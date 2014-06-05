@@ -7,26 +7,32 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "TaskerWidget.h"
 #include "moc_TaskerWidget.cpp"
-#include "clients_gui/EntitySymbols.h"
-#include "clients_gui/ImageWrapper.h"
-#include "clients_gui/RichGroupBox.h"
-#include "clients_gui/RichLabel.h"
-#include "clients_gui/RichPushButton.h"
+#include "EntitySymbols.h"
+#include "ImageWrapper.h"
+#include "RichGroupBox.h"
+#include "RichLabel.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
+
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "tools/GeneralConfig.h"
 #include <boost/assign/list_of.hpp>
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: TaskerWidget constructor
 // Created: ABR 2013-12-17
 // -----------------------------------------------------------------------------
-TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
+TaskerWidget::TaskerWidget( const QString& objectName,
+                            kernel::Controllers& controllers,
                             const gui::EntitySymbols& symbols,
+                            const QString& title,
                             bool showActivate /* = true */,
                             bool showClear /* = true */,
                             QWidget* parent /* = 0 */ )
@@ -37,9 +43,13 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
     , activateButton_( 0 )
     , clearButton_( 0 )
 {
+    setObjectName( objectName );
+    SubObjectName subObject( objectName );
+    setMinimumHeight( 64 );
     nameLabel_ = new gui::RichLabel( "event-target-label", "---" );
     symbolLabel_ = new gui::RichLabel( "event-target-symbol-label" );
-    groupBox_ = new gui::RichGroupBox( "event-target-groupbox", tr( "Recipient" ) );
+    groupBox_ = new gui::RichGroupBox( "event-target-groupbox", title );
+    connect( groupBox_, SIGNAL( clicked( bool ) ), SIGNAL( Clicked( bool ) ) );
 
     QWidget* symbolWidget = new QWidget();
     QHBoxLayout* symbolLayout = new QHBoxLayout( symbolWidget );
@@ -64,6 +74,7 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
     clearButton_->setVisible( showClear );
 
     QHBoxLayout* mainLayout = new QHBoxLayout( this );
+    mainLayout->setMargin( 0 );
     mainLayout->addWidget( groupBox_ );
 
     controllers_.controller_.Register( *this );
@@ -102,7 +113,7 @@ void TaskerWidget::BlockSignals( bool blocked )
 // Name: TaskerWidget::SetTasker
 // Created: ABR 2013-12-17
 // -----------------------------------------------------------------------------
-void TaskerWidget::SetTasker( kernel::Entity_ABC* entity )
+void TaskerWidget::SetTasker( const kernel::Entity_ABC* entity )
 {
     if( tasker_ == entity )
         return;
@@ -120,6 +131,7 @@ void TaskerWidget::SetTasker( kernel::Entity_ABC* entity )
             pixmap = pixmap.scaled( QSize( 48, 48 ), Qt::KeepAspectRatio, Qt::SmoothTransformation );
         }
     symbolLabel_->setPixmap( pixmap );
+    emit TaskerChanged( tasker_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,4 +173,40 @@ void TaskerWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     if( tasker_ && tasker_ == &entity )
         SetTasker( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TaskerWidget::setCheckable
+// Created: ABR 2014-05-28
+// -----------------------------------------------------------------------------
+void TaskerWidget::setCheckable( bool checkable )
+{
+    groupBox_->setCheckable( checkable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TaskerWidget::isCheckable
+// Created: ABR 2014-05-28
+// -----------------------------------------------------------------------------
+bool TaskerWidget::isCheckable() const
+{
+    return groupBox_->isCheckable( );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TaskerWidget::setChecked
+// Created: ABR 2014-05-28
+// -----------------------------------------------------------------------------
+void TaskerWidget::setChecked( bool checked )
+{
+    groupBox_->setChecked( checked );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TaskerWidget::isChecked
+// Created: ABR 2014-05-28
+// -----------------------------------------------------------------------------
+bool TaskerWidget::isChecked() const
+{
+    return groupBox_->isChecked();
 }

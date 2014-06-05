@@ -10,7 +10,6 @@
 #ifndef __CommunicationTreeView_h_
 #define __CommunicationTreeView_h_
 
-#include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_gui/HierarchyTreeView.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
@@ -42,23 +41,27 @@ class CommunicationTreeView : public gui::HierarchyTreeView< kernel::Communicati
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
-                            , gui::ChangeSuperior_ABC
 {
     Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                                    gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel,
-                                    const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
+             CommunicationTreeView( const QString& objectName,
+                                    kernel::Controllers& controllers,
+                                    const kernel::Profile_ABC& profile,
+                                    gui::ModelObserver_ABC& modelObserver,
+                                    const gui::EntitySymbols& symbols,
+                                    const StaticModel& staticModel,
+                                    const kernel::Time_ABC& simulation,
+                                    actions::ActionsModel& actionsModel,
+                                    gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                                    QWidget* parent = 0 );
     virtual ~CommunicationTreeView();
     //@}
 
     //! @name Operations
     //@{
     std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
-    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
-    virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
     //@}
 
 private slots:
@@ -91,7 +94,7 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     actions::ActionsModel& actionsModel_;
-    gui::ChangeSuperiorDialog* changeSuperiorDialog_;
+    gui::ChangeSuperiorDialog& changeSuperiorDialog_;
     QPixmap lock_;
     QPixmap commandPost_;
     QPixmap scisors_;

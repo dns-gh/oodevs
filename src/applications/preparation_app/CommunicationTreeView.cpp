@@ -25,14 +25,59 @@
 
 // TODO factoriser avec gaming
 
+namespace
+{
+    bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
+    {
+        auto automat   = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
+        auto formation = dynamic_cast< const kernel::Formation_ABC* >     ( &entity );
+        auto ghost     = dynamic_cast< const kernel::Ghost_ABC* >         ( &entity );
+        auto group     = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
+        if( ghost && ghost->GetGhostType() != eGhostType_Automat )
+            return false;
+        if( ( automat || ghost || formation ) && group )
+            return &entity.Get< kernel::TacticalHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+        else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+        {
+            const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
+            const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
+            if( com && com == team )
+                return true;
+            else if( group && ( knowledgegroup != group ) )
+                return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: CommunicationTreeView constructor
 // Created: JSR 2012-09-11
 // -----------------------------------------------------------------------------
-CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, QWidget* parent )
+CommunicationTreeView::CommunicationTreeView( const QString& objectName,
+                                              kernel::Controllers& controllers,
+                                              const kernel::Profile_ABC& profile,
+                                              gui::ModelObserver_ABC& modelObserver,
+                                              const gui::EntitySymbols& symbols,
+                                              gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                                              QWidget* parent )
     : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( objectName, controllers, profile, modelObserver, symbols, parent )
-    , changeSuperiorDialog_( 0 )
+    , changeSuperiorDialog_( changeSuperiorDialog )
 {
+    connect( this,                   SIGNAL( SelectionChanged( const std::vector< const kernel::Entity_ABC* >& ) ),
+             &changeSuperiorDialog_, SLOT( OnKnowledgeGroupSelectionChanged( const std::vector< const kernel::Entity_ABC* >& ) ) );
+    changeSuperiorDialog_.SetKnowledgeGroupFunctors(
+        &::CanChangeSuperior,
+        [&] ( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) {
+            if( auto automat = dynamic_cast< kernel::Automat_ABC* >( &entity ) )
+                Drop( *automat, superior );
+            else if( auto formation = dynamic_cast< kernel::Formation_ABC* >( &entity ) )
+                Drop( *formation, superior );
+            else if( auto ghost = dynamic_cast< kernel::Ghost_ABC* >( &entity ) )
+                Drop( *ghost, superior );
+            else if( auto kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( &entity ) )
+                Drop( *kg, superior );
+    } );
     SetLessThanEntityFunctor( &tools::LessThanById );
     controllers_.Update( *this );
 }
@@ -44,52 +89,6 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel:
 CommunicationTreeView::~CommunicationTreeView()
 {
     controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationTreeView::CanChangeSuperior
-// Created: JSR 2012-09-11
-// -----------------------------------------------------------------------------
-bool CommunicationTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
-{
-    const kernel::Automat_ABC*        automat   = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
-    const kernel::Formation_ABC*      formation = dynamic_cast< const kernel::Formation_ABC* >     ( &entity );
-    const kernel::Ghost_ABC*          ghost     = dynamic_cast< const kernel::Ghost_ABC* >         ( &entity );
-    const kernel::KnowledgeGroup_ABC* group     = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
-    if( ghost && ghost->GetGhostType() != eGhostType_Automat )
-        return false;
-    if( ( automat || ghost || formation ) && group )
-        return &entity.Get< kernel::TacticalHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-    else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
-    {
-        const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
-        const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
-        if( com && com == team )
-            return true;
-        else if( group && ( knowledgegroup != group ) )
-            return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationTreeView::DoChangeSuperior
-// Created: JSR 2012-09-11
-// -----------------------------------------------------------------------------
-void CommunicationTreeView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
-{
-    kernel::Automat_ABC* automat = dynamic_cast< kernel::Automat_ABC* >( &entity );
-    kernel::Formation_ABC* formation = dynamic_cast< kernel::Formation_ABC* >( &entity );
-    kernel::Ghost_ABC* ghost = dynamic_cast< kernel::Ghost_ABC* >( &entity );
-    kernel::KnowledgeGroup_ABC* kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( &entity );
-    if( automat )
-        Drop( *automat, superior );
-    else if( formation )
-        Drop( *formation, superior );
-    else if( ghost )
-        Drop( *ghost, superior );
-    else if( kg )
-        Drop( *kg, superior );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,15 +108,8 @@ void CommunicationTreeView::OnChangeKnowledgeGroup()
 {
     QModelIndexList list = selectionModel()->selectedIndexes();
     if( list.size() == 1)
-    {
-        kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( list.front() );
-        if( entity )
-        {
-            if( !changeSuperiorDialog_ )
-                changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, true );
-            changeSuperiorDialog_->Show( *entity );
-        }
-    }
+        if( auto* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( list.front() ) )
+            changeSuperiorDialog_.Show( *entity, tr( "Select new knowledge group" ), gui::ChangeSuperiorDialog::eKnowledgeGroup );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,7 +208,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::Automat_ABC& /*agen
 {
     if( !isVisible() )
         return;
-    menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ), false, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +220,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
     if( !isVisible() )
         return;
     menu.InsertItem( "Creation", tools::translate( "CommunicationTreeView", "Create sub knowledge group" ), this, SLOT( OnCreateCommunication() ) );
-    menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ), false, 1 );
 }
 
 namespace

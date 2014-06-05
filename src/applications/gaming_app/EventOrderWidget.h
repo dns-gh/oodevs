@@ -35,6 +35,7 @@ namespace gui
     class EventOrderPresenter;
     struct EventOrderViewState;
     class GlTools_ABC;
+    class TaskerWidget;
     class RichGroupBox;
     class RichLabel;
     template< typename T > class RichWarnWidget;
@@ -57,7 +58,6 @@ namespace tools
 }
 
 class Model;
-class TaskerWidget;
 
 // =============================================================================
 /** @class  EventOrderWidget
@@ -146,7 +146,7 @@ private:
     boost::shared_ptr< gui::EventOrderPresenter > orderPresenter_;
 
     unsigned int lastTaskerId_;
-    TaskerWidget* taskerWidget_;
+    gui::TaskerWidget* taskerWidget_;
     gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
     QVBoxLayout* missionComboLayout_;
     gui::RichWarnWidget< QComboBox >* missionCombo_;

@@ -14,11 +14,6 @@
 
 class LogisticSupplyExclusiveListWidget;
 
-namespace kernel
-{
-    class Profile_ABC;
-}
-
 // =============================================================================
 /** @class  LogisticSupplyPushFlowDialog
     @brief  LogisticSupplyPushFlowDialog
@@ -96,7 +91,6 @@ private:
     T_RecipientSupplies recipientSupplies_;
     T_RecipientsNames recipientsNames_;
     const kernel::Automat_ABC* pRecipientSelected_;
-    const kernel::Profile_ABC& profile_;
     //@}
 };
 

@@ -91,8 +91,12 @@
         <translation>Create sub knowledge group</translation>
     </message>
     <message>
-        <source>Change superior</source>
-        <translation>Change superior</translation>
+        <source>Select new knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2589,10 +2593,6 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Create side</source>
         <translation>Create side</translation>
-    </message>
-    <message>
-        <source>Change superior</source>
-        <translation>Change superior</translation>
     </message>
     <message>
         <source>Change hierarchy level</source>

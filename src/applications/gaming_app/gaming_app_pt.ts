@@ -331,37 +331,6 @@
     </message>
 </context>
 <context>
-    <name>ChangeLogisticLinksDialog</name>
-    <message>
-        <source>Logistic links edition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nominal superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change logistic links</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatDock</name>
     <message>
         <source>Chat</source>
@@ -434,11 +403,15 @@
 <context>
     <name>CommunicationTreeView</name>
     <message>
-        <source>Change superior</source>
+        <source>Create Knowledge Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create Knowledge Group</source>
+        <source>Select new knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -719,6 +692,10 @@ Reason: %3
         <source>Supervisor action:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventOrderWidget</name>
@@ -740,6 +717,10 @@ Reason: %3
     </message>
     <message>
         <source>New order (unit)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recipient</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3350,30 +3331,11 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TacticalTreeView</name>
     <message>
-        <source>Change superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Create formation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create logistic base</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TaskerWidget</name>
-    <message>
-        <source>Recipient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

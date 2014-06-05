@@ -183,9 +183,9 @@ int protocol::CheckCount( int i, int j, const sword::MissionParameters& params, 
 
 bool protocol::IsNull( const sword::MissionParameters& params, int i )
 {
-    protocol::Check( params.elem_size() > i, "is missing", i);
-    const auto& param = params.elem( i );
-    return param.null_value();
+    if( params.elem_size() <= i )
+        return true;
+    return params.elem( i ).null_value();
 }
 
 const std::string& protocol::GetString( const sword::MissionParameters& params, int i, int j, int k )

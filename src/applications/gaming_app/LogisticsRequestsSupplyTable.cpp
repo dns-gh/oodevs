@@ -37,7 +37,7 @@ LogisticsRequestsSupplyTable::LogisticsRequestsSupplyTable( const QString& objec
 
     setSortingEnabled( true );
     setFocusPolicy( Qt::NoFocus );
-    setSelectionMode( SingleSelection );
+    setSelectionMode( NoSelection );
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
 }
@@ -94,9 +94,6 @@ void LogisticsRequestsSupplyTable::SetData( int row, int col, QVariant text, boo
         item->setTextAlignment( Qt::AlignCenter );
     }
     else
-    {
-        item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
         item->setCheckState( checked ? Qt::Checked : Qt::Unchecked );
-    }
     dataModel_.setItem( row, col, item );
 }

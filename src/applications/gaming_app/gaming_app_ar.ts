@@ -331,37 +331,6 @@
     </message>
 </context>
 <context>
-    <name>ChangeLogisticLinksDialog</name>
-    <message>
-        <source>Logistic links edition</source>
-        <translation type="unfinished">الطبعة روابط السوقي</translation>
-    </message>
-    <message>
-        <source>Nominal superior</source>
-        <translation type="unfinished">الأعلى تصنيفا</translation>
-    </message>
-    <message>
-        <source>Current superior</source>
-        <translation type="unfinished">العليا الحالية</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished">لا شيء</translation>
-    </message>
-    <message>
-        <source>Change logistic links</source>
-        <translation type="unfinished">تغيير الارتباطات السوقية</translation>
-    </message>
-</context>
-<context>
     <name>ChatDock</name>
     <message>
         <source>Chat</source>
@@ -434,12 +403,16 @@
 <context>
     <name>CommunicationTreeView</name>
     <message>
-        <source>Change superior</source>
-        <translation type="unfinished">تغيير مجموعة المعارف</translation>
-    </message>
-    <message>
         <source>Create Knowledge Group</source>
         <translation type="unfinished">إنشاء مجموعة المعارف</translation>
+    </message>
+    <message>
+        <source>Select new knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -719,6 +692,10 @@ Reason: %3
         <source>Supervisor action:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventOrderWidget</name>
@@ -740,6 +717,10 @@ Reason: %3
     </message>
     <message>
         <source>New order (unit)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recipient</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3351,30 +3332,11 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TacticalTreeView</name>
     <message>
-        <source>Change superior</source>
-        <translation type="unfinished">تغير عليا</translation>
-    </message>
-    <message>
         <source>Create formation</source>
         <translation type="unfinished">إنشاء تكوين</translation>
     </message>
     <message>
         <source>Create logistic base</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TaskerWidget</name>
-    <message>
-        <source>Recipient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

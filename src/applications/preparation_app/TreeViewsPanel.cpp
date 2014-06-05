@@ -20,6 +20,7 @@
 #include "TacticalTreeView.h"
 #include "UrbanTreeView.h"
 #include "clients_gui/AggregateToolbar.h"
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_gui/DrawingsTreeView.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/GlProxy.h"
@@ -51,6 +52,70 @@ namespace
         QObject::connect( &aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), view, SLOT( LockDragAndDrop( bool ) ) );
         treeViews.push_back( richView );
     }
+
+    void CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent,
+                              gui::RichWidget< QTabWidget >* tabWidget,
+                              kernel::Controllers& controllers,
+                              gui::EntitySymbols& icons,
+                              ModelBuilder& modelBuilder,
+                              Model& model,
+                              StaticModel& staticModel,
+                              std::vector< gui::RichView_ABC* >& treeViews,
+                              const gui::AggregateToolbar& aggregateToolbar,
+                              gui::ChangeSuperiorDialog& superiorDialog,
+                              std::vector< gui::HierarchyTreeView_ABC* >& views )
+    {
+        gui::SubObjectName subObject( "UnitTabWidget" );
+        // Tactical
+        {
+            auto richView = new gui::RichView< TacticalTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                   "TacticalTreeView",
+                                                                   tabWidget,
+                                                                   controllers,
+                                                                   PreparationProfile::GetProfile(),
+                                                                   modelBuilder,
+                                                                   icons,
+                                                                   model,
+                                                                   staticModel.types_,
+                                                                   superiorDialog );
+            views.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
+            QObject::connect( views.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ),
+                              tabWidget,    SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
+            Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+            parent->addTab( richView, tools::translate( "DockContainer","Tactical" ) );
+        }
+        // Communication
+        {
+            auto richView = new gui::RichView< CommunicationTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                        "CommunicationTreeView",
+                                                                        tabWidget,
+                                                                        controllers,
+                                                                        PreparationProfile::GetProfile(),
+                                                                        modelBuilder,
+                                                                        icons,
+                                                                        superiorDialog );
+            views.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
+            QObject::connect( views.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ),
+                              tabWidget,    SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
+            Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+            parent->addTab( richView, tools::translate( "DockContainer","Communication" ) );
+        }
+        // Logistic
+        {
+            auto richView = new gui::RichView< LogisticTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                   "LogisticTreeView",
+                                                                   tabWidget,
+                                                                   controllers,
+                                                                   PreparationProfile::GetProfile(),
+                                                                   modelBuilder,
+                                                                   icons,
+                                                                   superiorDialog );
+            views.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
+            QObject::connect( views.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), tabWidget, SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
+            Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+            parent->addTab( richView, tools::translate( "DockContainer", "Logistic" ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -67,22 +132,24 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                 const gui::AggregateToolbar& aggregateToolbar,
                                 gui::ParametersLayer& paramLayer )
     : gui::RichWidget< QTabWidget >( "TreeViewsPanel" )
-    , controllers_      ( controllers )
+    , controllers_( controllers )
     , contextMenuEntity_( controllers )
-    , modelBuilder_     ( modelBuilder )
+    , modelBuilder_( modelBuilder )
+    , changeSuperiorDialog_( new gui::ChangeSuperiorDialog( controllers, icons, this ) )
 {
+    // Tactical
     gui::SubObjectName subObject( "TreeViewsPanel" );
     {
         gui::RichWidget< QTabWidget >* pFirstAgentsTabWidget = new gui::RichWidget< QTabWidget >( "FirstAgentsTabWidget" );
         {
             gui::SubObjectName subObject( "pFirstAgentsTabWidget" );
-            CreateUnitTabWidget( pFirstAgentsTabWidget, this, controllers, icons, modelBuilder, model, staticModel, treeViews, aggregateToolbar, true );
+            CreateUnitTabWidget( pFirstAgentsTabWidget, this, controllers, icons, modelBuilder, model, staticModel, treeViews, aggregateToolbar, *changeSuperiorDialog_, firstUnitViews_ );
         }
         pSecondAgentsTabWidget_ = new gui::RichWidget< QTabWidget >( "SecondAgentsTabWidget" );
         {
             gui::SubObjectName subObject( "pSecondAgentsTabWidget_" );
             pSecondAgentsTabWidget_->hide();
-            CreateUnitTabWidget( pSecondAgentsTabWidget_, this, controllers, icons, modelBuilder, model, staticModel, treeViews, aggregateToolbar, false );
+            CreateUnitTabWidget( pSecondAgentsTabWidget_, this, controllers, icons, modelBuilder, model, staticModel, treeViews, aggregateToolbar, *changeSuperiorDialog_, secondUnitViews_ );
         }
 
         QSplitter* splitter = new QSplitter();
@@ -167,70 +234,6 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
 TreeViewsPanel::~TreeViewsPanel()
 {
     controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::CreateUnitTabWidget
-// Created: LGY 2012-06-27
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent,
-                                          gui::RichWidget< QTabWidget >* tabWidget,
-                                          kernel::Controllers& controllers,
-                                          gui::EntitySymbols& icons,
-                                          ModelBuilder& modelBuilder,
-                                          Model& model,
-                                          StaticModel& staticModel,
-                                          std::vector< gui::RichView_ABC* >& treeViews,
-                                          const gui::AggregateToolbar& aggregateToolbar,
-                                          bool first )
-{
-    gui::SubObjectName subObject( "UnitTabWidget" );
-    std::vector< gui::HierarchyTreeView_ABC* >& trees = first ? firstUnitViews_ : secondUnitViews_;
-    // Tactical
-    {
-        auto richView = new gui::RichView< TacticalTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
-                                                               "TacticalTreeView",
-                                                               tabWidget,
-                                                               controllers,
-                                                               PreparationProfile::GetProfile(),
-                                                               modelBuilder,
-                                                               icons,
-                                                               model,
-                                                               staticModel.types_ );
-        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
-        connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
-        parent->addTab( richView, tools::translate( "DockContainer","Tactical" ) );
-    }
-
-    // Communication
-    {
-        auto richView = new gui::RichView< CommunicationTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
-                                                                    "CommunicationTreeView",
-                                                                    tabWidget,
-                                                                    controllers,
-                                                                    PreparationProfile::GetProfile(),
-                                                                    modelBuilder,
-                                                                    icons );
-        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
-        connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
-        parent->addTab( richView, tools::translate( "DockContainer","Communication" ) );
-    }
-    // Logistic
-    {
-        auto richView = new gui::RichView< LogisticTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
-                                                               "LogisticTreeView",
-                                                               tabWidget,
-                                                               controllers,
-                                                               PreparationProfile::GetProfile(),
-                                                               modelBuilder,
-                                                               icons );
-        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
-        connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
-        parent->addTab( richView, tools::translate( "DockContainer", "Logistic" ) );
-    }
 }
 
 // -----------------------------------------------------------------------------

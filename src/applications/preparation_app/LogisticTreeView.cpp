@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "LogisticTreeView.h"
 
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "preparation/LogisticBaseStates.h"
@@ -18,9 +19,22 @@
 // Name: LogisticTreeView constructor
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------
-LogisticTreeView::LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, QWidget* parent /*= 0*/ )
-    : gui::LogisticTreeView( objectName, controllers, profile, modelObserver, symbols, parent )
+LogisticTreeView::LogisticTreeView( const QString& objectName,
+                                    kernel::Controllers& controllers,
+                                    const kernel::Profile_ABC& profile,
+                                    gui::ModelObserver_ABC& modelObserver,
+                                    const gui::EntitySymbols& symbols,
+                                    gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                                    QWidget* parent /*= 0*/ )
+    : gui::LogisticTreeView( objectName, controllers, profile, modelObserver, symbols, changeSuperiorDialog, parent )
 {
+    changeSuperiorDialog.SetLogisticNominalFunctors(
+        [&] ( const kernel::Entity_ABC& entity ) {
+            return RetrieveSuperior( entity );
+        },
+        [&] ( kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* ) {
+            SetSuperior( entity, nominalSuperior );
+        } );
     controllers_.Update( *this );
 }
 

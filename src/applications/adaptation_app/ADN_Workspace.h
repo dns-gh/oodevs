@@ -102,6 +102,11 @@ namespace tools
     class Loader_ABC;
 }
 
+namespace gui
+{
+    class Application_ABC;
+}
+
 #define DECLARE_WORKSPACE_ELEMENT_GETTER( ELEMENT )                                                 \
 ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& Get##ELEMENT##();                \
 const ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& Get##ELEMENT##() const;    \
@@ -119,7 +124,7 @@ class ADN_Workspace : public QObject
 public:
     //! @name Singleton implementation
     //@{
-    static void CreateWorkspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config );
+    static void CreateWorkspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config, gui::Application_ABC& application );
     static bool HasWorkspace();
     static ADN_Workspace& GetWorkspace();
     static void DeleteWorkspace();
@@ -128,7 +133,7 @@ public:
 private:
     //! @name Constructors/destructor
     //@{
-    explicit ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config );
+    explicit ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config, gui::Application_ABC& application );
     virtual ~ADN_Workspace();
     //@}
 
@@ -173,6 +178,7 @@ public:
     void SetIsSwappingLanguage( bool isSwappingLanguage );
 
     ADN_Project_Data& GetProject();
+    gui::Application_ABC& GetApplication();
     ADN_WorkspaceElement_ABC& GetWorkspaceElement( E_WorkspaceElements workspaceElement );
 
     DECLARE_WORKSPACE_ELEMENT_GETTER( Languages );
@@ -234,6 +240,7 @@ private:
     ADN_MainWindow& mainWindow_;
     ADN_ProgressBar& progressIndicator_;
     const ADN_GeneralConfig& config_;
+    gui::Application_ABC& application_;
     std::auto_ptr< kernel::LanguageController > languageController_;
     std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
     std::auto_ptr< const tools::Loader_ABC > fileLoader_;

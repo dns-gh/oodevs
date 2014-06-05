@@ -12,7 +12,6 @@
 
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_gui/HierarchyTreeView.h"
 
 namespace gui
@@ -31,20 +30,19 @@ class CommunicationTreeView : public gui::HierarchyTreeView< kernel::Communicati
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC > // LTO
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
-                            , public gui::ChangeSuperior_ABC
 {
     Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, QWidget* parent );
+             CommunicationTreeView( const QString& objectName,
+                                    kernel::Controllers& controllers,
+                                    const kernel::Profile_ABC& profile,
+                                    gui::ModelObserver_ABC& modelObserver,
+                                    const gui::EntitySymbols& symbols,
+                                    gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                                    QWidget* parent );
     virtual ~CommunicationTreeView();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
-    virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
     //@}
 
 private slots:
@@ -74,12 +72,14 @@ private:
     void UpdateFonts( const kernel::KnowledgeGroup_ABC& kg, bool deleted );
     void UpdateLongName( const kernel::Entity_ABC& entity );
     virtual void keyPressEvent( QKeyEvent* event );
+
+    void EnableKnowledgeGroupEdition( bool optional, gui::ChangeSuperiorDialog& dialog );
     //@}
 
 private:
     //! @name Member data
     //@{
-    gui::ChangeSuperiorDialog* changeSuperiorDialog_;
+    gui::ChangeSuperiorDialog& changeSuperiorDialog_;
     //@}
 };
 

@@ -24,7 +24,6 @@ namespace gui
     class EntitySymbols;
     class RichGroupBox;
     class RichLabel;
-}
 
 // =============================================================================
 /** @class  TaskerWidget
@@ -41,8 +40,10 @@ class TaskerWidget : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TaskerWidget( kernel::Controllers& controllers,
+             TaskerWidget( const QString& objectName,
+                           kernel::Controllers& controllers,
                            const gui::EntitySymbols& symbols,
+                           const QString& title,
                            bool showActivate = true,
                            bool showClear = true,
                            QWidget* parent = 0 );
@@ -51,16 +52,24 @@ public:
 
     //! @name Operations
     //@{
-    void SetTasker( kernel::Entity_ABC* entity );
+    void SetTasker( const kernel::Entity_ABC* entity );
     const kernel::Entity_ABC* GetTasker() const;
 
     void BlockSignals( bool blocked );
     void EnableStaticWarning( bool warn, const QColor& color = QColor() );
+
+    void setCheckable( bool checkable );
+    bool isCheckable() const;
+
+    void setChecked( bool checked );
+    bool isChecked() const;
     //@}
 
 signals:
     //! @name Signals
     //@{
+    void Clicked( bool checked );
+    void TaskerChanged( const kernel::Entity_ABC* tasker );
     void ClearClicked();
     //@}
 
@@ -82,7 +91,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const gui::EntitySymbols& symbols_;
-    kernel::Entity_ABC* tasker_;
+    const kernel::Entity_ABC* tasker_;
 
     gui::RichGroupBox* groupBox_;
     gui::RichLabel* nameLabel_;
@@ -91,5 +100,7 @@ private:
     QPushButton* clearButton_;
     //@}
 };
+
+} //!namespace gui
 
 #endif // __TaskerWidget_h_

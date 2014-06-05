@@ -393,6 +393,8 @@ const ActionParam automat_creation_params[] =
 {
     { "AutomatType", "identifier", 0, 0, 0, 0 },
     { "KnowledgeGroup", "identifier", 0, 0, 0, 0 },
+    { "Name", "string", 0, 0, 0, 0 },
+    { "Extensions", "extensionlist", 0, 0, 0, 0 },
 };
 
 const ActionParam change_automat_superior_params[] =
@@ -615,6 +617,7 @@ const ActionParam formation_creation_params[] =
     { "Level", "numeric", 0, 0, 0, 0 },
     { "Name", "string", 0, 0, 0, 0 },
     { "LogLevel", "string", 0, 0, 0, 0 },
+    { "Extensions", "extensionlist", 0, 0, 0, 0 },
 };
 
 const ActionParam global_weather_params[] =
@@ -813,6 +816,9 @@ const ActionParam unit_creation_params[] =
 {
     { "UnitType", "identifier", 0, 0, 0, 0 },
     { "Location", "point", 0, 0, 0, 0 },
+    { "Name", "string", 0, 0, 0, 0 },
+    { "CommandPost", "boolean", 0, 0, 0, 0 },
+    { "Extensions", "extensionlist", 0, 0, 0, 0 },
 };
 
 const ActionParam update_object_params[] =

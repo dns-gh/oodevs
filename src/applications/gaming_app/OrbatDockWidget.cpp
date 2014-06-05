@@ -16,6 +16,7 @@
 #include "PopulationTreeView.h"
 #include "TacticalTreeView.h"
 #include "clients_gui/AggregateToolBar.h"
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_gui/DrawingsTreeView.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/ObjectTreeView.h"
@@ -52,6 +53,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   DrawingsBuilder& drawingsBuilder,
                                   gui::ParametersLayer& paramLayer )
     : gui::RichDockWidget( controllers, parent, objectName )
+    , changeSuperiorDialog_( new gui::ChangeSuperiorDialog( controllers, icons, this ) )
     , logisticListView_( 0 )
 {
     setWindowTitle( tools::translate( "OrbatDockWidget", "Orbat" ) );
@@ -74,20 +76,22 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                                       icons,
                                                                       staticModel,
                                                                       simulation,
-                                                                      actionsModel ) );
+                                                                      actionsModel,
+                                                                      *changeSuperiorDialog_ ) );
     connect( toolbar, SIGNAL( ChangeDisplay( int ) ), tactical->GetView(), SLOT( ChangeDisplay( int ) ) );
     // Communication
     Configure( views_, unitTab, toolbar, tools::translate( "OrbatDockWidget", "Communication" ),
-                new gui::RichView< CommunicationTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
-                                                            "SearchCommunicationTreeView",
-                                                            unitTab,
-                                                            controllers,
-                                                            filter,
-                                                            observer_,
-                                                            icons,
-                                                            staticModel,
-                                                            simulation,
-                                                            actionsModel ) );
+               new gui::RichView< CommunicationTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                           "SearchCommunicationTreeView",
+                                                           unitTab,
+                                                           controllers,
+                                                           filter,
+                                                           observer_,
+                                                           icons,
+                                                           staticModel,
+                                                           simulation,
+                                                           actionsModel,
+                                                           *changeSuperiorDialog_ ) );
     // Logistic
     auto logistic = Configure( views_, unitTab, toolbar, tools::translate( "OrbatDockWidget", "Logistic" ),
                                new gui::RichView< LogisticTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
@@ -99,7 +103,8 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                                       icons,
                                                                       staticModel,
                                                                       simulation,
-                                                                      actionsModel ) );
+                                                                      actionsModel,
+                                                                      *changeSuperiorDialog_ ) );
     logisticListView_ = logistic->GetView();
     // Object
     Configure( views_, mainTab, toolbar, tools::translate( "OrbatDockWidget", "Objects" ),

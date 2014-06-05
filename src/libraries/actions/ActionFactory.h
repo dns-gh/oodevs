@@ -108,6 +108,13 @@ public:
     virtual Action_ABC* CreatePathfindCreation( const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points ) const;
     virtual Action_ABC* CreatePathfindDestruction( uint32_t id ) const;
 
+    virtual Action_ABC* CreateChangeLogisticLinks( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* currentSuperior ) const;
+    virtual Action_ABC* CreateUnitChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Automat_ABC& superior ) const;
+    virtual Action_ABC* CreateChangeFormationSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+    virtual Action_ABC* CreateChangeKnowledgeGroup( const kernel::Automat_ABC& entity, const kernel::KnowledgeGroup_ABC& superior ) const;
+    virtual Action_ABC* CreateKnowledgeGroupUpdateParty( const kernel::KnowledgeGroup_ABC& entity, const kernel::Team_ABC& superior ) const;
+    virtual Action_ABC* CreateKnowledgeGroupUpdatePartyParent( const kernel::KnowledgeGroup_ABC& entity, const kernel::KnowledgeGroup_ABC& superior ) const;
+
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}
 

@@ -40,6 +40,8 @@
 #include "icons.h"
 #include <boost/bind.hpp>
 
+// TODO factoriser avec prepa
+
 namespace
 {
     bool IsKgDeactivated( const kernel::Entity_ABC& entity )
@@ -48,25 +50,69 @@ namespace
             return !kg->IsActivated();
         return false;
     }
+    
+    bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
+    {
+        const kernel::Agent_ABC*          agent   = dynamic_cast< const kernel::Agent_ABC* >         ( &entity );
+        const kernel::Automat_ABC*        automat = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
+        const kernel::KnowledgeGroup_ABC* group   = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
+        if( automat && group )
+            return &entity.Get< kernel::CommunicationHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+        else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+        {
+            const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
+            const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
+            if( com && com == team )
+                return true;
+            else if( group && ( knowledgegroup != group ) )
+                return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+        }
+        else if( agent )
+        {
+            const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &superior );
+            if( !automat )
+                automat = dynamic_cast< const kernel::Automat_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetUp() );
+            if( automat != &agent->Get< kernel::CommunicationHierarchies >().GetUp() )
+                return true;
+        }
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: CommunicationTreeView constructor
 // Created: JSR 2012-09-28
 // -----------------------------------------------------------------------------
-CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                                              gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel,
-                                              const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
+CommunicationTreeView::CommunicationTreeView( const QString& objectName,
+                                              kernel::Controllers& controllers,
+                                              const kernel::Profile_ABC& profile,
+                                              gui::ModelObserver_ABC& modelObserver,
+                                              const gui::EntitySymbols& symbols,
+                                              const StaticModel& staticModel,
+                                              const kernel::Time_ABC& simulation,
+                                              actions::ActionsModel& actionsModel,
+                                              gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                                              QWidget* parent /*= 0*/ )
     : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( objectName, controllers, profile, modelObserver, symbols, parent )
     , profile_             ( profile )
     , static_              ( staticModel )
     , simulation_          ( simulation )
     , actionsModel_        ( actionsModel )
-    , changeSuperiorDialog_( 0 )
+    , changeSuperiorDialog_( changeSuperiorDialog )
     , lock_                ( MAKE_PIXMAP( lock ) )
     , scisors_             ( MAKE_PIXMAP( scisors ) ) // LTO
     , commandPost_         ( MAKE_PIXMAP( commandpost ) )
 {
+    connect( this,                   SIGNAL( SelectionChanged( const std::vector< const kernel::Entity_ABC* >& ) ),
+             &changeSuperiorDialog_, SLOT( OnKnowledgeGroupSelectionChanged( const std::vector< const kernel::Entity_ABC* >& ) ) );
+    changeSuperiorDialog_.SetKnowledgeGroupFunctors(
+        &::CanChangeSuperior,
+        [&] ( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) {
+            if( auto automat = dynamic_cast< kernel::Automat_ABC* >( &entity ) )
+                Drop( *automat, superior );
+            else if( auto kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( &entity ) )
+                Drop( *kg, superior );
+    } );
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &CommunicationTreeView::GetEntityPixmap, this, _1 ), this ) );
     setEditTriggers( 0 );
     SetLessThanEntityFunctor( &tools::LessThanByPC );
@@ -99,51 +145,6 @@ std::vector< const QPixmap* > CommunicationTreeView::GetEntityPixmap( const kern
 }
 
 // -----------------------------------------------------------------------------
-// Name: CommunicationTreeView::CanChangeSuperior
-// Created: JSR 2012-09-28
-// -----------------------------------------------------------------------------
-bool CommunicationTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
-{
-    const kernel::Agent_ABC*          agent   = dynamic_cast< const kernel::Agent_ABC* >         ( &entity );
-    const kernel::Automat_ABC*        automat = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
-    const kernel::KnowledgeGroup_ABC* group   = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
-    if( automat && group )
-        return &entity.Get< kernel::CommunicationHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-    else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
-    {
-        const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
-        const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
-        if( com && com == team )
-            return true;
-        else if( group && ( knowledgegroup != group ) )
-            return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-    }
-    else if( agent )
-    {
-        const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &superior );
-        if( !automat )
-            automat = dynamic_cast< const kernel::Automat_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetUp() );
-        if( automat != &agent->Get< kernel::CommunicationHierarchies >().GetUp() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationTreeView::DoChangeSuperior
-// Created: JSR 2012-09-28
-// -----------------------------------------------------------------------------
-void CommunicationTreeView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
-{
-    kernel::Automat_ABC* automat = dynamic_cast< kernel::Automat_ABC* >( &entity );
-    kernel::KnowledgeGroup_ABC* kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( &entity );
-    if( automat )
-        Drop( *automat, superior );
-    else if( kg )
-        Drop( *kg, superior );
-}
-
-// -----------------------------------------------------------------------------
 // Name: CommunicationTreeView::OnChangeKnowledgeGroup
 // Created: JSR 2012-09-28
 // -----------------------------------------------------------------------------
@@ -151,15 +152,8 @@ void CommunicationTreeView::OnChangeKnowledgeGroup()
 {
     QModelIndexList list = selectionModel()->selectedIndexes();
     if( list.size() == 1)
-    {
-        kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( list.front() );
-        if( entity )
-        {
-            if( !changeSuperiorDialog_ )
-                changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, true );
-            changeSuperiorDialog_->Show( *entity );
-        }
-    }
+        if( auto entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( list.front() ) )
+            changeSuperiorDialog_.Show( *entity, tr( "Select new knowledge group" ), gui::ChangeSuperiorDialog::eKnowledgeGroup );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,7 +243,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::Automat_ABC& /*auto
     if( !isVisible() )
         return;
     if( controllers_.GetCurrentMode() != eModes_Replay )
-        menu.InsertItem( "Knowledge", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+        menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ), false, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +255,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
     if( !isVisible() )
         return;
     if( controllers_.GetCurrentMode() != eModes_Replay )
-        menu.InsertItem( "Knowledge", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+        menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ), false, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,21 +295,12 @@ void CommunicationTreeView::OnCreateKnowledgeGroup( const kernel::SafePointer< k
 // -----------------------------------------------------------------------------
 void CommunicationTreeView::Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target )
 {
-    if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &target ) )
+    if( auto agent = dynamic_cast< const kernel::Agent_ABC* >( &target ) )
         Drop( item, target.Get< kernel::CommunicationHierarchies >().GetUp() );
-    else if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &target ) )
-    {
-        if( &item.Get< kernel::CommunicationHierarchies >().GetUp() != automat )
-        {
-            kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
-            std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
-            tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-            action->AddParameter( *new actions::parameters::Automat( it.NextElement(), *automat, controllers_.controller_ ) );
-            action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-            actionsModel_.Publish( *action );
-        }
-    }
+    else
+        if( auto automat = dynamic_cast< const kernel::Automat_ABC* >( &target ) )
+            if( &item.Get< kernel::CommunicationHierarchies >().GetUp() != automat )
+                actionsModel_.PublishUnitChangeSuperior( item, *automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -324,18 +309,8 @@ void CommunicationTreeView::Drop( const kernel::Agent_ABC& item, const kernel::E
 // -----------------------------------------------------------------------------
 void CommunicationTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target )
 {
-    if( const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target ) )
-    {
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_knowledge_group" );
-        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        action->AddParameter( *new actions::parameters::KnowledgeGroup( it.NextElement(), *group, controllers_.controller_ ) );
-        if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &group->Get< kernel::CommunicationHierarchies >().GetTop() ) )
-            action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-        actionsModel_.Publish( *action );
-    }
+    if( auto group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target ) )
+        actionsModel_.PublishChangeKnowledgeGroup( item, *group );
 }
 
 // -----------------------------------------------------------------------------
@@ -344,28 +319,8 @@ void CommunicationTreeView::Drop( const kernel::Automat_ABC& item, const kernel:
 // -----------------------------------------------------------------------------
 void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target )
 {
-    std::unique_ptr< actions::Action_ABC > action;
-    if( const kernel::KnowledgeGroup_ABC* groupParent = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target ) )
-    {
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side_parent" );
-        action.reset( new actions::KnowledgeGroupMagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &groupParent->Get< kernel::CommunicationHierarchies >().GetTop() ) )
-            action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
-        action->AddParameter( *new actions::parameters::KnowledgeGroup( it.NextElement(), *groupParent, controllers_.controller_ ) );
-    }
-    else if( const kernel::Team_ABC* teamParent = dynamic_cast< const kernel::Team_ABC* >( &target ) )
-    {
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side" );
-        action.reset( new actions::KnowledgeGroupMagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &teamParent->Get< kernel::CommunicationHierarchies >().GetTop() ) )
-            action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
-    }
-    if( action )
-    {
-        action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        actionsModel_.Publish( *action );
-    }
+    if( auto group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target ) )
+        actionsModel_.PublishKnowledgeGroupUpdatePartyParent( item, *group );
+    else if( auto team = dynamic_cast< const kernel::Team_ABC* >( &target ) )
+        actionsModel_.PublishKnowledgeGroupUpdateParty( item, *team );
 }

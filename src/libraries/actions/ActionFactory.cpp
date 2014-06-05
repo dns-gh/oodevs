@@ -9,17 +9,22 @@
 
 #include "actions_pch.h"
 #include "ActionFactory.h"
+#include "Army.h"
 #include "Agent.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
+#include "Automat.h"
 #include "DateTime.h"
 #include "Direction.h"
 #include "DotationType.h"
 #include "EngageMagicAction.h"
 #include "EntityMission.h"
+#include "ExtensionList.h"
 #include "Enumeration.h"
+#include "Formation.h"
 #include "FragOrder.h"
 #include "Helpers.h"
+#include "KnowledgeGroup.h"
 #include "Identifier.h"
 #include "Itinerary.h"
 #include "KnowledgeGroupMagicAction.h"
@@ -583,6 +588,9 @@ Action_ABC* ActionFactory::CreateAgentCreationAction( const kernel::AgentType& t
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
+    action->AddParameter( *new parameters::String( it.NextElement() ) );
+    action->AddParameter( *new parameters::Bool( it.NextElement() ) );
+    action->AddParameter( *new parameters::ExtensionList( it.NextElement() ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &selected, false );
     return action.release();
@@ -601,6 +609,7 @@ Action_ABC* ActionFactory::CreateFormationCreationAction( int level, const kerne
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     const std::string logisticLevel = isLogisticBase ? ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) : std::string();
     action->AddParameter( *new parameters::String( it.NextElement(), logisticLevel ) );
+    action->AddParameter( *new parameters::ExtensionList( it.NextElement() ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &selected, false );
     return action.release();
@@ -763,6 +772,8 @@ namespace
         action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
         if( destination )
             action->AddParameter( *new parameters::Agent( it.NextElement(), *destination, entities, controller, false ) );
+        else
+            action->AddParameter( *new parameters::Agent( it.NextElement(), controller, false ) );
         action->Attach( *new ActionTiming( controller, simulation ) );
         return action.release();
     }
@@ -784,6 +795,15 @@ Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int cons
 Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) const
 {
     return CreateMaintenanceSelection( consignId, equipmentTypeId, boost::none, magicActions_.Get( "select_diagnosis_team" ), controller_, simulation_, entities_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateSelectMaintenanceRepairTeam
+// Created: BAX 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId )
+{
+    return CreateMaintenanceSelection( consignId, equipmentTypeId, boost::none, magicActions_.Get( "select_repair_team" ), controller_, simulation_, entities_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -926,12 +946,117 @@ Action_ABC* ActionFactory::CreateLocalDestruction( unsigned int weatherId ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateSelectMaintenanceRepairTeam
-// Created: BAX 2014-02-10
+// Name: ActionFactory::CreateChangeLogisticLinks
+// Created: ABR 2014-06-03
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId )
+Action_ABC* ActionFactory::CreateChangeLogisticLinks( const kernel::Entity_ABC& entity,
+                                                      const kernel::Entity_ABC* nominalSuperior,
+                                                      const kernel::Entity_ABC* currentSuperior ) const
 {
-    return CreateMaintenanceSelection( consignId, equipmentTypeId, boost::none, magicActions_.Get( "select_repair_team" ), controller_, simulation_, entities_ );
+    kernel::MagicActionType& actionType = magicActions_.Get( "change_logistic_links" );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    action->AddParameter( nominalSuperior ? *new parameters::Identifier( it.NextElement(), nominalSuperior->GetId() )
+                                          : *new parameters::Identifier( it.NextElement() ) );
+    action->AddParameter( currentSuperior ? *new parameters::Identifier( it.NextElement(), currentSuperior->GetId() )
+                                          : *new parameters::Identifier( it.NextElement() ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &entity, false );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateUnitChangeSuperior
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateUnitChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Automat_ABC& superior ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "unit_change_superior" );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Automat( it.NextElement(), superior, controller_ ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &entity, false );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateChangeFormationSuperior
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateChangeFormationSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "change_formation_superior" );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    if( auto formation = dynamic_cast< const kernel::Formation_ABC* >( &superior ) )
+        action->AddParameter( *new parameters::Formation( it.NextElement(), *formation, controller_ ) );
+    else if( auto team = dynamic_cast< const kernel::Team_ABC* >( &superior ) )
+        action->AddParameter( *new parameters::Army( it.NextElement(), *team, controller_ ) );
+    else
+        action->Invalidate();
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &entity, false );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateChangeKnowledgeGroup
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateChangeKnowledgeGroup( const kernel::Automat_ABC& entity,
+                                                       const kernel::KnowledgeGroup_ABC& superior ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "change_knowledge_group" );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), superior, controller_ ) );
+    if( auto team = dynamic_cast< const kernel::Team_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetTop() ) )
+        action->AddParameter( *new parameters::Army( it.NextElement(), *team, controller_ ) );
+    else
+        action->Invalidate();
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &entity, false );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateKnowledgeGroupUpdateParty
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateKnowledgeGroupUpdateParty( const kernel::KnowledgeGroup_ABC& entity,
+                                                            const kernel::Team_ABC& superior ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "knowledge_group_update_side" );
+    std::unique_ptr< Action_ABC > action( new KnowledgeGroupMagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    if( auto team = dynamic_cast< const kernel::Team_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetTop() ) )
+        action->AddParameter( *new parameters::Army( it.NextElement(), superior, controller_ ) );
+    else
+        action->Invalidate();
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &entity, false );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateKnowledgeGroupUpdatePartyParent
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateKnowledgeGroupUpdatePartyParent( const kernel::KnowledgeGroup_ABC& entity,
+                                                                  const kernel::KnowledgeGroup_ABC& superior ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "knowledge_group_update_side_parent" );
+    std::unique_ptr< Action_ABC > action( new KnowledgeGroupMagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetTop() ) )
+        action->AddParameter( *new parameters::Army( it.NextElement(), *team, controller_ ) );
+    else
+        action->Invalidate();
+    action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), superior, controller_ ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &entity, false );
+    return action.release();
 }
 
 namespace

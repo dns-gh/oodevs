@@ -91,8 +91,12 @@
         <translation>Créer un sous-groupe de connaissance</translation>
     </message>
     <message>
-        <source>Change superior</source>
-        <translation>Changer de supérieur</translation>
+        <source>Select new knowledge group</source>
+        <translation>Selectionner un nouveau groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation>Changer le groupe de connaissance</translation>
     </message>
 </context>
 <context>
@@ -743,19 +747,19 @@
     <name>LogisticEditor</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Class</source>
-        <translation type="unfinished">Catégorie</translation>
+        <translation>Catégorie</translation>
     </message>
     <message>
         <source>Days</source>
-        <translation type="unfinished">Jours</translation>
+        <translation>Jours</translation>
     </message>
 </context>
 <context>
@@ -857,7 +861,7 @@
     <name>LogisticSuperiorEditor</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Aucun</translation>
+        <translation>Aucun</translation>
     </message>
 </context>
 <context>
@@ -1518,7 +1522,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
 </context>
 <context>
@@ -1897,7 +1901,8 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>A cycle has been detected in the resource network for the block %1.
  The network automatic generation cannot be computed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un cycle a été détecté dans le réseau de ressource pour le bloc %1.
+ La génération automatique du réseau ne peut être effectuée.</translation>
     </message>
 </context>
 <context>
@@ -2240,15 +2245,15 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>ScoreProfilesPage</name>
     <message>
         <source>Access rights</source>
-        <translation type="unfinished">Droits d&apos;accès</translation>
+        <translation>Droits d&apos;accès</translation>
     </message>
     <message>
         <source>Selected profiles will have access to the score during the exercise.</source>
-        <translation type="unfinished">Les profiles sélectionnés auront accès au score pendant l&apos;exercice.</translation>
+        <translation>Les profiles sélectionnés auront accès au score pendant l&apos;exercice.</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished">Profil</translation>
+        <translation>Profil</translation>
     </message>
 </context>
 <context>
@@ -2588,10 +2593,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Créer un camp</translation>
     </message>
     <message>
-        <source>Change superior</source>
-        <translation>Changer de supérieur</translation>
-    </message>
-    <message>
         <source>Change hierarchy level</source>
         <translation>Changer le niveau hiérarchique</translation>
     </message>
@@ -2794,7 +2795,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
-        <translation type="unfinished">Vos modifications seront appliquées à toutes les sous-unités de cette entité, voulez-vous valider?</translation>
+        <translation>Vos modifications seront appliquées à toutes les sous-unités de cette entité, voulez-vous valider?</translation>
     </message>
 </context>
 <context>

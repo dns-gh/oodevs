@@ -113,11 +113,11 @@ ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& ADN_Workspace
 // Name: ADN_Workspace::CreateWorkspace
 // Created: ABR 2013-09-11
 // -----------------------------------------------------------------------------
-void ADN_Workspace::CreateWorkspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config )
+void ADN_Workspace::CreateWorkspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config, gui::Application_ABC& application )
 {
     if( pWorkspace_ )
         throw MASA_EXCEPTION( "Workspace already created" );
-    pWorkspace_ = new ADN_Workspace( mainWindow, config );
+    pWorkspace_ = new ADN_Workspace( mainWindow, config, application );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,10 +156,11 @@ void ADN_Workspace::DeleteWorkspace()
 // Name: ADN_Workspace constructor
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config )
+ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config, gui::Application_ABC& application )
     : mainWindow_( mainWindow )
     , progressIndicator_( mainWindow.GetProgressBar() )
     , config_( config )
+    , application_( application )
     , languageController_( new kernel::LanguageController() )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
     , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
@@ -936,4 +937,9 @@ bool ADN_Workspace::ApplyOnGui( const boost::function< bool( ADN_GUI_ABC& data )
 kernel::LanguageController& ADN_Workspace::GetLanguageController()
 {
     return *languageController_;
+}
+
+gui::Application_ABC& ADN_Workspace::GetApplication()
+{
+    return application_;
 }

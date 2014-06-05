@@ -10,13 +10,13 @@
 #include "gaming_app_pch.h"
 #include "EventMagicWidget.h"
 #include "moc_EventMagicWidget.cpp"
-#include "TaskerWidget.h"
 
 #include "actions/ActionsModel.h"
 
 #include "clients_gui/EventMagicPresenter.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventMagicViewState.h"
+#include "clients_gui/TaskerWidget.h"
 
 #include "clients_kernel/AgentTypes.h"
 
@@ -42,7 +42,7 @@ EventMagicWidget::EventMagicWidget( gui::EventPresenter& presenter,
     presenter_.AddSubPresenter( magicPresenter_ );
 
     // Layout
-    taskerWidget_ = new TaskerWidget( controllers, symbols, true, false );
+    taskerWidget_ = new gui::TaskerWidget( "magic-tasker", controllers, symbols, tr( "Recipient" ), true, false );
 
     QGridLayout* layout = new QGridLayout( 0, 1, 2 );
     name_ = new QLabel();

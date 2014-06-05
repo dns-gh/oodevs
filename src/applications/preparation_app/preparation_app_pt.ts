@@ -87,11 +87,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change superior</source>
+        <source>Create sub knowledge group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create sub knowledge group</source>
+        <source>Select new knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2584,10 +2588,6 @@ This data can&apos;t be projected.</source>
     <name>TacticalTreeView</name>
     <message>
         <source>Create side</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change superior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

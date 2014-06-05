@@ -965,54 +965,30 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationReques
 // -----------------------------------------------------------------------------
 unsigned int MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx )
 {
-    if( msg.type() != sword::UnitMagicAction_Type_unit_creation )
+    if( msg.type() != sword::UnitMagicAction_Type_unit_creation || !msg.has_parameters() )
         throw MASA_BADPARAM_UNIT( "invalid message type" );
-    if( !msg.has_parameters() || msg.parameters().elem_size() < 2 || msg.parameters().elem_size() > 5 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count" );
-    const sword::MissionParameter& id = msg.parameters().elem( 0 );
-    if( id.value_size() != 1 || !id.value(0).has_identifier() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be an Identifier" );
-    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value(0).identifier() );
-    if( !pType )
-        throw MASA_BADPARAM_UNIT( "invalid unit type" );
-    const sword::MissionParameter& location = msg.parameters().elem( 1 );
-    if( location.value_size() != 1 || !location.value(0).has_point() )
-        throw MASA_BADPARAM_UNIT( "parameters[1] must be a Point" );
-    const sword::Point& point = location.value(0).point();
-    if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "parameters[1] must be a point Location" );
-    if( msg.parameters().elem_size() >= 3 )
-        if( msg.parameters().elem( 2 ).value_size() != 1 || !msg.parameters().elem( 2 ).value(0).has_acharstr() )
-            throw MASA_BADPARAM_UNIT( "parameters[2] must be an ACharStr" );
-    if( msg.parameters().elem_size() >= 4 )
-        if( msg.parameters().elem( 3 ).value_size() != 1 || !msg.parameters().elem( 3 ).value(0).has_booleanvalue() )
-            throw MASA_BADPARAM_UNIT( "parameters[3] must be a BooleanValue" );
-    if( msg.parameters().elem_size() >= 5 )
-        if( msg.parameters().elem( 4 ).value_size() != 1 || !msg.parameters().elem( 4 ).value(0).has_extensionlist() )
-            throw MASA_BADPARAM_UNIT( "parameters[4] must be an ExtensionList" );
-
+    const sword::MissionParameters& parameters = msg.parameters();
+    protocol::CheckCount( parameters, 2, 5 );
+    const uint32_t id = protocol::GetIdentifier( parameters, 0 );
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id );
+    protocol::Check( pType, "invalid unit type" );
+    const sword::CoordLatLong point = protocol::GetPoint( parameters, 1 );
     MT_Vector2D position;
-    MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
+    MIL_Tools::ConvertCoordMosToSim( point, position );
     try
     {
         MIL_AgentPion* pion = 0;
-        if( msg.parameters().elem_size() >= 3 )
+        if( !protocol::IsNull( parameters, 2 ) )
         {
             MIL_DictionaryExtensions extensions;
-            if( msg.parameters().elem_size() >= 5 )
-            {
-                extensions.ReadExtensions( msg.parameters().elem( 4 ).value( 0 ).extensionlist() );
-            }
-
-            std::string name = msg.parameters().elem( 2 ).value( 0 ).acharstr();
+            if( !protocol::IsNull( parameters, 4 ) )
+                extensions.ReadExtensions( protocol::GetExtensionList( parameters, 4 ) );
+            const std::string name = protocol::GetString( parameters, 2 );
             // Auto-registration
             pion = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion(
                     *pType, *this, position, name, nCtx, &extensions );
-            if( msg.parameters().elem_size() >= 4 )
-            {
-                bool isPc =  msg.parameters().elem( 3 ).value( 0 ).booleanvalue();
-                pion->SetPionAsCommandPost( isPc );
-            }
+            if( !protocol::IsNull( parameters, 3 ) )
+                pion->SetPionAsCommandPost( protocol::GetBool( parameters, 3 ) );
         }
         else
         {

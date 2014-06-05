@@ -89,6 +89,12 @@ public:
     virtual void Rename( kernel::Entity_ABC& entity );
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void SelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
+    //@}
+
 protected:
     //! @name QWidget
     //@{

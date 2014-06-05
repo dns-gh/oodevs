@@ -29,6 +29,7 @@ namespace kernel
 namespace gui
 {
     class AggregateToolbar;
+    class ChangeSuperiorDialog;
     class EntitySymbols;
     class HierarchyTreeView_ABC;
     class ParametersLayer;
@@ -75,12 +76,6 @@ public:
     //! @name Operations
     //@{
     void SetVisible( bool value );
-
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Formation_ABC& automat, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Ghost_ABC& automat, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Team_ABC& automat, kernel::ContextMenu& menu );
     //@}
 
 public slots:
@@ -90,17 +85,16 @@ public slots:
 private:
     //! @name Helpers
     //@{
-    void CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent,
-                              gui::RichWidget< QTabWidget >* tabWidget,
-                              kernel::Controllers& controllers,
-                              gui::EntitySymbols& icons,
-                              ModelBuilder& modelBuilder,
-                              Model& model,
-                              StaticModel& staticModel,
-                              std::vector< gui::RichView_ABC* >& treeViews,
-                              const gui::AggregateToolbar& aggregateToolbar,
-                              bool first );
     void AddContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    //@}
+
+    //! @name ContextMenuObserver implementations
+    //@{
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& automat, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Ghost_ABC& automat, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& automat, kernel::ContextMenu& menu );
     //@}
 
 private:
@@ -112,6 +106,7 @@ private:
     gui::RichWidget< QTabWidget >* pSecondAgentsTabWidget_;
     std::vector< gui::HierarchyTreeView_ABC* > firstUnitViews_;
     std::vector< gui::HierarchyTreeView_ABC* > secondUnitViews_;
+    std::unique_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
     //@}
 };
 

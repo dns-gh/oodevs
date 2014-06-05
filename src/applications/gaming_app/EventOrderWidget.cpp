@@ -11,7 +11,6 @@
 #include "EventOrderWidget.h"
 #include "moc_EventOrderWidget.cpp"
 #include "icons.h"
-#include "TaskerWidget.h"
 
 #include "actions/Action_ABC.h"
 #include "actions/ActionError.h"
@@ -27,6 +26,7 @@
 #include "clients_gui/EventOrderPresenter.h"
 #include "clients_gui/EventOrderViewState.h"
 #include "clients_gui/EventViewState.h"
+#include "clients_gui/TaskerWidget.h"
 #include "clients_gui/TimelinePublisher.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/RichWarnWidget.h"
@@ -96,7 +96,7 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
     presenter_.AddSubPresenter( orderPresenter_ );
 
     // Tasker
-    taskerWidget_ = new TaskerWidget( controllers, entitySymbols );
+    taskerWidget_ = new gui::TaskerWidget( "order-tasker", controllers, entitySymbols, tr( "Recipient" ) );
 
     // Top
     missionTypeCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-type-combobox" );

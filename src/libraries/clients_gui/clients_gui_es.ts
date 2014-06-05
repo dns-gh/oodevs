@@ -565,6 +565,21 @@
     </message>
 </context>
 <context>
+    <name>gui::ChangeLogisticLinksWidget</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nominal superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ChangeSuperiorDialog</name>
     <message>
         <source>Ok</source>
@@ -575,20 +590,20 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Select new superior</source>
-        <translation>Seleccionar nuevo superior</translation>
+        <source>Moved entity</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select new group</source>
-        <translation>Seleccionar nuevo grupo</translation>
+        <source>Tactical superior</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New superior</source>
-        <translation>Nuevo superior</translation>
+        <source>Knowledge group</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entity moved: </source>
-        <translation>Entidad movida:</translation>
+        <source>Logistic links</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1408,6 +1423,10 @@ Desea eliminarlo?</translation>
         <source>Supported units</source>
         <translation>Unidades con apoyo logístico</translation>
     </message>
+    <message>
+        <source>Change logistic links</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::MinePrototype_ABC</name>
@@ -1972,6 +1991,24 @@ Desea eliminarlo?</translation>
     <message>
         <source>Create phase line</source>
         <translation>Crear Linea de Fase</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TacticalTreeView</name>
+    <message>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::TaskerWidget</name>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -360,6 +360,10 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[1\\] is missing")
 
+	// error: third parameter must be an identifier
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[2\\] is missing")
+
 	// error: first parameter must be a valid request identifier
 	err = client.SelectMaintenanceTransporter(1000, TRANSHeavyEquipmentTransporterSystem)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")

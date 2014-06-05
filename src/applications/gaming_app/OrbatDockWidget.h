@@ -21,6 +21,7 @@ namespace actions
 namespace gui
 {
     class AutomatsLayer;
+    class ChangeSuperiorDialog;
     class EntitySymbols;
     class FormationLayer;
     class ParametersLayer;
@@ -75,6 +76,7 @@ public:
 private:
     //! @name Member data
     //@{
+    std::unique_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
     LogisticTreeView* logisticListView_;
     gui::DummyModelObserver observer_;
     std::vector< gui::RichView_ABC* > views_;

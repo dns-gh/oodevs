@@ -331,37 +331,6 @@
     </message>
 </context>
 <context>
-    <name>ChangeLogisticLinksDialog</name>
-    <message>
-        <source>Logistic links edition</source>
-        <translation>Edición de enlaces logisticos</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Ninguno</translation>
-    </message>
-    <message>
-        <source>Change logistic links</source>
-        <translation>Cambiar enlaces logísticos</translation>
-    </message>
-    <message>
-        <source>Nominal superior</source>
-        <translation>Superior nominal</translation>
-    </message>
-    <message>
-        <source>Current superior</source>
-        <translation>Superior actual</translation>
-    </message>
-</context>
-<context>
     <name>ChatDock</name>
     <message>
         <source>Chat</source>
@@ -434,12 +403,16 @@
 <context>
     <name>CommunicationTreeView</name>
     <message>
-        <source>Change superior</source>
-        <translation>Cambiar superior</translation>
-    </message>
-    <message>
         <source>Create Knowledge Group</source>
         <translation>Crear grupo de conocimiento</translation>
+    </message>
+    <message>
+        <source>Select new knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -720,6 +693,10 @@ Motivo: %3</translation>
         <source>Supervisor action:</source>
         <translation>Acción de Supervisor:</translation>
     </message>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished">Receptor</translation>
+    </message>
 </context>
 <context>
     <name>EventOrderWidget</name>
@@ -742,6 +719,10 @@ Motivo: %3</translation>
     <message>
         <source>New order (unit)</source>
         <translation>Nuevo pedido (unidad)</translation>
+    </message>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished">Receptor</translation>
     </message>
 </context>
 <context>
@@ -3360,31 +3341,12 @@ Los datos no pueden ser proyectados.</translation>
 <context>
     <name>TacticalTreeView</name>
     <message>
-        <source>Change superior</source>
-        <translation>Cambiar superior</translation>
-    </message>
-    <message>
         <source>Create formation</source>
         <translation>Crear formación</translation>
     </message>
     <message>
         <source>Create logistic base</source>
         <translation>Crear base logística</translation>
-    </message>
-</context>
-<context>
-    <name>TaskerWidget</name>
-    <message>
-        <source>Recipient</source>
-        <translation>Receptor</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation>Seleccionar</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Eliminar</translation>
     </message>
 </context>
 <context>
