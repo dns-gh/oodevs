@@ -31,10 +31,9 @@
 
     <propertyregex property="platform32" input="${platform}" regexp="(\w+)_x64" select="\1" defaultvalue="${platform}"/>
 
-    <!-- generate random ports -->
-    <math result="test.portnumber2">
+    <math result="test.port2">
         <op op="+" datatype="int">
-            <num value="${test.portnumber}"/>
+            <num value="${test.port}"/>
             <num value="1"/>
         </op>
     </math>
@@ -202,8 +201,8 @@
                 <arg value="root-dir=@{new-root-without-unicode}"/>
                 <arg value="exercise=@{exercise}"/>
                 <arg value="session=@{session}"/>
-                <arg value="simulation-address=${test.portnumber}"/>
-                <arg value="dispatcher-address=${test.portnumber2}"/>
+                <arg value="simulation-address=${test.port}"/>
+                <arg value="dispatcher-address=${test.port2}"/>
                 <arg value="test"/>
             </exec-unicode>
             <!-- Remove context -->
@@ -224,8 +223,8 @@
                 <arg value="--root-dir=${data.dir}"/>
                 <arg value="--exercise=@{exercise}"/>
                 <arg value="--session=@{session}"/>
-                <arg value="--simulation-address=${test.portnumber}"/>
-                <arg value="--dispatcher-address=${test.portnumber2}"/>
+                <arg value="--simulation-address=${test.port}"/>
+                <arg value="--dispatcher-address=${test.port2}"/>
                 <arg value="--test"/>
                 <args/>
             </exec>
@@ -453,7 +452,7 @@
             <arg value="${data.dir}"/>
             <arg value="${out.dir}"/>
             <arg value="${run.dir}"/>
-            <arg value="${test.portnumber}"/>
+            <arg value="${test.port}"/>
             <arg value="${migrations.jobs}"/>
             <arg value="CabourgOld,3.0"/>
             <arg value="Cabourg,4.2.0"/>
@@ -528,8 +527,8 @@
         <check-gui app="adaptation_app"/>
         <check-gui app="preparation_app"/>
         <check-gui app="selftraining_app">
-            <arg value="--launcher-port=${test.portnumber}"/>
-            <arg value="--dispatcher-port=${test.portnumber2}"/>
+            <arg value="--launcher-port=${test.port}"/>
+            <arg value="--dispatcher-port=${test.port2}"/>
             <arg value="--test"/>
         </check-gui>
         <check-gui app="gaming_app" logfile="${out.dir}/app_test_gaming/gaming.log">
@@ -543,7 +542,7 @@
             <arg value="--root-dir=${data.dir}"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
-            <arg value="--dispatcher-address=${test.portnumber}"/>
+            <arg value="--dispatcher-address=${test.port}"/>
             <arg value="--debug-dir=${out.dir}/app_test_dispatcher"/>
             <arg value="--test"/>
         </check-app>
@@ -552,7 +551,7 @@
             <arg value="--root-dir=${data.dir}"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
-            <arg value="--dispatcher-address=${test.portnumber}"/>
+            <arg value="--dispatcher-address=${test.port}"/>
             <arg value="--debug-dir=${out.dir}/app_test_replayer"/>
             <arg value="--test"/>
         </check-app>
