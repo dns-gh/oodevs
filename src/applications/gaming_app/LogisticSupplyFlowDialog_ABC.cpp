@@ -29,6 +29,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/Dotation.h"
@@ -57,7 +58,8 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
                                                             const ::StaticModel& staticModel,
                                                             const kernel::Time_ABC& simulation,
                                                             gui::ParametersLayer& layer,
-                                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats )
+                                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                                                            const kernel::Profile_ABC& profile )
     : QDialog( parent, tr( "Supply flow" ), 0, Qt::WStyle_Customize | Qt::WStyle_Title )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -67,6 +69,7 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     , selected_( controllers )
     , startWaypointLocation_( false )
     , layer_( layer )
+    , profile_( profile )
 {
     waypointLocationCreator_ = new LocationCreator( 0, layer, *this );
     waypointLocationCreator_->Allow( false, false, false, false, false );
@@ -308,19 +311,10 @@ void LogisticSupplyFlowDialog_ABC::MoveDownWaypoint()
 // -----------------------------------------------------------------------------
 void LogisticSupplyFlowDialog_ABC::AddCarryingEquipment( const Entity_ABC& entity )
 {
-    if( entity.GetTypeName() != kernel::Agent_ABC::typeName_ )
-    {
-        const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( !tacticalHierarchies )
-            return;
-        auto it = tacticalHierarchies->CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-            AddCarryingEquipment( it.NextElement() );
-    }
-    if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+    if( auto agent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
     {
         auto equipments = static_cast< const Equipments* >( entity.Retrieve< Equipments_ABC >() );
-        if( !equipments )
+        if( !equipments || !profile_.CanBeOrdered( *agent ) )
             return;
         auto it = agent->GetType().CreateIterator();
         while( it.HasMoreElements() )
@@ -341,6 +335,15 @@ void LogisticSupplyFlowDialog_ABC::AddCarryingEquipment( const Entity_ABC& entit
                 }
             }
         }
+    }
+    else
+    {
+        auto tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !tacticalHierarchies )
+            return;
+        auto it = tacticalHierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+            AddCarryingEquipment( it.NextElement() );
     }
 }
 

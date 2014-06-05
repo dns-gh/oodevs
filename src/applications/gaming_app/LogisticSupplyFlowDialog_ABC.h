@@ -23,8 +23,9 @@ namespace kernel
     class Entity_ABC;
     class EquipmentType;
     class Formation_ABC;
-    class Time_ABC;
     class Location_ABC;
+    class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace actions
@@ -65,7 +66,8 @@ protected:
                                   const ::StaticModel& staticModel,
                                   const kernel::Time_ABC& simulation,
                                   gui::ParametersLayer& layer,
-                                  const tools::Resolver_ABC< kernel::Automat_ABC >& automats );
+                                  const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                                  const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyFlowDialog_ABC();
     //@}
 
@@ -158,6 +160,7 @@ protected:
     const kernel::Time_ABC& simulation_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automats_;
     gui::ParametersLayer& layer_;
+    const kernel::Profile_ABC& profile_;
 
     kernel::SafePointer< kernel::Entity_ABC > selected_;
 
