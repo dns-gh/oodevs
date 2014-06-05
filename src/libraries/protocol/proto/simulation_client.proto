@@ -689,20 +689,14 @@ message ControlStopAck {
     required ControlAck.ErrorCode error_code = 1;
 }
 
-/** @struct ControlPauseAck
-    @brief A pause acknowledgement message
-    @see ControlPause
-*/
+//! Broadcast when the simulation enters paused state.
 message ControlPauseAck {
     //! Reason for the failure of the request
     required ControlAck.ErrorCode error_code   = 1;
     optional int32                current_tick = 2;
 }
 
-/** @struct ControlResumeAck
-    @brief A resume acknowledgement message
-    @see ControlResume
-*/
+//! Broadcast when the simulation leaves paused state.
 message ControlResumeAck {
     //! Reason for the failure of the request
     required ControlAck.ErrorCode error_code   = 1;

@@ -21,8 +21,9 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 	tick, err := client.Pause()
 	c.Assert(err, IsNil)
 	c.Assert(tick, Greater, int32(0))
+	// Pausing a paused simulation is a no-op
 	_, err = client.Pause()
-	c.Assert(err, IsSwordError, "error_already_paused")
+	c.Assert(err, IsNil)
 
 	// Test WaitUntilTick() while we are here
 	model.WaitTimeout = 2 * time.Second

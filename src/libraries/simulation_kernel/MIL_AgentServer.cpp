@@ -505,17 +505,13 @@ void MIL_AgentServer::Stop( unsigned int nCtx, unsigned int clientId )
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::Pause( unsigned int nCtx, unsigned int clientId )
 {
+    nSimState_ = eSimPaused;
+    MT_Timer_ABC::Stop();
+    MT_LOG_INFO_MSG( "Simulation paused" );
+
     client::ControlPauseAck msg;
-    if( nSimState_ != eSimRunning && nSimState_ != eSimWait )
-        msg().set_error_code( sword::ControlAck::error_already_paused );
-    else
-    {
-        nSimState_ = eSimPaused;
-        MT_Timer_ABC::Stop();
-        MT_LOG_INFO_MSG( "Simulation paused" );
-        msg().set_current_tick( GetCurrentTimeStep() );
-        msg().set_error_code( sword::ControlAck::no_error );
-    }
+    msg().set_current_tick( GetCurrentTimeStep() );
+    msg().set_error_code( sword::ControlAck::no_error );
     msg.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
