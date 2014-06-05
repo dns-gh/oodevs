@@ -69,7 +69,8 @@ add_popover = (layout, el, event) ->
         el.popover _.extend data, content: title
 
 get_zone = (y, h, pos) ->
-    max = (h - y) / 8
+    # each zone is at least 1 pixel
+    max = imax 1, (h - y) / 8
     if Math.abs(pos - y) < max
         return -1
     else if Math.abs(pos - h) < max
@@ -87,11 +88,14 @@ lane_move = (min_zone, max_zone, zone, d, scale, pos, offsets, children) ->
         d.min = scale(pos - offmin).valueOf()
     if zone != min_zone
         d.max = scale(pos - offmax).valueOf()
+    # get the minimal visible range at current scale
+    # we want at least 2 pixel height, and at least 1 second
+    visible = imax 1000, scale(2).valueOf() - scale(0).valueOf()
     # make sure there's at least 1s between min & max timestamp
     if zone == min_zone
-        d.min = imin d.min, d.max - 1000
+        d.min = imin d.min, d.max - visible
     if zone == max_zone
-        d.max = imax d.min + 1000, d.max
+        d.max = imax d.min + visible, d.max
     return if _.isEmpty(children)
     if zone == min_zone
         d.min = imin d.min, _.min(children, (v) -> v.min).min
