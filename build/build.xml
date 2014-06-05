@@ -1207,7 +1207,7 @@
     </target>
 
     <target name="unit_test" description="build and run unit tests">
-        <cmake_test>
+        <cmake_test port="${test.port}">
             <arg value="-j${migrations.jobs}"/>
         </cmake_test>
     </target>
