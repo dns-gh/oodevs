@@ -71,7 +71,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update();
+    bool Update();
     void OnWebControl( xml::xistream& xis );
     //@}
 
@@ -94,6 +94,7 @@ private:
     std::unique_ptr< SimulationPublisher_ABC >         publisher_;
     bool                                               started_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
+    bool                                               stopped_;
     //@}
 };
 }

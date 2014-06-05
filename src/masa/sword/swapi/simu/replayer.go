@@ -9,6 +9,7 @@
 package simu
 
 import (
+	"errors"
 	"masa/sword/swapi"
 	"path/filepath"
 	"time"
@@ -61,6 +62,23 @@ func (o *ReplayOpts) GetSessionFile() string {
 type ReplayProcess struct {
 	*ServerProcess
 	Opts *ReplayOpts
+}
+
+// Connect to the simulation and execute a Login/Stop sequence using
+// supervisor.
+func (replay *ReplayProcess) Stop() error {
+	if replay == nil {
+		return errors.New("replayer is stopped already")
+	}
+	stopped, err := logAndStop(replay.ClientAddr, true)
+	if stopped {
+		if replay.Wait(10 * time.Second) {
+			return nil
+		}
+		err = errors.New("wait timed out")
+	}
+	replay.Kill()
+	return err
 }
 
 // Start a replayer using supplied options. On success, the replayer

@@ -77,6 +77,7 @@ Replayer::Replayer( const Config& config )
     , rights_          ( boost::make_shared< plugins::rights::RightsPlugin >(
         *model_, *clientsNetworker_, config, *clientsNetworker_,
         handler_, *clientsNetworker_, registrables_, 0 ))
+    , stopped_( false )
 {
     clientsNetworker_->RegisterMessage( *this, &Replayer::ReceiveClientToReplay );
 
@@ -113,12 +114,13 @@ Replayer::~Replayer()
 // Name: Replayer::Update
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Replayer::Update()
+bool Replayer::Update()
 {
     if( !started_ )
         started_ = loader_->Start();
     clientsNetworker_->Update();
     handler_.Update();
+    return !stopped_;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +135,15 @@ void Replayer::OnWebControl( xml::xistream& xis )
 void Replayer::ReceiveClientToReplay( const std::string& link,
         const sword::ClientToReplay& msg )
 {
-    dispatcher::UnicastPublisher unicaster( rights_->GetAuthenticatedPublisher( link ), link,
-            rights_->GetClientID( link ), msg.context() );
+    dispatcher::UnicastPublisher unicaster( rights_->GetAuthenticatedPublisher( link ),
+            link, rights_->GetClientID( link ), msg.context() );
+    if( msg.message().has_control_stop() )
+    {
+        stopped_ = true;
+        sword::ReplayToClient ack;
+        ack.mutable_message()->mutable_control_stop_ack()
+            ->set_error_code( sword::ControlAck::no_error );
+        unicaster.Send( ack );
+    }
     handler_.HandleClientToReplay( msg, unicaster, *clientsNetworker_ );
 }

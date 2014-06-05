@@ -146,3 +146,17 @@ func (c *Client) ReplayListLogisticRequests(currentTick, maxCount int, entities 
 	err := <-c.postReplay(msg, handler)
 	return entries, err
 }
+
+func (c *Client) ReplayStop() error {
+	msg := &sword.ClientToReplay_Content{
+		ControlStop: &sword.ControlStop{},
+	}
+	handler := func(msg *sword.ReplayToClient_Content) error {
+		reply := msg.GetControlStopAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		return getControlAckError(reply)
+	}
+	return <-c.postReplay(msg, handler)
+}

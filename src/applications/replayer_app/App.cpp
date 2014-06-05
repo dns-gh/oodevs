@@ -76,7 +76,8 @@ void App::Execute()
     StartIconAnimation();
     tools::ipc::Watch watch( *quit_ );
     do
-        replayer_->Update();
+        if( !replayer_->Update() )
+            break;
     while( !test_ && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
     StopIconAnimation();
 }
