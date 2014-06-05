@@ -212,7 +212,7 @@ void ParametersLayer::StartCurve( ShapeHandler_ABC& handler )
 // -----------------------------------------------------------------------------
 void ParametersLayer::StartRectangle( ShapeHandler_ABC& handler )
 {
-    cursors_->SelectTool( MAKE_PIXMAP( polygon_cursor ), true );
+    cursors_->SelectTool( MAKE_PIXMAP( rectangle_cursor ), true );
     Start( handler, kernel::Rectangle() );
 }
 

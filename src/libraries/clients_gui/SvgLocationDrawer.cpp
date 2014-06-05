@@ -12,6 +12,7 @@
 #include "DrawingTemplate.h"
 #include "clients_kernel/Location_ABC.h"
 #include "GlTools_ABC.h"
+#include <boost/assign.hpp>
 #include <svgl/svgl.h>
 #include <svgl/Opacity.h>
 #include <iterator>
@@ -118,7 +119,16 @@ void SvgLocationDrawer::VisitLines( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void SvgLocationDrawer::VisitRectangle( const T_PointVector& points )
 {
-    DrawShape( points );
+    if( points.size() > 1 )
+    {
+        const geometry::Rectangle2f box( points[ 0 ], points[ 1 ] );
+        const T_PointVector copy = boost::assign::list_of( geometry::Point2f( box.Left(), box.Top() ) )
+            ( geometry::Point2f( box.Right(), box.Top() ) )
+            ( geometry::Point2f( box.Right(), box.Bottom() ) )
+            ( geometry::Point2f( box.Left(), box.Bottom() ) )
+            ( geometry::Point2f( box.Left(), box.Top() ) );
+        DrawShape( copy );
+    }
 }
 
 // -----------------------------------------------------------------------------
