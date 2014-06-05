@@ -229,6 +229,7 @@ integration.communication.Continue = function()
     myself.speedModulation = myself.speedModulation or {}
     myself.speedModulation.coordination = 1 -- scipio 
     myself.slowDown = false -- ww base
+    myself.inFrontOfPE = false
 end
 
 --- Returns true if the given automat can do the given mission (defined in adaptation tool, tab decisional model )
