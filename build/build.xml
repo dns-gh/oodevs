@@ -517,13 +517,11 @@
     </macrodef>
 
     <target name="qt_name_test">
-        <!--
         <check-qt-names app="preparation_app" outputfile="${out.dir}/checkqtnames.txt"/>
         <check-qt-names app="adaptation_app" outputfile="${out.dir}/checkqtnames.txt">
             <arg value="-i"/>
             <arg value="${data.dir}/data/models/ada/physical/test/physical.xml"/>
         </check-qt-names>
-        -->
     </target>
 
     <target name="app_test" description="check whether gui applications start properly">
