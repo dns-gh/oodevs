@@ -90,9 +90,9 @@ void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >
         setsockopt( nativeSock, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast< const char* >( &timeOut_ ), sizeof( DWORD) );
         setsockopt( nativeSock, SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast< const char* >( &timeOut_ ), sizeof( DWORD) );
     }
-    pSocket->StartReading();
     sockets_.insert( std::make_pair( remote, pSocket ) );
     connection_->ConnectionSucceeded( local, remote );
+    pSocket->StartReading();
 }
 
 // -----------------------------------------------------------------------------
