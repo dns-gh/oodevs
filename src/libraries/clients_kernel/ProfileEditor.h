@@ -36,11 +36,9 @@ public:
     //@{
     void Delete();
     bool IsDeleted() const;
-    // todo ne pas faire de getter
+    // todo ne pas faire de getter mais un proxy?
     UserProfile_ABC& GetProfile();
     UserProfile_ABC* GetOriginalProfile() const;
-    void NotifyOriginalProfileDeleted();
-    void NotifyOriginalProfileCreated( UserProfile_ABC* profile );
     //@}
 
 private:

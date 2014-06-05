@@ -47,12 +47,12 @@ public:
     //! @name Operations
     //@{
     virtual QSize sizeHint() const;
+    bool CanBeShown( const kernel::Profile_ABC& profile ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnApply();
     void OnAccept();
     //@}
 

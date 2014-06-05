@@ -1821,10 +1821,6 @@ Do you want to remove it?</translation>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
-    <message>
-        <source>Apply</source>
-        <translation>Apply</translation>
-    </message>
 </context>
 <context>
     <name>gui::RefreshRatePanel</name>

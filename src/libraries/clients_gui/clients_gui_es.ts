@@ -1820,10 +1820,6 @@ Desea eliminarlo?</translation>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>gui::RefreshRatePanel</name>

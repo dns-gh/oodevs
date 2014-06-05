@@ -169,19 +169,16 @@ kernel::ProfileEditor* ProfilesModel::CreateProfileEditor( kernel::UserProfile_A
 // -----------------------------------------------------------------------------
 void ProfilesModel::CommitFromEditor( kernel::ProfileEditor& editor )
 {
-    // todo à nettoyer après la fusion avec gaming
     kernel::UserProfile_ABC* originalProfile = editor.GetOriginalProfile();
     if( editor.IsDeleted() )
     {
         if( originalProfile )
             DeleteProfile( *originalProfile );
-        editor.NotifyOriginalProfileDeleted();
         return;
     }
     if( originalProfile == 0 )
-        editor.NotifyOriginalProfileCreated( CreateProfile( editor.GetProfile().GetLogin() ) );
-    originalProfile = editor.GetOriginalProfile();
-    if( originalProfile && editor.GetProfile() != *editor.GetOriginalProfile() )
+        originalProfile = CreateProfile( editor.GetProfile().GetLogin() );
+    if( originalProfile && editor.GetProfile() != *originalProfile )
     {
         *originalProfile = editor.GetProfile();
         controllers_.controller_.Update( *originalProfile );

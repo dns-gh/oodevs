@@ -1817,10 +1817,6 @@ Voulez-vous le supprimer?</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
-    <message>
-        <source>Apply</source>
-        <translation>Appliquer</translation>
-    </message>
 </context>
 <context>
     <name>gui::RefreshRatePanel</name>

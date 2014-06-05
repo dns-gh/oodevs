@@ -16,6 +16,7 @@
 #include "UserProfileList.h"
 #include "resources.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
 
 using namespace gui;
 
@@ -69,12 +70,10 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     gui::RichPushButton* okBtn = new gui::RichPushButton( "ok", tr( "Ok" ), box );
     okBtn->setDefault( true );
     gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tr( "Cancel" ), box );
-    gui::RichPushButton* applyBtn = new gui::RichPushButton( "apply", tr( "Apply" ), box );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( reject() ) );
-    connect( applyBtn, SIGNAL( clicked() ), SLOT( OnApply() ) );
     hide();
 }
 
@@ -97,12 +96,12 @@ QSize ProfileDialog::sizeHint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileDialog::OnApply
-// Created: JSR 2014-06-03
+// Name: ProfileDialog::CanBeShown
+// Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
-void ProfileDialog::OnApply()
+bool ProfileDialog::CanBeShown( const kernel::Profile_ABC& profile ) const
 {
-    list_->Commit();
+    return profile.IsSupervision();
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +110,6 @@ void ProfileDialog::OnApply()
 // -----------------------------------------------------------------------------
 void ProfileDialog::OnAccept()
 {
-    OnApply();
+    list_->Commit();
     accept();
 }

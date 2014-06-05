@@ -69,21 +69,3 @@ bool ProfileEditor::IsDeleted() const
 {
     return deleted_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: ProfileEditor::NotifyOriginalProfileDeleted
-// Created: JSR 2014-06-05
-// -----------------------------------------------------------------------------
-void ProfileEditor::NotifyOriginalProfileDeleted()
-{
-    originalProfile_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileEditor::NotifyOriginalProfileCreated
-// Created: JSR 2014-06-05
-// -----------------------------------------------------------------------------
-void ProfileEditor::NotifyOriginalProfileCreated( UserProfile_ABC* profile )
-{
-    originalProfile_ = profile;
-}
