@@ -21,7 +21,6 @@
 #include "preparation/Stocks.h"
 #include "preparation/Dotation.h"
 #include "preparation/ProfilesModel.h"
-#include "preparation/UserProfile.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_gui/EntityType.h"
@@ -46,6 +45,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
 #include "meteo/PHY_Precipitation.h"
@@ -339,7 +339,7 @@ void CsvExport::WriteProfiles( const tools::Path& exerciseName, const tools::Pat
     tools::Path profilesPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "profiles" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( profilesPath );
     std::set< std::string > profiles;
-    model_.profiles_->Apply( [&]( UserProfile& profile )
+    model_.profiles_->Apply( [&]( kernel::UserProfile_ABC& profile )
         {
             profiles.insert( profile.GetLogin().toStdString() );
         });

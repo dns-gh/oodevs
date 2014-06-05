@@ -15,10 +15,10 @@
 namespace kernel
 {
     class Controllers;
+    class UserProfile_ABC;
 }
 
 class ProfileSelection;
-class UserProfile;
 
 // =============================================================================
 /** @class  ScoreProfilesPage
@@ -28,7 +28,7 @@ class UserProfile;
 // =============================================================================
 class ScoreProfilesPage : public Q3VBox
                         , public tools::Observer_ABC
-                        , public tools::ElementObserver_ABC< UserProfile >
+                        , public tools::ElementObserver_ABC< kernel::UserProfile_ABC >
 {
 
 public:
@@ -47,9 +47,9 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const UserProfile& profile );
-    virtual void NotifyUpdated( const UserProfile& profile );
-    virtual void NotifyDeleted( const UserProfile& profile );
+    virtual void NotifyCreated( const kernel::UserProfile_ABC& profile );
+    virtual void NotifyUpdated( const kernel::UserProfile_ABC& profile );
+    virtual void NotifyDeleted( const kernel::UserProfile_ABC& profile );
     //@}
 
 private:

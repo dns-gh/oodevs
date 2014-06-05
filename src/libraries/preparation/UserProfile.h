@@ -27,12 +27,14 @@ namespace kernel
 // Created: SBO 2007-01-16
 // =============================================================================
 class UserProfile : public kernel::UserProfile_ABC
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              UserProfile( xml::xistream& xis, kernel::Controller& controller, const kernel::Model_ABC& model, const kernel::EntityResolver_ABC& resolver );
              UserProfile( const QString& login, kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver );
+             UserProfile( kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}
@@ -43,9 +45,10 @@ public:
     virtual const QString& GetPassword() const;
     virtual bool IsSupervisor() const;
     virtual bool HasTimeControl() const;
+    virtual const kernel::UserRights& GetRights() const;
     virtual bool IsReadable( const kernel::Entity_ABC& entity ) const;
     virtual bool IsWriteable( const kernel::Entity_ABC& entity ) const;
-    void Visit( std::vector< unsigned long >& elements ) const;
+    virtual void Visit( std::vector< unsigned long >& elements ) const;
     virtual void VisitAllAutomats( std::set< unsigned long >& elements ) const;
     //@}
 
@@ -61,15 +64,21 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos ) const;
-    UserProfile& operator=( const UserProfile& );
-    bool operator==( const UserProfile& ) const;
-    bool operator!=( const UserProfile& ) const;
-    void NotifyTeamDeleted( unsigned long teamId );
-    void NotifyFormationDeleted( unsigned long formationId );
-    void NotifyAutomatDeleted( unsigned long automatId );
-    void NotifyPopulationDeleted( unsigned long populationId );
-    void NotifyGhostDeleted( unsigned long ghostId );
+    virtual void Serialize( xml::xostream& xos ) const;
+    virtual kernel::UserProfile_ABC& operator=( const kernel::UserProfile_ABC& );
+    virtual bool operator==( const kernel::UserProfile_ABC& ) const;
+    virtual bool operator!=( const kernel::UserProfile_ABC& ) const;
+    virtual void NotifyTeamDeleted( unsigned long teamId );
+    virtual void NotifyFormationDeleted( unsigned long formationId );
+    virtual void NotifyAutomatDeleted( unsigned long automatId );
+    virtual void NotifyPopulationDeleted( unsigned long populationId );
+    virtual void NotifyGhostDeleted( unsigned long ghostId );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    const kernel::UserProfile_ABC& Base() const;
     //@}
 
 private:

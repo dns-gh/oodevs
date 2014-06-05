@@ -27,6 +27,7 @@ namespace kernel
     class Ghost_ABC;
     class Population_ABC;
     class Team_ABC;
+    class UserProfile_ABC;
 }
 
 namespace tools
@@ -35,9 +36,9 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
-class UserProfile;
 class ProfileFactory_ABC;
 class Model;
+class ProfileEditor;
 
 // =============================================================================
 /** @class  ProfilesModel
@@ -66,14 +67,18 @@ public:
     void Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    UserProfile* CreateProfile( const QString& name );
+    kernel::UserProfile_ABC* CreateProfile( const QString& name );
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
-    void DeleteProfile( const UserProfile& profile );
-    void Apply( boost::function< void( UserProfile& ) > functor );
+    void DeleteProfile( const kernel::UserProfile_ABC& profile );
+    ProfileEditor* CreateProfileEditor() const;
+    ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const;
+    void CommitFromEditor( ProfileEditor& editor );
+
+    void Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor );
 
     bool Exists( const QString& login ) const;
-    UserProfile* Find( const std::string& name ) const;
-    const UserProfile* Find( const QString& name ) const;
+    kernel::UserProfile_ABC* Find( const std::string& name ) const;
+    const kernel::UserProfile_ABC* Find( const QString& name ) const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     bool IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
@@ -99,7 +104,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< UserProfile* > T_UserProfiles;
+    typedef std::vector< kernel::UserProfile_ABC* > T_UserProfiles;
     //@}
 
 private:

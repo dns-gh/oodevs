@@ -9,10 +9,8 @@
 
 #include "preparation_pch.h"
 #include "ProfilesModel.h"
-#include "UserProfile.h"
 #include "ProfileFactory_ABC.h"
 #include "Model.h"
-#include "clients_kernel/Tools.h"
 #include "AgentsModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -21,6 +19,8 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -28,6 +28,20 @@
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
+
+
+
+
+
+
+
+
+#include "../../applications/preparation_app/ProfileEditor.h" // TMP
+
+
+
+
+
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel constructor
@@ -100,7 +114,7 @@ void ProfilesModel::Serialize( const tools::Path& file, const tools::SchemaWrite
 // -----------------------------------------------------------------------------
 void ProfilesModel::LoadProfile( xml::xistream& xis )
 {
-    std::unique_ptr< UserProfile > profile( factory_.Create( xis ) );
+    std::unique_ptr< kernel::UserProfile_ABC > profile( factory_.Create( xis ) );
     userProfiles_.push_back( profile.release() );
 }
 
@@ -108,9 +122,9 @@ void ProfilesModel::LoadProfile( xml::xistream& xis )
 // Name: ProfilesModel::CreateProfile
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile* ProfilesModel::CreateProfile( const QString& name )
+kernel::UserProfile_ABC* ProfilesModel::CreateProfile( const QString& name )
 {
-    std::unique_ptr< UserProfile > profile( factory_.Create( name ) );
+    std::unique_ptr< kernel::UserProfile_ABC > profile( factory_.Create( name ) );
     userProfiles_.push_back( profile.release() );
     return userProfiles_.back();
 }
@@ -121,7 +135,7 @@ UserProfile* ProfilesModel::CreateProfile( const QString& name )
 // -----------------------------------------------------------------------------
 void ProfilesModel::CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly )
 {
-    std::unique_ptr< UserProfile > profile( factory_.Create( name ) );
+    std::unique_ptr< kernel::UserProfile_ABC > profile( factory_.Create( name ) );
     if( readonly )
         profile->SetReadable( entity, true );
     else
@@ -133,14 +147,57 @@ void ProfilesModel::CreateProfile( const QString& name, const kernel::Entity_ABC
 // Name: ProfilesModel::DeleteProfile
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void ProfilesModel::DeleteProfile( const UserProfile& profile )
+void ProfilesModel::DeleteProfile( const kernel::UserProfile_ABC& profile )
 {
-    T_UserProfiles::iterator it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
+    auto it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
     if( it != userProfiles_.end() )
     {
-        const UserProfile* element = *it;
+        const kernel::UserProfile_ABC* element = *it;
         userProfiles_.erase( it );
         delete element;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::CreateProfileEditor
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+ProfileEditor* ProfilesModel::CreateProfileEditor() const
+{
+    return new ProfileEditor( factory_.Create(), 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::CreateProfileEditor
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+ProfileEditor* ProfilesModel::CreateProfileEditor( kernel::UserProfile_ABC& profile ) const
+{
+    return new ProfileEditor( factory_.Create( profile ), &profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::CommitFromEditor
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+void ProfilesModel::CommitFromEditor( ProfileEditor& editor )
+{
+    // todo à nettoyer après la fusion avec gaming
+    kernel::UserProfile_ABC* originalProfile = editor.GetOriginalProfile();
+    if( editor.IsDeleted() )
+    {
+        if( originalProfile )
+            DeleteProfile( *originalProfile );
+        editor.NotifyOriginalProfileDeleted();
+        return;
+    }
+    if( originalProfile == 0 )
+        editor.NotifyOriginalProfileCreated( CreateProfile( editor.GetProfile().GetLogin() ) );
+    originalProfile = editor.GetOriginalProfile();
+    if( originalProfile && editor.GetProfile() != *editor.GetOriginalProfile() )
+    {
+        *originalProfile = editor.GetProfile();
+        controllers_.controller_.Update( *originalProfile );
     }
 }
 
@@ -212,7 +269,7 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const std::st
 // Name: ProfilesModel::Find
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-const UserProfile* ProfilesModel::Find( const QString& name ) const
+const kernel::UserProfile_ABC* ProfilesModel::Find( const QString& name ) const
 {
     BOOST_FOREACH( const T_UserProfiles::value_type profile, userProfiles_ )
         if( profile->GetLogin() == name )
@@ -224,7 +281,7 @@ const UserProfile* ProfilesModel::Find( const QString& name ) const
 // Name: ProfilesModel::Find
 // Created: ABR 2012-06-26
 // -----------------------------------------------------------------------------
-UserProfile* ProfilesModel::Find( const std::string& name ) const
+kernel::UserProfile_ABC* ProfilesModel::Find( const std::string& name ) const
 {
     BOOST_FOREACH( const T_UserProfiles::value_type profile, userProfiles_ )
         if( profile->GetLogin() == name.c_str() )
@@ -286,7 +343,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 // Name: ProfilesModel::Apply
 // Created: JSR 2014-06-03
 // -----------------------------------------------------------------------------
-void ProfilesModel::Apply( boost::function< void( UserProfile& ) > functor )
+void ProfilesModel::Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor )
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         functor( **it );

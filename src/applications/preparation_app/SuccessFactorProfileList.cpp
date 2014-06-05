@@ -9,10 +9,10 @@
 
 #include "preparation_app_pch.h"
 #include "SuccessFactorProfileList.h"
-#include "clients_kernel/Controllers.h"
-#include "preparation/ProfileSelection.h"
-#include "preparation/UserProfile.h"
 #include "clients_gui/ObjectNameManager.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/UserProfile_ABC.h"
+#include "preparation/ProfileSelection.h"
 
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorProfileList constructor
@@ -42,7 +42,7 @@ SuccessFactorProfileList::~SuccessFactorProfileList()
 void SuccessFactorProfileList::StartEdit( const ProfileSelection& profiles )
 {
     selectionModel()->clearSelection();
-    tools::Iterator< const UserProfile& > it( profiles.CreateIterator() );
+    tools::Iterator< const kernel::UserProfile_ABC& > it( profiles.CreateIterator() );
     while( it.HasMoreElements() )
         Select( it.NextElement() );
 }
@@ -57,7 +57,7 @@ void SuccessFactorProfileList::CommitTo( ProfileSelection& profiles ) const
     const int profileSize = static_cast< int >( profiles_.size() );
     for( int i = 0; i < count() && i < profileSize; ++i )
         if( item( i )->isSelected() )
-            if( const UserProfile* profile = profiles_.at( i ) )
+            if( const kernel::UserProfile_ABC* profile = profiles_.at( i ) )
                 profiles.Register( profile->GetLogin(), *profile );
 }
 
@@ -65,7 +65,7 @@ void SuccessFactorProfileList::CommitTo( ProfileSelection& profiles ) const
 // Name: SuccessFactorProfileList::Select
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
-void SuccessFactorProfileList::Select( const UserProfile& profile )
+void SuccessFactorProfileList::Select( const kernel::UserProfile_ABC& profile )
 {
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
@@ -76,7 +76,7 @@ void SuccessFactorProfileList::Select( const UserProfile& profile )
 // Name: SuccessFactorProfileList::NotifyCreated
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void SuccessFactorProfileList::NotifyCreated( const UserProfile& profile )
+void SuccessFactorProfileList::NotifyCreated( const kernel::UserProfile_ABC& profile )
 {
     profiles_.push_back( &profile );
     addItem( profile.GetLogin() );
@@ -86,7 +86,7 @@ void SuccessFactorProfileList::NotifyCreated( const UserProfile& profile )
 // Name: SuccessFactorProfileList::NotifyUpdated
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void SuccessFactorProfileList::NotifyUpdated( const UserProfile& profile )
+void SuccessFactorProfileList::NotifyUpdated( const kernel::UserProfile_ABC& profile )
 {
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
@@ -100,7 +100,7 @@ void SuccessFactorProfileList::NotifyUpdated( const UserProfile& profile )
 // Name: SuccessFactorProfileList::NotifyDeleted
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void SuccessFactorProfileList::NotifyDeleted( const UserProfile& profile )
+void SuccessFactorProfileList::NotifyDeleted( const kernel::UserProfile_ABC& profile )
 {
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )

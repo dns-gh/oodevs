@@ -10,8 +10,12 @@
 #ifndef __ProfileEditor_h_
 #define __ProfileEditor_h_
 
-#include "preparation/UserProfile.h"
 #include <boost/noncopyable.hpp>
+
+namespace kernel
+{
+    class UserProfile_ABC;
+}
 
 class ProfilesModel;
 
@@ -21,30 +25,31 @@ class ProfilesModel;
 */
 // Created: SBO 2007-11-07
 // =============================================================================
-class ProfileEditor : private UserProfile
-                    , private boost::noncopyable
+class ProfileEditor : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileEditor( const QString& login, kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver );
-    explicit ProfileEditor( UserProfile& profile );
+             ProfileEditor( kernel::UserProfile_ABC* profile, kernel::UserProfile_ABC* originalProfile );
     virtual ~ProfileEditor();
     //@}
 
     //! @name Operations
     //@{
-    void Commit( ProfilesModel& model, kernel::Controller& controller );
     void Delete();
     bool IsDeleted() const;
     // todo ne pas faire de getter
     kernel::UserProfile_ABC& GetProfile();
+    kernel::UserProfile_ABC* GetOriginalProfile() const;
+    void NotifyOriginalProfileDeleted();
+    void NotifyOriginalProfileCreated( kernel::UserProfile_ABC* profile );
     //@}
 
 private:
     //! @name Member data
     //@{
-    UserProfile* originalProfile_;
+    std::unique_ptr< kernel::UserProfile_ABC > profile_;
+    kernel::UserProfile_ABC* originalProfile_;
     bool deleted_;
     //@}
 };

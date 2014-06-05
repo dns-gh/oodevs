@@ -12,12 +12,10 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace xml
+namespace kernel
 {
-    class xistream;
+    class UserProfile_ABC;
 }
-
-class UserProfile;
 
 // =============================================================================
 /** @class  ProfileFactory_ABC
@@ -36,8 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual UserProfile* Create( xml::xistream& xis ) const = 0;
-    virtual UserProfile* Create( const QString& name ) const = 0;
+    virtual kernel::UserProfile_ABC* Create( xml::xistream& xis ) const = 0;
+    virtual kernel::UserProfile_ABC* Create( const QString& name ) const = 0;
+    virtual kernel::UserProfile_ABC* Create( kernel::UserProfile_ABC& profile ) const = 0;
+    virtual kernel::UserProfile_ABC* Create() const = 0;
     //@}
 };
 

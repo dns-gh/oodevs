@@ -52,7 +52,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     xis >> xml::end;
     login_ = login.c_str();
     password_ = pass.c_str();
-    controller_.Create( *this );
+    controller_.Create( Base() );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,23 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , timeControl_( false )
     , isClone_( false )
 {
-    controller_.Create( *this );
+    controller_.Create( Base() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile constructor
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+UserProfile::UserProfile( kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver )
+    : controller_( controller )
+    , resolver_( resolver )
+    , login_( "" )
+    , password_( "" )
+    , supervisor_( false )
+    , timeControl_( false )
+    , isClone_( true )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +111,7 @@ UserProfile::UserProfile( const UserProfile& p )
 UserProfile::~UserProfile()
 {
     if( !isClone_ )
-        controller_.Delete( *this );
+        controller_.Delete( Base() );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,6 +168,15 @@ bool UserProfile::HasTimeControl() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::GetRights
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+const kernel::UserRights& UserProfile::GetRights() const
+{
+    return rights_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::IsReadable
 // Created: LDC 2012-05-09
 // -----------------------------------------------------------------------------
@@ -177,7 +202,7 @@ void UserProfile::SetLogin( const QString& value )
 {
     login_ = value;
     if( !isClone_ )
-        controller_.Update( *this );
+        controller_.Update( Base() );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +213,7 @@ void UserProfile::SetPassword( const QString& value )
 {
     password_ = value;
     if( !isClone_ )
-        controller_.Update( *this );
+        controller_.Update( Base() );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +224,7 @@ void UserProfile::SetSupervisor( bool value )
 {
     supervisor_ = value;
     if( !isClone_ )
-        controller_.Update( *this );
+        controller_.Update( Base() );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +235,7 @@ void UserProfile::SetTimeControl( bool value )
 {
     timeControl_ = value;
     if( !isClone_ )
-        controller_.Update( *this );
+        controller_.Update( Base() );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,16 +260,17 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 // Name: UserProfile::operator=
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
-UserProfile& UserProfile::operator=( const UserProfile& p )
+kernel::UserProfile_ABC& UserProfile::operator=( const kernel::UserProfile_ABC& p )
 {
-    const bool changed = login_ != p.login_ || password_ != p.password_ || supervisor_ != p.supervisor_;
-    login_            = p.login_;
-    password_         = p.password_;
-    supervisor_       = p.supervisor_;
-    timeControl_      = p.timeControl_;
-    rights_           = p.rights_;
+    const bool changed = login_ != p.GetLogin() || password_ != p.GetPassword() || supervisor_ != p.IsSupervisor()
+        || timeControl_ != p.HasTimeControl() || !( rights_ == p.GetRights() );
+    login_            = p.GetLogin();
+    password_         = p.GetPassword();
+    supervisor_       = p.IsSupervisor();
+    timeControl_      = p.HasTimeControl();
+    rights_           = p.GetRights();
     if( !isClone_ && changed )
-        controller_.Update( *this );
+        controller_.Update( Base() );
     return *this;
 }
 
@@ -252,17 +278,17 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
 // Name: UserProfile::operator==
 // Created: JSR 2014-06-02
 // -----------------------------------------------------------------------------
-bool UserProfile::operator==( const UserProfile& other ) const
+bool UserProfile::operator==( const kernel::UserProfile_ABC& other ) const
 {
-    return login_ == other.login_ && password_ == other.password_ && supervisor_ == other.supervisor_
-        && timeControl_ == other.timeControl_ && rights_ == other.rights_;
+    return login_ == other.GetLogin() && password_ == other.GetPassword() && supervisor_ == other.IsSupervisor()
+        && timeControl_ == other.HasTimeControl() && rights_ == other.GetRights();
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile::operator!=
 // Created: JSR 2014-06-03
 // -----------------------------------------------------------------------------
-bool UserProfile::operator!=( const UserProfile& other ) const
+bool UserProfile::operator!=( const kernel::UserProfile_ABC& other ) const
 {
     return !( *this == other );
 }
@@ -372,4 +398,13 @@ void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
     InsertAutomatsFromTeams( rights_.GetWriteSides(), elements, resolver_ );
     InsertAutomatsFromFormations( rights_.GetReadFormations(), elements, resolver_ );
     InsertAutomatsFromFormations( rights_.GetWriteFormations(), elements, resolver_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::Base
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+const kernel::UserProfile_ABC& UserProfile::Base() const
+{
+    return *this;
 }

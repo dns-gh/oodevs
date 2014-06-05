@@ -28,7 +28,6 @@
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
 #include "UrbanModel.h"
-#include "UserProfile.h"
 
 #include "clients_gui/EntityType.h"
 #include "clients_gui/Infrastructure_ABC.h"
@@ -64,6 +63,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "ENT/ENT_Tr.h"
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
@@ -471,7 +471,7 @@ void ModelConsistencyChecker::CheckProfileUniqueness()
     typedef std::set< std::string > T_Profiles;
     typedef std::map< unsigned long, T_Profiles > T_Units;
     T_Units units;
-    model_.profiles_->Apply( [&]( UserProfile& profile )
+    model_.profiles_->Apply( [&]( kernel::UserProfile_ABC& profile )
         {
             std::vector< unsigned long > ids;
             profile.Visit( ids );

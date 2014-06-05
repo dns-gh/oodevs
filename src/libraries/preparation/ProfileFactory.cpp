@@ -36,7 +36,7 @@ ProfileFactory::~ProfileFactory()
 // Name: ProfileFactory::Create
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile* ProfileFactory::Create( xml::xistream& xis ) const
+kernel::UserProfile_ABC* ProfileFactory::Create( xml::xistream& xis ) const
 {
     return new UserProfile( xis, controller_, model_, model_ );
 }
@@ -45,7 +45,25 @@ UserProfile* ProfileFactory::Create( xml::xistream& xis ) const
 // Name: ProfileFactory::Create
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile* ProfileFactory::Create( const QString& name ) const
+kernel::UserProfile_ABC* ProfileFactory::Create( const QString& name ) const
 {
     return new UserProfile( name, controller_, model_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFactory::Create
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+kernel::UserProfile_ABC* ProfileFactory::Create( kernel::UserProfile_ABC& profile ) const
+{
+    return new UserProfile( static_cast< UserProfile& >( profile ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFactory::Create
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+kernel::UserProfile_ABC* ProfileFactory::Create() const
+{
+    return new UserProfile( controller_, model_ );
 }

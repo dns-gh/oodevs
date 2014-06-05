@@ -11,12 +11,12 @@
 #include "ScoreProfilesPage.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "preparation/ProfileSelection.h"
-#include "preparation/UserProfile.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichTreeView.h"
 
-Q_DECLARE_METATYPE( const UserProfile* )
+Q_DECLARE_METATYPE( const kernel::UserProfile_ABC* )
 
 // -----------------------------------------------------------------------------
 // Name: ScoreProfilesPage constructor
@@ -62,7 +62,7 @@ ScoreProfilesPage::~ScoreProfilesPage()
 // Name: ScoreProfilesPage::NotifyCreated
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-void ScoreProfilesPage::NotifyCreated( const UserProfile& profile )
+void ScoreProfilesPage::NotifyCreated( const kernel::UserProfile_ABC& profile )
 {
     QStandardItem* item = new QStandardItem( profile.GetLogin() );
     item->setData( true, Qt::CheckStateRole );
@@ -75,12 +75,12 @@ void ScoreProfilesPage::NotifyCreated( const UserProfile& profile )
 // Name: ScoreProfilesPage::NotifyUpdated
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-void ScoreProfilesPage::NotifyUpdated( const UserProfile& profile )
+void ScoreProfilesPage::NotifyUpdated( const kernel::UserProfile_ABC& profile )
 {
     for( int i = 0; i < model_->rowCount(); ++i )
     {
         QStandardItem* item = model_->item( i );
-        if( item->data().value< const UserProfile* >() == &profile )
+        if( item->data().value< const kernel::UserProfile_ABC* >() == &profile )
             item->setText( profile.GetLogin() );
     }
 }
@@ -89,12 +89,12 @@ void ScoreProfilesPage::NotifyUpdated( const UserProfile& profile )
 // Name: ScoreProfilesPage::NotifyDeleted
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-void ScoreProfilesPage::NotifyDeleted( const UserProfile& profile )
+void ScoreProfilesPage::NotifyDeleted( const kernel::UserProfile_ABC& profile )
 {
     for( int i = 0; i < model_->rowCount(); ++i )
     {
         QStandardItem* item = model_->item( i );
-        if( item->data().value< const UserProfile* >() == &profile )
+        if( item->data().value< const kernel::UserProfile_ABC* >() == &profile )
         {
             model_->removeRow( i );
             return;;
@@ -127,7 +127,7 @@ std::unique_ptr< ProfileSelection > ScoreProfilesPage::CreateResult() const
         QStandardItem* item = model_->item( i );
         if( item->data( Qt::CheckStateRole ).toBool() )
         {
-            const UserProfile* profile = item->data().value< const UserProfile* >();
+            const kernel::UserProfile_ABC* profile = item->data().value< const kernel::UserProfile_ABC* >();
             selection->Register( profile->GetLogin(), *profile );
         }
     }

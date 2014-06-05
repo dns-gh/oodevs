@@ -13,8 +13,8 @@
 #include "UserProfileWidget.h"
 #include "ProfileEditor.h"
 #include "NewProfileDialog.h"
-#include "preparation/Model.h"
 #include "preparation/ProfilesModel.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWidget.h"
 
@@ -24,7 +24,7 @@ Q_DECLARE_METATYPE( ProfileEditor* )
 // Name: UserProfileList constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, Model& model )
+UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, ProfilesModel& model )
     : QWidget( parent )
     , controller_( controller )
     , pages_( pages )
@@ -76,7 +76,7 @@ UserProfileList::~UserProfileList()
 void UserProfileList::Commit()
 {
     for( auto it = localProfiles_.begin(); it != localProfiles_.end(); ++it )
-        ( *it )->Commit( *model_.profiles_, controller_ );
+        model_.CommitFromEditor( **it);
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +152,8 @@ void UserProfileList::OnCreate()
     const QString& result = pNewProfileDialog_->Exec();
     if( result.isEmpty() )
         return;
-    ProfileEditor* profileEditor = new ProfileEditor( result, controller_, model_ );
+    ProfileEditor* profileEditor = model_.CreateProfileEditor();
+    profileEditor->GetProfile().SetLogin( result );
     localProfiles_.emplace_back( profileEditor );
     dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
     pages_.setVisible( true );
@@ -195,9 +196,9 @@ void UserProfileList::NotifyNameChanged( const kernel::UserProfile_ABC* profile 
 // -----------------------------------------------------------------------------
 void UserProfileList::showEvent( QShowEvent* event )
 {
-    model_.profiles_->Apply( [&]( UserProfile& profile )
+    model_.Apply( [&]( kernel::UserProfile_ABC& profile )
         {
-            ProfileEditor* profileEditor = new ProfileEditor( profile );
+            ProfileEditor* profileEditor = model_.CreateProfileEditor( profile );
             localProfiles_.emplace_back( profileEditor );
             dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
         });

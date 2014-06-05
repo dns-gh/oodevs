@@ -36,8 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual UserProfile* Create( xml::xistream& xis ) const;
-    virtual UserProfile* Create( const QString& name ) const;
+    virtual kernel::UserProfile_ABC* Create( xml::xistream& xis ) const;
+    virtual kernel::UserProfile_ABC* Create( const QString& name ) const;
+    virtual kernel::UserProfile_ABC* Create( kernel::UserProfile_ABC& profile ) const;
+    virtual kernel::UserProfile_ABC* Create() const;
     //@}
 
 private:

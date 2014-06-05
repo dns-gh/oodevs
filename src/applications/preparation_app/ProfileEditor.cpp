@@ -9,28 +9,15 @@
 
 #include "preparation_app_pch.h"
 #include "ProfileEditor.h"
-#include "preparation/ProfilesModel.h"
-#include "clients_kernel/Controller.h"
-
-// -----------------------------------------------------------------------------
-// Name: ProfileEditor constructor
-// Created: JSR 2014-05-27
-// -----------------------------------------------------------------------------
-ProfileEditor::ProfileEditor( const QString& login, kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver )
-    : UserProfile( login, controller, resolver )
-    , originalProfile_( 0 )
-    , deleted_( false )
-{
-    // NOTHING
-}
+#include "clients_kernel/UserProfile_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ProfileEditor constructor
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfileEditor::ProfileEditor( UserProfile& profile )
-    : UserProfile( profile )
-    , originalProfile_( &profile )
+ProfileEditor::ProfileEditor( kernel::UserProfile_ABC* profile, kernel::UserProfile_ABC* originalProfile )
+    : profile_( profile )
+    , originalProfile_( originalProfile )
     , deleted_( false )
 {
     // NOTHING
@@ -51,29 +38,16 @@ ProfileEditor::~ProfileEditor()
 // -----------------------------------------------------------------------------
 kernel::UserProfile_ABC& ProfileEditor::GetProfile()
 {
-    return *this;
+    return *profile_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileEditor::Commit
-// Created: JSR 2014-05-27
+// Name: ProfileEditor::GetOriginalProfile
+// Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
-void ProfileEditor::Commit( ProfilesModel& model, kernel::Controller& controller )
+kernel::UserProfile_ABC* ProfileEditor::GetOriginalProfile() const
 {
-    if( deleted_ )
-    {
-        if( originalProfile_ )
-            model.DeleteProfile( *originalProfile_ );
-        originalProfile_ = 0;
-        return;
-    }
-    if( originalProfile_ == 0 )
-        originalProfile_ = model.CreateProfile( GetLogin() );
-    if( *this != *originalProfile_ )
-    {
-        *originalProfile_ = *this;
-        controller.Update( *originalProfile_ );
-    }
+    return originalProfile_;
 }
 
 // -----------------------------------------------------------------------------
@@ -92,4 +66,22 @@ void ProfileEditor::Delete()
 bool ProfileEditor::IsDeleted() const
 {
     return deleted_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileEditor::NotifyOriginalProfileDeleted
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+void ProfileEditor::NotifyOriginalProfileDeleted()
+{
+    originalProfile_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileEditor::NotifyOriginalProfileCreated
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+void ProfileEditor::NotifyOriginalProfileCreated( kernel::UserProfile_ABC* profile )
+{
+    originalProfile_ = profile;
 }

@@ -24,7 +24,7 @@ namespace gui
 }
 
 class UserProfileWidget;
-class Model;
+class ProfilesModel;
 class NewProfileDialog;
 class ProfileEditor;
 
@@ -42,7 +42,7 @@ class UserProfileList : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, Model& model );
+             UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, ProfilesModel& model );
     virtual ~UserProfileList();
     //@}
 
@@ -82,7 +82,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    Model& model_;
+    ProfilesModel& model_;
     T_LocalProfiles localProfiles_;
     UserProfileWidget& pages_;
     gui::RichWidget< QListView >* list_;

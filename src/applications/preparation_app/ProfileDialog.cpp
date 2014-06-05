@@ -56,7 +56,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    list_ = new UserProfileList( box, *pages, controllers.controller_, model );
+    list_ = new UserProfileList( box, *pages, controllers.controller_, *model.profiles_ );
     grid->addWidget( box, 1, 0 );
 
     box = new Q3HBox( this );
