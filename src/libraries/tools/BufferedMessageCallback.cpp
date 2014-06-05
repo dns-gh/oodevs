@@ -35,10 +35,14 @@ BufferedMessageCallback::~BufferedMessageCallback()
 // Name: BufferedMessageCallback::Event::Event
 // Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-BufferedMessageCallback::Event::Event( const std::string& endpoint, const std::string& error, const std::string& warning )
-    : endpoint_( endpoint )
-    , error_   ( error )
-    , warning_ ( warning )
+BufferedMessageCallback::Event::Event( const std::string& local,
+    const std::string& remote, const std::string& error, const std::string& warning,
+    bool connection )
+    : local_( local )
+    , remote_( remote )
+    , error_( error )
+    , warning_( warning )
+    , connection_( connection )
 {
     // NOTHING
 }
@@ -47,9 +51,10 @@ BufferedMessageCallback::Event::Event( const std::string& endpoint, const std::s
 // Name: BufferedMessageCallback::Event::Event
 // Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-BufferedMessageCallback::Event::Event( const std::string& endpoint, const Message& message )
-    : endpoint_( endpoint )
-    , message_ ( message )
+BufferedMessageCallback::Event::Event( const std::string& remote, const Message& message )
+    : remote_( remote )
+    , message_( message )
+    , connection_( false )
 {
     // NOTHING
 }
@@ -58,37 +63,58 @@ BufferedMessageCallback::Event::Event( const std::string& endpoint, const Messag
 // Name: BufferedMessageCallback::OnError
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void BufferedMessageCallback::OnError( const std::string& endpoint, const std::string& error )
+void BufferedMessageCallback::OnError( const std::string& remote, const std::string& error )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( endpoint, error, "" ) );
+    events_.push_back( Event( "", remote, error, "", false ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: BufferedMessageCallback::OnWarning
 // Created: MCO 2011-09-26
 // -----------------------------------------------------------------------------
-void BufferedMessageCallback::OnWarning( const std::string& endpoint, const std::string& warning )
+void BufferedMessageCallback::OnWarning( const std::string& remote, const std::string& warning )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( endpoint, "", warning ) );
+    events_.push_back( Event( "", remote, "", warning, false ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: BufferedMessageCallback::OnMessage
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void BufferedMessageCallback::OnMessage( const std::string& endpoint, Message& message )
+void BufferedMessageCallback::OnMessage( const std::string& remote, Message& message )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( endpoint, message ) );
+    events_.push_back( Event( remote, message ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: BufferedMessageCallback::ConnectionSucceeded
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void BufferedMessageCallback::ConnectionSucceeded( const std::string& local,
+        const std::string& remote )
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    events_.push_back( Event( local, remote, "", "", true ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BufferedMessageCallback::ConnectionFailed
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void BufferedMessageCallback::ConnectionFailed( const std::string& address, const std::string& error )
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    events_.push_back( Event( "", address, error, "", true ) );
+}
 // -----------------------------------------------------------------------------
 // Name: BufferedMessageCallback::Commit
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void BufferedMessageCallback::Commit( MessageCallback_ABC& callback )
+void BufferedMessageCallback::Commit( ConnectionCallback_ABC& connection, 
+            MessageCallback_ABC& message )
 {
     T_Events events;
     {
@@ -97,12 +123,24 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback )
     }
     for( IT_Events it = events.begin(); it != events.end(); ++it )
     {
-        if( ! it->error_.empty() )
-            callback.OnError( it->endpoint_, it->error_ );
-        else if( ! it->warning_.empty() )
-            callback.OnWarning( it->endpoint_, it->warning_ );
+        if( it->connection_ )
+        {
+            // Connection event
+            if( ! it->error_.empty() )
+                connection.ConnectionFailed( it->remote_, it->error_ );
+            else
+                connection.ConnectionSucceeded( it->local_, it->remote_ );
+        }
         else
-            Commit( callback, it->endpoint_, it->message_ );
+        {
+            // Message event
+            if( ! it->error_.empty() )
+                message.OnError( it->remote_, it->error_ );
+            else if( ! it->warning_.empty() )
+                message.OnWarning( it->remote_, it->warning_ );
+            else
+                Commit( message, it->remote_, it->message_ );
+        }
     }
 }
 
