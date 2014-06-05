@@ -691,6 +691,7 @@
                 <fileset dir="${run.dir}">
                     <exclude name="Debug/**"/>
                     <exclude name="resources/integration tests/**"/>
+                    <exclude name="cef/timeline_app.exe"/>
                 </fileset>
             </zip>
             <check-depends file="@{file}"/>
@@ -1077,7 +1078,20 @@
         </go>
     </target>
 
-    <target name="timeline.test" depends="server.test,web.test"/>
+    <target name="timeline_ui.test">
+        <echo message="test.port=${test.port}"/>
+        <go cmd="test" module="masa/timelineui/...">
+            <env key="TIMELINE_DISABLE_PROXY" value=""/>
+            <arg value="--rundir=${run.dir}"/>
+            <arg value="--outdir=${out.dir}"/>
+            <arg value="--client=${run.dir}/cef/timeline_client.exe"/>
+            <arg value="--port=${test.port}"/>
+            <arg value="--test.v"/>
+            <arg value="--gocheck.v"/>
+        </go>
+    </target>
+
+    <target name="timeline.test" depends="server.test,web.test,timeline_ui.test"/>
 
     <target name="timeline.package">
         <setversion file="${bin.dir}/timeline_player.exe"
@@ -1168,6 +1182,7 @@
         <!-- timeline_ui dependencies -->
         <update name="cef" version="1.1364.1123" package="dll/${platform32}" todir="${run.dir}/cef"/>
         <update name="timeline_ui" package="dll/${platform32}" todir="${run.dir}/cef"/>
+        <update name="timeline_ui" package="test_${platform}" todir="${run.dir}/cef"/>
         <update name="timeline_ui" package="include"           todir="${include.dir}"/>
         <update name="timeline_ui" package="lib/${platform}"   todir="${lib.dir}"/>
     </target>
