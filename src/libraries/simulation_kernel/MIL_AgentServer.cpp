@@ -513,6 +513,7 @@ void MIL_AgentServer::Pause( unsigned int nCtx, unsigned int clientId )
         nSimState_ = eSimPaused;
         MT_Timer_ABC::Stop();
         MT_LOG_INFO_MSG( "Simulation paused" );
+        msg().set_current_tick( GetCurrentTimeStep() );
         msg().set_error_code( sword::ControlAck::no_error );
     }
     msg.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
@@ -525,16 +526,14 @@ void MIL_AgentServer::Pause( unsigned int nCtx, unsigned int clientId )
 void MIL_AgentServer::Resume( unsigned int ticks, unsigned int nCtx, unsigned int clientId )
 {
     nextPause_ = ticks;
+    nSimState_ = eSimRunning;
+    MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
+    MT_LOG_INFO_MSG( "Simulation resumed" );
+
     client::ControlResumeAck msg;
-    if( nSimState_ != eSimPaused )
-        msg().set_error_code( sword::ControlAck::error_not_paused );
-    else
-    {
-        nSimState_ = eSimRunning;
-        MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
-        MT_LOG_INFO_MSG( "Simulation resumed" );
-        msg().set_error_code( sword::ControlAck::no_error );
-    }
+    msg().set_current_tick( GetCurrentTimeStep() );
+    msg().set_delay( ticks );
+    msg().set_error_code( sword::ControlAck::no_error );
     msg.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 

@@ -213,7 +213,7 @@ used to exercise swapi.Model update against real world scenarii.
 		return fmt.Errorf("could not login: %s", err)
 	}
 	if *resume {
-		err = client.Resume(0)
+		_, _, err = client.Resume(0)
 		if err != nil {
 			return fmt.Errorf("could not resume the simulation: %s", err)
 		}

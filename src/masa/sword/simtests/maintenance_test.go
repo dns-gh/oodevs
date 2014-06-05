@@ -192,7 +192,7 @@ func (MaintenanceDeleteChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *s
 func checkMaintenance(c *C, admin, client *swapi.Client, unit *swapi.Unit,
 	offset int, breakdown BreakdownType, checkers ...MaintenanceChecker) {
 
-	err := admin.Pause()
+	_, err := admin.Pause()
 	c.Assert(err, IsNil)
 	check := MaintenanceCheckContext{
 		data:      client.Model.GetData(),
@@ -231,7 +231,7 @@ func checkMaintenance(c *C, admin, client *swapi.Client, unit *swapi.Unit,
 	defer client.Unregister(ctx)
 	err = client.ChangeEquipmentState(unit.Id, makeBreakdown(c, eqid, eq, 1, breakdown))
 	c.Assert(err, IsNil)
-	err = admin.Resume(0)
+	_, _, err = admin.Resume(0)
 	c.Assert(err, IsNil)
 	select {
 	case <-quit:
@@ -577,7 +577,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualTransporterMultipleSelecti
 				return nil
 			}),
 	)
-	err := admin.Pause()
+	_, err := admin.Pause()
 	c.Assert(err, IsNil)
 	err = client.SelectMaintenanceTransporter(handlingId, TowTruck)
 	c.Assert(err, IsNil)
@@ -615,7 +615,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualDiagnosisTeamMultipleSelec
 				return nil
 			}),
 	)
-	err := admin.Pause()
+	_, err := admin.Pause()
 	c.Assert(err, IsNil)
 	err = client.SelectDiagnosisTeam(handlingId, gyroscrew_1)
 	c.Assert(err, IsNil)
@@ -671,7 +671,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualRepairerMultipleSelection(
 				return nil
 			}),
 	)
-	err := admin.Pause()
+	_, err := admin.Pause()
 	c.Assert(err, IsNil)
 	err = client.SelectRepairTeam(handlingId, gyroscrew_2)
 	c.Assert(err, IsNil)

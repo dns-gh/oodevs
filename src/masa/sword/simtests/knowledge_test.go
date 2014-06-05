@@ -295,7 +295,7 @@ func (s *TestSuite) TestKnowledgePropagationAmongGroups(c *C) {
 			}
 			return false
 		})
-	err := client.Resume(0)
+	_, _, err := client.Resume(0)
 	c.Assert(err, IsNil)
 	found := <-done
 	c.Assert(found, Equals, int32(61))

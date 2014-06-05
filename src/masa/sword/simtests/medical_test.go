@@ -135,7 +135,7 @@ func (MedicalDeleteChecker) Check(c *C, ctx *MedicalCheckContext, msg *sword.Sim
 func checkMedical(c *C, admin, client *swapi.Client, unit *swapi.Unit, offset int,
 	rank sword.EnumHumanRank, state int32, mental bool, checkers ...MedicalChecker) {
 
-	err := admin.Pause()
+	_, err := admin.Pause()
 	c.Assert(err, IsNil)
 	check := MedicalCheckContext{
 		data:         client.Model.GetData(),
@@ -186,7 +186,7 @@ func checkMedical(c *C, admin, client *swapi.Client, unit *swapi.Unit, offset in
 	}
 	err = client.ChangeHumanState(unit.Id, []*swapi.Human{&human})
 	c.Assert(err, IsNil)
-	err = admin.Resume(0)
+	_, _, err = admin.Resume(0)
 	c.Assert(err, IsNil)
 	select {
 	case <-quit:

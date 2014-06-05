@@ -498,7 +498,8 @@ func getControlAckError(reply ControlAckError) error {
 	return makeError(reply, int32(code), sword.ControlAck_ErrorCode_name)
 }
 
-func (c *Client) Pause() error {
+// Returns the tick when the pause took effect.
+func (c *Client) Pause() (int32, error) {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
@@ -506,17 +507,22 @@ func (c *Client) Pause() error {
 			},
 		},
 	}
+	tick := int32(0)
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetControlPauseAck()
 		if reply == nil {
 			return unexpected(msg)
 		}
+		tick = reply.GetCurrentTick()
 		return getControlAckError(reply)
 	}
-	return <-c.postSimRequest(msg, handler)
+	err := <-c.postSimRequest(msg, handler)
+	return tick, err
 }
 
-func (c *Client) Resume(nextPause uint32) error {
+// Returns the tick when the resume was taken in account and the delay
+// after which the resume will pause again if non-zero.
+func (c *Client) Resume(nextPause uint32) (int32, int32, error) {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
@@ -526,14 +532,19 @@ func (c *Client) Resume(nextPause uint32) error {
 			},
 		},
 	}
+
+	tick, delay := int32(0), int32(0)
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetControlResumeAck()
 		if reply == nil {
 			return unexpected(msg)
 		}
+		tick = reply.GetCurrentTick()
+		delay = reply.GetDelay()
 		return getControlAckError(reply)
 	}
-	return <-c.postSimRequest(msg, handler)
+	err := <-c.postSimRequest(msg, handler)
+	return tick, delay, err
 }
 
 func (c *Client) Stop() error {

@@ -695,7 +695,8 @@ message ControlStopAck {
 */
 message ControlPauseAck {
     //! Reason for the failure of the request
-    required ControlAck.ErrorCode error_code = 1;
+    required ControlAck.ErrorCode error_code   = 1;
+    optional int32                current_tick = 2;
 }
 
 /** @struct ControlResumeAck
@@ -704,7 +705,11 @@ message ControlPauseAck {
 */
 message ControlResumeAck {
     //! Reason for the failure of the request
-    required ControlAck.ErrorCode error_code = 1;
+    required ControlAck.ErrorCode error_code   = 1;
+    optional int32                current_tick = 2;
+    //! If set and greater than zero, the number of ticks after which
+    //! the simulation will pause again.
+    optional int32                delay        = 3;
 }
 
 /** @struct PartyCreation
