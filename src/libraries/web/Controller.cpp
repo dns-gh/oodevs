@@ -469,7 +469,10 @@ void Controller::DeleteNode( Reply_ABC& rpy, const Request_ABC& request )
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const std::string id = RequireParameter< std::string >( "id", request );
     LOG_INFO( log_ ) << "[web] /delete_node id: " << id;
-    WriteHttpReply( rpy, agent_.DeleteNode( Convert( id ) ) );
+    const auto uuid = Convert( id );
+    const auto tree = agent_.DeleteNode( uuid );
+    users_.DeleteUsers( uuid );
+    WriteHttpReply( rpy, tree );
 }
 
 // -----------------------------------------------------------------------------
