@@ -114,7 +114,7 @@ private:
     const dispatcher::Config&                   config_;
     dispatcher::Plugin_ABC&                     container_;
     const dispatcher::LinkResolver_ABC&         resolver_;
-    std::auto_ptr< dispatcher::ProfileManager > profiles_;
+    std::unique_ptr< dispatcher::ProfileManager > profiles_;
     T_Profiles                                  authenticated_;
     int                                         maxConnections_;
     int                                         currentConnections_;

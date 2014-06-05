@@ -39,7 +39,7 @@ ParamInhabitant::~ParamInhabitant()
 // -----------------------------------------------------------------------------
 void ParamInhabitant::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< kernel::Inhabitant_ABC > > param( new actions::parameters::Inhabitant( parameter_, controllers_.controller_ ) );
+    std::unique_ptr< actions::parameters::Entity< kernel::Inhabitant_ABC > > param( new actions::parameters::Inhabitant( parameter_, controllers_.controller_ ) );
     EntityParameter< kernel::Inhabitant_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

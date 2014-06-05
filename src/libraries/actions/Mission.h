@@ -53,7 +53,7 @@ private:
     //@{
     kernel::Controller& controller_;
     bool registered_;
-    mutable std::auto_ptr< gui::GlTooltip_ABC > tooltip_;
+    mutable std::unique_ptr< gui::GlTooltip_ABC > tooltip_;
     //@}
 };
 

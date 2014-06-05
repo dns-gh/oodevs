@@ -61,7 +61,7 @@ namespace
         }
 
         MockPublisher                            publisher;
-        std::auto_ptr< CoordinateConverter_ABC > converter;
+        std::unique_ptr< CoordinateConverter_ABC > converter;
         MockResolver                             resolver;
         const kernel::XmlAdapter                 adapter;
     };

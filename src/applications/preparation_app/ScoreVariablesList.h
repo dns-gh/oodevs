@@ -98,8 +98,8 @@ private:
     const gui::GlTools_ABC& tools_;
     ScoreVariableCreationWizard* wizard_;
     gui::RichWidget< QTreeWidget >* list_;
-    std::auto_ptr< kernel::Location_ABC > location_;
-    std::auto_ptr< gui::MgrsParser > parser_;
+    std::unique_ptr< kernel::Location_ABC > location_;
+    std::unique_ptr< gui::MgrsParser > parser_;
     //@}
 };
 

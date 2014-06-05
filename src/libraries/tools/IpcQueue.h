@@ -71,9 +71,9 @@ private:
     //! @name Member data
     //@{
     Handler_ABC& handler_;
-    std::auto_ptr< tools::ThreadPool > pool_;
-    std::auto_ptr< Counter > counter_;
-    std::auto_ptr< boost::interprocess::message_queue > queue_;
+    std::unique_ptr< tools::ThreadPool > pool_;
+    std::unique_ptr< Counter > counter_;
+    std::unique_ptr< boost::interprocess::message_queue > queue_;
     //@}
 };
 }

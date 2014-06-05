@@ -61,8 +61,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< WebControl > control_;
-    std::auto_ptr< MongooseServer > server_;
+    std::unique_ptr< WebControl > control_;
+    std::unique_ptr< MongooseServer > server_;
     //@}
 };
 }

@@ -85,7 +85,7 @@ private:
 private:
     //! @name
     //@{
-    std::auto_ptr< logistic::ObjectLogisticHierarchy > pLogisticHierarchy_;
+    std::unique_ptr< logistic::ObjectLogisticHierarchy > pLogisticHierarchy_;
     unsigned int idFromXML_;
     //@}
 };

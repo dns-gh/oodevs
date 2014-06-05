@@ -75,7 +75,7 @@ private:
     //! @name Member data
     //@{
     const GaugeType& type_;
-    std::auto_ptr< GaugeNormalizer > normalizer_;
+    std::unique_ptr< GaugeNormalizer > normalizer_;
     //@}
 };
 

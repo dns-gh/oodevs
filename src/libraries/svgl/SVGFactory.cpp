@@ -78,7 +78,7 @@ svg::Node_ABC* SVGFactory::Compile( const std::string& filename, svg::References
 svg::Node_ABC* SVGFactory::Compile( xml::xistream& input, svg::References_ABC& references, float expectedPrecision ) const
 {
     References temporary;
-    std::auto_ptr< svg::Node_ABC > base( Parse( input, temporary ) );
+    std::unique_ptr< svg::Node_ABC > base( Parse( input, temporary ) );
     RenderingContext context( expectedPrecision );
     return & base->Compile( context, references );
 }
@@ -139,9 +139,9 @@ svg::Node_ABC* SVGFactory::Create( const std::string& nodeName, xml::xistream& i
 // Name: SVGFactory::ChangePropertyFactory
 // Created: ZEBRE 2007-05-24
 // -----------------------------------------------------------------------------
-void SVGFactory::ChangePropertyFactory( svg::RenderingContext_ABC::E_Properties property, std::auto_ptr< PropertyFactory_ABC > factory )
+void SVGFactory::ChangePropertyFactory( svg::RenderingContext_ABC::E_Properties property, std::unique_ptr< PropertyFactory_ABC > factory )
 {
-    factory_->ChangeFactory( property, factory );
+    factory_->ChangeFactory( property, std::move( factory ) );
 }
 
 // -----------------------------------------------------------------------------

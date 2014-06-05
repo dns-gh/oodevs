@@ -68,7 +68,7 @@ private:
     Model& model_;
     const StaticModel& staticModel_;
     tools::IdManager& idManager_;
-    std::auto_ptr< ObjectAttributeFactory_ABC > factory_;
+    std::unique_ptr< ObjectAttributeFactory_ABC > factory_;
     //@}
 };
 

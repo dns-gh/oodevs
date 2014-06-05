@@ -70,7 +70,7 @@ namespace
 // Name: Workers::Enqueue
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Workers::Enqueue( std::auto_ptr< WorkerTask_ABC > task )
+void Workers::Enqueue( std::unique_ptr< WorkerTask_ABC > task )
 {
     if( pool_.get() )
         pool_->Enqueue( Adaptor( *task.release(), mutex_, finished_ ) );

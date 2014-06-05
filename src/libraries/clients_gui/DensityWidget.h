@@ -77,7 +77,7 @@ private:
     //! @name Member Data
     //@{
     const std::string category_;
-    std::auto_ptr< Painter_ABC > pPainter_;
+    std::unique_ptr< Painter_ABC > pPainter_;
     kernel::Controllers& controllers_;
     kernel::Options& options_;
     RichLineEdit* max_;

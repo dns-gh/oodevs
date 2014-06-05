@@ -180,8 +180,8 @@ private:
     ArmyFactory_ABC& armyFactory_;
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
     const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter_;
-    std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
-    std::auto_ptr< MIL_Color > pColor_;
+    std::unique_ptr< MIL_DictionaryExtensions > pExtensions_;
+    std::unique_ptr< MIL_Color > pColor_;
     //@}
 };
 

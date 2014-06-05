@@ -65,7 +65,7 @@ private:
     //@{
     ReplayModel_ABC& model_;
     MessageHandler_ABC& handler_;
-    std::auto_ptr< MessageLoader > loader_;
+    std::unique_ptr< MessageLoader > loader_;
     unsigned int keyFrame_;
     unsigned int frame_;
     //@}

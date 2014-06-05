@@ -73,7 +73,7 @@ private:
     QPixmap defaultSymbol_;
     T_PendingIcons pending_;
     T_Icons icons_;
-    std::auto_ptr< IconsRenderPass > renderPass_;
+    std::unique_ptr< IconsRenderPass > renderPass_;
     //@}
 };
 

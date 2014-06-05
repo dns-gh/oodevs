@@ -78,10 +78,10 @@ private:
     MIL_EffectManager& effectManager_;
     MIL_Agent_ABC& pion_;
     mutable PHY_DotationGroupContainer dotationGroupContainer_;
-    std::auto_ptr< PHY_DotationCapacity > pCapacity_;
-    mutable std::auto_ptr< PHY_RolePion_Composantes > role_;
-    mutable std::auto_ptr< PHY_ComposantePion > firer_;
-    mutable std::auto_ptr< PHY_Weapon > weapon_;
+    std::unique_ptr< PHY_DotationCapacity > pCapacity_;
+    mutable std::unique_ptr< PHY_RolePion_Composantes > role_;
+    mutable std::unique_ptr< PHY_ComposantePion > firer_;
+    mutable std::unique_ptr< PHY_Weapon > weapon_;
 };
 
 #endif // __TestIndirectFireModifier_h_

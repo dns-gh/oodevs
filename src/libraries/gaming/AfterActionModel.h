@@ -79,7 +79,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    std::auto_ptr< IndicatorRequests > requests_;
+    std::unique_ptr< IndicatorRequests > requests_;
     //@}
 };
 

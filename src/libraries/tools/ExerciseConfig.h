@@ -211,8 +211,8 @@ private:
     //! @name Member data
     //@{
     const boost::shared_ptr< tools::Loader_ABC > loader_;
-    std::auto_ptr< tools::PhyLoader > phyLoader_;
-    std::auto_ptr< const tools::WorldParameters > pWorldParameters_;
+    std::unique_ptr< tools::PhyLoader > phyLoader_;
+    std::unique_ptr< const tools::WorldParameters > pWorldParameters_;
     boost::shared_ptr< RealFileLoaderObserver_ABC > observer_;
 
     std::string modelVersion_;

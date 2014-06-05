@@ -86,7 +86,7 @@ private:
     //! @name Member data
     //@{
     bool active_;
-    std::auto_ptr< directia::tools::binders::ScriptRef > function_;
+    std::unique_ptr< directia::tools::binders::ScriptRef > function_;
     //@}
 };
 

@@ -94,8 +94,8 @@ private:
     const kernel::Positions& positions_;
     kernel::UnitedValue< int > depth_;
     kernel::UnitedValue< int > refDist_;
-    std::auto_ptr< propagation::FloodModel_ABC > floodModel_;
-    std::auto_ptr< propagation::FloodDrawer > floodDrawer_;
+    std::unique_ptr< propagation::FloodModel_ABC > floodModel_;
+    std::unique_ptr< propagation::FloodDrawer > floodDrawer_;
     //@}
 };
 

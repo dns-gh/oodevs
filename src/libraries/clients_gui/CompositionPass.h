@@ -73,8 +73,8 @@ private:
     kernel::Controllers& controllers_;
     TextureRenderPass& first_;
     TextureRenderPass& second_;
-    std::auto_ptr< gl::FragmentShader > fragment_;
-    std::auto_ptr< gl::ShaderProgram > program_;
+    std::unique_ptr< gl::FragmentShader > fragment_;
+    std::unique_ptr< gl::ShaderProgram > program_;
     unsigned noiseTexture_;
     bool ignoreShader_;
     std::string option_;

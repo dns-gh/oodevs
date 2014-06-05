@@ -347,7 +347,7 @@ void ListParameter< ConcreteElement >::Select( const Param_ABC& param )
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
+    std::unique_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     param->Set( CommitChildrenTo( *param ) );
     action.AddParameter( *param.release() );
 }

@@ -18,8 +18,7 @@
 // Created: JDY 03-07-10
 //-----------------------------------------------------------------------------
 ADN_Gfx_ABC::ADN_Gfx_ABC( bool bAuto )
-    : pConnector_( 0 )
-    , bAutoEnabled_( bAuto )
+    : bAutoEnabled_( bAuto )
 {
     // NOTHING
 }

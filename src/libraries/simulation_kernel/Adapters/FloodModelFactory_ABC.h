@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< propagation::FloodModel_ABC > CreateFloodModel() const = 0;
+    virtual std::unique_ptr< propagation::FloodModel_ABC > CreateFloodModel() const = 0;
     //@}
 
     //! @name CheckPoints

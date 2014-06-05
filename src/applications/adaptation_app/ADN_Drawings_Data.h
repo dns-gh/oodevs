@@ -85,8 +85,8 @@ private:
     T_DrawingsMap geometryMap_;
     T_DrawingsMap categoryMap_;
     T_DrawingInfoVector drawings_;
-    std::auto_ptr< svg::TextRenderer > renderer_;
-    std::auto_ptr< gui::GlTools_ABC > tools_;
+    std::unique_ptr< svg::TextRenderer > renderer_;
+    std::unique_ptr< gui::GlTools_ABC > tools_;
     //@}
 };
 

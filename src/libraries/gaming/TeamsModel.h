@@ -75,7 +75,7 @@ private:
     //! @name Member data
     //@{
     TeamFactory_ABC& factory_;
-    std::auto_ptr< kernel::Team_ABC > noSideTeam_;
+    std::unique_ptr< kernel::Team_ABC > noSideTeam_;
     //@}
 };
 

@@ -122,7 +122,7 @@ void ParamDotationTypeList::CommitTo( actions::ParameterContainer_ABC& action ) 
 {
     if( !list_ )
         return;
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::DotationTypeList( parameter_ ) );
+    std::unique_ptr< actions::Parameter_ABC > param( new actions::parameters::DotationTypeList( parameter_ ) );
     if( IsChecked() )
     {
         QModelIndexList selection = list_->selectionModel()->selection().indexes();

@@ -122,7 +122,7 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCo
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
 {
-    std::auto_ptr< RepairPartInfo > spNew( new RepairPartInfo() );
+    std::unique_ptr< RepairPartInfo > spNew( new RepairPartInfo() );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vRepairParts_.AddItem( spNew.release() );
@@ -249,7 +249,7 @@ void ADN_Breakdowns_Data::ReadCategory( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_BreakdownNTI& nti )
 {
-    std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo( input.attribute< unsigned int >( "id" ) ) );
+    std::unique_ptr<BreakdownInfo> spNew( new BreakdownInfo( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     spNew->nNTI_ = nti;
     vBreakdowns_.AddItem( spNew.release() );

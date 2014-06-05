@@ -55,7 +55,7 @@ private:
 
     //! @name Helpers
     //@{
-    std::auto_ptr< gui::GlTooltip > CreateTooltip( const QFont& font, bool hover );
+    std::unique_ptr< gui::GlTooltip > CreateTooltip( const QFont& font, bool hover );
     void DrawFrame( QPainter& painter, const QRect& rect, bool hover );
     //@}
 
@@ -64,8 +64,8 @@ private:
     //@{
     const gui::GlTools_ABC& tools_;
     QString label_;
-    std::auto_ptr< gui::GlTooltip > default_;
-    std::auto_ptr< gui::GlTooltip > hover_;
+    std::unique_ptr< gui::GlTooltip > default_;
+    std::unique_ptr< gui::GlTooltip > hover_;
     gui::GlTooltip* current_;
     geometry::Point2f position_;
     int alignment_;

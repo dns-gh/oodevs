@@ -471,21 +471,21 @@ void ADN_Crowds_Data::CrowdsInfos::Initialize()
     {
         E_PopulationAttitude attitude = static_cast< E_PopulationAttitude >( i );
         SpeedEffectInfos* pSpeedNew = new SpeedEffectInfos( attitude );
-        std::auto_ptr< SpeedEffectInfos > spSpeedNew( pSpeedNew );
+        std::unique_ptr< SpeedEffectInfos > spSpeedNew( pSpeedNew );
         vSpeedEffectInfos_.AddItem( spSpeedNew.release() );
 
         FireEffectInfos* pFireNew = new FireEffectInfos( attitude );
-        std::auto_ptr< FireEffectInfos > spFireNew( pFireNew );
+        std::unique_ptr< FireEffectInfos > spFireNew( pFireNew );
         vFireEffectInfos_.AddItem( spFireNew.release() );
 
         UrbanEffectInfos* pUrbanNew = new UrbanEffectInfos( attitude );
-        std::auto_ptr< UrbanEffectInfos > spUrbanNew( pUrbanNew );
+        std::unique_ptr< UrbanEffectInfos > spUrbanNew( pUrbanNew );
         vUrbanEffectInfos_.AddItem( spUrbanNew.release() );
     }
     for( int i = 2; i < eNbrPopulationRoe; ++i )
     {
         FireEffectRoeInfos* pFireRoeNew = new FireEffectRoeInfos( static_cast< E_PopulationRoe >( i ) );
-        std::auto_ptr< FireEffectRoeInfos > spFireRoeNew( pFireRoeNew );
+        std::unique_ptr< FireEffectRoeInfos > spFireRoeNew( pFireRoeNew );
         vFireEffectRoeInfos_.AddItem( spFireRoeNew.release() );
     }
     BindExistenceTo( &ptrModel_ );
@@ -834,7 +834,7 @@ void ADN_Crowds_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::ReadPopulation( xml::xistream& input )
 {
-    std::auto_ptr< CrowdsInfos > spNew( new CrowdsInfos( input.attribute< unsigned int >( "id" ) ) );
+    std::unique_ptr< CrowdsInfos > spNew( new CrowdsInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vCrowds_.AddItem( spNew.release() );
 }

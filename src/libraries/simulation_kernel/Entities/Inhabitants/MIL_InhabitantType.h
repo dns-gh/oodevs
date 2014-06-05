@@ -91,7 +91,7 @@ private:
     float safetyGainPerHour_;
     float safetyLossOnFire_;
     T_ConsumptionsMap consumptions_;
-    std::auto_ptr< xml::xibufferstream > pXisSchedule_;
+    std::unique_ptr< xml::xibufferstream > pXisSchedule_;
     static T_InhabitantMap inhabitants_;
     //@}
 };

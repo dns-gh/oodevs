@@ -76,7 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< SessionTray > sessionTray_;
+    std::unique_ptr< SessionTray > sessionTray_;
     QStackedWidget* pages_;
     //@}
 };

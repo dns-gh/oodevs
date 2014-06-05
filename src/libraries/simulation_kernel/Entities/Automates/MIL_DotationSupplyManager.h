@@ -101,7 +101,7 @@ private:
     bool                     bSupplyNeeded_;
     bool                     bDotationSupplyExplicitlyRequested_;
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > supplyRequestBuilder_;
-    std::auto_ptr< logistic::SupplyRequestContainer > supplyRequests_;
+    std::unique_ptr< logistic::SupplyRequestContainer > supplyRequests_;
     T_Supplies scheduledSupplies_;
     //@}
 };

@@ -79,10 +79,10 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< kernel::Controller > controller_;
-    std::auto_ptr< ActionPublisher > actions_;
-    std::auto_ptr< ScenarioManager > scenario_;
-    std::auto_ptr< PublisherActor > publisher_;
+    std::unique_ptr< kernel::Controller > controller_;
+    std::unique_ptr< ActionPublisher > actions_;
+    std::unique_ptr< ScenarioManager > scenario_;
+    std::unique_ptr< PublisherActor > publisher_;
 	dispatcher::Logger_ABC*  logger_;
     //@}
 };

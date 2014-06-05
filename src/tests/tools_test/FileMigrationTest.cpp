@@ -42,7 +42,7 @@ BOOST_FIXTURE_TEST_CASE( test_single_migration, Fixture )
     xisMigrations.start( "migration" );
     tools::FileMigration fileMigration( xisMigrations );
 
-    std::auto_ptr< xml::xistream > inputStream = fileMigration.UpgradeFile( std::auto_ptr< xml::xistream >( new tools::Xifstream( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) ) ), "testFileMigration/1.2/schema.xsd" );
+    std::unique_ptr< xml::xistream > inputStream = fileMigration.UpgradeFile( std::unique_ptr< xml::xistream >( new tools::Xifstream( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) ) ), "testFileMigration/1.2/schema.xsd" );
     BOOST_REQUIRE( inputStream.get() );
     xml::xostringstream actual;
     actual << *inputStream;
@@ -63,7 +63,7 @@ BOOST_FIXTURE_TEST_CASE( test_single_migration_not_applicable, Fixture )
     xisMigrations.start( "migration" );
     tools::FileMigration fileMigration( xisMigrations );
 
-    std::auto_ptr< xml::xistream > inputStream = fileMigration.UpgradeFile( std::auto_ptr< xml::xistream >( new tools::Xifstream( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) ) ), "testFileMigration/1.2/OTHER_SCHEMA.xsd" );
+    std::unique_ptr< xml::xistream > inputStream = fileMigration.UpgradeFile( std::unique_ptr< xml::xistream >( new tools::Xifstream( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) ) ), "testFileMigration/1.2/OTHER_SCHEMA.xsd" );
     BOOST_REQUIRE( inputStream.get() );
     xml::xostringstream actual;
     actual << *inputStream;

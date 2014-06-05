@@ -81,7 +81,7 @@ protected:
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     T_PointVector pointList_;
-    std::auto_ptr< kernel::Location_ABC > location_;
+    std::unique_ptr< kernel::Location_ABC > location_;
     const kernel::TacticalLine_ABC& owner_;
     geometry::Rectangle2f boundingBox_;
     //@}

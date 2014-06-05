@@ -80,7 +80,7 @@ private:
     boost::shared_ptr< OGRDataSource > dataSource_;
     OGRLayer* currentLayer_;
     OGRFeature* currentFeature_;
-    std::auto_ptr< kernel::Location_ABC > currentLocation_;
+    std::unique_ptr< kernel::Location_ABC > currentLocation_;
     unsigned int unsupportedShapes_;
     unsigned int unsupportedPoints_;
     //@}

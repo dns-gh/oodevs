@@ -74,7 +74,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    std::auto_ptr< svg::TextRenderer > renderer_;
+    std::unique_ptr< svg::TextRenderer > renderer_;
     //@}
 };
 

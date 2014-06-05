@@ -83,8 +83,8 @@ private:
     ProcessObserver_ABC& observer_;
     T_Spawns spawns_;
     T_Spawn current_;
-    std::auto_ptr< boost::thread > thread_;
-    std::auto_ptr< boost::mutex > mutex_;
+    std::unique_ptr< boost::thread > thread_;
+    std::unique_ptr< boost::mutex > mutex_;
     //@}
 };
 }

@@ -74,17 +74,17 @@ private:
     void         CreateStaticLists();
     unsigned int RetrieveListId( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
                                  unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists );
-    std::auto_ptr< svg::Style > CreateStyle( const std::string& style );
+    std::unique_ptr< svg::Style > CreateStyle( const std::string& style );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< svg::Color >             current_;
-    std::auto_ptr< svg::Opacity >           opacity_;
-    std::auto_ptr< svg::References >        references_;
-    std::auto_ptr< svg::RenderingContext >  renderingContext_;
-    std::auto_ptr< svg::ListLengthFactory > listLenghts_;
+    std::unique_ptr< svg::Color >             current_;
+    std::unique_ptr< svg::Opacity >           opacity_;
+    std::unique_ptr< svg::References >        references_;
+    std::unique_ptr< svg::RenderingContext >  renderingContext_;
+    std::unique_ptr< svg::ListLengthFactory > listLenghts_;
 
     T_Lists lists_;
     T_Lists pickingLists_;
@@ -97,7 +97,7 @@ private:
 
     //! @name Static data
     //@{
-    static std::auto_ptr< svg::TextRenderer > renderer_;
+    static std::unique_ptr< svg::TextRenderer > renderer_;
     static unsigned int colorList_;
     //@}
 };

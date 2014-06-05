@@ -67,7 +67,7 @@ private:
     kernel::Controllers& controllers_;
     ResourceNetworkModel& resourceNetwork_;
     const StaticModel& static_;
-    std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
+    std::unique_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
     //@}
 };
 

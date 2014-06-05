@@ -51,7 +51,7 @@ namespace
 
         //! @name Operations
         //@{
-        virtual std::auto_ptr< gui::GlTooltip_ABC > CreateTooltip() const { return std::auto_ptr< gui::GlTooltip_ABC >( 0 ); }
+        virtual std::unique_ptr< gui::GlTooltip_ABC > CreateTooltip() const { return std::unique_ptr< gui::GlTooltip_ABC >(); }
         virtual void SetCurrentColor  ( float, float, float, float ) {}
         virtual void SetCurrentCursor ( const QCursor& ) {}
         virtual void DrawCross        ( const geometry::Point2f&, float, E_Unit ) const {}
@@ -143,7 +143,7 @@ void ADN_Drawings_Data::ReadArchive( xml::xistream& xis )
                              "    <segment/>"
                              "</template>" );
 
-    std::auto_ptr< DrawingInfo > drawing;
+    std::unique_ptr< DrawingInfo > drawing;
     drawing.reset( new DrawingInfo( xss >> xml::start( "template" ), "tasks", "tasks", *renderer_ ) );
     drawing->GenerateSamplePixmap( *tools_ );
     drawings_.AddItem( drawing.release() );
@@ -169,7 +169,7 @@ void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& nam
 {
     try
     {
-        std::auto_ptr< DrawingInfo > drawing;
+        std::unique_ptr< DrawingInfo > drawing;
         drawing.reset( new DrawingInfo( xis, name.c_str(), id.c_str(), *renderer_ ) );
         drawing->GenerateSamplePixmap( *tools_ );
         drawings_.AddItem( drawing.release() );

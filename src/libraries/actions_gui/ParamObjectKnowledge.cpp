@@ -64,7 +64,7 @@ void ParamObjectKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, 
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< kernel::ObjectKnowledge_ABC > > param( new actions::parameters::ObjectKnowledge( parameter_, controllers_.controller_ ) );
+    std::unique_ptr< actions::parameters::Entity< kernel::ObjectKnowledge_ABC > > param( new actions::parameters::ObjectKnowledge( parameter_, controllers_.controller_ ) );
     EntityParameter< kernel::ObjectKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

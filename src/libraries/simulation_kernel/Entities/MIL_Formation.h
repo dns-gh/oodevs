@@ -133,10 +133,10 @@ private:
     MIL_Army_ABC* pArmy_;
     MIL_Formation* pParent_;
     const PHY_NatureLevel* pLevel_;
-    std::auto_ptr< MIL_AutomateLOG > pBrainLogistic_;
+    std::unique_ptr< MIL_AutomateLOG > pBrainLogistic_;
     boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
-    std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
-    std::auto_ptr< MIL_Color > pColor_;
+    std::unique_ptr< MIL_DictionaryExtensions > pExtensions_;
+    std::unique_ptr< MIL_Color > pColor_;
     std::string symbol_;
     //@}
 };

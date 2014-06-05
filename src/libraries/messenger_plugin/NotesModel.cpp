@@ -66,7 +66,7 @@ void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message, uns
     messenger::MarkerCreationRequestAck ack;
     ack().set_error_code( sword::MarkerRequestAck::no_error );
     ack.Send( clients_, context );
-    std::auto_ptr< Note > note( new Note( idManager_.GetNextId(), message, currentTime_ ) );
+    std::unique_ptr< Note > note( new Note( idManager_.GetNextId(), message, currentTime_ ) );
     Register( note->GetId(), *note );
     if( note->GetParent() )
     {
@@ -334,7 +334,7 @@ unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const u
 {
     const unsigned int id = idManager_.GetNextId();
     boost::algorithm::replace_all( fields[3], "<br>", "\n" );
-    std::auto_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
+    std::unique_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
     Register( note->GetId(), *note );
     if( !currentContext_.IsEmpty() )
         contexts_[ currentContext_ ].push_back( note->GetId() );

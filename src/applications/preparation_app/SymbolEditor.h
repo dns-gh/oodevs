@@ -96,7 +96,7 @@ private:
     kernel::Controllers& controllers_;
     const gui::EntitySymbols& symbols_;
     const tools::ExerciseConfig& config_;
-    std::auto_ptr< kernel::SymbolFactory > pFactory_;
+    std::unique_ptr< kernel::SymbolFactory > pFactory_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     kernel::ContextMenu* menu_;
     //@}

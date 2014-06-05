@@ -34,8 +34,6 @@ using namespace plugins::score;
 IndicatorBuilder::IndicatorBuilder( const tools::SessionConfig& config )
     : primitives_ ( new indicators::Primitives() )
     , typeFactory_( new indicators::DataTypeFactory() )
-    , variables_  ( 0 )
-    , factory_    ( 0 )
 {
     primitives_->Load( *config.GetLoader().LoadFile(
         tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) ));

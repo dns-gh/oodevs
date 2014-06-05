@@ -49,7 +49,7 @@ SuccessFactorActions::~SuccessFactorActions()
 // -----------------------------------------------------------------------------
 void SuccessFactorActions::ReadAction( xml::xistream& xis, const SuccessFactorActionTypes& actionsTypes )
 {
-    std::auto_ptr< SuccessFactorAction > action( new SuccessFactorAction( xis, actionsTypes ) );
+    std::unique_ptr< SuccessFactorAction > action( new SuccessFactorAction( xis, actionsTypes ) );
     Register( static_cast< unsigned long >( elements_.size() ), *action.release() );
 }
 

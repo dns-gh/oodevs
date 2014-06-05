@@ -151,7 +151,7 @@ void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
 {
     struct UrbanModifier
     {
-        static void Read( xml::xistream& xis, std::auto_ptr< PHY_UrbanAttritionData >& data )
+        static void Read( xml::xistream& xis, std::unique_ptr< PHY_UrbanAttritionData >& data )
         {
             data.reset( new PHY_UrbanAttritionData( xis ) );
             data->UpdateGlobalScore();

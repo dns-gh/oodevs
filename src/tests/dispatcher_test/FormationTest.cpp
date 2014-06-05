@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE( Formation_CanBeCreated, Fixture )
 
     // creation
     MOCK_EXPECT( side.RegisterFormation ).once();
-    std::auto_ptr< dispatcher::Formation_ABC > result( new dispatcher::Formation( model, message ) ); // $$$$ MCO : why is it an auto_ptr ?
+    std::unique_ptr< dispatcher::Formation_ABC > result( new dispatcher::Formation( model, message ) ); // $$$$ MCO : why is it an unique_ptr ?
 
     // network serialization
     MockClientPublisher publisher;
@@ -117,7 +117,7 @@ BOOST_FIXTURE_TEST_CASE( Formation_CanBeCreated_WithExtensions, Fixture )
 
 namespace
 {
-    std::auto_ptr< dispatcher::Formation > CreateFormation( const std::string& name, unsigned int id, dispatcher::Model_ABC& model, MockSide& side )
+    std::unique_ptr< dispatcher::Formation > CreateFormation( const std::string& name, unsigned int id, dispatcher::Model_ABC& model, MockSide& side )
     {
         sword::SimToClient expected;
         expected.set_context( 0 );
@@ -133,7 +133,7 @@ namespace
 
         // creation
         MOCK_EXPECT( side.RegisterFormation ).once();
-        return std::auto_ptr< dispatcher::Formation >( new dispatcher::Formation( model, message ) );
+        return std::unique_ptr< dispatcher::Formation >( new dispatcher::Formation( model, message ) );
     }
 }
 
@@ -143,8 +143,8 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Formation_SuperiorCanBeChanged, Fixture )
 {
-    std::auto_ptr< dispatcher::Formation > child( CreateFormation("child", 1, model, side ) );
-    std::auto_ptr< dispatcher::Formation > parent( CreateFormation("parent", 52, model, side ) );
+    std::unique_ptr< dispatcher::Formation > child( CreateFormation("child", 1, model, side ) );
+    std::unique_ptr< dispatcher::Formation > parent( CreateFormation("parent", 52, model, side ) );
 
     formations.Register( child->GetId(), *child );
     formations.Register( parent->GetId(), *parent );

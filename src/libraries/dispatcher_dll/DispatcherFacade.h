@@ -51,10 +51,10 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< dispatcher::Config > config_;
-    std::auto_ptr< dispatcher::Dispatcher > dispatcher_;
-    std::auto_ptr< MT_ConsoleLogger > console_;
-    std::auto_ptr< MT_FileLogger > file_;
+    std::unique_ptr< dispatcher::Config > config_;
+    std::unique_ptr< dispatcher::Dispatcher > dispatcher_;
+    std::unique_ptr< MT_ConsoleLogger > console_;
+    std::unique_ptr< MT_FileLogger > file_;
     //@}
 };
 

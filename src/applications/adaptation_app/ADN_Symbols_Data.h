@@ -124,10 +124,10 @@ private:
     //@{
     T_SymbolsUnits_Vector                  units_;
     T_SymbolsInfra_Vector                  infras_;
-    std::auto_ptr< kernel::SymbolFactory > factory_;
-    std::auto_ptr< gui::SvglRenderer >     svgRender_;
-    std::auto_ptr< gui::GLSymbols >        glSymbols_;
-    std::auto_ptr< xml::xibufferstream >   xibs_;
+    std::unique_ptr< kernel::SymbolFactory > factory_;
+    std::unique_ptr< gui::SvglRenderer >     svgRender_;
+    std::unique_ptr< gui::GLSymbols >        glSymbols_;
+    std::unique_ptr< xml::xibufferstream >   xibs_;
     //@}
 };
 

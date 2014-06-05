@@ -72,7 +72,7 @@ private:
     PopulationFactory_ABC& populationFactory_;
     InhabitantFactory_ABC& inhabitantFactory_;
     KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
-    std::auto_ptr< MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess > > diplomacyConverter_;
+    std::unique_ptr< MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess > > diplomacyConverter_;
     //@}
 };
 

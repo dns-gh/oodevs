@@ -66,7 +66,7 @@ void ADN_Weapons_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Weapons_Data::ReadWeapon( xml::xistream& input )
 {
-    std::auto_ptr< ADN_Weapons_Data_WeaponInfos > spNew( new ADN_Weapons_Data_WeaponInfos() );
+    std::unique_ptr< ADN_Weapons_Data_WeaponInfos > spNew( new ADN_Weapons_Data_WeaponInfos() );
     spNew->ReadArchive( input );
     if( spNew->ptrLauncher_.GetData() && spNew->ptrAmmunition_.GetData() )
         weapons_.AddItem( spNew.release() );

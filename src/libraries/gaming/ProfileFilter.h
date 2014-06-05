@@ -60,7 +60,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< UnitFilter > pUnitFilter_;
+    std::unique_ptr< UnitFilter > pUnitFilter_;
     kernel::Controller& controller_;
     kernel::SafePointer< kernel::Profile_ABC > profile_;
     //@}

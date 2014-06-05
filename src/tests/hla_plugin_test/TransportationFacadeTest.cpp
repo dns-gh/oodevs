@@ -102,7 +102,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( netn_transportation_facade_init, Fixture )
 {
-    std::auto_ptr< TransportationFacade > transportationFacade;
+    std::unique_ptr< TransportationFacade > transportationFacade;
 
     // requester
     MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "pause" ).returns( pauseId );
@@ -126,7 +126,7 @@ BOOST_FIXTURE_TEST_CASE( netn_transportation_facade_init, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( netn_transportation_facade_invalid_pause, Fixture )
 {
-    std::auto_ptr< TransportationFacade > transportationFacade;
+    std::unique_ptr< TransportationFacade > transportationFacade;
 
     MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "pause" ).throws( tools::Exception( "file", "function", 1, "frag order pause does not exist") );
 
@@ -138,7 +138,7 @@ BOOST_FIXTURE_TEST_CASE( netn_transportation_facade_invalid_pause, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( netn_transportation_facade_invalid_transport_request, Fixture )
 {
-    std::auto_ptr< TransportationFacade > transportationFacade;
+    std::unique_ptr< TransportationFacade > transportationFacade;
 
     MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "pause" ).returns( pauseId );
     MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "resume" ).returns( resumeId );
@@ -154,7 +154,7 @@ BOOST_FIXTURE_TEST_CASE( netn_transportation_facade_invalid_transport_request, F
 
 BOOST_FIXTURE_TEST_CASE( netn_transportation_facade_invalid_transport_offer, Fixture )
 {
-    std::auto_ptr< TransportationFacade > transportationFacade;
+    std::unique_ptr< TransportationFacade > transportationFacade;
 
     // requester
     MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "pause" ).returns( pauseId );

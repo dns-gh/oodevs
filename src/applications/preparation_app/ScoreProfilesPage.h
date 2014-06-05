@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     void StartEdit( const ProfileSelection& profiles );
-    std::auto_ptr< ProfileSelection > CreateResult() const;
+    std::unique_ptr< ProfileSelection > CreateResult() const;
     //@}
 
 private:

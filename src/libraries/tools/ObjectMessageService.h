@@ -49,7 +49,7 @@ public:
     void RegisterWarningCallback( const T_Callback& warning );
 
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
-    virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
+    virtual void Register( unsigned long id, std::unique_ptr< ObjectMessageCallback_ABC > callback );
     //@}
 
     //! @name Accessors

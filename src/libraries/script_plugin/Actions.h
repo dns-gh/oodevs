@@ -87,8 +87,8 @@ private:
     const tools::ExerciseConfig& config_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     kernel::Controller& controller_;
-    std::auto_ptr< kernel::EntityResolver_ABC > entities_;
-    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::unique_ptr< kernel::EntityResolver_ABC > entities_;
+    std::unique_ptr< kernel::CoordinateConverter_ABC > converter_;
     T_Schedulers schedulers_;
     //@}
 };

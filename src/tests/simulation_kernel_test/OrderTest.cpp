@@ -32,6 +32,6 @@ BOOST_AUTO_TEST_CASE( OrderTest_EmptyContextIsValid )
     sword::MissionParameters parameters;
     for( unsigned int i = 0; i < contextSize; ++i )
         parameters.add_elem()->set_null_value( true );
-    std::auto_ptr< MIL_OrderContext > context;
+    std::unique_ptr< MIL_OrderContext > context;
     BOOST_CHECK_NO_THROW( context.reset( new MIL_OrderContext( parameters, MT_Vector2D( 0, 0 ) ) ) );
 }

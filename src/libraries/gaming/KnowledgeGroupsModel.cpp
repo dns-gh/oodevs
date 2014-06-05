@@ -39,7 +39,7 @@ KnowledgeGroupsModel::~KnowledgeGroupsModel()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Create( const sword::KnowledgeGroupCreation& message )
 {
-    std::auto_ptr< kernel::KnowledgeGroup_ABC > group( factory_.CreateKnowledgeGroup( message ) );
+    std::unique_ptr< kernel::KnowledgeGroup_ABC > group( factory_.CreateKnowledgeGroup( message ) );
     Register( group->GetId(), *group );
     group.release();
 }

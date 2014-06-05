@@ -73,7 +73,7 @@ private:
     //@{
     GlTools_ABC& tools_;
     const kernel::DetectionMap& elevation_;
-    std::auto_ptr< GlTooltip_ABC > tooltip_;
+    std::unique_ptr< GlTooltip_ABC > tooltip_;
     bool multiRulingMode_;
     geometry::Point2f start_;
     geometry::Point2f end_;

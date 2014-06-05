@@ -74,7 +74,7 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const ScoreDefinitions& definitions_;
-    std::auto_ptr< IndicatorRequests > requests_;
+    std::unique_ptr< IndicatorRequests > requests_;
     T_ScoreRequests scoreRequests_;
     bool hasReplay_;
     //@}

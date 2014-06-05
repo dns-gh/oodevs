@@ -100,7 +100,7 @@ void ProfilesModel::Serialize( const tools::Path& file, const tools::SchemaWrite
 // -----------------------------------------------------------------------------
 void ProfilesModel::LoadProfile( xml::xistream& xis )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create( xis ) );
+    std::unique_ptr< UserProfile > profile( factory_.Create( xis ) );
     userProfiles_.push_back( profile.release() );
 }
 
@@ -110,7 +110,7 @@ void ProfilesModel::LoadProfile( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ProfilesModel::CreateProfile( const QString& name )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create( name ) );
+    std::unique_ptr< UserProfile > profile( factory_.Create( name ) );
     userProfiles_.push_back( profile.release() );
 }
 
@@ -120,7 +120,7 @@ void ProfilesModel::CreateProfile( const QString& name )
 // -----------------------------------------------------------------------------
 void ProfilesModel::CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create( name ) );
+    std::unique_ptr< UserProfile > profile( factory_.Create( name ) );
     if( readonly )
         profile->SetReadable( entity, true );
     else

@@ -73,7 +73,7 @@ void MissionParameters::UpdateMessage( const T& message )
 
     try
     {
-        std::auto_ptr< Action_ABC > action( factory_.CreateAction( message, true ) );
+        std::unique_ptr< Action_ABC > action( factory_.CreateAction( message, true ) );
         if( !action.get() )
             return;
         Register( action->GetId(), *action );

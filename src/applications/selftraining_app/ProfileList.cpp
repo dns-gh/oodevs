@@ -69,7 +69,7 @@ void ProfileList::ReadProfiles( const tools::Path& exercise )
 {
     tools::Path profilesFile;
     {
-        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise ) );
+        std::unique_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise ) );
         *xis >> xml::start( "exercise" )
                 >> xml::start( "profiles" )
                     >> xml::attribute( "file", profilesFile );
@@ -78,7 +78,7 @@ void ProfileList::ReadProfiles( const tools::Path& exercise )
         const tools::Path file = config_.BuildChildPath( config_.GetExerciseFile( exercise ), profilesFile );
         if( file.Exists() )
         {
-            std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
+            std::unique_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
             *xis >> xml::start( "profiles" )
                 >> xml::list( "profile", *this, &ProfileList::ReadProfile );
         }

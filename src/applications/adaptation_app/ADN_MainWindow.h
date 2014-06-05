@@ -108,12 +108,12 @@ private:
     //! @name Member data
     //@{
     const ADN_GeneralConfig& config_;
-    std::auto_ptr< gui::GlContext > openGLContext_;
+    std::unique_ptr< gui::GlContext > openGLContext_;
 
-    std::auto_ptr< gui::ConsistencyDialog_ABC > consistencyDialog_;
-    std::auto_ptr< ADN_MainTabWidget > mainTabWidget_;
-    std::auto_ptr< ADN_ProgressBar > progressBar_;
-    std::auto_ptr< QSignalMapper > consistencyMapper_;
+    std::unique_ptr< gui::ConsistencyDialog_ABC > consistencyDialog_;
+    std::unique_ptr< ADN_MainTabWidget > mainTabWidget_;
+    std::unique_ptr< ADN_ProgressBar > progressBar_;
+    std::unique_ptr< QSignalMapper > consistencyMapper_;
 
     QLayout* mainLayout_;
 

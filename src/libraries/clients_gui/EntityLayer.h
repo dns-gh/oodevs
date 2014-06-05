@@ -131,7 +131,7 @@ private:
     kernel::Controllers&                      controllers_; // TODO protected?? utilisé dans EntityLayer
     ColorStrategy_ABC&                        strategy_;
     View_ABC&                                 view_;
-    std::auto_ptr< InformationToolTip >       infoTooltip_;
+    std::unique_ptr< InformationToolTip >     infoTooltip_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     std::set< unsigned int >                  selection_;
     //@}

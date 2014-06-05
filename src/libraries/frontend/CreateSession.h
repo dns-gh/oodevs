@@ -53,7 +53,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ConfigurationManipulator > setter_;
+    std::unique_ptr< ConfigurationManipulator > setter_;
     tools::Path session_;
     //@}
 };

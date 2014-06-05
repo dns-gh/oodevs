@@ -121,7 +121,7 @@ private:
     T_ExtinguisherAgentEffectVector extinguisherAgentEffects_;
     T_WeatherEffectMap weatherEffects_;
     T_InjuryMap injuries_;
-    std::auto_ptr< PHY_UrbanAttritionData > urbanModifiers_;
+    std::unique_ptr< PHY_UrbanAttritionData > urbanModifiers_;
     T_Surfaces surfaces_;
     const std::string name_;
     int decreaseRate_;

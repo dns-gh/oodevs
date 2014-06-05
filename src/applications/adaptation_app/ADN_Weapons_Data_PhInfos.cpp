@@ -125,7 +125,7 @@ ADN_Weapons_Data_PhSizeInfos::~ADN_Weapons_Data_PhSizeInfos()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_Data_PhSizeInfos::ReadHp( xml::xistream& input )
 {
-    std::auto_ptr< ADN_Weapons_Data_PhInfos > spNew( new ADN_Weapons_Data_PhInfos() );
+    std::unique_ptr< ADN_Weapons_Data_PhInfos > spNew( new ADN_Weapons_Data_PhInfos() );
     spNew->ReadArchive( input );
     vPhs_.AddItem( spNew.release() );
 }

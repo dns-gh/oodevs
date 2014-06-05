@@ -54,7 +54,7 @@ private:
     //! @name Private members
     //@{
     struct Private;
-    std::auto_ptr< Private > private_;
+    std::unique_ptr< Private > private_;
     //@}
 };
 }

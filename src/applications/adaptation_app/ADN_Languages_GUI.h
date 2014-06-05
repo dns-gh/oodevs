@@ -62,7 +62,7 @@ private:
     //@{
     ADN_Languages_Data& data_;
     QMenu* menu_;
-    std::auto_ptr< ADN_Languages_Dialog > dialog_;
+    std::unique_ptr< ADN_Languages_Dialog > dialog_;
     std::vector< QAction* > actions_;
     QAction* swapAction_;
     QAction* swapSeparator_;

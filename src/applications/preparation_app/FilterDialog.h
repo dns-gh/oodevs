@@ -81,7 +81,7 @@ signals:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< FilterManager > filterManager_;
+    std::unique_ptr< FilterManager > filterManager_;
     gui::RichWidget< QListWidget >*           list_;
     QLabel*                        description_;
     gui::RichPushButton*           okButton_;

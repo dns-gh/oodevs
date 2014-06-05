@@ -544,10 +544,10 @@ void GlProxy::Reset3d()
 // Name: GlProxy::CreateTooltip
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-std::auto_ptr< GlTooltip_ABC > GlProxy::CreateTooltip() const
+std::unique_ptr< GlTooltip_ABC > GlProxy::CreateTooltip() const
 {
     if( tooltipLayer_ )
-        return std::auto_ptr< GlTooltip_ABC >( new GlTooltip( *tooltipLayer_ ) );
+        return std::unique_ptr< GlTooltip_ABC >( new GlTooltip( *tooltipLayer_ ) );
     throw MASA_EXCEPTION( "ToolTipLayer not defined." );
 }
 

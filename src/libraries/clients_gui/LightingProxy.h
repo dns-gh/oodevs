@@ -60,8 +60,8 @@ private:
     //! @name Member data
     //@{
     bool camera_;
-    std::auto_ptr< FixedLighting > fixed_;
-    std::auto_ptr< TimeLighting > time_;
+    std::unique_ptr< FixedLighting > fixed_;
+    std::unique_ptr< TimeLighting > time_;
     Lighting_ABC* current_;
     //@}
 };

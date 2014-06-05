@@ -26,8 +26,8 @@ using namespace gui;
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
 ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const tools::Resolver_ABC< ObjectType, std::string >& resolver,
-                                                                      std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory, QWidget* parent )
-    : factory_ ( factory )
+                                                                      std::unique_ptr< ObjectAttributePrototypeFactory_ABC > factory, QWidget* parent )
+    : factory_ ( std::move( factory ) )
     , resolver_( resolver )
     , parent_  ( parent )
 {

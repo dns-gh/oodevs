@@ -74,7 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< GaugeTypeFactory > factory_;
+    std::unique_ptr< GaugeTypeFactory > factory_;
     //@}
 };
 

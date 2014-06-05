@@ -86,8 +86,8 @@ private:
     //! @name Member data
     //@{
     dispatcher::AuthenticatedLinkResolver_ABC& resolver_;
-    std::auto_ptr< dispatcher::MessageLoader > messages_;
-    std::auto_ptr< ::aar::StaticModel > model_;
+    std::unique_ptr< dispatcher::MessageLoader > messages_;
+    std::unique_ptr< ::aar::StaticModel > model_;
     //@}
 };
 

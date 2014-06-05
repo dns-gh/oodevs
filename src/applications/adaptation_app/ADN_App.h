@@ -40,8 +40,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< const ADN_GeneralConfig > config_;
-    std::auto_ptr< ADN_MainWindow > mainWindow_;
+    std::unique_ptr< const ADN_GeneralConfig > config_;
+    std::unique_ptr< ADN_MainWindow > mainWindow_;
     //@}
 };
 

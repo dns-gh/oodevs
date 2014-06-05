@@ -69,7 +69,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void Add( std::auto_ptr< ColorModifier_ABC > modifier );
+    void Add( std::unique_ptr< ColorModifier_ABC > modifier );
     //@}
 
 private:

@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     const kernel::DetectionMap& detection_;
-    std::auto_ptr< propagation::FloodModel_ABC > pFloodModel_;
+    std::unique_ptr< propagation::FloodModel_ABC > pFloodModel_;
     T_Floods floods_;
     unsigned int idManager_;
     //@}

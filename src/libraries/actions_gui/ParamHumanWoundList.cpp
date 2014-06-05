@@ -83,7 +83,7 @@ QWidget* ParamHumanWoundList::BuildInterface( const QString& objectName, QWidget
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::MedicalPriorities > param( new actions::parameters::MedicalPriorities( parameter_ ) );
+    std::unique_ptr< actions::parameters::MedicalPriorities > param( new actions::parameters::MedicalPriorities( parameter_ ) );
     if( IsChecked() )
         for( int row = 0; row < model_.rowCount(); ++row )
         {

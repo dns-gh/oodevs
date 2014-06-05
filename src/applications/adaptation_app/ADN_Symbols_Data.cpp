@@ -214,7 +214,6 @@ ADN_Symbols_Data::SymbolsInfra::~SymbolsInfra()
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::ADN_Symbols_Data()
     : ADN_Data_ABC( eSymbols )
-    , factory_( 0 )
     , svgRender_( new gui::SvglRenderer() )
     , glSymbols_( new gui::GLSymbols( *svgRender_ ) )
 {

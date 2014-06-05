@@ -53,7 +53,7 @@ private:
     //! @name Member data
     //@{
     bool triggered_;
-    std::auto_ptr< xml::xistream > xis_;
+    std::unique_ptr< xml::xistream > xis_;
     //@}
 };
 

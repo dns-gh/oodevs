@@ -54,7 +54,7 @@ namespace
         const tools::Path fileName = config.GetExerciseFile( path );
         try
         {
-            std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
+            std::unique_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
             *xis >> xml::start( "exercise" )
                     >> xml::start( "terrain" )
                         >> xml::attribute( "name", terrain )
@@ -92,7 +92,7 @@ namespace
         QStringList result;
         try
         {
-            std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
+            std::unique_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
             ResourcesLoadingWrapper loadingWrapper( result );
             *xis >> xml::start( "exercise" )
                     >> xml::optional >> xml::start( "meta" )
@@ -193,7 +193,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
 template< typename T >
 T* ScenarioLauncherPage::AddPlugin( T* ptr )
 {
-    std::auto_ptr< T > plugin( ptr );
+    std::unique_ptr< T > plugin( ptr );
     if( plugin.get() && plugin->IsAvailable() )
     {
         if( plugin->IsVisible() )

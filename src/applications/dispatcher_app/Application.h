@@ -47,8 +47,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< dispatcher::DispatcherLoader > dispatcher_;
-    std::auto_ptr< tools::WaitEvent > quit_;
+    std::unique_ptr< dispatcher::DispatcherLoader > dispatcher_;
+    std::unique_ptr< tools::WaitEvent > quit_;
     //@}
 };
 

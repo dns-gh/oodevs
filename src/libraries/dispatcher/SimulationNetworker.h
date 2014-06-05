@@ -73,7 +73,7 @@ private:
     Model&                      model_;
     ClientsNetworker&           clients_;
     Plugin_ABC&                 plugins_;
-    std::auto_ptr< Simulation > simulation_;
+    std::unique_ptr< Simulation > simulation_;
 };
 
 }

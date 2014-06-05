@@ -76,7 +76,7 @@ namespace
         tools::Resolver< dispatcher::Object_ABC > objects;
         tools::Resolver< dispatcher::UrbanObject_ABC > urbanObjects;
         tools::Resolver< dispatcher::Automat_ABC > automats;
-        std::auto_ptr< dispatcher::ObjectKnowledge_ABC > result;
+        std::unique_ptr< dispatcher::ObjectKnowledge_ABC > result;
         sword::SimToClient expected;
         MockClientPublisher publisher;
     };

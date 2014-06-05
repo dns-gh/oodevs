@@ -128,14 +128,14 @@ void MIL_AgentPion_Remote::load( MIL_CheckPointInArchive& file, const unsigned i
          >> level;
     SetAutomate( pAutomate );
     SetKnowledge( blackboard );
-    SetAffinities( std::auto_ptr< MIL_AffinitiesMap >( pAffinities ) );
+    SetAffinities( std::unique_ptr< MIL_AffinitiesMap >( pAffinities ) );
     SetLevel( level );
     SetSymbol( symbol );
     LoadRole< NET_RoleInterface_Dotations >( file, *this );
     LoadRole< PHY_RoleInterface_Location >( file, *this );
     LoadRole< PHY_RoleInterface_UrbanLocation >( file, *this );
     LoadRole< PHY_RoleInterface_Composantes >( file, *this );
-    SetColor( std::auto_ptr< MIL_Color >( pColor ) );
+    SetColor( std::unique_ptr< MIL_Color >( pColor ) );
     SetExtensions( *pExtensions );
     LoadRole< sword::RoleAdapterInterface >( file, *this );
 }

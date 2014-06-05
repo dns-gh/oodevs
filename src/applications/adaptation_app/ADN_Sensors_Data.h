@@ -202,7 +202,7 @@ public:
     T_SensorsInfos_Vector vSensors_;
     ALATInfos alatInfos_;
     CobraInfos cobraInfos_;
-    std::auto_ptr< ADN_Radars_Data > radarData_;
+    std::unique_ptr< ADN_Radars_Data > radarData_;
 };
 
 //-----------------------------------------------------------------------------

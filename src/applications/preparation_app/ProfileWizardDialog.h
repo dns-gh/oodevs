@@ -54,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ProfilesGenerator > generator_;
+    std::unique_ptr< ProfilesGenerator > generator_;
     ProfilesModel& profiles_;
     Q3ButtonGroup* profileTypes_;
     Q3ButtonGroup* creationMode_;

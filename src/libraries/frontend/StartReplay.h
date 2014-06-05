@@ -40,7 +40,7 @@ public:
 private:
     //! @name data
     //@{
-    std::auto_ptr< ConfigurationManipulator > configManipulator_;
+    std::unique_ptr< ConfigurationManipulator > configManipulator_;
     //@}
 
 };

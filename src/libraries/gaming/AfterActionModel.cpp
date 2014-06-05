@@ -99,7 +99,7 @@ void AfterActionModel::Load( const tools::Path& functions )
 // -----------------------------------------------------------------------------
 void AfterActionModel::ReadFunction( xml::xistream& xis )
 {
-    std::auto_ptr< AfterActionFunction > function( new AfterActionFunction( xis ) );
+    std::unique_ptr< AfterActionFunction > function( new AfterActionFunction( xis ) );
     Register( function->GetName(), *function.release() );
 }
 

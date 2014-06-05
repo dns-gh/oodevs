@@ -51,7 +51,7 @@ bool PluginConfigBuilder::AddPlugin( const tools::Path& path )
     {
         try
         {
-            std::auto_ptr< xml::xistream > xis = loader_->LoadFile( path );
+            std::unique_ptr< xml::xistream > xis = loader_->LoadFile( path );
             *xis >> xml::start( "plugin" );
             composite_->Add( config_, *xis );
         }

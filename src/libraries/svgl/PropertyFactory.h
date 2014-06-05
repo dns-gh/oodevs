@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void ChangeFactory   ( RenderingContext_ABC::E_Properties type, std::auto_ptr< PropertyFactory_ABC > factory );
+    void ChangeFactory   ( RenderingContext_ABC::E_Properties type, std::unique_ptr< PropertyFactory_ABC > factory );
     void ChangeFactory   ( RenderingContext_ABC::E_Properties type, const PropertyFactory_ABC& factory );
     void CreateProperties( PropertyGroup& group, xml::xistream& input ) const;
     void CreateProperties( PropertyGroup& group, const std::string& css ) const;

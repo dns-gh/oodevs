@@ -240,7 +240,7 @@ void GlToolsBase::OptionChanged( const std::string& name, const kernel::OptionVa
 // Name: GlToolsBase::CreateTooltip
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-std::auto_ptr< GlTooltip_ABC > GlToolsBase::CreateTooltip() const
+std::unique_ptr< GlTooltip_ABC > GlToolsBase::CreateTooltip() const
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

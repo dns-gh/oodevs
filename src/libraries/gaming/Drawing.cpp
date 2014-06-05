@@ -61,7 +61,7 @@ Drawing::~Drawing()
 // -----------------------------------------------------------------------------
 void Drawing::SetLocation( const sword::CoordLatLongList& list )
 {
-    std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
+    std::unique_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
     location.release();
     for( int i = 0; i < list.elem_size(); ++i )

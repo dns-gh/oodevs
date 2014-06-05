@@ -54,9 +54,9 @@ private:
     //@{
     const QString name_;
     const std::string formula_;
-    std::auto_ptr< indicators::Gauge > gauge_;
-    std::auto_ptr< indicators::Variables > variables_;
-    std::auto_ptr< indicators::ElementFactory_ABC > elementFactory_;
+    std::unique_ptr< indicators::Gauge > gauge_;
+    std::unique_ptr< indicators::Variables > variables_;
+    std::unique_ptr< indicators::ElementFactory_ABC > elementFactory_;
     //@}
 };
 

@@ -32,8 +32,7 @@ namespace tools
 // -----------------------------------------------------------------------------
 ExerciseConfig::ExerciseConfig( 
     const boost::shared_ptr< RealFileLoaderObserver_ABC >& observer )
-    : pWorldParameters_( 0 )
-    , observer_( observer )
+    : observer_( observer )
     , loader_( new DefaultLoader( *observer ))
 {
     po::options_description desc( "Exercise options" );

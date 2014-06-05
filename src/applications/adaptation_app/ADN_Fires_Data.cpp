@@ -390,7 +390,7 @@ void ADN_Fires_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Fires_Data::ReadFireClass( xml::xistream& input )
 {
-    std::auto_ptr< FireClassInfos > spNew( new FireClassInfos() );
+    std::unique_ptr< FireClassInfos > spNew( new FireClassInfos() );
     spNew->ReadArchive( input );
     fireClasses_.AddItem( spNew.release() );
 }

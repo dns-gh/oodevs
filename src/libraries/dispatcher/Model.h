@@ -153,10 +153,10 @@ private:
     //@{
     const kernel::StaticModel&               staticModel_;
     MemoryLogger_ABC&                        logger_;
-    std::auto_ptr< SimulationModel >         simulation_;
-    std::auto_ptr< CompositeFactory >        compositeFactory_;
-    std::auto_ptr< FolkModel >               folk_;
-    std::auto_ptr< MeteoModel >              meteoModel_;
+    std::unique_ptr< SimulationModel >       simulation_;
+    std::unique_ptr< CompositeFactory >      compositeFactory_;
+    std::unique_ptr< FolkModel >             folk_;
+    std::unique_ptr< MeteoModel >            meteoModel_;
     const Config&                            config_;
     tools::Resolver< Team_ABC >              sides_;
     tools::Resolver< KnowledgeGroup_ABC >    knowledgeGroups_;

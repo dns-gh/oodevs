@@ -157,8 +157,9 @@ void VisionCones::Update() const
 //    updater.Commit();
 
     // $$$$ AGE 2007-07-09: threaded version enabled
-    std::auto_ptr< WorkerTask_ABC > task( new Updater( *const_cast< VisionCones* >( this ) ) );
-    workers_.Enqueue( task );
+    workers_.Enqueue(
+        std::unique_ptr< WorkerTask_ABC >(
+            new Updater( *const_cast< VisionCones* >( this ) ) ) );
 }
 
 // -----------------------------------------------------------------------------

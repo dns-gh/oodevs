@@ -80,7 +80,7 @@ void ADN_Models_Data::FilesNeeded(tools::Path::T_Paths& files) const
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadModels( xml::xistream& input, E_EntityType type )
 {
-    std::auto_ptr< ADN_Models_ModelInfos > spNew( new ADN_Models_ModelInfos( type ) );
+    std::unique_ptr< ADN_Models_ModelInfos > spNew( new ADN_Models_ModelInfos( type ) );
     spNew->ReadArchive( input );
     vModels_[ type ].AddItem( spNew.release() );
 }

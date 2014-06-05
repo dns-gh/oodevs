@@ -70,8 +70,8 @@ private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
-    std::auto_ptr< kernel::EntityResolver_ABC > entities_;
+    std::unique_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::unique_ptr< kernel::EntityResolver_ABC > entities_;
     //@}
 };
 }

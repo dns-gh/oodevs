@@ -50,9 +50,9 @@ public:
 protected:
     //! @name Member data
     //@{
-    std::auto_ptr< gui::EditorFactory_ABC > editorFactory_;
-    std::auto_ptr< gui::PropertyDisplayer > propertiesComparator_;
-    std::auto_ptr< gui::PropertyDisplayer > propertiesDisplayer_;
+    std::unique_ptr< gui::EditorFactory_ABC > editorFactory_;
+    std::unique_ptr< gui::PropertyDisplayer > propertiesComparator_;
+    std::unique_ptr< gui::PropertyDisplayer > propertiesDisplayer_;
     //@}
 };
 

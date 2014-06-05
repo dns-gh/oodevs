@@ -39,7 +39,7 @@ public:
     virtual void                           CheckOptionalFile( const Path& file ) const;
     virtual void                           LoadFile         ( const Path& fileName, T_Loader loader ) const;
     virtual bool                           LoadOptionalFile ( const Path& fileName, T_Loader loader ) const;
-    virtual std::auto_ptr< xml::xistream > LoadFile         ( const Path& fileName ) const;
+    virtual std::unique_ptr< xml::xistream > LoadFile         ( const Path& fileName ) const;
     virtual const RealFileLoaderObserver_ABC& GetObserver() const;
     //@}
 
@@ -47,8 +47,8 @@ protected:
     //! @name Member data
     //@{
     RealFileLoaderObserver_ABC& observer_;
-    std::auto_ptr< SchemaVersionExtractor_ABC > schemaVersionExtractor_;
-    std::auto_ptr< RealFileLoader_ABC > fileLoader_;
+    std::unique_ptr< SchemaVersionExtractor_ABC > schemaVersionExtractor_;
+    std::unique_ptr< RealFileLoader_ABC > fileLoader_;
     //@}
 };
 

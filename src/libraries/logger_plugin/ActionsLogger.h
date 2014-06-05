@@ -111,8 +111,8 @@ private:
     //@{
     const tools::SessionConfig&                      config_;
     const kernel::Time_ABC&                          time_;
-    std::auto_ptr< kernel::EntityResolver_ABC >      entities_;
-    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::unique_ptr< kernel::EntityResolver_ABC >      entities_;
+    std::unique_ptr< kernel::CoordinateConverter_ABC > converter_;
     T_Actions                                        actions_;
     bool                                             loaded_;
     //@}

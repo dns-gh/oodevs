@@ -333,7 +333,7 @@ void ADN_Radars_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Radars_Data::ReadRadar( xml::xistream& input )
 {
-    std::auto_ptr< RadarInfos > spNew( new RadarInfos() );
+    std::unique_ptr< RadarInfos > spNew( new RadarInfos() );
     spNew->ReadArchive( input );
     vRadars_.AddItem( spNew.release() );
 }

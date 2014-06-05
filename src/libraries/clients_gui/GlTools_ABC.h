@@ -92,7 +92,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< gui::GlTooltip_ABC > CreateTooltip() const = 0;
+    virtual std::unique_ptr< gui::GlTooltip_ABC > CreateTooltip() const = 0;
 
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 ) = 0;
     virtual void SetCurrentCursor ( const QCursor& cursor ) = 0;

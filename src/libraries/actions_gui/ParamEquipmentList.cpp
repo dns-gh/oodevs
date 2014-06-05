@@ -121,7 +121,7 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::MaintenancePriorities > param( new actions::parameters::MaintenancePriorities( parameter_ ) );
+    std::unique_ptr< actions::parameters::MaintenancePriorities > param( new actions::parameters::MaintenancePriorities( parameter_ ) );
     if( IsChecked() )
         for( int row = 0; row <  list_->count(); ++row )
             param->AddPriority( *list_->item( row )->data( EquipmentRole ).value< const kernel::EquipmentType* >() );

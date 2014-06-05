@@ -77,7 +77,7 @@ private:
     kernel::Controllers& controllers_;
     TeamFactory_ABC& factory_;
     KnowledgeGroupsModel& knowledgeGroupsModel_;
-    std::auto_ptr< kernel::Team_ABC > noSideTeam_;
+    std::unique_ptr< kernel::Team_ABC > noSideTeam_;
     //@}
 };
 

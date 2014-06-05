@@ -282,7 +282,7 @@ void CreateExerciceWidget::OnSelectionChanged()
     QList< QListWidgetItem* > items = exerciseList_->selectedItems();
     if( items.empty() )
         return;
-    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( tools::Path::FromUnicode( items[ 0 ]->text().toStdWString() ) ) );
+    std::unique_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( tools::Path::FromUnicode( items[ 0 ]->text().toStdWString() ) ) );
     std::string terrain, physical, dataSet;
     *xis >> xml::start( "exercise" )
             >> xml::start( "terrain" )

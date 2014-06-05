@@ -66,7 +66,7 @@ private:
     //@{
     const dispatcher::Config& config_;
     dispatcher::Model_ABC& model_;
-    std::auto_ptr< Saver > saver_;
+    std::unique_ptr< Saver > saver_;
     std::string encodingBuffer_;
     MessageFilter filter_;
     unsigned int keyFrameIndex_;

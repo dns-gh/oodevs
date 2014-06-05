@@ -73,7 +73,7 @@ private:
     //! @name Member data
     //@{
     QProgressDialog* progressDialog_;
-    std::auto_ptr< CsvExport > pExport_;
+    std::unique_ptr< CsvExport > pExport_;
     gui::RichLineEdit* output_;
     const tools::Path exerciseFile_;
     const tools::Path exerciseName_;

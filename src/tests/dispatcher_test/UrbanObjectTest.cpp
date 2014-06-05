@@ -39,7 +39,7 @@ namespace
             mock::reset( publisher );
             expected.mutable_message()->Clear();
         }
-        std::auto_ptr< dispatcher::UrbanObject_ABC > result;
+        std::unique_ptr< dispatcher::UrbanObject_ABC > result;
         MockModel model;
         sword::SimToClient expected;
         MockClientPublisher publisher;

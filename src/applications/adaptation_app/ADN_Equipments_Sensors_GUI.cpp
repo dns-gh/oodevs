@@ -71,7 +71,7 @@ ADN_Type_Vector_ABC< ADN_Radars_Data::RadarInfos >& ADN_Equipments_Sensors_GUI< 
 template< typename EquipmentInfo, typename SensorInfo >
 void ADN_Equipments_Sensors_GUI< EquipmentInfo, SensorInfo >::OnContextMenu( const QPoint& pt )
 {
-    std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
+    std::unique_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
     // Get the list of the possible munitions
     bool bDisplayAdd = false;
     bool bDisplayRem = GetSelectedData() != 0;

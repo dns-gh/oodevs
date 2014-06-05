@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeCreated )
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "string" );
     }
-    std::auto_ptr< ClientObject > result;
+    std::unique_ptr< ClientObject > result;
     result.reset( new ClientObject( 42, msg ) );
     MockClientPublisher publisher;
     MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( expected );

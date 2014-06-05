@@ -74,7 +74,7 @@ void SuccessFactorConditions::NotifyDeleted( const Score_ABC& score )
 // -----------------------------------------------------------------------------
 void SuccessFactorConditions::ReadCondition( xml::xistream& xis, const ScoresModel& model )
 {
-    std::auto_ptr< SuccessFactorCondition > condition( new SuccessFactorCondition( xis, model ) );
+    std::unique_ptr< SuccessFactorCondition > condition( new SuccessFactorCondition( xis, model ) );
     Register( static_cast< unsigned long >( elements_.size() ), *condition.release() );
 }
 

@@ -157,7 +157,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
         return;
     try
     {
-        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise->GetName() ) );
+        std::unique_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise->GetName() ) );
         currentTerrain_.Clear();
         currentData_.Clear();
         currentPhysical_.Clear();

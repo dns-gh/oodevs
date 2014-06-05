@@ -388,7 +388,7 @@ void ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList( xml::xistream& inp
 {
     bLimitedToSensors_ = true;
 
-    std::auto_ptr< LimitedToSensorsInfos > spNew( new LimitedToSensorsInfos() );
+    std::unique_ptr< LimitedToSensorsInfos > spNew( new LimitedToSensorsInfos() );
     spNew->ReadArchive( input );
     vLimitedToSensorsInfos_.AddItem( spNew.release() );
 }
@@ -452,7 +452,7 @@ void ADN_Sensors_Data::SensorInfos::ReadItem( const std::string& name, xml::xist
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadObject( xml::xistream& input )
 {
-    std::auto_ptr<TargetInfos> spNew( new TargetInfos() );
+    std::unique_ptr<TargetInfos> spNew( new TargetInfos() );
     spNew->ReadArchive( input );
     vTargets_.AddItem( spNew.release() );
 }
@@ -483,7 +483,7 @@ void ADN_Sensors_Data::SensorInfos::ReadDisasterDetection( xml::xistream& input 
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadDisaster( xml::xistream& input )
 {
-    std::auto_ptr< DisasterInfos > spNew( new DisasterInfos() );
+    std::unique_ptr< DisasterInfos > spNew( new DisasterInfos() );
     spNew->ReadArchive( input );
     vDisasters_.AddItem( spNew.release() );
 }
@@ -712,7 +712,7 @@ void ADN_Sensors_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::ReadSensor( xml::xistream& input )
 {
-    std::auto_ptr<SensorInfos> spNew( new SensorInfos() );
+    std::unique_ptr<SensorInfos> spNew( new SensorInfos() );
     spNew->ReadArchive( input );
     vSensors_.AddItem( spNew.release() );
 }

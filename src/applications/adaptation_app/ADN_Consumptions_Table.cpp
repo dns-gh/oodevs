@@ -43,7 +43,7 @@ ADN_Consumptions_Table::~ADN_Consumptions_Table()
 // -----------------------------------------------------------------------------
 void ADN_Consumptions_Table::OnContextMenu( const QPoint& pt )
 {
-    std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
+    std::unique_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
     // Get the list of the possible munitions
     bool bDisplayAdd = false;
     bool bDisplayRem = GetSelectedData() != 0;

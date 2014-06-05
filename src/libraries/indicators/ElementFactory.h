@@ -53,7 +53,7 @@ private:
     //@{
     const Primitives& primitives_;
     const Variables& variables_;
-    std::auto_ptr< DataTypeFactory > types_;
+    std::unique_ptr< DataTypeFactory > types_;
     boost::shared_ptr< ElementTypeResolver > resolver_;
     mutable unsigned long id_;
     //@}

@@ -105,8 +105,8 @@ private:
     EventStrategy_ABC& strategy_;
     kernel::Logger_ABC& logger_;
 
-    std::auto_ptr< IconLayout > iconLayout_;
-    std::auto_ptr< MapLayer_ABC >    moveLayer_;
+    std::unique_ptr< IconLayout > iconLayout_;
+    std::unique_ptr< MapLayer_ABC > moveLayer_;
 
     QTimer* displayTimer_;
 

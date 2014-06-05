@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
-    std::auto_ptr< CommandPublisher > publisher_;
+    std::unique_ptr< CommandPublisher > publisher_;
     CommandHandler& handler_;
     Q3TextBrowser* browser_;
     std::string dialogId_;

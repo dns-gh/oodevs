@@ -95,13 +95,13 @@ namespace
                 MOCK_EXPECT( entityResolver.FindAgent ).exactly( 3 ).with( 17u ).returns( &agent );
                 MOCK_EXPECT( agent.GetId ).exactly( 2 ).returns( 17u );
             }
-            std::auto_ptr< Action_ABC > fromXml( actionFactory.CreateAction( xis >> xml::start( "action" ) ) );
+            std::unique_ptr< Action_ABC > fromXml( actionFactory.CreateAction( xis >> xml::start( "action" ) ) );
             BOOST_REQUIRE( fromXml.get() );
             const auto str1 = Serialize( *fromXml );
             CheckXml( input, str1 );
             const auto msg1 = Publish( *fromXml );
             checkmagic( msg1 );
-            std::auto_ptr< Action_ABC > fromProto( actionFactory.CreateAction( msg1, false ) );
+            std::unique_ptr< Action_ABC > fromProto( actionFactory.CreateAction( msg1, false ) );
             BOOST_REQUIRE( fromProto.get() );
             const auto str2 = Serialize( *fromProto );
             CheckXml( input, str2 );
@@ -133,7 +133,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_null_parameter_when_type_attribute_missing, F
     MOCK_EXPECT( entityResolver.FindAgent ).once().with( 17u ).returns( &agent );
     MOCK_EXPECT( agent.GetId ).once().returns( 17u );
 
-    std::auto_ptr< Action_ABC > action( actionFactory.CreateAction( xis >> xml::start( "action" ) ) );
+    std::unique_ptr< Action_ABC > action( actionFactory.CreateAction( xis >> xml::start( "action" ) ) );
     BOOST_REQUIRE( action.get() );
 
     MockPublisher publisher;

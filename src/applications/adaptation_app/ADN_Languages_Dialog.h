@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     ADN_Languages_Data& data_;
-    std::auto_ptr< ADN_Languages_MasterDialog > masterDialog_;
+    std::unique_ptr< ADN_Languages_MasterDialog > masterDialog_;
     QLabel* master_;
     QTreeWidget* availables_;
     QTreeWidget* actives_;

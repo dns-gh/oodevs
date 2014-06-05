@@ -55,7 +55,7 @@ public:
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext );
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext );
 
-    virtual std::auto_ptr< propagation::FloodModel_ABC > CreateFloodModel() const;
+    virtual std::unique_ptr< propagation::FloodModel_ABC > CreateFloodModel() const;
     //@}
 
     //! @name CheckPoint
@@ -78,10 +78,10 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< propagation::ElevationGetter_ABC > pElevation_;
+    std::unique_ptr< propagation::ElevationGetter_ABC > pElevation_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
-    std::auto_ptr< sword::DEC_Logger > decLogger_;
+    std::unique_ptr< sword::DEC_Logger > decLogger_;
     const boost::shared_ptr< const TER_World > world_;
     MIL_IDManager& idManager_;
     MissionController_ABC& missionController_;

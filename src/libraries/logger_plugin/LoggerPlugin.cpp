@@ -39,7 +39,6 @@ using namespace plugins::logger;
 LoggerPlugin::LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services )
     : sessionConfig_( config )
     , filename_    ( config.BuildSessionChildFile( "Messages.log" ) )
-    , pLogger_     ( 0 )
     , resolver_    ( model )
     , factory_     ( resolver_, objectTypes_, objectTypes_, 0 )
     , model_       ( model )

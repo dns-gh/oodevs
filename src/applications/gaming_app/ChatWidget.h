@@ -75,7 +75,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     CommandHandler& handler_;
-    std::auto_ptr< CommandPublisher > publisher_;
+    std::unique_ptr< CommandPublisher > publisher_;
     QTabWidget* tabs_;
     QListWidget* profiles_;
     T_Rooms rooms_;

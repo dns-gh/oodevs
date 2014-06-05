@@ -48,7 +48,7 @@ private:
     kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     geometry::Point2f draggingPoint_;
     geometry::Point2f draggingOffset_;
-    std::auto_ptr< QWidget > dummy_;
+    std::unique_ptr< QWidget > dummy_;
     //@}
 };
 

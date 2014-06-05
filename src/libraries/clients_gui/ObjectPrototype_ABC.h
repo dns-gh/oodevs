@@ -68,7 +68,7 @@ public:
              ObjectPrototype_ABC( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
                                   const kernel::CoordinateConverter_ABC& coordinateConverter,
                                   const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::Team_ABC& noSideTeam,
-                                  ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory );
+                                  ParametersLayer& layer, std::unique_ptr< ObjectAttributePrototypeFactory_ABC > factory );
     virtual ~ObjectPrototype_ABC();
     //@}
 
@@ -128,12 +128,12 @@ protected:
     QLabel* locationLabel_;
     RichLabel* position_;
 
-    std::auto_ptr< ObjectAttributePrototypeContainer > attributes_;
+    std::unique_ptr< ObjectAttributePrototypeContainer > attributes_;
     //@}
 
 private:
     kernel::Location_ABC* location_;
-    std::auto_ptr< ObjectPrototypeLoader_ABC > loader_;
+    std::unique_ptr< ObjectPrototypeLoader_ABC > loader_;
     RichPushButton* loadFromFileButton_;
     RichLabel* loadFromFilePathLabel_;
     RichGroupBox* descriptionBox_;

@@ -66,7 +66,7 @@ void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
     {
         try
         {
-            std::auto_ptr< ClientObject > clientObject( new ClientObject( idManager_.GetNextId(), message ) );
+            std::unique_ptr< ClientObject > clientObject( new ClientObject( idManager_.GetNextId(), message ) );
             Register( clientObject->GetID(), *clientObject );
             clientObject->SendCreation( clients_ );
             clientObject.release();
@@ -165,7 +165,7 @@ void ClientObjectsModel::ReadClientObject( xml::xistream& xis )
 {
     unsigned int id = xis.attribute< unsigned int >( "id" );
     idManager_.Lock( id );
-    std::auto_ptr< ClientObject > clientObject( new ClientObject( id, xis ) );
+    std::unique_ptr< ClientObject > clientObject( new ClientObject( id, xis ) );
     Register( clientObject->GetID(), *clientObject );
     clientObject.release();
 }

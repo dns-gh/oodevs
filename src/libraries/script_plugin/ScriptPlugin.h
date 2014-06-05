@@ -107,10 +107,10 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     const dispatcher::Config& config_;
-    std::auto_ptr< kernel::Controller > controller_;
+    std::unique_ptr< kernel::Controller > controller_;
     dispatcher::CompositeRegistrable& registrables_;
-    std::auto_ptr< kernel::CoordinateConverter > converter_;
-    std::auto_ptr< ExtensionFactory > factory_;
+    std::unique_ptr< kernel::CoordinateConverter > converter_;
+    std::unique_ptr< ExtensionFactory > factory_;
     boost::ptr_vector< Script > scripts_;
     boost::ptr_vector< directia::tools::binders::ScriptRef > pending_;
     long time_;

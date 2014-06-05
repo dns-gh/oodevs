@@ -30,7 +30,7 @@ class DrawingProxy
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawingProxy( DrawingsModel& model, std::auto_ptr< Drawing > drawing );
+             DrawingProxy( DrawingsModel& model, std::unique_ptr< Drawing > drawing );
     virtual ~DrawingProxy();
     //@}
 
@@ -51,7 +51,7 @@ private:
     //! @name Member data
     //@{
     DrawingsModel& model_;
-    std::auto_ptr< Drawing > drawing_;
+    std::unique_ptr< Drawing > drawing_;
     //@}
 };
 

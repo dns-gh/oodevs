@@ -55,7 +55,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< FunctionFactory > factory_;
+    std::unique_ptr< FunctionFactory > factory_;
     //@}
 };
 

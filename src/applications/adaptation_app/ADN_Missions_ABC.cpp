@@ -91,7 +91,7 @@ void ADN_Missions_ABC::Initialize()
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
 {
-    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter( type_ ) );
+    std::unique_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter( type_ ) );
     spNew->ReadArchive( input );
     parameters_.AddItem( spNew.release() );
 }
@@ -413,7 +413,7 @@ void ADN_Missions_ABC::ParseImagesInImageDirectory( const tools::Path& imageDir 
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs /* = 1 */, int maxOccurs /* = 1 */ )
 {
-    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter( type_ ) );
+    std::unique_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter( type_ ) );
 
     spNew->strName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr::eToTr );
     spNew->diaName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr::eToSim );

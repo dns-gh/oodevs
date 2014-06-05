@@ -66,7 +66,7 @@ private:
     std::string value_;
     std::string move_;
     std::string static_;
-    std::auto_ptr< SymbolRule > rule_;
+    std::unique_ptr< SymbolRule > rule_;
     //@}
 };
 

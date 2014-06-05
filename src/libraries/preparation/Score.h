@@ -65,7 +65,7 @@ public:
     void SetFormula( const QString& formula );
     void SetGauge( const indicators::Gauge& gauge );
     void SetVariables( const indicators::Variables& variables );
-    void SetProfiles( std::auto_ptr< ProfileSelection > profiles );
+    void SetProfiles( std::unique_ptr< ProfileSelection > profiles );
     //@}
 
     //! @name Operations
@@ -93,9 +93,9 @@ private:
     const indicators::Primitives& indicators_;
     QString name_;
     QString formula_;
-    std::auto_ptr< indicators::Gauge > gauge_;
-    std::auto_ptr< indicators::Variables > variables_;
-    std::auto_ptr< ProfileSelection > profiles_;
+    std::unique_ptr< indicators::Gauge > gauge_;
+    std::unique_ptr< indicators::Variables > variables_;
+    std::unique_ptr< ProfileSelection > profiles_;
     //@}
 };
 

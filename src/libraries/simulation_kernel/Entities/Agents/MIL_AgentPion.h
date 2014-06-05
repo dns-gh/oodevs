@@ -228,7 +228,7 @@ private:
 protected:
     //! @name Accessors
     //@{
-    void SetColor( std::auto_ptr< MIL_Color > color );
+    void SetColor( std::unique_ptr< MIL_Color > color );
     MIL_Color* const GetColor() const;
     const std::string& GetLevel() const;
     void SetLevel( const std::string& level );
@@ -236,7 +236,7 @@ protected:
     const std::string& GetSymbol() const;
     void SetSymbol( const std::string& symbol );
     MIL_AffinitiesMap* const GetAffinities() const;
-    void SetAffinities( std::auto_ptr< MIL_AffinitiesMap > affinities );
+    void SetAffinities( std::unique_ptr< MIL_AffinitiesMap > affinities );
     void SetKnowledge( DEC_KnowledgeBlackBoard_AgentPion* knowledge );
     void SetAutomate( MIL_Automate* automate );
     const MissionController_ABC& GetController() const;
@@ -254,10 +254,10 @@ private:
     std::string                               criticalIntelligence_;
     MIL_Automate*                             pAutomate_;
     DEC_KnowledgeBlackBoard_AgentPion*        pKnowledgeBlackBoard_;
-    std::auto_ptr< MIL_PionOrderManager >     pOrderManager_;
-    std::auto_ptr< MIL_AffinitiesMap >        pAffinities_;
-    std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
-    std::auto_ptr< MIL_Color >                pColor_;
+    std::unique_ptr< MIL_PionOrderManager >     pOrderManager_;
+    std::unique_ptr< MIL_AffinitiesMap >        pAffinities_;
+    std::unique_ptr< MIL_DictionaryExtensions > pExtensions_;
+    std::unique_ptr< MIL_Color >                pColor_;
     std::set< const DEC_Agent_Path* >         agentPaths_;
     bool                                      teleported_;
     //@}

@@ -200,9 +200,9 @@ void ClientNetworker::Send( const std::string& endpoint, unsigned long tag, Mess
 // Name: ClientNetworker::Register
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ClientNetworker::Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback )
+void ClientNetworker::Register( unsigned long id, std::unique_ptr< ObjectMessageCallback_ABC > callback )
 {
-    messageService_->Register( id, callback );
+    messageService_->Register( id, std::move( callback ) );
 }
 
 // -----------------------------------------------------------------------------

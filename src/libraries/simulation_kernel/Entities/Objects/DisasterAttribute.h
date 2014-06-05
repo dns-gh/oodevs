@@ -81,7 +81,7 @@ private:
     //@{
     tools::Path model_;
     std::string date_;
-    std::auto_ptr< PropagationManager > pManager_;
+    std::unique_ptr< PropagationManager > pManager_;
     std::vector< boost::shared_ptr< Extractor_ABC > > values_;
     std::vector< tools::Path > files_;
     //@}

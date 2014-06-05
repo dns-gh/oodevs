@@ -35,9 +35,9 @@ FunctionFactory::~FunctionFactory()
 // Name: FunctionFactory::Add
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void FunctionFactory::Add( std::auto_ptr< ElementFactory_ABC > factory )
+void FunctionFactory::Add( std::unique_ptr< ElementFactory_ABC > factory )
 {
-    factories_.push_back( factory );
+    factories_.push_back( factory.release() );
 }
 
 // -----------------------------------------------------------------------------

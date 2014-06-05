@@ -58,7 +58,7 @@ namespace
         tools::Resolver< dispatcher::Team_ABC > sides;
         tools::Resolver< dispatcher::UrbanObject_ABC > urbans;
         tools::Resolver< dispatcher::Automat_ABC > automats;
-        std::auto_ptr< dispatcher::UrbanKnowledge_ABC > result;
+        std::unique_ptr< dispatcher::UrbanKnowledge_ABC > result;
         sword::SimToClient expected;
         MockClientPublisher publisher;
     };

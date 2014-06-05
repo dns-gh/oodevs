@@ -86,7 +86,7 @@ public:
     kernel::Controller&                                 controller_;
     const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
     const tools::Resolver_ABC< kernel::DotationType >&  dotationResolver_;
-    std::auto_ptr< Dotation >                           resourceNetworkStock_;
+    std::unique_ptr< Dotation >                         resourceNetworkStock_;
     bool                                                bChainEnabled_;
     T_Availabilities                                    dispoTransporters_;
     const QString                                       property_;

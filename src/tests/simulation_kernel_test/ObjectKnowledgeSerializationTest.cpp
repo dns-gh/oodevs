@@ -88,7 +88,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
     const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
     ArmySerializationProxy army;
-    std::auto_ptr< MIL_Object_ABC > pObject;
+    std::unique_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );

@@ -245,7 +245,7 @@ void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
             for( auto it = newPoints_.begin(); it != newPoints_.end(); ++it )
                 lines.AddPoint( *it );
         }
-        std::auto_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( kernel::OrderParameter( GetName().toStdString(), "phaseline", false ), converter_, lines ) );
+        std::unique_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( kernel::OrderParameter( GetName().toStdString(), "phaseline", false ), converter_, lines ) );
         for( int i = 0; i < functions_->count(); ++i )
             if( functions_->isItemSelected( functions_->item( i ) ) )
                 param->AddFunction( i );

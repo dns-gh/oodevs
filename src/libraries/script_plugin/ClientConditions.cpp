@@ -113,7 +113,7 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
                 Trigger( mission, entity ? entity->Retrieve< AgentManipulator >() : 0 );
             }
         };
-        std::auto_ptr< ModelResolver > resolver_;
+        std::unique_ptr< ModelResolver > resolver_;
     };
     return boost::shared_ptr< Condition_ABC >( new MissionChoice( controller_, model_ ) );
 }
@@ -146,7 +146,7 @@ boost::shared_ptr< Condition_ABC > ClientConditions::EntitySelected()
                 Trigger( entity ? entity->Retrieve< AgentManipulator >() : 0 );
             }
         };
-        std::auto_ptr< ModelResolver > resolver_;
+        std::unique_ptr< ModelResolver > resolver_;
     };
     return boost::shared_ptr< Condition_ABC >( new EntitySelected( controller_, model_ ) );
 }

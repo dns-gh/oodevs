@@ -108,13 +108,13 @@ void Profile::VisitProfiles( const tools::GeneralConfig& config, const tools::Lo
     const tools::Path exerciseFile = config.GetExerciseFile( exercise );
     tools::Path profilesFile;
     {
-        std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( exerciseFile ) ;
+        std::unique_ptr< xml::xistream > xis = fileLoader.LoadFile( exerciseFile ) ;
         *xis >> xml::start( "exercise" )
                 >> xml::start( "profiles" )
                     >> xml::attribute( "file", profilesFile );
     }
     {
-        std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( config.BuildChildPath( exerciseFile, profilesFile ) );
+        std::unique_ptr< xml::xistream > xis = fileLoader.LoadFile( config.BuildChildPath( exerciseFile, profilesFile ) );
         ProfileReader reader;
         *xis >> xml::start( "profiles" )
                 >> xml::list( "profile", reader, &ProfileReader::ReadProfile, visitor );

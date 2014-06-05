@@ -350,7 +350,7 @@ void ActionsModel::Destroy( const Action_ABC& action )
 void ActionsModel::Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader )
 {
     const auto readaction = [&]( xml::xistream& xis ){
-        std::auto_ptr< Action_ABC > action( factory_.CreateAction( xis ) );
+        std::unique_ptr< Action_ABC > action( factory_.CreateAction( xis ) );
         if( !action.get() )
             return;
         Register( action->GetId(), *action );

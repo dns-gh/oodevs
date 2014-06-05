@@ -73,7 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< TimeOut > timeOut_;
+    std::unique_ptr< TimeOut > timeOut_;
     bool connected_;
     //@}
 };

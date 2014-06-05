@@ -49,7 +49,7 @@ void DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& col
 {
     DrawingPositions* positions = new DrawingPositions();
     positions->SetLocation( location );
-    std::auto_ptr< DrawerShape > shape( new DrawerShape( controllers_, ++idManager_, style.GetName(),
+    std::unique_ptr< DrawerShape > shape( new DrawerShape( controllers_, ++idManager_, style.GetName(),
         style, color, entity, *positions, coordinateConverter_, dashStyle ) );
     shape->Attach< kernel::Positions >( *positions );
     shape->Polish();
@@ -63,7 +63,7 @@ void DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& col
 void DrawerFactory::CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const
 {
     DrawingPositions* positions = new DrawingPositions();
-    std::auto_ptr< DrawerShape > shape( new DrawerShape( controllers_, ++idManager_, xis, entity, types_, *positions, coordinateConverter_ ) );
+    std::unique_ptr< DrawerShape > shape( new DrawerShape( controllers_, ++idManager_, xis, entity, types_, *positions, coordinateConverter_ ) );
     shape->Attach< kernel::Positions >( *positions );
     shape->Polish();
     shape.release();

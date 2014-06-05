@@ -61,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< sword::Report > message_;
+    std::unique_ptr< sword::Report > message_;
     //@}
 };
 

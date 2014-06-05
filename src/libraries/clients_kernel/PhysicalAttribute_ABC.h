@@ -57,8 +57,8 @@ public:
 protected:
     //! @name Member data
     //@{
-    std::auto_ptr< Architecture_ABC > architecture_;
-    std::auto_ptr< Usages_ABC >       usages_;
+    std::unique_ptr< Architecture_ABC > architecture_;
+    std::unique_ptr< Usages_ABC > usages_;
     //@}
 };
 

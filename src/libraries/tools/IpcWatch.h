@@ -39,7 +39,7 @@ public:
 
 private:
     WaitEvent& event_;
-    std::auto_ptr< Queue > queue_;
+    std::unique_ptr< Queue > queue_;
 };
 }
 }

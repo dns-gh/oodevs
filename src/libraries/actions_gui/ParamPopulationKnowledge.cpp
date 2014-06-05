@@ -40,7 +40,7 @@ ParamPopulationKnowledge::~ParamPopulationKnowledge()
 // -----------------------------------------------------------------------------
 void ParamPopulationKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< kernel::Population_ABC > > param( new actions::parameters::PopulationKnowledge( parameter_, controllers_.controller_ ) );
+    std::unique_ptr< actions::parameters::Entity< kernel::Population_ABC > > param( new actions::parameters::PopulationKnowledge( parameter_, controllers_.controller_ ) );
     EntityParameter< kernel::Population_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

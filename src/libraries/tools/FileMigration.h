@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< xml::xistream > UpgradeFile( std::auto_ptr< xml::xistream > file, const Path& schema ) const;
+    virtual std::unique_ptr< xml::xistream > UpgradeFile( std::unique_ptr< xml::xistream > file, const Path& schema ) const;
     //@}
 
 private:

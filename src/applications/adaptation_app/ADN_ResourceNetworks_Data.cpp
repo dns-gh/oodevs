@@ -166,7 +166,7 @@ void ADN_ResourceNetworks_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_ResourceNetworks_Data::ReadResourceNetwork( xml::xistream& input )
 {
-    std::auto_ptr< ResourceNetworkInfos > spNew( new ResourceNetworkInfos() );
+    std::unique_ptr< ResourceNetworkInfos > spNew( new ResourceNetworkInfos() );
     spNew->ReadArchive( input );
     resourceNetworks_.AddItem( spNew.release() );
 }

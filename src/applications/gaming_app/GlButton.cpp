@@ -23,8 +23,6 @@
 GlButton::GlButton( const QString& label, const gui::GlTools_ABC& tools )
     : tools_    ( tools )
     , label_    ( label )
-    , default_  ( 0 )
-    , hover_    ( 0 )
     , current_  ( 0 )
     , alignment_( Qt::AlignLeft | Qt::AlignTop )
     , xMargin_  ( 0 )
@@ -53,10 +51,10 @@ GlButton::~GlButton()
 // Name: GlButton::CreateTooltip
 // Created: SBO 2008-07-07
 // -----------------------------------------------------------------------------
-std::auto_ptr< gui::GlTooltip > GlButton::CreateTooltip( const QFont& font, bool hover )
+std::unique_ptr< gui::GlTooltip > GlButton::CreateTooltip( const QFont& font, bool hover )
 {
-    std::auto_ptr< gui::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
-    std::auto_ptr< gui::GlTooltip > concrete( (gui::GlTooltip*)tooltip.get() );
+    std::unique_ptr< gui::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
+    std::unique_ptr< gui::GlTooltip > concrete( (gui::GlTooltip*)tooltip.get() );
     tooltip.release();
     concrete->SetFrameDrawer( boost::bind( &GlButton::DrawFrame, this, _1, _2, hover ) );
     kernel::Displayer_ABC& display = *concrete;

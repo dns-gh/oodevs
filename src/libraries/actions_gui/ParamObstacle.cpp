@@ -314,7 +314,7 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
         return;
     if( Param_ABC::IsChecked() )
     {
-        std::auto_ptr< actions::parameters::EngineerConstruction > param( new actions::parameters::EngineerConstruction( parameter_, *type ) );
+        std::unique_ptr< actions::parameters::EngineerConstruction > param( new actions::parameters::EngineerConstruction( parameter_, *type ) );
         if( type->HasBuildableDensity() )
             CommitAndSetKeyName( *density_, *param );
         if( type->HasLogistic() )

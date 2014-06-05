@@ -104,7 +104,7 @@ void SessionList::ReadComments( const tools::Path& session )
     try
     {
         std::string date, name, comment;
-        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.BuildSessionDir( exercise_, session ) / "session.xml" );
+        std::unique_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.BuildSessionDir( exercise_, session ) / "session.xml" );
         *xis >> xml::start( "session" )
                 >> xml::start( "meta" );
         if( xis->has_child( "comment" ) )

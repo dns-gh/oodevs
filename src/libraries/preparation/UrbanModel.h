@@ -127,11 +127,11 @@ private:
     const StaticModel&                           staticModel_;
     tools::IdManager&                            idManager_;
     const tools::Resolver< kernel::Object_ABC >& objects_;
-    std::auto_ptr< gui::UrbanDisplayOptions >    urbanDisplayOptions_;
-    std::auto_ptr< UrbanFactory_ABC >            factory_;
-    std::auto_ptr< geostore::Geostore >          geostore_;
+    std::unique_ptr< gui::UrbanDisplayOptions >  urbanDisplayOptions_;
+    std::unique_ptr< UrbanFactory_ABC >          factory_;
+    std::unique_ptr< geostore::Geostore >        geostore_;
     std::auto_ptr< T_QuadTree >                  quadTree_;
-    std::auto_ptr< UrbanMenuManager >            menuManager_;
+    std::unique_ptr< UrbanMenuManager >          menuManager_;
     float                                        precision_;
     float                                        maxElementSize_;
     bool                                         cleanedLinks_;

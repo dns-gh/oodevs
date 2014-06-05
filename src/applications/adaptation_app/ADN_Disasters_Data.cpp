@@ -308,7 +308,7 @@ void ADN_Disasters_Data::DisasterInfos::ReadProtection( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Disasters_Data::DisasterInfos::ReadAttrition( xml::xistream& input )
 {
-    std::auto_ptr< AttritionThresholdInfos > spNew( new AttritionThresholdInfos() );
+    std::unique_ptr< AttritionThresholdInfos > spNew( new AttritionThresholdInfos() );
     spNew->ReadArchive( input );
     attritionThresholds_.AddItem( spNew.release() );
 }
@@ -319,7 +319,7 @@ void ADN_Disasters_Data::DisasterInfos::ReadAttrition( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Disasters_Data::DisasterInfos::ReadContamination( xml::xistream& input )
 {
-    std::auto_ptr< ConcentrationThresholdInfos > spNew( new ConcentrationThresholdInfos() );
+    std::unique_ptr< ConcentrationThresholdInfos > spNew( new ConcentrationThresholdInfos() );
     spNew->ReadArchive( input );
     concentrationThresholds_.AddItem( spNew.release() );
 }
@@ -405,7 +405,7 @@ void ADN_Disasters_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Disasters_Data::ReadDisaster( xml::xistream& input )
 {
-    std::auto_ptr< DisasterInfos > spNew( new DisasterInfos() );
+    std::unique_ptr< DisasterInfos > spNew( new DisasterInfos() );
     spNew->ReadArchive( input );
     vDisasters_.AddItem( spNew.release() );
 }

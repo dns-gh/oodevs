@@ -53,7 +53,7 @@ namespace
 BOOST_AUTO_TEST_CASE( Reduction_TestAdder )
 {
     MockFunction1< unsigned long, float > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > adder( new Adder< unsigned long, float >( handler ) );
+    std::unique_ptr< Function1_ABC< unsigned long, float > > adder( new Adder< unsigned long, float >( handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).once().with( 42.f );
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE( Reduction_TestAdder )
 BOOST_AUTO_TEST_CASE( Reduction_TestCount )
 {
     MockFunction1< NumericValue, NumericValue > handler;
-    std::auto_ptr< Function1_ABC< NumericValue, NumericValue > > counter( new Count< NumericValue, NumericValue >( handler ) );
+    std::unique_ptr< Function1_ABC< NumericValue, NumericValue > > counter( new Count< NumericValue, NumericValue >( handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).once().with( NumericValue( 2u ) );
@@ -97,7 +97,7 @@ BOOST_AUTO_TEST_CASE( Reduction_TestCount )
 BOOST_AUTO_TEST_CASE( Reduction_TestMeaner )
 {
     MockFunction1< unsigned long, float > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > meaner( new Meaner< unsigned long, float >( handler ) );
+    std::unique_ptr< Function1_ABC< unsigned long, float > > meaner( new Meaner< unsigned long, float >( handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).once().with( 21.f );
@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_CASE( Reduction_TestMeaner )
 BOOST_AUTO_TEST_CASE( Reduction_TestSelector )
 {
     MockFunction1< unsigned long, float > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Selector< unsigned long, float >( 2, handler ) );
+    std::unique_ptr< Function1_ABC< unsigned long, float > > selector( new Selector< unsigned long, float >( 2, handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).once().with( 24.f );
@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_CASE( Reduction_TestSelector )
 BOOST_AUTO_TEST_CASE( Reduction_TestMinimum )
 {
     MockFunction1< unsigned long, float > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Minimum< unsigned long, float >( handler ) );
+    std::unique_ptr< Function1_ABC< unsigned long, float > > selector( new Minimum< unsigned long, float >( handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).once().with( 18.f );
@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE( Reduction_TestMinimum )
 BOOST_AUTO_TEST_CASE( Reduction_TestMaximum )
 {
     MockFunction1< unsigned long, float > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Maximum< unsigned long, float >( handler ) );
+    std::unique_ptr< Function1_ABC< unsigned long, float > > selector( new Maximum< unsigned long, float >( handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).once().with( 24.f );
@@ -188,7 +188,7 @@ BOOST_AUTO_TEST_CASE( Reduction_TestThresholdSingleValue )
     xml::xistringstream xis( input );
     xis >> xml::start( "reduce" );
     MockFunction1< unsigned long, float > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
+    std::unique_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).once().with( 0.1f );
@@ -214,7 +214,7 @@ BOOST_AUTO_TEST_CASE( Reduction_TestThresholdMultipleValues )
     xml::xistringstream xis( input );
     xis >> xml::start( "reduce" );
     MockFunction1< unsigned long, float > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
+    std::unique_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).once().with( 0.5f );
@@ -240,7 +240,7 @@ BOOST_AUTO_TEST_CASE( Reduction_TestThresholdMoreValuesThanRanges )
     xml::xistringstream xis( input );
     xis >> xml::start( "reduce" );
     MockFunction1< unsigned long, float > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
+    std::unique_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
     {
         MOCK_EXPECT( handler.BeginTick ).once();
         MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 0.25f );

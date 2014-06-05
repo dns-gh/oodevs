@@ -37,13 +37,13 @@ void load_construct_data( Archive& archive, AutomateFactory* factory, const unsi
     MissionController_ABC* controller;
     unsigned int gcPause;
     unsigned int gcMult;
-    std::auto_ptr< sword::DEC_Logger > logger;
+    std::unique_ptr< sword::DEC_Logger > logger;
     archive >> idManager
             >> controller
             >> gcPause
             >> gcMult
             >> logger;
-    ::new( factory )AutomateFactory( *idManager, *controller, gcPause, gcMult, logger );
+    ::new( factory )AutomateFactory( *idManager, *controller, gcPause, gcMult, std::move( logger ) );
 }
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
@@ -74,12 +74,12 @@ AutomateFactory::AutomateFactory( MIL_IDManager& idManager,
                                   MissionController_ABC& controller,
                                   unsigned int gcPause,
                                   unsigned int gcMult,
-                                  std::auto_ptr< sword::DEC_Logger > logger )
+                                  std::unique_ptr< sword::DEC_Logger > logger )
     : idManager_ ( idManager )
     , controller_( controller )
     , gcPause_   ( gcPause )
     , gcMult_    ( gcMult )
-    , logger_    ( logger )
+    , logger_    ( std::move( logger ) )
 {
     // NOTHING
 }

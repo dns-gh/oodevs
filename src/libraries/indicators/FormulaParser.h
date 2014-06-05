@@ -50,7 +50,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Impl > pImpl_;
+    std::unique_ptr< Impl > pImpl_;
     //@}
 };
 

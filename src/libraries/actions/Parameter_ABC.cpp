@@ -122,11 +122,8 @@ void Parameter_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_AB
 // -----------------------------------------------------------------------------
 void Parameter_ABC::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
-    if( !toolTip_.get() )
-    {
-        std::auto_ptr< gui::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
-        const_cast< Parameter_ABC* >( this )->toolTip_ = tooltip;
-    }
+    if( !toolTip_ )
+        const_cast< Parameter_ABC* >( this )->toolTip_ = tools.CreateTooltip();
     DrawToolTip( viewport, tools );
 }
 
@@ -138,11 +135,8 @@ void Parameter_ABC::DrawToolTip( const gui::Viewport_ABC& viewport, const gui::G
 {
     if( !viewport.IsVisible( GetPosition() ) )
         return;
-    if( !toolTip_.get() )
-    {
-        std::auto_ptr< ::gui::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
-        const_cast< Parameter_ABC* >( this )->toolTip_ = tooltip;
-    }
+    if( !toolTip_ )
+        const_cast< Parameter_ABC* >( this )->toolTip_ = tools.CreateTooltip();
     DisplayInToolTip( *toolTip_ );
     toolTip_->Draw( GetPosition() );
 }

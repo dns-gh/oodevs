@@ -54,8 +54,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< directia::brain::Brain > brain_;
-    std::auto_ptr< FiniteStateMachine > fsm_;
+    std::unique_ptr< directia::brain::Brain > brain_;
+    std::unique_ptr< FiniteStateMachine > fsm_;
     //@}
 };
 

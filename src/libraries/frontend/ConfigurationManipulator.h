@@ -58,7 +58,7 @@ private:
     //! @name Member data
     //@{
     const tools::Path outputPath_;
-    std::auto_ptr< XmlNode > document_;
+    std::unique_ptr< XmlNode > document_;
     //@}
 };
 

@@ -91,8 +91,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< CapacityFactory_ABC > factory_;
-    std::auto_ptr< AttributeFactory > attributes_;
+    std::unique_ptr< CapacityFactory_ABC > factory_;
+    std::unique_ptr< AttributeFactory > attributes_;
     T_Prototypes prototypes_;
     //@}
 };

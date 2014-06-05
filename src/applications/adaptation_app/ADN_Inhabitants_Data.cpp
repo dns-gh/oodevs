@@ -337,7 +337,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::InhabitantsInfos::ReadEvent( xml::xistream& input )
 {
-    std::auto_ptr< EventInfos > spNew( new EventInfos() );
+    std::unique_ptr< EventInfos > spNew( new EventInfos() );
     spNew->ReadArchive( input );
     if( spNew->ptrAccommodation_.GetData() )
         schedule_.AddItem( spNew.release() );
@@ -361,7 +361,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::CheckDatabaseValidity( ADN_Consiste
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::InhabitantsInfos::ReadConsumption( xml::xistream& input )
 {
-    std::auto_ptr< InhabitantsInfosConsumption > spNew( new InhabitantsInfosConsumption() );
+    std::unique_ptr< InhabitantsInfosConsumption > spNew( new InhabitantsInfosConsumption() );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         consumptions_.AddItem( spNew.release() );
@@ -419,7 +419,7 @@ void ADN_Inhabitants_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::ReadPeople( xml::xistream& input )
 {
-    std::auto_ptr< InhabitantsInfos > spNew( new InhabitantsInfos( input.attribute< unsigned int >( "id" ) ) );
+    std::unique_ptr< InhabitantsInfos > spNew( new InhabitantsInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vInhabitants_.AddItem( spNew.release() );
 }

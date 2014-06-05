@@ -122,8 +122,8 @@ private:
     //! @name Member data
     //@{
     T_MissionResolver missions_[ 3 ];
-    std::auto_ptr< SymbolFactory > symbolFactory_;
-    std::auto_ptr< kernel::XmlTranslations > agentTypesTranslations_;
+    std::unique_ptr< SymbolFactory > symbolFactory_;
+    std::unique_ptr< kernel::XmlTranslations > agentTypesTranslations_;
     //@}
 
 public:

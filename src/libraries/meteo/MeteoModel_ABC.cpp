@@ -17,9 +17,9 @@ using namespace weather;
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
 MeteoModel_ABC::MeteoModel_ABC( kernel::CoordinateConverter_ABC& converter )
-    : converter_  ( converter )
-    , globalMeteo_( 0 )
+    : converter_( converter )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,6 +28,7 @@ MeteoModel_ABC::MeteoModel_ABC( kernel::CoordinateConverter_ABC& converter )
 // -----------------------------------------------------------------------------
 MeteoModel_ABC::~MeteoModel_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

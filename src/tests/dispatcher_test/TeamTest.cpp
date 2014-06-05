@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
-        std::auto_ptr< dispatcher::Team_ABC > result( new dispatcher::Side( model, message ) );
+        std::unique_ptr< dispatcher::Team_ABC > result( new dispatcher::Side( model, message ) );
 
         // network serialization
         MockClientPublisher publisher;
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
     MockModel model;
     MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
     {
-        std::auto_ptr< dispatcher::Team_ABC > result;
+        std::unique_ptr< dispatcher::Team_ABC > result;
         {
             sword::SimToClient expected;
             expected.set_context( 0 );

@@ -83,7 +83,7 @@ private:
     const tools::GeneralConfig& config_;
     const std::string name_;
     struct Private;
-    std::auto_ptr< Private > private_;
+    std::unique_ptr< Private > private_;
     //@}
 };
 

@@ -92,7 +92,7 @@ private:
     void ReadFormation( xml::xistream& xis );
     void ReadShape( xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion );
     virtual void RegisterIn( directia::brain::Brain& brain );
-    void ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name );
+    void ReadNamedShape( xml::xistream& xis, std::unique_ptr< Drawing >& result, const std::string& name );
     boost::shared_ptr< DrawingProxy > CreateDrawing( const std::string& name );
     //@}
 

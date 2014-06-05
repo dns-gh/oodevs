@@ -157,8 +157,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , glProxy_           ( new gui::GlProxy( logger ) )
     , connected_         ( false )
     , onPlanif_          ( false )
-    , icons_             ( 0 )
-    , dockContainer_     ( 0 )
     , drawingsBuilder_   ( new DrawingsBuilder( controllers_, profile_ ) )
 {
     controllers_.modes_.SetMainWindow( this );
@@ -167,8 +165,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Strategy
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, profile_ ) ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, profile_ ) ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, profile_ ) ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, profile_ ) ) );
 
     // Symbols
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );

@@ -125,7 +125,7 @@ protected:
     //@{
     QStandardItemModel dataModel_;
     ADN_TableDelegate delegate_;
-    std::auto_ptr< QSortFilterProxyModel > proxyModel_;
+    std::unique_ptr< QSortFilterProxyModel > proxyModel_;
     ADN_NavigationInfos::GoTo goToInfo_;
     //@}
 };

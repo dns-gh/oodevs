@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
 
     MockModel model;
     MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
-    std::auto_ptr< dispatcher::KnowledgeGroup_ABC > result;
+    std::unique_ptr< dispatcher::KnowledgeGroup_ABC > result;
     {
         sword::SimToClient expected;
         expected.set_context( 0 );
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
     MockModel model;
     MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
     MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
-    std::auto_ptr< dispatcher::KnowledgeGroup_ABC > result;
+    std::unique_ptr< dispatcher::KnowledgeGroup_ABC > result;
     {
         {
             sword::SimToClient expected;

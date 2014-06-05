@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
     QApplication app( argc, &argv );
     tools::IdManager idManager;
     MockKnowledgeGroupTypeResolver types;
-    std::auto_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
+    std::unique_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
     MOCK_EXPECT( types.Find ).with( mock::any ).returns( standardType.get() );
     kernel::Controller controller;
     MockTeam team;
@@ -260,7 +260,7 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
 //    QApplication app( argc, &argv );
 //    IdManager idManager;
 //    MockKnowledgeGroupTypeResolver types;
-//    std::auto_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
+//    std::unique_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
 //    MOCK_EXPECT( types.Get ).with( mock::any ).returns( boost::ref( *standardType ) );
 //    kernel::Controller controller;
 //    MockTeam team;

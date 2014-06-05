@@ -53,7 +53,7 @@ struct ThreadPool::Private
     }
     boost::thread_group threads;
     boost::asio::io_service service;
-    std::auto_ptr< boost::asio::io_service::work > work;
+    std::unique_ptr< boost::asio::io_service::work > work;
 };
 
 // -----------------------------------------------------------------------------

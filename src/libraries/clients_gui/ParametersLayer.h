@@ -81,7 +81,7 @@ private:
     //! @name Member data
     //@{
     GlTools_ABC& tools_;
-    std::auto_ptr< CursorStrategy_ABC > cursors_;
+    std::unique_ptr< CursorStrategy_ABC > cursors_;
     ShapeHandler_ABC* handler_;
     kernel::Location_ABC* current_;
     geometry::Rectangle2f world_;

@@ -102,7 +102,7 @@ void ADN_Maintenance_Data::ReadWorkingScheme( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Maintenance_Data::ReadAvailabilityAlert( xml::xistream& input )
 {
-    std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+    std::unique_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
     pNew->ReadArchive( input );
     std::string resource;
     input >> xml::attribute( "resource", resource );

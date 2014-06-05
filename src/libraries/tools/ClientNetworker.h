@@ -94,7 +94,7 @@ private:
 
     //! @name Operations
     //@{
-    virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
+    virtual void Register( unsigned long id, std::unique_ptr< ObjectMessageCallback_ABC > callback );
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     //@}
 
@@ -106,13 +106,13 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< boost::asio::io_service >        service_;
+    std::unique_ptr< boost::asio::io_service >      service_;
     boost::shared_ptr< BufferedConnectionCallback > connectionBuffer_;
     boost::shared_ptr< BufferedMessageCallback >    messageBuffer_;
-    std::auto_ptr< SocketManager >                  sockets_;
-    std::auto_ptr< ObjectMessageService >           messageService_;
-    std::auto_ptr< Connector >                      connector_;
-    std::auto_ptr< WaitEvent >                      quit_;
+    std::unique_ptr< SocketManager >                sockets_;
+    std::unique_ptr< ObjectMessageService >         messageService_;
+    std::unique_ptr< Connector >                    connector_;
+    std::unique_ptr< WaitEvent >                    quit_;
     std::string                                     host_;
     bool                                            retry_;
     boost::thread                                   thread_;

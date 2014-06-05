@@ -365,7 +365,7 @@ namespace
             MOCK_EXPECT( entityResolver.FindAgent ).with( 42u ).returns( &target );
             MOCK_EXPECT( entityResolver.FindEntity ).with( 42u ).returns( &target );
             MOCK_EXPECT( target.GetId ).returns( 42u );
-            std::auto_ptr< actions::Action_ABC > fromXml( actionFactory.CreateAction( xis >> xml::start( "action" ) ) );
+            std::unique_ptr< actions::Action_ABC > fromXml( actionFactory.CreateAction( xis >> xml::start( "action" ) ) );
             BOOST_REQUIRE( fromXml.get() );
             const auto str1 = Serialize( *fromXml );
             CheckXml( input, str1 );
@@ -376,7 +376,7 @@ namespace
             BOOST_REQUIRE_EQUAL( order.parameters().elem_size(), 1 );
             const auto& param = order.parameters().elem( 0 );
             checker( param );
-            std::auto_ptr< actions::Action_ABC > fromProto( actionFactory.CreateAction( msg1, false ) );
+            std::unique_ptr< actions::Action_ABC > fromProto( actionFactory.CreateAction( msg1, false ) );
             BOOST_REQUIRE( fromProto.get() );
             const auto str2 = Serialize( *fromProto );
             CheckXml( input, str2 );

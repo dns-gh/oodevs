@@ -38,7 +38,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< QStyle > baseStyle_;
+    std::unique_ptr< QStyle > baseStyle_;
     //@}
 };
 

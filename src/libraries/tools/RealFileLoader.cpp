@@ -102,7 +102,7 @@ bool RealFileLoader::AssignDefaultSchema( const Path& inputFileName, xml::xistre
 // Name: RealFileLoader::UpgradeToLastVersion
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const Path& inputFileName, std::auto_ptr< xml::xistream > xis, const Path& initialSchema, const Path& initialVersion, RealFileLoaderObserver_ABC& observer ) const
+std::unique_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const Path& inputFileName, std::unique_ptr< xml::xistream > xis, const Path& initialSchema, const Path& initialVersion, RealFileLoaderObserver_ABC& observer ) const
 {
     Path schema = initialSchema;
     bool applyMigration = false;
@@ -116,7 +116,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const Path&
             applyMigration = true;
         if( applyMigration )
         {
-            xis = migration.UpgradeFile( xis, schema );
+            xis = migration.UpgradeFile( std::move( xis ), schema );
             observer.NotifyFileMigrated( inputFileName, fromVersion, toVersion );
         }
         std::string schemaName = schema.ToUTF8();
@@ -130,7 +130,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const Path&
 // Name: RealFileLoader::LoadFile
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInputFileName, RealFileLoaderObserver_ABC& observer ) const
+std::unique_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInputFileName, RealFileLoaderObserver_ABC& observer ) const
 {
     std::string data;
     Path inputFileName = initialInputFileName;
@@ -152,7 +152,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInpu
 
     // Get schema and version
     Path schema;
-    std::auto_ptr< xml::xistream > xis( new xml::xistringstream( data ));
+    std::unique_ptr< xml::xistream > xis( new xml::xistringstream( data ));
     *xis >> xml::list( [&]( const std::string&, const std::string&, xml::xistream& x )
         {
             schema = x.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
@@ -185,5 +185,5 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInpu
                 throw;
         }
     }
-    return UpgradeToLastVersion( inputFileName, xis, schema, version, observer );
+    return UpgradeToLastVersion( inputFileName, std::move( xis ), schema, version, observer );
 }
