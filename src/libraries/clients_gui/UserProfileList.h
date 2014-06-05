@@ -10,23 +10,22 @@
 #ifndef __UserProfileList_h_
 #define __UserProfileList_h_
 
-#include "ProfilesChecker_ABC.h"
+#include "clients_kernel/ProfilesChecker_ABC.h"
 
 namespace kernel
 {
     class Controller;
     class UserProfile_ABC;
+    class ProfileEditor;
+    class ProfilesModel_ABC;
 }
 
 namespace gui
 {
-    template< typename T > class RichWidget;
-}
 
+template< typename T > class RichWidget;
 class UserProfileWidget;
-class ProfilesModel;
 class NewProfileDialog;
-class ProfileEditor;
 
 // =============================================================================
 /** @class  UserProfileList
@@ -35,14 +34,14 @@ class ProfileEditor;
 // Created: SBO 2007-01-16
 // =============================================================================
 class UserProfileList : public QWidget
-                      , public ProfilesChecker_ABC
+                      , public kernel::ProfilesChecker_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, ProfilesModel& model );
+             UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, kernel::ProfilesModel_ABC& model );
     virtual ~UserProfileList();
     //@}
 
@@ -75,19 +74,21 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< std::unique_ptr< ProfileEditor > > T_LocalProfiles;
+    typedef std::vector< std::unique_ptr< kernel::ProfileEditor > > T_LocalProfiles;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    ProfilesModel& model_;
+    kernel::ProfilesModel_ABC& model_;
     T_LocalProfiles localProfiles_;
     UserProfileWidget& pages_;
     gui::RichWidget< QListView >* list_;
     QSortFilterProxyModel* proxyModel_;
     std::auto_ptr< NewProfileDialog > pNewProfileDialog_;    //@}
 };
+
+}
 
 #endif // __UserProfileList_h_

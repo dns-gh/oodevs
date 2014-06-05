@@ -14,8 +14,8 @@
 
 namespace kernel
 {
-    class UserProfile_ABC;
-}
+
+class UserProfile_ABC;
 
 // =============================================================================
 /** @class  ProfileFactory_ABC
@@ -34,11 +34,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::UserProfile_ABC* Create( xml::xistream& xis ) const = 0;
-    virtual kernel::UserProfile_ABC* Create( const QString& name ) const = 0;
-    virtual kernel::UserProfile_ABC* Create( kernel::UserProfile_ABC& profile ) const = 0;
-    virtual kernel::UserProfile_ABC* Create() const = 0;
+    virtual UserProfile_ABC* Create( xml::xistream& xis ) const = 0;
+    virtual UserProfile_ABC* Create( const QString& name ) const = 0;
+    virtual UserProfile_ABC* Create( UserProfile_ABC& profile ) const = 0;
+    virtual UserProfile_ABC* Create() const = 0;
     //@}
 };
+
+}
 
 #endif // __ProfileFactory_ABC_h_

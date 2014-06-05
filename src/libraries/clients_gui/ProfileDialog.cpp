@@ -7,21 +7,24 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "ProfileDialog.h"
 #include "moc_ProfileDialog.cpp"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "UserProfileWidget.h"
 #include "UserProfileList.h"
-#include "icons.h"
-#include "preparation/Model.h"
-#include "clients_gui/RichPushButton.h"
+#include "resources.h"
+#include "clients_kernel/Controllers.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                              const gui::EntitySymbols& icons, Model& model )
+                              const EntitySymbols& icons, const kernel::EntityResolver_ABC& resolver, kernel::ProfilesModel_ABC& profiles )
     : ModalDialog( parent, "ProfileDialog" )
 {
     gui::SubObjectName subObject( "UsersProfile" );
@@ -50,13 +53,13 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    UserProfileWidget* pages = new UserProfileWidget( "UserProfileWidget", box, controllers, profile, icons, model );
+    UserProfileWidget* pages = new UserProfileWidget( "UserProfileWidget", box, controllers, profile, icons, resolver );
     pages->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    list_ = new UserProfileList( box, *pages, controllers.controller_, *model.profiles_ );
+    list_ = new UserProfileList( box, *pages, controllers.controller_, profiles );
     grid->addWidget( box, 1, 0 );
 
     box = new Q3HBox( this );

@@ -419,6 +419,17 @@
     </message>
 </context>
 <context>
+    <name>UserProfileRights</name>
+    <message>
+        <source>Read</source>
+        <translation>Lectura</translation>
+    </message>
+    <message>
+        <source>Write</source>
+        <translation>Escritura</translation>
+    </message>
+</context>
+<context>
     <name>Wgs84DmsParser</name>
     <message>
         <source>%1° %2&apos; %3.%4 %5</source>
@@ -1482,6 +1493,25 @@ Desea eliminarlo?</translation>
     </message>
 </context>
 <context>
+    <name>gui::NewProfileDialog</name>
+    <message>
+        <source>New profile</source>
+        <translation>Nuevo perfil</translation>
+    </message>
+    <message>
+        <source>Profile name:</source>
+        <translation>Nombre de Perfil:</translation>
+    </message>
+    <message>
+        <source>Profile name is empty.</source>
+        <translation>Nombre de perfíl vacio.</translation>
+    </message>
+    <message>
+        <source>Profile &apos;%1&apos; already exists.</source>
+        <translation>Perfil &apos;%1&apos; ya existe.</translation>
+    </message>
+</context>
+<context>
     <name>gui::ObjectPanel</name>
     <message>
         <source>Object state</source>
@@ -1774,6 +1804,25 @@ Desea eliminarlo?</translation>
     <message>
         <source>Preset name already exists.</source>
         <translation>Nombre de preajuste ya existe.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ProfileDialog</name>
+    <message>
+        <source>User profiles</source>
+        <translation>Perfiles de usuario</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2262,6 +2311,82 @@ Desea eliminarlo?</translation>
     <message>
         <source>Drag and drop symbol to map to create a new unit.</source>
         <translation>Drag and Drop símbolo al mapa para crear una nueva unidad.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UserProfileList</name>
+    <message>
+        <source>Create</source>
+        <translation>Crear</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Borrar</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UserProfileWidget</name>
+    <message>
+        <source>Profile information</source>
+        <translation>Información del perfil</translation>
+    </message>
+    <message>
+        <source>Login:</source>
+        <translation>Usuario:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Clave:</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
+        <source>Access permissions</source>
+        <translation>Permisos de acceso</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Unidades</translation>
+    </message>
+    <message>
+        <source>Invalid profile information</source>
+        <translation>Información de perfíl nó válida</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation>Permisos</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Muchedumbres</translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
+        <translation>Acciones de supervisor</translation>
+    </message>
+    <message>
+        <source>&apos;Read&apos; permission allows you to see a unit.
+&apos;Write&apos; permission allows you to control a unit.</source>
+        <translation>Permiso &apos;Visualizar&apos; permite observar una unidad.
+Permiso &apos;Controlar&apos; permite manejar una unidad.</translation>
+    </message>
+    <message>
+        <source>Automats:</source>
+        <translation>Autómatas:</translation>
+    </message>
+    <message>
+        <source>Knowledge groups:</source>
+        <translation>Grupos de conocimiento:</translation>
+    </message>
+    <message>
+        <source>Time Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate login: &apos;%1&apos;.</source>
+        <translation>Login repetido: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>

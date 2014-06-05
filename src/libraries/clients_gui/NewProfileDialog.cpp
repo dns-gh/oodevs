@@ -7,22 +7,25 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "NewProfileDialog.h"
 #include "moc_NewProfileDialog.cpp"
-#include "ProfilesChecker_ABC.h"
 #include "clients_gui/RichDialogButtonBox.h"
 #include "clients_gui/RichLineEdit.h"
+#include "clients_gui/SubObjectName.h"
+#include "clients_kernel/ProfilesChecker_ABC.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: NewProfileDialog constructor
 // Created: LGY 2011-12-08
 // -----------------------------------------------------------------------------
-NewProfileDialog::NewProfileDialog( QWidget* parent, const ProfilesChecker_ABC& checker )
+NewProfileDialog::NewProfileDialog( QWidget* parent, const kernel::ProfilesChecker_ABC& checker )
     : QDialog( parent )
     , checker_( checker )
 {
-    gui::SubObjectName subObject( "NewProfileDialog" );
+    SubObjectName subObject( "NewProfileDialog" );
     setCaption( tr( "New profile") );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     QHBoxLayout* editLayout = new QHBoxLayout();
@@ -37,7 +40,7 @@ NewProfileDialog::NewProfileDialog( QWidget* parent, const ProfilesChecker_ABC& 
     okButton_ = new gui::RichDialogButtonBox( "okButton", QDialogButtonBox::Ok );
     connect( okButton_, SIGNAL( accepted() ), this, SLOT( Validate() ) );
     okButton_->setFocus();
-    gui::RichDialogButtonBox* cancelButton = new gui::RichDialogButtonBox( "cancelButton", QDialogButtonBox::Cancel );
+    RichDialogButtonBox* cancelButton = new RichDialogButtonBox( "cancelButton", QDialogButtonBox::Cancel );
     connect( cancelButton, SIGNAL( rejected() ), this, SLOT( reject() ) );
     buttonLayout->addWidget( okButton_ );
     buttonLayout->addWidget( cancelButton );

@@ -10,19 +10,18 @@
 #ifndef __UserProfileRights_ABC_h_
 #define __UserProfileRights_ABC_h_
 
-#include "clients_gui/StandardModelVisitor_ABC.h"
+#include "StandardModelVisitor_ABC.h"
 #include <boost/noncopyable.hpp>
-
-namespace gui
-{
-    class RichTreeView;
-    class StandardModel;
-}
 
 namespace kernel
 {
     class UserProfile_ABC;
 }
+
+namespace gui
+{
+    class RichTreeView;
+    class StandardModel;
 
 // =============================================================================
 /** @class  UserProfileRights_ABC
@@ -31,13 +30,13 @@ namespace kernel
 */
 // Created: SBO 2007-01-18
 // =============================================================================
-class UserProfileRights_ABC : public gui::StandardModelVisitor_ABC
+class UserProfileRights_ABC : public StandardModelVisitor_ABC
                             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileRights_ABC( gui::RichTreeView& listView, gui::StandardModel& model, const QString& name );
+             UserProfileRights_ABC( RichTreeView& listView, StandardModel& model, const QString& name );
     virtual ~UserProfileRights_ABC();
     //@}
 
@@ -81,12 +80,14 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::RichTreeView& listView_;
-    gui::StandardModel& model_;
+    RichTreeView& listView_;
+    StandardModel& model_;
     kernel::UserProfile_ABC* profile_;
     QPixmap check_;
     QPixmap check_grey_;
     //@}
 };
+
+}
 
 #endif // __UserProfileRights_ABC_h_

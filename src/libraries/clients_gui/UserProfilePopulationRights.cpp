@@ -7,16 +7,18 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UserProfilePopulationRights.h"
 #include "moc_UserProfilePopulationRights.cpp"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights constructor
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
 UserProfilePopulationRights::UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name, const kernel::Profile_ABC& profile )
-    : gui::PopulationTreeView(objectName, controllers, profile, observer_, pParent )
+    : PopulationTreeView(objectName, controllers, profile, observer_, pParent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
     connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );

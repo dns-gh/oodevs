@@ -7,15 +7,17 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_kernel_pch.h"
 #include "ProfileEditor.h"
-#include "clients_kernel/UserProfile_ABC.h"
+#include "UserProfile_ABC.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ProfileEditor constructor
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfileEditor::ProfileEditor( kernel::UserProfile_ABC* profile, kernel::UserProfile_ABC* originalProfile )
+ProfileEditor::ProfileEditor( UserProfile_ABC* profile, UserProfile_ABC* originalProfile )
     : profile_( profile )
     , originalProfile_( originalProfile )
     , deleted_( false )
@@ -36,7 +38,7 @@ ProfileEditor::~ProfileEditor()
 // Name: ProfileEditor::GetProfile
 // Created: JSR 2014-06-04
 // -----------------------------------------------------------------------------
-kernel::UserProfile_ABC& ProfileEditor::GetProfile()
+UserProfile_ABC& ProfileEditor::GetProfile()
 {
     return *profile_;
 }
@@ -45,7 +47,7 @@ kernel::UserProfile_ABC& ProfileEditor::GetProfile()
 // Name: ProfileEditor::GetOriginalProfile
 // Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
-kernel::UserProfile_ABC* ProfileEditor::GetOriginalProfile() const
+UserProfile_ABC* ProfileEditor::GetOriginalProfile() const
 {
     return originalProfile_;
 }
@@ -81,7 +83,7 @@ void ProfileEditor::NotifyOriginalProfileDeleted()
 // Name: ProfileEditor::NotifyOriginalProfileCreated
 // Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
-void ProfileEditor::NotifyOriginalProfileCreated( kernel::UserProfile_ABC* profile )
+void ProfileEditor::NotifyOriginalProfileCreated( UserProfile_ABC* profile )
 {
     originalProfile_ = profile;
 }

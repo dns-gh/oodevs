@@ -10,23 +10,22 @@
 #ifndef __UserProfileWidget_h_
 #define __UserProfileWidget_h_
 
-#include "clients_gui/RichWidget.h"
+#include "RichWidget.h"
 
 namespace kernel
 {
     class Controllers;
     class EntityResolver_ABC;
     class Profile_ABC;
+    class ProfilesChecker_ABC;
     class UserProfile_ABC;
 }
 
 namespace gui
 {
-    class EntitySymbols;
-}
 
+class EntitySymbols;
 class UserProfileRights_ABC;
-class ProfilesChecker_ABC;
 
 // =============================================================================
 /** @class  UserProfileWidget
@@ -34,7 +33,7 @@ class ProfilesChecker_ABC;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileWidget : public gui::RichWidget< QTabWidget >
+class UserProfileWidget : public RichWidget< QTabWidget >
 {
     Q_OBJECT
 
@@ -42,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
-                                const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
+                                const kernel::Profile_ABC& profile, const EntitySymbols& icons,
                                 const kernel::EntityResolver_ABC& resolver );
     virtual ~UserProfileWidget();
     //@}
@@ -50,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::UserProfile_ABC& profile );
-    void SetChecker( const ProfilesChecker_ABC* pChecker );
+    void SetChecker( const kernel::ProfilesChecker_ABC* pChecker );
     //@}
 
 private slots:
@@ -67,7 +66,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const ProfilesChecker_ABC* pChecker_;
+    const kernel::ProfilesChecker_ABC* pChecker_;
     const kernel::EntityResolver_ABC& resolver_;
     kernel::UserProfile_ABC* profile_;
     QLineEdit* login_;
@@ -80,5 +79,7 @@ private:
     UserProfileRights_ABC* populationRights_;
     //@}
 };
+
+}
 
 #endif // __UserProfileWidget_h_

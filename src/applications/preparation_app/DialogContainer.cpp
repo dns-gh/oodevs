@@ -27,7 +27,6 @@
 #include "PeopleAffinitiesDialog.h"
 #include "PerformanceDialog.h"
 #include "PreparationProfile.h"
-#include "ProfileDialog.h"
 #include "ProfileWizardDialog.h"
 #include "RemoveBlocksDialog.h"
 #include "ScoreDialog.h"
@@ -37,11 +36,13 @@
 #include "UnitStateDialog.h"
 #include "clients_gui/LinkInterpreter.h"
 #include "clients_gui/AddRasterDialog.h"
+#include "clients_gui/ProfileDialog.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/SoundPanel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/Model.h"
+#include "preparation/ProfilesModel.h"
 #include "preparation/StaticModel.h"
 #include "tools/DefaultLoader.h"
 #include "tools/ExerciseConfig.h"
@@ -78,7 +79,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     std::vector< std::string > sounds;
     prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateConverter_, painter, selector, elevation2dLayer, preferences );
     prefDialog_->AddPage( tools::translate( "DialogContainer", "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers ) );
-    profileDialog_ = new ProfileDialog( parent, controllers, PreparationProfile::GetProfile(), symbols, model );
+    profileDialog_ = new gui::ProfileDialog( parent, controllers, PreparationProfile::GetProfile(), symbols, model, *model.profiles_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
     scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, tools );
     successFactorDialog_ = new SuccessFactorDialog( parent, controllers, *model.successFactors_, staticModel.successFactorActionTypes_, *model.scores_ );
@@ -135,7 +136,7 @@ gui::PreferencesDialog& DialogContainer::GetPrefDialog() const
 // Name: DialogContainer::GetProfileDialog
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-ProfileDialog& DialogContainer::GetProfileDialog() const
+gui::ProfileDialog& DialogContainer::GetProfileDialog() const
 {
     return *profileDialog_;
 }

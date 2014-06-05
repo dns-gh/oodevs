@@ -15,9 +15,7 @@
 namespace kernel
 {
     class UserProfile_ABC;
-}
-
-class ProfilesModel;
+    class ProfilesModel_ABC;
 
 // =============================================================================
 /** @class  ProfileEditor
@@ -30,7 +28,7 @@ class ProfileEditor : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileEditor( kernel::UserProfile_ABC* profile, kernel::UserProfile_ABC* originalProfile );
+             ProfileEditor( UserProfile_ABC* profile, UserProfile_ABC* originalProfile );
     virtual ~ProfileEditor();
     //@}
 
@@ -39,19 +37,21 @@ public:
     void Delete();
     bool IsDeleted() const;
     // todo ne pas faire de getter
-    kernel::UserProfile_ABC& GetProfile();
-    kernel::UserProfile_ABC* GetOriginalProfile() const;
+    UserProfile_ABC& GetProfile();
+    UserProfile_ABC* GetOriginalProfile() const;
     void NotifyOriginalProfileDeleted();
-    void NotifyOriginalProfileCreated( kernel::UserProfile_ABC* profile );
+    void NotifyOriginalProfileCreated( UserProfile_ABC* profile );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::unique_ptr< kernel::UserProfile_ABC > profile_;
-    kernel::UserProfile_ABC* originalProfile_;
+    std::unique_ptr< UserProfile_ABC > profile_;
+    UserProfile_ABC* originalProfile_;
     bool deleted_;
     //@}
 };
+
+}
 
 #endif // __ProfileEditor_h_

@@ -10,7 +10,7 @@
 #ifndef __ProfileFactory_h_
 #define __ProfileFactory_h_
 
-#include "ProfileFactory_ABC.h"
+#include "clients_kernel/ProfileFactory_ABC.h"
 
 namespace kernel
 {
@@ -25,7 +25,7 @@ class Model;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class ProfileFactory : public ProfileFactory_ABC
+class ProfileFactory : public kernel::ProfileFactory_ABC
 {
 public:
     //! @name Constructors/Destructor

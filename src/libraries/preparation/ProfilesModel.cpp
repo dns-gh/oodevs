@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "ProfilesModel.h"
-#include "ProfileFactory_ABC.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -18,38 +17,26 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/ProfileFactory_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UserProfile_ABC.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
+#include "clients_kernel/ProfileEditor.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <tools/Iterator.h>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
-
-
-
-
-
-
-
-#include "../../applications/preparation_app/ProfileEditor.h" // TMP
-
-
-
-
-
-
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfilesModel::ProfilesModel( kernel::Controllers& controllers, const ProfileFactory_ABC& factory )
+ProfilesModel::ProfilesModel( kernel::Controllers& controllers, const kernel::ProfileFactory_ABC& factory )
     : controllers_( controllers )
-    , factory_   ( factory )
+    , factory_( factory )
 {
     controllers_.Register( *this );
 }
@@ -162,25 +149,25 @@ void ProfilesModel::DeleteProfile( const kernel::UserProfile_ABC& profile )
 // Name: ProfilesModel::CreateProfileEditor
 // Created: JSR 2014-06-04
 // -----------------------------------------------------------------------------
-ProfileEditor* ProfilesModel::CreateProfileEditor() const
+kernel::ProfileEditor* ProfilesModel::CreateProfileEditor() const
 {
-    return new ProfileEditor( factory_.Create(), 0 );
+    return new kernel::ProfileEditor( factory_.Create(), 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::CreateProfileEditor
 // Created: JSR 2014-06-04
 // -----------------------------------------------------------------------------
-ProfileEditor* ProfilesModel::CreateProfileEditor( kernel::UserProfile_ABC& profile ) const
+kernel::ProfileEditor* ProfilesModel::CreateProfileEditor( kernel::UserProfile_ABC& profile ) const
 {
-    return new ProfileEditor( factory_.Create( profile ), &profile );
+    return new kernel::ProfileEditor( factory_.Create( profile ), &profile );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::CommitFromEditor
 // Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
-void ProfilesModel::CommitFromEditor( ProfileEditor& editor )
+void ProfilesModel::CommitFromEditor( kernel::ProfileEditor& editor )
 {
     // todo à nettoyer après la fusion avec gaming
     kernel::UserProfile_ABC* originalProfile = editor.GetOriginalProfile();

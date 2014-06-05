@@ -35,6 +35,7 @@ namespace gui
     class GraphicPreferences;
     class DisplayExtractor;
     class LinkInterpreter;
+    class ProfileDialog;
     class UnitStateDialog;
 }
 
@@ -47,7 +48,6 @@ class ExerciseDialog;
 class FilterDialogs;
 class Model;
 class PerformanceDialog;
-class ProfileDialog;
 class ProfileWizardDialog;
 class RemoveBlocksDialog;
 class ScoreDialog;
@@ -82,7 +82,7 @@ public:
     //! @name Accessors
     //@{
     gui::PreferencesDialog& GetPrefDialog() const;
-    ProfileDialog& GetProfileDialog() const;
+    gui::ProfileDialog& GetProfileDialog() const;
     ProfileWizardDialog& GetProfileWizardDialog() const;
     ScoreDialog& GetScoreDialog() const;
     SuccessFactorDialog& GetSuccessFactorDialog() const;
@@ -99,7 +99,7 @@ private:
     //! @name Member data
     //@{
     gui::PreferencesDialog*     prefDialog_;
-    ProfileDialog*              profileDialog_;
+    gui::ProfileDialog*              profileDialog_;
     ProfileWizardDialog*        profileWizardDialog_;
     ScoreDialog*                scoreDialog_;
     SuccessFactorDialog*        successFactorDialog_;

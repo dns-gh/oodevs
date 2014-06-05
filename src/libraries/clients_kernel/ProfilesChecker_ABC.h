@@ -12,8 +12,8 @@
 
 namespace kernel
 {
-    class UserProfile_ABC;
-}
+
+class UserProfile_ABC;
 
 // =============================================================================
 /** @class  ProfilesChecker_ABC
@@ -34,8 +34,10 @@ public:
     //@{
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const = 0;
     virtual bool Exists( const QString& login ) const = 0;
-    virtual void NotifyNameChanged( const kernel::UserProfile_ABC* profile ) const = 0;
+    virtual void NotifyNameChanged( const UserProfile_ABC* profile ) const = 0;
     //@}
 };
+
+}
 
 #endif // __ProfilesChecker_ABC_h_

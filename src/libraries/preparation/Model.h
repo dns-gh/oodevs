@@ -20,6 +20,7 @@ namespace kernel
 {
     class Controllers;
     class KnowledgeGroupFactory_ABC; // LTO
+    class ProfileFactory_ABC;
     class SymbolFactory;
 }
 
@@ -50,7 +51,6 @@ class GhostModel;
 class LimitsModel;
 class WeatherModel;
 class ProfilesModel;
-class ProfileFactory_ABC;
 class ObjectsModel;
 class ObjectFactory_ABC;
 class ScoresModel;
@@ -129,7 +129,7 @@ private:
     std::unique_ptr< FormationFactory_ABC > formationFactory_;
     std::unique_ptr< AgentFactory_ABC > agentFactory_;
     std::unique_ptr< ObjectFactory_ABC > objectFactory_;
-    std::unique_ptr< ProfileFactory_ABC > profileFactory_;
+    std::unique_ptr< kernel::ProfileFactory_ABC > profileFactory_;
     std::unique_ptr< ScoreFactory_ABC > scoreFactory_;
     std::unique_ptr< SuccessFactorFactory_ABC > successFactorFactory_;
     std::unique_ptr< gui::DrawingFactory_ABC > drawingFactory_;

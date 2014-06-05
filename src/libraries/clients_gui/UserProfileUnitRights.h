@@ -10,15 +10,15 @@
 #ifndef __UserProfileUnitRights_h_
 #define __UserProfileUnitRights_h_
 
-#include "clients_gui/HierarchyTreeView.h"
-#include "clients_gui/DummyModelObserver.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "HierarchyTreeView.h"
+#include "DummyModelObserver.h"
 #include "UserProfileRights_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
-namespace
+typedef gui::HierarchyTreeView< kernel::TacticalHierarchies > T_Parent;
+
+namespace gui
 {
-    typedef gui::HierarchyTreeView< kernel::TacticalHierarchies > T_Parent;
-}
 
 // =============================================================================
 /** @class  UserProfileUnitRights
@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
-                           const gui::EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile );
+                           const EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile );
     virtual ~UserProfileUnitRights();
     //@}
 
@@ -70,8 +70,10 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::DummyModelObserver observer_;
+    DummyModelObserver observer_;
     //@}
 };
+
+}
 
 #endif // __UserProfileUnitRights_h_

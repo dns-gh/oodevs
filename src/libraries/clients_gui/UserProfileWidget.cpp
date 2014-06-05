@@ -7,58 +7,61 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UserProfileWidget.h"
 #include "moc_UserProfileWidget.cpp"
 #include "UserProfileUnitRights.h"
 #include "UserProfilePopulationRights.h"
-#include "ProfilesChecker_ABC.h"
+#include "RichCheckBox.h"
+#include "RichLineEdit.h"
+#include "RichGroupBox.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/ProfilesChecker_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UserProfile_ABC.h"
-#include "clients_gui/RichCheckBox.h"
-#include "clients_gui/RichLineEdit.h"
-#include "clients_gui/RichGroupBox.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileWidget constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
-                                      const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
+                                      const kernel::Profile_ABC& profile, const EntitySymbols& icons,
                                       const kernel::EntityResolver_ABC& resolver )
-    : gui::RichWidget< QTabWidget >( objectName, parent )
+    : RichWidget< QTabWidget >( objectName, parent )
     , controllers_( controllers )
     , resolver_( resolver )
     , profile_( 0 )
 {
-    gui::SubObjectName subObject( "UserProfileWidget" );
+    SubObjectName subObject( "UserProfileWidget" );
     {
-        gui::SubObjectName subObject( "ProfileInformation" );
+        SubObjectName subObject( "ProfileInformation" );
         //profile
         QLabel* loginLabel = new QLabel( tr( "Login:" ) );
-        login_ = new gui::RichLineEdit( "login" );
+        login_ = new RichLineEdit( "login" );
         connect( login_, SIGNAL( editingFinished() ), SLOT( OnLoginChanged() ) );
 
         //password
         QLabel* passwordLabel = new QLabel( tr( "Password:" ) );
-        password_ = new gui::RichLineEdit( "password" );
+        password_ = new RichLineEdit( "password" );
         connect( password_, SIGNAL( textChanged( const QString& ) ), SLOT( OnPasswordChanged( const QString& ) ) );
 
         //automat
         QLabel* automataLabel = new QLabel( tr( "Automats:" ) );
-        automats_= new gui::RichLineEdit( "automats" );
+        automats_= new RichLineEdit( "automats" );
         automats_->setReadOnly( true );
 
         //knowledge group
         QLabel* knowledgeLabel = new QLabel( tr( "Knowledge groups:" ) );
-        knowledgeGroups_ = new gui::RichLineEdit( "knowledgeGroups" );
+        knowledgeGroups_ = new RichLineEdit( "knowledgeGroups" );
         knowledgeGroups_->setReadOnly( true );
 
-        gui::RichGroupBox* group = new gui::RichGroupBox( "ProfileInformation", tr( "Profile information" ) );
+        RichGroupBox* group = new RichGroupBox( "ProfileInformation", tr( "Profile information" ) );
         QGridLayout* layout = new QGridLayout( group );
         layout->addWidget( loginLabel, 0, 0 );
         layout->addWidget( login_, 0, 1 );
@@ -80,13 +83,13 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
         addTab( box, tr( "General" ) );
     }
     {
-        supervisor_ = new gui::RichCheckBox( "supervisorActions", tr( "Supervisor actions" ) );
+        supervisor_ = new RichCheckBox( "supervisorActions", tr( "Supervisor actions" ) );
         connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
 
-        timeControl_  = new gui::RichCheckBox( "timeControl", tr( "Time Control" ) );
+        timeControl_  = new RichCheckBox( "timeControl", tr( "Time Control" ) );
         connect( timeControl_, SIGNAL( toggled( bool ) ), SLOT( OnTimeControlChanged( bool ) ) );
 
-        gui::RichWidget< QTabWidget >* tabs = new gui::RichWidget< QTabWidget >( "RichWidget< QTabWidget >" );
+        RichWidget< QTabWidget >* tabs = new RichWidget< QTabWidget >( "RichWidget< QTabWidget >" );
 
         unitRights_ = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ), profile );
         connect( unitRights_->GetWidget(), SIGNAL( NotifyRightsChanged() ), SLOT( UpdateAutomatsAndKnowledgeGroups() ) );
@@ -98,7 +101,7 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
         QLabel* readPermissionlabel = new QLabel( tr( "'Read' permission allows you to see a unit.\n"
                         "'Write' permission allows you to control a unit." ) );
 
-        gui::RichGroupBox* group = new gui::RichGroupBox( "permissionsGroup", tr( "Access permissions" ) );
+        RichGroupBox* group = new RichGroupBox( "permissionsGroup", tr( "Access permissions" ) );
         QHBoxLayout* holder = new QHBoxLayout();
         holder->addWidget( supervisor_ );
         holder->addWidget( timeControl_ );
@@ -147,7 +150,7 @@ void UserProfileWidget::Display( kernel::UserProfile_ABC& profile )
 // Name: UserProfileWidget::SetChecker
 // Created: JSR 2014-06-02
 // -----------------------------------------------------------------------------
-void UserProfileWidget::SetChecker( const ProfilesChecker_ABC* pChecker )
+void UserProfileWidget::SetChecker( const kernel::ProfilesChecker_ABC* pChecker )
 {
     pChecker_ = pChecker;
 }
@@ -166,7 +169,7 @@ void UserProfileWidget::OnLoginChanged()
         return;
     if( pChecker_->Exists( oldLogin, newLogin ) )
     {
-        QMessageBox::warning( this, tr( "Invalid profile information" ), tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( newLogin ), QMessageBox::Ok, Qt::NoButton );
+        QMessageBox::warning( this, tr( "Invalid profile information" ), tr( "Duplicate login: '%1'." ).arg( newLogin ), QMessageBox::Ok, Qt::NoButton );
         login_->setText( oldLogin );
     }
     else

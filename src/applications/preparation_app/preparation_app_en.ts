@@ -1499,25 +1499,6 @@ This data can&apos;t be projected.</translation>
     </message>
 </context>
 <context>
-    <name>NewProfileDialog</name>
-    <message>
-        <source>New profile</source>
-        <translation>New profile</translation>
-    </message>
-    <message>
-        <source>Profile name:</source>
-        <translation>Profile name:</translation>
-    </message>
-    <message>
-        <source>Profile name is empty.</source>
-        <translation>Profile name is empty.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; already exists.</source>
-        <translation>Profile &apos;%1&apos; already exists.</translation>
-    </message>
-</context>
-<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -1739,25 +1720,6 @@ This data can&apos;t be projected.</translation>
     <message>
         <source> Location is outside terrain bounding box </source>
         <translation> Location is outside terrain bounding box </translation>
-    </message>
-</context>
-<context>
-    <name>ProfileDialog</name>
-    <message>
-        <source>User profiles</source>
-        <translation>User profiles</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation>Apply</translation>
     </message>
 </context>
 <context>
@@ -2891,93 +2853,6 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Delete</source>
         <translation>Delete</translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileList</name>
-    <message>
-        <source>Create</source>
-        <translation>Create</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Delete</translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileRights</name>
-    <message>
-        <source>Read</source>
-        <translation>Read</translation>
-    </message>
-    <message>
-        <source>Write</source>
-        <translation>Write</translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileWidget</name>
-    <message>
-        <source>Profile information</source>
-        <translation>Profile information</translation>
-    </message>
-    <message>
-        <source>Login:</source>
-        <translation>Login:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Password:</translation>
-    </message>
-    <message>
-        <source>Automats:</source>
-        <translation>Automats:</translation>
-    </message>
-    <message>
-        <source>Knowledge groups:</source>
-        <translation>Knowledge groups:</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation>General</translation>
-    </message>
-    <message>
-        <source>Access permissions</source>
-        <translation>Access permissions</translation>
-    </message>
-    <message>
-        <source>Supervisor actions</source>
-        <translation>Supervisor actions</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Units</translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Crowds</translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translation>Permissions</translation>
-    </message>
-    <message>
-        <source>&apos;Read&apos; permission allows you to see a unit.
-&apos;Write&apos; permission allows you to control a unit.</source>
-        <translation>&apos;Read&apos; permission allows you to see a unit.
-&apos;Write&apos; permission allows you to control a unit.</translation>
-    </message>
-    <message>
-        <source>Duplicate login: &apos;%1&apos;.</source>
-        <translation>Duplicate login: &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Invalid profile information</source>
-        <translation>Invalid profile information</translation>
-    </message>
-    <message>
-        <source>Time Control</source>
-        <translation>Time Control</translation>
     </message>
 </context>
 <context>

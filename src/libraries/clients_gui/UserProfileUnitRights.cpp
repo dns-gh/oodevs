@@ -7,18 +7,20 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UserProfileUnitRights.h"
 #include "moc_UserProfileUnitRights.cpp"
-#include "clients_gui/LongNameHelper.h"
-#include "clients_gui/Tools.h"
+#include "LongNameHelper.h"
+#include "Tools.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileUnitRights::UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
-                                              const gui::EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile )
+                                              const EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile )
     : T_Parent( objectName, controllers, profile, observer_, icons, parent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
@@ -61,7 +63,7 @@ void UserProfileUnitRights::Display( kernel::UserProfile_ABC& profile )
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
 {
-    gui::longname::SetItemLongName( entity, entityItem );
+    longname::SetItemLongName( entity, entityItem );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +93,7 @@ void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
     QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
     {
-        gui::longname::SetItemLongName( entity, *item);
+        longname::SetItemLongName( entity, *item);
         proxyModel_->invalidate();
     }
 }

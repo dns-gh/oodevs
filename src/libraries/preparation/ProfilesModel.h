@@ -10,6 +10,7 @@
 #ifndef __ProfilesModel_h_
 #define __ProfilesModel_h_
 
+#include "clients_kernel/ProfilesModel_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <tools/ElementObserver_ABC.h>
 
@@ -26,6 +27,8 @@ namespace kernel
     class Formation_ABC;
     class Ghost_ABC;
     class Population_ABC;
+    class ProfileEditor;
+    class ProfileFactory_ABC;
     class Team_ABC;
     class UserProfile_ABC;
 }
@@ -36,9 +39,7 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
-class ProfileFactory_ABC;
 class Model;
-class ProfileEditor;
 
 // =============================================================================
 /** @class  ProfilesModel
@@ -46,7 +47,8 @@ class ProfileEditor;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class ProfilesModel : public tools::Observer_ABC
+class ProfilesModel : public kernel::ProfilesModel_ABC
+                    , public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< kernel::Team_ABC >
                     , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                     , public tools::ElementObserver_ABC< kernel::Automat_ABC >
@@ -57,7 +59,7 @@ class ProfilesModel : public tools::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ProfilesModel( kernel::Controllers& controllers, const ProfileFactory_ABC& factory );
+             ProfilesModel( kernel::Controllers& controllers, const kernel::ProfileFactory_ABC& factory );
     virtual ~ProfilesModel();
     //@}
 
@@ -70,11 +72,11 @@ public:
     kernel::UserProfile_ABC* CreateProfile( const QString& name );
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
     void DeleteProfile( const kernel::UserProfile_ABC& profile );
-    ProfileEditor* CreateProfileEditor() const;
-    ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const;
-    void CommitFromEditor( ProfileEditor& editor );
+    virtual kernel::ProfileEditor* CreateProfileEditor() const;
+    virtual kernel::ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const;
+    virtual void CommitFromEditor( kernel::ProfileEditor& editor );
 
-    void Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor );
+    virtual void Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor );
 
     bool Exists( const QString& login ) const;
     kernel::UserProfile_ABC* Find( const std::string& name ) const;
@@ -111,7 +113,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const ProfileFactory_ABC& factory_;
+    const kernel::ProfileFactory_ABC& factory_;
     T_UserProfiles userProfiles_;
     //@}
 };

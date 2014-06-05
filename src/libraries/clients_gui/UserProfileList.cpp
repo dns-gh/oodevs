@@ -7,24 +7,27 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UserProfileList.h"
 #include "moc_UserProfileList.cpp"
 #include "UserProfileWidget.h"
-#include "ProfileEditor.h"
 #include "NewProfileDialog.h"
-#include "preparation/ProfilesModel.h"
+#include "clients_kernel/ProfilesModel_ABC.h"
+#include "clients_gui/SubObjectName.h"
+#include "clients_kernel/ProfileEditor.h"
 #include "clients_kernel/UserProfile_ABC.h"
-#include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichWidget.h"
+#include "RichPushButton.h"
+#include "RichWidget.h"
 
-Q_DECLARE_METATYPE( ProfileEditor* )
+using namespace gui;
+
+Q_DECLARE_METATYPE( kernel::ProfileEditor* )
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileList constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, ProfilesModel& model )
+UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, kernel::ProfilesModel_ABC& model )
     : QWidget( parent )
     , controller_( controller )
     , pages_( pages )
@@ -119,14 +122,14 @@ void UserProfileList::OnSelectionChanged()
     if( isVisible() && !indexes.empty() )
     {
         const int row = proxyModel_->mapToSource( indexes.front() ).row();
-        if( ProfileEditor* profile = dataModel_->item( row )->data().value< ProfileEditor* >() )
+        if( kernel::ProfileEditor* profile = dataModel_->item( row )->data().value< kernel::ProfileEditor* >() )
             pages_.Display( profile->GetProfile() );
     }
 }
 
 namespace
 {
-    QStandardItem* CreateItem( ProfileEditor& profile )
+    QStandardItem* CreateItem( kernel::ProfileEditor& profile )
     {
         QStandardItem* item = new QStandardItem( profile.GetProfile().GetLogin() );
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -137,7 +140,7 @@ namespace
     int GetIndex( const QStandardItemModel* model, const kernel::UserProfile_ABC* profile )
     {
         for( int i = 0; i < model->rowCount(); ++i )
-            if( &model->item( i )->data().value< ProfileEditor* >()->GetProfile() == profile )
+            if( &model->item( i )->data().value< kernel::ProfileEditor* >()->GetProfile() == profile )
                 return i;
         return -1;
     }
@@ -152,7 +155,7 @@ void UserProfileList::OnCreate()
     const QString& result = pNewProfileDialog_->Exec();
     if( result.isEmpty() )
         return;
-    ProfileEditor* profileEditor = model_.CreateProfileEditor();
+    kernel::ProfileEditor* profileEditor = model_.CreateProfileEditor();
     profileEditor->GetProfile().SetLogin( result );
     localProfiles_.emplace_back( profileEditor );
     dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
@@ -169,7 +172,7 @@ void UserProfileList::OnDelete()
     if( !indexes.empty() )
     {
         const int index = proxyModel_->mapToSource( indexes.front() ).row();
-        dataModel_->item( index )->data().value< ProfileEditor* >()->Delete();
+        dataModel_->item( index )->data().value< kernel::ProfileEditor* >()->Delete();
         dataModel_->removeRow( index );
         pages_.setVisible( dataModel_->rowCount() > 0 );
     }
@@ -198,7 +201,7 @@ void UserProfileList::showEvent( QShowEvent* event )
 {
     model_.Apply( [&]( kernel::UserProfile_ABC& profile )
         {
-            ProfileEditor* profileEditor = model_.CreateProfileEditor( profile );
+            kernel::ProfileEditor* profileEditor = model_.CreateProfileEditor( profile );
             localProfiles_.emplace_back( profileEditor );
             dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
         });

@@ -423,6 +423,17 @@
     </message>
 </context>
 <context>
+    <name>UserProfileRights</name>
+    <message>
+        <source>Read</source>
+        <translation>Read</translation>
+    </message>
+    <message>
+        <source>Write</source>
+        <translation>Write</translation>
+    </message>
+</context>
+<context>
     <name>Wgs84DmsParser</name>
     <message>
         <source>%1° %2&apos; %3.%4 %5</source>
@@ -1485,6 +1496,25 @@ Do you want to remove it?</translation>
     </message>
 </context>
 <context>
+    <name>gui::NewProfileDialog</name>
+    <message>
+        <source>New profile</source>
+        <translation>New profile</translation>
+    </message>
+    <message>
+        <source>Profile name:</source>
+        <translation>Profile name:</translation>
+    </message>
+    <message>
+        <source>Profile name is empty.</source>
+        <translation>Profile name is empty.</translation>
+    </message>
+    <message>
+        <source>Profile &apos;%1&apos; already exists.</source>
+        <translation>Profile &apos;%1&apos; already exists.</translation>
+    </message>
+</context>
+<context>
     <name>gui::ObjectPanel</name>
     <message>
         <source>Object state</source>
@@ -1775,6 +1805,25 @@ Do you want to remove it?</translation>
     <message>
         <source>Preset name already exists.</source>
         <translation>Preset name already exists.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ProfileDialog</name>
+    <message>
+        <source>User profiles</source>
+        <translation>User profiles</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Apply</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2308,82 @@ Do you want to remove it?</translation>
     <message>
         <source>Drag and drop symbol to map to create a new unit.</source>
         <translation>Drag and drop symbol to map to create a new unit.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UserProfileList</name>
+    <message>
+        <source>Create</source>
+        <translation>Create</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Delete</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UserProfileWidget</name>
+    <message>
+        <source>Profile information</source>
+        <translation>Profile information</translation>
+    </message>
+    <message>
+        <source>Login:</source>
+        <translation>Login:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Password:</translation>
+    </message>
+    <message>
+        <source>Automats:</source>
+        <translation>Automats:</translation>
+    </message>
+    <message>
+        <source>Knowledge groups:</source>
+        <translation>Knowledge groups:</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
+        <source>Access permissions</source>
+        <translation>Access permissions</translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
+        <translation>Supervisor actions</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Units</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Crowds</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation>Permissions</translation>
+    </message>
+    <message>
+        <source>&apos;Read&apos; permission allows you to see a unit.
+&apos;Write&apos; permission allows you to control a unit.</source>
+        <translation>&apos;Read&apos; permission allows you to see a unit.
+&apos;Write&apos; permission allows you to control a unit.</translation>
+    </message>
+    <message>
+        <source>Invalid profile information</source>
+        <translation>Invalid profile information</translation>
+    </message>
+    <message>
+        <source>Time Control</source>
+        <translation>Time Control</translation>
+    </message>
+    <message>
+        <source>Duplicate login: &apos;%1&apos;.</source>
+        <translation>Duplicate login: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>
