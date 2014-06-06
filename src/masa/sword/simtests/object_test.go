@@ -231,8 +231,6 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 }
 
 func (s *TestSuite) TestTimeLimitAttribute(c *C) {
-	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-12044")
-
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	data := client.Model.GetData()
