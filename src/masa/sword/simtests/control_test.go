@@ -14,55 +14,50 @@ import (
 )
 
 func (s *TestSuite) TestPauseStopResume(c *C) {
-	c.Skip("unreliable")
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer stopSimAndClient(c, sim, client)
 	model := client.Model
 
-	err := client.Pause()
+	tick, err := client.Pause()
 	c.Assert(err, IsNil)
-	err = client.Pause()
-	c.Assert(err, IsSwordError, "error_already_paused")
-
-	// Wait a bit to see if it ticks, not super reliable but locally ticks
-	// are around 500ms
-	tick1 := model.GetData().Tick
-	time.Sleep(3 * time.Second)
-	tick2 := model.GetData().Tick
-	c.Assert(tick1, Equals, tick2)
+	c.Assert(tick, Greater, int32(0))
+	// Pausing a paused simulation is a no-op
+	_, err = client.Pause()
+	c.Assert(err, IsNil)
 
 	// Test WaitUntilTick() while we are here
 	model.WaitTimeout = 2 * time.Second
-	if model.WaitUntilTick(tick1 + 1) {
+	if model.WaitUntilTick(tick + 1) {
 		c.Fatal("simulation ticked while paused")
 	}
 	model.WaitTimeout = 1 * time.Minute
 
 	// Resume without pausing again afterwards
-	err = client.Resume(0)
-	c.Assert(err, IsNil) // simulation failed to resume
-	err = client.Resume(0)
-	c.Assert(err, IsSwordError, "error_not_paused")
+	tick, delay, err := client.Resume(0)
+	c.Assert(err, IsNil)
+	c.Assert(tick, Greater, int32(0))
+	c.Assert(delay, Equals, int32(0))
 	// Should tick now
-	if !model.WaitUntilTick(tick1 + 1) {
+	if !model.WaitUntilTick(tick + 1) {
 		c.Fatal("simulation failed to resume")
 	}
 
-	// Resuming again with a delay should fail too
-	err = client.Resume(1)
-	c.Assert(err, IsSwordError, "error_not_paused")
-	// Test resuming with a delay
-	err = client.Pause()
+	// Resuming again is a no-op
+	_, _, err = client.Resume(0)
 	c.Assert(err, IsNil)
-	tick1 = model.GetData().Tick
-	err = client.Resume(1)
-	if !model.WaitUntilTick(tick1 + 1) {
+
+	// Resuming again with a delay will pause after the delay
+	// Note the pause happens after the end of (tick + delay - 1) and before
+	// the start of (tick + delay), hence the -1 below.
+	tick, delay, err = client.Resume(1)
+	c.Assert(err, IsNil)
+	if !model.WaitUntilTickEnds(tick + delay - 1) {
 		c.Fatal("simulation failed to resume")
 	}
 	// Should tick once
 	model.WaitTimeout = 2 * time.Second
 	// Not twice
-	if model.WaitUntilTick(tick1 + 2) {
+	if model.WaitUntilTickEnds(tick + delay) {
 		c.Fatal("simulation ticked while paused")
 	}
 	model.WaitTimeout = 1 * time.Minute
@@ -81,12 +76,12 @@ func (s *TestSuite) TestControlRights(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer stopSimAndClient(c, sim, client)
 
-	err := client.Pause()
+	_, err := client.Pause()
 	c.Assert(err, IsSwordError, "error_forbidden")
 
 	// Privilege checking should happen before validity checks, that is
 	// resuming a non-paused simulation
-	err = client.Resume(0)
+	_, _, err = client.Resume(0)
 	c.Assert(err, IsSwordError, "error_forbidden")
 
 	err = client.Stop()

@@ -111,7 +111,7 @@ type RequestCallback func()
 func checkRequest(c *C, admin, client *swapi.Client, offset int,
 	requester, supplier uint32, callback RequestCallback, checkers ...RequestChecker) {
 
-	err := admin.Pause()
+	_, err := admin.Pause()
 	c.Assert(err, IsNil)
 	check := RequestCheckContext{
 		requester: requester,
@@ -146,7 +146,7 @@ func checkRequest(c *C, admin, client *swapi.Client, offset int,
 	})
 	defer client.Unregister(ctx)
 	callback()
-	err = admin.Resume(0)
+	_, _, err = admin.Resume(0)
 	c.Assert(err, IsNil)
 	select {
 	case <-quit:

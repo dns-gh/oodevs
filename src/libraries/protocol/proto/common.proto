@@ -259,16 +259,17 @@ enum EnumNatureLevel {
 message ControlStop {
 }
 
-/** @struct ControlPause
-    @brief Pauses the simulation
-    @see ControlPauseAck
-*/
+//! Pauses the simulation. Pausing a paused simulation does nothing.
+//! Returns ControlPauseAck.
 message ControlPause {
 }
 
 //! Resumes a paused simulation. If tick greater is than zero, the
-//! simulation runs until after the end message of current_tick + tick
-//! before being suspended again.
+//! simulation runs until after the end message of
+//! (ControlResumeAck.current_tick + ControlResumeAck.tick - 1) tick
+//! before being suspended again. Resuming a running simulation does
+//! nothing if tick is set to 0, and will pause it after tick ticks
+//! otherwise.
 message ControlResume {
     optional uint32 tick = 1;
 }

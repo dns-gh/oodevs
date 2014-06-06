@@ -323,7 +323,7 @@ func startGaming(c *C, sim *simu.SimProcess) {
 	c.Assert(err, IsNil)
 	err = admin.LoginWithAuthenticationKey("", "", key)
 	c.Assert(err, IsNil)
-	err = admin.Pause()
+	_, err = admin.Pause()
 	c.Assert(err, IsNil)
 	_, err = simu.StartGamingFromSim(sim.Opts)
 	c.Assert(err, IsNil)
