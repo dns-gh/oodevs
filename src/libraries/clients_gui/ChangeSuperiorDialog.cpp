@@ -109,8 +109,8 @@ void ChangeSuperiorDialog::Show( kernel::Entity_ABC& entity,
                                  int options /* = eTacticalSuperior */ )
 {
     setWindowTitle( title );
-    if( currentEntity_->GetTasker() )
-        logisticWidget_->AddItem( *currentEntity_->GetTasker() );
+    if( auto tasker = currentEntity_->GetTasker() )
+        logisticWidget_->AddItem( *tasker );
     currentEntity_->SetTasker( &entity );
     // visibility
     SetVisibleAndCheckable( tacticalSuperior_, options, eTacticalSuperior, eOptionalTacticalSuperior );
@@ -194,18 +194,20 @@ namespace
 // -----------------------------------------------------------------------------
 void ChangeSuperiorDialog::accept()
 {
-    if( !currentEntity_->GetTasker() )
-        throw MASA_EXCEPTION( "Invalid entity while trying to change superior" );
-    kernel::Entity_ABC& entity = const_cast< kernel::Entity_ABC& >( *currentEntity_->GetTasker() );
-    ApplyChanges( entity, *tacticalSuperior_, tacticalSuperiorFunctors_ );
-    ApplyChanges( entity, *knowledgeGroup_, knowledgeGroupFunctors_ );
-    if( IsSuperiorActivated( *logisticSuperior_ ) )
+    auto tasker = currentEntity_->GetTasker();
+    if( tasker )
     {
-        if( !logisticNominalFunctors_ )
-            throw MASA_EXCEPTION( "No functor defined to change superior" );
-        logisticNominalFunctors_->doChange_( entity,
-                                             logisticWidget_->GetNominalSuperior(),
-                                             logisticWidget_->GetCurrentSuperior() );
+        kernel::Entity_ABC& entity = const_cast< kernel::Entity_ABC& >( *currentEntity_->GetTasker() );
+        ApplyChanges( entity, *tacticalSuperior_, tacticalSuperiorFunctors_ );
+        ApplyChanges( entity, *knowledgeGroup_, knowledgeGroupFunctors_ );
+        if( IsSuperiorActivated( *logisticSuperior_ ) )
+        {
+            if( !logisticNominalFunctors_ )
+                throw MASA_EXCEPTION( "No functor defined to change superior" );
+            logisticNominalFunctors_->doChange_( entity,
+                                                 logisticWidget_->GetNominalSuperior(),
+                                                 logisticWidget_->GetCurrentSuperior() );
+        }
     }
     Clear();
     QDialog::accept();
@@ -253,9 +255,10 @@ namespace
 // -----------------------------------------------------------------------------
 void ChangeSuperiorDialog::OnContentChanged()
 {
-    const bool validTactical = IsValidSuperior( *currentEntity_->GetTasker(), *tacticalSuperior_, tacticalSuperiorFunctors_ );
-    const bool validKnowledgeGroup = IsValidSuperior( *currentEntity_->GetTasker(), *knowledgeGroup_, knowledgeGroupFunctors_ );
-    okButton_->setEnabled( currentEntity_->GetTasker() && validTactical && validKnowledgeGroup );
+    auto tasker = currentEntity_->GetTasker();
+    okButton_->setEnabled( tasker &&
+                           IsValidSuperior( *tasker, *tacticalSuperior_, tacticalSuperiorFunctors_ ) &&
+                           IsValidSuperior( *tasker, *knowledgeGroup_, knowledgeGroupFunctors_ ) );
 }
 
 // -----------------------------------------------------------------------------
