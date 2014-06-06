@@ -24,6 +24,7 @@ DecisionalStates::DecisionalStates( const kernel::Entity_ABC& entity )
     , draw1stEchelon_( false )
     , drawEclairage_ ( false )
     , drawEtatOps_   ( false )
+    , dead_          ( false )
 {
     // NOTHING
 }
@@ -69,6 +70,8 @@ void DecisionalStates::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_operational_state() )
         drawEtatOps_ = message.operational_state() != sword::operational;
+    if( message.has_dead() )
+        dead_ = message.dead();
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +88,7 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport
             tools.DrawSvg( "eclairage.svg", where, tools.GetAdaptiveZoomFactor( false ) );
         if( draw1stEchelon_ )
             tools.DrawSvg( "1stechelon.svg", where, tools.GetAdaptiveZoomFactor( false ) );
-        if( drawEtatOps_ )
+        if( drawEtatOps_ || dead_ )
             tools.DrawSvg( "opstatehs.svg", where, tools.GetAdaptiveZoomFactor( false ) );
     }
 }

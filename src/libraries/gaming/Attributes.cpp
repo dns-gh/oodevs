@@ -134,6 +134,7 @@ void Attributes::CreateDictionary( gui::PropertiesDictionary& dictionary ) const
 void Attributes::DoUpdate( const sword::UnitAttributes& message )
 {
     std::set< std::string > updated;
+    bool mustUpdateHierarchies = false;
 
     UPDATE_SUBPROPERTY( message, nDirection_, direction, heading, "Info/Heading", updated );
     UPDATE_PROPERTY( message, nRawOpState_, raw_operational_state, "Info/Operational state", updated );
@@ -147,7 +148,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         {
             bNeutralized_ = bNeutralized;
             updated.insert( "Info/Neutralized" );
-            UpdateHierarchies();
+            mustUpdateHierarchies = true;
         }
     }
 
@@ -175,7 +176,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         {
             nOpState_ = nOpState;
             updated.insert( "Decisional state/Operational state" );
-            UpdateHierarchies();
+            mustUpdateHierarchies = true;
         }
     }
 
@@ -244,7 +245,12 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         nPostureCompletionPourcentage_ = message.posture_transition();
 
     if( message.has_dead() )
+    {
+        bool dead = bDead_;        
         bDead_ = message.dead();
+        if( dead != bDead_ )
+            mustUpdateHierarchies = true;
+    }
 
     if( message.has_roe_crowd() )
         nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_crowd();
@@ -275,7 +281,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         if( isPC_ != message.headquarters() )
         {
             isPC_ = !isPC_;
-            UpdateHierarchies();
+            mustUpdateHierarchies = true;
         }
     }
 
@@ -289,6 +295,8 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         nSlope_ = distance == 0 ? 0 : static_cast< int >( 100.f * diff / distance );
     }
 
+    if( mustUpdateHierarchies )
+        UpdateHierarchies();
     controller_.Update( *this );
 }
 

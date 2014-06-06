@@ -71,6 +71,7 @@ private:
     bool draw1stEchelon_;
     bool drawEclairage_;
     bool drawEtatOps_;
+    bool dead_;
     //@}
 };
 
