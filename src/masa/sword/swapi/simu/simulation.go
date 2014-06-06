@@ -16,6 +16,10 @@ import (
 	"time"
 )
 
+const (
+	StopTimeout = 10 * time.Second
+)
+
 type SimOpts struct {
 	Executable     string
 	RunDir         *string
@@ -178,7 +182,7 @@ func (sim *SimProcess) Stop() error {
 	}
 	stopped, err := logAndStop(sim.ClientAddr, false)
 	if stopped {
-		if sim.Wait(10 * time.Second) {
+		if sim.Wait(StopTimeout) {
 			return nil
 		}
 		err = errors.New("wait timed out")

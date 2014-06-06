@@ -64,7 +64,7 @@ type ReplayProcess struct {
 	Opts *ReplayOpts
 }
 
-// Connect to the simulation and execute a Login/Stop sequence using
+// Connect to the replayer and execute a Login/Stop sequence using
 // supervisor.
 func (replay *ReplayProcess) Stop() error {
 	if replay == nil {
@@ -72,7 +72,7 @@ func (replay *ReplayProcess) Stop() error {
 	}
 	stopped, err := logAndStop(replay.ClientAddr, true)
 	if stopped {
-		if replay.Wait(10 * time.Second) {
+		if replay.Wait(StopTimeout) {
 			return nil
 		}
 		err = errors.New("wait timed out")
