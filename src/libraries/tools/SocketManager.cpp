@@ -11,6 +11,7 @@
 #include "SocketManager.h"
 #include "Socket.h"
 #include "ConnectionCallback_ABC.h"
+#include "NET_AsnException.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
@@ -103,7 +104,7 @@ void SocketManager::Send( const std::string& endpoint, unsigned long tag, Messag
 {
     const CIT_Sockets it = sockets_.find( endpoint );
     if( it == sockets_.end() )
-        throw MASA_EXCEPTION( "Not connected to " + endpoint );
+        throw MASA_CONNECTIONCLOSED( "Not connected to " + endpoint );
     outBytes_ += it->second->Send( tag, message );
     ++nbMessagesSent_;
 }
