@@ -12,6 +12,7 @@
 #include "moc_UserProfileUnitRights.cpp"
 #include "LongNameHelper.h"
 #include "Tools.h"
+#include "clients_kernel/Agent_ABC.h"
 
 using namespace gui;
 
@@ -64,6 +65,44 @@ void UserProfileUnitRights::Display( kernel::UserProfile_ABC& profile )
 void UserProfileUnitRights::AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
 {
     longname::SetItemLongName( entity, entityItem );
+}
+
+namespace
+{
+    bool IsAgent( const kernel::Hierarchies& hierarchies )
+    {
+        return hierarchies.GetEntity().GetTypeName() == kernel::Agent_ABC::typeName_;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::NotifyCreated
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::NotifyCreated( const kernel::TacticalHierarchies& hierarchy )
+{
+    if( !IsAgent( hierarchy  ) )
+        ::T_Parent::NotifyCreated( hierarchy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::NotifyUpdated
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::NotifyUpdated( const kernel::TacticalHierarchies& hierarchy )
+{
+    if( !IsAgent( hierarchy  ) )
+        ::T_Parent::NotifyUpdated( hierarchy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::NotifyDeleted
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::NotifyDeleted( const kernel::TacticalHierarchies& hierarchy )
+{
+    if( !IsAgent( hierarchy  ) )
+        ::T_Parent::NotifyDeleted( hierarchy );
 }
 
 // -----------------------------------------------------------------------------

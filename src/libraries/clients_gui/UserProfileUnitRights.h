@@ -46,6 +46,14 @@ public:
     virtual void AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual void NotifyCreated( const kernel::TacticalHierarchies& hierarchy );
+    virtual void NotifyUpdated( const kernel::TacticalHierarchies& hierarchy );
+    virtual void NotifyDeleted( const kernel::TacticalHierarchies& hierarchy );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
