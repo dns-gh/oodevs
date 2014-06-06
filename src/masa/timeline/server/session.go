@@ -547,12 +547,12 @@ func appendParentUpdate(event *Event, updates *[]*sdk.Event) {
 }
 
 func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 	event, err := NewEvent(msg, s.d.events)
 	if err != nil {
 		return nil, err
 	}
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
 	if event := s.d.events.Find(event.uuid); event != nil {
 		return nil, ErrEventUuidTaken
 	}
