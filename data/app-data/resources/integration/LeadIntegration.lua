@@ -856,8 +856,10 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     end
     
     if self.params.forbidFlyingAgentsFromLanding == true then
+        self.entitiesToAllowToLand = {}
         for i = 1, #self.parameters.commandingEntities do
             integration.SendMessage( "DeactivateBehaviour", self.parameters.commandingEntities[i], { behaviour = "landWhenStationary" }, { type = "dynamic" } )
+            self.entitiesToAllowToLand[i] = self.parameters.commandingEntities[i]
         end
     end
 
@@ -1186,17 +1188,17 @@ integration.leadDestroy = function ( self, setEchelonNone )
     if self.companyTask and self.companyTask.destroy then
         self.companyTask:destroy( self.params, self.parameters )
     end
-    local entities = self.parameters.commandingEntities
+
     if setEchelonNone then
-        for i = 1, #entities do
-           integration.setEchelonState( entities[i].source, eEtatEchelon_None )
+        for i = 1, #self.parameters.commandingEntities do
+           integration.setEchelonState( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
         end
     end
     self.parameters.pcObjective = nil
     
-    if self.params.forbidFlyingAgentsFromLanding == true then
-        for i = 1, #entities do
-            integration.SendMessage( "ReactivateBehaviour", self.parameters.commandingEntities[i], { behaviour = "landWhenStationary" }, { type = "dynamic" } )
+    if self.params.forbidFlyingAgentsFromLanding == true and self.entitiesToAllowToLand then
+        for i = 1, #self.entitiesToAllowToLand do
+            integration.SendMessage( "ReactivateBehaviour", self.entitiesToAllowToLand[i], { behaviour = "landWhenStationary" }, { type = "dynamic" } )
         end
     end
 end
