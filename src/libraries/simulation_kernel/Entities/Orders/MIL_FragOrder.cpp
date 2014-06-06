@@ -114,6 +114,7 @@ void MIL_FragOrder::Register( sword::Brain& brain )
     brain.RegisterMethod( "GetorderConduiteModifierPrioritesReparations_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations );
     brain.RegisterMethod( "GetorderConduiteModifierPrioritesTactiquesBlesses_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesBlesses );
     brain.RegisterMethod( "GetorderConduiteModifierPrioritesTactiquesReparations_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesReparations );
+    brain.RegisterMethod( "GetEquipmentTypeListParameter", &MIL_FragOrder::GetEquipmentTypeListParameter );
     brain.RegisterMethod( "GetorderConduiteModifierRegimeTravailMaintenance_", &MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance );
     brain.RegisterMethod( "GetorderConduitePopulationChangerAttitude_", &MIL_FragOrder::GetOrderConduitePopulationChangerAttitude );
     brain.RegisterMethod( "GetpionARenforcer_", &MIL_FragOrder::GetPionARenforcer );
@@ -425,6 +426,27 @@ std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetOrderConduiteModifierPriorite
 {
     static const std::string parameterName( "orderConduiteModifierPrioritesTactiquesBlesses_" );
     return GetAutomatListParameter( parameterName, parameters_, type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::GetEquipmentTypeListParameter
+// Created: NMI 2014-05-27
+// -----------------------------------------------------------------------------
+std::vector< const PHY_ComposanteTypePion* > MIL_FragOrder::GetEquipmentTypeListParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for ( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            std::vector< const PHY_ComposanteTypePion* > result;
+            if( parameters_[i]->ToEquipmentTypeList( result ) )
+                return result;
+            else
+                return std::vector< const PHY_ComposanteTypePion* >();
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
 }
 
 // -----------------------------------------------------------------------------
