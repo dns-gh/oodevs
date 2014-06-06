@@ -85,8 +85,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< tools::IdManager > idManager_;
-    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::unique_ptr< tools::IdManager > idManager_;
+    std::unique_ptr< kernel::CoordinateConverter_ABC > converter_;
     //@}
 
 public:

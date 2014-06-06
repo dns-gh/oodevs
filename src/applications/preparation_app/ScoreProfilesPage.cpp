@@ -119,9 +119,9 @@ void ScoreProfilesPage::StartEdit( const ProfileSelection& profiles )
 // Name: ScoreProfilesPage::CreateResult
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-std::auto_ptr< ProfileSelection > ScoreProfilesPage::CreateResult() const
+std::unique_ptr< ProfileSelection > ScoreProfilesPage::CreateResult() const
 {
-    std::auto_ptr< ProfileSelection > selection( new ProfileSelection( controllers_ ) );
+    std::unique_ptr< ProfileSelection > selection( new ProfileSelection( controllers_ ) );
     for( int i = 0; i < model_->rowCount(); ++i )
     {
         QStandardItem* item = model_->item( i );

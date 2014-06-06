@@ -93,7 +93,7 @@ private:
     geometry::Point2f point_;
     Layer_ABC::T_LayerElements extractedElements_;
     std::map< const kernel::GraphicalEntity_ABC*, QPixmap > icons_;
-    std::auto_ptr< QMouseEvent > mouseEvent_;
+    std::unique_ptr< QMouseEvent > mouseEvent_;
     gui::GlWidget* parent2d_;
     gui::Gl3dWidget* parent3d_;
     unsigned int moreElements_;

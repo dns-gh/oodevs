@@ -160,7 +160,7 @@ ADN_Units_Data::StockInfos::StockInfos()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::StockInfos::ReadStock( xml::xistream& input, ADN_Type_Bool& stockThresholds )
 {
-    std::auto_ptr< StockLogThresholdInfos > spNew( new StockLogThresholdInfos() );
+    std::unique_ptr< StockLogThresholdInfos > spNew( new StockLogThresholdInfos() );
     spNew->ReadArchive( input );
     vLogThresholds_.AddItem( spNew.release() );
     stockThresholds = true;
@@ -501,7 +501,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::ReadEquipment( xml::xistream& input )
 {
-    std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos( ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments() ) );
+    std::unique_ptr<ComposanteInfos> spNew( new ComposanteInfos( ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments() ) );
     spNew->ReadArchive( input );
     vComposantes_.AddItem( spNew.release() );
 }
@@ -539,7 +539,7 @@ void ADN_Units_Data::UnitInfos::ReadPosture( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::ReadPointDistance( xml::xistream& input )
 {
-    std::auto_ptr<PointInfos> spNew( new PointInfos() );
+    std::unique_ptr<PointInfos> spNew( new PointInfos() );
     spNew->ReadArchive( input );
     vPointInfos_.AddItem( spNew.release() );
 }
@@ -876,7 +876,7 @@ void ADN_Units_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::ReadUnit( xml::xistream& input )
 {
-    std::auto_ptr<UnitInfos> spNew( new UnitInfos( input.attribute< unsigned int >( "id" ) ) );
+    std::unique_ptr<UnitInfos> spNew( new UnitInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vUnits_.AddItem( spNew.release() );
 }

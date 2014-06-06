@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
 
         // creation
         MOCK_EXPECT( automat.RegisterAgent ).once();
-        std::auto_ptr< dispatcher::Agent_ABC > result( new dispatcher::Agent( model, message, types ) );
+        std::unique_ptr< dispatcher::Agent_ABC > result( new dispatcher::Agent( model, message, types ) );
 
         // network serialization
         MockClientPublisher publisher;
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
     MOCK_EXPECT( model.Agents ).returns( boost::ref( agents ) );
     MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
     {
-        std::auto_ptr< dispatcher::Agent_ABC > result;
+        std::unique_ptr< dispatcher::Agent_ABC > result;
         {
             sword::SimToClient expected;
             expected.set_context( 0 );

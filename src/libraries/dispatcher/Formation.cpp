@@ -32,7 +32,6 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
     , team_                ( model.Sides().Get( msg.party().id() ) )
     , level_               ( static_cast< E_NatureLevel >( msg.level() ) )
     , app6symbol_          ( msg.app6symbol() )
-    , logisticEntity_      ( 0 )
     , parent_              ( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
     , logMaintenanceManual_( msg.log_maintenance_manual() )
     , logSupplyManual_     ( msg.log_supply_manual() )

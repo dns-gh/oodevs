@@ -66,9 +66,9 @@ private:
     //@{
     kernel::Controller& controller_;
     QString name_;
-    std::auto_ptr< ProfileSelection > profiles_;
-    std::auto_ptr< SuccessFactorConditions > conditions_;
-    std::auto_ptr< SuccessFactorActions > actions_;
+    std::unique_ptr< ProfileSelection > profiles_;
+    std::unique_ptr< SuccessFactorConditions > conditions_;
+    std::unique_ptr< SuccessFactorActions > actions_;
     //@}
 };
 

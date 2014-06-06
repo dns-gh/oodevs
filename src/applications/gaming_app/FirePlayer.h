@@ -77,7 +77,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profileFilter_;
-    std::auto_ptr< gui::SoundManager > soundManager_;
+    std::unique_ptr< gui::SoundManager > soundManager_;
     const Simulation& simulation_;
     unsigned int lastTick_;
     std::map< std::string, std::map< const kernel::Entity_ABC*, int > > loopingSounds_;

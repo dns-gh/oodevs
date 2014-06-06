@@ -53,7 +53,7 @@ public:
         if( ! composite )
         {
             composite = new ObjectMessageCallback< T >();
-            Register( id, std::auto_ptr< ObjectMessageCallback_ABC >( composite ) );
+            Register( id, std::unique_ptr< ObjectMessageCallback_ABC >( composite ) );
         }
         composite->AddCallback( callback );
     }
@@ -66,7 +66,7 @@ public:
         if( ! composite )
         {
             composite = new ObjectMessageCallback< T >();
-            Register( id, std::auto_ptr< ObjectMessageCallback_ABC >( composite ) );
+            Register( id, std::unique_ptr< ObjectMessageCallback_ABC >( composite ) );
         }
         composite->AddCallback( callback );
     }
@@ -98,7 +98,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback ) = 0;
+    virtual void Register( unsigned long id, std::unique_ptr< ObjectMessageCallback_ABC > callback ) = 0;
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id ) = 0;
     //@}
 };

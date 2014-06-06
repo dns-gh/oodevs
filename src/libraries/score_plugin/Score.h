@@ -78,7 +78,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< xml::xibufferstream > xml_;
+    std::unique_ptr< xml::xibufferstream > xml_;
     std::deque< float > values_;
     std::vector< std::string > profiles_;
     //@}

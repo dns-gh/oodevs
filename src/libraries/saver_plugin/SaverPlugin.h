@@ -48,7 +48,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< SaverFacade > saver_;
+    std::unique_ptr< SaverFacade > saver_;
     //@}
 };
 

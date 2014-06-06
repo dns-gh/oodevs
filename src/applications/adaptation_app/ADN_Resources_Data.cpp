@@ -245,7 +245,7 @@ ADN_Resources_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     for( int i = 0; i < eNbrUnitPosture; ++i )
     {
         ModificatorPostureInfos* pNew = new ModificatorPostureInfos( ( E_UnitPosture )i );
-        std::auto_ptr< ModificatorPostureInfos > spNew( pNew );
+        std::unique_ptr< ModificatorPostureInfos > spNew( pNew );
         vModifStance_.AddItem( spNew.release() );
     }
 }
@@ -728,7 +728,7 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::ResourceInfos::FindCategor
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::ResourceInfos::ReadArchive( xml::xistream& input, kernel::XmlTranslations& /*xmlTranslations*/ )
 {
-    std::auto_ptr< CategoryInfo > spNew;
+    std::unique_ptr< CategoryInfo > spNew;
     if( strName_.GetData() == "munition" || strName_.GetData() == "explosif" || strName_.GetData() == "mine" )
         spNew.reset( new AmmoCategoryInfo( *this, input.attribute< unsigned int >( "id" ) ) );
     else

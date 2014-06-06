@@ -90,7 +90,7 @@ public:
     QTime                           sunset_;
     E_LightingType                  dayLighting_;
     E_LightingType                  nightLighting_;
-    std::auto_ptr< weather::Meteo > globalWeather_;
+    std::unique_ptr< weather::Meteo > globalWeather_;
     //@}
 };
 

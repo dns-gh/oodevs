@@ -65,11 +65,11 @@ private:
     QColor unoccupiedDensity_;
     float minDensity_;
     float maxDensity_;
-    std::auto_ptr< Gradient > pGradient_;
+    std::unique_ptr< Gradient > pGradient_;
     QColor unoccupiedAccommodation_;
     float minAccommodationDensity_;
     float maxAccommodationDensity_;
-    std::auto_ptr< Gradient > pAccommodationGradient_;
+    std::unique_ptr< Gradient > pAccommodationGradient_;
     std::set< std::string > populationsDisplayed_;
     //@}
 };

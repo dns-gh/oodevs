@@ -136,7 +136,7 @@ ADN_Automata_Data::AutomatonInfos* ADN_Automata_Data::AutomatonInfos::CreateCopy
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 {
-    std::auto_ptr< UnitInfos > spNew( new UnitInfos( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos() ) );
+    std::unique_ptr< UnitInfos > spNew( new UnitInfos( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos() ) );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
     {
@@ -300,7 +300,7 @@ void ADN_Automata_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 {
-    std::auto_ptr< AutomatonInfos > spNew( new AutomatonInfos( input.attribute< unsigned int >( "id" ) ) );
+    std::unique_ptr< AutomatonInfos > spNew( new AutomatonInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vAutomata_.AddItem( spNew.release() );
 }

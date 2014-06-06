@@ -35,7 +35,6 @@ Population::Population( Model_ABC& model, const sword::CrowdCreation& msg, const
     , female_          ( msg.repartition().female() )
     , children_        ( msg.repartition().children() )
     , nDominationState_( 0 )
-    , order_           ( 0 )
     , decisionalInfos_ ( model )
     , armedIndividuals_( 0 )
     , decisionalModel_ ( decisionalModel )

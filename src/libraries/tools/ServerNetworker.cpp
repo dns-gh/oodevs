@@ -113,9 +113,9 @@ void ServerNetworker::Run()
 // Name: ServerNetworker::Register
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ServerNetworker::Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback )
+void ServerNetworker::Register( unsigned long id, std::unique_ptr< ObjectMessageCallback_ABC > callback )
 {
-    messageService_->Register( id, callback );
+    messageService_->Register( id, std::move( callback ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
         MIL_EffectManager effectManager;
         FixturePion pion( controller, effectManager );
         flux >> xml::start( "urban-object" );
-        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( flux, 0 ) );
+        std::unique_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( flux, 0 ) );
         flux >> xml::end;
 
         {

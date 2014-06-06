@@ -256,9 +256,9 @@ void Score::SetVariables( const indicators::Variables& variables )
 // Name: Score::SetProfiles
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-void Score::SetProfiles( std::auto_ptr< ProfileSelection > profiles )
+void Score::SetProfiles( std::unique_ptr< ProfileSelection > profiles )
 {
-    profiles_ = profiles;
+    profiles_.swap( profiles );
     if( controller_ )
         controller_->Update( *static_cast< Score_ABC* >( this ) );
 }

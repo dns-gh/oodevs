@@ -98,7 +98,7 @@ private:
     int nextPause_;
     std::string endpoint_;
     MT_TimerManager manager_;
-    std::auto_ptr< ReplayExtensionFactory > factory_;
+    std::unique_ptr< ReplayExtensionFactory > factory_;
     //@}
 };
 

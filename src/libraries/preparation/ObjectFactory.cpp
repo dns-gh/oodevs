@@ -251,7 +251,7 @@ void ObjectFactory::Initialize()
 // -----------------------------------------------------------------------------
 Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC& team, const QString& name, const Location_ABC& location )
 {
-    std::auto_ptr< Object > result( new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ ) );
+    std::unique_ptr< Object > result( new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ ) );
     result->Attach< Positions >( *new ObjectPositions( controllers_.controller_, staticModel_.coordinateConverter_, result->GetType(), location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
     const_cast< Team_ABC* >( &team )->Get< Objects >().AddObject( *result );
@@ -267,7 +267,7 @@ Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC&
 // -----------------------------------------------------------------------------
 Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& team, const kernel::ObjectType& type )
 {
-    std::auto_ptr< Object > result( new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ ) );
+    std::unique_ptr< Object > result( new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ ) );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, controllers_.controller_, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );

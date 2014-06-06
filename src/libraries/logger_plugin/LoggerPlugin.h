@@ -89,7 +89,7 @@ private:
     //@{
     const tools::SessionConfig&    sessionConfig_;
     tools::Path                    filename_;
-    std::auto_ptr< MT_FileLogger > pLogger_;
+    std::unique_ptr< MT_FileLogger > pLogger_;
     kernel::ObjectTypes            objectTypes_;
     RcEntityResolver               resolver_;
     ReportFactory                  factory_;
@@ -99,8 +99,8 @@ private:
     std::string                    date_;
     bool                           enabled_;
     bool                           initialized_;
-    std::auto_ptr< Simulation >    simulation_;
-    std::auto_ptr< ActionsLogger > actions_;
+    std::unique_ptr< Simulation >    simulation_;
+    std::unique_ptr< ActionsLogger > actions_;
     unsigned int                   nCurrentTick_;
     std::set< int >                missions_;
     //@}

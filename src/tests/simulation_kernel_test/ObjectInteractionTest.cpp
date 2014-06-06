@@ -117,7 +117,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC, O
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
     MT_Vector2D position;
@@ -152,7 +152,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC, Obj
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
     // The following lines are used to force the Instanciation of attributes
@@ -191,7 +191,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapa
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "implantationArea" );
 
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ProtectionCapacity >( *pObject );
 
     //First add
@@ -231,7 +231,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped, Ob
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "itineraire logistique" );
 
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< InteractIfEquippedCapacity >( *pObject );
 
     MockAgent agent;
@@ -260,7 +260,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Supply, ObjectCapacity
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "plot ravitaillement" );
 
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< SupplyCapacity >( *pObject );
 
     //First add
@@ -291,7 +291,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection, ObjectCapac
         factory.Initialize( xis );
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "checkpoint" );
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
     CheckCapacity< DetectionCapacity >( *object );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >() );
 
@@ -333,7 +333,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
         BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "sensors" );
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
     CheckCapacity< DetectionCapacity >( *object );
 
     MockAgent intruder;
@@ -386,7 +386,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Mine, ObjectCapacityFi
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetRealTime ).once().returns( 3u );
     const MIL_ObjectType_ABC& type = factory.FindType( "mines" );
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< ObstacleAttribute >() );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< TimeLimitedAttribute >() );
@@ -412,7 +412,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, Objec
     }
 
     const MIL_ObjectType_ABC& type = factory.FindType( "paralyzing area" );
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
@@ -449,7 +449,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionPerception, ObjectCapac
     }
 
     const MIL_ObjectType_ABC& type = factory.FindType( "blinding area" );
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
@@ -486,7 +486,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionScattering, ObjectCapac
     }
 
     const MIL_ObjectType_ABC& type = factory.FindType( "scattering area" );
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
+    std::unique_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );

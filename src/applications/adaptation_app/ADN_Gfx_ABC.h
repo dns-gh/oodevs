@@ -30,7 +30,7 @@ public:
     bool IsAutoEnabled();
 
 protected:
-    std::auto_ptr< ADN_Connector_ABC > pConnector_;
+    std::unique_ptr< ADN_Connector_ABC > pConnector_;
     bool bAutoEnabled_;
 };
 

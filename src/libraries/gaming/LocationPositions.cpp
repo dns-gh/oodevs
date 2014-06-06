@@ -28,7 +28,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LocationPositions::LocationPositions( const CoordinateConverter_ABC& converter )
     : converter_( converter )
-    , location_ ( 0 )
 {
     // NOTHING
 }
@@ -127,9 +126,9 @@ void LocationPositions::Draw( const gui::GlTools_ABC& tools ) const
 
 namespace
 {
-    std::auto_ptr< kernel::Location_ABC > BuildLocation( const kernel::CoordinateConverter_ABC& converter, const sword::Location& message )
+    std::unique_ptr< kernel::Location_ABC > BuildLocation( const kernel::CoordinateConverter_ABC& converter, const sword::Location& message )
     {
-        std::auto_ptr< kernel::Location_ABC > location;
+        std::unique_ptr< kernel::Location_ABC > location;
         switch( message.type() )
         {
         case sword::Location_Geometry_point:   location.reset( new kernel::Point() ); break;

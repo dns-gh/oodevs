@@ -72,7 +72,7 @@ private:
     const MeteoModel& meteoModel_;
     const kernel::Profile_ABC& profile_;
     T_Effects effects_;
-    std::auto_ptr< weather::Meteo > currentMeteo_;
+    std::unique_ptr< weather::Meteo > currentMeteo_;
     gui::TerrainPicker& picker_;
     //@}
 };

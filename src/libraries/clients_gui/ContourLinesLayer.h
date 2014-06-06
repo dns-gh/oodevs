@@ -76,7 +76,7 @@ private:
     QColor color_;
     unsigned int callListId_;
     int linesHeight_;
-    std::auto_ptr< tools::thread::ThreadPool > thread_;
+    std::unique_ptr< tools::thread::ThreadPool > thread_;
     T_Contours loops_;
     boost::mutex mutex_;
     bool stopThread_;

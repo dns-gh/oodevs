@@ -142,7 +142,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( xml::xistream& xis, MIL_Army_AB
     location.Read( xis );
     const MIL_ObjectBuilder_ABC& builder = *it->second;
     // $$$$ SBO 2009-06-08: Check geometry constraint
-    std::auto_ptr< Object > object( new Object( xis, builder.GetType(), army, &location ) );
+    std::unique_ptr< Object > object( new Object( xis, builder.GetType(), army, &location ) );
     builder.Build( *object );
     xis >> xml::optional
         >> xml::start( "attributes" )

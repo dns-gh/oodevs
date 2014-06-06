@@ -106,7 +106,7 @@ private:
     float female_;
     float children_;
     unsigned int nDominationState_;
-    std::auto_ptr< PopulationOrder > order_;
+    std::unique_ptr< PopulationOrder > order_;
     DecisionalState decisionalInfos_;
     std::map< std::string, std::string > extensions_;
     T_Affinities affinities_;

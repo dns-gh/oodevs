@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Add( std::auto_ptr< ElementFactory_ABC > factory );
+    void Add( std::unique_ptr< ElementFactory_ABC > factory );
 
     boost::shared_ptr< Task > CreateTask( xml::xistream& xis, unsigned int firstTick, unsigned int lastTick );
     //@}

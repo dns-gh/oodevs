@@ -68,7 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ProfilesChecker_ABC > pChecher_;
+    std::unique_ptr< ProfilesChecker_ABC > pChecher_;
     UserProfileList* list_;
     UserProfileWidget* pages_;
     //@}

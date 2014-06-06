@@ -62,7 +62,7 @@ void FileMigration::ReadXslTransform( xml::xistream& xis )
 // Name: FileMigration::UpgradeFile
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-std::auto_ptr< xml::xistream > FileMigration::UpgradeFile( std::auto_ptr< xml::xistream > xis, const Path& schema ) const
+std::unique_ptr< xml::xistream > FileMigration::UpgradeFile( std::unique_ptr< xml::xistream > xis, const Path& schema ) const
 {
     T_XslTransforms::const_iterator it = transformsFromSchema_.find( schema.ToUTF8() );
     if( it == transformsFromSchema_.end() )
@@ -70,5 +70,5 @@ std::auto_ptr< xml::xistream > FileMigration::UpgradeFile( std::auto_ptr< xml::x
 
     xsl::xstringtransform xst( it->second.ToUTF8() );
     xst << *xis;
-    return std::auto_ptr< xml::xistream >( new xml::xistringstream( xst.str() ) );
+    return std::unique_ptr< xml::xistream >( new xml::xistringstream( xst.str() ) );
 }

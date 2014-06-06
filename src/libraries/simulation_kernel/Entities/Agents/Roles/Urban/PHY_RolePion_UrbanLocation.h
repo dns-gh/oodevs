@@ -105,7 +105,7 @@ private:
     //@{
     MIL_Agent_ABC&                          owner_;
     const MIL_UrbanObject_ABC*               urbanObject_;
-    std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
+    std::unique_ptr< UrbanBlockPosition_ABC > delegate_;
     bool                                    isInCity_;
     bool                                    isFlying_;
     std::set< unsigned int >                collisions_;

@@ -201,7 +201,7 @@ namespace
     /*
     * Register capacity tag
     */
-    std::auto_ptr< ObjectAttributePrototypeFactory_ABC > FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, DetectionMap& detection, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const WeatherModel& weather, const tools::GeneralConfig& config, Object_ABC*& object )
+    std::unique_ptr< ObjectAttributePrototypeFactory_ABC > FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, DetectionMap& detection, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const WeatherModel& weather, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
@@ -237,7 +237,7 @@ namespace
 
         factory->RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders ) );
 
-        return std::auto_ptr< ObjectAttributePrototypeFactory_ABC >( factory );
+        return std::unique_ptr< ObjectAttributePrototypeFactory_ABC >( factory );
     }
 }
 

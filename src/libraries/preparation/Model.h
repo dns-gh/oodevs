@@ -121,19 +121,19 @@ private:
     //@{
     const StaticModel& staticModel_;
     kernel::Controllers& controllers_;
-    std::auto_ptr< tools::IdManager > idManager_;
-    std::auto_ptr< TeamFactory_ABC > teamFactory_;
-    std::auto_ptr< kernel::KnowledgeGroupFactory_ABC > knowledgeGroupFactory_; // LTO
-    std::auto_ptr< kernel::SymbolFactory > symbolsFactory_;
-    std::auto_ptr< FormationFactory_ABC > formationFactory_;
-    std::auto_ptr< AgentFactory_ABC > agentFactory_;
-    std::auto_ptr< ObjectFactory_ABC > objectFactory_;
-    std::auto_ptr< ProfileFactory_ABC > profileFactory_;
-    std::auto_ptr< ScoreFactory_ABC > scoreFactory_;
-    std::auto_ptr< SuccessFactorFactory_ABC > successFactorFactory_;
-    std::auto_ptr< gui::DrawingFactory_ABC > drawingFactory_;
-    std::auto_ptr< GhostFactory_ABC > ghostFactory_;
-    std::auto_ptr< gui::ResourceNetworkSelectionObserver > resourceObserver_;
+    std::unique_ptr< tools::IdManager > idManager_;
+    std::unique_ptr< TeamFactory_ABC > teamFactory_;
+    std::unique_ptr< kernel::KnowledgeGroupFactory_ABC > knowledgeGroupFactory_; // LTO
+    std::unique_ptr< kernel::SymbolFactory > symbolsFactory_;
+    std::unique_ptr< FormationFactory_ABC > formationFactory_;
+    std::unique_ptr< AgentFactory_ABC > agentFactory_;
+    std::unique_ptr< ObjectFactory_ABC > objectFactory_;
+    std::unique_ptr< ProfileFactory_ABC > profileFactory_;
+    std::unique_ptr< ScoreFactory_ABC > scoreFactory_;
+    std::unique_ptr< SuccessFactorFactory_ABC > successFactorFactory_;
+    std::unique_ptr< gui::DrawingFactory_ABC > drawingFactory_;
+    std::unique_ptr< GhostFactory_ABC > ghostFactory_;
+    std::unique_ptr< gui::ResourceNetworkSelectionObserver > resourceObserver_;
     QString name_;
     bool loaded_;
     bool consistencyErrorsOnLoad_;
@@ -147,21 +147,21 @@ public:
     //! @name Member data
     //@{
     // $$$$ JSR 2011-06-28: TODO passer en private ce qui est possible et utiliser les méthodes de Model_ABC
-    std::auto_ptr< Exercise > exercise_;
-    std::auto_ptr< KnowledgeGroupsModel > knowledgeGroups_;
-    std::auto_ptr< TeamsModel > teams_;
-    std::auto_ptr< ObjectsModel > objects_;
-    std::auto_ptr< AgentsModel > agents_;
-    std::auto_ptr< FormationModel > formations_;
-    std::auto_ptr< LimitsModel > limits_;
-    std::auto_ptr< WeatherModel > weather_;
-    std::auto_ptr< ProfilesModel > profiles_;
-    std::auto_ptr< ScoresModel > scores_;
-    std::auto_ptr< SuccessFactorsModel > successFactors_;
-    std::auto_ptr< UrbanModel > urban_;
-    std::auto_ptr< gui::DrawerModel > drawings_;
-    std::auto_ptr< GhostModel > ghosts_;
-    std::auto_ptr< PerformanceIndicator > performanceIndicator_;
+    std::unique_ptr< Exercise > exercise_;
+    std::unique_ptr< KnowledgeGroupsModel > knowledgeGroups_;
+    std::unique_ptr< TeamsModel > teams_;
+    std::unique_ptr< ObjectsModel > objects_;
+    std::unique_ptr< AgentsModel > agents_;
+    std::unique_ptr< FormationModel > formations_;
+    std::unique_ptr< LimitsModel > limits_;
+    std::unique_ptr< WeatherModel > weather_;
+    std::unique_ptr< ProfilesModel > profiles_;
+    std::unique_ptr< ScoresModel > scores_;
+    std::unique_ptr< SuccessFactorsModel > successFactors_;
+    std::unique_ptr< UrbanModel > urban_;
+    std::unique_ptr< gui::DrawerModel > drawings_;
+    std::unique_ptr< GhostModel > ghosts_;
+    std::unique_ptr< PerformanceIndicator > performanceIndicator_;
     //@}
 };
 

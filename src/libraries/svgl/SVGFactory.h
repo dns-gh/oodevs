@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void ChangePropertyFactory( svg::RenderingContext_ABC::E_Properties property, std::auto_ptr< svg::PropertyFactory_ABC > factory );
+    void ChangePropertyFactory( svg::RenderingContext_ABC::E_Properties property, std::unique_ptr< svg::PropertyFactory_ABC > factory );
     void ChangePropertyFactory( svg::RenderingContext_ABC::E_Properties property, const svg::PropertyFactory_ABC& factory );
 
     svg::Node_ABC* Compile( const std::string& filename, svg::References_ABC& references, float expectedPrecision ) const;
@@ -67,7 +67,7 @@ private:
     //! @name Member data
     //@{
     svg::TextRenderer& renderer_;
-    std::auto_ptr< svg::PropertyFactory > factory_;
+    std::unique_ptr< svg::PropertyFactory > factory_;
     //@}
 };
 

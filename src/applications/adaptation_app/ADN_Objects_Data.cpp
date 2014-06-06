@@ -796,7 +796,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadArchive( xml::xis
 
 void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadTerrain( xml::xistream& xis )
 {
-    std::auto_ptr< ScoreLocationInfos > score( new ScoreLocationInfos() );
+    std::unique_ptr< ScoreLocationInfos > score( new ScoreLocationInfos() );
     score->ReadArchive( xis );
     scores_.AddItem( score.release() );
 }

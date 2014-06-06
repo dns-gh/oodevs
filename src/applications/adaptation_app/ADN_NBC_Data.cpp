@@ -353,7 +353,7 @@ void ADN_NBC_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_NBC_Data::ReadAgent( xml::xistream& input )
 {
-    std::auto_ptr< NbcAgentInfos > spNew( new NbcAgentInfos( input.attribute< unsigned int >( "id" ) ) );
+    std::unique_ptr< NbcAgentInfos > spNew( new NbcAgentInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vNbcAgent_.AddItem( spNew.release() );
 }

@@ -161,7 +161,7 @@ void ADN_Missions_Parameter::FillChoices()
 
 void ADN_Missions_Parameter::ReadValue( xml::xistream& input )
 {
-    std::auto_ptr< ADN_Missions_ParameterValue > spNew( new ADN_Missions_ParameterValue( missionType_ ) );
+    std::unique_ptr< ADN_Missions_ParameterValue > spNew( new ADN_Missions_ParameterValue( missionType_ ) );
     spNew->ReadArchive( input );
     values_.AddItem( spNew.release() );
 }

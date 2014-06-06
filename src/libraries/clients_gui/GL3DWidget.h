@@ -156,7 +156,7 @@ private:
     bool isInitialized_;
     ViewFrustum current_;
     //picking
-    std::auto_ptr< PickingSelector > pPickingSelector_;
+    std::unique_ptr< PickingSelector > pPickingSelector_;
     QPoint point_;
     float SymbolSize_;
     int windowHeight_;

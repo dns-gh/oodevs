@@ -60,7 +60,7 @@ PropertyFactory::~PropertyFactory()
 // Name: PropertyFactory::ChangeFactory
 // Created: ZEBRE 2007-05-24
 // -----------------------------------------------------------------------------
-void PropertyFactory::ChangeFactory( RenderingContext_ABC::E_Properties type, std::auto_ptr< PropertyFactory_ABC > factory )
+void PropertyFactory::ChangeFactory( RenderingContext_ABC::E_Properties type, std::unique_ptr< PropertyFactory_ABC > factory )
 {
     for( IT_PropertyTypes it = propertyTypes_.begin(); it != propertyTypes_.end(); ++it )
         if( it->type_ == type )
@@ -93,8 +93,7 @@ namespace
 // -----------------------------------------------------------------------------
 void PropertyFactory::ChangeFactory( RenderingContext_ABC::E_Properties type, const PropertyFactory_ABC& factory )
 {
-    std::auto_ptr< PropertyFactory_ABC > wrapper( new FactoryWrapper( factory ) );
-    ChangeFactory( type, wrapper );
+    ChangeFactory( type, std::unique_ptr< PropertyFactory_ABC >( new FactoryWrapper( factory ) ) );
 }
 
 // -----------------------------------------------------------------------------

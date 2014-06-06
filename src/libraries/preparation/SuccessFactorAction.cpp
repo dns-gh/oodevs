@@ -50,7 +50,7 @@ SuccessFactorAction::~SuccessFactorAction()
 // -----------------------------------------------------------------------------
 void SuccessFactorAction::ReadParameter( xml::xistream& xis )
 {
-    std::auto_ptr< SuccessFactorActionParameter > parameter( new SuccessFactorActionParameter( xis ) );
+    std::unique_ptr< SuccessFactorActionParameter > parameter( new SuccessFactorActionParameter( xis ) );
     Register( static_cast< unsigned long >( elements_.size() ), *parameter.release() );
 }
 

@@ -46,10 +46,10 @@ public:
     template< typename Functor, typename Commiter >
     void Enqueue( const Functor& functor, const Commiter& commiter )
     {
-        std::auto_ptr< WorkerTask_ABC > task( new WorkerTask< Functor, Commiter >( functor, commiter ) );
+        std::unique_ptr< WorkerTask_ABC > task( new WorkerTask< Functor, Commiter >( functor, commiter ) );
         Enqueue( task );
     }
-    void Enqueue( std::auto_ptr< WorkerTask_ABC > task );
+    void Enqueue( std::unique_ptr< WorkerTask_ABC > task );
 
     void CommitTasks();
     void Terminate();
@@ -72,7 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< tools::thread::ThreadPool > pool_;
+    std::unique_ptr< tools::thread::ThreadPool > pool_;
     boost::mutex mutex_;
     T_Tasks finished_;
     //@}

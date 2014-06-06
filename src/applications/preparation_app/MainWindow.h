@@ -140,23 +140,23 @@ private:
     bool                 loading_;
     bool                 needsSaving_;
 
-    std::auto_ptr< gui::GraphicPreferences >     graphicPreferences_;
-    std::auto_ptr< ModelBuilder >                modelBuilder_;
-    std::auto_ptr< gui::CircularEventStrategy >  forward_;
-    std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    std::auto_ptr< gui::Painter_ABC >            pPainter_;
-    std::auto_ptr< ColorController >             colorController_;
-    std::auto_ptr< DockContainer >               dockContainer_;
-    std::auto_ptr< DialogContainer >             dialogContainer_;
-    std::auto_ptr< ToolbarContainer >            toolbarContainer_;
-    std::auto_ptr< gui::GlProxy >                glProxy_;
-    std::auto_ptr< gui::LightingProxy >          lighting_;
-    std::auto_ptr< gui::ColorStrategy >          strategy_;
-    std::auto_ptr< Menu >                        menu_;
-    std::auto_ptr< gui::GlSelector >             selector_;
-    std::auto_ptr< QProgressDialog >             progressDialog_;
-    boost::shared_ptr< QProcess >                process_;
-    std::auto_ptr< gui::EntitySymbols >          icons_;
+    std::unique_ptr< gui::GraphicPreferences >     graphicPreferences_;
+    std::unique_ptr< ModelBuilder >                modelBuilder_;
+    std::unique_ptr< gui::CircularEventStrategy >  forward_;
+    std::unique_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
+    std::unique_ptr< gui::Painter_ABC >            pPainter_;
+    std::unique_ptr< ColorController >             colorController_;
+    std::unique_ptr< DockContainer >               dockContainer_;
+    std::unique_ptr< DialogContainer >             dialogContainer_;
+    std::unique_ptr< ToolbarContainer >            toolbarContainer_;
+    std::unique_ptr< gui::GlProxy >                glProxy_;
+    std::unique_ptr< gui::LightingProxy >          lighting_;
+    std::unique_ptr< gui::ColorStrategy >          strategy_;
+    std::unique_ptr< Menu >                        menu_;
+    std::unique_ptr< gui::GlSelector >             selector_;
+    std::unique_ptr< QProgressDialog >             progressDialog_;
+    boost::shared_ptr< QProcess >                  process_;
+    std::unique_ptr< gui::EntitySymbols >          icons_;
     //@}
 };
 

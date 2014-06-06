@@ -52,7 +52,7 @@ public:
         ADN_Connector_Vector_ABC& targetConnector_;
     };
 
-    typedef std::vector< std::auto_ptr< T_EditionInfo > > T_EditionInfos;
+    typedef std::vector< std::unique_ptr< T_EditionInfo > > T_EditionInfos;
     //@}
 
     //! @name Operations

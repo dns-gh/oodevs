@@ -37,7 +37,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    std::auto_ptr< sword::Pathfind > data_;
+    std::unique_ptr< sword::Pathfind > data_;
     //@}
 
 };

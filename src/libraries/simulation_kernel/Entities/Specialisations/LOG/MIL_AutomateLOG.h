@@ -232,7 +232,7 @@ private:
     MIL_Formation*     pAssociatedFormation_;
     const PHY_LogisticLevel* pLogLevel_;
 
-    std::auto_ptr< logistic::LogisticHierarchy > pLogisticHierarchy_;
+    std::unique_ptr< logistic::LogisticHierarchy > pLogisticHierarchy_;
 
     // Supply
     T_SupplyConsigns supplyConsigns_;

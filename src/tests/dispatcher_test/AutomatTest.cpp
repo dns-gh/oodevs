@@ -164,7 +164,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_CanBeUnderAnAutomat, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Automat_SuperiorCanBeChanged, Fixture )
 {
-    std::auto_ptr< dispatcher::Automat > result;
+    std::unique_ptr< dispatcher::Automat > result;
     {
         // creation
         sword::AutomatCreation message;
@@ -213,7 +213,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_KnowledgeGroupCanBeChanged, Fixture )
     MOCK_EXPECT( knowledgeGroup2.GetId ).returns( 4 );
     knowledgeGroups.Register( knowledgeGroup2.GetId(), knowledgeGroup2 );
 
-    std::auto_ptr< dispatcher::Automat > result;
+    std::unique_ptr< dispatcher::Automat > result;
     {
         // creation
         sword::AutomatCreation message;
@@ -259,7 +259,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_KnowledgeGroupCanBeChanged, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Automat_DecisionalStateCanBeChanged, Fixture )
 {
-    std::auto_ptr< dispatcher::Automat > result;
+    std::unique_ptr< dispatcher::Automat > result;
     {
         // creation
         sword::AutomatCreation message;
@@ -310,7 +310,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_DecisionalStateCanBeChanged, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Automat_AttributesCanBeChanged, Fixture )
 {
-    std::auto_ptr< dispatcher::Automat > result;
+    std::unique_ptr< dispatcher::Automat > result;
     {
         // creation
         sword::AutomatCreation message;
@@ -384,7 +384,7 @@ namespace {
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged, Fixture )
 {
-    std::auto_ptr< dispatcher::Automat > result;
+    std::unique_ptr< dispatcher::Automat > result;
     {
         // creation
         sword::AutomatCreation message;

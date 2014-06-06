@@ -104,7 +104,7 @@ private:
     //! @name Member data
     //@{
     DEC_Logger* logger_;
-    std::auto_ptr< directia::brain::Brain > brain_;
+    std::unique_ptr< directia::brain::Brain > brain_;
     static T_Profilers profilers_;
     //@}
 };

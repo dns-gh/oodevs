@@ -48,7 +48,7 @@ private:
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ );
-    PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
+    PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, std::unique_ptr< sword::DEC_Logger > logger );
     //@}
 
 private:
@@ -57,7 +57,7 @@ private:
     MissionController_ABC& missionController_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
-    std::auto_ptr< sword::DEC_Logger > logger_;
+    std::unique_ptr< sword::DEC_Logger > logger_;
     //@}
 };
 
@@ -78,12 +78,12 @@ void load_construct_data( Archive& archive, PopulationFactory* factory, const un
     MissionController_ABC* missionController;
     unsigned int gcPause;
     unsigned int gcMult;
-    std::auto_ptr< sword::DEC_Logger > logger;
+    std::unique_ptr< sword::DEC_Logger > logger;
     archive >> missionController
             >> gcPause
             >> gcMult
             >> logger;
-    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult, logger );
+    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult, std::move( logger ) );
 }
 
 #endif // __PopulationFactory_h_

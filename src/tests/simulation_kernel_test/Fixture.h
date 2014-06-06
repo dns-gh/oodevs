@@ -49,11 +49,11 @@ struct FixturePion : private boost::noncopyable
     }
     MissionController_ABC&                 controller_;
     MIL_EffectManager&                     effectManager_;
-    std::auto_ptr< DEC_Model >             pModel_;
-    std::auto_ptr< StubMIL_AgentTypePion > pType_;
-    std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;
-    std::auto_ptr< MIL_Automate >          pAutomat_;
-    std::auto_ptr< StubMIL_AgentPion >     pPion_;
+    std::unique_ptr< DEC_Model >             pModel_;
+    std::unique_ptr< StubMIL_AgentTypePion > pType_;
+    std::unique_ptr< StubMIL_AutomateType >  pTypeAutomat_;
+    std::unique_ptr< MIL_Automate >          pAutomat_;
+    std::unique_ptr< StubMIL_AgentPion >     pPion_;
 };
 
 struct FixtureAutomate : private boost::noncopyable
@@ -75,9 +75,9 @@ struct FixtureAutomate : private boost::noncopyable
     }
     MissionController_ABC&                controller_;
     MIL_EffectManager                     effectManager_;
-    std::auto_ptr< DEC_Model >            pModel_;
-    std::auto_ptr< StubMIL_AutomateType > pType_;
-    std::auto_ptr< MIL_Automate >         pAutomat_;
+    std::unique_ptr< DEC_Model >            pModel_;
+    std::unique_ptr< StubMIL_AutomateType > pType_;
+    std::unique_ptr< MIL_Automate >         pAutomat_;
 };
 
 #endif // __Fixture_h_

@@ -27,7 +27,6 @@
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises )
     : gui::WidgetLanguageObserver_ABC< QMainWindow >()
-    , sessionTray_( 0 )
 {
     setWindowIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
     setFixedWidth( 800 );

@@ -45,7 +45,7 @@ protected:
     virtual void PostStopMission() {}
 
 private:
-    std::auto_ptr< DEC_Model > model_;
+    std::unique_ptr< DEC_Model > model_;
 };
 
 #endif

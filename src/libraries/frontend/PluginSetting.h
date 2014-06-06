@@ -114,7 +114,7 @@ private:
     QComboBox*                       enumerationValue_;
     FileList*                        fileList_;
     std::string                      fileName_;
-    std::auto_ptr< FileButtonEvent > fileValue_;
+    std::unique_ptr< FileButtonEvent > fileValue_;
     //@}
 };
 

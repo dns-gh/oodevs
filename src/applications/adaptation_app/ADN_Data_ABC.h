@@ -84,7 +84,7 @@ protected:
     static QString duplicateName_;
     static QString invalidDataOntab_;
     E_WorkspaceElements currentTab_;
-    std::auto_ptr< kernel::XmlTranslations > translations_;
+    std::unique_ptr< kernel::XmlTranslations > translations_;
     int subTab_;
     //@}
 };

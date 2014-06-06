@@ -76,8 +76,8 @@ private:
     Publisher_ABC& publisher_;
     const QString name_;
     const ScoreDefinition& definition_;
-    std::auto_ptr< indicators::Tendency > tendency_;
-    std::auto_ptr< indicators::Gauge > gauge_;
+    std::unique_ptr< indicators::Tendency > tendency_;
+    std::unique_ptr< indicators::Gauge > gauge_;
     double value_;
     IndicatorRequest* request_;
     //@}

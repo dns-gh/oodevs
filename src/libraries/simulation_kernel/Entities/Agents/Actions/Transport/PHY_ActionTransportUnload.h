@@ -43,7 +43,7 @@ public:
 
 private:
     transport::PHY_RoleAction_Transport& role_;
-    std::auto_ptr< MT_Vector2D > position_;
+    std::unique_ptr< MT_Vector2D > position_;
 };
 
 #endif // __PHY_ActionTransportUnload_h_

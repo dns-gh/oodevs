@@ -117,7 +117,7 @@ private:
     MIL_PopulationFlow* pPullingFlow_;
     std::set< MIL_PopulationFlow* > pushingFlows_;
     const MIL_Object_ABC* pSplittingObject_;
-    std::auto_ptr< MIL_AttackController > pAttackController_;
+    std::unique_ptr< MIL_AttackController > pAttackController_;
     std::vector< boost::shared_ptr< MT_Vector2D > > pathForNextPullingFlow_;
     std::size_t waypointForNextPullingFlow_;
     bool hasDoneMagicMove_;

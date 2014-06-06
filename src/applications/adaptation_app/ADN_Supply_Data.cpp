@@ -149,7 +149,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability( xml::xistream& input )
 {
-    std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+    std::unique_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
     pNew->ReadArchive( input );
     vVectorWarnings_.AddItem( pNew.release() );
 }
@@ -160,7 +160,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability( xml::xistream& 
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime( xml::xistream& input )
 {
-    std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+    std::unique_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
     spNew->ReadArchive( "time", input );
     vConvoySetupInfos_.AddItem( spNew.release() );
 }
@@ -171,7 +171,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime( xml::xistream& inpu
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime( xml::xistream& input )
 {
-    std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+    std::unique_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
     spNew->ReadArchive( "time", input );
     vConvoyLoadingInfos_.AddItem( spNew.release() );
 }
@@ -182,7 +182,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime( xml::xistream& input )
 {
-    std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+    std::unique_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
     spNew->ReadArchive( "time", input );
     vConvoyUnloadingInfos_.AddItem( spNew.release() );
 }
@@ -193,7 +193,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier( xml::xistream& input )
 {
-    std::auto_ptr< ConvoyInfo< ADN_Type_Double > > spNew( new ConvoyInfo< ADN_Type_Double >( 1 ) );
+    std::unique_ptr< ConvoyInfo< ADN_Type_Double > > spNew( new ConvoyInfo< ADN_Type_Double >( 1 ) );
     spNew->ReadArchive( "value", input );
     vConvoySpeedModificatorInfos_.AddItem( spNew.release() );
 }
@@ -264,7 +264,7 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output ) con
     output << xml::start( "resource-availability-alerts" );
     if( vVectorWarnings_.empty() )
     {
-        std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+        std::unique_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
         pNew->WriteArchive( output );
     }
     else

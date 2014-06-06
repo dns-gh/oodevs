@@ -49,7 +49,7 @@ void UserProfilesModel::Purge()
 // -----------------------------------------------------------------------------
 void UserProfilesModel::CreateProfile( const sword::ProfileCreation& message )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create( message ) );
+    std::unique_ptr< UserProfile > profile( factory_.Create( message ) );
     userProfiles_.push_back( profile.release() );
 }
 

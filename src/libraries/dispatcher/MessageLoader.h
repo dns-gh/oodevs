@@ -108,11 +108,11 @@ private:
     unsigned int tickCount_;
     std::string endDateTime_;
     mutable boost::mutex access_;
-    std::auto_ptr< tools::WaitEvent > init_;
-    std::auto_ptr< tools::WaitEvent > quit_;
-    std::auto_ptr< boost::thread > folderObserver_;
-    std::auto_ptr< tools::ThreadPool > disk_;
-    std::auto_ptr< tools::ThreadPool > cpu_;
+    std::unique_ptr< tools::WaitEvent > init_;
+    std::unique_ptr< tools::WaitEvent > quit_;
+    std::unique_ptr< boost::thread > folderObserver_;
+    std::unique_ptr< tools::ThreadPool > disk_;
+    std::unique_ptr< tools::ThreadPool > cpu_;
     T_FragmentsInfos fragmentsInfos_;
     tools::Path currentOpenFolder_;
     tools::Ifstream updates_;

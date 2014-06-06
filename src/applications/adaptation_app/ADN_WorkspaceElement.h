@@ -48,8 +48,8 @@ public:
     //@}
 
 private:
-    std::auto_ptr< DATA > data_;
-    std::auto_ptr< GUI > gui_;
+    std::unique_ptr< DATA > data_;
+    std::unique_ptr< GUI > gui_;
 };
 
 #endif // __ADN_WorkspaceElement_h_

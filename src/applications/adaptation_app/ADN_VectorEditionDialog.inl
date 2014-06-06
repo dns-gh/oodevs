@@ -140,7 +140,7 @@ void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString
                                                                    ADN_Connector_Vector_ABC& targetConnector,
                                                                    const T_FilterFunctor& filterFunctor )
 {
-    editionInfos_.push_back( std::auto_ptr< T_EditionInfo >( new T_EditionInfo( vectorName, sourceVector, targetConnector ) ) );
+    editionInfos_.push_back( std::unique_ptr< T_EditionInfo >( new T_EditionInfo( vectorName, sourceVector, targetConnector ) ) );
 
     QStandardItem* rootItem = new QStandardItem( vectorName );
     rootItem->setFlags( rootItem->flags() | Qt::ItemIsTristate );

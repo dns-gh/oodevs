@@ -91,7 +91,7 @@ void CompositePluginConfig::Commit( const tools::Path& exercise, const tools::Pa
 // -----------------------------------------------------------------------------
 void CompositePluginConfig::Add( const tools::GeneralConfig& config, xml::xistream& xis )
 {
-    std::auto_ptr< PluginConfig_ABC > plugin( new PluginConfig( tabs_, config, xis ) );
+    std::unique_ptr< PluginConfig_ABC > plugin( new PluginConfig( tabs_, config, xis ) );
     if( plugin->IsAvailable() )
     {
         plugins_.push_back( plugin.release() );

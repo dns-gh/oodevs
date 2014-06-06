@@ -58,8 +58,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< geocoord::UTM > utm_;
-    std::auto_ptr< geocoord::Geodetic > geodetic_;
+    std::unique_ptr< geocoord::UTM > utm_;
+    std::unique_ptr< geocoord::Geodetic > geodetic_;
     geometry::Point2d origin_;
     //@}
 };

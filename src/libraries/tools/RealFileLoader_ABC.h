@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< xml::xistream > LoadFile( const Path& file, RealFileLoaderObserver_ABC& observer ) const = 0;
+    virtual std::unique_ptr< xml::xistream > LoadFile( const Path& file, RealFileLoaderObserver_ABC& observer ) const = 0;
     //@}
 };
 

@@ -81,7 +81,7 @@ private:
     //! @name Member data
     //@{
     static std::vector< geometry::Vector2f > circle_;
-    std::auto_ptr< svg::RenderingContext > context_;
+    std::unique_ptr< svg::RenderingContext > context_;
     geometry::Rectangle2f viewport_;
     const DrawingTemplate& style_;
     const GlTools_ABC* tools_;

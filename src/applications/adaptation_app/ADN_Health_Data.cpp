@@ -132,7 +132,7 @@ void ADN_Health_Data::ReadInjury( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Health_Data::ReadResourceAvailability( xml::xistream& input )
 {
-    std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+    std::unique_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
     pNew->ReadArchive( input );
     const std::string resource = input.attribute< std::string >( "resource" );
     if( resource == "relieve" )

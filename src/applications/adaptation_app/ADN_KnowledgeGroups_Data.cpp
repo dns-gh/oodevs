@@ -190,7 +190,7 @@ void ADN_KnowledgeGroups_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_Data::ReadKnowledgeGroup( xml::xistream& input )
 {
-    std::auto_ptr<GroupInfo> spNew( new GroupInfo() );
+    std::unique_ptr<GroupInfo> spNew( new GroupInfo() );
     spNew->ReadArchive( input );
     vGroups_.AddItem( spNew.release() );
 }

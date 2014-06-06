@@ -41,7 +41,7 @@ ObjectMessageService::~ObjectMessageService()
 // Name: ObjectMessageService::Register
 // Created: AGE 2007-05-28
 // -----------------------------------------------------------------------------
-void ObjectMessageService::Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback )
+void ObjectMessageService::Register( unsigned long id, std::unique_ptr< ObjectMessageCallback_ABC > callback )
 {
     callbacks_[ id ] = callback.release();
 }

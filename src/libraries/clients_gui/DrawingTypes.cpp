@@ -74,7 +74,7 @@ void DrawingTypes::Purge()
 // -----------------------------------------------------------------------------
 void DrawingTypes::ReadCategory( xml::xistream& xis )
 {
-    std::auto_ptr< DrawingCategory > category( new DrawingCategory( xis, *renderer_, controller_ ) );
+    std::unique_ptr< DrawingCategory > category( new DrawingCategory( xis, *renderer_, controller_ ) );
     Register( category->GetName(), *category );
     category.release();
 }

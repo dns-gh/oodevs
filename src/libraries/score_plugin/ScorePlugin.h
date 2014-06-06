@@ -86,7 +86,7 @@ private:
     //@{
     dispatcher::LinkResolver_ABC& resolver_;
     const tools::SessionConfig& config_;
-    std::auto_ptr< ScoresModel > scores_;
+    std::unique_ptr< ScoresModel > scores_;
     //@}
 };
 

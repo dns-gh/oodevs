@@ -137,7 +137,7 @@ void ADN_Reports_Data::ReportParameter::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Reports_Data::ReportParameter::ReadParameterValue( xml::xistream& input )
 {
-    std::auto_ptr< ReportParameterValue > spNew( new ReportParameterValue() );
+    std::unique_ptr< ReportParameterValue > spNew( new ReportParameterValue() );
     spNew->ReadArchive( input );
     values_.AddItem( spNew.release() );
 }
@@ -220,7 +220,7 @@ void ADN_Reports_Data::ReportInfo::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Reports_Data::ReportInfo::ReadParameter( xml::xistream& input )
 {
-    std::auto_ptr< ReportParameter > spNew( new ReportParameter() );
+    std::unique_ptr< ReportParameter > spNew( new ReportParameter() );
     spNew->ReadArchive( input );
     parameters_.AddItem( spNew.release() );
 }
@@ -289,7 +289,7 @@ void ADN_Reports_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Reports_Data::ReadReport( xml::xistream& input )
 {
-    std::auto_ptr< ReportInfo > spNew( new ReportInfo() );
+    std::unique_ptr< ReportInfo > spNew( new ReportInfo() );
     spNew->ReadArchive( input );
     reports_.AddItem( spNew.release() );
 }

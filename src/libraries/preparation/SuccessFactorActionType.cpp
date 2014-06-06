@@ -53,7 +53,7 @@ SuccessFactorActionType::~SuccessFactorActionType()
 // -----------------------------------------------------------------------------
 void SuccessFactorActionType::ReadParameter( xml::xistream& xis )
 {
-    std::auto_ptr< SuccessFactorActionTypeParameter > parameter( new SuccessFactorActionTypeParameter( xis ) );
+    std::unique_ptr< SuccessFactorActionTypeParameter > parameter( new SuccessFactorActionTypeParameter( xis ) );
     Register( static_cast< unsigned long >( elements_.size() ), *parameter.release() );
 }
 

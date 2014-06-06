@@ -19,8 +19,6 @@ using namespace kernel;
 // Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
 PhysicalAttribute_ABC::PhysicalAttribute_ABC()
-    : architecture_( 0 )
-    , usages_      ( 0 )
 {
     // NOTHING
 }

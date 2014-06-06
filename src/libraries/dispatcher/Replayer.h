@@ -81,17 +81,17 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Services >                          services_;
-    std::auto_ptr< kernel::StaticModel >               staticModel_;
-    std::auto_ptr< MemoryLogger_ABC >                  logger_;
+    std::unique_ptr< Services >                        services_;
+    std::unique_ptr< kernel::StaticModel >             staticModel_;
+    std::unique_ptr< MemoryLogger_ABC >                logger_;
     boost::shared_ptr< Model >                         model_;
     dispatcher::CompositeRegistrable                   registrables_;
     boost::shared_ptr< ClientsNetworker >              clientsNetworker_;
     PluginContainer                                    handler_;
     boost::shared_ptr< SimulationDispatcher >          simulation_;
-    std::auto_ptr< Loader >                            loader_;
+    std::unique_ptr< Loader >                          loader_;
     boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
-    std::auto_ptr< SimulationPublisher_ABC >           publisher_;
+    std::unique_ptr< SimulationPublisher_ABC >         publisher_;
     bool                                               started_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
     //@}

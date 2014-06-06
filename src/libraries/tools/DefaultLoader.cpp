@@ -65,7 +65,7 @@ bool DefaultLoader::LoadOptionalFile( const Path& fileName, T_Loader loader ) co
 // Name: DefaultLoader::LoadFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-std::auto_ptr< xml::xistream > DefaultLoader::LoadFile( const Path& fileName ) const
+std::unique_ptr< xml::xistream > DefaultLoader::LoadFile( const Path& fileName ) const
 {
     return fileLoader_->LoadFile( fileName, observer_ );
 }

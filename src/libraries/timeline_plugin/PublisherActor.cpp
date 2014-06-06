@@ -22,8 +22,8 @@ using namespace plugins::timeline;
 // Name: PublisherActor constructor
 // Created: AGE 2008-05-30
 // -----------------------------------------------------------------------------
-PublisherActor::PublisherActor( std::auto_ptr< Publisher_ABC > base )
-    : base_( base )
+PublisherActor::PublisherActor( std::unique_ptr< Publisher_ABC > base )
+    : base_( std::move( base ) )
     , thread_( new tools::thread::ThreadPool( 1 ) )
 {
     // NOTHING

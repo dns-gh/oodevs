@@ -128,9 +128,9 @@ private:
     sword::EnumMeetingEngagementStatus nCloseCombatState_;
     sword::EnumOperationalStatus nOperationalState_;
     sword::RulesOfEngagement_Value nRoe_;
-    std::auto_ptr< LogisticEntity > logisticEntity_;
+    std::unique_ptr< LogisticEntity > logisticEntity_;
     LogisticHierarchy logisticHierarchy_;
-    std::auto_ptr< AutomatOrder > order_;
+    std::unique_ptr< AutomatOrder > order_;
     DecisionalState decisionalInfos_;
     tools::Resolver< dispatcher::Agent_ABC >   agents_;
     tools::Resolver< dispatcher::Automat_ABC > automats_;

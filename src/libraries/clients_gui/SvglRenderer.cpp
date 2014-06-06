@@ -22,7 +22,7 @@ using namespace geometry;
 using namespace gui;
 using namespace svg;
 
-std::auto_ptr< TextRenderer > SvglRenderer::renderer_( new TextRenderer() );
+std::unique_ptr< TextRenderer > SvglRenderer::renderer_( new TextRenderer() );
 unsigned int SvglRenderer::colorList_ = 0;
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
     CreateStaticLists();
     SVGFactory factory( *renderer_ );
     factory.ChangePropertyFactory( svg::RenderingContext_ABC::strokeWidth, *listLenghts_ );
-    std::auto_ptr< Style > border( CreateStyle( "" ) );
+    std::unique_ptr< Style > border( CreateStyle( "" ) );
     references_->Register( "border", *border );
     return factory.Compile( input, *references_, lod );
 }
@@ -149,7 +149,7 @@ unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const std::string&
             svg::Opacity opacity( a_ );
             renderingContext_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
             renderingContext_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
-            std::auto_ptr< Style > border( CreateStyle( style ) );
+            std::unique_ptr< Style > border( CreateStyle( style ) );
             references_->Register( "border", *border );
             node->Draw( *renderingContext_, *references_ );
             renderingContext_->DisablePickingMode();
@@ -196,11 +196,11 @@ void SvglRenderer::ConfigureWidthList( const geometry::Rectangle2f& viewport, un
 // Name: SvglRenderer::CreateStyle
 // Created: AGE 2007-10-31
 // -----------------------------------------------------------------------------
-std::auto_ptr< Style > SvglRenderer::CreateStyle( const std::string& style )
+std::unique_ptr< Style > SvglRenderer::CreateStyle( const std::string& style )
 {
     PropertyFactory factory;
     factory.ChangeFactory( RenderingContext_ABC::strokeWidth, *listLenghts_ );
-    return std::auto_ptr< Style >( new Style( style, factory ) );
+    return std::unique_ptr< Style >( new Style( style, factory ) );
 }
 
 // -----------------------------------------------------------------------------

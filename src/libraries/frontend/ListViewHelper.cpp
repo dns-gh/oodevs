@@ -65,7 +65,7 @@ void frontend::BuildExerciseData( const tools::Path& exercise,
     const tools::GeneralConfig& config, QStandardItemModel& model, const tools::Loader_ABC& loader )
 {
     tools::Path terrain, population, dataset, physical;
-    std::auto_ptr< xml::xistream > xis = loader.LoadFile( config.GetExerciseFile( exercise ) );
+    std::unique_ptr< xml::xistream > xis = loader.LoadFile( config.GetExerciseFile( exercise ) );
     ReadExerciseData( *xis, terrain, population, dataset, physical );
 
     QStandardItem* root = GetRoot( model, "data" );
@@ -110,7 +110,7 @@ namespace
             if( !it->IsEmpty() )
             {
                 tools::Path terrain, population, dataset, physical;
-                std::auto_ptr< xml::xistream > xis = loader.LoadFile( config.GetExerciseFile( *it ) );
+                std::unique_ptr< xml::xistream > xis = loader.LoadFile( config.GetExerciseFile( *it ) );
                 ReadExerciseData( *xis, terrain, population, dataset, physical );
                 terrains.insert( terrain );
                 populations.insert( population );
@@ -128,7 +128,7 @@ void frontend::RemoveExerciseData( const tools::Path& exercise, const std::vecto
     FillExercisesData( exercises, terrains, populations, datasets, physicals, config, loader );
 
     tools::Path terrain, population, dataset, physical;
-    std::auto_ptr< xml::xistream > xis = loader.LoadFile( config.GetExerciseFile( exercise ) );
+    std::unique_ptr< xml::xistream > xis = loader.LoadFile( config.GetExerciseFile( exercise ) );
     ReadExerciseData( *xis, terrain, population, dataset, physical );
 
     QStandardItem* root = GetRoot( model, "data" );

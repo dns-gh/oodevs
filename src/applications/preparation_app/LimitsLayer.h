@@ -73,7 +73,7 @@ private:
     geometry::Point2f dragPoint_;
     geometry::Point2f oldPosition_;
     kernel::FourStateOption drawLines_;
-    std::auto_ptr< QWidget > dummy_;
+    std::unique_ptr< QWidget > dummy_;
     //@}
 };
 

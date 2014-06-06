@@ -260,7 +260,7 @@ private:
     T_AccommodationInfos_Vector vAccommodations_;
     T_InfrastructureInfos_Vector vInfrastructures_;
     T_UrbanTemplateInfos_Vector vTemplates_;
-    std::auto_ptr< kernel::XmlTranslations > templateTranslations_;
+    std::unique_ptr< kernel::XmlTranslations > templateTranslations_;
     //@}
 
 public:

@@ -53,7 +53,7 @@ ADN_Models_ModelInfos::~ADN_Models_ModelInfos()
 // -----------------------------------------------------------------------------
 void ADN_Models_ModelInfos::AddFragOrder( ADN_Missions_FragOrder* fragorder, const std::string& name )
 {
-    std::auto_ptr< ADN_Models_OrderInfos > spNew( new ADN_Models_OrderInfos( fragorder, name ) );
+    std::unique_ptr< ADN_Models_OrderInfos > spNew( new ADN_Models_OrderInfos( fragorder, name ) );
     vFragOrders_.AddItem( spNew.release() );
 }
 
@@ -97,7 +97,7 @@ ADN_Models_ModelInfos* ADN_Models_ModelInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Models_ModelInfos::ReadMission( xml::xistream& input )
 {
-    std::auto_ptr< ADN_Models_MissionInfos > spNew( new ADN_Models_MissionInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( ADN_Tools::ConvertEntityTypeToMissionType( type_ ) ) ) );
+    std::unique_ptr< ADN_Models_MissionInfos > spNew( new ADN_Models_MissionInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( ADN_Tools::ConvertEntityTypeToMissionType( type_ ) ) ) );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vMissions_.AddItem( spNew.release() );
@@ -111,7 +111,7 @@ void ADN_Models_ModelInfos::ReadMission( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_ModelInfos::ReadOrder( xml::xistream& input )
 {
-    std::auto_ptr< ADN_Models_OrderInfos > spNew( new ADN_Models_OrderInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) ) );
+    std::unique_ptr< ADN_Models_OrderInfos > spNew( new ADN_Models_OrderInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) ) );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vFragOrders_.AddItem( spNew.release() );

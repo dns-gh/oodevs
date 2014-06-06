@@ -178,7 +178,7 @@ namespace
         NBCPrototype* prototype_;
     };
 
-    std::auto_ptr< ObjectAttributePrototypeFactory_ABC > CreateFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver,
+    std::unique_ptr< ObjectAttributePrototypeFactory_ABC > CreateFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver,
                                                                         const kernel::Time_ABC& simulation, ParameterList*& attributesList,
                                                                         const tools::GeneralConfig& config )
     {
@@ -212,7 +212,7 @@ namespace
         factory->Register( "propagation"               , boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1 ) );
         factory->RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders ) );
 
-        return std::auto_ptr< ObjectAttributePrototypeFactory_ABC >( factory );
+        return std::unique_ptr< ObjectAttributePrototypeFactory_ABC >( factory );
     }
 }
 

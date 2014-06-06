@@ -60,7 +60,7 @@ private:
     kernel::Controllers& controllers_;
     const tools::Resolver_ABC< kernel::PopulationType >& types_;
     const QSpinBox& number_;
-    std::auto_ptr< kernel::PopulationPrototype > prototype_;
+    std::unique_ptr< kernel::PopulationPrototype > prototype_;
     //@}
 };
 

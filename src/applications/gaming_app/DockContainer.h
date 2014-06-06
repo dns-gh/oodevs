@@ -135,9 +135,9 @@ private:
 
     //! @name Member data
     //@{
-    std::auto_ptr< actions::gui::InterfaceBuilder > interfaceBuilder_;
-    std::auto_ptr< ActionsScheduler > scheduler_;
-    std::auto_ptr< IndicatorPlotFactory > plotFactory_;
+    std::unique_ptr< actions::gui::InterfaceBuilder > interfaceBuilder_;
+    std::unique_ptr< ActionsScheduler > scheduler_;
+    std::unique_ptr< IndicatorPlotFactory > plotFactory_;
     //@}
 };
 

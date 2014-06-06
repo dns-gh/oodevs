@@ -50,7 +50,7 @@ void ADN_Funeral_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_Funeral_Data::ReadFuneralPackagingResource( xml::xistream& input )
 {
-    std::auto_ptr< ADN_FuneralPackagingResource > pNew( new ADN_FuneralPackagingResource() );
+    std::unique_ptr< ADN_FuneralPackagingResource > pNew( new ADN_FuneralPackagingResource() );
     pNew->ReadArchive( input );
     if( pNew->GetCrossedElement() )
         funeralPackagingResources_.AddItem( pNew.release() );

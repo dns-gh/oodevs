@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     MOCK_EXPECT( army.RegisterObject ).once();
     MOCK_EXPECT( army.GetColor ).once().returns( boost::cref( color ) );
 
-    std::auto_ptr< MIL_Object_ABC > pObject;
+    std::unique_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );

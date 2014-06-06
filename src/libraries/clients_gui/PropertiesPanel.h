@@ -91,7 +91,7 @@ private:
     PropertyDelegate*                             delegate_;
     const kernel::Entity_ABC*                     selected_;
     std::vector< const kernel::UrbanObject_ABC* > urbanObjects_;
-    std::auto_ptr< PropertiesGroupDictionary >    pMultiProperties_;
+    std::unique_ptr< PropertiesGroupDictionary >  pMultiProperties_;
     //@}
 };
 

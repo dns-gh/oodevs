@@ -84,7 +84,7 @@ void ADN_ActiveProtections_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ReadProtection( xml::xistream& xis )
 {
-    std::auto_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
+    std::unique_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
     spNew->ReadArchive( xis );
     activeProtections_.AddItem( spNew.release() );
 }
@@ -230,7 +230,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon( xml::xistream& xis )
 {
-    std::auto_ptr<ActiveProtectionsInfosWeapons> spNew( new ActiveProtectionsInfosWeapons() );
+    std::unique_ptr<ActiveProtectionsInfosWeapons> spNew( new ActiveProtectionsInfosWeapons() );
     spNew->ReadArchive( xis );
     weapons_.AddItem( spNew.release() );
 }

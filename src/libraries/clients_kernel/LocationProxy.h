@@ -34,7 +34,7 @@ public:
     //! @name Proxy operations
     //@{
     void SetLocation( Location_ABC& location );
-    void SetLocation( std::auto_ptr< Location_ABC >& location );
+    void SetLocation( std::unique_ptr< Location_ABC >& location );
     //@}
 
     //! @name Operations

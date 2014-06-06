@@ -59,7 +59,7 @@ public:
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
     virtual bool ShouldDisplay( const std::string& name, bool b1, bool b2, bool b3 ) const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
-    virtual std::auto_ptr< GlTooltip_ABC > CreateTooltip() const;
+    virtual std::unique_ptr< GlTooltip_ABC > CreateTooltip() const;
 
     GlToolsBase& Base() const;
     void BindIcon( const char** xpm );
@@ -95,10 +95,10 @@ private:
     mutable bool superiorSelected_;
     mutable bool controlled_;
     T_Icons icons_;
-    std::auto_ptr< SvglRenderer > renderer_;
-    std::auto_ptr< GLSymbols > symbols_;
-    std::auto_ptr< SvglProxy > svgl_;
-    std::auto_ptr< TacticalGraphics > graphics_;
+    std::unique_ptr< SvglRenderer > renderer_;
+    std::unique_ptr< GLSymbols > symbols_;
+    std::unique_ptr< SvglProxy > svgl_;
+    std::unique_ptr< TacticalGraphics > graphics_;
     unsigned int billboard_;
     mutable T_Options options_;
     //@}

@@ -76,7 +76,7 @@ DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xm
     , coordinateConverter_( coordinateConverter )
     , isEditing_          ( false )
 {
-    std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
+    std::unique_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
     gui::ReadLocation( xis, location_, coordinateConverter );
     AddExtension( *this );
@@ -251,7 +251,7 @@ void DrawerShape::Handle( kernel::Location_ABC& location )
 {
     if( location.IsValid() )
     {
-        std::auto_ptr< kernel::Location_ABC > ptr( &location );
+        std::unique_ptr< kernel::Location_ABC > ptr( &location );
         location_.SetLocation( ptr );
         Update();
         isEditing_ = false;

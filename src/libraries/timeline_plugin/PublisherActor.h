@@ -40,7 +40,7 @@ class PublisherActor : public Publisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PublisherActor( std::auto_ptr< Publisher_ABC > base );
+    explicit PublisherActor( std::unique_ptr< Publisher_ABC > base );
     virtual ~PublisherActor();
     //@}
 
@@ -74,8 +74,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Publisher_ABC > base_;
-    std::auto_ptr< tools::thread::ThreadPool > thread_;
+    std::unique_ptr< Publisher_ABC > base_;
+    std::unique_ptr< tools::thread::ThreadPool > thread_;
     boost::recursive_mutex mutex_;
     T_Answers answers_;
     //@}

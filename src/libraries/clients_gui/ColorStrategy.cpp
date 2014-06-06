@@ -65,7 +65,7 @@ ColorStrategy::~ColorStrategy()
 // Name: ColorStrategy::Add
 // Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
-void ColorStrategy::Add( std::auto_ptr< ColorModifier_ABC > modifier )
+void ColorStrategy::Add( std::unique_ptr< ColorModifier_ABC > modifier )
 {
     modifiers_.push_back( modifier.release() );
 }

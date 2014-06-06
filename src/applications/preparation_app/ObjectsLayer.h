@@ -54,7 +54,7 @@ private:
     const gui::GlTools_ABC& tools_;
     geometry::Point2f draggingPoint_;
     geometry::Point2f oldPosition_;
-    std::auto_ptr< QWidget > dummy_;
+    std::unique_ptr< QWidget > dummy_;
     //@}
 };
 

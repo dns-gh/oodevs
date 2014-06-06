@@ -20,12 +20,12 @@
 
 namespace
 {
-    std::auto_ptr< kernel::ObjectType > MakeObjectType()
+    std::unique_ptr< kernel::ObjectType > MakeObjectType()
     {
         const std::string xml( "<object name='my_name' type='my_type' symbol='my_symbol' geometry='point'/>" );
         xml::xistringstream xis( xml );
         xis >> xml::start( "object" );
-        return std::auto_ptr< kernel::ObjectType >( new kernel::ObjectType( xis ) );
+        return std::unique_ptr< kernel::ObjectType >( new kernel::ObjectType( xis ) );
     }
 
     struct Fixture
@@ -63,10 +63,10 @@ namespace
             expected.mutable_message()->Clear();
         }
         tools::Resolver< kernel::ObjectType, std::string > types;
-        std::auto_ptr< kernel::ObjectType > type;
+        std::unique_ptr< kernel::ObjectType > type;
         tools::Resolver< dispatcher::Team_ABC > teams;
         MockSide team;
-        std::auto_ptr< dispatcher::Object_ABC > result;
+        std::unique_ptr< dispatcher::Object_ABC > result;
         MockModel model;
         sword::SimToClient expected;
         MockClientPublisher publisher;

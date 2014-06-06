@@ -68,6 +68,6 @@ void SuccessFactorActionTypes::Purge()
 // -----------------------------------------------------------------------------
 void SuccessFactorActionTypes::ReadAction( xml::xistream& xis )
 {
-    std::auto_ptr< SuccessFactorActionType > type( new SuccessFactorActionType( xis ) );
+    std::unique_ptr< SuccessFactorActionType > type( new SuccessFactorActionType( xis ) );
     Register( type->GetFunction().c_str(), *type.release() );
 }

@@ -205,7 +205,7 @@ void ADN_Armors_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Armors_Data::ReadArmor( xml::xistream& input )
 {
-    std::auto_ptr< ArmorInfos > pNew( new ArmorInfos() );
+    std::unique_ptr< ArmorInfos > pNew( new ArmorInfos() );
     pNew->ReadArchive( input );
     vArmors_.AddItem( pNew.release() );
 }

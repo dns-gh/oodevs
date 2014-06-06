@@ -57,7 +57,7 @@ private:
     kernel::Controllers& controllers_;
     const Model& model_;
     const StaticModel& staticModel_;
-    std::auto_ptr< gui::ResourceNetworkSelectionObserver > observer_;
+    std::unique_ptr< gui::ResourceNetworkSelectionObserver > observer_;
     //@}
 };
 

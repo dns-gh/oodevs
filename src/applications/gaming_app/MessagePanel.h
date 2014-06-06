@@ -81,7 +81,7 @@ private:
     QMainWindow* mainWindow_;
     CommandHandler& handler_;
     gui::ItemFactory_ABC& factory_;
-    std::auto_ptr< CommandPublisher > publisher_;
+    std::unique_ptr< CommandPublisher > publisher_;
     gui::RichLabel* text_;
     QWidget* buttons_;
     std::string activePrompt_;

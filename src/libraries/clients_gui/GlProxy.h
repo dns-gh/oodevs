@@ -75,7 +75,7 @@ public:
     virtual float Zoom() const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
     virtual void SetCurrentCursor ( const QCursor& cursor );
-    virtual std::auto_ptr< GlTooltip_ABC > CreateTooltip() const;
+    virtual std::unique_ptr< GlTooltip_ABC > CreateTooltip() const;
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to, float width = 1. ) const;
     virtual void DrawStippledLine ( const geometry::Point2f& from, const geometry::Point2f& to ) const;

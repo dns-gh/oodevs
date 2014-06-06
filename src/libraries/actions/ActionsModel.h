@@ -156,7 +156,7 @@ private:
 template< typename T >
 Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC* target )
 {
-    std::auto_ptr< Action_ABC > action( factory_.CreateAction( target, order ) );
+    std::unique_ptr< Action_ABC > action( factory_.CreateAction( target, order ) );
     if( !action.get() )
         return nullptr;
     Register( action->GetId(), *action );
@@ -172,7 +172,7 @@ Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC
 template< typename T >
 Action_ABC* ActionsModel::CreateAction( const T& message, bool needRegistration )
 {
-    std::auto_ptr< Action_ABC > action( factory_.CreateAction( message, needRegistration ) );
+    std::unique_ptr< Action_ABC > action( factory_.CreateAction( message, needRegistration ) );
     if( !action.get() )
         return nullptr;
     Register( action->GetId(), *action );

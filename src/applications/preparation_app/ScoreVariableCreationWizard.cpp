@@ -146,7 +146,7 @@ namespace
         }
         const QString name_;
         std::string type_;
-        std::auto_ptr< indicators::Variable > pVariable_;
+        std::unique_ptr< indicators::Variable > pVariable_;
     };
 }
 

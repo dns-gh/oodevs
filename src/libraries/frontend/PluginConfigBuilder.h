@@ -62,9 +62,9 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    std::auto_ptr< CompositePluginConfig > composite_;
-    std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
-    std::auto_ptr< tools::Loader_ABC > loader_;
+    std::unique_ptr< CompositePluginConfig > composite_;
+    std::unique_ptr< tools::RealFileLoaderObserver_ABC > observer_;
+    std::unique_ptr< tools::Loader_ABC > loader_;
     //@}
 };
 

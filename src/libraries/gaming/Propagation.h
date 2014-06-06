@@ -46,8 +46,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< RGBATextureFactory > pFactory_;
-    std::auto_ptr< TextureTree > pTree_;
+    std::unique_ptr< RGBATextureFactory > pFactory_;
+    std::unique_ptr< TextureTree > pTree_;
     geometry::Rectangle2f globalExtent_;
     //@}
 };

@@ -74,12 +74,12 @@ private:
     const kernel::DetectionMap& elevation_;
     Lighting_ABC& lighting_;
     ViewFrustum lastFrustum_;
-    std::auto_ptr< TextureSet >         usrp_;
-    std::auto_ptr< TextureSet >         normals_;
-    std::auto_ptr< MultiTextureLayer >  textures_;
-    std::auto_ptr< gl::FragmentShader > fragment_;
-    std::auto_ptr< gl::ShaderProgram >  program_;
-    std::auto_ptr< CompiledVisitor3d >  visitor_;
+    std::unique_ptr< TextureSet >         usrp_;
+    std::unique_ptr< TextureSet >         normals_;
+    std::unique_ptr< MultiTextureLayer >  textures_;
+    std::unique_ptr< gl::FragmentShader > fragment_;
+    std::unique_ptr< gl::ShaderProgram >  program_;
+    std::unique_ptr< CompiledVisitor3d >  visitor_;
     float zRatio_;
     bool reset_;
     bool ignoreShader_;

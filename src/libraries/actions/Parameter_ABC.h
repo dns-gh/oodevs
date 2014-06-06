@@ -107,7 +107,7 @@ private:
     //@{
     QString name_;
     geometry::Point2f position_;
-    std::auto_ptr< ::gui::GlTooltip_ABC > toolTip_;
+    std::unique_ptr< ::gui::GlTooltip_ABC > toolTip_;
     bool isSet_;
     //@}
 };

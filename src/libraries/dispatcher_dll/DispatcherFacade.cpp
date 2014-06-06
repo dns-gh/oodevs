@@ -24,10 +24,6 @@ using namespace plugins;
 // Created: AGE 2008-05-21
 // -----------------------------------------------------------------------------
 DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
-    : config_( 0 )
-    , dispatcher_( 0 )
-    , console_( 0 )
-    , file_( 0 )
 {
     tools::SetCodec();
     config_.reset( new dispatcher::Config() );

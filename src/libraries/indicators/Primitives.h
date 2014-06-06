@@ -51,7 +51,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< DataTypeFactory > types_;
+    std::unique_ptr< DataTypeFactory > types_;
     //@}
 };
 

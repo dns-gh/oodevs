@@ -228,7 +228,7 @@ private:
     //!@name Data
     //@{
     boost::shared_ptr< sword::Brain >  pBrain_;
-    std::auto_ptr< struct ScriptRefs > pRefs_;
+    std::unique_ptr< struct ScriptRefs > pRefs_;
     bool                               isMasalife_;
     //@}
 };

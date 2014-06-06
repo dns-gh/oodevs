@@ -62,7 +62,7 @@ private:
     bool                          bSystemEnabled_;
     tools::Resolver< Dotation >   stocks_;
     std::vector< T_Availability > convoyersAvailability_;
-    std::auto_ptr< Dotation >     resourceNetworkStock_;
+    std::unique_ptr< Dotation >   resourceNetworkStock_;
 };
 
 }

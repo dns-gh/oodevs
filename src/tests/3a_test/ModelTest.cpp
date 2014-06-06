@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE( Model_TestInstanciation )
     NullValueHandler< NumericValue > valueHandler;
     NullValueHandler< NumericValue > keyHandler;
     {
-        std::auto_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( valueHandler ) );
+        std::unique_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( valueHandler ) );
     }
     {
         DispatcherFactory< IdentifierValue, attributes::OperationalState > factory;
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
 {
     const NumericValue epsilon( 0.001f );
     MockValueHandler< NumericValue > handler;
-    std::auto_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( handler ) );
+    std::unique_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( handler ) );
     MOCK_EXPECT( handler.BeginTick ).exactly( 4 );
     MOCK_EXPECT( handler.Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.25f ), _1, epsilon ) );
     MOCK_EXPECT( handler.Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );

@@ -83,7 +83,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Time_ABC& simulation_;
     const kernel::CoordinateConverter_ABC& converter_;
-    std::auto_ptr< PropagationManager > pManager_;
+    std::unique_ptr< PropagationManager > pManager_;
     const kernel::DisasterType& disasterType_;
     T_Propagations propagations_;
     tools::Path::T_Paths files_;

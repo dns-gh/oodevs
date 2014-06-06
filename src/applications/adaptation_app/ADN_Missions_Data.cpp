@@ -306,7 +306,7 @@ namespace
     {
         const tools::Path missionPath = ADN_Missions_Data::GetMissionSheetsPath( type );
         const tools::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
-        std::auto_ptr< T > spNew( new T( type, xis.attribute< unsigned int >( "id" ) ) );
+        std::unique_ptr< T > spNew( new T( type, xis.attribute< unsigned int >( "id" ) ) );
         spNew->ReadArchive( xis );
         spNew->ReadMissionSheet( missionPath, ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
         for( auto it = languages.begin(); it != languages.end(); ++it )

@@ -356,8 +356,8 @@ public:
     public:
         ADN_Type_Enum< E_ConsumptionType, eNbrConsumptionType > nDefaultConsumption_;
         ADN_Type_Enum< E_ConstructorType, eNbrConstructorType > nUnitType_;
-        std::auto_ptr< ADN_CapacityInfos_Buildable > ptrBuildable_;
-        std::auto_ptr< ADN_CapacityInfos_Improvable > ptrImprovable_;
+        std::unique_ptr< ADN_CapacityInfos_Buildable > ptrBuildable_;
+        std::unique_ptr< ADN_CapacityInfos_Improvable > ptrImprovable_;
     };
 
     class ADN_CapacityInfos_Detection : public helpers::ADN_CapacityInfos_Default< helpers::eDetectionCapacity >

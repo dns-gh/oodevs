@@ -34,11 +34,11 @@ PopulationFactory::PopulationFactory( MissionController_ABC& missionController, 
 // Name: PopulationFactory constructor
 // Created: SLI 2013-02-22
 // -----------------------------------------------------------------------------
-PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger )
+PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, std::unique_ptr< sword::DEC_Logger > logger )
     : gcPause_          ( gcPause )
     , gcMult_           ( gcMult )
     , missionController_( missionController )
-    , logger_           ( logger )
+    , logger_           ( std::move( logger ) )
 {
     // NOTHING
 }

@@ -203,7 +203,7 @@ private:
     resource::ResourceTools_ABC* pResourceTools_;
     MIL_BurningCells* pBurningCells_;
     ProcessMonitor* pProcessMonitor_;
-    std::auto_ptr< MIL_ObjectFactory > pObjectFactory_;
+    std::unique_ptr< MIL_ObjectFactory > pObjectFactory_;
     double pathfindTime_;
     // Ensures a paused simulation reloaded from a checkpoint remains in the
     // checkpoint state and does not tick.

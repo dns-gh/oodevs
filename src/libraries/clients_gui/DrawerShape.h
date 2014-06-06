@@ -105,7 +105,7 @@ protected:
     QColor color_;
     const QString template_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
-    std::auto_ptr< SvgLocationDrawer > drawer_;
+    std::unique_ptr< SvgLocationDrawer > drawer_;
     bool isEditing_;
     //@}
 

@@ -66,12 +66,12 @@ private:
     const int maxConnections_;
     const bool verbose_;
 
-    std::auto_ptr< MIL_Config > config_;
-    std::auto_ptr< tools::WinArguments > winArguments_;
-    std::auto_ptr< MT_FileLogger > logger_;
-    std::auto_ptr< tools::WaitEvent > quit_;
-    std::auto_ptr< boost::thread > gui_;
-    std::auto_ptr< boost::thread > dispatcher_;
+    std::unique_ptr< MIL_Config > config_;
+    std::unique_ptr< tools::WinArguments > winArguments_;
+    std::unique_ptr< MT_FileLogger > logger_;
+    std::unique_ptr< tools::WaitEvent > quit_;
+    std::unique_ptr< boost::thread > gui_;
+    std::unique_ptr< boost::thread > dispatcher_;
     int result_;
     HWND hWnd_;
     HINSTANCE hInstance_;

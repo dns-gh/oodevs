@@ -74,9 +74,9 @@ namespace
         FixturePion firerFixture;
         FixturePion targetFixture;
         std::vector< MT_Vector2D > vertices;
-        std::auto_ptr< MIL_UrbanObject_ABC > city;
-        std::auto_ptr< MIL_UrbanObject_ABC > district;
-        std::auto_ptr< MIL_UrbanObject_ABC > urbanBlock;
+        std::unique_ptr< MIL_UrbanObject_ABC > city;
+        std::unique_ptr< MIL_UrbanObject_ABC > district;
+        std::unique_ptr< MIL_UrbanObject_ABC > urbanBlock;
         xml::xistringstream xis;
         MIL_ObjectFactory factory;
     };

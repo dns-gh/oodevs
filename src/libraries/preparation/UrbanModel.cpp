@@ -224,7 +224,7 @@ void UrbanModel::LoadUrban( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void UrbanModel::ReadCity( xml::xistream& xis )
 {
-    std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, 0 ) );
+    std::unique_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, 0 ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
         auto ptr = static_cast< gui::UrbanObject* >( pTerrainObject.release() );
@@ -242,7 +242,7 @@ void UrbanModel::ReadCity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* parent )
 {
-    std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
+    std::unique_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
         auto ptr = static_cast< gui::UrbanObject* >( pTerrainObject.release() );
@@ -260,7 +260,7 @@ void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* pare
 // -----------------------------------------------------------------------------
 void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent )
 {
-    std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
+    std::unique_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
     if( pTerrainObject.get() && !Find( pTerrainObject->GetId() ) )
     {
         auto ptr = static_cast< gui::UrbanObject* >( pTerrainObject.release() );
@@ -362,7 +362,7 @@ void UrbanModel::UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& ob
 // -----------------------------------------------------------------------------
 void UrbanModel::CreateCityOrDistrict( kernel::Entity_ABC* parent )
 {
-    std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( parent ) );
+    std::unique_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( parent ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
         auto ptr = static_cast< gui::UrbanObject* >( pTerrainObject.release() );

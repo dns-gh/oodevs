@@ -47,7 +47,7 @@ TacticalLinesModel::~TacticalLinesModel()
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::ReadLimit( xml::xistream& xis, const sword::Diffusion& diffusion)
 {
-    std::auto_ptr< Limit > limit( new Limit( idManager_.GetNextId(), xis, diffusion, converter_ ) );
+    std::unique_ptr< Limit > limit( new Limit( idManager_.GetNextId(), xis, diffusion, converter_ ) );
     limits_.Register( limit->GetID(), *limit );
     limit.release();
 }
@@ -58,7 +58,7 @@ void TacticalLinesModel::ReadLimit( xml::xistream& xis, const sword::Diffusion& 
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::ReadLima( xml::xistream& xis, const sword::Diffusion& diffusion)
 {
-    std::auto_ptr< Lima > lima( new Lima( idManager_.GetNextId(), xis, diffusion, converter_ ) );
+    std::unique_ptr< Lima > lima( new Lima( idManager_.GetNextId(), xis, diffusion, converter_ ) );
     limas_.Register( lima->GetID(), *lima );
     lima.release();
 }
@@ -91,7 +91,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 {
     plugins::messenger::LimitCreationRequestAck ack;
     ack().set_error_code( sword::TacticalLineAck::no_error );
-    std::auto_ptr< Limit > limit( new Limit( idManager_.GetNextId(), asn ) );
+    std::unique_ptr< Limit > limit( new Limit( idManager_.GetNextId(), asn ) );
     const auto id = limit->GetID();
     ack().set_id( id );
     limits_.Register( id, *limit );
@@ -149,7 +149,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 {
     plugins::messenger::PhaseLineCreationAck ack;
     ack().set_error_code( sword::TacticalLineAck::no_error );
-    std::auto_ptr< Lima > lima( new Lima( idManager_.GetNextId(), asn ) );
+    std::unique_ptr< Lima > lima( new Lima( idManager_.GetNextId(), asn ) );
     const auto id = lima->GetID();
     ack().set_id( id );
     limas_.Register( id, *lima );

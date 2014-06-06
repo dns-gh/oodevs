@@ -18,9 +18,9 @@ using namespace plugins::messenger;
 // Name: DrawingProxy constructor
 // Created: AGE 2008-07-09
 // -----------------------------------------------------------------------------
-DrawingProxy::DrawingProxy( DrawingsModel& model, std::auto_ptr< Drawing > drawing )
+DrawingProxy::DrawingProxy( DrawingsModel& model, std::unique_ptr< Drawing > drawing )
     : model_  ( model )
-    , drawing_( drawing )
+    , drawing_( std::move( drawing ) )
 {
     // NOTHING
 }

@@ -51,7 +51,7 @@ void ParamUrbanBlock::NotifyContextMenu( const kernel::UrbanObject_ABC& entity, 
 // -----------------------------------------------------------------------------
 void ParamUrbanBlock::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< kernel::UrbanObject_ABC > > param( new actions::parameters::UrbanBlock( parameter_, controllers_.controller_ ) );
+    std::unique_ptr< actions::parameters::Entity< kernel::UrbanObject_ABC > > param( new actions::parameters::UrbanBlock( parameter_, controllers_.controller_ ) );
     EntityParameter< UrbanObject_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

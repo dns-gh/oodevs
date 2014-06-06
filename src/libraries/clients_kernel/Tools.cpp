@@ -121,7 +121,7 @@ QString tools::DurationFromSeconds( int value )
 // -----------------------------------------------------------------------------
 QTranslator* tools::AddTranslator( QApplication& application, const std::string& languageCode, const char* t )
 {
-    std::auto_ptr< QTranslator > trans( new QTranslator( &application ) );
+    std::unique_ptr< QTranslator > trans( new QTranslator( &application ) );
     const QString file = QString( "%1_%2" ).arg( t ).arg( languageCode.c_str() );
     if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
     {

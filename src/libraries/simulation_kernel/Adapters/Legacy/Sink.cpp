@@ -216,8 +216,8 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::CreateFloodModel
 // Created: LGY 2012-08-07
 // -----------------------------------------------------------------------------
-std::auto_ptr< propagation::FloodModel_ABC > Sink::CreateFloodModel() const
+std::unique_ptr< propagation::FloodModel_ABC > Sink::CreateFloodModel() const
 {
-    return std::auto_ptr< propagation::FloodModel_ABC >( new propagation::FloodModel( *pElevation_ ) );
+    return std::unique_ptr< propagation::FloodModel_ABC >( new propagation::FloodModel( *pElevation_ ) );
 }
 

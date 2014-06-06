@@ -147,11 +147,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
-    , pAffinities_         ( 0 )
-    , pExtensions_         ( 0 )
-    , pColor_              ( 0 )
-    , app6Symbol_          ( "" )
-    , level_               ( "" )
     , teleported_          ( false )
 {
     // NOTHING
@@ -2024,9 +2019,9 @@ MIL_DictionaryExtensions* const MIL_AgentPion::GetExtensions() const
 // Name: MIL_AgentPion::SetColor
 // Created: AHC 2013-03-01
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SetColor( std::auto_ptr< MIL_Color > color )
+void MIL_AgentPion::SetColor( std::unique_ptr< MIL_Color > color )
 {
-    pColor_ = color;
+    pColor_.swap( color );
 }
 
 // -----------------------------------------------------------------------------
@@ -2087,9 +2082,9 @@ MIL_AffinitiesMap* const MIL_AgentPion::GetAffinities() const
 // Name: MIL_AgentPion::SetAffinities
 // Created: AHC 2013-03-01
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SetAffinities( std::auto_ptr< MIL_AffinitiesMap > affinities )
+void MIL_AgentPion::SetAffinities( std::unique_ptr< MIL_AffinitiesMap > affinities )
 {
-    pAffinities_ = affinities;
+    pAffinities_.swap( affinities );
 }
 
 // -----------------------------------------------------------------------------

@@ -50,9 +50,9 @@ private:
     //! @name Member data
     //@{
     const SpatialIndexer& index_;
-    std::auto_ptr< Loader > loader_;
-    std::auto_ptr< PointProjector_ABC > projector_;
-    std::auto_ptr< Database > database_;
+    std::unique_ptr< Loader > loader_;
+    std::unique_ptr< PointProjector_ABC > projector_;
+    std::unique_ptr< Database > database_;
     //@}
 };
 

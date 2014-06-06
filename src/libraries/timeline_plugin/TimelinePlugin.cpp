@@ -32,7 +32,7 @@ TimelinePlugin::TimelinePlugin( dispatcher::Model_ABC& model, const kernel::Stat
     : controller_( new kernel::Controller() )
     , actions_   ( new ActionPublisher( config, model, simulationPublisher ) )
     , scenario_  ( new ScenarioManager( *actions_ ) )
-    , publisher_ ( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis, logger  ) ) ) )
+    , publisher_ ( new PublisherActor( std::unique_ptr< Publisher_ABC >( new Publisher( xis, logger  ) ) ) )
 	, logger_( &logger )
 {
     try

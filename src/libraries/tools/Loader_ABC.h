@@ -51,7 +51,7 @@ public:
     virtual void                           CheckOptionalFile( const Path& file ) const = 0;
     virtual void                           LoadFile         ( const Path& fileName, T_Loader loader ) const = 0;
     virtual bool                           LoadOptionalFile ( const Path& fileName, T_Loader loader ) const = 0;
-    virtual std::auto_ptr< xml::xistream > LoadFile         ( const Path& fileName ) const = 0;
+    virtual std::unique_ptr< xml::xistream > LoadFile         ( const Path& fileName ) const = 0;
     //@}
 };
 

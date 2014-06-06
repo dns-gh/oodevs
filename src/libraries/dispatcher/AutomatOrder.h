@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< sword::AutomatOrder > message_;
+    std::unique_ptr< sword::AutomatOrder > message_;
     //@}
 };
 

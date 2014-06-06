@@ -194,7 +194,7 @@ private:
     bool bMulti_;
     float SymbolSize_;
     GLUtesselator* tesselator_;
-    std::auto_ptr< PickingSelector > pPickingSelector_;
+    std::unique_ptr< PickingSelector > pPickingSelector_;
     QPoint point_;
     std::vector< unsigned int > selectionBuffer_;
     T_Geometry urbanGeometryBuffer_;

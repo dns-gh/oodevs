@@ -127,7 +127,7 @@ void DrawingsModel::ReadFormation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DrawingsModel::ReadShape( xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion )
 {
-    std::auto_ptr< Drawing > drawing( new Drawing( idManager_.GetNextId(), xis, diffusion, converter_ ) );
+    std::unique_ptr< Drawing > drawing( new Drawing( idManager_.GetNextId(), xis, diffusion, converter_ ) );
     drawing->SendCreation( clients_ );
     Register( drawing->GetId(), *drawing );
     drawing.release();
@@ -203,7 +203,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     ack().set_error_code( sword::ShapeRequestAck::no_error );
     try
     {
-        std::auto_ptr< Drawing > drawing( new Drawing( idManager_.GetNextId(), message.shape(), converter_ ) );
+        std::unique_ptr< Drawing > drawing( new Drawing( idManager_.GetNextId(), message.shape(), converter_ ) );
         Register( drawing->GetId(), *drawing );
         drawing->SendCreation( clients_ );
         drawing.release();
@@ -291,12 +291,12 @@ void DrawingsModel::RegisterIn( directia::brain::Brain& brain )
 boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::string& name )
 {
     tools::Xifstream xis( config_.BuildExerciseChildFile( "scripts/resources/drawings.xml" ) );
-    std::auto_ptr< Drawing > p;
+    std::unique_ptr< Drawing > p;
     xis >> xml::start( "shapes" )
             >> xml::list( "shape", *this, &DrawingsModel::ReadNamedShape, p, name );
-    if( !p.get() )
+    if( !p )
         throw MASA_EXCEPTION( "Could not find drawing '" + name + "'" );
-    return boost::shared_ptr< DrawingProxy >( new DrawingProxy( *this, p ) );
+    return boost::shared_ptr< DrawingProxy >( new DrawingProxy( *this, std::move( p ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -305,7 +305,7 @@ boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::strin
 // -----------------------------------------------------------------------------
 void DrawingsModel::Publish( const Drawing& drawing )
 {
-    std::auto_ptr< Drawing > copy( new Drawing( idManager_.GetNextId(), drawing ) );
+    std::unique_ptr< Drawing > copy( new Drawing( idManager_.GetNextId(), drawing ) );
     copy->SendCreation( clients_ );
     Register( copy->GetId(), *copy );
     copy.release();
@@ -315,7 +315,7 @@ void DrawingsModel::Publish( const Drawing& drawing )
 // Name: DrawingsModel::ReadNamedShape
 // Created: AGE 2008-07-09
 // -----------------------------------------------------------------------------
-void DrawingsModel::ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name )
+void DrawingsModel::ReadNamedShape( xml::xistream& xis, std::unique_ptr< Drawing >& result, const std::string& name )
 {
     boost::optional< sword::Diffusion > diffusion;
     if( xis.attribute( "name", "" ) == name )

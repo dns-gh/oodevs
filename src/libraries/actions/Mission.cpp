@@ -70,8 +70,7 @@ void Mission::Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& v
 {
     if( !tooltip_.get() )
     {
-        std::auto_ptr< gui::GlTooltip_ABC > tooltip = tools.CreateTooltip();
-        tooltip_ = tooltip;
+        tooltip_ = tools.CreateTooltip();
         kernel::Displayer_ABC& displayer = *tooltip_;
         displayer.Display( "", GetName() );
     }

@@ -202,7 +202,7 @@ void LimitParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) cons
             for( auto it = newPoints_.begin(); it != newPoints_.end(); ++it )
                 lines.AddPoint( *it );
         }
-        std::auto_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, lines ) );
+        std::unique_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, lines ) );
         parameter.AddParameter( *param.release() );
     }
     else

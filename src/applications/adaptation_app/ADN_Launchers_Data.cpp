@@ -158,7 +158,7 @@ void ADN_Launchers_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::ReadLauncher( xml::xistream& input )
 {
-    std::auto_ptr<LauncherInfos> spNew( new LauncherInfos() );
+    std::unique_ptr<LauncherInfos> spNew( new LauncherInfos() );
     spNew->ReadArchive( input );
     vLaunchers_.AddItem( spNew.release() );
 }

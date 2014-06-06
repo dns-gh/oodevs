@@ -52,7 +52,7 @@ ADN_Models_MissionInfos* ADN_Models_MissionInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Models_MissionInfos::ReadFragOrder( xml::xistream& input )
 {
-    std::auto_ptr< ADN_Models_OrderInfos > spNew( new ADN_Models_OrderInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) ) );
+    std::unique_ptr< ADN_Models_OrderInfos > spNew( new ADN_Models_OrderInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) ) );
     spNew->ReadArchive( input );
     vOrders_.AddItem( spNew.release() );
 }

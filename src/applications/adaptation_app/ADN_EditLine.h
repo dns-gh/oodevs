@@ -36,7 +36,7 @@ protected:
     virtual void mousePressEvent( QMouseEvent* event );
 
 private:
-    std::auto_ptr< Validator > pValidator_;
+    std::unique_ptr< Validator > pValidator_;
 };
 
 #include "ADN_EditLine.inl"

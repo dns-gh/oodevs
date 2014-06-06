@@ -104,7 +104,7 @@ private:
     const Path exerciseConfigFile_;
 
     std::string features_;
-    std::auto_ptr< const Languages > languages_;
+    std::unique_ptr< const Languages > languages_;
     std::string commandLineLanguage_;
     std::unordered_set< std::string > devFeatures_;
     //@}

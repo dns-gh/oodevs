@@ -97,7 +97,7 @@ private:
     Model& model_;
     ClientPublisher_ABC& clients_;
     std::map< std::string, boost::shared_ptr< Profile > > profiles_;
-    std::auto_ptr< tools::SchemaWriter > pSchemaWriter_;
+    std::unique_ptr< tools::SchemaWriter > pSchemaWriter_;
     boost::shared_ptr< Profile > supervisor_;
 };
 

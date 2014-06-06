@@ -55,7 +55,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller&         controller_;
-    std::auto_ptr< TextureSet > textures_;
+    std::unique_ptr< TextureSet > textures_;
     bool                        ignore_;
     tools::Path                 directory_;
     const tools::Path           texture_;

@@ -75,13 +75,13 @@ private:
     //! @name Member data
     //@{
     dispatcher::Model_ABC& model_;
-    std::auto_ptr< UdpNetwork > network_;
-    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::unique_ptr< UdpNetwork > network_;
+    std::unique_ptr< kernel::CoordinateConverter_ABC > converter_;
     const unsigned long timeStep_;
-    std::auto_ptr< tic::PlatformDelegateFactory_ABC > platforms_;
-    std::auto_ptr< rpr::EntityTypeResolver > resolver_;
-    std::auto_ptr< Model > factory_;
-    std::auto_ptr< FireManager > fires_;
+    std::unique_ptr< tic::PlatformDelegateFactory_ABC > platforms_;
+    std::unique_ptr< rpr::EntityTypeResolver > resolver_;
+    std::unique_ptr< Model > factory_;
+    std::unique_ptr< FireManager > fires_;
     unsigned long time_;
     //@}
 };

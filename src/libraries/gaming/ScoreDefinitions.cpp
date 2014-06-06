@@ -70,7 +70,7 @@ void ScoreDefinitions::ReadDefinition( xml::xistream& xis )
 {
     try
     {
-        std::auto_ptr< ScoreDefinition > def( new ScoreDefinition( xis, primitives_, gaugeFactory_ ) );
+        std::unique_ptr< ScoreDefinition > def( new ScoreDefinition( xis, primitives_, gaugeFactory_ ) );
         Register( def->GetName(), *def.release() );
     }
     catch( ... ) {}

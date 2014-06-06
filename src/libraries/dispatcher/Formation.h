@@ -96,7 +96,7 @@ private:
     E_NatureLevel                                level_;
     std::string                                  app6symbol_;
     std::unique_ptr< sword::RgbColor >           color_;
-    std::auto_ptr< LogisticEntity >              logisticEntity_;
+    std::unique_ptr< LogisticEntity >            logisticEntity_;
     dispatcher::Formation_ABC*                   parent_;
     tools::Resolver< dispatcher::Formation_ABC > formations_;
     tools::Resolver< dispatcher::Automat_ABC >   automats_;

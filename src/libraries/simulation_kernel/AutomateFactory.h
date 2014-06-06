@@ -52,7 +52,7 @@ private:
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ );
-    AutomateFactory( MIL_IDManager& idManager, MissionController_ABC& controller, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
+    AutomateFactory( MIL_IDManager& idManager, MissionController_ABC& controller, unsigned int gcPause, unsigned int gcMult, std::unique_ptr< sword::DEC_Logger > logger );
     //@}
 
 private:
@@ -60,7 +60,7 @@ private:
     //@{
     unsigned int gcPause_;
     unsigned int gcMult_;
-    std::auto_ptr< sword::DEC_Logger > logger_;
+    std::unique_ptr< sword::DEC_Logger > logger_;
     MIL_IDManager& idManager_;
     MissionController_ABC& controller_;
     //@}

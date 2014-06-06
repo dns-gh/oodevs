@@ -70,7 +70,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > toDelete_;
     const kernel::Profile_ABC& profile_;
-    std::auto_ptr< QMessageBox > confirmation_;
+    std::unique_ptr< QMessageBox > confirmation_;
     //@}
 };
 

@@ -36,7 +36,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< CommandPublisher > publisher_;
+    std::unique_ptr< CommandPublisher > publisher_;
     //@}
 };
 

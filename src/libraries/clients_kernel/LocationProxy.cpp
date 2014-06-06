@@ -51,7 +51,7 @@ void LocationProxy::SetLocation( Location_ABC& location )
 // Name: LocationProxy::SetLocation
 // Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-void LocationProxy::SetLocation( std::auto_ptr< Location_ABC >& location )
+void LocationProxy::SetLocation( std::unique_ptr< Location_ABC >& location )
 {
     location_.reset( location.release() );
     Update();

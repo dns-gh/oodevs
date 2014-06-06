@@ -67,7 +67,7 @@ protected:
     //! @name Member data
     //@{
     kernel::CoordinateConverter_ABC& converter_;
-    std::auto_ptr< weather::Meteo > globalMeteo_;
+    std::unique_ptr< weather::Meteo > globalMeteo_;
     //@}
 };
 

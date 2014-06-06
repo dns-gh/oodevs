@@ -57,7 +57,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< TerrainFeatureSearcher > searcher_;
+    std::unique_ptr< TerrainFeatureSearcher > searcher_;
     mutable QString lastRequest_;
     //@}
 };

@@ -78,11 +78,8 @@ void MetricsLayer::Paint( Viewport_ABC& )
 
             const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
             const QString message = tools::translate( "Règle GL", "2D: %L1m\n3D: %L2m\n%L3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
-            if( !tooltip_.get() )
-            {
-                std::auto_ptr< GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
-                tooltip_ = tooltip;
-            }
+            if( !tooltip_ )
+                tooltip_ = tools_.CreateTooltip();
             // $$$$ SBO 2008-03-19: GlTooltip_ABC maybe should be a Displayer_ABC...
             static_cast< kernel::Displayer_ABC& >( *tooltip_ ).Start( Styles::bold ).Add( message.toStdString() ).End();
             tooltip_->Draw( middle );

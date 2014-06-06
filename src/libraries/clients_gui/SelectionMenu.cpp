@@ -328,7 +328,7 @@ void SelectionMenu::GenerateMenu()
         return;
     }
 
-    std::auto_ptr< Menu_ABC > menu;
+    std::unique_ptr< Menu_ABC > menu;
     if( mode3d_ )
         menu.reset( new RichMenu< gui::Gl3dWidget >( parent3d_ ) );
     else

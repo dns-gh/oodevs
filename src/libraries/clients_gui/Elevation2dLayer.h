@@ -77,9 +77,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::DetectionMap& elevation_;
-    std::auto_ptr< ElevationExtrema > extrema_;
-    std::auto_ptr< ElevationShader > shader_;
-    std::auto_ptr< TextureSet > layer_;
+    std::unique_ptr< ElevationExtrema > extrema_;
+    std::unique_ptr< ElevationShader > shader_;
+    std::unique_ptr< TextureSet > layer_;
     bool reset_;
     bool modelLoaded_;
     bool ignore_;

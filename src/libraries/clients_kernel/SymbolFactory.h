@@ -85,9 +85,9 @@ private:
     bool initialized_;
     std::string symbolBase_;
     size_t karmaPosition_;
-    std::auto_ptr< SymbolRule > symbolRule_;
+    std::unique_ptr< SymbolRule > symbolRule_;
     std::string levelBase_;
-    std::auto_ptr< SymbolRule > levelRule_;
+    std::unique_ptr< SymbolRule > levelRule_;
     std::string automatSymbol_;
     std::vector< std::string > availableSymbols_;
     std::map< std::string, std::string > symbolNatureMap_;

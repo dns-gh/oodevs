@@ -50,8 +50,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< aar::PowerIndicators > powerIndicators_;
-    std::auto_ptr< aar::PowerModificator > powerModificators_;
+    std::unique_ptr< aar::PowerIndicators > powerIndicators_;
+    std::unique_ptr< aar::PowerModificator > powerModificators_;
     //@}
 };
 

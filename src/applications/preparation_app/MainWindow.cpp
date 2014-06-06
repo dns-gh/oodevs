@@ -152,12 +152,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , glProxy_           ( new gui::GlProxy( logger ) )
     , lighting_          ( new gui::LightingProxy( this ) )
     , strategy_          ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
-    , dockContainer_     ( 0 )
-    , dialogContainer_   ( 0 )
-    , toolbarContainer_  ( 0 )
-    , progressDialog_    ( 0 )
-    , menu_              ( 0 )
-    , icons_             ( 0 )
 {
     gui::SubObjectName subObject( "MainWindow" );
     controllers_.modes_.SetMainWindow( this );
@@ -191,9 +185,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );
 
     // Strategy
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, PreparationProfile::GetProfile() ) ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, PreparationProfile::GetProfile() ) ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::OverFlyingColorModifier( controllers ) ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, PreparationProfile::GetProfile() ) ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, PreparationProfile::GetProfile() ) ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::OverFlyingColorModifier( controllers ) ) );
 
     // Layer 1
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );

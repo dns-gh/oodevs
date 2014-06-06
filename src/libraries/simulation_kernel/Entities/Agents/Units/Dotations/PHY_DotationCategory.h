@@ -141,7 +141,7 @@ private:
     double rVolume_;
 
     T_AttritionVector attritions_;
-    std::auto_ptr< PHY_UrbanAttritionData > urbanAttritionData_;
+    std::unique_ptr< PHY_UrbanAttritionData > urbanAttritionData_;
     T_IndirectFireEffects indirectFireEffects_;
 
     //Illumination capacity

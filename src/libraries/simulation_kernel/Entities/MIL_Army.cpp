@@ -119,8 +119,6 @@ MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::strin
     , armyFactory_         ( armyFactory )
     , diplomacyConverter_  ( diplomacyConverter )
     , pKnowledgeBlackBoard_( 0 )
-    , pExtensions_         ( 0 )
-    , pColor_              ( 0 )
 {
     // NOTHING
 }

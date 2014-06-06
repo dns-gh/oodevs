@@ -241,11 +241,11 @@ private:
     ADN_ProgressBar& progressIndicator_;
     const ADN_GeneralConfig& config_;
     gui::Application_ABC& application_;
-    std::auto_ptr< kernel::LanguageController > languageController_;
-    std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
-    std::auto_ptr< const tools::Loader_ABC > fileLoader_;
-    std::auto_ptr< ADN_Project_Data > projectData_;
-    std::auto_ptr< ADN_WorkspaceElement_ABC > elements_[ eNbrWorkspaceElements ];
+    std::unique_ptr< kernel::LanguageController > languageController_;
+    std::unique_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
+    std::unique_ptr< const tools::Loader_ABC > fileLoader_;
+    std::unique_ptr< ADN_Project_Data > projectData_;
+    std::unique_ptr< ADN_WorkspaceElement_ABC > elements_[ eNbrWorkspaceElements ];
     bool isSwappingLanguage_;
     //@}
 

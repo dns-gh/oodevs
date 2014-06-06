@@ -51,16 +51,16 @@ public:
     //@}
 
 private:
-    std::auto_ptr< dispatcher::StaticModel >  staticModel_;
-    std::auto_ptr< MemoryLogger_ABC >     memoryLogger_;
-    boost::shared_ptr< Model >            model_;
-    std::auto_ptr< PluginContainer >      handler_;
-    std::auto_ptr< CompositeRegistrable > registrables_;
-    std::auto_ptr< Services >             services_;
-    tools::Log                            log_;
-    boost::shared_ptr< ClientsNetworker > clientsNetworker_;
-    std::auto_ptr< SimulationNetworker >  simulationNetworker_;
-    std::auto_ptr< PluginFactory >        factory_;
+    std::unique_ptr< dispatcher::StaticModel > staticModel_;
+    std::unique_ptr< MemoryLogger_ABC >        memoryLogger_;
+    boost::shared_ptr< Model >                 model_;
+    std::unique_ptr< PluginContainer >         handler_;
+    std::unique_ptr< CompositeRegistrable >    registrables_;
+    std::unique_ptr< Services >                services_;
+    tools::Log                                 log_;
+    boost::shared_ptr< ClientsNetworker >      clientsNetworker_;
+    std::unique_ptr< SimulationNetworker >     simulationNetworker_;
+    std::unique_ptr< PluginFactory >           factory_;
 };
 
 }

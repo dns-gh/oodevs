@@ -40,7 +40,7 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
         >> xml::attribute( "decisional-model", modelName );
     model_ = & modelResolver.Get( modelName );
 
-    std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
+    std::unique_ptr< AgentNature > nature( new AgentNature( xis ) );
     xis >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &AgentType::ReadEquipment, componentResolver )
         >> xml::end

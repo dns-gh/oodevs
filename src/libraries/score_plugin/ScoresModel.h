@@ -124,9 +124,9 @@ private:
     //@{
     dispatcher::ClientPublisher_ABC& clients_;
     T_Tasks tasks_;
-    std::auto_ptr< IndicatorBuilder > builder_;
-    std::auto_ptr< aar::StaticModel > model_;
-    std::auto_ptr< ScoreAnnouncer > announcer_;
+    std::unique_ptr< IndicatorBuilder > builder_;
+    std::unique_ptr< aar::StaticModel > model_;
+    std::unique_ptr< ScoreAnnouncer > announcer_;
     T_Scores scores_;
     QDateTime initialDateTime_;
     bool dateTimeInitialized_;

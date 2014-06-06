@@ -107,7 +107,7 @@ private:
     MIL_Automate*         pAutomate_;
     bool                  bSupplyNeeded_;
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > supplyRequestBuilder_;
-    std::auto_ptr< logistic::SupplyRequestContainer > autoSupplyRequest_;
+    std::unique_ptr< logistic::SupplyRequestContainer > autoSupplyRequest_;
     T_SupplyRequests manualSupplyRequests_;
     T_Supplies scheduledSupplies_;
     //@}

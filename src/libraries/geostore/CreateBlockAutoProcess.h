@@ -69,7 +69,7 @@ private:
     PointProjector_ABC&     projector_;
     double                  roadWidth_;
 
-    std::auto_ptr< GeometryFactory > geometryFactory_;
+    std::unique_ptr< GeometryFactory > geometryFactory_;
     //@}
 };
 

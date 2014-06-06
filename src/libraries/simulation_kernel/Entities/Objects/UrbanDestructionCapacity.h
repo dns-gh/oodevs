@@ -62,7 +62,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< PHY_UrbanAttritionData > data_;
+    std::unique_ptr< PHY_UrbanAttritionData > data_;
     bool appliedOnce_;
     //@}
 };

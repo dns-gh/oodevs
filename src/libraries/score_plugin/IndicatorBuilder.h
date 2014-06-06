@@ -67,10 +67,10 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< indicators::Primitives > primitives_;
-    std::auto_ptr< indicators::Variables > variables_;
-    std::auto_ptr< indicators::DataTypeFactory > typeFactory_;
-    std::auto_ptr< indicators::ElementFactory > factory_;
+    std::unique_ptr< indicators::Primitives > primitives_;
+    std::unique_ptr< indicators::Variables > variables_;
+    std::unique_ptr< indicators::DataTypeFactory > typeFactory_;
+    std::unique_ptr< indicators::ElementFactory > factory_;
     //@}
 };
 

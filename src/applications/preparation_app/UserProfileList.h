@@ -99,7 +99,7 @@ private:
     gui::RichWidget< QListView >*          list_;
     QSortFilterProxyModel* proxyModel_;
     QStandardItemModel*    dataModel_;
-    std::auto_ptr< NewProfileDialog > pNewProfileDialog_;
+    std::unique_ptr< NewProfileDialog > pNewProfileDialog_;
     //@}
 };
 

@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< xml::xistream > LoadFile( const Path& file, RealFileLoaderObserver_ABC& observer ) const;
+    virtual std::unique_ptr< xml::xistream > LoadFile( const Path& file, RealFileLoaderObserver_ABC& observer ) const;
     //@}
 
 private:
@@ -57,7 +57,7 @@ private:
     void ReadMigration  ( xml::xistream& xis );
 
     bool                           AssignDefaultSchema ( const Path& inputFileName, xml::xistream& xis, Path& newSchema ) const;
-    std::auto_ptr< xml::xistream > UpgradeToLastVersion( const Path& inputFileName, std::auto_ptr< xml::xistream > xis, const Path& initialSchema, const Path& initialVersion, RealFileLoaderObserver_ABC& observer ) const;
+    std::unique_ptr< xml::xistream > UpgradeToLastVersion( const Path& inputFileName, std::unique_ptr< xml::xistream > xis, const Path& initialSchema, const Path& initialVersion, RealFileLoaderObserver_ABC& observer ) const;
     //@}
 
 private:
@@ -70,7 +70,7 @@ private:
     //@}
 
 private:
-    const std::auto_ptr< FileMatcherFactory_ABC > fileMatcherFactory_;
+    const std::unique_ptr< FileMatcherFactory_ABC > fileMatcherFactory_;
     const SchemaVersionExtractor_ABC& versionExtractor_;
     T_Migrations migrations_;
     T_DefaultSchemasAssignment defaultSchemasAssignment_;

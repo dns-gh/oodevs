@@ -68,9 +68,9 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< dispatcher::Config >   config_;
-    std::auto_ptr< dispatcher::Replayer > replayer_;
-    std::auto_ptr< tools::WaitEvent > quit_;
+    std::unique_ptr< dispatcher::Config >   config_;
+    std::unique_ptr< dispatcher::Replayer > replayer_;
+    std::unique_ptr< tools::WaitEvent > quit_;
     //@}
 
     //! @name GUI Member data
@@ -79,7 +79,7 @@ private:
     HINSTANCE                      hInstance_ ;
     NOTIFYICONDATA                 TrayIcon_;
     unsigned int                   nIconIndex_;
-    std::auto_ptr< boost::thread > guiThread_ ;
+    std::unique_ptr< boost::thread > guiThread_ ;
     bool                           test_;
     //@}
 };

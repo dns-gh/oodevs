@@ -116,8 +116,6 @@ MIL_Formation::MIL_Formation( const std::string& name )
     , pArmy_               ( 0 )
     , pParent_             ( 0 )
     , pLevel_              ( 0 )
-    , pExtensions_         ( 0 )
-    , pColor_              ( 0 )
 {
     // NOTHING
 }

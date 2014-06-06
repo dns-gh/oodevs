@@ -89,8 +89,8 @@ private:
     float width_;
     float height_;
 
-    std::auto_ptr< RawShapeLayer >        layer_;
-    std::auto_ptr< NoVBOShapeLayer > noVBOlayer_;
+    std::unique_ptr< RawShapeLayer > layer_;
+    std::unique_ptr< NoVBOShapeLayer > noVBOlayer_;
     //@}
 };
 

@@ -52,8 +52,8 @@ private:
     //@{
     tools::Path exercise_;
     tools::Path session_ ;
-    std::auto_ptr< SpawnCommand > dispatcher_;
-    std::auto_ptr< ConfigurationManipulator > configManipulator_;
+    std::unique_ptr< SpawnCommand > dispatcher_;
+    std::unique_ptr< ConfigurationManipulator > configManipulator_;
     unsigned int percentage_;
     //@}
 };

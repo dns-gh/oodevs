@@ -124,7 +124,7 @@ private:
     kernel::SafePointer< kernel::Object_ABC >         selectedObject_;
     kernel::SafePointer< kernel::UrbanObject_ABC >    selectedUrbanObject_;
     kernel::SafePointer< kernel::Entity_ABC >         toDelete_;
-    std::auto_ptr< QMessageBox >                      confirmation_;
+    std::unique_ptr< QMessageBox >                    confirmation_;
     const QString                                     property_;
     //@}
 };

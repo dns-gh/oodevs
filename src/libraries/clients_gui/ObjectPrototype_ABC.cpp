@@ -43,7 +43,7 @@ using namespace gui;
 ObjectPrototype_ABC::ObjectPrototype_ABC( const QString& objectName, QWidget* parent, Controllers& controllers,
                                          const kernel::CoordinateConverter_ABC& coordinateConverter,
                                          const tools::Resolver_ABC< ObjectType, std::string >& resolver, const Team_ABC& noSideTeam,
-                                         ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory )
+                                         ParametersLayer& layer, std::unique_ptr< ObjectAttributePrototypeFactory_ABC > factory )
     : QWidget( parent )
     , coordinateConverter_( coordinateConverter )
     , controllers_( controllers )
@@ -117,7 +117,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( const QString& objectName, QWidget* pa
         attributBox->setLayout( new QVBoxLayout( attributBox ) );
         SubObjectName subObject( "attributBox" );
         layout->addWidget( attributBox );
-        attributes_.reset( new ObjectAttributePrototypeContainer( resolver, factory, attributBox ) );
+        attributes_.reset( new ObjectAttributePrototypeContainer( resolver, std::move( factory ), attributBox ) );
         // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
     }
     controllers_.Register( *this );
