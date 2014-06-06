@@ -85,7 +85,7 @@ func (s *TestSuite) TestReplayerData(c *C) {
 
 	// Start a replay, login a client, the formation is not there
 	replay, client := replayAndWaitModel(c, opts, NewAdminOpts(""))
-	defer replay.Kill()
+	defer replay.Stop()
 	defer client.Close()
 	c.Assert(client.Model.GetFormation(formation.Id), IsNil)
 
@@ -189,7 +189,7 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 
 func replayDumps(c *C, cfg *simu.SimOpts, dumps []ModelDump) {
 	replay := startReplay(c, cfg)
-	defer replay.Kill()
+	defer replay.Stop()
 	client := loginAndWaitModel(c, replay, NewAdminOpts(""))
 	defer client.Close()
 	for _, d := range dumps {
@@ -243,7 +243,7 @@ func checkTimetable(c *C, client *swapi.Client, first, last int32, broadcast boo
 func (s *TestSuite) TestReplayerTimetable(c *C) {
 	opts, _ := makeSimpleReplay(c)
 	replay, client := replayAndWaitModel(c, opts, NewAdminOpts(""))
-	defer replay.Kill()
+	defer replay.Stop()
 	defer client.Close()
 	// ControlReplayInformation is apparently only returned after a skip
 	err := client.SkipToTick(1)

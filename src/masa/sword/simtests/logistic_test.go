@@ -301,7 +301,7 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 	sim.Stop()
 	client.Close()
 	replay := startReplay(c, sim.Opts)
-	defer replay.Kill()
+	defer replay.Stop()
 	client = loginAndWaitModel(c, replay, NewAdminOpts(""))
 	defer client.Close()
 
