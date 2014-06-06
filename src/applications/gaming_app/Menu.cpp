@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "Menu.h"
-#include "UserProfileDialog.h"
 #include "ExerciseMenu.h"
 #include "ConnectionMenu.h"
 #include "EfficientRangeDialog.h"
@@ -24,6 +23,7 @@
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
+#include "clients_gui/ProfileDialog.h"
 #include "clients_gui/RichAction.h"
 #include "clients_gui/RichToolBar.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
@@ -143,7 +143,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog, UserProfileDialog& profileDialog, const QString& license, Network& network, kernel::Logger_ABC& logger )
+Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog, gui::ProfileDialog& profileDialog, const QString& license, Network& network, kernel::Logger_ABC& logger )
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )

@@ -139,7 +139,7 @@ void UserProfileWidget::Display( kernel::UserProfile_ABC& profile )
     login_->setText( profile.GetLogin() );
     password_->setText( profile.GetPassword() );
     UpdateAutomatsAndKnowledgeGroups();
-    supervisor_->setChecked( profile.IsSupervisor() );
+    supervisor_->setChecked( profile.IsSupervision() );
     timeControl_->setChecked( profile.HasTimeControl() );
     unitRights_->Display( profile );
     populationRights_->Display( profile );

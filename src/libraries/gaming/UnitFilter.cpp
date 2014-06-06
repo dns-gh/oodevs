@@ -48,7 +48,7 @@ UnitFilter::~UnitFilter()
 // Name: UnitFilter::GetLogin
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-QString UnitFilter::GetLogin() const
+const QString& UnitFilter::GetLogin() const
 {
     return forward_.GetLogin();
 }

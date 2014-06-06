@@ -24,9 +24,10 @@ const kernel::Profile_ABC& PreparationProfile::GetProfile()
 // Name: PreparationProfile::GetLogin
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-QString PreparationProfile::GetLogin() const
+const QString& PreparationProfile::GetLogin() const
 {
-    return "Preparation"; // $$$$ SBO 2008-06-11:
+    static const QString login( "Preparation" );
+    return login;
 }
 
 // -----------------------------------------------------------------------------

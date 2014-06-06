@@ -10,22 +10,28 @@
 #include "gaming_pch.h"
 #include "UserProfile.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/ServerPublisher_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
+UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher, const kernel::EntityResolver_ABC& resolver )
     : controller_ ( controller )
     , publisher_  ( publisher )
+    , resolver_   ( resolver )
     , registered_ ( true )
     , login_      ( "" )
-    , supervision_( false )
+    , supervisor_ ( false )
     , timeControl_( false )
 {
     controller_.Register( *this );
-    controller_.Create( *this );
+    controller_.Create( Base() );
     SetProfile( message.profile() );
 }
 
@@ -33,12 +39,12 @@ UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Control
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher )
+UserProfile::UserProfile( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::EntityResolver_ABC& resolver )
     : controller_ ( controller )
     , publisher_  ( publisher )
+    , resolver_   ( resolver )
     , registered_ ( false )
-    , login_      ( login )
-    , supervision_( false )
+    , supervisor_ ( false )
     , timeControl_( false )
 {
     controller_.Register( *this );
@@ -52,10 +58,11 @@ UserProfile::UserProfile( const UserProfile& p )
     : RightsResolver( (const RightsResolver&) p )
     , controller_   ( p.controller_ )
     , publisher_    ( p.publisher_ )
+    , resolver_     ( p.resolver_ )
     , registered_   ( false )
     , login_        ( p.login_ )
     , password_     ( p.password_ )
-    , supervision_  ( p.supervision_ )
+    , supervisor_   ( p.supervisor_ )
     , timeControl_  ( p.timeControl_ )
 {
     controller_.Register( *this );
@@ -68,7 +75,7 @@ UserProfile::UserProfile( const UserProfile& p )
 UserProfile::~UserProfile()
 {
     if( registered_ )
-        controller_.Delete( *this );
+        controller_.Delete( Base() );
     controller_.Unregister( *this );
 }
 
@@ -76,11 +83,11 @@ UserProfile::~UserProfile()
 // Name: UserProfile::RequestCreation
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfile::RequestCreation()
+void UserProfile::RequestCreation() const
 {
     authentication::ProfileCreationRequest message;
     message().mutable_profile()->set_login( login_.toStdString() );
-    message().mutable_profile()->set_supervisor( supervision_ );
+    message().mutable_profile()->set_supervisor( supervisor_ );
     message().mutable_profile()->set_time_control( timeControl_ );
     message.Send( publisher_ );
 }
@@ -89,7 +96,7 @@ void UserProfile::RequestCreation()
 // Name: UserProfile::RequestDeletion
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfile::RequestDeletion()
+void UserProfile::RequestDeletion() const
 {
     authentication::ProfileDestructionRequest message;
     message().set_login( login_.toStdString() );
@@ -110,14 +117,14 @@ namespace
 // Name: UserProfile::RequestUpdate
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfile::RequestUpdate( const QString& newLogin )
+void UserProfile::RequestUpdate( const QString& oldLogin ) const
 {
     authentication::ProfileUpdateRequest message;
-    message().set_login( login_.toStdString() );
+    message().set_login( oldLogin.toStdString() );
     sword::Profile& profile = *message().mutable_profile();
-    profile.set_login( newLogin.toStdString() );
+    profile.set_login( login_.toStdString() );
     profile.set_password( password_.toStdString() );
-    profile.set_supervisor( supervision_ );
+    profile.set_supervisor( supervisor_ );
     profile.set_time_control( timeControl_ );
     CopyList( rights_.GetReadSides(), *profile.mutable_read_only_parties() );
     CopyList( rights_.GetWriteSides(), *profile.mutable_read_write_parties() );
@@ -148,23 +155,139 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     login_ = profile.login().c_str();
     if( profile.has_password() )
         password_ = profile.password().c_str();
-    supervision_ = profile.supervisor();
+    supervisor_ = profile.supervisor();
     if( profile.has_time_control() )
         timeControl_ = profile.time_control();
 
     RightsResolver::Update( profile );
 
     if( registered_ )
-        controller_.Update( *this );
+        controller_.Update( Base() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile::GetPassword
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-QString UserProfile::GetPassword() const
+const QString& UserProfile::GetPassword() const
 {
     return password_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::GetRights
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+const kernel::UserRights& UserProfile::GetRights() const
+{
+    return rights_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::SetLogin
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+void UserProfile::SetLogin( const QString& value )
+{
+    login_ = value;
+}
+
+namespace
+{
+    //TODO copier coller de préparation
+    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity )
+    {
+        const auto hierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !hierarchies )
+            return;
+        auto it = hierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const auto& childEntity = it.NextElement();
+            if( auto pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity ) )
+                automats.insert( pAutomat->GetId() );
+            else
+                InsertAutomats( automats, childEntity );
+        }
+    }
+
+    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
+    {
+        for( auto it = teams.begin();  it != teams.end(); ++it )
+            if( auto pTeam = resolver.FindTeam( *it ) )
+                InsertAutomats( automats, *pTeam );
+    }
+
+    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
+    {
+        for( auto it = formations.begin();  it != formations.end(); ++it )
+            if( auto pFormation = resolver.FindFormation( *it ) )
+                InsertAutomats( automats, *pFormation );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::VisitAllAutomats
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
+{
+    //TODO copier coller de préparation
+    std::vector< unsigned long > automats;
+    rights_.InsertWriteAutomats( automats );
+    elements.insert( automats.begin(), automats.end() );
+    automats = rights_.GetReadAutomats();
+    elements.insert( automats.begin(), automats.end() );
+    InsertAutomatsFromTeams( rights_.GetReadSides(), elements, resolver_ );
+    InsertAutomatsFromTeams( rights_.GetWriteSides(), elements, resolver_ );
+    InsertAutomatsFromFormations( rights_.GetReadFormations(), elements, resolver_ );
+    InsertAutomatsFromFormations( rights_.GetWriteFormations(), elements, resolver_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::Visit
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+void UserProfile::Visit( std::vector< unsigned long >& elements ) const
+{
+    //TODO copier coller de préparation
+    rights_.InsertWriteSides( elements );
+    rights_.InsertWriteAutomats( elements );
+    rights_.InsertWritePopulations( elements );
+    rights_.InsertWriteGhosts( elements );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::operator=
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+kernel::UserProfile_ABC& UserProfile::operator=( const kernel::UserProfile_ABC& p )
+{
+    login_ = p.GetLogin();
+    password_ = p.GetPassword();
+    supervisor_ = p.IsSupervision();
+    timeControl_ = p.HasTimeControl();
+    rights_ = p.GetRights();
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::operator==
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::operator==( const kernel::UserProfile_ABC& other ) const
+{
+    return login_ == other.GetLogin() && password_ == other.GetPassword() && supervisor_ == other.IsSupervision()
+        && timeControl_ == other.HasTimeControl() && rights_ == other.GetRights();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::operator!=
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::operator!=( const kernel::UserProfile_ABC& other ) const
+{
+    return !( *this == other );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +332,7 @@ void UserProfile::SetPassword( const QString& password )
 // -----------------------------------------------------------------------------
 void UserProfile::SetSupervisor( bool supervisor )
 {
-    supervision_ = supervisor;
+    supervisor_ = supervisor;
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +366,7 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 // Name: UserProfile::GetLogin
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
-QString UserProfile::GetLogin() const
+const QString& UserProfile::GetLogin() const
 {
     return login_;
 }
@@ -254,7 +377,7 @@ QString UserProfile::GetLogin() const
 // -----------------------------------------------------------------------------
 bool UserProfile::IsSupervision() const
 {
-    return supervision_;
+    return supervisor_;
 }
 
 // -----------------------------------------------------------------------------
@@ -264,4 +387,13 @@ bool UserProfile::IsSupervision() const
 bool UserProfile::HasTimeControl() const
 {
     return timeControl_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::Base
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+const kernel::UserProfile_ABC& UserProfile::Base() const
+{
+    return *this;
 }

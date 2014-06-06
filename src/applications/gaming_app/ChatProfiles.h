@@ -11,14 +11,12 @@
 #define __ChatProfiles_h_
 
 #include <tools/ElementObserver_ABC.h>
-#include <QtGui/qlistwidget.h>
 
 namespace kernel
 {
     class Controllers;
+    class UserProfile_ABC;
 }
-
-class UserProfile;
 
 // =============================================================================
 /** @class  ChatProfiles
@@ -28,9 +26,9 @@ class UserProfile;
 // =============================================================================
 class ChatProfiles : public QListWidget
                    , public tools::Observer_ABC
-                   , public tools::ElementObserver_ABC< UserProfile >
+                   , public tools::ElementObserver_ABC< kernel::UserProfile_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -42,7 +40,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void Selected( const UserProfile& profile );
+    void Selected( const kernel::UserProfile_ABC& profile );
     //@}
 
 private slots:
@@ -52,16 +50,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ChatProfiles( const ChatProfiles& );            //!< Copy constructor
-    ChatProfiles& operator=( const ChatProfiles& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const UserProfile& profile );
-    virtual void NotifyDeleted( const UserProfile& profile );
+    virtual void NotifyUpdated( const kernel::UserProfile_ABC& profile );
+    virtual void NotifyDeleted( const kernel::UserProfile_ABC& profile );
     //@}
 
 private:

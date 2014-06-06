@@ -19,9 +19,9 @@
 namespace kernel
 {
     class Controllers;
+    class UserProfile_ABC;
 }
 
-class UserProfile;
 class Profile;
 class ProfileFilter;
 class Network;
@@ -34,7 +34,7 @@ class TeamsModel;
 // Created: LGY 2011-11-15
 // =============================================================================
 class ProfilesPanel : public gui::RichDockWidget
-                    , public tools::ElementObserver_ABC< UserProfile >
+                    , public tools::ElementObserver_ABC< kernel::UserProfile_ABC >
                     , public tools::ElementObserver_ABC< Profile >
                     , public tools::ElementObserver_ABC< AvailableProfile >
                     , public tools::ElementObserver_ABC< Simulation >
@@ -51,9 +51,9 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const UserProfile& profile );
-    virtual void NotifyUpdated( const UserProfile& profile );
-    virtual void NotifyDeleted( const UserProfile& profile );
+    virtual void NotifyCreated( const kernel::UserProfile_ABC& profile );
+    virtual void NotifyUpdated( const kernel::UserProfile_ABC& profile );
+    virtual void NotifyDeleted( const kernel::UserProfile_ABC& profile );
 
     virtual void NotifyUpdated( const Profile& profile );
     virtual void NotifyUpdated( const AvailableProfile& profile );
@@ -70,8 +70,7 @@ private slots:
 private:
     //! @name Types
     //@{
-    typedef std::vector< const UserProfile* > T_UserProfiles;
-    typedef T_UserProfiles::const_iterator  CIT_UserProfiles;
+    typedef std::vector< const kernel::UserProfile_ABC* > T_UserProfiles;
     //@}
 
 private:

@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "ProfileFactory.h"
 #include "UserProfile.h"
+#include "clients_kernel/ProfileEditor.h"
 #include "Model.h"
 
 // -----------------------------------------------------------------------------
@@ -39,6 +40,15 @@ ProfileFactory::~ProfileFactory()
 kernel::UserProfile_ABC* ProfileFactory::Create( xml::xistream& xis ) const
 {
     return new UserProfile( xis, controller_, model_, model_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFactory::Create
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+kernel::UserProfile_ABC* ProfileFactory::Create( const sword::ProfileCreation& ) const
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

@@ -39,13 +39,23 @@ public:
     virtual ~UserProfile();
     //@}
 
-    //! @name Accessors
+    //! @name From Profile_ABC
     //@{
     virtual const QString& GetLogin() const;
-    virtual const QString& GetPassword() const;
-    virtual bool IsSupervisor() const;
+    virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const;
+    virtual bool IsVisible( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanBeOrdered ( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsSupervision() const;
     virtual bool HasTimeControl() const;
+    virtual bool IsPerceived( const kernel::Entity_ABC& ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const QString& GetPassword() const;
     virtual const kernel::UserRights& GetRights() const;
+    virtual bool IsPasswordProtected() const;
     virtual bool IsReadable( const kernel::Entity_ABC& entity ) const;
     virtual bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     virtual void Visit( std::vector< unsigned long >& elements ) const;
@@ -64,15 +74,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( xml::xostream& xos ) const;
     virtual kernel::UserProfile_ABC& operator=( const kernel::UserProfile_ABC& );
     virtual bool operator==( const kernel::UserProfile_ABC& ) const;
     virtual bool operator!=( const kernel::UserProfile_ABC& ) const;
-    virtual void NotifyTeamDeleted( unsigned long teamId );
-    virtual void NotifyFormationDeleted( unsigned long formationId );
-    virtual void NotifyAutomatDeleted( unsigned long automatId );
-    virtual void NotifyPopulationDeleted( unsigned long populationId );
-    virtual void NotifyGhostDeleted( unsigned long ghostId );
+    void Serialize( xml::xostream& xos ) const;
+    void NotifyTeamDeleted( unsigned long teamId );
+    void NotifyFormationDeleted( unsigned long formationId );
+    void NotifyAutomatDeleted( unsigned long automatId );
+    void NotifyPopulationDeleted( unsigned long populationId );
+    void NotifyGhostDeleted( unsigned long ghostId );
     //@}
 
 private:

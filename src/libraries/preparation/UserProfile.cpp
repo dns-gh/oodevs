@@ -133,11 +133,74 @@ void UserProfile::Serialize( xml::xostream& xos ) const
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile::GetLogin
-// Created: SBO 2007-01-16
+// Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
 const QString& UserProfile::GetLogin() const
 {
     return login_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsKnowledgeVisible
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::IsKnowledgeVisible( const kernel::Knowledge_ABC& ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsVisible
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::IsVisible( const kernel::Entity_ABC& ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::CanBeOrdered
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::CanBeOrdered( const kernel::Entity_ABC& ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::CanDoMagic
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::CanDoMagic( const kernel::Entity_ABC& ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsSupervision
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::IsSupervision() const
+{
+    return supervisor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::HasTimeControl
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::HasTimeControl() const
+{
+    return timeControl_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsPerceived
+// Created: JSR 2014-06-05
+// -----------------------------------------------------------------------------
+bool UserProfile::IsPerceived( const kernel::Entity_ABC& ) const
+{
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,30 +213,21 @@ const QString& UserProfile::GetPassword() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfile::IsSupervisor
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-bool UserProfile::IsSupervisor() const
-{
-    return supervisor_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::HasTimeControl
-// Created: BAX 2014-01-30
-// -----------------------------------------------------------------------------
-bool UserProfile::HasTimeControl() const
-{
-    return timeControl_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfile::GetRights
 // Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
 const kernel::UserRights& UserProfile::GetRights() const
 {
     return rights_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsPasswordProtected
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+bool UserProfile::IsPasswordProtected() const
+{
+    return !password_.isEmpty();
 }
 
 // -----------------------------------------------------------------------------
@@ -262,11 +316,11 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 // -----------------------------------------------------------------------------
 kernel::UserProfile_ABC& UserProfile::operator=( const kernel::UserProfile_ABC& p )
 {
-    const bool changed = login_ != p.GetLogin() || password_ != p.GetPassword() || supervisor_ != p.IsSupervisor()
+    const bool changed = login_ != p.GetLogin() || password_ != p.GetPassword() || supervisor_ != p.IsSupervision()
         || timeControl_ != p.HasTimeControl() || !( rights_ == p.GetRights() );
     login_            = p.GetLogin();
     password_         = p.GetPassword();
-    supervisor_       = p.IsSupervisor();
+    supervisor_       = p.IsSupervision();
     timeControl_      = p.HasTimeControl();
     rights_           = p.GetRights();
     if( !isClone_ && changed )
@@ -280,7 +334,7 @@ kernel::UserProfile_ABC& UserProfile::operator=( const kernel::UserProfile_ABC& 
 // -----------------------------------------------------------------------------
 bool UserProfile::operator==( const kernel::UserProfile_ABC& other ) const
 {
-    return login_ == other.GetLogin() && password_ == other.GetPassword() && supervisor_ == other.IsSupervisor()
+    return login_ == other.GetLogin() && password_ == other.GetPassword() && supervisor_ == other.IsSupervision()
         && timeControl_ == other.HasTimeControl() && rights_ == other.GetRights();
 }
 

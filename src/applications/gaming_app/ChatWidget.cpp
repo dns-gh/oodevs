@@ -12,11 +12,11 @@
 #include "moc_ChatWidget.cpp"
 #include "ChatRoom.h"
 #include "ChatProfiles.h"
-#include "gaming/UserProfile.h"
 #include "gaming/CommandPublisher.h"
 #include "gaming/Command.h"
 #include "gaming/CommandHandler.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/UserProfile_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ChatWidget constructor
@@ -37,7 +37,7 @@ ChatWidget::ChatWidget( QWidget* parent, kernel::Controllers& controllers, Publi
     profiles_ = new ChatProfiles( this, controllers );
     setStretchFactor( tabs_, 4 );
     setStretchFactor( profiles_, 1 );
-    connect( profiles_, SIGNAL( Selected( const UserProfile& ) ), SLOT( OnProfileSelected( const UserProfile& ) ) );
+    connect( profiles_, SIGNAL( Selected( const kernel::UserProfile_ABC& ) ), SLOT( OnProfileSelected( const kernel::UserProfile_ABC& ) ) );
     connect( tabs_, SIGNAL( tabCloseRequested ( int ) ), SLOT( OnTabClosed( int ) ) );
     handler_.Register( "text", *this );
     controllers_.Register( *this );
@@ -57,7 +57,7 @@ ChatWidget::~ChatWidget()
 // Name: ChatWidget::NotifyDeleted
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-void ChatWidget::NotifyDeleted( const UserProfile& profile )
+void ChatWidget::NotifyDeleted( const kernel::UserProfile_ABC& profile )
 {
     T_Rooms::iterator it = rooms_.find( profile.GetLogin() );
     if( it != rooms_.end() )
@@ -72,7 +72,7 @@ void ChatWidget::NotifyDeleted( const UserProfile& profile )
 // Name: ChatWidget::OnProfileSelected
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-void ChatWidget::OnProfileSelected( const UserProfile& profile )
+void ChatWidget::OnProfileSelected( const kernel::UserProfile_ABC& profile )
 {
     Select( profile.GetLogin() );
 }

@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetLogin() const = 0;
+    virtual const QString& GetLogin() const = 0;
     virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const = 0;
     virtual bool IsVisible( const kernel::Entity_ABC& entity ) const = 0;
     virtual bool CanBeOrdered ( const kernel::Entity_ABC& entity ) const = 0;

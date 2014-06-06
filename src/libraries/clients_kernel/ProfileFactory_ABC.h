@@ -12,6 +12,11 @@
 
 #include <boost/noncopyable.hpp>
 
+namespace sword
+{
+    class ProfileCreation;
+}
+
 namespace kernel
 {
 
@@ -36,6 +41,7 @@ public:
     //@{
     virtual UserProfile_ABC* Create( xml::xistream& xis ) const = 0;
     virtual UserProfile_ABC* Create( const QString& name ) const = 0;
+    virtual UserProfile_ABC* Create( const sword::ProfileCreation& message ) const = 0;
     virtual UserProfile_ABC* Create( UserProfile_ABC& profile ) const = 0;
     virtual UserProfile_ABC* Create() const = 0;
     //@}

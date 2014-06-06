@@ -9,15 +9,16 @@
 
 #include "gaming_pch.h"
 #include "UserProfilesModel.h"
-#include "UserProfileFactory_ABC.h"
 #include "UserProfile.h"
+#include "clients_kernel/ProfileFactory_ABC.h"
+#include "clients_kernel/ProfileEditor.h"
 #include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfilesModel constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfilesModel::UserProfilesModel( const UserProfileFactory_ABC& factory )
+UserProfilesModel::UserProfilesModel( const kernel::ProfileFactory_ABC& factory )
     : factory_( factory )
 {
     // NOTHING
@@ -30,6 +31,56 @@ UserProfilesModel::UserProfilesModel( const UserProfileFactory_ABC& factory )
 UserProfilesModel::~UserProfilesModel()
 {
     Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilesModel::CommitFromEditor
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+void UserProfilesModel::CommitFromEditor( kernel::ProfileEditor& editor )
+{
+    const kernel::UserProfile_ABC* originalProfile = editor.GetOriginalProfile();
+    const UserProfile& profile = static_cast< UserProfile& >( editor.GetProfile() );
+    if( editor.IsDeleted() )
+    {
+        if( originalProfile )
+            profile.RequestDeletion();
+    }
+    else if( originalProfile == 0 )
+    {
+        profile.RequestCreation();
+        profile.RequestUpdate( profile.GetLogin() );
+    }
+    else if( profile != *originalProfile )
+        profile.RequestUpdate( originalProfile->GetLogin() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilesModel::CreateProfileEditor
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+kernel::ProfileEditor* UserProfilesModel::CreateProfileEditor() const
+{
+    return new kernel::ProfileEditor( factory_.Create(), 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilesModel::CreateProfileEditor
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+kernel::ProfileEditor* UserProfilesModel::CreateProfileEditor( kernel::UserProfile_ABC& profile ) const
+{
+    return new kernel::ProfileEditor( factory_.Create( profile ), &profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilesModel::function< void
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+void UserProfilesModel::Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor )
+{
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        functor( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +100,7 @@ void UserProfilesModel::Purge()
 // -----------------------------------------------------------------------------
 void UserProfilesModel::CreateProfile( const sword::ProfileCreation& message )
 {
-    std::unique_ptr< UserProfile > profile( factory_.Create( message ) );
+    std::unique_ptr< kernel::UserProfile_ABC > profile( factory_.Create( message ) );
     userProfiles_.push_back( profile.release() );
 }
 
@@ -62,7 +113,7 @@ void UserProfilesModel::DeleteProfile( const sword::ProfileDestruction& message 
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( message.login() == (*it)->GetLogin().toStdString() )
         {
-            const UserProfile* element = *it;
+            const kernel::UserProfile_ABC* element = *it;
             userProfiles_.erase( it );
             delete element;
             return;
@@ -73,7 +124,7 @@ void UserProfilesModel::DeleteProfile( const sword::ProfileDestruction& message 
 // Name: UserProfilesModel::Find
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-const UserProfile* UserProfilesModel::Find( const QString& login ) const
+const kernel::UserProfile_ABC* UserProfilesModel::Find( const QString& login ) const
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( login == (*it)->GetLogin() )
@@ -85,7 +136,7 @@ const UserProfile* UserProfilesModel::Find( const QString& login ) const
 // Name: UserProfilesModel::Get
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile& UserProfilesModel::Get( const QString& login )
+kernel::UserProfile_ABC& UserProfilesModel::Get( const QString& login )
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( login == (*it)->GetLogin() )

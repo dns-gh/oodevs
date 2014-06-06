@@ -12,15 +12,15 @@
 #include "moc_ProfilesPanel.cpp"
 #include "ReconnectLoginDialog.h"
 #include "gaming/Profile.h"
-#include "gaming/UserProfile.h"
 #include "gaming/Network.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/ProfileFilter.h"
 #include "gaming/TeamsModel.h"
 #include "gaming/Simulation.h"
-#include "clients_kernel/Tools.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/UserProfile_ABC.h"
 
 #pragma warning( disable : 4355 )
 
@@ -86,7 +86,7 @@ ProfilesPanel::~ProfilesPanel()
 // Name: ProfilesPanel::NotifyCreated
 // Created: LGY 2011-11-15
 // -----------------------------------------------------------------------------
-void ProfilesPanel::NotifyCreated( const UserProfile& profile )
+void ProfilesPanel::NotifyCreated( const kernel::UserProfile_ABC& profile )
 {
     profiles_.push_back( &profile );
     AddProfile( dataModel_->rowCount() );
@@ -96,9 +96,9 @@ void ProfilesPanel::NotifyCreated( const UserProfile& profile )
 // Name: ProfilesPanel::NotifyUpdated
 // Created: LGY 2011-11-15
 // -----------------------------------------------------------------------------
-void ProfilesPanel::NotifyUpdated( const UserProfile& profile )
+void ProfilesPanel::NotifyUpdated( const kernel::UserProfile_ABC& profile )
 {
-    T_UserProfiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
+    auto it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
@@ -111,9 +111,9 @@ void ProfilesPanel::NotifyUpdated( const UserProfile& profile )
 // Name: ProfilesPanel::NotifyDeleted
 // Created: LGY 2011-11-15
 // -----------------------------------------------------------------------------
-void ProfilesPanel::NotifyDeleted( const UserProfile& profile )
+void ProfilesPanel::NotifyDeleted( const kernel::UserProfile_ABC& profile )
 {
-    T_UserProfiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
+    auto it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
@@ -180,7 +180,7 @@ void ProfilesPanel::Reconnect()
 {
     QModelIndex index = proxyModel_->mapToSource( tableView_->currentIndex() );
     if( index.row() != -1 )
-        if( const UserProfile* profile = profiles_.at( index.row() ) )
+        if( const kernel::UserProfile_ABC* profile = profiles_.at( index.row() ) )
         {
             const std::string& login = profile->GetLogin().toStdString();
             if( profile->IsPasswordProtected() )
@@ -201,7 +201,7 @@ void ProfilesPanel::Filter()
 {
     QModelIndex index = proxyModel_->mapToSource( tableView_->currentIndex() );
     if( index.row() != -1 )
-        if( const UserProfile* profile = profiles_.at( index.row() ) )
+        if( const kernel::UserProfile_ABC* profile = profiles_.at( index.row() ) )
         {
             filter_.SetFilter( *profile );
             controllers_.controller_.Update( *static_cast< const kernel::Profile_ABC* >( profile ) );

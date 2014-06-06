@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChatProfiles.h"
 #include "moc_ChatProfiles.cpp"
-#include "gaming/UserProfile.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "clients_kernel/Controllers.h"
 
 namespace
@@ -18,13 +18,13 @@ namespace
     class ProfileItem : public QListWidgetItem
     {
     public:
-        ProfileItem( QListWidget* parent, const UserProfile& profile )
+        ProfileItem( QListWidget* parent, const kernel::UserProfile_ABC& profile )
             : QListWidgetItem( profile.GetLogin() )
             , profile_( &profile )
         {
             parent->addItem( this );
         }
-        const UserProfile* profile_;
+        const kernel::UserProfile_ABC* profile_;
     };
 }
 
@@ -53,7 +53,7 @@ ChatProfiles::~ChatProfiles()
 // Name: ChatProfiles::NotifyUpdated
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-void ChatProfiles::NotifyUpdated( const UserProfile& profile )
+void ChatProfiles::NotifyUpdated( const kernel::UserProfile_ABC& profile )
 {
     if( findItems( profile.GetLogin(), Qt::MatchFixedString ).isEmpty() )
         new ProfileItem( this, profile );
@@ -63,7 +63,7 @@ void ChatProfiles::NotifyUpdated( const UserProfile& profile )
 // Name: ChatProfiles::NotifyDeleted
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-void ChatProfiles::NotifyDeleted( const UserProfile& profile )
+void ChatProfiles::NotifyDeleted( const kernel::UserProfile_ABC& profile )
 {
     if( !findItems( profile.GetLogin(), Qt::MatchFixedString ).isEmpty() )
         if( QListWidgetItem* item = findItems( profile.GetLogin(), Qt::MatchFixedString ).at( 0 ) )

@@ -37,6 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::UserProfile_ABC* Create( xml::xistream& xis ) const;
+    virtual kernel::UserProfile_ABC* Create( const sword::ProfileCreation& message ) const;
     virtual kernel::UserProfile_ABC* Create( const QString& name ) const;
     virtual kernel::UserProfile_ABC* Create( kernel::UserProfile_ABC& profile ) const;
     virtual kernel::UserProfile_ABC* Create() const;

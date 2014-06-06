@@ -11,7 +11,7 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controller.h"
-#include "gaming/UserProfile.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "gaming/Simulation.h"
 #include "tools/ExerciseConfig.h"
 
@@ -21,7 +21,7 @@ namespace
                    , private boost::noncopyable
     {
     public:
-        UserItem( QListWidget* parent, const UserProfile& profile )
+        UserItem( QListWidget* parent, const kernel::UserProfile_ABC& profile )
             : QListWidgetItem( parent )
             , profile_( profile )
         {
@@ -36,7 +36,7 @@ namespace
         QString Login() const { return profile_.GetLogin(); }
 
     private:
-        const UserProfile& profile_;
+        const kernel::UserProfile_ABC& profile_;
     };
 }
 
@@ -44,7 +44,7 @@ namespace
 // Name: ReconnectLoginDialog constructor
 // Created: LGY 2011-11-23
 // -----------------------------------------------------------------------------
-ReconnectLoginDialog::ReconnectLoginDialog( QWidget* pParent, const UserProfile& profile,
+ReconnectLoginDialog::ReconnectLoginDialog( QWidget* pParent, const kernel::UserProfile_ABC& profile,
                                             kernel::Controller& controller )
     : LoginDialog( pParent )
     , profile_( profile )

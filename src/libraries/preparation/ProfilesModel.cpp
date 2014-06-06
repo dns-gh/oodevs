@@ -11,6 +11,7 @@
 #include "ProfilesModel.h"
 #include "Model.h"
 #include "AgentsModel.h"
+#include "UserProfile.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -91,7 +92,7 @@ void ProfilesModel::Serialize( const tools::Path& file, const tools::SchemaWrite
     xos << xml::start( "profiles" );
     schemaWriter.WriteExerciseSchema( xos, "profiles" );
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->Serialize( xos );
+        static_cast< UserProfile* >(*it)->Serialize( xos );
     xos << xml::end;
 }
 
@@ -280,7 +281,7 @@ kernel::UserProfile_ABC* ProfilesModel::Find( const std::string& name ) const
 void ProfilesModel::NotifyDeleted( const kernel::Team_ABC& team)
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->NotifyTeamDeleted( team.GetId() );
+        static_cast< UserProfile* >(*it)->NotifyTeamDeleted( team.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,7 +291,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Team_ABC& team)
 void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation)
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->NotifyFormationDeleted( formation.GetId() );
+        static_cast< UserProfile* >(*it)->NotifyFormationDeleted( formation.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -300,7 +301,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation)
 void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat)
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->NotifyAutomatDeleted( automat.GetId() );
+        static_cast< UserProfile* >(*it)->NotifyAutomatDeleted( automat.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +311,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat)
 void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population)
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->NotifyPopulationDeleted( population.GetId() );
+        static_cast< UserProfile* >(*it)->NotifyPopulationDeleted( population.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,7 +321,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population)
 void ProfilesModel::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->NotifyGhostDeleted( ghost.GetId() );
+        static_cast< UserProfile* >(*it)->NotifyGhostDeleted( ghost.GetId() );
 }
 
 // -----------------------------------------------------------------------------

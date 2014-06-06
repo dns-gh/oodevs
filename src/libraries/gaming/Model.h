@@ -26,6 +26,7 @@ namespace kernel
     class Controllers;
     class ObjectKnowledgeConverter_ABC;
     class Profile_ABC;
+    class ProfileFactory_ABC;
     class SymbolFactory;
     class Workers;
 }
@@ -77,7 +78,7 @@ class TeamFactory_ABC;
 class TeamsModel;
 class UrbanBlockDetectionMap;
 class UrbanKnowledgeFactory;
-class UserProfileFactory_ABC;
+class ProfileFactory_ABC;
 class UserProfilesModel;
 class WeatherModel;
 class UrbanModel;
@@ -147,7 +148,7 @@ public:
     FireFactory& fireFactory_;
     TacticalLineFactory& tacticalLineFactory_;
     FireResultFactory& fireResultsFactory_;
-    UserProfileFactory_ABC& userProfileFactory_;
+    kernel::ProfileFactory_ABC& userProfileFactory_;
     actions::ParameterFactory_ABC& actionParameterFactory_;
     actions::ActionFactory_ABC& actionFactory_;
     DrawingFactory& drawingFactory_;
