@@ -52,6 +52,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    QListWidgetItem* FindItem( const kernel::UserProfile_ABC& profile ) const;
     virtual void NotifyUpdated( const kernel::UserProfile_ABC& profile );
     virtual void NotifyDeleted( const kernel::UserProfile_ABC& profile );
     //@}
