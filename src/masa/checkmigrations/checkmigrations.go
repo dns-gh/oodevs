@@ -11,8 +11,10 @@ package main
 import (
 	"encoding/xml"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 )
@@ -47,24 +49,69 @@ func listXsl(migrationsFile string) ([]string, error) {
 	return files, nil
 }
 
+var (
+	// <xsl:import href="./tools.xsl"/>
+	reImport = regexp.MustCompile(`<xsl:import href="([^\"]+)`)
+)
+
+// Lists files imported by "xsl".
+func listImportedXsl(xsl string) ([]string, error) {
+	data, err := ioutil.ReadFile(xsl)
+	if err != nil {
+		return nil, err
+	}
+	dir := filepath.Dir(xsl)
+	m := reImport.FindAllSubmatch(data, -1)
+	imported := []string{}
+	for _, s := range m {
+		path := string(s[1])
+		// Assume path relative to xsl directory, unlikely to work otherwise
+		path = filepath.Join(dir, path)
+		imported = append(imported, path)
+	}
+	return imported, nil
+}
+
+func normPath(path, base string) (string, error) {
+	rel, err := filepath.Rel(base, path)
+	if err != nil {
+		return "", err
+	}
+	rel = strings.ToLower(filepath.ToSlash(rel))
+	return rel, nil
+}
+
 // Checks XSL files referenced in migrations.xml exist and existing XSL files
 // in "schemas" subtree are referenced in migrations.xml.
 func checkXslExist(xsls []string, resourcesDir string) error {
 	// List existing XSLs to cross-check with referenced ones
 	existing := map[string]struct{}{}
 	existingSorted := []string{}
+	allImported := map[string]struct{}{}
 	schemasDir := filepath.Join(resourcesDir, "schemas")
 	err := filepath.Walk(schemasDir, func(path string, fi os.FileInfo, err error) error {
 		if err != nil || fi.IsDir() || filepath.Ext(path) != ".xsl" {
 			return err
 		}
-		rel, err := filepath.Rel(resourcesDir, path)
+		rel, err := normPath(path, resourcesDir)
 		if err != nil {
 			return err
 		}
-		rel = strings.ToLower(filepath.ToSlash(rel))
 		existing[rel] = struct{}{}
 		existingSorted = append(existingSorted, rel)
+
+		// Populate set of files referenced by other XSLs
+		imported, err := listImportedXsl(path)
+		if err != nil {
+			return err
+		}
+		for _, imp := range imported {
+			rel, err := normPath(imp, resourcesDir)
+			if err != nil {
+				return err
+			}
+			allImported[rel] = struct{}{}
+		}
 		return nil
 	})
 	if err != nil {
@@ -80,6 +127,10 @@ func checkXslExist(xsls []string, resourcesDir string) error {
 			failed = true
 			fmt.Fprintf(os.Stderr, "error: %s is in migrations.xml but does not exist\n", xsl)
 		}
+		referenced[xsl] = struct{}{}
+	}
+
+	for xsl, _ := range allImported {
 		referenced[xsl] = struct{}{}
 	}
 
