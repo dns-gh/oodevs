@@ -922,7 +922,12 @@
             <arg value="--exclude=*.MagicAction.Type"/>
             <arg value="--exclude=*.UnitMagicAction.Type"/>
         </compare-proto>
-        <compare-proto olddir="${proto.dir}/5.4.1" newdir="${src.dir}/libraries/protocol/proto/"/>
+        <compare-proto olddir="${proto.dir}/5.4.1" newdir="${src.dir}/libraries/protocol/proto/">
+            <!-- Pathfind objects were changed between 5.4 and 5.5. This is fine
+                 they were still being prototyped.
+            -->
+            <arg value="--exclude=SimToClient.Content.ComputePathfindAck.*"/>
+        </compare-proto>
     </target>
 
     <target name="checkmigrations" description="check migrations.xml consistency">
