@@ -122,7 +122,7 @@ void TacticalTreeView::drawRow( QPainter* painter, const QStyleOptionViewItem& o
         {
             if( const Attributes* attributes = agent->Retrieve< Attributes >() )
             {
-                if( attributes->nOpState_ == eOperationalStatus_DetruitTotalement )
+                if( attributes->bDead_ || attributes->nOpState_ == eOperationalStatus_DetruitTotalement )
                     painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TotallyDestroyed", QString( "" ) ).To< QString >() ) );
                 else if( attributes->nOpState_ == eOperationalStatus_DetruitTactiquement )
                     painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TacticallyDestroyed", QString( "" ) ).To< QString >() ) );
