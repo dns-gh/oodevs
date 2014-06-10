@@ -169,4 +169,11 @@
         <translation>Aucun paramètre trouvé pour l&apos;id &apos;%1&apos; dans l&apos;union &apos;%2&apos;</translation>
     </message>
 </context>
+<context>
+    <name>PullFlowParameters</name>
+    <message>
+        <source>Invalid supplier when saving pull flow parameters</source>
+        <translation>Fournisseur invalide lors de la sauvegarde de paramètre tirer flux</translation>
+    </message>
+</context>
 </TS>

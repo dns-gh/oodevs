@@ -1767,7 +1767,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Supplies</source>
-        <translation type="unfinished">Dotations</translation>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Quota</source>
@@ -1955,11 +1955,11 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Basic load</source>
-        <translation type="unfinished">Dotations</translation>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Supplies</source>
-        <translation type="unfinished">Dotations</translation>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Ammo</source>
@@ -2025,7 +2025,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Supplies</source>
-        <translation type="unfinished">Dotation</translation>
+        <translation>Dotation</translation>
     </message>
     <message>
         <source>Requested</source>
@@ -2238,7 +2238,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Capacity (t)</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité (t)</translation>
     </message>
 </context>
 <context>
@@ -3297,7 +3297,7 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>SupplyStocksListView</name>
     <message>
         <source>Supplies</source>
-        <translation type="unfinished">Dotation</translation>
+        <translation>Dotation</translation>
     </message>
     <message>
         <source>Quantity</source>
@@ -3624,6 +3624,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Invalid orders while loading &apos;%1&apos;</source>
         <translation>Ordres invalides pendant le chargement de &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Save failed. Some actions may not have been saved correctly. Check log for details.</source>
+        <translation>Erreur à la sauvegarde. Certaines actions peuvent ne pas avoir été sauvées correctement. Vérifiez le fichier log pour plus de détails.</translation>
+    </message>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>
@@ -3653,7 +3657,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Recover - Basic load</source>
-        <translation type="unfinished">Recompléter - Ressources</translation>
+        <translation>Recompléter - Ressources</translation>
     </message>
     <message>
         <source>Destroy - All</source>
@@ -3716,7 +3720,7 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>UnitStateDialog</name>
     <message>
         <source>Basic load</source>
-        <translation type="unfinished">Dotations</translation>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Composition</source>
