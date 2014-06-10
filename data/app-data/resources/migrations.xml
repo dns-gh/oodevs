@@ -206,5 +206,6 @@
     <upgrade schema="schemas/5.3.3/exercise/orders.xsd" apply="schemas/5.4.0/xsl/orders_5.3.3-5.4.0.xsl"/>
   </migration>
   <migration from="5.4.0" to="5.4.1"/>
-  <migration from="5.4.1" to="5.5.0"/>
+  <migration from="5.4.1" to="5.4.2"/>
+  <migration from="5.4.2" to="5.5.0"/>
 </migrations>
