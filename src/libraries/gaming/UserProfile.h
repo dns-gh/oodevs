@@ -19,7 +19,6 @@ namespace kernel
 {
     class Controller;
     class Entity_ABC;
-    class EntityResolver_ABC;
 }
 
 namespace sword
@@ -43,8 +42,8 @@ class UserProfile : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher, const kernel::EntityResolver_ABC& resolver );
-             UserProfile( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::EntityResolver_ABC& resolver );
+             UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
+             UserProfile( kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}
@@ -57,8 +56,6 @@ public:
     virtual void SetPassword( const QString& password );
     virtual void SetSupervisor( bool supervisor );
     virtual void SetTimeControl( bool timeControl );
-    virtual void VisitAllAutomats( std::set< unsigned long >& elements ) const;
-    virtual void Visit( std::vector< unsigned long >& elements ) const;
     virtual bool IsReadable( const kernel::Entity_ABC& entity ) const;
     virtual bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     virtual void SetReadable( const kernel::Entity_ABC& entity, bool readable );
@@ -103,7 +100,6 @@ private:
     //@{
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
-    const kernel::EntityResolver_ABC& resolver_;
     bool registered_;
     QString login_;
     QString password_;

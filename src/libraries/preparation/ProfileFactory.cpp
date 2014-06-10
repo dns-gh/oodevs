@@ -39,7 +39,7 @@ ProfileFactory::~ProfileFactory()
 // -----------------------------------------------------------------------------
 kernel::UserProfile_ABC* ProfileFactory::Create( xml::xistream& xis ) const
 {
-    return new UserProfile( xis, controller_, model_, model_ );
+    return new UserProfile( xis, controller_, model_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ kernel::UserProfile_ABC* ProfileFactory::Create( const sword::ProfileCreation& )
 // -----------------------------------------------------------------------------
 kernel::UserProfile_ABC* ProfileFactory::Create( const QString& name ) const
 {
-    return new UserProfile( name, controller_, model_ );
+    return new UserProfile( name, controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,5 +75,5 @@ kernel::UserProfile_ABC* ProfileFactory::Create( kernel::UserProfile_ABC& profil
 // -----------------------------------------------------------------------------
 kernel::UserProfile_ABC* ProfileFactory::Create() const
 {
-    return new UserProfile( controller_, model_ );
+    return new UserProfile( controller_ );
 }

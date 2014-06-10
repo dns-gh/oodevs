@@ -16,7 +16,6 @@
 namespace kernel
 {
     class Controller;
-    class EntityResolver_ABC;
     class Model_ABC;
 }
 
@@ -32,9 +31,9 @@ class UserProfile : public kernel::UserProfile_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfile( xml::xistream& xis, kernel::Controller& controller, const kernel::Model_ABC& model, const kernel::EntityResolver_ABC& resolver );
-             UserProfile( const QString& login, kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver );
-             UserProfile( kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver );
+             UserProfile( xml::xistream& xis, kernel::Controller& controller, const kernel::Model_ABC& model );
+             UserProfile( const QString& login, kernel::Controller& controller );
+             UserProfile( kernel::Controller& controller );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}
@@ -58,8 +57,6 @@ public:
     virtual bool IsPasswordProtected() const;
     virtual bool IsReadable( const kernel::Entity_ABC& entity ) const;
     virtual bool IsWriteable( const kernel::Entity_ABC& entity ) const;
-    virtual void Visit( std::vector< unsigned long >& elements ) const;
-    virtual void VisitAllAutomats( std::set< unsigned long >& elements ) const;
     //@}
 
     //! @name Setters
@@ -95,7 +92,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::EntityResolver_ABC& resolver_;
     QString login_;
     QString password_;
     bool supervisor_;

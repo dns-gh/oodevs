@@ -10,15 +10,13 @@
 #include "gaming_pch.h"
 #include "UserProfileFactory.h"
 #include "UserProfile.h"
-#include "Model.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileFactory constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfileFactory::UserProfileFactory( const Model& model, kernel::Controller& controller, Publisher_ABC& publisher )
-    : model_( model )
-    , controller_( controller )
+UserProfileFactory::UserProfileFactory( kernel::Controller& controller, Publisher_ABC& publisher )
+    : controller_( controller )
     , publisher_( publisher )
 {
     // NOTHING
@@ -57,7 +55,7 @@ kernel::UserProfile_ABC* UserProfileFactory::Create( const QString& /*name*/ ) c
 // -----------------------------------------------------------------------------
 kernel::UserProfile_ABC* UserProfileFactory::Create( const sword::ProfileCreation& message ) const
 {
-    return new UserProfile( message, controller_, publisher_, model_ );
+    return new UserProfile( message, controller_, publisher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,5 +73,5 @@ kernel::UserProfile_ABC* UserProfileFactory::Create( kernel::UserProfile_ABC& pr
 // -----------------------------------------------------------------------------
 kernel::UserProfile_ABC* UserProfileFactory::Create() const
 {
-    return new UserProfile( controller_, publisher_, model_ );
+    return new UserProfile( controller_, publisher_ );
 }

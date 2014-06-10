@@ -17,7 +17,6 @@ namespace kernel
     class Controller;
 }
 
-class Model;
 class Publisher_ABC;
 
 // =============================================================================
@@ -31,7 +30,7 @@ class UserProfileFactory : public kernel::ProfileFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileFactory( const Model& model, kernel::Controller& controller, Publisher_ABC& publisher );
+             UserProfileFactory( kernel::Controller& controller, Publisher_ABC& publisher );
     virtual ~UserProfileFactory();
     //@}
 
@@ -47,7 +46,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const Model& model_;
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
     //@}

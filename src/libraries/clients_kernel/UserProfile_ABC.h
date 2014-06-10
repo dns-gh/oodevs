@@ -44,9 +44,6 @@ public:
 
     virtual bool IsPasswordProtected() const = 0;
 
-    virtual void VisitAllAutomats( std::set< unsigned long >& elements ) const = 0;
-    virtual void Visit( std::vector< unsigned long >& elements ) const = 0;
-
     virtual bool IsReadable( const kernel::Entity_ABC& entity ) const = 0;
     virtual bool IsWriteable( const kernel::Entity_ABC& entity ) const = 0;
 

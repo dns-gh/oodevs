@@ -57,8 +57,6 @@ public:
     virtual void SetPassword( const QString& ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void SetSupervisor( bool ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void SetTimeControl( bool ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual void VisitAllAutomats( std::set< unsigned long >& ) const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual void Visit( std::vector< unsigned long >& ) const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool IsReadable( const kernel::Entity_ABC& ) const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool IsWriteable( const kernel::Entity_ABC& ) const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool IsPasswordProtected() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }

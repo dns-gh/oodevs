@@ -88,7 +88,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , fireFactory_             ( *new FireFactory( *this, controllers_.controller_, filter ) )
     , tacticalLineFactory_     ( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher, profile ) )
     , fireResultsFactory_      ( *new FireResultFactory( *this, simulation, profile ) )
-    , userProfileFactory_      ( *new UserProfileFactory( *this, controllers_.controller_, publisher ) )
+    , userProfileFactory_      ( *new UserProfileFactory( controllers_.controller_, publisher ) )
     , actionParameterFactory_  ( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_, controllers_.controller_ ) )
     , actionFactory_           ( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
     , drawingFactory_          ( *new DrawingFactory( controllers, staticModel.drawings_, publisher, staticModel.coordinateConverter_, *this ) )

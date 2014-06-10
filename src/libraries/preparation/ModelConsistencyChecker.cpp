@@ -64,6 +64,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UserProfile_ABC.h"
+#include "clients_kernel/UserRights.h"
 #include "ENT/ENT_Tr.h"
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
@@ -474,7 +475,10 @@ void ModelConsistencyChecker::CheckProfileUniqueness()
     model_.profiles_->Apply( [&]( kernel::UserProfile_ABC& profile )
         {
             std::vector< unsigned long > ids;
-            profile.Visit( ids );
+            profile.GetRights().InsertWriteSides( ids );
+            profile.GetRights().InsertWriteAutomats( ids );
+            profile.GetRights().InsertWritePopulations( ids );
+            profile.GetRights().InsertWriteGhosts( ids );
             BOOST_FOREACH( unsigned long id, ids )
                 units[ id ].insert( profile.GetLogin().toStdString() );
         });

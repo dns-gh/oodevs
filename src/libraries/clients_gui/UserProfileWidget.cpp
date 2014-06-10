@@ -19,10 +19,12 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ProfilesChecker_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UserProfile_ABC.h"
+#include "clients_kernel/UserRights.h"
 
 using namespace gui;
 
@@ -211,6 +213,36 @@ void UserProfileWidget::OnTimeControlChanged( bool timeControl )
 
 namespace
 {
+    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity )
+    {
+        const auto hierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !hierarchies )
+            return;
+        auto it = hierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const auto& childEntity = it.NextElement();
+            if( auto pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity ) )
+                automats.insert( pAutomat->GetId() );
+            else
+                InsertAutomats( automats, childEntity );
+        }
+    }
+
+    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
+    {
+        for( auto it = teams.begin();  it != teams.end(); ++it )
+            if( auto pTeam = resolver.FindTeam( *it ) )
+                InsertAutomats( automats, *pTeam );
+    }
+
+    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
+    {
+        for( auto it = formations.begin();  it != formations.end(); ++it )
+            if( auto pFormation = resolver.FindFormation( *it ) )
+                InsertAutomats( automats, *pFormation );
+    }
+
     const kernel::KnowledgeGroup_ABC* GetKnowledgeGroup( const kernel::Entity_ABC& entity )
     {
         const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >();
@@ -244,9 +276,16 @@ void UserProfileWidget::UpdateAutomatsAndKnowledgeGroups()
 {
     if( !profile_ )
         return;
-    // todo Move all this and namespace above to UserProfile
-    std::set< unsigned long > automats;
-    profile_->VisitAllAutomats( automats );
-    automats_->setText( locale().toString( automats.size() ) );
-    knowledgeGroups_->setText( locale().toString( GetKGCount( automats, resolver_ ) ) );
+    std::vector< unsigned long > automats;
+    std::set< unsigned long > elements;
+    profile_->GetRights().InsertWriteAutomats( automats );
+    elements.insert( automats.begin(), automats.end() );
+    automats = profile_->GetRights().GetReadAutomats();
+    elements.insert( automats.begin(), automats.end() );
+    InsertAutomatsFromTeams( profile_->GetRights().GetReadSides(), elements, resolver_ );
+    InsertAutomatsFromTeams( profile_->GetRights().GetWriteSides(), elements, resolver_ );
+    InsertAutomatsFromFormations( profile_->GetRights().GetReadFormations(), elements, resolver_ );
+    InsertAutomatsFromFormations( profile_->GetRights().GetWriteFormations(), elements, resolver_ );
+    automats_->setText( locale().toString( elements.size() ) );
+    knowledgeGroups_->setText( locale().toString( GetKGCount( elements, resolver_ ) ) );
 }

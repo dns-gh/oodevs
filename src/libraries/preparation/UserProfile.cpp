@@ -9,29 +9,15 @@
 
 #include "preparation_pch.h"
 #include "UserProfile.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Model_ABC.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/EntityResolver_ABC.h"
-#include "clients_kernel/ExtensionType.h"
-#include "clients_kernel/ExtensionTypes.h"
-#include "clients_kernel/DictionaryType.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include <tools/Iterator.h>
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, const kernel::Model_ABC& model, const kernel::EntityResolver_ABC& resolver )
+UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, const kernel::Model_ABC& model )
     : controller_( controller )
-    , resolver_( resolver )
     , supervisor_( false )
     , timeControl_( false )
     , isClone_( false )
@@ -59,9 +45,8 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
 // Name: UserProfile constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const QString& login, kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver )
+UserProfile::UserProfile( const QString& login, kernel::Controller& controller )
     : controller_( controller )
-    , resolver_( resolver )
     , login_( login )
     , password_( "" )
     , supervisor_( false )
@@ -75,9 +60,8 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 // Name: UserProfile constructor
 // Created: JSR 2014-06-04
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver )
+UserProfile::UserProfile( kernel::Controller& controller )
     : controller_( controller )
-    , resolver_( resolver )
     , login_( "" )
     , password_( "" )
     , supervisor_( false )
@@ -93,7 +77,6 @@ UserProfile::UserProfile( kernel::Controller& controller, const kernel::EntityRe
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const UserProfile& p )
     : controller_( p.controller_ )
-    , resolver_( p.resolver_ )
     , login_( p.login_ )
     , password_( p.password_ )
     , supervisor_( p.supervisor_ )
@@ -390,68 +373,6 @@ void UserProfile::NotifyPopulationDeleted( unsigned long populationId )
 void UserProfile::NotifyGhostDeleted( unsigned long ghostId )
 {
     rights_.NotifyGhostDeleted( ghostId );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::Visit
-// Created: LGY 2011-09-16
-// -----------------------------------------------------------------------------
-void UserProfile::Visit( std::vector< unsigned long >& elements ) const
-{
-    rights_.InsertWriteSides( elements );
-    rights_.InsertWriteAutomats( elements );
-    rights_.InsertWritePopulations( elements );
-    rights_.InsertWriteGhosts( elements );
-}
-
-namespace
-{
-    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity )
-    {
-        const auto hierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( !hierarchies )
-            return;
-        auto it = hierarchies->CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-        {
-            const auto& childEntity = it.NextElement();
-            if( auto pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity ) )
-                automats.insert( pAutomat->GetId() );
-            else
-                InsertAutomats( automats, childEntity );
-        }
-    }
-
-    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
-    {
-        for( auto it = teams.begin();  it != teams.end(); ++it )
-            if( auto pTeam = resolver.FindTeam( *it ) )
-                InsertAutomats( automats, *pTeam );
-    }
-
-    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
-    {
-        for( auto it = formations.begin();  it != formations.end(); ++it )
-            if( auto pFormation = resolver.FindFormation( *it ) )
-                InsertAutomats( automats, *pFormation );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::VisitAllAutomats
-// Created: MMC 2012-04-23
-// -----------------------------------------------------------------------------
-void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
-{
-    std::vector< unsigned long > automats;
-    rights_.InsertWriteAutomats( automats );
-    elements.insert( automats.begin(), automats.end() );
-    automats = rights_.GetReadAutomats();
-    elements.insert( automats.begin(), automats.end() );
-    InsertAutomatsFromTeams( rights_.GetReadSides(), elements, resolver_ );
-    InsertAutomatsFromTeams( rights_.GetWriteSides(), elements, resolver_ );
-    InsertAutomatsFromFormations( rights_.GetReadFormations(), elements, resolver_ );
-    InsertAutomatsFromFormations( rights_.GetWriteFormations(), elements, resolver_ );
 }
 
 // -----------------------------------------------------------------------------

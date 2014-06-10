@@ -10,21 +10,15 @@
 #include "gaming_pch.h"
 #include "UserProfile.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/EntityResolver_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/ServerPublisher_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher, const kernel::EntityResolver_ABC& resolver )
+UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_ ( controller )
     , publisher_  ( publisher )
-    , resolver_   ( resolver )
     , registered_ ( true )
     , login_      ( "" )
     , supervisor_ ( false )
@@ -39,10 +33,9 @@ UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Control
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::EntityResolver_ABC& resolver )
+UserProfile::UserProfile( kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_ ( controller )
     , publisher_  ( publisher )
-    , resolver_   ( resolver )
     , registered_ ( false )
     , supervisor_ ( false )
     , timeControl_( false )
@@ -58,7 +51,6 @@ UserProfile::UserProfile( const UserProfile& p )
     : RightsResolver( (const RightsResolver&) p )
     , controller_   ( p.controller_ )
     , publisher_    ( p.publisher_ )
-    , resolver_     ( p.resolver_ )
     , registered_   ( false )
     , login_        ( p.login_ )
     , password_     ( p.password_ )
@@ -190,71 +182,6 @@ const kernel::UserRights& UserProfile::GetRights() const
 void UserProfile::SetLogin( const QString& value )
 {
     login_ = value;
-}
-
-namespace
-{
-    //TODO copier coller de préparation
-    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity )
-    {
-        const auto hierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( !hierarchies )
-            return;
-        auto it = hierarchies->CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-        {
-            const auto& childEntity = it.NextElement();
-            if( auto pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity ) )
-                automats.insert( pAutomat->GetId() );
-            else
-                InsertAutomats( automats, childEntity );
-        }
-    }
-
-    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
-    {
-        for( auto it = teams.begin();  it != teams.end(); ++it )
-            if( auto pTeam = resolver.FindTeam( *it ) )
-                InsertAutomats( automats, *pTeam );
-    }
-
-    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
-    {
-        for( auto it = formations.begin();  it != formations.end(); ++it )
-            if( auto pFormation = resolver.FindFormation( *it ) )
-                InsertAutomats( automats, *pFormation );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::VisitAllAutomats
-// Created: JSR 2014-06-05
-// -----------------------------------------------------------------------------
-void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
-{
-    //TODO copier coller de préparation
-    std::vector< unsigned long > automats;
-    rights_.InsertWriteAutomats( automats );
-    elements.insert( automats.begin(), automats.end() );
-    automats = rights_.GetReadAutomats();
-    elements.insert( automats.begin(), automats.end() );
-    InsertAutomatsFromTeams( rights_.GetReadSides(), elements, resolver_ );
-    InsertAutomatsFromTeams( rights_.GetWriteSides(), elements, resolver_ );
-    InsertAutomatsFromFormations( rights_.GetReadFormations(), elements, resolver_ );
-    InsertAutomatsFromFormations( rights_.GetWriteFormations(), elements, resolver_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::Visit
-// Created: JSR 2014-06-05
-// -----------------------------------------------------------------------------
-void UserProfile::Visit( std::vector< unsigned long >& elements ) const
-{
-    //TODO copier coller de préparation
-    rights_.InsertWriteSides( elements );
-    rights_.InsertWriteAutomats( elements );
-    rights_.InsertWritePopulations( elements );
-    rights_.InsertWriteGhosts( elements );
 }
 
 // -----------------------------------------------------------------------------
