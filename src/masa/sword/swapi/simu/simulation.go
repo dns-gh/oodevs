@@ -16,6 +16,10 @@ import (
 	"time"
 )
 
+const (
+	StopTimeout = 10 * time.Second
+)
+
 type SimOpts struct {
 	Executable     string
 	RunDir         *string
@@ -145,7 +149,7 @@ type SimProcess struct {
 // as Stop() seem unreliable. What you know is if it was not issued there is
 // little reason for the simulation to stop unless it reaches it max-tick,
 // hence less reasons to wait for it.
-func logAndStop(host string) (bool, error) {
+func logAndStop(host string, replayer bool) (bool, error) {
 	client, err := swapi.NewClient(host)
 	if err != nil {
 		return false, err
@@ -162,7 +166,11 @@ func logAndStop(host string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	err = client.Stop()
+	if replayer {
+		err = client.ReplayStop()
+	} else {
+		err = client.Stop()
+	}
 	return true, err
 }
 
@@ -172,9 +180,9 @@ func (sim *SimProcess) Stop() error {
 	if sim == nil {
 		return errors.New("simulation is stopped already")
 	}
-	stopped, err := logAndStop(sim.ClientAddr)
+	stopped, err := logAndStop(sim.ClientAddr, false)
 	if stopped {
-		if sim.Wait(10 * time.Second) {
+		if sim.Wait(StopTimeout) {
 			return nil
 		}
 		err = errors.New("wait timed out")

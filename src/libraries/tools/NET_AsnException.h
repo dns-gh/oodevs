@@ -71,4 +71,15 @@ public:
 
 #define MASA_INVALIDTASKER NET_InvalidTasker( __FILE__, __FUNCTION__, __LINE__ )
 
+class NET_ConnectionClosed: public tools::Exception
+{
+public:
+    NET_ConnectionClosed( const std::string& file, const std::string& function,
+            const unsigned int line, const std::string& what ) throw()
+        : tools::Exception( file, function, line, what )
+    {}
+};
+
+#define MASA_CONNECTIONCLOSED( what ) NET_ConnectionClosed( __FILE__, __FUNCTION__, __LINE__, what )
+
 #endif // __NET_AsnException_h_

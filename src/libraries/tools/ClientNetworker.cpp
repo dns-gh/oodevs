@@ -12,7 +12,6 @@
 #include "SocketManager.h"
 #include "Connector.h"
 #include "BufferedMessageCallback.h"
-#include "BufferedConnectionCallback.h"
 #include "ObjectMessageService.h"
 #include "WaitEvent.h"
 #include <boost/bind.hpp>
@@ -28,11 +27,10 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry /* = false*/, unsigned long timeOut /*=10000*/ )
     : service_         ( new boost::asio::io_service() )
-    , connectionBuffer_( new BufferedConnectionCallback() )
     , messageBuffer_   ( new BufferedMessageCallback() )
-    , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
+    , sockets_         ( new SocketManager( messageBuffer_, messageBuffer_, timeOut ) )
     , messageService_  ( new ObjectMessageService() )
-    , connector_       ( new Connector( *service_, *sockets_, *connectionBuffer_ ) )
+    , connector_       ( new Connector( *service_, *sockets_, *messageBuffer_ ) )
     , quit_            ( new WaitEvent() )
     , retry_           ( retry )
     , thread_          ( boost::bind( &ClientNetworker::Run, this ) )
@@ -127,9 +125,8 @@ struct CommitStatistics : public MessageCallback_ABC, boost::noncopyable
 // -----------------------------------------------------------------------------
 void ClientNetworker::Update()
 {
-    connectionBuffer_->Commit( *this );
     CommitStatistics stats( *messageService_ );
-    messageBuffer_->Commit( stats );
+    messageBuffer_->Commit( *this, stats );
     inMessages_ += stats.messages_;
     inBytes_ += stats.messagesSize_;
 }

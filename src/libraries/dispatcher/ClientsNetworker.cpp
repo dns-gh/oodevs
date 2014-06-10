@@ -16,6 +16,7 @@
 #include "Model_ABC.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/NET_AsnException.h"
 
 using namespace dispatcher;
 
@@ -180,6 +181,17 @@ void ClientsNetworker::ConnectionWarning( const std::string& link, const std::st
     ServerNetworker::ConnectionWarning( link, warning );
 }
 
+#define CATCH_SEND_ERRORS                                                       \
+    catch( const NET_ConnectionClosed& e )                                      \
+    {                                                                           \
+        MT_LOG_WARNING_MSG( tools::GetExceptionMsg( e ) );                      \
+    }                                                                           \
+    catch( const std::exception& e )                                            \
+    {                                                                           \
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );\
+    }
+
+
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::Send
 // Created: NLD 2006-09-21
@@ -191,10 +203,7 @@ void ClientsNetworker::Send( const sword::SimToClient& msg )
         for( auto it = clients_.begin(); it != clients_.end(); ++it ) // $$$$ MCO : doesn't this bypass authentication ?
             it->second->Send( msg );
     }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
-    }
+    CATCH_SEND_ERRORS
 }
 
 // -----------------------------------------------------------------------------
@@ -215,10 +224,7 @@ void ClientsNetworker::Send( const sword::AuthenticationToClient& msg )
         for( auto it = receivers->begin(); it != receivers->end(); ++it )
             it->second->Send( msg );
     }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
-    }
+    CATCH_SEND_ERRORS
 }
 
 // -----------------------------------------------------------------------------
@@ -232,10 +238,7 @@ void ClientsNetworker::Send( const sword::ReplayToClient& msg )
         for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
     }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
-    }
+    CATCH_SEND_ERRORS
 }
 
 // -----------------------------------------------------------------------------
@@ -250,10 +253,7 @@ void ClientsNetworker::Send( const sword::AarToClient& msg )
             it->second->Send( msg );
         plugin_.Receive( msg );
     }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
-    }
+    CATCH_SEND_ERRORS
 }
 
 // -----------------------------------------------------------------------------
@@ -268,10 +268,7 @@ void ClientsNetworker::Send( const sword::MessengerToClient& msg )
             it->second->Send( msg );
         plugin_.Receive( msg );
     }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
-    }
+    CATCH_SEND_ERRORS
 }
 
 // -----------------------------------------------------------------------------
@@ -285,11 +282,10 @@ void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
         for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
     }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
-    }
+    CATCH_SEND_ERRORS
 }
+
+#undef CATCH_SEND_ERRORS
 
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::GetConnectedPublisher

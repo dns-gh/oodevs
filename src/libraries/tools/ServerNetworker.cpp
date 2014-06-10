@@ -10,7 +10,6 @@
 #include "tools_pch.h"
 #include "ServerNetworker.h"
 #include "BufferedMessageCallback.h"
-#include "BufferedConnectionCallback.h"
 #include "ObjectMessageService.h"
 #include "SocketManager.h"
 #include "Acceptor.h"
@@ -25,9 +24,8 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 ServerNetworker::ServerNetworker( const std::string& endpoint, unsigned long timeOut /*=10000*/ )
     : service_         ( new boost::asio::io_service() )
-    , connectionBuffer_( new BufferedConnectionCallback() )
     , messageBuffer_   ( new BufferedMessageCallback() )
-    , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
+    , sockets_         ( new SocketManager( messageBuffer_, messageBuffer_, timeOut ) )
     , messageService_  ( new ObjectMessageService() )
     , acceptor_        ( new Acceptor( *sockets_, *service_, endpoint ) )
     , quit_            ( new WaitEvent() )
@@ -91,8 +89,7 @@ void ServerNetworker::AllowConnections()
 // -----------------------------------------------------------------------------
 void ServerNetworker::Update()
 {
-    connectionBuffer_->Commit( *this );
-    messageBuffer_->Commit( *messageService_ );
+    messageBuffer_->Commit( *this, *messageService_ );
 }
 
 // -----------------------------------------------------------------------------
