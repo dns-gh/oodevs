@@ -760,32 +760,23 @@ Action_ABC* ActionFactory::CreateTransferToLogisticSuperior( unsigned int consig
     return action.release();
 }
 
-namespace
-{
-    Action_ABC* CreateMaintenanceSelection( unsigned int consignId, unsigned int equipmentTypeId, boost::optional< unsigned int > destination,
-                                            kernel::MagicActionType& actionType, kernel::Controller& controller,
-                                            const kernel::Time_ABC& simulation, const kernel::EntityResolver_ABC& entities )
-    {
-        std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller, false ) );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
-        if( destination )
-            action->AddParameter( *new parameters::Agent( it.NextElement(), *destination, entities, controller, false ) );
-        else
-            action->AddParameter( *new parameters::Agent( it.NextElement(), controller, false ) );
-        action->Attach( *new ActionTiming( controller, simulation ) );
-        return action.release();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateSelectMaintenanceTransporter
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId, const boost::optional< unsigned int >& destination ) const
 {
-    return CreateMaintenanceSelection( consignId, equipmentTypeId, destination, magicActions_.Get( "select_maintenance_transporter" ), controller_, simulation_, entities_ );
+    MagicActionType& actionType = magicActions_.Get( "select_maintenance_transporter" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
+    if( destination )
+        action->AddParameter( *new parameters::Agent( it.NextElement(), *destination, entities_, controller_, false ) );
+    else
+        action->AddParameter( *new parameters::Agent( it.NextElement(), controller_, false ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -794,7 +785,13 @@ Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int cons
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) const
 {
-    return CreateMaintenanceSelection( consignId, equipmentTypeId, boost::none, magicActions_.Get( "select_diagnosis_team" ), controller_, simulation_, entities_ );
+    MagicActionType& actionType = magicActions_.Get( "select_diagnosis_team" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -803,7 +800,13 @@ Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int co
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId )
 {
-    return CreateMaintenanceSelection( consignId, equipmentTypeId, boost::none, magicActions_.Get( "select_repair_team" ), controller_, simulation_, entities_ );
+    MagicActionType& actionType = magicActions_.Get( "select_repair_team" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    auto it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
 }
 
 // -----------------------------------------------------------------------------
