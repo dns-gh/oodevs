@@ -23,7 +23,7 @@
     <property name="www.dir" value="${src.dir}/masa/timeline/www"/>
 
     <property name="version.project" value="5.4"/>
-    <property name="version.major" value="5.4.1"/>
+    <property name="version.major" value="5.4.2"/>
     <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
     <property name="unicode.extension" value=" ゑ"/>
     <!-- Maximum number of concurrently running simulations in data_migrations_test -->
@@ -917,11 +917,12 @@
             <!-- New weather enumeration -->
             <arg value="--exclude=*EnumPrecipitationType"/>
         </compare-proto>
-        <compare-proto olddir="${proto.dir}/5.3.3" newdir="${src.dir}/libraries/protocol/proto/">
+        <compare-proto olddir="${proto.dir}/5.3.3" newdir="${proto.dir}/5.4.1">
             <!-- New magic actions are fine -->
             <arg value="--exclude=*.MagicAction.Type"/>
             <arg value="--exclude=*.UnitMagicAction.Type"/>
         </compare-proto>
+        <compare-proto olddir="${proto.dir}/5.4.1" newdir="${src.dir}/libraries/protocol/proto/"/>
     </target>
 
     <target name="check" depends="checkreports,checkdec,checkproto"

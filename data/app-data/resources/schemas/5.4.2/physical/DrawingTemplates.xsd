@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="templates">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="category" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="description" type="xs:string" minOccurs="0"/>
+							<xs:element name="template" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:choice minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="description" type="xs:string" minOccurs="0"/>
+										<xs:element name="segment" type="xs:anyType" minOccurs="0"/>
+										<xs:element name="marker-mid" type="xs:anyType" minOccurs="0"/>
+										<xs:element name="marker-start" type="xs:anyType" minOccurs="0"/>
+										<xs:element name="marker-end" type="xs:anyType" minOccurs="0"/>
+										<xs:element name="marker-corner" type="xs:anyType" minOccurs="0"/>
+										<xs:element name="marker" type="xs:anyType" minOccurs="0"/>
+									</xs:choice>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="type" type="xs:string" use="required"/>
+									<xs:attribute name="code" type="xs:string"/>
+									<xs:attribute name="external-Id" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>Shield drawing identifier</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="id" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
