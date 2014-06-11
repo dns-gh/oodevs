@@ -10,6 +10,7 @@
 #ifndef __UserProfileList_h_
 #define __UserProfileList_h_
 
+#include "RichWidget.h"
 #include "clients_kernel/ProfilesChecker_ABC.h"
 
 namespace kernel
@@ -33,7 +34,7 @@ class NewProfileDialog;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileList : public QWidget
+class UserProfileList : public RichWidget< QWidget >
                       , public kernel::ProfilesChecker_ABC
 {
     Q_OBJECT
@@ -41,7 +42,7 @@ class UserProfileList : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, kernel::ProfilesModel_ABC& model );
+             UserProfileList( const QString& objectName, QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, kernel::ProfilesModel_ABC& model );
     virtual ~UserProfileList();
     //@}
 
