@@ -75,7 +75,8 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Object_ABC& objectKnown ) const
 {
-    assert( pBlackBoard_ );
+    if( objectKnown.IsMarkedForDestruction() )
+        return boost::shared_ptr< DEC_Knowledge_Object >();
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pBlackBoard_->GetKnowledgeObjectContainer().GetKnowledgeObject( objectKnown );
 
     if( pKnowledge && pKnowledge->IsValid() )
@@ -101,7 +102,9 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( co
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision )
 {
-    GetKnowledgeToUpdate( collision.GetObject() )->Update( collision );
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeToUpdate( collision.GetObject() );
+    if( pKnowledge )
+        pKnowledge->Update( collision );
 }
 
 namespace

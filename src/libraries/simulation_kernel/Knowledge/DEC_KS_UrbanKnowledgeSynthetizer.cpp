@@ -72,7 +72,8 @@ void DEC_KS_UrbanKnowledgeSynthetizer::Prepare()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Urban > DEC_KS_UrbanKnowledgeSynthetizer::GetKnowledgeToUpdate( const MIL_UrbanObject_ABC& objectKnown ) const
 {
-    assert( pBlackBoard_ );
+    if( objectKnown.IsMarkedForDestruction() )
+        return boost::shared_ptr< DEC_Knowledge_Urban >();
     boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pBlackBoard_->GetKnowledgeUrbanContainer().GetKnowledgeUrban( objectKnown );
 
     if( pKnowledge && pKnowledge->IsValid() )
