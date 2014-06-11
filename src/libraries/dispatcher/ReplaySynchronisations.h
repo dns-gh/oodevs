@@ -210,11 +210,11 @@ private:
     //@{
     const ReplayModel_ABC& model_;
     kernel::EntityBase_ABC& holder_;
-    bool created_  : 1;
-    bool updated_  : 1;
-    bool synching_ : 1;
-    bool destroyLater_: 1;
-    bool destroyNow_: 1;
+    bool created_;
+    bool updated_;
+    bool synching_;
+    bool destroyLater_;
+    bool destroyNow_;
     //@}
 };
 
