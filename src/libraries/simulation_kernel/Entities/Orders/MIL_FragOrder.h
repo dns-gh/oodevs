@@ -97,6 +97,11 @@ public:
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesBlesses() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesReparations() const;
     std::vector< const PHY_ComposanteTypePion* > GetEquipmentTypeListParameter( const std::string& ) const;
+    int GetIntegerParameter( const std::string& ) const;
+    std::vector< DEC_Decision_ABC* > GetAutomatListParameter( const std::string& ) const;
+    const DEC_Decision_ABC* GetAgentParameter( const std::string& ) const;
+    boost::shared_ptr< TER_Localisation > GetLocationParameter( const std::string& ) const;
+    boost::shared_ptr< MT_Vector2D > GetPointParameter( const std::string& name ) const;
     int GetOrderConduiteModifierRegimeTravailMaintenance() const;
     int GetOrderConduitePopulationChangerAttitude() const;
     const DEC_Decision_ABC* GetPionARenforcer() const;

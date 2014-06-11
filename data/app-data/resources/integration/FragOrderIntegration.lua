@@ -125,6 +125,46 @@ integration.getEquipmentTypeListParameter = function( fragorder, parameterName )
     return fragorder.source:GetEquipmentTypeListParameter( parameterName )
 end
 
+--- Returns the fragmentary order's "Integer" parameter with the given name.
+-- @param DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return Integer
+integration.getIntegerParameter = function( fragorder, parameterName )
+    return fragorder.source:GetIntegerParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Automat list" parameter with the given name.
+-- @param DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of simulation companies
+integration.getAutomatListParameter = function( fragorder, parameterName )
+    return fragorder.source:GetAutomatListParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Agent" parameter with the given name.
+-- @param DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of simulation agents
+integration.getAgentParameter = function( fragorder, parameterName )
+    return fragorder.source:GetAgentParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Location" parameter with the given name.
+-- @param DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of simulation areas
+integration.getLocationParameter = function( fragorder, parameterName )
+    return fragorder.source:GetLocationParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Point" parameter with the given name.
+-- @param DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of simulation points
+integration.getPointParameter = function( fragorder, parameterName )
+    return fragorder.source:GetPointParameter( parameterName )
+end
+
 integration.getOrderConduiteModifierPrioritesBlessesParameter = function( fragorder )
     return fragorder.source:GetorderConduiteModifierPrioritesBlesses_()
 end
