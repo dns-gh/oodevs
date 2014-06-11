@@ -2787,3 +2787,11 @@ message PathfindDestruction {
     //! The pathfind identifier
     required uint32     id          = 1;
 }
+
+/** @struct Timeskip
+    @brief Notifies of the creation of a timeskip
+*/
+message Timeskip {
+    optional uint32 tick = 2;
+    optional string time = 3;
+}

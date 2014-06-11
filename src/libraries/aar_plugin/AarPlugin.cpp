@@ -36,7 +36,7 @@ namespace sword
 // -----------------------------------------------------------------------------
 AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::AuthenticatedLinkResolver_ABC& resolver, const dispatcher::Config& config )
     : resolver_( resolver )
-    , messages_( new dispatcher::MessageLoader( config.GetRecordDirectory(), true ) )
+    , messages_( new dispatcher::MessageLoader( config.GetRecordDirectory(), true, config.GetTickDuration(), nullptr ) )
     , model_   ( new ::aar::StaticModel( config ) )
 {
     dispatcher.RegisterMessage( *this, &AarPlugin::OnReceive );

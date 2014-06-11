@@ -36,7 +36,7 @@ class Loader : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, ClientPublisher_ABC* clients );
+             Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, ClientPublisher_ABC& clients );
     virtual ~Loader();
     //@}
 
@@ -53,6 +53,7 @@ public:
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
     unsigned int FindTickForDate( const std::string& GDHDate ) const;
     const std::string& GetEndDateTime() const;
+    void SendTimeskips( ClientPublisher_ABC& client ) const;
 
     void ReloadAll();
     //@}

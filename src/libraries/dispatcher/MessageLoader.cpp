@@ -42,13 +42,14 @@ namespace
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
 MessageLoader::MessageLoader( const tools::Path& records, bool threaded,
-                              ClientPublisher_ABC* clients )
-    : records_  ( records )
-    , clients_  ( clients )
-    , firstTick_( std::numeric_limits< unsigned int >::max() )
-    , tickCount_( 0 )
-    , init_     ( new tools::WaitEvent() )
-    , quit_     ( new tools::WaitEvent() )
+                              int tickDuration, ClientPublisher_ABC* clients )
+    : records_     ( records )
+    , tickDuration_( tickDuration )
+    , clients_     ( clients )
+    , firstTick_   ( std::numeric_limits< unsigned int >::max() )
+    , tickCount_   ( 0 )
+    , init_        ( new tools::WaitEvent() )
+    , quit_        ( new tools::WaitEvent() )
 {
     if( threaded )
     {
@@ -257,6 +258,11 @@ namespace
         bpt::ptime time = bpt::from_iso_string( GDHDate );
         return ( time - bpt::from_time_t( 0 ) ).total_seconds();
     }
+
+    std::string Convert( uint32_t seconds )
+    {
+        return bpt::to_iso_string( bpt::from_time_t( 0 ) + bpt::seconds( seconds ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -402,9 +408,12 @@ void MessageLoader::AddFolder( const tools::Path& folderName )
     if( tickCount_ < end )
     {
         tickCount_ = end;
-        std::string dummy;
+        std::string sim, real;
         for( unsigned int i = start; i < end; ++i )
-            wrapper >> dummy >> dummy;
+        {
+            wrapper >> sim >> real;
+            AddTick( i, sim );
+        }
         wrapper >> endDateTime_;
     }
     infoFile.close();
@@ -665,4 +674,35 @@ void MessageLoader::ReloadAllFragmentsInfos()
         currentOpenFolder_.Clear();
     }
     ScanDataFolders( true );
+}
+
+namespace
+{
+    void SendTimeskip( uint32_t tick, const std::string& time, ClientPublisher_ABC& client )
+    {
+        replay::Timeskip msg;
+        msg().set_tick( tick );
+        msg().set_time( time );
+        msg.Send( client );
+    }
+}
+
+void MessageLoader::AddTick( uint32_t tick, const std::string& time )
+{
+    if( !clients_ )
+        return;
+    const uint32_t now = static_cast< uint32_t >( ConvertFromGDHToSeconds( time ) );
+    const auto last = skips_.rbegin();
+    if( last != skips_.rend() && ( tick <= last->first ||
+        now - last->second == tickDuration_ * ( tick - last->first ) ) )
+        return;
+    skips_.insert( std::make_pair( tick, now ) );
+    SendTimeskip( tick, time, *clients_ );
+}
+
+void MessageLoader::SendTimeskips( ClientPublisher_ABC& client )
+{
+    boost::mutex::scoped_lock lock( access_ );
+    for( auto it = skips_.begin(); it != skips_.end(); ++it )
+        SendTimeskip( it->first, Convert( it->second ), client );
 }

@@ -144,6 +144,7 @@ void ReplayPlugin::OnTimer()
 void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
 {
     tickNumber_ = loader_.GetTickNumber();
+    loader_.SendTimeskips( client );
     model_.SendReplayInfo( client, tickNumber_, loader_.GetEndDateTime(), running_ ? sword::running : sword::paused, factor_, loader_.GetFirstTick() );
 }
 
