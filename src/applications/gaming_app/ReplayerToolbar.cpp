@@ -46,7 +46,6 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , simulationController_( simulationController )
     , network_( network )
     , slider_( 0 )
-    , sliderTick_( 0 )
     , lastTickSkip_( 0 )
 {
     setWindowTitle( tr( "Replay control" ) );
@@ -73,16 +72,20 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 {
     if( controllers_.GetCurrentMode() == eModes_Replay )
     {
-        unsigned int maxTick = simulation.GetTickCount();
+        const unsigned int maxTick = simulation.GetTickCount();
         if( ! slider_ )
         {
-            slider_ = new QSlider( Qt::Horizontal );
+            minTime_ = new QLabel( this );
+            addWidget( minTime_ );
+            slider_ = new QSlider( Qt::Horizontal, this );
             addWidget( slider_ );
             const unsigned int firstTick = simulation.GetFirstTick();
             slider_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? maxTick : firstTick );
             slider_->setPageStep( 1 );
             slider_->setMinimumWidth( 200 );
             slider_->setTickmarks( QSlider::TicksBelow );
+            maxTime_ = new QLabel( this );
+            addWidget( maxTime_ );
             addSeparator();
             button_ = new QPushButton();
             menu_ = new kernel::ContextMenu( button_ );
@@ -119,9 +122,15 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
             connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
         }
-        SpinBox()->setRange( simulation.GetFirstTick(), maxTick );
+        const auto SetDateTime = [&]( QLabel& dst, int tick ){
+            dst.setText( simulation.GetTime( tick ).toString( "dd/MM/yy\nHH:mm:ss" ) );
+        };
+        const auto first = simulation.GetFirstTick();
+        SetDateTime( *minTime_, first );
+        SetDateTime( *maxTime_, maxTick );
+        SpinBox()->setRange( first, maxTick );
         SpinBox()->setSuffix( QString( " / %1" ).arg( maxTick ) );
-        slider_->setRange( simulation.GetFirstTick(), maxTick );
+        slider_->setRange( first, maxTick );
         slider_->setTickInterval( slider_->maxValue() / 20 );
         slider_->blockSignals( true );
         slider_->setValue( simulation.GetCurrentTick() );
@@ -202,10 +211,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation::sTimeTable& timeTable )
 void ReplayerToolbar::OnSliderMoved( int value )
 {
     SpinBox()->setValue( value );
-    QDateTime date = DateTimeEdit()->dateTime();
-    date = date.addSecs( ( value - sliderTick_ ) * simulationController_.GetTickDuration() );
-    DateTimeEdit()->setDateTime( date );
-    sliderTick_ = value;
+    DateTimeEdit()->setDateTime( simulationController_.GetTime( value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +238,6 @@ void ReplayerToolbar::OnDateTimeChanged()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSliderPressed()
 {
-    sliderTick_ = slider_->value();
     if( !simulationController_.IsPaused() )
         simulationController_.Pause();
 }

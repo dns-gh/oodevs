@@ -53,6 +53,7 @@ public:
     unsigned int GetFirstTick() const;
     unsigned int GetTickCount() const;
     unsigned int GetTickDuration() const;
+    QDateTime GetTime( uint32_t tick ) const;
     void Pause();
     void Resume();
     void Step();

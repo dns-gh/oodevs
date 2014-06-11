@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Time_ABC.h"
 #include "Profiling.h"
+#include <map>
 
 namespace kernel
 {
@@ -28,6 +29,7 @@ namespace sword
     class ControlSendCurrentStateEnd;
     class ControlCheckPointSaveEnd;
     class NewDataChunkNotification;
+    class Timeskip;
     class TimeTable;
 }
 
@@ -78,6 +80,7 @@ public:
     void Update( const sword::ControlSendCurrentStateEnd& message );
     void Update( const sword::NewDataChunkNotification& message );
     void Update( const sword::TimeTable& message );
+    void Update( const sword::Timeskip& message );
     //@}
 
     //! @name Operations
@@ -91,23 +94,25 @@ public:
     void EndCheckPoint( const sword::ControlCheckPointSaveEnd& message );
     //@}
 
+    //! @name Simulation_ABC methods
+    //@{
+    virtual QDateTime GetDateTime() const;
+    virtual QDateTime GetInitialDateTime() const;
+    virtual unsigned int GetTickDuration() const;
+    virtual QString GetTimeAsString() const;
+    //@}
+
     //! @name Accessors
     //@{
-    virtual QDateTime GetInitialDateTime() const;
-    virtual QDateTime GetDateTime() const;
-    virtual QString GetTimeAsString() const;
+    QDateTime GetTime( uint32_t tick ) const;
+    unsigned int GetFirstTick() const;           //!< first recorded tick (replayer)
+    unsigned int GetCurrentTick() const;         //!< tick since simulation start
+    unsigned int GetTickCount() const;           //!< total tick count (replayer)
     QDateTime GetEndDateTime() const;
     QString GetDateAsString() const;
     QDateTime GetRealDateTime() const;
     QString GetRealTimeAsString() const;
     QString GetRealDateAsString() const;
-
-    int GetTime() const;                    //!< seconds since simulation start
-
-    unsigned int GetCurrentTick() const;         //!< tick since simulation start
-    unsigned int GetTickCount() const;           //!< total tick count (replayer)
-    unsigned int GetFirstTick() const;           //!< first recorded tick (replayer)
-    virtual unsigned int GetTickDuration() const;
 
     bool IsPaused() const;
     bool IsConnected() const;
@@ -144,6 +149,7 @@ private:
     sCheckPoint checkPoint_;
     std::string simulationHost_;
     Profiling profiling_;
+    std::map< uint32_t, uint32_t > skips_;
     //@}
 };
 

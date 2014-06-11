@@ -15,6 +15,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "Network.h"
 #include "protocol/ReplaySenders.h"
+#include <tuple>
 
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor
@@ -233,15 +234,6 @@ void Simulation::EndCheckPoint( const sword::ControlCheckPointSaveEnd& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Simulation::GetTime
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-int Simulation::GetTime() const
-{
-    return time_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Simulation::IsPaused
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
@@ -447,4 +439,24 @@ unsigned long Simulation::GetMemory() const
 unsigned long Simulation::GetVirtualMemory() const
 {
     return profiling_.GetVirtualMemory();
+}
+
+void Simulation::Update( const sword::Timeskip& message )
+{
+    skips_.insert( std::make_pair( message.tick(), tools::GDHStringToQDateTime( message.time() ).toTime_t() ) );
+}
+
+QDateTime Simulation::GetTime( uint32_t tick ) const
+{
+    uint32_t max = 0, time = 0;
+    for( auto it = skips_.begin(); it != skips_.end(); ++it )
+        if( it->first > tick )
+            break;
+        else
+            std::tie( max, time ) = *it;
+    if( !max )
+        return QDateTime();
+    auto now = QDateTime::fromTime_t( time + ( tick - max ) * tickDuration_ );
+    now.setTimeSpec( Qt::LocalTime );
+    return now.toLocalTime();
 }
