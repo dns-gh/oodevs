@@ -214,7 +214,8 @@ void PullFlowParameters::Serialize( const T_PointVector& path, const std::string
 // -----------------------------------------------------------------------------
 void PullFlowParameters::Serialize( xml::xostream& xos ) const
 {
-    assert( supplierAutomat_ || supplierFormation_ );
+    if( !supplierAutomat_ && !supplierFormation_ )
+        throw MASA_EXCEPTION( tools::translate( "PullFlowParameters", "Invalid supplier when saving pull flow parameters" ).toStdString() );
     Parameter< QString >::Serialize( xos );
     xos << xml::start( "supplier" );
         xos << xml::attribute( "id", supplierAutomat_ ? supplierAutomat_->GetId() : supplierFormation_->GetId() );

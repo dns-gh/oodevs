@@ -3609,6 +3609,10 @@ This data can&apos;t be projected.</source>
         <source>The following errors occurred:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save failed. Some actions may not have been saved correctly. Check log for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>

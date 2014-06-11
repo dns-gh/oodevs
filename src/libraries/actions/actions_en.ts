@@ -169,4 +169,11 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>PullFlowParameters</name>
+    <message>
+        <source>Invalid supplier when saving pull flow parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

@@ -565,6 +565,7 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
         return;
     }
 
+    bool saveError = false;
     tools::Xofstream xos( currentFile_ );
     tools::SchemaWriter schemaWriter;
     xos << xml::start( "actions" );
@@ -575,13 +576,24 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
         if( const actions::Action_ABC* action = event.GetAction() )
         {
             xos << xml::start( "action" );
-            action->Serialize( xos );
+            try
+            {
+                action->Serialize( xos );
+            }
+            catch( const std::exception& e )
+            {
+                saveError = true;
+                MT_LOG_ERROR_MSG( "An error occurred saving an action : " << tools::GetExceptionMsg( e ) );
+            }
             xos << xml::end; //! action
         }
     }
     xos << xml::end; //! actions
 
     currentFile_.Clear();
+
+    if( saveError )
+        throw std::exception( tr( "Save failed. Some actions may not have been saved correctly. Check log for details." ) );
 }
 
 // -----------------------------------------------------------------------------

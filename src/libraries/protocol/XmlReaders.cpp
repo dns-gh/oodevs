@@ -802,6 +802,7 @@ namespace
         const auto type = reader.Resolve( *supplier );
         if( type != Reader_ABC::AUTOMAT && type != Reader_ABC::FORMATION )
             return;
+        dst.set_null_value( false );
         auto& pull = *dst.add_value()->mutable_pull_flow_parameters();
         auto& next = *pull.mutable_supplier();
         if( type == Reader_ABC::AUTOMAT )
@@ -1151,6 +1152,5 @@ namespace
 void protocol::Read( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
 {
     if( const auto type = TestLowCaseAttribute( xis, "type" ) )
-        if( Apply( orders, COUNT_OF( orders ), *type, reader, dst, xis ) )
-            return;
+        Apply( orders, COUNT_OF( orders ), *type, reader, dst, xis );
 }
