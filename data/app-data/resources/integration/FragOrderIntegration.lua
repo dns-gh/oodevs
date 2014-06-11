@@ -145,7 +145,7 @@ end
 -- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
 -- @return Simulation agent
-integration.getAgentParameter = function( fragorder, parameterName )
+integration.getAgentTypeParameter = function( fragorder, parameterName )
     return fragorder.source:GetAgentParameter( parameterName )
 end
 
