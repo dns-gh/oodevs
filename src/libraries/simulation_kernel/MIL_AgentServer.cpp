@@ -604,7 +604,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
 // Name: MIL_AgentServer::SetRealTime
 // Created: SBO 2008-04-24
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::SetRealTime( const std::string& realTime )
+void MIL_AgentServer::SetRealTime( const std::string& realTime, unsigned int nCtx, unsigned int clientId )
 {
     unsigned int secs = 0;
     sword::DateTime datetime;
@@ -618,7 +618,7 @@ void MIL_AgentServer::SetRealTime( const std::string& realTime )
         nRealTime_ = secs;
         ack().set_error_code( sword::ControlAck::no_error );
     }
-    ack.Send( NET_Publisher_ABC::Publisher() );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

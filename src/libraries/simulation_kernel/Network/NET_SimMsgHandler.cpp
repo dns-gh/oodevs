@@ -92,7 +92,7 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
     else if( msg.has_control_change_time_factor() )
         simulation_.SetTimeFactor( msg.control_change_time_factor().time_factor() );
     else if( msg.has_control_date_time_change() )
-        simulation_.SetRealTime( msg.control_date_time_change().date_time().data() );
+        simulation_.SetRealTime( msg.control_date_time_change().date_time().data(), nCtx, clientId );
     else if( msg.has_control_checkpoint_save_now() )
         server.GetCheckPointManager().OnReceiveMsgCheckPointSaveNow(
             msg.control_checkpoint_save_now(), clientId, nCtx );

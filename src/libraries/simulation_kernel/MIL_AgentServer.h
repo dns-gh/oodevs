@@ -88,7 +88,7 @@ public:
     virtual void Continue();
     virtual void Resume( unsigned int ticks, unsigned int nCtx, unsigned int clientId );
     virtual void SetTimeFactor( unsigned timeFactor );
-    virtual void SetRealTime( const std::string& realTime );
+    virtual void SetRealTime( const std::string& realTime, unsigned int nCtx, unsigned int clientId );
     //@}
 
     //! @name Simulation main loop
