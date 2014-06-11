@@ -70,76 +70,75 @@ ReplayerToolbar::~ReplayerToolbar()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    if( controllers_.GetCurrentMode() == eModes_Replay )
+    if( controllers_.GetCurrentMode() != eModes_Replay )
+        return;
+    const unsigned int maxTick = simulation.GetTickCount();
+    if( ! slider_ )
     {
-        const unsigned int maxTick = simulation.GetTickCount();
-        if( ! slider_ )
-        {
-            minTime_ = new QLabel( this );
-            addWidget( minTime_ );
-            slider_ = new QSlider( Qt::Horizontal, this );
-            addWidget( slider_ );
-            const unsigned int firstTick = simulation.GetFirstTick();
-            slider_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? maxTick : firstTick );
-            slider_->setPageStep( 1 );
-            slider_->setMinimumWidth( 200 );
-            slider_->setTickmarks( QSlider::TicksBelow );
-            maxTime_ = new QLabel( this );
-            addWidget( maxTime_ );
-            addSeparator();
-            button_ = new QPushButton();
-            menu_ = new kernel::ContextMenu( button_ );
-            button_->setPopup( menu_ );
-            button_->setText( tr( "Ticks" ) );
-            menu_->insertItem( tr( "Ticks" ), 0 );
-            menu_->insertItem( tr( "Time" ), 1 );
-            menu_->setItemChecked( 0, true );
-            addWidget( button_ );
-            QSpinBox* spinBox = new EditWidget< QSpinBox >();
-            spinBoxAction_ = addWidget( spinBox );
-            spinBoxAction_->setVisible( true );
-            QDateTimeEdit* dateTime = new EditWidget< QDateTimeEdit >();
-            dateTime->setDisplayFormat( "dd/MM/yy HH:mm:ss" );
-            dateTime->setButtonSymbols( QAbstractSpinBox::NoButtons );
-            dateTimeAction_ = addWidget( dateTime );
-            dateTimeAction_->setVisible( false );
-            addSeparator();
-            QToolButton* pTimeTableButton = new QToolButton();
-            pTimeTableButton->setIconSet( MAKE_ICON( tic_temps ) );
-            pTimeTableButton->setTextLabel( tr( "Time table" ) );
-            addWidget( pTimeTableButton );
-            addSeparator();
-            QToolButton* pRefreshButton = new QToolButton();
-            pRefreshButton->setIconSet( MAKE_ICON( refresh ) );
-            pRefreshButton->setTextLabel( tr( "Refresh" ) );
-            addWidget( pRefreshButton );
-            connect( slider_, SIGNAL( sliderPressed() ), SLOT( OnSliderPressed() ) );
-            connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
-            connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
-            connect( spinBox, SIGNAL( editingFinished() ), SLOT( OnSpinBoxChanged() ) );
-            connect( dateTime, SIGNAL( editingFinished() ), SLOT( OnDateTimeChanged() ) );
-            connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
-            connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
-            connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
-        }
-        const auto SetDateTime = [&]( QLabel& dst, int tick ){
-            dst.setText( simulation.GetTime( tick ).toString( "dd/MM/yy\nHH:mm:ss" ) );
-        };
-        const auto first = simulation.GetFirstTick();
-        SetDateTime( *minTime_, first );
-        SetDateTime( *maxTime_, maxTick );
-        SpinBox()->setRange( first, maxTick );
-        SpinBox()->setSuffix( QString( " / %1" ).arg( maxTick ) );
-        slider_->setRange( first, maxTick );
-        slider_->setTickInterval( slider_->maxValue() / 20 );
-        slider_->blockSignals( true );
-        slider_->setValue( simulation.GetCurrentTick() );
-        slider_->blockSignals( false );
-        SpinBox()->setValue( simulation.GetCurrentTick() );
-        DateTimeEdit()->setDateTime( simulation.GetDateTime() );
-        SpinBox()->setEnabled( simulation.IsPaused() );
-        DateTimeEdit()->setEnabled( simulation.IsPaused() );
+        minTime_ = new QLabel( this );
+        addWidget( minTime_ );
+        slider_ = new QSlider( Qt::Horizontal, this );
+        addWidget( slider_ );
+        const unsigned int firstTick = simulation.GetFirstTick();
+        slider_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? maxTick : firstTick );
+        slider_->setPageStep( 1 );
+        slider_->setMinimumWidth( 200 );
+        slider_->setTickmarks( QSlider::TicksBelow );
+        maxTime_ = new QLabel( this );
+        addWidget( maxTime_ );
+        addSeparator();
+        button_ = new QPushButton();
+        menu_ = new kernel::ContextMenu( button_ );
+        button_->setPopup( menu_ );
+        button_->setText( tr( "Ticks" ) );
+        menu_->insertItem( tr( "Ticks" ), 0 );
+        menu_->insertItem( tr( "Time" ), 1 );
+        menu_->setItemChecked( 0, true );
+        addWidget( button_ );
+        QSpinBox* spinBox = new EditWidget< QSpinBox >();
+        spinBoxAction_ = addWidget( spinBox );
+        spinBoxAction_->setVisible( true );
+        QDateTimeEdit* dateTime = new EditWidget< QDateTimeEdit >();
+        dateTime->setDisplayFormat( "dd/MM/yy HH:mm:ss" );
+        dateTime->setButtonSymbols( QAbstractSpinBox::NoButtons );
+        dateTimeAction_ = addWidget( dateTime );
+        dateTimeAction_->setVisible( false );
+        addSeparator();
+        QToolButton* pTimeTableButton = new QToolButton();
+        pTimeTableButton->setIconSet( MAKE_ICON( tic_temps ) );
+        pTimeTableButton->setTextLabel( tr( "Time table" ) );
+        addWidget( pTimeTableButton );
+        addSeparator();
+        QToolButton* pRefreshButton = new QToolButton();
+        pRefreshButton->setIconSet( MAKE_ICON( refresh ) );
+        pRefreshButton->setTextLabel( tr( "Refresh" ) );
+        addWidget( pRefreshButton );
+        connect( slider_, SIGNAL( sliderPressed() ), SLOT( OnSliderPressed() ) );
+        connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
+        connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
+        connect( spinBox, SIGNAL( editingFinished() ), SLOT( OnSpinBoxChanged() ) );
+        connect( dateTime, SIGNAL( editingFinished() ), SLOT( OnDateTimeChanged() ) );
+        connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
+        connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
+        connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
     }
+    const auto SetDateTime = [&]( QLabel& dst, int tick ){
+        dst.setText( simulation.GetTime( tick ).toString( "dd/MM/yy\nHH:mm:ss" ) );
+    };
+    const auto first = simulation.GetFirstTick();
+    SetDateTime( *minTime_, first );
+    SetDateTime( *maxTime_, maxTick );
+    SpinBox()->setRange( first, maxTick );
+    SpinBox()->setSuffix( QString( " / %1" ).arg( maxTick ) );
+    slider_->setRange( first, maxTick );
+    slider_->setTickInterval( slider_->maxValue() / 20 );
+    slider_->blockSignals( true );
+    slider_->setValue( simulation.GetCurrentTick() );
+    slider_->blockSignals( false );
+    SpinBox()->setValue( simulation.GetCurrentTick() );
+    DateTimeEdit()->setDateTime( simulation.GetDateTime() );
+    SpinBox()->setEnabled( simulation.IsPaused() );
+    DateTimeEdit()->setEnabled( simulation.IsPaused() );
 }
 
 namespace
