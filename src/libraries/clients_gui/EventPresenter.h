@@ -13,6 +13,7 @@
 #include "EventSubPresenter_ABC.h"
 #include "ENT/ENT_Enums.h"
 #include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #pragma warning( push )
@@ -112,7 +113,10 @@ private:
     //! @name Helpers
     //@{
     void CheckEvent() const;
-    bool IsCurrentEvent( const gui::Event& event );
+    void CheckHandler() const;
+    bool IsCurrentEvent( const gui::Event& event ) const;
+    boost::optional< std::string > GetConsistencyError( bool creation ) const;
+    bool DisplayConsistencyWarning( bool creation );
     void InternalPurge();
 
     void ResetView( E_EventDockModes mode,

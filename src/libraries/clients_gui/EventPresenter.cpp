@@ -97,6 +97,16 @@ void EventPresenter::CheckEvent() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventPresenter::CheckHandler
+// Created: ABR 2014-06-04
+// -----------------------------------------------------------------------------
+void EventPresenter::CheckHandler() const
+{
+    if( !timelineHandler_ )
+        throw MASA_EXCEPTION( "Unable to process this action without a timeline handler" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventPresenter::SetTimelineHandler
 // Created: ABR 2013-12-06
 // -----------------------------------------------------------------------------
@@ -109,9 +119,40 @@ void EventPresenter::SetTimelineHandler( const boost::shared_ptr< kernel::Timeli
 // Name: EventPresenter::IsCurrentEvent
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-bool EventPresenter::IsCurrentEvent( const gui::Event& event )
+bool EventPresenter::IsCurrentEvent( const gui::Event& event ) const
 {
     return event_ && event_->GetEvent().uuid == event.GetEvent().uuid;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: EventPresenter::GetConsistencyError
+// Created: ABR 2014-06-05
+// -----------------------------------------------------------------------------
+boost::optional< std::string > EventPresenter::GetConsistencyError( bool creation ) const
+{
+    CheckEvent();
+    CheckHandler();
+    const auto& event = event_->GetEvent();
+    if( event.begin == event.end )
+        return tr( "Error: unable to save a task with the same begin and end date" ).toStdString();
+    const auto parent = timelineHandler_->GetCurrentParent();
+    if( !parent.empty() && !event.end.empty() && ( parent != event.uuid || creation ) )
+        return tr( "Error: unable to save a task with a duration and a parent" ).toStdString();
+    return boost::none;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventPresenter::DisplayConsistencyWarning
+// Created: ABR 2014-06-05
+// -----------------------------------------------------------------------------
+bool EventPresenter::DisplayConsistencyWarning( bool creation )
+{
+    auto error = GetConsistencyError( creation );
+    if( !error )
+        return false;
+    OnWarningChanged( *error, Qt::red );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -313,14 +354,16 @@ void EventPresenter::OnSaveClicked()
         state_->mode_ == eEventDockModes_DisplayTriggered ||
         state_->mode_ == eEventDockModes_EditTriggered )
         throw MASA_EXCEPTION( "Save button should be disabled" );
+    if( DisplayConsistencyWarning( state_->mode_ == eEventDockModes_Create ) )
+        return;
     if( state_->mode_ == eEventDockModes_EditPlanned )
     {
         UpdateCurrent();
         UpdateRemote();
+        ResetView( eEventDockModes_EditPlanned );
     }
     else if( state_->mode_ == eEventDockModes_Create )
         Plan();
-    ResetView( eEventDockModes_EditPlanned );
 }
 
 // -----------------------------------------------------------------------------
@@ -332,8 +375,9 @@ void EventPresenter::OnSaveAsClicked()
     if( state_->mode_ == eEventDockModes_None ||
         state_->mode_ == eEventDockModes_Create )
         throw MASA_EXCEPTION( "Save as button should be disabled" );
+    if( DisplayConsistencyWarning( true ) )
+        return;
     Plan();
-    ResetView( eEventDockModes_EditPlanned );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,15 +396,16 @@ void EventPresenter::Trigger()
 void EventPresenter::Plan()
 {
     CheckEvent();
-    event_->GetEvent().uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
-    event_->GetEvent().done = false;
-    event_->GetEvent().error_code = 0;
-    event_->GetEvent().error_text.clear();
-    event_->GetEvent().read_only = false;
-    if( !timelineHandler_ )
-        throw MASA_EXCEPTION( "Can't plan an event without a timeline handler" );
-    event_->GetEvent().parent = timelineHandler_->GetCurrentParent();
+    CheckHandler();
+    auto& event = event_->GetEvent();
+    event.uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
+    event.done = false;
+    event.error_code = 0;
+    event.error_text.clear();
+    event.read_only = false;
+    event.parent = timelineHandler_->GetCurrentParent();
     timelineHandler_->CreateEvent( event_->GetEvent(), true );
+    ResetView( eEventDockModes_EditPlanned );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,10 +415,9 @@ void EventPresenter::Plan()
 void EventPresenter::UpdateRemote()
 {
     CheckEvent();
+    CheckHandler();
     if( event_->GetType() == eEventTypes_Order && event_->GetEvent().done )
         throw MASA_EXCEPTION( "Can't edit an already triggered event" );
-    if( !timelineHandler_ )
-        throw MASA_EXCEPTION( "Can't edit an event without a timeline handler" );
     timelineHandler_->EditEvent( event_->GetEvent() );
 }
 
@@ -398,8 +442,7 @@ void EventPresenter::UpdateCurrent()
 void EventPresenter::Delete()
 {
     CheckEvent();
-    if( !timelineHandler_ )
-        throw MASA_EXCEPTION( "Can't delete an event without a timeline handler" );
+    CheckHandler();
     timelineHandler_->DeleteEvent( event_->GetEvent().uuid );
 }
 
@@ -410,8 +453,7 @@ void EventPresenter::Delete()
 void EventPresenter::Select()
 {
     CheckEvent();
-    if( !timelineHandler_ )
-        throw MASA_EXCEPTION( "Can't select an event without a timeline handler" );
+    CheckHandler();
     timelineHandler_->SelectEvent( event_->GetEvent().uuid );
 }
 

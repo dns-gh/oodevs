@@ -236,14 +236,14 @@ void ChangeSuperiorDialog::Clear()
 
 namespace
 {
-    bool IsValidSuperior( const kernel::Entity_ABC& entity,
+    bool IsValidSuperior( const kernel::Entity_ABC* entity,
                           gui::TaskerWidget& tasker,
                           const boost::optional< ChangeSuperiorDialog::ChangeSuperiorFunctors >& functors )
     {
 
         bool canChange = !IsSuperiorActivated( tasker );
         auto superior = tasker.GetTasker();
-        canChange |= superior && functors->canChange_( entity, *superior );
+        canChange |= entity && superior && functors->canChange_( *entity, *superior );
         tasker.EnableStaticWarning( !canChange, Qt::red );
         return canChange;
     }
@@ -256,9 +256,9 @@ namespace
 void ChangeSuperiorDialog::OnContentChanged()
 {
     auto tasker = currentEntity_->GetTasker();
-    okButton_->setEnabled( tasker &&
-                           IsValidSuperior( *tasker, *tacticalSuperior_, tacticalSuperiorFunctors_ ) &&
-                           IsValidSuperior( *tasker, *knowledgeGroup_, knowledgeGroupFunctors_ ) );
+    auto validTactical = IsValidSuperior( tasker, *tacticalSuperior_, tacticalSuperiorFunctors_ );
+    auto validKnowledgeGroup = IsValidSuperior( tasker, *knowledgeGroup_, knowledgeGroupFunctors_ );
+    okButton_->setEnabled( tasker && validTactical && validKnowledgeGroup );
 }
 
 // -----------------------------------------------------------------------------

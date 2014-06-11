@@ -943,6 +943,17 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::EventPresenter</name>
+    <message>
+        <source>Error: unable to save a task with a duration and a parent</source>
+        <translation>Erreur: impossible de sauvegarder une tâche avec une durée et un parent</translation>
+    </message>
+    <message>
+        <source>Error: unable to save a task with the same begin and end date</source>
+        <translation>Erreur: impossible de sauvegarder une tâche avec la même date de début et de fin</translation>
+    </message>
+</context>
+<context>
     <name>gui::ExtensionsPanel</name>
     <message>
         <source>Extensions</source>

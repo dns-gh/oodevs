@@ -149,7 +149,7 @@ void InitialState::ReadResource( xml::xistream& xis )
     if( resource.lowThreshold_ == -1 )
         resource.lowThreshold_ = RetrieveLowLogisticThreshold( resource.name_ );
     if( resource.highThreshold_ == -1 )
-        resource.lowThreshold_ = RetrieveHighLogisticThreshold( resource.name_ );
+        resource.highThreshold_ = RetrieveHighLogisticThreshold( resource.name_ );
     auto it = std::find_if( resources_.begin(), resources_.end(),
         [&]( const InitialStateResource& initial )
         {

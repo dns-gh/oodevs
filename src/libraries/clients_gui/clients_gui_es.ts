@@ -945,6 +945,17 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
     </message>
 </context>
 <context>
+    <name>gui::EventPresenter</name>
+    <message>
+        <source>Error: unable to save a task with the same begin and end date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: unable to save a task with a duration and a parent</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ExtensionsPanel</name>
     <message>
         <source>Extensions</source>
