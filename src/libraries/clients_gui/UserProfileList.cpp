@@ -27,8 +27,8 @@ Q_DECLARE_METATYPE( kernel::ProfileEditor* )
 // Name: UserProfileList constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, kernel::ProfilesModel_ABC& model )
-    : QWidget( parent )
+UserProfileList::UserProfileList( const QString& objectName, QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, kernel::ProfilesModel_ABC& model )
+    : RichWidget< QWidget >( objectName, parent )
     , controller_( controller )
     , pages_( pages )
     , model_( model )
