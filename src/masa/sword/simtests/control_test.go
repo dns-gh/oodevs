@@ -10,6 +10,7 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
 	"time"
 )
 
@@ -86,4 +87,20 @@ func (s *TestSuite) TestControlRights(c *C) {
 
 	err = client.Stop()
 	c.Assert(err, IsSwordError, "error_forbidden")
+}
+
+func (s *TestSuite) TestControlChangeDateTime(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+	invalid, err := swapi.GetTime("20100908T060504")
+	c.Assert(err, IsNil)
+	err = client.ChangeTime(invalid)
+	c.Assert(err, IsSwordError, "error_invalid_date_time")
+	valid, err := swapi.GetTime("20200908T060504")
+	c.Assert(err, IsNil)
+	err = client.ChangeTime(valid)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Time.After(valid)
+	})
 }

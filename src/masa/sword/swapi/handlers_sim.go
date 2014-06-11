@@ -56,7 +56,7 @@ func (model *ModelData) handleControlBeginTick(m *sword.SimToClient_Content) err
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	t, err := GetTime(mm.GetDateTime())
+	t, err := GetTime(mm.GetDateTime().GetData())
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,7 @@ func (model *ModelData) handleControlInformation(m *sword.SimToClient_Content) e
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	t, err := GetTime(mm.GetDateTime())
+	t, err := GetTime(mm.GetDateTime().GetData())
 	if err != nil {
 		return err
 	}
@@ -837,12 +837,12 @@ func (model *ModelData) handleControlLocalWeatherCreation(m *sword.SimToClient_C
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	start, err := GetTime(mm.GetStartDate())
+	start, err := GetTime(mm.GetStartDate().GetData())
 	if err != nil {
 		return fmt.Errorf("cannot parse local weather start time: %v",
 			mm.GetStartDate())
 	}
-	end, err := GetTime(mm.GetEndDate())
+	end, err := GetTime(mm.GetEndDate().GetData())
 	if err != nil {
 		return fmt.Errorf("cannot parse local weather end time: %v",
 			mm.GetEndDate())

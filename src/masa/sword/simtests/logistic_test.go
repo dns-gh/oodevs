@@ -317,8 +317,8 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 }
 
 func CheckDeployTime(c *C, start, end *sword.DateTime, duration time.Duration) {
-	startTime, _ := swapi.GetTime(start)
-	endTime, _ := swapi.GetTime(end)
+	startTime, _ := swapi.GetTime(start.GetData())
+	endTime, _ := swapi.GetTime(end.GetData())
 	c.Assert(endTime.Sub(startTime), Equals, duration)
 }
 

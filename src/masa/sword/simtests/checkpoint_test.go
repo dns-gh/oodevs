@@ -405,3 +405,13 @@ func (s *TestSuite) TestCheckpointPathfind(c *C) {
 	c.Assert(data.Pathfinds, HasLen, 1)
 	checkpointCompareAndStop(c, sim, client)
 }
+
+func (s *TestSuite) TestCheckpointTimeskips(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	defer stopSimAndClient(c, sim, client)
+	valid, err := swapi.GetTime("20200908T060504")
+	c.Assert(err, IsNil)
+	err = client.ChangeTime(valid)
+	c.Assert(err, IsNil)
+	checkpointCompareAndStop(c, sim, client)
+}

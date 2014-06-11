@@ -370,12 +370,16 @@ func MakePathfindRequest(unitId uint32, ignoreDynamicObjects bool, points ...Poi
 		})
 }
 
+func MakeDateTime(value time.Time) *sword.DateTime {
+	return &sword.DateTime{
+		Data: proto.String(value.UTC().Format(BoostTimeLayout)),
+	}
+}
+
 func MakeTime(value time.Time) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			DateTime: &sword.DateTime{
-				Data: proto.String(value.UTC().Format(BoostTimeLayout)),
-			},
+			DateTime: MakeDateTime(value),
 		})
 }
 
@@ -465,11 +469,11 @@ func MakeBreakdowns(equipments map[uint32]*Equipment) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
-func GetTime(value *sword.DateTime) (time.Time, error) {
-	if value == nil {
+func GetTime(value string) (time.Time, error) {
+	if len(value) == 0 {
 		return time.Time{}, ErrInvalidTime
 	}
-	return time.Parse(BoostTimeLayout, value.GetData())
+	return time.Parse(BoostTimeLayout, value)
 }
 
 func GetFirstValue(param *sword.MissionParameter) *sword.MissionParameter_Value {
