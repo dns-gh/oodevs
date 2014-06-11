@@ -118,7 +118,7 @@ integration.getOrderConduiteModifierPrioritesReparationsParameter = function( fr
 end
 
 --- Returns the fragmentary order's "Equipment type list" parameter
--- @param DirectIA fragmentary order
+-- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
 -- @return List of equipment types
 integration.getEquipmentTypeListParameter = function( fragorder, parameterName )
@@ -126,7 +126,7 @@ integration.getEquipmentTypeListParameter = function( fragorder, parameterName )
 end
 
 --- Returns the fragmentary order's "Integer" parameter with the given name.
--- @param DirectIA fragmentary order
+-- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
 -- @return Integer
 integration.getIntegerParameter = function( fragorder, parameterName )
@@ -134,7 +134,7 @@ integration.getIntegerParameter = function( fragorder, parameterName )
 end
 
 --- Returns the fragmentary order's "Automat list" parameter with the given name.
--- @param DirectIA fragmentary order
+-- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
 -- @return List of simulation companies
 integration.getAutomatListParameter = function( fragorder, parameterName )
@@ -142,25 +142,25 @@ integration.getAutomatListParameter = function( fragorder, parameterName )
 end
 
 --- Returns the fragmentary order's "Agent" parameter with the given name.
--- @param DirectIA fragmentary order
+-- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
--- @return List of simulation agents
+-- @return Simulation agent
 integration.getAgentParameter = function( fragorder, parameterName )
     return fragorder.source:GetAgentParameter( parameterName )
 end
 
 --- Returns the fragmentary order's "Location" parameter with the given name.
--- @param DirectIA fragmentary order
+-- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
--- @return List of simulation areas
+-- @return Simulation area
 integration.getLocationParameter = function( fragorder, parameterName )
     return fragorder.source:GetLocationParameter( parameterName )
 end
 
 --- Returns the fragmentary order's "Point" parameter with the given name.
--- @param DirectIA fragmentary order
+-- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
--- @return List of simulation points
+-- @return Simulation point
 integration.getPointParameter = function( fragorder, parameterName )
     return fragorder.source:GetPointParameter( parameterName )
 end
