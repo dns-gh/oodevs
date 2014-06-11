@@ -487,3 +487,60 @@ void ADN_TableDelegate::paint( QPainter* painter, const QStyleOptionViewItem& op
         painter->drawLine( option.rect.topLeft(), option.rect.bottomLeft () );
     painter->setPen( oldPen );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::drawCheck
+// Created: ABR 2014-04-23
+// -----------------------------------------------------------------------------
+void ADN_TableDelegate::drawCheck( QPainter* painter, const QStyleOptionViewItem& option, const QRect& rect, Qt::CheckState state ) const
+{
+    if( !rect.isValid() )
+        return;
+    const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
+    QRect checkRect = QStyle::alignedRect( option.direction,
+                                           Qt::AlignCenter,
+                                           check( option, option.rect, Qt::Checked ).size(),
+                                           QRect( option.rect.x() + textMargin,
+                                           option.rect.y(),
+                                           option.rect.width() - ( textMargin * 2 ),
+                                           option.rect.height() ) );
+    QItemDelegate::drawCheck( painter, option, checkRect, state );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::editorEvent
+// Created: LGY 2012-11-27
+// -----------------------------------------------------------------------------
+bool ADN_TableDelegate::editorEvent( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index )
+{
+    Qt::ItemFlags flags = model->flags( index );
+    if( ( flags & Qt::ItemIsUserCheckable ) && ( flags & Qt::ItemIsEnabled ) )
+    {
+        QVariant value = index.data( Qt::CheckStateRole );
+        if( !value.isValid() )
+            return false;
+        if( event->type() == QEvent::MouseButtonRelease )
+        {
+            const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
+            QRect checkRect = QStyle::alignedRect( option.direction, Qt::AlignCenter,
+                option.decorationSize,
+                QRect( option.rect.x() + ( 2 * textMargin ), option.rect.y(),
+                option.rect.width() - ( 2 * textMargin ),
+                option.rect.height() ) );
+            if( !checkRect.contains( static_cast< QMouseEvent* >( event )->pos() ) )
+                return false;
+        }
+        else if( event->type() == QEvent::KeyPress )
+        {
+            if( static_cast< QKeyEvent* >( event )->key() != Qt::Key_Space &&
+                static_cast< QKeyEvent* >( event )->key() != Qt::Key_Select )
+                return false;
+        }
+        else
+            return false;
+        Qt::CheckState state =( static_cast< Qt::CheckState >( value.toInt() ) == Qt::Checked
+            ? Qt::Unchecked : Qt::Checked );
+        return model->setData( index, state, Qt::CheckStateRole );
+    }
+    return QItemDelegate::editorEvent( event, model, option, index );
+}

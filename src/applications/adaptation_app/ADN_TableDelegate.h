@@ -93,6 +93,8 @@ protected:
     virtual void setEditorData( QWidget* editor, const QModelIndex& index ) const;
     virtual void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const;
     virtual void paint( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
+    virtual void drawCheck( QPainter* painter, const QStyleOptionViewItem& option, const QRect& rect, Qt::CheckState state ) const;
+    virtual bool editorEvent( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
     //@}
 
 private:
