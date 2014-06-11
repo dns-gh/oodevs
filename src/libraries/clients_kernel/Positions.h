@@ -43,6 +43,7 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const = 0;
     virtual void Accept( LocationVisitor_ABC& visitor ) const = 0;
     virtual bool CanAggregate() const = 0;
+    virtual void Compute() {}
     //@}
 };
 

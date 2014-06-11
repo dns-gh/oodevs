@@ -117,6 +117,7 @@ public slots:
     void OnAddRaster();
     void OnGenerateSymbols();
     void PlayPauseSoundControl( bool play );
+    void OnUpdateGL();
     //@}
 
 signals:

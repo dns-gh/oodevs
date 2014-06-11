@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __RefreshRatePanel_h_
-#define __RefreshRatePanel_h_
+#ifndef ReplayPanel_h
+#define ReplayPanel_h
 
 #include "PreferencePanel_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
@@ -21,27 +21,28 @@ namespace kernel
 
 namespace gui
 {
-    class RichSpinBox;
 // =============================================================================
-/** @class  RefreshRatePanel
-    @brief  RefreshRatePanel
+/** @class  ReplayPanel
+    @brief  ReplayPanel
 */
-// Created: LDC 2014-02-21
+// Created: SLI 2014-06-06
 // =============================================================================
-class RefreshRatePanel : public PreferencePanel_ABC
-                       , public tools::Observer_ABC
-                       , public kernel::OptionsObserver_ABC
+class ReplayPanel : public PreferencePanel_ABC
+                  , public tools::Observer_ABC
+                  , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             RefreshRatePanel( QWidget* parent, kernel::Controllers& controllers );
-    virtual ~RefreshRatePanel();
+             ReplayPanel( QWidget* parent, kernel::Controllers& controllers );
+    virtual ~ReplayPanel();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Commit();
     virtual void Reset();
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
@@ -49,8 +50,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    RefreshRatePanel( const RefreshRatePanel& );            //!< Copy constructor
-    RefreshRatePanel& operator=( const RefreshRatePanel& ); //!< Assignment operator
+    ReplayPanel( const ReplayPanel& );            //!< Copy constructor
+    ReplayPanel& operator=( const ReplayPanel& ); //!< Assignment operator
     //@}
 
 private:
@@ -58,8 +59,10 @@ private:
     //@{
      kernel::Options& options_;
      kernel::Controllers& controllers_;
-     gui::RichSpinBox* spinBox_;
+     QCheckBox* checkbox_;
     //@}
 };
+
 }
-#endif // __RefreshRatePanel_h_
+
+#endif // ReplayPanel_h

@@ -14,6 +14,7 @@
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
 #include "RefreshRatePanel.h"
+#include "ReplayPanel.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
 #include "InhabitantPanel.h"
@@ -206,6 +207,7 @@ void PreferencesDialog::BuildSettings()
     AddPage( tools::translate( "PreferencesDialog", "2D/Elevation" ), *new ElevationPanel( this, elevation2dLayer_, controllers_, painter_ ) );
     AddPage( tools::translate( "PreferencesDialog", "3D" ), *new LightingPanel( this, lighting_, controllers_ ) );
     AddPage( tools::translate( "PreferencesDialog", "Refresh rate" ), *new RefreshRatePanel( this, controllers_ ) );
+    AddPage( tools::translate( "PreferencesDialog", "Replay" ), *new ReplayPanel( this, controllers_ ) );
 }
 
 // -----------------------------------------------------------------------------

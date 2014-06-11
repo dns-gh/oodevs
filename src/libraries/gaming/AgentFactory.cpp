@@ -58,6 +58,8 @@
 #include "PopulationPositions.h"
 #include "Reinforcements.h"
 #include "Reports.h"
+#include "Services.h"
+#include "SmoothPositions.h"
 #include "StaticModel.h"
 #include "Symbol.h"
 #include "TeamsModel.h"
@@ -88,6 +90,7 @@
 #include "clients_kernel/SymbolHierarchy.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "protocol/ReplaySenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -99,7 +102,8 @@ AgentFactory::AgentFactory( kernel::Controllers& controllers,
                             Publisher_ABC& publisher,
                             kernel::Workers& workers,
                             const kernel::Profile_ABC& profile,
-                            actions::ActionsModel& actionsModel )
+                            actions::ActionsModel& actionsModel,
+                            const Simulation& simulation )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
@@ -107,8 +111,10 @@ AgentFactory::AgentFactory( kernel::Controllers& controllers,
     , workers_( workers )
     , profile_( profile )
     , actionsModel_( actionsModel )
+    , simulation_ ( simulation )
+    , isInReplay_ ( false )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +123,7 @@ AgentFactory::AgentFactory( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 AgentFactory::~AgentFactory()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,6 +179,22 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     return result;
 }
 
+namespace
+{
+    template< typename Entity, typename Extension >
+    void AddPositions( Entity& entity, kernel::Controllers& controllers, const Simulation& simulation,
+                       bool isInReplay, Extension& extension )
+    {
+        if( isInReplay )
+        {
+            entity.Attach( extension );
+            entity.Attach< kernel::Positions >( *new SmoothPositions( controllers, simulation, extension ) );
+        }
+        else
+            entity.Attach< kernel::Positions >( extension );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
@@ -189,7 +211,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, message, static_.types_ ) ); // $$$$ LDC Warning: Must be before new Attributes because Attributes uses it without knowing it to paint the headquarters symbol...
     result->Attach( *new Attributes( *result, controllers_.controller_, static_.detection_, static_.coordinateConverter_, dictionary, model_.teams_ ) );
     result->Attach< gui::Decisions_ABC >( *new AgentDecisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
-    result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
+    AddPositions( *result, controllers_, simulation_, isInReplay_, *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_, workers_, controllers_.controller_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );
@@ -267,7 +289,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& m
     result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
-    result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
+    AddPositions( *result, controllers_, simulation_, isInReplay_, *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     result->Attach< kernel::LivingArea_ABC >( *new LivingArea( message, result->GetId(), controllers_.controller_, model_.urbanObjects_ ) );
@@ -291,4 +313,13 @@ void AgentFactory::AttachExtensions( kernel::Entity_ABC& agent )
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_, agent.GetId() ) );
     agent.Attach( *new UrbanPerceptions( controllers_.controller_, model_.agents_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::NotifyUpdated
+// Created: SLI 2014-06-06
+// -----------------------------------------------------------------------------
+void AgentFactory::NotifyUpdated( const Services& services )
+{
+    isInReplay_ = services.HasService( sword::service_replay );
 }

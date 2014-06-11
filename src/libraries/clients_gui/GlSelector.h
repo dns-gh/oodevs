@@ -77,7 +77,11 @@ signals:
     void Widget3dChanged( gui::Gl3dWidget* );
     void MouseMove( const geometry::Point2f& );
     void MouseMove( const geometry::Point3f& );
+    void UpdateGL();
     //@}
+
+private slots:
+    void OnUpdateGL();
 
 protected:
     //! @name Operations
