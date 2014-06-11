@@ -107,7 +107,7 @@ namespace
     const KeyFrame* FindKeyFrame( const MessageLoader::T_KeyFrames& keyFrames, unsigned frame )
     {
         const KeyFrame* next = 0;
-        for( MessageLoader::CIT_KeyFrames it = keyFrames.begin(); it != keyFrames.end(); ++it )
+        for( auto it = keyFrames.begin(); it != keyFrames.end(); ++it )
             if( it->frameNumber_ <= frame )
                 next = &*it;
         return next;
@@ -398,7 +398,7 @@ void MessageLoader::AddFolder( const tools::Path& folderName )
     tools::InputBinaryWrapper wrapper( infoFile );
     wrapper >> start;
     wrapper >> end;
-    fragmentsInfos_[ folderName ] = std::make_pair< unsigned int, unsigned int >( start, end );
+    fragmentsInfos_[ folderName ] = std::make_pair( start, end );
     if( tickCount_ < end )
     {
         tickCount_ = end;

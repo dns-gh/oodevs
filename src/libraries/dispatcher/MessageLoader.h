@@ -73,9 +73,7 @@ public:
     //@{
     typedef std::vector< Frame > T_Frames;
     typedef std::vector< KeyFrame > T_KeyFrames;
-    typedef T_KeyFrames::const_iterator CIT_KeyFrames;
     typedef std::map< tools::Path, std::pair< unsigned int, unsigned int > > T_FragmentsInfos;
-    typedef T_FragmentsInfos::const_iterator CIT_FragmentsInfos;
     //@}
 
 private:
