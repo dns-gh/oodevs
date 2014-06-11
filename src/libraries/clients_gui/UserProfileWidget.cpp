@@ -158,6 +158,15 @@ void UserProfileWidget::SetChecker( const kernel::ProfilesChecker_ABC* pChecker 
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileWidget::hideEvent
+// Created: JSR 2014-06-11
+// -----------------------------------------------------------------------------
+void UserProfileWidget::hideEvent( QHideEvent* )
+{
+    profile_ = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileWidget::OnLoginChanged
 // Created: LGY 2011-09-26
 // -----------------------------------------------------------------------------

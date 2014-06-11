@@ -50,6 +50,7 @@ public:
     //@{
     void Display( kernel::UserProfile_ABC& profile );
     void SetChecker( const kernel::ProfilesChecker_ABC* pChecker );
+    virtual void hideEvent( QHideEvent* event );
     //@}
 
 private slots:

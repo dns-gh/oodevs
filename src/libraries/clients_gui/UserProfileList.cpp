@@ -158,8 +158,9 @@ void UserProfileList::OnCreate()
     kernel::ProfileEditor* profileEditor = model_.CreateProfileEditor();
     profileEditor->GetProfile().SetLogin( result );
     localProfiles_.emplace_back( profileEditor );
-    dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
-    pages_.setVisible( true );
+    const int row = dataModel_->rowCount();
+    dataModel_->setItem( row, 0, CreateItem( *profileEditor ) );
+    list_->selectionModel()->select( proxyModel_->mapFromSource( dataModel_->index( row, 0 ) ), QItemSelectionModel::ClearAndSelect );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +175,10 @@ void UserProfileList::OnDelete()
         const int index = proxyModel_->mapToSource( indexes.front() ).row();
         dataModel_->item( index )->data().value< kernel::ProfileEditor* >()->Delete();
         dataModel_->removeRow( index );
-        pages_.setVisible( dataModel_->rowCount() > 0 );
+        const int count = dataModel_->rowCount();
+        pages_.setVisible( count > 0 );
+        if( count > 0 && !list_->selectionModel()->hasSelection() )
+            list_->selectionModel()->select( proxyModel_->index( count - 1, 0 ), QItemSelectionModel::Select );
     }
 }
 
