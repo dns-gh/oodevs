@@ -50,7 +50,6 @@
 #include "StatusBar.h"
 #include "TeamLayer.h"
 #include "DrawingsBuilder.h"
-#include "UserProfileDialog.h"
 #include "WeatherLayer.h"
 #include "PathfindLayer.h"
 #include "UnitStateDialog.h"
@@ -68,6 +67,7 @@
 #include "gaming/Profile.h"
 #include "gaming/ProfileFilter.h"
 #include "gaming/Services.h"
+#include "gaming/UserProfilesModel.h"
 #include "gaming/VisionConesToggler.h"
 #include "gaming/ColorController.h"
 #include "gaming/TeamsModel.h"
@@ -103,6 +103,7 @@
 #include "clients_gui/OrbatPanel.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/PreferencesDialog.h"
+#include "clients_gui/ProfileDialog.h"
 #include "clients_gui/RasterLayer.h"
 #include "clients_gui/MapnikLayer.h"
 #include "clients_gui/RasterProcess.h"
@@ -229,7 +230,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     //Dialogs
     new Dialogs( this, controllers, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, profile_, network.GetCommands(), config );
     addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
-    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, profile_, *icons_, model_.userProfileFactory_ );
+    gui::ProfileDialog* profileDialog = new gui::ProfileDialog( this, controllers, profile_, *icons_, model_, model.profiles_ );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
     unitStateDialog_.reset( new UnitStateDialog( this, controllers, config, model.static_, model.actions_, simulation, filter, *displayExtractor_ ) );
 

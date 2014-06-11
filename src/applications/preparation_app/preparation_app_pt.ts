@@ -1495,25 +1495,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>NewProfileDialog</name>
-    <message>
-        <source>New profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile name is empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; already exists.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -1734,21 +1715,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source> Location is outside terrain bounding box </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ProfileDialog</name>
-    <message>
-        <source>User profiles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2882,92 +2848,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileList</name>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileRights</name>
-    <message>
-        <source>Read</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Write</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileWidget</name>
-    <message>
-        <source>Login:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automats:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Knowledge groups:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supervisor actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;Read&apos; permission allows you to see a unit.
-&apos;Write&apos; permission allows you to control a unit.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Access permissions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duplicate login: &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid profile information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time Control</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

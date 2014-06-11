@@ -10,18 +10,13 @@
 #include "gaming_pch.h"
 #include "UserProfileFactory.h"
 #include "UserProfile.h"
-#include "Model.h"
-#include "UserProfilesModel.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileFactory constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfileFactory::UserProfileFactory( const Model& model, kernel::Controllers& controllers, Publisher_ABC& publisher )
-    : model_( model )
-    , controllers_( controllers )
+UserProfileFactory::UserProfileFactory( kernel::Controller& controller, Publisher_ABC& publisher )
+    : controller_( controller )
     , publisher_( publisher )
 {
     // NOTHING
@@ -38,33 +33,45 @@ UserProfileFactory::~UserProfileFactory()
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileFactory::Create
-// Created: SBO 2007-01-19
+// Created: JSR 2014-06-06
 // -----------------------------------------------------------------------------
-UserProfile* UserProfileFactory::Create( const sword::ProfileCreation& message ) const
+kernel::UserProfile_ABC* UserProfileFactory::Create( xml::xistream& /*xis*/ ) const
 {
-    return new UserProfile( message, controllers_.controller_, publisher_, model_ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileFactory::Create
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+kernel::UserProfile_ABC* UserProfileFactory::Create( const QString& /*name*/ ) const
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileFactory::Create
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfileFactory::Create()
+kernel::UserProfile_ABC* UserProfileFactory::Create( const sword::ProfileCreation& message ) const
 {
-    UserProfile profile( GenerateUniqueLogin(), controllers_.controller_, publisher_, model_ );
-    profile.RequestCreation();
+    return new UserProfile( message, controller_, publisher_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileFactory::GenerateUniqueLogin
-// Created: SBO 2007-01-19
+// Name: UserProfileFactory::Create
+// Created: JSR 2014-06-06
 // -----------------------------------------------------------------------------
-QString UserProfileFactory::GenerateUniqueLogin() const
+kernel::UserProfile_ABC* UserProfileFactory::Create( kernel::UserProfile_ABC& profile ) const
 {
-    static const QString defaultName = tools::translate( "UserProfileFactory", "New profile" );
-    QString name;
-    int i = 0;
-    while( model_.profiles_.Find( name = defaultName + ( i > 0 ? " (" + QString::number( i ) + ")" : "" ) ) )
-        ++i;
-    return name;
+    return new UserProfile( static_cast< UserProfile& >( profile ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileFactory::Create
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+kernel::UserProfile_ABC* UserProfileFactory::Create() const
+{
+    return new UserProfile( controller_, publisher_ );
 }

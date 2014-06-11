@@ -10,7 +10,7 @@
 #ifndef __RightsResolver_h_
 #define __RightsResolver_h_
 
-#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "clients_kernel/UserRights.h"
 #include "protocol/AuthenticationSenders.h"
 #include <tools/ElementObserver_ABC.h>
@@ -36,7 +36,7 @@ class Model;
 */
 // Created: LGY 2011-11-25
 // =============================================================================
-class RightsResolver : public kernel::Profile_ABC
+class RightsResolver : public kernel::UserProfile_ABC
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                      , public tools::ElementObserver_ABC< kernel::Population_ABC >
@@ -51,7 +51,7 @@ public:
     virtual ~RightsResolver();
     //@}
 
-    //! @name Operations
+    //! @name From Profile_ABC
     //@{
     virtual bool IsVisible( const kernel::Entity_ABC& entity ) const;
     virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const;

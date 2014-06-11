@@ -10,14 +10,13 @@
 #ifndef __UserProfileFactory_h_
 #define __UserProfileFactory_h_
 
-#include "UserProfileFactory_ABC.h"
+#include "clients_kernel/ProfileFactory_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
+    class Controller;
 }
 
-class Model;
 class Publisher_ABC;
 
 // =============================================================================
@@ -26,38 +25,28 @@ class Publisher_ABC;
 */
 // Created: SBO 2007-01-19
 // =============================================================================
-class UserProfileFactory : public UserProfileFactory_ABC
+class UserProfileFactory : public kernel::ProfileFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileFactory( const Model& model, kernel::Controllers& controllers, Publisher_ABC& publisher );
+             UserProfileFactory( kernel::Controller& controller, Publisher_ABC& publisher );
     virtual ~UserProfileFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual UserProfile* Create( const sword::ProfileCreation& message ) const;
-    virtual void Create();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfileFactory( const UserProfileFactory& );            //!< Copy constructor
-    UserProfileFactory& operator=( const UserProfileFactory& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    QString GenerateUniqueLogin() const;
+    virtual kernel::UserProfile_ABC* Create( xml::xistream& xis ) const;
+    virtual kernel::UserProfile_ABC* Create( const QString& name ) const;
+    virtual kernel::UserProfile_ABC* Create( const sword::ProfileCreation& message ) const;
+    virtual kernel::UserProfile_ABC* Create( kernel::UserProfile_ABC& profile ) const;
+    virtual kernel::UserProfile_ABC* Create() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Model& model_;
-    kernel::Controllers& controllers_;
+    kernel::Controller& controller_;
     Publisher_ABC& publisher_;
     //@}
 };

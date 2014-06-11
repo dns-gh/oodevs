@@ -10,8 +10,8 @@
 #include "preparation_pch.h"
 #include "ProfileSelection.h"
 #include "ProfilesModel.h"
-#include "UserProfile.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -32,10 +32,10 @@ ProfileSelection::ProfileSelection( kernel::Controllers& controllers )
 ProfileSelection::ProfileSelection( const ProfileSelection& selection )
     : controllers_( selection.controllers_ )
 {
-    tools::Iterator< const UserProfile& > it( selection.CreateIterator() );
+    auto it( selection.CreateIterator() );
     while( it.HasMoreElements() )
     {
-        const UserProfile& profile = it.NextElement();
+        const kernel::UserProfile_ABC& profile = it.NextElement();
         Register( profile.GetLogin(), profile );
     }
 }
@@ -69,7 +69,7 @@ ProfileSelection::~ProfileSelection()
 void ProfileSelection::ReadProfile( xml::xistream& xis, const ProfilesModel& model )
 {
     const std::string name = xis.attribute< std::string >( "name" );
-    if( const UserProfile* profile = model.Find( QString( name.c_str() ) ) )
+    if( const kernel::UserProfile_ABC* profile = model.Find( QString( name.c_str() ) ) )
         Register( profile->GetLogin(), *profile );
 }
 
@@ -91,7 +91,7 @@ void ProfileSelection::Serialize( xml::xostream& xos ) const
 // Name: ProfileSelection::NotifyUpdated
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
-void ProfileSelection::NotifyUpdated( const UserProfile& profile )
+void ProfileSelection::NotifyUpdated( const kernel::UserProfile_ABC& profile )
 {
     BOOST_FOREACH( T_Elements::value_type element, elements_ )
         if( element.second == &profile && element.first != profile.GetLogin() )
@@ -106,7 +106,7 @@ void ProfileSelection::NotifyUpdated( const UserProfile& profile )
 // Name: ProfileSelection::NotifyDeleted
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void ProfileSelection::NotifyDeleted( const UserProfile& profile )
+void ProfileSelection::NotifyDeleted( const kernel::UserProfile_ABC& profile )
 {
     Remove( profile.GetLogin() );
 }

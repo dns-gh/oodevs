@@ -11,8 +11,11 @@
 #define __UserProfilePopulationRights_h_
 
 #include "UserProfileRights_ABC.h"
-#include "clients_gui/EntityTreeView.h"
-#include "clients_gui/DummyModelObserver.h"
+#include "EntityTreeView.h"
+#include "DummyModelObserver.h"
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  UserProfilePopulationRights
@@ -20,7 +23,7 @@
 */
 // Created: SBO 2007-01-18
 // =============================================================================
-class UserProfilePopulationRights : public gui::PopulationTreeView
+class UserProfilePopulationRights : public PopulationTreeView
                                   , public UserProfileRights_ABC
 {
     Q_OBJECT
@@ -28,8 +31,13 @@ class UserProfilePopulationRights : public gui::PopulationTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-    UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name );
+    UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name, const kernel::Profile_ABC& profile );
     virtual ~UserProfilePopulationRights();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual QWidget* GetWidget();
     //@}
 
 private slots:
@@ -47,8 +55,10 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::DummyModelObserver observer_;
+    DummyModelObserver observer_;
     //@}
 };
+
+}
 
 #endif // __UserProfilePopulationRights_h_

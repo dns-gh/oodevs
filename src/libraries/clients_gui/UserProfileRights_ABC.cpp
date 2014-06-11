@@ -7,19 +7,21 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UserProfileRights_ABC.h"
-#include "icons.h"
-#include "clients_gui/RichTreeView.h"
-#include "clients_gui/StandardModel.h"
+#include "resources.h"
+#include "RichTreeView.h"
+#include "StandardModel.h"
 #include "clients_kernel/Tools.h"
-#include "preparation/UserProfile.h"
+#include "clients_kernel/UserProfile_ABC.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileRights_ABC constructor
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-UserProfileRights_ABC::UserProfileRights_ABC( gui::RichTreeView& listView, gui::StandardModel& model, const QString& name )
+UserProfileRights_ABC::UserProfileRights_ABC( RichTreeView& listView, StandardModel& model, const QString& name )
     : listView_( listView )
     , model_( model )
     , profile_( 0 )
@@ -62,7 +64,7 @@ void UserProfileRights_ABC::Visit( QStandardItem& item )
     kernel::Entity_ABC* entity = model_.GetDataFromItem< kernel::Entity_ABC >( item );
     if( entity )
     {
-        const Status status = Status( item.data( gui::Roles::OtherRole ).toInt() );
+        const Status status = Status( item.data( Roles::OtherRole ).toInt() );
         const bool isWriteable = status == eWrite;
         const bool isReadable  = status == eReadOnly;
         profile_->SetReadable ( *entity, isReadable && !isWriteable );
@@ -85,7 +87,7 @@ void UserProfileRights_ABC::Commit()
 // Name: UserProfileRights_ABC::Display
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Display( UserProfile& profile )
+void UserProfileRights_ABC::Display( kernel::UserProfile_ABC& profile )
 {
     Clear();
     listView_.setDisabled( false );
@@ -108,7 +110,7 @@ void UserProfileRights_ABC::OnItemClicked( const QModelIndex& index )
         return;
 
     QStandardItem* item = model_.GetItemFromIndex( model_.GetMainModelIndex( index ) );
-    const Status status = Status( item->data( gui::Roles::OtherRole ).toInt() );
+    const Status status = Status( item->data( Roles::OtherRole ).toInt() );
     if( status == eWriteInherited || ( index.column() == 1 && status == eReadInherited ) )
         return;
     bool write = status == eWrite;
@@ -123,7 +125,7 @@ void UserProfileRights_ABC::OnItemClicked( const QModelIndex& index )
 
 namespace
 {
-    class ClearVisitor : public gui::StandardModelVisitor_ABC
+    class ClearVisitor : public StandardModelVisitor_ABC
                        , private boost::noncopyable
     {
     public:
@@ -159,7 +161,7 @@ void UserProfileRights_ABC::Clear()
 void UserProfileRights_ABC::SetStatus( QStandardItem* item, Status status )
 {
     assert( item->column() == 0 );
-    item->setData( static_cast< int >( status ), gui::Roles::OtherRole );
+    item->setData( static_cast< int >( status ), Roles::OtherRole );
     const QModelIndex index = model_.indexFromItem( item );
     const QModelIndex index1 = model_.index( index.row(), 1, index.parent() );
     const QModelIndex index2 = model_.index( index.row(), 2, index.parent() );

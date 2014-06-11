@@ -17,6 +17,7 @@
 namespace kernel
 {
     class Controllers;
+    class UserProfile_ABC;
 }
 
 namespace xml
@@ -26,7 +27,6 @@ namespace xml
 }
 
 class ProfilesModel;
-class UserProfile;
 
 // =============================================================================
 /** @class  ProfileSelection
@@ -34,9 +34,9 @@ class UserProfile;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class ProfileSelection : public tools::Resolver< const UserProfile, QString >
+class ProfileSelection : public tools::Resolver< const kernel::UserProfile_ABC, QString >
                        , public tools::Observer_ABC
-                       , public tools::ElementObserver_ABC< UserProfile >
+                       , public tools::ElementObserver_ABC< kernel::UserProfile_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -60,8 +60,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const UserProfile& profile );
-    virtual void NotifyDeleted( const UserProfile& profile );
+    virtual void NotifyUpdated( const kernel::UserProfile_ABC& profile );
+    virtual void NotifyDeleted( const kernel::UserProfile_ABC& profile );
     void ReadProfile( xml::xistream& xis, const ProfilesModel& model );
     //@}
 

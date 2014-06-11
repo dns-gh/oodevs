@@ -10,7 +10,7 @@
 #ifndef __ProfileFactory_h_
 #define __ProfileFactory_h_
 
-#include "ProfileFactory_ABC.h"
+#include "clients_kernel/ProfileFactory_ABC.h"
 
 namespace kernel
 {
@@ -25,7 +25,7 @@ class Model;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class ProfileFactory : public ProfileFactory_ABC
+class ProfileFactory : public kernel::ProfileFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -36,8 +36,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual UserProfile* Create( xml::xistream& xis ) const;
-    virtual UserProfile* Create( const QString& name ) const;
+    virtual kernel::UserProfile_ABC* Create( xml::xistream& xis ) const;
+    virtual kernel::UserProfile_ABC* Create( const sword::ProfileCreation& message ) const;
+    virtual kernel::UserProfile_ABC* Create( const QString& name ) const;
+    virtual kernel::UserProfile_ABC* Create( kernel::UserProfile_ABC& profile ) const;
+    virtual kernel::UserProfile_ABC* Create() const;
     //@}
 
 private:

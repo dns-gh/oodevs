@@ -150,6 +150,15 @@ tools::Resolver_ABC< Agent_ABC >& Model::GetAgentResolver() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::GetGhostResolver
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Ghost_ABC >& Model::GetGhostResolver() const
+{
+    return *ghosts_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::GetKnowledgeGroupResolver
 // Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------

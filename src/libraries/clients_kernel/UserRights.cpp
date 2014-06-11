@@ -403,3 +403,31 @@ const UserRights::T_Ids& UserRights::GetReadGhosts() const
 {
     return readGhosts_;
 }
+
+namespace
+{
+    bool AreSame( UserRights::T_Ids lIds, UserRights::T_Ids rIds )
+    {
+        std::sort( lIds.begin(), lIds.end() );
+        std::sort( rIds.begin(), rIds.end() );
+        return lIds == rIds;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserRights::operator==
+// Created: JSR 2014-06-02
+// -----------------------------------------------------------------------------
+bool UserRights::operator==( const UserRights& other ) const
+{
+    return AreSame( readSides_, other.readSides_ )
+        && AreSame( writeSides_, other.writeSides_ )
+        && AreSame( readAutomats_, other.readAutomats_ )
+        && AreSame( writeAutomats_, other.writeAutomats_ )
+        && AreSame( readPopulations_, other.readPopulations_ )
+        && AreSame( writePopulations_, other.writePopulations_ )
+        && AreSame( readFormations_, other.readFormations_ )
+        && AreSame( writeFormations_, other.writeFormations_ )
+        && AreSame( readGhosts_, other.readGhosts_ )
+        && AreSame( writeGhosts_, other.writeGhosts_ );
+}

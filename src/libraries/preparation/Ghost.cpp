@@ -18,7 +18,6 @@
 #include "FormationModel.h"
 #include "ProfilesModel.h"
 #include "StaticModel.h"
-#include "UserProfile.h"
 
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
@@ -34,13 +33,14 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GhostPrototype.h"
 #include "clients_gui/MergingTacticalHierarchies.h"
-#include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/PropertiesDictionary.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/SubTypes.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "ENT/ENT_Tr.h"
 
 using namespace kernel;
@@ -337,11 +337,11 @@ void Ghost::Finalize( const ::StaticModel& staticModel )
     // Compute profiles
     if( !profilesReadOnly_.empty() )
         for( std::vector< std::string >::const_iterator it = profilesReadOnly_.begin(); it != profilesReadOnly_.end(); ++it )
-            if( UserProfile* profile = model_.profiles_->Find( *it ) )
+            if( kernel::UserProfile_ABC* profile = model_.profiles_->Find( *it ) )
                 profile->SetReadable( *this, true );
     if( !profilesWriteOnly_.empty() )
         for( std::vector< std::string >::const_iterator it = profilesWriteOnly_.begin(); it != profilesWriteOnly_.end(); ++it )
-            if( UserProfile* profile = model_.profiles_->Find( *it ) )
+            if( kernel::UserProfile_ABC* profile = model_.profiles_->Find( *it ) )
                 profile->SetWriteable( *this, true );
 }
 

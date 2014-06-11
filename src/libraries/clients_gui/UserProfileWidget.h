@@ -10,26 +10,22 @@
 #ifndef __UserProfileWidget_h_
 #define __UserProfileWidget_h_
 
-#include <boost/noncopyable.hpp>
-#include "clients_gui/RichWidget.h"
+#include "RichWidget.h"
 
 namespace kernel
 {
     class Controllers;
-    class DictionaryType;
-    class Entity_ABC;
-    class ExtensionTypes;
+    class EntityResolver_ABC;
+    class Profile_ABC;
+    class ProfilesChecker_ABC;
+    class UserProfile_ABC;
 }
 
 namespace gui
 {
-    class EntitySymbols;
-}
 
-class UserProfile;
+class EntitySymbols;
 class UserProfileRights_ABC;
-class Model;
-class ProfilesChecker_ABC;
 
 // =============================================================================
 /** @class  UserProfileWidget
@@ -37,22 +33,24 @@ class ProfilesChecker_ABC;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileWidget : public gui::RichWidget< QTabWidget >
+class UserProfileWidget : public RichWidget< QTabWidget >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
-                                const kernel::ExtensionTypes& extensions, ProfilesChecker_ABC& checker, Model& model );
+             UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+                                const kernel::Profile_ABC& profile, const EntitySymbols& icons,
+                                const kernel::EntityResolver_ABC& resolver );
     virtual ~UserProfileWidget();
     //@}
 
     //! @name Operations
     //@{
-    void Display( UserProfile& profile );
-    void SetEnabled( bool enabled );
+    void Display( kernel::UserProfile_ABC& profile );
+    void SetChecker( const kernel::ProfilesChecker_ABC* pChecker );
+    virtual void hideEvent( QHideEvent* event );
     //@}
 
 private slots:
@@ -62,16 +60,16 @@ private slots:
     void OnPasswordChanged( const QString& text );
     void OnSupervisorChanged( bool supervisor );
     void OnTimeControlChanged( bool timeControl );
+    void UpdateAutomatsAndKnowledgeGroups();
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::ExtensionTypes& extensions_;
-    ProfilesChecker_ABC& checker_;
-    Model& model_;
-    UserProfile* profile_;
+    const kernel::ProfilesChecker_ABC* pChecker_;
+    const kernel::EntityResolver_ABC& resolver_;
+    kernel::UserProfile_ABC* profile_;
     QLineEdit* login_;
     QLineEdit* password_;
     QLineEdit* automats_;
@@ -82,5 +80,7 @@ private:
     UserProfileRights_ABC* populationRights_;
     //@}
 };
+
+}
 
 #endif // __UserProfileWidget_h_

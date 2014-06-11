@@ -10,6 +10,8 @@
 #ifndef __ProfilesModel_h_
 #define __ProfilesModel_h_
 
+#include "clients_kernel/ProfilesModel_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <tools/ElementObserver_ABC.h>
 
 namespace xml
@@ -25,7 +27,10 @@ namespace kernel
     class Formation_ABC;
     class Ghost_ABC;
     class Population_ABC;
+    class ProfileEditor;
+    class ProfileFactory_ABC;
     class Team_ABC;
+    class UserProfile_ABC;
 }
 
 namespace tools
@@ -34,8 +39,6 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
-class UserProfile;
-class ProfileFactory_ABC;
 class Model;
 
 // =============================================================================
@@ -44,25 +47,20 @@ class Model;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class ProfilesModel : public tools::Observer_ABC
+class ProfilesModel : public kernel::ProfilesModel_ABC
+                    , public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< kernel::Team_ABC >
                     , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                     , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                     , public tools::ElementObserver_ABC< kernel::Population_ABC >
                     , public tools::ElementObserver_ABC< kernel::Ghost_ABC >
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ProfilesModel( kernel::Controllers& controllers, const ProfileFactory_ABC& factory );
+             ProfilesModel( kernel::Controllers& controllers, const kernel::ProfileFactory_ABC& factory );
     virtual ~ProfilesModel();
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::set< std::string >               T_Profiles;
-    typedef std::map< unsigned long, T_Profiles > T_Units;
-    typedef T_Units::const_iterator             CIT_Units;
     //@}
 
     //! @name Operations
@@ -71,15 +69,18 @@ public:
     void Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    void CreateProfile( const QString& name );
+    kernel::UserProfile_ABC* CreateProfile( const QString& name );
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
-    void DeleteProfile( const UserProfile& profile );
-    void Visit( T_Units& units ) const;
-    void Visit( T_Profiles& profiles ) const;
+    void DeleteProfile( const kernel::UserProfile_ABC& profile );
+    virtual kernel::ProfileEditor* CreateProfileEditor() const;
+    virtual kernel::ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const;
+    virtual void CommitFromEditor( kernel::ProfileEditor& editor );
+
+    virtual void Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor );
 
     bool Exists( const QString& login ) const;
-    UserProfile* Find( const std::string& name ) const;
-    const UserProfile* Find( const QString& name ) const;
+    kernel::UserProfile_ABC* Find( const std::string& name ) const;
+    const kernel::UserProfile_ABC* Find( const QString& name ) const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     bool IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
@@ -97,12 +98,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ProfilesModel( const ProfilesModel& );            //!< Copy constructor
-    ProfilesModel& operator=( const ProfilesModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Read( xml::xistream& xis );
@@ -111,15 +106,14 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< UserProfile* >      T_UserProfiles;
-    typedef T_UserProfiles::const_iterator CIT_UserProfiles;
+    typedef std::vector< kernel::UserProfile_ABC* > T_UserProfiles;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const ProfileFactory_ABC& factory_;
+    const kernel::ProfileFactory_ABC& factory_;
     T_UserProfiles userProfiles_;
     //@}
 };

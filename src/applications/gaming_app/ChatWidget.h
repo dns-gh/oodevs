@@ -16,9 +16,9 @@
 namespace kernel
 {
     class Controllers;
+    class UserProfile_ABC;
 }
 
-class UserProfile;
 class Publisher_ABC;
 class CommandPublisher;
 class CommandHandler;
@@ -32,7 +32,7 @@ class ChatRoom;
 // =============================================================================
 class ChatWidget : public Q3HBox
                  , public tools::Observer_ABC
-                 , public tools::ElementObserver_ABC< UserProfile >
+                 , public tools::ElementObserver_ABC< kernel::UserProfile_ABC >
                  , public CommandHandler_ABC
 {
     Q_OBJECT;
@@ -47,20 +47,14 @@ public:
 private slots:
     //! @name Operations
     //@{
-    void OnProfileSelected( const UserProfile& profile );
+    void OnProfileSelected( const kernel::UserProfile_ABC& profile );
     void OnTabClosed( int index );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ChatWidget( const ChatWidget& );            //!< Copy constructor
-    ChatWidget& operator=( const ChatWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void NotifyDeleted( const UserProfile& profile );
+    virtual void NotifyDeleted( const kernel::UserProfile_ABC& profile );
     virtual void Receive( const Command& command );
     void Select( const QString& name );
     //@}

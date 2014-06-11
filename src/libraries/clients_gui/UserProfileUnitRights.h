@@ -10,15 +10,15 @@
 #ifndef __UserProfileUnitRights_h_
 #define __UserProfileUnitRights_h_
 
-#include "clients_gui/HierarchyTreeView.h"
-#include "clients_gui/DummyModelObserver.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "HierarchyTreeView.h"
+#include "DummyModelObserver.h"
 #include "UserProfileRights_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
-namespace
+typedef gui::HierarchyTreeView< kernel::TacticalHierarchies > T_Parent;
+
+namespace gui
 {
-    typedef gui::HierarchyTreeView< kernel::TacticalHierarchies > T_Parent;
-}
 
 // =============================================================================
 /** @class  UserProfileUnitRights
@@ -34,36 +34,54 @@ class UserProfileUnitRights : public ::T_Parent
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile );
+    UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+                           const EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile );
     virtual ~UserProfileUnitRights();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool NeedsCommit() const;
+    virtual QWidget* GetWidget();
+    virtual void Display( kernel::UserProfile_ABC& profile );
     virtual void AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    virtual void NotifyCreated( const kernel::TacticalHierarchies& hierarchy );
+    virtual void NotifyUpdated( const kernel::TacticalHierarchies& hierarchy );
+    virtual void NotifyDeleted( const kernel::TacticalHierarchies& hierarchy );
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnItemClicked( const QModelIndex& index );
+    virtual void OnSelect( const QItemSelection& /*selected*/, const QItemSelection& /* deselected */ );
+    //@}
+
+signals:
+    //! @name Slots
+    //@{
+    void NotifyRightsChanged();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void showEvent( QShowEvent* event );
-    virtual void hideEvent( QHideEvent* event );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void contextMenuEvent( QContextMenuEvent* event );
+    virtual void Commit();
     //@}
 
 private:
     //! @name Member data
     //@{
-    gui::DummyModelObserver observer_;
+    DummyModelObserver observer_;
     //@}
 };
+
+}
 
 #endif // __UserProfileUnitRights_h_

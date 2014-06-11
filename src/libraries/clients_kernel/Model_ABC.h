@@ -18,6 +18,7 @@ namespace kernel
     class Formation_ABC;
     class Automat_ABC;
     class Agent_ABC;
+    class Ghost_ABC;
     class KnowledgeGroup_ABC;
     class Object_ABC;
     class Pathfind_ABC;
@@ -46,6 +47,7 @@ public:
     virtual tools::Resolver_ABC< Formation_ABC      >& GetFormationResolver() const = 0;
     virtual tools::Resolver_ABC< Automat_ABC        >& GetAutomatResolver() const = 0;
     virtual tools::Resolver_ABC< Agent_ABC          >& GetAgentResolver() const = 0;
+    virtual tools::Resolver_ABC< Ghost_ABC          >& GetGhostResolver() const = 0;
     virtual tools::Resolver_ABC< KnowledgeGroup_ABC >& GetKnowledgeGroupResolver() const = 0;
     virtual tools::Resolver_ABC< Object_ABC         >& GetObjectResolver() const = 0;
     virtual tools::Resolver_ABC< Population_ABC     >& GetPopulationResolver() const = 0;

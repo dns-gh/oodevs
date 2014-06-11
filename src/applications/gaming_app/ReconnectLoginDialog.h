@@ -12,11 +12,10 @@
 
 #include "LoginDialog.h"
 
-class UserProfile;
-
 namespace kernel
 {
     class Controller;
+    class UserProfile_ABC;
 }
 
 // =============================================================================
@@ -30,7 +29,7 @@ class ReconnectLoginDialog : public LoginDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ReconnectLoginDialog( QWidget* pParent, const UserProfile& profile,
+             ReconnectLoginDialog( QWidget* pParent, const kernel::UserProfile_ABC& profile,
                                    kernel::Controller& controller );
     virtual ~ReconnectLoginDialog();
     //@}
@@ -45,7 +44,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const UserProfile& profile_;
+    const kernel::UserProfile_ABC& profile_;
     kernel::Controller& controller_;
     //@}
 };

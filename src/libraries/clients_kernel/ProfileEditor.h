@@ -10,7 +10,12 @@
 #ifndef __ProfileEditor_h_
 #define __ProfileEditor_h_
 
-#include "preparation/UserProfile.h"
+#include <boost/noncopyable.hpp>
+
+namespace kernel
+{
+    class UserProfile_ABC;
+    class ProfilesModel_ABC;
 
 // =============================================================================
 /** @class  ProfileEditor
@@ -18,33 +23,33 @@
 */
 // Created: SBO 2007-11-07
 // =============================================================================
-class ProfileEditor : public UserProfile
+class ProfileEditor : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileEditor( const UserProfile& profile, kernel::Controller& controller );
+             ProfileEditor( UserProfile_ABC* profile, UserProfile_ABC* originalProfile );
     virtual ~ProfileEditor();
     //@}
 
-    //! @name Setters
+    //! @name Operations
     //@{
-    virtual void SetLogin( const QString& value );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ProfileEditor( const ProfileEditor& );            //!< Copy constructor
-    ProfileEditor& operator=( const ProfileEditor& ); //!< Assignment operator
+    void Delete();
+    bool IsDeleted() const;
+    // todo ne pas faire de getter mais un proxy?
+    UserProfile_ABC& GetProfile();
+    UserProfile_ABC* GetOriginalProfile() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    const UserProfile& profile_;
+    std::unique_ptr< UserProfile_ABC > profile_;
+    UserProfile_ABC* originalProfile_;
+    bool deleted_;
     //@}
 };
+
+}
 
 #endif // __ProfileEditor_h_

@@ -10,23 +10,10 @@
 #include "gaming_app_pch.h"
 #include "ChatProfiles.h"
 #include "moc_ChatProfiles.cpp"
-#include "gaming/UserProfile.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "clients_kernel/Controllers.h"
 
-namespace
-{
-    class ProfileItem : public QListWidgetItem
-    {
-    public:
-        ProfileItem( QListWidget* parent, const UserProfile& profile )
-            : QListWidgetItem( profile.GetLogin() )
-            , profile_( &profile )
-        {
-            parent->addItem( this );
-        }
-        const UserProfile* profile_;
-    };
-}
+Q_DECLARE_METATYPE( const kernel::UserProfile_ABC* );
 
 // -----------------------------------------------------------------------------
 // Name: ChatProfiles constructor
@@ -36,6 +23,7 @@ ChatProfiles::ChatProfiles( QWidget* parent, kernel::Controllers& controllers )
     : QListWidget( parent )
     , controllers_( controllers )
 {
+    setSortingEnabled( true );
     connect( this, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ), SLOT( OnSelected( QListWidgetItem* ) ) );
     controllers_.Register( *this );
 }
@@ -50,27 +38,45 @@ ChatProfiles::~ChatProfiles()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ChatProfiles::FindItem
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+QListWidgetItem* ChatProfiles::FindItem( const kernel::UserProfile_ABC& profile ) const
+{
+    for( int i = 0; i < count(); ++i )
+    {
+        QListWidgetItem* listItem = item( i );
+        if( &profile == listItem->data( Qt::UserRole ).value< const kernel::UserProfile_ABC* >() )
+            return listItem;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ChatProfiles::NotifyUpdated
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-void ChatProfiles::NotifyUpdated( const UserProfile& profile )
+void ChatProfiles::NotifyUpdated( const kernel::UserProfile_ABC& profile )
 {
-    if( findItems( profile.GetLogin(), Qt::MatchFixedString ).isEmpty() )
-        new ProfileItem( this, profile );
+    QListWidgetItem* item = FindItem( profile );
+    if( !item )
+    {
+        item = new QListWidgetItem( this );
+        item->setData( Qt::UserRole, QVariant::fromValue( &profile ) );
+    }
+    item->setText( profile.GetLogin() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ChatProfiles::NotifyDeleted
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-void ChatProfiles::NotifyDeleted( const UserProfile& profile )
+void ChatProfiles::NotifyDeleted( const kernel::UserProfile_ABC& profile )
 {
-    if( !findItems( profile.GetLogin(), Qt::MatchFixedString ).isEmpty() )
-        if( QListWidgetItem* item = findItems( profile.GetLogin(), Qt::MatchFixedString ).at( 0 ) )
-        {
-            setItemSelected( item, false );
-            delete item;
-        }
+    QListWidgetItem* item = FindItem( profile );
+    if( item )
+        setItemSelected( item, false );
+    delete item;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +85,6 @@ void ChatProfiles::NotifyDeleted( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void ChatProfiles::OnSelected( QListWidgetItem* item )
 {
-    ProfileItem* profileItem = dynamic_cast< ProfileItem* >( item );
-    if( profileItem )
-        emit Selected( *profileItem->profile_ );
+    if( item )
+        emit Selected( *item->data( Qt::UserRole ).value< const kernel::UserProfile_ABC* >() );
 }

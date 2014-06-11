@@ -414,8 +414,9 @@ void AgentServerMsgMgr::OnReceiveProfileDestructionRequestAck( const sword::Auth
 void AgentServerMsgMgr::OnReceiveProfileUpdate( const sword::AuthenticationToClient& msg )
 {
     const auto& message = msg.message().profile_update();
-    GetModel().profiles_.Get( QString( message.login().c_str() ) ).DoUpdate( message );
-    if( message.login().c_str() == GetProfile().GetLogin() )
+    const QString login( message.login().c_str() );
+    static_cast< UserProfile& >( GetModel().profiles_.Get( login ) ).DoUpdate( message );
+    if( login == GetProfile().GetLogin() )
         GetProfile().Update( GetModel(), message );
 }
 

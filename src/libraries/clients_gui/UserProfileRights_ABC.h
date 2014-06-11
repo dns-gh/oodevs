@@ -10,50 +10,48 @@
 #ifndef __UserProfileRights_ABC_h_
 #define __UserProfileRights_ABC_h_
 
+#include "StandardModelVisitor_ABC.h"
 #include <boost/noncopyable.hpp>
-#include "clients_gui/StandardModelVisitor_ABC.h"
+
+namespace kernel
+{
+    class UserProfile_ABC;
+}
 
 namespace gui
 {
     class RichTreeView;
     class StandardModel;
-}
-
-class UserProfile;
 
 // =============================================================================
 /** @class  UserProfileRights_ABC
     @brief  UserProfileRights_ABC
+    // $$$$ AGE 2007-04-18: ^c^v
 */
 // Created: SBO 2007-01-18
 // =============================================================================
-class UserProfileRights_ABC : public gui::StandardModelVisitor_ABC
+class UserProfileRights_ABC : public StandardModelVisitor_ABC
                             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileRights_ABC( gui::RichTreeView& listView, gui::StandardModel& model, const QString& name );
+             UserProfileRights_ABC( RichTreeView& listView, StandardModel& model, const QString& name );
     virtual ~UserProfileRights_ABC();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Display( kernel::UserProfile_ABC& profile );
     virtual void Visit( QStandardItem& item );
-    void Commit( bool savedStatus );
-    void Reset();
-    bool NeedsSaving() const;
-    virtual bool NeedsCommit() const = 0;
-
-    void Display( UserProfile& profile );
+    virtual QWidget* GetWidget() = 0;
     //@}
 
 protected:
-    //! @name Slots
+    //! @name Helpers
     //@{
     void OnItemClicked( const QModelIndex& index );
-    void OnShow();
-    void OnHide();
+    virtual void Commit();
     //@}
 
 private:
@@ -71,6 +69,7 @@ private:
 
     //! @name Helpers
     //@{
+    void Clear();
     void SetStatus( QStandardItem* item, Status status );
     void SetStatus( QStandardItem* item, bool inheritsReadable, bool inheritsWriteable );
     void SetStatus( QStandardItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
@@ -81,13 +80,14 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::RichTreeView& listView_;
-    gui::StandardModel& model_;
-    UserProfile* profile_;
-    bool needsSaving_;
-
-    QPixmap check_, check_grey_;
+    RichTreeView& listView_;
+    StandardModel& model_;
+    kernel::UserProfile_ABC* profile_;
+    QPixmap check_;
+    QPixmap check_grey_;
     //@}
 };
+
+}
 
 #endif // __UserProfileRights_ABC_h_

@@ -42,7 +42,6 @@
 #include "Color.h"
 #include "Symbol.h"
 #include "AgentAffinities.h"
-#include "UserProfile.h"
 
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentType.h"
@@ -60,6 +59,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_gui/AutomatDecisions.h"
 #include "clients_gui/CriticalIntelligence.h"
@@ -376,11 +376,11 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
         //result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, tactSuperior ) );
         std::vector< std::string > readingProfiles = model_.profiles_->GetProfilesWhoCanRead( ghost );
         for( std::vector< std::string >::const_iterator it = readingProfiles.begin(); it != readingProfiles.end(); ++it )
-            if( UserProfile* profile = model_.profiles_->Find( *it ) )
+            if( kernel::UserProfile_ABC* profile = model_.profiles_->Find( *it ) )
                 profile->SetReadable( *result, true );
         std::vector< std::string > writingProfiles = model_.profiles_->GetProfilesWhoCanWrite( ghost );
         for( std::vector< std::string >::const_iterator it = writingProfiles.begin(); it != writingProfiles.end(); ++it )
-            if( UserProfile* profile = model_.profiles_->Find( *it ) )
+            if( kernel::UserProfile_ABC* profile = model_.profiles_->Find( *it ) )
                 profile->SetWriteable( *result, true );
     }
     // Communication hierarchy

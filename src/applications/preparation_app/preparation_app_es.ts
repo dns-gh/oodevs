@@ -1497,25 +1497,6 @@ Este dato no puede ser proyectado.</translation>
     </message>
 </context>
 <context>
-    <name>NewProfileDialog</name>
-    <message>
-        <source>New profile</source>
-        <translation>Nuevo perfil</translation>
-    </message>
-    <message>
-        <source>Profile name:</source>
-        <translation>Nombre de Perfil:</translation>
-    </message>
-    <message>
-        <source>Profile name is empty.</source>
-        <translation>Nombre de perfíl vacio.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; already exists.</source>
-        <translation>Perfil &apos;%1&apos; ya existe.</translation>
-    </message>
-</context>
-<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -1737,21 +1718,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source> Location is outside terrain bounding box </source>
         <translation>La ubicación está fuera de los límites del terreno</translation>
-    </message>
-</context>
-<context>
-    <name>ProfileDialog</name>
-    <message>
-        <source>User profiles</source>
-        <translation>Perfiles de usuario</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2886,93 +2852,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>Delete</source>
         <translation>Borrar</translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileList</name>
-    <message>
-        <source>Create</source>
-        <translation>Crear</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Borrar</translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileRights</name>
-    <message>
-        <source>Read</source>
-        <translation>Lectura</translation>
-    </message>
-    <message>
-        <source>Write</source>
-        <translation>Escritura</translation>
-    </message>
-</context>
-<context>
-    <name>UserProfileWidget</name>
-    <message>
-        <source>Profile information</source>
-        <translation>Información del perfil</translation>
-    </message>
-    <message>
-        <source>Login:</source>
-        <translation>Usuario:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Clave:</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation>General</translation>
-    </message>
-    <message>
-        <source>Access permissions</source>
-        <translation>Permisos de acceso</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Unidades</translation>
-    </message>
-    <message>
-        <source>Invalid profile information</source>
-        <translation>Información de perfíl nó válida</translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translation>Permisos</translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Muchedumbres</translation>
-    </message>
-    <message>
-        <source>Duplicate login: &apos;%1&apos;.</source>
-        <translation>Login repetido: &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Supervisor actions</source>
-        <translation>Acciones de supervisor</translation>
-    </message>
-    <message>
-        <source>&apos;Read&apos; permission allows you to see a unit.
-&apos;Write&apos; permission allows you to control a unit.</source>
-        <translation>Permiso &apos;Visualizar&apos; permite observar una unidad.
-Permiso &apos;Controlar&apos; permite manejar una unidad.</translation>
-    </message>
-    <message>
-        <source>Automats:</source>
-        <translation>Autómatas:</translation>
-    </message>
-    <message>
-        <source>Knowledge groups:</source>
-        <translation>Grupos de conocimiento:</translation>
-    </message>
-    <message>
-        <source>Time Control</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

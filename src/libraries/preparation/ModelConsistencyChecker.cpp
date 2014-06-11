@@ -28,7 +28,6 @@
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
 #include "UrbanModel.h"
-#include "UserProfile.h"
 
 #include "clients_gui/EntityType.h"
 #include "clients_gui/Infrastructure_ABC.h"
@@ -64,6 +63,8 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/UserProfile_ABC.h"
+#include "clients_kernel/UserRights.h"
 #include "ENT/ENT_Tr.h"
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
@@ -468,11 +469,23 @@ void ModelConsistencyChecker::CheckLogisticInitialization()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::CheckProfileUniqueness()
 {
-    ProfilesModel::T_Units units;
-    model_.profiles_->Visit( units );
-    for( ProfilesModel::CIT_Units it = units.begin(); it != units.end(); ++it )
+    typedef std::set< std::string > T_Profiles;
+    typedef std::map< unsigned long, T_Profiles > T_Units;
+    T_Units units;
+    model_.profiles_->Apply( [&]( kernel::UserProfile_ABC& profile )
+        {
+            std::vector< unsigned long > ids;
+            profile.GetRights().InsertWriteSides( ids );
+            profile.GetRights().InsertWriteAutomats( ids );
+            profile.GetRights().InsertWritePopulations( ids );
+            profile.GetRights().InsertWriteGhosts( ids );
+            BOOST_FOREACH( unsigned long id, ids )
+                units[ id ].insert( profile.GetLogin().toStdString() );
+        });
+
+    for( auto it = units.begin(); it != units.end(); ++it )
     {
-        const ProfilesModel::T_Units::value_type& element = *it;
+        const T_Units::value_type& element = *it;
         if( element.second.size() > 1 )
         {
             const Entity_ABC* entity = model_.GetTeamResolver().Find( element.first );

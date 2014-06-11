@@ -34,7 +34,7 @@ using namespace kernel;
 Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std::string& profile, bool isLoginSet )
     : controller_ ( controllers.controller_ )
     , publisher_  ( publisher )
-    , login_      ( profile )
+    , login_      ( profile.c_str() )
     , loggedIn_   ( false )
     , supervision_( false )
     , timeControl_( false )
@@ -63,7 +63,7 @@ void Profile::Login() const
 {
     authentication::AuthenticationRequest message;
     message().mutable_version()->set_value( sword::ProtocolVersion().value() );
-    message().set_login( login_.c_str() );
+    message().set_login( login_.toStdString() );
     message().set_password( password_.c_str() );
     message.Send( publisher_ );
 }
@@ -74,7 +74,7 @@ void Profile::Login() const
 // -----------------------------------------------------------------------------
 void Profile::SetCredentials( const std::string& login, const std::string& password )
 {
-    login_ = login;
+    login_ = login.c_str();
     password_ = password;
 }
 
@@ -84,7 +84,7 @@ void Profile::SetCredentials( const std::string& login, const std::string& passw
 // -----------------------------------------------------------------------------
 void Profile::Login( const std::string& login, const std::string& password ) const
 {
-    login_ = login;
+    login_ = login.c_str();
     password_ = password;
     Login();
     controller_.Update( *static_cast< Profile_ABC* >( const_cast< Profile* >( this ) ) );
@@ -150,7 +150,7 @@ void Profile::Update( const sword::ConnectedProfileList& message )
 // -----------------------------------------------------------------------------
 void Profile::Update( const Model& model, const sword::ProfileUpdate& message )
 {
-    if( message.login() == login_ )
+    if( message.login() == login_.toStdString() )
     {
         Update( message.profile() );
         RightsResolver::Update( model );
@@ -165,7 +165,7 @@ void Profile::Update( const Model& model, const sword::ProfileUpdate& message )
 // -----------------------------------------------------------------------------
 void Profile::Update( const sword::Profile& profile )
 {
-    login_ = profile.login();
+    login_ = profile.login().c_str();
     if( profile.has_password()  )
         password_ = profile.password();
     else
@@ -181,9 +181,9 @@ void Profile::Update( const sword::Profile& profile )
 // Name: Profile::GetLogin
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-QString Profile::GetLogin() const
+const QString& Profile::GetLogin() const
 {
-    return login_.c_str();
+    return login_;
 }
 
 // -----------------------------------------------------------------------------

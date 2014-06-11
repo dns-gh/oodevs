@@ -49,6 +49,24 @@ public:
     virtual ~Profile();
     //@}
 
+    //! @name From UserProfile_ABC (not used, for inheritance reason, should be refactored)
+    //@{
+    virtual const QString& GetPassword() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual const kernel::UserRights& GetRights() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void SetLogin( const QString& ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void SetPassword( const QString& ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void SetSupervisor( bool ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void SetTimeControl( bool ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool IsReadable( const kernel::Entity_ABC& ) const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool IsWriteable( const kernel::Entity_ABC& ) const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool IsPasswordProtected() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void SetReadable( const kernel::Entity_ABC&, bool ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void SetWriteable( const kernel::Entity_ABC&, bool ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual kernel::UserProfile_ABC& operator=( const kernel::UserProfile_ABC& ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool operator==( const kernel::UserProfile_ABC& ) const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool operator!=( const kernel::UserProfile_ABC& ) const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    //@}
+
     //! @name Operations
     //@{
     void SetCredentials( const std::string& login, const std::string& password );
@@ -62,7 +80,7 @@ public:
 
     //! @name Accessors
     //@{
-    QString GetLogin() const;
+    const QString& GetLogin() const;
     bool IsLoggedIn() const;
     bool DisplayMessage( unsigned int messageClientId ) const;
     unsigned int GetProfileCount( const std::string& login ) const;
@@ -104,7 +122,7 @@ private:
     //@{
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
-    mutable std::string login_;
+    mutable QString login_;
     mutable std::string password_;
     bool loggedIn_;
     bool supervision_;

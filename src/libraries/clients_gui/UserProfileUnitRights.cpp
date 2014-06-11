@@ -7,19 +7,22 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UserProfileUnitRights.h"
 #include "moc_UserProfileUnitRights.cpp"
-#include "PreparationProfile.h"
-#include "clients_gui/LongNameHelper.h"
-#include "clients_gui/Tools.h"
+#include "LongNameHelper.h"
+#include "Tools.h"
+#include "clients_kernel/Agent_ABC.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileUnitRights::UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name )
-    : HierarchyTreeView< kernel::TacticalHierarchies >( objectName, controllers, PreparationProfile::GetProfile(), observer_, icons, parent )
+UserProfileUnitRights::UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+                                              const EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile )
+    : T_Parent( objectName, controllers, profile, observer_, icons, parent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
     connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );
@@ -37,10 +40,19 @@ UserProfileUnitRights::~UserProfileUnitRights()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::GetWidget
+// Created: JSR 2014-05-27
+// -----------------------------------------------------------------------------
+QWidget* UserProfileUnitRights::GetWidget()
+{
+    return this;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights::Display
 // Created: LGY 2011-12-09
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::Display( UserProfile& profile )
+void UserProfileUnitRights::Display( kernel::UserProfile_ABC& profile )
 {
     selectionModel()->clearSelection();
     UserProfileRights_ABC::Display( profile );
@@ -52,7 +64,45 @@ void UserProfileUnitRights::Display( UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
 {
-    gui::longname::SetItemLongName( entity, entityItem );
+    longname::SetItemLongName( entity, entityItem );
+}
+
+namespace
+{
+    bool IsAgent( const kernel::Hierarchies& hierarchies )
+    {
+        return hierarchies.GetEntity().GetTypeName() == kernel::Agent_ABC::typeName_;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::NotifyCreated
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::NotifyCreated( const kernel::TacticalHierarchies& hierarchy )
+{
+    if( !IsAgent( hierarchy  ) )
+        ::T_Parent::NotifyCreated( hierarchy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::NotifyUpdated
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::NotifyUpdated( const kernel::TacticalHierarchies& hierarchy )
+{
+    if( !IsAgent( hierarchy  ) )
+        ::T_Parent::NotifyUpdated( hierarchy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::NotifyDeleted
+// Created: JSR 2014-06-06
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::NotifyDeleted( const kernel::TacticalHierarchies& hierarchy )
+{
+    if( !IsAgent( hierarchy  ) )
+        ::T_Parent::NotifyDeleted( hierarchy );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +132,7 @@ void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
     QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
     {
-        gui::longname::SetItemLongName( entity, *item);
+        longname::SetItemLongName( entity, *item);
         proxyModel_->invalidate();
     }
 }
@@ -94,4 +144,14 @@ void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
 void UserProfileUnitRights::contextMenuEvent( QContextMenuEvent* /*event*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::Commit
+// Created: JSR 2014-06-03
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::Commit()
+{
+    UserProfileRights_ABC::Commit();
+    emit NotifyRightsChanged();
 }

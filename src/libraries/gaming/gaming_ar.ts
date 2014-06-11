@@ -1289,13 +1289,6 @@
     </message>
 </context>
 <context>
-    <name>UserProfileFactory</name>
-    <message>
-        <source>New profile</source>
-        <translation type="unfinished">ملف تعريف جديد</translation>
-    </message>
-</context>
-<context>
     <name>UserProfilesModel</name>
     <message>
         <source>Profile &apos;%1&apos; does not exist.</source>

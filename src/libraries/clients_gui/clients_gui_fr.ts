@@ -419,6 +419,17 @@
     </message>
 </context>
 <context>
+    <name>UserProfileRights</name>
+    <message>
+        <source>Read</source>
+        <translation>Lecture</translation>
+    </message>
+    <message>
+        <source>Write</source>
+        <translation>Ecriture</translation>
+    </message>
+</context>
+<context>
     <name>Wgs84DmsParser</name>
     <message>
         <source>%1° %2&apos; %3.%4 %5</source>
@@ -1491,6 +1502,25 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::NewProfileDialog</name>
+    <message>
+        <source>New profile</source>
+        <translation>Nouveau profil</translation>
+    </message>
+    <message>
+        <source>Profile name:</source>
+        <translation>Nom du profil :</translation>
+    </message>
+    <message>
+        <source>Profile name is empty.</source>
+        <translation>Le nom du profil n&apos;est pas renseigné.</translation>
+    </message>
+    <message>
+        <source>Profile &apos;%1&apos; already exists.</source>
+        <translation>Le profil &apos;%1&apos; existe déjà.</translation>
+    </message>
+</context>
+<context>
     <name>gui::ObjectPanel</name>
     <message>
         <source>Object state</source>
@@ -1782,6 +1812,21 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Preset name already exists.</source>
         <translation>Le nom du dégradé existe déjà.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ProfileDialog</name>
+    <message>
+        <source>User profiles</source>
+        <translation>Profils utilisateurs</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -2270,6 +2315,82 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Drag and drop symbol to map to create a new unit.</source>
         <translation>Glissez/déposez le symbole sur la carte pour créer une nouvelle unité.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UserProfileList</name>
+    <message>
+        <source>Create</source>
+        <translation>Créer</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UserProfileWidget</name>
+    <message>
+        <source>Profile information</source>
+        <translation>Information sur le profil</translation>
+    </message>
+    <message>
+        <source>Login:</source>
+        <translation>Profil:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Mot de passe:</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Général</translation>
+    </message>
+    <message>
+        <source>Access permissions</source>
+        <translation>Droits d&apos;accès</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Invalid profile information</source>
+        <translation>Information de profil invalide</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation>Droits</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
+        <translation>Actions de supervision</translation>
+    </message>
+    <message>
+        <source>&apos;Read&apos; permission allows you to see a unit.
+&apos;Write&apos; permission allows you to control a unit.</source>
+        <translation>&apos;Lecture&apos; permet de voir une unité.
+&apos;Ecriture&apos; permet de contrôler une unité.</translation>
+    </message>
+    <message>
+        <source>Automats:</source>
+        <translation>Automates:</translation>
+    </message>
+    <message>
+        <source>Knowledge groups:</source>
+        <translation>Groupes de connaissance:</translation>
+    </message>
+    <message>
+        <source>Time Control</source>
+        <translation>Contrôle du temps</translation>
+    </message>
+    <message>
+        <source>Duplicate login: &apos;%1&apos;.</source>
+        <translation>Profil en double: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>

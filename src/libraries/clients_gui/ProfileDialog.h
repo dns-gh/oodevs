@@ -10,23 +10,21 @@
 #ifndef __ProfileDialog_h_
 #define __ProfileDialog_h_
 
-#include "clients_gui/ModalDialog.h"
+#include "ModalDialog.h"
 
 namespace kernel
 {
     class Controllers;
-    class ExtensionTypes;
+    class EntityResolver_ABC;
+    class Profile_ABC;
+    class ProfilesModel_ABC;
 }
 
 namespace gui
 {
-    class EntitySymbols;
-}
-
+class EntitySymbols;
 class UserProfileList;
 class UserProfileWidget;
-class Model;
-class ProfilesChecker_ABC;
 
 // =============================================================================
 /** @class  ProfileDialog
@@ -36,42 +34,34 @@ class ProfilesChecker_ABC;
 // =============================================================================
 class ProfileDialog : public ModalDialog
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
-                            Model& model, const kernel::ExtensionTypes& extensions );
+             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, 
+                            const EntitySymbols& icons, const kernel::EntityResolver_ABC& resolver, kernel::ProfilesModel_ABC& profiles );
     virtual ~ProfileDialog();
     //@}
 
     //! @name Operations
     //@{
     virtual QSize sizeHint() const;
+    bool CanBeShown( const kernel::Profile_ABC& profile ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnAccept();
-    void OnReject();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ProfileDialog( const ProfileDialog& );            //!< Copy constructor
-    ProfileDialog& operator=( const ProfileDialog& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::unique_ptr< ProfilesChecker_ABC > pChecher_;
-    UserProfileList* list_;
-    UserProfileWidget* pages_;
-    //@}
+    UserProfileList* list_;    //@}
 };
+
+}
 
 #endif // __ProfileDialog_h_

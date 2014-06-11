@@ -37,7 +37,7 @@ ProfileFilter::~ProfileFilter()
 // Name: ProfileFilter::GetLogin
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
-QString ProfileFilter::GetLogin() const
+const QString& ProfileFilter::GetLogin() const
 {
     return pUnitFilter_->GetLogin();
 }

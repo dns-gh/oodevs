@@ -45,6 +45,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
 #include "meteo/PHY_Precipitation.h"
@@ -337,8 +338,11 @@ void CsvExport::WriteProfiles( const tools::Path& exerciseName, const tools::Pat
 {
     tools::Path profilesPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "profiles" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( profilesPath );
-    ProfilesModel::T_Profiles profiles;
-    model_.profiles_->Visit( profiles );
+    std::set< std::string > profiles;
+    model_.profiles_->Apply( [&]( kernel::UserProfile_ABC& profile )
+        {
+            profiles.insert( profile.GetLogin().toStdString() );
+        });
     BOOST_FOREACH( const std::string& profile, profiles )
         file << separator << profile;
     file << std::endl;

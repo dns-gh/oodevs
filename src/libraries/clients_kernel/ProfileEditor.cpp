@@ -3,71 +3,69 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
-#include "ProfilesChecker.h"
-#include "preparation/UserProfile.h"
+#include "clients_kernel_pch.h"
+#include "ProfileEditor.h"
+#include "UserProfile_ABC.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesChecker constructor
-// Created: LGY 2011-12-07
+// Name: ProfileEditor constructor
+// Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfilesChecker::ProfilesChecker()
+ProfileEditor::ProfileEditor( UserProfile_ABC* profile, UserProfile_ABC* originalProfile )
+    : profile_( profile )
+    , originalProfile_( originalProfile )
+    , deleted_( false )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesChecker destructor
-// Created: LGY 2011-12-07
+// Name: ProfileEditor destructor
+// Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfilesChecker::~ProfilesChecker()
+ProfileEditor::~ProfileEditor()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesChecker::Display
-// Created: LGY 2011-12-07
+// Name: ProfileEditor::GetProfile
+// Created: JSR 2014-06-04
 // -----------------------------------------------------------------------------
-void ProfilesChecker::Display( const T_ProfileEditors& editors )
+UserProfile_ABC& ProfileEditor::GetProfile()
 {
-    Clean();
-    editors_ = editors;
+    return *profile_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesChecker::Clean
-// Created: LGY 2011-12-08
+// Name: ProfileEditor::GetOriginalProfile
+// Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
-void ProfilesChecker::Clean()
+UserProfile_ABC* ProfileEditor::GetOriginalProfile() const
 {
-    editors_.clear();
+    return originalProfile_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesChecker::Exists
-// Created: LGY 2011-12-07
+// Name: ProfileEditor::Delete
+// Created: JSR 2014-06-02
 // -----------------------------------------------------------------------------
-bool ProfilesChecker::Exists( const QString& oldLogin, const QString& newLogin ) const
+void ProfileEditor::Delete()
 {
-    for( auto it = editors_.begin(); it != editors_.end(); ++it )
-        if( it->first && it->first->GetLogin() != oldLogin && it->second && it->second->GetLogin() == newLogin )
-            return true;
-    return false;
+    deleted_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesChecker::Exists
-// Created: LGY 2011-12-07
+// Name: ProfileEditor::IsDeleted
+// Created: JSR 2014-06-02
 // -----------------------------------------------------------------------------
-bool ProfilesChecker::Exists( const QString& login ) const
+bool ProfileEditor::IsDeleted() const
 {
-    for( auto it = editors_.begin(); it != editors_.end(); ++it )
-        if( it->first && it->first->GetLogin() == login && it->second && it->second->GetLogin() != login )
-            return true;
-    return false;
+    return deleted_;
 }

@@ -24,10 +24,10 @@ namespace gui
 {
     class ItemFactory_ABC;
     class HelpSystem;
+    class ProfileDialog;
     class RichAction;
 }
 
-class UserProfileDialog;
 class Profile;
 class Network;
 class StaticModel;
@@ -47,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog,
-                   UserProfileDialog& profileDialog, const QString& license,
+                   gui::ProfileDialog& profileDialog, const QString& license,
                    Network& network, kernel::Logger_ABC& logger );
     virtual ~Menu();
     //@}
@@ -62,7 +62,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    UserProfileDialog& profileDialog_;
+    gui::ProfileDialog& profileDialog_;
     int profileMenu_;
     gui::RichAction* windowAction_;
     //@}

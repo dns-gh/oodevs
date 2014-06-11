@@ -26,6 +26,7 @@ namespace kernel
     class Controllers;
     class ObjectKnowledgeConverter_ABC;
     class Profile_ABC;
+    class ProfileFactory_ABC;
     class SymbolFactory;
     class Workers;
 }
@@ -77,7 +78,7 @@ class TeamFactory_ABC;
 class TeamsModel;
 class UrbanBlockDetectionMap;
 class UrbanKnowledgeFactory;
-class UserProfileFactory_ABC;
+class ProfileFactory_ABC;
 class UserProfilesModel;
 class WeatherModel;
 class UrbanModel;
@@ -111,6 +112,7 @@ public:
     virtual tools::Resolver_ABC< kernel::Formation_ABC      >& GetFormationResolver() const;
     virtual tools::Resolver_ABC< kernel::Automat_ABC        >& GetAutomatResolver() const;
     virtual tools::Resolver_ABC< kernel::Agent_ABC          >& GetAgentResolver() const;
+    virtual tools::Resolver_ABC< kernel::Ghost_ABC          >& GetGhostResolver() const;
     virtual tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& GetKnowledgeGroupResolver() const;
     virtual tools::Resolver_ABC< kernel::Object_ABC         >& GetObjectResolver() const;
     virtual tools::Resolver_ABC< kernel::Population_ABC     >& GetPopulationResolver() const;
@@ -146,7 +148,7 @@ public:
     FireFactory& fireFactory_;
     TacticalLineFactory& tacticalLineFactory_;
     FireResultFactory& fireResultsFactory_;
-    UserProfileFactory_ABC& userProfileFactory_;
+    kernel::ProfileFactory_ABC& userProfileFactory_;
     actions::ParameterFactory_ABC& actionParameterFactory_;
     actions::ActionFactory_ABC& actionFactory_;
     DrawingFactory& drawingFactory_;

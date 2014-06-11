@@ -20,6 +20,7 @@ namespace kernel
 {
     class Controllers;
     class KnowledgeGroupFactory_ABC; // LTO
+    class ProfileFactory_ABC;
     class SymbolFactory;
 }
 
@@ -50,7 +51,6 @@ class GhostModel;
 class LimitsModel;
 class WeatherModel;
 class ProfilesModel;
-class ProfileFactory_ABC;
 class ObjectsModel;
 class ObjectFactory_ABC;
 class ScoresModel;
@@ -82,6 +82,7 @@ public:
     virtual tools::Resolver_ABC< kernel::Formation_ABC      >& GetFormationResolver() const;
     virtual tools::Resolver_ABC< kernel::Automat_ABC        >& GetAutomatResolver() const;
     virtual tools::Resolver_ABC< kernel::Agent_ABC          >& GetAgentResolver() const;
+    virtual tools::Resolver_ABC< kernel::Ghost_ABC          >& GetGhostResolver() const;
     virtual tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& GetKnowledgeGroupResolver() const;
     virtual tools::Resolver_ABC< kernel::Object_ABC         >& GetObjectResolver() const;
     virtual tools::Resolver_ABC< kernel::Population_ABC     >& GetPopulationResolver() const;
@@ -128,7 +129,7 @@ private:
     std::unique_ptr< FormationFactory_ABC > formationFactory_;
     std::unique_ptr< AgentFactory_ABC > agentFactory_;
     std::unique_ptr< ObjectFactory_ABC > objectFactory_;
-    std::unique_ptr< ProfileFactory_ABC > profileFactory_;
+    std::unique_ptr< kernel::ProfileFactory_ABC > profileFactory_;
     std::unique_ptr< ScoreFactory_ABC > scoreFactory_;
     std::unique_ptr< SuccessFactorFactory_ABC > successFactorFactory_;
     std::unique_ptr< gui::DrawingFactory_ABC > drawingFactory_;

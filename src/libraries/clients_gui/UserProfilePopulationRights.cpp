@@ -7,17 +7,18 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UserProfilePopulationRights.h"
 #include "moc_UserProfilePopulationRights.cpp"
-#include "PreparationProfile.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights constructor
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-UserProfilePopulationRights::UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name )
-    : gui::PopulationTreeView(objectName, controllers, PreparationProfile::GetProfile(), observer_, pParent )
+UserProfilePopulationRights::UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name, const kernel::Profile_ABC& profile )
+    : PopulationTreeView(objectName, controllers, profile, observer_, pParent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
     connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );
@@ -30,6 +31,15 @@ UserProfilePopulationRights::UserProfilePopulationRights( const QString& objectN
 UserProfilePopulationRights::~UserProfilePopulationRights()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilePopulationRights::GetWidget
+// Created: JSR 2014-05-27
+// -----------------------------------------------------------------------------
+QWidget* UserProfilePopulationRights::GetWidget()
+{
+    return this;
 }
 
 // -----------------------------------------------------------------------------
