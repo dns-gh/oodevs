@@ -33,7 +33,7 @@ public:
     virtual void Continue() = 0;
     virtual void Resume( unsigned int ticks, unsigned int nCtx, unsigned int clientId ) = 0;
     virtual void SetTimeFactor( unsigned timeFactor ) = 0;
-    virtual void SetRealTime( const std::string& realTime, unsigned nCtx, unsigned int clientId ) = 0;
+    virtual void SetRealTime( const std::string& realTime, unsigned int nCtx, unsigned int clientId ) = 0;
     //@}
 };
 
