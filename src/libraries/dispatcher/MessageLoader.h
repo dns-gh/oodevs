@@ -51,7 +51,9 @@ class MessageLoader : public MessageLoader_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageLoader( const tools::Path& records, bool threaded, ClientPublisher_ABC* clients = 0 );
+             MessageLoader( const tools::Path& records, bool threaded,
+                            int tickDuration,
+                            ClientPublisher_ABC* clients );
     virtual ~MessageLoader();
     //@}
 
@@ -66,6 +68,7 @@ public:
     const std::string& GetEndDateTime() const;
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
     void ReloadAllFragmentsInfos();
+    void SendTimeskips( ClientPublisher_ABC& client );
     //@}
 
 public:
@@ -73,9 +76,7 @@ public:
     //@{
     typedef std::vector< Frame > T_Frames;
     typedef std::vector< KeyFrame > T_KeyFrames;
-    typedef T_KeyFrames::const_iterator CIT_KeyFrames;
     typedef std::map< tools::Path, std::pair< unsigned int, unsigned int > > T_FragmentsInfos;
-    typedef T_FragmentsInfos::const_iterator CIT_FragmentsInfos;
     //@}
 
 private:
@@ -97,6 +98,7 @@ private:
     void LoadKeyFrameInThread( const tools::Path& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback );
     size_t LoadSimToClientMessage( const char* input, size_t size, MessageHandler_ABC& handler );
+    void AddTick( uint32_t tick, const std::string& time );
     //@}
 
 private:
@@ -104,6 +106,7 @@ private:
     //@{
     const tools::Path records_;
     ClientPublisher_ABC* clients_;
+    const int tickDuration_;
     unsigned int firstTick_;
     unsigned int tickCount_;
     std::string endDateTime_;
@@ -119,6 +122,7 @@ private:
     tools::Ifstream keys_;
     T_Frames frames_;
     T_KeyFrames keyFrames_;
+    std::map< uint32_t, uint32_t > skips_; // map ticks to seconds
     //@}
 };
 }

@@ -328,3 +328,8 @@ void SimulationController::RegisterReplayHandler( Publisher_ABC::T_ReplayHandler
 {
     publisher_.Register( handler );
 }
+
+QDateTime SimulationController::GetTime( uint32_t tick ) const
+{
+    return simulation_.GetTime( tick );
+}

@@ -97,7 +97,7 @@ namespace
             const TestCase& test = tests[i];
             BOOST_REQUIRE( !test.valid_frames || BOOST_RESOLVE( test.dir ).Exists() );
             MockMessageHandler msg, keymsg;
-            MessageLoader loader( BOOST_RESOLVE( test.dir ), thread, 0 );
+            MessageLoader loader( BOOST_RESOLVE( test.dir ), thread, 10, nullptr );
             BOOST_CHECK_EQUAL( loader.GetFirstTick(),  test.first_tick );
             BOOST_CHECK_EQUAL( loader.GetTickNumber(), test.last_tick );
             LoadAllFrames( loader, test.valid_frames,

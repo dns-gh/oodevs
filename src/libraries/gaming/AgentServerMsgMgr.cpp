@@ -2103,6 +2103,7 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& /*from*/,
         { &sword::ReplayToClient_Content::has_list_logistic_requests_ack,       &AgentServerMsgMgr::OnReceiveListLogisticRequestsAck },
         { &sword::ReplayToClient_Content::has_logistic_history_ack,             &AgentServerMsgMgr::OnReceiveLogisticHistoryAck },
         { &sword::ReplayToClient_Content::has_new_data_chunk_notification,      &AgentServerMsgMgr::OnReceiveNewDataChunkNotification },
+        { &sword::ReplayToClient_Content::has_timeskip,                         &AgentServerMsgMgr::OnReceiveTimeskip },
         { &sword::ReplayToClient_Content::has_time_table,                       &AgentServerMsgMgr::OnReceiveTimeTable },
         { &sword::ReplayToClient_Content::has_time_table_request_ack,           &AgentServerMsgMgr::OnReceiveTimeTableRequestAck },
     };
@@ -2409,4 +2410,9 @@ void AgentServerMsgMgr::OnReceivePathfindCreation( const sword::SimToClient& msg
 void AgentServerMsgMgr::OnReceivePathfindDestruction( const sword::SimToClient& msg )
 {
     GetModel().pathfinds_.Delete( msg.message().pathfind_destruction() );
+}
+
+void AgentServerMsgMgr::OnReceiveTimeskip( const sword::ReplayToClient& msg )
+{
+    simulation_.Update( msg.message().timeskip() );
 }

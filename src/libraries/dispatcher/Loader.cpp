@@ -21,10 +21,10 @@ using namespace dispatcher;
 // Name: Loader constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, ClientPublisher_ABC* clients )
+Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, ClientPublisher_ABC& clients )
     : model_   ( model )
     , handler_ ( handler )
-    , loader_  ( new MessageLoader( config.GetRecordDirectory(), false, clients ) )
+    , loader_  ( new MessageLoader( config.GetRecordDirectory(), false, config.GetTickDuration(), &clients ) )
     , keyFrame_( UINT_MAX )
     , frame_   ( UINT_MAX )
 {
@@ -161,4 +161,9 @@ const std::string& Loader::GetEndDateTime() const
 void Loader::ReloadAll()
 {
     loader_->ReloadAllFragmentsInfos();
+}
+
+void Loader::SendTimeskips( ClientPublisher_ABC& client ) const
+{
+    loader_->SendTimeskips( client );
 }

@@ -142,6 +142,7 @@ message ReplayToClient {
         optional NewDataChunkNotification   new_data_chunk_notification    = 9;
         optional LogisticHistoryAck         logistic_history_ack           = 10;
         optional ListLogisticRequestsAck    list_logistic_requests_ack     = 11;
+        optional Timeskip                   timeskip                       = 12;
     }
     /** @property context
         @brief Identifies the request matching the response.

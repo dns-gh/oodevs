@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"masa/sword/sword"
 	"text/template"
+	"time"
 )
 
 func getUnitMagicActionAck(msg *sword.SimToClient_Content) (*sword.UnitMagicActionAck,
@@ -1938,4 +1939,24 @@ func (c *Client) CreateStockSupplyRequests(taskerId, supplierId, recipentId uint
 	return c.sendUnitMagicAction(MakeUnitTasker(taskerId),
 		MakeParameters(MakeIdentifier(supplierId), MakeIdentifier(recipentId), MakeQuantities(resources)),
 		sword.UnitMagicAction_create_stock_supply_request)
+}
+
+func (c *Client) ChangeTime(value time.Time) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlDateTimeChange: &sword.ControlDateTimeChange{
+					DateTime: MakeDateTime(value),
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlDateTimeChangeAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		return getControlAckError(reply)
+	}
+	return <-c.postSimRequest(msg, handler)
 }

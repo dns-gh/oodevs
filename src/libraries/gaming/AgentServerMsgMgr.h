@@ -133,6 +133,7 @@ private:
     void OnReceiveControlMeteoLocalDestruction( const sword::SimToClient& msg );
     void OnReceiveMsgSendCurrentStateEnd      ( const sword::SimToClient& msg );
     void OnReceiveNewDataChunkNotification    ( const sword::ReplayToClient& msg );
+    void OnReceiveTimeskip                    ( const sword::ReplayToClient& msg );
     void OnReceiveTimeTableRequestAck         ( const sword::ReplayToClient& msg );
     void OnReceiveTimeTable                   ( const sword::ReplayToClient& msg );
 

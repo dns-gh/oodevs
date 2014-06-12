@@ -184,6 +184,12 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	c.Assert(err, IsNil)
 	skip(step)
 
+	future, err := swapi.GetTime("20200908T060504")
+	c.Assert(err, IsNil)
+	err = client.ChangeTime(future)
+	c.Assert(err, IsNil)
+	skip(step)
+
 	return sim.Opts, dumps
 }
 

@@ -76,7 +76,9 @@ private:
     kernel::Controllers& controllers_;
     SimulationController& simulationController_;
     Publisher_ABC& network_;
+    QLabel* minTime_;
     QSlider* slider_;
+    QLabel* maxTime_;
     QAction* spinBoxAction_;
     QAction* dateTimeAction_;
     kernel::ContextMenu* menu_;
