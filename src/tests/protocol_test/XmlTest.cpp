@@ -127,7 +127,8 @@ BOOST_FIXTURE_TEST_CASE( read_numerics, Fixture )
     AddParameterValue( xos, "integer", 47 );
     AddParameterValue( xos, "numeric", 3.14f );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { intValue: 47 } } elem { null_value: false value { aReal: 3.14 } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { intValue: 47 } } "
+                                               "elem { null_value: false value { aReal: 3.14 } }" );
     CheckCycle( msg );
 }
 
@@ -197,7 +198,16 @@ BOOST_FIXTURE_TEST_CASE( read_location, Fixture )
     BOOST_CHECK_EQUAL( list.value_size(), 2 );
     CheckLocation( list.value( 0 ).location(), Location::line,    2 );
     CheckLocation( list.value( 1 ).location(), Location::polygon, 3 );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } elem { null_value: false value { location { type: line coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } value { location { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(), 
+        "elem { null_value: false value { location { type: point coordinates { "
+                                                                "elem { latitude: 0 longitude: 0 } } } } } "
+        "elem { null_value: false value { location { type: line coordinates { "
+                                                                "elem { latitude: 0 longitude: 0 } "
+                                                                "elem { latitude: 0 longitude: 0 } } } } "
+                                 "value { location { type: polygon coordinates { "
+                                                                "elem { latitude: 0 longitude: 0 } "
+                                                                "elem { latitude: 0 longitude: 0 } "
+                                                                "elem { latitude: 0 longitude: 0 } } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -233,7 +243,13 @@ BOOST_FIXTURE_TEST_CASE( read_point, Fixture )
     BOOST_CHECK_EQUAL( list.value_size(), 2 );
     CheckLocation( list.value( 0 ).point().location(), Location::point, 1 );
     CheckLocation( list.value( 1 ).point().location(), Location::point, 1 );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { point { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } elem { null_value: false value { point { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } value { point { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { point { location { type: point coordinates { "
+                                                                        "elem { latitude: 0 longitude: 0 } } } } } } "
+        "elem { null_value: false value { point { location { type: point coordinates { "
+                                                                        "elem { latitude: 0 longitude: 0 } } } } } "
+                                 "value { point { location { type: point coordinates { "
+                                                                        "elem { latitude: 0 longitude: 0 } } } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -276,7 +292,20 @@ BOOST_FIXTURE_TEST_CASE( read_polygon, Fixture )
     BOOST_CHECK_EQUAL( list.value_size(), 2 );
     CheckLocation( list.value( 0 ).area().location(), Location::polygon, 3 );
     CheckLocation( list.value( 1 ).area().location(), Location::polygon, 4 );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { area { location { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } } elem { null_value: false value { area { location { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } value { area { location { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { area { location { type: polygon coordinates { "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } } } } } } "
+        "elem { null_value: false value { area { location { type: polygon coordinates { "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } } } } } "
+                                 "value { area { location { type: polygon coordinates { "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } } } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -293,7 +322,10 @@ BOOST_FIXTURE_TEST_CASE( read_limit, Fixture )
     "</action>";
     MOCK_EXPECT( reader.Convert ).exactly( 2 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { limit { location { type: line coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { limit { location { type: line coordinates { "
+                                                                        "elem { latitude: 0 longitude: 0 } "
+                                                                        "elem { latitude: 0 longitude: 0 } } } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -334,7 +366,19 @@ BOOST_FIXTURE_TEST_CASE( read_path, Fixture )
     BOOST_CHECK_EQUAL( list.value_size(), 2 );
     CheckLocation( list.value( 0 ).path().location(), Location::line, 3 );
     CheckLocation( list.value( 1 ).path().location(), Location::line, 3 );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { path { location { type: line coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } } elem { null_value: false value { path { location { type: line coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } value { path { location { type: line coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { path { location { type: line coordinates { "
+                                                                      "elem { latitude: 0 longitude: 0 } "
+                                                                      "elem { latitude: 0 longitude: 0 } "
+                                                                      "elem { latitude: 0 longitude: 0 } } } } } } "
+        "elem { null_value: false value { path { location { type: line coordinates { "
+                                                                      "elem { latitude: 0 longitude: 0 } "
+                                                                      "elem { latitude: 0 longitude: 0 } "
+                                                                      "elem { latitude: 0 longitude: 0 } } } } } "
+                                 "value { path { location { type: line coordinates { "
+                                                                      "elem { latitude: 0 longitude: 0 } "
+                                                                      "elem { latitude: 0 longitude: 0 } "
+                                                                      "elem { latitude: 0 longitude: 0 } } } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -381,7 +425,19 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     BOOST_CHECK_EQUAL( lima_2.fonctions( 1 ), PhaseLineOrder::attitude_change_line );
     CheckLocation( lima_2.line().location(), Location::line, 3 );
     BOOST_CHECK_EQUAL( lima_2.time().data(), "20121113T085132" );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { phaseLine { elem { line { location { type: line coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } time { data: \"\" } fonctions: objective_line } } } value { phaseLine { elem { line { location { type: line coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } time { data: \"20121113T085132\" } fonctions: coordination_line fonctions: attitude_change_line } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { phaseLine { "
+                                        "elem { line { location { type: line coordinates { "
+                                                                            "elem { latitude: 0 longitude: 0 } "
+                                                                            "elem { latitude: 0 longitude: 0 } } } } "
+                                        "time { data: \"\" } fonctions: objective_line } } } "
+                                 "value { phaseLine { "
+                                        "elem { line { location { type: line coordinates { "
+                                                                            "elem { latitude: 0 longitude: 0 } "
+                                                                            "elem { latitude: 0 longitude: 0 } "
+                                                                            "elem { latitude: 0 longitude: 0 } } } } "
+                                        "time { data: \"20121113T085132\" } "
+                                        "fonctions: coordination_line fonctions: attitude_change_line } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -414,7 +470,9 @@ BOOST_FIXTURE_TEST_CASE( read_automat_id, Fixture )
     AddParameterValue( xos, "automat", 1338 );
     AddParameterValue( xos, "automat", 1339 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { automat { id: 1337 } } } elem { null_value: false value { automat { id: 1338 } } value { automat { id: 1339 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { automat { id: 1337 } } } "
+        "elem { null_value: false value { automat { id: 1338 } } value { automat { id: 1339 } } }" );
     CheckCycle( msg );
 }
 
@@ -426,7 +484,9 @@ BOOST_FIXTURE_TEST_CASE( read_agent_id, Fixture )
     AddParameterValue( xos, "agent", 1338 );
     AddParameterValue( xos, "agent", 1339 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { agent { id: 1337 } } } elem { null_value: false value { agent { id: 1338 } } value { agent { id: 1339 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { agent { id: 1337 } } } "
+        "elem { null_value: false value { agent { id: 1338 } } value { agent { id: 1339 } } }" );
     CheckCycle( msg );
 }
 
@@ -438,7 +498,9 @@ BOOST_FIXTURE_TEST_CASE( read_agent_knowledge_id, Fixture )
     AddParameterValue( xos, "agentknowledge", 1338 );
     AddParameterValue( xos, "agentknowledge", 1339 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { agentKnowledge { id: 1337 } } } elem { null_value: false value { agentKnowledge { id: 1338 } } value { agentKnowledge { id: 1339 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { agentKnowledge { id: 1337 } } } "
+        "elem { null_value: false value { agentKnowledge { id: 1338 } } value { agentKnowledge { id: 1339 } } }" );
     CheckCycle( msg );
 }
 
@@ -446,7 +508,8 @@ BOOST_FIXTURE_TEST_CASE( read_crowd_knowledge_id, Fixture )
 {
     AddParameterValue( xos, "crowdknowledge", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { crowdKnowledge { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { crowdKnowledge { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -458,7 +521,9 @@ BOOST_FIXTURE_TEST_CASE( read_object_knowledge_id, Fixture )
     AddParameterValue( xos, "objectknowledge", 1338 );
     AddParameterValue( xos, "objectknowledge", 1339 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { objectKnowledge { id: 1337 } } } elem { null_value: false value { objectKnowledge { id: 1338 } } value { objectKnowledge { id: 1339 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { objectKnowledge { id: 1337 } } } "
+        "elem { null_value: false value { objectKnowledge { id: 1338 } } value { objectKnowledge { id: 1339 } } }" );
     CheckCycle( msg );
 }
 
@@ -466,7 +531,8 @@ BOOST_FIXTURE_TEST_CASE( read_urban_knowledge_id, Fixture )
 {
     AddParameterValue( xos, "urbanknowledge", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { urbanKnowledge { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { urbanKnowledge { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -474,7 +540,8 @@ BOOST_FIXTURE_TEST_CASE( read_phase_line_function, Fixture )
 {
     AddParameterValue( xos, "limafunction", "LC" );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { phase_line_function: coordination_line } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { phase_line_function: coordination_line } }" );
     CheckCycle( msg );
 }
 
@@ -540,7 +607,34 @@ BOOST_FIXTURE_TEST_CASE( read_planned_work, Fixture )
     BOOST_CHECK_EQUAL( next.value_size(), 2 );
     CheckPlannedWork( next.value( 0 ).plannedwork() );
     CheckPlannedWork( next.value( 1 ).plannedwork() );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { plannedWork { type: \"barricade\" position { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } type_obstacle: reserved density: 4.2 combat_train { id: 5169 } activity_time: 38 activation_time: 39 name: \"gyhjkf\" altitude_modifier: 40 time_limit: 41 mining: true lodging: 98 fire_class: \"some fire\" max_combustion: 42 } } } elem { null_value: false value { plannedWork { type: \"barricade\" position { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } type_obstacle: reserved density: 4.2 combat_train { id: 5169 } activity_time: 38 activation_time: 39 name: \"gyhjkf\" altitude_modifier: 40 time_limit: 41 mining: true lodging: 98 fire_class: \"some fire\" max_combustion: 42 } } value { plannedWork { type: \"barricade\" position { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } type_obstacle: reserved density: 4.2 combat_train { id: 5169 } activity_time: 38 activation_time: 39 name: \"gyhjkf\" altitude_modifier: 40 time_limit: 41 mining: true lodging: 98 fire_class: \"some fire\" max_combustion: 42 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { plannedWork { type: \"barricade\" "
+                                         "position { type: polygon coordinates { "
+                                                                  "elem { latitude: 0 longitude: 0 } "
+                                                                  "elem { latitude: 0 longitude: 0 } "
+                                                                  "elem { latitude: 0 longitude: 0 } } } "
+                                        "type_obstacle: reserved density: 4.2 combat_train { id: 5169 } "
+                                        "activity_time: 38 activation_time: 39 name: \"gyhjkf\" "
+                                        "altitude_modifier: 40 time_limit: 41 mining: true lodging: 98 "
+                                        "fire_class: \"some fire\" max_combustion: 42 } } } "
+        "elem { null_value: false value { plannedWork { type: \"barricade\" "
+                                        "position { type: polygon coordinates { "
+                                                                  "elem { latitude: 0 longitude: 0 } "
+                                                                  "elem { latitude: 0 longitude: 0 } "
+                                                                  "elem { latitude: 0 longitude: 0 } } } "
+                                         "type_obstacle: reserved density: 4.2 combat_train { id: 5169 } "
+                                        "activity_time: 38 activation_time: 39 name: \"gyhjkf\" "
+                                        "altitude_modifier: 40 time_limit: 41 mining: true lodging: 98 "
+                                        "fire_class: \"some fire\" max_combustion: 42 } } "
+                                 "value { plannedWork { type: \"barricade\" "
+                                        "position { type: polygon coordinates { "
+                                                                  "elem { latitude: 0 longitude: 0 } "
+                                                                  "elem { latitude: 0 longitude: 0 } "
+                                                                  "elem { latitude: 0 longitude: 0 } } } "
+                                        "type_obstacle: reserved density: 4.2 combat_train { id: 5169 } "
+                                        "activity_time: 38 activation_time: 39 name: \"gyhjkf\" "
+                                        "altitude_modifier: 40 time_limit: 41 mining: true lodging: 98 "
+                                        "fire_class: \"some fire\" max_combustion: 42 } } }" );
     CheckCycle( input, msg );
 }
 
@@ -548,7 +642,8 @@ BOOST_FIXTURE_TEST_CASE( read_nature_atlas, Fixture )
 {
     AddParameterValue( xos, "natureatlas", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { nature { flags: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { nature { flags: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -556,7 +651,8 @@ BOOST_FIXTURE_TEST_CASE( read_resource_type, Fixture )
 {
     AddParameterValue( xos, "resourcetype", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { resourceType { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { resourceType { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -570,7 +666,8 @@ BOOST_FIXTURE_TEST_CASE( read_resource_type_list, Fixture )
     "  </parameter>"
     "</action>";
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { resourceType { id: 100 } } value { resourceType { id: 20 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { resourceType { id: 100 } } value { resourceType { id: 20 } } }" );
     CheckCycle( input, msg );
 }
 
@@ -578,7 +675,8 @@ BOOST_FIXTURE_TEST_CASE( read_acharstr, Fixture )
 {
     AddParameterValue( xos, "string", "zomg" );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { aCharStr: \"zomg\" } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { aCharStr: \"zomg\" } }" );
     CheckCycle( msg );
 }
 
@@ -586,7 +684,8 @@ BOOST_FIXTURE_TEST_CASE( read_stage, Fixture )
 {
     AddParameterValue( xos, "stage", "zomg" );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { stage: \"zomg\" } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { stage: \"zomg\" } }" );
     CheckCycle( msg );
 }
 
@@ -594,7 +693,8 @@ BOOST_FIXTURE_TEST_CASE( read_object_id, Fixture )
 {
     AddParameterValue( xos, "object", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { object { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { object { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -602,7 +702,8 @@ BOOST_FIXTURE_TEST_CASE( read_party_id, Fixture )
 {
     AddParameterValue( xos, "army", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { party { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { party { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -610,7 +711,8 @@ BOOST_FIXTURE_TEST_CASE( read_indirect_fire_id, Fixture )
 {
     AddParameterValue( xos, "indirectfire", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { indirectFire { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { indirectFire { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -618,7 +720,8 @@ BOOST_FIXTURE_TEST_CASE( read_knowledge_group_id, Fixture )
 {
     AddParameterValue( xos, "knowledgegroup", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { knowledgeGroup { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { knowledgeGroup { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -626,7 +729,8 @@ BOOST_FIXTURE_TEST_CASE( read_formation_id, Fixture )
 {
     AddParameterValue( xos, "formation", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { formation { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { formation { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -634,7 +738,8 @@ BOOST_FIXTURE_TEST_CASE( read_identifier, Fixture )
 {
     AddParameterValue( xos, "identifier", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { identifier: 1337 } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { identifier: 1337 } }" );
     CheckCycle( msg );
 }
 
@@ -642,7 +747,8 @@ BOOST_FIXTURE_TEST_CASE( read_external_identifier, Fixture )
 {
     AddParameterValue( xos, "externalidentifier", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { external_identifier: 1337 } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { external_identifier: 1337 } }" );
     CheckCycle( msg );
 }
 
@@ -650,7 +756,8 @@ BOOST_FIXTURE_TEST_CASE( read_quantity, Fixture )
 {
     AddParameterValue( xos, "quantity", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { quantity: 1337 } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { quantity: 1337 } }" );
     CheckCycle( msg );
 }
 
@@ -658,7 +765,8 @@ BOOST_FIXTURE_TEST_CASE( read_equipment_type, Fixture )
 {
     AddParameterValue( xos, "equipmenttype", 1337 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { equipmentType { id: 1337 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { equipmentType { id: 1337 } } }" );
     CheckCycle( msg );
 }
 
@@ -666,7 +774,8 @@ BOOST_FIXTURE_TEST_CASE( read_resource_network_type, Fixture )
 {
     AddParameterValue( xos, "resourcenetworktype", "zomg" );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { resourceNetworkType { name: \"zomg\" } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { resourceNetworkType { name: \"zomg\" } } }" );
     CheckCycle( msg );
 }
 
@@ -678,14 +787,16 @@ BOOST_FIXTURE_TEST_CASE( read_mission_objective, Fixture )
             << xml::start( "parameter" )
             << xml::attribute( "type", "missionobjective" );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: true } elem { null_value: true }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: true } elem { null_value: true }" );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_maintenance_priorities, Fixture )
 {
     AddParameterValue( xos, "maintenancepriorities", "7;46" );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { logMaintenancePriorities { elem { id: 7 } elem { id: 46 } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { logMaintenancePriorities { elem { id: 7 } elem { id: 46 } } } }" );
     CheckCycle( msg );
 }
 
@@ -693,7 +804,8 @@ BOOST_FIXTURE_TEST_CASE( read_medical_priorities, Fixture )
 {
     AddParameterValue( xos, "medicalpriorities", "1;5" );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { logMedicalPriorities { elem: dead elem: wounded_extreme_urgency } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { logMedicalPriorities { elem: dead elem: wounded_extreme_urgency } } }" );
     CheckCycle( msg );
 }
 
@@ -706,7 +818,8 @@ BOOST_FIXTURE_TEST_CASE( read_resource_network_node, Fixture )
     "  </parameter>"
     "</action>";
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { resourceNetworkNode { object { id: 1337 } resource { name: \"some_value\" } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { resourceNetworkNode { object { id: 1337 } resource { name: \"some_value\" } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -719,7 +832,8 @@ BOOST_FIXTURE_TEST_CASE( read_resource_network_node_scipio, Fixture )
     "  </parameter>"
     "</action>";
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { resourceNetworkNode { object { id: 1337 } resource { name: \"some_value\" } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { resourceNetworkNode { object { id: 1337 } resource { name: \"some_value\" } } } }" );
     boost::replace_all( input, "resourcenetwork", "resourcenetworknode" );
     CheckCycle( input, msg );
 }
@@ -734,7 +848,10 @@ BOOST_FIXTURE_TEST_CASE( read_extension_list, Fixture )
     "  </parameter>"
     "</action>";
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { extensionList { entries { name: \"resource\" value: \"some_value\" } entries { name: \"cogito\" value: \"ergo sum\" } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { extensionList { "
+            "entries { name: \"resource\" value: \"some_value\" } "
+            "entries { name: \"cogito\" value: \"ergo sum\" } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -785,7 +902,17 @@ BOOST_FIXTURE_TEST_CASE( read_push_flow_parameters, Fixture )
     BOOST_CHECK_EQUAL( push.waybackpath().elem_size(), 2 );
     CheckLocation( push.waybackpath().elem( 0 ).location(), Location::point, 1 );
     CheckLocation( push.waybackpath().elem( 1 ).location(), Location::point, 1 );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { push_flow_parameters { recipients { receiver { id: 1 } resources { resourceType { id: 2 } quantity: 3 } resources { resourceType { id: 4 } quantity: 5 } path { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } recipients { receiver { id: 6 } path { } } transporters { equipmentType { id: 7 } quantity: 8 } transporters { equipmentType { id: 9 } quantity: 10 } wayBackPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false "
+            "value { push_flow_parameters { recipients { receiver { id: 1 } "
+                "resources { resourceType { id: 2 } quantity: 3 } "
+                "resources { resourceType { id: 4 } quantity: 5 } "
+                "path { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } "
+                       "elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } "
+                "recipients { receiver { id: 6 } path { } } "
+                "transporters { equipmentType { id: 7 } quantity: 8 } transporters { equipmentType { id: 9 } quantity: 10 } "
+                "wayBackPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } "
+                              "elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -832,7 +959,15 @@ BOOST_FIXTURE_TEST_CASE( read_pull_flow_parameters, Fixture )
     BOOST_CHECK_EQUAL( pull.waybackpath().elem_size(), 2 );
     CheckLocation( pull.waybackpath().elem( 0 ).location(), Location::point, 1 );
     CheckLocation( pull.waybackpath().elem( 1 ).location(), Location::point, 1 );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { pull_flow_parameters { supplier { formation { id: 1 } } resources { resourceType { id: 2 } quantity: 3 } resources { resourceType { id: 4 } quantity: 5 } transporters { equipmentType { id: 6 } quantity: 7 } transporters { equipmentType { id: 8 } quantity: 9 } wayOutPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } wayBackPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { pull_flow_parameters { "
+            "supplier { formation { id: 1 } } "
+            "resources { resourceType { id: 2 } quantity: 3 } resources { resourceType { id: 4 } quantity: 5 } "
+            "transporters { equipmentType { id: 6 } quantity: 7 } transporters { equipmentType { id: 8 } quantity: 9 } "
+            "wayOutPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } "
+                         "elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } "
+            "wayBackPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } "
+                          "elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -876,7 +1011,12 @@ BOOST_FIXTURE_TEST_CASE( read_list, Fixture )
     BOOST_CHECK_EQUAL( val.list_size(), 2 );
     CheckLocation( val.list( 0 ).area().location(), Location::polygon, 3 );
     BOOST_CHECK_EQUAL( val.list( 1 ).agent().id(), 1106u );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { list { area { location { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } list { agent { id: 1106 } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { list { area { location { type: polygon coordinates { "
+                                                                                "elem { latitude: 0 longitude: 0 } "
+                                                                                "elem { latitude: 0 longitude: 0 } "
+                                                                                "elem { latitude: 0 longitude: 0 } } } } } "
+                                         "list { agent { id: 1106 } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -896,7 +1036,9 @@ BOOST_FIXTURE_TEST_CASE( read_change_quota_links, Fixture )
     "  </parameter>"
     "</action>";
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { list { identifier: 3 } list { quantity: 4 } } value { list { identifier: 5 } list { quantity: 6 } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { list { identifier: 3 } list { quantity: 4 } } "
+                                 "value { list { identifier: 5 } list { quantity: 6 } } }" );
     CheckCycle( input, msg );
 }
 
@@ -927,7 +1069,13 @@ BOOST_FIXTURE_TEST_CASE( read_locationcomposite, Fixture )
     BOOST_CHECK_EQUAL( list.size(), 2 );
     CheckLocation( list.Get( 0 ).area().location(), Location::polygon, 3 );
     CheckLocation( list.Get( 1 ).point().location(), Location::point, 1 );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { area { location { type: polygon coordinates { elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } elem { latitude: 0 longitude: 0 } } } } } value { point { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { area { location { type: polygon coordinates { "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } "
+                                                                         "elem { latitude: 0 longitude: 0 } } } } } "
+                                 "value { point { location { type: point coordinates { "
+                                                                         "elem { latitude: 0 longitude: 0 } } } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -941,7 +1089,8 @@ namespace
                 << xml::attribute( "type", "mission" )
                 << xml::attribute( "time", "2011-04-08T10:01:36" );
         const auto msg = fix.Read< T >();
-        BOOST_CHECK_EQUAL( msg.ShortDebugString(), "tasker { id: 27 } type { id: 17 } parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+        BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+                        "tasker { id: 27 } type { id: 17 } parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
         fix.CheckCycle( msg );
     }
 }
@@ -969,7 +1118,8 @@ BOOST_FIXTURE_TEST_CASE( read_frag_order, Fixture )
         << xml::attribute( "time", "2011-04-08T10:01:36" );
     MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< FragOrder >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "tasker { party { id: 27 } } type { id: 1 } parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "tasker { party { id: 27 } } type { id: 1 } parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 
@@ -983,7 +1133,8 @@ BOOST_FIXTURE_TEST_CASE( read_magic_action, Fixture )
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "type: change_resource_network_properties parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "type: change_resource_network_properties parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 
@@ -1000,7 +1151,9 @@ BOOST_FIXTURE_TEST_CASE( read_unit_magic_action, Fixture )
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "tasker { party { id: 27 } } type: change_formation_superior parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "tasker { party { id: 27 } } type: change_formation_superior parameters { } "
+                 "start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 
@@ -1016,7 +1169,8 @@ BOOST_FIXTURE_TEST_CASE( read_object_magic_action, Fixture )
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "object { id: 27 } type: create parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "object { id: 27 } type: create parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 
@@ -1027,7 +1181,8 @@ BOOST_FIXTURE_TEST_CASE( read_knowledge_magic_action, Fixture )
         << xml::attribute( "type", "magicknowledge" )
         << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< KnowledgeMagicAction >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "knowledge_group { id: 27 } type: add_knowledge parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "knowledge_group { id: 27 } type: add_knowledge parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 
@@ -1038,7 +1193,8 @@ BOOST_FIXTURE_TEST_CASE( read_set_automat_mode, Fixture )
         << xml::attribute( "type", "change_mode" )
         << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< SetAutomatMode >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "automate { id: 27 } mode: engaged start_time { data: \"2011-04-08T10:01:36\" }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "automate { id: 27 } mode: engaged start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 
@@ -1049,7 +1205,8 @@ BOOST_FIXTURE_TEST_CASE( read_client_to_sim, Fixture )
         << xml::attribute( "type", "mission" );
     MOCK_EXPECT( reader.Resolve ).once().with( 8323u ).returns( Reader_ABC::AUTOMAT );
     const auto msg = Read< ClientToSim_Content >();
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "automat_order { tasker { id: 8323 } type { id: 2053 } parameters { } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "automat_order { tasker { id: 8323 } type { id: 2053 } parameters { } }" );
     CheckCycle( msg );
 }
 
@@ -1095,7 +1252,21 @@ BOOST_FIXTURE_TEST_CASE( read_complex_list_of_list, Fixture )
     BOOST_CHECK_EQUAL( msg.elem( 0 ).null_value(), false );
     const auto& list = msg.elem( 0 ).value();
     BOOST_CHECK_EQUAL( list.size(), 2 );
-    BOOST_CHECK_EQUAL( msg.ShortDebugString(), "elem { null_value: false value { list { quantity: 1 } list { enumeration: 1 } list { enumeration: 1 } list { list { list { identifier: 1 } list { enumeration: 1 } } list { list { identifier: 2 } list { enumeration: 2 } } } list { booleanValue: false } list { booleanValue: false } } value { list { quantity: 1 } list { enumeration: 1 } list { enumeration: 1 } list { list { list { identifier: 0 } list { enumeration: 0 } } } list { booleanValue: false } list { booleanValue: false } } }" );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { list { quantity: 1 } "
+                                         "list { enumeration: 1 } "
+                                         "list { enumeration: 1 } "
+                                         "list { list { list { identifier: 1 } "
+                                                       "list { enumeration: 1 } } "
+                                                "list { list { identifier: 2 } "
+                                                       "list { enumeration: 2 } } } "
+                                         "list { booleanValue: false } list { booleanValue: false } } "
+                                 "value { list { quantity: 1 } "
+                                         "list { enumeration: 1 } "
+                                         "list { enumeration: 1 } "
+                                         "list { list { list { identifier: 0 } list { enumeration: 0 } } } "
+                                         "list { booleanValue: false } "
+                                         "list { booleanValue: false } } }" );
     CheckCycle( input, msg );
 }
 
