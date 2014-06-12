@@ -2792,6 +2792,6 @@ message PathfindDestruction {
     @brief Notifies of the creation of a timeskip
 */
 message Timeskip {
-    optional uint32 tick = 2;
-    optional string time = 3;
+    optional uint32 tick = 1;
+    optional string time = 2;
 }
