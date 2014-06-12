@@ -120,6 +120,11 @@ void MIL_FragOrder::Register( sword::Brain& brain )
     brain.RegisterMethod( "GetAgentParameter", &MIL_FragOrder::GetAgentParameter );
     brain.RegisterMethod( "GetLocationParameter", &MIL_FragOrder::GetLocationParameter );
     brain.RegisterMethod( "GetPointParameter", &MIL_FragOrder::GetPointParameter );
+    brain.RegisterMethod( "GetMedicalPriorityParameter", &MIL_FragOrder::GetMedicalPriorityParameter );
+    brain.RegisterMethod( "GetAgentKnowledgeParameter", &MIL_FragOrder::GetAgentKnowledgeParameter );
+    brain.RegisterMethod( "GetResourceTypeParameter", &MIL_FragOrder::GetResourceTypeParameter );
+    brain.RegisterMethod( "GetResourceTypeListParameter", &MIL_FragOrder::GetResourceTypeListParameter );
+    brain.RegisterMethod( "GetObjectListParameter", &MIL_FragOrder::GetObjectListParameter );
     brain.RegisterMethod( "GetorderConduiteModifierRegimeTravailMaintenance_", &MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance );
     brain.RegisterMethod( "GetorderConduitePopulationChangerAttitude_", &MIL_FragOrder::GetOrderConduitePopulationChangerAttitude );
     brain.RegisterMethod( "GetpionARenforcer_", &MIL_FragOrder::GetPionARenforcer );
@@ -163,19 +168,8 @@ int MIL_FragOrder::GetAmbianceMission() const
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* MIL_FragOrder::GetMunition() const
 {
-    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
-    for( unsigned int i = 0; i < parametersNumber; ++i )
-    {
-        if( type_.GetParameterName( i ) == "munitions_" )
-        {
-            const PHY_DotationCategory* result;
-            if( parameters_[i]->ToDotationType( result ) )
-                return result;
-            else
-                return 0;
-        }
-    }
-    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter munitions_" );
+    static const std::string parameterName( "munitions_" );
+    return GetResourceTypeParameter( parameterName );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,19 +178,8 @@ const PHY_DotationCategory* MIL_FragOrder::GetMunition() const
 // -----------------------------------------------------------------------------
 std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetMunitions() const
 {
-    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
-    for( unsigned int i = 0; i < parametersNumber; ++i )
-    {
-        if( type_.GetParameterName( i ) == "munitions_" )
-        {
-            std::vector< const PHY_DotationCategory* > result;
-            if( parameters_[i]->ToDotationTypeList( result ) )
-                return result;
-            else
-                return std::vector< const PHY_DotationCategory* >();
-        }
-    }
-    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter munitions_" );
+    static const std::string parameterName( "munitions_" );
+    return GetResourceTypeListParameter( parameterName );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,19 +280,8 @@ int MIL_FragOrder::GetOrderConduiteChangerReglesEngagement() const
 // -----------------------------------------------------------------------------
 MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses() const
 {
-    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
-    for( unsigned int i = 0; i < parametersNumber; ++i )
-    {
-        if( type_.GetParameterName( i ) == "orderConduiteModifierPrioritesBlesses_" )
-        {
-            T_MedicalPriorityVector result;
-            if( parameters_[i]->ToMedicalPriorities( result ) )
-                return result;
-            else
-                return MIL_FragOrder::T_MedicalPriorityVector();
-        }
-    }
-    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter orderConduiteModifierPrioritesBlesses_" );
+    static const std::string parameterName( "orderConduiteModifierPrioritesBlesses_" );
+    return GetMedicalPriorityParameter( parameterName );
 }
 
 // -----------------------------------------------------------------------------
@@ -451,6 +423,91 @@ boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetPointParameter( const std::st
     throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
 }
 
+MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetMedicalPriorityParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            T_MedicalPriorityVector result;
+            if( parameters_[i]->ToMedicalPriorities( result ) )
+                return result;
+            else
+                return MIL_FragOrder::T_MedicalPriorityVector();
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
+boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledgeParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            boost::shared_ptr< DEC_Knowledge_Agent > result;
+            if( parameters_[i]->ToAgentKnowledge( result ) )
+                return result;
+            else
+                return boost::shared_ptr< DEC_Knowledge_Agent >();
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
+const PHY_DotationCategory* MIL_FragOrder::GetResourceTypeParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            const PHY_DotationCategory* result;
+            if( parameters_[i]->ToDotationType( result ) )
+                return result;
+            else
+                return 0;
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
+std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetResourceTypeListParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            std::vector< const PHY_DotationCategory* > result;
+            if( parameters_[i]->ToDotationTypeList( result ) )
+                return result;
+            else
+                return std::vector< const PHY_DotationCategory* >();
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
+std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjectListParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            std::vector< boost::shared_ptr< DEC_Knowledge_Object > > result;
+            if( parameters_[i]->ToObjectKnowledgeList( result ) )
+                return result;
+            else
+                return std::vector< boost::shared_ptr< DEC_Knowledge_Object > >();
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesReparations
 // Created: LDC 2009-08-04
@@ -558,21 +615,9 @@ int MIL_FragOrder::GetSiteFranchissementVariante() const
 boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() const
 {
     static const std::string parameterName( "agentKnowledge_" );
-
-    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
-    for( unsigned int i = 0; i < parametersNumber; ++i )
-    {
-        if( type_.GetParameterName( i ) == parameterName )
-        {
-            boost::shared_ptr< DEC_Knowledge_Agent > result;
-            if( parameters_[i]->ToAgentKnowledge( result ) )
-                return result;
-            else
-                return boost::shared_ptr< DEC_Knowledge_Agent >();
-        }
-    }
-    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + parameterName );
+    return GetAgentKnowledgeParameter( parameterName );
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetObjectKnowledge
 // Created: GGE 2011-11-17
@@ -580,21 +625,9 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() cons
 std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjectKnowledge() const
 {
     static const std::string parameterName( "objectKnowledge_" );
-
-    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
-    for( unsigned int i = 0; i < parametersNumber; ++i )
-    {
-        if( type_.GetParameterName( i ) == parameterName )
-        {
-            std::vector< boost::shared_ptr< DEC_Knowledge_Object > > result;
-            if( parameters_[i]->ToObjectKnowledgeList( result ) )
-                return result;
-            else
-                return std::vector< boost::shared_ptr< DEC_Knowledge_Object > >();
-        }
-    }
-    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + parameterName );
+    return GetObjectListParameter( parameterName );
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetAgent
 // Created: MGD 2010-02-27

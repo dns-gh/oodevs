@@ -101,7 +101,12 @@ public:
     std::vector< DEC_Decision_ABC* > GetAutomatListParameter( const std::string& ) const;
     const DEC_Decision_ABC* GetAgentParameter( const std::string& ) const;
     boost::shared_ptr< TER_Localisation > GetLocationParameter( const std::string& ) const;
-    boost::shared_ptr< MT_Vector2D > GetPointParameter( const std::string& name ) const;
+    boost::shared_ptr< MT_Vector2D > GetPointParameter( const std::string& ) const;
+    T_MedicalPriorityVector GetMedicalPriorityParameter( const std::string& ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetAgentKnowledgeParameter( const std::string& ) const;
+    const PHY_DotationCategory* GetResourceTypeParameter( const std::string& ) const;
+    std::vector< const PHY_DotationCategory* > GetResourceTypeListParameter( const std::string& ) const;
+    std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectListParameter( const std::string& ) const;
     int GetOrderConduiteModifierRegimeTravailMaintenance() const;
     int GetOrderConduitePopulationChangerAttitude() const;
     const DEC_Decision_ABC* GetPionARenforcer() const;
