@@ -49,7 +49,7 @@ class StdObserver : public tools::RealFileLoaderObserver_ABC
     virtual void GetXsdErrors( std::vector< std::string >& errors ) const
     {
         for( auto it = errors.cbegin(); it != errors.cend(); ++it )
-            std::cerr << "error: schema error:" << *it << std::endl;
+            std::cerr << "error: schema error: " << *it << std::endl;
     }
 };
 
