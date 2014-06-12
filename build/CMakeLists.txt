@@ -166,9 +166,10 @@ target_link_libraries( mt_tools
 )
 
 # sword_tools
-add_target( sword_tools common "libraries/tools" OPTIONS protocol )
+add_target( sword_tools common "libraries/tools" OPTIONS )
 target_link_libraries( sword_tools
     mt_tools
+    ${PROTOBUF_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
     ${XALAN_LIBRARIES}
     ${XERCES_LIBRARIES}
