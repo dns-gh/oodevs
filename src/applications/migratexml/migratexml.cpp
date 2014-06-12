@@ -112,7 +112,7 @@ int main( int, char** )
             std::cout << "usage: migratexml MIGRATIONFILE INPUT OUTPUT\n\n";
             std::cout << "Migrate input XML file using supplied migrations.xml migration file\n";
             std::cout << desc << std::endl;
-            exit( 0 );
+            return 0;
         }
 
         const auto mig = tools::Path::FromUTF8( migration );
@@ -125,5 +125,5 @@ int main( int, char** )
         ret = 1;
         std::cerr << "error: " << tools::GetExceptionMsg( e ) << std::endl;
     }
-    exit( ret );
+    return ret;
 }
