@@ -683,7 +683,8 @@
                         excludes="**/*_test.exe,
                                   **/client_sample_app.exe,
                                   **/svgl_app.exe,
-                                  **/casava_odb_gen_app.exe"/>
+                                  **/casava_odb_gen_app.exe,
+                                  **/migratexml.exe"/>
                     <flattenmapper/>
                 </mappedresources>
                 <fileset dir="${bin.dir}" includes="csvclient.exe"/>

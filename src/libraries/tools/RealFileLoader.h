@@ -27,7 +27,10 @@ namespace tools
     class FileMatcherFactory_ABC;
     class FileMigration_ABC;
     class Path;
-    class SchemaVersionExtractor_ABC;
+
+// Returns the version string related to an XSD URI, an empty path if it
+// cannot be found.
+tools::Path ExtractSchemaVersion( const tools::Path& schema );
 
 // =============================================================================
 /** @class  RealFileLoader_ABC
@@ -40,7 +43,7 @@ class RealFileLoader : public RealFileLoader_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RealFileLoader( xml::xistream& xis, const SchemaVersionExtractor_ABC& versionExtractor );
+    explicit RealFileLoader( xml::xistream& xis );
     virtual ~RealFileLoader();
     //@}
 
@@ -71,7 +74,6 @@ private:
 
 private:
     const std::unique_ptr< FileMatcherFactory_ABC > fileMatcherFactory_;
-    const SchemaVersionExtractor_ABC& versionExtractor_;
     T_Migrations migrations_;
     T_DefaultSchemasAssignment defaultSchemasAssignment_;
     T_AddedFiles addedFiles_;

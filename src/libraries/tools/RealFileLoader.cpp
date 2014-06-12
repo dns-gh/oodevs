@@ -15,23 +15,40 @@
 #include "FileMatcherFactory.h"
 #include "FileMatcher_ABC.h"
 #include "FileWrapper.h"
-#include "SchemaVersionExtractor_ABC.h"
 #include "XmlStreamOperators.h"
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/iterator/reverse_iterator.hpp>
 #include <boost/ref.hpp>
+#include <boost/regex.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 
 using namespace tools;
+
+namespace
+{
+
+const boost::wregex reVersion( L"[^0-9.]*([0-9][0-9.]*).*" );
+
+}
+
+tools::Path tools::ExtractSchemaVersion( const tools::Path& schema )
+{
+    const std::wstring schemaString = schema.ToUnicode();
+    boost::match_results< std::wstring::const_iterator > what;
+    const bool matched = boost::regex_match( schemaString, what, reVersion,
+            boost::match_default | boost::match_partial );
+    if( matched && what[1].matched )
+        return Path::FromUnicode( std::wstring( what[1].first, what[1].second ) );
+    return Path();
+}
 
 // -----------------------------------------------------------------------------
 // Name: RealFileLoader constructor
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-RealFileLoader::RealFileLoader( xml::xistream& xis, const SchemaVersionExtractor_ABC& versionExtractor )
+RealFileLoader::RealFileLoader( xml::xistream& xis )
     : fileMatcherFactory_( new FileMatcherFactory() )
-    , versionExtractor_  ( versionExtractor )
 {
     xis >> xml::start( "migrations" )
             >> xml::start( "default" )
@@ -158,14 +175,14 @@ std::unique_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialIn
             schema = x.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
         } );
 
-    Path version = versionExtractor_.ExtractVersion( schema );
+    Path version = ExtractSchemaVersion( schema );
     if( version.IsEmpty() )
     {
         Path newSchema;
         if( AssignDefaultSchema( inputFileName, *xis, newSchema ) )
         {
             schema = newSchema;
-            version = versionExtractor_.ExtractVersion( schema );
+            version = ExtractSchemaVersion( schema );
         }
         if( schema.IsEmpty() )
             observer.NotifyNoXmlSchemaSpecified( inputFileName );

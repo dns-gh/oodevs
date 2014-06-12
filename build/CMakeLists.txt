@@ -166,9 +166,10 @@ target_link_libraries( mt_tools
 )
 
 # sword_tools
-add_target( sword_tools common "libraries/tools" OPTIONS protocol )
+add_target( sword_tools common "libraries/tools" OPTIONS )
 target_link_libraries( sword_tools
     mt_tools
+    ${PROTOBUF_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
     ${XALAN_LIBRARIES}
     ${XERCES_LIBRARIES}
@@ -661,4 +662,10 @@ target_link_libraries( casava_odb_gen_app
     clients_gui
     sword_tools
     ${GEOCOORD_LIBRARIES}
+)
+
+# migratexml 
+add_target( migratexml clients "applications/migratexml" OPTIONS executable )
+target_link_libraries( migratexml
+    sword_tools
 )
