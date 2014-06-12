@@ -10,7 +10,6 @@
 #include "tools_pch.h"
 #include "DefaultLoader.h"
 #include "RealFileLoader.h"
-#include "SchemaVersionExtractor.h"
 #include "GeneralConfig.h"
 #include "FileWrapper.h"
 
@@ -22,11 +21,10 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 DefaultLoader::DefaultLoader( RealFileLoaderObserver_ABC& observer )
     : observer_              ( observer )
-    , schemaVersionExtractor_( new SchemaVersionExtractor() )
 {
 
     Xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "migrations.xml" ) );
-    fileLoader_.reset( new RealFileLoader( xis, *schemaVersionExtractor_ ) );
+    fileLoader_.reset( new RealFileLoader( xis ) );
 }
 
 // -----------------------------------------------------------------------------

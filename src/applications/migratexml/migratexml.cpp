@@ -10,7 +10,6 @@
 #include <tools/FileWrapper.h>
 #include "tools/RealFileLoader.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
-#include "tools/SchemaVersionExtractor.h"
 #include <tools/Helpers.h>
 #include <tools/Exception.h>
 #include <tools/Path.h>
@@ -64,8 +63,7 @@ void MigrateXml( const tools::Path& migrations, const tools::Path& input,
     if( !input.Exists() )
         throw std::invalid_argument( "failed to open " + input.ToUTF8() );
     tools::Xifstream xis( migrations );
-    tools::SchemaVersionExtractor versionExtractor;
-    tools::RealFileLoader loader( xis, versionExtractor );
+    tools::RealFileLoader loader( xis );
     StdObserver observer;
     auto migrated = loader.LoadFile( input, observer );
     output.Parent().CreateDirectories();

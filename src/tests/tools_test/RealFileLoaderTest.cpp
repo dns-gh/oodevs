@@ -11,7 +11,6 @@
 #include "MockRealFileLoaderObserver.h"
 #include "tools/FileWrapper.h"
 #include "tools/RealFileLoader.h"
-#include "tools/SchemaVersionExtractor.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -43,17 +42,26 @@ namespace
     };
 }
 
+BOOST_AUTO_TEST_CASE( test_schema_version_extractor )
+{
+    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "2.0.1" ), "1.0.1" );
+    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "1.0.1/schema/validation.xml" ), "1.0.1" );
+    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "schema/1.0.1/validation.xml" ), "1.0.1" );
+    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "schema/validation.xml" ), "" );
+    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "1.2.3/schema/1.0.1/validation.xml" ), "1.2.3" );
+    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "1/schema/validation.xml" ), "1" );
+    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "schema/2/validation.xml" ), "2" );
+}
+
 BOOST_FIXTURE_TEST_CASE( test_invalid_migrations_file_missing_version, Fixture )
 {
-    tools::SchemaVersionExtractor ve;
     tools::Xifstream invalidMigrations( BOOST_RESOLVE( "testFileMigration/invalid_migrations.xml" ) );
-    BOOST_CHECK_THROW( tools::RealFileLoader loader( invalidMigrations, ve ), std::exception );
+    BOOST_CHECK_THROW( tools::RealFileLoader loader( invalidMigrations ), std::exception );
 }
 
 BOOST_FIXTURE_TEST_CASE( test_valid_xml_schema, Fixture )
 {
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
+    tools::RealFileLoader loader( emptyMigrations_ );
     MockRealFileLoaderObserver observer;
     std::unique_ptr< xml::xistream > inputStream = loader.LoadFile( BOOST_RESOLVE( "testFileMigration/input-1.0.xml" ), observer );
     BOOST_REQUIRE( inputStream.get() );
@@ -62,8 +70,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_schema, Fixture )
 BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_throws, Fixture )
 {
     const tools::Path inputFile = "testFileMigration/input_invalid_schema.xml";
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
+    tools::RealFileLoader loader( emptyMigrations_ );
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( false );
     BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
@@ -72,8 +79,7 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_throws, Fixture )
 BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_nothrows, Fixture )
 {
     const tools::Path inputFile = "testFileMigration/input_invalid_schema.xml";
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
+    tools::RealFileLoader loader( emptyMigrations_ );
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( true );
     std::unique_ptr< xml::xistream > inputStream = loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
@@ -83,8 +89,7 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_nothrows, Fixture )
 BOOST_FIXTURE_TEST_CASE( test_invalid_xml_no_version_in_schema, Fixture )
 {
     const tools::Path inputFile = "testFileMigration/input_invalid_no_version_in_schema.xml";
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
+    tools::RealFileLoader loader( emptyMigrations_ );
     MockRealFileLoaderObserver observer;
     // NotifyInvalidXml won't be called: no version in initial schema = don't check
     loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
@@ -93,8 +98,7 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_no_version_in_schema, Fixture )
 BOOST_FIXTURE_TEST_CASE( test_valid_xml_schema_migration, Fixture )
 {
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations.xml" ) );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
 
     const tools::Path inputFile = BOOST_RESOLVE( "testFileMigration/input-1.0.xml" );
 
@@ -119,8 +123,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_version_in_schema_no_default_assignme
 {
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations_no_default_assignment.xml" ) );
     const tools::Path inputFile = "testFileMigration/input_valid_no_version_in_schema.xml";
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
     MockRealFileLoaderObserver observer;
     std::unique_ptr< xml::xistream > inputStream = loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
     BOOST_REQUIRE( inputStream.get() );
@@ -131,8 +134,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_schema_no_default_assignment, Fixture
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations_no_default_assignment.xml" ) );
 
     const tools::Path inputFile = "testFileMigration/input_valid_no_schema.xml";
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
 
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyNoXmlSchemaSpecified ).once().with( BOOST_RESOLVE( inputFile ) );
@@ -145,8 +147,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_schema_default_assignment_rootnode, F
     const tools::Path inputFile = BOOST_RESOLVE( "testFileMigration/input_valid_no_schema.xml" );
 
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations_default_rootnode.xml" ) );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
 
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
@@ -162,8 +163,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_version_in_schema_default_assignment_
     const tools::Path inputFile = BOOST_RESOLVE( "testFileMigration/input_valid_no_version_in_schema.xml" );
 
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations_default_rootnode.xml" ) );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
 
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
@@ -179,8 +179,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_schema_default_assignment_filename, F
     const tools::Path inputFile = BOOST_RESOLVE( "testFileMigration/input_valid_no_schema.xml" );
 
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations_default_filename.xml" ) );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
 
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
@@ -196,8 +195,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_version_in_schema_default_assignment_
     const tools::Path inputFile = BOOST_RESOLVE( "testFileMigration/input_valid_no_version_in_schema.xml" );
 
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations_default_filename.xml" ) );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
 
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
@@ -213,8 +211,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_version_in_schema_default_assignment_
     const tools::Path inputFile = BOOST_RESOLVE( "testFileMigration/input_valid_no_version_in_schema.xml" );
 
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations_default_schema.xml" ) );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
 
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
@@ -230,8 +227,7 @@ BOOST_FIXTURE_TEST_CASE( test_added_file, Fixture )
     const tools::Path inputFile = tools::GeneralConfig::BuildResourceChildFile( "testFileMigration/input-1.0.xml" );
 
     tools::Xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations_added_files.xml" ) );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( migrations, ve );
+    tools::RealFileLoader loader( migrations );
 
     MockRealFileLoaderObserver observer;
     MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );

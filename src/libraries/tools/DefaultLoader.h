@@ -15,7 +15,6 @@
 namespace tools
 {
     class RealFileLoader_ABC;
-    class SchemaVersionExtractor_ABC;
     class RealFileLoaderObserver_ABC;
 
 // =============================================================================
@@ -47,7 +46,6 @@ protected:
     //! @name Member data
     //@{
     RealFileLoaderObserver_ABC& observer_;
-    std::unique_ptr< SchemaVersionExtractor_ABC > schemaVersionExtractor_;
     std::unique_ptr< RealFileLoader_ABC > fileLoader_;
     //@}
 };
