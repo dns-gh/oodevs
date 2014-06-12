@@ -1212,11 +1212,6 @@
             <arg value="${bin.dir}/buildtools/fixmsvc.py"/>
             <arg value="${out.dir}/msvc"/>
         </python>
-        <exec taskname="snapdir" executable="${bin.dir}/snapdir" failonerror="true">
-            <arg value="--input=${src.dir}"/>
-            <arg value="--output=${out.dir}/msvc/.snapdir"/>
-            <arg value="--save"/>
-        </exec>
     </target>
 
     <target name="cmake.configure" description="generate cmake build files">
