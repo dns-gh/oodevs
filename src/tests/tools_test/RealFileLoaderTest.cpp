@@ -44,7 +44,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( test_schema_version_extractor )
 {
-    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "2.0.1" ), "1.0.1" );
+    BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "1.0.1" ), "1.0.1" );
     BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "1.0.1/schema/validation.xml" ), "1.0.1" );
     BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "schema/1.0.1/validation.xml" ), "1.0.1" );
     BOOST_CHECK_EQUAL( tools::ExtractSchemaVersion( "schema/validation.xml" ), "" );
