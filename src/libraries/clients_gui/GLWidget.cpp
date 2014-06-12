@@ -970,7 +970,9 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     width = width ? width / 360 : 1;
     float symbolDepth = 240;
     float baseDepth = depth;
-    depth = depth ? depth / symbolDepth : 1;
+    depth = depth ? depth / symbolDepth : 1;           
+    bool mirror = direction > 180;
+    float xFactor = mirror ? -1.f : 1.f;
     if( isMoving )
     {
         if( !moveSymbol.empty() )
@@ -982,9 +984,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
             geometry::Point2f arrowHead = where;
             geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth * SymbolSize_/defaultSymbolSize);
             geometry::Vector2f symbolVector( symbolTail, arrowHead );
-            geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f;            
-            bool mirror = direction > 180;
-            float xFactor = mirror ? -1.f : 1.f;
+            geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f; 
             DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, xFactor, 1 );
             if( baseDepth && baseDepth > symbolDepth * SymbolSize_/defaultSymbolSize )
             {
@@ -1001,7 +1001,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     else
     {
         if( !staticSymbol.empty() )
-            DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction, width, depth );
+            DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction, width * xFactor, depth );
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
