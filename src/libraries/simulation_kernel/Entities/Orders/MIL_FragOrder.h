@@ -102,11 +102,11 @@ public:
     const DEC_Decision_ABC* GetAgentParameter( const std::string& ) const;
     boost::shared_ptr< TER_Localisation > GetLocationParameter( const std::string& ) const;
     boost::shared_ptr< MT_Vector2D > GetPointParameter( const std::string& ) const;
-    T_MedicalPriorityVector MIL_FragOrder::GetMedicalPriorityParameter( const std::string& ) const;
-    boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledgeParameter( const std::string& ) const;
-    const PHY_DotationCategory* MIL_FragOrder::GetResourceTypeParameter( const std::string& ) const;
-    std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetResourceTypeListParameter( const std::string& ) const;
-    std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjectListParameter( const std::string& ) const;
+    T_MedicalPriorityVector GetMedicalPriorityParameter( const std::string& ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetAgentKnowledgeParameter( const std::string& ) const;
+    const PHY_DotationCategory* GetResourceTypeParameter( const std::string& ) const;
+    std::vector< const PHY_DotationCategory* > GetResourceTypeListParameter( const std::string& ) const;
+    std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectListParameter( const std::string& ) const;
     int GetOrderConduiteModifierRegimeTravailMaintenance() const;
     int GetOrderConduitePopulationChangerAttitude() const;
     const DEC_Decision_ABC* GetPionARenforcer() const;
