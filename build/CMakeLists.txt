@@ -662,3 +662,9 @@ target_link_libraries( casava_odb_gen_app
     sword_tools
     ${GEOCOORD_LIBRARIES}
 )
+
+# migratexml 
+add_target( migratexml clients "applications/migratexml" OPTIONS executable )
+target_link_libraries( migratexml
+    sword_tools
+)
