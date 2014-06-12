@@ -165,6 +165,46 @@ integration.getPointParameter = function( fragorder, parameterName )
     return fragorder.source:GetPointParameter( parameterName )
 end
 
+--- Returns the fragmentary order's "Human wounds list" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of simulation human wounds
+integration.getHumanWoundsListParameter = function( fragorder, parameterName )
+    return fragorder.source:GetMedicalPriorityParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Agent knowledge" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return Simulation agent knowledge
+integration.getAgentKnowledgeTypeParameter = function( fragorder, parameterName )
+    return fragorder.source:GetAgentKnowledgeParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Resource type" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return Simulation resource type
+integration.getResourceTypeParameter = function( fragorder, parameterName )
+    return fragorder.source:GetResourceTypeParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Resource type list" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of simulation resource types
+integration.getResourceTypeListParameter = function( fragorder, parameterName )
+    return fragorder.source:GetResourceTypeListParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Object list" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of simulation objects
+integration.getObjectListParameter = function( fragorder, parameterName )
+    return fragorder.source:GetObjectListParameter( parameterName )
+end
+
 integration.getOrderConduiteModifierPrioritesBlessesParameter = function( fragorder )
     return fragorder.source:GetorderConduiteModifierPrioritesBlesses_()
 end
