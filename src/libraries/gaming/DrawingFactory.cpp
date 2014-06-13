@@ -14,9 +14,9 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LocationProxy.h"
-#include "clients_gui/DrawingTemplate.h"
 #include "clients_gui/DrawingHelper.h"
-#include "DrawingPositions.h"
+#include "clients_gui/DrawingPositions.h"
+#include "clients_gui/DrawingTemplate.h"
 #include "Drawing.h"
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,12 @@ kernel::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& me
         else if( message.shape().diffusion().has_formation() )
             diffusionEntity = resolver_.FindFormation( message.shape().diffusion().formation().id() );
     }
-    DrawingPositions* location = new DrawingPositions( converter_, message );
+
+    gui::DrawingPositions* location = new gui::DrawingPositions();
+    const auto& points = message.shape().points();
+    for( int i = 0; i < points.elem_size(); ++i )
+        location->AddPoint( converter_.ConvertToXY( points.elem(i) ) );
+
     Drawing* drawing = new Drawing( controllers_, message, diffusionEntity, types_, *location, publisher_, converter_ );
     drawing->Attach< kernel::Positions >( *location );
     drawing->Polish();
