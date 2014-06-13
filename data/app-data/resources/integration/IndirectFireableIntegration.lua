@@ -251,3 +251,12 @@ end
 integration.getMaxRangeIndirectFireWithoutSelectAmmo = function()
     return DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition()
 end
+
+-- Returns the indirect fire range for the given agent
+-- Note that this method can only be called by a company.
+-- If the returned distance is 0 the entity can't apply indirect fire
+-- @param agent Simulation agent
+-- @return Float, distance in meters
+integration.getRangeDistanceForIndirectFire = function( agent )
+    return DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition( agent )
+end

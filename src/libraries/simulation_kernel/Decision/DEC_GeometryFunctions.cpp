@@ -1281,6 +1281,31 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBar
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeListPointsBarycenter
+// Created: GGE 2014-06-12
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeListPointsBarycenter( const std::vector< boost::shared_ptr< MT_Vector2D > >& points )
+{
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( 0., 0. );
+
+    unsigned int nNbr = 0;
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+    {
+        boost::shared_ptr< MT_Vector2D > pPoint = *it;
+        if( pPoint )
+        {
+            *pResult += *pPoint;
+            ++ nNbr;
+        }
+    }
+
+    if( nNbr )
+        *pResult /= (double)nNbr;
+
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::GetFrontestPion
 // Created: JVT 2005-02-11
 // -----------------------------------------------------------------------------

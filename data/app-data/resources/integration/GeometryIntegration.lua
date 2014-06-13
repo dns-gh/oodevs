@@ -40,6 +40,13 @@ integration.computeLocationBarycenter = function( location )
     return DEC_Geometrie_CalculerBarycentreLocalisation( location )
 end
 
+--- Returns the barycenter of the provided list of points
+-- @param listPoints List of simulation positions
+-- @return Simulation position
+integration.computePointsListBarycenter = function( listPoints )
+    return DEC_Geometrie_CalculerBarycentreListePoints( listPoints )
+end
+
 --- Returns a position on the middle limit at the provided advance
 --- along the area of responsibility.
 -- @param areaOfResponsibility Simulation area of responsibility
