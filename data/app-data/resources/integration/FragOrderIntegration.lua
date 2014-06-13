@@ -130,6 +130,9 @@ end
 -- @param parameterName String, the name of the parameter
 -- @return Integer
 integration.getIntegerParameter = function( fragorder, parameterName )
+    if not fragorder.source:HasIntegerParameter( parameterName ) then
+        return nil
+    end
     return fragorder.source:GetIntegerParameter( parameterName )
 end
 
@@ -195,6 +198,14 @@ end
 -- @return List of simulation resource types
 integration.getResourceTypeListParameter = function( fragorder, parameterName )
     return fragorder.source:GetResourceTypeListParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Object" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return Simulation object
+integration.getObjectParameter = function( fragorder, parameterName )
+    return fragorder.source:GetObjectParameter( parameterName )
 end
 
 --- Returns the fragmentary order's "Object list" parameter with the given name.
