@@ -110,12 +110,13 @@
 #include "res/dnd_lock.xpm"
 #include "res/dnd_unlock.xpm"
 
+#include "cursors/circle_cursor.xpm"
+#include "cursors/line_cursor.xpm"
+#include "cursors/path_cursor.xpm"
 #include "cursors/pen_cursor.xpm"
 #include "cursors/point_cursor.xpm"
-#include "cursors/line_cursor.xpm"
 #include "cursors/polygon_cursor.xpm"
-#include "cursors/circle_cursor.xpm"
-#include "cursors/path_cursor.xpm"
+#include "cursors/rectangle_cursor.xpm"
 
 QIcon MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

@@ -294,6 +294,8 @@ void DrawerPanel::StartDrawing()
             layer_.StartCircle( *this );
         else if( selectedStyle_->GetType() == "curve" )
             layer_.StartCurve( *this );
+        else if( selectedStyle_->GetType() == "rectangle" )
+            layer_.StartRectangle( *this );
         else
             throw MASA_EXCEPTION( "Unhandled shape geometry." );
     }

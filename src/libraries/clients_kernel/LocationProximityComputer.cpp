@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "LocationProximityComputer.h"
+#include <boost/assign.hpp>
 
 using namespace kernel;
 
@@ -49,7 +50,16 @@ void LocationProximityComputer::VisitLines( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void LocationProximityComputer::VisitRectangle( const T_PointVector& points )
 {
-    VisitPolygon( points );
+    if( points.size() > 1 )
+    {
+        const geometry::Rectangle2f box( points[ 0 ], points[ 1 ] );
+        const T_PointVector copy = boost::assign::list_of( geometry::Point2f( box.Left(), box.Top() ) )
+            ( geometry::Point2f( box.Right(), box.Top() ) )
+            ( geometry::Point2f( box.Right(), box.Bottom() ) )
+            ( geometry::Point2f( box.Left(), box.Bottom() ) )
+            ( geometry::Point2f( box.Left(), box.Top() ) );
+         VisitPolygon( copy );
+    }
 }
 
 // -----------------------------------------------------------------------------

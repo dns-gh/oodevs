@@ -105,11 +105,12 @@ DECLARE_ICON( dnd_lock );
 DECLARE_ICON( dnd_unlock );
 
 // cursors
+DECLARE_ICON( circle_cursor );
+DECLARE_ICON( line_cursor );
+DECLARE_ICON( path_cursor );
 DECLARE_ICON( pen_cursor );
 DECLARE_ICON( point_cursor );
-DECLARE_ICON( line_cursor );
 DECLARE_ICON( polygon_cursor );
-DECLARE_ICON( circle_cursor );
-DECLARE_ICON( path_cursor );
+DECLARE_ICON( rectangle_cursor );
 
 #endif // __demo_resources_h_
