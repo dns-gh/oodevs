@@ -350,9 +350,7 @@ bool MIL_FragOrder::HasIntegerParameter( const std::string& name ) const
             if( parameters_[i]->ToId( result ) )
                 return true;
             float realResult;
-            if( parameters_[i]->ToNumeric( realResult ) )
-                return true;
-            return false;
+            return parameters_[i]->ToNumeric( realResult );
         }
     }
     return false;
