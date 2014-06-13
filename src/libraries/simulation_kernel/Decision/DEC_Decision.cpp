@@ -258,6 +258,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_DecouperListePoints", &DEC_GeometryFunctions::SplitListPoints );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionCouverture", &DEC_GeometryFunctions::ComputeCoverPosition );
     brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreAgents", &DEC_GeometryFunctions::ComputeAgentsBarycenter );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreListePoints", &DEC_GeometryFunctions::ComputeListPointsBarycenter );
     brain.RegisterFunction( "DEC_Geometrie_PositionTranslate", &DEC_GeometryFunctions::TranslatePosition );
     brain.RegisterFunction( "DEC_Geometrie_PositionTranslateDir", &DEC_GeometryFunctions::TranslatePositionInDirection );
     brain.RegisterFunction( "DEC_Geometrie_PositionTranslateVector", &DEC_GeometryFunctions::TranslatePositionInVector );
