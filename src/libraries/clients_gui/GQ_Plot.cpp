@@ -408,7 +408,8 @@ void GQ_Plot::UpdateLayerBBox( const T_PlotLayer& layer, GQ_PlotDataBBox& bbox )
     {
         const GQ_PlotData* pData = layer[i];
         assert( pData );
-        bbox.UpdateWithBBox( pData->BBox() );
+        if( pData->CanUpdateBBox() )
+            bbox.UpdateWithBBox( pData->BBox() );
     }
 }
 

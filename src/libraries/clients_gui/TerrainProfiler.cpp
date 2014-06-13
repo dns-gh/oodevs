@@ -41,12 +41,16 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     {
         QWidget* box = new QWidget( this );
         profile_ = new TerrainProfile( box );
+        heightCheckbox_ = new QCheckBox();
+        heightCheckbox_->setCheckState( Qt::Checked );
         QLabel* heightLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Observation height" ) );
         heightValue_ = new RichSpinBox( "heightValue" );
         heightValue_->setFixedSize( 100, 30 );
         heightValue_->setLineStep( 50 );
         heightValue_->setSuffix( " " + kernel::Units::meters.AsString() );
         heightValue_->setValue( 1 );
+        slopeCheckbox_ = new QCheckBox();
+        slopeCheckbox_->setCheckState( Qt::Checked );
         QLabel* slopeLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Slope threshold" ) );
         slopeValue_ = new RichSpinBox( "slopeValue", 0, 0, 90 );
         slopeValue_->setFixedSize( 100, 30 );
@@ -56,13 +60,17 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
         QVBoxLayout* vlayout = new QVBoxLayout( box );
         vlayout->addWidget( profile_ );
         QHBoxLayout* hlayout = new QHBoxLayout( vlayout );
+        hlayout->addWidget( heightCheckbox_ );
         hlayout->addWidget( heightLabel );
         hlayout->addWidget( heightValue_ );
+        hlayout->addWidget( slopeCheckbox_ );
         hlayout->addWidget( slopeLabel );
         hlayout->addWidget( slopeValue_ );
         hlayout->addStretch();
         setWidget( box );
+        connect( heightCheckbox_, SIGNAL( stateChanged( int ) ), SLOT( UpdateView() ) );
         connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( UpdateView() ) );
+        connect( slopeCheckbox_, SIGNAL( stateChanged( int ) ), SLOT( UpdateView() ) );
         connect( slopeValue_, SIGNAL( valueChanged( int ) ), SLOT( UpdateView() ) );
     }
     setFloating( true );
@@ -206,6 +214,8 @@ void TerrainProfiler::UpdateView()
 
 void TerrainProfiler::UpdatePathView()
 {
+    const bool displayHeight = heightCheckbox_->checkState() == Qt::Checked;
+    const bool displaySlope = slopeCheckbox_->checkState() == Qt::Checked;
     std::vector< TerrainProfile::T_Point > points;
     auto previous = path_.begin();
     points.push_back( std::make_pair( 0, detection_.ElevationAt( *previous ) ) );
@@ -215,11 +225,15 @@ void TerrainProfiler::UpdatePathView()
         x += previous->Distance( *it );
         points.push_back( std::make_pair( x / 1000, detection_.ElevationAt( *it ) ) );
     }
-    profile_->Update( points, heightValue_->value(), slopeValue_->value() );
+    profile_->Update( points, displayHeight, heightValue_->value(), displaySlope, slopeValue_->value() );
 }
 
 void TerrainProfiler::UpdatePointsView()
 {
+    const bool displayHeight = heightCheckbox_->checkState() == Qt::Checked;
+    const bool displaySlope = slopeCheckbox_->checkState() == Qt::Checked;
+    heightValue_->setEnabled( displayHeight );
+    slopeValue_->setEnabled( displaySlope );
     if( to_.IsZero() || from_.IsZero() )
         return;
     std::vector< TerrainProfile::T_Point > points;
@@ -233,7 +247,7 @@ void TerrainProfiler::UpdatePointsView()
         points.push_back( std::make_pair( x / 1000, value ) );
         x += line.Length();
     }
-    profile_->Update( points, height, slopeValue_->value() );
+    profile_->Update( points, displayHeight, height, displaySlope, slopeValue_->value() );
 }
 
 // -----------------------------------------------------------------------------

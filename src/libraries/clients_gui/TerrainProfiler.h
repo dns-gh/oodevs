@@ -59,12 +59,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TerrainProfiler( const TerrainProfiler& );            //!< Copy constructor
-    TerrainProfiler& operator=( const TerrainProfiler& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
@@ -93,7 +87,9 @@ private:
     geometry::Point2f from_;
     geometry::Point2f to_;
     T_PointVector path_;
+    QCheckBox* heightCheckbox_;
     QSpinBox* heightValue_;
+    QCheckBox* slopeCheckbox_;
     QSpinBox* slopeValue_;
     //@}
 };

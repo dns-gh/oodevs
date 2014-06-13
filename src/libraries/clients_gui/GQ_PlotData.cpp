@@ -29,6 +29,7 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot )
 , bOwnData_       ( true  )
 , nUserID_        ( nUserID )
 , bVisible_       ( true )
+, canUpdateBBox_  ( true )
 , pointPen_       ( Qt::red   )
 , linePen_        ( Qt::blue  )
 , barPen_         ( Qt::black )
@@ -59,6 +60,7 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot, T_Data& data, uns
 , bOwnData_       ( false )
 , nUserID_        ( nUserID )
 , bVisible_       ( true )
+, canUpdateBBox_  ( true )
 , pointPen_       ( Qt::red   )
 , linePen_        ( Qt::blue  )
 , barPen_         ( Qt::black )
@@ -125,6 +127,15 @@ void GQ_PlotData::SetVisible( bool bShow )
     bVisible_ = bShow;
 
     TouchRange();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::SetCanUpdateBBox
+// Created: JSR 2014-06-13
+// -----------------------------------------------------------------------------
+void GQ_PlotData::SetCanUpdateBBox( bool canUpdateBBox )
+{
+    canUpdateBBox_ = canUpdateBBox;
 }
 
 // -----------------------------------------------------------------------------

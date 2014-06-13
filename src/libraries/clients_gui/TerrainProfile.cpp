@@ -47,6 +47,7 @@ TerrainProfile::TerrainProfile( QWidget* parent )
     vision_->SetLinePen( QPen( Qt::blue, 1 ) );
     vision_->AddIgnoreValue( -1.f );
     slopes_->SetLinePen( QPen( Qt::red, 1 ) );
+    slopes_->SetCanUpdateBBox( false );
     RegisterPlotData( *data_ );
     RegisterPlotData( *vision_ );
     RegisterPlotData( *slopes_ );
@@ -65,17 +66,21 @@ TerrainProfile::~TerrainProfile()
 // Name: TerrainProfile::Update
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-void TerrainProfile::Update( const std::vector< T_Point >& points, int height, int slope )
+void TerrainProfile::Update( const std::vector< T_Point >& points, bool displayHeight, int height, bool displaySlope, int slope )
 {
     data_->ClearData();
+    vision_->ClearData();
+    slopes_->ClearData();
     double x = 0;
     for( auto it = points.begin(); it != points.end(); ++it )
     {
         data_->AddPoint( *it );
         x = it->first;
     }
-    UpdateVision( height );
-    UpdateSlopes( slope );
+    if( displayHeight )
+        UpdateVision( height );
+    if( displaySlope )
+        UpdateSlopes( slope );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +89,6 @@ void TerrainProfile::Update( const std::vector< T_Point >& points, int height, i
 // -----------------------------------------------------------------------------
 void TerrainProfile::UpdateVision( int height )
 {
-    vision_->ClearData();
     const auto& data = data_->Data();
     if( data.size() < 2 )
         return;
@@ -128,7 +132,6 @@ namespace
 
 void TerrainProfile::UpdateSlopes( int threshold )
 {
-    slopes_->ClearData();
     const auto& data = data_->Data();
     if( data.size() < 2 )
         return;

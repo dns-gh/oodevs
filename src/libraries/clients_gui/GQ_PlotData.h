@@ -89,6 +89,7 @@ public:
     void SetName  ( const QString& );
 
     void SetVisible( bool bShow );
+    void SetCanUpdateBBox( bool canUpdateBBox );
 
     void SetPointPen  ( const QPen& );
     void SetPointShape( E_PointShapeType nPredefinedType, unsigned int nShapeSize = 3 );
@@ -104,6 +105,7 @@ public:
     //! @name Accessors
     //@{
     bool IsEmpty     () const;
+    bool CanUpdateBBox() const;
 
     unsigned int           UserID() const;
     const QString& Name  () const;
@@ -180,6 +182,7 @@ protected:
     //! @name Settings parameters
     //@{
     bool bVisible_;
+    bool canUpdateBBox_;
 
     QPen   pointPen_;
     QPen   linePen_;
@@ -224,6 +227,16 @@ inline
 bool GQ_PlotData::IsEmpty() const
 {
     return pData_->empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::CanUpdateBBox
+// Created: JSR 2014-06-13
+// -----------------------------------------------------------------------------
+inline
+bool GQ_PlotData::CanUpdateBBox() const
+{
+    return canUpdateBBox_;
 }
 
 // -----------------------------------------------------------------------------

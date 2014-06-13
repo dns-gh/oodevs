@@ -32,19 +32,13 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const std::vector< T_Point >& points, int height, int solope );
+    void Update( const std::vector< T_Point >& points, bool displayHeight, int height, bool displaySlope, int slope );
     //@}
 
 protected:
     bool event( QEvent* event );
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TerrainProfile( const TerrainProfile& );            //!< Copy constructor
-    TerrainProfile& operator=( const TerrainProfile& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void UpdateVision( int height );
