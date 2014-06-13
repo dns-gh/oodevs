@@ -107,6 +107,8 @@ public:
     const PHY_DotationCategory* GetResourceTypeParameter( const std::string& ) const;
     std::vector< const PHY_DotationCategory* > GetResourceTypeListParameter( const std::string& ) const;
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectListParameter( const std::string& ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetObjectParameter( const std::string& ) const;
+    bool HasIntegerParameter( const std::string& ) const;
     int GetOrderConduiteModifierRegimeTravailMaintenance() const;
     int GetOrderConduitePopulationChangerAttitude() const;
     const DEC_Decision_ABC* GetPionARenforcer() const;

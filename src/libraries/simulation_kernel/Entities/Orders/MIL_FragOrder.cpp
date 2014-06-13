@@ -124,6 +124,7 @@ void MIL_FragOrder::Register( sword::Brain& brain )
     brain.RegisterMethod( "GetAgentKnowledgeParameter", &MIL_FragOrder::GetAgentKnowledgeParameter );
     brain.RegisterMethod( "GetResourceTypeParameter", &MIL_FragOrder::GetResourceTypeParameter );
     brain.RegisterMethod( "GetResourceTypeListParameter", &MIL_FragOrder::GetResourceTypeListParameter );
+    brain.RegisterMethod( "GetObjectParameter", &MIL_FragOrder::GetObjectParameter );
     brain.RegisterMethod( "GetObjectListParameter", &MIL_FragOrder::GetObjectListParameter );
     brain.RegisterMethod( "GetorderConduiteModifierRegimeTravailMaintenance_", &MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance );
     brain.RegisterMethod( "GetorderConduitePopulationChangerAttitude_", &MIL_FragOrder::GetOrderConduitePopulationChangerAttitude );
@@ -137,6 +138,7 @@ void MIL_FragOrder::Register( sword::Brain& brain )
     brain.RegisterMethod( "GetAgentKnowledge_", &MIL_FragOrder::GetAgentKnowledge );
     brain.RegisterMethod( "GetObjectKnowledge_", &MIL_FragOrder::GetObjectKnowledge );
     brain.RegisterMethod( "GetAgent_", &MIL_FragOrder::GetAgent );
+    brain.RegisterMethod( "HasIntegerParameter", &MIL_FragOrder::HasIntegerParameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,6 +339,24 @@ std::vector< const PHY_ComposanteTypePion* > MIL_FragOrder::GetEquipmentTypeList
     throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
 }
 
+bool MIL_FragOrder::HasIntegerParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            int result;
+            if( parameters_[i]->ToId( result ) )
+                return true;
+            float realResult;
+            if( parameters_[i]->ToNumeric( realResult ) )
+                return true;
+        }
+    }
+    return false;
+}
+
 int MIL_FragOrder::GetIntegerParameter( const std::string& name ) const
 {
     unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
@@ -486,6 +506,23 @@ std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetResourceTypeListPar
                 return result;
             else
                 return std::vector< const PHY_DotationCategory* >();
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
+boost::shared_ptr< DEC_Knowledge_Object > MIL_FragOrder::GetObjectParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            boost::shared_ptr< DEC_Knowledge_Object > result;
+            if( parameters_[i]->ToObjectKnowledge( result ) )
+                return result;
+            else
+                return boost::shared_ptr< DEC_Knowledge_Object >();
         }
     }
     throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
