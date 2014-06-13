@@ -13,7 +13,7 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/LocationProxy.h"
+#include "clients_kernel/Location_ABC.h"
 #include "clients_gui/DrawingTemplate.h"
 #include "clients_gui/DrawingHelper.h"
 #include "DrawingPositions.h"
@@ -150,8 +150,8 @@ void DrawingFactory::CreateShape( const gui::DrawingTemplate& style, const QColo
 // -----------------------------------------------------------------------------
 void DrawingFactory::CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const
 {
-    kernel::LocationProxy location;
-    gui::ReadLocation( xis, location, converter_ );
-    CreateShape( gui::ReadStyle( xis, types_ ), gui::ReadColor( xis ), entity,
-        gui::ReadDashStyle( xis ) ,location );
+    const auto& style = gui::ReadStyle( xis, types_ );
+    std::unique_ptr< kernel::Location_ABC > location( style.CreateLocation() );
+    gui::ReadLocation( xis, *location, converter_ );
+    CreateShape( style, gui::ReadColor( xis ), entity, gui::ReadDashStyle( xis ), *location );
 }

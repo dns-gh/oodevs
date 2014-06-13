@@ -26,7 +26,7 @@ namespace gui
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class LocationProxy;
+    class Location_ABC;
 }
 
 namespace gui
@@ -35,7 +35,7 @@ namespace gui
     const DrawingTemplate& ReadStyle( xml::xistream& xis, const DrawingTypes& types );
     E_Dash_style ConvertStyle( const std::string& name );
     E_Dash_style ReadDashStyle( xml::xistream& xis );
-    void ReadLocation( xml::xistream& xis, kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& converter );
+    void ReadLocation( xml::xistream& xis, kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter );
 }
 
 #endif // __gui_DrawingHelper_h_

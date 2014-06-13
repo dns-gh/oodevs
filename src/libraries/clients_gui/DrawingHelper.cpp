@@ -12,7 +12,7 @@
 #include "DrawingTypes.h"
 #include "DrawingCategory.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/LocationProxy.h"
+#include "clients_kernel/Location_ABC.h"
 
 #include <xeumeuleu/xml.hpp>
 
@@ -52,7 +52,7 @@ E_Dash_style ReadDashStyle( xml::xistream& xis )
 
 namespace
 {
-    void ReadPoint( xml::xistream& xis, kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& converter )
+    void ReadPoint( xml::xistream& xis, kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter )
     {
         geometry::Point2f point;
         if( xis.has_attribute( "x" ) && xis.has_attribute( "y" ) )
@@ -69,13 +69,13 @@ namespace
                 >> xml::attribute( "longitude", longitude );
             point = converter.ConvertFromGeo( geometry::Point2d( longitude, latitude ) );
         }
-        proxy.AddPoint( point );
+        location.AddPoint( point );
     }
 }
 
-void ReadLocation( xml::xistream& xis, kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& converter )
+void ReadLocation( xml::xistream& xis, kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter )
 {
-    xis >> xml::list( "point", boost::bind( &ReadPoint, _1, boost::ref( proxy ), boost::cref( converter ) ) );
+    xis >> xml::list( "point", boost::bind( &ReadPoint, _1, boost::ref( location ), boost::cref( converter ) ) );
 }
 
 }
