@@ -93,17 +93,6 @@ macro( grab_item output name items )
     endif()
 endmacro()
 
-function( set_output_directory target release debug )
-    set_target_properties( ${target} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${debug} )
-    set_target_properties( ${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${debug} )
-    set_target_properties( ${target} PROPERTIES PDB_OUTPUT_DIRECTORY_DEBUG     ${debug} )
-    set_target_properties( ${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${debug} )
-    set_target_properties( ${target} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO ${release} )
-    set_target_properties( ${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${release} )
-    set_target_properties( ${target} PROPERTIES PDB_OUTPUT_DIRECTORY_RELWITHDEBINFO     ${release} )
-    set_target_properties( ${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${release} )
-endfunction()
-
 function( add_target target group dir )
     message( "-- ${target}" )
     masa_extract_options( options ${ARGN} )
@@ -113,7 +102,7 @@ function( add_target target group dir )
     masa_has_item( shared "shared" ${options} )
     masa_has_item( test "test" ${options} )
     masa_add_target( ${target} ${group} ${dir} OPTIONS ${options} )
-    set_output_directory( ${target}
+    masa_set_output_directory( ${target}
         "${root_dir}/out/${platform}/release"
         "${root_dir}/out/${platform}/debug"
     )

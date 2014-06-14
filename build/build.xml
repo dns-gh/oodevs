@@ -1146,7 +1146,7 @@
         <update name="asciidoc" version="8.6.8"/>
         <update name="boost" version="1.55.r717"/>
         <update name="buildtools"/>
-        <update name="cmake" version="2.8.11.1-masa1"/>
+        <update name="cmake" version="3.0"/>
         <update name="depends" version="2.2.6000"/>
         <update name="flexlm" version="11.8"/>
         <update name="gdal" version="1.9.1.r671"/>
@@ -1213,11 +1213,6 @@
             <arg value="${bin.dir}/buildtools/fixmsvc.py"/>
             <arg value="${out.dir}/msvc"/>
         </python>
-        <exec taskname="snapdir" executable="${bin.dir}/snapdir" failonerror="true">
-            <arg value="--input=${src.dir}"/>
-            <arg value="--output=${out.dir}/msvc/.snapdir"/>
-            <arg value="--save"/>
-        </exec>
     </target>
 
     <target name="cmake.configure" description="generate cmake build files">
