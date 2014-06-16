@@ -136,7 +136,6 @@ private:
     unsigned int currentTick_;
     unsigned int tickCount_;
     unsigned int firstTick_;
-    int time_;
     std::string initialDate_;
     std::string endDateTime_;
     std::string simDate_;
