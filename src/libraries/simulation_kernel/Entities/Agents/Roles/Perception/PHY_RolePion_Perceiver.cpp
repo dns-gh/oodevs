@@ -749,10 +749,13 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
             (**it).FinalizePerception();
     }
-    NotifyPerception( *owner_, PHY_PerceptionLevel::identified_, false );
-    const MIL_Agent_ABC* transporter = owner_->GetRole< transport::PHY_RoleInterface_Transported >().GetTransporter();
-    if( transporter )
-        NotifyPerception( const_cast< MIL_Agent_ABC& >( *transporter ), PHY_PerceptionLevel::identified_, false );
+    if( !owner_->IsDead() )
+    {
+        NotifyPerception( *owner_, PHY_PerceptionLevel::identified_, false );
+        const MIL_Agent_ABC* transporter = owner_->GetRole< transport::PHY_RoleInterface_Transported >().GetTransporter();
+        if( transporter )
+            NotifyPerception( const_cast< MIL_Agent_ABC& >( *transporter ), PHY_PerceptionLevel::identified_, false );
+    }
 }
 
 // -----------------------------------------------------------------------------
