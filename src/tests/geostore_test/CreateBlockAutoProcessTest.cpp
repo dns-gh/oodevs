@@ -15,6 +15,7 @@
 #include <terrain/TerrainObject.h>
 #include <tools/TemporaryDirectory.h>
 #include <boost/assign/list_of.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace geostore;
 
@@ -31,9 +32,9 @@ namespace
             std::vector< geometry::Point2d > points = boost::assign::list_of
                 ( geometry::Point2d( left, top ) )( geometry::Point2d( left, bottom ) )
                 ( geometry::Point2d( right, bottom ) )( geometry::Point2d( right, top ) );
-            TerrainObject feature( points );
-            std::vector< TerrainObject* > features;
-            features.push_back( &feature );
+            auto feature = boost::make_shared< TerrainObject >( points );
+            std::vector< boost::shared_ptr< TerrainObject > > features;
+            features.push_back( feature );
             db.AddLayer( name, geomType, features );
         }
         tools::TemporaryDirectory dir;
