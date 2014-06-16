@@ -50,7 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual void CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
-                              gui::E_Dash_style dashStyle, kernel::Location_ABC& location ) const;
+                              gui::E_Dash_style dashStyle, kernel::Location_ABC& location, const QString& name ) const;
     virtual void CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
     //@}
 
