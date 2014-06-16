@@ -76,6 +76,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
     if( ! slider_ )
     {
         minTime_ = new QLabel( this );
+        minTime_->setAlignment( Qt::AlignHCenter );
         addWidget( minTime_ );
         slider_ = new QSlider( Qt::Horizontal, this );
         addWidget( slider_ );
@@ -85,6 +86,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         slider_->setMinimumWidth( 200 );
         slider_->setTickmarks( QSlider::TicksBelow );
         maxTime_ = new QLabel( this );
+        maxTime_->setAlignment( Qt::AlignHCenter );
         addWidget( maxTime_ );
         addSeparator();
         button_ = new QPushButton();
@@ -99,7 +101,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         spinBoxAction_ = addWidget( spinBox );
         spinBoxAction_->setVisible( true );
         QDateTimeEdit* dateTime = new EditWidget< QDateTimeEdit >();
-        dateTime->setDisplayFormat( "dd/MM/yy HH:mm:ss" );
+        dateTime->setDisplayFormat( QLocale::system().dateTimeFormat( QLocale::ShortFormat ) );
         dateTime->setButtonSymbols( QAbstractSpinBox::NoButtons );
         dateTimeAction_ = addWidget( dateTime );
         dateTimeAction_->setVisible( false );
@@ -122,8 +124,10 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
         connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
     }
+    const auto dateFmt = QLocale::system().dateFormat( QLocale::ShortFormat );
+    const auto timeFmt = QLocale::system().timeFormat( QLocale::ShortFormat );
     const auto SetDateTime = [&]( QLabel& dst, int tick ){
-        dst.setText( simulation.GetTime( tick ).toString( "dd/MM/yy\nHH:mm:ss" ) );
+        dst.setText( simulation.GetTime( tick ).toString( timeFmt + "\n" + dateFmt ) );
     };
     const auto first = simulation.GetFirstTick();
     SetDateTime( *minTime_, first );
