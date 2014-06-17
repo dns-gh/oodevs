@@ -15,11 +15,10 @@ integration.startDestroyingIt = function( target )
     end
 end
 
---- Starts firing at a target unit, specifically with a 'ground- air missile' type of ammunition.
+--- Starts firing at a target unit, specifically with a 'ground - air missile' type of ammunition.
 -- This method can only be called by an agent.
 -- @param target, DirectIA agent knowledge
 -- @param percentage the percentage of components to be used to open fire.
--- @see munition class definition in 'type.lua' file.
 integration.startDestroyingItWithMissileAir = function( target, percentage )
     target[ myself ] = target[ myself ] or {}
     if not target[ myself ].actionTir then
@@ -43,7 +42,7 @@ integration.startRespondIt = function( target )
     end
 end
 
---- Manages the direct fire actions.
+--- Manages the feedbacks of a running fire action.
 -- This method can only be called by an agent.
 -- @see integration.startDestroyingIt and integration.startDestroyingItWithMissileAir methods
 -- @param target The agent to shoot with direct fire
@@ -86,10 +85,10 @@ integration.startedDestroyingIt = function( target, snipe )
     return false
 end
 
---- Stops the fire action.
+--- Stops a fire action.
 -- This method can only be called by an agent.
 -- @see integration.startDestroyingIt and integration.startDestroyingItWithMissileAir methods
--- @param target a DirectIA agent knowledge
+-- @param target the unit fired upon (a DirectIA agent knowledge) 
 integration.stopDestroyingIt = function( target )
     target[ myself ] = target[ myself ] or {}
     if  target[ myself ].actionTir ~= nil then
@@ -100,10 +99,10 @@ integration.stopDestroyingIt = function( target )
     end
 end
 
---- Stops the respond action.
+--- Stops a respond action.
 -- This method can only be called by an agent.
 -- @see integration.startRespondIt methods
--- @param target a DirectIA agent knowledge
+-- @param target the unit fired upon (a DirectIA agent knowledge) 
 integration.stopRespondIt = function( target )
     target[ myself ] = target[ myself ] or {}
     if  target[ myself ].actionRespond ~= nil then
@@ -115,8 +114,8 @@ integration.stopRespondIt = function( target )
 end
 
 --- Informs whether or not the agent has the authorization to open fire at the given target.
--- The implentation checks that the current rule of engagement is "free fire" and if 
--- the target is not located into a fire restricted area. 
+-- Checks that the current rule of engagement is "free fire" and if 
+-- the target is not located inside a fire restricted area. 
 -- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge
 -- @return a boolean 'true' if the agent can open fire, 'false' otherwise.
@@ -129,8 +128,8 @@ integration.firePermitted = function( target )
 end
 
 --- Informs if the agent has the authorization to open fire onto a given position.
--- The implentation checks that the current rule of engagement is "free fire" or "retaliation fire" and that 
--- the position is not located into a fire restricted area.
+-- Checks that the current rule of engagement is "free fire" or "retaliation fire" and that 
+-- the position is not located inside a fire restricted area.
 -- This method can only be called by an agent.
 -- @param target a DirectIA 'LocalizedElement 'knowledge.
 -- @return a boolean 'true' if the agent can open fire, 'false' otherwise.
@@ -151,8 +150,8 @@ integration.firePermittedForPoint = function( target )
 end
 
 --- Informs if the agent has the authorization to open fire at the given target.
--- The implentation checks if the current rule of engagement is "free fire" or "retaliation fire"  and if 
--- the target is not located into a fire restricted area. 
+-- Checks if the current rule of engagement is "free fire" or "retaliation fire"  and if 
+-- the target is not located inside a fire restricted area. 
 -- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge
 -- @return a boolean 'true' if the agent can open fire, 'false' otherwise.
@@ -164,8 +163,8 @@ integration.fireNotForbbiden = function( target )
     return false
 end
 
---- Informs if the provided target is located into a fire restricted area. 
--- The implementation tests if the target is inside a "firing forbidden area" type of object.
+--- Informs if the provided target is located inside a fire restricted area. 
+-- Tests if the target is inside a "firing forbidden area" type of object.
 -- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge
 -- @return a boolean 'true' if the target is located inside a "firing forbidden area" type of object, 'false' otherwise.
@@ -179,7 +178,7 @@ end
 -- @param target a DirectIA agent knowledge.
 -- @param position a knowledge
 -- @param pH the probability to hit.
--- @return numeric a percentage of attrition power. A value of '0' means that the agent cannot engage 
+-- @return a number between 0 et 100. A value of '0' means that the agent cannot engage 
 -- the target from the position.
 integration.getAttrition = function( self, target, position, pH )
 
@@ -206,7 +205,6 @@ end
 --- Returns the simulation agent ID from a DirectIA agent knowledge.
 -- @param target a DirectIA agent knowledge.
 -- @return numeric the simulation agent ID
--- the target from the position
 integration.getAgentIdFromKnowledge = function( agentKnowledge )
     return DEC_GetAgentIdFromKnowledge( agentKnowledge.source )
 end
@@ -226,7 +224,7 @@ integration.isFlying = function ( target )
 end
 
 --- Returns the maximum range (in meters) of the agent weapons systems, regarding the given target and PH (Probability to Hit). 
--- The range takes into account the current posture of the agent.
+-- The range takes into account the current posture of both agents.
 -- This method can only be called by an agent.
 -- @param eni a DirectIA agent knowledge.
 -- @param ph the probability to hit.
@@ -236,8 +234,8 @@ integration.porteeMaxPourTirerSurUnitePosturesReelles = function( eni, ph )
 end
 
 --- Informs if the agent is in range to engage the given target, regarding the given PH (Probability to Hit).
--- This implementation checks if the target distance is in between maximum and minimum range.
--- The range takes into account the current posture of the agent.
+-- Checks if the target distance is in between maximum and minimum range.
+-- The range takes into account the current posture of both agents.
 -- This method can only be called by an agent.
 -- @param eni a DirectIA agent knowledge.
 -- @param ph the probability to hit.
@@ -259,10 +257,10 @@ end
 
 --- Forbid the use of the given types of ammunition. See dotation categories in authoring tool.
 -- <ul> Possible values are: 
--- <li> eMunitionClasse_Obus = 0 </li>
--- <li> eMunitionClasse_MissileSol = 1 </li>
--- <li> eMunitionClasse_MissileAir = 2 </li>
--- <li> eMunitionClasse_Mitraille = 3 </li> </ul>
+-- <li> eMunitionClasse_Obus = 0 (shell) </li>
+-- <li> eMunitionClasse_MissileSol = 1  (ground to ground missile)</li>
+-- <li> eMunitionClasse_MissileAir = 2 (ground to air missile)</li>
+-- <li> eMunitionClasse_Mitraille = 3 (bullets)</li> </ul>
 -- This method can only be called by an agent.
 -- @param munitions the liste of the type to be fordiden
 integration.forbidAmmunition = function( munitions )
@@ -271,12 +269,12 @@ end
 
 --- Authorize the use of the given types of ammunition. See dotation categories in authoring tool.
 -- <ul> Possible values are:
--- <li> eMunitionClasse_Obus = 0 </li>
--- <li> eMunitionClasse_MissileSol = 1 </li>
--- <li> eMunitionClasse_MissileAir = 2 </li>
--- <li> eMunitionClasse_Mitraille = 3 </li> </ul>
+-- <li> eMunitionClasse_Obus = 0 (shell) </li>
+-- <li> eMunitionClasse_MissileSol = 1  (ground to ground missile)</li>
+-- <li> eMunitionClasse_MissileAir = 2 (ground to air missile)</li>
+-- <li> eMunitionClasse_Mitraille = 3 (bullets)</li> </ul>
 -- This method can only be called by an agent.
--- @param munitions the liste of the type to be fordiden
+-- @param munitions munitions list of types to be forbidden
 integration.autoriseAmmunition = function( munitions )
     DEC_Pion_AutoriserMunition( munitions )
 end
@@ -308,32 +306,30 @@ end
 
 --- Returns the list of agent knowledges that are currently firing at the agent.
 -- This method can only be called by an agent.
--- @return table containing the simulation agents knowledge engaging the agent.
+-- @return table containing the simulation agent knowledges engaging the agent.
 integration.getKnowledgesUnitsEngaging = function()
     return DEC_Connaissances_UnitesPrenantAPartie()
 end
 
---- Returns the list of agents knowledge that are currently firing at the given 'friendAgent'.
+--- Returns the list of agent knowledges that are currently firing at the given 'friendAgent'.
 -- This method can only be called by an agent.
--- @param friendAgent a siMulation agent knowledge.
--- @return table containing the knowledge agents engaging the agent.
+-- @param friendAgent a simulation agent knowledge.
+-- @return table containing the agent knowledges engaging the agent.
 integration.getKnowledgesUnitsEngagingFriend = function( friendAgent )
     return DEC_Connaissances_UnitesPrenantAPartieSurAmi( friendAgent )
 end
 
 --- Returns the list of hostile agents knowledge that are considered as 'dangerous' for the agent.
--- A 'dangerous' unit is a unit which PH onto the agent is striclty greater than 0. This means that 
--- all returned agents knowledge has the capability to open fire at the agent.
--- Only enemies are returned considering the diplomacy matrix. 
+-- A 'dangerous' unit is a unit which has the capability to open fire at the target.
+-- Only enemies are returned. 
 -- This method can only be called by an agent.
--- @return table the knowledge agents that can engage the agent.
+-- @return table the agent knowledges that can engage the agent.
 integration.getKnowledgesDangerousUnits = function()
     return DEC_Connaissances_UnitesEnnemiesDangereuses( )
 end
 
 --- Returns the dangerosity of the given agent knowledge.
--- A 'dangerous' unit is an unit which PH onto the agent is strictly greater than 0. This means that 
--- the agent knowledge has the capability to open fire at the agent.
+-- A 'dangerous' unit is a unit which has the capability to open fire at the target.
 -- This method can only be called by an agent.
 -- @param agent a simulation agent knowledge.
 -- @return numeric, a value between 0 and 1, the dangerosity of the given agent. A value of '0' means not dangerous at all,
@@ -343,15 +339,15 @@ integration.getKnowledgeDangerousAgent = function( agent )
 end
 
 --- Informs whether or not the given agent knowledge is tactically destroyed.
--- An agent is considered as not 'operational' ("tactically destroyed") if all its 
--- major equipments are destroyed (see 'Equipements' definitions, 'Units' tab ). 
+-- An agent is considered as not 'operational' ("tactically destroyed"). 
 -- @param agent a simulation agent knowledge.
 -- @return boolean returns 'true' tactically destroyed, 'false' otherwise.
 integration.isAgentTacticallyDestroyed = function( agent )
     return DEC_ConnaissanceAgent_EstDetruitTactique( agent )
 end
 
---- Returns the maximum range (in meters) allowing the agent to open fire at the given agent knowledge, regarding the given PH.
+--- Returns the maximum range (in meters) allowing the agent to open fire at the given agent knowledge, 
+-- with a probability to hit superior or equal to the given pH (expressed as a percentage).
 -- This method can only be called by an agent.
 -- @param agent a simulation agent knowledge.
 -- @param pH numeric the probability to hit.
@@ -360,7 +356,8 @@ integration.getMaxRangeToFireOnAgent = function( agent, pH )
     return DEC_Tir_PorteeMaxPourTirerSurUnite( agent, pH )
 end
 
---- Returns the maximum range (in meters) allowing the given  agent knowledge to open fire at the agent, regarding the given PH.
+--- Returns the maximum range (in meters) allowing the given agent knowledge, 
+-- with a probability to hit superior or equal to the given pH (expressed as a percentage).
 -- This method can only be called by an agent.
 -- @param agent a simulation agent knowledge.
 -- @param pH numeric the probability to hit.
@@ -369,28 +366,31 @@ integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
     return DEC_Tir_PorteeMaxPourEtreTireParUnite( agent, pH )
 end
 
---- Returns whether or not the agent can open fire with regarding the given targetUnit, ph and targetSpeed.
--- The implementation estimates the future position of the given target (using the 'targetSpeed' parameter). If 
--- this position is in range regarding weapon systems, the method returns 'true' once the 'targetUnit' occupies the future position.
+--- Returns whether or not the agent can hit the given target with an ammunition of specified speed.
+-- Estimates the interception position of the given target (using the 'projectileSpeed' parameter). If 
+-- this position is in range regarding weapon systems, the method returns 'true' once the 'targetUnit' occupies the interception position.
 -- This method can only be called by an agent.
 -- @param targetUnit a DirectIA agent knowledge.
 -- @param pH numeric the probability to hit.
--- @param targetSpeed km/h the estimation of target speed.
+-- @param projectileSpeed The speed of the ammunition in km/h. See weapon systems in the physical model.
 -- @return boolean returns true when the agent can open fire, false otherwise.
-integration.canBeDestroyedWithMissiles = function( targetUnit, ph, targetSpeed )
+integration.canBeDestroyedWithMissiles = function( targetUnit, ph, projectileSpeed )
     local integration = integration
     local distanceCouverte = integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
-    local pointInterception = integration.positionInterception( targetUnit, targetSpeed )
+    local pointInterception = integration.positionInterception( targetUnit, projectileSpeed )
     if not pointInterception then
         return false
     end
     local distancePointInterception = DEC_Geometrie_DistanceBetweenPoints( meKnowledge:getPosition(), pointInterception )
+    local tempsInterception =  distancePointInterception / ( projectileSpeed * 60 )
     if( distancePointInterception <= distanceCouverte ) then
         if targetUnit:isValid() then
+            if waitInMin( meKnowledge, tempsInterception ) then
                 if( integration.niTropPresNiTropLoin( targetUnit, ph ) ) then
                     return true
                 end
             end
         end
+    end
     return false
 end
