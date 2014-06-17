@@ -28,7 +28,6 @@ Simulation::Simulation( kernel::Controller& controller )
     , currentTick_ ( 0 )
     , tickCount_   ( static_cast< unsigned int >( -1 ) )
     , firstTick_   ( 1 )
-    , time_        ( 0 )
     , paused_      ( false )
     , connected_   ( false )
     , initialized_ ( false )
@@ -65,7 +64,6 @@ void Simulation::Disconnect()
 {
     if( !connected_ )
         return;
-    time_ = 0;
     currentTick_ = 0;
     firstTick_ = 1;
     profiling_.Clear();
@@ -106,7 +104,6 @@ void Simulation::Update( const sword::ControlInformation& message )
     tickDuration_ = message.tick_duration();
     paused_       = message.status() == sword::paused;
     timeFactor_   = message.time_factor();
-    time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
     simDate_      = message.date_time().data();
     controller_.Update( *this );
@@ -123,7 +120,6 @@ void Simulation::Update( const sword::ControlReplayInformation& message )
     tickCount_    = message.tick_count();
     paused_       = message.status() == sword::paused;
     timeFactor_   = message.time_factor();
-    time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
     simDate_      = message.date_time().data();
     if( message.has_real_date_time() )
@@ -161,7 +157,6 @@ void Simulation::Update( const sword::ControlBeginTick& message )
         profiling_.GetMemory() / 1048576.,
         profiling_.GetVirtualMemory() / 1048576.
         ));
-    time_ = currentTick_ * tickDuration_;
     controller_.Update( startTick_ );
     controller_.Update( *this );
 }
