@@ -2,7 +2,10 @@
 ---- FRAGMENTARY ORDERS METHODS IMPLEMENTATION
 -------------------------------------------------------------------
 
---- Remove the given fragmentary order from the knowledge base. 
+--- Removes the given fragmentary order from the list of received fragmentary orders.
+-- Removes the fragmentary order from myself.fragOrders table if it exists.
+-- The myself.fragOrders table is used by agents of the simulation to received fragmentary orders from commanding agents.
+-- @see integration.getOrdersCategory 
 -- @param fragOrder a DirectIA fragmentary order knowledge
 integration.cleanFragOrder = function( fragOrder )
     if myself.fragOrders then
@@ -12,25 +15,28 @@ integration.cleanFragOrder = function( fragOrder )
     DEC_DeleteRepresentation( fragOrder.source )
 end
 
---- Set the rule of engagement corresponding to the one issued as the given 'fragOrder' parameter.
--- It also displays a report.
+--- Sets the rule of engagement corresponding to the one issued as the given 'fragOrder' parameter.
+-- Also displays a report.
+-- Consumes the fragmentary order after use.
+-- @see integration.cleanFragOrder
 -- This method can only be called by an agent.
 -- @see integration.getOrderConduiteChangerReglesEngagementParameter
+-- @param fragOrder a DirectIA fragmentary order knowledge
 integration.updateROE = function( fragOrder )
     DEC_Agent_ChangeEtatROE( integration.getOrderConduiteChangerReglesEngagementParameter( fragOrder ) )
     integration.CR_ROE ( integration.getROE() )
-    integration.cleanFragOrder( self )
+    integration.cleanFragOrder( fragOrder )
 end
 
---- Set the rule of engagement (ROE) with one issued as parameter.
--- The ROE is defined by an enumeration which values represent the different rules of engagements. 
+--- Sets the rule of engagement (ROE).
+-- The ROE is defined by an enumeration.. 
 -- Possible values are:
 -- <ul> <li> eRoeStateFreeFire </li>
 -- <li> eRoeStateRestrictedFire </li>
 -- <li> eRoeStateFireByOrder </li> </ul>
 -- It also displays a report.
 -- This method can only be called by an agent.
--- @param etatROE the rule of engagement to be setted.
+-- @param etatROE the rule of engagement to be set.
 integration.setROE = function( etatROE )
     DEC_Agent_ChangeEtatROE( etatROE )
     integration.CR_ROE ( etatROE )
@@ -38,19 +44,19 @@ end
 
 --- Returns the current rule of engagement.
 -- This method can only be called by an agent.
--- @return Integer the current rule of engagement.
 -- Possible values are:
 -- <ul> <li> eRoeStateFreeFire </li>
 -- <li> eRoeStateRestrictedFire </li>
 -- <li> eRoeStateFireByOrder </li> </ul>
 -- It also displays a report.
 -- This method can only be called by an agent.
+-- @return Integer the current rule of engagement.
 integration.getROE = function()
     return DEC_Agent_GetEtatROE()
 end
 
---- For an automat, sets the rule of engagement (ROE) with one issued as parameter.
--- The ROE is defined by an enumeration which values represent the different rules of engagements. 
+--- Sets the rule of engagement (ROE) for an automat.
+-- The ROE is defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eRoeStateFreeFire </li>
 -- <li> eRoeStateRestrictedFire </li>
@@ -64,7 +70,7 @@ integration.setCompanyROE = function( etatROE )
 end
 
 --- Displays a report depending on the issued ROE.
--- The ROE are defined by an enumeration which values represent the different rules of engagements. 
+-- The ROE are defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eRoeStateFreeFire </li>
 -- <li> eRoeStateRestrictedFire </li>
@@ -81,7 +87,7 @@ integration.CR_ROE  = function( typeROE )
 end
 
 --- Displays a report depending on the issued ROE toward crowds.
--- The crowds ROE are defined by an enumeration which values represent the different rules of engagements. 
+-- The crowds ROE are defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eEtatROEPopulation_EmploiForceInterdit</li>
 -- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux </li>
@@ -117,7 +123,7 @@ integration.CR_Attitude_Foules  = function ( attitude )
 end
 
 --- For an automat, set the rule of engagement (ROE) for crowds, with one issued as parameter.
--- The crowds ROE are defined by an enumeration which values represent the different rules of engagements. 
+-- The crowds ROE are defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eEtatROEPopulation_EmploiForceInterdit</li>
 -- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux </li>
@@ -129,7 +135,7 @@ integration.changeCrowdROEForAutomat = function( roe )
 end
 
 --- Set the rule of engagement (ROE) for crowds, with one issued as parameter.
--- The ROE is defined by an enumeration which values represent the different rules of engagements. 
+-- The ROE is defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eEtatROEPopulation_EmploiForceInterdit</li>
 -- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux </li>
