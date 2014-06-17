@@ -41,7 +41,8 @@ GeoTable::GeoTable( sqlite3* db, const std::string& name )
     SetGeometryType( Convert( results.back().back() ) );
 }
 
-GeoTable::GeoTable( sqlite3* db, const std::string& name, GeometryType geomType, const std::vector< TerrainObject* >& features )
+GeoTable::GeoTable( sqlite3* db, const std::string& name, GeometryType geomType,
+        const std::vector< boost::shared_ptr< TerrainObject > >& features )
     : Table( db, name )
 {
     ExecuteQuery(
@@ -132,7 +133,7 @@ std::vector< GeometryCollection > GeoTable::CreateLineGeometry( const TerrainObj
     return result;
 }
 
-void GeoTable::Fill( const std::vector< TerrainObject* >& features )
+void GeoTable::Fill( const std::vector< boost::shared_ptr< TerrainObject > >& features )
 {
     ExecuteQuery( "BEGIN" );
     sqlite3_stmt* stmt = CreateStatement( "REPLACE INTO " + GetName() + "( id, name, geom ) VALUES ( ?, ?, ? )" );

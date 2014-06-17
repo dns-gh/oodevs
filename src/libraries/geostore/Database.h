@@ -44,8 +44,8 @@ public:
     ~Database();
     //@}
 
-    void AddLayer( std::string layer, GeometryType geomType, const std::vector< TerrainObject* >& features );
-
+    void AddLayer( std::string layer, GeometryType geomType,
+            const std::vector< boost::shared_ptr< TerrainObject > >& features );
     const T_GeoTables& GetTables() const;
 
 private:

@@ -104,13 +104,17 @@ void Database::LoadLayer( std::string layer, PointProjector_ABC& projector, cons
         tables_.insert( layer, new GeoTable( db_.get(), layer ) );
     else
     {
-        const TerrainFileReader reader( file, projector );
-        AddLayer( layer, static_cast< GeometryType >( reader.GetGeomType() ), reader.GetFeatures() );
+        TerrainFileReader reader( file, projector );
+        std::vector< boost::shared_ptr< TerrainObject > > features;
+        while( auto feature = reader.Next() )
+            features.push_back( feature );
+        AddLayer( layer, static_cast< GeometryType >( reader.GetGeomType() ), features );
         log_->SetLastAccessTime( layer, file.LastWriteTime() );
     }
 }
 
-void Database::AddLayer( std::string layer, GeometryType geomType, const std::vector< TerrainObject* >& features )
+void Database::AddLayer( std::string layer, GeometryType geomType,
+        const std::vector< boost::shared_ptr< TerrainObject > >& features )
 {
     tables_.insert( layer, new GeoTable( db_.get(), layer, geomType, features ) );
 }

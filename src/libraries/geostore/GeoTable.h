@@ -13,6 +13,7 @@
 #include "GeometryType.h"
 #include "GeometryCollection.h"
 #include "Table.h"
+#include <boost/shared_ptr.hpp>
 #include <vector>
 
 class TerrainObject;
@@ -31,7 +32,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     GeoTable( sqlite3* db, const std::string& name );
-    GeoTable( sqlite3* db, const std::string& name, GeometryType geomType, const std::vector< TerrainObject* >& features );
+    GeoTable( sqlite3* db, const std::string& name, GeometryType geomType,
+            const std::vector< boost::shared_ptr< TerrainObject > >& features );
     //@}
 
     //! @name Operations
@@ -47,7 +49,7 @@ private:
     std::vector< GeometryCollection > CreateLineGeometry( const TerrainObject& shape );
     std::vector< GeometryCollection > CreateGeometry( const TerrainObject& shape );
     void SetGeometryType( GeometryType type );
-    void Fill( const std::vector< TerrainObject* >& features );
+    void Fill( const std::vector< boost::shared_ptr< TerrainObject > >& features );
     void AddGeometryColumn( GeometryType geomType );
     //@}
 
