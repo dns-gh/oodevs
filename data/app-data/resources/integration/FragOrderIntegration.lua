@@ -63,7 +63,7 @@ end
 -- <li> eRoeStateFireByOrder </li> </ul>
 -- It also displays a report.
 -- This method can only be called by an automat.
--- @param etatROE the rule of engagement to be setted.
+-- @param etatROE the rule of engagement to be set.
 integration.setCompanyROE = function( etatROE )
    DEC_Automate_ChangeEtatROE( etatROE )
    integration.CR_ROE ( etatROE )
@@ -86,7 +86,7 @@ integration.CR_ROE  = function( typeROE )
     end
 end
 
---- Displays a report depending on the issued ROE toward crowds.
+--- Displays a report depending on the issued the rule of engagement (ROE) toward crowds.
 -- The crowds ROE are defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eEtatROEPopulation_EmploiForceInterdit</li>
@@ -129,7 +129,7 @@ end
 -- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux </li>
 -- <li> eEtatROEPopulation_ArmesLetalesAutorisees </li> </ul>
 -- This method can only be called by an automat.
--- @param roe the rule of engagement to be setted.
+-- @param roe the rule of engagement to be set.
 integration.changeCrowdROEForAutomat = function( roe )
     DEC_Automate_ChangeEtatROEPopulation( roe )
 end
@@ -141,7 +141,7 @@ end
 -- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux </li>
 -- <li> eEtatROEPopulation_ArmesLetalesAutorisees </li> </ul>
 -- This method can only be called by an agent.
--- @param roe the rule of engagement to be setted.
+-- @param roe the rule of engagement to be set.
 integration.changeCrowdROEForAgent = function( roe )
     DEC_Agent_ChangeEtatROEPopulation( roe )
 end
@@ -315,7 +315,7 @@ integration.getOrderConduiteModifierPrioritesBlessesParameter = function( fragor
     return fragorder.source:GetorderConduiteModifierPrioritesBlesses_()
 end
 
---- Returns the rule of engagement toward crowds set as parameter in the given fragmentary order.
+--- Returns the rule of engagement (ROE) toward crowds set as parameter in the given fragmentary order.
 -- The rules of engagement are defined by an enumeration which values are set in authoring 
 -- tool in the 'Missions' and 'Fragmentary' tab.
 -- See the 'Change crowd ROE' fragmentary order in authoring tool.
