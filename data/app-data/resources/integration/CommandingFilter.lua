@@ -133,7 +133,7 @@ end
 integration.isCompanyMoving = function( company )
     local subordinates = company.source:DEC_Automate_PionsAvecPC()
     for _, subordinate in pairs( subordinates or emptyTable ) do
-        if subordinate:DEC_Agent_IsMoving() then
+        if subordinate:DEC_Agent_EstEnMouvement() then
             return true
         end
     end
