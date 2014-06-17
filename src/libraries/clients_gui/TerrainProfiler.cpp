@@ -20,6 +20,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Path.h"
 #include "clients_kernel/Tools.h"
@@ -36,6 +37,8 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     , controllers_( controllers )
     , detection_  ( detection )
     , layer_      ( layer )
+    , forestColor_( 170, 226, 164 )
+    , suburbColor_( 195, 193, 194 )
 {
     gui::SubObjectName subObject( this->objectName() );
     {
@@ -128,6 +131,34 @@ void TerrainProfiler::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TerrainProfiler::OptionChanged
+// Created: JSR 2014-06-17
+// -----------------------------------------------------------------------------
+void TerrainProfiler::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    static const QString forestOption = "Terrains/forest edge/color";
+    static const QString suburbOption = "Terrains/suburb/color";
+    if( name == forestOption.toStdString() )
+    {
+        const QColor newColor = QColor( value.To< QString >() );
+        if( newColor != forestColor_ )
+        {
+            forestColor_ = newColor;
+            UpdateView();
+        }
+    }
+    else if( name == suburbOption.toStdString() )
+    {
+        const QColor newColor = QColor( value.To< QString >() );
+        if( newColor != suburbColor_ )
+        {
+            suburbColor_= newColor;
+            UpdateView();
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TerrainProfiler::SetFromPosition
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
@@ -212,18 +243,50 @@ void TerrainProfiler::UpdateView()
         UpdatePathView();
 }
 
+namespace
+{
+    const QColor forestColor( 170, 226, 164 );
+    const QColor suburbColor( 195, 193, 194 );
+
+    TerrainProfile::T_PointInfo CreatePointInfo( bool forest, bool town, short elevation, double x )
+    {
+        TerrainProfile::T_PointInfo info;
+        info.height_ = forest ? 10.f : ( town ? 20.f : 0.f );
+        info.color_ = forest ? forestColor : ( town ? suburbColor : QColor() );
+        info.point_ = std::make_pair( x / 1000, elevation - info.height_ );
+        return info;
+    }
+    void ComputePoints( std::vector< TerrainProfile::T_PointInfo >& points, const kernel::DetectionMap& detection,
+        const geometry::Point2f& from, const geometry::Point2f& to, int height, double distance )
+    {
+        VisionLine line( detection, from, to, static_cast< float >( height ), true );
+        double x = distance +line.CurrentPoint().Distance( from );
+        while( !line.IsDone() )
+        {
+            points.push_back( CreatePointInfo( line.IsInForest(), line.IsInTown(), line.Elevation(), x ) );
+            line.Increment();
+            x += line.Length();
+        }
+    }
+}
+
 void TerrainProfiler::UpdatePathView()
 {
     const bool displayHeight = heightCheckbox_->checkState() == Qt::Checked;
     const bool displaySlope = slopeCheckbox_->checkState() == Qt::Checked;
-    std::vector< TerrainProfile::T_Point > points;
+    heightValue_->setEnabled( displayHeight );
+    slopeValue_->setEnabled( displaySlope );
+    std::vector< TerrainProfile::T_PointInfo > points;
     auto previous = path_.begin();
-    points.push_back( std::make_pair( 0, detection_.ElevationAt( *previous ) ) );
+    const auto environment = detection_.EnvironmentAt( *previous );
+    const auto elevation = detection_.ElevationAt( *previous );
+    const auto height = heightValue_->value();
+    points.push_back( CreatePointInfo( environment.IsInForest(), environment.IsInTown(), elevation, 0 ) );
     double x = 0;
     for( auto it = previous + 1; it != path_.end(); previous = it++ )
     {
         x += previous->Distance( *it );
-        points.push_back( std::make_pair( x / 1000, detection_.ElevationAt( *it ) ) );
+        ComputePoints( points, detection_, *previous, *it, height, x );
     }
     profile_->Update( points, displayHeight, heightValue_->value(), displaySlope, slopeValue_->value() );
 }
@@ -236,17 +299,12 @@ void TerrainProfiler::UpdatePointsView()
     slopeValue_->setEnabled( displaySlope );
     if( to_.IsZero() || from_.IsZero() )
         return;
-    std::vector< TerrainProfile::T_Point > points;
-    double x = 0;
-    const int height = heightValue_->value();
-    VisionLine line( detection_, from_, to_, static_cast< float >( height ) );
-    while( ! line.IsDone() )
-    {
-        line.Increment();
-        const double value = line.Elevation();
-        points.push_back( std::make_pair( x / 1000, value ) );
-        x += line.Length();
-    }
+    std::vector< TerrainProfile::T_PointInfo > points;
+    const auto environment = detection_.EnvironmentAt( from_ );
+    const auto elevation = detection_.ElevationAt( from_ );
+    const auto height = heightValue_->value();
+    points.push_back( CreatePointInfo( environment.IsInForest(), environment.IsInTown(), elevation, 0 ) );
+    ComputePoints( points, detection_, from_, to_, height, 0 );
     profile_->Update( points, displayHeight, height, displaySlope, slopeValue_->value() );
 }
 

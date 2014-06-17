@@ -126,6 +126,8 @@ public:
 
     void AddPoint( const T_Point& );
     void AddPoint( double rX, double rY );
+    void AddColor( double rX, const QColor& color );
+    void AddHeight( double rX, float offset );
     void ChangePoint( uint nIndex, const T_Point& point );
     void DeletePoint( uint nIndex );
     //@}
@@ -160,10 +162,10 @@ private:
     //! @name Helpers
     //@{
     virtual void InitPointShape( unsigned int nShapeSize );
-    virtual void PreparePoints  ( Q3PointArray& );
+    virtual void PreparePoints  ( Q3PointArray&, std::map< int, QColor >&, std::map< int, float >& );
     virtual void DrawPoints     ( QPainter&, const Q3PointArray& );
     virtual void DrawPoint      ( QPainter&, const QPoint&      );
-    virtual void DrawPolyline   ( QPainter&, const Q3PointArray& );
+    virtual void DrawPolyline   ( QPainter&, const Q3PointArray&, const std::map< int, QColor >* = 0, const std::map< int, float >* = 0 );
     virtual void DrawBars       ( QPainter&, const Q3PointArray& );
 
     virtual void UpdateBBox();
@@ -210,6 +212,8 @@ protected:
     GQ_PlotDataBBox bbox_;
 
     std::set< double > ignoredValues_;
+    std::map< double, QColor > overrideColors_;
+    std::map< double, float > offsetHeights_;
     //@}
 };
 

@@ -66,16 +66,18 @@ TerrainProfile::~TerrainProfile()
 // Name: TerrainProfile::Update
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-void TerrainProfile::Update( const std::vector< T_Point >& points, bool displayHeight, int height, bool displaySlope, int slope )
+void TerrainProfile::Update( const std::vector< T_PointInfo >& points, bool displayHeight, int height, bool displaySlope, int slope )
 {
     data_->ClearData();
     vision_->ClearData();
     slopes_->ClearData();
-    double x = 0;
     for( auto it = points.begin(); it != points.end(); ++it )
     {
-        data_->AddPoint( *it );
-        x = it->first;
+        data_->AddPoint( it->point_ );
+        if( it->color_.isValid() )
+            data_->AddColor( it->point_.first, it->color_ );
+        if( it->height_ != 0 )
+            data_->AddHeight( it->point_.first, it->height_ );
     }
     if( displayHeight )
         UpdateVision( height );

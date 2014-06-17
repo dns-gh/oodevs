@@ -30,9 +30,16 @@ public:
     virtual ~TerrainProfile();
     //@}
 
+    typedef struct T_PointInfo
+    {
+        T_PointInfo() : height_( 0 ) {}
+        T_Point point_;
+        QColor color_;
+        float height_;
+    };
     //! @name Operations
     //@{
-    void Update( const std::vector< T_Point >& points, bool displayHeight, int height, bool displaySlope, int slope );
+    void Update( const std::vector< T_PointInfo >& points, bool displayHeight, int height, bool displaySlope, int slope );
     //@}
 
 protected:

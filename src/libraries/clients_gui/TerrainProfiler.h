@@ -12,6 +12,7 @@
 
 #include "RichDockWidget.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 
 namespace kernel
@@ -37,8 +38,9 @@ class TerrainProfiler : public RichDockWidget
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                       , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                      , public kernel::OptionsObserver_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -64,6 +66,7 @@ private:
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual void showEvent( QShowEvent* e );
     virtual void hideEvent( QHideEvent* e );
     virtual QSize sizeHint () const;
@@ -80,6 +83,8 @@ private:
     const kernel::DetectionMap& detection_;
     TerrainProfilerLayer& layer_;
     TerrainProfile* profile_;
+    QColor forestColor_;
+    QColor suburbColor_;
     geometry::Point2f candidatePoint_;
     geometry::Point2f candidateUnitPoint_;
     T_PointVector candidatePath_;

@@ -100,6 +100,15 @@ DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const geome
 }
 
 // -----------------------------------------------------------------------------
+// Name: DetectionMapIterator destructor
+// Created: AGE 2006-04-06
+// -----------------------------------------------------------------------------
+DetectionMapIterator::~DetectionMapIterator()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: DetectionMapIterator::Increment
 // Created: JSR 2014-06-16
 // -----------------------------------------------------------------------------
