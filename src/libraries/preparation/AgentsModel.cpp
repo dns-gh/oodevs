@@ -158,6 +158,7 @@ void AgentsModel::ReplaceAutomatChildrenByAGhost( const kernel::Ghost_ABC& origi
         }
         for( ; toAdd > 0; --toAdd ) // Type bigger than original
             InternalCreateAgent( automat, type, *it, formation, pcSet );
+        ++it;
     }
     for( ; it != compositions.end(); ++it ) // Type bigger than original
         for( unsigned toAdd = it->GetSensibleNumber(); toAdd > 0; --toAdd )
