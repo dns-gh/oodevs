@@ -333,6 +333,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_IsWaterInBetween", &DEC_TerrainFunctions::IsWaterInBetween );
     brain.RegisterFunction( "DEC_Geometrie_GetTerrainData", &DEC_TerrainFunctions::GetTerrainData );
     brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongAOR", &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerEntreeFuseau", &DEC_GeometryFunctions::ComputeEntryPointForFuseau );
 }
 
 // -----------------------------------------------------------------------------

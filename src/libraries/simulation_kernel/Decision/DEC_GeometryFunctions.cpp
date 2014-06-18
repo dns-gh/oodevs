@@ -2039,6 +2039,19 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeEntryPointForFuseau
+// Created: GGE 2014-06-04
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeEntryPointForFuseau( DEC_Decision_ABC* pPion, MIL_Fuseau& fuseau )
+{
+     if( !pPion )
+        throw std::runtime_error( "Invalid unit" );
+    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
+    fuseau.ComputeEntryPoint( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDelayFromSchedule
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
