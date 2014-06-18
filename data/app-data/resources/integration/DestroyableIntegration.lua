@@ -28,29 +28,40 @@ end
 --- Manage the direct fire action, method calls at each tick during the action
 -- @param target The agent to shoot with direct fire
 -- @param snipe a boolean if action is used by sniper : send a report if firing is temporarily blocked in urban area
--- @return a boolean 'true' if action is finished, 'false' if action continues
+-- @return Two return values :
+-- <ul> <li> Boolean, 'true' if a fire has been shot or if it will never be possible to shoot; false otherwise </li>
+-- <li> Integer, the fire action current state, among one of these possible values (or nil if there is no current action state) : </li>
+-- <ul> <li> eActionTirDirect_Impossible </li>
+-- <li> eActionTirDirect_EnemyDestroyed </li>
+-- <li> eActionTirDirect_NoCapacity </li>
+-- <li> eActionTirDirect_NoAmmo </li>
+-- <li> eActionTirDirect_Running </li>
+-- <li> eActionTirDirect_Finished </li>
+-- <li> eActionTirDirect_TemporarilyBlocked </li>
+-- <li> eActionTirDirect_None </li> </ul> </ul>
 integration.startedDestroyingIt = function( target, snipe )
     if target[myself] then
-        if target[myself].eTir == eActionTirDirect_NoAmmo and not target[myself].noAmmo then
+        local actionState = target[myself].eTir
+        if actionState == eActionTirDirect_NoAmmo and not target[myself].noAmmo then
             target[myself].noAmmo = true
             reportFunction(eRC_TirImpossiblePlusDeMunitions )
-            return true
-        elseif target[myself].eTir == eActionTirDirect_NoCapacity and not target[myself].noCapacity then
+            return true, actionState
+        elseif actionState == eActionTirDirect_NoCapacity and not target[myself].noCapacity then
             target[myself].noCapacity = true
             reportFunction(eRC_TirSansCapacite )
-            return true
-        elseif target[myself].eTir == eActionTirDirect_Impossible and not target[myself].noTir then
+            return true, actionState
+        elseif actionState == eActionTirDirect_Impossible and not target[myself].noTir then
             target[myself].noTir = true
             reportFunction(eRC_TirDirectImpossible )
-            return true
-        elseif snipe and target[myself].eTir == eActionTirDirect_TemporarilyBlocked and not target[myself].blocked then
+            return true, actionState
+        elseif snipe and actionState == eActionTirDirect_TemporarilyBlocked and not target[myself].blocked then
             target[myself].blocked = true
             reportFunction(eRC_ShootingTemporarilyBlocked )
-        elseif target[myself].eTir and target[myself].eTir ~= 2  then
+        elseif actionState and actionState ~= eActionTirDirect_NoCapacity then
             g_myEnemy = target.source
-            return true
+            return true, actionState
         end
-        return false
+        return false, actionState
     end
     return false
 end
