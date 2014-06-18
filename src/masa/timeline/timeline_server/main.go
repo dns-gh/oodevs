@@ -10,6 +10,7 @@ package main
 
 import (
 	"flag"
+	"io"
 	"log"
 	"masa/timeline/client"
 	"masa/timeline/server"
@@ -32,52 +33,52 @@ func main() {
 	run := flag.String("run", "", "optional run script")
 	flag.Parse()
 
+	logger := log.New(os.Stderr, "", log.LstdFlags)
 	if len(*logto) > 0 {
 		file, err := os.Create(*logto)
 		if err != nil {
 			log.Fatalln("unable to create file", *logto)
 		}
 		defer file.Close()
-		log.SetOutput(file)
+		logger = log.New(io.MultiWriter(file, os.Stderr), "", log.LstdFlags)
 	}
 
-	log.Println("Masa Timeline server - copyright Masa Group 2013")
-	log.Println("port", *port)
-	log.Println("pak", *pak)
-	log.Println("debug", *debug)
+	logger.Println("Masa Timeline server - copyright Masa Group 2013")
+	logger.Println("port", *port)
+	logger.Println("pak", *pak)
+	logger.Println("debug", *debug)
 	if len(*www) > 0 {
-		log.Println("www", *www)
+		logger.Println("www", *www)
 	}
 	if len(*logto) > 0 {
-		log.Println("log", *logto)
+		logger.Println("logger", *logto)
 	}
 	if len(*run) > 0 {
-		log.Println("run", *run)
+		logger.Println("run", *run)
 	}
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	log := log.New(os.Stderr, "", log.LstdFlags)
-	controller := server.MakeController(log)
-	web, err := web.NewServer(log, *debug, *port, *pak, *www, controller)
+	controller := server.MakeController(logger)
+	web, err := web.NewServer(logger, *debug, *port, *pak, *www, controller)
 	if err != nil {
-		log.Fatalln("unable to start web server", err)
+		logger.Fatalln("unable to start web server", err)
 	}
 	if len(*run) > 0 {
-		runScript(controller, *run)
+		runScript(controller, *run, logger)
 	}
 	web.ListenAndServe()
 }
 
-func runScript(controller server.SdkController, file string) {
+func runScript(controller server.SdkController, file string, logger *log.Logger) {
 	handler := client.MakeHandler(controller)
 	commands, err := client.ParseFile(file)
 	if err != nil {
-		log.Fatalln("unable to parse run script", err)
+		logger.Fatalln("unable to parse run script", err)
 	}
 	for _, cmd := range commands {
 		err := handler.Process(&cmd)
 		if err != nil {
-			log.Fatalln("unable to process command", server.Dump(&cmd), err)
+			logger.Fatalln("unable to process command", server.Dump(&cmd), err)
 		}
 	}
 }
