@@ -225,7 +225,7 @@ end
 -- @param agent Directia agent
 -- @param AOR Simulation area of responsibility
 -- @return Simulation position at the end of the AOR
-integration.computeArrivalPoint( agent, AOR )
+integration.computeArrivalPoint = function( agent, AOR )
     return DEC_Geometrie_CalculerEntreeFuseau( agent, AOR )
 end
 
