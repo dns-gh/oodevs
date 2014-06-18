@@ -66,7 +66,10 @@ func main() {
 	if len(*run) > 0 {
 		runScript(controller, *run, logger)
 	}
-	web.ListenAndServe()
+	err = web.ListenAndServe()
+	if err != nil {
+		logger.Printf("web server stopped: %s\n", err)
+	}
 }
 
 func runScript(controller server.SdkController, file string, logger *log.Logger) {
