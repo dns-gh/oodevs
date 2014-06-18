@@ -83,7 +83,6 @@ private:
     QAction* dateTimeAction_;
     kernel::ContextMenu* menu_;
     QPushButton* button_;
-    int sliderTick_;
     unsigned int lastTickSkip_;
     //@}
 };
