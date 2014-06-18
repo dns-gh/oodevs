@@ -2044,7 +2044,7 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeEntryPointForFuseau( DEC_Decision_ABC* pPion, MIL_Fuseau& fuseau )
 {
-     if( !pPion )
+    if( !pPion )
         throw std::runtime_error( "Invalid unit" );
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
     fuseau.ComputeEntryPoint( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
