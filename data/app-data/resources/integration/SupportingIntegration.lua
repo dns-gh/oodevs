@@ -1,14 +1,24 @@
+local defaultPhForPositionTranslation = 0.5 -- used in getPositionTranslatedDirFromFriend
+local defaultPhForSupportPosition = 0.7 -- used in integration.getPositionToSupportFriend
+local defaultPhForMinRange = 0.9 -- used in integration.firingRangeToSupport
+local defaultPhForMaxRange = 0.7 -- used in integration.firingRangeToSupport
+
 --- Returns firing ranges for this entity to support an agent.
 --- This method returns a table with indirect fire or direct fire ranges, whichever has
 --- the greatest maximal firing range.
 -- Note that this method can only be called by an agent.
+-- @param phForMinRange Float (between 0 and 1), the wanted probability to hit for the
+-- minimal range for direct fire (optional, default value is defaultPhForMinRange = 0.9)
+-- @param phForMaxRange Float (between 0 and 1), the wanted probability to hit for the
+-- maximal range for direct fire (optional, default value is defaultPhForMaxRange = 0.7)
 -- @return List of three elements :
 -- <ul> <li> The minimum firing range for this entity to support an agent </li>
 -- <li> The maximum firing range for this entity to support an agent </li>
 -- <li> Whether or not the ranges in this table pertain to indirect fire </li> </ul>
-integration.firingRangeToSupport = function()
+integration.firingRangeToSupport = function( phForMinRange, phForMaxRange )
     local tirIndirect = { DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3, DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2, true }
-    local tirDirect = { DEC_Tir_PorteeMaxPourTirer( 0.9 ) / 2, DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2, false }
+    local tirDirect = { DEC_Tir_PorteeMaxPourTirer( phForMinRange or defaultPhForMinRange ) / 2, 
+                        DEC_Tir_PorteeMaxPourTirer( phForMaxRange or defaultPhForMaxRange ) / 2, false }
     if tirIndirect[2] > tirDirect[2] then
         return tirIndirect
     else
@@ -47,14 +57,14 @@ integration.getSupportDistanceToCoordination = function( agent, pH )
     return rangeDistance
 end
 
-local getPositionTranslatedDirFromFriend = function( friendToSupport, firingTypeEnumeration ) 
+local getPositionTranslatedDirFromFriend = function( friendToSupport, firingTypeEnumeration, ph ) 
     local integration = integration
     if integration.hasMission( meKnowledge.source ) then
         local rangeDistance = 0
         if firingTypeEnumeration == eIndirectFires then
             rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2
         else
-            rangeDistance = integration.firingRangeWithDirectFires( 0.5 ) -- direct fire case pH = 0.5
+            rangeDistance = integration.firingRangeWithDirectFires( ph or defaultPhForPositionTranslation )
         end
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = integration.getDangerousDirection( mission )
@@ -69,18 +79,19 @@ end
 -- @see integration.getPositionInAORToSupportFriend
 -- @param friendToSupport Directia agent or Directia agent knowledge, the unit to support
 -- @param firingTypeEnumeration Integer, whether the position should be computed for indirect or direct fire. 
+-- @param pH Float (between 0 and 1), the desired probability to hit (optional, default value is defaultPhForSupportPosition = 0.7) 
 -- The possible values are :
 -- <ul> <li> eDirectFires </li>
 -- <li> eIndirectFires </li> </ul>
 -- @return Point knowledge, or nil if this entity has no mission
-integration.getPositionToSupportFriend = function( friendToSupport, firingTypeEnumeration )
+integration.getPositionToSupportFriend = function( friendToSupport, firingTypeEnumeration, ph )
     if firingTypeEnumeration then
         return getPositionTranslatedDirFromFriend( friendToSupport, firingTypeEnumeration )
     else -- backward compatibility
         local integration = integration
         local rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2  -- indirect fire case
         if rangeDistance <= 0 then -- direct fire case
-            rangeDistance = DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2
+            rangeDistance = DEC_Tir_PorteeMaxPourTirer( ph or defaultPhForSupportPosition ) / 2
         end
         if integration.hasMission( meKnowledge.source ) then
             local mission = DEC_GetRawMission( meKnowledge.source )
