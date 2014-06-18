@@ -268,8 +268,10 @@ end
 -- @see integration.geometrySplitLocalisation
 -- @param area Area knowledge, the area to be split
 -- @param numberOfParts Integer, the number of sub-areas to create
-integration.splitArea = function( area, numberOfParts )
-    local subAreas = integration.geometrySplitLocalisation( area.source, numberOfParts )
+-- @param direction Simulation direction (vector), the direction with respect to which the splitting will take place
+-- (the north-south direction by default).
+integration.splitArea = function( area, numberOfParts, direction )
+    local subAreas = integration.geometrySplitLocalisation( area.source, numberOfParts, direction )
     subAreas = subAreas.first
     local integration = integration
     local myself = myself
