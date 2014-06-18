@@ -81,7 +81,7 @@ end
 -- The possible values are :
 -- <ul> <li> eDirectFires </li>
 -- <li> eIndirectFires </li> </ul>
--- @param pH Float (between 0 and 1), the desired probability to hit (optional, default value is defaultPhForSupportPosition = 0.7) 
+-- @param pH Float (between 0 and 1), the desired probability to hit (optional, default value is defaultPhForPositionTranslation = 0.5) 
 -- @return Point knowledge, or nil if this entity has no mission
 integration.getPositionToSupportFriend = function( friendToSupport, firingTypeEnumeration, ph )
     if firingTypeEnumeration then
