@@ -33,6 +33,7 @@ ADN_Missions_ParameterValue* ADN_Missions_ParameterValue::CreateCopy()
 {
     ADN_Missions_ParameterValue* newValue = new ADN_Missions_ParameterValue( missionType_ );
     newValue->strName_ = strName_.GetData();
+    newValue->id_ = id_.GetData();
     return newValue;
 }
 
