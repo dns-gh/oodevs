@@ -2,6 +2,8 @@
 ---- ASYMETRIC INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
 
+local defaultPhForFiringRange = 0.9 -- used in integration.isInFiringRangeForDotation
+
 --- Allows the agent to become stealthy or not
 -- When unit is stealthy, other agents cannot perceive it.
 -- Becoming visible is effective 2 ticks later if no order to stay stealthy is given during this delay
@@ -127,12 +129,15 @@ integration.killOfficers = function( unit )
     return true
 end
 
---- Returns true if target is in range for firing with the provided dotation, false otherwise
+--- Returns true if target is in range for firing with the provided dotation and the given ph, false otherwise
 -- @param target Directia agent knowledge
 -- @param dotation simulation dotation category
+-- @param ph Float (between 0 and 1), the wanted probability to hit (optional, default value is defaultPhForFiringRange = 0.9)
 -- @return Boolean, whether or not the target is in firing range
-integration.isInFiringRangeForDotation = function( target, dotation )
-    return integration.distance( meKnowledge, target ) < DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( target.source, 0.9, dotation )
+integration.isInFiringRangeForDotation = function( target, dotation, ph )
+    return integration.distance( meKnowledge, target ) < DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( target.source,
+                                                                                                         ph or defaultPhForFiringRange,
+                                                                                                         dotation )
 end
 
 --- Deprecated
