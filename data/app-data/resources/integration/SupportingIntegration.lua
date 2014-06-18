@@ -1,7 +1,6 @@
 local defaultPhForPositionTranslation = 0.5 -- used in getPositionTranslatedDirFromFriend
-local defaultPhForSupportPosition = 0.7 -- used in integration.getPositionToSupportFriend
-local defaultPhForMinRange = 0.9 -- used in integration.firingRangeToSupport
 local defaultPhForMaxRange = 0.7 -- used in integration.firingRangeToSupport
+local defaultPhForMinRange = 0.9 -- used in integration.firingRangeToSupport
 
 --- Returns firing ranges for this entity to support an agent.
 --- This method returns a table with indirect fire or direct fire ranges, whichever has
@@ -79,19 +78,19 @@ end
 -- @see integration.getPositionInAORToSupportFriend
 -- @param friendToSupport Directia agent or Directia agent knowledge, the unit to support
 -- @param firingTypeEnumeration Integer, whether the position should be computed for indirect or direct fire. 
--- @param pH Float (between 0 and 1), the desired probability to hit (optional, default value is defaultPhForSupportPosition = 0.7) 
 -- The possible values are :
 -- <ul> <li> eDirectFires </li>
 -- <li> eIndirectFires </li> </ul>
+-- @param pH Float (between 0 and 1), the desired probability to hit (optional, default value is defaultPhForSupportPosition = 0.7) 
 -- @return Point knowledge, or nil if this entity has no mission
 integration.getPositionToSupportFriend = function( friendToSupport, firingTypeEnumeration, ph )
     if firingTypeEnumeration then
-        return getPositionTranslatedDirFromFriend( friendToSupport, firingTypeEnumeration )
+        return getPositionTranslatedDirFromFriend( friendToSupport, firingTypeEnumeration, ph )
     else -- backward compatibility
         local integration = integration
         local rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2  -- indirect fire case
         if rangeDistance <= 0 then -- direct fire case
-            rangeDistance = DEC_Tir_PorteeMaxPourTirer( ph or defaultPhForSupportPosition ) / 2
+            rangeDistance = DEC_Tir_PorteeMaxPourTirer( ph or 0.7 ) / 2
         end
         if integration.hasMission( meKnowledge.source ) then
             local mission = DEC_GetRawMission( meKnowledge.source )
