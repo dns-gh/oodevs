@@ -39,6 +39,8 @@ public:
     virtual void Paint( Viewport_ABC& viewport );
     void SetFromPosition( const geometry::Point2f& point );
     void SetToPosition( const geometry::Point2f& point );
+    void SetCurrentPosition( const geometry::Point2f& point );
+    void ClearCurrentPosition();
     //@}
 
 private:
@@ -47,6 +49,7 @@ private:
     const GlTools_ABC& tools_;
     geometry::Point2f from_;
     geometry::Point2f to_;
+    geometry::Point2f current_;
     //@}
 };
 

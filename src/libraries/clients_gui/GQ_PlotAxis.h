@@ -94,6 +94,7 @@ public:
     QSize GetAxisSize   () const;
     int   GetRefTickPos () const;
 
+    double GetMaxAxisValue() const;
     double ClipValue( double rValue ) const;
 
     int MapToViewport ( double rValue ) const;

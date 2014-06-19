@@ -14,7 +14,7 @@
 
 namespace gui
 {
-
+    class TerrainProfilerLayer;
 // =============================================================================
 /** @class  TerrainProfile
     @brief  TerrainProfile
@@ -26,7 +26,7 @@ class TerrainProfile : public gui::GQ_Plot
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainProfile( QWidget* parent );
+             TerrainProfile( QWidget* parent, TerrainProfilerLayer& layer );
     virtual ~TerrainProfile();
     //@}
 
@@ -39,10 +39,12 @@ public:
     };
     //! @name Operations
     //@{
-    void Update( const std::vector< T_PointInfo >& points, bool displayHeight, int height, bool displaySlope, int slope );
+    void Update( const std::vector< T_PointInfo >& points, bool displayHeight, int height, bool displaySlope, int slope,
+                 const std::vector< geometry::Point2f >& path );
     //@}
 
 protected:
+    virtual void mouseMoveEvent( QMouseEvent* event );
     bool event( QEvent* event );
 
 private:
@@ -55,9 +57,14 @@ private:
 private:
     //! @name Member data
     //@{
+    TerrainProfilerLayer& layer_;
     gui::GQ_PlotData* data_;
     gui::GQ_PlotData* vision_;
     gui::GQ_PlotData* slopes_;
+    gui::GQ_PlotData* selection_;
+    int currentSlope_;
+    int currentHeight_;
+    std::vector< geometry::Point2f > path_;
     //@}
 };
 

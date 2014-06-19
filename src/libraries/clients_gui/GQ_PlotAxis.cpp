@@ -574,6 +574,11 @@ double GQ_PlotAxis::ClipValue( double rValue ) const
     return rValue;
 }
 
+double GQ_PlotAxis::GetMaxAxisValue() const
+{
+    return rMaxAxisValue_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::MapToViewport
 /** @param  rValue

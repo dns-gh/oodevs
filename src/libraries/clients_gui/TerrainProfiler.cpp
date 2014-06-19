@@ -25,6 +25,7 @@
 #include "clients_kernel/Path.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
+#include <boost/assign.hpp>
 
 using namespace gui;
 
@@ -43,15 +44,14 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     gui::SubObjectName subObject( this->objectName() );
     {
         QWidget* box = new QWidget( this );
-        profile_ = new TerrainProfile( box );
+        profile_ = new TerrainProfile( box, layer );
         heightCheckbox_ = new QCheckBox();
         heightCheckbox_->setCheckState( Qt::Checked );
         QLabel* heightLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Observation height" ) );
         heightValue_ = new RichSpinBox( "heightValue" );
         heightValue_->setFixedSize( 100, 30 );
-        heightValue_->setLineStep( 50 );
         heightValue_->setSuffix( " " + kernel::Units::meters.AsString() );
-        heightValue_->setValue( 1 );
+        heightValue_->setValue( 2 );
         slopeCheckbox_ = new QCheckBox();
         slopeCheckbox_->setCheckState( Qt::Checked );
         QLabel* slopeLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Slope threshold" ) );
@@ -127,7 +127,7 @@ void TerrainProfiler::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
 // -----------------------------------------------------------------------------
 void TerrainProfiler::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 {
-    heightValue_->setValue( 0 );
+    heightValue_->setValue( 2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,10 +237,10 @@ void TerrainProfiler::SetPath()
 // -----------------------------------------------------------------------------
 void TerrainProfiler::UpdateView()
 {
-    if( path_.empty() )
-        UpdatePointsView();
-    else
-        UpdatePathView();
+    if( !path_.empty() )
+        Update( path_ );
+    else if( !to_.IsZero() && !from_.IsZero() )
+        Update( boost::assign::list_of( from_ )( to_ ) );
 }
 
 namespace
@@ -270,42 +270,27 @@ namespace
     }
 }
 
-void TerrainProfiler::UpdatePathView()
+void TerrainProfiler::Update( const T_PointVector& path )
 {
-    const bool displayHeight = heightCheckbox_->checkState() == Qt::Checked;
-    const bool displaySlope = slopeCheckbox_->checkState() == Qt::Checked;
-    heightValue_->setEnabled( displayHeight );
-    slopeValue_->setEnabled( displaySlope );
-    std::vector< TerrainProfile::T_PointInfo > points;
-    auto previous = path_.begin();
-    const auto environment = detection_.EnvironmentAt( *previous );
-    const auto elevation = detection_.ElevationAt( *previous );
-    const auto height = heightValue_->value();
-    points.push_back( CreatePointInfo( environment.IsInForest(), environment.IsInTown(), elevation, 0 ) );
-    double x = 0;
-    for( auto it = previous + 1; it != path_.end(); previous = it++ )
+    if( path.size() > 1 )
     {
-        x += previous->Distance( *it );
-        ComputePoints( points, detection_, *previous, *it, height, x );
+        const bool displayHeight = heightCheckbox_->checkState() == Qt::Checked;
+        const bool displaySlope = slopeCheckbox_->checkState() == Qt::Checked;
+        heightValue_->setEnabled( displayHeight );
+        slopeValue_->setEnabled( displaySlope );
+        std::vector< TerrainProfile::T_PointInfo > points;
+        auto previous = path.begin();
+        const auto environment = detection_.EnvironmentAt( *previous );
+        const auto height = heightValue_->value();
+        points.push_back( CreatePointInfo( environment.IsInForest(), environment.IsInTown(), detection_.ElevationAt( from_ ), 0 ) );
+        double x = 0;
+        for( auto it = previous + 1; it != path.end(); previous = it++ )
+        {
+            ComputePoints( points, detection_, *previous, *it, height, x );
+            x += previous->Distance( *it );
+        }
+        profile_->Update( points, displayHeight, heightValue_->value(), displaySlope, slopeValue_->value(), path );
     }
-    profile_->Update( points, displayHeight, heightValue_->value(), displaySlope, slopeValue_->value() );
-}
-
-void TerrainProfiler::UpdatePointsView()
-{
-    const bool displayHeight = heightCheckbox_->checkState() == Qt::Checked;
-    const bool displaySlope = slopeCheckbox_->checkState() == Qt::Checked;
-    heightValue_->setEnabled( displayHeight );
-    slopeValue_->setEnabled( displaySlope );
-    if( to_.IsZero() || from_.IsZero() )
-        return;
-    std::vector< TerrainProfile::T_PointInfo > points;
-    const auto environment = detection_.EnvironmentAt( from_ );
-    const auto elevation = detection_.ElevationAt( from_ );
-    const auto height = heightValue_->value();
-    points.push_back( CreatePointInfo( environment.IsInForest(), environment.IsInTown(), elevation, 0 ) );
-    ComputePoints( points, detection_, from_, to_, height, 0 );
-    profile_->Update( points, displayHeight, height, displaySlope, slopeValue_->value() );
 }
 
 // -----------------------------------------------------------------------------

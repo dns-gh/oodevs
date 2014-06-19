@@ -72,8 +72,7 @@ private:
     virtual QSize sizeHint () const;
     void SetFromPosition( const geometry::Point2f& point );
     void SetToPosition( const geometry::Point2f& point );
-    void UpdatePathView();
-    void UpdatePointsView();
+    void Update( const T_PointVector& path );
     //@}
 
 private:
