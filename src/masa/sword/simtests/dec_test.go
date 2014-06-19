@@ -600,8 +600,7 @@ func (s *TestSuite) TestDecGetTerrainData(c *C) {
 
 	// create a unit to execute script function
 	f := getSomeFormation(c, model)
-	kg := getSomeKnowledgeGroup(c, model)
-	c.Assert(f.PartyId, Equals, kg.PartyId)
+	kg := getSomeKnowledgeGroup(c, model, f.PartyId)
 	automat, err := client.CreateAutomat(f.Id, 2, kg.Id)
 	c.Assert(err, IsNil)
 	err = client.SetAutomatMode(automat.Id, false)

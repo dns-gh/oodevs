@@ -239,7 +239,7 @@ func testCreateAllUnitsAndAutomats(c *C, exercise, phyName string) {
 	defer stopSimAndClient(c, sim, client)
 	data := client.Model.GetData()
 	formation := getSomeFormation(c, data)
-	kg := getAnyKnowledgeGroupInParty(c, data, formation.PartyId)
+	kg := getSomeKnowledgeGroup(c, data, formation.PartyId)
 	pos := swapi.Point{X: -15.8219, Y: 28.2456}
 
 	phydb := loadPhysical(c, phyName)

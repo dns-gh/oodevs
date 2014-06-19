@@ -25,7 +25,7 @@ func (s *TestSuite) TestEnableKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kg := getSomeKnowledgeGroup(c, data)
+	kg := getSomeKnowledgeGroup(c, data, 0)
 
 	// error: no params
 	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable,
@@ -65,7 +65,7 @@ func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kg := getSomeKnowledgeGroup(c, data)
+	kg := getSomeKnowledgeGroup(c, data, 0)
 
 	// error: update party with 2 parameters
 	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_party,
@@ -124,7 +124,7 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kg := getSomeKnowledgeGroup(c, data)
+	kg := getSomeKnowledgeGroup(c, data, 0)
 
 	// error: no params
 	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type,
@@ -217,7 +217,7 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	knowledgeGroup := getSomeKnowledgeGroup(c, data)
+	knowledgeGroup := getSomeKnowledgeGroup(c, data, 0)
 	automat := getSomeAutomat(c, data)
 
 	// error: invalid tasker (not an automat)

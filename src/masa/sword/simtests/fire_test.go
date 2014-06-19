@@ -263,8 +263,8 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 
 	// Create 2 automats
 	data := client.Model.GetData()
-	kg0 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 0)
-	kg1 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 1)
+	kg0 := getSomeKnowledgeGroup(c, data, f1.PartyId).Id
+	kg1 := getSomeKnowledgeGroup(c, data, f2.PartyId).Id
 	a1 := CreateAutomat(c, client, f1.Id, kg0)
 	a2 := CreateAutomat(c, client, f2.Id, kg1)
 
@@ -345,7 +345,7 @@ func (s *TestSuite) TestActiveProtection(c *C) {
 
 	party1 := getPartyByName(c, data, "party1")
 	formation1 := CreateFormation(c, client, party1.Id)
-	kg1 := getAnyKnowledgeGroupInParty(c, data, party1.Id)
+	kg1 := getSomeKnowledgeGroup(c, data, party1.Id)
 
 	// Create target with active protection
 	automatType1 := getAutomatTypeFromName(c, phydb, "VW Combi Rally")

@@ -768,8 +768,10 @@ func CreateFormation(c *C, client *swapi.Client, partyId uint32) *swapi.Formatio
 
 func CreateAutomatType(c *C, client *swapi.Client, formationId, groupId, automatType uint32) *swapi.Automat {
 	data := client.Model.GetData()
+	formation := data.Formations[formationId]
+	c.Assert(formation, NotNil)
 	if groupId == 0 {
-		groupId = getSomeKnowledgeGroup(c, data).Id
+		groupId = getSomeKnowledgeGroup(c, data, formation.PartyId).Id
 	}
 	kg0, ok := data.KnowledgeGroups[groupId]
 	c.Assert(ok, Equals, true)
@@ -798,8 +800,7 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 
 	// Create 2 automats
 	data := client.Model.GetData()
-	kg0 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 0)
-	kg1 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 1)
+	kg0 := getSomeKnowledgeGroup(c, data, f1.PartyId).Id
 	a1 := CreateAutomat(c, client, f1.Id, kg0)
 	a2 := CreateAutomat(c, client, f1.Id, kg0)
 
@@ -824,6 +825,7 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 
 	// error: automat parameter isn't in the same side
 	f2 := CreateFormation(c, client, 2)
+	kg1 := getSomeKnowledgeGroup(c, data, f2.PartyId).Id
 	a3 := CreateAutomat(c, client, f2.Id, kg1)
 
 	err = client.ChangeUnitSuperior(u2.Id, a3.Id)
