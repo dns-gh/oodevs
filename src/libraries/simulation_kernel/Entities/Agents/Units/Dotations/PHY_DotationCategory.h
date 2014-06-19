@@ -67,9 +67,9 @@ public:
     const PHY_AttritionData& GetAttritionData( const PHY_Protection& protectionTarget ) const;
     double GetAttritionScore( const PHY_Protection& protectionTarget ) const;
 
-    void ApplyIndirectFireEffect( const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
-    void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
-    void ApplyStrikeEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
+    void ApplyIndirectFireEffect( const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, const MIL_Agent_ABC* requester = 0 ) const;
+    void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, const MIL_Agent_ABC* requester = 0 ) const;
+    void ApplyStrikeEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, const MIL_Agent_ABC* requester = 0 ) const;
 
     double ConvertToNbrAmmo( double rNbrIT ) const;
     double ConvertToInterventionType( unsigned int nNbr ) const;
