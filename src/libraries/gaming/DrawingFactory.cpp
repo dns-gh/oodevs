@@ -127,7 +127,7 @@ namespace
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
 void DrawingFactory::CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
-                                  gui::E_Dash_style dashStyle, kernel::Location_ABC& location ) const
+                                  gui::E_Dash_style dashStyle, kernel::Location_ABC& location, const QString& name ) const
 {
     plugins::messenger::ShapeCreationRequest message;
     message().mutable_shape()->set_category( style.GetCategory().toStdString() );
@@ -135,7 +135,7 @@ void DrawingFactory::CreateShape( const gui::DrawingTemplate& style, const QColo
     message().mutable_shape()->mutable_color()->set_green( color.green() );
     message().mutable_shape()->mutable_color()->set_blue( color.blue() );
     message().mutable_shape()->set_pattern( style.GetName().toStdString() );
-    message().mutable_shape()->set_name( style.GetName() );
+    message().mutable_shape()->set_name( name.toStdString() );
     if( dashStyle != gui::eSolid )
         message().mutable_shape()->set_pen_style( sword::EnumPenStyle( dashStyle ) );
     if( entity )
@@ -158,5 +158,6 @@ void DrawingFactory::CreateShape( xml::xistream& xis, const kernel::Entity_ABC* 
     const auto& style = gui::ReadStyle( xis, types_ );
     std::unique_ptr< kernel::Location_ABC > location( style.CreateLocation() );
     gui::ReadLocation( xis, *location, converter_ );
-    CreateShape( style, gui::ReadColor( xis ), entity, gui::ReadDashStyle( xis ), *location );
+    CreateShape( style, gui::ReadColor( xis ), entity, gui::ReadDashStyle( xis ), *location,
+        xis.attribute< std::string >( "name", style.GetName().toStdString() ).c_str() );
 }

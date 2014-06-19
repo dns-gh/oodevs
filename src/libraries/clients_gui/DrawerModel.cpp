@@ -11,6 +11,7 @@
 #include "DrawerModel.h"
 #include "DrawingFactory_ABC.h"
 #include "DrawerShape.h"
+#include "DrawingTemplate.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -200,5 +201,5 @@ void DrawerModel::NotifyDeleted( const kernel::Drawing_ABC& shape )
 void DrawerModel::Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
                           E_Dash_style dashStyle, kernel::Location_ABC& location ) const
 {
-    factory_.CreateShape( style, color, entity, dashStyle, location );
+    factory_.CreateShape( style, color, entity, dashStyle, location, style.GetName() );
 }

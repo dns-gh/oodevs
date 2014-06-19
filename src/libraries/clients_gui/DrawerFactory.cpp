@@ -45,11 +45,11 @@ DrawerFactory::~DrawerFactory()
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
 void DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
-                                 E_Dash_style dashStyle, kernel::Location_ABC& location ) const
+                                 E_Dash_style dashStyle, kernel::Location_ABC& location, const QString& name ) const
 {
     DrawingPositions* positions = new DrawingPositions();
     positions->SetLocation( location );
-    std::unique_ptr< DrawerShape > shape( new DrawerShape( controllers_, ++idManager_, style.GetName(),
+    std::unique_ptr< DrawerShape > shape( new DrawerShape( controllers_, ++idManager_, name,
         style, color, entity, *positions, coordinateConverter_, dashStyle ) );
     shape->Attach< kernel::Positions >( *positions );
     shape->Polish();
