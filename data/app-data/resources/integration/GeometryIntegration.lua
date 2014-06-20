@@ -221,6 +221,14 @@ integration.computeMiddlePointsInAOR = function( AOR )
     return DEC_Fuseau_ComputeMiddlePointsInAOR( AOR.source )
 end
 
+--- Returns the closest position to reach the provided area of responsibility for the given agent
+-- @param agent Directia agent
+-- @param AOR Simulation area of responsibility
+-- @return Simulation position at the end of the AOR
+integration.computeArrivalPoint = function( agent, AOR )
+    return DEC_Geometrie_CalculerEntreeFuseau( agent, AOR )
+end
+
 --- Clips the provided area to the area of responsibility, and returns the result
 -- Returns nil if there is no intersection between the area and the area of responsibility
 -- @param area Masalife knowledge of an area
