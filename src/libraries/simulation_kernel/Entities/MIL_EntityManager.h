@@ -96,7 +96,6 @@ class MIL_ObjectFactory;
 class MIL_ObjectManager;
 class MIL_ObjectType_ABC;
 class MIL_Population;
-class MIL_ProfilerManager;
 class MIL_Time_ABC;
 class MIL_UrbanObject_ABC;
 class MissionController_ABC;
@@ -321,7 +320,6 @@ private:
 
     // Profiling
     std::map< std::string, double > profilers_;
-    std::unique_ptr< MIL_ProfilerManager > profilerManager_;
     unsigned int nRandomBreakdownsNextTimeStep_;
     double rKnowledgesTime_;
     double rAutomatesDecisionTime_;

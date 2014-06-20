@@ -117,7 +117,6 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_MessageParameters.h"
-#include "Tools/MIL_ProfilerManager.h"
 #include "Tools/NET_AsnException.h"
 #include "tools/SchemaWriter.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -277,7 +276,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , bSendUnitVisionCones_         ( false )
     , bEnableRandomBreakdowns_      ( config.EnableRandomBreakdowns() )
     , actions_                      ( actions )
-    , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0 )
     , rKnowledgesTime_              ( 0 )
     , rAutomatesDecisionTime_       ( 0 )
@@ -317,7 +315,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , bSendUnitVisionCones_         ( false )
     , bEnableRandomBreakdowns_      ( config.EnableRandomBreakdowns() )
     , actions_                      ( actions )
-    , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0 )
     , rAutomatesDecisionTime_       ( 0 )
@@ -808,17 +805,6 @@ void MIL_EntityManager::UpdateKnowledges()
     }
 }
 
-namespace
-{
-    template< typename T >
-    void UpdateDecision( float duration, T& entity, MT_Profiler& profiler, MIL_ProfilerManager& profilerManager )
-    {
-        profiler.Start();
-        entity.UpdateDecision( duration );
-        profilerManager.NotifyDecisionUpdated( entity, profiler.Stop() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UpdateDecisions
 // Created: NLD 2004-08-19
@@ -826,18 +812,26 @@ namespace
 void MIL_EntityManager::UpdateDecisions()
 {
     float duration = static_cast< float >( MIL_Time_ABC::GetTime().GetTickDuration() );
-    MT_Profiler decisionUpdateProfiler;
     {
         Profiler profiler( rAutomatesDecisionTime_ );
-        automateFactory_->Apply( boost::bind( &UpdateDecision< MIL_Automate >, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
+        automateFactory_->Apply( [duration]( MIL_Automate& entity )
+        {
+            entity.UpdateDecision( duration );
+        });
     }
     {
         Profiler profiler( rPionsDecisionTime_ );
-        sink_->Apply( boost::bind( &UpdateDecision< MIL_AgentPion >, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
+        sink_->Apply( [duration]( MIL_AgentPion& entity )
+        {
+            entity.UpdateDecision( duration );
+        });
     }
     {
         Profiler profiler( rPopulationsDecisionTime_ );
-        populationFactory_->Apply( boost::bind( &UpdateDecision< MIL_Population >, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
+        populationFactory_->Apply( [duration]( MIL_Population& entity )
+        {
+            entity.UpdateDecision( duration );
+        });
     }
 }
 
