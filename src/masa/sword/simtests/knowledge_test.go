@@ -217,7 +217,6 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	knowledgeGroup := getSomeKnowledgeGroup(c, data, 0)
 	automat := getSomeAutomat(c, data)
 
 	// error: invalid tasker (not an automat)
@@ -234,13 +233,13 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// creation of another knowledge group with the same army
-	group, err := client.CreateKnowledgeGroup(knowledgeGroup.PartyId, "Standard")
+	group, err := client.CreateKnowledgeGroup(automat.PartyId, "Standard")
 	c.Assert(err, IsNil)
 
 	// ... and one belonging to the other party
 	otherParty := uint32(0)
 	for _, p := range data.Parties {
-		if p.Id != knowledgeGroup.PartyId {
+		if p.Id != group.PartyId {
 			otherParty = p.Id
 			break
 		}
