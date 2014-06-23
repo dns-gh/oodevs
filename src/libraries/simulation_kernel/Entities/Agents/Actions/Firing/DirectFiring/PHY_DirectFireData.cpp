@@ -74,12 +74,12 @@ std::pair< double, PHY_Weapon* > PHY_DirectFireData::sComposanteWeapons::GetBest
     const MIL_AgentPion& firer, const MIL_Agent_ABC& target,
     const PHY_Composante_ABC& compTarget ) const
 {
-    std::pair< double, PHY_Weapon* > result( -1, nullptr );
+    std::pair< double, PHY_Weapon* > result( 0, nullptr );
     for( auto it = weaponsReady_.cbegin(); it != weaponsReady_.cend(); ++it )
     {
         const double score = (*it)->GetDangerosity( firer, target, compTarget.GetType(),
                 true, true ); // 'true' = 'use PH', true = "use ammo"
-        if( score >= result.first )
+        if( score > result.first )
         {
             result.first = score;
             result.second = *it;
