@@ -282,7 +282,7 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
     for( auto it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )
     {
         const auto w = it->second.GetBestWeapon( firer_, target, compTarget );
-        if( w.first > rBestScore || ( w.second && w.second != pBestWeapon ) )
+        if( w.first > rBestScore )
         {
             rBestScore = w.first;
             pBestWeapon = w.second;
