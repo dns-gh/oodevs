@@ -186,7 +186,7 @@ namespace
 // Name: PHY_DotationCategory_IndirectFire::ApplyEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult, const MIL_Agent_ABC* requester ) const
+void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
 {
     MT_Vector2D vFireDirection = ( ( vTargetPosition == vSourcePosition ) ? MT_Vector2D( 1.f, 0.f ) : ( vTargetPosition - vSourcePosition ) ).Normalize() ;
     MT_Vector2D vRotatedFireDirection = vFireDirection;
@@ -272,10 +272,10 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 {
                     MIL_Agent_ABC& observerAgent = static_cast< PHY_RoleInterface_Location& >( **itobserver ).GetAgent();
                     //only take those observers belonging to same army as firer:
-                    if( &observerAgent != requester && pFirer && observerAgent.GetArmy().GetID() != pFirer->GetArmy().GetID() )
+                    if( pFirer && observerAgent.GetArmy().GetID() != pFirer->GetArmy().GetID() )
                         continue;
                     PHY_RoleInterface_Perceiver& perceiver = observerAgent.GetRole< PHY_RoleInterface_Perceiver >();
-                    if( perceiver.IsFireObserver() || &observerAgent == requester )
+                    if( perceiver.IsFireObserver() )
                     {
                         boost::shared_ptr< DEC_Knowledge_Agent > knowledge = perceiver.GetKnowledgeGroup()->GetKnowledge()->GetKnowledgeAgentContainer().GetKnowledgeAgent( target );
                         if( knowledge && knowledge->GetRelevance() == 1. && knowledge->GetCurrentPerceptionLevel() >= PHY_PerceptionLevel::detected_ )

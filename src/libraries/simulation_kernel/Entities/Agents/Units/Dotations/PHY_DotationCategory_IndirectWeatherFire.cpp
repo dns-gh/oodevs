@@ -64,7 +64,7 @@ PHY_DotationCategory_IndirectWeatherFire::~PHY_DotationCategory_IndirectWeatherF
 // Name: PHY_DotationCategory_IndirectWeatherFire::ApplyEffect
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC* /*pFirer*/, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/, const MIL_Agent_ABC* /*requester*/ ) const
+void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC* /*pFirer*/, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
 {
     MT_Vector2D vFireDirection( 0., 1. );
     if( vTargetPosition != vSourcePosition )
