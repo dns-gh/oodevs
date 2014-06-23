@@ -103,7 +103,7 @@ integration.CR_ROE_Foules  = function( typeROE )
 end
 
 --- Displays a report depending on the given crowd 'attitude'. 
--- The crowds 'attitude' is defined by an enumeration which values can be:
+-- The crowds 'attitude' is defined by an enumeration which values are:
 -- <ul> <li> eAttitudeCalme (calm) </li>
 -- <li> eAttitudeAgitee (agitated) </li>
 -- <li> eAttitudeAgressive (aggressive) </li>
@@ -121,7 +121,7 @@ integration.CR_Attitude_Foules  = function ( attitude )
     end
 end
 
---- For an automat, set the rule of engagement (ROE) for crowds, with one issued as parameter.
+--- For an automat, set the given rule of engagement(ROE) toward crowds.
 -- The crowds ROE are defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eEtatROEPopulation_EmploiForceInterdit (no intervention) (</li>
@@ -133,7 +133,7 @@ integration.changeCrowdROEForAutomat = function( roe )
     DEC_Automate_ChangeEtatROEPopulation( roe )
 end
 
---- Set the rule of engagement (ROE) for crowds, with one issued as parameter.
+--- Set the given rule of engagement(ROE) toward crowds.
 -- The ROE is defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eEtatROEPopulation_EmploiForceInterdit (no intervention)</li>
@@ -155,8 +155,8 @@ integration.getCrowdROEForAgent = function()
     return DEC_Agent_RoePopulation()
 end
 
---- Set the "attitude" (safety attitude or speedy attitude), using a given fragmentary order.
--- The attitude values can be:
+--- Sets the given fragmentary order "attitude" (speed or safety) parameter (orderConduiteChangerAmbiance_).
+-- The attitude values are:
 -- <ul> <li> eEtatAmbiance_Surete (safety attiude)</li>
 -- <li> eEtatAmbiance_Vitesse (normal attiude) </li> </ul>
 -- This method can only be called by an agent.
@@ -166,18 +166,17 @@ integration.setOrderConduiteChangerAmbiance = function( fragOrder, value )
     fragOrder:SetorderConduiteChangerAmbiance_( value )
 end
 
---- Returns the 'work mode' of the maintenance logistic chain, set as parameter in the given fragmentary order.
+--- Returns the fragmentary order's "maintenance logistic chain work mode" parameter (orderConduiteModifierRegimeTravailMaintenance_).
 -- The 'work mode' is an enumeration defined in authoring tool in the 'Missions' and 'Fragmentary' tab.
 -- See the 'Change work mode' fragmentary order in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return integer the value of the 'work mode' enumeration.
 integration.getOrderConduiteModifierRegimeTravailMaintenanceParameter = function( fragorder )
     return fragorder.source:GetorderConduiteModifierRegimeTravailMaintenance_()
 end
 
---- Returns the list of automatons to be processed in priority by the logistic health chain. 
--- The priority is defined by the order of the automatons in the given list (first element has the priority). 
--- The list is set as a parameter of the given fragmentary order.
+--- Returns the fragmentary order's "medical tactical priorities" parameter (orderConduiteModifierPrioritesTactiquesBlesses_).
+-- The priority is defined by the order of the automatons in the given list (first element has the highest priority). 
 -- See the 'Change tactical wounded treatment priorities' fragmentary order in authoring tool.
 -- @param fragorder a fragmentary order
 -- @return a list of simulation automatons.
@@ -185,19 +184,17 @@ integration.getOrderConduiteModifierPrioritesTactiquesBlessesParameter = functio
     return fragorder.source:GetorderConduiteModifierPrioritesTactiquesBlesses_()
 end
 
---- Returns the list of automatons to be processed in priority by the logistic reparation chain.
--- The priority is defined by the order of the automatons in the given list (first element has the priority).
--- The list is set as a parameter of the given fragmentary order.
+--- Returns the fragmentary order's "maintenance tactical priorities" parameter (orderConduiteModifierPrioritesTactiquesReparations_).
+-- The priority is defined by the order of the automatons in the given list (the first element has the highest priority).
 -- See the 'Change tactical reparations priorities' fragmentary order in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return a list of simulation automatons.
 integration.getOrderConduiteModifierPrioritesTactiquesReparationsParameter = function( fragorder )
     return fragorder.source:GetorderConduiteModifierPrioritesTactiquesReparations_()
 end
 
---- Returns the list of equipement types to be processed in priority by the logistic reparation chain.
--- The priority is defined by the order of the equipement types in the given list (first element has the priority).
--- The list is set as a parameter of the given fragmentary order.
+--- Returns the fragmentary order's "maintenance priorities" parameter (orderConduiteModifierPrioritesReparations_).
+-- The priority is defined by the order of the equipement types in the given list (first element has the highest priority).
 -- See the 'Change reparations priorities' fragmentary order in authoring tool.
 -- @param fragorder a fragmentary order
 -- @return a list of equipement types. 
@@ -306,95 +303,92 @@ end
 
 --- Returns the list of urgence types to be processed in priority by the logistic health chain.
 -- The medical priority is defined by the order of the urgence types in the returned list (first element has the priority).
--- The list is set as a parameter of the given fragmentary order.
 -- See the 'Change wounded treatment priorities' fragmentary order in authoring tool.
 -- @param fragorder a fragmentary order
--- @return a list of urgence types.
+-- @return a list of wound levels.
 integration.getOrderConduiteModifierPrioritesBlessesParameter = function( fragorder )
     return fragorder.source:GetorderConduiteModifierPrioritesBlesses_()
 end
 
---- Returns the rule of engagement (ROE) toward crowds set as parameter in the given fragmentary order.
+--- Returns the fragmentary order's "rule of engagement toward crowds" parameter (orderConduiteChangerReglesEngagementPopulation_).
 -- The rules of engagement are defined by an enumeration which values are set in authoring 
 -- tool in the 'Missions' and 'Fragmentary' tab.
 -- See the 'Change crowd ROE' fragmentary order in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return integer the value corresponding to the rule of engagement.
 integration.getOrderConduiteChangerReglesEngagementPopulationParameter = function( fragorder )
     return fragorder.source:GetorderConduiteChangerReglesEngagementPopulation_()
 end
 
---- Returns the rule of engagement set as parameter in the given fragmentary order.
+--- Returns the fragmentary order's "rule of engagement" parameter (orderConduiteChangerReglesEngagement_).
 -- The rules of engagement are defined by an enumeration which values are set in authoring 
 -- tool in the 'Missions' and 'Fragmentary' tab.
 -- See the 'Change ROE' fragmentary order in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return integer the value corresponding to the rule of engagement.
 integration.getOrderConduiteChangerReglesEngagementParameter = function( fragorder )
     return fragorder.source:GetorderConduiteChangerReglesEngagement_()
 end
 
+--- Returns the fragmentary order's "agent knowledge" parameter (agentKnowledge_).
 --- Returns the agent knowledge parameter of the given fragmentary order.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return a knowledge agent.
 integration.getAgentKnowledgeParameter = function( fragorder )
     return fragorder.source:GetAgentKnowledge_()
 end
 
---- Returns the agent parameter of the given fragmentary order.
+--- Returns the fragmentary order's "agent" parameter (agent_).
 -- The 'fragorder' parameter must be of type 'agent_' as defined 
 -- in the fragmentary order definition (see authoring tool,'Missions' then 'Fragmentary' tab).
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return an agent.
 integration.getAgentParameter = function( fragorder )
     return fragorder.source:GetAgent_()
 end
 
---- Returns the 'attitude' parameter of the given fragmentary order.
+--- Returns the fragmentary order's "attitude" parameter (orderConduiteChangerAmbiance_).
 -- The 'attitude' parameter is defined by an enumeration which values are set in the authoring tool.
 -- in the fragmentary order definition.
 -- See the 'Switch posture' fragmentary order in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return integer the value corresponding to the attitude.
 integration.getConduiteChangerAmbianceParameter = function( fragorder )
     return fragorder.source:GetorderConduiteChangerAmbiance_()
 end
 
---- Returns the 'resource type' parameter of the given fragmentary order.
+--- Returns the fragmentary order's "munition" parameter (munition_).
 -- See the 'Fire' and 'Fire in area' fragmentary orders in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return the ressource type.
 integration.getMunitionParameter = function( fragorder )
     return fragorder.source:Getmunition_()
 end
 
---- Returns a list of 'resource type', set as parameter in the given fragmentary order.
+--- Returns the fragmentary order's "munitions" parameter (munitions_).
 -- See the 'Fire' and 'Fire in area' fragmentary orders definitions in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return the list of ressource types.
 integration.getMunitionsParameter = function( fragorder )
     return fragorder.source:Getmunitions_()
 end
 
---- Returns the 'number of salvoes' parameter of the given fragmentary order.
+--- Returns the fragmentary order's "number of salvoes" parameter (nbIT_).
 -- See the 'Fire' and 'Fire in area' fragmentary orders definitions in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return integer a number of salvoes.
 integration.getNbItParameter = function( fragorder )
     return fragorder.source:GetnbIT_()
 end
 
---- Returns the 'target position' parameter of the given fragmentary order.
+--- Returns the fragmentary order's "target position" parameter (pointCible_).
 -- See the 'Fire' and 'Fire in area' fragmentary orders definitions in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return a simulation position.
 integration.getpointCibleParameter = function( fragorder )
     return fragorder.source:GetpointCible_()
 end
 
---- Returns the requester of the given fragmentary order
--- @param fragorder a fragmentary order
--- @return integer the value corresponding to the attitude
 integration.getRequesterParameter = function( fragorder, parameterName )
     local requester = nil
     local agent = nil
@@ -410,75 +404,76 @@ integration.getRequesterParameter = function( fragorder, parameterName )
     return requester
 end
 
---- Returns the crowd 'attitude' parameter of the given fragmentary order.
+--- Returns the fragmentary order's "attitude" parameter (orderConduitePopulationChangerAttitude_).
 -- The crowd attitude is defined by an enumeration which values are set in the authoring tool. 
 -- See the 'Population - Change attitude' fragmentary order definition in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return integer the value corresponding to the attitude
 integration.getorderConduitePopulationChangerAttitudeParameter = function( fragorder )
     return fragorder.source:GetorderConduitePopulationChangerAttitude_()
 end
 
---- Returns the 'agent' to be reinforced (with new equipments), set as parameter in the given fragmentary order.
+--- Returns the fragmentary order's "agent to reinforce" parameter (pionARenforcer_).
 -- See the 'Get back lended ambulances' fragmentary order definition in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return the agent
 integration.getPionARenforcerParameter = function( fragorder )
     return fragorder.source:GetpionARenforcer_()
 end
 
---- Returns the reinforced 'agent', set as parameter in the given fragmentary order.
+--- Returns the fragmentary order's "reinforced agent" parameter (pionRenforce_).
 -- See the 'Send lended ambulances' and 'Send lended carriers' fragmentary orders definitions in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return the agent
 integration.getPionRenforceParameter = function( fragorder )
     return fragorder.source:GetpionRenforce_()
 end
 
---- Returns the number of ambulances to be used for medical evacuation, set as parameter in the given fragmentary order.
+--- Returns the fragmentary order's "number of ambulances" parameter (nbrAmbulances_).
 -- See the 'Send lended ambulances' fragmentary order definition in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return integer number of ambulances
 integration.getNbrAmbulancesParameter = function( fragorder )
     return fragorder.source:GetnbrAmbulances_()
 end
 
---- Returns the number of tow equipements to be used for maintenance evacuation, set as parameter in the given fragmentary order.
+--- Returns the fragmentary order's "umber of tow equipements" parameter (nbrRemorqueurs_).
 -- See the 'Send lended carriers' fragmentary order definition in authoring tool.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return integer number of equipements
 integration.getNbrRemorqueursParameter = function( fragorder )
     return fragorder.source:GetnbrRemorqueurs_()
 end
 
---- Returns 'object' set as parameter in the given fragmentary order.
--- @param fragorder a fragmentary order
+--- Returns the fragmentary order's "object" parameter (objectKnowledge_).
+-- @param fragorder a directia fragmentary order
 -- @return a simulation object
 integration.getObjectKnowledgeParameter = function( fragorder )
     return fragorder.source:GetObjectKnowledge_()
 end
 
---- Returns the type of in the given fragmentary order.
+--- Returns the type of the given fragmentary order.
 -- @see integration.getAnyType method.
--- @param fragorder a fragmentary order
+-- @param fragorder a directia fragmentary order
 -- @return string the name of the fragmentary order
 integration.getOrderType = function( fragorder )
     return integration.getAnyType( fragorder.source )
 end
 
---- Returns the list of fragmentary orders representation to be processed by the agent.
--- @return a list of orders
+--- Returns the list of fragmentary orders received by this entity.
+-- @see integration.cleanFragOrder
+-- @return a list of simulation fragmentary orders
 integration.getOrdersCategory = function( )
     return DEC_GetOrdersCategory()
 end
 
---- Returns a table containing all parameters to be used to apply the 'Fire' fragorder.
+--- Returns a table containing all parameters to be used to apply the 'Fire' fragmentary order.
 -- See the 'Fire' fragmentary order in authoring tool.
 -- @see integration.getMunitionParameter
 -- @see integration.getNbItParameter
 -- @see integration.getpointCibleParameter
 -- @see integration.getAgentKnowledgeParameter
--- @param fragorder the fire fragmentary order
+-- @param fragorder the fire fragmentary order (a directia fragmentary order)
 -- @return a simulation object
 integration.getFireParameters = function( fragOrder )
     local params = {}
@@ -494,8 +489,8 @@ integration.getFireParameters = function( fragOrder )
 end
 
 --- Create a fragmentary order knowledge of the given type.
--- @param fragOrderType a string
--- @return the created fragmentary order
+-- @param fragOrderType the type of the fragmentary order to create
+-- @return a simulation fragmentary order
 integration.createFragOrder = function( fragOrderType )
     return CreateFragOrder( fragOrderType )
 end
