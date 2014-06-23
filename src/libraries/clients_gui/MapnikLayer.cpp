@@ -13,7 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "tools/ExerciseConfig.h"
 #include <graphics/MapnikLayer.h>
-#include <extractor/TerrainExtractionManager.h>
+#include <extractor/MapnikUtils.h>
 
 using namespace gui;
 
@@ -45,6 +45,10 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
     if( !ShouldDrawPass() || terrain_.IsEmpty() )
         return;
     if( !layer_ )
-        layer_.reset( new graphics::MapnikLayer( &extractor::ExportTerrain, terrain_, "resources/mapnik.xml" ) );
+    {
+        const auto levels = extractor::GetMapnikLevels();
+        extractor::BuildMapnikData( terrain_, true, 0 );
+        layer_.reset( new graphics::MapnikLayer( levels, terrain_, "resources/mapnik.xml" ) );
+    }
     layer_->Paint( viewport, GetAlpha() );
 }
