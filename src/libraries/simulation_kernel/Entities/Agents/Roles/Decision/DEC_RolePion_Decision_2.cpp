@@ -157,8 +157,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     // Actions
     RegisterFunction( "DEC_StartTirIndirectSurPosition",
         boost::function< unsigned int ( const PHY_DotationCategory*, float, MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Position, const PHY_DotationCategory*, float, MT_Vector2D* >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
-    RegisterFunction( "DEC_StartTirIndirectSurPositionAvecDemandeur",
-        boost::function< unsigned int ( const PHY_DotationCategory*, float, MT_Vector2D*, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Position, const PHY_DotationCategory*, float, MT_Vector2D*, DEC_Decision_ABC* >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
     RegisterFunction( "DEC_StartTirIndirectSurConnaissance",
         boost::function< unsigned int( const PHY_DotationCategory*, float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Knowledge, const PHY_DotationCategory*, float, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     RegisterFunction( "DEC_StartTirIndirectSurConnaissancePtr",

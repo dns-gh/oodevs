@@ -284,33 +284,33 @@ const PHY_DotationCategory::T_IndirectFireEffects& PHY_DotationCategory::GetIndi
 // Name: PHY_DotationCategory::ApplyIndirectFireEffect
 // Created: ABR 2011-01-19
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ApplyIndirectFireEffect( const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, const MIL_Agent_ABC* requester ) const
+void PHY_DotationCategory::ApplyIndirectFireEffect( const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
     for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
-        (*it)->ApplyEffect( 0, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult, requester );
+        (*it)->ApplyEffect( 0, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::ApplyIndirectFireEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, const MIL_Agent_ABC* requester ) const
+void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
     for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
-        (*it)->ApplyEffect( &firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult, requester );
+        (*it)->ApplyEffect( &firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::ApplyStrikeEffect
 // Created: MGD 2010-10-15
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ApplyStrikeEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, const MIL_Agent_ABC* requester  ) const
+void PHY_DotationCategory::ApplyStrikeEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
     for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
-        (*it)->ApplyStrikeEffect( firer, target, rInterventionTypeFired, fireResult, requester );
+        (*it)->ApplyStrikeEffect( firer, target, rInterventionTypeFired, fireResult );
 }
 
 // -----------------------------------------------------------------------------
