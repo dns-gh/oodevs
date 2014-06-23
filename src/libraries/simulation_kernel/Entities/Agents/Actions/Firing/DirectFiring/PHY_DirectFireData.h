@@ -105,7 +105,8 @@ private:
         //@{
         void        AddWeapon      ( PHY_Weapon& weapon );
         void        RemoveWeapon   ( PHY_Weapon& weapon );
-        bool        GetBestWeapon  ( double& rBestScore, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pBestWeapon ) const;
+        std::pair< double, PHY_Weapon* > GetBestWeapon( const MIL_AgentPion& firer,
+            const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget ) const;
         bool        GetRandomWeapon( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pRandomWeapon ) const;
         PHY_Weapon* GetUnusedWeapon() const;
         //@}

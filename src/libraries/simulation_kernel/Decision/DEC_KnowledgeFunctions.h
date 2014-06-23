@@ -111,6 +111,8 @@ public:
     static T_KnowledgePopulationDiaIDVector GetPopulationsAttacking( const MIL_AgentPion& callerAgent );
     static bool IsPopulationAttacking( const MIL_AgentPion& callerAgent, int knowledgeId );
     template< typename T > static std::vector< unsigned int > GetPopulations( const T& caller );
+    static boost::shared_ptr< DEC_Knowledge_Agent > GetAgentKnowledge(
+            int callerId, int knowledgeId );
     //@}
 
     //! @name Tools

@@ -629,3 +629,14 @@ bool DEC_KnowledgeFunctions::IsPopulationAttacking( const MIL_AgentPion& callerA
     }
     return false;
 }
+
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeFunctions::GetAgentKnowledge(
+        int callerId, int knowledgeId )
+{
+    const auto& entities = MIL_AgentServer::GetWorkspace().GetEntityManager();
+    if( MIL_AgentPion* caller = entities.FindAgentPion( callerId ) )
+    {
+        return caller->GetKnowledge().ResolveKnowledgeAgent( knowledgeId );
+    }
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
+}
