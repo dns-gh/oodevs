@@ -76,6 +76,7 @@ local treatIndirectFireFragOrder = function ( )
             params.entity = parameterValue.entity
             params.munition = parameterValue.munition
             params.interventionType = parameterValue.interventionType
+            prams.requester = parameterValue.requester
         end
     end
 

@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
+    virtual void ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult, const MIL_Agent_ABC* requester ) const;
     virtual double GetSmokeDuration() const;
     void NotifyEffectStarted( const MIL_Effect_Weather& effect ) const;
     //@}

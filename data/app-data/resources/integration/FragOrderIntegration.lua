@@ -485,6 +485,7 @@ integration.getFireParameters = function( fragOrder )
     end
     params.munition = integration.getMunitionParameter( fragOrder )
     params.interventionType = integration.getNbItParameter( fragOrder )
+    params.requester = integration.getRequesterParameter( self, "demandeur_" )
     return params
 end
 

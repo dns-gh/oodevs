@@ -81,11 +81,16 @@ end
 -- @param point Point knowledge
 -- @param munition Resource type
 -- @param quantity The number of salvos
+-- @param requester DirectIA agent. Optional. The requester will issue reports about the fire result if they perceive it.
 -- @return Boolean, false
-integration.startApplyFireOnPoint = function( point, munition, interventionType )
+integration.startApplyFireOnPoint = function( point, munition, quantity, requester )
     point[myself] = point[myself] or {}
     point[myself].firstTime = true
-    point[myself].actionIndirectFire = DEC_StartTirIndirectSurPosition( munition, interventionType, point.source )
+    if not requester then
+        point[myself].actionIndirectFire = DEC_StartTirIndirectSurPosition( munition, quantity, point.source )
+    else
+        point[myself].actionIndirectFire = DEC_StartTirIndirectSurPositionAvecDemandeur( munition, quantity, point.source, requester.source )
+    end
     actionCallbacks[ point[myself].actionIndirectFire ] = function( arg ) point[myself].eIndirectFireState = arg end
     return false
 end
