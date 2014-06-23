@@ -70,21 +70,22 @@ void PHY_DirectFireData::sComposanteWeapons::RemoveWeapon( PHY_Weapon& weapon )
 // Name: PHY_DirectFireData::sComposanteWeapons::GetBestWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-bool PHY_DirectFireData::sComposanteWeapons::GetBestWeapon( double& rBestScore, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pBestWeapon ) const
+std::pair< double, PHY_Weapon* > PHY_DirectFireData::sComposanteWeapons::GetBestWeapon(
+    const MIL_AgentPion& firer, const MIL_Agent_ABC& target,
+    const PHY_Composante_ABC& compTarget ) const
 {
-    bool bUpdated = false;
-    for( CIT_WeaponVector itWeapon = weaponsReady_.begin(); itWeapon != weaponsReady_.end(); ++itWeapon )
+    std::pair< double, PHY_Weapon* > result( -1, nullptr );
+    for( auto it = weaponsReady_.cbegin(); it != weaponsReady_.cend(); ++it )
     {
-        PHY_Weapon& weapon = **itWeapon;
-        double rCurrentScore = weapon.GetDangerosity( firer, target, compTarget.GetType(), true, true ); // 'true' = 'use PH', true = "use ammo"
-        if( rCurrentScore >= rBestScore )
+        const double score = (*it)->GetDangerosity( firer, target, compTarget.GetType(),
+                true, true ); // 'true' = 'use PH', true = "use ammo"
+        if( score >= result.first )
         {
-            bUpdated = true;
-            rBestScore  = rCurrentScore;
-            pBestWeapon = &weapon;
+            result.first = score;
+            result.second = *it;
         }
     }
-    return bUpdated;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -280,11 +281,13 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
     pBestWeapon = 0;
     for( auto it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )
     {
-        const sComposanteWeapons& data = it->second;
-
-        bool bUpdated = data.GetBestWeapon( rBestScore, firer_, target, compTarget, pBestWeapon );
-        if( bUpdated )
+        const auto w = it->second.GetBestWeapon( firer_, target, compTarget );
+        if( w.first > rBestScore || ( w.second && w.second != pBestWeapon ) )
+        {
+            rBestScore = w.first;
+            pBestWeapon = w.second;
             pBestFirer = it->first;
+        }
     }
 }
 
