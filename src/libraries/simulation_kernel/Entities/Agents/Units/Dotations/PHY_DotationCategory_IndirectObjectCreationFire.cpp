@@ -71,7 +71,7 @@ PHY_DotationCategory_IndirectObjectCreationFire::~PHY_DotationCategory_IndirectO
 // Name: PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect
 // Created: LDC 2009-12-30
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
+void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/, const MIL_Agent_ABC* /*requester*/ ) const
 {
     MT_Vector2D vFireDirection( 0., 1. );
     if( vTargetPosition != vSourcePosition )

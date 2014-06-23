@@ -256,6 +256,21 @@ integration.getpointCibleParameter = function( fragorder )
     return fragorder.source:GetpointCible_()
 end
 
+integration.getRequesterParameter = function( fragorder, parameterName )
+    local requester = nil
+    local agent = nil
+    local agentKnowledge = integration.getAgentKnowledgeTypeParameter( fragorder, parameterName )
+    if agentKnowledge then
+        agent = DEC_ConnaissanceAgent_EnAgent( agentKnowledge )
+    else
+        agent = integration.getAgentTypeParameter( fragorder, parameterName )
+    end
+    if agent then
+        requester = CreateKnowledge( integration.ontology.types.agent, agent )
+    end
+    return requester
+end
+
 integration.getorderConduitePopulationChangerAttitudeParameter = function( fragorder )
     return fragorder.source:GetorderConduitePopulationChangerAttitude_()
 end
@@ -296,6 +311,7 @@ integration.getFireParameters = function( self )
     end
     params.munition = integration.getMunitionParameter( self )
     params.interventionType = integration.getNbItParameter( self )
+    params.requester = integration.getRequesterParameter( self, "demandeur_" )
     return params
 end
 
