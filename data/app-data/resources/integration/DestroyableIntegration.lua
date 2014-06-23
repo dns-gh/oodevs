@@ -319,7 +319,7 @@ integration.getKnowledgesUnitsEngagingFriend = function( friendAgent )
     return DEC_Connaissances_UnitesPrenantAPartieSurAmi( friendAgent )
 end
 
---- Returns the list of hostile agents knowledge that are considered as 'dangerous' for the agent.
+--- Returns the list of hostile agent knowledges that are considered as 'dangerous' for the agent.
 -- A 'dangerous' unit is a unit which has the capability to open fire at the target.
 -- Only enemies are returned. 
 -- This method can only be called by an agent.
