@@ -304,13 +304,13 @@ end
 integration.getObjectListParameter = function( fragorder, parameterName )
     return fragorder.source:GetObjectListParameter( parameterName )
 end
+
 --- Returns the list of urgence types to be processed in priority by the logistic health chain.
 -- The medical priority is defined by the order of the urgence types in the returned list (first element has the priority).
 -- The list is set as a parameter of the given fragmentary order.
 -- See the 'Change wounded treatment priorities' fragmentary order in authoring tool.
 -- @param fragorder a fragmentary order
 -- @return a list of urgence types.
-
 integration.getOrderConduiteModifierPrioritesBlessesParameter = function( fragorder )
     return fragorder.source:GetorderConduiteModifierPrioritesBlesses_()
 end
@@ -393,6 +393,9 @@ integration.getpointCibleParameter = function( fragorder )
     return fragorder.source:GetpointCible_()
 end
 
+--- Returns the requester of the given fragmentary order
+-- @param fragorder a fragmentary order
+-- @return integer the value corresponding to the attitude
 integration.getRequesterParameter = function( fragorder, parameterName )
     local requester = nil
     local agent = nil
@@ -407,6 +410,7 @@ integration.getRequesterParameter = function( fragorder, parameterName )
     end
     return requester
 end
+
 --- Returns the crowd 'attitude' parameter of the given fragmentary order.
 -- The crowd attitude is defined by an enumeration which values are set in the authoring tool. 
 -- See the 'Population - Change attitude' fragmentary order definition in authoring tool.
@@ -454,7 +458,6 @@ end
 integration.getObjectKnowledgeParameter = function( fragorder )
     return fragorder.source:GetObjectKnowledge_()
 end
-
 
 --- Returns the type of in the given fragmentary order.
 -- @see integration.getAnyType method.
