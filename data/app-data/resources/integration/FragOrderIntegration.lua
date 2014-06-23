@@ -29,8 +29,7 @@ integration.updateROE = function( fragOrder )
 end
 
 --- Sets the rule of engagement (ROE).
--- The ROE is defined by an enumeration.. 
--- Possible values are:
+-- The ROE is defined by an enumeration which possible values are:
 -- <ul> <li> eRoeStateFreeFire </li>
 -- <li> eRoeStateRestrictedFire </li>
 -- <li> eRoeStateFireByOrder </li> </ul>
@@ -69,7 +68,7 @@ integration.setCompanyROE = function( etatROE )
    integration.CR_ROE ( etatROE )
 end
 
---- Displays a report depending on the issued ROE.
+--- Displays a report depending on the issued rule of engagement (ROE).
 -- The ROE are defined by an enumeration. 
 -- Possible values are:
 -- <ul> <li> eRoeStateFreeFire </li>
@@ -89,9 +88,9 @@ end
 --- Displays a report depending on the issued the rule of engagement (ROE) toward crowds.
 -- The crowds ROE are defined by an enumeration. 
 -- Possible values are:
--- <ul> <li> eEtatROEPopulation_EmploiForceInterdit</li>
--- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux </li>
--- <li> eEtatROEPopulation_ArmesLetalesAutorisees </li> </ul>
+-- <ul> <li> eEtatROEPopulation_EmploiForceInterdit (no intervention)</li>
+-- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux (intervention with non lethal means) </li>
+-- <li> eEtatROEPopulation_ArmesLetalesAutorisees (intervention with lethal means authorized) </li> </ul>
 -- @param typeROE the rule of engagement.
 integration.CR_ROE_Foules  = function( typeROE )
     if typeROE == eEtatROEPopulation_EmploiForceInterdit then
@@ -105,10 +104,10 @@ end
 
 --- Displays a report depending on the given crowd 'attitude'. 
 -- The crowds 'attitude' is defined by an enumeration which values can be:
--- <ul> <li> eAttitudeCalme </li>
--- <li> eAttitudeAgitee </li>
--- <li> eAttitudeAgressive </li>
--- <li> eAttitudeExcitee </li> </ul>
+-- <ul> <li> eAttitudeCalme (calm) </li>
+-- <li> eAttitudeAgitee (agitated) </li>
+-- <li> eAttitudeAgressive (aggressive) </li>
+-- <li> eAttitudeExcitee (excited) </li> </ul>
 -- @param attitude the crowd's attitude.
 integration.CR_Attitude_Foules  = function ( attitude )
     if attitude == eAttitudeCalme then
@@ -125,9 +124,9 @@ end
 --- For an automat, set the rule of engagement (ROE) for crowds, with one issued as parameter.
 -- The crowds ROE are defined by an enumeration. 
 -- Possible values are:
--- <ul> <li> eEtatROEPopulation_EmploiForceInterdit</li>
--- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux </li>
--- <li> eEtatROEPopulation_ArmesLetalesAutorisees </li> </ul>
+-- <ul> <li> eEtatROEPopulation_EmploiForceInterdit (no intervention) (</li>
+-- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux (intervention with non lethal means)</li>
+-- <li> eEtatROEPopulation_ArmesLetalesAutorisees(intervention with lethal means authorized) </li> </ul>
 -- This method can only be called by an automat.
 -- @param roe the rule of engagement to be set.
 integration.changeCrowdROEForAutomat = function( roe )
@@ -137,9 +136,9 @@ end
 --- Set the rule of engagement (ROE) for crowds, with one issued as parameter.
 -- The ROE is defined by an enumeration. 
 -- Possible values are:
--- <ul> <li> eEtatROEPopulation_EmploiForceInterdit</li>
--- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux </li>
--- <li> eEtatROEPopulation_ArmesLetalesAutorisees </li> </ul>
+-- <ul> <li> eEtatROEPopulation_EmploiForceInterdit (no intervention)</li>
+-- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux (intervention with non lethal means) </li>
+-- <li> eEtatROEPopulation_ArmesLetalesAutorisees (intervention with lethal means authorized) </li> </ul>
 -- This method can only be called by an agent.
 -- @param roe the rule of engagement to be set.
 integration.changeCrowdROEForAgent = function( roe )
@@ -158,8 +157,8 @@ end
 
 --- Set the "attitude" (safety attitude or speedy attitude), using a given fragmentary order.
 -- The attitude values can be:
--- <ul> <li> eEtatAmbiance_Surete</li>
--- <li> eEtatAmbiance_Vitesse </li> </ul>
+-- <ul> <li> eEtatAmbiance_Surete (safety attiude)</li>
+-- <li> eEtatAmbiance_Vitesse (normal attiude) </li> </ul>
 -- This method can only be called by an agent.
 -- @param fragOrder a fragmentary order
 -- @param value integer, the enumeration value
