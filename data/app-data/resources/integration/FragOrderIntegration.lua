@@ -176,7 +176,7 @@ integration.getOrderConduiteModifierRegimeTravailMaintenanceParameter = function
 end
 
 --- Returns the fragmentary order's "medical tactical priorities" parameter (orderConduiteModifierPrioritesTactiquesBlesses_).
--- The priority is defined by the order of the automatons in the given list (first element has the highest priority). 
+-- The priority is defined by the order of the automatons in the given list (the first element has the highest priority). 
 -- See the 'Change tactical wounded treatment priorities' fragmentary order in authoring tool.
 -- @param fragorder a fragmentary order
 -- @return a list of simulation automatons.
@@ -194,7 +194,7 @@ integration.getOrderConduiteModifierPrioritesTactiquesReparationsParameter = fun
 end
 
 --- Returns the fragmentary order's "maintenance priorities" parameter (orderConduiteModifierPrioritesReparations_).
--- The priority is defined by the order of the equipement types in the given list (first element has the highest priority).
+-- The priority is defined by the order of the equipement types in the given list (the first element has the highest priority).
 -- See the 'Change reparations priorities' fragmentary order in authoring tool.
 -- @param fragorder a fragmentary order
 -- @return a list of equipement types. 
@@ -302,7 +302,7 @@ integration.getObjectListParameter = function( fragorder, parameterName )
 end
 
 --- Returns the list of urgence types to be processed in priority by the logistic health chain.
--- The medical priority is defined by the order of the urgence types in the returned list (first element has the priority).
+-- The medical priority is defined by the order of the urgence types in the returned list (the first element has the priority).
 -- See the 'Change wounded treatment priorities' fragmentary order in authoring tool.
 -- @param fragorder a fragmentary order
 -- @return a list of wound levels.
@@ -488,7 +488,7 @@ integration.getFireParameters = function( fragOrder )
     return params
 end
 
---- Create a fragmentary order knowledge of the given type.
+--- Create a fragmentary order of the given type.
 -- @param fragOrderType the type of the fragmentary order to create
 -- @return a simulation fragmentary order
 integration.createFragOrder = function( fragOrderType )
