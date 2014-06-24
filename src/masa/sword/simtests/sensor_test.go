@@ -42,7 +42,7 @@ func (s *TestSuite) TestSpecialSensor(c *C) {
 	data := client.Model.GetData()
 	party1 := getPartyByName(c, data, "party1")
 	formation1 := CreateFormation(c, client, party1.Id)
-	kg1 := getAnyKnowledgeGroupInParty(c, data, party1.Id)
+	kg1 := getSomeKnowledgeGroup(c, data, party1.Id)
 
 	// Create radar
 	automatType1 := getAutomatTypeFromName(c, phydb, "VW Combi Rally")
@@ -56,7 +56,7 @@ func (s *TestSuite) TestSpecialSensor(c *C) {
 	// Create target
 	party2 := getPartyByName(c, data, "party2")
 	formation2 := CreateFormation(c, client, party2.Id)
-	kg2 := getAnyKnowledgeGroupInParty(c, data, party2.Id)
+	kg2 := getSomeKnowledgeGroup(c, data, party2.Id)
 	automat2, err := client.CreateAutomat(formation2.Id, automatType1, kg2.Id)
 	c.Assert(err, IsNil)
 	unitType2 := getUnitTypeFromName(c, phydb, "VW Combi")

@@ -265,8 +265,8 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 
 	// Create 2 automats
 	data := client.Model.GetData()
-	kg0 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 0)
-	kg1 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 1)
+	kg0 := getSomeKnowledgeGroup(c, data, f1.PartyId).Id
+	kg1 := getSomeKnowledgeGroup(c, data, f2.PartyId).Id
 	a1 := CreateAutomat(c, client, f1.Id, kg0)
 	a2 := CreateAutomat(c, client, f2.Id, kg1)
 
@@ -338,7 +338,7 @@ func CreateUnitInParty(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
 	data := client.Model.GetData()
 	party := getPartyByName(c, data, partyName)
 	formation := CreateFormation(c, client, party.Id)
-	kg := getAnyKnowledgeGroupInParty(c, data, party.Id)
+	kg := getSomeKnowledgeGroup(c, data, party.Id)
 
 	automatType := getAutomatTypeFromName(c, phydb, automatName)
 	automat, err := client.CreateAutomat(formation.Id, automatType, kg.Id)

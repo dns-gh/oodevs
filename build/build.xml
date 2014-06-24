@@ -1152,7 +1152,7 @@
         <update name="gdal" version="1.9.1.r671"/>
         <update name="geos" version="3.3.7.r662"/>
         <update name="glew" version="1.9.0"/>
-        <update name="golang" version="1.2.1"/>
+        <update name="golang" version="1.3"/>
         <update name="golibs"/>
         <update name="hla" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
         <update name="hla" package="federation_app" todir="${bin.dir}"/>

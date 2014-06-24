@@ -25,7 +25,7 @@ func (s *TestSuite) TestEnableKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kg := getSomeKnowledgeGroup(c, data)
+	kg := getSomeKnowledgeGroup(c, data, 0)
 
 	// error: no params
 	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable,
@@ -65,7 +65,7 @@ func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kg := getSomeKnowledgeGroup(c, data)
+	kg := getSomeKnowledgeGroup(c, data, 0)
 
 	// error: update party with 2 parameters
 	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_party,
@@ -124,7 +124,7 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kg := getSomeKnowledgeGroup(c, data)
+	kg := getSomeKnowledgeGroup(c, data, 0)
 
 	// error: no params
 	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type,
@@ -246,7 +246,6 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	knowledgeGroup := getSomeKnowledgeGroup(c, data)
 	automat := getSomeAutomat(c, data)
 
 	// error: invalid tasker (not an automat)
@@ -263,13 +262,13 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// creation of another knowledge group with the same army
-	group, err := client.CreateKnowledgeGroup(knowledgeGroup.PartyId, "Standard")
+	group, err := client.CreateKnowledgeGroup(automat.PartyId, "Standard")
 	c.Assert(err, IsNil)
 
 	// ... and one belonging to the other party
 	otherParty := uint32(0)
 	for _, p := range data.Parties {
-		if p.Id != knowledgeGroup.PartyId {
+		if p.Id != group.PartyId {
 			otherParty = p.Id
 			break
 		}
