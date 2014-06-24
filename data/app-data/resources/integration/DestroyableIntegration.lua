@@ -366,17 +366,17 @@ integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
 end
 
 
---- Estimates the interception position of the given target (using the 'targetSpeed' parameter) and 
+--- Estimates the interception position of the given target (using the 'projectileSpeed' parameter) and 
 -- returns true if such a position exists and is in range of the weapon systems.
 -- This method can only be called by an agent.
 -- @param targetUnit a DirectIA agent knowledge.
 -- @param pH numeric the probability to hit.
--- @param targetSpeed The speed of the ammunition in km/h. See weapon systems in the physical model.
+-- @param projectileSpeed The speed of the ammunition in km/h. See weapon systems in the physical model.
 -- @return boolean returns true when the agent can open fire, false otherwise.
-integration.canBeDestroyedWithMissiles = function( targetUnit, ph, targetSpeed )
+integration.canBeDestroyedWithMissiles = function( targetUnit, ph, projectileSpeed )
     local integration = integration
     local distanceCouverte = integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
-    local pointInterception = integration.positionInterception( targetUnit, targetSpeed )
+    local pointInterception = integration.positionInterception( targetUnit, projectileSpeed )
     if not pointInterception then
         return false
     end
