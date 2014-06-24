@@ -114,8 +114,7 @@ integration.stopRespondIt = function( target )
 end
 
 --- Informs whether or not the agent has the authorization to open fire at the given target.
--- Checks that the current rule of engagement is "free fire" and if 
--- the target is not located inside a fire restricted area. 
+-- Checks that the current rule of engagement is "free fire" and that the target is not located inside a fire restricted area. 
 -- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge
 -- @return a boolean 'true' if the agent can open fire, 'false' otherwise.
@@ -339,7 +338,7 @@ integration.getKnowledgeDangerousAgent = function( agent )
 end
 
 --- Informs whether or not the given agent knowledge is tactically destroyed.
--- An agent is considered as not 'operational' ("tactically destroyed"). 
+-- An agent is considered as not 'operational' ("tactically destroyed") when all its major equipements are out of order. 
 -- @param agent a simulation agent knowledge.
 -- @return boolean returns 'true' tactically destroyed, 'false' otherwise.
 integration.isAgentTacticallyDestroyed = function( agent )
@@ -366,31 +365,28 @@ integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
     return DEC_Tir_PorteeMaxPourEtreTireParUnite( agent, pH )
 end
 
---- Returns whether or not the agent can hit the given target with an ammunition of specified speed.
--- Estimates the interception position of the given target (using the 'projectileSpeed' parameter). If 
--- this position is in range regarding weapon systems, the method returns 'true' once the 'targetUnit' occupies the interception position.
+
+--- Estimates the interception position of the given target (using the 'targetSpeed' parameter) and 
+-- returns true if such a position exists and is in range of the weapon systems.
 -- This method can only be called by an agent.
 -- @param targetUnit a DirectIA agent knowledge.
 -- @param pH numeric the probability to hit.
--- @param projectileSpeed The speed of the ammunition in km/h. See weapon systems in the physical model.
+-- @param targetSpeed The speed of the ammunition in km/h. See weapon systems in the physical model.
 -- @return boolean returns true when the agent can open fire, false otherwise.
-integration.canBeDestroyedWithMissiles = function( targetUnit, ph, projectileSpeed )
+integration.canBeDestroyedWithMissiles = function( targetUnit, ph, targetSpeed )
     local integration = integration
     local distanceCouverte = integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
-    local pointInterception = integration.positionInterception( targetUnit, projectileSpeed )
+    local pointInterception = integration.positionInterception( targetUnit, targetSpeed )
     if not pointInterception then
         return false
     end
     local distancePointInterception = DEC_Geometrie_DistanceBetweenPoints( meKnowledge:getPosition(), pointInterception )
-    local tempsInterception =  distancePointInterception / ( projectileSpeed * 60 )
     if( distancePointInterception <= distanceCouverte ) then
         if targetUnit:isValid() then
-            if waitInMin( meKnowledge, tempsInterception ) then
                 if( integration.niTropPresNiTropLoin( targetUnit, ph ) ) then
                     return true
                 end
             end
         end
-    end
     return false
 end
