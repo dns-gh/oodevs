@@ -145,6 +145,21 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 	})
 }
 
+// Returns true if callerId has a knowledge with supplied identifier.
+func DecHasKnowledgeAgent(c *C, client *swapi.Client, unitId, callerId,
+	knowledgeId uint32) (bool, error) {
+
+	script := `function TestFunction()
+		return tostring(DEC_GetAgentKnowledge({{.callerId}}, {{.knowledgeId}}))
+	end`
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"callerId":    callerId,
+			"knowledgeId": knowledgeId,
+		})
+	return output != "nil", err
+}
+
 func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer stopSimAndClient(c, sim, client)
@@ -191,6 +206,20 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(unitKnowledge.KnowledgeGroupId, Equals, kg1.Id)
 	c.Assert(unitKnowledge.UnitId, Equals, unit2.Id)
+
+	// test DEC_GetKnowledgeAgent
+	ok, err := DecHasKnowledgeAgent(c, client, unit1.Id, 1234, 1234)
+	c.Assert(ok, Equals, false)
+	c.Assert(err, IsNil)
+	ok, err = DecHasKnowledgeAgent(c, client, unit1.Id, unit1.Id, 1234)
+	c.Assert(ok, Equals, false)
+	c.Assert(err, IsNil)
+	ok, err = DecHasKnowledgeAgent(c, client, unit1.Id, 1234, unitKnowledge.Id)
+	c.Assert(ok, Equals, false)
+	c.Assert(err, IsNil)
+	ok, err = DecHasKnowledgeAgent(c, client, unit1.Id, unit1.Id, unitKnowledge.Id)
+	c.Assert(ok, Equals, true)
+	c.Assert(err, IsNil)
 
 	// add object in knowledge group
 	location := swapi.MakePointLocation(unit2.Position)

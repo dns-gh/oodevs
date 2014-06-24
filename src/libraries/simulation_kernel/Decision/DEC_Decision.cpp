@@ -215,6 +215,10 @@ void RegisterAgentKnowledgeFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_GetModulationVitesseMax", &DEC_MiscFunctions::GetMaxSpeedModificator );
     brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
     brain.RegisterMethod( "DEC_AgentKnowledge_Relevance", &DEC_Knowledge_Agent::GetRelevance );
+    
+    // Returns agent knownledge known by callerId and identified by knowledgeId,
+    // throws an exception if the knowledge cannot be resolved.
+    brain.RegisterFunction( "DEC_GetAgentKnowledge", &DEC_KnowledgeFunctions::GetAgentKnowledge );
 }
 
 // -----------------------------------------------------------------------------

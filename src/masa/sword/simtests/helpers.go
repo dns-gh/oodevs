@@ -189,3 +189,11 @@ func getUnitsFromAutomat(automatId uint32, model *swapi.ModelData) []*swapi.Unit
 	}
 	return units
 }
+
+func getResourceTypeFromName(c *C, phydb *phy.PhysicalFile, typeName string) uint32 {
+	resources, err := phy.ReadResources(*phydb)
+	c.Assert(err, IsNil)
+	id, err := resources.GetIdFromName(typeName)
+	c.Assert(err, IsNil)
+	return id
+}

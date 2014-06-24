@@ -37,7 +37,7 @@ PHY_DirectFireData::sComposanteWeapons::sComposanteWeapons()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::~sComposanteWeapons
+// Name: PHY_DirectFireData::sComposanteWeapons::~sComposanteWeapons
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
 PHY_DirectFireData::sComposanteWeapons::~sComposanteWeapons()
@@ -64,6 +64,84 @@ void PHY_DirectFireData::sComposanteWeapons::AddWeapon( PHY_Weapon& weapon )
 void PHY_DirectFireData::sComposanteWeapons::RemoveWeapon( PHY_Weapon& weapon )
 {
     weaponsReady_.erase( std::find( weaponsReady_.begin(), weaponsReady_.end(), &weapon ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::sComposanteWeapons::GetBestWeapon
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+std::pair< double, PHY_Weapon* > PHY_DirectFireData::sComposanteWeapons::GetBestWeapon(
+    const MIL_AgentPion& firer, const MIL_Agent_ABC& target,
+    const PHY_Composante_ABC& compTarget ) const
+{
+    std::pair< double, PHY_Weapon* > result( 0, nullptr );
+    for( auto it = weaponsReady_.cbegin(); it != weaponsReady_.cend(); ++it )
+    {
+        const double score = (*it)->GetDangerosity( firer, target, compTarget.GetType(),
+                true, true ); // 'true' = 'use PH', true = "use ammo"
+        if( score > result.first )
+        {
+            result.first = score;
+            result.second = *it;
+        }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+bool PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pRandomWeapon ) const
+{
+    const std::size_t nRnd = MIL_Random::rand32_ii( 0, static_cast< unsigned long >( weaponsReady_.size() - 1 ) );
+
+    CIT_WeaponVector it = weaponsReady_.begin();
+    std::advance( it, nRnd );
+
+    for( std::size_t i = 0; i < weaponsReady_.size(); ++i )
+    {
+        PHY_Weapon& weapon = **it;
+        if( weapon.GetDangerosity( firer, target, compTarget.GetType(), false, true ) > 0 ) // 'false' = 'don't use PH' 'true' = 'use ammo'
+        {
+            pRandomWeapon = &weapon;
+            return true;
+        }
+
+        ++it;
+        if( it == weaponsReady_.end() )
+            it = weaponsReady_.begin();
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::sComposanteWeapons::GetNbrWeaponsUsable
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+unsigned int PHY_DirectFireData::sComposanteWeapons::GetNbrWeaponsUsable() const
+{
+    return static_cast< unsigned >( weaponsReady_.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::sComposanteWeapons::IsFiring
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+bool PHY_DirectFireData::sComposanteWeapons::IsFiring() const
+{
+    return bIsFiring_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::sComposanteWeapons::GetUnusedWeapon
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+PHY_Weapon* PHY_DirectFireData::sComposanteWeapons::GetUnusedWeapon() const
+{
+    if( weaponsReady_.empty() )
+        return 0;
+    return weaponsReady_.front();
 }
 
 // -----------------------------------------------------------------------------
@@ -193,54 +271,6 @@ void PHY_DirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::sComposanteWeapons::GetBestWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-bool PHY_DirectFireData::sComposanteWeapons::GetBestWeapon( double& rBestScore, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pBestWeapon ) const
-{
-    bool bUpdated = false;
-    for( CIT_WeaponVector itWeapon = weaponsReady_.begin(); itWeapon != weaponsReady_.end(); ++itWeapon )
-    {
-        PHY_Weapon& weapon = **itWeapon;
-        double rCurrentScore = weapon.GetDangerosity( firer, target, compTarget.GetType(), true, true ); // 'true' = 'use PH', true = "use ammo"
-        if( rCurrentScore >= rBestScore )
-        {
-            bUpdated = true;
-            rBestScore  = rCurrentScore;
-            pBestWeapon = &weapon;
-        }
-    }
-    return bUpdated;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-bool PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pRandomWeapon ) const
-{
-    const std::size_t nRnd = MIL_Random::rand32_ii( 0, static_cast< unsigned long >( weaponsReady_.size() - 1 ) );
-
-    CIT_WeaponVector it = weaponsReady_.begin();
-    std::advance( it, nRnd );
-
-    for( std::size_t i = 0; i < weaponsReady_.size(); ++i )
-    {
-        PHY_Weapon& weapon = **it;
-        if( weapon.GetDangerosity( firer, target, compTarget.GetType(), false, true ) > 0 ) // 'false' = 'don't use PH' 'true' = 'use ammo'
-        {
-            pRandomWeapon = &weapon;
-            return true;
-        }
-
-        ++it;
-        if( it == weaponsReady_.end() )
-            it = weaponsReady_.begin();
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData::ChooseBestWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
@@ -251,11 +281,13 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
     pBestWeapon = 0;
     for( auto it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )
     {
-        const sComposanteWeapons& data = it->second;
-
-        bool bUpdated = data.GetBestWeapon( rBestScore, firer_, target, compTarget, pBestWeapon );
-        if( bUpdated )
+        const auto w = it->second.GetBestWeapon( firer_, target, compTarget );
+        if( w.first > rBestScore )
+        {
+            rBestScore = w.first;
+            pBestWeapon = w.second;
             pBestFirer = it->first;
+        }
     }
 }
 
@@ -347,31 +379,3 @@ bool PHY_DirectFireData::IsTemporarilyBlocked() const
     return bTemporarilyBlocked_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::GetNbrWeaponsUsable
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-unsigned int PHY_DirectFireData::sComposanteWeapons::GetNbrWeaponsUsable() const
-{
-    return static_cast< unsigned >( weaponsReady_.size() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::IsFiring
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-bool PHY_DirectFireData::sComposanteWeapons::IsFiring() const
-{
-    return bIsFiring_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::sComposanteWeapons::GetUnusedWeapon
-// Created: NLD 2004-10-06
-// -----------------------------------------------------------------------------
-PHY_Weapon* PHY_DirectFireData::sComposanteWeapons::GetUnusedWeapon() const
-{
-    if( weaponsReady_.empty() )
-        return 0;
-    return weaponsReady_.front();
-}

@@ -12,7 +12,9 @@ import (
 	"fmt"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
+	"masa/sword/swapi/phy"
 	"masa/sword/sword"
+	"strconv"
 )
 
 const (
@@ -330,6 +332,23 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	c.Assert(damagesErrors, IsNil)
 }
 
+func CreateUnitInParty(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
+	partyName, automatName, unitName string, pos swapi.Point) *swapi.Unit {
+
+	data := client.Model.GetData()
+	party := getPartyByName(c, data, partyName)
+	formation := CreateFormation(c, client, party.Id)
+	kg := getAnyKnowledgeGroupInParty(c, data, party.Id)
+
+	automatType := getAutomatTypeFromName(c, phydb, automatName)
+	automat, err := client.CreateAutomat(formation.Id, automatType, kg.Id)
+	c.Assert(err, IsNil)
+	unitType := getUnitTypeFromName(c, phydb, unitName)
+	target, err := client.CreateUnit(automat.Id, unitType, pos)
+	c.Assert(err, IsNil)
+	return target
+}
+
 func (s *TestSuite) TestActiveProtection(c *C) {
 	// VW Active Protection has:
 	// - Hard kill active protection from "Shell Of Death", comsumming
@@ -341,20 +360,12 @@ func (s *TestSuite) TestActiveProtection(c *C) {
 
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
-	data := client.Model.GetData()
-
-	party1 := getPartyByName(c, data, "party1")
-	formation1 := CreateFormation(c, client, party1.Id)
-	kg1 := getAnyKnowledgeGroupInParty(c, data, party1.Id)
 
 	// Create target with active protection
-	automatType1 := getAutomatTypeFromName(c, phydb, "VW Combi Rally")
-	automat1, err := client.CreateAutomat(formation1.Id, automatType1, kg1.Id)
-	c.Assert(err, IsNil)
-	unitType1 := getUnitTypeFromName(c, phydb, "VW Active Protection")
 	pos := swapi.Point{X: -15.9268, Y: 28.3453}
-	target, err := client.CreateUnit(automat1.Id, unitType1, pos)
-	c.Assert(err, IsNil)
+	target := CreateUnitInParty(c, client, phydb, "party1", "VW Combi Rally",
+		"VW Active Protection", pos)
+
 	ammunitionId := uint32(96)
 	smoke1Id := uint32(106)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -371,7 +382,7 @@ func (s *TestSuite) TestActiveProtection(c *C) {
 
 	// Test hard-kill protection
 	ShellOfDeathId := uint32(114)
-	err = client.CreateFireOnLocation(pos, ShellOfDeathId, 1)
+	err := client.CreateFireOnLocation(pos, ShellOfDeathId, 1)
 	c.Assert(err, IsNil)
 	// TODO: smoke1 should not be consumed by hard-kill protection
 	// http://jira.masagroup.net/browse/SWBUG-12458
@@ -414,4 +425,93 @@ func (s *TestSuite) TestActiveProtection(c *C) {
 
 ^neutralized$
 `)
+}
+
+func DecStartDirectFire(client *swapi.Client, percentage float64,
+	unitId, targetKgId, firingMode uint32) (uint32, error) {
+
+	script := `function TestFunction()
+        kg = DEC_GetAgentKnowledge({{.unitId}}, {{.knowledgeId}})
+        fire = DEC_StartTirDirect(kg, {{.percentage}}, {{.firingMode}},
+            {{.ammoDotationClass}})
+        return fire
+	end`
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"unitId":            unitId,
+			"knowledgeId":       targetKgId,
+			"percentage":        percentage,
+			"firingMode":        firingMode,
+			"ammoDotationClass": -1, // ignore this parameter
+		})
+	if err != nil {
+		return 0, err
+	}
+	id, err := strconv.ParseUint(output, 10, 32)
+	return uint32(id), err
+}
+
+func (s *TestSuite) TestDecDirectFireRangeUpdate(c *C) {
+	phydb := loadPhysical(c, "test")
+
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
+	defer stopSimAndClient(c, sim, client)
+
+	// The VW Direct Fire has two weapon systems, one firing up to 500m, the
+	// second up to 1000m
+	pos := swapi.Point{X: -15.9268, Y: 28.3453}
+	pos250m := swapi.Point{X: -15.9248, Y: pos.Y}
+	pos1250m := swapi.Point{X: -15.9116, Y: pos.Y}
+	ammo500m := getResourceTypeFromName(c, phydb, "direct fire ammo 500m")
+	ammo1km := getResourceTypeFromName(c, phydb, "direct fire ammo 1km")
+
+	// Create fire source
+	firer := CreateUnitInParty(c, client, phydb, "party1", "VW Combi Rally",
+		"VW Direct Fire", pos)
+	data := client.Model.GetData()
+	kg := data.KnowledgeGroups[data.Automats[firer.AutomatId].KnowledgeGroupId]
+	c.Assert(kg, NotNil)
+
+	// Create target
+	target := CreateUnitInParty(c, client, phydb, "party2", "VW Combi Rally",
+		"VW Combi", pos250m)
+
+	// Wait for firer to aquire target knowledge
+	targetKgId := uint32(0)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, k := range data.UnitKnowledges {
+			if k.KnowledgeGroupId == kg.Id && k.UnitId == target.Id {
+				targetKgId = k.Id
+				return true
+			}
+		}
+		return false
+	})
+
+	// Open fire, target is in range
+	percentage := float64(1) // fire with all components
+	firingMode := uint32(0)  // pick best component
+	_, err := DecStartDirectFire(client, percentage, firer.Id, targetKgId, firingMode)
+	c.Assert(err, IsNil)
+
+	// Wait some ticks and teleport out of range
+	ok := client.Model.WaitTicks(2)
+	c.Assert(ok, Equals, true)
+	err = client.Teleport(swapi.MakeUnitTasker(target.Id), pos1250m)
+	c.Assert(err, IsNil)
+	ok = client.Model.WaitTicks(1)
+	c.Assert(ok, Equals, true)
+
+	// The firer should not consume ammunitions anymore
+	// Note this test is not perfect because the target might get destroyed
+	// before it could be teleported, in which case the fire will cease
+	// regardless of target range.
+	data = client.Model.GetData()
+	firerBefore := data.Units[firer.Id]
+	ok = client.Model.WaitTicks(1)
+	c.Assert(ok, Equals, true)
+	data = client.Model.GetData()
+	firerAfter := data.Units[firer.Id]
+	c.Assert(firerAfter.Resources[ammo500m], Equals, firerBefore.Resources[ammo500m])
+	c.Assert(firerAfter.Resources[ammo1km], Equals, firerBefore.Resources[ammo1km])
 }
