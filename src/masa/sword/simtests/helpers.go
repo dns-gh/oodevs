@@ -90,40 +90,14 @@ func getSomePopulation(c *C, data *swapi.ModelData) *swapi.Population {
 	return nil
 }
 
-func getSomeKnowledgeGroup(c *C, data *swapi.ModelData) *swapi.KnowledgeGroup {
-	for _, k := range data.KnowledgeGroups {
-		return k
-	}
-	c.Fatal("missing knowledge groups")
-	return nil
-}
-
-func getAnyKnowledgeGroupInParty(c *C, data *swapi.ModelData,
-	partyId uint32) *swapi.KnowledgeGroup {
-
-	for _, k := range data.KnowledgeGroups {
-		if k.PartyId == partyId {
-			return k
+func getSomeKnowledgeGroup(c *C, data *swapi.ModelData, partyId uint32) *swapi.KnowledgeGroup {
+	for _, kg := range data.KnowledgeGroups {
+		if kg.PartyId == partyId || partyId == 0 {
+			return kg
 		}
 	}
 	c.Fatal("missing knowledge groups")
 	return nil
-}
-
-func getAnyKnowledgeGroupIdWithPartyIndex(c *C, data *swapi.ModelData, index int) uint32 {
-	parties := map[uint32]struct{}{}
-	for id, group := range data.KnowledgeGroups {
-		_, found := parties[group.PartyId]
-		if found {
-			continue
-		}
-		if len(parties) == index {
-			return id
-		}
-		parties[group.PartyId] = struct{}{}
-	}
-	c.Fatal("unable to find a knowledge group with party index", index)
-	return 0
 }
 
 func getSomeEquipment(c *C, unit *swapi.Unit) (uint32, *swapi.Equipment) {

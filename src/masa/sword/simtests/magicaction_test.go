@@ -210,7 +210,7 @@ func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	group, err = client.CreateKnowledgeGroupTest(params)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	parent := getSomeKnowledgeGroup(c, client.Model.GetData())
+	parent := getSomeKnowledgeGroup(c, client.Model.GetData(), 0)
 	c.Assert(parent, Not(IsNil))
 
 	// error: second parameter must be a valid knowledge group type identifier

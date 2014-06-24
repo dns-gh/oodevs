@@ -435,6 +435,7 @@ func waitBroadcastTag(messages <-chan interface{}, tag sdk.MessageTag) *sdk.Mess
 }
 
 type FakeService struct {
+	lock   sync.Mutex
 	events []*sdk.Event
 	uuids  []string
 }
@@ -453,11 +454,25 @@ func (f *FakeService) Stop() error                   { return nil }
 func (f *FakeService) Apply(string, url.URL, []byte) {}
 
 func (f *FakeService) Update(events ...*sdk.Event) {
+	f.lock.Lock()
+	defer f.lock.Unlock()
 	f.events = events
 }
 
 func (f *FakeService) Delete(uuids ...string) {
+	f.lock.Lock()
+	defer f.lock.Unlock()
 	f.uuids = uuids
+}
+
+func (f *FakeService) GetAndClear() ([]*sdk.Event, []string) {
+	f.lock.Lock()
+	defer f.lock.Unlock()
+	events := f.events
+	f.events = nil
+	uuids := f.uuids
+	f.uuids = nil
+	return events, uuids
 }
 
 func (f *Fixture) checkBroadcastEvents(c *C, messages <-chan interface{}, name string) *sdk.Event {
@@ -495,8 +510,8 @@ func (t *TestSuite) TestListeners(c *C) {
 
 	// test create event
 	event := f.checkBroadcastEvents(c, messages, "some_name")
-	c.Assert(faker.events, DeepEquals, []*sdk.Event{event})
-	faker.events = nil
+	fakerEvents, _ := faker.GetAndClear()
+	c.Assert(fakerEvents, DeepEquals, []*sdk.Event{event})
 
 	// test update event
 	event.Name = proto.String("new_name")
@@ -505,19 +520,19 @@ func (t *TestSuite) TestListeners(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(updated, DeepEquals, event)
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	fakerEvents, _ = faker.GetAndClear()
 	c.Assert(msg, NotNil)
 	c.Assert(msg.Events, DeepEquals, []*sdk.Event{event})
-	c.Assert(faker.events, DeepEquals, []*sdk.Event{event})
-	faker.events = nil
+	c.Assert(fakerEvents, DeepEquals, []*sdk.Event{event})
 
 	// test delete event
 	err = f.session.DeleteEvent(uuid)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
+	_, fakerUuids := faker.GetAndClear()
 	c.Assert(msg, NotNil)
 	c.Assert(msg.Uuids, DeepEquals, []string{uuid})
-	c.Assert(faker.uuids, DeepEquals, []string{uuid})
-	faker.uuids = nil
+	c.Assert(fakerUuids, DeepEquals, []string{uuid})
 
 	// test detach
 	err = f.session.Stop()
@@ -525,7 +540,8 @@ func (t *TestSuite) TestListeners(c *C) {
 	err = f.session.Detach("faker")
 	c.Assert(err, IsNil)
 	f.checkBroadcastEvents(c, messages, "another_name")
-	c.Assert(faker.events, IsNil)
+	_, fakerUuids = faker.GetAndClear()
+	c.Assert(fakerUuids, IsNil)
 }
 
 type FakeFilterer struct {

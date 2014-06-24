@@ -25,8 +25,7 @@ const (
 func CreateCombiVW(c *C, client *swapi.Client, pos swapi.Point) *swapi.Unit {
 	model := client.Model.GetData()
 	f := getSomeFormation(c, model)
-	kg := getSomeKnowledgeGroup(c, model)
-	c.Assert(f.PartyId, Equals, kg.PartyId)
+	kg := getSomeKnowledgeGroup(c, model, f.PartyId)
 	automat, err := client.CreateAutomat(f.Id, CombiVWAutomatId, kg.Id)
 	c.Assert(err, IsNil)
 	err = client.SetAutomatMode(automat.Id, false)
