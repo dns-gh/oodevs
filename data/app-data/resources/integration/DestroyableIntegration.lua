@@ -222,7 +222,8 @@ integration.isFlying = function ( target )
     return DEC_ConnaissanceAgent_EstEnVol( target.source )
 end
 
---- Returns the maximum range (in meters) of the agent weapons systems, regarding the given target and PH (Probability to Hit). 
+--- Returns the maximum range of the agent weapon systems allowing to hit the given target with a certain probability.
+-- Returns 0 if the target cannot be hit at any range.
 -- The range takes into account the current posture of both agents.
 -- This method can only be called by an agent.
 -- @param eni a DirectIA agent knowledge.
@@ -284,7 +285,9 @@ integration.autoriseAllAmmunitions = function()
     DEC_Pion_AutoriserToutesMunitions()
 end
 
---- Returns the maximum range (in meters) of the agent weapons systems regarding the given PH (Probability to Hit). 
+--- Returns the maximum range of the agent weapon systems allowing to hit with a certain probability.
+-- The range returned is computed with regards every volume, and the longest range is returned.
+-- Returns 0 if the hit probability cannot be attained. 
 -- See 'weapon systems' tab in authoring tool.
 -- This method can only be called by an agent.
 -- @param ph the probability to hit.
@@ -293,7 +296,8 @@ integration.getMaxRangeToFireForPH = function( pH )
     return DEC_Tir_PorteeMaxPourTirer( pH )
 end
 
---- Returns the maximum range (in meters) of the agent weapons systems, regarding the given target and PH (Probability to Hit). 
+--- Returns the maximum range of the agent weapon systems allowing to hit the given target with a certain probability.
+-- Returns 0 if the target cannot be hit at any range. 
 -- The returned range does not take into account the current posture of the agent.
 -- This method can only be called by an agent.
 -- @param agent a simulation agent knowledge.
@@ -318,13 +322,13 @@ integration.getKnowledgesUnitsEngagingFriend = function( friendAgent )
     return DEC_Connaissances_UnitesPrenantAPartieSurAmi( friendAgent )
 end
 
---- Returns the list of hostile agent knowledges that are considered as 'dangerous' for the agent.
+--- Returns the list of hostile agent knowledges that are considered 'dangerous' for the agent.
 -- A 'dangerous' unit is a unit which has the capability to open fire at the target.
 -- Only enemies are returned. 
 -- This method can only be called by an agent.
 -- @return table the agent knowledges that can engage the agent.
 integration.getKnowledgesDangerousUnits = function()
-    return DEC_Connaissances_UnitesEnnemiesDangereuses( )
+    return DEC_Connaissances_UnitesEnnemiesDangereuses()
 end
 
 --- Returns the dangerosity of the given agent knowledge.
@@ -355,8 +359,8 @@ integration.getMaxRangeToFireOnAgent = function( agent, pH )
     return DEC_Tir_PorteeMaxPourTirerSurUnite( agent, pH )
 end
 
---- Returns the maximum range (in meters) allowing the given agent knowledge, 
--- with a probability to hit superior or equal to the given pH (expressed as a percentage).
+--- Returns the maximum range of the agent weapon systems allowing to hit the given target with a certain probability.
+-- Returns 0 if the target cannot be hit at any range.
 -- This method can only be called by an agent.
 -- @param agent a simulation agent knowledge.
 -- @param pH numeric the probability to hit.
