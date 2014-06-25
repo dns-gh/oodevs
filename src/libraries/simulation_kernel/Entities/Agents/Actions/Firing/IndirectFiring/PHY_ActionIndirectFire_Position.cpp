@@ -26,26 +26,6 @@ using namespace firing;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Position constructor
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, const MT_Vector2D* pTargetPosition )
-    : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
-{
-    if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
-    {
-        const auto& effects = pDotationCategory->GetIndirectFireEffects();
-        for( auto it = effects.begin(); it != effects.end(); ++ it )
-        {
-            MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, *pTargetPosition, **it, rNbInterventionType_, 0 );
-            pEffect->IncRef();
-            MIL_EffectManager::GetEffectManager().Register( *pEffect );
-            effects_.push_back( pEffect );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ActionIndirectFire_Position constructor
 // Created: LDC 2014-06-19
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, const MT_Vector2D* pTargetPosition, DEC_Decision_ABC* requester )
