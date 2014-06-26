@@ -1061,6 +1061,12 @@ integration.leadDelayActivate = function( self, disengageTask )
         self.orderUnitsToDisengage = meKnowledge:screeningSubordinateIsMovingBackward()
     end
     meKnowledge.arrivedUnits = meKnowledge.arrivedUnits or {}
+    
+    local pionsLima1Entities = {}
+    for _, entity in pairs( myself.leadData.pionsLima1 ) do
+        pionsLima1Entities[ #pionsLima1Entities + 1 ] = entity
+    end
+    
     if ( not self.decrocher and self.orderUnitsToDisengage ) 
         and meKnowledge.arrivedUnits
         and #meKnowledge.arrivedUnits >= tableSize( myself.leadData.pionsLima1 ) then
@@ -1083,11 +1089,8 @@ integration.leadDelayActivate = function( self, disengageTask )
         for k,v in pairs( meKnowledge.pionsToAwait ) do
             meKnowledge.pionsToAwaitSource[k.source] = v.source
         end
-        local entities = {}
-        for _, entity in pairs( myself.leadData.pionsLima1 ) do
-            entities[ #entities + 1 ] = entity
-        end
-        Activate( self.skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = entities } )
+        
+        Activate( self.skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = pionsLima1Entities } )
         self.decrocher = true
         self.screenPosition = false
         myself.screenUnitDisengage = nil
@@ -1132,7 +1135,7 @@ integration.leadDelayActivate = function( self, disengageTask )
     local fuseau = meKnowledge:getAreaOfResponsibility()
     local largeurFuseau = fuseau:getWidth()
 
-    Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = myself.leadData.pionsLima1, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
+    Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = pionsLima1Entities, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
 
     integration.manageEndMission( self )
 
