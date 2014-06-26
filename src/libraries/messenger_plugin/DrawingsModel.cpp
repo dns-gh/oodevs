@@ -21,6 +21,7 @@
 #include "tools/XmlStreamOperators.h"
 #include "tools/SchemaWriter.h"
 #include <directia/brain/Brain.h>
+#include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -72,9 +73,9 @@ void DrawingsModel::Load( const dispatcher::Config& config )
         auto xis = config_.GetLoader().LoadFile( filename );
         ReadShapes( *xis );
     }
-    catch( const std::exception& )
+    catch( const std::exception& e )
     {
-        // $$$$ SBO 2008-06-10: log error
+        MT_LOG_ERROR_MSG( "failed to load drawings: " << tools::GetExceptionMsg( e ));
     }
 }
 
