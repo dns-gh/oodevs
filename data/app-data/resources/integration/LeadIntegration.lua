@@ -876,7 +876,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
 
     -- Execute the provided functions if any
     for _,func in pairs( functionsToExecute or emptyTable ) do
-        pcall( func, self )
+        func( self )
     end
 
     -- Initialisation des missions pion
