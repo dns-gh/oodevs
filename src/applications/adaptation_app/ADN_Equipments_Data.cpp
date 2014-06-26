@@ -32,7 +32,7 @@ ADN_Equipments_Data::AmbulanceInfos::AmbulanceInfos()
     : transportSkills_()
     , bTransportNBC_( false )
     , bTransportShock_( false )
-    , nCapacity_( 0 )
+    , nCapacity_( 1 )
     , loadTimePerPerson_( "0s" )
     , unloadTimePerPerson_( "0s" )
 {
