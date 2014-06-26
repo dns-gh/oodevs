@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         decision->RegisterFunction( "CallbackAction", &InitCallback );
 
         const MT_Vector2D targetPosition;
-        PHY_ActionIndirectFire_Position* pAction = new PHY_ActionIndirectFire_Position( pion, pCategory, 1, &targetPosition );
+        PHY_ActionIndirectFire_Position* pAction = new PHY_ActionIndirectFire_Position( pion, pCategory, 1, &targetPosition, 0 );
         pExpectedAction = pAction;
         // $$$$ LDC: New needed because it's deleted by PHY_Actor (inherited by MockAgent)
 
