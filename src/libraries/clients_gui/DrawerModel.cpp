@@ -17,7 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -50,15 +50,11 @@ DrawerModel::~DrawerModel()
 // Name: DrawerModel::Load
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Load( const tools::Loader_ABC& /*fileLoader*/, const tools::Path& file ) // modif
+void DrawerModel::Load( const tools::Loader_ABC& fileLoader, const tools::Path& file )
 {
-    tools::Xifstream xis( file );
-    xis >> xml::start( "shapes" );
-    const tools::Path schema = xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
-    if( !schema.IsEmpty() )
-        tools::Xifstream( file, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ).ToUTF8().c_str() ) );
-    ReadShapes( xis );
-    xis >> xml::end;
+    auto xis = fileLoader.LoadFile( file );
+    *xis >> xml::start( "shapes" );
+    ReadShapes( *xis );
 }
 
 // -----------------------------------------------------------------------------
