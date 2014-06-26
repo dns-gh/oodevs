@@ -53,7 +53,7 @@ public:
 
     typedef boost::variant< QAction*, ContextMenu* >        T_MenuVariant;
 
-    typedef std::map< int, T_MenuVariant >                  T_SubMenus;
+    typedef std::multimap< int, T_MenuVariant >             T_SubMenus;
     typedef T_SubMenus::const_iterator                    CIT_SubMenus;
 
     typedef std::map< Category, T_SubMenus >                T_Menus;
@@ -82,8 +82,10 @@ public:
     operator QWidget*() const;
     //@}
 
-    //! @name Operations
-    //@{
+    // Adds entries in the context menu. Entries ownership is transfered.
+    // If index == -1, the entry is appended to the menu. Otherwise the entry
+    // is inserted at "index", which is not unique: multiple entries can be
+    // set at a given index, their relative position is undefined.
     T_MenuVariant InsertVariant( const std::string& category, T_MenuVariant& variant, bool separatorText = false, int index = -1 );
     QAction* InsertAction( const std::string& category, QAction* action, bool separatorText = false, int index = -1 );
     QAction* InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, bool separatorText = false, int index = -1 );
@@ -92,12 +94,13 @@ public:
     QAction* InsertItem( const std::string& category, const QString& text, ContextMenu* popup, int index = -1 );
     ContextMenu* SubMenu( const std::string& category, const QString& text, bool textSeparator = false, int index = -1 );
     ContextMenu* SubMenu( const std::string& category, ContextMenu* popup, bool textSeparator = false, int index = -1 );
-    //@}
 
 private:
     //! @name Helpers
     //@{
     void InternalFillMenu( const CIT_Menus& currentMenu );
+    T_MenuVariant InsertMenuVariant( const std::string& category,
+            T_MenuVariant variant, bool separatorText, int index );
     //@}
 
 private:
