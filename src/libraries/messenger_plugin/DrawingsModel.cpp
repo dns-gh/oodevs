@@ -17,6 +17,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "tools/IdManager.h"
 #include "tools/FileWrapper.h"
+#include "tools/Loader_ABC.h"
 #include "tools/XmlStreamOperators.h"
 #include "tools/SchemaWriter.h"
 #include <directia/brain/Brain.h>
@@ -66,17 +67,10 @@ void DrawingsModel::Load( const dispatcher::Config& config )
     try
     {
         const tools::Path filename = BuildDrawingsFile( config );
-        if( filename.Exists() )
-        {
-            tools::Xifstream xis( filename );
-            xis >> xml::start( "shapes" );
-            const tools::Path schema = xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
-            xis >> xml::end;
-            if( schema.IsEmpty() )
-                ReadShapes( xis );
-            else
-                ReadShapes( tools::Xifstream( filename, xml::external_grammar( config.BuildResourceChildFile( schema ).ToUTF8().c_str() ) ) );
-        }
+        if( !filename.Exists() )
+            return;
+        auto xis = config_.GetLoader().LoadFile( filename );
+        ReadShapes( *xis );
     }
     catch( const std::exception& )
     {
