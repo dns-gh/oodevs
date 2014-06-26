@@ -58,9 +58,6 @@ public:
 
     typedef std::map< Category, T_SubMenus >                T_Menus;
     typedef T_Menus::const_iterator                       CIT_Menus;
-
-    typedef std::vector< std::string >                      T_BaseCategories;
-    typedef T_BaseCategories::const_iterator              CIT_BaseCategories;
     //@}
 
 public:
@@ -73,7 +70,6 @@ public:
 
     //! @name Operations
     //@{
-    void InitializeBaseCategories();
     void Clear();
     void Popup( const QPoint& where );
     void ConnectSubActions( const QObject* receiver, const char* member, int depth = 1 );
@@ -107,7 +103,6 @@ private:
 private:
     //! @name Member data
     //@{
-    T_BaseCategories baseCategories_;
     T_Menus          menus_;
     //@}
 };

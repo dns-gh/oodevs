@@ -9,8 +9,23 @@
 
 #include "clients_kernel_pch.h"
 #include "ContextMenu.h"
+#include <boost/assign.hpp>
 
 using namespace kernel;
+
+namespace
+{
+
+const std::vector< std::string > baseCategories_ = boost::assign::list_of
+    ( "Interface" )
+    ( "Order" )
+    ( "Command" )
+    ( "Helpers" )
+    ( "Creation" )
+    ( "Target" )
+    ( "Parameter" );
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu constructor
@@ -39,24 +54,6 @@ ContextMenu::ContextMenu( QWidget* parent )
 ContextMenu::~ContextMenu()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ContextMenu::InitializeBaseCategories
-// Created: ABR 2012-01-03
-// -----------------------------------------------------------------------------
-void ContextMenu::InitializeBaseCategories()
-{
-    if( baseCategories_.empty() )
-    {
-        baseCategories_.push_back( "Interface" );
-        baseCategories_.push_back( "Order" );
-        baseCategories_.push_back( "Command" );
-        baseCategories_.push_back( "Helpers" );
-        baseCategories_.push_back( "Creation" );
-        baseCategories_.push_back( "Target" );
-        baseCategories_.push_back( "Parameter" );
-    }
 }
 
 // -----------------------------------------------------------------------------
