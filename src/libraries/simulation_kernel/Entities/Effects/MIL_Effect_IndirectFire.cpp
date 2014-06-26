@@ -34,6 +34,7 @@
 MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, unsigned int nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire )
     : nNbrRefs_( 0 )
     , firer_( firer )
+    , requester_( 0 )
     , rInterventionTypeToFire_( rInterventionTypeToFire )
     , indirectDotationCategory_( indirectDotationCategory )
     , vSourcePosition_( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
@@ -53,9 +54,10 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, un
 // Name: MIL_Effect_IndirectFire constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire )
+MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire, const MIL_Agent_ABC* requester )
     : nNbrRefs_( 0 )
     , firer_( firer )
+    , requester_( requester )
     , rInterventionTypeToFire_( rInterventionTypeToFire )
     , indirectDotationCategory_( indirectDotationCategory )
     , vSourcePosition_( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
@@ -164,7 +166,7 @@ bool MIL_Effect_IndirectFire::Execute()
             }
         }
         else
-            indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, *vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );
+            indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, *vTargetPosition_, nNbrAmmoFired_, *pFireResult_, requester_ );
     }
     bArrived_ = true;
     StopFlying();

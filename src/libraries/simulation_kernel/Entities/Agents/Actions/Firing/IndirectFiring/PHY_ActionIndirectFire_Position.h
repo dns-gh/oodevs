@@ -14,6 +14,7 @@
 
 #include "PHY_ActionIndirectFire_ABC.h"
 
+class DEC_Decision_ABC;
 class MIL_Effect_IndirectFire;
 
 // =============================================================================
@@ -23,7 +24,7 @@ class MIL_Effect_IndirectFire;
 class PHY_ActionIndirectFire_Position : public PHY_ActionIndirectFire_ABC
 {
 public:
-             PHY_ActionIndirectFire_Position( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, const MT_Vector2D* pTargetPosition );
+             PHY_ActionIndirectFire_Position( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, const MT_Vector2D* pTargetPosition, DEC_Decision_ABC* requester );
     virtual ~PHY_ActionIndirectFire_Position();
 
     //! @name Operations
