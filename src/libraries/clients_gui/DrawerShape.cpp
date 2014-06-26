@@ -79,6 +79,8 @@ DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xm
     std::unique_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
     gui::ReadLocation( xis, location_, coordinateConverter );
+    if( !location_.IsValid() )
+        throw MASA_EXCEPTION( "shape '" + GetName().toStdString() + "' geometry is invalid" );
     AddExtension( *this );
     CreateDictionary();
 }

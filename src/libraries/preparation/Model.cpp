@@ -299,7 +299,22 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
-    LoadOptional( config.GetLoader(), config.GetDrawingsFile(), drawings_, schemaWriter );
+
+    const auto drawingFile = config.GetDrawingsFile();
+    if( drawingFile.Exists() )
+    {
+        try
+        {
+            drawings_->Load( config.GetLoader(), drawingFile );
+        }
+        catch( const std::exception& e )
+        {
+            // Drawing errors should not stop application startup
+            AppendLoadingError( eOthers, e.what() );
+        }
+    }
+    else
+        drawings_->Serialize( drawingFile, schemaWriter );
 
     performanceIndicator_->Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
     if( orbatFile.Exists() )
