@@ -1245,9 +1245,9 @@ ADN_Equipments_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsum
 // Name: ConsumptionItem::CreateCopy
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Equipments_Data::ConsumptionItem* ADN_Equipments_Data::ConsumptionItem::CreateCopy()
+ADN_Equipments_Data::ConsumptionItem* ADN_Equipments_Data::ConsumptionItem::CreateCopy( T_CategoryInfos_Vector& equipmentCategories )
 {
-    ConsumptionItem* pCopy = new ConsumptionItem( nConsumptionType_, GetVector(), GetCrossedElement() );
+    auto pCopy = new ConsumptionItem( nConsumptionType_, equipmentCategories, 0 );
     pCopy->nQuantityUsedPerHour_ = nQuantityUsedPerHour_.GetData();
     return pCopy;
 }
@@ -1302,10 +1302,10 @@ ADN_Equipments_Data::ConsumptionsInfos::ConsumptionsInfos()
 // Name: ConsumptionsInfos::CopyFrom
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::CopyFrom( ConsumptionsInfos& source )
+void ADN_Equipments_Data::ConsumptionsInfos::CopyFrom( ConsumptionsInfos& source, T_CategoryInfos_Vector& equipmentCategories )
 {
     for( auto it = source.vConsumptions_.begin(); it != source.vConsumptions_.end(); ++it )
-        vConsumptions_.AddItem( (*it)->CreateCopy() );
+        vConsumptions_.AddItem( (*it)->CreateCopy( equipmentCategories ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1669,7 +1669,7 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
     }
 
     pCopy->resources_.CopyFrom( resources_ );
-    pCopy->consumptions_.CopyFrom( consumptions_ );
+    pCopy->CopyConsumptionsFrom( consumptions_ );
 
     pCopy->bTroopEmbarkingTimes_ = bTroopEmbarkingTimes_.GetData();
     pCopy->embarkingTimePerPerson_ = embarkingTimePerPerson_.GetData();
@@ -1703,6 +1703,28 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
     pCopy->nPowerEngineering_   = nPowerEngineering_.GetData();
 
     return pCopy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Data::EquipmentInfos::CopyConsumptionsFrom
+// Created: LDC 2014-06-26
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::EquipmentInfos::CopyConsumptionsFrom( const ConsumptionsInfos& consumptions )
+{
+    FillMissingConsumptions();
+    for( auto fromIt = consumptions.vConsumptions_.begin(); fromIt != consumptions.vConsumptions_.end(); ++fromIt )
+    {
+        auto dotation = ( *fromIt )->GetCrossedElement()->GetCrossedElement()->nId_.GetData();
+        for( auto toIt = consumptions_.vConsumptions_.begin(); toIt != consumptions_.vConsumptions_.end(); ++toIt )
+        {
+            if( dotation == ( *toIt )->GetCrossedElement()->GetCrossedElement()->nId_.GetData()
+                && ( *toIt )->nConsumptionType_ == ( *fromIt )->nConsumptionType_ )
+            {
+                ( *toIt )->nQuantityUsedPerHour_ = ( *fromIt )->nQuantityUsedPerHour_.GetData();
+                break;
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
