@@ -52,22 +52,19 @@ void DebugPoints::DoUpdate( const sword::DebugPoints& message )
 // -----------------------------------------------------------------------------
 void DebugPoints::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( tools.ShouldDisplay( "DebugPoints" ) )
-    {
-        GLfloat color[4];
-        glGetFloatv( GL_CURRENT_COLOR, color );
-        glPushAttrib( GL_LINE_BIT );
-        for( auto it = points_.begin(); it != points_.end(); ++it )
-            if( viewport.IsVisible( *it ) )
-            {
-                glColor4f( 0, 0, 0, color[3] * 0.5f );
-                glLineWidth( 8.f );
-                tools.DrawCross( *it, GL_CROSSSIZE );
+    GLfloat color[4];
+    glGetFloatv( GL_CURRENT_COLOR, color );
+    glPushAttrib( GL_LINE_BIT );
+    for( auto it = points_.begin(); it != points_.end(); ++it )
+        if( viewport.IsVisible( *it ) )
+        {
+            glColor4f( 0, 0, 0, color[3] * 0.5f );
+            glLineWidth( 8.f );
+            tools.DrawCross( *it, GL_CROSSSIZE );
 
-                glColor4f( 255, 255, 255, 1.0f );
-                glLineWidth( 4.f );
-                tools.DrawCross( *it, GL_CROSSSIZE );
-            }
-        glPopAttrib();
-    }
+            glColor4f( 255, 255, 255, 1.0f );
+            glLineWidth( 4.f );
+            tools.DrawCross( *it, GL_CROSSSIZE );
+        }
+    glPopAttrib();
 }
