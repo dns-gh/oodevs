@@ -116,11 +116,12 @@ end
 --- Number of agents in automat who can perform the given targetTask  (Adaptation tool, tab "Doctrine models")
 -- @param listPlatoonAlly, A list of DirectIA agents
 -- @param targetTask, A task name
+-- @param onlyOperational Boolean, whether this method should ignore the tactically destroyed platoons or not
 -- @return Integer, the number of DirectIA agents with the specific task
-integration.nbPlatoonsHaveTask = function( listPlatoonAlly, targetTask )
+integration.nbPlatoonsHaveTask = function( listPlatoonAlly, targetTask, onlyOperational )
     local nb =  0
     for _, platoon in pairs( listPlatoonAlly or emptyTable ) do
-        if DEC_IsMissionAvailable( platoon.source, targetTask ) then
+        if DEC_IsMissionAvailable( platoon.source, targetTask ) and ( not onlyOperational or not integration.UnitIsNeutralized( platoon ) ) then
             nb = nb + 1
         end
     end
