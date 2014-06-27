@@ -218,7 +218,7 @@ func checkUnitFireDamages(msg *sword.UnitsFireDamages) error {
 	for _, d := range msg.Elem {
 		for _, eq := range d.Equipments.Elem {
 			// Damages cannot recreate/repair units
-			if *eq.Available > 0 || *eq.Unavailable < 0 || *eq.Repairable < 0 {
+			if *eq.Available > 0 || (*eq.Unavailable+*eq.Repairable) < 0 {
 				return fmt.Errorf("invalid damage message: %v", msg)
 			}
 		}
@@ -291,8 +291,13 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 
 	// Launching a magic strike with good parameters
 	const dotation81mmHighExplosiveShell = 9
-	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, 1)
-	c.Assert(err, IsNil)
+	for i := 0; i != 5; i++ {
+		// Fire more than one shell to beat the odds the target lives through
+		// this unchanged
+		err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id,
+			dotation81mmHighExplosiveShell, 1)
+		c.Assert(err, IsNil)
+	}
 
 	// testing strike effect: neutralization and attrition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -329,6 +334,9 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	client.Unregister(handlerId)
+	for _, err := range damagesErrors {
+		c.Check(err, IsNil)
+	}
 	c.Assert(damagesErrors, IsNil)
 }
 
