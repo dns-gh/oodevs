@@ -716,6 +716,24 @@ void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
         >> xml::end;
 }
 
+namespace
+{
+
+double ReadLoadingTime( xml::xistream& xis, const std::string& category,
+        const std::string& name, unsigned int capacity )
+{
+    double duration;
+    tools::ReadTimeAttribute( xis, name, duration );
+    if( duration < 0 )
+        throw MASA_EXCEPTION( xis.context() + category + ": " + name + " < 0" );
+    if( duration < 1e-6 )
+        // We can load everyone in one tick
+        return capacity;
+    return 1. / MIL_Tools::ConvertSecondsToSim( duration );
+}
+
+}  // namespace
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::ReadRelieving
 // Created: ABL 2007-07-23
@@ -730,18 +748,12 @@ void PHY_ComposanteTypePion::ReadRelieving( xml::xistream& xis )
             >> xml::attribute( "reac-mental-transport", bCanEvacuateMentalDiseases_ )
         >> xml::attribute( "capacity", nAmbulanceEvacuationCapacity_ );
 
-    tools::ReadTimeAttribute( xis, "man-loading-time", rNbrHumansLoadedForEvacuationPerTimeStep_ );
-    tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForEvacuationPerTimeStep_ );
-
     if( nAmbulanceEvacuationCapacity_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "relieving: capacity <= 0" );
-    if( rNbrHumansLoadedForEvacuationPerTimeStep_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "relieving: man-loading-time <= 0" );
-    if( rNbrHumansUnloadedForEvacuationPerTimeStep_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "relieving: man-unloading-time <= 0" );
-
-    rNbrHumansLoadedForEvacuationPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForEvacuationPerTimeStep_   );
-    rNbrHumansUnloadedForEvacuationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForEvacuationPerTimeStep_ );
+    rNbrHumansLoadedForEvacuationPerTimeStep_ = ReadLoadingTime(
+            xis, "relieving", "man-loading-time", nAmbulanceEvacuationCapacity_ );
+    rNbrHumansUnloadedForEvacuationPerTimeStep_ = ReadLoadingTime(
+            xis, "relieving", "man-unloading-time", nAmbulanceEvacuationCapacity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -758,18 +770,12 @@ void PHY_ComposanteTypePion::ReadCollecting( xml::xistream& xis )
             >> xml::attribute( "reac-mental-transport", bCanCollectMentalDiseases_ )
         >> xml::attribute( "capacity", nAmbulanceCollectionCapacity_ );
 
-    tools::ReadTimeAttribute( xis, "man-loading-time", rNbrHumansLoadedForCollectionPerTimeStep_ );
-    tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForCollectionPerTimeStep_ );
-
     if( nAmbulanceCollectionCapacity_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "collecting: capacity <= 0" );
-    if( rNbrHumansLoadedForCollectionPerTimeStep_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "collecting: man-loading-time <= 0" );
-    if( rNbrHumansUnloadedForCollectionPerTimeStep_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "collecting: man-unloading-time <= 0" );
-
-    rNbrHumansLoadedForCollectionPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForCollectionPerTimeStep_   );
-    rNbrHumansUnloadedForCollectionPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForCollectionPerTimeStep_ );
+    rNbrHumansLoadedForCollectionPerTimeStep_ = ReadLoadingTime(
+         xis, "collecting", "man-loading-time", nAmbulanceCollectionCapacity_ );
+    rNbrHumansUnloadedForCollectionPerTimeStep_ = ReadLoadingTime(
+         xis, "collecting", "man-unloading-time", nAmbulanceCollectionCapacity_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<decisonal>
-	<dangerosity-modifiers max-accuracy="20" max-operational-state="20" max-neutralized-state="80"/>
-	<operational-state-weights component="0.3" major-component="0.7" crew="0.25"/>
-	<force-ratio default-feedback-time="600s"/>
-</decisonal>
