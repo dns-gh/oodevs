@@ -71,10 +71,10 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadShapes( xml::xistream& xis );
-    void ReadFormation( xml::xistream& xis );
-    void ReadAutomat( xml::xistream& xis );
-    void ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity );
+    void ReadShapes( xml::xistream& xis, bool& failed );
+    void ReadFormation( xml::xistream& xis, bool& failed );
+    void ReadAutomat( xml::xistream& xis, bool& failed );
+    void ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity, bool& failed );
     virtual void NotifyCreated( const kernel::Drawing_ABC& );
     virtual void NotifyDeleted( const kernel::Drawing_ABC& );
     //@}

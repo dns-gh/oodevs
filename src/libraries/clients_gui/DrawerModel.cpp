@@ -17,7 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -50,53 +50,56 @@ DrawerModel::~DrawerModel()
 // Name: DrawerModel::Load
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Load( const tools::Loader_ABC& /*fileLoader*/, const tools::Path& file ) // modif
+void DrawerModel::Load( const tools::Loader_ABC& fileLoader, const tools::Path& file )
 {
-    tools::Xifstream xis( file );
-    xis >> xml::start( "shapes" );
-    const tools::Path schema = xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
-    if( !schema.IsEmpty() )
-        tools::Xifstream( file, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ).ToUTF8().c_str() ) );
-    ReadShapes( xis );
-    xis >> xml::end;
+    bool failed = false;
+    auto xis = fileLoader.LoadFile( file );
+    *xis >> xml::start( "shapes" );
+    ReadShapes( *xis, failed );
+    // Delay error reporting after all drawings have been loaded
+    if( failed )
+        throw MASA_EXCEPTION( tools::translate( "DrawerModel",
+                    "Unable to load a drawing" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::ReadShapes
 // Created: LGY 2011-02-10
 // -----------------------------------------------------------------------------
-void DrawerModel::ReadShapes( xml::xistream& xis )
+void DrawerModel::ReadShapes( xml::xistream& xis, bool& failed )
 {
-    xis >> xml::list( "formation", *this, &DrawerModel::ReadFormation )
-        >> xml::list( "automat", *this, &DrawerModel::ReadAutomat )
-        >> xml::list( "shape", boost::bind( &DrawerModel::ReadShape, this, _1, static_cast< const kernel::Entity_ABC* >( 0 ) ) );
+    const kernel::Entity_ABC* dummy = 0;
+    xis >> xml::list( "formation", *this, &DrawerModel::ReadFormation, boost::ref( failed ) )
+        >> xml::list( "automat", *this, &DrawerModel::ReadAutomat, boost::ref( failed ) )
+        >> xml::list( "shape", *this, &DrawerModel::ReadShape, dummy, boost::ref( failed ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::ReadFormation
 // Created: JSR 2011-06-29
 // -----------------------------------------------------------------------------
-void DrawerModel::ReadFormation( xml::xistream& xis )
+void DrawerModel::ReadFormation( xml::xistream& xis, bool& failed )
 {
     const kernel::Entity_ABC* formation = resolver_.FindFormation( xis.attribute< unsigned int >( "id" ) );
-    xis >> xml::list( "shape", *this, &DrawerModel::ReadShape, formation );
+    xis >> xml::list( "shape", *this, &DrawerModel::ReadShape, formation, boost::ref( failed ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::ReadAutomat
 // Created: JSR 2011-06-29
 // -----------------------------------------------------------------------------
-void DrawerModel::ReadAutomat( xml::xistream& xis )
+void DrawerModel::ReadAutomat( xml::xistream& xis, bool& failed )
 {
     const kernel::Entity_ABC* automat = resolver_.FindAutomat( xis.attribute< unsigned int >( "id" ) );
-    xis >> xml::list( "shape", *this, &DrawerModel::ReadShape, automat );
+    xis >> xml::list( "shape", *this, &DrawerModel::ReadShape, automat, boost::ref( failed ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::ReadShape
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity )
+void DrawerModel::ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity,
+       bool& failed )
 {
     try
     {
@@ -104,7 +107,7 @@ void DrawerModel::ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffu
     }
     catch( ... )
     {
-        throw MASA_EXCEPTION( tools::translate( "DrawerModel", "Unable to load a drawing" ).toStdString() );
+        failed = true;
     }
 }
 
