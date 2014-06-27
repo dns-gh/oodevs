@@ -81,8 +81,11 @@ bool PHY_RolePion_Deployment::UpdateDeploymentValue()
     rDeploymentValue_ = std::min( 1., rDeploymentValue_ + rDeploymentGap_ );
     if( rDeploymentValue_ < 1. )
         return false;
-    eDeploymentState_ = eDeployed;
-    MIL_Report::PostEvent( owner_, report::eRC_SectionDeployee );
+    if( eDeploymentState_ != eDeployed )
+    {
+        eDeploymentState_ = eDeployed;
+        MIL_Report::PostEvent( owner_, report::eRC_SectionDeployee );
+    }
     return true;
 }
 
@@ -95,8 +98,11 @@ bool PHY_RolePion_Deployment::UpdateUndeploymentValue()
     rDeploymentValue_ = std::max( 0., rDeploymentValue_ - rUndeploymentGap_ );
     if( rDeploymentValue_ > 0. )
         return false;
-    eDeploymentState_ = eUndeployed;
-    MIL_Report::PostEvent( owner_, report::eRC_SectionUndeployed );
+    if( eDeploymentState_ != eUndeployed )
+    {
+        eDeploymentState_ = eUndeployed;
+        MIL_Report::PostEvent( owner_, report::eRC_SectionUndeployed );
+    }
     return true;
 }
 
@@ -135,6 +141,8 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Deployment::Deploy()
 {
+    if( eDeploymentState_ == eDeploying )
+       return; 
     MIL_Report::PostEvent( owner_, report::eRC_StartDeploy );
     eDeploymentState_ = eDeploying;
 }
@@ -154,6 +162,8 @@ void PHY_RolePion_Deployment::StartDeploy()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Deployment::Undeploy()
 {
+    if( eDeploymentState_ == eUndeploying )
+       return; 
     MIL_Report::PostEvent( owner_, report::eRC_StartUndeploy );
     eDeploymentState_ = eUndeploying;
 }

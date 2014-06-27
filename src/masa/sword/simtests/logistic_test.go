@@ -339,11 +339,8 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 		"section deployed",
 		"Section undeployed",
 	}
-	// "Starting deploy/undeploy" reports are currently broken:
-	// http://jira.masagroup.net/browse/SWBUG-11867
-	//
-	//startingReporter := newReporter(c, unit.Id, phydb, startingReportsTypes...)
-	//startingReporter.Start(client.Model)
+	startingReporter, _ := newReporter(c, unit.Id, phydb, startingReportsTypes...)
+	startingReporter.Start(client.Model)
 	_ = startingReportsTypes
 	endingReporter, _ := newReporter(c, unit.Id, phydb, endingReportsTypes...)
 	endingReporter.Start(client.Model)
@@ -370,16 +367,16 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 	model.WaitTicks(10)
 
 	// Check reports
-	// startingReports := startingReporter.Stop()
+	startingReports := startingReporter.Stop()
 	endingReports := endingReporter.Stop()
 	// Check that reports are always by pairs "Starting deploy" -> "section deployed"
-	//c.Assert(len(startingReports), Equals, len(endingReports))
+	c.Assert(len(startingReports), Equals, len(endingReports))
 	// Check we have at least auto deployment and undeployment following mission
 	c.Assert(len(endingReports) >= 2, Equals, true)
 	// Check there is 1mn delay in deployment
-	//for i := 0; i < len(startingReports); i++ {
-	//	CheckDeployTime(c, startingReports[i].Time, endingReports[i].Time, 1*time.Minute)
-	//}
+	for i := 0; i < len(startingReports); i++ {
+		CheckDeployTime(c, startingReports[i].Time, endingReports[i].Time, 1*time.Minute)
+	}
 }
 
 func (s *TestSuite) TestLogisticUpdates(c *C) {
