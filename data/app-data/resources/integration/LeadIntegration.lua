@@ -381,7 +381,7 @@ local isHQTaskUsingRelievingUnit = function( self, hqUnit, unit, param )
     return false
 end
 
-local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
+local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask, restartMissionIfTacticallyDestroyed )
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -464,7 +464,11 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
                 elseif myself.leadData.pionsLima2 and myself.leadData.pionsLima2[ entity ] then
                     myself.leadData.pionsLima2[ entity ] = nil
                 end
-                integration.issueMission ( self, disengageTask, 1, eEtatEchelon_None, { entity }, false, findBestsFunction, disengageTask )
+                if restartMissionIfTacticallyDestroyed then
+                    self:create()
+                else
+                    integration.issueMission ( self, disengageTask, 1, eEtatEchelon_None, { entity }, false, findBestsFunction, disengageTask )
+                end
             end
         end
     end
@@ -829,7 +833,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     myself.feedback = false
     self.companyTask = integration.RetrieveAutomateTask( meKnowledge, self.params.companyTask )
     if self.params.mainTasks then
-        meKnowledge.nbPionsMain = integration.nbPlatoonsHaveTask( self.parameters.commandingEntities, self.params.mainTasks )
+        meKnowledge.nbPionsMain = integration.nbPlatoonsHaveTask( self.parameters.commandingEntities, self.params.mainTasks, true )
     end
     self.companyTask:init( self.params, self.parameters )
     
@@ -1034,7 +1038,7 @@ integration.leadDelayActivate = function( self, disengageTask )
         return
     end
 
-    manageAddedAndDeletedUnits( self, findBests, disengageTask )
+    manageAddedAndDeletedUnits( self, findBests, disengageTask, true )
     
     -- Mis à jour des echelons
     integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
@@ -1058,7 +1062,7 @@ integration.leadDelayActivate = function( self, disengageTask )
     if self.params.performBlockingActions then
         self.orderUnitsToDisengage = meKnowledge:delayingSubordinateIsNotSafe( myself.leadData.pionsLima1 )
     else
-        self.orderUnitsToDisengage = meKnowledge:screeningSubordinateIsMovingBackward()
+        self.orderUnitsToDisengage = myself.screenUnitDisengage and #myself.screenUnitDisengage > 0
     end
     meKnowledge.arrivedUnits = meKnowledge.arrivedUnits or {}
     
