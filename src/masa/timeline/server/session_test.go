@@ -1230,6 +1230,7 @@ func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 }
 
 func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
+	c.Skip("unreliable: http://jira.masagroup.net/browse/SWBUG-12670")
 	f := t.MakeFixture(c)
 	defer f.Close()
 	link := f.session.RegisterObserver(services.EventFilterConfig{})
