@@ -10,8 +10,10 @@ package swtest
 
 import (
 	"flag"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/pmezard/go-difflib/difflib"
 	. "launchpad.net/gocheck"
+	"regexp"
 	"runtime"
 )
 
@@ -57,9 +59,26 @@ func makeDiff(before, after string) (string, error) {
 	return difflib.GetUnifiedDiffString(diff)
 }
 
-func AssertEqualOrDiff(c *C, result, expected string) {
-	if expected != result {
-		diff, err := makeDiff(expected, result)
+var (
+	rePointer = regexp.MustCompile(`\(0x[0-9a-zA-Z]+\)`)
+)
+
+func Stringify(a interface{}) string {
+	if s, ok := a.(string); ok {
+		return s
+	}
+	cfg := spew.NewDefaultConfig()
+	cfg.SortKeys = true
+	s := cfg.Sdump(a)
+	s = rePointer.ReplaceAllString(s, "")
+	return s
+}
+
+func AssertEqualOrDiff(c *C, result, expected interface{}) {
+	resultStr := Stringify(result)
+	expectedStr := Stringify(expected)
+	if expectedStr != resultStr {
+		diff, err := makeDiff(expectedStr, resultStr)
 		c.Assert(err, IsNil)
 		c.Errorf("\n%s\n", diff)
 	}

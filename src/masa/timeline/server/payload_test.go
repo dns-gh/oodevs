@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	. "launchpad.net/gocheck"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 )
 
@@ -62,7 +63,7 @@ func jsoncompare(c *C, a, b []byte) {
 	c.Assert(err, IsNil)
 	err = jsondecode(b, &rawb)
 	c.Assert(err, IsNil)
-	c.Assert(rawa, DeepEquals, rawb)
+	swtest.AssertEqualOrDiff(c, rawa, rawb)
 }
 
 func testcycle(c *C, text []byte, dst, ref interface{}) {
