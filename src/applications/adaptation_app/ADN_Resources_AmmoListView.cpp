@@ -92,7 +92,6 @@ void ADN_Resources_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Resources_GUI::eSmokeDeployTime]->Connect( &pInfos->indirectAmmoInfos_.smokeDeployTime_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eSmokeLifetime]->Connect( &pInfos->indirectAmmoInfos_.smokeLifeTime_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eSmokeDispersion]->Connect( &pInfos->indirectAmmoInfos_.rSmokeDispersion_, bConnect );
-    vItemConnectors_[ADN_Resources_GUI::eMineNumber]->Connect( &pInfos->indirectAmmoInfos_.nMineNumber_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eEffectType]->Connect( &pInfos->indirectAmmoInfos_.objectType_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eEffectLifetime]->Connect( &pInfos->indirectAmmoInfos_.effectLifeTime_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eNetworkUsable]->Connect( &pInfos->bNetworkUsable_, bConnect );

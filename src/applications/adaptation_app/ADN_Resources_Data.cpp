@@ -238,7 +238,6 @@ ADN_Resources_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     , flareLifeTime_       ( "0s" )
     , smokeDeployTime_     ( "0s" )
     , smokeLifeTime_       ( "0s" )
-    , nMineNumber_         ( 0 )
     , effectLifeTime_      ( "0s" )
     , objectType_          ( ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 ) )
 {
@@ -286,7 +285,6 @@ void ADN_Resources_Data::IndirectAmmoInfos::CopyFrom( ADN_Resources_Data::Indire
     flareLifeTime_ = ammoInfos.flareLifeTime_.GetData();
     smokeDeployTime_ = ammoInfos.smokeDeployTime_.GetData();
     smokeLifeTime_ = ammoInfos.smokeLifeTime_.GetData();
-    nMineNumber_ = ammoInfos.nMineNumber_.GetData();
     objectType_ = ammoInfos.objectType_.GetData();
     strObjectType_ = ammoInfos.strObjectType_;
     effectLifeTime_ = ammoInfos.effectLifeTime_.GetData();

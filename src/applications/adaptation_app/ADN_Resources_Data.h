@@ -143,9 +143,6 @@ public:
         ADN_Type_Time smokeLifeTime_;
         ADN_Type_Double rSmokeDispersion_;
 
-        // For mine
-        ADN_Type_Int nMineNumber_;
-
         // For effect
         std::string strObjectType_;
         ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos > objectType_;
