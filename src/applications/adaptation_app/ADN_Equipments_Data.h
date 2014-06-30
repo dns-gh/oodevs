@@ -118,8 +118,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadInfo( const std::string& type, xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
-
-        bool IsRepairTypeValid() const;
+        void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const;
 
     public:
         ADN_Type_Bool bIsTower_;
@@ -164,8 +163,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadLogisticFunction( const std::string& type, xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
-
-        bool IsRepairTypeValid() const;
+        void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const;
 
     public:
         ADN_Type_Bool bHasHealthInfos_;
@@ -445,7 +443,7 @@ public:
                  ConsumptionItem( E_ConsumptionType nConsumptionType, const T_CategoryInfos_Vector& resources, ADN_Equipments_Data::CategoryInfos* equipmentCategory );
         virtual ~ConsumptionItem() {}
 
-        ConsumptionItem* CreateCopy();
+        ConsumptionItem* CreateCopy( T_CategoryInfos_Vector& equipmentCategories );
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -463,7 +461,7 @@ public:
                  ConsumptionsInfos();
         virtual ~ConsumptionsInfos() {}
 
-        void CopyFrom( ConsumptionsInfos& source );
+        void CopyFrom( ConsumptionsInfos& source, T_CategoryInfos_Vector& equipmentCategories );
         void ReadArchive( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
         void ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
         void ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
@@ -534,6 +532,9 @@ public:
         virtual void CheckValidity();
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker );
         void FillMissingConsumptions();
+
+    private:
+        void CopyConsumptionsFrom( const ConsumptionsInfos& consumptions );
 
     public:
         ADN_Type_Int nId_;

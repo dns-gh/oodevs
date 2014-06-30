@@ -21,6 +21,7 @@ enum E_ConsistencyCheck
     eMissingSymbols,
     eMissionAttachmentInvalid,
     eMissingRepairType,
+    eInvalidTowCapacity,
     eMissingConvoy,
     eMissingConvoyMission,
     eMissingBreakdown,

@@ -398,14 +398,15 @@ void ADN_Equipments_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& outp
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogMaintenanceInfos::IsRepairTypeValid
+// Name: LogMaintenanceInfos::CheckValidity
 // Created: MMC 2013-04-02
 // -----------------------------------------------------------------------------
-bool ADN_Equipments_Data::LogMaintenanceInfos::IsRepairTypeValid() const
+void ADN_Equipments_Data::LogMaintenanceInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const
 {
     if( !NTI1Infos_.IsTypeValid() || !NTI2Infos_.IsTypeValid() || !NTI3Infos_.IsTypeValid() )
-        return false;
-    return true;
+        checker.AddError( eMissingRepairType, composante, eEquipments );
+    if( bIsTower_.GetData() && rCapacity_.GetData() <= 0 )
+        checker.AddError( eInvalidTowCapacity, composante, eEquipments );
 }
 
 // -----------------------------------------------------------------------------
@@ -553,14 +554,13 @@ void ADN_Equipments_Data::LogInfos::WriteArchive( xml::xostream& output ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogInfos::IsRepairTypeValid
+// Name: LogInfos::CheckValidity
 // Created: MMC 2013-04-02
 // -----------------------------------------------------------------------------
-bool ADN_Equipments_Data::LogInfos::IsRepairTypeValid() const
+void ADN_Equipments_Data::LogInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const
 {
-    if( !bHasMaintenanceInfos_.GetData() )
-        return true;
-    return maintenanceInfos_.IsRepairTypeValid();
+    if( bHasMaintenanceInfos_.GetData() )
+        maintenanceInfos_.CheckValidity( checker, composante );
 }
 
 // -----------------------------------------------------------------------------
@@ -1255,9 +1255,9 @@ ADN_Equipments_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsum
 // Name: ConsumptionItem::CreateCopy
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Equipments_Data::ConsumptionItem* ADN_Equipments_Data::ConsumptionItem::CreateCopy()
+ADN_Equipments_Data::ConsumptionItem* ADN_Equipments_Data::ConsumptionItem::CreateCopy( T_CategoryInfos_Vector& equipmentCategories )
 {
-    ConsumptionItem* pCopy = new ConsumptionItem( nConsumptionType_, GetVector(), GetCrossedElement() );
+    auto pCopy = new ConsumptionItem( nConsumptionType_, equipmentCategories, 0 );
     pCopy->nQuantityUsedPerHour_ = nQuantityUsedPerHour_.GetData();
     return pCopy;
 }
@@ -1312,10 +1312,10 @@ ADN_Equipments_Data::ConsumptionsInfos::ConsumptionsInfos()
 // Name: ConsumptionsInfos::CopyFrom
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::CopyFrom( ConsumptionsInfos& source )
+void ADN_Equipments_Data::ConsumptionsInfos::CopyFrom( ConsumptionsInfos& source, T_CategoryInfos_Vector& equipmentCategories )
 {
     for( auto it = source.vConsumptions_.begin(); it != source.vConsumptions_.end(); ++it )
-        vConsumptions_.AddItem( (*it)->CreateCopy() );
+        vConsumptions_.AddItem( (*it)->CreateCopy( equipmentCategories ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1679,7 +1679,7 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
     }
 
     pCopy->resources_.CopyFrom( resources_ );
-    pCopy->consumptions_.CopyFrom( consumptions_ );
+    pCopy->CopyConsumptionsFrom( consumptions_ );
 
     pCopy->bTroopEmbarkingTimes_ = bTroopEmbarkingTimes_.GetData();
     pCopy->embarkingTimePerPerson_ = embarkingTimePerPerson_.GetData();
@@ -1713,6 +1713,28 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
     pCopy->nPowerEngineering_   = nPowerEngineering_.GetData();
 
     return pCopy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Data::EquipmentInfos::CopyConsumptionsFrom
+// Created: LDC 2014-06-26
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::EquipmentInfos::CopyConsumptionsFrom( const ConsumptionsInfos& consumptions )
+{
+    FillMissingConsumptions();
+    for( auto fromIt = consumptions.vConsumptions_.begin(); fromIt != consumptions.vConsumptions_.end(); ++fromIt )
+    {
+        auto dotation = ( *fromIt )->GetCrossedElement()->GetCrossedElement()->nId_.GetData();
+        for( auto toIt = consumptions_.vConsumptions_.begin(); toIt != consumptions_.vConsumptions_.end(); ++toIt )
+        {
+            if( dotation == ( *toIt )->GetCrossedElement()->GetCrossedElement()->nId_.GetData()
+                && ( *toIt )->nConsumptionType_ == ( *fromIt )->nConsumptionType_ )
+            {
+                ( *toIt )->nQuantityUsedPerHour_ = ( *fromIt )->nQuantityUsedPerHour_.GetData();
+                break;
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1994,8 +2016,7 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
     }
     attritionBreakdowns_.CheckValidity( checker, strName_.GetData() );
     randomBreakdowns_.CheckValidity( checker, strName_.GetData() );
-    if( !logInfos_.IsRepairTypeValid() )
-        checker.AddError( eMissingRepairType, strName_.GetData(), eEquipments );
+    logInfos_.CheckValidity( checker, strName_.GetData() );
     for( auto it = resources_.categories_.begin(); it != resources_.categories_.end(); ++it )
         if( (*it)->rLogLowThreshold_.GetData() > (*it)->rLogHighThreshold_.GetData() )
             checker.AddError( eRepartitionError, strName_.GetData(), eEquipments, -1,

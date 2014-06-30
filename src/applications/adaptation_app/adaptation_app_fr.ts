@@ -766,6 +766,10 @@ Arrêt moteur allumé</translation>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
+    <message>
+        <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>La capacité de remorquage doit être un nombre positif pour l&apos;équipement &apos;%1&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1099,7 +1103,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</source>
-        <translation>Seuils invalides, le seuil haut '%1' doit être supérieur au seuil bas '%2'.</translation>
+        <translation>Seuils invalides, le seuil haut &apos;%1&apos; doit être supérieur au seuil bas &apos;%2&apos;.</translation>
+    </message>
+    <message>
+        <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos; and will be set equal to low.</source>
+        <translation>Seuils invalides, le seuil haut &apos;%1&apos; doit être supérieur au seuil bas &apos;%2&apos; dont la valeur va lui être assignée.</translation>
     </message>
 </context>
 <context>

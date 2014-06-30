@@ -478,7 +478,6 @@ void ADN_Resources_GUI::IndirectTypeChanged()
     pSmokeParametersGroup_->setVisible( buttonGroup_->button( eSmokePresent )->isChecked() );
     pEffectParametersGroup_->setVisible( buttonGroup_->button( eEffectPresent )->isChecked() );
     pFlareParametersGroup_->setVisible( buttonGroup_->button( eFlarePresent )->isChecked() );
-    data_.Initialize();
 }
 
 // -----------------------------------------------------------------------------

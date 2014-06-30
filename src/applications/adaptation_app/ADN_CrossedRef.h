@@ -52,7 +52,6 @@ private:
     //! @name Member data
     //@{
     ADN_TypePtr_InVector_ABC< T > ptr_;
-    std::string xmlAttributeName_;
     //@}
 };
 

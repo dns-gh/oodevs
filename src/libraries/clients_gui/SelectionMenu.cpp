@@ -338,7 +338,6 @@ void SelectionMenu::GenerateMenu()
     menu->setStyle( new StandardIconProxyStyle() );
 
     // merge with default menu
-    menu->InitializeBaseCategories();
     controllers_.actions_.ContextMenu( point_, kernel::Nothing(), *menu );
     menu->FillMenu();
 
@@ -483,7 +482,6 @@ void SelectionMenu::OnSelectionChanged( QAction* action )
             return;
 
         kernel::ContextMenu* context = new kernel::ContextMenu( action->parentWidget() );
-        context->InitializeBaseCategories();
         result.first->FillContextMenu( static_cast< const kernel::Entity_ABC& >( *result.second ), *context );
         context->FillMenu();
         action->setMenu( context );
