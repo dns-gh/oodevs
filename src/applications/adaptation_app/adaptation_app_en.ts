@@ -724,7 +724,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
     <message>
         <source>Supply class name is empty</source>
@@ -1100,6 +1100,10 @@ Parked engine running</translation>
     <message>
         <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</source>
         <translation>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</translation>
+    </message>
+    <message>
+        <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos; and will be set equal to low.</source>
+        <translation>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos; and will be set equal to low.</translation>
     </message>
 </context>
 <context>
