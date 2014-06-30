@@ -290,10 +290,10 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	c.Assert(err, IsNil)
 
 	// Launching a magic strike with good parameters
+	// Fire more than one shell to beat the odds the target lives through
+	// this unchanged
 	const dotation81mmHighExplosiveShell = 9
 	for i := 0; i != 5; i++ {
-		// Fire more than one shell to beat the odds the target lives through
-		// this unchanged
 		err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id,
 			dotation81mmHighExplosiveShell, 1)
 		c.Assert(err, IsNil)
