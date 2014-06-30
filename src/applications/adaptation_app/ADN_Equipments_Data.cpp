@@ -405,6 +405,8 @@ void ADN_Equipments_Data::LogMaintenanceInfos::CheckValidity( ADN_ConsistencyChe
 {
     if( !NTI1Infos_.IsTypeValid() || !NTI2Infos_.IsTypeValid() || !NTI3Infos_.IsTypeValid() )
         checker.AddError( eMissingRepairType, composante, eEquipments );
+    if( bIsTower_.GetData() && rCapacity_.GetData() <= 0 )
+        checker.AddError( eInvalidTowCapacity, composante, eEquipments );
 }
 
 // -----------------------------------------------------------------------------

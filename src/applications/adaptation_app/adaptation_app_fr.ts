@@ -766,6 +766,10 @@ Arrêt moteur allumé</translation>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
+    <message>
+        <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>La capacité de remorquage doit être un nombre positif pour l&apos;équipement &apos;%1&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

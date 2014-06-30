@@ -754,6 +754,10 @@ Parked engine running</source>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
