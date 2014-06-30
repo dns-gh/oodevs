@@ -16,6 +16,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 	"masa/timeline/services"
 	"masa/timeline/swfake"
@@ -1292,7 +1293,7 @@ func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 	c.Assert(msg, NotNil)
 	child1.Parent = proto.String("")
 	child2.Parent = proto.String("")
-	c.Assert(msg.Events, DeepEquals, []*sdk.Event{child1, child2})
+	swtest.AssertEqualOrDiff(c, msg.Events, []*sdk.Event{child1, child2})
 
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
 	c.Assert(msg, NotNil)
