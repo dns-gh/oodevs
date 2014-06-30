@@ -371,10 +371,6 @@ integration.getEntitiesFromBatallion = function ()
     end
     return knowledges
 end
- 
-integration.getOperationnalEntitiesDespiteJammedFromAutomat = function ( automat, role, withPC)
-    return integration.getOperationnalEntitiesFromAutomat( automat, role, withPC)
- end
 
 --- Returns a list of all the knowledges of operational subordinates of the provided company.
 -- Communication constraints may apply, according to the noCommunication parameter.
@@ -675,3 +671,6 @@ end
 function integration.getAvoidingPositionsFor( entity )
     return { CreateProxyKnowledge( integration.ontology.types.avoidingArea, entity ) }
 end
+
+--- Deprecated
+integration.getOperationnalEntitiesDespiteJammedFromAutomat = integration.getOperationnalEntitiesFromAutomat
