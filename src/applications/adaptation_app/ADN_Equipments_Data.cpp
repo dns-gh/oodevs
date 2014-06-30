@@ -1252,17 +1252,6 @@ ADN_Equipments_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsum
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConsumptionItem::CreateCopy
-// Created: APE 2004-12-29
-// -----------------------------------------------------------------------------
-ADN_Equipments_Data::ConsumptionItem* ADN_Equipments_Data::ConsumptionItem::CreateCopy( T_CategoryInfos_Vector& equipmentCategories )
-{
-    auto pCopy = new ConsumptionItem( nConsumptionType_, equipmentCategories, 0 );
-    pCopy->nQuantityUsedPerHour_ = nQuantityUsedPerHour_.GetData();
-    return pCopy;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ConsumptionItem::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
@@ -1306,16 +1295,6 @@ void ADN_Equipments_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
 ADN_Equipments_Data::ConsumptionsInfos::ConsumptionsInfos()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsumptionsInfos::CopyFrom
-// Created: APE 2005-01-25
-// -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::CopyFrom( ConsumptionsInfos& source, T_CategoryInfos_Vector& equipmentCategories )
-{
-    for( auto it = source.vConsumptions_.begin(); it != source.vConsumptions_.end(); ++it )
-        vConsumptions_.AddItem( (*it)->CreateCopy( equipmentCategories ) );
 }
 
 // -----------------------------------------------------------------------------

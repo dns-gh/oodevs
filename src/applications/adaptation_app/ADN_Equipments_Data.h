@@ -443,7 +443,6 @@ public:
                  ConsumptionItem( E_ConsumptionType nConsumptionType, const T_CategoryInfos_Vector& resources, ADN_Equipments_Data::CategoryInfos* equipmentCategory );
         virtual ~ConsumptionItem() {}
 
-        ConsumptionItem* CreateCopy( T_CategoryInfos_Vector& equipmentCategories );
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -461,7 +460,6 @@ public:
                  ConsumptionsInfos();
         virtual ~ConsumptionsInfos() {}
 
-        void CopyFrom( ConsumptionsInfos& source, T_CategoryInfos_Vector& equipmentCategories );
         void ReadArchive( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
         void ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
         void ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
