@@ -126,7 +126,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
     for( auto itAgent = perceivableAgents.begin(); itAgent != perceivableAgents.end(); ++itAgent )
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
-        if( agent.BelongsTo( *perceiver_.GetKnowledgeGroup() ) )
+        if( agent.BelongsTo( *perceiver_.GetKnowledgeGroup() ) && !agent.IsDead() )
             continue;
         if( agent.IsMarkedForDestruction() )
         {
