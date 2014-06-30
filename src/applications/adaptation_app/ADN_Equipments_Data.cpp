@@ -383,7 +383,7 @@ void ADN_Equipments_Data::LogMaintenanceInfos::ReadArchive( xml::xistream& input
 void ADN_Equipments_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "maintenance-functions" );
-    if( bIsTower_.GetData() )
+    if( bIsTower_.GetData() && rCapacity_.GetData() > 0 )
     {
         output << xml::start( "towing" )
                 << xml::attribute( "capacity", rCapacity_ )
