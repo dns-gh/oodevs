@@ -95,7 +95,6 @@ func makeevent(c *C) *sdk.Event {
 }
 
 func (TestSuite) TestFixRequest(c *C) {
-	c.Skip("unreliable, http://jira.masagroup.net/browse/SWBUG-12671")
 	ref := sdk.ClientRequest{
 		Type: sdk.Type_EVENT_CREATE.Enum(),
 		Event: &sdk.EventRequests{
