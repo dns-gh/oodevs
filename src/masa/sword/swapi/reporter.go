@@ -14,6 +14,7 @@ import (
 	"masa/sword/sword"
 	"strings"
 	"sync"
+	"time"
 )
 
 // Creates a report filter matching supplied entity identifiers.
@@ -71,20 +72,28 @@ func PrintReports(reports []*sword.Report, patterns map[uint32]string) string {
 	return strings.Join(lines, "")
 }
 
+type ReporterCond func([]*sword.Report) bool
+
 // A reporter listens to all incoming reports and records those matched by
 // supplied filter. Records are obtained when stopping the recorder.
+// Timeout controls Wait() timeout and should be changed before recording
+// reports.
 type Reporter struct {
+	Timeout time.Duration
+
 	lock      *sync.Mutex // Protects reports
 	reports   []*sword.Report
 	filter    func(*sword.Report) bool
 	handlerId int32
 	model     *Model
+	conds     []ReporterCond
 }
 
 func NewReporter(filter func(*sword.Report) bool) *Reporter {
 	return &Reporter{
-		lock:   &sync.Mutex{},
-		filter: filter,
+		Timeout: 40 * time.Second,
+		lock:    &sync.Mutex{},
+		filter:  filter,
 	}
 }
 
@@ -109,9 +118,46 @@ func (r *Reporter) Start(model *Model) {
 				r.lock.Lock()
 				defer r.lock.Unlock()
 				r.reports = append(r.reports, report)
+				for i := 0; i < len(r.conds); {
+					if r.conds[i](r.reports) {
+						r.conds = append(r.conds[:i], r.conds[i+1:]...)
+					} else {
+						i++
+					}
+				}
 			}
 			return false
 		})
+}
+
+// Returns the number of reports caught until now.
+func (r *Reporter) Count() int {
+	r.lock.Lock()
+	defer r.lock.Unlock()
+	return len(r.reports)
+}
+
+// Waits until the number of caught reports equals or exceeds "count". Returns
+// false on timeout.
+func (r *Reporter) WaitCount(count int) bool {
+	done := make(chan bool, 2)
+	r.lock.Lock()
+	fn := func(reports []*sword.Report) bool {
+		if len(reports) >= count {
+			done <- true
+			return true
+		}
+		return false
+	}
+	r.conds = append(r.conds, fn)
+	r.lock.Unlock()
+
+	go func() {
+		time.Sleep(r.Timeout)
+		done <- false
+	}()
+
+	return <-done
 }
 
 // Append a nil Report entry to the lock list. Used to explicitely separate

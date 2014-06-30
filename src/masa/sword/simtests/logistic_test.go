@@ -351,6 +351,9 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 		return data.Units[unit.Id].Installation == 100
 	})
 
+	// Assume all starting reports have been emitted at that point
+	starting := startingReporter.Count()
+
 	// Deploy TC2 to another position to force undeployment and deployment
 	MissionLogDeploy := uint32(44584)
 	heading := swapi.MakeHeading(0)
@@ -364,7 +367,10 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 	params := swapi.MakeParameters(heading, nil, limit1, limit2, swapi.MakePointParam(destination))
 	_, err := client.SendAutomatOrder(tc2.Id, MissionLogDeploy, params)
 	c.Assert(err, IsNil)
-	model.WaitTicks(10)
+
+	// Wait until the TC2 has deployed again
+	ok := endingReporter.WaitCount(starting + 1)
+	c.Assert(ok, Equals, true)
 
 	// Check reports
 	startingReports := startingReporter.Stop()
