@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	. "launchpad.net/gocheck"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 )
 
@@ -62,7 +63,7 @@ func jsoncompare(c *C, a, b []byte) {
 	c.Assert(err, IsNil)
 	err = jsondecode(b, &rawb)
 	c.Assert(err, IsNil)
-	c.Assert(rawa, DeepEquals, rawb)
+	swtest.AssertEqualOrDiff(c, rawa, rawb)
 }
 
 func testcycle(c *C, text []byte, dst, ref interface{}) {
@@ -95,7 +96,6 @@ func makeevent(c *C) *sdk.Event {
 }
 
 func (TestSuite) TestFixRequest(c *C) {
-	c.Skip("unreliable, http://jira.masagroup.net/browse/SWBUG-12671")
 	ref := sdk.ClientRequest{
 		Type: sdk.Type_EVENT_CREATE.Enum(),
 		Event: &sdk.EventRequests{

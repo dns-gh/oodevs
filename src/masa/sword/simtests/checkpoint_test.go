@@ -9,14 +9,12 @@
 package simtests
 
 import (
-	"github.com/davecgh/go-spew/spew"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/simu"
 	"masa/sword/swtest"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"time"
 )
@@ -167,18 +165,10 @@ func normalizeModel(model *swapi.ModelData) *swapi.ModelData {
 	return n
 }
 
-func stringifyModel(model interface{}) string {
-	cfg := spew.NewDefaultConfig()
-	cfg.SortKeys = true
-	s := cfg.Sdump(model)
-	s = regexp.MustCompile(`\(0x[0-9a-zA-Z]+\)`).ReplaceAllString(s, "")
-	return s
-}
-
 // Compare m1 and m2 for quasi-equality, fail and display a diff on mismatch.
 func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
-	n1 := stringifyModel(normalizeModel(m1))
-	n2 := stringifyModel(normalizeModel(m2))
+	n1 := swtest.Stringify(normalizeModel(m1))
+	n2 := swtest.Stringify(normalizeModel(m2))
 	if n1 == n2 {
 		return
 	}
