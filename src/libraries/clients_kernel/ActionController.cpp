@@ -41,7 +41,6 @@ ActionController::ActionController()
     , selectInRectangle_( false )
     , menu_()
 {
-    menu_.InitializeBaseCategories();
     InitializeSelectionners();
 }
 

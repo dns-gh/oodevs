@@ -9,8 +9,23 @@
 
 #include "clients_kernel_pch.h"
 #include "ContextMenu.h"
+#include <boost/assign.hpp>
 
 using namespace kernel;
+
+namespace
+{
+
+const std::vector< std::string > baseCategories_ = boost::assign::list_of
+    ( "Interface" )
+    ( "Order" )
+    ( "Command" )
+    ( "Helpers" )
+    ( "Creation" )
+    ( "Target" )
+    ( "Parameter" );
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu constructor
@@ -39,24 +54,6 @@ ContextMenu::ContextMenu( QWidget* parent )
 ContextMenu::~ContextMenu()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ContextMenu::InitializeBaseCategories
-// Created: ABR 2012-01-03
-// -----------------------------------------------------------------------------
-void ContextMenu::InitializeBaseCategories()
-{
-    if( baseCategories_.empty() )
-    {
-        baseCategories_.push_back( "Interface" );
-        baseCategories_.push_back( "Order" );
-        baseCategories_.push_back( "Command" );
-        baseCategories_.push_back( "Helpers" );
-        baseCategories_.push_back( "Creation" );
-        baseCategories_.push_back( "Target" );
-        baseCategories_.push_back( "Parameter" );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -174,15 +171,53 @@ ContextMenu::T_MenuVariant ContextMenu::InsertVariant( const std::string& catego
     return result;
 }
 
+namespace
+{
+
+std::pair< bool, QString > GetVariantTitle( ContextMenu::T_MenuVariant variant )
+{
+    const QString name = boost::get< QAction* >( &variant )
+        ? boost::get< QAction* >( variant )->text()
+        : boost::get< ContextMenu* >( variant )->title();
+    return std::make_pair( boost::get< QAction* >( &variant ) != 0, name );
+}
+
+} // namespace
+
+ContextMenu::T_MenuVariant ContextMenu::InsertMenuVariant(
+        const std::string& category, T_MenuVariant variant, bool separatorText,
+        int index )
+{
+    T_SubMenus& subMenus = GetCategoryCreateIFN( category, separatorText );
+
+    // Deduplicate entries by (type, title)
+    const auto title = GetVariantTitle( variant );
+    for( auto it = subMenus.begin(); it != subMenus.end(); ++it )
+    {
+        if( GetVariantTitle( it->second ) == title )
+        {
+            // Delete current instance and return the other one
+            if( auto action = boost::get< QAction* >( &variant ) )
+                delete *action;
+            else
+                delete boost::get< ContextMenu* >( variant );
+            return it->second;
+        }
+    }
+    const int pos = index == -1 ? static_cast< int >( subMenus.size() ) : index;
+    subMenus.insert( std::make_pair( pos, variant ) );
+    return variant;
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::InsertAction
 // Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------
 QAction* ContextMenu::InsertAction( const std::string& category, QAction* action, bool separatorText /* = false */, int index /* = -1*/ )
 {
-    T_SubMenus& subMenus = GetCategoryCreateIFN( category, separatorText );
-    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = action;
-    return action;
+    const auto v = InsertMenuVariant( category, action, separatorText, index );
+    return boost::get< QAction* >( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,11 +227,12 @@ QAction* ContextMenu::InsertAction( const std::string& category, QAction* action
 // -----------------------------------------------------------------------------
 QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, bool separatorText /* = false */, int index /* = -1*/ )
 {
-    T_SubMenus& subMenus = GetCategoryCreateIFN( category, separatorText );
     QAction* action = new QAction( text, this );
-    QObject::connect( action, SIGNAL( triggered() ), receiver, member );
-    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = action;
-    return action;
+    const auto v = InsertMenuVariant( category, action, separatorText, index );
+    const auto a = boost::get< QAction* >( v );
+    if( a == action )
+        QObject::connect( action, SIGNAL( triggered() ), receiver, member );
+    return a;
 }
 
 // -----------------------------------------------------------------------------
@@ -206,11 +242,13 @@ QAction* ContextMenu::InsertItem( const std::string& category, const QString& te
 // -----------------------------------------------------------------------------
 QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel /* = 0*/, int index /* = -1*/ )
 {
-    T_SubMenus& subMenus = GetCategoryCreateIFN( category, false );
     QAction* action = new QAction( text, this );
     action->setShortcut( accel );
-    QObject::connect( action, SIGNAL( triggered() ), receiver, member );
-    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = action;
+    const auto v = InsertMenuVariant( category, action, false, index );
+    const auto a = boost::get< QAction* >( v );
+    if( a == action )
+        QObject::connect( action, SIGNAL( triggered() ), receiver, member );
+    return a;
     return action;
 }
 
@@ -221,10 +259,9 @@ QAction* ContextMenu::InsertItem( const std::string& category, const QString& te
 // -----------------------------------------------------------------------------
 QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, int index /* = -1*/ )
 {
-    T_SubMenus& subMenus = GetCategoryCreateIFN( category, false );
     QAction* action = new QAction( text, this );
-    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = action;
-    return action;
+    const auto v = InsertMenuVariant( category, action, false, index );
+    return boost::get< QAction* >( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -234,10 +271,8 @@ QAction* ContextMenu::InsertItem( const std::string& category, const QString& te
 // -----------------------------------------------------------------------------
 QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, ContextMenu* subMenu, int index /* = -1*/ )
 {
-    T_SubMenus& subMenus = GetCategoryCreateIFN( category, false );
-    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = subMenu;
     subMenu->setTitle( text );
-    return subMenu->menuAction();
+    return SubMenu( category, subMenu, false, index )->menuAction();
 }
 
 // -----------------------------------------------------------------------------
@@ -247,33 +282,9 @@ QAction* ContextMenu::InsertItem( const std::string& category, const QString& te
 // -----------------------------------------------------------------------------
 ContextMenu* ContextMenu::SubMenu( const std::string& category, const QString& text, bool textSeparator /* = false */, int index /* = -1*/  )
 {
-    T_SubMenus& subMenus = GetCategoryCreateIFN( category, textSeparator );
-
-    // Check if exist by index
-    if( index != -1 )
-    {
-        CIT_SubMenus subMenu = subMenus.find( index );
-        if( subMenu != subMenus.end() )
-        {
-            if( ContextMenu* const* existingMenu = boost::get< ContextMenu* >( &subMenu->second ) )
-            {
-                assert( text == ( *existingMenu )->title() );
-                return *existingMenu;
-            }
-        }
-    }
-    // Check if exist by name
-    else
-        for( CIT_SubMenus subMenu = subMenus.begin(); subMenu != subMenus.end(); ++subMenu )
-            if( ContextMenu* const* existingMenu = boost::get< ContextMenu* >( &subMenu->second ) )
-                if( text == ( *existingMenu )->title() )
-                    return *existingMenu;
-
-    // Create
     ContextMenu* newMenu = new ContextMenu( this );
     newMenu->setTitle( text );
-    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = newMenu;
-    return newMenu;
+    return SubMenu( category, newMenu, textSeparator, index );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,39 +293,8 @@ ContextMenu* ContextMenu::SubMenu( const std::string& category, const QString& t
 // -----------------------------------------------------------------------------
 ContextMenu* ContextMenu::SubMenu( const std::string& category, ContextMenu* newMenu, bool textSeparator /*= false*/, int index /*= -1*/ )
 {
-    T_SubMenus& subMenus = GetCategoryCreateIFN( category, textSeparator );
-
-    // Check if exist by index
-    if( index != -1 )
-    {
-        CIT_SubMenus subMenu = subMenus.find( index );
-        if( subMenu != subMenus.end() )
-        {
-            if( ContextMenu* const* existingMenu = boost::get< ContextMenu* >( &subMenu->second ) )
-            {
-                assert( newMenu->title() == ( *existingMenu )->title() );
-                if( newMenu != *existingMenu )
-                    delete newMenu;
-                newMenu = *existingMenu;
-                return newMenu;
-            }
-        }
-    }
-    // Check if exist by name
-    else
-        for( CIT_SubMenus subMenu = subMenus.begin(); subMenu != subMenus.end(); ++subMenu )
-            if( ContextMenu* const* existingMenu = boost::get< ContextMenu* >( &subMenu->second ) )
-                if( newMenu->title() == ( *existingMenu )->title() )
-                {
-                    if( newMenu != *existingMenu )
-                        delete newMenu;
-                    newMenu = *existingMenu;
-                    return newMenu;
-                }
-
-    // Add
-    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = newMenu;
-    return newMenu;
+    const auto v = InsertMenuVariant( category, newMenu, textSeparator, index );
+    return boost::get< ContextMenu* >( v );
 }
 
 // -----------------------------------------------------------------------------
