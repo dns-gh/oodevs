@@ -561,6 +561,13 @@ void ADN_Equipments_Data::LogInfos::CheckValidity( ADN_ConsistencyChecker& check
 {
     if( bHasMaintenanceInfos_.GetData() )
         maintenanceInfos_.CheckValidity( checker, composante );
+    if( bHasSupplyInfos_.GetData() )
+    {
+        if( supplyInfos_.rMaxWeight_.GetData() <= 0 )
+            checker.AddError( eInvalidMaxMassCarried, composante, eEquipments );
+        if( supplyInfos_.rMaxVolume_.GetData() <= 0 )
+            checker.AddError( eInvalidMaxVolumeCarried, composante, eEquipments );
+    }
 }
 
 // -----------------------------------------------------------------------------

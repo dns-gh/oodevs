@@ -22,6 +22,8 @@ enum E_ConsistencyCheck
     eMissionAttachmentInvalid,
     eMissingRepairType,
     eInvalidTowCapacity,
+    eInvalidMaxMassCarried,
+    eInvalidMaxVolumeCarried,
     eMissingConvoy,
     eMissingConvoyMission,
     eMissingBreakdown,

@@ -770,6 +770,14 @@ Arrêt moteur allumé</translation>
         <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
         <translation>La capacité de remorquage doit être un nombre positif pour l&apos;équipement &apos;%1&apos;.</translation>
     </message>
+    <message>
+        <source>Max volume carried must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>Le volume max transportable doit être un nombre positif pour l&apos;équipement &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Max weight carried must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>La masse max transportable doit être un nombre positif pour l&apos;équipement &apos;%1&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

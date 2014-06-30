@@ -770,6 +770,14 @@ Parked engine running</translation>
         <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
         <translation>Tow capacity must be a positive number for equipment &apos;%1&apos;.</translation>
     </message>
+    <message>
+        <source>Max volume carried must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>Max volume carried must be a positive number for equipment &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Max weight carried must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>Max weight carried must be a positive number for equipment &apos;%1&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
