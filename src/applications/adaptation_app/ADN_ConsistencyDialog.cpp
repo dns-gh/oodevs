@@ -34,6 +34,7 @@ namespace
                type == eInvalidTowCapacity ||
                type == eInvalidMaxMassCarried ||
                type == eInvalidMaxVolumeCarried ||
+               type == eInvalidCrowdTransportCapacity ||
                type == eInvalidPtrInVector ||
                type == eBadBreakdownSum ||
                type == eInhabitantSchedule ||
@@ -78,6 +79,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eInvalidTowCapacity ]     = tr( "Tow capacity must be a positive number for equipment '%1'." );
     errorDescriptions_[ eInvalidMaxMassCarried ]  = tr( "Max weight carried must be a positive number for equipment '%1'." );
     errorDescriptions_[ eInvalidMaxVolumeCarried ] = tr( "Max volume carried must be a positive number for equipment '%1'." );
+    errorDescriptions_[ eInvalidCrowdTransportCapacity ] = tr( "Crowd transport capacity must be a positive number for equipment '%1'." );
 
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
     errorDescriptions_[ eObjectTypeUniqueness ]   = tr( "Duplicate type for objects %1" ) + error;

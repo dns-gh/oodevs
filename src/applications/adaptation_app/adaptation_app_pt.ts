@@ -766,6 +766,10 @@ Parked engine running</source>
         <source>Max weight carried must be a positive number for equipment &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Crowd transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
