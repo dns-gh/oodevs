@@ -398,14 +398,15 @@ void ADN_Equipments_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& outp
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogMaintenanceInfos::IsRepairTypeValid
+// Name: LogMaintenanceInfos::CheckValidity
 // Created: MMC 2013-04-02
 // -----------------------------------------------------------------------------
-bool ADN_Equipments_Data::LogMaintenanceInfos::IsRepairTypeValid() const
+void ADN_Equipments_Data::LogMaintenanceInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const
 {
     if( !NTI1Infos_.IsTypeValid() || !NTI2Infos_.IsTypeValid() || !NTI3Infos_.IsTypeValid() )
-        return false;
-    return true;
+        checker.AddError( eMissingRepairType, composante, eEquipments );
+    if( bIsTower_.GetData() && rCapacity_.GetData() <= 0 )
+        checker.AddError( eInvalidTowCapacity, composante, eEquipments );
 }
 
 // -----------------------------------------------------------------------------
@@ -553,14 +554,13 @@ void ADN_Equipments_Data::LogInfos::WriteArchive( xml::xostream& output ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogInfos::IsRepairTypeValid
+// Name: LogInfos::CheckValidity
 // Created: MMC 2013-04-02
 // -----------------------------------------------------------------------------
-bool ADN_Equipments_Data::LogInfos::IsRepairTypeValid() const
+void ADN_Equipments_Data::LogInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const
 {
-    if( !bHasMaintenanceInfos_.GetData() )
-        return true;
-    return maintenanceInfos_.IsRepairTypeValid();
+    if( bHasMaintenanceInfos_.GetData() )
+        maintenanceInfos_.CheckValidity( checker, composante );
 }
 
 // -----------------------------------------------------------------------------
@@ -2016,8 +2016,7 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
     }
     attritionBreakdowns_.CheckValidity( checker, strName_.GetData() );
     randomBreakdowns_.CheckValidity( checker, strName_.GetData() );
-    if( !logInfos_.IsRepairTypeValid() )
-        checker.AddError( eMissingRepairType, strName_.GetData(), eEquipments );
+    logInfos_.CheckValidity( checker, strName_.GetData() );
     for( auto it = resources_.categories_.begin(); it != resources_.categories_.end(); ++it )
         if( (*it)->rLogLowThreshold_.GetData() > (*it)->rLogHighThreshold_.GetData() )
             checker.AddError( eRepartitionError, strName_.GetData(), eEquipments, -1,

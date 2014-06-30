@@ -724,7 +724,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
     <message>
         <source>Supply class name is empty</source>
@@ -765,6 +765,10 @@ Parked engine running</translation>
     <message>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
+    </message>
+    <message>
+        <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>Tow capacity must be a positive number for equipment &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>
@@ -1100,6 +1104,10 @@ Parked engine running</translation>
     <message>
         <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</source>
         <translation>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</translation>
+    </message>
+    <message>
+        <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos; and will be set equal to low.</source>
+        <translation>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos; and will be set equal to low.</translation>
     </message>
 </context>
 <context>

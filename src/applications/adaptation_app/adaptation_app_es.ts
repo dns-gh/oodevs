@@ -767,6 +767,10 @@ Estacionado y motor encendido</translation>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1100,6 +1104,10 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos; and will be set equal to low.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

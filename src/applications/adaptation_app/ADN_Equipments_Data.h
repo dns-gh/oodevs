@@ -118,8 +118,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadInfo( const std::string& type, xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
-
-        bool IsRepairTypeValid() const;
+        void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const;
 
     public:
         ADN_Type_Bool bIsTower_;
@@ -164,8 +163,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadLogisticFunction( const std::string& type, xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
-
-        bool IsRepairTypeValid() const;
+        void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const;
 
     public:
         ADN_Type_Bool bHasHealthInfos_;

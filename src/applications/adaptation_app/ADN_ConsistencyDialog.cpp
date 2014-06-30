@@ -31,6 +31,7 @@ namespace
                type == eMissionTypeUniqueness ||
                type == eObjectTypeUniqueness ||
                type == eMissingRepairType ||
+               type == eInvalidTowCapacity ||
                type == eInvalidPtrInVector ||
                type == eBadBreakdownSum ||
                type == eInhabitantSchedule ||
@@ -72,6 +73,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingSymbols ]         = tr( "The symbols %1 are defined in symbols.xml but not found in Symbols directory." );
     errorDescriptions_[ eMissionAttachmentInvalid ] = tr( "The file %2 included in the mission %1 is invalid or not present in the attachment list." );
     errorDescriptions_[ eMissingRepairType ]      = tr( "Maintenance system definition is incorrect for equipment '%1'. At least one breakdown type must be defined for each severity." );
+    errorDescriptions_[ eInvalidTowCapacity ]     = tr( "Tow capacity must be a positive number for equipment '%1'." );
 
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
     errorDescriptions_[ eObjectTypeUniqueness ]   = tr( "Duplicate type for objects %1" ) + error;
