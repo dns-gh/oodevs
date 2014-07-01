@@ -32,6 +32,10 @@ namespace
                type == eObjectTypeUniqueness ||
                type == eMissingRepairType ||
                type == eInvalidTowCapacity ||
+               type == eInvalidMaxMassCarried ||
+               type == eInvalidMaxVolumeCarried ||
+               type == eInvalidCargoTransportCapacity ||
+               type == eInvalidCrowdTransportCapacity ||
                type == eInvalidPtrInVector ||
                type == eBadBreakdownSum ||
                type == eInhabitantSchedule ||
@@ -74,6 +78,10 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissionAttachmentInvalid ] = tr( "The file %2 included in the mission %1 is invalid or not present in the attachment list." );
     errorDescriptions_[ eMissingRepairType ]      = tr( "Maintenance system definition is incorrect for equipment '%1'. At least one breakdown type must be defined for each severity." );
     errorDescriptions_[ eInvalidTowCapacity ]     = tr( "Tow capacity must be a positive number for equipment '%1'." );
+    errorDescriptions_[ eInvalidMaxMassCarried ]  = tr( "Max weight carried must be a positive number for equipment '%1'." );
+    errorDescriptions_[ eInvalidMaxVolumeCarried ] = tr( "Max volume carried must be a positive number for equipment '%1'." );
+    errorDescriptions_[ eInvalidCargoTransportCapacity ] = tr( "Cargo transport capacity must be a positive number for equipment '%1'." );
+    errorDescriptions_[ eInvalidCrowdTransportCapacity ] = tr( "Crowd transport capacity must be a positive number for equipment '%1'." );
 
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
     errorDescriptions_[ eObjectTypeUniqueness ]   = tr( "Duplicate type for objects %1" ) + error;
