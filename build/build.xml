@@ -527,7 +527,6 @@
         <check-gui app="adaptation_app"/>
         <check-gui app="preparation_app"/>
         <check-gui app="selftraining_app">
-            <arg value="--launcher-port=${test.port}"/>
             <arg value="--dispatcher-port=${test.port2}"/>
             <arg value="--test"/>
         </check-gui>
