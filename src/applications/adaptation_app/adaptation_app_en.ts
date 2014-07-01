@@ -782,6 +782,10 @@ Parked engine running</translation>
         <source>Crowd transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
         <translation>Crowd transport capacity must be a positive number for equipment &apos;%1&apos;.</translation>
     </message>
+    <message>
+        <source>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

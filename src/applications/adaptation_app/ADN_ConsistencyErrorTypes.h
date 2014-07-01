@@ -24,6 +24,7 @@ enum E_ConsistencyCheck
     eInvalidTowCapacity,
     eInvalidMaxMassCarried,
     eInvalidMaxVolumeCarried,
+    eInvalidCargoTransportCapacity,
     eInvalidCrowdTransportCapacity,
     eMissingConvoy,
     eMissingConvoyMission,

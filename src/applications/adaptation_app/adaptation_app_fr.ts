@@ -782,6 +782,10 @@ Arrêt moteur allumé</translation>
         <source>Crowd transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
         <translation>La capacité de transport de foule doit être un nombre positif pour l&apos;équipement &apos;%1&apos;.</translation>
     </message>
+    <message>
+        <source>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation>La capacité de transport de pions doit être un nombre positif pour l&apos;équipement &apos;%1&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

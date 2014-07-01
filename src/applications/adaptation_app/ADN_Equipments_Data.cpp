@@ -2029,6 +2029,8 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
             checker.AddError( eRepartitionError, strName_.GetData(), eEquipments, -1,
                 tools::translate( "ADN_Equipments_Data", "Invalid thresholds, high \'%1\' must be superior than low \'%2\'." )
                     .arg( (*it)->rLogHighThreshold_.GetData() ).arg( (*it)->rLogLowThreshold_.GetData() ).toStdString() );
+    if( bCanCarryCargo_.GetData() && rWeightTransportCapacity_.GetData() <= 0 )
+        checker.AddError( eInvalidCargoTransportCapacity, strName_.GetData(), eEquipments );
     if( bCanCarryCrowd_.GetData() && nCrowdTransportCapacity_.GetData() <= 0 )
         checker.AddError( eInvalidCrowdTransportCapacity, strName_.GetData(), eEquipments );
 }
