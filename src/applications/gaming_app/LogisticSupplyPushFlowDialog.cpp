@@ -366,7 +366,20 @@ void LogisticSupplyPushFlowDialog::SetSuppliesToTable( const kernel::Automat_ABC
     for( auto it = availableSupplies_.begin(); it != availableSupplies_.end(); ++it )
         if( !it->first.isEmpty() && it->second.type_ && it->second.quantity_ > 0 )
             if( isPushFlow_ || HasDotation( recipient, it->first ) )
-                maxQuantities[ it->first ] = it->second.quantity_;
+            {
+                int quantity = it->second.quantity_;
+                // remove from available quantity the dotations that are already allocated
+                for( auto recIt = recipientSupplies_.begin(); recIt != recipientSupplies_.end(); ++recIt )
+                {
+                    if( recIt->first == &recipient )
+                        continue;
+                    const T_QuantitiesMap& quantities = recIt->second;
+                    for( auto qIt = quantities.begin(); qIt != quantities.end(); ++qIt )
+                        if( qIt.key() == it->first )
+                            quantity = std::max( 0, quantity - qIt.value() );
+                }
+                maxQuantities[ it->first ] = quantity;
+            }
     resourcesTable_->SetQuantities( recipientSupplies_[ &recipient ], maxQuantities );
 }
 
