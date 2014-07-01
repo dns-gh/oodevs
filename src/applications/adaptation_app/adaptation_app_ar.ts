@@ -4144,14 +4144,6 @@ PNG (*.png)
         <translation type="unfinished">الكائن الذي تم إنشاؤه</translation>
     </message>
     <message>
-        <source>Mine ammo parameters</source>
-        <translation type="unfinished">معلمات ذخيرة الأعمال المتعلقة بالألغام</translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation type="unfinished">كمية الألغام</translation>
-    </message>
-    <message>
         <source>Illumination capacity</source>
         <translation type="unfinished">قدرة الإضاءة</translation>
     </message>

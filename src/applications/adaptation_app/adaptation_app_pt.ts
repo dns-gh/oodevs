@@ -4149,14 +4149,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mine ammo parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Illumination capacity</source>
         <translation type="unfinished"></translation>
     </message>

@@ -94,7 +94,6 @@ ADN_Resources_GUI::ADN_Resources_GUI( ADN_Resources_Data& data )
     , pExplosiveParametersGroup_( 0 )
     , pFlareParametersGroup_( 0 )
     , pEffectParametersGroup_( 0 )
-    , pMineParametersGroup_( 0 )
     , pSmokeParametersGroup_( 0 )
 {
     // NOTHING
@@ -354,12 +353,6 @@ void ADN_Resources_GUI::BuildAmmunition()
         builder.PushSubName( "param-effect" );
         builder.AddField< ADN_ComboBox_Vector >( pEffectParametersGroup_, "created-object", tr( "Created object" ), vConnectors[ eEffectType ] );
         builder.AddField< ADN_TimeField >( pEffectParametersGroup_, "span", tr( "Span" ), vConnectors[ eEffectLifetime ] );
-        builder.PopSubName();
-
-        // Mine parameters
-        pMineParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pEffectsInfo );
-        builder.PushSubName( "param-mine" );
-        builder.AddField< ADN_EditLine_Int >( pMineParametersGroup_, "quantity", tr( "Mines quantity" ), vConnectors[ eMineNumber ], 0, eGreaterEqualZero );
         builder.PopSubName();
     }
     builder.PopSubName(); //! indirect-fire

@@ -79,7 +79,6 @@ public:
         eFlareDispersion,
         eEffectType,
         eEffectLifetime,
-        eMineNumber,
         eDirect,
         eIndirect,
         eIlluminating,
@@ -175,7 +174,6 @@ private:
     Q3GroupBox*                                                        pExplosiveParametersGroup_;
     Q3GroupBox*                                                        pFlareParametersGroup_;
     Q3GroupBox*                                                        pEffectParametersGroup_;
-    Q3GroupBox*                                                        pMineParametersGroup_;
     Q3GroupBox*                                                        pSmokeParametersGroup_;
     //@}
 };

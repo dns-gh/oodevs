@@ -4157,14 +4157,6 @@ PNG (*.png)
         <translation>Created object</translation>
     </message>
     <message>
-        <source>Mine ammo parameters</source>
-        <translation>Mine ammo parameters</translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation>Mine quantity</translation>
-    </message>
-    <message>
         <source>Illumination capacity</source>
         <translation>Illumination capacity</translation>
     </message>
