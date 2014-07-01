@@ -32,7 +32,6 @@ public:
     //! @name Operations
     //@{
     const tools::Path& GetPackageFile() const;
-    unsigned short GetLauncherPort() const;
     bool IsTestMode() const;
     //@}
 
@@ -40,7 +39,6 @@ private:
     //! @name Member data
     //@{
     tools::Path package_;
-    unsigned short launcherPort_;
     //@}
 };
 }
