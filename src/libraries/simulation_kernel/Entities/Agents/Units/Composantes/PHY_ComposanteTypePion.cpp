@@ -439,18 +439,32 @@ void PHY_ComposanteTypePion::InitializeTransport( xml::xistream& xis )
         >> xml::end;
 }
 
+namespace
+{
+
+double ReadLoadingTime( xml::xistream& xis, const std::string& category,
+        const std::string& name, double capacity )
+{
+    double duration;
+    tools::ReadTimeAttribute( xis, name, duration );
+    if( duration < 0 )
+        throw MASA_EXCEPTION( xis.context() + category + ": " + name + " < 0" );
+    if( duration < 1e-6 )
+        // We can load everyone in one tick
+        return capacity;
+    return 1. / MIL_Tools::ConvertSecondsToSim( duration );
+}
+
+}  // namespace
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::ReadTransportCrew
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
 {
-    if( !tools::ReadTimeAttribute( xis, "man-boarding-time", rNbrHumansLoadedPerTimeStep_ ) || rNbrHumansLoadedPerTimeStep_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "crew: man-boarding-time < 0" );
-    if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedPerTimeStep_ ) || rNbrHumansUnloadedPerTimeStep_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "crew: man-unloading-time < 0" );
-    rNbrHumansLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedPerTimeStep_   );
-    rNbrHumansUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedPerTimeStep_ );
+    rNbrHumansLoadedPerTimeStep_ = ReadLoadingTime( xis, "crew", "man-boarding-time", std::numeric_limits< double >::max() );
+    rNbrHumansUnloadedPerTimeStep_ = ReadLoadingTime( xis, "crew", "man-unloading-time", std::numeric_limits< double >::max() );
 }
 
 // -----------------------------------------------------------------------------
@@ -715,24 +729,6 @@ void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
             >> xml::list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
         >> xml::end;
 }
-
-namespace
-{
-
-double ReadLoadingTime( xml::xistream& xis, const std::string& category,
-        const std::string& name, unsigned int capacity )
-{
-    double duration;
-    tools::ReadTimeAttribute( xis, name, duration );
-    if( duration < 0 )
-        throw MASA_EXCEPTION( xis.context() + category + ": " + name + " < 0" );
-    if( duration < 1e-6 )
-        // We can load everyone in one tick
-        return capacity;
-    return 1. / MIL_Tools::ConvertSecondsToSim( duration );
-}
-
-}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::ReadRelieving
