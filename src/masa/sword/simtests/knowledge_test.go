@@ -81,7 +81,7 @@ func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 	armies := data.Parties
 	c.Assert(len(armies), Greater, 1)
 	var otherPartyId uint32
-	for otherPartyId, _ := range armies {
+	for otherPartyId := range armies {
 		if otherPartyId != kg.PartyId {
 			break
 		}

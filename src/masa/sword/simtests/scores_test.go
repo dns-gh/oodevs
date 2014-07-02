@@ -25,8 +25,8 @@ func (s *TestSuite) TestScores(c *C) {
 	})
 	model := client.Model.GetData()
 	c.Assert(model.KnownScores, DeepEquals, map[string]struct{}{
-		scoreEq:   struct{}{},
-		scoreDist: struct{}{},
+		scoreEq:   {},
+		scoreDist: {},
 	})
 
 	// Wait for the values to be populated
@@ -62,7 +62,7 @@ func (s *TestSuite) TestScores(c *C) {
 	})
 	model2 := client.Model.GetData()
 	c.Assert(model2.KnownScores, DeepEquals, map[string]struct{}{
-		scoreDist: struct{}{},
+		scoreDist: {},
 	})
 	c.Assert(model2.Scores, DeepEquals, model.Scores)
 }

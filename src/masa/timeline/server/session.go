@@ -581,7 +581,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 		updates := []*sdk.Event{proto}
 		appendParentUpdate(event, &updates)
 		if updateChildren {
-			for child, _ := range event.children {
+			for child := range event.children {
 				updates = append(updates, child.Proto())
 			}
 		}
@@ -602,7 +602,7 @@ func (s *Session) DeleteEvent(uuid string) error {
 	parent := &Event{}
 	if event != nil {
 		parent = event.parent
-		for child, _ := range event.children {
+		for child := range event.children {
 			child.parent = nil
 			updates = append(updates, child.Proto())
 		}

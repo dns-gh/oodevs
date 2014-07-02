@@ -241,7 +241,7 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 
 	data := client.Model.GetData()
 	handlingId := uint32(0)
-	for id, _ := range data.MedicalHandlings {
+	for id := range data.MedicalHandlings {
 		handlingId = id
 		break
 	}
@@ -275,7 +275,7 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 
 	// List requests for a valid unit
 	unitIds := []uint32{}
-	for id, _ := range data.Units {
+	for id := range data.Units {
 		unitIds = append(unitIds, id)
 	}
 	entries, err = client.ListLogisticRequests(-1, -1, unitIds...)

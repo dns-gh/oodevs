@@ -186,7 +186,7 @@ func (s *TestSuite) TestSupplyRequests(c *C) {
 	removeElectrogen_1 := func() {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_1): &swapi.Resource{
+				uint32(electrogen_1): {
 					Quantity:      0,
 					LowThreshold:  50,
 					HighThreshold: 100,
@@ -335,12 +335,12 @@ func (s *TestSuite) TestSupplyAutomatRequestsStocks(c *C) {
 	unit1 := getSomeUnitByName(c, d, "Supply Log Unit 1c")
 	err = client.RecoverStocks(unit1.Id,
 		map[uint32]*swapi.Resource{
-			uint32(electrogen_1): &swapi.Resource{
+			uint32(electrogen_1): {
 				Quantity:      0,
 				LowThreshold:  50,
 				HighThreshold: 100,
 			},
-			uint32(electrogen_3): &swapi.Resource{
+			uint32(electrogen_3): {
 				Quantity:      0,
 				LowThreshold:  50,
 				HighThreshold: 100,
@@ -387,7 +387,7 @@ func (s *TestSuite) TestSupplyFormationRequestsStocks(c *C) {
 
 	err := client.RecoverStocks(tc21Id,
 		map[uint32]*swapi.Resource{
-			uint32(electrogen_2): &swapi.Resource{
+			uint32(electrogen_2): {
 				Quantity:      0,
 				LowThreshold:  50,
 				HighThreshold: 100,
@@ -396,12 +396,12 @@ func (s *TestSuite) TestSupplyFormationRequestsStocks(c *C) {
 
 	err = client.RecoverStocks(tc22Id,
 		map[uint32]*swapi.Resource{
-			uint32(electrogen_1): &swapi.Resource{
+			uint32(electrogen_1): {
 				Quantity:      0,
 				LowThreshold:  50,
 				HighThreshold: 100,
 			},
-			uint32(electrogen_2): &swapi.Resource{
+			uint32(electrogen_2): {
 				Quantity:      0,
 				LowThreshold:  50,
 				HighThreshold: 100,

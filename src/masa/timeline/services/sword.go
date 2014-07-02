@@ -751,15 +751,15 @@ func isTaskerInProfile(tasker *sword.Tasker, data *swapi.ModelData, profile *swa
 
 var (
 	clientMagicActions = map[sword.UnitMagicAction_Type]struct{}{
-		sword.UnitMagicAction_log_finish_handlings:      struct{}{},
-		sword.UnitMagicAction_log_supply_change_quotas:  struct{}{},
-		sword.UnitMagicAction_log_supply_pull_flow:      struct{}{},
-		sword.UnitMagicAction_log_supply_push_flow:      struct{}{},
-		sword.UnitMagicAction_unit_change_superior:      struct{}{},
-		sword.UnitMagicAction_change_knowledge_group:    struct{}{},
-		sword.UnitMagicAction_change_logistic_links:     struct{}{},
-		sword.UnitMagicAction_change_formation_superior: struct{}{},
-		sword.UnitMagicAction_change_automat_superior:   struct{}{},
+		sword.UnitMagicAction_log_finish_handlings:      {},
+		sword.UnitMagicAction_log_supply_change_quotas:  {},
+		sword.UnitMagicAction_log_supply_pull_flow:      {},
+		sword.UnitMagicAction_log_supply_push_flow:      {},
+		sword.UnitMagicAction_unit_change_superior:      {},
+		sword.UnitMagicAction_change_knowledge_group:    {},
+		sword.UnitMagicAction_change_logistic_links:     {},
+		sword.UnitMagicAction_change_formation_superior: {},
+		sword.UnitMagicAction_change_automat_superior:   {},
 	}
 )
 

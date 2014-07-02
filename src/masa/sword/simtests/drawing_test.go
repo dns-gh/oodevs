@@ -20,8 +20,8 @@ func (s *TestSuite) TestDrawingLimit(c *C) {
 	data := client.Model.GetData()
 
 	points := []swapi.Point{
-		swapi.Point{X: -15.8241, Y: 28.3241},
-		swapi.Point{X: -15.8092, Y: 28.3458},
+		{X: -15.8241, Y: 28.3241},
+		{X: -15.8092, Y: 28.3458},
 	}
 
 	// Creation
@@ -58,8 +58,8 @@ func (s *TestSuite) TestDrawingPhaseLine(c *C) {
 	data := client.Model.GetData()
 
 	points := []swapi.Point{
-		swapi.Point{X: -15.8241, Y: 28.3241},
-		swapi.Point{X: -15.8092, Y: 28.3458},
+		{X: -15.8241, Y: 28.3241},
+		{X: -15.8092, Y: 28.3458},
 	}
 
 	// Creation

@@ -175,10 +175,10 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	skip(step)
 
 	positions := []swapi.Point{
-		swapi.Point{X: -15.9248, Y: 28.2645},
-		swapi.Point{X: -15.8429, Y: 28.3308},
-		swapi.Point{X: -15.8640, Y: 28.2507},
-		swapi.Point{X: -15.8946, Y: 28.3189},
+		{X: -15.9248, Y: 28.2645},
+		{X: -15.8429, Y: 28.3308},
+		{X: -15.8640, Y: 28.2507},
+		{X: -15.8946, Y: 28.3189},
 	}
 	_, err = client.CreatePathfind(unit.Id, positions...)
 	c.Assert(err, IsNil)

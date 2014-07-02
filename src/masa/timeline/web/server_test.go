@@ -52,12 +52,12 @@ func (TestSuite) TestServerLoadTranslations(c *C) {
 `
 	expectedTranslations := i18n.Translations{
 		"fr": i18n.TS{Lang: "fr", Version: "2.0", SourceLanguage: "en", Contexts: []i18n.Context{
-			i18n.Context{Name: "Context1", Messages: []i18n.Message{
-				i18n.Message{Source: "A", Translation: i18n.Translation{Text: "B"}},
+			{Name: "Context1", Messages: []i18n.Message{
+				{Source: "A", Translation: i18n.Translation{Text: "B"}},
 			}},
-			i18n.Context{Name: "Context2", Messages: []i18n.Message{
-				i18n.Message{Source: "C", Translation: i18n.Translation{Text: "D"}},
-				i18n.Message{Source: "E", Translation: i18n.Translation{Text: "F", Type: "unfinished"}},
+			{Name: "Context2", Messages: []i18n.Message{
+				{Source: "C", Translation: i18n.Translation{Text: "D"}},
+				{Source: "E", Translation: i18n.Translation{Text: "F", Type: "unfinished"}},
 			}},
 		}},
 	}

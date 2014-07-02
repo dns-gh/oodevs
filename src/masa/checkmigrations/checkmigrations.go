@@ -130,7 +130,7 @@ func checkXslExist(xsls []string, resourcesDir string) error {
 		referenced[xsl] = struct{}{}
 	}
 
-	for xsl, _ := range allImported {
+	for xsl := range allImported {
 		referenced[xsl] = struct{}{}
 	}
 

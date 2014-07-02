@@ -20,7 +20,7 @@ import (
 func makeBreakdown(c *C, id uint32, eq *swapi.Equipment, count int32, breakdown BreakdownType) map[uint32]*swapi.Equipment {
 	c.Assert(eq.Available, Greater, count)
 	return map[uint32]*swapi.Equipment{
-		id: &swapi.Equipment{
+		id: {
 			Available:  eq.Available - count,
 			Repairable: count,
 			Breakdowns: []int32{int32(breakdown)},
@@ -98,11 +98,11 @@ func IsProvider(d *swapi.ModelData, obtained uint32, expected *sword.Tasker, isS
 	profile := swapi.Profile{}
 	if expected.Automat != nil {
 		profile.ReadOnlyAutomats = map[uint32]struct{}{
-			expected.Automat.GetId(): struct{}{},
+			expected.Automat.GetId(): {},
 		}
 	} else if expected.Formation != nil {
 		profile.ReadOnlyFormations = map[uint32]struct{}{
-			expected.Formation.GetId(): struct{}{},
+			expected.Formation.GetId(): {},
 		}
 	}
 	return d.IsUnitInProfile(obtained, &profile)
@@ -1021,17 +1021,17 @@ func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
 			func(ctx *MaintenanceCheckContext) error {
 				return client.ChangeHumanState(unit.Id,
 					[]*swapi.Human{
-						&swapi.Human{
+						{
 							Quantity: 1,
 							Rank:     0,
 							State:    2,
 						},
-						&swapi.Human{
+						{
 							Quantity: 1,
 							Rank:     1,
 							State:    2,
 						},
-						&swapi.Human{
+						{
 							Quantity: 3,
 							Rank:     2,
 							State:    2,

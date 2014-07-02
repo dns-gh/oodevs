@@ -393,7 +393,7 @@ func (s *TestSuite) TestActiveProtection(c *C) {
 
 	// Deplete "ammunition" and test counter protection
 	err = client.ChangeResource(target.Id, map[uint32]*swapi.Resource{
-		ammunitionId: &swapi.Resource{
+		ammunitionId: {
 			Quantity: 1,
 		},
 	})
