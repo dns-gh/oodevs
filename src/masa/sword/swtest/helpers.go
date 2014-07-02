@@ -12,7 +12,7 @@ import (
 	"flag"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/pmezard/go-difflib/difflib"
-	. "launchpad.net/gocheck"
+	"launchpad.net/gocheck"
 	"regexp"
 	"runtime"
 )
@@ -74,12 +74,12 @@ func Stringify(a interface{}) string {
 	return s
 }
 
-func AssertEqualOrDiff(c *C, result, expected interface{}) {
+func DeepEquals(c *gocheck.C, result, expected interface{}) {
 	resultStr := Stringify(result)
 	expectedStr := Stringify(expected)
 	if expectedStr != resultStr {
 		diff, err := makeDiff(expectedStr, resultStr)
-		c.Assert(err, IsNil)
+		c.Assert(err, gocheck.IsNil)
 		c.Errorf("\n%s\n", diff)
 	}
 }

@@ -99,7 +99,7 @@ func diffScript(c *C, client *swapi.Client, script string, keys map[string]inter
 	c.Assert(err, IsNil)
 	parts := strings.Split(output, "-- EXPECTED --\n")
 	c.Assert(parts, HasLen, 2)
-	swtest.AssertEqualOrDiff(c, parts[0], parts[1])
+	swtest.DeepEquals(c, parts[0], parts[1])
 }
 
 func (s *TestSuite) TestGenericLuaErrors(c *C) {

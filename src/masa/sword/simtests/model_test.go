@@ -270,7 +270,7 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 	dump := printParties(&prettyPrinter{HideUnstable: true},
 		model.GetData()).GetOutput()
 	expected := readFileAsString(c, "testdata/model.txt")
-	swtest.AssertEqualOrDiff(c, dump, expected)
+	swtest.DeepEquals(c, dump, expected)
 	client.Close()
 
 	// Do not enable the model, it is there but get no updates

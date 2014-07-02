@@ -63,7 +63,7 @@ func jsoncompare(c *C, a, b []byte) {
 	c.Assert(err, IsNil)
 	err = jsondecode(b, &rawb)
 	c.Assert(err, IsNil)
-	swtest.AssertEqualOrDiff(c, rawa, rawb)
+	swtest.DeepEquals(c, rawa, rawb)
 }
 
 func testcycle(c *C, text []byte, dst, ref interface{}) {

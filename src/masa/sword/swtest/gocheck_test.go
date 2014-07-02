@@ -10,7 +10,7 @@ package swtest
 
 import (
 	"io/ioutil"
-	. "launchpad.net/gocheck"
+	"launchpad.net/gocheck"
 	"os"
 	"testing"
 )
@@ -23,17 +23,17 @@ func init() {
 	Cfg = ParseFlags()
 }
 
-func Test(t *testing.T) { TestingT(t) }
+func Test(t *testing.T) { gocheck.TestingT(t) }
 
 type TestSuite struct{}
 
-var _ = Suite(&TestSuite{})
+var _ = gocheck.Suite(&TestSuite{})
 
-func (s *TestSuite) TestProcessReport(c *C) {
+func (s *TestSuite) TestProcessReport(c *gocheck.C) {
 	sample, err := ioutil.ReadFile("testdata/report.txt")
-	c.Assert(err, IsNil)
+	c.Assert(err, gocheck.IsNil)
 	expected, err := ioutil.ReadFile("testdata/expected.txt")
-	c.Assert(err, IsNil)
+	c.Assert(err, gocheck.IsNil)
 
 	report := ProcessReport(string(sample))
 	output := report.Config + "\n"
@@ -43,10 +43,10 @@ func (s *TestSuite) TestProcessReport(c *C) {
 	// Change this to update the test reference output
 	if false {
 		fp, err := os.Create("testdata/expected.txt")
-		c.Assert(err, IsNil)
+		c.Assert(err, gocheck.IsNil)
 		defer fp.Close()
 		_, err = fp.Write([]byte(output))
-		c.Assert(err, IsNil)
+		c.Assert(err, gocheck.IsNil)
 	}
-	AssertEqualOrDiff(c, output, string(expected))
+	DeepEquals(c, output, string(expected))
 }

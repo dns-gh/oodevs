@@ -1301,7 +1301,7 @@ func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 	c.Assert(msg, NotNil)
 	child1.Parent = proto.String("")
 	child2.Parent = proto.String("")
-	swtest.AssertEqualOrDiff(c, mapEvents(msg.Events...), mapEvents(child1, child2))
+	swtest.DeepEquals(c, mapEvents(msg.Events...), mapEvents(child1, child2))
 
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
 	c.Assert(msg, NotNil)
