@@ -12,6 +12,7 @@ import (
 	"bytes"
 	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 	"testing"
 )
@@ -66,5 +67,5 @@ func (TestSuite) TestLoad(c *C) {
 	}
 	cmds, err := ParseReader(bytes.NewBufferString(text))
 	c.Assert(err, IsNil)
-	c.Assert(ref, DeepEquals, cmds)
+	swtest.DeepEquals(c, ref, cmds)
 }

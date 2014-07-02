@@ -11,6 +11,7 @@ package client
 import (
 	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 	"masa/timeline/server"
 	"masa/timeline/services"
@@ -131,7 +132,7 @@ func process(c *C, msg *sdk.ClientRequest) *FakeHandler {
 	dummy := FakeHandler{}
 	handler := MakeHandler(&dummy)
 	err := handler.Process(msg)
-	c.Assert(err, DeepEquals, DummyError)
+	swtest.DeepEquals(c, err, DummyError)
 	return &dummy
 }
 

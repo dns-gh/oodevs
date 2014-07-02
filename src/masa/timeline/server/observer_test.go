@@ -12,6 +12,7 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/json"
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 )
 
@@ -45,5 +46,5 @@ func (TestSuite) TestExpectedJsonSpecs(c *C) {
 		},
 		Uuids: []string{"a", "b"},
 	}
-	c.Assert(dst, DeepEquals, expected)
+	swtest.DeepEquals(c, dst, expected)
 }

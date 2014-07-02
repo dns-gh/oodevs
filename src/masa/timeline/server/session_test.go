@@ -481,7 +481,7 @@ func (f *Fixture) checkBroadcastEvents(c *C, messages <-chan interface{}, name s
 	c.Assert(err, IsNil)
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	c.Assert(msg.Events, DeepEquals, []*sdk.Event{event})
+	swtest.DeepEquals(c, msg.Events, []*sdk.Event{event})
 	return event
 }
 
@@ -512,19 +512,19 @@ func (t *TestSuite) TestListeners(c *C) {
 	// test create event
 	event := f.checkBroadcastEvents(c, messages, "some_name")
 	fakerEvents, _ := faker.GetAndClear()
-	c.Assert(fakerEvents, DeepEquals, []*sdk.Event{event})
+	swtest.DeepEquals(c, fakerEvents, []*sdk.Event{event})
 
 	// test update event
 	event.Name = proto.String("new_name")
 	uuid := event.GetUuid()
 	updated, err := f.session.UpdateEvent(uuid, event)
 	c.Assert(err, IsNil)
-	c.Assert(updated, DeepEquals, event)
+	swtest.DeepEquals(c, updated, event)
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	fakerEvents, _ = faker.GetAndClear()
 	c.Assert(msg, NotNil)
-	c.Assert(msg.Events, DeepEquals, []*sdk.Event{event})
-	c.Assert(fakerEvents, DeepEquals, []*sdk.Event{event})
+	swtest.DeepEquals(c, msg.Events, []*sdk.Event{event})
+	swtest.DeepEquals(c, fakerEvents, []*sdk.Event{event})
 
 	// test delete event
 	err = f.session.DeleteEvent(uuid)
@@ -532,8 +532,8 @@ func (t *TestSuite) TestListeners(c *C) {
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
 	_, fakerUuids := faker.GetAndClear()
 	c.Assert(msg, NotNil)
-	c.Assert(msg.Uuids, DeepEquals, []string{uuid})
-	c.Assert(fakerUuids, DeepEquals, []string{uuid})
+	swtest.DeepEquals(c, msg.Uuids, []string{uuid})
+	swtest.DeepEquals(c, fakerUuids, []string{uuid})
 
 	// test detach
 	err = f.session.Stop()
@@ -1184,20 +1184,20 @@ func (t *TestSuite) TestCreateEventUpdatesParent(c *C) {
 	parent := f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour))
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	c.Assert(msg.Events, DeepEquals, []*sdk.Event{parent})
+	swtest.DeepEquals(c, msg.Events, []*sdk.Event{parent})
 
 	// test create child, no parent update
 	child1 := f.addChildEvent(c, "child1", "parent", f.begin.Add(10*time.Minute))
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	c.Assert(msg.Events, DeepEquals, []*sdk.Event{child1})
+	swtest.DeepEquals(c, msg.Events, []*sdk.Event{child1})
 
 	// test create child, need parent update
 	child2 := f.addChildEvent(c, "child2", "parent", f.begin.Add(2*time.Hour))
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	parent.End = proto.String(util.FormatTime(f.begin.Add(2 * time.Hour)))
-	c.Assert(msg.Events, DeepEquals, []*sdk.Event{child2, parent})
+	swtest.DeepEquals(c, msg.Events, []*sdk.Event{child2, parent})
 }
 
 func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
@@ -1223,11 +1223,11 @@ func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 	child.Begin = proto.String(util.FormatTime(f.begin.Add(2 * time.Hour)))
 	newChild, err := f.session.UpdateEvent("child", child)
 	c.Assert(err, IsNil)
-	c.Assert(newChild, DeepEquals, child)
+	swtest.DeepEquals(c, newChild, child)
 
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	parent.End = proto.String(util.FormatTime(f.begin.Add(2 * time.Hour)))
-	c.Assert(msg.Events, DeepEquals, []*sdk.Event{child, parent})
+	swtest.DeepEquals(c, msg.Events, []*sdk.Event{child, parent})
 }
 
 func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
@@ -1257,11 +1257,11 @@ func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
 	parent.End = proto.String(util.FormatTime(f.begin.Add(1*time.Hour + 5*time.Minute)))
 	newParent, err := f.session.UpdateEvent("parent", parent)
 	c.Assert(err, IsNil)
-	c.Assert(newParent, DeepEquals, parent)
+	swtest.DeepEquals(c, newParent, parent)
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	child1.Begin = proto.String(util.FormatTime(f.begin.Add(1*time.Minute + 5*time.Minute)))
 	child2.Begin = proto.String(util.FormatTime(f.begin.Add(2*time.Minute + 5*time.Minute)))
-	c.Assert(msg.Events, DeepEquals, []*sdk.Event{parent, child1, child2})
+	swtest.DeepEquals(c, msg.Events, []*sdk.Event{parent, child1, child2})
 }
 
 func mapEvents(events ...*sdk.Event) map[string]*sdk.Event {
@@ -1305,5 +1305,5 @@ func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
 	c.Assert(msg, NotNil)
-	c.Assert(msg.Uuids, DeepEquals, []string{"parent"})
+	swtest.DeepEquals(c, msg.Uuids, []string{"parent"})
 }

@@ -61,6 +61,7 @@ func makeDiff(before, after string) (string, error) {
 
 var (
 	rePointer = regexp.MustCompile(`\(0x[0-9a-zA-Z]+\)`)
+	reCap     = regexp.MustCompile(`\((len=\d+) cap=\d+\)`)
 )
 
 func Stringify(a interface{}) string {
@@ -71,6 +72,7 @@ func Stringify(a interface{}) string {
 	cfg.SortKeys = true
 	s := cfg.Sdump(a)
 	s = rePointer.ReplaceAllString(s, "")
+	s = reCap.ReplaceAllString(s, `(\1)`)
 	return s
 }
 
