@@ -1264,6 +1264,14 @@ func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
 	c.Assert(msg.Events, DeepEquals, []*sdk.Event{parent, child1, child2})
 }
 
+func mapEvents(events ...*sdk.Event) map[string]*sdk.Event {
+	dst := map[string]*sdk.Event{}
+	for _, e := range events {
+		dst[e.GetUuid()] = e
+	}
+	return dst
+}
+
 func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
@@ -1293,7 +1301,7 @@ func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 	c.Assert(msg, NotNil)
 	child1.Parent = proto.String("")
 	child2.Parent = proto.String("")
-	swtest.AssertEqualOrDiff(c, msg.Events, []*sdk.Event{child1, child2})
+	swtest.AssertEqualOrDiff(c, mapEvents(msg.Events...), mapEvents(child1, child2))
 
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
 	c.Assert(msg, NotNil)
