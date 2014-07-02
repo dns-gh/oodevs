@@ -100,6 +100,13 @@ void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const 
                            unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
     CreateStaticLists();
+    if( pickingMode )
+    {
+        ConfigureColorList();
+        ConfigureWidthList( viewport, vWidth, vHeight );
+        Draw( node, style, viewport, vWidth, vHeight, pickingMode );
+        return;
+    }
     unsigned int listId = RetrieveListId( node, style, viewport, vWidth, vHeight, pickingMode,
                                           pickingMode ? pickingLists_ : lists_ );
     if( !listId )
@@ -120,9 +127,12 @@ unsigned int SvglRenderer::RetrieveListId( svg::Node_ABC* node, const std::strin
     CIT_Lists it = lists.find( node );
     if( it == lists.end() )
     {
-        listId = GenerateList( node, style, viewport, vWidth, vHeight, pickingMode );
+        listId = glGenLists( 1 );
         if( !listId )
             return 0;
+        glNewList( listId, GL_COMPILE );
+        Draw( node, style, viewport, vWidth, vHeight, pickingMode );
+        glEndList();
         lists[ node ] = listId;
     }
     else
@@ -131,34 +141,27 @@ unsigned int SvglRenderer::RetrieveListId( svg::Node_ABC* node, const std::strin
 }
 
 // -----------------------------------------------------------------------------
-// Name: SvglRenderer::GenerateList
+// Name: SvglRenderer::Draw
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
+void SvglRenderer::Draw( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
-    unsigned int result = glGenLists( 1 );
-    if( result )
-    {
-        glNewList( result, GL_COMPILE );
-            const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
-            ListPaint color( colorList_ );
-            if( pickingMode )
-                renderingContext_->EnablePickingMode( 5.f );
-            renderingContext_->SetViewport( box, vWidth, vHeight );
-            renderingContext_->PushProperty( RenderingContext::color, color );
-            svg::Opacity opacity( a_ );
-            renderingContext_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
-            renderingContext_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
-            std::auto_ptr< Style > border( CreateStyle( style ) );
-            references_->Register( "border", *border );
-            node->Draw( *renderingContext_, *references_ );
-            renderingContext_->DisablePickingMode();
-            renderingContext_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
-            renderingContext_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
-            renderingContext_->PopProperty( RenderingContext::color );
-        glEndList();
-    }
-    return result;
+    const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
+    ListPaint color( colorList_ );
+    if( pickingMode )
+        renderingContext_->EnablePickingMode( 5.f );
+    renderingContext_->SetViewport( box, vWidth, vHeight );
+    renderingContext_->PushProperty( RenderingContext::color, color );
+    svg::Opacity opacity( a_ );
+    renderingContext_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
+    renderingContext_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
+    std::auto_ptr< Style > border( CreateStyle( style ) );
+    references_->Register( "border", *border );
+    node->Draw( *renderingContext_, *references_ );
+    renderingContext_->DisablePickingMode();
+    renderingContext_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
+    renderingContext_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
+    renderingContext_->PopProperty( RenderingContext::color );
 }
 
 // -----------------------------------------------------------------------------
