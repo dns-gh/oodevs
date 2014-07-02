@@ -14,6 +14,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_WorkspaceElement.h"
+#include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanSpeedsInfos: Constructor
@@ -85,6 +86,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , bDetectDestroyedUnits_       ( true )
     , reconSpeed_                  ( 12 )
     , searchSpeed_                 ( 6 )
+    , nMaxPerceptionLevel_         ( ePerceptionLevel_Identification )
 {
     // NOTHING
 }
@@ -173,9 +175,13 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "captured", rCapturedModificator_ )
         >> xml::end;
 
+    std::string maxPerceptionLevel;
     input >> xml::optional >> xml::start( "perception" )
+            >> xml::attribute( "max-level", maxPerceptionLevel )
             >> xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
           >> xml::end;
+    if( !maxPerceptionLevel.empty() )
+        nMaxPerceptionLevel_ = ENT_Tr::ConvertToPerceptionLevel( maxPerceptionLevel );
 
     urbanSearchSpeeds_.SetFixedVector( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() );
     input >> xml::optional >> xml::start( "recon-and-search-speeds" )
@@ -239,6 +245,7 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output ) const
                 << xml::attribute( "captured", rCapturedModificator_.GetData() / 100.f )
             << xml::end
             << xml::start( "perception" )
+                << xml::attribute( "max-level", nMaxPerceptionLevel_.Convert() )
                 << xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
             << xml::end
             << xml::start( "recon-and-search-speeds" )

@@ -101,6 +101,7 @@ void ADN_AiEngine_GUI::Build()
 
     // Perception
     Q3GroupBox* pPerceptionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Perception" ) );
+    builder.AddEnumField( pPerceptionBox, "perception-max-level", tr( "Maximum perception level of hostile units" ), data_.nMaxPerceptionLevel_ );
     ADN_CheckBox* destroyedUnits = new ADN_CheckBox( tr( "Destroyed units detection" ), pPerceptionBox, "destroyed-units-detection" );
     destroyedUnits->GetConnector().Connect( &data_.bDetectDestroyedUnits_ );
 
