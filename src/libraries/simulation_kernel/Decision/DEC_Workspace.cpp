@@ -118,8 +118,8 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
                       >> xml::attribute( "threshold", PHY_RoleInterface_Composantes::rOpStateDecisionalThreshold_ )
                   >> xml::end;
 
-    xisDecisional >> xml::optional >> xml::start( "urban-combat" )
-                      >> xml::attribute( "hit-factor", firing::PHY_DirectFireData::nUrbanCoefficient_ )
+    xisDecisional >> xml::optional >> xml::start( "urban-perception" )
+                      >> xml::attribute( "view-factor", firing::PHY_DirectFireData::nUrbanCoefficient_ )
                   >> xml::end;
 
     xisDecisional >> xml::start( "critical-intelligence-delay" );

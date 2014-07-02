@@ -65,7 +65,7 @@ void ADN_AiEngine_GUI::Build()
 
     // Urban area effect on fire
     Q3GroupBox* pUrbanStateBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Urban combat computation" ) );
-    builder.AddField< ADN_EditLine_Double >( pUrbanStateBox, "urban-combat-hit-ratio", tr( "Urban combat hit ratio" ), data_.rUrbanCombatWeight_, tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Double >( pUrbanStateBox, "urban-perception-view-factor", tr( "Urban perception view factor" ), data_.rUrbanViewFactor_, tr( "%" ), ePercentage );
     
     // Critical Intelligence
     Q3GroupBox* pCriticalIntelligenceBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Time to acquire critical intelligence" ) );

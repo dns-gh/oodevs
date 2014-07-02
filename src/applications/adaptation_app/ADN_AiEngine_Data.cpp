@@ -72,7 +72,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rMajorEquipmentWeight_       ( 1.f )
     , rHumanWeight_                ( 0.f )
     , rDecisionalThreshold_        ( 0.f )
-    , rUrbanCombatWeight_          ( 100.f )
+    , rUrbanViewFactor_            ( 100.f )
     , rDefaultFeedbackTime_        ( "1s" )
     , rMinimumAffinity_            ( "1s" )
     , rNeutralAffinity_            ( "1s" )
@@ -155,8 +155,8 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
           >> xml::end;
 
-    input >> xml::optional >> xml::start( "urban-combat" )
-            >> xml::attribute( "hit-factor", rUrbanCombatWeight_ )
+    input >> xml::optional >> xml::start( "urban-perception" )
+            >> xml::attribute( "view-factor", rUrbanViewFactor_ )
           >> xml::end;
 
     input >> xml::optional >> xml::start( "critical-intelligence-delay" )
@@ -223,8 +223,8 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output ) const
             << xml::start( "force-ratio" )
                 << xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
             << xml::end
-            << xml::start( "urban-combat" )
-                << xml::attribute( "hit-factor", rUrbanCombatWeight_ )
+            << xml::start( "urban-perception" )
+                << xml::attribute( "view-factor", rUrbanViewFactor_ )
             << xml::end
             << xml::start( "critical-intelligence-delay" )
                 << xml::attribute( "minimum-affinity", rMinimumAffinity_ )

@@ -93,10 +93,6 @@
         <translation>Calcul pour le combat en zone urbaine</translation>
     </message>
     <message>
-        <source>Urban combat hit ratio</source>
-        <translation>Proportion d&apos;équipements pouvant tirer à chaque pas de temps</translation>
-    </message>
-    <message>
         <source>Time to acquire critical intelligence</source>
         <translation>Délai d’obtention du renseignement critique</translation>
     </message>
@@ -171,6 +167,10 @@
     <message>
         <source>Recon and search speeds</source>
         <translation>Vitesses de reconnaissance et fouille</translation>
+    </message>
+    <message>
+        <source>Urban perception view factor</source>
+        <translation>Pourcentage de vues directes en bloc urbain</translation>
     </message>
 </context>
 <context>

@@ -94,10 +94,6 @@
         <translation>Cálculo de combate urbano</translation>
     </message>
     <message>
-        <source>Urban combat hit ratio</source>
-        <translation>Proporción de equipo que puede tirar a la vez en zona urbana</translation>
-    </message>
-    <message>
         <source>Time to acquire critical intelligence</source>
         <translation>Tiempo para adquirir inteligencia crítica</translation>
     </message>
@@ -171,6 +167,10 @@
     </message>
     <message>
         <source>Recon and search speeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban perception view factor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
