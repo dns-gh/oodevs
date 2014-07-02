@@ -72,14 +72,12 @@ public:
     //@{
     bool HasWeaponsNotReady () const;
     bool HasWeaponsAndNoAmmo() const;
-    bool IsTemporarilyBlocked() const;
     unsigned int GetNbrWeaponsUsable() const;
     //@}
 
 private:
     //! @name Tools
     //@{
-    bool CanFire();
     void RemoveFirer ( const PHY_ComposantePion& firer );
     void RemoveWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
     //@}
@@ -129,7 +127,6 @@ private:
           bool                   bHasWeaponsReady_;
           bool                   bHasWeaponsNotReady_;
           bool                   bHasWeaponsAndNoAmmo_;
-          bool                   bTemporarilyBlocked_;
 
 public:
     // Factor applied to number of components that can fire in urban areas.

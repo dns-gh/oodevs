@@ -157,7 +157,6 @@ PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiring
     , bHasWeaponsReady_           ( true )
     , bHasWeaponsNotReady_        ( false )
     , bHasWeaponsAndNoAmmo_       ( false )
-    , bTemporarilyBlocked_        ( false )
 {
     assert( rPercentageComposantesToUse_  >= 0. && rPercentageComposantesToUse_ <= 1. );
 }
@@ -210,9 +209,6 @@ unsigned int PHY_DirectFireData::GetNbrWeaponsUsable() const
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
 {
-    if( ! CanFire() )
-        return;
-
     if( !compFirer.CanFire() || !weapon.CanDirectFire() )
         return;
 
@@ -236,18 +232,6 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
 
         bHasWeaponsNotReady_ |= data.IsFiring();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::CanFire
-// Created: LDC 2011-03-09
-// -----------------------------------------------------------------------------
-bool PHY_DirectFireData::CanFire()
-{
-    if( !firer_.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
-        return true;
-    bTemporarilyBlocked_ = !( MIL_Random::rand32_io( 0u, 100u ) < PHY_DirectFireData::nUrbanCoefficient_ );
-    return !bTemporarilyBlocked_;
 }
 
 // -----------------------------------------------------------------------------
@@ -369,13 +353,3 @@ bool PHY_DirectFireData::HasWeaponsAndNoAmmo() const
 {
     return bHasWeaponsAndNoAmmo_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::IsTemporarilyBlocked
-// Created: LDC 2011-05-16
-// -----------------------------------------------------------------------------
-bool PHY_DirectFireData::IsTemporarilyBlocked() const
-{
-    return bTemporarilyBlocked_;
-}
-

@@ -84,7 +84,6 @@ private:
         eNoAmmo,            // -> le tir est terminé parque qu'il reste des composante capables de tirer mais qu'il ne reste plus de munition adéquates
         eRunning,           // -> le tir est en cours d'exécution
         eFinished,          // Stop tir
-        eTemporarilyBlocked // -> Le tir ne peut pas etre effectue tout de suite pour cause d'encombrement en zone urbaine
     };
     //@}
 
