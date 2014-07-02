@@ -13,6 +13,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"math"
 	"reflect"
 	"sort"
@@ -422,7 +423,7 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 		a, ok := data.Automats[9]
 		return ok && len(a.LogSuperiors) > 1
 	})
-	c.Assert(client.Model.GetAutomat(9).LogSuperiors, DeepEquals, newSuperiors)
+	swtest.DeepEquals(c, client.Model.GetAutomat(9).LogSuperiors, newSuperiors)
 
 	// add quotas on link
 	c.Assert(len(client.Model.GetAutomat(9).SuperiorQuotas), Equals, 0)
@@ -433,15 +434,15 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 		a, ok := data.Automats[9]
 		return ok && len(a.SuperiorQuotas) > 0
 	})
-	c.Assert(client.Model.GetAutomat(9).SuperiorQuotas, DeepEquals, quotas)
+	swtest.DeepEquals(c, client.Model.GetAutomat(9).SuperiorQuotas, quotas)
 
 	// valid unchange link does nothing, quotas are not reset
 	oldSuperiors := client.Model.GetAutomat(9).LogSuperiors
 	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), newSuperiors)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	c.Assert(client.Model.GetAutomat(9).LogSuperiors, DeepEquals, oldSuperiors)
-	c.Assert(client.Model.GetAutomat(9).SuperiorQuotas, DeepEquals, quotas)
+	swtest.DeepEquals(c, client.Model.GetAutomat(9).LogSuperiors, oldSuperiors)
+	swtest.DeepEquals(c, client.Model.GetAutomat(9).SuperiorQuotas, quotas)
 
 	// removing one superior do not reset quotas on the other superior
 	newSuperiors = []uint32{25}
@@ -451,7 +452,7 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 		a, ok := data.Automats[9]
 		return ok && len(a.LogSuperiors) == 1
 	})
-	c.Assert(client.Model.GetAutomat(9).SuperiorQuotas, DeepEquals, quotas)
+	swtest.DeepEquals(c, client.Model.GetAutomat(9).SuperiorQuotas, quotas)
 }
 
 func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
@@ -479,7 +480,7 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 		return ok && len(a.SuperiorQuotas) > 0
 	})
 	automat := client.Model.GetData().Automats[23]
-	c.Assert(automat.SuperiorQuotas, DeepEquals, newQuotas)
+	swtest.DeepEquals(c, automat.SuperiorQuotas, newQuotas)
 
 	quotas := map[uint32]int32{7: 400}
 	formationId := uint32(25)
@@ -490,7 +491,7 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 		return ok && len(a.SuperiorQuotas) > 0
 	})
 	formation := client.Model.GetData().Formations[formationId]
-	c.Assert(formation.SuperiorQuotas, DeepEquals, quotas)
+	swtest.DeepEquals(c, formation.SuperiorQuotas, quotas)
 }
 
 func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
@@ -578,13 +579,13 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	// error: transporter overloaded
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 10000000}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter capacity mass overloaded")
-	c.Assert(result, DeepEquals, []bool{false, true, false, true})
+	swtest.DeepEquals(c, result, []bool{false, true, false, true})
 
 	// valid underloaded transporters
 	transporters = client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 2})
 	c.Assert(err, IsNil)
-	c.Assert(result, DeepEquals, []bool{true, false, true, false})
+	swtest.DeepEquals(c, result, []bool{true, false, true, false})
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[unit].Equipments[transporter].Available == transporters-2
 	})
@@ -593,7 +594,7 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	transporters = client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 5}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, IsNil)
-	c.Assert(result, DeepEquals, []bool{false, false, false, false})
+	swtest.DeepEquals(c, result, []bool{false, false, false, false})
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[unit].Equipments[transporter].Available == transporters-1
 	})
@@ -679,13 +680,13 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	// error: transporter overloaded
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 10000000}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter capacity mass overloaded")
-	c.Assert(result, DeepEquals, []bool{false, true, false, true})
+	swtest.DeepEquals(c, result, []bool{false, true, false, true})
 
 	// valid underloaded transporter
 	transporters = client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 2})
 	c.Assert(err, IsNil)
-	c.Assert(result, DeepEquals, []bool{true, false, true, false})
+	swtest.DeepEquals(c, result, []bool{true, false, true, false})
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[unit].Equipments[transporter].Available == transporters-2
 	})
@@ -694,7 +695,7 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	transporters = client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 5}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, IsNil)
-	c.Assert(result, DeepEquals, []bool{false, false, false, false})
+	swtest.DeepEquals(c, result, []bool{false, false, false, false})
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[unit].Equipments[transporter].Available == transporters-1
 	})
@@ -1472,13 +1473,13 @@ func (s *TestSuite) TestUnitChangeResource(c *C) {
 	firstDotation := u1.Resources[firstDotationId]
 	secondDotation := u1.Resources[secondDotationId]
 
-	c.Assert(firstDotation, DeepEquals,
+	swtest.DeepEquals(c, firstDotation,
 		swapi.Resource{
 			Quantity:      3200,
 			LowThreshold:  10,
 			HighThreshold: 100,
 		})
-	c.Assert(secondDotation, DeepEquals,
+	swtest.DeepEquals(c, secondDotation,
 		swapi.Resource{
 			Quantity:      8000,
 			LowThreshold:  10,
@@ -1576,7 +1577,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		return len(data.Units[u1.Id].Equipments) != 0
 	})
 
-	c.Assert(*client.Model.GetUnit(u1.Id).Equipments[equipmentId], DeepEquals, equipment)
+	swtest.DeepEquals(c, *client.Model.GetUnit(u1.Id).Equipments[equipmentId], equipment)
 
 	// Error: Invalid parameters count
 	err := client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{})
@@ -1786,14 +1787,14 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 		return len(data.Units[u1.Id].Adhesions) != 0
 	})
 	newAdhesions := client.Model.GetUnit(u1.Id).Adhesions
-	c.Assert(adhesions, DeepEquals, newAdhesions)
+	swtest.DeepEquals(c, adhesions, newAdhesions)
 
 	// No change adhesions if new adhesions are invalid
 	err = client.ChangeUnitAdhesions(u1.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: adhesion must be between -1 and 1`)
 	newAdhesions = client.Model.GetUnit(u1.Id).Adhesions
-	c.Assert(adhesions, DeepEquals, newAdhesions)
+	swtest.DeepEquals(c, adhesions, newAdhesions)
 
 	// Partial change
 	adhesions = map[uint32]float32{0: 0.5}
@@ -1804,7 +1805,7 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 		return math.Abs(float64(updated.Adhesions[0]-0.5)) < 1e-5
 	})
 	newAdhesions = client.Model.GetUnit(u1.Id).Adhesions
-	c.Assert(adhesions, DeepEquals, newAdhesions)
+	swtest.DeepEquals(c, adhesions, newAdhesions)
 }
 
 func (s *TestSuite) TestUnitChangeHumanFactors(c *C) {
@@ -2281,7 +2282,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 		Available: 4,
 	}
 	data := client.Model.GetData()
-	c.Assert(dotation, DeepEquals, *data.Units[unitId].Equipments[equipmentId])
+	swtest.DeepEquals(c, dotation, *data.Units[unitId].Equipments[equipmentId])
 	c.Assert(data.MaintenanceHandlings, HasLen, 0)
 	equipment := swapi.Equipment{
 		Available:  3,
@@ -2309,7 +2310,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	client.Model.WaitTicks(2)
 	data = client.Model.GetData()
 	unit := data.Units[unitId]
-	c.Assert(dotation, DeepEquals, *unit.Equipments[equipmentId])
+	swtest.DeepEquals(c, dotation, *unit.Equipments[equipmentId])
 	c.Assert(data.MaintenanceHandlings, HasLen, 0)
 
 	// medical
@@ -2353,7 +2354,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	// supply
 	c.Assert(client.Model.GetData().SupplyHandlings, HasLen, 0)
 	c.Assert(unit.Resources, NotNil)
-	c.Assert(unit.Resources[1], DeepEquals,
+	swtest.DeepEquals(c, unit.Resources[1],
 		swapi.Resource{
 			Quantity:      3200,
 			LowThreshold:  10,
@@ -2384,7 +2385,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.LogFinishHandlings(23)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	c.Assert(client.Model.GetUnit(unitId).Resources[1], DeepEquals,
+	swtest.DeepEquals(c, client.Model.GetUnit(unitId).Resources[1],
 		swapi.Resource{
 			Quantity:      3200,
 			LowThreshold:  10,
@@ -2517,7 +2518,7 @@ func (s *TestSuite) TestDestroyRandomEquipment(c *C) {
 	eqs := map[uint32]*swapi.Equipment{
 		id: {Available: 4},
 	}
-	c.Assert(client.Model.GetUnit(unit.Id).Equipments, DeepEquals, eqs)
+	swtest.DeepEquals(c, client.Model.GetUnit(unit.Id).Equipments, eqs)
 	// invalid unit
 	err := client.DestroyRandomEquipment(123456)
 	c.Assert(err, IsSwordError, "error_invalid_unit")

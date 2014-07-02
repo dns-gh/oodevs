@@ -12,6 +12,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 )
 
 func (s *TestSuite) TestControlGlobalWeather(c *C) {
@@ -104,7 +105,7 @@ func CheckWeather(remote, local *swapi.LocalWeather, c *C) {
 	if isNearby(remote.BottomRight, local.BottomRight) {
 		remote.BottomRight = local.BottomRight
 	}
-	c.Assert(remote, DeepEquals, local)
+	swtest.DeepEquals(c, remote, local)
 }
 
 func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {

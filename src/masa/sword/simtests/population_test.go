@@ -11,6 +11,7 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
+	"masa/sword/swtest"
 	"reflect"
 )
 
@@ -91,7 +92,7 @@ func (s *TestSuite) TestPopulationChangeAdhesions(c *C) {
 
 	population = data.Populations[population.Id]
 	// Check initial state
-	c.Assert(population.Adhesions, DeepEquals, adhesions)
+	swtest.DeepEquals(c, population.Adhesions, adhesions)
 
 	// Error : missing parameter
 	err := client.ChangePopulationAdhesions(population.Id, map[uint32]float32{})
