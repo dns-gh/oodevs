@@ -107,8 +107,7 @@ void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const 
         Draw( node, style, viewport, vWidth, vHeight, pickingMode );
         return;
     }
-    unsigned int listId = RetrieveListId( node, style, viewport, vWidth, vHeight, pickingMode,
-                                          pickingMode ? pickingLists_ : lists_ );
+    unsigned int listId = RetrieveListId( node, style, viewport, vWidth, vHeight, pickingMode, lists_ );
     if( !listId )
         return;
     ConfigureColorList();

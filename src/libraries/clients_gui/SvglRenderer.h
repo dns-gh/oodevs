@@ -87,7 +87,6 @@ private:
     std::auto_ptr< svg::ListLengthFactory > listLenghts_;
 
     T_Lists lists_;
-    T_Lists pickingLists_;
     geometry::Rectangle2f previousViewport_;
     unsigned int previousWidth_;
     unsigned int previousHeight_;
