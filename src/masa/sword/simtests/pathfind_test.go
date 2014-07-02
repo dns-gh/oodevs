@@ -168,10 +168,10 @@ func (s *TestSuite) TestPointOrder(c *C) {
 
 	automat := createAutomat(c, client)
 	positions := []swapi.Point{
-		swapi.Point{X: -15.9248, Y: 28.2645},
-		swapi.Point{X: -15.8429, Y: 28.3308},
-		swapi.Point{X: -15.8640, Y: 28.2507},
-		swapi.Point{X: -15.8946, Y: 28.3189},
+		{X: -15.9248, Y: 28.2645},
+		{X: -15.8429, Y: 28.3308},
+		{X: -15.8640, Y: 28.2507},
+		{X: -15.8946, Y: 28.3189},
 	}
 
 	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])
@@ -183,11 +183,11 @@ func (s *TestSuite) TestPointOrder(c *C) {
 
 	// Compute path with an invalid position
 	positions = []swapi.Point{
-		swapi.Point{X: -15.918268777007073, Y: 28.3155935041111},
-		swapi.Point{X: -15.932060713923917, Y: 28.325101964202737},
-		swapi.Point{X: -15.951392003907085, Y: 28.352895879429273}, // invalid
-		swapi.Point{X: -15.932953364977887, Y: 28.365605325676778},
-		swapi.Point{X: -15.946757028026328, Y: 28.378285449675836}, // invalid
+		{X: -15.918268777007073, Y: 28.3155935041111},
+		{X: -15.932060713923917, Y: 28.325101964202737},
+		{X: -15.951392003907085, Y: 28.352895879429273}, // invalid
+		{X: -15.932953364977887, Y: 28.365605325676778},
+		{X: -15.946757028026328, Y: 28.378285449675836}, // invalid
 	}
 
 	points, err = client.UnitPathfindRequest(unit.Id, positions...)
@@ -201,10 +201,10 @@ func (s *TestSuite) TestCreateDestroyPathfind(c *C) {
 
 	automat := createAutomat(c, client)
 	positions := []swapi.Point{
-		swapi.Point{X: -15.9248, Y: 28.2645},
-		swapi.Point{X: -15.8429, Y: 28.3308},
-		swapi.Point{X: -15.8640, Y: 28.2507},
-		swapi.Point{X: -15.8946, Y: 28.3189},
+		{X: -15.9248, Y: 28.2645},
+		{X: -15.8429, Y: 28.3308},
+		{X: -15.8640, Y: 28.2507},
+		{X: -15.8946, Y: 28.3189},
 	}
 
 	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])

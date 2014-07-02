@@ -40,8 +40,8 @@ func (TestSuite) TestExpectedJsonSpecs(c *C) {
 		Tag:  sdk.MessageTag_update_events.Enum(),
 		Tick: proto.String("tick"),
 		Events: []*sdk.Event{
-			&sdk.Event{Uuid: proto.String("a")},
-			&sdk.Event{Uuid: proto.String("b")},
+			{Uuid: proto.String("a")},
+			{Uuid: proto.String("b")},
 		},
 		Uuids: []string{"a", "b"},
 	}

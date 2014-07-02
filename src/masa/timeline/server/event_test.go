@@ -138,7 +138,7 @@ func (TestSuite) TestEventUpdate(c *C) {
 	c.Assert(triggered, Equals, false)
 	c.Assert(updateChildren, Equals, true)
 	child.begin = child.begin.Add(2 * time.Minute)
-	c.Assert(parent.children, DeepEquals, map[*Event]struct{}{child: struct{}{}})
+	c.Assert(parent.children, DeepEquals, map[*Event]struct{}{child: {}})
 
 	// invalid parent update
 	child.begin = begin

@@ -226,7 +226,7 @@ func (s *SwordServer) writeContent(slink *SwordLink, ctx int32, message proto.Me
 
 func (s *SwordServer) broadcastContent(ctx int32, message proto.Message) {
 	s.mutex.Lock()
-	for it, _ := range s.links {
+	for it := range s.links {
 		it.pending.Add(1)
 		go func(slink *SwordLink) {
 			defer slink.pending.Done()

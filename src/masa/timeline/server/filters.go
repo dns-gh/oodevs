@@ -31,12 +31,12 @@ func parseSwordCustomFilter(dst services.EventFilterConfig, req Getter) error {
 		return nil
 	}
 	filters := map[string]map[uint32]struct{}{
-		"automats":    map[uint32]struct{}{},
-		"crowds":      map[uint32]struct{}{},
-		"formations":  map[uint32]struct{}{},
-		"inhabitants": map[uint32]struct{}{},
-		"parties":     map[uint32]struct{}{},
-		"units":       map[uint32]struct{}{},
+		"automats":    {},
+		"crowds":      {},
+		"formations":  {},
+		"inhabitants": {},
+		"parties":     {},
+		"units":       {},
 	}
 	dst["sword_filter"] = filters
 	for _, token := range strings.Split(filter, ",") {

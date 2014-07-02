@@ -283,7 +283,7 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		elements := data.Crowds[crowd.Id].CrowdElements
-		for id, _ := range elements {
+		for id := range elements {
 			if knownElements[id] != nil {
 				return false
 			}

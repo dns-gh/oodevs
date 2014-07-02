@@ -192,7 +192,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseLowThreshold(c *C) {
 	removeElectrogen_1 := func() {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_1): &swapi.Resource{
+				uint32(electrogen_1): {
 					Quantity:      6,
 					LowThreshold:  50,
 					HighThreshold: 100,
@@ -205,7 +205,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseLowThreshold(c *C) {
 	removeElectrogen_2 := func() {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_1): &swapi.Resource{
+				uint32(electrogen_1): {
 					Quantity:      4,
 					LowThreshold:  50,
 					HighThreshold: 100,
@@ -229,7 +229,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseHighThreshold(c *C) {
 	removeElectrogen_1 := func() {
 		err := client.ChangeResource(unit2.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_1): &swapi.Resource{
+				uint32(electrogen_1): {
 					Quantity:      6,
 					LowThreshold:  30,
 					HighThreshold: 50,
@@ -242,7 +242,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseHighThreshold(c *C) {
 	removeElectrogen_2 := func() {
 		err := client.ChangeResource(unit3.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_1): &swapi.Resource{
+				uint32(electrogen_1): {
 					Quantity:      4,
 					LowThreshold:  30,
 					HighThreshold: 50,
@@ -255,7 +255,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseHighThreshold(c *C) {
 	removeElectrogen_3 := func() {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_1): &swapi.Resource{
+				uint32(electrogen_1): {
 					Quantity:      4,
 					LowThreshold:  50,
 					HighThreshold: 100,
@@ -276,7 +276,7 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	removeElectrogen_1 := func() {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_1): &swapi.Resource{
+				uint32(electrogen_1): {
 					Quantity:      0,
 					LowThreshold:  50,
 					HighThreshold: 100,
@@ -294,7 +294,7 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	removeElectrogen_2 := func() {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_2): &swapi.Resource{
+				uint32(electrogen_2): {
 					Quantity:      0,
 					LowThreshold:  50,
 					HighThreshold: 100,
@@ -325,7 +325,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 	removeElectrogen_1 := func() {
 		err := client.RecoverStocks(unit.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_1): &swapi.Resource{
+				uint32(electrogen_1): {
 					Quantity:      0,
 					LowThreshold:  50,
 					HighThreshold: 100,
@@ -346,7 +346,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 	removeElectrogen_3 := func() {
 		err := client.RecoverStocks(unit.Id,
 			map[uint32]*swapi.Resource{
-				uint32(electrogen_3): &swapi.Resource{
+				uint32(electrogen_3): {
 					Quantity:      0,
 					LowThreshold:  50,
 					HighThreshold: 100,
@@ -383,7 +383,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseManual(c *C) {
 	SetManualSupply(c, client, supplierId, true)
 	err := client.ChangeResource(unit.Id,
 		map[uint32]*swapi.Resource{
-			uint32(electrogen_1): &swapi.Resource{
+			uint32(electrogen_1): {
 				Quantity:      0,
 				LowThreshold:  50,
 				HighThreshold: 100,
@@ -416,7 +416,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBaseManual(c *C) {
 	SetManualSupply(c, client, supplierId, true)
 	err = client.RecoverStocks(unit.Id,
 		map[uint32]*swapi.Resource{
-			uint32(electrogen_1): &swapi.Resource{
+			uint32(electrogen_1): {
 				Quantity:      0,
 				LowThreshold:  50,
 				HighThreshold: 100,

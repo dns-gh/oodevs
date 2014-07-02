@@ -47,12 +47,12 @@ const (
 )
 
 var translationFile = TS{Lang: "fr", Version: "2.0", SourceLanguage: "en", Contexts: []Context{
-	Context{Name: "Context1", Messages: []Message{
-		Message{Source: "A", Translation: Translation{Text: "B"}},
+	{Name: "Context1", Messages: []Message{
+		{Source: "A", Translation: Translation{Text: "B"}},
 	}},
-	Context{Name: "Context2", Messages: []Message{
-		Message{Source: "C", Translation: Translation{Text: "D"}},
-		Message{Source: "E", Translation: Translation{Text: "F", Type: "unfinished"}},
+	{Name: "Context2", Messages: []Message{
+		{Source: "C", Translation: Translation{Text: "D"}},
+		{Source: "E", Translation: Translation{Text: "F", Type: "unfinished"}},
 	}},
 }}
 
@@ -102,15 +102,15 @@ bla bla bla bla bla bla bla bla bla bla i18n 'test_end'
 func (TestSuite) TestBuildingNewTranslationFile(c *C) {
 	translations := Translations{
 		"en": TS{Lang: "en", Version: "2.0", SourceLanguage: "en", Contexts: []Context{
-			Context{Name: "Context1", Messages: []Message{
-				Message{Source: "A", Translation: Translation{Text: "B"}},
-				Message{Source: "B", Translation: Translation{Text: "B"}},
+			{Name: "Context1", Messages: []Message{
+				{Source: "A", Translation: Translation{Text: "B"}},
+				{Source: "B", Translation: Translation{Text: "B"}},
 			}},
-			Context{Name: "Context2", Messages: []Message{
-				Message{Source: "D", Translation: Translation{Text: "D"}},
-				Message{Source: "E", Translation: Translation{Text: "E"}},
-				Message{Source: "F", Translation: Translation{Text: "F"}},
-				Message{Source: "G", Translation: Translation{Text: "G"}},
+			{Name: "Context2", Messages: []Message{
+				{Source: "D", Translation: Translation{Text: "D"}},
+				{Source: "E", Translation: Translation{Text: "E"}},
+				{Source: "F", Translation: Translation{Text: "F"}},
+				{Source: "G", Translation: Translation{Text: "G"}},
 			}},
 		}},
 	}
@@ -122,15 +122,15 @@ func (TestSuite) TestBuildingNewTranslationFile(c *C) {
 
 	expectedTranslations := Translations{
 		"en": TS{Lang: "en", Version: "2.0", SourceLanguage: "en", Contexts: []Context{
-			Context{Name: "Context1", Messages: []Message{
-				Message{Source: "A", Translation: Translation{Text: "B"}},
-				Message{Source: "B", Translation: Translation{Text: "B"}},
-				Message{Source: "C", Translation: Translation{Type: "unfinished"}},
+			{Name: "Context1", Messages: []Message{
+				{Source: "A", Translation: Translation{Text: "B"}},
+				{Source: "B", Translation: Translation{Text: "B"}},
+				{Source: "C", Translation: Translation{Type: "unfinished"}},
 			}},
-			Context{Name: "Context2", Messages: []Message{
-				Message{Source: "D", Translation: Translation{Text: "D"}},
-				Message{Source: "E", Translation: Translation{Text: "E"}},
-				Message{Source: "F", Translation: Translation{Text: "F"}},
+			{Name: "Context2", Messages: []Message{
+				{Source: "D", Translation: Translation{Text: "D"}},
+				{Source: "E", Translation: Translation{Text: "E"}},
+				{Source: "F", Translation: Translation{Text: "F"}},
 			}},
 		}},
 	}

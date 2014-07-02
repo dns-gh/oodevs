@@ -146,7 +146,7 @@ func (e *Event) OnApply(err error, lock bool) bool {
 }
 
 func (e *Event) TranslateChildren(offset time.Duration) {
-	for child, _ := range e.children {
+	for child := range e.children {
 		child.begin = child.begin.Add(offset)
 	}
 }
@@ -177,7 +177,7 @@ func (e *Event) needChildrenUpdate(next *Event) (*time.Duration, error) {
 		return &beginGap, nil
 	}
 	// throw if a child is outside the new parent
-	for child, _ := range e.children {
+	for child := range e.children {
 		if child.begin.Before(next.begin) || child.begin.After(next.end) {
 			return nil, ErrInvalidParentUpdate
 		}
