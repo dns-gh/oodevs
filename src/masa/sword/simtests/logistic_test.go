@@ -132,7 +132,7 @@ func assertIsPrefixed(c *C, s, prefix string) {
 	if len(lines) > len(prefixes) {
 		lines = lines[:len(prefixes)]
 	}
-	swtest.AssertEqualOrDiff(c, strings.Join(lines, "\n"), strings.Join(prefixes, "\n"))
+	swtest.DeepEquals(c, strings.Join(lines, "\n"), strings.Join(prefixes, "\n"))
 }
 
 func initLogisticEvents(c *C, client *swapi.Client) {
@@ -150,7 +150,7 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 	dotation := swapi.Equipment{
 		Available: 4,
 	}
-	c.Assert(dotation, DeepEquals, *unit.Equipments[equipmentId])
+	swtest.DeepEquals(c, dotation, *unit.Equipments[equipmentId])
 	equipment := swapi.Equipment{
 		Available:  3,
 		Repairable: 1,
@@ -181,7 +181,7 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 
 	// Generate supply activity
 	c.Assert(unit.Resources, NotNil)
-	c.Assert(unit.Resources[1], DeepEquals,
+	swtest.DeepEquals(c, unit.Resources[1],
 		swapi.Resource{
 			Quantity:      3200,
 			LowThreshold:  10,

@@ -96,7 +96,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
     <name>test</name>
   </meta>
 </session>`
-	swtest.AssertEqualOrDiff(c, string(data), expected)
+	swtest.DeepEquals(c, string(data), expected)
 }
 
 func createTestSession() *Session {

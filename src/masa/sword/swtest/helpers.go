@@ -12,7 +12,7 @@ import (
 	"flag"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/pmezard/go-difflib/difflib"
-	. "launchpad.net/gocheck"
+	"launchpad.net/gocheck"
 	"regexp"
 	"runtime"
 )
@@ -61,6 +61,7 @@ func makeDiff(before, after string) (string, error) {
 
 var (
 	rePointer = regexp.MustCompile(`\(0x[0-9a-zA-Z]+\)`)
+	reCap     = regexp.MustCompile(`\((len=\d+) cap=\d+\)`)
 )
 
 func Stringify(a interface{}) string {
@@ -71,15 +72,16 @@ func Stringify(a interface{}) string {
 	cfg.SortKeys = true
 	s := cfg.Sdump(a)
 	s = rePointer.ReplaceAllString(s, "")
+	s = reCap.ReplaceAllString(s, `(\1)`)
 	return s
 }
 
-func AssertEqualOrDiff(c *C, result, expected interface{}) {
+func DeepEquals(c *gocheck.C, result, expected interface{}) {
 	resultStr := Stringify(result)
 	expectedStr := Stringify(expected)
 	if expectedStr != resultStr {
 		diff, err := makeDiff(expectedStr, resultStr)
-		c.Assert(err, IsNil)
+		c.Assert(err, gocheck.IsNil)
 		c.Errorf("\n%s\n", diff)
 	}
 }

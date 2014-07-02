@@ -63,7 +63,7 @@ func jsoncompare(c *C, a, b []byte) {
 	c.Assert(err, IsNil)
 	err = jsondecode(b, &rawb)
 	c.Assert(err, IsNil)
-	swtest.AssertEqualOrDiff(c, rawa, rawb)
+	swtest.DeepEquals(c, rawa, rawb)
 }
 
 func testcycle(c *C, text []byte, dst, ref interface{}) {
@@ -71,7 +71,7 @@ func testcycle(c *C, text []byte, dst, ref interface{}) {
 	c.Assert(err, IsNil)
 	err = jsondecode(data, dst)
 	c.Assert(err, IsNil)
-	c.Assert(ref, DeepEquals, dst)
+	swtest.DeepEquals(c, ref, dst)
 	data, err = json.Marshal(dst)
 	c.Assert(err, IsNil)
 	data, err = FixJsonPayloads(data, Decode)
@@ -140,9 +140,9 @@ func (TestSuite) TestEncodeEvent(c *C) {
 		c.Assert(err, IsNil)
 		data, err := filter.EncodeEvent(raw)
 		c.Assert(err, IsNil)
-		c.Assert(data, DeepEquals, evt)
+		swtest.DeepEquals(c, data, evt)
 		events, err := filter.EncodeEvents([]byte("[" + event + "," + event + "," + event + "]"))
 		c.Assert(err, IsNil)
-		c.Assert(events, DeepEquals, []*sdk.Event{evt, evt, evt})
+		swtest.DeepEquals(c, events, []*sdk.Event{evt, evt, evt})
 	}
 }

@@ -13,6 +13,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"masa/timeline/i18n"
 	"masa/timeline/server"
 	"masa/timeline/util"
@@ -81,5 +82,5 @@ func (TestSuite) TestServerLoadTranslations(c *C) {
 	controller := server.MakeController(log)
 	serv, err := NewServer(log, false, 8081, zipFile, "", controller)
 	c.Assert(err, IsNil)
-	c.Assert(*serv.Handler.(*Server).translations, DeepEquals, expectedTranslations)
+	swtest.DeepEquals(c, *serv.Handler.(*Server).translations, expectedTranslations)
 }

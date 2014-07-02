@@ -14,6 +14,7 @@ import (
 	"masa/sword/swapi/phy"
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"math"
 )
 
@@ -183,14 +184,14 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 		return len(data.Crowds[crowd.Id].Adhesions) != 0
 	})
 	newAdhesions := client.Model.GetData().Crowds[crowd.Id].Adhesions
-	c.Assert(adhesions, DeepEquals, newAdhesions)
+	swtest.DeepEquals(c, adhesions, newAdhesions)
 
 	// No change adhesions if new adhesions are invalid
 	err = client.ChangeCrowdAdhesions(crowd.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	newAdhesions = client.Model.GetData().Crowds[crowd.Id].Adhesions
-	c.Assert(adhesions, DeepEquals, newAdhesions)
+	swtest.DeepEquals(c, adhesions, newAdhesions)
 
 	// Partial change
 	adhesions = map[uint32]float32{0: 0.5}
@@ -201,7 +202,7 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 		return math.Abs(float64(updated.Adhesions[0]-0.5)) < 1e-5
 	})
 	newAdhesions = client.Model.GetData().Crowds[crowd.Id].Adhesions
-	c.Assert(adhesions, DeepEquals, newAdhesions)
+	swtest.DeepEquals(c, adhesions, newAdhesions)
 }
 
 func (s *TestSuite) TestCrowdReloadBrain(c *C) {
@@ -316,7 +317,7 @@ func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
 
 	data := client.Model.GetData()
 	newExtensions := data.Crowds[crowd.Id].Extensions
-	c.Assert(extensions, DeepEquals, newExtensions)
+	swtest.DeepEquals(c, extensions, newExtensions)
 
 	// Change extension
 	err = client.ChangeExtensions(crowd.Id,

@@ -16,6 +16,7 @@ import (
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"log"
+	"masa/sword/swtest"
 	"net/http"
 	"os"
 	"os/exec"
@@ -261,6 +262,6 @@ func (s *TestSuite) TestServerSaveLoad(c *C) {
 	defer client.Process.Kill()
 	WaitCommand(c, client)
 	afterEvents := GetEvents(c, model["uuid"].(string))
-	c.Assert(previousEvents, DeepEquals, afterEvents)
+	swtest.DeepEquals(c, previousEvents, afterEvents)
 	c.Assert(afterEvents, HasLen, 1)
 }

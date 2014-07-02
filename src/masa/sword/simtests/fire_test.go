@@ -14,6 +14,7 @@ import (
 	"masa/sword/swapi"
 	"masa/sword/swapi/phy"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"strconv"
 )
 
@@ -175,7 +176,7 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 		return false
 	})
 	c.Assert(p.Firer, Equals, firer.Id)
-	c.Assert(p.Units, DeepEquals, []uint32{watcher.Id})
+	swtest.DeepEquals(c, p.Units, []uint32{watcher.Id})
 	// check knowledge created
 	k := swapi.UnitKnowledge{}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {

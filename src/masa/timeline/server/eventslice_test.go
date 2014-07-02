@@ -10,6 +10,7 @@ package server
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"sort"
 	"time"
 )
@@ -37,7 +38,7 @@ func (TestSuite) TestEventSlice(c *C) {
 	c.Assert(slice, HasLen, len(events))
 	c.Assert(sort.IsSorted(slice), Equals, true)
 	slice.Remove("d")
-	c.Assert(slice, DeepEquals, events[0:3])
+	swtest.DeepEquals(c, slice, events[0:3])
 	slice.Remove("b")
 	c.Assert(sort.IsSorted(slice), Equals, true)
 	c.Assert(slice, HasLen, 2)

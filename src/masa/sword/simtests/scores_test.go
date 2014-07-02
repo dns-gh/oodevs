@@ -11,6 +11,7 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
+	"masa/sword/swtest"
 )
 
 func (s *TestSuite) TestScores(c *C) {
@@ -24,7 +25,7 @@ func (s *TestSuite) TestScores(c *C) {
 		return len(data.KnownScores) > 0
 	})
 	model := client.Model.GetData()
-	c.Assert(model.KnownScores, DeepEquals, map[string]struct{}{
+	swtest.DeepEquals(c, model.KnownScores, map[string]struct{}{
 		scoreEq:   {},
 		scoreDist: {},
 	})
@@ -34,7 +35,7 @@ func (s *TestSuite) TestScores(c *C) {
 		return len(data.Scores) > 1
 	})
 	model = client.Model.GetData()
-	c.Assert(model.Scores, DeepEquals, map[string]float32{
+	swtest.DeepEquals(c, model.Scores, map[string]float32{
 		scoreEq:   16,
 		scoreDist: 100.48342,
 	})
@@ -61,8 +62,8 @@ func (s *TestSuite) TestScores(c *C) {
 		return len(data.Scores) > 1
 	})
 	model2 := client.Model.GetData()
-	c.Assert(model2.KnownScores, DeepEquals, map[string]struct{}{
+	swtest.DeepEquals(c, model2.KnownScores, map[string]struct{}{
 		scoreDist: {},
 	})
-	c.Assert(model2.Scores, DeepEquals, model.Scores)
+	swtest.DeepEquals(c, model2.Scores, model.Scores)
 }

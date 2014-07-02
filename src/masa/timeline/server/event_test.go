@@ -11,6 +11,7 @@ package server
 import (
 	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"masa/timeline/util"
 	"time"
 )
@@ -67,7 +68,7 @@ func (TestSuite) TestEventCreation(c *C) {
 	childProto := child.Proto()
 	event, err := NewEvent(childProto, slice)
 	c.Assert(err, IsNil)
-	c.Assert(event, DeepEquals, child)
+	swtest.DeepEquals(c, event, child)
 
 	// valid parent, need update
 	parent.children = map[*Event]struct{}{}
@@ -75,13 +76,13 @@ func (TestSuite) TestEventCreation(c *C) {
 	childProto = child.Proto()
 	event, err = NewEvent(childProto, slice)
 	c.Assert(err, IsNil)
-	c.Assert(event, DeepEquals, child)
+	swtest.DeepEquals(c, event, child)
 
 	// invalid child, durable child
 	child.end = time.Now().Add(4 * time.Hour).UTC()
 	childProto = child.Proto()
 	event, err = NewEvent(childProto, slice)
-	c.Assert(err, DeepEquals, ErrInvalidChild)
+	swtest.DeepEquals(c, err, ErrInvalidChild)
 	c.Assert(event, IsNil)
 
 	// invalid parent, ephemeral parent
@@ -89,13 +90,13 @@ func (TestSuite) TestEventCreation(c *C) {
 	parent.end = time.Time{}
 	childProto = child.Proto()
 	event, err = NewEvent(childProto, slice)
-	c.Assert(err, DeepEquals, ErrInvalidParent)
+	swtest.DeepEquals(c, err, ErrInvalidParent)
 	c.Assert(event, IsNil)
 
 	// invalid parent, parent not found
 	slice.Remove(parent.uuid)
 	event, err = NewEvent(childProto, slice)
-	c.Assert(err, DeepEquals, ErrParentNotFound)
+	swtest.DeepEquals(c, err, ErrParentNotFound)
 	c.Assert(event, IsNil)
 }
 
@@ -138,7 +139,7 @@ func (TestSuite) TestEventUpdate(c *C) {
 	c.Assert(triggered, Equals, false)
 	c.Assert(updateChildren, Equals, true)
 	child.begin = child.begin.Add(2 * time.Minute)
-	c.Assert(parent.children, DeepEquals, map[*Event]struct{}{child: {}})
+	swtest.DeepEquals(c, parent.children, map[*Event]struct{}{child: {}})
 
 	// invalid parent update
 	child.begin = begin
@@ -149,10 +150,10 @@ func (TestSuite) TestEventUpdate(c *C) {
 	copyChild := child
 	parentProto.Begin = proto.String(util.FormatTime(begin.Add(2 * time.Minute)))
 	modified, triggered, updateChildren, err = parent.Update(parentProto, end, slice)
-	c.Assert(err, DeepEquals, ErrInvalidParentUpdate)
+	swtest.DeepEquals(c, err, ErrInvalidParentUpdate)
 	c.Assert(modified, Equals, false)
 	c.Assert(triggered, Equals, false)
 	c.Assert(updateChildren, Equals, false)
-	c.Assert(parent, DeepEquals, copyParent)
-	c.Assert(child, DeepEquals, copyChild)
+	swtest.DeepEquals(c, parent, copyParent)
+	swtest.DeepEquals(c, child, copyChild)
 }

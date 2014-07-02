@@ -10,6 +10,7 @@ package i18n
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"testing"
 )
 
@@ -61,7 +62,7 @@ var translationFile = TS{Lang: "fr", Version: "2.0", SourceLanguage: "en", Conte
 func (TestSuite) TestParsingTranslation(c *C) {
 	generatedResult, err := ReadTranslationData([]byte(data))
 	c.Assert(err, IsNil)
-	c.Assert(translationFile, DeepEquals, *generatedResult)
+	swtest.DeepEquals(c, translationFile, *generatedResult)
 }
 
 func (TestSuite) TestTranslationWriting(c *C) {
@@ -92,11 +93,11 @@ bla bla bla bla bla bla bla bla bla bla i18n 'test_end'
 
 	matches, err := applyRegexpExtractMatches(`i18n\s+"([^"]+)"`, dataDoubleQuote)
 	c.Assert(err, IsNil)
-	c.Assert(expectedResult, DeepEquals, matches)
+	swtest.DeepEquals(c, expectedResult, matches)
 
 	matches, err = applyRegexpExtractMatches(`i18n\s+'([^']+)'`, dataSimpleQuote)
 	c.Assert(err, IsNil)
-	c.Assert(expectedResult, DeepEquals, matches)
+	swtest.DeepEquals(c, expectedResult, matches)
 }
 
 func (TestSuite) TestBuildingNewTranslationFile(c *C) {
@@ -137,5 +138,5 @@ func (TestSuite) TestBuildingNewTranslationFile(c *C) {
 
 	newTranslations, err := BuildNewTranslationFiles(&translations, &extractedTranslations)
 	c.Assert(err, IsNil)
-	c.Assert(expectedTranslations, DeepEquals, *newTranslations)
+	swtest.DeepEquals(c, expectedTranslations, *newTranslations)
 }

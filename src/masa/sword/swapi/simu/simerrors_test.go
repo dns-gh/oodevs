@@ -11,6 +11,7 @@ package simu
 import (
 	"bytes"
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 )
 
 func getLogGroups(data string) ([]string, error) {
@@ -37,7 +38,7 @@ func (s *TestSuite) TestSimErrorsLogParser(c *C) {
 	// Single line
 	groups, err = getLogGroups("[2014-02-17 08:21:59] a\n")
 	c.Assert(err, IsNil)
-	c.Assert(groups, DeepEquals, []string{
+	swtest.DeepEquals(c, groups, []string{
 		"[2014-02-17 08:21:59] a\n",
 	})
 
@@ -50,7 +51,7 @@ func (s *TestSuite) TestSimErrorsLogParser(c *C) {
 `
 	groups, err = getLogGroups(log)
 	c.Assert(err, IsNil)
-	c.Assert(groups, DeepEquals, []string{
+	swtest.DeepEquals(c, groups, []string{
 		"[2014-02-17 08:21:59] a\n",
 		`[2014-02-17 08:21:59] b
   b
@@ -67,7 +68,7 @@ func (s *TestSuite) TestSimErrorsLogParser(c *C) {
 `
 	groups, err = getLogGroups(log)
 	c.Assert(err, IsNil)
-	c.Assert(groups, DeepEquals, []string{
+	swtest.DeepEquals(c, groups, []string{
 		"[2014-02-17 08:21:59] a\n",
 		`[2014-02-17 08:21:59] b
   b
