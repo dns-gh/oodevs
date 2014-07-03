@@ -19,7 +19,6 @@ using namespace kernel;
 // Created: JSR 2010-10-01
 // -----------------------------------------------------------------------------
 DictionaryType::DictionaryType( xml::xistream& xis )
-    : alias_( xis.attribute< std::string >( "alias", std::string() ) )
 {
     xis >> xml::list( "entry", *this, &DictionaryType::ReadEntry );
 }

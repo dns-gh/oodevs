@@ -10,8 +10,6 @@
 #ifndef __DictionaryEntryType_h_
 #define __DictionaryEntryType_h_
 
-#include "OptionalValue.h"
-
 namespace xml
 {
     class xistream;
@@ -68,7 +66,7 @@ private:
     //@{
     const std::string            key_;
     const unsigned int           id_;
-    OptionalValue< std::string > alias_;
+    std::string                  alias_;
     T_Labels                     labels_;
     //@}
 };
