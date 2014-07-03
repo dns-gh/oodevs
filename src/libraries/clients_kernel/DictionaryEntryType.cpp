@@ -21,7 +21,7 @@ using namespace kernel;
 DictionaryEntryType::DictionaryEntryType( xml::xistream& xis )
     : key_      ( xis.attribute< std::string >( "name" ) )
     , id_       ( xis.attribute< unsigned int >( "id" ) )
-    , alias_    ( xis.attribute< std::string >( "alias", std::string() ) )
+    , alias_    ( xis.attribute< std::string >( "alias", "" ) )
 {
     xis >> xml::optional >> xml::start( "labels" )
                            >> xml::list( "label", *this, &DictionaryEntryType::ReadLabel )
@@ -75,9 +75,7 @@ unsigned int DictionaryEntryType::GetId() const
 // -----------------------------------------------------------------------------
 std::string DictionaryEntryType::GetAlias() const
 {
-    if( alias_.IsSet() )
-        return alias_;
-    return std::string();
+    return alias_;
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,6 @@
 #ifndef __DictionaryType_h_
 #define __DictionaryType_h_
 
-#include "OptionalValue.h"
 #include <tools/Resolver.h>
 
 namespace xml
@@ -54,12 +53,6 @@ private:
     //! @name Helpers
     //@{
     void ReadEntry( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    OptionalValue< std::string > alias_;
     //@}
 };
 
