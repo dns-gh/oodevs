@@ -20,7 +20,10 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+
+unsigned int PHY_PerceptionView::nUrbanCoefficient_ = 100;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView constructor
@@ -125,11 +128,24 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
         !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
         return result;
 
+    if( FailDirectView( target ) )
+        return PHY_PerceptionLevel::notSeen_;
+
     const T_PerceptionParameterPair p = GetParameter( target );
     perceptionsBuffer_[ &target ] = std::make_pair( p.first + 1, p.second );
     const PHY_ZURBPerceptionComputer urbanComputer( perceiver_.GetPion(), p.second, p.first );
     const PHY_PerceptionLevel& urbanResult = urbanComputer.ComputePerception( target );
     return std::min( result, urbanResult );
+}
+
+bool PHY_PerceptionView::FailDirectView( const MIL_Agent_ABC& target ) const
+{
+    if( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() &&
+        !target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() )
+        return false;
+    if( !perceiver_.GetKnowledgeGroup()->GetKnowledge()->ResolveKnowledgeAgent( target ) )
+        return false;
+    return MIL_Random::rand32_ii( 0, 100, MIL_Random::ePerception ) > nUrbanCoefficient_;
 }
 
 // -----------------------------------------------------------------------------

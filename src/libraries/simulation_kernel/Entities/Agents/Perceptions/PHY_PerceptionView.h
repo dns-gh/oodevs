@@ -43,6 +43,9 @@ public:
     virtual void FinalizePerception();
     //@}
 
+public:
+    static unsigned int nUrbanCoefficient_;
+
 private:
     //! @name Types
     //@{
@@ -55,6 +58,7 @@ private:
     //@{
     void FinalizeSurfaceAgents();
     void TransfertPerception();
+    bool FailDirectView( const MIL_Agent_ABC& target ) const;
 
     T_PerceptionParameterPair GetParameter( const MIL_Agent_ABC& target );
     //@}

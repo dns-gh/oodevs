@@ -127,10 +127,6 @@ private:
           bool                   bHasWeaponsReady_;
           bool                   bHasWeaponsNotReady_;
           bool                   bHasWeaponsAndNoAmmo_;
-
-public:
-    // Factor applied to number of components that can fire in urban areas.
-    static unsigned int nUrbanCoefficient_;
 };
 
 } // namespace firing

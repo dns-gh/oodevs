@@ -24,8 +24,6 @@
 
 using namespace firing;
 
-unsigned int PHY_DirectFireData::nUrbanCoefficient_ = 100;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData::sComposanteWeapons::sComposanteWeapons
 // Created: NLD 2004-10-05
