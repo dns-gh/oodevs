@@ -82,6 +82,7 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport
 {
     if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "DecisionalState" ) && !entity_.IsAggregated() )
     {
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
         if( drawSauvegarde_ )
             tools.DrawSvg( "sauvegarde.svg", where, tools.GetAdaptiveZoomFactor( false ) );
         if( drawEclairage_ )
@@ -90,6 +91,7 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport
             tools.DrawSvg( "1stechelon.svg", where, tools.GetAdaptiveZoomFactor( false ) );
         if( drawEtatOps_ || dead_ )
             tools.DrawSvg( "opstatehs.svg", where, tools.GetAdaptiveZoomFactor( false ) );
+        glPopAttrib();
     }
 }
 

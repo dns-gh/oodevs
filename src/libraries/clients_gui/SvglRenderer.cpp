@@ -30,9 +30,7 @@ unsigned int SvglRenderer::colorList_ = 0;
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
 SvglRenderer::SvglRenderer()
-    : current_         ( new Color( "black" ) )
-    , opacity_         ( new Opacity() )
-    , references_      ( new References() )
+    : references_      ( new References() )
     , renderingContext_( new RenderingContext() )
     , listLenghts_     ( new ListLengthFactory() )
     , colorDirty_      ( true )
@@ -124,7 +122,7 @@ unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC 
 {
     unsigned int listId = 0;
     CIT_Lists it = lists.find( node );
-    if( it == lists.end() )
+    if( it == lists.end() || colorDirty_ )
     {
         listId = glGenLists( 1 );
         if( !listId )

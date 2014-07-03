@@ -80,8 +80,6 @@ private:
 private:
     //! @name Member data
     //@{
-    std::unique_ptr< svg::Color >             current_;
-    std::unique_ptr< svg::Opacity >           opacity_;
     std::unique_ptr< svg::References >        references_;
     std::unique_ptr< svg::RenderingContext >  renderingContext_;
     std::unique_ptr< svg::ListLengthFactory > listLenghts_;
