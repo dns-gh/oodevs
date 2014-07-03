@@ -21,6 +21,7 @@
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Sensors/DistanceModifiersHelpers.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
@@ -152,7 +153,7 @@ void PHY_PerceptionRadarData::Update( PHY_RoleInterface_Perceiver& perceiver )
             it = acquisitionData_.erase( it );
             continue;
         }
-        perceiver.NotifyPerception( target, pRadarType_->ComputeAcquisitionLevel( target, data.nFirstTimeStepPerceived_ ) );
+        perceiver.NotifyPerception( target, GetMaxHostilePerceptionLevel( perceiver.GetPion(), target, pRadarType_->ComputeAcquisitionLevel( target, data.nFirstTimeStepPerceived_ ) ) );
         data.bUpdated_ = false;
         ++it;
     }

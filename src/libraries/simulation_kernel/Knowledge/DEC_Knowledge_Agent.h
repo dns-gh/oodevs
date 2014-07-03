@@ -57,6 +57,7 @@ public:
     static double rMaxDangerosityDegradationByOpState_;
     static double rMaxDangerosityDegradationByNeutralizedState_;
     static bool detectDestroyedUnits_;
+    static const PHY_PerceptionLevel* maxHostilePerceptionLevel_;
 
 public:
     //! @name Constructors/Destructor
@@ -230,6 +231,8 @@ private:
     static MIL_IDManager idManager_;
     //@}
 };
+
+const PHY_PerceptionLevel& GetMaxHostilePerceptionLevel( const MIL_Agent_ABC& source, const MIL_Agent_ABC& target, const PHY_PerceptionLevel& maxLevel );
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Agent )
 

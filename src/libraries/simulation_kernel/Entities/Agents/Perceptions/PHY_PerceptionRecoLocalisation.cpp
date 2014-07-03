@@ -183,7 +183,7 @@ void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVec
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
             if( detectionComputer.CanBeSeen() )
-                perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
+                perceiver_.NotifyPerception( target, GetMaxHostilePerceptionLevel( perceiver_.GetPion(), target, PHY_PerceptionLevel::recognized_ ) );
         }
     }
 }

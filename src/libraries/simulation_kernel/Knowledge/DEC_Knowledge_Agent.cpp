@@ -45,11 +45,23 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
 
-double DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
-double DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
-double DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
+double DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_         = 0.2; // 20%
+double DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_           = 0.2; // 20%
+double DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_  = 0.8; // 80%
+const PHY_PerceptionLevel* DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::identified_;
 bool DEC_Knowledge_Agent::detectDestroyedUnits_ = true;
 MIL_IDManager DEC_Knowledge_Agent::idManager_;
+
+// -----------------------------------------------------------------------------
+// Name: GetMaxHostilePerceptionLevel
+// Created: JSR 2014-07-03
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& GetMaxHostilePerceptionLevel( const MIL_Agent_ABC& source, const MIL_Agent_ABC& target, const PHY_PerceptionLevel& maxLevel )
+{
+    if( source.GetArmy().IsAnEnemy( target.GetArmy() ) == eTristate_True )
+        return std::min( *DEC_Knowledge_Agent::maxHostilePerceptionLevel_, maxLevel );
+    return maxLevel;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent constructor
@@ -429,6 +441,8 @@ void DEC_Knowledge_Agent::UpdateFromCrowdPerception( const MIL_Population& popul
     static const int crowdPerceptionDelayTicks = 3;
     nTimeLastUpdate_ = currentTimeStep;
     ChangeRelevance( 1. );
+    const bool isEnemy = pAgentKnown_ && population.GetArmy().IsAnEnemy( pAgentKnown_->GetArmy() );
+
     pCurrentPerceptionLevel_ = pPreviousPerceptionLevel_;
     if( pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::notSeen_ )
     {
@@ -442,7 +456,9 @@ void DEC_Knowledge_Agent::UpdateFromCrowdPerception( const MIL_Population& popul
         }
         nTimeForDelayedCrowdPerception_ = currentTimeStep + crowdPerceptionDelayTicks;
     }
-    else if( pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::detected_ && currentTimeStep >= nTimeForDelayedCrowdPerception_ )
+    else if( ( !isEnemy || *maxHostilePerceptionLevel_ > PHY_PerceptionLevel::detected_ ) &&
+        pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::detected_ &&
+        currentTimeStep >= static_cast< int >( nTimeForDelayedCrowdPerception_ ) )
     {
         pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
         bCurrentPerceptionLevelUpdated_ = true;
@@ -454,7 +470,9 @@ void DEC_Knowledge_Agent::UpdateFromCrowdPerception( const MIL_Population& popul
         }
         nTimeForDelayedCrowdPerception_ = currentTimeStep + crowdPerceptionDelayTicks;
     }
-    else if( pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::recognized_  && currentTimeStep >= nTimeForDelayedCrowdPerception_ )
+    else if( ( !isEnemy || *maxHostilePerceptionLevel_ > PHY_PerceptionLevel::recognized_ ) &&
+        pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::recognized_ &&
+        currentTimeStep >= static_cast< int >( nTimeForDelayedCrowdPerception_ ) )
     {
         pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::identified_;
         bCurrentPerceptionLevelUpdated_ = true;

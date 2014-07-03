@@ -26,6 +26,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Objects/StructuralCapacity.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
@@ -68,15 +69,23 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
     ComputePerceptionPolygon( bestSensorParameters.detectionDist_, polygon );
     if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
     {
-        ComputePerceptionPolygon( bestSensorParameters.recognitionDist_, polygon );
-        if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
+        const PHY_PerceptionLevel& maxPerceptionLevel = GetMaxHostilePerceptionLevel( perceiver_, target, PHY_PerceptionLevel::identified_ );
+        const PHY_PerceptionLevel* level = &PHY_PerceptionLevel::detected_;
+        if( maxPerceptionLevel > PHY_PerceptionLevel::detected_ )
         {
-            ComputePerceptionPolygon( bestSensorParameters.identificationDist_, polygon );
+            ComputePerceptionPolygon( bestSensorParameters.recognitionDist_, polygon );
             if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
-                return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::identified_ );
-            return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::recognized_ );
+            {
+                level = &PHY_PerceptionLevel::recognized_;
+                if( maxPerceptionLevel > PHY_PerceptionLevel::recognized_ )
+                {
+                    ComputePerceptionPolygon( bestSensorParameters.identificationDist_, polygon );
+                    if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
+                        level = &PHY_PerceptionLevel::identified_;
+                }
+            }
         }
-        return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::detected_ );
+        return GetLevelWithDelay( bestSensorParameters.delay_, *level );
     }
     return PHY_PerceptionLevel::notSeen_;
 }
