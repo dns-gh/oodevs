@@ -13,7 +13,7 @@
 -- <li> eTypeLima_LFM = 8 (End of mission line) </li>
 -- <li> eTypeLima_LIA = 9 (Recognition and reception line) </li> </ul>
 -- @see integration.getLimasFromType
--- @return Simulation phase line (or 0)
+-- @return Integer (phase line id)
 integration.getLimaFromType = function( phaseLineType )
     return DEC_GetLima( phaseLineType )
 end
@@ -33,7 +33,7 @@ end
 -- <li> eTypeLima_LFM = 8 (End of mission line) </li>
 -- <li> eTypeLima_LIA = 9 (Recognition and reception line) </li> </ul>
 -- @see integration.getLimaFromType
--- @return List of simulation phase lines
+-- @return List of integers (phase line ids)
 integration.getLimasFromType = function( phaseLineType )
     return DEC_GetLimasFromType( phaseLineType )
 end
@@ -42,7 +42,7 @@ end
 -- This method only works for key positions of type eTypePointLima.
 -- @see integration.getPointsCategory
 -- @param position Simulation key position
--- @return Simulation phase line
+-- @return Integer (phase line id)
 integration.getLimaPoint = function( position )
     return DEC_GetLimaPoint( position )
 end
@@ -125,7 +125,7 @@ end
 -- The positions are translated by the general direction of the area of responsibility,
 -- towards this company.
 -- This method can only be called by a company.
--- @param phaseLine Simulation phase line
+-- @param phaseLine Integer (phase line id)
 -- @param distance The distance between every returned point and the given phase line (in meters)
 -- @param nbPoints The number of returned positions
 -- @return List of simulation positions
@@ -137,7 +137,7 @@ end
 -- Flagged phase lines are ignored by some integration functions.
 -- @see integration.getPointsLimas
 -- @see integration.getMissionLimaFlag
--- @param phaseLine Simulation phase line
+-- @param phaseLine Integer (phase line id)
 -- @param boolean Boolean, the new value
 integration.setMissionLimaFlag = function( phaseLine, boolean )
     DEC_SetMissionLimaFlag( phaseLine, boolean )
@@ -145,7 +145,7 @@ end
 
 --- Returns the given phase line's flagged state
 -- @see integration.setMissionLimaFlag
--- @param phaseLine Simulation phase line
+-- @param phaseLine Integer (phase line id)
 -- @return Boolean
 integration.getMissionLimaFlag = function( phaseLine )
     return DEC_GetMissionLimaFlag( phaseLine )
@@ -154,7 +154,7 @@ end
 --- Sets the given scheduled phase line's flagged state to the given boolean.
 -- Flagged scheduled phase lines are ignored when trying to get the next
 -- scheduled phase line to consider.
--- @param phaseLine Simulation phase line
+-- @param phaseLine Integer (phase line id)
 -- @param boolean Boolean, the new value
 integration.setMissionLimaFlagSchedule = function( phaseLine, boolean )
     DEC_SetMissionLimaFlagHoraire( phaseLine, boolean )
