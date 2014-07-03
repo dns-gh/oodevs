@@ -137,7 +137,8 @@ void Paths::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& v
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
     if( displayPath )
     {
-        glColor4f( COLOR_PATH );
+        static const float color[4] = { COLOR_PATH };
+        glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
         glLineWidth( 3 );
         glEnable( GL_LINE_STIPPLE );
         glLineStipple( 1, tools.StipplePattern() );
@@ -146,10 +147,11 @@ void Paths::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& v
     }
     if( displayOldPath )
     {
-        glColor4f( COLOR_BLACK );
+        static const float colors[2][4] = { { COLOR_BLACK }, { COLOR_OLDPATH } };
+        glColor4f( colors[0][0], colors[0][1], colors[0][2], tools.GetCurrentAlpha() );
         glLineWidth( 3 );
         tools.DrawLines( previousPath_ );
-        glColor4f( COLOR_OLDPATH );
+        glColor4f( colors[1][0], colors[1][1], colors[1][2], tools.GetCurrentAlpha() );
         glLineWidth( 2 );
         tools.DrawLines( previousPath_ );
     }

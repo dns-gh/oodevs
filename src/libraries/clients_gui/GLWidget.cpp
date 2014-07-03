@@ -825,24 +825,25 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/,
     const float x = where.X();
     const float ydelta = factor * 20.f; // $$$$ SBO 2007-05-04: hard coded again
     const float xdelta = h * halfWidth * 2;
+    const float alpha = GetCurrentAlpha();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
         glLineWidth( 1. );
-        glColor3f( 0.8f, 0.8f, 0.8f );  // light gray
+        glColor4f( 0.8f, 0.8f, 0.8f, alpha );  // light gray
         glBegin( GL_QUADS );
             glVertex2f( x - halfWidth + xdelta, y - ydelta );
             glVertex2f( x + halfWidth, y - ydelta );
             glVertex2f( x + halfWidth, y + ydelta );
             glVertex2f( x - halfWidth + xdelta, y + ydelta );
         glEnd();
-        glColor3f( 1 - h, h*h*h, 0.f ); // gradiation from green (full) to red (dead)
+        glColor4f( 1 - h, h*h*h, 0.f, alpha ); // gradiation from green (full) to red (dead)
         glBegin( GL_QUADS );
             glVertex2f( x - halfWidth, y - ydelta );
             glVertex2f( x - halfWidth + xdelta, y - ydelta );
             glVertex2f( x - halfWidth + xdelta, y + ydelta );
             glVertex2f( x - halfWidth, y + ydelta );
         glEnd();
-        glColor3f( 0.1f, 0.1f, 0.1f );   // almost black
+        glColor4f( 0.1f, 0.1f, 0.1f, alpha );   // almost black
         glBegin( GL_LINE_LOOP );
             glVertex2f( x - halfWidth, y - ydelta );
             glVertex2f( x + halfWidth, y - ydelta );

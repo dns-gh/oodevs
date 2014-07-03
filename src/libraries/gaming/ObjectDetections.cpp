@@ -60,10 +60,11 @@ void ObjectDetections::DoUpdate( const sword::ObjectDetection& message )
 // -----------------------------------------------------------------------------
 void ObjectDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
 {
+    static const float color[4] = { COLOR_DETECTED };
     if( ! tools.ShouldDisplay( "VisionLines" ) || perceivedObjects_.empty() )
         return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glColor4f( COLOR_DETECTED );
+    glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
     for( auto it = perceivedObjects_.begin(); it != perceivedObjects_.end(); ++it )
         tools.DrawLine( where, (*it)->Get< Positions >().GetPosition(), 1.f );
     glPopAttrib();
