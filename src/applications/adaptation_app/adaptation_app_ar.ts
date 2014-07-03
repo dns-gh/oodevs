@@ -758,6 +758,22 @@ Parked engine running</source>
         <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Max volume carried must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max weight carried must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -4126,14 +4142,6 @@ PNG (*.png)
     <message>
         <source>Created object</source>
         <translation type="unfinished">الكائن الذي تم إنشاؤه</translation>
-    </message>
-    <message>
-        <source>Mine ammo parameters</source>
-        <translation type="unfinished">معلمات ذخيرة الأعمال المتعلقة بالألغام</translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation type="unfinished">كمية الألغام</translation>
     </message>
     <message>
         <source>Illumination capacity</source>

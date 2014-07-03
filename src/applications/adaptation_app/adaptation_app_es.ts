@@ -771,6 +771,22 @@ Estacionado y motor encendido</translation>
         <source>Tow capacity must be a positive number for equipment &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Max volume carried must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max weight carried must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -4148,14 +4164,6 @@ PNG (*.png)</translation>
     <message>
         <source>Created object</source>
         <translation>Objeto creado</translation>
-    </message>
-    <message>
-        <source>Mine ammo parameters</source>
-        <translation>Parámetros de munición tipo mina</translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation>Cantidad de minas</translation>
     </message>
     <message>
         <source>Illumination capacity</source>

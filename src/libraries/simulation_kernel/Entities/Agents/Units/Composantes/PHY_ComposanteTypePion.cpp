@@ -439,18 +439,32 @@ void PHY_ComposanteTypePion::InitializeTransport( xml::xistream& xis )
         >> xml::end;
 }
 
+namespace
+{
+
+double ReadLoadingTime( xml::xistream& xis, const std::string& category,
+        const std::string& name, double capacity )
+{
+    double duration;
+    tools::ReadTimeAttribute( xis, name, duration );
+    if( duration < 0 )
+        throw MASA_EXCEPTION( xis.context() + category + ": " + name + " < 0" );
+    if( duration < 1e-6 )
+        // We can load everyone in one tick
+        return capacity;
+    return 1. / MIL_Tools::ConvertSecondsToSim( duration );
+}
+
+}  // namespace
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::ReadTransportCrew
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
 {
-    if( !tools::ReadTimeAttribute( xis, "man-boarding-time", rNbrHumansLoadedPerTimeStep_ ) || rNbrHumansLoadedPerTimeStep_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "crew: man-boarding-time < 0" );
-    if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedPerTimeStep_ ) || rNbrHumansUnloadedPerTimeStep_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "crew: man-unloading-time < 0" );
-    rNbrHumansLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedPerTimeStep_   );
-    rNbrHumansUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedPerTimeStep_ );
+    rNbrHumansLoadedPerTimeStep_ = ReadLoadingTime( xis, "crew", "man-boarding-time", std::numeric_limits< double >::max() );
+    rNbrHumansUnloadedPerTimeStep_ = ReadLoadingTime( xis, "crew", "man-unloading-time", std::numeric_limits< double >::max() );
 }
 
 // -----------------------------------------------------------------------------
@@ -463,20 +477,8 @@ void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
     rPionTransporterWeightCapacity_ = xis.attribute< double >( "capacity" );
     if( rPionTransporterWeightCapacity_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "unit: capacity <= 0" );
-    if( !tools::ReadTimeAttribute( xis, "ton-loading-time", rPionTransporterWeightLoadedPerTimeStep_ )
-      || rPionTransporterWeightLoadedPerTimeStep_ < 0 )
-        throw MASA_EXCEPTION( xis.context() + "unit: ton-loading-time < 0" );
-    if( rPionTransporterWeightLoadedPerTimeStep_ > 0 )
-        rPionTransporterWeightLoadedPerTimeStep_  = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_ );
-    else
-        rPionTransporterWeightLoadedPerTimeStep_ = std::numeric_limits< double >::max();
-    if( !tools::ReadTimeAttribute( xis, "ton-unloading-time", rPionTransporterWeightUnloadedPerTimeStep_ )
-      || rPionTransporterWeightUnloadedPerTimeStep_ < 0 )
-        throw MASA_EXCEPTION( xis.context() + "unit: ton-unloading-time < 0" );
-    if( rPionTransporterWeightUnloadedPerTimeStep_ > 0 )
-        rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
-    else
-        rPionTransporterWeightUnloadedPerTimeStep_ = std::numeric_limits< double >::max();
+    rPionTransporterWeightLoadedPerTimeStep_ = ReadLoadingTime( xis, "unit", "ton-loading-time", std::numeric_limits< double >::max() );
+    rPionTransporterWeightUnloadedPerTimeStep_ = ReadLoadingTime( xis, "unit", "ton-unloading-time", std::numeric_limits< double >::max() );
 }
 
 // -----------------------------------------------------------------------------
@@ -488,20 +490,8 @@ void PHY_ComposanteTypePion::ReadTransportCrowd( xml::xistream& xis )
     nCrowdTransporterCapacity_ = xis.attribute< unsigned int >( "capacity" );
     if( nCrowdTransporterCapacity_ == 0 )
         throw MASA_EXCEPTION( xis.context() + "unit: capacity == 0" );
-    if( !tools::ReadTimeAttribute( xis, "man-boarding-time", rCrowdTransporterLoadedPerTimeStep_ )
-      || rCrowdTransporterLoadedPerTimeStep_ < 0 )
-        throw MASA_EXCEPTION( xis.context() + "unit: man-boarding-time < 0" );
-    if( rCrowdTransporterLoadedPerTimeStep_ > 0 )
-        rCrowdTransporterLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rCrowdTransporterLoadedPerTimeStep_ );
-    else
-        rCrowdTransporterLoadedPerTimeStep_ = std::numeric_limits< double >::max();
-    if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rCrowdTransporterUnloadedPerTimeStep_ )
-      || rCrowdTransporterUnloadedPerTimeStep_ < 0 )
-        throw MASA_EXCEPTION( xis.context() + "unit: man-unloading-time < 0" );
-    if( rCrowdTransporterUnloadedPerTimeStep_ > 0 )
-        rCrowdTransporterUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rCrowdTransporterUnloadedPerTimeStep_ );
-    else
-        rCrowdTransporterUnloadedPerTimeStep_ = std::numeric_limits< double >::max();
+    rCrowdTransporterLoadedPerTimeStep_ = ReadLoadingTime( xis, "unit", "man-boarding-time", std::numeric_limits< double >::max() );
+    rCrowdTransporterUnloadedPerTimeStep_ = ReadLoadingTime( xis, "unit", "man-unloading-time", std::numeric_limits< double >::max() );
 }
 
 // -----------------------------------------------------------------------------
@@ -715,24 +705,6 @@ void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
             >> xml::list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
         >> xml::end;
 }
-
-namespace
-{
-
-double ReadLoadingTime( xml::xistream& xis, const std::string& category,
-        const std::string& name, unsigned int capacity )
-{
-    double duration;
-    tools::ReadTimeAttribute( xis, name, duration );
-    if( duration < 0 )
-        throw MASA_EXCEPTION( xis.context() + category + ": " + name + " < 0" );
-    if( duration < 1e-6 )
-        // We can load everyone in one tick
-        return capacity;
-    return 1. / MIL_Tools::ConvertSecondsToSim( duration );
-}
-
-}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::ReadRelieving
