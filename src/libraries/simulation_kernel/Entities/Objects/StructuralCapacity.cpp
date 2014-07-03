@@ -182,7 +182,7 @@ bool StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
         ratio = TER_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
     const float oldStructuralState = structuralState_;
 
-    structuralState_ = static_cast< float >( std::max( 0., (double)structuralState_ - ratio * ( 1 - factor ) ) );
+    Build( ratio * ( factor - 1 ) );
     for( auto it = agents_.begin(); it != agents_.end(); ++it )
         if( ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= oldStructuralState - structuralState_ )
             (*it)->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
@@ -228,7 +228,8 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
     // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
     if( area == 0 )
         return;
-    structuralState_ = (float)std::max( 0., (double)structuralState_ - ( 1 - dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) ) / area );
+
+    Build( ( dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) - 1 ) / area );
     object.ApplyStructuralState( structuralState_ );
 }
 
