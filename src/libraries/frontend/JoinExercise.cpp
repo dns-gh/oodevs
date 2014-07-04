@@ -23,7 +23,8 @@ using namespace frontend;
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
 JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
-        const tools::Path& session, const QString* profile, const QString& devFeatures )
+        const tools::Path& session, const QString* profile, const QString& devFeatures,
+        const tools::Path& timelineLog, const tools::Path& cefLog )
     : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
     AddRootArgument();
@@ -34,6 +35,10 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
         AddArgument( "login", !profile->isEmpty() ? profile->toStdString() : "anonymous" );
     if( !devFeatures.isEmpty() )
         AddArgument( "features", devFeatures.toStdString() );
+    if( !timelineLog.IsEmpty() )
+        AddArgument( "timeline-log", timelineLog.ToUTF8() );
+    if( !cefLog.IsEmpty() )
+        AddArgument( "cef-log", cefLog.ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------

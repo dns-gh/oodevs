@@ -17,6 +17,10 @@ namespace tools
     class GeneralConfig;
 }
 
+// Returns an absolute path to timeline client log file. logPath is resolved
+// relatively to sessionDir. If logPath is empty, an empty path is returned.
+tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath );
+
 // =============================================================================
 /** @class  DebugConfigPanel
     @brief  DebugConfigPanel
@@ -61,6 +65,7 @@ private slots:
     void OnTimelineDebugPortChanged( int port );
     void OnTimelineLogChanged( const QString& );
     void OnTimelineDebugChanged( const QString& );
+    void OnCefLogChanged( const QString& );
     void OnExerciseNumberChanged( int exerciseNumber );
     void OnMapnikLayerChecked( bool checked );
     void OnChangeIntegrationDirectory();
@@ -89,6 +94,8 @@ private:
     QLineEdit* timelineLog_;
     QLabel* timelineDebugLabel_;
     QLineEdit* timelineDebug_;
+    QLabel* cefLogLabel_;
+    QLineEdit* cefLog_;
     QCheckBox* oldTimeline_;
     int exerciseNumber_;
 

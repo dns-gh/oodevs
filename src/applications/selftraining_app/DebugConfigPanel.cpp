@@ -27,6 +27,15 @@ namespace
     const int maxIntegrationDir = 5;
 }
 
+tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath )
+{
+    if( logPath.IsEmpty() )
+        return logPath;
+    if( logPath.IsAbsolute() )
+        return logPath;
+    return sessionDir.Absolute() / logPath;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
@@ -113,6 +122,16 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     debugLayout->addWidget( timelineDebugLabel_ );
     debugLayout->addWidget( timelineDebug_ );
 
+    QHBoxLayout* cefLogLayout = new QHBoxLayout();
+    cefLogLayout->setSpacing( 10 );
+    cefLogLabel_ = new QLabel();
+    cefLog_ = new QLineEdit();
+    cefLog_->setText( registry::ReadString( "CefLog" ) );
+    auto test = registry::ReadString( "CefLog" );
+    connect( cefLog_, SIGNAL( textEdited( const QString& ) ), SLOT( OnCefLogChanged( const QString& ) ) );
+    cefLogLayout->addWidget( cefLogLabel_ );
+    cefLogLayout->addWidget( cefLog_ );
+
     oldTimeline_ = new QCheckBox();
     oldTimeline_->setChecked( registry::ReadBool( "EnableLegacyTimeline" ) );
     QHBoxLayout* oldTimelineLayout = new QHBoxLayout();
@@ -123,6 +142,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     timelineGroupLayout->addLayout( debugPortBox );
     timelineGroupLayout->addLayout( timelineLogLayout );
     timelineGroupLayout->addLayout( debugLayout );
+    timelineGroupLayout->addLayout( cefLogLayout );
     timelineGroupLayout->addLayout( oldTimelineLayout );
 
     //profiling group box
@@ -258,6 +278,7 @@ void DebugConfigPanel::OnLanguageChanged()
     timelineDebugPortLabel_->setText( tools::translate( "DebugConfigPanel", "Debug port" ) );
     timelineLogLabel_->setText( tools::translate( "DebugConfigPanel", "Client log file" ) );
     timelineDebugLabel_->setText( tools::translate( "DebugConfigPanel", "Debug directory" ) );
+    cefLogLabel_->setText( tools::translate( "DebugConfigPanel", "Chrome embedded log file" ) );
     oldTimeline_->setText( tools::translate( "DebugConfigPanel", "Enable legacy timeline" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
     profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
@@ -298,9 +319,8 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
     action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );
     if( !timelineLog_->text().isEmpty() )
     {
-        auto xml = frontend::ConfigurationManipulator::GetSessionXml( config_, exercise, session );
-        xml = xml.Absolute();
-        const auto log = xml.Parent() / tools::Path::FromUTF8( timelineLog_->text().toStdString() );
+        auto log = tools::Path::FromUTF8( timelineLog_->text().toStdString() );
+        log = GetTimelineLog( action.GetPath().Parent(), log );
         action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
     }
     const auto debug = timelineDebug_->text().trimmed();
@@ -362,6 +382,11 @@ void DebugConfigPanel::OnTimelineLogChanged( const QString& path )
 void DebugConfigPanel::OnTimelineDebugChanged( const QString& path )
 {
     registry::WriteString( "TimelineDebugDir", path );
+}
+
+void DebugConfigPanel::OnCefLogChanged( const QString& path )
+{
+    registry::WriteString( "CefLog", path );
 }
 
 // -----------------------------------------------------------------------------

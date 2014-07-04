@@ -130,3 +130,8 @@ bool CreateSession::HasOption( const std::string& path )
 {
     return setter_->HasNode( path );
 }
+
+const tools::Path& CreateSession::GetPath() const
+{
+    return setter_->GetPath();
+}

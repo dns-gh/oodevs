@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    const tools::Path& GetPath() const;
     template< typename T >
     void SetValue( const std::string& path, const T& value );
     bool HasNode( const std::string& path );

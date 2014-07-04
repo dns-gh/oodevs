@@ -196,6 +196,10 @@
         <source>Debug directory</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Chrome embedded log file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>
