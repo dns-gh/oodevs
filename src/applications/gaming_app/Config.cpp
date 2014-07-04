@@ -32,20 +32,22 @@ Config::Config( int argc, char** argv )
     , timelineDebugPort_( 0 )
     , mapnik_( false )
 {
-    std::string timelineLog;
+    std::string timelineLog, cefLog;
     po::options_description desc( "Gaming options" );
     desc.add_options()
         ( "host",  po::value( &host_ ), "specify host to join" )
         ( "login", po::value( &login_ ), "specify login" )
         ( "password", po::value( &password_ ), "specify password" )
         ( "order-file", po::value( &orderFile_ ), "specify an order file to load" )
-        ( "timeline-log", po::value( &timelineLog ), "timeline log file" );
+        ( "timeline-log", po::value( &timelineLog ), "timeline log file" )
+        ( "cef-log", po::value( &cefLog ), "chrome embedded log file" );
     AddOptions( desc );
     Parse( argc, argv );
     isLoginInCommandLine_ = IsSet( "login" );
     if( isLoginInCommandLine_ && login_ == "anonymous" )
         login_ = "";
     timelineLogFileCli_ = tools::Path::FromUTF8( timelineLog );
+    cefLogFile_ = tools::Path::FromUTF8( cefLog );
     ReadSession();
 }
 
@@ -180,6 +182,11 @@ tools::Path Config::GetTimelineClientLogFile() const
     if( !timelineLogFileCli_.IsEmpty() )
         return timelineLogFileCli_;
     return timelineLogFile_;
+}
+
+tools::Path Config::GetCefLogFile() const
+{
+    return cefLogFile_;
 }
 
 bool Config::HasMapnik() const

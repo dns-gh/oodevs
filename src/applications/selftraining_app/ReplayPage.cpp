@@ -11,6 +11,8 @@
 #include "ReplayPage.h"
 #include "moc_ReplayPage.cpp"
 
+#include "Config.h"
+#include "DebugConfigPanel.h"
 #include "ExerciseContainer.h"
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
@@ -35,7 +37,7 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises )
+ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_( config )
     , fileLoader_( fileLoader )
@@ -110,7 +112,8 @@ void ReplayPage::StartExercise()
     process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_ ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-            exerciseName, session_, &profile, features, tools::Path() ) );
+            exerciseName, session_, &profile, features, tools::Path(),
+            config_.GetCefLog() ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

@@ -65,6 +65,7 @@ private slots:
     void OnTimelineDebugPortChanged( int port );
     void OnTimelineLogChanged( const QString& );
     void OnTimelineDebugChanged( const QString& );
+    void OnCefLogChanged( const QString& );
     void OnExerciseNumberChanged( int exerciseNumber );
     void OnMapnikLayerChecked( bool checked );
     void OnChangeIntegrationDirectory();
@@ -93,6 +94,8 @@ private:
     QLineEdit* timelineLog_;
     QLabel* timelineDebugLabel_;
     QLineEdit* timelineDebug_;
+    QLabel* cefLogLabel_;
+    QLineEdit* cefLog_;
     QCheckBox* oldTimeline_;
     int exerciseNumber_;
 

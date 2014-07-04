@@ -43,6 +43,8 @@ public:
     virtual int GetTimelineDebugPort() const;
     // Disabled if empty.
     tools::Path GetTimelineClientLogFile() const;
+    // Disabled if empty
+    tools::Path GetCefLogFile() const;
 
     bool HasMapnik() const;
     //@}
@@ -68,6 +70,7 @@ private:
     // Timeline client log file can be set from CLI or session file
     tools::Path timelineLogFile_;
     tools::Path timelineLogFileCli_;
+    tools::Path cefLogFile_;
     bool mapnik_;
     //@}
 };

@@ -197,6 +197,10 @@
         <source>Debug directory</source>
         <translation>Répertoire de debug</translation>
     </message>
+    <message>
+        <source>Chrome embedded log file</source>
+        <translation>Fichier de log de Chrome embedded</translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

@@ -270,7 +270,8 @@ void ScenarioLauncherPage::OnStart()
         auto profile = profile_.GetLogin();
         QString devFeatures = configPanel_ ? configPanel_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
-            config_, exerciseName, session.first, &profile, devFeatures, tools::Path() ) );
+            config_, exerciseName, session.first, &profile, devFeatures, tools::Path(),
+            config_.GetCefLog() ) );
     }
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );

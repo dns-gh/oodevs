@@ -15,7 +15,6 @@
 
 namespace frontend
 {
-    class Config;
     class Exercise_ABC;
 }
 
@@ -30,6 +29,7 @@ namespace tools
 }
 
 class Application;
+class Config;
 class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
@@ -49,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous,
-                         const frontend::Config& config,
+                         const Config& config,
                          const tools::Loader_ABC& fileLoader,
                          kernel::Controllers& controllers,
                          ExerciseContainer& exercises );
@@ -77,7 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const frontend::Config& config_;
+    const Config& config_;
     const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
     ExerciseContainer& exerciseContainer_;

@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "Config.h"
+#include "Registry.h"
 #pragma warning( push, 0 )
 #include <boost/foreach.hpp>
 #include <boost/program_options.hpp>
@@ -119,4 +120,13 @@ bool Config::IsOnDebugMode() const
 const tools::Path& Config::GetSession() const
 {
     return session_;
+}
+
+tools::Path Config::GetCefLog() const
+{
+    if( !IsOnDebugMode() )
+        // Enable CEF logging only if selftraining is run in debug mode to
+        // avoid hidden registry effects.
+        return tools::Path();
+    return tools::Path::FromUTF8( registry::ReadString( "CefLog" ).toStdString() );
 }
