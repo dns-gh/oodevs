@@ -11,6 +11,7 @@
 
 #include "Engine.h"
 #include "timeline_core/api.h"
+#include <tools/Path.h>
 
 #include <stdlib.h>
 
@@ -26,6 +27,12 @@ App::App( const Configuration& cfg, CefRefPtr< Engine > engine )
     settings.single_process = true;
     settings.remote_debugging_port = cfg.debug_port;
     settings.log_severity = LOGSEVERITY_DISABLE;
+    if( !cfg.cef_log.empty() )
+    {
+        settings.log_severity = LOGSEVERITY_VERBOSE;
+        CefString( &settings.log_file ).FromWString( 
+                tools::Path::FromUTF8( cfg.cef_log ).ToUnicode()  );
+    }
     const bool valid = CefInitialize( CefMainArgs( GetModuleHandle( 0 ) ), settings, this );
     if( !valid )
         throw std::runtime_error( "unable to initialize cef" );
