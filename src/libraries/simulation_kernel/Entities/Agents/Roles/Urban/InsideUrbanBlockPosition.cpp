@@ -87,8 +87,11 @@ MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& firer, U
 // -----------------------------------------------------------------------------
 double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
 {
+    const double urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
+    if( urbanObjectArea <= 0 )
+        return 0;
     const double intersectArea = TER_Geometry::IntersectionArea( attritionSurface, urbanObject_.GetLocalisation() );
-    return intersectArea * result.urbanDeployment_;
+    return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
 }
 
 // -----------------------------------------------------------------------------
