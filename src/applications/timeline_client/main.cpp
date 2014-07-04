@@ -35,8 +35,18 @@ std::function< void( const std::string& )> MakeLogger( const tools::Path& path )
     const auto mutex = boost::make_shared< boost::mutex >();
     boost::shared_ptr< tools::Ofstream > output;
     if( !path.IsEmpty() )
+    {
+        try
+        {
+            path.Parent().CreateDirectories();
+        }
+        catch( const std::exception& )
+        {
+            // Do not stop timeline_client if we fail to create the log file
+        }
         output = boost::make_shared< tools::Ofstream >(
             path, std::ios::out | std::ios::binary );
+    }
     return [mutex,output]( const std::string& msg )
     {
         boost::lock_guard< boost::mutex > lock( *mutex );
