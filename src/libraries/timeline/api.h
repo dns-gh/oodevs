@@ -178,6 +178,7 @@ struct Configuration
     tools::Path binary;
     tools::Path server_log;
     tools::Path client_log;
+    tools::Path cef_log;
     QWidget*    widget;
     std::string url;
     int         debug_port; ///< optional remove debug port

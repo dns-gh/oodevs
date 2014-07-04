@@ -39,6 +39,7 @@ namespace core
         std::string uuid;
         std::string url;
         std::string log;
+        std::string cef_log;
         int debug_port;
         bool log_events;
     };
