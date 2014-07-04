@@ -30,7 +30,7 @@ public:
              // empty string to log anonymously.
              JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
                  const tools::Path& session, const QString* profile,
-                 const QString& devFeatures );
+                 const QString& devFeatures ,const tools::Path& timelineLog );
     virtual ~JoinExercise();
     //@}
 

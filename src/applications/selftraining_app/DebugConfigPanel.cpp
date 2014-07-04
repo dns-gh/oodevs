@@ -27,6 +27,15 @@ namespace
     const int maxIntegrationDir = 5;
 }
 
+tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath )
+{
+    if( logPath.IsEmpty() )
+        return logPath;
+    if( logPath.IsAbsolute() )
+        return logPath;
+    return sessionDir.Absolute() / logPath;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
@@ -299,13 +308,7 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
     if( !timelineLog_->text().isEmpty() )
     {
         auto log = tools::Path::FromUTF8( timelineLog_->text().toStdString() );
-        if( !log.IsAbsolute() )
-        {
-            auto xml = frontend::ConfigurationManipulator::GetSessionXml(
-                    config_, exercise, session );
-            xml = xml.Absolute();
-            log = xml.Parent() / log;
-        }
+        log = GetTimelineLog( action.GetPath().Parent(), log );
         action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
     }
     const auto debug = timelineDebug_->text().trimmed();

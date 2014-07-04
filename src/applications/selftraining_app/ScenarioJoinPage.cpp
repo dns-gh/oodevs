@@ -11,6 +11,7 @@
 #include "ScenarioJoinPage.h"
 #include "moc_ScenarioJoinPage.cpp"
 #include "Config.h"
+#include "DebugConfigPanel.h"
 #include "ExerciseContainer.h"
 #include "ExerciseList.h"
 #include "ProgressPage.h"
@@ -167,8 +168,10 @@ void ScenarioJoinPage::OnJoin()
 {
     if( !exercise_ )
         return;
+    tools::Path sessionPath;
     {
         frontend::CreateSession action( config_, exercise_->GetName(), "remote" );
+        sessionPath = action.GetPath();
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( port_->text() ) );
         action.SetOption( "session/config/timeline/@url", QString( "%1:%2" ).arg( host_->text() ).arg( timeline_->text() ) );
@@ -176,10 +179,14 @@ void ScenarioJoinPage::OnJoin()
         action.SetOption( "session/config/gaming/mapnik/@activate", mapnik_->isChecked() );
         action.Commit();
     }
+
+    auto log = tools::Path::FromUTF8( registry::ReadString( "TimelineClientLog" ).toStdString() );
+    log = GetTimelineLog( sessionPath.Parent(), log );
+
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     const auto devFeatures = registry::ReadFeatures();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-        exercise_->GetName(), "remote", static_cast< const QString* >( 0 ), devFeatures ) );
+        exercise_->GetName(), "remote", static_cast< const QString* >( 0 ), devFeatures, log ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

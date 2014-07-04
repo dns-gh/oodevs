@@ -17,6 +17,10 @@ namespace tools
     class GeneralConfig;
 }
 
+// Returns an absolute path to timeline client log file. logPath is resolved
+// relatively to sessionDir. If logPath is empty, an empty path is returned.
+tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath );
+
 // =============================================================================
 /** @class  DebugConfigPanel
     @brief  DebugConfigPanel

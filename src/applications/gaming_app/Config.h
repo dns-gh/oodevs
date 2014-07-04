@@ -65,7 +65,9 @@ private:
     bool hasTimeline_;
     std::string timelineUrl_;
     int timelineDebugPort_;
+    // Timeline client log file can be set from CLI or session file
     tools::Path timelineLogFile_;
+    tools::Path timelineLogFileCli_;
     bool mapnik_;
     //@}
 };

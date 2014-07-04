@@ -32,17 +32,20 @@ Config::Config( int argc, char** argv )
     , timelineDebugPort_( 0 )
     , mapnik_( false )
 {
+    std::string timelineLog;
     po::options_description desc( "Gaming options" );
     desc.add_options()
         ( "host",  po::value( &host_ ), "specify host to join" )
         ( "login", po::value( &login_ ), "specify login" )
         ( "password", po::value( &password_ ), "specify password" )
-        ( "order-file", po::value( &orderFile_ ), "specify an order file to load" );
+        ( "order-file", po::value( &orderFile_ ), "specify an order file to load" )
+        ( "timeline-log", po::value( &timelineLog ), "timeline log file" );
     AddOptions( desc );
     Parse( argc, argv );
     isLoginInCommandLine_ = IsSet( "login" );
     if( isLoginInCommandLine_ && login_ == "anonymous" )
         login_ = "";
+    timelineLogFileCli_ = tools::Path::FromUTF8( timelineLog );
     ReadSession();
 }
 
@@ -174,6 +177,8 @@ int Config::GetTimelineDebugPort() const
 
 tools::Path Config::GetTimelineClientLogFile() const
 {
+    if( !timelineLogFileCli_.IsEmpty() )
+        return timelineLogFileCli_;
     return timelineLogFile_;
 }
 

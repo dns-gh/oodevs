@@ -46,6 +46,7 @@ public:
     template< typename T >
     T GetOption( const std::string& path ) const;
     void SetDefaultValues();
+    const tools::Path& GetPath() const;
 
     void Commit();
     //@}

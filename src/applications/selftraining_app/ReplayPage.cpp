@@ -110,7 +110,7 @@ void ReplayPage::StartExercise()
     process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_ ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-            exerciseName, session_, &profile, features ) );
+            exerciseName, session_, &profile, features, tools::Path() ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();
