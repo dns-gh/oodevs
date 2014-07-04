@@ -298,9 +298,14 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
     action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );
     if( !timelineLog_->text().isEmpty() )
     {
-        auto xml = frontend::ConfigurationManipulator::GetSessionXml( config_, exercise, session );
-        xml = xml.Absolute();
-        const auto log = xml.Parent() / tools::Path::FromUTF8( timelineLog_->text().toStdString() );
+        auto log = tools::Path::FromUTF8( timelineLog_->text().toStdString() );
+        if( !log.IsAbsolute() )
+        {
+            auto xml = frontend::ConfigurationManipulator::GetSessionXml(
+                    config_, exercise, session );
+            xml = xml.Absolute();
+            log = xml.Parent() / log;
+        }
         action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
     }
     const auto debug = timelineDebug_->text().trimmed();
