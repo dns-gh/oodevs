@@ -103,3 +103,8 @@ bool ConfigurationManipulator::HasNode( const std::string& path )
 {
     return document_->HasNode( path );
 }
+
+const tools::Path& ConfigurationManipulator::GetPath() const
+{
+    return outputPath_;
+}
