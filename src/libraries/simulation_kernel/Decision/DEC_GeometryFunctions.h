@@ -191,20 +191,6 @@ public:
     //@}
 
 private:
-    static const MT_Vector2D& GetPosition( const MIL_Automate& );
-    static const MT_Vector2D& GetPosition( const MIL_AgentPion& );
-    static MT_Vector2D _ComputeAutomatesBarycenter( const std::vector< DEC_Decision_ABC* >& automates );
-
-private:
-    static bool ClipLocalisationInFuseau( const TER_Localisation& localisation, const MIL_Fuseau& fuseau, TER_Localisation& clippedLocalisation );
-    static unsigned int SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, const MT_Vector2D* splitDirection, std::vector< boost::shared_ptr< TER_Localisation > >& result );
-
-    //! @name Tools
-    //@{
-    static float ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule );
-    //@}
-
-private:
     // These static functions have no reasons to be kept in the header but their
     // declaration cannot be moved in the .cpp until the other private have been
     // moved to. And the others cannot be moved until the templates have been
@@ -219,14 +205,6 @@ private:
 private:
     //! @name Types
     //@{
-    enum E_LocalisationFunctionsReturnCode
-    {
-        eError_PionsPasDansMemeFuseau,
-        eError_LocalisationPasDansFuseau,
-        eWarning_DecoupageIncomplet,
-        eNoError
-    };
-
     typedef std::vector< boost::shared_ptr< TER_Localisation > > T_LocalisationPtrVector;
     //@}
 };
