@@ -254,7 +254,7 @@ namespace
 
 bool HasMaxRepairTime( const ADN_Type_Time& time )
 {
-    return time != "0s";
+    return !ADN_Tools::IsNullDelay( time.GetData() );
 }
 
 } // namespace

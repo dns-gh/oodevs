@@ -145,6 +145,7 @@ namespace ADN_Tools
 
     int ConvertDelayToCentiseconds( const QString& delay );             // from 12m / 12s / 12.3s to 720. / 12. / 12.3
     QString ConvertCentisecondsToDelay( int value );                  // from 720. / 12. / 12.3 to 720s / 12s / 12.3s
+    bool IsNullDelay( const std::string& delay );
 
     QString ConvertCentisecondsToLongString( int );                     //
     int ConvertLongStringToCentiseconds( const QString& text );         //

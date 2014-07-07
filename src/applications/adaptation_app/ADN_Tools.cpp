@@ -256,6 +256,11 @@ int ADN_Tools::ConvertDelayToCentiseconds( const QString& delay )
     return boost::numeric_cast< int >( boost::lexical_cast< double >( strValue.toStdString() ) * modifier );
 }
 
+bool ADN_Tools::IsNullDelay( const std::string& delay )
+{
+    return ADN_Tools::ConvertDelayToCentiseconds( QString::fromStdString( delay ) ) == 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tools::ConvertCentisecondsToDelay
 // Created: ABR 2013-09-25
