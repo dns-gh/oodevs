@@ -82,6 +82,47 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
     config.GetPhyLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
 }
 
+namespace
+{
+    DEC_Knowledge_Agent::E_PerceptionTypes ConvertFromType( const std::string& type )
+    {
+        if( type == "heading" )
+            return DEC_Knowledge_Agent::ePerceptionType_Heading;
+        if( type == "speed" )
+            return DEC_Knowledge_Agent::ePerceptionType_Speed;
+        if( type == "opstate" )
+            return DEC_Knowledge_Agent::ePerceptionType_OpState;
+        if( type == "side" )
+            return DEC_Knowledge_Agent::ePerceptionType_Side;
+        if( type == "level" )
+            return DEC_Knowledge_Agent::ePerceptionType_Level;
+        if( type == "nature-partial" )
+            return DEC_Knowledge_Agent::ePerceptionType_NaturePartial;
+        if( type == "nature-full" )
+            return DEC_Knowledge_Agent::ePerceptionType_NatureFull;
+        if( type == "surrendered" )
+            return DEC_Knowledge_Agent::ePerceptionType_Surrendered;
+        if( type == "prisoner" )
+            return DEC_Knowledge_Agent::ePerceptionType_Prisoner;
+        if( type == "refugees" )
+            return DEC_Knowledge_Agent::ePerceptionType_Refugees;
+        if( type == "cp" )
+            return DEC_Knowledge_Agent::ePerceptionType_CommandPost;
+        return DEC_Knowledge_Agent::eNbrPerceptionTypes;
+    }
+
+    const PHY_PerceptionLevel* ConvertFromLevel( const std::string& level )
+    {
+        if( level == "never" )
+            return &PHY_PerceptionLevel::notSeen_;
+        if( level == "detection" )
+            return &PHY_PerceptionLevel::detected_;
+        if( level == "recognition" )
+            return &PHY_PerceptionLevel::recognized_;
+        return &PHY_PerceptionLevel::identified_;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Workspace::LoadDecisional
 // Created: LDC 2010-12-01
@@ -141,18 +182,20 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
         throw MASA_EXCEPTION( "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1" ); // $$$$ ABL 2007-07-25: error context
 
     DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional, tickDuration );
-    
+
     std::string maxHostilePerceptionLevel;
     xisDecisional >> xml::optional >> xml::start( "perception" )
                     >> xml::attribute( "detect-destroyed-units", DEC_Knowledge_Agent::detectDestroyedUnits_ )
                     >> xml::optional >> xml::attribute( "max-level", maxHostilePerceptionLevel )
+                      >> xml::list( "availability", [&]( xml::xistream& xis )
+                    {
+                        const auto eType = ConvertFromType( xis.attribute< std::string >( "type" ) );
+                        if( eType != DEC_Knowledge_Agent::eNbrPerceptionTypes )
+                            DEC_Knowledge_Agent::perceptionInfoAvailability_[ eType ] =
+                                ConvertFromLevel( xis.attribute< std::string >( "level" ) );
+                    })
                   >> xml::end;
-    if( maxHostilePerceptionLevel == "detection" )
-        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::detected_;
-    else if( maxHostilePerceptionLevel == "recognition" )
-        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
-    else
-        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::identified_;
+    DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = ConvertFromLevel( maxHostilePerceptionLevel );
 
     xisDecisional >> xml::end;
 }

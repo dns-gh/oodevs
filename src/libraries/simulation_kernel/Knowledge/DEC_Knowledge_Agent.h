@@ -52,12 +52,30 @@ class MIL_UrbanObject_ABC;
 class DEC_Knowledge_Agent : public DEC_Knowledge_ABC
 {
 public:
+    enum E_PerceptionTypes
+    {
+        ePerceptionType_Heading = 0,
+        ePerceptionType_Speed,
+        ePerceptionType_OpState,
+        ePerceptionType_Side,
+        ePerceptionType_Level,
+        ePerceptionType_NaturePartial,
+        ePerceptionType_NatureFull,
+        ePerceptionType_Surrendered,
+        ePerceptionType_Prisoner,
+        ePerceptionType_Refugees,
+        ePerceptionType_CommandPost,
+        eNbrPerceptionTypes
+    };
+
+public:
     // Parameters - $$$ Changer - ne devrait pas être public
     static double rMaxDangerosityDegradationByRelevance_;
     static double rMaxDangerosityDegradationByOpState_;
     static double rMaxDangerosityDegradationByNeutralizedState_;
     static bool detectDestroyedUnits_;
     static const PHY_PerceptionLevel* maxHostilePerceptionLevel_;
+    static const PHY_PerceptionLevel* perceptionInfoAvailability_[ eNbrPerceptionTypes ];
 
 public:
     //! @name Constructors/Destructor

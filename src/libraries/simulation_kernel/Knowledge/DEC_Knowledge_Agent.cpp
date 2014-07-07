@@ -50,6 +50,20 @@ double DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_           = 0.2
 double DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_  = 0.8; // 80%
 const PHY_PerceptionLevel* DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::identified_;
 bool DEC_Knowledge_Agent::detectDestroyedUnits_ = true;
+const PHY_PerceptionLevel* DEC_Knowledge_Agent::perceptionInfoAvailability_[ eNbrPerceptionTypes ] =
+{
+    &PHY_PerceptionLevel::detected_,   // Heading
+    &PHY_PerceptionLevel::detected_,   // Speed
+    &PHY_PerceptionLevel::identified_, // OpState
+    &PHY_PerceptionLevel::recognized_, // Side
+    &PHY_PerceptionLevel::identified_, // Level
+    &PHY_PerceptionLevel::recognized_, // NaturePartial
+    &PHY_PerceptionLevel::identified_, // NatureFull
+    &PHY_PerceptionLevel::identified_, // Surrendered
+    &PHY_PerceptionLevel::identified_, // Prisoner
+    &PHY_PerceptionLevel::identified_, // Refugees
+    &PHY_PerceptionLevel::identified_  // CommandPost
+};
 MIL_IDManager DEC_Knowledge_Agent::idManager_;
 
 // -----------------------------------------------------------------------------
@@ -288,8 +302,6 @@ void DEC_Knowledge_Agent::Prepare()
     previousPerceptionLevelPerAutomateMap_.clear();
     perceptionLevelPerAutomateMap_.swap( previousPerceptionLevelPerAutomateMap_ );
     dataDetection_.Prepare();
-    dataRecognition_.Prepare();
-    dataIdentification_.Prepare();
     if( nTimeExtrapolationEnd_ > 0 )
         --nTimeExtrapolationEnd_;
 }
@@ -588,7 +600,7 @@ void DEC_Knowledge_Agent::SendChangedState()
     const bool bPerceptionPerAutomateUpdated = ( previousPerceptionLevelPerAutomateMap_ != perceptionLevelPerAutomateMap_ );
     if( !( bCurrentPerceptionLevelUpdated_ || bMaxPerceptionLevelUpdated_
          || bRelevanceUpdated_ || bPerceptionPerAutomateUpdated || bCriticalIntelligenceUpdated_
-         || dataDetection_.HasChanged() || dataRecognition_.HasChanged() || dataIdentification_.HasChanged() ) )
+         || dataDetection_.HasChanged() ) )
         return;
     client::UnitKnowledgeUpdate asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
@@ -619,9 +631,7 @@ void DEC_Knowledge_Agent::SendChangedState()
     }
     if( pAgentKnown_ )
         asnMsg().set_posture( pAgentKnown_->GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetAsnID() );
-    dataDetection_.SendChangedState( asnMsg() );
-    dataRecognition_.SendChangedState( asnMsg() );
-    dataIdentification_.SendChangedState( asnMsg() );
+    dataDetection_.SendChangedState( asnMsg(), *pMaxPerceptionLevel_, bMaxPerceptionLevelUpdated_ );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -645,9 +655,7 @@ void DEC_Knowledge_Agent::SendFullState()
     if( !perceptionLevelPerAutomateMap_.empty() )
         WriteMsgPerceptionSources( asnMsg() );
     asnMsg().set_critical_intelligence( criticalIntelligence_ );
-    dataDetection_.SendFullState( asnMsg() );
-    dataRecognition_ .SendFullState( asnMsg() );
-    dataIdentification_.SendFullState( asnMsg() );
+    dataDetection_.SendFullState( asnMsg(), *pMaxPerceptionLevel_ );
     if( pAgentKnown_ )
         asnMsg().set_posture( pAgentKnown_->GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetAsnID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );

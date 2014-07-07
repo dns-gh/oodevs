@@ -46,7 +46,6 @@ public:
 
     //! @name Operations
     //@{
-    void Prepare();
     void Update( const DEC_Knowledge_AgentPerceptionDataIdentification& data );
     void Update( const DEC_Knowledge_AgentDataIdentification& data );
     void Extrapolate( const MIL_Agent_ABC& agentKnown );
@@ -56,13 +55,6 @@ public:
     //@{
     unsigned int GetTimeLastUpdate() const;
     const MIL_AgentType_ABC* GetAgentType() const;
-    //@}
-
-    //! @name Network
-    //@{
-    bool HasChanged() const;
-    void SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState( sword::UnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
 private:
@@ -76,7 +68,6 @@ private:
     //@{
     unsigned int nTimeLastUpdate_;
     const MIL_AgentType_ABC* pAgentType_; // For 'natures'
-    bool bAgentTypeUpdated_;
     //@}
 };
 

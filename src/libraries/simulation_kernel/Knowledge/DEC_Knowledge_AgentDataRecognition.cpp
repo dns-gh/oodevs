@@ -36,8 +36,6 @@ DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
     , maxSquareRange_          ( 0 )
     , pAgentType_              ( 0 )
     , bIsPC_                   ( false )
-    , bOperationalStateChanged_( false )
-    , bAgentTypeUpdated_       ( false )
 {
     // NOTHING
 }
@@ -67,8 +65,6 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
-    file >> bOperationalStateChanged_;
-    file >> bAgentTypeUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +82,6 @@ void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, c
     file << pArmy_;
     file << bIsPC_;
     file << agentType;
-    file << bOperationalStateChanged_;
-    file << bAgentTypeUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -120,17 +114,6 @@ void DEC_Knowledge_AgentDataRecognition::WriteKnowledges( xml::xostream& xos ) c
     xos << xml::end;
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataRecognition::Prepare
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::Prepare()
-{
-    bOperationalStateChanged_ = false;
-    bAgentTypeUpdated_ = false;
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::DoUpdate
 // Created: NLD 2004-11-15
@@ -142,10 +125,7 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
         return;
     double rNewOpState = data.GetOperationalState();
     if( rOperationalState_ != rNewOpState )
-    {
         rOperationalState_ = rNewOpState;
-        bOperationalStateChanged_ = true;
-    }
     rMajorOperationalState_ = data.GetMajorOperationalState();
     composantes_ = data.GetComposantes();
     double maxRange = 0;
@@ -154,7 +134,6 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
     maxSquareRange_ = maxRange * maxRange;
     if( !pAgentType_ )
     {
-        bAgentTypeUpdated_ = true;
         pArmy_= data.GetArmy();
         bIsPC_ = data.IsPC();
         pAgentType_ = data.GetAgentType();
@@ -183,38 +162,6 @@ void DEC_Knowledge_AgentDataRecognition::Update( const DEC_Knowledge_AgentDataRe
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataRecognition::SendChangedState
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const
-{
-    if( bOperationalStateChanged_ )
-        asnMsg.set_operational_state( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ));
-    if( bAgentTypeUpdated_ )
-    {
-        assert( pArmy_ );
-        assert( pAgentType_ );
-        asnMsg.mutable_party()->set_id( pArmy_->GetID() );
-        asnMsg.set_command_post( bIsPC_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataRecognition::SendFullState
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::SendFullState( sword::UnitKnowledgeUpdate& asnMsg ) const
-{
-    if( nTimeLastUpdate_ == 0 )
-        return;
-    asnMsg.set_operational_state( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ) );
-    assert( pArmy_ );
-    assert( pAgentType_ );
-    asnMsg.mutable_party()->set_id( pArmy_->GetID() );
-    asnMsg.set_command_post( bIsPC_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::GetNatureAtlas
 // Created: NLD 2004-11-10
 // Modified: JVT 2004-12-09
@@ -234,15 +181,6 @@ bool DEC_Knowledge_AgentDataRecognition::IsHuman() const
         if( it->GetType().GetProtection().IsHuman() )
             return true;
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataRecognition::HasChanged
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-bool DEC_Knowledge_AgentDataRecognition::HasChanged() const
-{
-    return bOperationalStateChanged_ || bAgentTypeUpdated_;
 }
 
 // -----------------------------------------------------------------------------

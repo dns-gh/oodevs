@@ -25,7 +25,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataIdentification )
 DEC_Knowledge_AgentDataIdentification::DEC_Knowledge_AgentDataIdentification()
     : nTimeLastUpdate_  ( 0 )
     , pAgentType_       ( 0 )
-    , bAgentTypeUpdated_( false )
 {
     // NOTHING
 }
@@ -49,7 +48,6 @@ void DEC_Knowledge_AgentDataIdentification::load( MIL_CheckPointInArchive& file,
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
-    file >> bAgentTypeUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,16 +59,6 @@ void DEC_Knowledge_AgentDataIdentification::save( MIL_CheckPointOutArchive& file
     unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (unsigned int)-1 );
     file << nTimeLastUpdate_;
     file << agentType;
-    file << bAgentTypeUpdated_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataIdentification::Prepare
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::Prepare()
-{
-    bAgentTypeUpdated_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +74,6 @@ void DEC_Knowledge_AgentDataIdentification::DoUpdate( const T& data )
     {
         pAgentType_ = data.GetAgentType();
         assert( pAgentType_ );
-        bAgentTypeUpdated_ = true;
     }
     nTimeLastUpdate_ = data.GetTimeLastUpdate();
 }
@@ -107,33 +94,6 @@ void DEC_Knowledge_AgentDataIdentification::Update( const DEC_Knowledge_AgentPer
 void DEC_Knowledge_AgentDataIdentification::Update( const DEC_Knowledge_AgentDataIdentification& data )
 {
     DoUpdate( data );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataIdentification::SendChangedState
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::SendChangedState( sword::UnitKnowledgeUpdate& /*asnMsg*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataIdentification::SendFullState
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::SendFullState( sword::UnitKnowledgeUpdate& /*asnMsg*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataIdentification::HasChanged
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-bool DEC_Knowledge_AgentDataIdentification::HasChanged() const
-{
-    return bAgentTypeUpdated_;
 }
 
 // -----------------------------------------------------------------------------
