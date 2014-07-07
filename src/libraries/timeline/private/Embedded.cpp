@@ -90,6 +90,8 @@ namespace
                 list << "--debug_port" << QString::number( cfg.debug_port );
             if( !cfg.client_log.IsEmpty() )
                 list << "--log" << QString::fromStdString( cfg.client_log.ToUTF8() );
+            if( !cfg.cef_log.IsEmpty() )
+                list << "--cef_log" << QString::fromStdString( cfg.cef_log.ToUTF8() );
             std::vector< std::wstring > args;
             args.push_back( cfg.binary.ToUnicode() );
             for( auto it = list.begin(); it != list.end(); ++it )

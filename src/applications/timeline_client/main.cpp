@@ -35,8 +35,18 @@ std::function< void( const std::string& )> MakeLogger( const tools::Path& path )
     const auto mutex = boost::make_shared< boost::mutex >();
     boost::shared_ptr< tools::Ofstream > output;
     if( !path.IsEmpty() )
+    {
+        try
+        {
+            path.Parent().CreateDirectories();
+        }
+        catch( const std::exception& )
+        {
+            // Do not stop timeline_client if we fail to create the log file
+        }
         output = boost::make_shared< tools::Ofstream >(
             path, std::ios::out | std::ios::binary );
+    }
     return [mutex,output]( const std::string& msg )
     {
         boost::lock_guard< boost::mutex > lock( *mutex );
@@ -74,7 +84,9 @@ int main( int argc, char* argv[] )
             ( "url",            bpo::value( &cfg.url )->required(), "set url target" )
             ( "log",            bpo::value( &cfg.log ), "optional log file" )
             ( "debug_port",     bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" )
-            ( "log_events",     bpo::value( &cfg.log_events )->zero_tokens(), "log events" );
+            ( "log_events",     bpo::value( &cfg.log_events )->zero_tokens(), "log events" )
+            ( "cef_log",        bpo::value( &cfg.cef_log ), "chrome embedded log file" )
+            ;
         bpo::variables_map args;
         bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), args );
         if( args.count( "help" ) )
