@@ -10,18 +10,6 @@
 #ifndef __DEC_GeometryFunctions_h_
 #define __DEC_GeometryFunctions_h_
 
-#include "Decision/DEC_Objective.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Orders/MIL_Fuseau.h"
-#include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/MIL_ObjectFactory.h"
-#include "Entities/Objects/TerrainHeuristicCapacity.h"
-#include "Tools/MIL_Tools.h"
-#include "simulation_terrain/TER_World.h"
-
-#include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 
 class DEC_Decision_ABC;

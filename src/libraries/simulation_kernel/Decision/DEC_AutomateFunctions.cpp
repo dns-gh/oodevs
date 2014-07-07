@@ -11,7 +11,9 @@
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
@@ -24,6 +26,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "DEC_PerceptionFunctions.h"
+#include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetBarycenter

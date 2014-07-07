@@ -23,6 +23,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_Sharing.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Tools/MIL_Tools.h"
 #include "MIL_Time_ABC.h"
 
 class DEC_Decision_ABC;
