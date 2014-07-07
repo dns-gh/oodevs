@@ -47,7 +47,7 @@ AutomatsLayer::~AutomatsLayer()
 void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode )
 {
     gui::AutomatsLayer::Draw( entity, viewport, pickingMode );
-    if( !ShouldDisplay( entity ) && selected_ == &entity )
+    if( selected_ == &entity && !ShouldDisplay( entity ) )
     {
         SelectColor( entity );
         const kernel::Positions& positions = entity.Get< kernel::Positions >();
