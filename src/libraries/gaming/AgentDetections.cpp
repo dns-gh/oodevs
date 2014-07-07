@@ -108,7 +108,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
         if( ! CanShareKnowledge( holder_, agent ) && it->second != sword::UnitVisibility::invisible )
         {
             if( it->second == sword::UnitVisibility::recognized )
-                glColor4f( COLOR_RECO );
+                glColor4f( COLOR_RECOGNIZED );
             else if( it->second == sword::UnitVisibility::identified )
                 glColor4f( COLOR_IDENTIFIED );
             else if( it->second == sword::UnitVisibility::recorded )
