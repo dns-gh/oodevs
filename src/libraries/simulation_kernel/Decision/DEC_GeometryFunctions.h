@@ -189,24 +189,6 @@ public:
     static bool IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pPoint );
 
     //@}
-
-private:
-    // These static functions have no reasons to be kept in the header but their
-    // declaration cannot be moved in the .cpp until the other private have been
-    // moved to. And the others cannot be moved until the templates have been
-    // moved too...
-    template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction );
-    template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInSections( const T& caller, const double rSectionLength );
-    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenterInFuseau( const T& caller, TER_Localisation* pLocalisation );
-    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLima( const T& caller, int phaseLine, float distanceBefore );
-    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeNearestLocalisationPointInFuseau( const T& caller, const TER_Localisation* location );
-    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeNearestUnclippedLocalisationPointInFuseau ( const T& caller, const TER_Localisation* pLocation );
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< boost::shared_ptr< TER_Localisation > > T_LocalisationPtrVector;
-    //@}
 };
 
 #endif // __DEC_GeometryFunctions_h_
