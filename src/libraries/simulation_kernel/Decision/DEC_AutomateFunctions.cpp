@@ -469,7 +469,7 @@ bool DEC_AutomateFunctions::IsPointInPionFuseau( const MIL_Automate& callerAutom
 {
     if( !pPion || !IsPionInAutomate( callerAutomate, pPion->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid parameter in IsPointInPionFuseau" );
-    return DEC_GeometryFunctions::IsPointInFuseau< MIL_AgentPion >( pPion->GetPion(), pPoint );
+    return DEC_GeometryFunctions::IsPointInUnitFuseau( pPion->GetPion(), pPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -529,7 +529,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePointBeforeLimaFo
 {
     if( !pion )
         throw MASA_EXCEPTION( "Invalid pion in ComputePointBeforeLimaForPion" );
-    return DEC_GeometryFunctions::ComputePointBeforeLima< MIL_AgentPion >( pion->GetPion(), phaseLine, distanceBefore );
+    return DEC_GeometryFunctions::ComputePointBeforeUnitLima( pion->GetPion(), phaseLine, distanceBefore );
 }
 
 // -----------------------------------------------------------------------------
@@ -540,7 +540,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePionNearestLocali
 {
     if( !pion )
         throw MASA_EXCEPTION( "Invalid pion in ComputePionNearestLocalisationPointInFuseau" );
-    return DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( pion->GetPion(), location );
+    return DEC_GeometryFunctions::ComputeNearestLocalisationPointInUnitFuseau( pion->GetPion(), location );
 }
 
 // -----------------------------------------------------------------------------
