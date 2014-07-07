@@ -16,9 +16,8 @@
 
 struct TER_Polygon::PolygonData
 {
-    PolygonData( bool isNull ) : bIsNull_( isNull ), rArea_( -1 ) {};
+    PolygonData( bool isNull ) : bIsNull_( isNull ) {};
     bool             bIsNull_;
-    mutable double rArea_; // $$$$ AGE 2005-06-14: late initialization
     T_PointVector    borderVector_;
     MT_Rect          boundingBox_;
 };
@@ -410,10 +409,10 @@ namespace
 };
 
 // -----------------------------------------------------------------------------
-// Name: TER_Polygon::ComputeArea
+// Name: TER_Polygon::GetArea
 // Created: AGE 2005-06-14
 // -----------------------------------------------------------------------------
-double TER_Polygon::ComputeArea() const
+double TER_Polygon::GetArea() const
 {
     double result = 0;
     if( ! pData_ || pData_->bIsNull_ || pData_->borderVector_.empty() )
@@ -633,15 +632,4 @@ void TER_Polygon::Reset()
 bool TER_Polygon::IsNull() const
 {
     return pData_->bIsNull_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_Polygon::GetArea
-// Created: NLD 2003-10-17
-// -----------------------------------------------------------------------------
-double TER_Polygon::GetArea() const
-{
-    if( pData_->rArea_ == -1 )
-        pData_->rArea_ = ComputeArea();
-    return pData_->rArea_;
 }
