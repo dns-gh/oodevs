@@ -16,8 +16,6 @@
 
 struct TER_Polygon::PolygonData
 {
-    PolygonData( bool isNull ) : bIsNull_( isNull ) {};
-    bool             bIsNull_;
     T_PointVector    borderVector_;
     MT_Rect          boundingBox_;
 };
@@ -25,8 +23,9 @@ struct TER_Polygon::PolygonData
 namespace
 {
 
-const boost::shared_ptr< TER_Polygon::PolygonData > emptyData(
-        new TER_Polygon::PolygonData( true ));
+const MT_Rect emptyRect(
+        std::numeric_limits<double>::max(), std::numeric_limits<double>::max(),
+        std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
 
 }  // namespace
 
@@ -45,12 +44,10 @@ TER_Polygon::TER_Polygon()
 //-----------------------------------------------------------------------------
 TER_Polygon::TER_Polygon( const T_PointVector& points, bool bConvexHull )
 {
-    pData_ = boost::make_shared< PolygonData >( points.empty() );
-
-    // no points in polygon
-    if (pData_->bIsNull_)
+    if( points.empty() )
         return;
 
+    pData_ = boost::make_shared< PolygonData >();
     pData_->borderVector_ = points;
 
     if( bConvexHull )
@@ -99,7 +96,7 @@ TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 {
-    if (IsNull())
+    if( !pData_ )
         return true;
 
     if( ! IsInBoundingBox( vPos, rPrecision ) )
@@ -115,7 +112,7 @@ bool TER_Polygon::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 // -----------------------------------------------------------------------------
 bool TER_Polygon::IsInsidish( const MT_Vector2D& vPos ) const
 {
-    if( IsNull() || ! IsInBoundingBox( vPos ) )
+    if( !pData_ || ! IsInBoundingBox( vPos ) )
         return false;
     return BoundedSide( vPos ) != eOnUnboundedSide;
 }
@@ -126,6 +123,9 @@ bool TER_Polygon::IsInsidish( const MT_Vector2D& vPos ) const
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IsOnBorder( const MT_Vector2D& vPos, double rPrecision ) const
 {
+    if( !pData_ )
+        return false;
+
     // Test des bords
     const MT_Vector2D* pLastPos = 0;
     for( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
@@ -148,7 +148,7 @@ bool TER_Polygon::IsOnBorder( const MT_Vector2D& vPos, double rPrecision ) const
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IntersectWithBorder( const MT_Line& line, double rPrecision ) const
 {
-    if (IsNull())
+    if( !pData_ )
         return false;
 
     if( pData_->borderVector_.size() > 8 //$$$$ Optim, il semblerait
@@ -183,7 +183,7 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line, double rPrecision ) 
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IntersectWithBorder( const MT_Line& line,T_PointSet& res, double rPrecision ) const
 {
-    if (IsNull())
+    if( !pData_ )
         return false;
 
     const MT_Vector2D* pLastPos = 0;
@@ -214,7 +214,7 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line,T_PointSet& res, doub
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IntersectWithBorder( const MT_Droite& line, T_PointSet& res ) const
 {
-    if( IsNull() )
+    if( pData_ )
         return false;
 
     const MT_Vector2D* pLastPos = 0;
@@ -241,6 +241,8 @@ bool TER_Polygon::IntersectWithBorder( const MT_Droite& line, T_PointSet& res ) 
 //-----------------------------------------------------------------------------
 bool TER_Polygon::Intersect2D( const MT_Line& line, double rPrecision ) const
 {
+    if( !pData_ )
+        return false;
     return IsInside( line.GetPosStart(), rPrecision )
         || IsInside( line.GetPosEnd(), rPrecision )
         || IntersectWithBorder( line, rPrecision );
@@ -252,6 +254,8 @@ bool TER_Polygon::Intersect2D( const MT_Line& line, double rPrecision ) const
 //-----------------------------------------------------------------------------
 bool TER_Polygon::Intersect2D( const MT_Line& line, T_PointSet& collisions, double rPrecision  ) const
 {
+    if( !pData_ )
+        return false;
     collisions.clear();
     IntersectWithBorder( line, collisions, rPrecision );
     if( IsInside( line.GetPosStart(), rPrecision ) )
@@ -276,6 +280,9 @@ bool TER_Polygon::Intersect2D( const MT_Droite& line, T_PointSet& res, double /*
 //-----------------------------------------------------------------------------
 bool TER_Polygon::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
+    if( !pData_ )
+        return false;
+
     if( IsInside( vCircleCenter ) )
         return true;
 
@@ -303,8 +310,7 @@ void TER_Polygon::Intersection( MT_Polyline& polyline, double rPrecision ) const
     T_PointVector res;
 
     CIT_PointVector itSegEnd = polyline.GetPoints().begin();
-
-    if( itSegEnd == polyline.GetPoints().end() )
+    if( !pData_ || itSegEnd == polyline.GetPoints().end() )
     {
         polyline = res;
         return;
@@ -336,13 +342,17 @@ void TER_Polygon::Intersection( MT_Polyline& polyline, double rPrecision ) const
 // -----------------------------------------------------------------------------
 void TER_Polygon::ComputeExtremities( const MT_Droite& line, MT_Vector2D& vLeftPoint, MT_Vector2D& vRightPoint ) const
 {
-    // Retourne les deux extrémités du polygone sur la droite
+    vLeftPoint = MT_Vector2D();
+    vRightPoint = MT_Vector2D();
+    if( !pData_ )
+        return;
 
+    // Retourne les deux extrémités du polygone sur la droite
     TER_DistanceLess cmp( MT_Vector2D( 0, 0 ) );
     T_PointSet collisionSet( cmp );
-
     IntersectWithBorder( line, collisionSet );
-    assert( collisionSet.size() > 1 );
+    if( collisionSet.size() <= 1 )
+        return;
 
     vLeftPoint  = *collisionSet.begin();
     vRightPoint = *(--collisionSet.end());
@@ -354,6 +364,9 @@ void TER_Polygon::ComputeExtremities( const MT_Droite& line, MT_Vector2D& vLeftP
 // -----------------------------------------------------------------------------
 void TER_Polygon::ComputeBoundingBox()
 {
+    if( !pData_ )
+        return;
+
     // bounding box
     MT_Vector2D vDownLeft( std::numeric_limits<double>::max(), std::numeric_limits<double>::max() );
     MT_Vector2D vUpRight ( std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
@@ -379,6 +392,8 @@ void TER_Polygon::ComputeBoundingBox()
 //-----------------------------------------------------------------------------
 MT_Rect TER_Polygon::GetBoundingBox() const
 {
+    if( !pData_ )
+        return emptyRect;
     return pData_->boundingBox_;
 }
 
@@ -415,7 +430,7 @@ namespace
 double TER_Polygon::GetArea() const
 {
     double result = 0;
-    if( ! pData_ || pData_->bIsNull_ || pData_->borderVector_.empty() )
+    if( ! pData_ || pData_->borderVector_.empty() )
         return 0;
 
     CIT_PointVector second = pData_->borderVector_.begin();
@@ -522,6 +537,8 @@ void TER_Polygon::Convexify()
         convexHull.push_back( convexHull.front() );
 
     pData_->borderVector_ = convexHull;
+    if( pData_->borderVector_.empty() )
+        pData_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -603,7 +620,6 @@ bool TER_Polygon::IsInside( const MT_Vector2D& vPos ) const
 //-----------------------------------------------------------------------------
 const T_PointVector& TER_Polygon::GetBorderPoints() const
 {
-    assert(pData_);
     return pData_->borderVector_;
 }
 
@@ -622,7 +638,7 @@ void TER_Polygon::Reset( const T_PointVector& points, bool bConvexHull )
 //-----------------------------------------------------------------------------
 void TER_Polygon::Reset()
 {
-    pData_ = emptyData;
+    pData_.reset();
 }
 
 //-----------------------------------------------------------------------------
@@ -631,5 +647,5 @@ void TER_Polygon::Reset()
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IsNull() const
 {
-    return pData_->bIsNull_;
+    return !pData_;
 }
