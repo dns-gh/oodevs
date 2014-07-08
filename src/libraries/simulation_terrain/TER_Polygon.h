@@ -92,7 +92,6 @@ private:
     E_BoundedSize BoundedSide( const MT_Vector2D& pos ) const;
     void          Convexify();
     bool          IsInBoundingBox( const MT_Vector2D& p, double rPrecision = 0 ) const;
-    void          ComputeBoundingBox();
     //@}
 
 private:

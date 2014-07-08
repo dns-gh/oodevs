@@ -27,6 +27,27 @@ const MT_Rect emptyRect(
         std::numeric_limits<double>::max(), std::numeric_limits<double>::max(),
         std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
 
+MT_Rect ComputeBoundingBox( const T_PointVector& points )
+{
+    // bounding box
+    MT_Vector2D vDownLeft( std::numeric_limits<double>::max(), std::numeric_limits<double>::max() );
+    MT_Vector2D vUpRight ( std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
+
+    for( auto it = points.begin(); it != points.end(); ++it )
+    {
+        const MT_Vector2D& vPos = *it;
+        if( vPos.rX_ < vDownLeft.rX_ )
+            vDownLeft.rX_ = vPos.rX_;
+        if( vPos.rY_ < vDownLeft.rY_ )
+            vDownLeft.rY_ = vPos.rY_;
+        if( vPos.rX_ > vUpRight.rX_ )
+            vUpRight.rX_ = vPos.rX_;
+        if( vPos.rY_ > vUpRight.rY_ )
+            vUpRight.rY_ = vPos.rY_;
+    }
+    return MT_Rect( vDownLeft.rX_, vDownLeft.rY_, vUpRight.rX_, vUpRight.rY_ );
+}
+
 }  // namespace
 
 //-----------------------------------------------------------------------------
@@ -53,7 +74,7 @@ TER_Polygon::TER_Polygon( const T_PointVector& points, bool bConvexHull )
     if( bConvexHull )
         Convexify();
 
-    ComputeBoundingBox();
+    pData_->boundingBox_ = ComputeBoundingBox( pData_->borderVector_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -356,34 +377,6 @@ void TER_Polygon::ComputeExtremities( const MT_Droite& line, MT_Vector2D& vLeftP
 
     vLeftPoint  = *collisionSet.begin();
     vRightPoint = *(--collisionSet.end());
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_Polygon::ComputeBoundingBox
-// Created: AGE 2005-06-16
-// -----------------------------------------------------------------------------
-void TER_Polygon::ComputeBoundingBox()
-{
-    if( !pData_ )
-        return;
-
-    // bounding box
-    MT_Vector2D vDownLeft( std::numeric_limits<double>::max(), std::numeric_limits<double>::max() );
-    MT_Vector2D vUpRight ( std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
-
-    for( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
-    {
-        const MT_Vector2D& vPos = *itPoint;
-        if( vPos.rX_ < vDownLeft.rX_ )
-            vDownLeft.rX_ = vPos.rX_;
-        if( vPos.rY_ < vDownLeft.rY_ )
-            vDownLeft.rY_ = vPos.rY_;
-        if( vPos.rX_ > vUpRight.rX_ )
-            vUpRight.rX_ = vPos.rX_;
-        if( vPos.rY_ > vUpRight.rY_ )
-            vUpRight.rY_ = vPos.rY_;
-    }
-    pData_->boundingBox_ = MT_Rect( vDownLeft.rX_, vDownLeft.rY_, vUpRight.rX_, vUpRight.rY_ );
 }
 
 //-----------------------------------------------------------------------------
