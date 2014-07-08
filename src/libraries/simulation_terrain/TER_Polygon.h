@@ -90,12 +90,12 @@ private:
     //@{
     double      ComputeArea() const;
     E_BoundedSize BoundedSide( const MT_Vector2D& pos ) const;
-    void          Convexify();
     bool          IsInBoundingBox( const MT_Vector2D& p, double rPrecision = 0 ) const;
     //@}
 
 private:
-    boost::shared_ptr< PolygonData > pData_;
+    // Immutability allows it to be shared between instances.
+    boost::shared_ptr< const PolygonData > pData_;
 };
 
 #endif // __TER_Polygon_h_

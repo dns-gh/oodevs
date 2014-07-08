@@ -48,6 +48,92 @@ MT_Rect ComputeBoundingBox( const T_PointVector& points )
     return MT_Rect( vDownLeft.rX_, vDownLeft.rY_, vUpRight.rX_, vUpRight.rY_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: InitializeHull
+// Created: AGE 2005-06-14
+// -----------------------------------------------------------------------------
+void InitializeHull( const T_PointVector& polygon, T_PointVector& hull )
+{
+    MT_Vector2D min, max;
+    for( auto it = polygon.begin(); it != polygon.end(); ++it )
+    {
+        const MT_Vector2D& p = *it;
+        if( min.IsZero() || min.rX_ > p.rX_ )
+            min = p;
+        if( max.IsZero() || max.rX_ < p.rX_ )
+            max = p;
+    }
+    hull.push_back( min );
+    hull.push_back( max );
+}
+
+double CrossProductTmp( const MT_Vector2D& v1, const MT_Vector2D& v2 )
+{
+    return v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FindOuterPoint
+// Created: AGE 2005-03-29
+// -----------------------------------------------------------------------------
+bool FindOuterPoint( const T_PointVector& polygon, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
+{
+    bool bFound = false;
+    double rMaxProjection = 0;
+    for( auto it = polygon.begin(); it != polygon.end(); ++it )
+    {
+        const MT_Vector2D v = from - *it;
+        const double rProjection = CrossProductTmp( direction, v );
+        if( rProjection < -0.001 ) // epsilon
+        {
+            bFound = true;
+            if( rMaxProjection > rProjection )
+            {
+                rMaxProjection = rProjection;
+                worst = *it;
+            }
+        }
+    }
+    return bFound;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Convexify
+// Created: AGE 2005-06-14
+// -----------------------------------------------------------------------------
+void Convexify( T_PointVector& points )
+{
+    if( points.size() < 3 )
+        return;
+
+    T_PointVector convexHull;
+    InitializeHull( points, convexHull );
+
+    unsigned int nPoint = 0;
+    while( nPoint != convexHull.size() )
+    {
+        unsigned int nFollowingPoint = nPoint + 1;
+        if( nFollowingPoint == convexHull.size() )
+            nFollowingPoint = 0;
+
+        MT_Vector2D direction = convexHull[ nFollowingPoint ] - convexHull[ nPoint ];
+        direction.Normalize();
+        MT_Vector2D worst;
+        if( FindOuterPoint( points, convexHull[ nPoint ], direction, worst ) )
+        {
+            convexHull.insert( convexHull.begin() + nFollowingPoint, worst );
+            nPoint = 0;
+        }
+        else
+            ++nPoint;
+    }
+    // Ensure the polygon is closed
+    if( convexHull.back() != convexHull.front() )
+        convexHull.push_back( convexHull.front() );
+
+    points.swap( convexHull );
+}
+
 }  // namespace
 
 //-----------------------------------------------------------------------------
@@ -68,22 +154,24 @@ TER_Polygon::TER_Polygon( const T_PointVector& points, bool bConvexHull )
     if( points.empty() )
         return;
 
-    pData_ = boost::make_shared< PolygonData >();
-    pData_->borderVector_ = points;
-
+    auto data = boost::make_shared< PolygonData >();
+    data->borderVector_ = points;
     if( bConvexHull )
-        Convexify();
+        Convexify( data->borderVector_ );
+    data->boundingBox_ = ComputeBoundingBox( data->borderVector_ );
+    if( data->borderVector_.empty() )
+        data.reset();
 
-    pData_->boundingBox_ = ComputeBoundingBox( pData_->borderVector_ );
+    pData_ = data;
 }
 
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon constructor
 // Created: JDY 03-05-26
 //-----------------------------------------------------------------------------
-TER_Polygon::TER_Polygon(const TER_Polygon& poly)
+TER_Polygon::TER_Polygon( const TER_Polygon& poly )
 {
-    pData_ = poly.pData_;
+    *this = poly;
 }
 
 //-----------------------------------------------------------------------------
@@ -101,6 +189,7 @@ TER_Polygon::~TER_Polygon()
 //-----------------------------------------------------------------------------
 TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
 {
+    // Fine because pData_ is immutable
     pData_ = rhs.pData_;
     return *this;
 }
@@ -441,97 +530,6 @@ double TER_Polygon::GetArea() const
         second = third;
     }
     return std::fabs( result );
-}
-
-namespace
-{
-    // -----------------------------------------------------------------------------
-    // Name: InitializeHull
-    // Created: AGE 2005-06-14
-    // -----------------------------------------------------------------------------
-    void InitializeHull( const T_PointVector& polygon, T_PointVector& hull )
-    {
-        MT_Vector2D min, max;
-        for( auto it = polygon.begin(); it != polygon.end(); ++it )
-        {
-            const MT_Vector2D& p = *it;
-            if( min.IsZero() || min.rX_ > p.rX_ )
-                min = p;
-            if( max.IsZero() || max.rX_ < p.rX_ )
-                max = p;
-        }
-        hull.push_back( min );
-        hull.push_back( max );
-    }
-
-    double CrossProductTmp( const MT_Vector2D& v1, const MT_Vector2D& v2 )
-    {
-        return v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: FindOuterPoint
-    // Created: AGE 2005-03-29
-    // -----------------------------------------------------------------------------
-    bool FindOuterPoint( const T_PointVector& polygon, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
-    {
-        bool bFound = false;
-        double rMaxProjection = 0;
-        for( auto it = polygon.begin(); it != polygon.end(); ++it )
-        {
-            const MT_Vector2D v = from - *it;
-            const double rProjection = CrossProductTmp( direction, v );
-            if( rProjection < -0.001 ) // epsilon
-            {
-                bFound = true;
-                if( rMaxProjection > rProjection )
-                {
-                    rMaxProjection = rProjection;
-                    worst = *it;
-                }
-            }
-        }
-        return bFound;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_Polygon::Convexify
-// Created: AGE 2005-06-14
-// -----------------------------------------------------------------------------
-void TER_Polygon::Convexify()
-{
-    if( ! pData_ || pData_->borderVector_.size() < 3 )
-        return;
-
-    T_PointVector convexHull;
-    InitializeHull( pData_->borderVector_, convexHull );
-
-    unsigned int nPoint = 0;
-    while( nPoint != convexHull.size() )
-    {
-        unsigned int nFollowingPoint = nPoint + 1;
-        if( nFollowingPoint == convexHull.size() )
-            nFollowingPoint = 0;
-
-        MT_Vector2D direction = convexHull[ nFollowingPoint ] - convexHull[ nPoint ];
-        direction.Normalize();
-        MT_Vector2D worst;
-        if( FindOuterPoint( pData_->borderVector_, convexHull[ nPoint ], direction, worst ) )
-        {
-            convexHull.insert( convexHull.begin() + nFollowingPoint, worst );
-            nPoint = 0;
-        }
-        else
-            ++nPoint;
-    }
-    // Ensure the polygon is closed
-    if( convexHull.back() != convexHull.front() )
-        convexHull.push_back( convexHull.front() );
-
-    pData_->borderVector_ = convexHull;
-    if( pData_->borderVector_.empty() )
-        pData_.reset();
 }
 
 // -----------------------------------------------------------------------------
