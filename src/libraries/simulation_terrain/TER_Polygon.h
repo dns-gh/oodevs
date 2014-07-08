@@ -71,11 +71,6 @@ public:
     //@}
 
 private:
-    // @name
-    //@{
-    TER_Polygon( const T_PointVector& points    , bool bConvexHull = false );
-    //@}
-
     //! @name Types
     //@{
     enum E_BoundedSize

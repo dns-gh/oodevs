@@ -134,6 +134,27 @@ void Convexify( T_PointVector& points )
     points.swap( convexHull );
 }
 
+boost::shared_ptr< TER_Polygon::PolygonData > BuildPolygon(
+        const T_PointVector& points, bool convexHull )
+{
+    boost::shared_ptr< TER_Polygon::PolygonData > data;
+    if( points.empty() )
+        return data;
+    data = boost::make_shared< TER_Polygon::PolygonData >();
+    data->borderVector_ = points;
+    if( convexHull )
+    {
+        Convexify( data->borderVector_ );
+        if( data->borderVector_.empty() )
+        {
+            data.reset();
+            return data;
+        }
+    }
+    data->boundingBox_ = ComputeBoundingBox( data->borderVector_ );
+    return data;
+}
+
 }  // namespace
 
 //-----------------------------------------------------------------------------
@@ -143,26 +164,6 @@ void Convexify( T_PointVector& points )
 TER_Polygon::TER_Polygon()
 {
     Reset();
-}
-
-//-----------------------------------------------------------------------------
-// Name: TER_Polygon constructor
-// Created: JDY 03-05-26
-//-----------------------------------------------------------------------------
-TER_Polygon::TER_Polygon( const T_PointVector& points, bool bConvexHull )
-{
-    if( points.empty() )
-        return;
-
-    auto data = boost::make_shared< PolygonData >();
-    data->borderVector_ = points;
-    if( bConvexHull )
-        Convexify( data->borderVector_ );
-    data->boundingBox_ = ComputeBoundingBox( data->borderVector_ );
-    if( data->borderVector_.empty() )
-        data.reset();
-
-    pData_ = data;
 }
 
 //-----------------------------------------------------------------------------
@@ -193,12 +194,6 @@ TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
     pData_ = rhs.pData_;
     return *this;
 }
-
-//=============================================================================
-// GEO
-//=============================================================================
-
-//#define PRECISION   0.1 //$$$ NLD CRADE POUR LE MOMENT
 
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon::IsInside
@@ -620,7 +615,7 @@ const T_PointVector& TER_Polygon::GetBorderPoints() const
 //-----------------------------------------------------------------------------
 void TER_Polygon::Reset( const T_PointVector& points, bool bConvexHull )
 {
-    *this=TER_Polygon( points, bConvexHull ); //$$ c'est de la merde !
+    pData_ = BuildPolygon( points, bConvexHull );
 }
 
 //-----------------------------------------------------------------------------
