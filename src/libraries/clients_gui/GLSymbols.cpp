@@ -36,11 +36,6 @@ GLSymbols::GLSymbols( SvglRenderer& renderer )
 // -----------------------------------------------------------------------------
 GLSymbols::~GLSymbols()
 {
-    for( auto it = symbols_.begin(); it != symbols_.end(); ++it )
-    {
-        delete it->second.first;
-        delete it->second.second;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +54,8 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
     {
         try
         {
-            node.first  = Compile( symbol, 10, true );
-            node.second = Compile( symbol, 100, false );
+            node.first.reset( Compile( symbol, 10, true ) );
+            node.second.reset( Compile( symbol, 100, false ) );
             alphaSymbols_[ key ] = alpha_;
         }
         catch( ... )
@@ -68,7 +63,7 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
             MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbol << ".svg', and cannot find the closest symbol." );
         }
     }
-    Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
+    const auto& renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
     if( renderNode )
         renderer_.Render( renderNode, style, viewport, vWidth, vHeight, pickingMode );
 }
