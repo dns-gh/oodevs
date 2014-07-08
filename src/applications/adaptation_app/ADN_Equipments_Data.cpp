@@ -1925,7 +1925,8 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "man-unloading-time", crowdDisembarkingTimePerPerson_ )
             >> xml::end
           >> xml::end;
-    bTroopEmbarkingTimes_ = embarkingTimePerPerson_ != "0s" || disembarkingTimePerPerson_ != "0s";
+    bTroopEmbarkingTimes_ = !ADN_Tools::IsNullDelay( embarkingTimePerPerson_.GetData() )
+                         || !ADN_Tools::IsNullDelay( disembarkingTimePerPerson_.GetData() );
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
     bCanCarryCrowd_ = nCrowdTransportCapacity_ != 0;
 

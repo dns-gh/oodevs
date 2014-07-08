@@ -258,6 +258,8 @@ int ADN_Tools::ConvertDelayToCentiseconds( const QString& delay )
 
 bool ADN_Tools::IsNullDelay( const std::string& delay )
 {
+    if( delay.empty() )
+        return true;
     return ADN_Tools::ConvertDelayToCentiseconds( QString::fromStdString( delay ) ) == 0;
 }
 
