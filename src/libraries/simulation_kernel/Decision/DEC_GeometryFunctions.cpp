@@ -2426,14 +2426,14 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAutomatLocalisati
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeUnitDestPoint( const MIL_AgentPion& caller )
 {
-    auto pResult = boost::make_shared< MT_Vector2D >(); //$$$$ RAM
+    auto pResult = boost::make_shared< MT_Vector2D >();
     caller.GetOrderManager().GetFuseau().ComputeFurthestExtremityPoint( *pResult );
     return pResult;
 }
 
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAutomatDestPoint( const MIL_Automate& caller )
 {
-    auto pResult = boost::make_shared< MT_Vector2D >(); //$$$$ RAM
+    auto pResult = boost::make_shared< MT_Vector2D >();
     caller.GetOrderManager().GetFuseau().ComputeFurthestExtremityPoint( *pResult );
     return pResult;
 }
@@ -2444,14 +2444,14 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAutomatDestPoint(
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeUnitStartPoint( const MIL_AgentPion& caller )
 {
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() ); //$$$$ RAM
+    auto pResult = boost::make_shared< MT_Vector2D >();
     caller.GetOrderManager().GetFuseau().ComputeClosestExtremityPoint( *pResult );
     return pResult;
 }
 
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAutomatStartPoint( const MIL_Automate& caller )
 {
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() ); //$$$$ RAM
+    auto pResult = boost::make_shared< MT_Vector2D >();
     caller.GetOrderManager().GetFuseau().ComputeClosestExtremityPoint( *pResult );
     return pResult;
 }
