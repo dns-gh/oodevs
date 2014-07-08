@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "StaticModel.h"
 
+#include "AgentKnowledge.h"
 #include "clients_gui/DrawingTypes.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -58,6 +59,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     gaugeTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
     drawings_.Load( config );
     reportFactory_.Load( config );
+    AgentKnowledge::LoadPerceptionAvaibilities( config );
     controllers_.controller_.Update( kernel::ModelLoaded( config ) );
 }
 
@@ -71,6 +73,7 @@ void StaticModel::Purge()
     gaugeTypes_.Purge();
     drawings_.Purge();
     reportFactory_.Purge();
+    AgentKnowledge::PurgePerceptionAvaibilities();
     kernel::StaticModel::Purge();
     controllers_.controller_.Update( kernel::ModelUnLoaded() );
 }

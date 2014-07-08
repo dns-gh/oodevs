@@ -13,6 +13,7 @@
 #include "PointingKnowledges.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
+#include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
@@ -22,11 +23,73 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Tools.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/PhyLoader.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
+
+E_PerceptionResult AgentKnowledge::levelPerception_ = eIdentification;
+E_PerceptionResult AgentKnowledge::partialNaturePerception_ = eRecognition;
+E_PerceptionResult AgentKnowledge::fullNaturePerception_ = eIdentification;
+
+namespace
+{
+    E_PerceptionResult ConvertToPerception( const std::string& level )
+    {
+        if( level == "detection" )
+            return eDetection;
+        if( level == "recognition" )
+            return eRecognition;
+        if( level == "identification" )
+            return eIdentification;
+        if( level == "never" )
+            return eNotSeen;
+        return static_cast< E_PerceptionResult >( -1 );
+    }
+
+    void ReadAvailability( xml::xistream& xis )
+    {
+        const std::string type = xis.attribute< std::string >( "type" );
+        const E_PerceptionResult perception = ConvertToPerception( xis.attribute< std::string >( "level" ) );
+        if( perception != static_cast< E_PerceptionResult >( -1 ) )
+        {
+            if( type == "level" )
+                AgentKnowledge::levelPerception_ = perception;
+            else if( type == "nature-partial" )
+                AgentKnowledge::partialNaturePerception_ = perception;
+            else if( type == "nature-full" )
+                AgentKnowledge::fullNaturePerception_ = perception;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::LoadPerceptionAvaibilities
+// Created: JSR 2014-07-07
+// -----------------------------------------------------------------------------
+void AgentKnowledge::LoadPerceptionAvaibilities( const tools::ExerciseConfig& config )
+{
+    config.GetPhyLoader().LoadPhysicalFile( "decisional",
+        [&]( xml::xistream& xis )
+        {
+            xis >> xml::start( "decisional" )
+                >> xml::optional >> xml::start( "perception" )
+                   >> xml::list( "availability", &ReadAvailability );
+        });
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::PurgePerceptionAvaibilities
+// Created: JSR 2014-07-07
+// -----------------------------------------------------------------------------
+void AgentKnowledge::PurgePerceptionAvaibilities()
+{
+    levelPerception_ = eIdentification;
+    partialNaturePerception_ = eRecognition;
+    fullNaturePerception_ = eIdentification;
+}
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge constructor
@@ -280,16 +343,15 @@ void AgentKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_A
     Draw( where, viewport, tools );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::TeamCharacter
-// Created: AGE 2006-10-25
-// -----------------------------------------------------------------------------
-const kernel::Karma& AgentKnowledge::TeamKarma( E_PerceptionResult perception ) const
+namespace
 {
-    if( team_ && perception > eDetection )
-        if( const Diplomacies_ABC* diplomacy = team_->Retrieve< Diplomacies_ABC >() )
-            return diplomacy->GetKarma();
-    return Karma::unknown_;
+    const kernel::Karma& GetKarma( const kernel::Team_ABC* team )
+    {
+        if( team )
+            if( const Diplomacies_ABC* diplomacy = team->Retrieve< Diplomacies_ABC >() )
+                return diplomacy->GetKarma();
+        return Karma::unknown_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -299,12 +361,18 @@ const kernel::Karma& AgentKnowledge::TeamKarma( E_PerceptionResult perception ) 
 void AgentKnowledge::UpdateSymbol()
 {
     const E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
+    App6Symbol::E_LevelFilter filter = App6Symbol::eLevelFilter_Nothing;
+    if( fullNaturePerception_ != eNotSeen && perception >= fullNaturePerception_ )
+        filter = App6Symbol::eLevelFilter_Full;
+    else if( partialNaturePerception_ != eNotSeen && perception >= partialNaturePerception_ )
+        filter = App6Symbol::eLevelFilter_Partial;
     currentSymbol_ = fullSymbol_;
-    App6Symbol::SetKarma( currentSymbol_, TeamKarma( perception ) );
-    App6Symbol::SetKarma( moveSymbol_, TeamKarma( perception ) );
-    App6Symbol::SetKarma( staticSymbol_, TeamKarma( perception ) );
-    App6Symbol::FilterPerceptionLevel( currentSymbol_, perception );
-    currentNature_ = App6Symbol::FilterNature( realAgent_.GetType().GetNature().GetNature(), perception );
-    if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
+    const auto& teamKarma = GetKarma( team_ );
+    App6Symbol::SetKarma( currentSymbol_, teamKarma );
+    App6Symbol::SetKarma( moveSymbol_, teamKarma );
+    App6Symbol::SetKarma( staticSymbol_, teamKarma );
+    App6Symbol::FilterPerceptionLevel( currentSymbol_, filter );
+    currentNature_ = App6Symbol::FilterNature( realAgent_.GetType().GetNature().GetNature(), filter );
+    if( levelPerception_ != eNotSeen && nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ >= levelPerception_ )
         nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() );
 }
