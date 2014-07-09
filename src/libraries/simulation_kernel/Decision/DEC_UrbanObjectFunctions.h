@@ -38,6 +38,7 @@ public:
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject );
     static void DestroyUrbanBlock(  MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject, const PHY_DotationCategory* category );
     static float GetStateUrbanBlock( MIL_UrbanObject_ABC* pUrbanObject );
+    static void SetUrbanBlockState( MIL_UrbanObject_ABC* pUrbanObject, float state );
     static boost::shared_ptr< TER_Localisation > GetPolygonFromUrbanBlock( const MIL_UrbanObject_ABC* pUrbanObject );
     static std::string GetType( const MIL_UrbanObject_ABC* pUrbanObject );
     static T_UrbanObjectVector GetUrbanBlockInZone( TER_Localisation* );

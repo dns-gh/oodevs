@@ -272,6 +272,15 @@ float StructuralCapacity::GetStructuralState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: StructuralCapacity::SetStructuralState
+// Created: MCO 2014-07-09
+// -----------------------------------------------------------------------------
+void StructuralCapacity::SetStructuralState( float state )
+{
+    structuralState_ = std::max( 0.f, std::min( 1.f, state ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: StructuralCapacity::ProcessAgentEntering
 // Created: SLG 2010-06-29
 // -----------------------------------------------------------------------------
