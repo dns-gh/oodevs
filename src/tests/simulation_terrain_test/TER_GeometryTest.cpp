@@ -12,36 +12,22 @@
 #include "simulation_terrain/TER_Polygon.h"
 #include <boost/assign/list_of.hpp>
 
-BOOST_AUTO_TEST_CASE( TestComputePolygonHull )
+BOOST_AUTO_TEST_CASE( TestComputeHull )
 {
-    MT_Vector2D Point1( 0, 0 );
-    MT_Vector2D Point2( 0, 10 );
-    MT_Vector2D Point3( 10, 10 );
-    MT_Vector2D Point4( 10, 0 );
-    MT_Vector2D Point5( 10, -10 );
-    MT_Vector2D Point6( 0, -10 );
-    MT_Vector2D Point7( -10, -10 );
-    MT_Vector2D Point8( -10, 0 );
-    T_PointVector input;
-    input.push_back( Point1 );
-    input.push_back( Point2 );
-    input.push_back( Point3 );
-    input.push_back( Point4 );
-    input.push_back( Point5 );
-    input.push_back( Point6 );
-    input.push_back( Point7 );
-    input.push_back( Point8 );
-    T_PointVector output;
-    TER_Geometry::ComputeHull( output, input );
-
-    T_PointVector result;
-    result.push_back( Point7 );
-    result.push_back( Point5 );
-    result.push_back( Point3 );
-    result.push_back( Point2 );
-    result.push_back( Point8 );
-    result.push_back( Point7 );
-    BOOST_CHECK_EQUAL_COLLECTIONS( output.begin(), output.end(), result.begin(), result.end() );
+    // Cases for more than two points or non-colinear points are already
+    // covered by TER_Polygon
+    auto points = boost::assign::list_of
+        ( MT_Vector2D( 0, 0 ) )
+        ( MT_Vector2D( 1, 0 ) )
+        ( MT_Vector2D( 2, 0 ) )
+        ;
+    for( auto it = points.begin(); it != points.end(); ++it )
+    {
+        T_PointVector inputs( points.begin(), it );
+        T_PointVector hull;
+        TER_Geometry::ComputeHull( hull, inputs );
+        BOOST_CHECK_EQUAL_COLLECTIONS( hull.begin(), hull.end(), inputs.begin(), inputs.end() );
+    }
 }
 
 BOOST_AUTO_TEST_CASE( TestComputePolygonScale )

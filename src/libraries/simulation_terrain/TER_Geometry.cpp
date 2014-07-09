@@ -52,6 +52,8 @@ void TER_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertic
     TER_Polygon polygon;
     polygon.Reset( vertices, true );
     hull = polygon.GetBorderPoints();
+    if( hull.empty() )
+        hull = vertices;
 }
 
 namespace

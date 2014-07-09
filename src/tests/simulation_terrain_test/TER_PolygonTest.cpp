@@ -108,6 +108,14 @@ BOOST_AUTO_TEST_CASE( TER_Polygon_Constructor )
         { "POLYGON (1 1)", false, "POLYGON ()" },
         { "POLYGON (1 1)", true, "POLYGON ()" },
 
+        // Invalid polygons
+        { "POLYGON (0 0, 1 1)", false, "POLYGON ()" },
+        { "POLYGON (0 0, 1 1)", true, "POLYGON ()" },
+
+        // Flat polygon
+        { "POLYGON (0 0, 1 1, 2 2)", false, "POLYGON ()" },
+        { "POLYGON (0 0, 1 1, 2 2)", true, "POLYGON ()" },
+
         // Self-intersecting shapes (bow tie)
         { "POLYGON (0 0, 2 1, 2 0, 0 1, 0 0)", false, "POLYGON (1 0.5, 2 0, 2 1, 1 0.5)" },
         { "POLYGON (0 0, 2 1, 2 0, 0 1, 0 0)", true, "POLYGON (0 0, 2 0, 2 1, 0 1, 0 0)" },

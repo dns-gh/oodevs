@@ -490,7 +490,7 @@ void MIL_Inhabitant::CreateInhabitantMovingObject()
         return;
 
     T_PointVector hull = pLivingArea_->ComputeMovingArea();
-    if( hull.empty() )
+    if( hull.size() < 3 )
         return;
 
     MIL_Object_ABC* obj = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "population moving", pArmy_, TER_Localisation( TER_Localisation::ePolygon, hull ) );
