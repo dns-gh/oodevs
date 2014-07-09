@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-#include "MIL_Geometry.h"
+#include "simulation_terrain_pch.h"
+#include "TER_Geometry.h"
+#include "TER_Localisation.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
-#include "simulation_terrain/TER_Localisation.h"
 #pragma warning( push, 0 )
 #pragma warning( disable: 4702 )
 #include <boost/geometry/geometry.hpp>
@@ -21,10 +21,10 @@
 namespace bg = boost::geometry;
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Geometry::Scale
+// Name: TER_Geometry::Scale
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-void MIL_Geometry::Scale( TER_Polygon& result, const T_PointVector& polygon, double distance )
+void TER_Geometry::Scale( TER_Polygon& result, const T_PointVector& polygon, double distance )
 {
     T_PointVector ret;
     T_PointVector hull;
@@ -39,10 +39,10 @@ void MIL_Geometry::Scale( TER_Polygon& result, const T_PointVector& polygon, dou
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Geometry::ComputeHull
+// Name: TER_Geometry::ComputeHull
 // Created: JSR 2011-03-29
 // -----------------------------------------------------------------------------
-void MIL_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertices )
+void TER_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertices )
 {
     if( vertices.empty() )
         return;
@@ -86,10 +86,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Geometry::IntersectionArea
+// Name: TER_Geometry::IntersectionArea
 // Created: JSR 2011-01-25
 // -----------------------------------------------------------------------------
-double MIL_Geometry::IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 )
+double TER_Geometry::IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 )
 {
     bgPolygon poly1, poly2;
     GetPolygonFromLocalisation( localisation1, poly1 );
@@ -98,10 +98,10 @@ double MIL_Geometry::IntersectionArea( const TER_Localisation& localisation1, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Geometry::IsEntirelyCovered
+// Name: TER_Geometry::IsEntirelyCovered
 // Created: MMC 2013-06-11
 // -----------------------------------------------------------------------------
-bool MIL_Geometry::IsEntirelyCovered( const TER_Localisation& toCover, const std::vector< TER_Localisation >& covers )
+bool TER_Geometry::IsEntirelyCovered( const TER_Localisation& toCover, const std::vector< TER_Localisation >& covers )
 {
     if( covers.empty() )
         return false;

@@ -18,8 +18,8 @@
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "simulation_terrain/TER_Geometry.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
-#include "Tools/MIL_Geometry.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( IntoxicationCapacity )
 
@@ -160,7 +160,7 @@ void IntoxicationCapacity::DesintoxicateZone( MIL_Object_ABC& object, const TER_
     {
         std::vector< TER_Localisation > covers;
         GetLocationsFromPtrVector( desintoxicatedZones_, covers );
-        if( MIL_Geometry::IsEntirelyCovered( object.GetLocalisation(), covers ) )
+        if( TER_Geometry::IsEntirelyCovered( object.GetLocalisation(), covers ) )
             object.MarkForDestruction();
     }
 }

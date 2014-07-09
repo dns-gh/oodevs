@@ -13,6 +13,7 @@
 #define __MT_Vector3D_h_
 
 #include "MT_Tools_Types.h"
+#include <iosfwd>
 #include <vector>
 
 // Scipio types
@@ -59,6 +60,8 @@ MT_Vector3D operator   -( const MT_Vector3D& v1, const MT_Vector3D& v2 );
 bool        operator   <( const MT_Vector3D& v1, const MT_Vector3D& v2 );
 MT_Vector3D CrossProduct( const MT_Vector3D& v1, const MT_Vector3D& v2 );
 double      DotProduct  ( const MT_Vector3D& v1, const MT_Vector3D& v2 );
+
+std::ostream& operator<<( std::ostream&, const MT_Vector3D& );
 
 #include "MT_Vector3D.inl"
 

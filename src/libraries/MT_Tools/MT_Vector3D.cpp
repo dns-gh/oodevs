@@ -7,14 +7,8 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-#include "MT_Tools/MT_Vector3D.h"
-#include "MT_Tools/MT_Vector2D.h"
-
-std::ostream& operator<<( std::ostream& out, const MT_Vector2D& vect )
-{
-    return out << '[' << vect.rX_ << ", " << vect.rY_ << ']';
-}
+#include "MT_Vector3D.h"
+#include <ostream>
 
 std::ostream& operator<<( std::ostream& out, const MT_Vector3D& vect )
 {

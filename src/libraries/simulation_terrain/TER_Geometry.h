@@ -7,24 +7,17 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_Geometry_h_
-#define __MIL_Geometry_h_
+#ifndef TER_GEOMETRY_H
+#define TER_GEOMETRY_H
 
 #include "MT_Tools/Mt_Vector2DTypes.h"
 
 class TER_Localisation;
 class TER_Polygon;
 
-// =============================================================================
-/** @class  MIL_Geometry
-    @brief  MIL Geometry
-*/
-// Created: SLG 2010-04-30
-// =============================================================================
-class MIL_Geometry
+class TER_Geometry
 {
 public:
-    //! @name Operations
     //@{
     static void Scale( TER_Polygon& result, const T_PointVector& polygon, double distance ); // $$$$ MCO : where are the unit tests ?!
     static void ComputeHull( T_PointVector& result, const T_PointVector& polygon );
@@ -33,4 +26,4 @@ public:
     //@}
 };
 
-#endif // __MIL_Geometry_h_
+#endif // TER_GEOMETRY_H

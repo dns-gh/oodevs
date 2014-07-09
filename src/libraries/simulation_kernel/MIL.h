@@ -15,9 +15,6 @@
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Vector2D.h"
 
-std::ostream& operator<<( std::ostream&, const MT_Vector3D& );
-std::ostream& operator<<( std::ostream&, const MT_Vector2D& );
-
 template< class T >
 std::ostream& operator<<( std::ostream& out, const std::vector< T >& vect )
 {

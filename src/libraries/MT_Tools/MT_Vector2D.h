@@ -14,6 +14,7 @@
 
 #include "MT_Tools_Types.h"
 #include <functional>
+#include <iosfwd>
 
 //=============================================================================
 // Created: FBD 02-03-01
@@ -70,6 +71,8 @@ bool         operator <( const MT_Vector2D& v1, const MT_Vector2D& v2 );
 double       CrossProduct( const MT_Vector2D& v1, const MT_Vector2D& v2 );
 double       DotProduct  ( const MT_Vector2D& v1, const MT_Vector2D& v2 );
 double       Angle       ( const MT_Vector2D& v1, const MT_Vector2D& v2 ); // Retourne l'angle (orienté) de v1 vers v2, dans le sens trigo, [0, 2*PI]
+
+std::ostream& operator<<( std::ostream&, const MT_Vector2D& );
 
 struct TER_DistanceLess : std::binary_function< MT_Vector2D, MT_Vector2D, bool >
 {

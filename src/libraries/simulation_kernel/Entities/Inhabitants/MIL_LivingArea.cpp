@@ -11,7 +11,6 @@
 #include "MIL_LivingArea.h"
 #include "MIL_LivingAreaBlock.h"
 #include "MIL_AgentServer.h"
-#include "Tools/MIL_Geometry.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Objects/MedicalCapacity.h"
@@ -20,6 +19,7 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_AccomodationType.h"
+#include "simulation_terrain/TER_Geometry.h"
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingArea )
@@ -565,7 +565,7 @@ T_PointVector MIL_LivingArea::ComputeMovingArea() const
         const T_PointVector& objectVertices = it->first->GetObject().GetLocalisation().GetPoints();
         vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
     }
-    MIL_Geometry::ComputeHull( hull, vertices );
+    TER_Geometry::ComputeHull( hull, vertices );
     return hull;
 }
 

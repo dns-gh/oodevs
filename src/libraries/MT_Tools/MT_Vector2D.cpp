@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
@@ -11,6 +11,7 @@
 #include "MT_Vector2DTypes.h"
 #include "MT_Droite.h"
 #include <cassert>
+#include <ostream>
 
 // -----------------------------------------------------------------------------
 // Name: MT_Vector2D::MT_ComputeBarycenter
@@ -38,4 +39,9 @@ MT_Vector2D MT_ComputeBarycenter( const T_PointVector& points )
         vBarycenter += *itPoint;
     vBarycenter /= nNbrPoints;
     return vBarycenter;
+}
+
+std::ostream& operator<<( std::ostream& out, const MT_Vector2D& vect )
+{
+    return out << '[' << vect.rX_ << ", " << vect.rY_ << ']';
 }

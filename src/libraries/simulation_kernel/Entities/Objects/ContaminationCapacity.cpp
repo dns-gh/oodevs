@@ -18,9 +18,9 @@
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "simulation_terrain/TER_Geometry.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <boost/foreach.hpp>
-#include "Tools/MIL_Geometry.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ContaminationCapacity )
 
@@ -174,7 +174,7 @@ void ContaminationCapacity::DecontaminateZone( MIL_Object_ABC& object, const TER
     {
         std::vector< TER_Localisation > covers;
         GetLocationsFromPtrVector( decontaminatedZones_, covers );
-        if( MIL_Geometry::IsEntirelyCovered( object.GetLocalisation(), covers ) )
+        if( TER_Geometry::IsEntirelyCovered( object.GetLocalisation(), covers ) )
             object.MarkForDestruction();
     }
 }
