@@ -11,7 +11,9 @@
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
@@ -24,6 +26,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "DEC_PerceptionFunctions.h"
+#include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetBarycenter
@@ -469,7 +472,7 @@ bool DEC_AutomateFunctions::IsPointInPionFuseau( const MIL_Automate& callerAutom
 {
     if( !pPion || !IsPionInAutomate( callerAutomate, pPion->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid parameter in IsPointInPionFuseau" );
-    return DEC_GeometryFunctions::IsPointInFuseau< MIL_AgentPion >( pPion->GetPion(), pPoint );
+    return DEC_GeometryFunctions::IsPointInUnitFuseau( pPion->GetPion(), pPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -529,7 +532,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePointBeforeLimaFo
 {
     if( !pion )
         throw MASA_EXCEPTION( "Invalid pion in ComputePointBeforeLimaForPion" );
-    return DEC_GeometryFunctions::ComputePointBeforeLima< MIL_AgentPion >( pion->GetPion(), phaseLine, distanceBefore );
+    return DEC_GeometryFunctions::ComputePointBeforeUnitLima( pion->GetPion(), phaseLine, distanceBefore );
 }
 
 // -----------------------------------------------------------------------------
@@ -540,7 +543,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePionNearestLocali
 {
     if( !pion )
         throw MASA_EXCEPTION( "Invalid pion in ComputePionNearestLocalisationPointInFuseau" );
-    return DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( pion->GetPion(), location );
+    return DEC_GeometryFunctions::ComputeNearestLocalisationPointInUnitFuseau( pion->GetPion(), location );
 }
 
 // -----------------------------------------------------------------------------

@@ -245,24 +245,24 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
 
     // Geometry
     brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau",
-        boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeAutomatLocalisationBarycenterInFuseau, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometry_SplitLocalisation",
-        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::SplitAutomatLocalisationInParts, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometry_Pion_SplitLocalisation", &DEC_GeometryFunctions::SplitPionLocalisationInParts );
     brain.RegisterFunction( "DEC_Geometrie_DecoupeFuseauEnTroncons",
-        boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_Automate >, boost::ref( GetAutomate() ), _1  ) ) );
+        boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitAutomatLocalisationInSections, boost::ref( GetAutomate() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionObstacle",
         boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, const std::string&, double) >( boost::bind( &DEC_GeometryFunctions::ComputeObstaclePositionForAutomat, boost::cref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointArrivee",
-                            boost::bind( &DEC_GeometryFunctions::ComputeDestPoint< MIL_Automate >, boost::ref( GetAutomate() ) ) );
+                            boost::bind( &DEC_GeometryFunctions::ComputeAutomatDestPoint, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointDepart",
-                            boost::bind( &DEC_GeometryFunctions::ComputeStartPoint< MIL_Automate >, boost::ref( GetAutomate() ) ) );
+                            boost::bind( &DEC_GeometryFunctions::ComputeAutomatStartPoint, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Geometrie_EstPointDansFuseau",
-        boost::function< bool( MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::IsPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
+        boost::function< bool( MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::IsPointInAutomatFuseau, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionParRapportALima",
-        boost::function< boost::shared_ptr< MT_Vector2D >( int, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLima< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( int, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeAutomatLima, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau",
-        boost::function< boost::shared_ptr< MT_Vector2D >( unsigned int, double, const MIL_Fuseau* ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( unsigned int, double, const MIL_Fuseau* ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionsParRapportALima",
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( unsigned int, double, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::ComputePointsBeforeLima, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_StartCalculLignesAvantEtArriere",
@@ -274,11 +274,11 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointArriveePourPion",
         boost::function< boost::shared_ptr< MT_Vector2D >( DEC_Decision_ABC* ) >( boost::bind( &DEC_GeometryFunctions::ComputeDestPointForPion, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau",
-        boost::function< boost::shared_ptr< MT_Vector2D >( const TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( const TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestLocalisationPointInAutomatFuseau, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau",
-        boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInAutomatFuseau, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerRetardSurObjectifs",
-        boost::function< float( const MIL_Fuseau*, const std::vector< DEC_Decision_ABC* >&, const std::vector< DEC_Objective* >& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< float( const MIL_Fuseau*, const std::vector< DEC_Decision_ABC* >&, const std::vector< DEC_Objective* >& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_AdvanceAlongFuseau",
         boost::function< double( DEC_Decision_ABC* ) >( boost::bind( &DEC_GeometryFunctions::ComputeAdvanceAlongFuseau, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_GetPointsLimas",

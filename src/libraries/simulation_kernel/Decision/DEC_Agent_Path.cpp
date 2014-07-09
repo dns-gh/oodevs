@@ -20,9 +20,14 @@
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentType_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/TrafficabilityCapacity.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
+#include "Entities/Orders/MIL_PionOrderManager.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/make_shared.hpp>
 

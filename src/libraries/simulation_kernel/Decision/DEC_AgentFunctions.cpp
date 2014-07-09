@@ -28,6 +28,7 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
@@ -48,6 +49,7 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Agents/Units/Logistic/PHY_BreakdownType.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_Suicide.h"
 #include "Entities/Specialisations/LOG/Medical/MIL_AgentTypePionLOGMedical.h"
@@ -67,7 +69,9 @@
 #include "MT_Tools/MT_Logger.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_AgentManager.h"
+#include "simulation_terrain/TER_World.h"
 
 DEC_Decision_ABC* DEC_AgentFunctions::GetUnitById( uint32_t id )
 {

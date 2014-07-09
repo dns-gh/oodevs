@@ -15,15 +15,19 @@
 #include "MIL_AgentServer.h"
 #include "MIL_Random.h"
 #include "DEC_Decision_ABC.h"
+#include "DEC_Objective.h"
 #include "Brain.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/TerrainHeuristicCapacity.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_LimaFunction.h"
@@ -35,15 +39,143 @@
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_Analyzer.h"
+#include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/smart_ptr/make_shared.hpp>
 #include <boost/foreach.hpp>
 
 #define PRECISION 0.0000001
+
+namespace
+{
+
+enum E_LocalisationFunctionsReturnCode
+{
+    eError_PionsPasDansMemeFuseau,
+    eError_LocalisationPasDansFuseau,
+    eWarning_DecoupageIncomplet,
+    eNoError
+};
+
+// -----------------------------------------------------------------------------
+// Name: ClipLocalisationInFuseau
+// Created: JVT 2004-11-03
+// -----------------------------------------------------------------------------
+bool ClipLocalisationInFuseau( const TER_Localisation& localisation, const MIL_Fuseau& fuseau, TER_Localisation& clippedLocalisation )
+{
+    // Clippe le polygone dans le fuseau
+    T_PointVector clippedPointVector;
+    localisation.GetPointsClippedByPolygon( fuseau, clippedPointVector );
+
+    if( clippedPointVector.empty() )
+        return false;
+    clippedLocalisation.Reset( clippedPointVector ); //$$$ NAZE
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SplitLocalisation
+// Created: JVT 2004-11-03
+// -----------------------------------------------------------------------------
+unsigned int SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, const MT_Vector2D* splitDirection, std::vector< boost::shared_ptr< TER_Localisation > >& result )
+{
+    result.clear();
+    if( nNbrParts <= 0 )
+        return eWarning_DecoupageIncomplet;
+
+    localisation.Split( nNbrParts, result, splitDirection );
+
+    if( result.size() != nNbrParts )
+        return eWarning_DecoupageIncomplet;
+    else
+        return eNoError;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDelayFromSchedule
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+float ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule )
+{
+    if( !pFuseau )
+        throw MASA_EXCEPTION( "Invalid fuseau" );
+
+    // Calcul vitesse moyenne de l'automate
+    double rSpeed = std::numeric_limits< double >::max();
+    for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
+    {
+        if( !(*it) )
+            throw MASA_EXCEPTION( "invalid parameter." );
+        const MIL_Automate& automate = ( **it ).GetAutomate();
+        rSpeed = std::min( rSpeed, automate.GetAlivePionsMaxSpeed() );
+    }
+
+    if( rDistanceFromScheduled == std::numeric_limits< double >::max() || rSpeed == 0. )
+        return 0.f;
+    else
+    {
+        const double rTimeToGoToElement = 1.439 * rDistanceFromScheduled / rSpeed; //$$$ Deplacer la formule magique (Cf. PHY_ComposantePion où elle existe aussi...)
+        const double rTimeLeeway        = 1.439 * 2000. / rSpeed;
+
+        // Valeur de retour : = 0 : en avance, ou à 2km de la lima
+        //                    = 1 : en retard
+        //              entre les 2 : marge de sécurité
+
+        const double rDelay = nSchedule - ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() + rTimeToGoToElement );
+        if( rDelay < 0 )
+            return 1.f;
+        return static_cast< float >( 1.f - std::min( 1., rDelay / rTimeLeeway ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComputeAutomatesBarycenter
+// Created: NLD 2007-04-29
+// -----------------------------------------------------------------------------
+MT_Vector2D ComputeAutomatesBarycenter( const std::vector< DEC_Decision_ABC* >& automates )
+{
+    MT_Vector2D barycenter;
+    unsigned int nNbrElt = 0;
+    for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
+    {
+        MT_Vector2D tmp;
+        if( !(*it) )
+            throw MASA_EXCEPTION( "invalid parameter." );
+        if( ( **it ).GetAutomate().GetAlivePionsBarycenter( tmp ) )
+        {
+            barycenter += tmp;
+            ++ nNbrElt;
+        }
+    }
+    if( nNbrElt > 0 )
+        barycenter /= nNbrElt;
+    return barycenter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GetPosition
+// Created: JVT 2005-01-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& GetPosition( const MIL_AgentPion& pion )
+{
+    return pion.GetRole< PHY_RoleInterface_Location >().GetPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GetPosition
+// Created: JVT 2005-01-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& GetPosition( const MIL_Automate& automate )
+{
+    return automate.GetPosition();
+}
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeAgentsBarycenter
@@ -74,7 +206,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForPion(
         throw MASA_EXCEPTION( "invalid parameter." );
     if( std::find( callerAutomate.GetPions().begin(), callerAutomate.GetPions().end(), &pPion->GetPion() ) == callerAutomate.GetPions().end() )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return ComputeDestPoint( pPion->GetPion() );
+    return ComputeUnitDestPoint( pPion->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
@@ -931,22 +1063,6 @@ float DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine( const MIL_Autom
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ClipLocalisationInFuseau
-// Created: JVT 2004-11-03
-// -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::ClipLocalisationInFuseau( const TER_Localisation& localisation, const MIL_Fuseau& fuseau, TER_Localisation& clippedLocalisation )
-{
-    // Clippe le polygone dans le fuseau
-    T_PointVector clippedPointVector;
-    localisation.GetPointsClippedByPolygon( fuseau, clippedPointVector );
-
-    if( clippedPointVector.empty() )
-        return false;
-    clippedLocalisation.Reset( clippedPointVector ); //$$$ NAZE
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ClipLocalisation
 // Created: LDC 2013-02-11
 // -----------------------------------------------------------------------------
@@ -961,24 +1077,6 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ClipLocalisation( c
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::SplitLocalisation
-// Created: JVT 2004-11-03
-// -----------------------------------------------------------------------------
-unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, const MT_Vector2D* splitDirection, std::vector< boost::shared_ptr< TER_Localisation > >& result )
-{
-    result.clear();
-    if( nNbrParts <= 0 )
-        return eWarning_DecoupageIncomplet;
-
-    localisation.Split( nNbrParts, result, splitDirection );
-
-    if( result.size() != nNbrParts )
-        return eWarning_DecoupageIncomplet;
-    else
-        return eNoError;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::SplitLocalisation
 // Created: JVT 2004-11-04
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, MT_Vector2D vOrigin, const MT_Vector2D& vDirection, double rSectionLength )
@@ -986,7 +1084,7 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
     if( localisation.GetType() != TER_Localisation::ePolygon )
         throw MASA_EXCEPTION( "SplitLocalisation expects an input polygon not a " + localisation.GetTypeString() );
 
-    T_LocalisationPtrVector splitLocVector;
+    TER_Localisation::T_LocalisationPtrVector splitLocVector;
     if( rSectionLength == 0 || vDirection.SquareMagnitude() == 0. )
         return splitLocVector;
 
@@ -1011,17 +1109,6 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
         backBound  = frontBound;
         frontBound.MT_Droite::MT_Droite( vOrigin, vOrigin + vLineDirection );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::SplitPionLocalisationInParts
-// Created: LDC 2013-02-07
-// -----------------------------------------------------------------------------
-std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitPionLocalisationInParts( DEC_Decision_ABC* caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
-{
-    if( !caller )
-         throw std::runtime_error( "Null unit when splitting location in parts" );
-    return SplitLocalisationInParts< MIL_AgentPion >( caller->GetPion(), pLocalisation, nNbrParts, direction);
 }
 
 // -----------------------------------------------------------------------------
@@ -1853,30 +1940,6 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertFuseauToLoca
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::_ComputeAutomatesBarycenter
-// Created: NLD 2007-04-29
-// -----------------------------------------------------------------------------
-MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const std::vector< DEC_Decision_ABC* >& automates )
-{
-    MT_Vector2D barycenter;
-    unsigned int nNbrElt = 0;
-    for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
-    {
-        MT_Vector2D tmp;
-        if( !(*it) )
-            throw MASA_EXCEPTION( "invalid parameter." );
-        if( ( **it ).GetAutomate().GetAlivePionsBarycenter( tmp ) )
-        {
-            barycenter += tmp;
-            ++ nNbrElt;
-        }
-    }
-    if( nNbrElt > 0 )
-        barycenter /= nNbrElt;
-    return barycenter;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::GetNextObjectiveInFuseau
 // Created: NLD 2007-05-16
 // -----------------------------------------------------------------------------
@@ -1934,7 +1997,7 @@ float DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule( const MIL_Fuseau* 
     unsigned int     nSchedule              = 0;
     if( pLima )
     {
-        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );
+        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, ComputeAutomatesBarycenter( automates ) );
         nSchedule = pLima->GetSchedule();
     }
 
@@ -2049,43 +2112,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeEntryPointForFuse
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
     fuseau.ComputeEntryPoint( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
     return pResult;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeDelayFromSchedule
-// Created: LDC 2009-07-06
-// -----------------------------------------------------------------------------
-float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule )
-{
-    if( !pFuseau )
-        throw MASA_EXCEPTION( "Invalid fuseau" );
-
-    // Calcul vitesse moyenne de l'automate
-    double rSpeed = std::numeric_limits< double >::max();
-    for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
-    {
-        if( !(*it) )
-            throw MASA_EXCEPTION( "invalid parameter." );
-        const MIL_Automate& automate = ( **it ).GetAutomate();
-        rSpeed = std::min( rSpeed, automate.GetAlivePionsMaxSpeed() );
-    }
-
-    if( rDistanceFromScheduled == std::numeric_limits< double >::max() || rSpeed == 0. )
-        return 0.f;
-    else
-    {
-        const double rTimeToGoToElement = 1.439 * rDistanceFromScheduled / rSpeed; //$$$ Deplacer la formule magique (Cf. PHY_ComposantePion où elle existe aussi...)
-        const double rTimeLeeway        = 1.439 * 2000. / rSpeed;
-
-        // Valeur de retour : = 0 : en avance, ou à 2km de la lima
-        //                    = 1 : en retard
-        //              entre les 2 : marge de sécurité
-
-        const double rDelay = nSchedule - ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() + rTimeToGoToElement );
-        if( rDelay < 0 )
-            return 1.f;
-        return static_cast< float >( 1.f - std::min( 1., rDelay / rTimeLeeway ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -2212,20 +2238,427 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePositionF
             type, rRadius );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::GetPosition
-// Created: JVT 2005-01-03
-// -----------------------------------------------------------------------------
-const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_AgentPion& pion )
+namespace
 {
-    return pion.GetRole< PHY_RoleInterface_Location >().GetPosition();
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::SplitLocalisation
+// Created: NLD 2003-08-21
+// Modified: JVT 2004-11-03
+// -----------------------------------------------------------------------------
+template< typename T >
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
+{
+    if( !pLocalisation )
+        throw MASA_EXCEPTION( "Null location when splitting location in parts" );
+
+    std::vector< boost::shared_ptr< TER_Localisation > > result;
+
+    TER_Localisation clippedLocalisation;
+    unsigned int errCode = eError_LocalisationPasDansFuseau;
+    if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
+        errCode = ::SplitLocalisation( clippedLocalisation, nNbrParts, direction, result );
+    return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
+}
+
+} // namespace
+
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitUnitLocalisationInParts( const MIL_AgentPion& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
+{
+    return SplitLocalisationInParts< MIL_AgentPion >( caller, pLocalisation, nNbrParts, direction );
+}
+
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitAutomatLocalisationInParts( const MIL_Automate& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
+{
+    return SplitLocalisationInParts< MIL_Automate >( caller, pLocalisation, nNbrParts, direction );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::GetPosition
+// Name: DEC_GeometryFunctions::SplitPionLocalisationInParts
+// Created: LDC 2013-02-07
+// -----------------------------------------------------------------------------
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitPionLocalisationInParts( DEC_Decision_ABC* caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
+{
+    if( !caller )
+         throw std::runtime_error( "Null unit when splitting location in parts" );
+    return SplitLocalisationInParts< MIL_AgentPion >( caller->GetPion(), pLocalisation, nNbrParts, direction);
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::SplitUnitLocalisationInSurfaces
+// Created: JVT 2004-11-03
+// -----------------------------------------------------------------------------
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitUnitLocalisationInSurfaces( const MIL_AgentPion& caller, TER_Localisation* pLocalisation, const double rAverageArea, MT_Vector2D* direction )
+{
+    if( !pLocalisation )
+        throw MASA_EXCEPTION( "invalid parameter." );
+
+    std::vector< boost::shared_ptr< TER_Localisation > > result;
+
+    TER_Localisation clippedLocalisation;
+    unsigned int errCode = eError_LocalisationPasDansFuseau;
+    if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
+    {
+        const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( clippedLocalisation.GetArea() / rAverageArea ) );
+        errCode = ::SplitLocalisation( clippedLocalisation, nNbrParts, direction, result );
+    }
+    return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::RecursiveSplitLocalisationInSurfaces
+// Created: BCI 2011-01-31
+// -----------------------------------------------------------------------------
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::RecursiveSplitUnitLocalisationInSurfaces( const MIL_AgentPion& caller, TER_Localisation* pLocalisation, const double rAverageArea )
+{
+    if( !pLocalisation )
+        throw MASA_EXCEPTION( "Null location when splitting location in surfaces" );
+
+    typedef std::vector< boost::shared_ptr< TER_Localisation > > T_ResultVector;
+    T_ResultVector result;
+
+    TER_Localisation clippedLocalisation;
+    unsigned int errCode = eError_LocalisationPasDansFuseau;
+    if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
+    {
+        const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( clippedLocalisation.GetArea() / rAverageArea ) );
+        if( nNbrParts < 4 )
+            clippedLocalisation.Split( nNbrParts, result );
+        else
+        {
+            auto loc = boost::make_shared< TER_Localisation >( clippedLocalisation );
+            result.push_back( loc );
+            for( unsigned int n = 1; n < nNbrParts; n *= 4 )
+            {
+                T_ResultVector splitted;
+                MT_Vector2D* splitDirection = 0;
+                for( T_ResultVector::const_iterator it = result.begin(); it != result.end(); ++it )
+                {
+                    if( !(*it) )
+                        throw MASA_EXCEPTION( "invalid parameter." );
+                    (*it)->Split( 4, splitted, splitDirection );
+                }
+                std::swap( result, splitted );
+            }
+        }
+        if( result.size() != nNbrParts )
+            errCode = eWarning_DecoupageIncomplet;
+        else
+            errCode = eNoError;
+    }
+    return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
+}
+// -----------------------------------------------------------------------------
+// Name:DEC_GeometryFunctions::SplitLocalisationInSections
+// Created: JVT 2004-11-04
+// -----------------------------------------------------------------------------
+namespace
+{
+
+template< typename T >
+std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInSections( const T& caller, const double rSectionLength )
+{
+    const MT_Line& globalDirection = caller.GetOrderManager().GetFuseau().GetGlobalDirection();
+    MT_Vector2D vDirection( globalDirection.GetPosEnd() - globalDirection.GetPosStart() );
+    vDirection.Normalize();
+
+    return DEC_GeometryFunctions::SplitLocalisation( TER_Localisation(
+        TER_Localisation::ePolygon, caller.GetOrderManager().GetFuseau().GetBorderPoints() ),
+        globalDirection.GetPosStart(), vDirection , rSectionLength );
+}
+
+} // namespace
+
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitUnitLocalisationInSections( const MIL_AgentPion& caller, const double rSectionLength )
+{
+    return SplitLocalisationInSections< MIL_AgentPion >( caller, rSectionLength );
+}
+
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitAutomatLocalisationInSections( const MIL_Automate& caller, const double rSectionLength )
+{
+    return SplitLocalisationInSections< MIL_Automate >( caller, rSectionLength );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau
+// Created: NLD 2003-09-17
+// -----------------------------------------------------------------------------
+namespace
+{
+
+template< typename T >
+boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenterInFuseau( const T& caller, TER_Localisation* pLocalisation )
+{
+    if( !pLocalisation )
+        throw MASA_EXCEPTION( "Null location when computing barycenter in fuseau" );
+    // 1. Clippe le polygone dans le fuseau
+    T_PointVector clippedPointVector;
+    pLocalisation->GetPointsClippedByPolygon( caller.GetOrderManager().GetFuseau(), clippedPointVector );
+    // 2. Barycentre polygone clippé
+    MT_Vector2D vBarycenter = MT_ComputeBarycenter( clippedPointVector );
+
+    boost::shared_ptr< MT_Vector2D > result;
+
+    if( !clippedPointVector.empty() && caller.GetOrderManager().GetFuseau().IsInside( vBarycenter ) )
+    {
+        assert( TER_World::GetWorld().IsValidPosition( vBarycenter ) );
+        // 3. Envoi du résulat à DIA
+        result = boost::make_shared< MT_Vector2D >( vBarycenter );
+    }
+    return result;
+}
+
+}  // namespace
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeUnitLocalisationBarycenterInFuseau( const MIL_AgentPion& caller, TER_Localisation* pLocalisation )
+{
+    return ComputeLocalisationBarycenterInFuseau< MIL_AgentPion >( caller, pLocalisation );
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAutomatLocalisationBarycenterInFuseau( const MIL_Automate& caller, TER_Localisation* pLocalisation )
+{
+    return ComputeLocalisationBarycenterInFuseau< MIL_Automate >( caller, pLocalisation );
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDestPoint
+// Created: NLD 2003-04-23
+//-----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeUnitDestPoint( const MIL_AgentPion& caller )
+{
+    auto pResult = boost::make_shared< MT_Vector2D >();
+    caller.GetOrderManager().GetFuseau().ComputeFurthestExtremityPoint( *pResult );
+    return pResult;
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAutomatDestPoint( const MIL_Automate& caller )
+{
+    auto pResult = boost::make_shared< MT_Vector2D >();
+    caller.GetOrderManager().GetFuseau().ComputeFurthestExtremityPoint( *pResult );
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeStartPoint
+// Created: NLD 2004-05-24
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeUnitStartPoint( const MIL_AgentPion& caller )
+{
+    auto pResult = boost::make_shared< MT_Vector2D >();
+    caller.GetOrderManager().GetFuseau().ComputeClosestExtremityPoint( *pResult );
+    return pResult;
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAutomatStartPoint( const MIL_Automate& caller )
+{
+    auto pResult = boost::make_shared< MT_Vector2D >();
+    caller.GetOrderManager().GetFuseau().ComputeClosestExtremityPoint( *pResult );
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetLeavingAreaPosition
+// Created: MGG 2011-01-20
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( const MIL_AgentPion& caller, TER_Localisation* pLocalisation )
+{
+    if( !pLocalisation )
+        throw MASA_EXCEPTION( "Invalid location" );
+
+    TER_Localisation scale = *pLocalisation;
+    scale.Scale( 500 );
+
+    boost::shared_ptr< MT_Vector2D > pResult;
+    MT_Vector2D vResult;
+    scale.ComputeNearestOutsidePoint( GetPosition( caller ), vResult );
+    pResult = boost::make_shared< MT_Vector2D >( vResult );
+
+    return pResult;
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::IsPointInFuseau
+// Created: AGN 03-03-11
+//-----------------------------------------------------------------------------
+bool DEC_GeometryFunctions::IsPointInUnitFuseau( const MIL_AgentPion& caller, MT_Vector2D* pVect )
+{
+    if( !pVect )
+        throw MASA_EXCEPTION( "Invalid point" );
+    return caller.GetOrderManager().GetFuseau().IsInside( *pVect );
+}
+
+bool DEC_GeometryFunctions::IsPointInAutomatFuseau( const MIL_Automate& caller, MT_Vector2D* pVect )
+{
+    if( !pVect )
+        throw MASA_EXCEPTION( "Invalid point" );
+    return caller.GetOrderManager().GetFuseau().IsInside( *pVect );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputePointBeforeLima
 // Created: JVT 2005-01-03
 // -----------------------------------------------------------------------------
-const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_Automate& automate )
+namespace
 {
-    return automate.GetPosition();
+
+template< typename T >
+boost::shared_ptr< MT_Vector2D > ComputePointBeforeLima( const T& caller, int phaseLine, float distanceBefore )
+{
+    boost::shared_ptr< MT_Vector2D > pResult;
+    if( const MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( phaseLine ) )
+    {
+        MT_Vector2D vResult;
+        if( caller.GetOrderManager().GetFuseau().ComputePointBeforeLima( *pLima, MIL_Tools::ConvertMeterToSim( distanceBefore ), vResult ) )
+            pResult = boost::make_shared< MT_Vector2D >( vResult );
+    }
+    return pResult;
 }
+
+}  // namespace
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeUnitLima( const MIL_AgentPion& caller, int phaseLine, float distanceBefore )
+{
+    return ComputePointBeforeLima< MIL_AgentPion >( caller, phaseLine, distanceBefore );
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeAutomatLima( const MIL_Automate& caller, int phaseLine, float distanceBefore )
+{
+    return ComputePointBeforeLima< MIL_Automate >( caller, phaseLine, distanceBefore );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau
+// Created: SBO 2008-01-11
+// Modified RPD 2009-08-06
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau( const MIL_Automate& caller, unsigned int limaID, double rDistBeforeLima, const MIL_Fuseau* pFuseau )
+{
+    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( limaID );
+
+    boost::shared_ptr< MT_Vector2D > pResult;
+    if(  pLima && pFuseau )
+    {
+        MT_Vector2D vResult;
+        if ( pFuseau->ComputePointBeforeLima( *pLima, rDistBeforeLima, vResult ) )
+            pResult = boost::make_shared< MT_Vector2D >( vResult );
+    }
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau
+// Created: JVT 2005-01-03
+// -----------------------------------------------------------------------------
+namespace
+{
+
+template< typename T >
+boost::shared_ptr< MT_Vector2D > ComputeNearestLocalisationPointInFuseau( const T& caller, const TER_Localisation* pLocation )
+{
+    assert( pLocation );
+    if( !pLocation )
+        throw MASA_EXCEPTION( "Invalid location" );
+    boost::shared_ptr< MT_Vector2D > pResult;
+    TER_Localisation clipped;
+    if( ClipLocalisationInFuseau( *pLocation, caller.GetOrderManager().GetFuseau(), clipped ) )
+    {
+        MT_Vector2D vResult;
+        clipped.ComputeNearestPoint( GetPosition( caller ), vResult );
+        pResult = boost::make_shared< MT_Vector2D >( vResult );
+    }
+    return pResult;
+}
+
+} // namespace
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestLocalisationPointInUnitFuseau( const MIL_AgentPion& caller, const TER_Localisation* pLocation )
+{
+    return ComputeNearestLocalisationPointInFuseau< MIL_AgentPion >( caller, pLocation );
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestLocalisationPointInAutomatFuseau( const MIL_Automate& caller, const TER_Localisation* pLocation )
+{
+    return ComputeNearestLocalisationPointInFuseau< MIL_Automate >( caller, pLocation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau
+// Created: GGR 2006-09-27
+// Modified RPD 2009-08-06
+// -----------------------------------------------------------------------------
+namespace
+{
+
+template< typename T >
+boost::shared_ptr< MT_Vector2D > ComputeNearestUnclippedLocalisationPointInFuseau( const T& caller, const TER_Localisation* pLocation )
+{
+    if( !pLocation )
+        throw MASA_EXCEPTION( "Invalid location" );
+    boost::shared_ptr< MT_Vector2D > pResult;
+
+    TER_Localisation fuseauLocation = TER_Localisation( TER_Localisation::ePolygon, caller.GetOrderManager().GetFuseau().GetBorderPoints() );
+
+    MT_Vector2D vResult;
+    fuseauLocation.ComputeNearestPoint( pLocation->ComputeBarycenter(), vResult );
+    pResult = boost::make_shared< MT_Vector2D >( vResult );
+    return pResult;
+}
+
+}  // namespace
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInUnitFuseau( const MIL_AgentPion& caller, const TER_Localisation* pLocation )
+{
+    return ComputeNearestUnclippedLocalisationPointInFuseau< MIL_AgentPion >( caller, pLocation );
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInAutomatFuseau( const MIL_Automate& caller, const TER_Localisation* pLocation )
+{
+    return ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >( caller, pLocation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+float DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( const MIL_Automate& caller, const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, const std::vector< DEC_Objective* >& objectives )
+{
+    //
+    typedef std::vector< DEC_Objective* >     T_ObjectiveVector;
+    typedef T_ObjectiveVector::iterator       IT_ObjectiveVector;
+    typedef T_ObjectiveVector::const_iterator CIT_ObjectiveVector;
+    //
+    if( !pFuseau )
+        throw MASA_EXCEPTION( "invalid parameter." );
+
+    const MIL_LimaOrder* pNextLima = caller.GetOrderManager().FindNextScheduledLima();
+
+    const DEC_Objective* pNextObjective = 0;
+    for( std::vector< DEC_Objective* >::const_iterator it = objectives.begin(); it != objectives.end(); ++it )
+    {
+        const DEC_Objective* pObjective = *it;
+        if( !pObjective )
+            throw MASA_EXCEPTION( "invalid parameter." );
+        if( pObjective->GetSchedule() == 0 || pObjective->IsFlagged() )
+            continue;
+
+        if( ( !pNextObjective || pObjective->GetSchedule() < pNextObjective->GetSchedule() )
+         && ( !pNextLima      || pObjective->GetSchedule() < pNextLima->GetSchedule() ) )
+            pNextObjective = *it;
+    }
+
+    double rDistanceFromScheduled = std::numeric_limits< double >::max();
+    unsigned int     nSchedule              = 0;
+    if( pNextObjective )
+    {
+        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromObjective( *pNextObjective, ComputeAutomatesBarycenter( automates ) );
+        nSchedule = pNextObjective->GetSchedule();
+    }
+    else if( pNextLima )
+    {
+        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pNextLima, ComputeAutomatesBarycenter( automates ) );
+        nSchedule = pNextLima->GetSchedule();
+    }
+
+    return ComputeDelayFromSchedule( pFuseau, automates, ( float ) rDistanceFromScheduled, nSchedule );
+}
+
