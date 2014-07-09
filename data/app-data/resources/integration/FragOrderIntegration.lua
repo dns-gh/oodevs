@@ -455,9 +455,16 @@ end
 --- Returns the type of the given fragmentary order.
 -- @see integration.getAnyType method.
 -- @param fragorder a directia fragmentary order
--- @return string the name of the fragmentary order
+-- @return string the directia type of the fragmentary order
 integration.getOrderType = function( fragorder )
     return integration.getAnyType( fragorder.source )
+end
+
+--- Returns the user name of the given fragmentary order.
+-- @param fragorder a directia fragmentary order
+-- @return string the name of the fragmentary order
+integration.getFragOrderName = function( fragorder )
+    return fragorder.source:GetName()
 end
 
 --- Returns the list of fragmentary orders received by this entity.
