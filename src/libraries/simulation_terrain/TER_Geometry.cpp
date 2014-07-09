@@ -44,8 +44,6 @@ void TER_Geometry::Scale( TER_Polygon& result, const T_PointVector& polygon, dou
 // -----------------------------------------------------------------------------
 void TER_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertices )
 {
-    if( vertices.empty() )
-        return;
     if( vertices.size() < 3 )
     {
         hull = vertices;
