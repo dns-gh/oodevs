@@ -12,6 +12,7 @@
 
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
+#include "ADN_Urban_Data.h"
 
 // =============================================================================
 /** @class  ADN_AiEngine_Data
@@ -21,6 +22,56 @@
 // =============================================================================
 class ADN_AiEngine_Data : public ADN_Data_ABC
 {
+public:
+    class UrbanSpeedsInfos : public ADN_Ref_ABC
+    {
+    public:
+        explicit UrbanSpeedsInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr );
+
+        std::string GetItemName();
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        ADN_TypePtr_InVector_ABC< ADN_Urban_Data::UrbanMaterialInfos > ptrMaterial_;
+        ADN_Type_Double searchSpeed_;
+        ADN_Type_Double reconSpeed_;
+
+    public:
+        typedef ADN_Urban_Data::UrbanMaterialInfos T_Item;
+
+        class Cmp : public std::unary_function< UrbanSpeedsInfos* , bool >
+        {
+        public:
+            explicit Cmp( const std::string& val ) : val_( val ) {}
+            virtual ~Cmp() {}
+
+            bool operator()( UrbanSpeedsInfos* tgtnfos ) const
+            {
+                return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->strName_ == val_;
+            }
+
+        private:
+            std::string val_;
+        };
+
+        class CmpRef : public std::unary_function< UrbanSpeedsInfos* , bool >
+        {
+        public:
+            explicit CmpRef( ADN_Urban_Data::UrbanMaterialInfos* val ) : val_( val ) {}
+            virtual ~CmpRef() {}
+
+            bool operator()( UrbanSpeedsInfos* tgtnfos ) const
+            {
+                return tgtnfos->ptrMaterial_.GetData() == val_;
+            }
+
+        private:
+            ADN_Urban_Data::UrbanMaterialInfos* val_;
+        };
+    };
+
+    typedef ADN_Type_VectorFixed_ABC< UrbanSpeedsInfos > T_UrbanSpeedsInfos_Vector;
 
 public:
     //! @name Constructors/Destructor
@@ -54,6 +105,9 @@ public:
     ADN_Type_Double rRepairingModificator_;
     ADN_Type_Double rCapturedModificator_;
     ADN_Type_Bool bDetectDestroyedUnits_;
+    ADN_Type_Double reconSpeed_;
+    ADN_Type_Double searchSpeed_;
+    T_UrbanSpeedsInfos_Vector urbanSearchSpeeds_;
 };
 
 #endif // __ADN_AiEngine_Data_h_

@@ -11,6 +11,7 @@
 #include "DEC_Knowledge_Urban.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Decision/DEC_GeometryFunctions.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -33,6 +34,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const MIL_Ur
     : DEC_Knowledge_Object( army, const_cast< MIL_UrbanObject_ABC& >( wrapper ), false )
     , armyId_                 ( army.GetID() )
     , objectId_               ( wrapper.GetID() )
+    , urbanObject_            ( &wrapper )
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
@@ -53,6 +55,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban()
     : DEC_Knowledge_Object()
     , armyId_                 ( 0 )
     , objectId_               ( 0 )
+    , urbanObject_            ( 0 )
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
@@ -130,36 +133,29 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::ComputeProgress
-// Created: MGD 2010-08-12
+// Created: JSR 2014-07-23
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
 {
-    MIL_UrbanObject_ABC* object = 0;
-    if( MIL_AgentServer::IsInitialized() )
-        object = static_cast< MIL_UrbanObject_ABC* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectId_ ) );
-    float complexity = object ? object->ComputeComplexity() : 0; // $$$$ ALGO TEMPORAIRE
-    float progress = 0.f;
-    if( complexity != 0.f )
-        progress = 10 / complexity;// $$$$ @TODO MGD Add true physical configuration in ADN
-    const MIL_UrbanObject_ABC* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    float maxRecce = ( urbanBlock && object == urbanBlock ) ? 1.0f : 0.25f;
-    if( agent.Get< PHY_RoleInterface_Perceiver >().IsReconnoitering( object ) )
-        maxRecce = 1.f;
-    progress = std::max( progress, 0.001f );
-    maxRecce = std::max( maxRecce, rProgressPercent_ );
-    SetProgress( std::min( rProgressPercent_ + progress, maxRecce ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::SetProgress
-// Created: MGD 2009-11-26
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_Urban::SetProgress( float progress )
-{
-    progress = std::max( std::min( progress, 1.f ), 0.f );
-    rProgressPercent_ = progress;
-    if( rProgressPercent_ > rMaxProgressPercent_ )
-        rMaxProgressPercent_ = rProgressPercent_;
+    if( agent.IsDead() )
+        return;
+    // ugly, urbanObject_ is just for simulation_kernel_test. should be cleaned (or not...)
+    if( !urbanObject_ && MIL_AgentServer::IsInitialized() )
+        urbanObject_ = static_cast< MIL_UrbanObject_ABC* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectId_ ) );
+    if( !urbanObject_ )
+        return;
+    float maxRecce = ( agent.Get< PHY_RoleInterface_Perceiver >().IsReconnoitering( urbanObject_ )
+                       || agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() == urbanObject_ ) ?
+                       1.f : 0.25f;
+    if( rProgressPercent_ >= maxRecce )
+        return;
+    const MT_Rect& box = urbanObject_->GetLocalisation().GetBoundingBox();
+    const double radius = box.GetPointDownLeft().Distance( box.GetPointUpRight() ) * 0.5;
+    double currentRadius = rProgressPercent_ * radius;
+    const double ratio = urbanObject_->GetFloorNumber() * urbanObject_->GetOccupation();
+    currentRadius += DEC_GeometryFunctions::GetUrbanSearchSpeed( urbanObject_ ) / ( ratio ? ratio : 1.f );
+    rProgressPercent_ = std::min( maxRecce, radius == 0 ? 1.f : static_cast< float >( currentRadius / radius ) );
+    rMaxProgressPercent_ = std::max( rMaxProgressPercent_, rProgressPercent_ );
 }
 
 // -----------------------------------------------------------------------------

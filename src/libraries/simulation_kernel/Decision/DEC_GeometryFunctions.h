@@ -190,6 +190,12 @@ public:
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeMiddlePointsInAOR( const MIL_Fuseau* pFuseau );
     static bool IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pPoint );
 
+    // Reco and Search
+    static double GetOpenSearchSpeed();
+    static double GetOpenRecoSpeed();
+    static double GetUrbanRecoSpeed( const MIL_UrbanObject_ABC* pUrbanObject );
+    static double GetUrbanSearchSpeed( const MIL_UrbanObject_ABC* pUrbanObject );
+    static void ReadRecoAndSearchSpeeds( xml::xistream& xisDecisional, unsigned int tickDuration );
     //@}
 };
 

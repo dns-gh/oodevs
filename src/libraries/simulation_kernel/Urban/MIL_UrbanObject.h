@@ -53,8 +53,9 @@ public:
     virtual void ComputeConvexHull();
     virtual void GetUrbanBlocks( std::vector< const MIL_UrbanObject_ABC* >& blocks ) const;
     virtual float GetLivingSpace() const;
-    virtual float ComputeComplexity() const;
     void ReadData( xml::xistream& xis );
+    virtual int GetFloorNumber() const;
+    virtual double GetOccupation() const;
     //@}
 
     //! @name CheckPoints

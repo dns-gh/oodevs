@@ -17,9 +17,8 @@
 #include "Entities/Orders/MIL_FragOrder.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "Decision/DEC_DIAFunctions.h"
-#include "Decision/DEC_LogisticFunctions.h"
+#include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
-#include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
@@ -31,6 +30,7 @@
 #include "tools/PhyLoader.h"
 #include "tools/VersionHelper.h"
 #include "tools/XmlStreamOperators.h"
+
 #include <boost/algorithm/string.hpp>
 #include <sys/stat.h>
 
@@ -127,6 +127,8 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
     tools::ReadTimeAttribute( xisDecisional, "neutral-affinity", MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ );
     tools::ReadTimeAttribute( xisDecisional, "maximum-affinity", MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ );
     xisDecisional >> xml::end;
+    
+    DEC_GeometryFunctions::ReadRecoAndSearchSpeeds( xisDecisional, tickDuration );
 
     if( PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
         throw MASA_EXCEPTION( "operational-state-weights: component not in [0..1]" );

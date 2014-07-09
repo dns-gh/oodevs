@@ -26,6 +26,7 @@
 #include "Entities/Agents/Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -42,6 +43,7 @@
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_Geometry.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -2693,3 +2695,98 @@ float DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( const MIL_Au
     return ComputeDelayFromSchedule( pFuseau, automates, ( float ) rDistanceFromScheduled, nSchedule );
 }
 
+namespace
+{
+    struct T_RecoAndSearchSpeeds
+    {
+        T_RecoAndSearchSpeeds() 
+            : searchSpeed_( 1. )
+            , recoSpeed_( 2. )
+            {
+                // NOTHING
+            }
+        double searchSpeed_;
+        double recoSpeed_;
+    };
+    T_RecoAndSearchSpeeds openRecoAndSearchSpeeds_;
+    std::map< std::string, T_RecoAndSearchSpeeds > urbanRecoAndSearchSpeeds_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ReadRecoAndSearchSpeeds
+// Created: LDC 2014-08-27
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ReadRecoAndSearchSpeeds( xml::xistream& xisDecisional, unsigned int tickDuration )
+{
+    urbanRecoAndSearchSpeeds_.clear();
+    if( xisDecisional.has_child( "recon-and-search-speeds" ) )
+    {
+        const double factor = tickDuration / 60.; // m/min -> m/tick
+        double searchSpeed = 0;
+        double recoSpeed = 0;
+        xisDecisional >> xml::start( "recon-and-search-speeds" )
+                    >> xml::attribute( "recon-speed", recoSpeed )
+                    >> xml::attribute( "search-speed", searchSpeed )
+                    >> xml::list( "urban-speeds", [&]( xml::xistream& xis )
+                    {
+                        const std::string type = xis.attribute< std::string >( "type" );
+                        urbanRecoAndSearchSpeeds_[ type ].recoSpeed_ = xis.attribute< double >( "recon-speed" ) * factor;
+                        urbanRecoAndSearchSpeeds_[ type ].searchSpeed_ = xis.attribute< double >( "search-speed" ) * factor;
+                    })
+                  >> xml::end;
+        openRecoAndSearchSpeeds_.recoSpeed_ = recoSpeed * factor;
+        openRecoAndSearchSpeeds_.searchSpeed_ = searchSpeed * factor;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetOpenSearchSpeed
+// Created: JSR 2014-07-16
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::GetOpenSearchSpeed()
+{
+    return openRecoAndSearchSpeeds_.searchSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetOpenRecoSpeed
+// Created: JSR 2014-07-16
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::GetOpenRecoSpeed()
+{
+    return openRecoAndSearchSpeeds_.recoSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetUrbanRecoSpeed
+// Created: JSR 2014-07-16
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::GetUrbanRecoSpeed( const MIL_UrbanObject_ABC* pUrbanObject )
+{
+    if( !pUrbanObject )
+        return GetOpenRecoSpeed();
+    if( const MaterialAttribute* materialAttribute = pUrbanObject->RetrieveAttribute< MaterialAttribute >() )
+    {
+        auto it = urbanRecoAndSearchSpeeds_.find( materialAttribute->GetMaterial().GetName() );
+        if( it != urbanRecoAndSearchSpeeds_.end() )
+            return it->second.recoSpeed_;
+    }
+    return 0.5;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetUrbanSearchSpeed
+// Created: JSR 2014-07-16
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::GetUrbanSearchSpeed( const MIL_UrbanObject_ABC* pUrbanObject )
+{
+    if( !pUrbanObject )
+        return GetOpenSearchSpeed();
+    if( const MaterialAttribute* materialAttribute = pUrbanObject->RetrieveAttribute< MaterialAttribute >() )
+    {
+        auto it = urbanRecoAndSearchSpeeds_.find( materialAttribute->GetMaterial().GetName() );
+        if( it != urbanRecoAndSearchSpeeds_.end() )
+            return it->second.searchSpeed_;
+    }
+    return 0.25;
+}

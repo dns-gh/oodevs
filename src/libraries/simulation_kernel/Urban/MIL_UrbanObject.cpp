@@ -165,22 +165,27 @@ float MIL_UrbanObject::GetLivingSpace() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::ComputeComplexity
-// Created: JSR 2012-08-01
+// Name: MIL_UrbanObject::GetFloorNumber
+// Created: LDC 2014-08-27
 // -----------------------------------------------------------------------------
-float MIL_UrbanObject::ComputeComplexity() const
+int MIL_UrbanObject::GetFloorNumber() const
 {
-    // $$$$ _RC_ JSR 2010-09-16: A refaire (voir PHY_RolePion_UrbanLocation::Execute dans la sim)
-    if( complexity_ != 0 )
-    {
-        complexity_ = 0.1f * static_cast< float >( GetLocalisation().GetArea() );
-        if( complexity_ == 0 )
-            complexity_ = 1.f;
-        const UrbanPhysicalCapacity* physical = Retrieve< UrbanPhysicalCapacity >();
+    const UrbanPhysicalCapacity* physical = Retrieve< UrbanPhysicalCapacity >();
+    if( physical )
+        return 1 + physical->GetFloorNumber();
+    return 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::GetOccupation
+// Created: LDC 2014-08-27
+// -----------------------------------------------------------------------------
+double MIL_UrbanObject::GetOccupation() const
+{
+    const UrbanPhysicalCapacity* physical = Retrieve< UrbanPhysicalCapacity >();
         if( physical )
-            complexity_ *= static_cast< float >( ( ( 1 + physical->GetFloorNumber() ) * physical->GetOccupation() ) );
-    }
-    return complexity_;
+            return physical->GetOccupation();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

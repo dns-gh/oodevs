@@ -52,7 +52,7 @@ public:
     void RemoveUrbanBlock( int );
 
     bool HasLocalisationToHandle() const;
-    bool IsReconnoitering( MIL_UrbanObject_ABC* urbanBlock ) const;
+    bool IsReconnoitering( const MIL_UrbanObject_ABC* urbanBlock ) const;
     //@}
 
     //! @name Execution

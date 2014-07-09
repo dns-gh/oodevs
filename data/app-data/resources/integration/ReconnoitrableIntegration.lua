@@ -1,9 +1,3 @@
-local pointRecceSpeed = 2
-local pointSearchSpeed = 1
-local buRecceSpeed = 0.5
-local buSearchSpeed = 0.5
-local areaRecceSpeed = 2
-local areaSearchSpeed = 1
 local objectRecceSpeed = 5
 local objectSearchSpeed = 1
 local pointNBCSpeed = 2
@@ -22,13 +16,13 @@ integration.getUrbanBlockReconnaissanceState = function( urbanBlock )
 end
 --- Start reconnoitering an urban block knowledge and emits a report
 -- @param urbanBlock Urban block knowledge
--- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, buRecceSpeed = 0.5
+-- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, use the value defined in authoring tool
 -- @return true
 integration.startRecceUrbanBlock = function( urbanBlock, recceSpeed )
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )
     urbanBlock.recceAction = 
         DEC_Perception_ActiverReconnaissanceDansBlocUrbain( urbanBlock.source )
-    urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), recceSpeed or buRecceSpeed )
+    urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), recceSpeed or DEC_GetUrbanRecoSpeed( urbanBlock.source ) )
     reportFunction(eRC_DebutReconnaissanceBlocUrbain )
     return true
 end
@@ -57,14 +51,14 @@ end
 
 --- Start searching an urban block
 -- @param urbanBlock Urban block knowledge
--- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, recceSpeed = 0.5
+-- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, use the value defined in authoring tool
 -- @return true
 integration.startSearchUrbanBlock = function( urbanBlock, recceSpeed )
-    local buSearchSpeed = 1 -- used by scipio decisionnal
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )
+    local buSearchSpeed = recceSpeed or DEC_GetUrbanSearchSpeed( urbanBlock.source )
     urbanBlock.actionSearch = 
-        DEC_Perception_ActivateLocationProgressiveRecce( urbanBlock.area, recceSpeed or buSearchSpeed )
-    urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), recceSpeed or buSearchSpeed )
+        DEC_Perception_ActivateLocationProgressiveRecce( urbanBlock.area, buSearchSpeed )
+    urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), buSearchSpeed )
     urbanBlock.bActionSearchFinished = false
     urbanBlock.recoFinished = false
     perceptionReconnaissanceCallbacks[ urbanBlock.actionSearch ] = function( arg )
@@ -163,16 +157,17 @@ end
 -- @param point Point knowledge
 -- @param partially If false or nil, reconnoiter 100 meters around the point. Otherwise (true), reconnoiter 30 meters around the point.
 -- @param radius Optional. Override radius computed with partially parameter
--- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, pointRecceSpeed = 2
+-- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, use the value defined in authoring tool
 -- @return true
 integration.startReccePoint = function( point, partially, radius, recceSpeed )
     local pointCircleRadius = radius or 100
     if not radius and partially then
         pointCircleRadius = 30
     end
+    local actualRecceSpeed = recceSpeed or DEC_GetOpenRecoSpeed()
     point.reconnaissanceAction = DEC_Perception_ActiverReconnaissancePoint( 
-                                 point.source, pointCircleRadius, recceSpeed or pointRecceSpeed )
-    point.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, recceSpeed or pointRecceSpeed )
+                                 point.source, pointCircleRadius, actualRecceSpeed )
+    point.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, actualRecceSpeed )
     point.bActionRecceFinished = false
     perceptionReconnaissanceCallbacks[ point.reconnaissanceAction ] = function( arg )
         point.bActionRecceFinished = true
@@ -211,13 +206,14 @@ end
 --- Start searching a point
 -- @param point Point knowledge
 -- @param radius Radius of search. Optional. 30 meters by default.
--- @param searchSpeed Optional. Speed of the search in meters/tick. By default, pointSearchSpeed = 1
+-- @param searchSpeed Optional. Speed of the search in meters/tick. By default, use the value defined in authoring tool
 -- @return true
 integration.startSearchPoint = function( point, radius, searchSpeed )
     local pointCircleRadius = radius or 30
+    local actualSearchSpeed = searchSpeed or DEC_GetOpenSearchSpeed()
     point.actionSearch = DEC_Perception_ActiverReconnaissancePoint( 
-                                        point.source, pointCircleRadius, searchSpeed or pointSearchSpeed )
-    point.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, searchSpeed or pointSearchSpeed )
+                                        point.source, pointCircleRadius, actualSearchSpeed )
+    point.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, actualSearchSpeed )
     point.bActionSearchFinished = false
     perceptionReconnaissanceCallbacks[ point.actionSearch ] = function( arg )
         point.bActionSearchFinished = true
@@ -300,12 +296,13 @@ end
 
 --- Start reconnoitering an area
 -- @param area Area knowledge
--- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, areaRecceSpeed = 2
+-- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, use the value defined in authoring tool
 -- @return true
 integration.startRecceArea = function( area, recceSpeed )
+    local areaRecceSpeed = recceSpeed or DEC_GetOpenRecoSpeed()
     area.reconnaissanceAction = 
-        DEC_Perception_ActivateLocationProgressiveRecce( area.source, recceSpeed or areaRecceSpeed )
-    area.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), recceSpeed or areaRecceSpeed )
+        DEC_Perception_ActivateLocationProgressiveRecce( area.source, areaRecceSpeed )
+    area.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), areaRecceSpeed )
     area.bActionRecceFinished = false
     perceptionReconnaissanceCallbacks[ area.reconnaissanceAction ] = function( arg )
         area.bActionRecceFinished = true
@@ -340,12 +337,13 @@ end
 
 --- Start searching an area
 -- @param area Area knowledge
--- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, areaRecceSpeed = 2
+-- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, use the value defined in authoring tool
 -- @return true
 integration.startSearchArea = function( area, recceSpeed )
+    local areaSearchSpeed = recceSpeed or DEC_GetOpenRecoSpeed()
     area.actionSearch = 
-        DEC_Perception_ActivateLocationProgressiveRecce( area.source, recceSpeed or areaSearchSpeed )
-    area.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), recceSpeed or areaSearchSpeed )
+        DEC_Perception_ActivateLocationProgressiveRecce( area.source, areaSearchSpeed )
+    area.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), areaSearchSpeed )
     area.bActionSearchFinished = false
     perceptionReconnaissanceCallbacks[ area.actionSearch ] = function( arg )
         area.bActionSearchFinished = true

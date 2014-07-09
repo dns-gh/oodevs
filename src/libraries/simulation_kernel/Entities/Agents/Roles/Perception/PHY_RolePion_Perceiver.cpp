@@ -1448,7 +1448,7 @@ double PHY_RolePion_Perceiver::GetPerception( const MT_Vector2D& from, const MT_
 // Name: PHY_RolePion_Perceiver::IsReconnoitering
 // Created: LDC 2013-10-07
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Perceiver::IsReconnoitering( MIL_UrbanObject_ABC* pUrbanBlock ) const
+bool PHY_RolePion_Perceiver::IsReconnoitering( const MIL_UrbanObject_ABC* pUrbanBlock ) const
 {
     return pPerceptionRecoUrbanBlock_->IsReconnoitering( pUrbanBlock );
 }

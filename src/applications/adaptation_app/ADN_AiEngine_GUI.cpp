@@ -12,6 +12,7 @@
 #include "moc_ADN_AiEngine_GUI.cpp"
 #include "ADN_Workspace.h"
 #include "ADN_AiEngine_Data.h"
+#include "ADN_AiEngine_UrbanSpeeds_Table.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
@@ -84,6 +85,20 @@ void ADN_AiEngine_GUI::Build()
     Q3GroupBox* pForceRatioBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Force ratio feedback time" ) );
     builder.AddField< ADN_TimeField >( pForceRatioBox, "default-force-ratio-feedback-time", tr( "Default force ratio feedback time" ), data_.rDefaultFeedbackTime_ );
 
+    // Search/Recon speeds
+    QGroupBox* pSpeedsBox = new QGroupBox( tr( "Recon and search speeds" ) );
+    QVBoxLayout* pSpeedsLayout = new QVBoxLayout( pSpeedsBox );
+
+    Q3GroupBox* pOpenSpeeds = new Q3GroupBox( 3, Qt::Horizontal );
+    pOpenSpeeds->setFrameStyle( Q3GroupBox::NoFrame );
+    builder.AddField< ADN_EditLine_Double >( pOpenSpeeds, "open-terrain-recon-speed", tr( "Open terrain recon speed" ), data_.reconSpeed_, tr( "m/min" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pOpenSpeeds, "open-terrain-search-speed", tr( "Open terrain search speed" ), data_.searchSpeed_, tr( "m/min" ), eGreaterEqualZero );
+
+    ADN_AiEngine_UrbanSpeeds_Table* urbanTable = new ADN_AiEngine_UrbanSpeeds_Table( builder.GetChildName( "urban-speeds-table" ), data_.urbanSearchSpeeds_ );
+    
+    pSpeedsLayout->addWidget( pOpenSpeeds );
+    pSpeedsLayout->addWidget( urbanTable );
+
     // Perception
     Q3GroupBox* pPerceptionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Perception" ) );
     ADN_CheckBox* destroyedUnits = new ADN_CheckBox( tr( "Destroyed units detection" ), pPerceptionBox, "destroyed-units-detection" );
@@ -103,11 +118,11 @@ void ADN_AiEngine_GUI::Build()
     pLeftLayout->addWidget( pDangerBox );
     pLeftLayout->addWidget( pOpStateBox );
     pLeftLayout->addWidget( pCriticalIntelligenceBox );
+    pLeftLayout->addWidget( pSpeedsBox );
     pRightLayout->addWidget( pUrbanStateBox );
     pRightLayout->addWidget( pWoundEffectsBox );
     pRightLayout->addWidget( pForceRatioBox );
     pRightLayout->addWidget( pPerceptionBox );
-
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }
