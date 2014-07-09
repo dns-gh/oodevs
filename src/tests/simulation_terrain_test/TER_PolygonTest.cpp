@@ -105,15 +105,15 @@ BOOST_AUTO_TEST_CASE( TER_Polygon_Constructor )
         { "POLYGON ()", true, "POLYGON ()" },
 
         // Invalid polygons
-        { "POLYGON (1 1)", false, "POLYGON (1 1)" },
+        { "POLYGON (1 1)", false, "POLYGON ()" },
         { "POLYGON (1 1)", true, "POLYGON ()" },
 
         // Self-intersecting shapes (bow tie)
-        { "POLYGON (0 0, 2 1, 2 0, 0 1, 0 0)", false, "POLYGON (0 0, 2 1, 2 0, 0 1, 0 0)" },
+        { "POLYGON (0 0, 2 1, 2 0, 0 1, 0 0)", false, "POLYGON (1 0.5, 2 0, 2 1, 1 0.5)" },
         { "POLYGON (0 0, 2 1, 2 0, 0 1, 0 0)", true, "POLYGON (0 0, 2 0, 2 1, 0 1, 0 0)" },
 
         // Regular concave polygon (right looking rectangular pacman)
-        { "POLYGON (0 0, 2 0, 1 1, 2 3, 0 3)", false, "POLYGON (0 0, 2 0, 1 1, 2 3, 0 3)" },
+        { "POLYGON (0 0, 2 0, 1 1, 2 3, 0 3)", false, "POLYGON (0 0, 2 0, 1 1, 2 3, 0 3, 0 0)" },
         { "POLYGON (0 0, 2 0, 1 1, 2 3, 0 3)", true, "POLYGON (0 0, 2 0, 2 3, 0 3, 0 0)" },
     };
 

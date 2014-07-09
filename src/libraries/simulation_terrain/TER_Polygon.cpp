@@ -51,56 +51,52 @@ MT_Rect ComputeBoundingBox( const T_PointVector& points )
     return MT_Rect( vDownLeft.rX_, vDownLeft.rY_, vUpRight.rX_, vUpRight.rY_ );
 }
 
-void Convexify( T_PointVector& points )
-{
-    const auto h = terrain::InitGeos( false );
-    terrain::T_PointVector vertices( points.size() );
-    for( size_t i = 0; i < points.size(); ++i )
-        vertices[i] = geometry::Point2d( points[i].rX_, points[i].rY_ );
-    // Do not create a polygon here, points can be a point cloud and
-    // interpreting it as a polygon will at best truncate data.
-    auto p = terrain::CreateLineString( h, vertices );
-    points.clear();
-
-    if( !p )
-        return;
-    p = terrain::ConvexHull( h, p );
-    terrain::T_MultiPolygon output;
-    terrain::ExtractMultiPolygon( h, p, output );
-    if( !output.empty() )
-    {
-        // There may be more than one outer shell if the source polygon was
-        // invalid (self-intersecting, etc.) and was decomposed in simple
-        // shapes.
-        const auto& result = output[0].first;
-        points.resize( result.size() );
-        for( size_t i = 0; i < result.size(); ++i )
-            points[i] = MT_Vector2D( result[i].X(), result[i].Y() );
-        if( !points.empty() && points.front() != points.back() )
-            // Whether polygon should be closed or not was not really specified,
-            // so close them to be on the safe side.
-            points.push_back( points.front() );
-    }
-}
-
 boost::shared_ptr< TER_Polygon::PolygonData > BuildPolygon(
         const T_PointVector& points, bool convexHull )
 {
     boost::shared_ptr< TER_Polygon::PolygonData > data;
     if( points.empty() )
         return data;
-    data = boost::make_shared< TER_Polygon::PolygonData >();
-    data->borderVector_ = points;
+
+    const auto h = terrain::InitGeos( false );
+    terrain::T_PointVector vertices( points.size() );
+    for( size_t i = 0; i < points.size(); ++i )
+        vertices[i] = geometry::Point2d( points[i].rX_, points[i].rY_ );
+
+    terrain::GeosGeomPtr p;
     if( convexHull )
     {
-        Convexify( data->borderVector_ );
-        if( data->borderVector_.empty() )
-        {
-            data.reset();
-            return data;
-        }
+        // Do not create a polygon here, points can be a point cloud and
+        // interpreting it as a polygon will at best truncate data.
+        p = terrain::CreateLineString( h, vertices );
+        p = terrain::ConvexHull( h, p );
     }
-    data->boundingBox_ = ComputeBoundingBox( data->borderVector_ );
+    else
+    {
+        p = terrain::CreateMultiPolygon( h, vertices, terrain::T_Rings() );
+    }
+
+    terrain::T_MultiPolygon output;
+    terrain::ExtractMultiPolygon( h, p, output );
+    if( !output.empty() )
+    {
+        data = boost::make_shared< TER_Polygon::PolygonData >();
+        // There may be more than one outer shell if the source polygon was
+        // invalid (self-intersecting, etc.) and was decomposed in simple
+        // shapes.
+        const auto& result = output[0].first;
+        T_PointVector border( result.size() );
+        for( size_t i = 0; i < result.size(); ++i )
+            border[i] = MT_Vector2D( result[i].X(), result[i].Y() );
+        if( !border.empty() && border.front() != border.back() )
+            // Whether polygon should be closed or not was not really specified,
+            // so close them to be on the safe side.
+            border.push_back( border.front() );
+
+        data->borderVector_.swap( border );
+        data->boundingBox_ = ComputeBoundingBox( data->borderVector_ );
+    }
+
     return data;
 }
 
