@@ -178,7 +178,7 @@ end
 
 local normalizedInverseDistanceSim = function( simPos, pos2, distanceMax )
     if not simPos or not pos2 then return 1 end
-    if pos2.getLocalisation then 
+    if pos2.getLocalisation and pos2:getLocalisation() then 
         return normalizedInverseDistanceSimListSim( listLocalisationPoints( pos2 ), simPos, distanceMax )
     end
     return normalizedInverseDistanceSimSim( simPos, pos2:getPosition(), distanceMax )
@@ -204,10 +204,10 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
         return 1
     end
     local distanceMax = 100000 -- hard coded : same order of scale for an operational theater
-    if pos1.getLocalisation then
+    if pos1.getLocalisation and pos1:getLocalisation() then
         return normalizedInverseDistanceSimList( listLocalisationPoints( pos1 ), pos2, distanceMax )
     end
-    if pos2.getLocalisation then
+    if pos2.getLocalisation and pos2:getLocalisation() then
         return normalizedInverseDistanceSimList( listLocalisationPoints( pos2 ), pos1, distanceMax )
     end
     return normalizedInverseDistanceSimSim ( pos1:getPosition(), pos2:getPosition(), distanceMax )
