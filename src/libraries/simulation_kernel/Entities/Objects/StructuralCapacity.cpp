@@ -308,7 +308,8 @@ void StructuralCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 void StructuralCapacity::Build( double rDeltaPercentage )
 {
     static const float minStructuralState = 0.01f;
-    structuralState_ = std::max( minStructuralState, std::min( 1.f, structuralState_ + static_cast< float >( rDeltaPercentage ) ) );
+    if( rDeltaPercentage > 0 || structuralState_ > minStructuralState )
+        structuralState_ = std::max( minStructuralState, std::min( 1.f, structuralState_ + static_cast< float >( rDeltaPercentage ) ) );
     if( rDeltaPercentage > 0 && structuralState_ > 0.99f )
         structuralState_ = 1.f;
 }
