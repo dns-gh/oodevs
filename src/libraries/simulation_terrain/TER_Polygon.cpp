@@ -27,6 +27,8 @@ const MT_Rect emptyRect(
         std::numeric_limits<double>::max(), std::numeric_limits<double>::max(),
         std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
 
+const T_PointVector emptyShape;
+
 MT_Rect ComputeBoundingBox( const T_PointVector& points )
 {
     // bounding box
@@ -606,7 +608,7 @@ bool TER_Polygon::IsInside( const MT_Vector2D& vPos ) const
 //-----------------------------------------------------------------------------
 const T_PointVector& TER_Polygon::GetBorderPoints() const
 {
-    return pData_->borderVector_;
+    return pData_ ? pData_->borderVector_ : emptyShape;
 }
 
 //-----------------------------------------------------------------------------
