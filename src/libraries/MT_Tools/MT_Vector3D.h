@@ -63,8 +63,6 @@ double      DotProduct  ( const MT_Vector3D& v1, const MT_Vector3D& v2 );
 
 std::ostream& operator<<( std::ostream&, const MT_Vector3D& );
 
-#include "MT_Vector3D.inl"
-
 typedef std::vector< MT_Vector3D > T_Point3DVector;
 
 #endif // __MT_Vector3D_h_

@@ -106,6 +106,4 @@ namespace serialization
 }
 }
 
-#include "MT_Vector2D.inl"
-
 #endif // __MT_V2D_h_
