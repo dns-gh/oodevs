@@ -56,21 +56,6 @@ TER_Polygon FromWKT( std::string wkt, bool convexHull )
     return polygon;
 }
 
-std::string ToWKT( const TER_Polygon& p )
-{
-    std::stringstream out;
-    out << "POLYGON (";
-    const auto& points = p.GetBorderPoints();
-    for( auto it = points.begin(); it != points.end(); ++it )
-    {
-        if( it != points.begin() )
-            out << ", ";
-        out << it->rX_ << " " << it->rY_;
-    }
-    out << ")";
-    return out.str();
-}
-
 }  // namespace
 
 BOOST_AUTO_TEST_CASE( TER_Polygon_IsInside )

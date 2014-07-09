@@ -14,6 +14,7 @@
 #include "MT_Tools/MT_Droite.h"
 #include <terrain/GeosUtil.h>
 #include <boost/make_shared.hpp>
+#include <sstream>
 
 struct TER_Polygon::PolygonData
 {
@@ -579,4 +580,19 @@ void TER_Polygon::Reset()
 bool TER_Polygon::IsNull() const
 {
     return !pData_;
+}
+
+std::string ToWKT( const TER_Polygon& p )
+{
+    std::stringstream out;
+    out << "POLYGON (";
+    const auto& points = p.GetBorderPoints();
+    for( auto it = points.begin(); it != points.end(); ++it )
+    {
+        if( it != points.begin() )
+            out << ", ";
+        out << it->rX_ << " " << it->rY_;
+    }
+    out << ")";
+    return out.str();
 }

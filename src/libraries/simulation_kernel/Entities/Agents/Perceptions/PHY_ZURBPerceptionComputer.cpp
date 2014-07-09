@@ -89,7 +89,7 @@ void PHY_ZURBPerceptionComputer::ComputePerceptionPolygon( double distance, TER_
 {
     const MIL_UrbanObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     if( perceiverUrbanBlock && IsPosted( perceiver_ ) )
-        TER_Geometry::Scale( polygon, perceiverUrbanBlock->GetLocalisation().GetPoints(), distance );
+        TER_Geometry::Buffer( polygon, perceiverUrbanBlock->GetLocalisation().GetPoints(), distance );
     else
     {
         const MT_Vector2D& targetPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
