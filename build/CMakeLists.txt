@@ -439,8 +439,10 @@ target_link_libraries( simulation_terrain
     sword_tools
     ${ANALYSYS_LIBRARIES}
     ${GEOCOORD_LIBRARIES}
+    ${GEOS_I_LIBRARIES}
     ${PATHFIND_LIBRARIES}
     ${SPATIALCONTAINER_LIBRARIES}
+    ${TERRAIN_LIBRARIES}
 )
 
 # simulation_terrain_test
@@ -457,7 +459,6 @@ target_link_libraries( simulation_kernel
     resource_network
     simulation_terrain
     ${GEODATA_LIBRARIES}
-    ${TERRAIN_LIBRARIES}
 )
 
 # simulation_kernel_test

@@ -43,12 +43,12 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonHull )
     MIL_Geometry::ComputeHull( output, input );
 
     T_PointVector result;
-    result.push_back( Point5 );
     result.push_back( Point7 );
-    result.push_back( Point8 );
-    result.push_back( Point2 );
-    result.push_back( Point3 );
     result.push_back( Point5 );
+    result.push_back( Point3 );
+    result.push_back( Point2 );
+    result.push_back( Point8 );
+    result.push_back( Point7 );
     BOOST_CHECK_EQUAL_COLLECTIONS( output.begin(), output.end(), result.begin(), result.end() );
 }
 
@@ -66,9 +66,9 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
     TER_Polygon output;
     MIL_Geometry::Scale( output, input, 10.f );
     T_PointVector result = boost::assign::list_of( MT_Vector2D( 0, 20 ) )
-                                                 ( MT_Vector2D( 20, 0 ) )
-                                                 ( MT_Vector2D( 0, -20 ) )
                                                  ( MT_Vector2D( -20, 0 ) )
+                                                 ( MT_Vector2D( 0, -20 ) )
+                                                 ( MT_Vector2D( 20, 0 ) )
                                                  ( MT_Vector2D( 0, 20 ) );
     BOOST_CHECK_EQUAL_COLLECTIONS( output.GetBorderPoints().begin(), output.GetBorderPoints().end(), result.begin(), result.end() );
 }
@@ -148,14 +148,14 @@ BOOST_AUTO_TEST_CASE( GeometryComputeConvexHull )
     point->Reset( TER_Localisation::ePoint, listPoints, 1 );
     locations.push_back( point );
     boost::shared_ptr< TER_Localisation > result = DEC_GeometryFunctions::ComputeConvexHull( locations );
-    
-    T_PointVector expected = boost::assign::list_of( MT_Vector2D( 103, 98 ) )
-                                                   ( MT_Vector2D( 99, 97 ) )
-                                                   ( MT_Vector2D( 97, 97 ) )
-                                                   ( MT_Vector2D( 97, 99 ) )
-                                                   ( MT_Vector2D( 100, 101 ) )
-                                                   ( MT_Vector2D( 103, 100 ) )
-                                                   ( MT_Vector2D( 103, 98 ) );
+    T_PointVector expected = boost::assign::list_of
+        ( MT_Vector2D( 97, 97 ) )
+        ( MT_Vector2D( 99, 97 ) )
+        ( MT_Vector2D( 103, 98 ) )
+        ( MT_Vector2D( 103, 100 ) )
+        ( MT_Vector2D( 100, 101 ) )
+        ( MT_Vector2D( 97, 99 ) )
+        ( MT_Vector2D( 97, 97 ) );
 
     BOOST_CHECK_EQUAL_COLLECTIONS( result->GetPoints().begin(), result->GetPoints().end(), expected.begin(), expected.end() );
 }

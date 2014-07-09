@@ -12,6 +12,7 @@
 #include "TER_Polygon.h"
 #include "MT_Tools/MT_Polyline.h"
 #include "MT_Tools/MT_Droite.h"
+#include <terrain/GeosUtil.h>
 #include <boost/make_shared.hpp>
 
 struct TER_Polygon::PolygonData
@@ -50,90 +51,36 @@ MT_Rect ComputeBoundingBox( const T_PointVector& points )
     return MT_Rect( vDownLeft.rX_, vDownLeft.rY_, vUpRight.rX_, vUpRight.rY_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: InitializeHull
-// Created: AGE 2005-06-14
-// -----------------------------------------------------------------------------
-void InitializeHull( const T_PointVector& polygon, T_PointVector& hull )
-{
-    MT_Vector2D min, max;
-    for( auto it = polygon.begin(); it != polygon.end(); ++it )
-    {
-        const MT_Vector2D& p = *it;
-        if( min.IsZero() || min.rX_ > p.rX_ )
-            min = p;
-        if( max.IsZero() || max.rX_ < p.rX_ )
-            max = p;
-    }
-    hull.push_back( min );
-    hull.push_back( max );
-}
-
-double CrossProductTmp( const MT_Vector2D& v1, const MT_Vector2D& v2 )
-{
-    return v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FindOuterPoint
-// Created: AGE 2005-03-29
-// -----------------------------------------------------------------------------
-bool FindOuterPoint( const T_PointVector& polygon, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
-{
-    bool bFound = false;
-    double rMaxProjection = 0;
-    for( auto it = polygon.begin(); it != polygon.end(); ++it )
-    {
-        const MT_Vector2D v = from - *it;
-        const double rProjection = CrossProductTmp( direction, v );
-        if( rProjection < -0.001 ) // epsilon
-        {
-            bFound = true;
-            if( rMaxProjection > rProjection )
-            {
-                rMaxProjection = rProjection;
-                worst = *it;
-            }
-        }
-    }
-    return bFound;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Convexify
-// Created: AGE 2005-06-14
-// -----------------------------------------------------------------------------
 void Convexify( T_PointVector& points )
 {
-    if( points.size() < 3 )
+    const auto h = terrain::InitGeos( false );
+    terrain::T_PointVector vertices( points.size() );
+    for( size_t i = 0; i < points.size(); ++i )
+        vertices[i] = geometry::Point2d( points[i].rX_, points[i].rY_ );
+    // Do not create a polygon here, points can be a point cloud and
+    // interpreting it as a polygon will at best truncate data.
+    auto p = terrain::CreateLineString( h, vertices );
+    points.clear();
+
+    if( !p )
         return;
-
-    T_PointVector convexHull;
-    InitializeHull( points, convexHull );
-
-    unsigned int nPoint = 0;
-    while( nPoint != convexHull.size() )
+    p = terrain::ConvexHull( h, p );
+    terrain::T_MultiPolygon output;
+    terrain::ExtractMultiPolygon( h, p, output );
+    if( !output.empty() )
     {
-        unsigned int nFollowingPoint = nPoint + 1;
-        if( nFollowingPoint == convexHull.size() )
-            nFollowingPoint = 0;
-
-        MT_Vector2D direction = convexHull[ nFollowingPoint ] - convexHull[ nPoint ];
-        direction.Normalize();
-        MT_Vector2D worst;
-        if( FindOuterPoint( points, convexHull[ nPoint ], direction, worst ) )
-        {
-            convexHull.insert( convexHull.begin() + nFollowingPoint, worst );
-            nPoint = 0;
-        }
-        else
-            ++nPoint;
+        // There may be more than one outer shell if the source polygon was
+        // invalid (self-intersecting, etc.) and was decomposed in simple
+        // shapes.
+        const auto& result = output[0].first;
+        points.resize( result.size() );
+        for( size_t i = 0; i < result.size(); ++i )
+            points[i] = MT_Vector2D( result[i].X(), result[i].Y() );
+        if( !points.empty() && points.front() != points.back() )
+            // Whether polygon should be closed or not was not really specified,
+            // so close them to be on the safe side.
+            points.push_back( points.front() );
     }
-    // Ensure the polygon is closed
-    if( convexHull.back() != convexHull.front() )
-        convexHull.push_back( convexHull.front() );
-
-    points.swap( convexHull );
 }
 
 boost::shared_ptr< TER_Polygon::PolygonData > BuildPolygon(
