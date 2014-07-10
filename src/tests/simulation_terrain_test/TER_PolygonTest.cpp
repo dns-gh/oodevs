@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE( TER_Polygon_IsInside )
     BOOST_CHECK( !poly.IsInside( MT_Vector2D( 6, 6 ) ));
 
     TER_Polygon empty;
-    BOOST_CHECK( empty.IsInside( MT_Vector2D( 6, 6 ) ));
+    BOOST_CHECK( !empty.IsInside( MT_Vector2D( 6, 6 ) ));
 }
 
 namespace
