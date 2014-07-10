@@ -35,6 +35,10 @@ type Point struct {
 	Y float64
 }
 
+func (p Point) Shift(dx, dy float64) Point {
+	return Point{X: p.X + dx, Y: p.Y + dy}
+}
+
 type PathPoint struct {
 	Point    Point
 	Waypoint int32
