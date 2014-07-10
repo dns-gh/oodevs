@@ -217,6 +217,18 @@ float DEC_UrbanObjectFunctions::GetStateUrbanBlock( MIL_UrbanObject_ABC* pUrbanO
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_UrbanObjectFunctions::SetUrbanBlockState
+// Created: MCO 2014-07-09
+// -----------------------------------------------------------------------------
+void DEC_UrbanObjectFunctions::SetUrbanBlockState( MIL_UrbanObject_ABC* pUrbanObject, float state )
+{
+    if( !pUrbanObject )
+        return;
+    if( StructuralCapacity* pCapacity = pUrbanObject->Retrieve< StructuralCapacity >() )
+        pCapacity->SetStructuralState( state );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock
 // Created: EVH 2011-03-25
 // -----------------------------------------------------------------------------

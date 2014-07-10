@@ -62,6 +62,7 @@ public:
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
     void Build( double rDeltaPercentage );
     float GetStructuralState() const;
+    void SetStructuralState( float state );
 
     void SendState( sword::UrbanAttributes& message ) const;
     void SendFullState( sword::UrbanAttributes& message ) const;
