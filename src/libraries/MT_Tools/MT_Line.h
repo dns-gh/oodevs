@@ -59,6 +59,4 @@ typedef const T_LineVector               CT_LineVector;
 typedef T_LineVector::iterator           IT_LineVector;
 typedef T_LineVector::const_iterator     CIT_LineVector;
 
-#include "MT_Line.inl"
-
 #endif // __MT_Line_h_
