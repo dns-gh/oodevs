@@ -148,3 +148,43 @@ bool MT_Ellipse::IsInside( MT_Vector2D vPoint ) const
                             + rF_ );
     return rValue <= 0.;
 }
+
+//-----------------------------------------------------------------------------
+// Name: MT_Ellipse::GetCenter
+// Created: JVT 04-03-16
+//-----------------------------------------------------------------------------
+const MT_Vector2D& MT_Ellipse::GetCenter() const
+{
+    return vCenter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Ellipse::GetMajorAxeLength
+// Created: NLD 2004-10-12
+// -----------------------------------------------------------------------------
+double MT_Ellipse::GetMajorAxeLength() const
+{
+    return rMajorAxeLength_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Ellipse::GetMajorAxisHighPoint
+// Created: JVT 04-03-25
+//-----------------------------------------------------------------------------
+const MT_Vector2D MT_Ellipse::GetMajorAxisHighPoint()  const
+{
+    MT_Vector2D axis( cos( rTheta_ ), sin( rTheta_ ) );
+    axis *= rMajorAxeLength_;
+    return axis += vCenter_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Ellipse::GetMinorAxisHighPoint
+// Created: JVT 04-03-25
+//-----------------------------------------------------------------------------
+const MT_Vector2D MT_Ellipse::GetMinorAxisHighPoint()  const
+{
+    MT_Vector2D axis( -sin( rTheta_ ), cos( rTheta_ ) );
+    axis *= rMinorAxeLength_;
+    return axis += vCenter_;
+}
