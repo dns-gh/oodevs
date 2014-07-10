@@ -80,6 +80,7 @@ public:
     //! @name Accessors
     //@{
     std::string GetDIAType() const;
+    std::string GetName() const;
     int GetAmbianceMission() const;
     const PHY_DotationCategory* GetMunition() const;
     std::vector< const PHY_DotationCategory* > GetMunitions() const;

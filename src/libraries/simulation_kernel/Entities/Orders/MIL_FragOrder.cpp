@@ -91,6 +91,15 @@ std::string MIL_FragOrder::GetDIAType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::GetName
+// Created: LDC 2014-07-09
+// -----------------------------------------------------------------------------
+std::string MIL_FragOrder::GetName() const
+{
+    return type_.GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::Register
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
@@ -98,6 +107,7 @@ void MIL_FragOrder::Register( sword::Brain& brain )
 {
     brain.RegisterFunction( "CreateFragOrder", &MIL_FragOrder::CreateFragOrder );
     brain.RegisterMethod( "GetType", &MIL_FragOrder::GetDIAType );
+    brain.RegisterMethod( "GetName", &MIL_FragOrder::GetName );
     brain.RegisterMethod( "GetambianceMission_", &MIL_FragOrder::GetAmbianceMission );
     brain.RegisterMethod( "Getmunition_", &MIL_FragOrder::GetMunition );
     brain.RegisterMethod( "Getmunitions_", &MIL_FragOrder::GetMunitions );
