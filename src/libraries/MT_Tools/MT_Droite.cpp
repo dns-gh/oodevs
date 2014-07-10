@@ -10,6 +10,7 @@
 #include "MT_Droite.h"
 #include "MT_Line.h"
 #include <cassert>
+#include <cmath>
 
 namespace
 {
@@ -171,5 +172,35 @@ E_CollisionState MT_Droite::Intersect2D( const MT_Droite& droite, MT_Vector2D& v
 
     assert( GetSide( vPosIntersect ) == eOnBoundary );
     return eDoIntersect;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Droite::GetDistanceToPoint
+// Created: NLD 2003-09-29
+// -----------------------------------------------------------------------------
+double MT_Droite::GetDistanceToPoint( const MT_Vector2D& vPoint ) const
+{
+    double rTmp = sqrt( ( rA_ * rA_ ) + ( rB_ * rB_ ) );
+    if( rTmp == 0.0f )
+        return 0.0f;
+    return fabs( rA_ * vPoint.rX_ + rB_ * vPoint.rY_ + rC_ ) / rTmp;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Droite::GetSide
+// Created: JVT 04-03-17
+//-----------------------------------------------------------------------------
+MT_Droite::E_Side MT_Droite::GetSide( double rX, double rY )  const
+{
+    double rTmp = rX * rA_ + rY * rB_ + rC_;
+    return MT_IsZero( rTmp ) ? eOnBoundary : rTmp < 0 ? eOnNegativeSide : eOnPositiveSide;
+}
+
+bool MT_IsPointBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vPoint )
+{
+    const MT_Droite::E_Side nLeftSide  = leftDroite .GetSide( vPoint );
+    const MT_Droite::E_Side nRightSide = rightDroite.GetSide( vPoint );
+    return    ( nLeftSide  == MT_Droite::eOnPositiveSide || nLeftSide == MT_Droite::eOnBoundary )
+           && ( nRightSide == MT_Droite::eOnNegativeSide || nRightSide == MT_Droite::eOnBoundary );
 }
 

@@ -12,11 +12,11 @@
 #ifndef __MT_Droite_h_
 #define __MT_Droite_h_
 
-#include "MT_Tools_Types.h"
-#include "MT_Vector2D.h"
+#include "MT_Line.h"
 #include <vector>
 
 class MT_Line;
+class MT_Vector2D;
 
 enum E_CollisionState;
 
@@ -62,14 +62,7 @@ private:
     double rC_;
 };
 
-inline bool MT_IsPointBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vPoint )
-{
-    const MT_Droite::E_Side nLeftSide  = leftDroite .GetSide( vPoint );
-    const MT_Droite::E_Side nRightSide = rightDroite.GetSide( vPoint );
-    return    ( nLeftSide  == MT_Droite::eOnPositiveSide || nLeftSide == MT_Droite::eOnBoundary )
-           && ( nRightSide == MT_Droite::eOnNegativeSide || nRightSide == MT_Droite::eOnBoundary );
-}
-
-#include "MT_Droite.inl"
+bool MT_IsPointBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite,
+        const MT_Vector2D& vPoint );
 
 #endif // __MT_Droite_h_
