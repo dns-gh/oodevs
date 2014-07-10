@@ -921,6 +921,9 @@
             <!-- New magic actions are fine -->
             <arg value="--exclude=*.MagicAction.Type"/>
             <arg value="--exclude=*.UnitMagicAction.Type"/>
+            <!-- The laucnher has been removed in 5.4 -->
+            <arg value="--exclude=AdminToLauncher*"/>
+            <arg value="--exclude=LauncherToAdmin*"/>
         </compare-proto>
         <compare-proto olddir="${proto.dir}/5.4.1" newdir="${proto.dir}/5.4.2"/>
         <compare-proto olddir="${proto.dir}/5.4.2" newdir="${src.dir}/libraries/protocol/proto/">
