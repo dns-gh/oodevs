@@ -272,3 +272,11 @@ MT_Vector2D MT_Polyline::GetPointAt( double rDist ) const
     return vCur;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MT_Polyline::GetPoints
+// Created: NLD 2003-07-31
+// -----------------------------------------------------------------------------
+const T_PointVector& MT_Polyline::GetPoints() const
+{
+    return points_;
+}
