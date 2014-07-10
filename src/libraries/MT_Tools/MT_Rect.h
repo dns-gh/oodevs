@@ -13,7 +13,8 @@
 #define __MT_Rect_h_
 
 #include "MT_Line.h"
-#include "MT_Triangle.h"
+
+class MT_Triangle;
 
 //*****************************************************************************
 // Created: FBD 02-11-07
@@ -104,7 +105,5 @@ private:
 
     MT_Vector2D vCenter_;
 };
-
-#include "MT_Rect.inl"
 
 #endif // __MT_Rect_h_
