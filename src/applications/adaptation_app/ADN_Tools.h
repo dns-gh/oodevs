@@ -16,6 +16,7 @@
 #include "ADN_Enums.h"
 
 template< typename T > class ADN_Type_ABC;
+typedef ADN_Type_ABC< std::string > ADN_Type_Time;
 
 // =============================================================================
 /** @class  ADN_Tools
@@ -145,6 +146,7 @@ namespace ADN_Tools
 
     int ConvertDelayToCentiseconds( const QString& delay );             // from 12m / 12s / 12.3s to 720. / 12. / 12.3
     QString ConvertCentisecondsToDelay( int value );                  // from 720. / 12. / 12.3 to 720s / 12s / 12.3s
+    bool IsNullDelay( const ADN_Type_Time& delay );
 
     QString ConvertCentisecondsToLongString( int );                     //
     int ConvertLongStringToCentiseconds( const QString& text );         //
