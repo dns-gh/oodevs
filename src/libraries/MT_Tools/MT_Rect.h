@@ -14,8 +14,6 @@
 
 #include "MT_Line.h"
 
-class MT_Triangle;
-
 //*****************************************************************************
 // Created: FBD 02-11-07
 // Last modified: JVT 03-09-02
@@ -63,7 +61,6 @@ public:
     bool Contains   ( const MT_Rect& rect ) const;
     bool Intersect2D( const MT_Line& line ) const;
     bool Intersect2D( const MT_Rect& rect ) const;
-    bool Intersect2D( const MT_Triangle& triangle ) const;
     bool Intersect2D( const MT_Vector2D& vPosSrc, const MT_Vector2D& vPosDest ) const;
     bool Intersect2D( const MT_Line& orientedLine, T_PointSet& collisionSet, double rPrecision ) const;
 

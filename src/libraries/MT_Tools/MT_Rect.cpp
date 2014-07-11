@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "MT_Rect.h"
-#include "MT_Triangle.h"
 #include <cassert>
 #include <cmath>
 
@@ -96,19 +95,6 @@ void MT_Rect::Set( const MT_Vector2D& vLeftBottom, const MT_Vector2D& vRightTop 
 //=============================================================================
 // INTERSECTION
 //=============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: MT_Rect::Intersect2D
-// Created: FBD 02-11-21
-//-----------------------------------------------------------------------------
-bool MT_Rect::Intersect2D( const MT_Triangle& triangle ) const
-{
-    MT_Line line1( triangle.GetPos1(), triangle.GetPos2() );
-    MT_Line line2( triangle.GetPos2(), triangle.GetPos3() );
-    MT_Line line3( triangle.GetPos3(), triangle.GetPos1() );
-
-    return Intersect2D( line1 ) || Intersect2D( line2 ) || Intersect2D( line3 );
-}
 
 //-----------------------------------------------------------------------------
 // Name: MT_Rect::Intersect2D
