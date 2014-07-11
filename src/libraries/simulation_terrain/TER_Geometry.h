@@ -7,30 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_Geometry_h_
-#define __MIL_Geometry_h_
+#ifndef TER_GEOMETRY_H
+#define TER_GEOMETRY_H
 
 #include "MT_Tools/Mt_Vector2DTypes.h"
 
 class TER_Localisation;
 class TER_Polygon;
 
-// =============================================================================
-/** @class  MIL_Geometry
-    @brief  MIL Geometry
-*/
-// Created: SLG 2010-04-30
-// =============================================================================
-class MIL_Geometry
+class TER_Geometry
 {
 public:
-    //! @name Operations
-    //@{
-    static void Scale( TER_Polygon& result, const T_PointVector& polygon, double distance ); // $$$$ MCO : where are the unit tests ?!
-    static void ComputeHull( T_PointVector& result, const T_PointVector& polygon );
+    // Computes the convex hull of the input polygon then extents it with a buffer of
+    // "distance" radius. "polygon" can contains a single point or a line. Negative
+    // distances are forced to zero.
+    static void Buffer( TER_Polygon& result, const T_PointVector& polygon, double distance );
+    // Returns the convex hull of the input point set. If there are less than
+    // two points or if they are colinear, returns the input point set.
+    static void ComputeHull( T_PointVector& result, const T_PointVector& points );
     static double IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 );
     static bool IsEntirelyCovered( const TER_Localisation& toCover, const std::vector< TER_Localisation >& covers );
-    //@}
 };
 
-#endif // __MIL_Geometry_h_
+#endif // TER_GEOMETRY_H

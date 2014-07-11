@@ -20,9 +20,10 @@
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessageParameters.h"
+#include "simulation_terrain/TER_Geometry.h"
+#include "simulation_terrain/TER_World.h"
 #include <boost/lexical_cast.hpp>
 #include "tools/NET_AsnException.h"
 
@@ -111,65 +112,6 @@ MIL_UrbanObject_ABC* MIL_UrbanObject::GetParent() const
     return parent_;
 }
 
-namespace
-{
-    template< typename IT >
-    bool FindOuterPoint( IT begin, IT end, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
-    {
-        bool bFound = false;
-        double rMaxProjection = 0;
-        for( IT it = begin; it != end; ++it )
-        {
-            const MT_Vector2D v( *it - from );
-            const double rProjection = CrossProduct( direction, v );
-            if( rProjection < -1.f ) // epsilon
-            {
-                bFound = true;
-                if( rMaxProjection > rProjection )
-                {
-                    rMaxProjection = rProjection;
-                    worst = *it;
-                }
-            }
-        }
-        return bFound;
-    }
-    
-    void ComputeHull( const T_PointVector& vertices, T_PointVector& hull )
-    {
-        if( !vertices.empty() )
-        {
-            MT_Vector2D maxLeft = *vertices.begin();
-            MT_Vector2D maxRight = maxLeft;
-
-            for( T_PointVector::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
-            {
-                if( it->rX_ < maxLeft.rX_ )
-                    maxLeft = *it;
-                if( it->rX_ > maxRight.rX_ )
-                    maxRight = *it;
-            }
-            hull.push_back( maxLeft );
-            hull.push_back( maxRight );
-            unsigned int nPoint = 0;
-            while( nPoint != hull.size() )
-            {
-                unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
-                MT_Vector2D direction( hull[ nFollowingPoint ] -  hull[ nPoint ] );
-                direction.Normalize();
-                MT_Vector2D worst;
-                if( FindOuterPoint( vertices.begin(), vertices.end(), hull[ nPoint ], direction, worst ) )
-                {
-                    hull.insert( hull.begin() + nFollowingPoint, worst );
-                    nPoint = 0;
-                }
-                else
-                    ++nPoint;
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject::ComputeConvexHull
 // Created: JSR 2012-08-01
@@ -184,7 +126,7 @@ void MIL_UrbanObject::ComputeConvexHull()
         vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
     }
     T_PointVector hull;
-    ComputeHull( vertices, hull );
+    TER_Geometry::ComputeHull( hull, vertices );
     if( hull.size() > 2 )
         Initialize( TER_Localisation( TER_Localisation::ePolygon , hull ) );
 }

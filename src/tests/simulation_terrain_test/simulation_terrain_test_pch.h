@@ -16,6 +16,9 @@
 #define BOOST_LIB_NAME boost_unit_test_framework
 #include <boost/config/auto_link.hpp>
 
-std::string BOOST_RESOLVE( const std::string& filename );
+#include <tools/Exception.h>
+#include <tools/BoostTest.h>
+
+extern tools::TestOptions testOptions;
 
 #endif // SIMULATION_KERNEL_TEST_PCH_H

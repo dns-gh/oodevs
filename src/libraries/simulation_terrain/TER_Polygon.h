@@ -93,4 +93,6 @@ private:
     boost::shared_ptr< const PolygonData > pData_;
 };
 
+std::string ToWKT( const TER_Polygon& polygon );
+
 #endif // __TER_Polygon_h_

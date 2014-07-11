@@ -12,7 +12,9 @@
 #include "TER_Polygon.h"
 #include "MT_Tools/MT_Polyline.h"
 #include "MT_Tools/MT_Droite.h"
+#include <terrain/GeosUtil.h>
 #include <boost/make_shared.hpp>
+#include <sstream>
 
 struct TER_Polygon::PolygonData
 {
@@ -26,6 +28,8 @@ namespace
 const MT_Rect emptyRect(
         std::numeric_limits<double>::max(), std::numeric_limits<double>::max(),
         std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
+
+const T_PointVector emptyShape;
 
 MT_Rect ComputeBoundingBox( const T_PointVector& points )
 {
@@ -48,110 +52,52 @@ MT_Rect ComputeBoundingBox( const T_PointVector& points )
     return MT_Rect( vDownLeft.rX_, vDownLeft.rY_, vUpRight.rX_, vUpRight.rY_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: InitializeHull
-// Created: AGE 2005-06-14
-// -----------------------------------------------------------------------------
-void InitializeHull( const T_PointVector& polygon, T_PointVector& hull )
-{
-    MT_Vector2D min, max;
-    for( auto it = polygon.begin(); it != polygon.end(); ++it )
-    {
-        const MT_Vector2D& p = *it;
-        if( min.IsZero() || min.rX_ > p.rX_ )
-            min = p;
-        if( max.IsZero() || max.rX_ < p.rX_ )
-            max = p;
-    }
-    hull.push_back( min );
-    hull.push_back( max );
-}
-
-double CrossProductTmp( const MT_Vector2D& v1, const MT_Vector2D& v2 )
-{
-    return v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FindOuterPoint
-// Created: AGE 2005-03-29
-// -----------------------------------------------------------------------------
-bool FindOuterPoint( const T_PointVector& polygon, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
-{
-    bool bFound = false;
-    double rMaxProjection = 0;
-    for( auto it = polygon.begin(); it != polygon.end(); ++it )
-    {
-        const MT_Vector2D v = from - *it;
-        const double rProjection = CrossProductTmp( direction, v );
-        if( rProjection < -0.001 ) // epsilon
-        {
-            bFound = true;
-            if( rMaxProjection > rProjection )
-            {
-                rMaxProjection = rProjection;
-                worst = *it;
-            }
-        }
-    }
-    return bFound;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Convexify
-// Created: AGE 2005-06-14
-// -----------------------------------------------------------------------------
-void Convexify( T_PointVector& points )
-{
-    if( points.size() < 3 )
-        return;
-
-    T_PointVector convexHull;
-    InitializeHull( points, convexHull );
-
-    unsigned int nPoint = 0;
-    while( nPoint != convexHull.size() )
-    {
-        unsigned int nFollowingPoint = nPoint + 1;
-        if( nFollowingPoint == convexHull.size() )
-            nFollowingPoint = 0;
-
-        MT_Vector2D direction = convexHull[ nFollowingPoint ] - convexHull[ nPoint ];
-        direction.Normalize();
-        MT_Vector2D worst;
-        if( FindOuterPoint( points, convexHull[ nPoint ], direction, worst ) )
-        {
-            convexHull.insert( convexHull.begin() + nFollowingPoint, worst );
-            nPoint = 0;
-        }
-        else
-            ++nPoint;
-    }
-    // Ensure the polygon is closed
-    if( convexHull.back() != convexHull.front() )
-        convexHull.push_back( convexHull.front() );
-
-    points.swap( convexHull );
-}
-
 boost::shared_ptr< TER_Polygon::PolygonData > BuildPolygon(
         const T_PointVector& points, bool convexHull )
 {
     boost::shared_ptr< TER_Polygon::PolygonData > data;
     if( points.empty() )
         return data;
-    data = boost::make_shared< TER_Polygon::PolygonData >();
-    data->borderVector_ = points;
+
+    const auto h = terrain::InitGeos( false );
+    terrain::T_PointVector vertices( points.size() );
+    for( size_t i = 0; i < points.size(); ++i )
+        vertices[i] = geometry::Point2d( points[i].rX_, points[i].rY_ );
+
+    terrain::GeosGeomPtr p;
     if( convexHull )
     {
-        Convexify( data->borderVector_ );
-        if( data->borderVector_.empty() )
-        {
-            data.reset();
-            return data;
-        }
+        // Do not create a polygon here, points can be a point cloud and
+        // interpreting it as a polygon will at best truncate data.
+        p = terrain::CreateLineString( h, vertices );
+        p = terrain::ConvexHull( h, p );
     }
-    data->boundingBox_ = ComputeBoundingBox( data->borderVector_ );
+    else
+    {
+        p = terrain::CreateMultiPolygon( h, vertices, terrain::T_Rings() );
+    }
+
+    terrain::T_MultiPolygon output;
+    terrain::ExtractMultiPolygon( h, p, output );
+    if( !output.empty() )
+    {
+        data = boost::make_shared< TER_Polygon::PolygonData >();
+        // There may be more than one outer shell if the source polygon was
+        // invalid (self-intersecting, etc.) and was decomposed in simple
+        // shapes.
+        const auto& result = output[0].first;
+        T_PointVector border( result.size() );
+        for( size_t i = 0; i < result.size(); ++i )
+            border[i] = MT_Vector2D( result[i].X(), result[i].Y() );
+        if( !border.empty() && border.front() != border.back() )
+            // Whether polygon should be closed or not was not really specified,
+            // so close them to be on the safe side.
+            border.push_back( border.front() );
+
+        data->borderVector_.swap( border );
+        data->boundingBox_ = ComputeBoundingBox( data->borderVector_ );
+    }
+
     return data;
 }
 
@@ -201,10 +147,7 @@ TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 {
-    if( !pData_ )
-        return true;
-
-    if( ! IsInBoundingBox( vPos, rPrecision ) )
+    if( !pData_ || !IsInBoundingBox( vPos, rPrecision ) )
         return false;
 
     return BoundedSide( vPos ) != eOnUnboundedSide
@@ -606,7 +549,7 @@ bool TER_Polygon::IsInside( const MT_Vector2D& vPos ) const
 //-----------------------------------------------------------------------------
 const T_PointVector& TER_Polygon::GetBorderPoints() const
 {
-    return pData_->borderVector_;
+    return pData_ ? pData_->borderVector_ : emptyShape;
 }
 
 //-----------------------------------------------------------------------------
@@ -634,4 +577,19 @@ void TER_Polygon::Reset()
 bool TER_Polygon::IsNull() const
 {
     return !pData_;
+}
+
+std::string ToWKT( const TER_Polygon& p )
+{
+    std::stringstream out;
+    out << "POLYGON (";
+    const auto& points = p.GetBorderPoints();
+    for( auto it = points.begin(); it != points.end(); ++it )
+    {
+        if( it != points.begin() )
+            out << ", ";
+        out << it->rX_ << " " << it->rY_;
+    }
+    out << ")";
+    return out.str();
 }

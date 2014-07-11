@@ -33,8 +33,8 @@
 #include "MIL_Time_ABC.h"
 #include "MIL_Random.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Tools/MIL_Geometry.h"
 #include "simulation_terrain/TER_AgentManager.h"
+#include "simulation_terrain/TER_Geometry.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
@@ -776,7 +776,7 @@ void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element )
                 return;
 
             const MIL_PopulationType& populationType = pPopulation_->GetType();
-            double battleArea = MIL_Geometry::IntersectionArea( GetLocation(), element.GetLocation() );
+            double battleArea = TER_Geometry::IntersectionArea( GetLocation(), element.GetLocation() );
             double densityAttacker = populationType.GetConcentrationDensity();
             unsigned int humanAttacker = std::min( GetHealthyHumans(), static_cast< unsigned int >( densityAttacker * battleArea ) );
 

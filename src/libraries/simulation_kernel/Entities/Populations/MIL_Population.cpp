@@ -35,11 +35,11 @@
 #include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_Color.h"
 #include "Tools/MIL_DictionaryExtensions.h"
-#include "Tools/MIL_Geometry.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
+#include "simulation_terrain/TER_Geometry.h"
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/serialization/shared_ptr.hpp>
@@ -1438,7 +1438,7 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
     double coveredArea = 0.0, currentArea = 0.0, areaDensitySum = 0.0;
     for( auto it = concentrations_.begin(); it != concentrations_.end();  ++it )
     {
-        currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
+        currentArea = TER_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
         coveredArea += currentArea;
         areaDensitySum += currentArea * (*it)->GetDensity();
     }
@@ -1447,7 +1447,7 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
      * or just counting the number of people inside the block (but most often that will be 0).
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
     {
-        currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
+        currentArea = TER_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
         coveredArea += currentArea;
         areaDensitySum += currentArea * (*it)->GetDensity();
     }

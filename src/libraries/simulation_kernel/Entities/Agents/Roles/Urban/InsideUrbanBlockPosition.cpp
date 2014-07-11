@@ -15,10 +15,10 @@
 #include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include "Tools/MIL_Geometry.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
+#include "simulation_terrain/TER_Geometry.h"
 #pragma warning( push, 0 )
 #pragma warning( disable: 4702 )
 #include <boost/geometry/geometry.hpp>
@@ -88,7 +88,7 @@ MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& firer, U
 double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
 {
     TER_Localisation attritionPolygon( attritionSurface );
-    return MIL_Geometry::IntersectionArea( attritionSurface, urbanObject_.GetLocalisation() ) * result.urbanDeployment_;
+    return TER_Geometry::IntersectionArea( attritionSurface, urbanObject_.GetLocalisation() ) * result.urbanDeployment_;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
         double urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
         if( urbanObjectArea )
         {
-            double intersectArea = MIL_Geometry::IntersectionArea( TER_Localisation( polygon ), urbanObject_.GetLocalisation() );
+            double intersectArea = TER_Geometry::IntersectionArea( TER_Localisation( polygon ), urbanObject_.GetLocalisation() );
             return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
         }
         return 0.;

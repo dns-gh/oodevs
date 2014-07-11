@@ -29,7 +29,7 @@
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
-#include "Tools/MIL_Geometry.h"
+#include "simulation_terrain/TER_Geometry.h"
 #include <tools/Set.h>
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void PHY_ZURBPerceptionComputer::ComputePerceptionPolygon( double distance, TER_
 {
     const MIL_UrbanObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     if( perceiverUrbanBlock && IsPosted( perceiver_ ) )
-        MIL_Geometry::Scale( polygon, perceiverUrbanBlock->GetLocalisation().GetPoints(), distance );
+        TER_Geometry::Buffer( polygon, perceiverUrbanBlock->GetLocalisation().GetPoints(), distance );
     else
     {
         const MT_Vector2D& targetPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();

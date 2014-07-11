@@ -38,15 +38,15 @@
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Circle.h"
+#include "Urban/MIL_UrbanCache.h"
+#include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
+#include "simulation_terrain/TER_Geometry.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "simulation_terrain/TER_ObjectManager.h"
-#include "simulation_terrain/TER_AgentManager.h"
-#include "Tools/MIL_Geometry.h"
-#include "Urban/MIL_UrbanCache.h"
 #include <boost/tuple/tuple.hpp>
 
 // -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ namespace
                         && std::find( urbanList.begin(), urbanList.end(), wrapper ) != urbanList.end() ) // Urban block of unit is in area of effect
                     {
                         const TER_Localisation& location = wrapper->GetLocalisation();
-                        double intersection = MIL_Geometry::IntersectionArea( location, explosionArea );
+                        double intersection = TER_Geometry::IntersectionArea( location, explosionArea );
                         if( 0 < intersection )
                             targets.push_back( *it );
     }

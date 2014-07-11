@@ -22,9 +22,9 @@
 #include "MIL_Random.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_MaterialCompositionType.h"
+#include "simulation_terrain/TER_Geometry.h"
 #include <geometry/Types.h>
 #include <boost/assign/list_of.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
@@ -179,7 +179,7 @@ bool StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
     if( attritionSurface.GetType() == TER_Localisation::ePoint || attritionSurface.GetType() == TER_Localisation::eLine )
         ratio = 1.0;
     else
-        ratio = MIL_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
+        ratio = TER_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
     const float oldStructuralState = structuralState_;
 
     structuralState_ = static_cast< float >( std::max( 0., (double)structuralState_ - ratio * ( 1 - factor ) ) );
