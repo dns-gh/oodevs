@@ -603,7 +603,7 @@ end
 -- @see integration.startRecceArea
 -- @param target Area or point knowledge
 -- @return Boolean
-integration.startedRecceIt = function( target )
+integration.startedRecce = function( target )
     return target.bActionRecceFinished
 end
 
@@ -613,6 +613,6 @@ end
 -- @see integration.startSearchObject
 -- @param target Area, object or point knowledge.
 -- @return Boolean
-integration.startedSearchIt = function( target )
+integration.startedSearch = function( target )
     return target.bActionSearchFinished
 end
