@@ -111,6 +111,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , armedIndividualsChanged_    ( true )
     , isDamagingUrbanBlock_       ( false )
     , isDemonstrating_            ( false )
+    , isInFire_                   ( false )
+    , wasInFire_                  ( false )
     , pAffinities_                ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_                ( new MIL_DictionaryExtensions( xis ) )
 {
@@ -163,6 +165,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MissionControlle
     , armedIndividualsChanged_    ( true )
     , isDamagingUrbanBlock_       ( false )
     , isDemonstrating_            ( false )
+    , isInFire_                   ( false )
+    , wasInFire_                  ( false )
     , pAffinities_                ( 0 )
     , pExtensions_                ( 0 )
 {
@@ -203,6 +207,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , armedIndividualsChanged_    ( true )
     , isDamagingUrbanBlock_       ( false )
     , isDemonstrating_            ( false )
+    , isInFire_                   ( false )
+    , wasInFire_                  ( false )
     , pAffinities_                ( new MIL_AffinitiesMap() )
     , pExtensions_                ( new MIL_DictionaryExtensions() )
 {
@@ -421,6 +427,17 @@ void MIL_Population::NotifyChanneled( const TER_Localisation& localisation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::NotifyBurning
+// Created: LDC 2014-07-10
+// -----------------------------------------------------------------------------
+void MIL_Population::NotifyBurning()
+{
+    if( !wasInFire_ )
+        MIL_Report::PostEvent( *this, report::eRC_InFireObject );
+    isInFire_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::NotifyUrbanDestructionStart
 // Created: NPT 2013-02-13
 // -----------------------------------------------------------------------------
@@ -515,6 +532,8 @@ void MIL_Population::UpdateState()
         Update( concentrations_, trashedConcentrations_ );
         if( !trashedFlows_.empty() || !trashedConcentrations_.empty() )
             UpdateBarycenter();
+        wasInFire_ = isInFire_;
+        isInFire_ = false;
         UpdateAttackedPopulations();
     }
     catch( const std::exception& e )

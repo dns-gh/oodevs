@@ -126,6 +126,7 @@ public:
     void Secure( const MIL_AgentPion& securer  );
     void Exterminate( const MIL_AgentPion& exterminator, double rSurface );
     void NotifyChanneled( const TER_Localisation& localisation );
+    void NotifyBurning();
     void NotifyUrbanDestructionStart();
     //@}
 
@@ -266,6 +267,8 @@ private:
     bool                                            armedIndividualsChanged_;
     bool                                            isDamagingUrbanBlock_;
     bool                                            isDemonstrating_;
+    bool                                            isInFire_;
+    bool                                            wasInFire_;
     boost::scoped_ptr< MIL_AffinitiesMap >          pAffinities_;
     boost::scoped_ptr< MIL_DictionaryExtensions >   pExtensions_;
     double                                          urbanBlockAngriness_;

@@ -16,7 +16,9 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 
@@ -111,12 +113,22 @@ void BurnCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& ag
 }
 
 // -----------------------------------------------------------------------------
+// Name: BurnCapacity::ProcessAgentEntering
+// Created: LDC 2014-07-11
+// -----------------------------------------------------------------------------
+void BurnCapacity::ProcessAgentEntering( MIL_Object_ABC&, MIL_Agent_ABC& agent )
+{
+    MIL_Report::PostEvent( agent, report::eRC_InFireObject );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AttritionCapacity::ProcessPopulationInside
 // Created: RFT 2008-06-06
 // -----------------------------------------------------------------------------
 void BurnCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
-    population.ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+    population.ApplyBurn( object.GetLocalisation() );
+    population.GetPopulation().NotifyBurning();
 }
 
 // -----------------------------------------------------------------------------

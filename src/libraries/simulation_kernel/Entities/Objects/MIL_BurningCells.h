@@ -76,7 +76,7 @@ public:
     //! @name Attrition
     //@{
     void BurnAgent( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
-    void BurnPopulation( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population );
+    void BurnPopulation( MIL_PopulationElement_ABC& population );
     //@}
 
 private:

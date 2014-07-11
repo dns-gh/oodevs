@@ -155,7 +155,7 @@ void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireR
         return;
     bHumansUpdated_ = true;
     if( lethal )
-        ApplyLethalDamage( nHit, fireResult );
+        ApplyLethalDamage( nHit, &fireResult );
     else
     {
         bHumansUpdated_ = true;
@@ -168,28 +168,32 @@ void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireR
 // Name: MIL_PopulationElement_ABC::ApplyLethalDamage
 // Created: LDC 2011-05-09
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::ApplyLethalDamage( unsigned int nHit, PHY_FireResults_ABC& fireResult )
+void MIL_PopulationElement_ABC::ApplyLethalDamage( unsigned int nHit, PHY_FireResults_ABC* fireResult )
 {
     bHumansUpdated_ = true;
-    unsigned int pK = 33;
+    const unsigned int pK = 33;
 
     unsigned int hitRoll = ( unsigned int )MIL_Random::rand_ii( 0, 99, MIL_Random::eWounds );
     if( hitRoll < pK )
     {
         humans_.ApplyNumberOfDead( nHit );
-        fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
+        if( fireResult )
+            fireResult->GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
     }
     else if( hitRoll < 2*pK )
     {
         humans_.ApplyWounds( nHit );
-        fireResult.GetDamages( *pPopulation_ ).NotifyHumansWounded( nHit );
+        if( fireResult )
+            fireResult->GetDamages( *pPopulation_ ).NotifyHumansWounded( nHit );
     }
     else if( hitRoll < 3*pK )
     {
         PullHumans( nHit );
-        fireResult.GetDamages( *pPopulation_ ).NotifyHumansScattered( nHit );
+        if( fireResult )
+            fireResult->GetDamages( *pPopulation_ ).NotifyHumansScattered( nHit );
     }
-    fireResult.Hit( nHit );
+    if( fireResult )
+        fireResult->Hit( nHit );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +206,7 @@ void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCir
     double rDead = std::min( static_cast< double >( humans_.GetTotalLivingHumans() ), rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) );
     // $$$$ SBO 2006-04-07: 2% kill, at least one kill
     unsigned int nDead = static_cast< unsigned int >( ceil( 0.02f * rDead ) );
-    ApplyLethalDamage( nDead, fireResult );
+    ApplyLethalDamage( nDead, &fireResult );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,16 +222,33 @@ void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacit
     for( unsigned int i = 0; i < nNbrTarget; ++i )
         if( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH )
             ++nHit;
-    ApplyLethalDamage( nHit, fireResult );
+    ApplyLethalDamage( nHit, &fireResult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::ApplyBurn
 // Created: BCI 2010-12-15
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::ApplyBurn( const MIL_BurnEffectManipulator& /*burn*/ )
+void MIL_PopulationElement_ABC::ApplyBurn( const TER_Localisation& location )
 {
-    // NOTHING
+    const double killRatio = 0.05; // $$$$ LDC arbitrary 5% wounded per tick.
+    // $$$$ LDC arbitrary use bounding boxes for intersection because lack of polygon/circle - polygon/polygon intersection in TER_Localisation
+    auto ownBB = GetLocation().GetBoundingBox();
+    auto area = ownBB.GetWidth() * ownBB.GetHeight();
+    double ratio = 1;
+    if( area != 0 )
+    {
+        auto burnBB = location.GetBoundingBox();
+        if( !ownBB.Intersect2D( burnBB ) && !burnBB.Contains( ownBB ) && !ownBB.Contains( burnBB ) )
+            return;
+        MT_Rect intersection( std::max( burnBB.GetLeft(), ownBB.GetLeft() ),
+                              std::max( burnBB.GetBottom(), ownBB.GetBottom() ),
+                              std::min( burnBB.GetRight(), ownBB.GetRight() ),
+                              std::min( burnBB.GetTop(), ownBB.GetTop() ) );
+        ratio = intersection.GetWidth() * intersection.GetHeight() / area;
+    }
+    unsigned int nHit = static_cast< unsigned int >( ceil( GetTotalLivingHumans() * ratio * killRatio ) );
+    ApplyLethalDamage( nHit, 0 );
 }
 
 // -----------------------------------------------------------------------------

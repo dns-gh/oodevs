@@ -86,7 +86,7 @@ public:
     void ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, bool lethal );
     void ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult );
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
-    void ApplyBurn( const MIL_BurnEffectManipulator& burn );
+    void ApplyBurn( const TER_Localisation& location );
     void ApplyContamination( const MIL_NbcAgentType& type );
     void ApplyIntoxication( const MIL_NbcAgentType& type );
     void ApplyDecontamination( double rRatioWorkers );
@@ -158,7 +158,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    void ApplyLethalDamage( unsigned int nDead, PHY_FireResults_ABC& fireResult );
+    void ApplyLethalDamage( unsigned int nDead, PHY_FireResults_ABC* fireResult );
     void UpdateCollidingAttackingAgents( MIL_Agent_ABC& target );
     void ClearCollidingAttackingAgents();
     //@}
