@@ -34,11 +34,14 @@ integration.startRecceUrbanBlock = function( urbanBlock, recceSpeed )
 end
 --- Stop reconnoitering an urban block knowledge and emits a report
 -- @param urbanBlock Urban block knowledge
+-- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
-integration.stopRecceUrbanBlock = function( urbanBlock )
+integration.stopRecceUrbanBlock = function( urbanBlock, noReport )
     DEC_Perception_DesactiverReconnaissanceDansBlocUrbain( urbanBlock.recceAction )
     DEC_Perception_DesactiverDetectionObjetLocalisation( urbanBlock.recceObj )
-    reportFunction(eRC_FinReconnaissanceBlocUrbain )
+    if not noReport then
+        reportFunction( eRC_FinReconnaissanceBlocUrbain )
+    end
     return true
 end
 
@@ -74,6 +77,7 @@ end
 --- Continue searching an urban block
 -- @param urbanBlock Urban block knowledge
 -- @param doNotCaptureTerrorists true, if terrorists should not be captured; false, otherwise
+-- @return Boolean, whether the searching action is finished or not
 integration.startedSearchUrbanBlock = function( urbanBlock, doNotCaptureTerrorists )
     if  urbanBlock.recoFinished then
         DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )     
@@ -83,16 +87,20 @@ integration.startedSearchUrbanBlock = function( urbanBlock, doNotCaptureTerroris
         end
         urbanBlock.bActionSearchFinished = true
     end
+    return urbanBlock.bActionSearchFinished
 end
 
 --- Stop searching an urban block
 -- @param urbanBlock Urban block knowledge
+-- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
-integration.stopSearchUrbanBlock = function( urbanBlock )
+integration.stopSearchUrbanBlock = function( urbanBlock, noReport )
     perceptionReconnaissanceCallbacks[ urbanBlock.actionSearch ] = nil
     DEC_Perception_DesactiverReconnaissanceLocalisation( urbanBlock.actionSearch )
     DEC_Perception_DesactiverDetectionObjetLocalisation( urbanBlock.recceObj )
-    reportFunction(eRC_FinFouilleBlocUrbain )
+    if not noReport then
+        reportFunction( eRC_FinFouilleBlocUrbain )
+    end
     urbanBlock.area = nil
     return true
 end
@@ -178,11 +186,14 @@ end
 
 --- Stop reconnoitering a point
 -- @param point Point knowledge
+-- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
-integration.stopReccePoint = function( point )
+integration.stopReccePoint = function( point, noReport )
     DEC_Perception_DesactiverReconnaissancePoint( point.reconnaissanceAction )
     DEC_Perception_DesactiverDetectionObjetLocalisation( point.recceObj )
-    reportFunction(eRC_FinReconnaissancePoint )
+    if not noReport then
+        reportFunction( eRC_FinReconnaissancePoint )
+    end
     perceptionReconnaissanceCallbacks[ point.reconnaissanceAction ] = nil
     return true
 end
@@ -213,17 +224,20 @@ integration.startSearchPoint = function( point, radius, searchSpeed )
         local pointArea = DEC_Geometrie_CreerLocalisationCercle( point.source, pointCircleRadius )
         DEC_Connaissances_IdentifierToutesUnitesDansZone( pointArea )
     end
-    reportFunction(eRC_DebutFouillePoint )
+    reportFunction( eRC_DebutFouillePoint )
     return true
 end
 
 --- Stop searching a point
 -- @param point Point knowledge
+-- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
-integration.stopSearchPoint = function( point )
+integration.stopSearchPoint = function( point, noReport )
     DEC_Perception_DesactiverReconnaissancePoint( point.actionSearch )
     DEC_Perception_DesactiverDetectionObjetLocalisation( point.recceObj )
-    reportFunction(eRC_FinFouillePoint )
+    if not noReport then
+        reportFunction( eRC_FinFouillePoint )
+    end
     perceptionReconnaissanceCallbacks[ point.actionSearch ] = nil
     return true
 end
@@ -302,11 +316,14 @@ end
 
 --- Stop reconnoitering an area
 -- @param area Area knowledge
+-- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
-integration.stopRecceArea  = function( area )
+integration.stopRecceArea  = function( area, noReport )
     DEC_Perception_DesactiverReconnaissanceLocalisation( area.reconnaissanceAction )
     DEC_Perception_DesactiverDetectionObjetLocalisation( area.recceObj )
-    reportFunction(eRC_FinReconnaissanceZone )
+    if not noReport then
+        reportFunction( eRC_FinReconnaissanceZone )
+    end
     perceptionReconnaissanceCallbacks[ area.reconnaissanceAction ] = nil
     return true
 end
@@ -340,11 +357,14 @@ end
 
 --- Stop searching an area
 -- @param area Area knowledge
+-- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
-integration.stopSearchArea = function( area )
+integration.stopSearchArea = function( area, noReport )
     DEC_Perception_DesactiverReconnaissanceLocalisation( area.actionSearch )
     DEC_Perception_DesactiverDetectionObjetLocalisation( area.recceObj )
-    reportFunction(eRC_FinFouilleZone )
+    if not noReport then
+        reportFunction( eRC_FinFouilleZone )
+    end
     perceptionReconnaissanceCallbacks[ area.actionSearch ] = nil
     return true
 end
@@ -447,16 +467,28 @@ integration.startRecceObject = function( object, recceSpeed )
         object.bActionFinished = true
         DEC_ConnaissanceObjet_Reconnaitre( object.source )
     end
-    reportFunction(eRC_ReconnaissancePoint )
+    reportFunction( eRC_ReconnaissancePoint )
     return true
+end
+
+--- Returns true if the ongoing reconnoitering action on the given object is finished, false otherwise.
+-- @see integration.startRecceObject
+-- @see integration.stopRecceObject
+-- @param target Object knowledge
+-- @return Boolean
+integration.startedRecceObject = function( object )
+    return object.bActionFinished
 end
 
 --- Stop reconnoitering an object
 -- @param object Object knowledge
+-- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
-integration.stopRecceObject  = function( object )
+integration.stopRecceObject  = function( object, noReport )
     DEC_Perception_DesactiverReconnaissanceLocalisation( object.perceptionID )
-    reportFunction(eRC_ReconnaissanceTerminee )
+    if not noReport then
+        reportFunction( eRC_ReconnaissanceTerminee )
+    end
     perceptionReconnaissanceCallbacks[ object.perceptionID ] = nil
     return true
 end
@@ -505,11 +537,14 @@ end
 
 --- Stop searching an object
 -- @param object Object knowledge
+-- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
-integration.stopSearchObject = function( object )
+integration.stopSearchObject = function( object, noReport )
     DEC_Perception_DesactiverReconnaissanceLocalisation( object.actionSearch )
     DEC_Perception_DesactiverDetectionObjetLocalisation( object.recceObj )
-    reportFunction(eRC_FinFouilleObjet )
+    if not noReport then
+        reportFunction( eRC_FinFouilleObjet )
+    end
     perceptionReconnaissanceCallbacks[ object.actionSearch ] = nil
     return true
 end
@@ -561,4 +596,23 @@ end
 -- @return Boolean
 integration.isInRecoRange = function( target )
     return integration.distance( meKnowledge, target ) < DEC_Reconnoissance_MajorComponentMinDistance()
+end
+
+--- Returns true if the ongoing reconnoitering action on the given target is finished, false otherwise.
+-- @see integration.startReccePoint
+-- @see integration.startRecceArea
+-- @param target Area or point knowledge
+-- @return Boolean
+integration.startedRecce = function( target )
+    return target.bActionRecceFinished
+end
+
+--- Returns true if the ongoing searching action on the given target is finished, false otherwise.
+-- @see integration.startSearchPoint
+-- @see integration.startSearchArea
+-- @see integration.startSearchObject
+-- @param target Area, object or point knowledge.
+-- @return Boolean
+integration.startedSearch = function( target )
+    return target.bActionSearchFinished
 end
