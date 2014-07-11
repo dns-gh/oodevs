@@ -17,7 +17,6 @@
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
-#include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_Logger.h"
 #include "resource.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
@@ -41,6 +40,11 @@
 #include <io.h>
 
 #define MY_WM_NOTIFYICON WM_USER + 1
+#ifdef _DEBUG
+#   define MT_COMPILE_TYPE "Debug"
+#else
+#   define MT_COMPILE_TYPE "Release"
+#endif
 
 static const int NUM_ICON_FOR_ANIMATION = 2;
 static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
