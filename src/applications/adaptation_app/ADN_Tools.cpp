@@ -11,6 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Tools.h"
+#include "ADN_Types.h"
 #include "ADN_Tr.h"
 
 #include "clients_kernel/Tools.h"
@@ -256,11 +257,12 @@ int ADN_Tools::ConvertDelayToCentiseconds( const QString& delay )
     return boost::numeric_cast< int >( boost::lexical_cast< double >( strValue.toStdString() ) * modifier );
 }
 
-bool ADN_Tools::IsNullDelay( const std::string& delay )
+bool ADN_Tools::IsNullDelay( const ADN_Type_Time& delay )
 {
-    if( delay.empty() )
+    const std::string s = delay.GetData();
+    if( s.empty() )
         return true;
-    return ADN_Tools::ConvertDelayToCentiseconds( QString::fromStdString( delay ) ) == 0;
+    return ADN_Tools::ConvertDelayToCentiseconds( QString::fromStdString( s ) ) == 0;
 }
 
 // -----------------------------------------------------------------------------

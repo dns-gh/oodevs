@@ -47,7 +47,7 @@ void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( xml::xostream& outpu
     output << xml::start( "working-scheme" )
         << xml::attribute( "type", QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).toStdString() )
         << xml::attribute( "working-time", nWorkTime_ );
-    if( !ADN_Tools::IsNullDelay( warningDelay_.GetData() ) )
+    if( !ADN_Tools::IsNullDelay( warningDelay_ ) )
         output << xml::attribute( "time-before-warning", warningDelay_ );
     output << xml::end;
 }

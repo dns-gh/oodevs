@@ -161,7 +161,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", strType )
           >> xml::attribute( "decisional-model", ptrModel_ )
           >> xml::optional >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
-    bStrengthRatioFeedbackTime_ = !ADN_Tools::IsNullDelay( strengthRatioFeedbackTime_.GetData() );
+    bStrengthRatioFeedbackTime_ = !ADN_Tools::IsNullDelay( strengthRatioFeedbackTime_ );
     nAgentType_ = ADN_Tr::ConvertToAgentTypeAutomate( strType );
     input >> xml::list( "unit", *this, &ADN_Automata_Data::AutomatonInfos::ReadUnit );
 }

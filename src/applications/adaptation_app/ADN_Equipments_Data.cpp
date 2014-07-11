@@ -249,16 +249,6 @@ void ADN_Equipments_Data::NTIInfos::CopyFrom( NTIInfos& src )
     bCanRepairM_ = src.bCanRepairM_.GetData();
 }
 
-namespace
-{
-
-bool HasMaxRepairTime( const ADN_Type_Time& time )
-{
-    return !ADN_Tools::IsNullDelay( time.GetData() );
-}
-
-} // namespace
-
 // -----------------------------------------------------------------------------
 // Name: NTIInfos::ReadArchive
 // Created: APE 2005-03-11
@@ -270,7 +260,7 @@ void ADN_Equipments_Data::NTIInfos::ReadArchive( xml::xistream& input )
     input >> xml::optional >> xml::attribute( "max-reparation-time", maxRepairTime_ )
           >> xml::optional >> xml::attribute( "type", type );
 
-    bHasMaxRepairTime_ = HasMaxRepairTime( maxRepairTime_ );
+    bHasMaxRepairTime_ = !ADN_Tools::IsNullDelay( maxRepairTime_ );
     bCanRepairEA_ = type.find( "EA" ) != std::string::npos;
     bCanRepairM_  = type.find( "M"  ) != std::string::npos;
 }
@@ -285,7 +275,7 @@ void ADN_Equipments_Data::NTIInfos::WriteArchive( xml::xostream& output ) const
         return;
     output << xml::start( "repairing" );
     output << xml::attribute( "category", strName_ );
-    if( bHasMaxRepairTime_.GetData() && HasMaxRepairTime( maxRepairTime_ ) )
+    if( bHasMaxRepairTime_.GetData() && !ADN_Tools::IsNullDelay( maxRepairTime_ ) )
         output << xml::attribute( "max-reparation-time", maxRepairTime_ );
     std::string type;
     if( bCanRepairEA_.GetData() && bCanRepairM_.GetData() )
@@ -1925,8 +1915,8 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "man-unloading-time", crowdDisembarkingTimePerPerson_ )
             >> xml::end
           >> xml::end;
-    bTroopEmbarkingTimes_ = !ADN_Tools::IsNullDelay( embarkingTimePerPerson_.GetData() )
-                         || !ADN_Tools::IsNullDelay( disembarkingTimePerPerson_.GetData() );
+    bTroopEmbarkingTimes_ = !ADN_Tools::IsNullDelay( embarkingTimePerPerson_ )
+                         || !ADN_Tools::IsNullDelay( disembarkingTimePerPerson_ );
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
     bCanCarryCrowd_ = nCrowdTransportCapacity_ != 0;
 

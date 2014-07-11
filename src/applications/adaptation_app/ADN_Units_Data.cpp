@@ -605,8 +605,8 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
                 >> xml::optional >> xml::attribute( "footprint-radius", nFootprintRadius_ )
                 >> xml::optional >> xml::attribute( "speed-modifier", rSpeedModifier_ )
             >> xml::end;
-    bInstallationDelay_ = !ADN_Tools::IsNullDelay( installationDelay_.GetData() )
-                       || !ADN_Tools::IsNullDelay( uninstallationDelay_.GetData() );
+    bInstallationDelay_ = !ADN_Tools::IsNullDelay( installationDelay_ )
+                       || !ADN_Tools::IsNullDelay( uninstallationDelay_ );
     input >> xml::start( "nbc" )
             >> xml::attribute( "decontamination-delay", decontaminationDelay_ )
             >> xml::attribute( "suit", nbcSuit )
@@ -634,7 +634,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     bProbe_ = rProbeWidth_ != 0. || rProbeLength_ != 0.;
     bRanges_ = nSensorRange_ != 0 || nEquipmentRange_ != 0;
-    bStrengthRatioFeedbackTime_ = !ADN_Tools::IsNullDelay( strengthRatioFeedbackTime_.GetData() );
+    bStrengthRatioFeedbackTime_ = !ADN_Tools::IsNullDelay( strengthRatioFeedbackTime_ );
 
     input >> xml::optional
             >> xml::start( "efficiencies" )

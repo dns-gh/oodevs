@@ -38,7 +38,7 @@ void ADN_KnowledgeGroups_Data::AgentGroupInfo::ReadArchive( xml::xistream& input
             >> xml::optional >> xml::attribute( "max-unit-to-knowledge-distance", rMaxDistance_ )
             >> xml::optional >> xml::attribute( "interpolation-time", interpolationTime_ )
           >> xml::end;
-    bInterpolationTime_ = !ADN_Tools::IsNullDelay( interpolationTime_.GetData() );
+    bInterpolationTime_ = !ADN_Tools::IsNullDelay( interpolationTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output ) 
 {
     output << xml::start( "knowledge-group" )
            << xml::attribute( "name", *this );
-    if( !ADN_Tools::IsNullDelay( communicationDelay_.GetData() ) ) // LTO
+    if( !ADN_Tools::IsNullDelay( communicationDelay_ ) ) // LTO
         output << xml::attribute( "communication-delay", communicationDelay_ ); // LTO
     agentInfos_.WriteArchive( output );
     populationInfos_.WriteArchive( output );
