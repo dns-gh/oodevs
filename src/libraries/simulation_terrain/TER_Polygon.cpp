@@ -147,7 +147,10 @@ TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 {
-    if( !pData_ || !IsInBoundingBox( vPos, rPrecision ) )
+    if( !pData_ )
+        return true;
+
+    if( !IsInBoundingBox( vPos, rPrecision ) )
         return false;
 
     return BoundedSide( vPos ) != eOnUnboundedSide
