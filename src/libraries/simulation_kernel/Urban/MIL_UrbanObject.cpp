@@ -191,8 +191,9 @@ void MIL_UrbanObject::ReadLocalisation( xml::xistream& xis )
     xis >> xml::optional >> xml::start( "footprint" )
             >> xml::list( "point", *this, &MIL_UrbanObject::ReadPoint, pointVector )
         >> xml::end;
-    if( pointVector.size() > 2 )
-        Initialize( TER_Localisation( TER_Localisation::ePolygon , pointVector ) );
+    TER_Localisation location;
+    if( location.Reset( TER_Localisation::ePolygon, pointVector ) )
+        Initialize( location );
 }
 
 // -----------------------------------------------------------------------------

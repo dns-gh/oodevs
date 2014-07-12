@@ -324,7 +324,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_Ur
         }
         if( pObject->GetLocalisation().GetPoints().empty() )
         {
-            MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", pObject->GetUrbanId() ) );
+            MT_LOG_WARNING_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", pObject->GetUrbanId() ) );
             delete pObject;
             return 0;
         }

@@ -160,14 +160,14 @@ void TER_Localisation::InitializeBoundingBox( CT_PointVector& pointVector )
 // -----------------------------------------------------------------------------
 bool TER_Localisation::InitializePolygon()
 {
-    if( pointVector_.size() < 3 )
-        return false;
     for( IT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
         TER_World::GetWorld().ClipPointInsideWorld( *it );
     // Make the polygon loop if it wasn't done
-    if( *pointVector_.begin() != *pointVector_.rbegin() )
+    if( !pointVector_.empty() && *pointVector_.begin() != *pointVector_.rbegin() )
         pointVector_.push_back( *pointVector_.begin() );
     polygon_.Reset( pointVector_ );
+    if( polygon_.IsNull() )
+        return false;
     InitializeBoundingBox( pointVector_ );
     return true;
 }
