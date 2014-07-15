@@ -503,7 +503,7 @@ void TER_Localisation::Read( xml::xistream& xis )
             >> xml::end// points
         >> xml::end; // shape
     if( !Initialize() )
-        throw MASA_EXCEPTION( "Invalid location" ); // $$$$ ABL 2007-07-09: error context
+        throw MASA_EXCEPTION( "invalid geometry of type '" + strType + "': " + xis.context() );
 }
 
 // -----------------------------------------------------------------------------
