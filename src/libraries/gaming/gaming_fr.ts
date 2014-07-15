@@ -1014,7 +1014,7 @@
     </message>
     <message>
         <source>Heat:</source>
-        <translation>Touché:</translation>
+        <translation>Chaleur:</translation>
     </message>
     <message>
         <source>Combustion energy:</source>

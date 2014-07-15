@@ -170,6 +170,7 @@ namespace report
     extern const MIL_DecisionalReport eRC_IdentifiedUnitSurrendered;
     extern const MIL_DecisionalReport eRC_RecognizedUnitSurrendered;
     extern const MIL_DecisionalReport eRC_IEDHeard;
+    extern const MIL_DecisionalReport eRC_InFireObject;
 }
 
 #endif // MIL_DecisionalReport

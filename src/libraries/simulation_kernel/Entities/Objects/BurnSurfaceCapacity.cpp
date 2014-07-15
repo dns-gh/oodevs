@@ -128,7 +128,7 @@ void BurnSurfaceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_
 // Name: BurnSurfaceCapacity::ProcessPopulationInside
 // Created: BCI 2011-01-06
 // -----------------------------------------------------------------------------
-void BurnSurfaceCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent )
+void BurnSurfaceCapacity::ProcessPopulationInside( MIL_Object_ABC&, MIL_PopulationElement_ABC& agent )
 {
-    burningCells_.BurnPopulation( object, agent );
+    burningCells_.BurnPopulation( agent );
 }

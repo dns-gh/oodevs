@@ -628,7 +628,7 @@ void MIL_BurningCells::BurnAgent( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 // Name: MIL_BurningCells::BurnPopulation
 // Created: BCI 2011-01-06
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::BurnPopulation( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+void MIL_BurningCells::BurnPopulation( MIL_PopulationElement_ABC& population )
 {
     const MT_Rect& boundingBox = population.GetLocation().GetBoundingBox();
     double minX = boundingBox.GetLeft();
@@ -647,8 +647,19 @@ void MIL_BurningCells::BurnPopulation( MIL_Object_ABC& object, MIL_PopulationEle
             {
                 if( it->second->phase_ == sword::combustion || it->second->phase_ == sword::decline )
                 {
-                    population.ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
-                    return;
+                    double radius = MIL_FireClass::GetCellSize() / 2.;
+                    T_PointVector vector;
+                    MT_Vector2D p1( it->second->center_.X() - radius, it->second->center_.Y() - radius );
+                    MT_Vector2D p2( it->second->center_.X() - radius, it->second->center_.Y() + radius );
+                    MT_Vector2D p3( it->second->center_.X() + radius, it->second->center_.Y() + radius );
+                    MT_Vector2D p4( it->second->center_.X() + radius, it->second->center_.Y() - radius );
+                    vector.push_back( p1 );
+                    vector.push_back( p2 );
+                    vector.push_back( p3 );
+                    vector.push_back( p4 );
+                    vector.push_back( p1 );
+                    TER_Localisation location( TER_Localisation::ePolygon, vector );
+                    population.ApplyBurn( location );
                 }
             }
         }
