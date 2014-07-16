@@ -59,6 +59,25 @@ private:
     double rC2_;
 };
 
-#include "MT_Sector.inl"
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+// -----------------------------------------------------------------------------
+// Name: MT_Sector::serialize
+// Created: JVT 2005-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MT_Sector::serialize( Archive& file, const unsigned int )
+{
+    file & vOrigin_
+         & vDirection_
+         & rSemiAngle_
+         & rA1_
+         & rB1_
+         & rC1_
+         & rA2_
+         & rB2_
+         & rC2_;
+}
 
 #endif // __MT_Sector_h_

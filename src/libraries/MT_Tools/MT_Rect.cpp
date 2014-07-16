@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "MT_Rect.h"
-#include "MT_Line.h"
 #include <cassert>
+#include <cmath>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Rect constructor
@@ -95,19 +95,6 @@ void MT_Rect::Set( const MT_Vector2D& vLeftBottom, const MT_Vector2D& vRightTop 
 //=============================================================================
 // INTERSECTION
 //=============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: MT_Rect::Intersect2D
-// Created: FBD 02-11-21
-//-----------------------------------------------------------------------------
-bool MT_Rect::Intersect2D( const MT_Triangle& triangle ) const
-{
-    MT_Line line1( triangle.GetPos1(), triangle.GetPos2() );
-    MT_Line line2( triangle.GetPos2(), triangle.GetPos3() );
-    MT_Line line3( triangle.GetPos3(), triangle.GetPos1() );
-
-    return Intersect2D( line1 ) || Intersect2D( line2 ) || Intersect2D( line3 );
-}
 
 //-----------------------------------------------------------------------------
 // Name: MT_Rect::Intersect2D
@@ -333,3 +320,227 @@ void MT_Rect::ClipPoint( MT_Vector2D& vPosToClip ) const
         vPosToClip.rY_ = rPosY2_;
 }
 
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetPointUpLeft
+// Created: NLD 2002-12-17
+//-----------------------------------------------------------------------------
+const MT_Vector2D& MT_Rect::GetPointUpLeft() const
+{
+    return pointUpLeft_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetPointUpRight
+// Created: NLD 2002-12-17
+//-----------------------------------------------------------------------------
+const MT_Vector2D& MT_Rect::GetPointUpRight() const
+{
+    return pointUpRight_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetPointDwnRight
+// Created: NLD 2002-12-17
+//-----------------------------------------------------------------------------
+const MT_Vector2D& MT_Rect::GetPointDownRight() const
+{
+    return pointDownRight_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetPointDownLeft
+// Created: NLD 2002-12-17
+//-----------------------------------------------------------------------------
+const MT_Vector2D& MT_Rect::GetPointDownLeft() const
+{
+    return pointDownLeft_;
+}
+
+//-----------------------------------------------------------------------------
+//  Name  :  MT_Rect::GetTop
+// Created: FBD 02-07-05
+//-----------------------------------------------------------------------------
+double MT_Rect::GetTop() const
+{
+    return rPosY2_;
+}
+
+//-----------------------------------------------------------------------------
+//  Name  :  MT_Rect::GetBottom
+// Created: FBD 02-07-05
+//-----------------------------------------------------------------------------
+double MT_Rect::GetBottom() const
+{
+    return rPosY1_;
+}
+
+
+//-----------------------------------------------------------------------------
+//  Name  :  MT_Rect::GetLeft
+// Created: FBD 02-07-05
+//-----------------------------------------------------------------------------
+double MT_Rect::GetLeft() const
+{
+    return rPosX1_;
+}
+
+
+//-----------------------------------------------------------------------------
+//  Name  :  MT_Rect::GetRight
+// Created: FBD 02-07-05
+//-----------------------------------------------------------------------------
+double MT_Rect::GetRight() const
+{
+    return rPosX2_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetWidth
+// Created: FBD 02-11-07
+//-----------------------------------------------------------------------------
+double MT_Rect::GetWidth() const
+{
+    return rWidth_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetHeight
+// Created: FBD 02-11-07
+//-----------------------------------------------------------------------------
+double MT_Rect::GetHeight() const
+{
+    return rHeight_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetCenter
+// Created: FBD 02-11-14
+//-----------------------------------------------------------------------------
+const MT_Vector2D& MT_Rect::GetCenter() const
+{
+    return vCenter_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::operator=
+// Created: FBD 02-11-07
+//-----------------------------------------------------------------------------
+MT_Rect& MT_Rect::operator=( const MT_Rect& rhs )
+{
+    rPosX1_         = rhs.rPosX1_;
+    rPosY1_         = rhs.rPosY1_;
+    rPosX2_         = rhs.rPosX2_;
+    rPosY2_         = rhs.rPosY2_;
+    rWidth_         = rPosX2_ - rPosX1_;
+    rHeight_        = rPosY2_ - rPosY1_;
+    vCenter_        = rhs.vCenter_;
+    
+    pointUpLeft_.rX_ = rPosX1_;
+    pointUpLeft_.rY_ = rPosY1_;
+    pointUpRight_.rX_ = rPosX2_;
+    pointUpRight_.rY_ = rPosY1_;
+    pointDownRight_.rX_ = rPosX2_;
+    pointDownRight_.rY_ = rPosY2_;
+    pointDownLeft_.rX_ = rPosX1_;
+    pointDownLeft_.rY_ = rPosY2_;
+
+    return *this;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::IsInside
+// Created: FBD 02-11-07
+//-----------------------------------------------------------------------------
+bool MT_Rect::IsInside( const MT_Vector2D& point ) const
+{
+    return( point.rX_ >= rPosX1_ && point.rX_ <= rPosX2_ && point.rY_ >= rPosY1_ && point.rY_ <= rPosY2_  );
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::IsInside
+// Created: NLD 2003-01-27
+//-----------------------------------------------------------------------------
+bool MT_Rect::IsInside( const MT_Vector2D& point, double rPrecision ) const
+{
+    double rTmpX = point.rX_ - rPosX1_;
+    if( rTmpX < 0 && fabs( rTmpX ) >= rPrecision )
+        return false;
+
+    rTmpX = rPosX2_ - point.rX_;
+    if( rTmpX < 0 && fabs( rTmpX ) >= rPrecision )
+        return false;
+
+    double rTmpY = point.rY_ - rPosY1_;
+    if( rTmpY < 0 && fabs( rTmpY ) >= rPrecision )
+        return false;
+
+    rTmpY = rPosY2_ - point.rY_;
+    if( rTmpY < 0 && fabs( rTmpY ) >= rPrecision )
+        return false;
+
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Rect::Contains
+// Created: BCI 2011-02-24
+// -----------------------------------------------------------------------------
+bool MT_Rect::Contains( const MT_Rect& rect ) const
+{
+    return IsInside( rect.GetPointUpLeft() ) && IsInside( rect.GetPointDownRight() );
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetLineLeft
+// Created: FBD 03-03-07
+//-----------------------------------------------------------------------------
+const MT_Line& MT_Rect::GetLineLeft() const
+{
+    return lineLeft_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetLineRight
+// Created: FBD 03-03-07
+//-----------------------------------------------------------------------------
+const MT_Line& MT_Rect::GetLineRight() const
+{
+    return lineRight_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetLineUp
+// Created: FBD 03-03-07
+//-----------------------------------------------------------------------------
+const MT_Line& MT_Rect::GetLineUp() const
+{
+    return lineUp_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::GetLineDown
+// Created: FBD 03-03-07
+//-----------------------------------------------------------------------------
+const MT_Line& MT_Rect::GetLineDown() const
+{
+    return lineDown_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MT_Rect::Intersect2D
+// Created: JDY 03-05-20
+//-----------------------------------------------------------------------------
+bool MT_Rect::Intersect2D( const MT_Rect& rect ) const
+{
+    return Intersect2D(MT_Line(rect.pointUpLeft_,rect.pointUpRight_) )
+        || Intersect2D(MT_Line(rect.pointUpRight_,rect.pointDownRight_) )
+        || Intersect2D(MT_Line(rect.pointDownRight_,rect.pointDownLeft_) )
+        || Intersect2D(MT_Line(rect.pointDownLeft_,rect.pointUpLeft_) );
+}

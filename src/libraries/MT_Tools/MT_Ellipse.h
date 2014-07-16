@@ -53,6 +53,4 @@ public:
     MT_Vector2D vCenter_;
 };
 
-#include "MT_Ellipse.inl"
-
 #endif // __MT_Ellipse_h_

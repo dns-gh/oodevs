@@ -9,12 +9,12 @@
 //
 // *****************************************************************************
 
+#include "MT_Sector.h"
 
 // -----------------------------------------------------------------------------
 // Name: MT_Sector constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-inline
 MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection, double rAngle )
     : vOrigin_   ( vOrigin_ )
     , vDirection_( vDirection )
@@ -45,7 +45,6 @@ MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection
 // Name: MT_Sector constructor
 // Created: JVT 2005-04-12
 // -----------------------------------------------------------------------------
-inline
 MT_Sector::MT_Sector()
     : vOrigin_   ()
     , vDirection_()
@@ -63,7 +62,6 @@ MT_Sector::MT_Sector()
 // Name: MT_Sector destructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-inline
 MT_Sector::~MT_Sector()
 {
     // NOTHING
@@ -73,7 +71,6 @@ MT_Sector::~MT_Sector()
 // Name: MT_Sector::IsInCone
 // Created: JVT 02-08-30
 //-----------------------------------------------------------------------------
-inline
 bool MT_Sector::IsInCone( const MT_Vector2D& vPos, double rRadius ) const
 {
     if ( rSemiAngle_ >= MT_PI || rSemiAngle_ <= 0 ) // vision sur 360°
@@ -90,7 +87,6 @@ bool MT_Sector::IsInCone( const MT_Vector2D& vPos, double rRadius ) const
 // Name: MT_Sector::IsInSector
 // Created: JVT 02-09-02
 //-----------------------------------------------------------------------------
-inline
 bool MT_Sector::IsInSector( const MT_Vector2D& vPos ) const
 {
     if ( rSemiAngle_ >= MT_PI || rSemiAngle_ <= 0 )
@@ -104,7 +100,6 @@ bool MT_Sector::IsInSector( const MT_Vector2D& vPos ) const
 // Name: MT_Sector::GetDirection
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-inline
 const MT_Vector2D& MT_Sector::GetDirection() const
 {
     return vDirection_;
@@ -114,7 +109,6 @@ const MT_Vector2D& MT_Sector::GetDirection() const
 // Name: MT_Sector::GetOrigin
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-inline
 const MT_Vector2D& MT_Sector::GetOrigin() const
 {
     return vOrigin_;
@@ -124,30 +118,7 @@ const MT_Vector2D& MT_Sector::GetOrigin() const
 // Name: MT_Sector::GetAngle
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-inline
 double MT_Sector::GetAngle() const
 {
     return rSemiAngle_ * 2;
-}
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-// -----------------------------------------------------------------------------
-// Name: MT_Sector::serialize
-// Created: JVT 2005-04-12
-// -----------------------------------------------------------------------------
-template< typename Archive >
-inline
-void MT_Sector::serialize( Archive& file, const unsigned int )
-{
-    file & vOrigin_
-         & vDirection_
-         & rSemiAngle_
-         & rA1_
-         & rB1_
-         & rC1_
-         & rA2_
-         & rB2_
-         & rC2_;
 }

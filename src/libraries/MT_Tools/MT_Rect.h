@@ -13,7 +13,6 @@
 #define __MT_Rect_h_
 
 #include "MT_Line.h"
-#include "MT_Triangle.h"
 
 //*****************************************************************************
 // Created: FBD 02-11-07
@@ -62,7 +61,6 @@ public:
     bool Contains   ( const MT_Rect& rect ) const;
     bool Intersect2D( const MT_Line& line ) const;
     bool Intersect2D( const MT_Rect& rect ) const;
-    bool Intersect2D( const MT_Triangle& triangle ) const;
     bool Intersect2D( const MT_Vector2D& vPosSrc, const MT_Vector2D& vPosDest ) const;
     bool Intersect2D( const MT_Line& orientedLine, T_PointSet& collisionSet, double rPrecision ) const;
 
@@ -104,7 +102,5 @@ private:
 
     MT_Vector2D vCenter_;
 };
-
-#include "MT_Rect.inl"
 
 #endif // __MT_Rect_h_

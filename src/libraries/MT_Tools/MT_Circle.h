@@ -12,7 +12,9 @@
 #ifndef __MT_Circle_h_
 #define __MT_Circle_h_
 
-#include "MT_Line.h"
+#include "MT_Vector2DTypes.h"
+
+class MT_Line;
 
 //*****************************************************************************
 // Created: JDY 03-03-06
@@ -47,7 +49,5 @@ private:
     MT_Vector2D c_;
     double    r_;
 };
-
-#include "MT_Circle.inl"
 
 #endif // __MT_Circle_h_

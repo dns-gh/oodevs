@@ -64,6 +64,4 @@ private:
 
 };
 
-#include "MT_Polyline.inl"
-
 #endif // __MT_Polyline_h_
