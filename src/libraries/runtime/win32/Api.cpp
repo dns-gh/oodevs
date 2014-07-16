@@ -135,3 +135,20 @@ int Api::GetCurrentProcessIdentifier() const
 {
     return ::GetCurrentProcessId();
 }
+
+bool Api_ABC::Has64BitSystem()
+{
+#ifdef _WIN64
+ return true;
+#else
+ bool x64 = false;
+ return IsWow64Process( GetCurrentProcess(), &x64 ) && x64;
+#endif
+}
+
+bool Api_ABC::Is64BitBinary( const wchar_t* app )
+{
+    DWORD type;
+    int err = GetBinaryTypeW( app, &type );
+    return err && type == SCS_64BIT_BINARY;
+}

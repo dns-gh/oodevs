@@ -384,15 +384,24 @@ NodeController::T_Node NodeController::Update( const Uuid& id, const Tree& cfg )
     return node;
 }
 
+namespace
+{
+    std::string GetClient( bool x64 )
+    {
+        return x64 ? "client64" : "client32";
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: NodeController::GetClient
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
-Tree NodeController::GetClient() const
+Tree NodeController::GetClient( bool x64 ) const
 {
     if( !client_ )
         throw web::HttpException( web::NOT_FOUND );
-    Package_ABC::T_Item item = client_->Find( 0, false );
+    const auto target = Package::MakeDependency( ::GetClient( x64 ), "gaming" );
+    const auto item = client_->Find( *target, false );
     if( !item )
         throw web::HttpException( web::NOT_FOUND );
     return client_->GetPropertiesFrom( *item );
@@ -402,11 +411,12 @@ Tree NodeController::GetClient() const
 // Name: NodeController::DownloadClient
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
-void NodeController::DownloadClient( web::Chunker_ABC& dst ) const
+void NodeController::DownloadClient( web::Chunker_ABC& dst, bool x64 ) const
 {
     if( !client_ )
         throw web::HttpException( web::NOT_FOUND );
-    Package_ABC::T_Item item = client_->Find( 0, false );
+    const auto target = Package::MakeDependency( ::GetClient( x64 ), "gaming" );
+    const auto item = client_->Find( *target, false );
     if( !item )
         throw web::HttpException( web::NOT_FOUND );
     try
@@ -588,11 +598,16 @@ size_t NodeController::CountPlugins() const
 
 namespace
 {
-Tree AppendClient( const Tree& source, const Tree& client )
+void AppendClient( Tree& dst, const std::string& name, const Tree& data )
 {
-    Tree dst = source;
-    dst.put( "client.name",     Get< std::string >( client, "name" ) );
-    dst.put( "client.checksum", Get< std::string >( client, "checksum" ) );
+    dst.put( name + ".name",     Get< std::string >( data, "name" ) );
+    dst.put( name + ".checksum", Get< std::string >( data, "checksum" ) );
+}
+
+Tree AppendClients( Tree dst, const Tree& bin32, const Tree& bin64 )
+{
+    AppendClient( dst, "client32", bin32 );
+    AppendClient( dst, "client64", bin64 );
     return dst;
 }
 }
@@ -603,7 +618,7 @@ Tree AppendClient( const Tree& source, const Tree& client )
 // -----------------------------------------------------------------------------
 Tree NodeController::LinkExercise( const Node_ABC& node, const std::string& name ) const
 {
-    return AppendClient( node.LinkExercise( name ), GetClient() );
+    return AppendClients( node.LinkExercise( name ), GetClient( false ), GetClient( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -612,7 +627,7 @@ Tree NodeController::LinkExercise( const Node_ABC& node, const std::string& name
 // -----------------------------------------------------------------------------
 Tree NodeController::LinkExercise( const Node_ABC& node, const Tree& tree ) const
 {
-    return AppendClient( node.LinkExercise( tree ), GetClient() );
+    return AppendClients( node.LinkExercise( tree ), GetClient( false ), GetClient( true ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,6 +9,7 @@
 
 #include "Package.h"
 
+#include "runtime/win32/Api_ABC.h"
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
@@ -779,17 +780,25 @@ namespace
         return ( root / Metadata::GetFilename() ) == path;
     }
 
+    std::string GetClient( const Path& root )
+    {
+        const auto app = root / "gaming_app.exe";
+        const bool x64 = runtime::Api_ABC::Is64BitBinary( app.wstring().data() );
+        return std::string( "client" ) + ( x64 ? "64" : "32" );
+    };
+
     struct Client : public Item
     {
         Client( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
             : Item( fs, root, id, "gaming", Format( fs.GetLastWrite( file ) ), meta )
+            , type_( GetClient( root ) )
         {
             // NOTHING
         }
 
         std::string GetType() const
         {
-            return "client";
+            return type_;
         }
 
         Path GetSuffix() const
@@ -811,6 +820,8 @@ namespace
                 AttachSimple< Client >( async, file, fs, root, items, &meta );
             }
         }
+
+        const std::string type_;
     };
 }
 
@@ -1242,4 +1253,9 @@ size_t Package::GetSize() const
 void Package::Download( web::Chunker_ABC& dst, const Item_ABC& item )
 {
     item.Download( fs_, dst) ;
+}
+
+Package::T_Item Package::MakeDependency( const std::string& type, const std::string& name )
+{
+    return boost::make_shared< Dependency >( type, name );
 }

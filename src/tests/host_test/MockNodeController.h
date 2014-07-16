@@ -31,8 +31,8 @@ namespace mocks
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 1 );
         MOCK_METHOD( Update, 2 );
-        MOCK_METHOD( GetClient, 0 );
-        MOCK_METHOD( DownloadClient, 1 );
+        MOCK_METHOD( GetClient, 1 );
+        MOCK_METHOD( DownloadClient, 2 );
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
         MOCK_METHOD_EXT( DownloadInstall, 3, void( const host::Uuid&, web::Chunker_ABC&, size_t ), DownloadInstallById );

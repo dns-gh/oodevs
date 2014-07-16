@@ -72,8 +72,8 @@ namespace
         MOCK_METHOD( UpdateNode, 2 );
         MOCK_METHOD( IdentifyNode, 1 );
         // client
-        MOCK_METHOD( GetClient, 0 );
-        MOCK_METHOD( DownloadClient, 1 );
+        MOCK_METHOD( GetClient, 1 );
+        MOCK_METHOD( DownloadClient, 2 );
         // install
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
