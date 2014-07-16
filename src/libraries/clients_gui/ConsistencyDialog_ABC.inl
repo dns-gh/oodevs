@@ -28,6 +28,7 @@ ConsistencyDialog< EnumError, TargetItem >::ConsistencyDialog( const QString& ob
     proxyModel_.setDynamicSortFilter( true );
     proxyModel_.setSourceModel( dataModel_ );
     proxyModel_.setSortRole( Qt::UserRole + 2 );
+    proxyModel_.sort( 0, Qt::DescendingOrder );
     tableView_->setModel( &proxyModel_ );
 }
 
