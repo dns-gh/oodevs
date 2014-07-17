@@ -37,7 +37,6 @@ TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers, GlTool
     , isLimit_     ( true )
     , isEditing_   ( false )
     , selected_    ( controllers_ )
-
 {
     controllers_.Update( *this );
 }
