@@ -217,7 +217,13 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
         composite.AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
         composite.AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
         composite.AddItem( tools::translate( "Menu", "10km" ), 10.0f );
+        composite.AddItem( tools::translate( "Menu", "100km" ), 100.0f );
         composite.AddItem( tools::translate( "Menu", "Off"    ),  -1 );
+    }
+    {
+        CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Grid type" ), MakePixmap( "grid_type" ), controllers.options_, "GridType" );
+        composite.AddItem( tools::translate( "Menu", "Local" ), eCoordinateSystem_Local );
+        composite.AddItem( tools::translate( "Menu", "MGRS"  ), eCoordinateSystem_Mgrs );
     }
 
     {

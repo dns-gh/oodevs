@@ -1249,6 +1249,22 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>&amp;Settings</source>
         <translation>&amp;Réglages</translation>
     </message>
+    <message>
+        <source>100km</source>
+        <translation>100km</translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation>Locale</translation>
+    </message>
+    <message>
+        <source>MGRS</source>
+        <translation>UTM</translation>
+    </message>
+    <message>
+        <source>Grid type</source>
+        <translation>Type de grille</translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>

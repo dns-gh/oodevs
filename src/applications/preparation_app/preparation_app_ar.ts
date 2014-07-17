@@ -1249,6 +1249,22 @@ This data can&apos;t be projected.</source>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>100km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MGRS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid type</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>

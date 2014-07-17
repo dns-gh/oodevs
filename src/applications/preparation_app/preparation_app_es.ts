@@ -1250,6 +1250,22 @@ Este dato no puede ser proyectado.</translation>
         <source>&amp;Settings</source>
         <translation>Con&amp;figuración</translation>
     </message>
+    <message>
+        <source>100km</source>
+        <translation type="unfinished">100km</translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MGRS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid type</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
