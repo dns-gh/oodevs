@@ -1793,6 +1793,14 @@ func ReadPathPoints(pathPoints []*sword.PathPoint) []PathPoint {
 	return points
 }
 
+func ReadIds(list []*sword.Id) []uint32 {
+	ids := []uint32{}
+	for _, id := range list {
+		ids = append(ids, id.GetId())
+	}
+	return ids
+}
+
 func (c *Client) PathfindRequest(request *sword.PathfindRequest, position ...Point) ([]PathPoint, error) {
 	request.Positions = make([]*sword.CoordLatLong, len(position))
 	for i, p := range position {

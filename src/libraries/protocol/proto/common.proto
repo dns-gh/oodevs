@@ -813,7 +813,7 @@ message MissionParameter {
         //! A phase line function type
         optional PhaseLineOrder.Function  phase_line_function      = 53;
         //! A pathfind request
-        optional PathfindRequest          pathfind_request         = 54;
+        optional Pathfind                 pathfind                 = 54;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;
@@ -2742,6 +2742,18 @@ message PathfindRequest {
     optional bool         ignore_dynamic_objects = 4;
 }
 
+/** @struct Pathfind
+    @brief Notifies of the creation of a pathfind
+*/
+message Pathfind {
+    //! The pathfind identifier
+    required uint32          id          = 1;
+    //! The pathfind request
+    required PathfindRequest request     = 2;
+    //! Computed path
+    optional PathResult      result      = 3;
+}
+
 //! Creates a new path.
 //! (see PathfindRequest)
 message ComputePathfind {
@@ -2768,18 +2780,6 @@ message ComputePathfindAck {
     optional Id         unit        = 3;
     //! Returns computed path
     optional PathResult path        = 4;
-}
-
-/** @struct Pathfind
-    @brief Notifies of the creation of a pathfind
-*/
-message Pathfind {
-    //! The pathfind identifier
-    required uint32     id          = 1;
-    //! The associated unit
-    required uint32     unit        = 2;
-    //! Computed path
-    required PathResult path        = 3;
 }
 
 /** @struct PathfindDestruction

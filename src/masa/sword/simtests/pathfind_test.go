@@ -11,6 +11,7 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
+	"masa/sword/swtest"
 )
 
 func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
@@ -225,7 +226,10 @@ func (s *TestSuite) TestCreateDestroyPathfind(c *C) {
 	// Create pathfind
 	pathfind, err := client.CreatePathfind(unit.Id, positions...)
 	c.Assert(err, IsNil)
-	CheckWaypoints(c, positions, pathfind.Points, []bool{true, true, true, true})
+	CheckWaypoints(c, positions, pathfind.Result, []bool{true, true, true, true})
+
+	swtest.DeepEquals(c, unit.Id, pathfind.UnitId)
+	swtest.DeepEquals(c, positions, pathfind.Positions)
 
 	// Invalid pathfind id
 	err = client.DestroyPathfind(12345)

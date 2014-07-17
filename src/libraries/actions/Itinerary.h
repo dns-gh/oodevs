@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class PathfindRequest;
+    class Pathfind;
 }
 
 namespace kernel
@@ -41,7 +41,7 @@ public:
                         const kernel::CoordinateConverter_ABC& converter );
              Itinerary( const kernel::OrderParameter& parameter,
                         const kernel::CoordinateConverter_ABC& converter,
-                        const sword::PathfindRequest& parameters );
+                        const sword::Pathfind& parameters );
     virtual ~Itinerary();
     //@}
 
@@ -57,8 +57,8 @@ public:
 private:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC&    converter_;
-    std::unique_ptr< sword::PathfindRequest > request_;
+    const kernel::CoordinateConverter_ABC& converter_;
+    std::unique_ptr< sword::Pathfind > pathfind_;
     //@}
 };
 

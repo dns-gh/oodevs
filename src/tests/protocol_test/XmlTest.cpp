@@ -15,6 +15,7 @@
 
 #include "tools/MessageSender_ABC.h"
 
+#include <tools/Helpers.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
@@ -97,8 +98,8 @@ namespace
     void AddParameterValue( xml::xosubstream xos, const std::string& type, const T& value )
     {
         xos << xml::start( "parameter" )
-            << xml::attribute( "type", type )
-            << xml::attribute( "value", value );
+                << xml::attribute( "type", type )
+                << xml::attribute( "value", value );
     }
 
     void CheckNull( const MissionParameter& src )
@@ -1084,35 +1085,51 @@ BOOST_FIXTURE_TEST_CASE( read_itinerary, Fixture )
     const std::string input =
     "<action>"
     "  <parameter type='itinerary'>"
-    "    <unit id='13'/>"
-    "    <positions>"
-    "      <point coordinates='dummy'/>"
-    "      <point coordinates='dummy'/>"
-    "    </positions>"
-    "    <equipments>"
-    "      <type id='7'/>"
-    "      <type id='17'/>"
-    "    </equipments>"
-    "    <ignore_dynamic_objects value='true'/>"
+    "    <id value='42'/>"
+    "    <request>"
+    "       <unit id='13'/>"
+    "       <positions>"
+    "         <point coordinates='dummy'/>"
+    "         <point coordinates='dummy'/>"
+    "       </positions>"
+    "       <equipments>"
+    "         <type id='7'/>"
+    "         <type id='17'/>"
+    "       </equipments>"
+    "       <ignore_dynamic_objects value='true'/>"
+    "    </request>"
+    "    <result>"
+    "       <point coordinates='dummy' waypoint='4' reached='false'/>"
+    "       <point coordinates='dummy'/>"
+    "    </result>"
     "  </parameter>"
     "</action>";
-    const Reader_ABC::Point points[] = { {1.0, 3.0}, {5.0, 7.0} };
-    MOCK_EXPECT( reader.Convert ).once().returns( points[0] );
-    MOCK_EXPECT( reader.Convert ).once().returns( points[1] );
+    const Reader_ABC::Point points[] = { {1.0, 3.0},   {5.0, 7.0},
+                                         {11.0, 13.0}, {15.0, 17.0} };
+    for( std::size_t i = 0; i < COUNT_OF( points ); ++i )
+        MOCK_EXPECT( reader.Convert ).once().returns( points[i] );
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
-    auto& req = msg.elem( 0 ).value( 0 ).pathfind_request();
-    BOOST_CHECK_EQUAL( req.unit().id(), 13u );
-    BOOST_CHECK_EQUAL( req.positions_size(), 2 );
-    const auto check = []( const sword::CoordLatLong& a, const Reader_ABC::Point& b ){
+    BOOST_REQUIRE_EQUAL( msg.elem_size(), 1 );
+    auto& pathfind = msg.elem( 0 ).value( 0 ).pathfind();
+    BOOST_CHECK_EQUAL( pathfind.id(), 42u );
+    BOOST_CHECK_EQUAL( pathfind.request().unit().id(), 13u );
+    BOOST_REQUIRE_EQUAL( pathfind.request().positions_size(), 2 );
+    const auto checkPoint = []( const sword::CoordLatLong& a, const Reader_ABC::Point& b ){
         return a.longitude() == b.x && a.latitude() == b.y;
     };
-    BOOST_CHECK( check( req.positions( 0 ), points[0] ) );
-    BOOST_CHECK( check( req.positions( 1 ), points[1] ) );
-    BOOST_CHECK_EQUAL( req.equipment_types_size(), 2 );
-    BOOST_CHECK_EQUAL( req.equipment_types( 0 ).id(), 7u );
-    BOOST_CHECK_EQUAL( req.equipment_types( 1 ).id(), 17u );
-    BOOST_CHECK( req.ignore_dynamic_objects() );
+    BOOST_CHECK( checkPoint( pathfind.request().positions( 0 ), points[0] ) );
+    BOOST_CHECK( checkPoint( pathfind.request().positions( 1 ), points[1] ) );
+    BOOST_CHECK_EQUAL( pathfind.request().equipment_types_size(), 2 );
+    BOOST_CHECK_EQUAL( pathfind.request().equipment_types( 0 ).id(), 7u );
+    BOOST_CHECK_EQUAL( pathfind.request().equipment_types( 1 ).id(), 17u );
+    BOOST_CHECK( pathfind.request().ignore_dynamic_objects() );
+    const auto checkPathPoint = []( const sword::PathPoint& a, const Reader_ABC::Point& b, int32_t waypoint, bool reached ){
+        return a.coordinate().longitude() == b.x && a.coordinate().latitude() == b.y &&
+             ( a.has_waypoint() ? a.waypoint() == waypoint : true ) && ( a.has_reached() ? a.reached() == reached : true );
+    };
+    BOOST_REQUIRE_EQUAL( pathfind.result().points_size(), 2 );
+    BOOST_CHECK( checkPathPoint( pathfind.result().points( 0 ), points[2], 4, false ) );
+    BOOST_CHECK( checkPathPoint( pathfind.result().points( 1 ), points[3], 0, true ) );
     CheckCycle( input, msg );
 }
 

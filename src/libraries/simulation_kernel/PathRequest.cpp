@@ -20,6 +20,7 @@
 #include <boost/serialization/optional.hpp>
 
 BOOST_SERIALIZATION_SPLIT_FREE( sword::PathResult );
+BOOST_SERIALIZATION_SPLIT_FREE( sword::PathfindRequest );
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PathRequest )
 
@@ -31,13 +32,13 @@ PathRequest::PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer,
                           unsigned int ctx,
                           unsigned int clientId,
                           uint32_t id,
-                          uint32_t unit,
+                          const sword::PathfindRequest& message,
                           const boost::optional< uint32_t >& magic )
     : computer_( computer )
     , ctx_( ctx )
     , clientId_( clientId )
     , id_( id )
-    , unit_( unit )
+    , request_( message )
     , magic_( magic )
 {
     // NOTHING
@@ -55,7 +56,7 @@ PathRequest::~PathRequest()
 void PathRequest::SendComputePathfindAck( bool ok )
 {
     client::ComputePathfindAck ack;
-    ack().mutable_unit()->set_id( unit_ );
+    ack().mutable_unit()->set_id( request_.unit().id() );
     ack().set_error_code( ok ? sword::ComputePathfindAck::no_error : sword::ComputePathfindAck::error_path_invalid );
     if( ok )
         *ack().mutable_path() = *path_;
@@ -111,8 +112,8 @@ void PathRequest::SendStateToNewClient()
         return;
     client::Pathfind msg;
     msg().set_id( id_ );
-    msg().set_unit( unit_ );
-    *msg().mutable_path() = *path_;
+    *msg().mutable_request() = request_;
+    *msg().mutable_result() = *path_;
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -139,7 +140,7 @@ void save_construct_data( Archive& ar, const PathRequest* ptr, const unsigned in
     ar << ptr->ctx_
        << ptr->clientId_
        << ptr->id_
-       << ptr->unit_
+       << ptr->request_
        << ptr->magic_;
 }
 
@@ -149,13 +150,13 @@ void load_construct_data( Archive& ar, PathRequest* ptr, const unsigned int /*ve
     unsigned int ctx;
     unsigned int clientId;
     uint32_t id;
-    uint32_t unit;
+    sword::PathfindRequest request;
     boost::optional< uint32_t > magic;
     ar >> ctx
        >> clientId
        >> id
-       >> unit
+       >> request
        >> magic;
     // we don't care anymore about the computer, our path is computed and ready to use
-    ::new( ptr ) PathRequest( boost::shared_ptr< DEC_PathComputer >(), ctx, clientId, id, unit, magic );
+    ::new( ptr ) PathRequest( boost::shared_ptr< DEC_PathComputer >(), ctx, clientId, id, request, magic );
 }

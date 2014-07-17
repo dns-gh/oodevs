@@ -815,25 +815,50 @@ namespace
         AddPointList( reader, *pull.mutable_waybackpath(), "waybackpath", xis );
     }
 
-    void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    void ReadPathfindRequest( const Reader_ABC& reader, sword::PathfindRequest& request, xml::xisubstream xis )
     {
-        dst.set_null_value( false );
-        auto& req = *dst.add_value()->mutable_pathfind_request();
+        xis >> xml::start( "request" );
         if( auto id = TestAttribute< uint32_t >( xml::xisubstream( xis ) >> xml::start( "unit" ), "id" ) )
-            req.mutable_unit()->set_id( *id );
+            request.mutable_unit()->set_id( *id );
         PointList positions;
         AddPointList( reader, positions, "positions", xis );
         for( auto it = positions.elem().begin(); it != positions.elem().end(); ++it )
             if( it->location().coordinates().elem().size() )
-                *req.add_positions() = it->location().coordinates().elem( 0 );
+                *request.add_positions() = it->location().coordinates().elem( 0 );
         xml::xisubstream( xis )
             >> xml::start( "equipments" )
             >> xml::list( "type", [&]( xml::xistream& xis ){
             if( auto id = TestAttribute< uint32_t >( xis, "id" ) )
-                req.add_equipment_types()->set_id( *id );
+                request.add_equipment_types()->set_id( *id );
         });
         if( auto dyn = TestAttribute< bool >( xml::xisubstream( xis ) >> xml::start( "ignore_dynamic_objects" ), "value" ) )
-            req.set_ignore_dynamic_objects( *dyn );
+            request.set_ignore_dynamic_objects( *dyn );
+    }
+
+    void ReadPathResult( const Reader_ABC& reader, sword::PathResult& result, xml::xisubstream xis )
+    {
+        xis >> xml::start( "result" )
+                >> xml::list( "point", [&]( xml::xistream& xis ){
+                    auto& points = *result.add_points();
+                    auto point = reader.Convert( xis.attribute< std::string >( "coordinates" ) );
+                    points.mutable_coordinate()->set_longitude( point.x );
+                    points.mutable_coordinate()->set_latitude( point.y );
+                    if( auto waypoint = TestAttribute< int32_t >( xis, "waypoint" ) )
+                        points.set_waypoint( *waypoint );
+                    if( auto reached = TestAttribute< bool >( xis, "reached" ) )
+                        points.set_reached( *reached );
+                } );
+    }
+
+    void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        dst.set_null_value( false );
+        auto& pathfind = *dst.add_value()->mutable_pathfind();
+        if( auto id = TestAttribute< uint32_t >( xml::xisubstream( xis ) >> xml::start( "id" ), "value" ) )
+            pathfind.set_id( *id );
+        ReadPathfindRequest( reader, *pathfind.mutable_request(), xis );
+        if( xis.has_child( "result" ) )
+            ReadPathResult( reader, *pathfind.mutable_result(), xis );
     }
 
     void AddListParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )

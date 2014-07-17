@@ -30,7 +30,7 @@ public:
                   unsigned int ctx,
                   unsigned int clientId,
                   uint32_t id,
-                  uint32_t unit,
+                  const sword::PathfindRequest& message,
                   const boost::optional< uint32_t >& magic );
     virtual ~PathRequest();
     //@}
@@ -62,7 +62,7 @@ private:
     const unsigned int ctx_;
     const unsigned int clientId_;
     const uint32_t id_;
-    const uint32_t unit_;
+    const sword::PathfindRequest request_;
     const boost::optional< uint32_t > magic_;
     boost::optional< sword::PathResult > path_;
     //@}

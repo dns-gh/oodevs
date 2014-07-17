@@ -444,9 +444,12 @@ type LocalWeather struct {
 }
 
 type Pathfind struct {
-	Id     uint32
-	UnitId uint32
-	Points []PathPoint
+	Id                   uint32
+	UnitId               uint32
+	Positions            []Point
+	EquipmentTypes       []uint32
+	IgnoreDynamicObjects bool
+	Result               []PathPoint
 }
 
 type OrderKind int
