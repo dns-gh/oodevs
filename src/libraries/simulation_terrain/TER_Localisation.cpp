@@ -1031,7 +1031,7 @@ bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon, double rPreci
 // -----------------------------------------------------------------------------
 bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation, double rPrecision ) const
 {
-    if( localisation.GetPoints().empty() || pointVector_.empty() ) // Nécessaire au dernier test...
+    if( localisation.IsEmpty() || IsEmpty() )
         return false;
     CIT_PointVector itPoint = pointVector_.begin();
     const MT_Vector2D* pPrevPoint = &*itPoint;
@@ -1357,4 +1357,10 @@ const MT_Vector2D& TER_Localisation::GetCircleCenter() const
 double TER_Localisation::DefaultPrecision()
 {
     return rPrecision_;
+}
+
+bool TER_Localisation::IsEmpty() const
+{
+    return pointVector_.empty() || 
+        ( nType_ == ePolygon && polygon_.IsNull() );
 }
