@@ -52,7 +52,6 @@ public:
     //! @name Operations
     //@{
     void LoadTemplates( const tools::Path& filename );
-    void SaveTemplates( const tools::Path& filename ) const;
     void CreateTemplate( const kernel::Entity_ABC& entity );
     //@}
 
@@ -78,6 +77,8 @@ private:
     void CreateItem( HierarchyTemplate& t );
     void CreateItem( HierarchyTemplate& t, const QString& name );
     virtual void keyPressEvent( QKeyEvent* event );
+
+    void SaveTemplates() const;
     //@}
 
 private:
@@ -89,6 +90,7 @@ private:
     const kernel::AgentTypes& types_;
     ColorController& colorController_;
     T_Templates templates_;
+    tools::Path file_;
     //@}
 };
 
