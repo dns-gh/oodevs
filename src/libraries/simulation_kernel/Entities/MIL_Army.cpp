@@ -281,11 +281,13 @@ void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory 
 {
     try
     {
-        objectFactory.CreateObject( xis, this );
+        xml::xisubstream sub( xis );
+        objectFactory.CreateObject( sub, this );
     }
     catch( const std::exception& e)
     {
-        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
+        MT_LOG_ERROR_MSG( "could not read object in party " << strName_ << "[" << nID_ << "]"
+                << ": " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -297,11 +299,13 @@ void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& popula
 {
     try
     {
-        populationFactory.Create( xis, *this );
+        xml::xisubstream sub( xis );
+        populationFactory.Create( sub, *this );
     }
     catch( const std::exception& e)
     {
-        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
+        MT_LOG_ERROR_MSG( "could not read crowd in party " << strName_ << "[" << nID_ << "]"
+                << ": " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -313,11 +317,13 @@ void MIL_Army::ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabi
 {
     try
     {
-        inhabitantFactory.Create( xis, *this );
+        xml::xisubstream sub( xis );
+        inhabitantFactory.Create( sub, *this );
     }
     catch( const std::exception& e)
     {
-        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
+        MT_LOG_ERROR_MSG( "could not read population in party " << strName_ << "[" << nID_ << "]"
+                << ": " << tools::GetExceptionMsg( e ) );
     }
 }
 
