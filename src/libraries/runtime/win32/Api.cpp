@@ -141,7 +141,7 @@ bool Api_ABC::Has64BitSystem()
 #ifdef _WIN64
  return true;
 #else
- bool x64 = false;
+ BOOL x64 = false;
  return IsWow64Process( GetCurrentProcess(), &x64 ) && x64;
 #endif
 }
