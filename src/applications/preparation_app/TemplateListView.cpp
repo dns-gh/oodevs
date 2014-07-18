@@ -56,6 +56,7 @@ void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
     HierarchyTemplate* pTemplate = new HierarchyTemplate( agents_, formations_, ghosts_, entity, true, colorController_ );
     templates_.push_back( pTemplate );
     CreateItem( *pTemplate );
+    SaveTemplates();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,6 +104,7 @@ void TemplateListView::OnRename( const QModelIndex& index, const QVariant& varia
     if( index.isValid() && variant.type() == QVariant::String )
         if( HierarchyTemplate* pTemplate = dataModel_.GetDataFromIndex< HierarchyTemplate >( index ) )
             pTemplate->Rename( variant.toString() );
+    SaveTemplates();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +114,7 @@ void TemplateListView::OnRename( const QModelIndex& index, const QVariant& varia
 void TemplateListView::LoadTemplates( const tools::Path& filename )
 {
     Clear();
+    file_ = filename;
     if( filename.IsEmpty() || !filename.Exists() )
         return;
     tools::Xifstream xif( filename );
@@ -127,13 +130,14 @@ void TemplateListView::LoadTemplates( const tools::Path& filename )
 // Name: TemplateListView::SaveTemplates
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void TemplateListView::SaveTemplates( const tools::Path& filename ) const
+void TemplateListView::SaveTemplates() const
 {
-    tools::Xofstream output( filename );
+    if( file_.IsEmpty() )
+        return;
+    tools::Xofstream output( file_ );
     output << xml::start( "templates" );
     for( auto it = templates_.begin(); it != templates_.end(); ++it )
         (*it)->Serialize( output );
-    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -200,4 +204,5 @@ void TemplateListView::OnDelete()
                     delete *it;
             }
         }
+    SaveTemplates();
 }

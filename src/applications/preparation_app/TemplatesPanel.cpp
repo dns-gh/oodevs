@@ -47,14 +47,6 @@ TemplatesPanel::TemplatesPanel( QWidget* parent,
 // -----------------------------------------------------------------------------
 TemplatesPanel::~TemplatesPanel()
 {
-    try
-    {
-        if( ! templateFile_.IsEmpty() )
-            list_->SaveTemplates( templateFile_ );
-    }
-    catch( ... )
-    {
-    }
     controllers_.Unregister( *this );
 }
 
@@ -65,8 +57,7 @@ TemplatesPanel::~TemplatesPanel()
 void TemplatesPanel::NotifyUpdated( const kernel::ModelLoaded& model )
 {
     Show();
-    templateFile_ = model.config_.BuildPhysicalChildFile( "templates.xml" );
-    list_->LoadTemplates( templateFile_ );
+    list_->LoadTemplates( model.config_.BuildPhysicalChildFile( "templates.xml" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +66,7 @@ void TemplatesPanel::NotifyUpdated( const kernel::ModelLoaded& model )
 // -----------------------------------------------------------------------------
 void TemplatesPanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
+    Hide();
     list_->LoadTemplates( "" );
 }
 
@@ -101,6 +93,4 @@ void TemplatesPanel::OnCreateTemplate()
 {
     if( menuEntity_ )
         list_->CreateTemplate( *menuEntity_ );
-    if( ! templateFile_.IsEmpty() )
-        list_->SaveTemplates( templateFile_ );
 }
