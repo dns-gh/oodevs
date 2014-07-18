@@ -101,7 +101,7 @@ private:
     boost::optional< std::string > Convert( double longitude, double latitude, const std::string& prefix, int x, int y ) const;
 
     template< typename C >
-    Point Find( int good, int bad, const C& convert ) const;
+    Point Bisect( int good, int bad, const C& convert ) const;
 
     Square MakeSquare( const std::string& prefix, double longitude, double latitude ) const;
     Point MakePoint( double longitude, double latitude ) const;
