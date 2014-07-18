@@ -10,8 +10,6 @@
 #include "simulation_terrain_test_pch.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "TER_TestHelpers.h"
-#include <tools/BoostTest.h>
-#include <tools/Helpers.h>
 
 BOOST_AUTO_TEST_CASE( TER_Localisation_IsEmpty )
 {
@@ -34,47 +32,37 @@ BOOST_AUTO_TEST_CASE( TER_Localisation_IsEmpty )
 namespace
 {
 
-struct TestIntersecting
+void CheckIntersecting( std::string wkt1, std::string wkt2, bool intersect )
 {
-    std::string wkt;
-    bool intersect;
-};
+    const auto poly1 = LocalisationFromWKT( wkt1 );
+    const auto poly2 = LocalisationFromWKT( wkt2 );
+    if( poly1->IsIntersecting( *poly2 ) != intersect )
+        BOOST_ERROR( "unexpected IsIntersecting between " << wkt1 << " and " << wkt2 );
+    if( poly2->IsIntersecting( *poly1 ) != intersect )
+        BOOST_ERROR( "unexpected IsIntersecting between " << wkt2 << " and " << wkt1 );
+}
 
 } // namespace
 
 BOOST_AUTO_TEST_CASE( TER_Localisation_IsIntersecting )
 {
-    const std::string otherWkt = "POLYGON (0 0, 3 0, 3 3, 0 3)";
-    const auto other = LocalisationFromWKT( otherWkt );
+    const std::string wkt1 = "POLYGON (0 0, 3 0, 3 3, 0 3)";
 
-    const TestIntersecting tests[] =
-    {
-        // Empty
-        { "POLYGON ()", false },
+    // Empty
+    CheckIntersecting( wkt1, "POLYGON ()", false );
 
-        // Invalid
-        { "POLYGON (1 1)", false },
-        { "POLYGON (1 1, 4 4)", false },
-        { "POLYGON (1 1, 4 4, 1 1)", false },
+    // Invalid
+    CheckIntersecting( wkt1, "POLYGON (1 1)", false );
+    CheckIntersecting( wkt1, "POLYGON (1 1, 4 4)", false );
+    CheckIntersecting( wkt1, "POLYGON (1 1, 4 4, 1 1)", false );
 
         // Intersecting
-        { "POLYGON (1 1, 1 4, 4 4, 4 1)", true },
+    CheckIntersecting( wkt1, "POLYGON (1 1, 1 4, 4 4, 4 1)", true );
 
-        // Included
-        { "POLYGON (1 1, 2 1, 2 2, 1 2)", true },
+    // Included
+    CheckIntersecting( wkt1, "POLYGON (1 1, 2 1, 2 2, 1 2)", true );
 
-        // Disjoint
-        { "POLYGON (5 5, 5 6, 6 6, 6 5)", false },
-    };
-
-    for( size_t i = 0; i < COUNT_OF( tests ); ++i )
-    {
-        const auto t = tests[i];
-        const auto poly = LocalisationFromWKT( t.wkt );
-        if( poly->IsIntersecting( *other ) != t.intersect )
-            BOOST_ERROR( "unexpected IsIntersecting between " << t.wkt << " and " << otherWkt );
-        if( other->IsIntersecting( *poly ) != t.intersect )
-            BOOST_ERROR( "unexpected IsIntersecting between " << otherWkt << " and " << t.wkt );
-    }
+    // Disjoint
+    CheckIntersecting( wkt1, "POLYGON (5 5, 5 6, 6 6, 6 5)", false );
 }
 
