@@ -73,7 +73,7 @@ private:
      //! @name Helpers
     //@{
     void SetGeodeticCoordinates( const geometry::Point2f& pos ) const;
-    const geometry::Point2d GetGeodeticCoordinates() const;
+    geometry::Point2d GetGeodeticCoordinates() const;
     //@}
 
 private:
