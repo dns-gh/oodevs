@@ -85,8 +85,8 @@ struct Agent_ABC : public boost::noncopyable
 
     //! @name Client Methods
     //@{
-    virtual Tree GetClient     () const = 0;
-    virtual void DownloadClient( Chunker_ABC& dst ) const = 0;
+    virtual Tree GetClient     ( bool x64 ) const = 0;
+    virtual void DownloadClient( Chunker_ABC& dst, bool x64 ) const = 0;
     //@}
 
     //! @name Install Methods

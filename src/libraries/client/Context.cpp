@@ -15,6 +15,7 @@
 #include "ItemModel.h"
 #include "QAsync.h"
 
+#include <runtime/win32/Api.h>
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
@@ -335,6 +336,13 @@ void Context::ParseSession( const QByteArray& body )
     ApplySession();
 }
 
+namespace
+{
+    std::string GetClient()
+    {
+        return std::string( "client" ) + ( runtime::Api_ABC::Has64BitSystem() ? "64" : "32" );
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: Head::Apply
 // Created: BAX 2012-10-02
@@ -342,7 +350,7 @@ void Context::ParseSession( const QByteArray& body )
 void Context::ApplySession()
 {
     size_t idx = size_t( ~0 );
-    AddItem( session_, "client", idx );
+    AddItem( session_, GetClient(), idx );
     AddItem( session_, "model", idx );
     AddItem( session_, "terrain", idx );
     AddItem( session_, "exercise", idx );
@@ -380,7 +388,8 @@ void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
     next.setPath( "/api/download_client" );
     QList< QPair< QString, QString > > list;
     list.append( qMakePair( QString( "sid" ), url_.queryItemValue( "sid" ) ) );
-    if( type != "client" )
+    list.append( qMakePair( QString( "x64" ), QString( runtime::Api_ABC::Has64BitSystem() ? "1" : "0" ) ) );
+    if( type != GetClient() )
     {
         next.setPath( "/api/download_install" );
         list.append( qMakePair( QString( "id" ),  QUtf8( node ) ) );
@@ -584,7 +593,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Context::StartClient()
 {
-    const Path client = GetPath( "client" );
+    const Path client = GetPath( QString::fromStdString( GetClient() ) );
     const Path model = GetPath( "model" );
     const Path terrain = GetPath( "terrain" );
     const Path exercise = GetPath( "exercise" );

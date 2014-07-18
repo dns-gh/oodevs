@@ -514,7 +514,8 @@ void Controller::UpdateNode( Reply_ABC& rpy, Request_ABC& request )
 void Controller::GetClient( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_PLAYER );
-    WriteHttpReply( rpy, agent_.GetClient() );
+    const bool x64 = GetParameter< bool >( "x64", request, false );
+    WriteHttpReply( rpy, agent_.GetClient( x64 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -525,7 +526,8 @@ void Controller::DownloadClient( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_PLAYER );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
-    return agent_.DownloadClient( *chunker );
+    const bool x64 = GetParameter< bool >( "x64", request, false );
+    return agent_.DownloadClient( *chunker, x64 );
 }
 
 // -----------------------------------------------------------------------------
