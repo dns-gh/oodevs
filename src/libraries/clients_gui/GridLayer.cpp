@@ -121,6 +121,8 @@ void GridLayer::DrawSquares( const geometry::Rectangle2f& viewport ) const
 
 namespace
 {
+    // Computes the intersection between a rectangle and a segment defined by
+    // two points. The result can be any of 0, 1 or 2 points.
     std::vector< geometry::Point2f > Intersect(
         const geometry::Rectangle2f& r,
         const geometry::Point2f& p1, const geometry::Point2f& p2 )

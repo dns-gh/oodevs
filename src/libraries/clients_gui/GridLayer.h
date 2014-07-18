@@ -51,6 +51,7 @@ public:
     //@}
 
 private:
+    // An MGRS point in a 100,000-meter square
     struct Point
     {
         Point()
@@ -62,11 +63,12 @@ private:
             , x_( x )
             , y_( y )
         {}
-        geometry::Point2f coord_;
-        int x_;
-        int y_; // MGRS xy coordinates
+        geometry::Point2f coord_; // screen coordinates
+        int x_, y_;               // MGRS xy coordinates
     };
 
+    // An MGRS 100,000-meter square
+    // See http://en.wikipedia.org/wiki/Military_grid_reference_system#100.2C000-meter_square_identification
     struct Square
     {
         Point topLeft_;
