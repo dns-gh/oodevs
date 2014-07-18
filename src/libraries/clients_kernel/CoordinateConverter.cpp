@@ -86,6 +86,14 @@ std::string CoordinateConverter::ConvertToMgrs( const geometry::Point2f& pos ) c
     return mgrs_.GetString();
 }
 
+std::string CoordinateConverter::ConvertToMgrs( const geometry::Point2d& pos ) const
+{
+    static const float rPiOver180 = std::acos( -1.f ) / 180.f;
+    geodetic_.Set( pos.Y() * rPiOver180, pos.X() * rPiOver180 );
+    mgrs_.SetCoordinates( geodetic_ );
+    return mgrs_.GetString();
+}
+
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::ConvertToXY
 // Created: SBO 2006-08-23
@@ -104,24 +112,15 @@ geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) co
 // -----------------------------------------------------------------------------
 geometry::Point2d CoordinateConverter::ConvertToGeo( const geometry::Point2f& pos ) const
 {
-    static const double r180OverPi = 180. / std::acos( -1. );
     SetGeodeticCoordinates( pos );
-    geometry::Point2d result;
-    result.Set( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude() * r180OverPi );
-    return result;
+    return GetGeodeticCoordinates();
 }
 
-// -----------------------------------------------------------------------------
-// Name: CoordinateConverter::ConvertToGeo
-// Created: AGE 2008-04-01
-// -----------------------------------------------------------------------------
-geometry::Point2d CoordinateConverter::ConvertToGeo( const geometry::Point2d& pos ) const
+geometry::Point2d CoordinateConverter::ConvertToGeo( const std::string& mgrs ) const
 {
-    static const double r180OverPi = 180. / std::acos( -1. );
-    const geometry::Point2d translated = pos - geometry::Vector2d( translation_.X(), translation_.Y() );
-    planar_.Set( translated.X(), translated.Y() );
-    geodetic_.SetCoordinates( planar_ );
-    return geometry::Point2d( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude() * r180OverPi );
+    mgrs_.SetString( mgrs );
+    geodetic_.SetCoordinates( mgrs_ );
+    return GetGeodeticCoordinates();
 }
 
 // -----------------------------------------------------------------------------
@@ -220,6 +219,14 @@ void CoordinateConverter::SetGeodeticCoordinates( const geometry::Point2f& pos )
     const geometry::Point2f translated = pos - translation_;
     planar_.Set( translated.X(), translated.Y() );
     geodetic_.SetCoordinates( planar_ );
+}
+
+const geometry::Point2d CoordinateConverter::GetGeodeticCoordinates() const
+{
+    static const double r180OverPi = 180. / std::acos( -1. );
+    geometry::Point2d result;
+    result.Set( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude() * r180OverPi );
+    return result;
 }
 
 // -----------------------------------------------------------------------------

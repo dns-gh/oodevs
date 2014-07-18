@@ -310,7 +310,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     gui::Layer& resourceNetworksLayer = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
+    gui::Layer& grid                 = *new gui::GridLayer( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
     gui::Layer& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
     gui::Layer& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, *parameters_, model_.tacticalLineFactory_, *glProxy_, profile_, *drawingsBuilder_ );
     gui::Layer& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, picker );

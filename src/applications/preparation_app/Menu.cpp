@@ -149,7 +149,12 @@ Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers
         gridMenu->AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
         gridMenu->AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
         gridMenu->AddItem( tools::translate( "Menu", "10km" ), 10.0f );
+        gridMenu->AddItem( tools::translate( "Menu", "100km" ), 100.0f );
         subMenu->insertItem( tools::translate( "Menu", "Grid" ), gridMenu );
+        auto sizeMenu = new gui::OptionMenu< int >( subMenu, controllers.options_, "GridType" );
+        sizeMenu->AddItem( tools::translate( "Menu", "Local" ), eCoordinateSystem_Local );
+        sizeMenu->AddItem( tools::translate( "Menu", "MGRS" ), eCoordinateSystem_Mgrs );
+        subMenu->insertItem( tools::translate( "Menu", "Grid type" ), sizeMenu );
         menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );
         menu->insertSeparator();
 

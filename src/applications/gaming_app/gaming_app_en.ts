@@ -2584,6 +2584,22 @@ This data can&apos;t be projected.</source>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>100km</source>
+        <translation>100km</translation>
+    </message>
+    <message>
+        <source>Grid type</source>
+        <translation>Grid type</translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation>Local</translation>
+    </message>
+    <message>
+        <source>MGRS</source>
+        <translation>MGRS</translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>
