@@ -36,10 +36,10 @@ void CheckIntersecting( std::string wkt1, std::string wkt2, bool intersect )
 {
     const auto poly1 = LocalisationFromWKT( wkt1 );
     const auto poly2 = LocalisationFromWKT( wkt2 );
-    if( poly1->IsIntersecting( *poly2 ) != intersect )
-        BOOST_ERROR( "unexpected IsIntersecting between " << wkt1 << " and " << wkt2 );
-    if( poly2->IsIntersecting( *poly1 ) != intersect )
-        BOOST_ERROR( "unexpected IsIntersecting between " << wkt2 << " and " << wkt1 );
+    BOOST_CHECK_MESSAGE( poly1->IsIntersecting( *poly2 ) == intersect,
+        "unexpected IsIntersecting between " << wkt1 << " and " << wkt2 );
+    BOOST_CHECK_MESSAGE( poly2->IsIntersecting( *poly1 ) == intersect,
+        "unexpected IsIntersecting between " << wkt2 << " and " << wkt1 );
 }
 
 } // namespace
