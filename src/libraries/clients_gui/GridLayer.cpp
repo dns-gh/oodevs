@@ -121,6 +121,8 @@ void GridLayer::DrawSquares( const geometry::Rectangle2f& viewport ) const
 
 namespace
 {
+    // Computes the intersection between a rectangle and a segment defined by
+    // two points. The result can be any of 0, 1 or 2 points.
     std::vector< geometry::Point2f > Intersect(
         const geometry::Rectangle2f& r,
         const geometry::Point2f& p1, const geometry::Point2f& p2 )
@@ -270,7 +272,7 @@ void GridLayer::NotifyUpdated( const kernel::ModelUnLoaded& )
 }
 
 template< typename C >
-GridLayer::Point GridLayer::Find( int good, int bad, const C& convert ) const
+GridLayer::Point GridLayer::Bisect( int good, int bad, const C& convert ) const
 {
     boost::optional< std::string > result;
     while( std::abs( good - bad ) > 1 )
@@ -389,40 +391,40 @@ GridLayer::Square GridLayer::MakeSquare( const std::string& prefix, double longi
     {
         square.bottomLeft_ = MakePoint( *bl );
         if( !br )
-            square.bottomRight_ = Find( 0, max,
+            square.bottomRight_ = Bisect( 0, max,
                 [&]( int i ) { return Convert( longitude, latitude, prefix, i, 0 ); } );
         if( !tl && !tr )
-            square.topLeft_ = Find( 0, max,
+            square.topLeft_ = Bisect( 0, max,
                 [&]( int i ) { return Convert( longitude, latitude, prefix, 0, i ); } );
     }
     if( tl )
     {
         square.topLeft_ = MakePoint( *tl );
         if( !tr )
-            square.topRight_ = Find( 0, max,
+            square.topRight_ = Bisect( 0, max,
                 [&]( int i ) { return Convert( longitude, latitude, prefix, i, max ); } );
         if( !bl && !br )
-            square.bottomLeft_ = Find( max, 0,
+            square.bottomLeft_ = Bisect( max, 0,
                 [&]( int i ) { return Convert( longitude, latitude, prefix, 0, i ); } );
     }
     if( tr )
     {
         square.topRight_ = MakePoint( *tr );
         if( !tl )
-            square.topLeft_ = Find( max, 0,
+            square.topLeft_ = Bisect( max, 0,
                 [&]( int i ) { return Convert( longitude, latitude, prefix, i, max ); } );
         if( !br && !bl )
-            square.bottomRight_ = Find( max, 0,
+            square.bottomRight_ = Bisect( max, 0,
                 [&]( int i ) { return Convert( longitude, latitude, prefix, max, i ); } );
     }
     if( br )
     {
         square.bottomRight_ = MakePoint( *br );
         if( !bl )
-            square.bottomLeft_ = Find( max, 0,
+            square.bottomLeft_ = Bisect( max, 0,
                 [&]( int i ) { return Convert( longitude, latitude, prefix, i, 0 ); } );
         if( !tr && !tl )
-            square.topRight_ = Find( 0, max,
+            square.topRight_ = Bisect( 0, max,
                 [&]( int i ) { return Convert( longitude, latitude, prefix, max, i ); } );
     }
     if( !br && !tl && !tr )

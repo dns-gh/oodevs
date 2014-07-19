@@ -51,6 +51,7 @@ public:
     //@}
 
 private:
+    // An MGRS point in a 100,000-meter square
     struct Point
     {
         Point()
@@ -62,11 +63,12 @@ private:
             , x_( x )
             , y_( y )
         {}
-        geometry::Point2f coord_;
-        int x_;
-        int y_; // MGRS xy coordinates
+        geometry::Point2f coord_; // screen coordinates
+        int x_, y_;               // MGRS xy coordinates
     };
 
+    // An MGRS 100,000-meter square
+    // See http://en.wikipedia.org/wiki/Military_grid_reference_system#100.2C000-meter_square_identification
     struct Square
     {
         Point topLeft_;
@@ -99,7 +101,7 @@ private:
     boost::optional< std::string > Convert( double longitude, double latitude, const std::string& prefix, int x, int y ) const;
 
     template< typename C >
-    Point Find( int good, int bad, const C& convert ) const;
+    Point Bisect( int good, int bad, const C& convert ) const;
 
     Square MakeSquare( const std::string& prefix, double longitude, double latitude ) const;
     Point MakePoint( double longitude, double latitude ) const;

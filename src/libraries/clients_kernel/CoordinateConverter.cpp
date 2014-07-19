@@ -221,7 +221,7 @@ void CoordinateConverter::SetGeodeticCoordinates( const geometry::Point2f& pos )
     geodetic_.SetCoordinates( planar_ );
 }
 
-const geometry::Point2d CoordinateConverter::GetGeodeticCoordinates() const
+geometry::Point2d CoordinateConverter::GetGeodeticCoordinates() const
 {
     static const double r180OverPi = 180. / std::acos( -1. );
     geometry::Point2d result;
