@@ -16,6 +16,42 @@
 #include <boost/make_shared.hpp>
 #include <boost/regex.hpp>
 
+namespace
+{
+
+std::string GetWKTType( const std::string& wkt )
+{
+    static const boost::regex reType( "^\\s*(\\S+)\\s*\\(", boost::regex::icase );
+    boost::smatch result;
+    if( !boost::regex_search( wkt, result, reType, boost::match_perl ) )
+        throw MASA_EXCEPTION( "could not parse wkt type: " + wkt );
+    return boost::algorithm::to_lower_copy( std::string( result[1] ) );
+}
+
+// Circle is not defined in WKT (only CircularString), but who cares:
+//
+//   CIRCLE( p1x p1y, p2x p2y )
+//
+// where the two points define a diameter.
+boost::shared_ptr< TER_Localisation > CircleFromWKT( const std::string& wkt )
+{
+    static const boost::regex reCircle(
+            "\\s*circle\\s*\\(\\s*(\\S+)\\s+(\\S+)\\s*,\\s*(\\S+)\\s+(\\S+)\\s*\\)",
+            boost::regex::icase );
+    boost::smatch result;
+    if( !boost::regex_match( wkt, result, reCircle, boost::match_perl ) )
+        throw MASA_EXCEPTION( "could not parse circle wkt: " + wkt );
+    const MT_Vector2D p1( boost::lexical_cast< double >( result[1] ),
+                          boost::lexical_cast< double >( result[2] ));
+    const MT_Vector2D p2( boost::lexical_cast< double >( result[3] ),
+                          boost::lexical_cast< double >( result[4] ));
+    const MT_Vector2D center( ( p1.rX_ + p2.rY_ ) / 2, ( p1.rY_ + p2.rY_ ) / 2 );
+    const double radius = p1.Distance( p2 ) / 2;
+    return boost::make_shared< TER_Localisation >( center, radius );
+}
+
+} // namespace
+
 TER_Polygon FromWKT( std::string wkt, bool convexHull )
 {
     // It is tempting to use GEOS to parse the WKT but it would normalize
@@ -50,6 +86,16 @@ TER_Polygon FromWKT( std::string wkt, bool convexHull )
 
 boost::shared_ptr< TER_Localisation > LocalisationFromWKT( const std::string& wkt )
 {
-    auto polygon = FromWKT( wkt, false );
-    return boost::make_shared< TER_Localisation >( polygon );
+    const auto type = GetWKTType( wkt );
+    if( type == "polygon" )
+    {
+        auto polygon = FromWKT( wkt, false );
+        return boost::make_shared< TER_Localisation >( polygon );
+    }
+    else if( type == "circle" )
+    {
+        return CircleFromWKT( wkt );
+    }
+    else
+        throw MASA_EXCEPTION( "unknown WKT type: " + type );
 }

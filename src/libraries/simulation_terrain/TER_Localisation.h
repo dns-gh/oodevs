@@ -109,7 +109,7 @@ public:
     virtual MT_Rect GetBoundingBox() const;
     virtual bool IsInside( const MT_Vector2D& vPos ) const;
 
-    bool IsEmpty() const;
+    bool IsValid() const;
     double       GetArea                      () const;
     double       GetLength                    () const;
     double       GetIntersectionAreaWithCircle( const MT_Circle& circle ) const;

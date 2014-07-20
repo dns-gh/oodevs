@@ -1031,7 +1031,7 @@ bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon, double rPreci
 // -----------------------------------------------------------------------------
 bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation, double rPrecision ) const
 {
-    if( localisation.IsEmpty() || IsEmpty() )
+    if( localisation.IsValid() || IsValid() )
         return false;
     CIT_PointVector itPoint = pointVector_.begin();
     const MT_Vector2D* pPrevPoint = &*itPoint;
@@ -1359,8 +1359,11 @@ double TER_Localisation::DefaultPrecision()
     return rPrecision_;
 }
 
-bool TER_Localisation::IsEmpty() const
+bool TER_Localisation::IsValid() const
 {
     return pointVector_.empty() || 
-        ( nType_ == ePolygon && polygon_.IsNull() );
+        // Null() polygon are invalid unless they were generated from
+        // zero-radius circles. We consider zero-radius circle to be valid
+        // and degenerated to point, to handle containment tests.
+        ( nType_ == ePolygon && polygon_.IsNull() && !bWasCircle_ );
 }
