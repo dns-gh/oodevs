@@ -13,7 +13,6 @@
 #include "MockBuilder.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
-#include "StubTER_World.h"
 #include "MockObjectTypeResolver.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
@@ -22,6 +21,7 @@
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Tools/MIL_Color.h"
+#include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 
 /**

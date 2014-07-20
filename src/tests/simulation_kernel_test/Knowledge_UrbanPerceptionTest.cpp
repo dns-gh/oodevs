@@ -16,7 +16,7 @@
 #include "MissionController.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
-#include "StubTER_World.h"
+#include "simulation_terrain/TER_World.h"
 #include <memory>
 
 namespace

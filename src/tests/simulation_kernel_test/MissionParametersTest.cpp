@@ -24,7 +24,6 @@
 #include "MockNET_Publisher_ABC.h"
 #include "MockMIL_Object_ABC.h"
 #include "Network/NET_ASN_Tools.h"
-#include "StubTER_World.h"
 #include "MockAgent.h"
 #include "ActionManager.h"
 #include "MissionController.h"
@@ -63,6 +62,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
+#include "simulation_terrain/TER_World.h"
 
 using namespace sword;
 

@@ -22,7 +22,6 @@
 #include "MockMIL_ObjectType_ABC.h"
 #include "MockMIL_Object_ABC.h"
 #include "MockNET_Publisher_ABC.h"
-#include "StubTER_World.h"
 #include "ActionManager.h"
 #include "MissionController.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -46,6 +45,7 @@
 #include "Knowledge/DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "Knowledge/DEC_Knowledge_PopulationFlowPerception.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include "simulation_terrain/TER_World.h"
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
 

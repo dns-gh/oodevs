@@ -29,6 +29,7 @@
 #include <spatialcontainer/TerrainData.h>
 #include "MT_Tools/MT_Rect.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/NullFileLoaderObserver.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/make_shared.hpp>
 
@@ -256,4 +257,40 @@ TER_PopulationManager& TER_World::GetPopulationManager() const
 TER_LimitDataManager& TER_World::GetLimitManager() const
 {
     return *limitManager_;
+}
+
+namespace
+{
+
+std::shared_ptr< tools::ExerciseConfig > CreateConfig( const std::string& exercise )
+{
+    auto config = std::make_shared< tools::ExerciseConfig >(
+            tools::CreateNullFileLoaderObserver() );
+    char* params[4];
+    params[0] = "dummy_executable.exe";
+    params[1] = "--root-dir=../../data";
+    const std::string option = "--exercise=" + exercise;
+    params[2] = const_cast< char* >( option .c_str() );
+    params[3] = "--session=default";
+    config->Parse( 4, params );
+    return config;
+}
+
+}  // namespace
+
+FakeWorld::FakeWorld( const std::string& exercise )
+{
+    const auto config = CreateConfig( exercise );
+    TER_World::Initialize( *config );
+}
+
+FakeWorld::~FakeWorld()
+{
+    TER_World::DestroyWorld();
+}
+
+boost::shared_ptr< TER_World > CreateWorld( const std::string& exercise )
+{
+    const auto config = CreateConfig( exercise );
+    return boost::make_shared< TER_World >( *config );
 }

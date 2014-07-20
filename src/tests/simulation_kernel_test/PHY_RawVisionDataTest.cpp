@@ -12,7 +12,7 @@
 #include "simulation_kernel/Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "meteo/Meteo.h"
-#include "StubTER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 BOOST_AUTO_TEST_CASE( phy_rawvisiondata_cell )
 {

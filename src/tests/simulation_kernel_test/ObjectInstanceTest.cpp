@@ -18,7 +18,7 @@
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
 #include "simulation_kernel/Tools/MIL_Color.h"
-#include "StubTER_World.h"
+#include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

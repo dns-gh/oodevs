@@ -23,7 +23,7 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Urban/MIL_UrbanObject.h"
 #include "Urban/PHY_MaterialCompositionType.h"
-#include "StubTER_World.h"
+#include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace
