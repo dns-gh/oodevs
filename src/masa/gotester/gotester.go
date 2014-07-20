@@ -139,28 +139,55 @@ func compileTest(pkg, outDir string) (string, error) {
 	return filepath.Join(outDir, suffix+".test.exe"), nil
 }
 
+type TestExecutable struct {
+	Package string
+	Path    string
+	Err     error
+}
+
 // Generates test executables from input tests into "outputDir" substree
 // Returns a mapping of packages to executable paths. The executable
 // related to package "foo/bar" is outputDir + "foo/bar/bar.test.exe".
-func compileTests(tests []Test, outputDir string) (map[string]string, error) {
+func compileTests(tests []Test, outputDir string, jobs uint) (map[string]string, error) {
 	seen := map[string]struct{}{}
-	compiled := map[string]string{}
+	pending := make(chan string, len(tests))
 	for _, test := range tests {
 		if _, ok := seen[test.Package]; ok {
 			continue
 		}
 		seen[test.Package] = struct{}{}
+		pending <- test.Package
 		testDir := filepath.Join(outputDir, test.Package)
 		err := os.MkdirAll(testDir, 0755)
 		if err != nil {
 			return nil, err
 		}
-		fmt.Printf("compiling %s\n", test.Package)
-		exe, err := compileTest(test.Package, testDir)
-		if err != nil {
-			return nil, err
+	}
+	close(pending)
+
+	results := make(chan TestExecutable, len(seen))
+	running := &sync.WaitGroup{}
+	for i := uint(0); i < jobs; i++ {
+		running.Add(1)
+		go func() {
+			defer running.Done()
+			for pkg := range pending {
+				fmt.Printf("compiling %s\n", pkg)
+				testDir := filepath.Join(outputDir, pkg)
+				exe, err := compileTest(pkg, testDir)
+				results <- TestExecutable{Package: pkg, Path: exe, Err: err}
+			}
+		}()
+	}
+	running.Wait()
+	close(results)
+
+	compiled := map[string]string{}
+	for t := range results {
+		if t.Err != nil {
+			return nil, t.Err
 		}
-		compiled[test.Package] = exe
+		compiled[t.Package] = t.Path
 	}
 	return compiled, nil
 }
@@ -197,8 +224,8 @@ type RunResult struct {
 func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
 	jobs, basePort uint) error {
 
-	testExe, err := compileTests(tests, exeDir)
-	if err != nil {
+	testExe, err := compileTests(tests, exeDir, jobs)
+	if err != nil || err == nil {
 		return err
 	}
 
