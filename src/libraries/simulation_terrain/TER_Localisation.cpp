@@ -1367,3 +1367,31 @@ bool TER_Localisation::IsValid() const
         // and degenerated to point, to handle containment tests.
         ( nType_ == ePolygon && polygon_.IsNull() && !bWasCircle_ );
 }
+
+std::string TER_Localisation::ToString() const
+{
+    std::stringstream s;
+    s << "TER_Localisation(type=" << GetTypeString();
+    if( !IsValid() )
+        s << ", valid=false";
+    if( bWasCircle_ )
+    {
+        s << ", wascircle=true, radius=" << rCircleRadius_ ;
+        s << ", center=" << vCircleCenter_;
+    }
+    s << ", points: " << "[" << pointVector_.size() << "] (";
+    for( auto it = pointVector_.begin(); it != pointVector_.end(); ++it )
+    {
+        if( it != pointVector_.begin() )
+            s << ", ";
+        s << *it;
+    }
+    s << "))";
+    return s.str();
+}
+
+std::ostream& operator<<( std::ostream& os, const TER_Localisation& loc )
+{
+    os << loc.ToString();
+    return os;
+}

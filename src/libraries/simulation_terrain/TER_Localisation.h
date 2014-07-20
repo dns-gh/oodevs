@@ -92,6 +92,7 @@ public:
     bool Reset( const T_PointList&   pointList   );
     void Read ( xml::xistream& xis ) ;
     void Write( xml::xostream& xos ) const;
+    std::string ToString() const;
     //@}
 
     //-------------------------------------------------------------------------
@@ -204,6 +205,8 @@ protected:
 private:
     static const double rPrecision_;
 };
+
+std::ostream& operator<<( std::ostream& os, const TER_Localisation& loc );
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::load
