@@ -715,7 +715,7 @@
                                    libiconv.dll,
                                    libpq.dll,
                                    libpng16.dll,
-                                   mapnik.dll,
+                                   mapnik*-mt.dll,
                                    phonon4.dll,
                                    proj.dll,
                                    Qt3Support4.dll,
@@ -734,8 +734,7 @@
                                    zlib1.dll,
                                    phonon_backend/*.dll,
                                    imageformats/*.dll,
-                                   mapnik/fonts/*.ttf,
-                                   mapnik/input/shape.input"/>
+                                   mapnik/fonts/*.ttf"/>
                 <fileset dir="${run.dir}" includes="resources/**"/>
             </zip>
             <check-depends file="@{file}"/>
@@ -1164,7 +1163,7 @@
         <update name="iconv" version="1.14.r619"/>
         <update name="icu" version="4.52.1"/>
         <update name="libpng" version="1.6.6"/>
-        <update name="mapnik" version="2.2.0.r719"/>
+        <update name="mapnik" version="2.2.0.r735"/>
         <update name="DIA"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
