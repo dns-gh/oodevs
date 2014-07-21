@@ -48,7 +48,10 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
     {
         const auto levels = extractor::GetMapnikLevels();
         extractor::BuildMapnikData( terrain_, true, 0 );
-        layer_.reset( new graphics::MapnikLayer( levels, terrain_, "resources/mapnik.xml" ) );
+        // TODO: move this in DebugConfigPanel
+        const size_t threads = 4;
+        layer_.reset( new graphics::MapnikLayer( 0, levels, terrain_,
+                    "resources/mapnik.xml", threads ) );
     }
     layer_->Paint( viewport, GetAlpha() );
 }
