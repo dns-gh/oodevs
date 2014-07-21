@@ -96,6 +96,5 @@ boost::shared_ptr< TER_Localisation > LocalisationFromWKT( const std::string& wk
     {
         return CircleFromWKT( wkt );
     }
-    else
-        throw MASA_EXCEPTION( "unknown WKT type: " + type );
+    throw MASA_EXCEPTION( "unknown WKT type: " + type );
 }
