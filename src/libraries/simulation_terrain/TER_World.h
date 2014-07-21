@@ -22,6 +22,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <memory>
+#include <string>
 
 class TerrainData;
 class MT_Ellipse;
@@ -120,5 +121,15 @@ private:
     std::unique_ptr< TER_LimitDataManager > limitManager_;
     //@}
 };
+
+// Initialize TER_World singleton, mostly for tests.
+class FakeWorld
+{
+public:
+    explicit FakeWorld( const std::string& exercise );
+    virtual ~FakeWorld();
+};
+
+boost::shared_ptr< TER_World > CreateWorld( const std::string& exercise );
 
 #endif // __TER_World_h_

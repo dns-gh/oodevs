@@ -36,7 +36,6 @@
 #include "simulation_kernel/Entities/Populations/MIL_PopulationAttitude.h"
 #include "simulation_kernel/Tools/MIL_Color.h"
 #include "simulation_kernel/ActionManager.h"
-#include "StubTER_World.h"
 #include "StubMIL_Population.h"
 #include "StubMIL_PopulationType.h"
 #include "MockNET_Publisher_ABC.h"
@@ -50,6 +49,7 @@
 #include "MockRoleInterface_Posture.h"
 #include "MockRolePerceiver.h"
 #include "MockRoleUrbanLocation.h"
+#include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace sword;

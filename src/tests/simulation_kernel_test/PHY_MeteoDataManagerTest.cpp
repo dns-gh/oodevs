@@ -15,7 +15,6 @@
 #include "simulation_kernel/Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Rect.h"
-#include "StubTER_World.h"
 #include <meteo/Meteo.h>
 #include <tools/Helpers.h>
 #include <xeumeuleu/xml.hpp>

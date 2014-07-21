@@ -1031,7 +1031,7 @@ bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon, double rPreci
 // -----------------------------------------------------------------------------
 bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation, double rPrecision ) const
 {
-    if( localisation.IsEmpty() || IsEmpty() )
+    if( localisation.IsValid() || IsValid() )
         return false;
     CIT_PointVector itPoint = pointVector_.begin();
     const MT_Vector2D* pPrevPoint = &*itPoint;
@@ -1359,8 +1359,39 @@ double TER_Localisation::DefaultPrecision()
     return rPrecision_;
 }
 
-bool TER_Localisation::IsEmpty() const
+bool TER_Localisation::IsValid() const
 {
     return pointVector_.empty() || 
-        ( nType_ == ePolygon && polygon_.IsNull() );
+        // Null() polygon are invalid unless they were generated from
+        // zero-radius circles. We consider zero-radius circle to be valid
+        // and degenerated to point, to handle containment tests.
+        ( nType_ == ePolygon && polygon_.IsNull() && !bWasCircle_ );
+}
+
+std::string TER_Localisation::ToString() const
+{
+    std::stringstream s;
+    s << "TER_Localisation(type=" << GetTypeString();
+    if( !IsValid() )
+        s << ", valid=false";
+    if( bWasCircle_ )
+    {
+        s << ", wascircle=true, radius=" << rCircleRadius_ ;
+        s << ", center=" << vCircleCenter_;
+    }
+    s << ", points: " << "[" << pointVector_.size() << "] (";
+    for( auto it = pointVector_.begin(); it != pointVector_.end(); ++it )
+    {
+        if( it != pointVector_.begin() )
+            s << ", ";
+        s << *it;
+    }
+    s << "))";
+    return s.str();
+}
+
+std::ostream& operator<<( std::ostream& os, const TER_Localisation& loc )
+{
+    os << loc.ToString();
+    return os;
 }

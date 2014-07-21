@@ -9,24 +9,33 @@
 
 #include "simulation_terrain_test_pch.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_World.h"
 #include "TER_TestHelpers.h"
 
-BOOST_AUTO_TEST_CASE( TER_Localisation_IsEmpty )
+BOOST_AUTO_TEST_CASE( TER_Localisation_IsValid )
 {
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
+
     const auto empty = LocalisationFromWKT( "POLYGON ()" );
-    BOOST_CHECK( empty->IsEmpty() );
+    BOOST_CHECK( empty->IsValid() );
 
     const auto onePoint = LocalisationFromWKT( "POLYGON (0 0)" );
-    BOOST_CHECK( onePoint->IsEmpty() );
+    BOOST_CHECK( onePoint->IsValid() );
 
     const auto twoPoints = LocalisationFromWKT( "POLYGON (0 0, 1 0)" );
-    BOOST_CHECK( twoPoints->IsEmpty() );
+    BOOST_CHECK( twoPoints->IsValid() );
 
     const auto invalid = LocalisationFromWKT( "POLYGON (0 0, 1 0, 0 0)" );
-    BOOST_CHECK( invalid->IsEmpty() );
+    BOOST_CHECK( invalid->IsValid() );
 
     const auto valid = LocalisationFromWKT( "POLYGON (0 0, 1 0, 1 1)" );
-    BOOST_CHECK( !valid->IsEmpty() );
+    BOOST_CHECK( !valid->IsValid() );
+
+    const auto emptyCircle = LocalisationFromWKT( "CIRCLE (0 0, 0 0)" );
+    BOOST_CHECK( !valid->IsValid() );
+
+    const auto validCircle = LocalisationFromWKT( "CIRCLE (0 1, 1 1)" );
+    BOOST_CHECK( !valid->IsValid() );
 }
 
 namespace
@@ -48,7 +57,7 @@ BOOST_AUTO_TEST_CASE( TER_Localisation_IsIntersecting )
 {
     const std::string wkt1 = "POLYGON (0 0, 3 0, 3 3, 0 3)";
 
-    // Empty
+    // Empty and invalid
     CheckIntersecting( wkt1, "POLYGON ()", false );
 
     // Invalid

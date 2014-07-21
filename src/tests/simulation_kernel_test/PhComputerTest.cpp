@@ -31,8 +31,8 @@
 #include "MockPHY_RoleInterface_ActiveProtection.h"
 #include "MockPHY_RoleInterface_HumanFactors.h"
 #include "MockRoleLocation.h"
-#include "StubTER_World.h"
 #include "ActionManager.h"
+#include "simulation_terrain/TER_World.h"
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
 

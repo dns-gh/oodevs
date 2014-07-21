@@ -12,7 +12,7 @@
 #include "simulation_kernel/Decision/DEC_GeometryFunctions.h"
 #include "simulation_terrain/TER_Polygon.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "StubTER_World.h"
+#include "simulation_terrain/TER_World.h"
 #include <boost/assign/list_of.hpp>
 
 BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )

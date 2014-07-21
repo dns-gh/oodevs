@@ -18,11 +18,11 @@
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Urban/MIL_UrbanObject.h"
-#include "StubTER_World.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "MockPHY_RoleInterface_Perceiver.h"
+#include "simulation_terrain/TER_World.h"
 
 #include <memory>
 

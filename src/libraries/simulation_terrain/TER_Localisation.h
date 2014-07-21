@@ -92,6 +92,7 @@ public:
     bool Reset( const T_PointList&   pointList   );
     void Read ( xml::xistream& xis ) ;
     void Write( xml::xostream& xos ) const;
+    std::string ToString() const;
     //@}
 
     //-------------------------------------------------------------------------
@@ -109,7 +110,7 @@ public:
     virtual MT_Rect GetBoundingBox() const;
     virtual bool IsInside( const MT_Vector2D& vPos ) const;
 
-    bool IsEmpty() const;
+    bool IsValid() const;
     double       GetArea                      () const;
     double       GetLength                    () const;
     double       GetIntersectionAreaWithCircle( const MT_Circle& circle ) const;
@@ -204,6 +205,8 @@ protected:
 private:
     static const double rPrecision_;
 };
+
+std::ostream& operator<<( std::ostream& os, const TER_Localisation& loc );
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::load

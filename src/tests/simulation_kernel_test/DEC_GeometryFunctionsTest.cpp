@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Decision/DEC_GeometryFunctions.h"
-#include "StubTER_World.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_World.h"
 
 BOOST_AUTO_TEST_CASE( split_localisation_cannot_split_when_increment_is_zero )
 {
