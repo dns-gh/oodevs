@@ -256,9 +256,9 @@ void ScenarioLauncherPage::OnStart()
             ( "checkpoint", checkpoint_.ToUTF8().c_str() )
             ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
     if( !integrationDir_.IsEmpty() )
-        arguments[ "integration-dir" ] = "\"" + integrationDir_.ToUTF8() + "\"";
+        arguments[ "integration-dir" ] = integrationDir_.ToUTF8();
     if( !dumpPathfindDirectory_.IsEmpty() )
-        arguments[ "dump-pathfinds" ] = "\"" + dumpPathfindDirectory_.ToUTF8() + "\"";
+        arguments[ "dump-pathfinds" ] = dumpPathfindDirectory_.ToUTF8();
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartExercise >(
