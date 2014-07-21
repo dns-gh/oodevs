@@ -270,7 +270,7 @@ std::shared_ptr< tools::ExerciseConfig > CreateConfig( const std::string& exerci
     params[0] = "dummy_executable.exe";
     params[1] = "--root-dir=../../data";
     const std::string option = "--exercise=" + exercise;
-    params[2] = const_cast< char* >( option .c_str() );
+    params[2] = const_cast< char* >( option.c_str() );
     params[3] = "--session=default";
     config->Parse( 4, params );
     return config;
