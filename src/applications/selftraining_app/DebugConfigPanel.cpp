@@ -160,9 +160,9 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     dumpLayout->setSpacing( 10 );
     dumpLabel_ = new QLabel();
     dataButton_ = new QPushButton();
-    connect( dataButton_, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
+    connect( dataButton_, SIGNAL( clicked() ), SLOT( OnSelectDataDirectory() ) );
     dataDirectory_ = new QLineEdit();
-
+    connect( dataDirectory_, SIGNAL( textEdited( const QString& ) ), SLOT( OnChangeDataDirectory() ) );
     dumpLayout->addWidget( dumpLabel_ );
     dumpLayout->addWidget( dataDirectory_ );
     dumpLayout->addWidget( dataButton_ );
@@ -340,11 +340,17 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnChangeDataDirectory()
 {
+    emit DumpPathfindOptionsChanged( filterEdit_->text(),
+            tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
+}
+
+void DebugConfigPanel::OnSelectDataDirectory()
+{
     const tools::Path directory = gui::FileDialog::getExistingDirectory( this , "", tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
     if( directory.IsEmpty() )
         return;
     dataDirectory_->setText( QString::fromStdWString( directory.ToUnicode() ) );
-    emit DumpPathfindOptionsChanged( filterEdit_->text(), tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
+    OnChangeDataDirectory();
 }
 
 // -----------------------------------------------------------------------------

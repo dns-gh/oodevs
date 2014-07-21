@@ -70,6 +70,7 @@ private slots:
     void OnMapnikLayerChecked( bool checked );
     void OnChangeIntegrationDirectory();
     void OnEditIntegrationDirectory( const QString& );
+    void OnSelectDataDirectory();
     void OnChangeDataDirectory();
     void OnChangeDataFilter();
     void OnDevFeaturesChanged();
