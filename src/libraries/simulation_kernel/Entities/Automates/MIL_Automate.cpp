@@ -1106,10 +1106,10 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     bool bCancelMission = !IsMasaLife();
-    for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
     {
-        ( **itPion ).OnReceiveMagicActionMoveTo( ( **itPion ).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
-        if( !(*itPion)->IsMasaLife() )
+        (*it )->OnReceiveMagicActionMoveTo( (*it )->GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
+        if( !(*it)->IsMasaLife() )
             bCancelMission = true;
     }
     if( bCancelMission )

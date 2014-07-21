@@ -1102,7 +1102,7 @@ void MIL_Population::FireOnPions( double rIntensity, PHY_FireResults_Population&
             ( **itConcentration ).FireOnPions( rIntensity, fireResult );
         for( auto itFlow = flows_.cbegin(); itFlow != flows_.end(); ++itFlow )
             ( **itFlow ).FireOnPions( rIntensity, fireResult );
-}
+    }
 }
 
 // -----------------------------------------------------------------------------

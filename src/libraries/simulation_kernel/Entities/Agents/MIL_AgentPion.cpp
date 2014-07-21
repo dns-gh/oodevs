@@ -549,7 +549,6 @@ void MIL_AgentPion::UpdatePhysicalState()
         CallRole( &PHY_RoleInterface_Maintenance::Update, bIsDead );  //@TODO add update to new role interface
         CallRole( &PHY_RoleInterface_Medical::Update, bIsDead );
         CallRole( &PHY_RoleInterface_Supply::Update, bIsDead );
-
     }
     catch( const std::exception& e )
     {
@@ -693,7 +692,7 @@ bool MIL_AgentPion::IsMasaLife() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::HasBeenTeleported
+// Name: MIL_AgentPion::ResetTeleported
 // Created: MMC 2013-07-24
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::ResetTeleported()
@@ -938,8 +937,7 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& ms
     const sword::CoordLatLong point = protocol::GetPoint( parameters, 0 );
     MT_Vector2D location;
     MIL_Tools::ConvertCoordMosToSim( point, location );
-    MagicMove( location );
-    UpdatePhysicalState();
+    OnReceiveMagicActionMoveTo( location );
 }
 
 // -----------------------------------------------------------------------------
