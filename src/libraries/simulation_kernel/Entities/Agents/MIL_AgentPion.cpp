@@ -922,6 +922,7 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition )
 {
     MagicMove( vPosition );
     UpdatePhysicalState();
+    UpdateNetwork();
 }
 
 // -----------------------------------------------------------------------------
