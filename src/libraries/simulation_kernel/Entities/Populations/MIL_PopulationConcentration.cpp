@@ -46,7 +46,6 @@ MIL_PopulationConcentration::MIL_PopulationConcentration()
     , pPullingFlow_( 0 )
     , pSplittingObject_( 0 )
     , waypointForNextPullingFlow_( 0 )
-    , hasDoneMagicMove_( false )
 {
     // NOTHING
 }
@@ -61,8 +60,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_( 0 )
     , pSplittingObject_( 0 )
     , waypointForNextPullingFlow_( 0 )
-    , hasDoneMagicMove_( false )
-    , pAttackController_   ( new MIL_AttackController() )
+    , pAttackController_( new MIL_AttackController() )
 {
     // NOTHING
 }
@@ -76,8 +74,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , pSplittingObject_    ( 0 )
     , waypointForNextPullingFlow_( 0 )
-    , hasDoneMagicMove_( false )
-    , pAttackController_   ( new MIL_AttackController() )
+    , pAttackController_( new MIL_AttackController() )
 {
     // Position
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), position_ );
@@ -98,8 +95,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , pSplittingObject_    ( 0 )
     , waypointForNextPullingFlow_( 0 )
-    , hasDoneMagicMove_( false )
-    , pAttackController_   ( new MIL_AttackController() )
+    , pAttackController_( new MIL_AttackController() )
 {
     PushHumans( MIL_PopulationHumans( nHumans ) );
     UpdateLocation();
@@ -117,7 +113,6 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , pSplittingObject_    ( 0 )
     , waypointForNextPullingFlow_( 0 )
-    , hasDoneMagicMove_( false )
 {
     PushHumans( humans );
     UpdateLocation();
@@ -192,12 +187,8 @@ void MIL_PopulationConcentration::NotifyCollision( MIL_Agent_ABC& agent )
 void MIL_PopulationConcentration::MagicMove( const MT_Vector2D& destination )
 {
     MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
-    if( &newConcentration != this )
-    {
-        hasDoneMagicMove_ = true;
-        newConcentration.PushHumans( PullHumans( GetAllHumans() ) );
-        newConcentration.SetAttitude( GetAttitude() );
-    }
+    newConcentration.PushHumans( PullHumans( GetAllHumans() ) );
+    newConcentration.SetAttitude( GetAttitude() );
     if( pPullingFlow_ )
     {
         pPullingFlow_->UnregisterSourceConcentration();
@@ -468,7 +459,7 @@ boost::shared_ptr< MT_Vector2D > MIL_PopulationConcentration::GetSecuringPoint( 
 // -----------------------------------------------------------------------------
 bool MIL_PopulationConcentration::IsValid() const
 {
-    return !hasDoneMagicMove_ && ( GetAllHumans() > 0. || !pushingFlows_.empty() );
+    return GetAllHumans() > 0 || !pushingFlows_.empty();
 }
 
 // -----------------------------------------------------------------------------

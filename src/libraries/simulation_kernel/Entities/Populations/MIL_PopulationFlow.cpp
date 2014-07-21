@@ -80,7 +80,6 @@ MIL_PopulationFlow::MIL_PopulationFlow()
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_( -1. )
     , canCollideWithFlow_( false )
-    , hasDoneMagicMove_( false )
     , speedLimit_( std::numeric_limits< double >::max() )
 {
     // NOTHING
@@ -111,7 +110,6 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( -1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
-    , hasDoneMagicMove_( false )
     , speedLimit_( std::numeric_limits< double >::max() )
     , moveAlongPath_( sourceConcentration.GetPathForNextPullingFlow() )
 {
@@ -148,7 +146,6 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( -1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
-    , hasDoneMagicMove_( false )
     , speedLimit_( source.speedLimit_ )
     , moveAlongPath_( source.moveAlongPath_ )
 {
@@ -237,7 +234,6 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::MagicMove( const MT_Vector2D& destination )
 {
-    hasDoneMagicMove_ = true;
     MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
     newConcentration.PushHumans( PullHumans( GetAllHumans() ) );
     newConcentration.SetAttitude( GetAttitude() );
@@ -1302,7 +1298,7 @@ double MIL_PopulationFlow::GetSpeed() const
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::IsValid() const
 {
-    return !hasDoneMagicMove_ && ( GetAllHumans() > 0. || pSourceConcentration_ );
+    return GetAllHumans() > 0 || pSourceConcentration_;
 }
 
 // -----------------------------------------------------------------------------
