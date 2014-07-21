@@ -311,3 +311,10 @@ integration.stopLaunchProjectile = function( target, dotation )
     target[ myself ].attackState = nil
     return true
 end
+
+--- Returns true if the given knowledge agent is a terrorist
+-- @param terrorist DirectIA agent knowledge
+-- @return boolean, true if the given agent is a terrorist, false otherwise
+integration.knowledgeIsTerrorist = function ( terrorist )
+    return DEC_ConnaissanceAgent_EstTerroriste( terrorist.source )
+end
