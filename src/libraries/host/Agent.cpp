@@ -257,18 +257,18 @@ std::string Agent::IdentifyNode( const Uuid& id ) const
 // Name: Agent::GetClient
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
-Tree Agent::GetClient() const
+Tree Agent::GetClient( bool x64 ) const
 {
-    return nodes_.GetClient();
+    return nodes_.GetClient( x64 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DownloadClient
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
-void Agent::DownloadClient( web::Chunker_ABC& dst ) const
+void Agent::DownloadClient( web::Chunker_ABC& dst, bool x64 ) const
 {
-    nodes_.DownloadClient( dst );
+    nodes_.DownloadClient( dst, x64 );
 }
 
 // -----------------------------------------------------------------------------

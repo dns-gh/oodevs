@@ -58,6 +58,8 @@ struct Api_ABC : public boost::noncopyable
     virtual std::wstring      GetModuleFilename    () const = 0;
     virtual ProcessDescriptor MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const = 0;
     virtual int               GetCurrentProcessIdentifier() const = 0;
+    static  bool              Has64BitSystem       ();
+    static  bool              Is64BitBinary        ( const wchar_t* app );
     //@}
 };
 }

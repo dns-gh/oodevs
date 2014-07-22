@@ -73,8 +73,8 @@ public:
 
     //! @name Client Methods
     //@{
-    virtual Tree GetClient     () const;
-    virtual void DownloadClient( web::Chunker_ABC& dst ) const;
+    virtual Tree GetClient     ( bool x64 ) const;
+    virtual void DownloadClient( web::Chunker_ABC& dst, bool x64 ) const;
     //@}
 
     //! @name Install Methods

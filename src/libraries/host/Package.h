@@ -63,6 +63,7 @@ public:
     virtual Tree GetExerciseProperties( const std::string& name );
     virtual bool UnlinkItem( runtime::Async& async, const Tree& tree );
     virtual void Download( web::Chunker_ABC& dst, const Item_ABC& item );
+    static T_Item MakeDependency( const std::string& type, const std::string& name );
     //@}
 
 public:
