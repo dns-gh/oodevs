@@ -673,16 +673,16 @@ T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
 
 T_ConverterDotationType DotationTypeConverter_[] =
 {
-    T_ConverterDotationType( "munition",         QT_TRANSLATE_NOOP( "ENT_Tr", "Ammunition" ),         sword::dotation_type_ammunition ),
-    T_ConverterDotationType( "carburant",        QT_TRANSLATE_NOOP( "ENT_Tr", "Fuel" ),               sword::dotation_type_fuel ),
-    T_ConverterDotationType( "explosif",         QT_TRANSLATE_NOOP( "ENT_Tr", "Explosive" ),          sword::dotation_type_explosive ),
-    T_ConverterDotationType( "mine",             QT_TRANSLATE_NOOP( "ENT_Tr", "Mine" ),               sword::dotation_type_mine ),
-    T_ConverterDotationType( "barbele",          QT_TRANSLATE_NOOP( "ENT_Tr", "Barbed wire" ),        sword::dotation_type_barbed_wire ),
-    T_ConverterDotationType( "piece",            QT_TRANSLATE_NOOP( "ENT_Tr", "Parts" ),              sword::dotation_type_parts ),
-    T_ConverterDotationType( "ration",           QT_TRANSLATE_NOOP( "ENT_Tr", "Food/water" ),         sword::dotation_type_food_and_water ),
-    T_ConverterDotationType( "agent extincteur", QT_TRANSLATE_NOOP( "ENT_Tr", "Extinguisher agent" ), sword::dotation_type_extinguisher_agent ),
-    T_ConverterDotationType( "energie",          QT_TRANSLATE_NOOP( "ENT_Tr", "Resources" ),          sword::dotation_type_energy ),
-    T_ConverterDotationType( "funeraire",        QT_TRANSLATE_NOOP( "ENT_Tr", "Funeral" ),            sword::dotation_type_funeral ),
+    T_ConverterDotationType( "munition",         QT_TRANSLATE_NOOP( "sword::DotationType", "Ammunition" ),         sword::dotation_type_ammunition ),
+    T_ConverterDotationType( "carburant",        QT_TRANSLATE_NOOP( "sword::DotationType", "Fuel" ),               sword::dotation_type_fuel ),
+    T_ConverterDotationType( "explosif",         QT_TRANSLATE_NOOP( "sword::DotationType", "Explosive" ),          sword::dotation_type_explosive ),
+    T_ConverterDotationType( "mine",             QT_TRANSLATE_NOOP( "sword::DotationType", "Mine" ),               sword::dotation_type_mine ),
+    T_ConverterDotationType( "barbele",          QT_TRANSLATE_NOOP( "sword::DotationType", "Barbed wire" ),        sword::dotation_type_barbed_wire ),
+    T_ConverterDotationType( "piece",            QT_TRANSLATE_NOOP( "sword::DotationType", "Parts" ),              sword::dotation_type_parts ),
+    T_ConverterDotationType( "ration",           QT_TRANSLATE_NOOP( "sword::DotationType", "Food/water" ),         sword::dotation_type_food_and_water ),
+    T_ConverterDotationType( "agent extincteur", QT_TRANSLATE_NOOP( "sword::DotationType", "Extinguisher agent" ), sword::dotation_type_extinguisher_agent ),
+    T_ConverterDotationType( "energie",          QT_TRANSLATE_NOOP( "sword::DotationType", "Resources" ),          sword::dotation_type_energy ),
+    T_ConverterDotationType( "funeraire",        QT_TRANSLATE_NOOP( "sword::DotationType", "Funeral" ),            sword::dotation_type_funeral ),
     T_ConverterDotationType( "", "", sword::DotationType_MAX )
 };
 

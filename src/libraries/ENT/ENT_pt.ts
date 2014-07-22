@@ -55,46 +55,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ammunition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fuel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explosive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Barbed wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Food/water</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Extinguisher agent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Funeral</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Shell</source>
         <translation type="unfinished"></translation>
     </message>
@@ -860,6 +820,49 @@
     </message>
     <message>
         <source>Itinerary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::DotationType</name>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fuel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Barbed wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Food/water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extinguisher agent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Funeral</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
