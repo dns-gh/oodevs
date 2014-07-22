@@ -26,7 +26,6 @@ using namespace frontend;
 StartReplay::StartReplay( const tools::GeneralConfig& config,
                           const tools::Path& exercise,
                           const tools::Path& session,
-                          unsigned port,
                           const std::string& name )
     : SpawnCommand( config, MakeBinaryName( "replayer_app" ), name )
     , configManipulator_( new ConfigurationManipulator( config, exercise, session ) )
@@ -34,7 +33,6 @@ StartReplay::StartReplay( const tools::GeneralConfig& config,
     AddRootArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
-    AddArgument( "port", boost::lexical_cast< std::string >( port ) );
 }
 
 // -----------------------------------------------------------------------------
