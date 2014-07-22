@@ -10,6 +10,9 @@
 #ifndef __MIL_MissionParameterVisitor_ABC_h_
 #define __MIL_MissionParameterVisitor_ABC_h_
 
+class MIL_OrderTypeParameter;
+class MIL_MissionParameter_ABC;
+
 // =============================================================================
 /** @class  MIL_MissionParameterVisitor_ABC
     @brief  MIL Mission parameter visitor definition

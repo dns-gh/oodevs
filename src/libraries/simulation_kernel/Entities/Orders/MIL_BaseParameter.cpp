@@ -433,6 +433,15 @@ bool MIL_BaseParameter::ToResourceNetworkTypeList( std::vector< const PHY_Resour
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::MIL_BaseParameter::ToItinerary
+// Created: SLI 2014-07-18
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToItinerary( boost::shared_ptr< sword::Pathfind >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::load
 // Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------

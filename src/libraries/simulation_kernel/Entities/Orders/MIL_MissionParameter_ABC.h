@@ -139,6 +139,7 @@ public:
     virtual bool ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const = 0;
     virtual bool ToResourceNetworkType( const PHY_ResourceNetworkType*& ) const = 0;
     virtual bool ToResourceNetworkTypeList( std::vector< const PHY_ResourceNetworkType* >& ) const = 0;
+    virtual bool ToItinerary( boost::shared_ptr< sword::Pathfind >& ) const = 0;
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param ) = 0;
     //@}
 
