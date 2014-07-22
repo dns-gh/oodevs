@@ -978,6 +978,7 @@
             <exec_goenv name="tests" executable="${bin.dir}/gotester">
                 <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
                 <arg line="${gocheck.filter}"/>
+                <arg value="-pkg=masa/(sword|testproto)"/>
                 <arg value="-port=${test.port}"/>
                 <arg value="-j=${ninja.jobs}"/>
                 <arg value="${root.dir}"/>
@@ -985,9 +986,6 @@
                 <!-- Make timeline tests compatible with gotester and reset
                      the following lines to ./src/...
                 -->
-                <arg value="./src/masa/sword/..."/>
-                <arg value="./src/masa/testproto/..."/>
-                <arg value="${go.race}"/>
                 <arg value="-test.parallel=1"/>
                 <arg value="-test.cpu=${ninja.jobs}"/>
                 <arg value="-test.timeout=${test.timeout}"/>
