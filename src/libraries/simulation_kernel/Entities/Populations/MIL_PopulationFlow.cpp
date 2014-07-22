@@ -222,10 +222,10 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
     }
     const auto headComputer = boost::make_shared< DEC_PathComputer >( GetPopulation().GetID() );
     pHeadPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ), headComputer );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( headComputer );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( headComputer, false );
     const auto tailComputer = boost::make_shared< DEC_PathComputer >( GetPopulation().GetID() );
     pTailPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ), tailComputer );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( tailComputer );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( tailComputer, false );
 }
 
 // -----------------------------------------------------------------------------

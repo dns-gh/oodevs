@@ -97,12 +97,25 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& path, bool ignoreDynamicObjects )
 {
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ) );
-    auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, ignoreDynamicObjects );
+    auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, ignoreDynamicObjects, static_cast< const sword::Pathfind* >( nullptr ) );
     boost::mutex::scoped_lock locker( mutex_ );
     if( path->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
     else
         shortRequests_.push_back( p );
+    condition_.notify_all();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::StartCompute
+// Created: SLI 2014-07-21
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
+{
+    MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ) );
+    auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, pathfind.request().ignore_dynamic_objects(), &pathfind );
+    boost::mutex::scoped_lock locker( mutex_ );
+    shortRequests_.push_back( p );
     condition_.notify_all();
 }
 

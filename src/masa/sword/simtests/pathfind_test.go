@@ -14,6 +14,11 @@ import (
 	"masa/sword/swtest"
 )
 
+const (
+	// This was "COMMON - Move along itinerary" when the test was written
+	MissionMoveAlongId = uint32(445949330)
+)
+
 func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
@@ -239,4 +244,42 @@ func (s *TestSuite) TestCreateDestroyPathfind(c *C) {
 	err = client.DestroyPathfind(pathfind.Id)
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetData().Pathfinds, HasLen, 0)
+}
+
+func (s *TestSuite) TestUnitOrderWithItineraryParameter(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+
+	automat := createAutomat(c, client)
+	positions := []swapi.Point{
+		{X: -15.9248, Y: 28.2645},
+		{X: -15.9216, Y: 28.2718},
+		{X: -15.9150, Y: 28.2659},
+		{X: -15.9248, Y: 28.2645},
+		{X: -15.9252, Y: 28.2713},
+	}
+
+	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])
+	c.Assert(err, IsNil)
+
+	// Create pathfind
+	pathfind, err := client.CreatePathfind(unit.Id, positions...)
+	c.Assert(err, IsNil)
+
+	// Send pathfind to unit
+	heading := swapi.MakeHeading(0)
+	params := swapi.MakeParameters(heading, nil, nil, nil, swapi.MakePathfind(pathfind))
+	// Should work with disengaged unit
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
+	c.Assert(err, IsNil)
+	for _, p := range pathfind.Result {
+		if p.Waypoint < 0 {
+			continue
+		}
+		waitCondition(c, client.Model, func(m *swapi.ModelData) bool {
+			return isNearby(p.Point, m.Units[unit.Id].Position)
+		})
+	}
 }
