@@ -127,8 +127,13 @@ func filterTests(tests []Test, namePattern, pkgPattern string) ([]Test, error) {
 	return filtered, nil
 }
 
-func compileTest(pkg, outDir string) (string, error) {
-	cmd := exec.Command("go", "test", "-race", "-c", pkg)
+func compileTest(pkg, outDir string, race bool) (string, error) {
+	args := []string{"test", "-c"}
+	if race {
+		args = append(args, "-race")
+	}
+	args = append(args, pkg)
+	cmd := exec.Command("go", args...)
 	cmd.Dir = outDir
 	output, err := cmd.CombinedOutput()
 	if err != nil {
@@ -148,7 +153,9 @@ type TestExecutable struct {
 // Generates test executables from input tests into "outputDir" substree
 // Returns a mapping of packages to executable paths. The executable
 // related to package "foo/bar" is outputDir + "foo/bar/bar.test.exe".
-func compileTests(tests []Test, outputDir string, jobs uint) (map[string]string, error) {
+func compileTests(tests []Test, outputDir string, race bool,
+	jobs uint) (map[string]string, error) {
+
 	seen := map[string]struct{}{}
 	pending := make(chan string, len(tests))
 	for _, test := range tests {
@@ -174,7 +181,7 @@ func compileTests(tests []Test, outputDir string, jobs uint) (map[string]string,
 			for pkg := range pending {
 				fmt.Printf("compiling %s\n", pkg)
 				testDir := filepath.Join(outputDir, pkg)
-				exe, err := compileTest(pkg, testDir)
+				exe, err := compileTest(pkg, testDir, race)
 				results <- TestExecutable{Package: pkg, Path: exe, Err: err}
 			}
 		}()
@@ -222,9 +229,9 @@ type RunResult struct {
 // test case, "jobs" sub-processes, invoking them with "baseArgs".
 // A distinct -test-port value will be appended to "baseArgs" for each run.
 func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
-	jobs, basePort uint) error {
+	race bool, jobs, basePort uint) error {
 
-	testExe, err := compileTests(tests, exeDir, jobs)
+	testExe, err := compileTests(tests, exeDir, race, jobs)
 	if err != nil || err == nil {
 		return err
 	}
@@ -320,6 +327,7 @@ itself, do not supply it in child arguments.
 		"run only tests with name matching the regular expression")
 	pkgFilter := flags.String("pkg", "",
 		"run only tests with package matching the regular expression")
+	race := flags.Bool("race", false, "compile test applications with -race")
 	flags.Parse(testerArgs)
 	if flags.NArg() < 1 {
 		return fmt.Errorf("root directory was not supplied")
@@ -338,7 +346,7 @@ itself, do not supply it in child arguments.
 	}
 	fmt.Printf("running %d tests in %d processes\n", len(tests), *jobs)
 	start := time.Now()
-	err = runTests(tests, childrenArgs, srcDir, testExeDir, *jobs, *basePort)
+	err = runTests(tests, childrenArgs, srcDir, testExeDir, *race, *jobs, *basePort)
 	end := time.Now()
 	trailer := fmt.Sprintf("%d tests in %.0fs", len(tests), end.Sub(start).Seconds())
 	if err == nil {
