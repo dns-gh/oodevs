@@ -125,16 +125,22 @@ integration.getCommanderEfficacity = function( agent, capacity )
     return DEC_Automate_GetEfficacite( agent, capacity )
 end
 
---- Returns the HQ (simulation agent) of a company, or nil if there is none.
+--- Returns the HQ (simulation agent) of the given company.
+-- If no company is given, then this method will return the HQ of the company of this entity instead.
+-- If there is no HQ in the company, then this method will return nil.
+-- @param company Simulation company (optional)
 -- @return Simulation agent (or nil if there is no HQ).
-integration.getHQ = function( )
-    return DEC_Automate_PionPCDeAutomate( DEC_GetAutomate( myself ) )
+integration.getHQ = function( company )
+    return DEC_Automate_PionPCDeAutomate( company or DEC_GetAutomate( myself ) )
 end
 
---- Returns the HQ (DirectIA agent) of a company, or nil if there is none.
+--- Returns the HQ (DirectIA agent) of the given company.
+-- If no company is given, then this method will return the HQ of the company of this entity instead.
+-- If there is no HQ in the company, then this method will return nil.
+-- @param company Simulation company (optional)
 -- @return DirectIA agent (or nil if there is no HQ).
-integration.getKnowledgeHQ = function( )
-    local simHQ = integration.getHQ()
+integration.getKnowledgeHQ = function( company )
+    local simHQ = integration.getHQ( company )
     return simHQ and CreateKnowledge( integration.ontology.types.agent, simHQ )
 end
 
