@@ -313,6 +313,10 @@
         <source>Curve</source>
         <translation>Curva</translation>
     </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stock</name>

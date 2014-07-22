@@ -105,6 +105,10 @@ namespace
         {
             valid_ = false;
         }
+        virtual void VisitText( const QString&, const QFont&, const geometry::Point2f& )
+        {
+            valid_ = false;
+        }
 
         bool pointAllowed_, lineAllowed_, polygonAllowed_, circleAllowed_, rectangleAllowed_;
         bool valid_;

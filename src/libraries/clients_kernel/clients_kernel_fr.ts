@@ -313,6 +313,10 @@
         <source>Curve</source>
         <translation>Arc</translation>
     </message>
+    <message>
+        <source>Text</source>
+        <translation>Texte</translation>
+    </message>
 </context>
 <context>
     <name>Stock</name>

@@ -132,3 +132,12 @@ bool Curve::IsAt( const geometry::Point2f& /*point*/, float /*precision*/ ) cons
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Curve::AddText
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+void Curve::AddText( const QString& /*text*/, const QFont& /*font*/ )
+{
+    // NOTHING
+}

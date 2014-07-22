@@ -33,12 +33,14 @@ namespace tools
 
 namespace gui
 {
-    class Drawing;
-    class ParametersLayer;
-    class DrawingTemplate;
-    class DrawingCategory;
     class ColorButton;
     class DrawerModel;
+    class Drawing;
+    class DrawingCategory;
+    class DrawingCategoryItem;
+    class DrawingTemplate;
+    class DrawingTypes;
+    class ParametersLayer;
 
 // =============================================================================
 /** @class  DrawerPanel
@@ -61,7 +63,8 @@ class DrawerPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers, DrawerModel& model, const tools::ExerciseConfig& config );
+             DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers,
+                          DrawerModel& model, DrawingTypes& types, const tools::ExerciseConfig& config );
     virtual ~DrawerPanel();
     //@}
 
@@ -75,6 +78,7 @@ private slots:
     void OnSelect( const DrawingTemplate& style );
     void OnColorChange( const QColor& color );
     void StartDrawing();
+    void StartTextEdition();
     void OnLineChanged( int index );
     //@}
 
@@ -97,11 +101,12 @@ private:
     virtual void Select( const kernel::Formation_ABC& element );
 
     virtual void Handle( kernel::Location_ABC& location );
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const DrawingCategory*, QWidget* > T_CategoryItems;
+    typedef std::map< const DrawingCategory*, DrawingCategoryItem* > T_CategoryItems;
     //@}
 
 private:
@@ -110,6 +115,7 @@ private:
     kernel::Controllers& controllers_;
     ParametersLayer& layer_;
     DrawerModel& model_;
+    DrawingTypes& types_;
     const tools::ExerciseConfig& config_;
     ColorButton* color_;
     QLabel* parentLabel_;

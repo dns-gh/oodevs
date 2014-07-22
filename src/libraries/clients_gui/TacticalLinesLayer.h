@@ -79,6 +79,7 @@ protected:
     virtual void VisitCircle   ( const geometry::Point2f& , float ) {};
     virtual void VisitPoint    ( const geometry::Point2f& ) {};
     virtual void VisitCurve    ( const T_PointVector& ) {};
+    virtual void VisitText     ( const QString&, const QFont&, const geometry::Point2f& ) {}
     //@}
 
 private slots:

@@ -97,7 +97,7 @@ public:
     void CreateDictionary( bool readOnly );
     virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate );
     virtual void UpdateTemplate( const kernel::ObjectTypes& objectTypes );
-    virtual bool IsUpdatingTemplate() const; // loic boom
+    virtual bool IsUpdatingTemplate() const;
     //@}
 
 private:

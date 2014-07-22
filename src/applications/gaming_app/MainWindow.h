@@ -48,6 +48,7 @@ namespace gui
     class TerrainLayer;
     class TerrainPicker;
     class TooltipsLayer_ABC;
+    class TextEditor;
 }
 
 namespace tools
@@ -173,6 +174,7 @@ private:
     std::unique_ptr< DrawingsBuilder > drawingsBuilder_;
     std::unique_ptr< UnitStateDialog > unitStateDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
+    std::unique_ptr< gui::TextEditor > textEditor_;
     gui::ParametersLayer* parameters_; // $$$$ ABR 2013-02-14: Can't make an unique_ptr of this one, because every layers are destroyed into GlProxy destructor.
     QByteArray states_;
     bool connected_;

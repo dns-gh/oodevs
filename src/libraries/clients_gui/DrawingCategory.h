@@ -42,7 +42,8 @@ class DrawingCategory : public kernel::Resolver2< DrawingTemplate, QString, std:
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawingCategory( xml::xistream& xis, svg::TextRenderer& renderer, kernel::Controller& controller );
+             DrawingCategory( xml::xistream& xis, svg::TextRenderer& renderer, kernel::Controller& controller,
+                              bool internalCategory );
     virtual ~DrawingCategory();
     //@}
 
@@ -50,6 +51,7 @@ public:
     //@{
     QString GetName() const;
     QString GetDescription() const;
+    bool IsInternal() const;
     const DrawingTemplate& GetTemplate( const std::string& templateName ) const;
     //@}
 
@@ -72,6 +74,7 @@ private:
     const QString name_;
     const QString id_;
     const QString description_;
+    const bool internalCategory_;
     //@}
 };
 

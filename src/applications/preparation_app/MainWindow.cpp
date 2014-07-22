@@ -35,27 +35,29 @@
 #include "ToolbarContainer.h"
 #include "LocationEditorToolbar.h"
 #include "LivingAreaPanel.h"
-#include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
+#include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/Elevation3dLayer.h"
+#include "clients_gui/ElevationPainter.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_gui/FileDialog.h"
+#include "clients_gui/GisToolbar.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GlSelector.h"
-#include "clients_gui/GisToolbar.h"
+#include "clients_gui/GraphicPreferences.h"
 #include "clients_gui/GridLayer.h"
-#include "clients_gui/FileDialog.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
-#include "clients_gui/LightingProxy.h"
-#include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/ImageWrapper.h"
+#include "clients_gui/InhabitantLayer.h"
+#include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MiscLayer.h"
@@ -64,6 +66,7 @@
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RasterLayer.h"
 #include "clients_gui/RasterProcess.h"
+#include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/SelectionColorModifier.h"
@@ -75,15 +78,13 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/TerrainProfilerLayer.h"
+#include "clients_gui/TextEditor.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/UrbanLayer.h"
-#include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/WeatherLayer.h"
-#include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/resources.h"
-#include "clients_gui/ElevationPainter.h"
-#include "clients_gui/GraphicPreferences.h"
+#include "clients_gui/resources.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ExtensionTypes.h"
@@ -170,6 +171,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
         return;
     }
 
+    // Text editor
+    textEditor_.reset( new gui::TextEditor( this ) );
+
     // Symbols
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
@@ -191,7 +195,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 
     // Layer 1
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
-    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_ );
+    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *textEditor_ );
     gui::AutomatsLayer& automats = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
     gui::FormationLayer& formation = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );

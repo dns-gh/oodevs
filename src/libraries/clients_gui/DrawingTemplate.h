@@ -149,6 +149,7 @@ private:
     QPixmap samplePixmap_;
     QPixmap curvePixmap_;
     QPixmap rectanglePixmap_;
+    QPixmap textPixmap_;
     std::unique_ptr< svg::Color > sampleColor_;
     float sampleMarkerRatio_;
     bool isDrawingSample_;

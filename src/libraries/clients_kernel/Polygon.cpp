@@ -161,3 +161,12 @@ const T_PointVector& Polygon::GetPoints() const
 {
     return points_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Polygon::AddText
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+void Polygon::AddText( const QString& /*text*/, const QFont& /*font*/ )
+{
+    // NOTHING
+}

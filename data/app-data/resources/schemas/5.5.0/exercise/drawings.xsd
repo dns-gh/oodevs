@@ -32,11 +32,20 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="T_ShapeType">
-		<xs:sequence maxOccurs="unbounded">
-			<xs:element name="point">
+		<xs:sequence>
+			<xs:element name="point" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:attribute name="latitude" type="xs:double" use="required"/>
 					<xs:attribute name="longitude" type="xs:double" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="font" type="xs:string"/>
+						</xs:extension>
+					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>

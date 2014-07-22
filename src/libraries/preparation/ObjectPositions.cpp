@@ -249,6 +249,15 @@ void ObjectPositions::VisitCurve( const T_PointVector& /*points*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectPositions::VisitText
+// Created: LGY 2014-07-21
+// -----------------------------------------------------------------------------
+void ObjectPositions::VisitText( const QString& /*text*/, const QFont& /*font*/, const geometry::Point2f& /*point*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectPositions::VisitPoint
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------

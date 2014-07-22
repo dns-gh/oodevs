@@ -66,13 +66,15 @@ private:
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
-    virtual void VisitLines     ( const T_PointVector& points );
-    virtual void VisitRectangle ( const T_PointVector& ) {};
-    virtual void VisitPolygon   ( const T_PointVector& ) {}
-    virtual void VisitCircle    ( const geometry::Point2f&, float ) {}
-    virtual void VisitPoint     ( const geometry::Point2f& ) {}
-    virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
-    virtual void VisitCurve     ( const T_PointVector& points );
+    virtual void VisitLines    ( const T_PointVector& points );
+    virtual void VisitRectangle( const T_PointVector& ) {};
+    virtual void VisitPolygon  ( const T_PointVector& ) {}
+    virtual void VisitCircle   ( const geometry::Point2f&, float ) {}
+    virtual void VisitPoint    ( const geometry::Point2f& ) {}
+    virtual void VisitPath     ( const geometry::Point2f& first, const T_PointVector& points );
+    virtual void VisitCurve    ( const T_PointVector& points );
+    virtual void VisitText     ( const QString& text, const QFont& font, const geometry::Point2f& point );
+
     void AddPoints( const sword::Location& message );
     void AddPoint( const geometry::Point2f& p, std::size_t i, std::size_t count );
     //@}

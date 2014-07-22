@@ -12,10 +12,17 @@
 #ifndef CLIENTS_GUI_TOOLS_H
 #define CLIENTS_GUI_TOOLS_H
 
+#include <geometry/Types.h>
+
 namespace kernel
 {
     class Entity_ABC;
     class Profile_ABC;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 namespace tools
@@ -32,6 +39,8 @@ namespace tools
     tools::Path SanitizeFileName( QString text, const QString& after = "-" );
     void SetKarma( const kernel::Entity_ABC& entity, std::string& symbol );
     void SetLevel( const kernel::Entity_ABC& entity, std::string& level );
+    void DrawText( const QString& text, const QFont& font, const geometry::Point2f& point,
+                   const QColor& color, const gui::GlTools_ABC& tools );
 
 }  //! namespace tools
 

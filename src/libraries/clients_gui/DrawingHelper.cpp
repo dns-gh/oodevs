@@ -76,6 +76,17 @@ namespace
 void ReadLocation( xml::xistream& xis, kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter )
 {
     xis >> xml::list( "point", boost::bind( &ReadPoint, _1, boost::ref( location ), boost::cref( converter ) ) );
+    if( xis.has_child( "text" ) )
+    {
+        std::string text, value;
+        QFont font;
+        xis >> xml::start( "text" )
+                >> xml::attribute( "font", value )
+                >> text
+            >> xml::end;
+        font.fromString( value.c_str() );
+        location.AddText( text.c_str(), font );
+    }
 }
 
 }

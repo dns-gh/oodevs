@@ -79,3 +79,17 @@ void DrawingCategoryItem::OnClicked( int id )
     if( it != styles_.end() )
         emit Selected( *it->second );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DrawingCategoryItem::ClearSelection
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+void DrawingCategoryItem::ClearSelection()
+{
+    if( QAbstractButton* button = selected() )
+    {
+        setExclusive( false );
+        button->toggle();
+        setExclusive( true );
+    }
+}

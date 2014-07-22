@@ -125,7 +125,7 @@ public:
     virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const = 0;
     virtual void DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, const std::string& level, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const = 0;
     virtual void DrawUnitSymbolAndTail( const std::string& symbol, const std::string& level, const T_PointVector& points ) const = 0;
-
+    virtual void DrawShapeText( const QImage& image, const geometry::Point2f& where ) const = 0;
     //@}
 };
 

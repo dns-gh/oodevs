@@ -85,6 +85,8 @@ private:
     virtual void VisitPoint     ( const geometry::Point2f& point );
     virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
     virtual void VisitCurve     ( const T_PointVector& points );
+    virtual void VisitText      ( const QString& text, const QFont& font, const geometry::Point2f& point );
+
     void Draw( const ::gui::GlTools_ABC& tools ) const;
     bool CheckValidity() const;
     //@}

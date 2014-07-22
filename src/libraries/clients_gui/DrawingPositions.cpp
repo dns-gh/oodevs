@@ -202,3 +202,12 @@ bool DrawingPositions::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DrawingPositions::VisitText
+// Created: LGY 2014-07-21
+// -----------------------------------------------------------------------------
+void DrawingPositions::VisitText( const QString& /*text*/, const QFont& /*font*/, const geometry::Point2f& point )
+{
+    VisitPoint( point );
+}

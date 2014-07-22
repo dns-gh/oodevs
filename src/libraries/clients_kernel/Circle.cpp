@@ -138,3 +138,12 @@ bool Circle::IsAt( const geometry::Point2f& point, float precision ) const
 {
     return IsValid() && center_.SquareDistance( point ) < ( radius_ + precision ) * ( radius_ + precision );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Circle::AddText
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+void Circle::AddText( const QString& /*text*/, const QFont& /*font*/ )
+{
+    // NOTHING
+}

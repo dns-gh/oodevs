@@ -116,3 +116,12 @@ std::string Point::GetTypeName() const
 {
     return "point";
 }
+
+// -----------------------------------------------------------------------------
+// Name: Point::AddText
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+void Point::AddText( const QString& /*text*/, const QFont& /*font*/ )
+{
+    // NOTHING
+}

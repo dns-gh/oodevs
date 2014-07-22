@@ -3,31 +3,30 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __kernel_Polygon_h_
-#define __kernel_Polygon_h_
+#ifndef __kernel_Text_h_
+#define __kernel_Text_h_
 
 #include "Location_ABC.h"
 
 namespace kernel
 {
-
 // =============================================================================
-/** @class  Polygon
-    @brief  Polygon
+/** @class  Text
+    @brief  Text
 */
-// Created: AGE 2006-08-09
+// Created: LGY 2014-06-11
 // =============================================================================
-class Polygon : public Location_ABC
+class Text : public Location_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Polygon();
-    virtual ~Polygon();
+             Text();
+    virtual ~Text();
     //@}
 
     //! @name Operations
@@ -46,27 +45,18 @@ public:
     virtual QString GetName() const;
     virtual bool IsValid() const;
     virtual bool IsDone() const;
-    const T_PointVector& GetPoints() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Polygon& operator=( const Polygon& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    bool IsSegment() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_PointVector points_;
+    bool pointSet_;
+    geometry::Point2f point_;
+    QString text_;
+    QFont font_;
     //@}
 };
 
 }
 
-#endif // __kernel_Polygon_h_
+#endif // __kernel_Text_h_

@@ -24,6 +24,7 @@ namespace gui
     class GlTools_ABC;
     class LocationEditor_ABC;
     class ShapeHandler_ABC;
+    class TextEditor;
 }
 
 namespace gui
@@ -39,7 +40,7 @@ class ParametersLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             ParametersLayer( GlTools_ABC& tools );
+             ParametersLayer( GlTools_ABC& tools, TextEditor& textEditor );
     virtual ~ParametersLayer();
     //@}
 
@@ -52,8 +53,10 @@ public:
     void StartPolygon   ( ShapeHandler_ABC& handler );
     void StartCircle    ( ShapeHandler_ABC& handler );
     void StartCurve     ( ShapeHandler_ABC& handler );
+    void StartText      ( ShapeHandler_ABC& handler, const QColor& color );
     void StartPath      ( ShapeHandler_ABC& handler, const kernel::Positions& position );
     void Start          ( ShapeHandler_ABC& handler, const kernel::Location_ABC& location );
+    void Start          ( ShapeHandler_ABC& handler, const kernel::Location_ABC& location, const QColor& color );
     void SelectRaster   ( ShapeHandler_ABC& handler );
     void Reset          ();
 
@@ -81,12 +84,14 @@ private:
     //! @name Member data
     //@{
     GlTools_ABC& tools_;
+    TextEditor& textEditor_;
     std::unique_ptr< CursorStrategy_ABC > cursors_;
     ShapeHandler_ABC* handler_;
     kernel::Location_ABC* current_;
     geometry::Rectangle2f world_;
     geometry::Rectangle2f viewport_;
     geometry::Point2f lastPoint_;
+    bool validation_;
     //@}
 };
 

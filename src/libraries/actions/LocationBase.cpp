@@ -135,6 +135,15 @@ void LocationBase::VisitCurve( const T_PointVector& /*points*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationBase::VisitText
+// Created: LGY 2014-07-21
+// -----------------------------------------------------------------------------
+void LocationBase::VisitText( const QString& /*text*/, const QFont& /*font*/, const geometry::Point2f& /*point*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationBase::VisitPoint
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------

@@ -152,3 +152,13 @@ void LocationProxy::Update()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: LocationProxy::AddText
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+void LocationProxy::AddText( const QString& text, const QFont& font )
+{
+    if( location_ )
+        location_->AddText( text, font );
+}

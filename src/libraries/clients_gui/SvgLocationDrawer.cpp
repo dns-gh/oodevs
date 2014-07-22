@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "SvgLocationDrawer.h"
+#include "Tools.h"
 #include "DrawingTemplate.h"
 #include "clients_kernel/Location_ABC.h"
 #include "GlTools_ABC.h"
@@ -214,6 +215,15 @@ void SvgLocationDrawer::VisitCurve( const T_PointVector& points )
             newPoints.push_back( Compute( points[ 0 ], points[ 2 ], points[ 1 ], i, segment ) );
         DrawShape( newPoints );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SvgLocationDrawer::VisitText
+// Created: LGY 2014-07-21
+// -----------------------------------------------------------------------------
+void SvgLocationDrawer::VisitText( const QString& text, const QFont& font, const geometry::Point2f& point )
+{
+    tools::DrawText( text, font, point, overlined_ ? color_.light( 120 ) : color_, *tools_ );
 }
 
 // -----------------------------------------------------------------------------

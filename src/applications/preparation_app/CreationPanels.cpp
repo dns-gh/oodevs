@@ -45,7 +45,7 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
     ghostPanel_ = new GhostsPanel( this, *this, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
     AddPanel( ghostPanel_ );
     AddPanel( new TemplatesPanel( this, *this, controllers, *model.agents_, *model.formations_, *model.ghosts_, staticModel.types_, colorController ) );
-    AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, *model.drawings_, config ) );
+    AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, *model.drawings_, staticModel.drawings_, config ) );
     weatherPanel_ = new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer );
     AddPanel( weatherPanel_ );
 }

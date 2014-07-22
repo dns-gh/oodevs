@@ -32,6 +32,11 @@ public:
     virtual ~DrawingCategoryItem();
     //@}
 
+    //! @name Operations
+    //@{
+    void ClearSelection();
+    //@}
+
 signals:
     //! @name Signals
     //@{

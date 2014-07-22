@@ -22,22 +22,23 @@ namespace kernel
 
 namespace gui
 {
-    class GlProxy;
-    class ParametersLayer;
-    class ColorStrategy;
-    class CircularEventStrategy;
-    class ExclusiveEventStrategy;
-    class LightingProxy;
-    class GlSelector;
-    class Layer;
-    class Painter_ABC;
-    class TerrainPicker;
     class AutomatsLayer;
-    class FormationLayer;
-    class HelpSystem;
-    class EntitySymbols;
+    class CircularEventStrategy;
+    class ColorStrategy;
     class Elevation2dLayer;
+    class EntitySymbols;
+    class ExclusiveEventStrategy;
+    class FormationLayer;
+    class GlProxy;
+    class GlSelector;
     class GraphicPreferences;
+    class HelpSystem;
+    class Layer;
+    class LightingProxy;
+    class Painter_ABC;
+    class ParametersLayer;
+    class TerrainPicker;
+    class TextEditor;
 }
 
 class ColorController;
@@ -157,6 +158,7 @@ private:
     std::unique_ptr< QProgressDialog >             progressDialog_;
     boost::shared_ptr< QProcess >                  process_;
     std::unique_ptr< gui::EntitySymbols >          icons_;
+    std::unique_ptr< gui::TextEditor >             textEditor_;
     //@}
 };
 

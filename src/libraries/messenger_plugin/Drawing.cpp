@@ -38,6 +38,10 @@ Drawing::Drawing( unsigned int id, const sword::Shape& msg, const kernel::Coordi
         points_.push_back( msg.points().elem( i ) );
     if( msg.has_pen_style() )
         style_ = msg.pen_style();
+    if( msg.has_text() )
+        text_ = msg.text();
+    if( msg.has_font() )
+        font_ = msg.font();
 }
 
 namespace
@@ -68,6 +72,16 @@ Drawing::Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sw
     xis >> xml::list( "point", *this, &Drawing::ReadPoint );
     if( xis.has_attribute( "style" ) )
         style_ = ReadStyle( xis );
+    if( xis.has_child( "text" ) )
+    {
+        std::string text, font;
+        xis >> xml::start( "text" )
+                >> xml::attribute( "font", font )
+                >> text
+            >> xml::end;
+        font_ = font;
+        text_ = text;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +98,8 @@ Drawing::Drawing( unsigned int id, const Drawing& rhs )
     , diffusion_( rhs.diffusion_ )
     , style_    ( rhs.style_ )
     , name_     ( rhs.name_ )
+    , font_     ( rhs.font_ )
+    , text_     ( rhs.text_ )
 {
     // NOTHING
 }
@@ -173,6 +189,10 @@ void Drawing::Update( const sword::ShapeUpdateRequest& msg )
     }
     if( msg.has_name() )
         name_ = msg.name();
+    if( msg.has_text() )
+        text_ = msg.text();
+    if( msg.has_font() )
+        font_ = msg.font();
 }
 
 // -----------------------------------------------------------------------------
@@ -183,21 +203,7 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     plugins::messenger::ShapeCreation message;
     message().mutable_id()->set_id( id_ );
-    message().mutable_shape()->set_category( category_ );
-    QColor color;
-    color.setNamedColor( color_.c_str() );
-    message().mutable_shape()->mutable_color()->set_red( color.red() );
-    message().mutable_shape()->mutable_color()->set_green( color.green() );
-    message().mutable_shape()->mutable_color()->set_blue( color.blue() );
-    message().mutable_shape()->set_pattern( pattern_ );
-    message().mutable_shape()->set_name( name_ );
-    if( diffusion_ )
-        *message().mutable_shape()->mutable_diffusion() = *diffusion_;
-    if( style_)
-        message().mutable_shape()->set_pen_style( *style_ );
-    sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
-    for( auto iter = points_.begin(); iter != points_.end(); ++iter )
-        *points->add_elem() = *iter;        //const_cast< CoordLatLong* >( &points_.front() );
+    SerializeShape( *message().mutable_shape() );
     message.Send( publisher );
 }
 
@@ -210,17 +216,35 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
     // $$$$ SBO 2008-06-09: keep track of updated fields...
     messenger::ShapeUpdate message;
     message().mutable_id()->set_id( id_ );
-    message().mutable_shape()->set_category( category_ );
+    SerializeShape( *message().mutable_shape() );
+    message.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::SerializeShape
+// Created: LGY 2014-07-23
+// -----------------------------------------------------------------------------
+void Drawing::SerializeShape( sword::Shape& shape ) const
+{
+    shape.set_category( category_ );
     QColor color;
     color.setNamedColor( color_.c_str() );
-    message().mutable_shape()->mutable_color()->set_red( color.red() );
-    message().mutable_shape()->mutable_color()->set_green( color.green() );
-    message().mutable_shape()->mutable_color()->set_blue( color.blue() );
-    message().mutable_shape()->set_pattern( pattern_ );
-    message().mutable_shape()->set_name( name_ );
+    shape.mutable_color()->set_red( color.red() );
+    shape.mutable_color()->set_green( color.green() );
+    shape.mutable_color()->set_blue( color.blue() );
+    shape.set_pattern( pattern_ );
+    shape.set_name( name_ );
+    if( diffusion_ )
+        *shape.mutable_diffusion() = *diffusion_;
+    if( style_ )
+        shape.set_pen_style( *style_ );
+    if( text_ )
+        shape.set_text( *text_ );
+    if( font_ )
+        shape.set_font( *font_ );
+    sword::CoordLatLongList* points = shape.mutable_points(); // required even if empty
     for( auto iter = points_.begin(); iter != points_.end(); ++iter )
-        *message().mutable_shape()->mutable_points()->add_elem() = *iter;
-    message.Send( publisher );
+        *points->add_elem() = *iter;
 }
 
 // -----------------------------------------------------------------------------
@@ -255,7 +279,12 @@ void Drawing::Serialize( xml::xostream& xos ) const
             << xml::attribute( "name", name_ )
             << xml::attribute( "template", pattern_ );
     std::for_each( points_.begin(), points_.end(), boost::bind( &Drawing::SerializePoint, this, _1, boost::ref( xos ) ) );
-    xos << xml::end;
+    if( font_ && text_ )
+        xos << xml::start( "text" )
+                << xml::attribute( "font", *font_ )
+                << *text_
+            << xml::end
+    << xml::end;
 }
 
 // -----------------------------------------------------------------------------

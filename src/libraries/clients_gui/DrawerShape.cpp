@@ -211,6 +211,14 @@ namespace
             for( auto it = points.begin(); it != points.end(); ++it )
                 VisitPoint( *it );
         }
+        virtual void VisitText( const QString& text, const QFont& font, const geometry::Point2f& point )
+        {
+            VisitPoint( point );
+            *xos_ << xml::start( "text" )
+                    << xml::attribute( "font", font.toString() )
+                    << text
+                  << xml::end;
+        }
         xml::xostream* xos_;
         const kernel::CoordinateConverter_ABC& converter_;
     };
@@ -275,7 +283,7 @@ void DrawerShape::Reset()
 // -----------------------------------------------------------------------------
 void DrawerShape::Edit( ParametersLayer& parameters )
 {
-    parameters.Start( *this, location_ );
+    parameters.Start( *this, location_, color_ );
     isEditing_ = true;
 }
 

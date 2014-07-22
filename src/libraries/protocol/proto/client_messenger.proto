@@ -117,6 +117,8 @@ message ShapeUpdateRequest {
     optional string           pattern  = 4;
     optional CoordLatLongList points   = 5;
     optional string           name     = 6;
+    optional string           text     = 7;
+    optional string           font     = 8;
 }
 
 /** @struct ShapeDestructionRequest

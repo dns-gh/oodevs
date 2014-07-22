@@ -11,6 +11,7 @@
 #include "Tools.h"
 #include "AutomatDecisions.h"
 
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -19,6 +20,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include <boost/assign.hpp>
 
 #include <tools/Path.h>
 
@@ -98,4 +100,33 @@ bool tools::CanOneSubordinateBeOrdered( const kernel::Profile_ABC& profile, cons
         if( CanOneSubordinateBeOrdered( profile, it.NextElement() ) )
             return true;
     return false;
+}
+
+void tools::DrawText( const QString& text, const QFont& font, const geometry::Point2f& point,
+                      const QColor& color, const gui::GlTools_ABC& tools )
+{
+    if( !text.isEmpty() )
+    {
+        const QFontMetrics metrics( font );
+        auto width = 0;
+        QStringList list = QStringList::split( '\n', text, true );
+        for( auto it = list.constBegin(); it != list.constEnd(); ++it )
+        {
+            const auto value =  metrics.width( *it );
+            if( value > width )
+                width = value;
+        }
+        ++width;
+        const auto height = metrics.height() * list.size();
+        QPixmap pix( width, height );
+        pix.fill( tools.IsPickingMode() ? tools.GetPickingColor() : Qt::transparent );
+        if( !tools.IsPickingMode() )
+        {
+            QPainter painter( &pix );
+            painter.setPen( color );
+            painter.setFont( font );
+            painter.drawText( QRectF( 0, 0, pix.width(), pix.height() ), Qt::AlignVCenter, text );
+        }
+        tools.DrawShapeText( pix.convertToImage(), point );
+    }
 }

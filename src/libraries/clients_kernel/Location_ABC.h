@@ -12,6 +12,7 @@
 
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
+#include <QtGui/qfont.h>
 #pragma warning( pop )
 
 #include <geometry/types.h>
@@ -40,6 +41,7 @@ public:
     //@{
     virtual void PopPoint() = 0;
     virtual void AddPoint( const geometry::Point2f& point ) = 0;
+    virtual void AddText( const QString& text, const QFont& font ) = 0;
     virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision ) = 0;
     virtual Location_ABC& Clone() const = 0;
     virtual std::string GetTypeName() const = 0;

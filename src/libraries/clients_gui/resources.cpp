@@ -117,6 +117,7 @@
 #include "cursors/point_cursor.xpm"
 #include "cursors/polygon_cursor.xpm"
 #include "cursors/rectangle_cursor.xpm"
+#include "cursors/text_cursor.xpm"
 
 QIcon MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

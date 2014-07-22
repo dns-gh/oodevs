@@ -70,13 +70,14 @@ private:
     void ReadLocation( xml::xistream& xis, const kernel::ObjectType& type );
     void ReadPoint( xml::xistream& xis );
     void Update();
-    virtual void VisitLines     ( const T_PointVector& points );
-    virtual void VisitRectangle ( const T_PointVector& points );
-    virtual void VisitPolygon   ( const T_PointVector& points );
-    virtual void VisitCircle    ( const geometry::Point2f& center, float radius );
-    virtual void VisitPoint     ( const geometry::Point2f& point );
-    virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
-    virtual void VisitCurve     ( const T_PointVector& points );
+    virtual void VisitLines    ( const T_PointVector& points );
+    virtual void VisitRectangle( const T_PointVector& points );
+    virtual void VisitPolygon  ( const T_PointVector& points );
+    virtual void VisitCircle   ( const geometry::Point2f& center, float radius );
+    virtual void VisitPoint    ( const geometry::Point2f& point );
+    virtual void VisitPath     ( const geometry::Point2f& first, const T_PointVector& points );
+    virtual void VisitCurve    ( const T_PointVector& points );
+    virtual void VisitText     ( const QString& text, const QFont& font, const geometry::Point2f& point );
     //@}
 
 private:

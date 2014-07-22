@@ -898,6 +898,10 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
         <source>Load drawing file</source>
         <translation>Cargar archivo de dibujo</translation>
     </message>
+    <message>
+        <source>Add text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawingCategory</name>
@@ -2132,6 +2136,33 @@ Desea eliminarlo?</translation>
     </message>
     <message>
         <source>Terrain profile unit path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::TextEditor</name>
+    <message>
+        <source>Text edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Bold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Italic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Underline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

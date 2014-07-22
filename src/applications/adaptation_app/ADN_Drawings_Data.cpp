@@ -88,6 +88,7 @@ namespace
         virtual bool IsPickingMode() const { return false; };
         virtual void Picking() {};
         virtual QColor GetPickingColor() const { return QColor() ; }
+        virtual void DrawShapeText( const QImage&, const geometry::Point2f& ) const {}
         //@}
     };
 }

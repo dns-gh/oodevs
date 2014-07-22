@@ -13,9 +13,13 @@
 #include <boost/noncopyable.hpp>
 #include "Types.h"
 
+#pragma warning( push, 0 )
+#include <QtCore/QString>
+#include <QtGui/QFont>
+#pragma warning( pop )
+
 namespace kernel
 {
-
 // =============================================================================
 /** @class  LocationVisitor_ABC
     @brief  Location visitor definition
@@ -40,6 +44,7 @@ public:
     virtual void VisitCurve    ( const T_PointVector& points ) = 0;
     virtual void VisitPoint    ( const geometry::Point2f& point ) = 0;
     virtual void VisitPath     ( const geometry::Point2f& first, const T_PointVector& points ) = 0;
+    virtual void VisitText     ( const QString& text, const QFont& font, const geometry::Point2f& point ) = 0;
     //@}
 };
 

@@ -123,3 +123,12 @@ std::string Rectangle::GetTypeName() const
 {
     return "rectangle";
 }
+
+// -----------------------------------------------------------------------------
+// Name: Rectangle::AddText
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+void Rectangle::AddText( const QString& /*text*/, const QFont& /*font*/ )
+{
+    // NOTHING
+}

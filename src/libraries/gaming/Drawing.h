@@ -67,7 +67,7 @@ private:
     //! @name Helpers
     //@{
     void SetLocation( const sword::CoordLatLongList& list );
-    void SerializeLocation( sword::CoordLatLongList& list ) const;
+    void SetText( const sword::Shape& shape );
     void SendUpdateRequest() const;
     //@}
 

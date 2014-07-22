@@ -152,3 +152,12 @@ std::string Path::GetTypeName() const
 {
     return "path";
 }
+
+// -----------------------------------------------------------------------------
+// Name: Path::AddText
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+void Path::AddText( const QString& /*text*/, const QFont& /*font*/ )
+{
+    // NOTHING
+}

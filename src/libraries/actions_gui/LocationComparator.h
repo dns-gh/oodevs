@@ -37,6 +37,7 @@ public:
     virtual void VisitCircle   ( const geometry::Point2f&, float ) {}
     virtual void VisitCurve    ( const T_PointVector& ) {}
     virtual void VisitPath     ( const geometry::Point2f&, const T_PointVector& ) {}
+    virtual void VisitText     ( const QString&, const QFont&, const geometry::Point2f& ) {}
     //@}
 
 private:

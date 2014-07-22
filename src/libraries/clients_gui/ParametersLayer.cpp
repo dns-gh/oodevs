@@ -13,16 +13,18 @@
 #include "CursorStrategy.h"
 #include "GlTools_ABC.h"
 #include "LocationEditor_ABC.h"
-#include "resources.h"
 #include "ShapeHandler_ABC.h"
+#include "TextEditor.h"
+#include "resources.h"
 
 #include "clients_kernel/Circle.h"
-#include "clients_kernel/Lines.h"
 #include "clients_kernel/Curve.h"
+#include "clients_kernel/Lines.h"
 #include "clients_kernel/Path.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Rectangle.h"
+#include "clients_kernel/Text.h"
 
 using namespace kernel;
 using namespace gui;
@@ -31,11 +33,13 @@ using namespace gui;
 // Name: ParametersLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ParametersLayer::ParametersLayer( GlTools_ABC& tools )
+ParametersLayer::ParametersLayer( GlTools_ABC& tools, TextEditor& textEditor )
     : tools_( tools )
+    , textEditor_( textEditor )
     , cursors_( new CursorStrategy( tools_ ) )
     , handler_( 0 )
     , current_( 0 )
+    , validation_( false )
 {
     // NOTHING
 }
@@ -79,9 +83,11 @@ void ParametersLayer::Paint( Viewport_ABC& /*viewport*/ )
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor4f( COLOR_UNDERCONST );
         glLineWidth( 3.f );
-        current_->AddPoint( lastPoint_ );
+        if( !validation_ )
+            current_->AddPoint( lastPoint_ );
         handler_->Draw( *current_, viewport_, tools_ );
-        current_->PopPoint();
+        if( !validation_ )
+            current_->PopPoint();
     glPopAttrib();
 }
 
@@ -207,6 +213,17 @@ void ParametersLayer::StartCurve( ShapeHandler_ABC& handler )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParametersLayer::StartText
+// Created: LGY 2014-06-10
+// -----------------------------------------------------------------------------
+void ParametersLayer::StartText( ShapeHandler_ABC& handler, const QColor& color )
+{
+    textEditor_.SetFontColor( color );
+    cursors_->SelectTool( MAKE_PIXMAP( text_cursor ), true );
+    Start( handler, Text() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParametersLayer::StartRectangle
 // Created: SLG 2010-03-24
 // -----------------------------------------------------------------------------
@@ -257,6 +274,17 @@ void ParametersLayer::Start( ShapeHandler_ABC& handler, const Location_ABC& loca
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParametersLayer::Start
+// Created: LGY 2014-06-10
+// -----------------------------------------------------------------------------
+void ParametersLayer::Start( ShapeHandler_ABC& handler, const Location_ABC& location, const QColor& color )
+{
+    textEditor_.SetFontColor( color );
+    handler_ = &handler;
+    current_ = &location.Clone();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParametersLayer::Reset
 // Created: SBO 2007-03-01
 // -----------------------------------------------------------------------------
@@ -267,6 +295,7 @@ void ParametersLayer::Reset()
     handler_ = 0;
     delete current_;
     current_ = 0;
+    validation_ = false;
     cursors_->SelectTool( QCursor(), false );
 }
 
@@ -280,10 +309,23 @@ void ParametersLayer::NotifyDone()
     {
         ShapeHandler_ABC* handler = handler_;
         Location_ABC* location = current_;
+
+        if( location )
+        {
+            if( location->GetTypeName() == "text" )
+            {
+                validation_ = true;
+                if( textEditor_.Exec( location ) != QDialog::Accepted )
+                {
+                    Reset();
+                    return;
+                }
+            }
+            handler->Handle( *location );
+        }
+        validation_ = false;
         handler_ = 0;
         current_ = 0;
-        if( location )
-            handler->Handle( *location );
         cursors_->SelectTool( QCursor(), false );
     }
 }

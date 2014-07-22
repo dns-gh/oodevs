@@ -901,6 +901,10 @@ Please check access permissions or write protection.</translation>
         <source>Load drawing file</source>
         <translation>Load drawing file</translation>
     </message>
+    <message>
+        <source>Add text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawingCategory</name>
@@ -2130,6 +2134,33 @@ Do you want to remove it?</translation>
     <message>
         <source>Terrain profile unit path</source>
         <translation>Terrain profile unit path</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TextEditor</name>
+    <message>
+        <source>Text edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Bold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Italic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Underline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
     </message>
 </context>
 <context>

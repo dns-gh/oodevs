@@ -3,131 +3,126 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
 #include "clients_kernel_pch.h"
-#include "Lines.h"
+#include "Text.h"
 #include "LocationVisitor_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: Lines constructor
-// Created: AGE 2006-08-09
+// Name: Text constructor
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-Lines::Lines()
+Text::Text()
+    : pointSet_( false )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines destructor
-// Created: AGE 2006-08-09
+// Name: Text destructor
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-Lines::~Lines()
+Text::~Text()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::PopPoint
-// Created: AGE 2006-08-09
+// Name: Text::PopPoint
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-void Lines::PopPoint()
+void Text::PopPoint()
 {
-    if( ! points_.empty() )
-        points_.pop_back();
+    pointSet_ = false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::AddPoint
-// Created: AGE 2006-08-09
+// Name: Text::AddPoint
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-void Lines::AddPoint( const geometry::Point2f& point )
+void Text::AddPoint( const geometry::Point2f& point )
 {
-    points_.push_back( point );
+    pointSet_ = true;
+    point_ = point;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::Translate
-// Created: SBO 2008-05-30
+// Name: Text::Translate
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-void Lines::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
+void Text::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
 {
-    const float squarePrecision = precision * precision;
-    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        if( it->SquareDistance( from ) < squarePrecision )
-        {
-            *it += translation;
-            return;
-        }
-    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        *it += translation;
+    if( IsValid() && point_.SquareDistance( from ) < precision * precision )
+        point_ += translation;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::IsValid
+// Name: Text::IsValid
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-bool Lines::IsValid() const
+bool Text::IsValid() const
 {
-    return points_.size() >= 2;
+    return pointSet_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::IsDone
+// Name: Text::IsDone
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-bool Lines::IsDone() const
+bool Text::IsDone() const
 {
-    return false;
+    return IsValid();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::Accept
-// Created: AGE 2006-08-09
+// Name: Text::Accept
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-void Lines::Accept( LocationVisitor_ABC& visitor ) const
+void Text::Accept( LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitLines( points_ );
+    visitor.VisitText( text_, font_, point_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::GetName
-// Created: AGE 2006-08-09
+// Name: Text::GetName
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-QString Lines::GetName() const
+QString Text::GetName() const
 {
-    static const QString name = tools::translate( "Localisation", "Line" );
+    static const QString name = tools::translate( "Localisation", "Text" );
     return name;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::Clone
+// Name: Text::Clone
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-Location_ABC& Lines::Clone() const
+Location_ABC& Text::Clone() const
 {
-    return *new Lines( *this );
+    return *new Text( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::GetTypeName
-// Created: JSR 2012-02-17
+// Name: Text::AddText
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-std::string Lines::GetTypeName() const
+void Text::AddText( const QString& text, const QFont& font )
 {
-    return "line";
+    text_ = text;
+    font_ = font;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lines::AddText
-// Created: LGY 2014-07-22
+// Name: Text::GetTypeName
+// Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-void Lines::AddText( const QString& /*text*/, const QFont& /*font*/ )
+std::string Text::GetTypeName() const
 {
-    // NOTHING
+    return "text";
 }
