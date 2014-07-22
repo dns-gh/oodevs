@@ -25,6 +25,7 @@ type PhysicalFile struct {
 	XMLName    xml.Name   `xml:"physical"`
 	Automats   FileHolder `xml:"automats"`
 	Components FileHolder `xml:"components"`
+	Objects    FileHolder `xml:"objects"`
 	Reports    FileHolder `xml:"reports"`
 	Resources  FileHolder `xml:"resources"`
 	Units      FileHolder `xml:"units"`
@@ -275,4 +276,29 @@ func ReadReports(physical PhysicalFile) (Reports, error) {
 		return Reports{}, err
 	}
 	return Reports(xml.Reports), nil
+}
+
+type Object struct {
+	Type string `xml:"type,attr"`
+	Name string `xml:"name,attr"`
+}
+
+type Objects struct {
+	XMLName xml.Name `xml:"objects"`
+	Content []Object `xml:"object"`
+}
+
+func ReadObjects(physical PhysicalFile) (*Objects, error) {
+	objects := Objects{}
+	err := readXml(physical.BaseDir, physical.Objects.File, &objects)
+	return &objects, err
+}
+
+func (r *Objects) GetObject(t string) *Object {
+	for _, object := range r.Content {
+		if object.Type == t {
+			return &object
+		}
+	}
+	return nil
 }

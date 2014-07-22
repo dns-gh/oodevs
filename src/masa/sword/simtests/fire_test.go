@@ -524,3 +524,25 @@ func (s *TestSuite) TestDecDirectFireRangeUpdate(c *C) {
 	c.Assert(firerAfter.Resources[ammo500m], Equals, firerBefore.Resources[ammo500m])
 	c.Assert(firerAfter.Resources[ammo1km], Equals, firerBefore.Resources[ammo1km])
 }
+
+func (s *TestSuite) TestIndirectFireWithObjectEffect(c *C) {
+	phydb := loadPhysical(c, "test")
+
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
+	defer stopSimAndClient(c, sim, client)
+
+	// Indirect fire with object creation, wait for the object ot appear
+	pos := swapi.Point{X: -15.9268, Y: 28.3453}
+	ammo := getResourceTypeFromName(c, phydb, "ammo with object effect")
+	err := client.CreateFireOnLocation(pos, ammo, 1)
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, o := range data.Objects {
+			if o.ObjectType == "ammo_object_effect" {
+				return true
+			}
+		}
+		return false
+	})
+}
