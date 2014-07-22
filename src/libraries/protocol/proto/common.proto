@@ -373,12 +373,16 @@ message Path {
 /** @struct PathPoint
 */
 message PathPoint {
-    // The coordinate point
+    //! The coordinate point
     required CoordLatLong coordinate = 1;
-    // The index of the associated waypoint
+    //! The index of the associated waypoint
     optional int32        waypoint   = 2;
-    // if the associated waypoint is reached
+    //! if the associated waypoint is reached
     optional bool         reached    = 3;
+    //! The terrain data picked at current point
+    optional TerrainData  current    = 4;
+    //! The terrain data picked at next point
+    optional TerrainData  next       = 5;
 }
 
 /** @struct PathResult
@@ -2796,4 +2800,14 @@ message PathfindDestruction {
 message Timeskip {
     optional uint32 tick = 1;
     optional string time = 2;
+}
+
+/** @struct TerrainData
+    @brief Describes a terrain data at a point
+*/
+message TerrainData {
+    required uint32 linear = 1;
+    required uint32 area   = 2;
+    required uint32 left   = 3;
+    required uint32 right  = 4;
 }

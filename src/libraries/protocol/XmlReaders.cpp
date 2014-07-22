@@ -835,18 +835,28 @@ namespace
             request.set_ignore_dynamic_objects( *dyn );
     }
 
+    void ReadTerrainData( xml::xisubstream xis, sword::TerrainData& data )
+    {
+        data.set_area( xis.attribute< uint32_t >( "area" ) );
+        data.set_linear( xis.attribute< uint32_t >( "linear" ) );
+        data.set_left( xis.attribute< uint32_t >( "left" ) );
+        data.set_right( xis.attribute< uint32_t >( "right" ) );
+    }
+
     void ReadPathResult( const Reader_ABC& reader, sword::PathResult& result, xml::xisubstream xis )
     {
         xis >> xml::start( "result" )
                 >> xml::list( "point", [&]( xml::xistream& xis ){
-                    auto& points = *result.add_points();
-                    auto point = reader.Convert( xis.attribute< std::string >( "coordinates" ) );
-                    points.mutable_coordinate()->set_longitude( point.x );
-                    points.mutable_coordinate()->set_latitude( point.y );
+                    auto& point = *result.add_points();
+                    auto coordinate = reader.Convert( xis.attribute< std::string >( "coordinates" ) );
+                    point.mutable_coordinate()->set_longitude( coordinate.x );
+                    point.mutable_coordinate()->set_latitude( coordinate.y );
                     if( auto waypoint = TestAttribute< int32_t >( xis, "waypoint" ) )
-                        points.set_waypoint( *waypoint );
+                        point.set_waypoint( *waypoint );
                     if( auto reached = TestAttribute< bool >( xis, "reached" ) )
-                        points.set_reached( *reached );
+                        point.set_reached( *reached );
+                    xis >> xml::list( "current", boost::bind( &ReadTerrainData, _1, boost::ref( *point.mutable_current() ) ) )
+                        >> xml::list( "next", boost::bind( &ReadTerrainData, _1, boost::ref( *point.mutable_next() ) ) );
                 } );
     }
 

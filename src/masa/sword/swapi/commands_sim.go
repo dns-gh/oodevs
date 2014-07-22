@@ -1788,6 +1788,12 @@ func ReadPathPoints(pathPoints []*sword.PathPoint) []PathPoint {
 		if reached := v.Reached; reached != nil {
 			point.Reached = *reached
 		}
+		if current := v.Current; current != nil {
+			point.Current = NewTerrainData(current.GetArea(), current.GetLinear(), current.GetLeft(), current.GetRight())
+		}
+		if next := v.Next; next != nil {
+			point.Next = NewTerrainData(next.GetArea(), next.GetLinear(), next.GetLeft(), next.GetRight())
+		}
 		points = append(points, point)
 	}
 	return points

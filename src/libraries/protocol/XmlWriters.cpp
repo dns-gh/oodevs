@@ -550,6 +550,15 @@ namespace
             << xml::attribute( "value", request.ignore_dynamic_objects() );
     }
 
+    void WriteTerrainData( xml::xosubstream xos, const sword::TerrainData& data, const std::string& tag )
+    {
+        xos << xml::start( tag )
+            << xml::attribute( "area", data.area() )
+            << xml::attribute( "linear", data.linear() )
+            << xml::attribute( "left", data.left() )
+            << xml::attribute( "right", data.right() );
+    }
+
     void WritePathResult( xml::xosubstream xos, const Writer_ABC& writer, const PathResult& result )
     {
         xos << xml::start( "result" );
@@ -562,6 +571,10 @@ namespace
                 xos << xml::attribute( "waypoint", it->waypoint() );
             if( it->has_reached() )
                 xos << xml::attribute( "reached", it->reached() );
+            if( it->has_current() )
+                WriteTerrainData( xos, it->current(), "current" );
+            if( it->has_next() )
+                WriteTerrainData( xos, it->next(), "next" );
             xos << xml::end;
         }
     }

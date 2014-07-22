@@ -373,6 +373,15 @@ func MakePathfindRequest(unitId uint32, ignoreDynamicObjects bool, points ...Poi
 		})
 }
 
+func MakeTerrainData(data TerrainData) *sword.TerrainData {
+	return &sword.TerrainData{
+		Area:   proto.Uint32(data.Area),
+		Linear: proto.Uint32(data.Linear),
+		Left:   proto.Uint32(data.Left),
+		Right:  proto.Uint32(data.Right),
+	}
+}
+
 func MakePathfind(pathfind *Pathfind) *sword.MissionParameter {
 	positions := []*sword.CoordLatLong{}
 	for _, p := range pathfind.Positions {
@@ -384,6 +393,8 @@ func MakePathfind(pathfind *Pathfind) *sword.MissionParameter {
 			Coordinate: MakeCoordLatLong(p.Point),
 			Waypoint:   proto.Int32(p.Waypoint),
 			Reached:    proto.Bool(p.Reached),
+			Current:    MakeTerrainData(p.Current),
+			Next:       MakeTerrainData(p.Next),
 		})
 	}
 	return MakeParameter(
