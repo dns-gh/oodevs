@@ -354,6 +354,10 @@
         <source>General</source>
         <translation>Général</translation>
     </message>
+    <message>
+        <source>Close tab</source>
+        <translation>Fermer l&apos;onglet</translation>
+    </message>
 </context>
 <context>
     <name>ClockDock</name>

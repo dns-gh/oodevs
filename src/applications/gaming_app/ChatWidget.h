@@ -63,6 +63,7 @@ private:
     virtual void NotifyDeleted( const UserProfile& profile );
     virtual void Receive( const Command& command );
     void Select( const QString& name );
+    void ChangeCloseTabTooltip();
     //@}
 
     //! @name Types
