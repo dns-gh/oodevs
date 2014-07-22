@@ -373,9 +373,7 @@ func (s *TestSuite) TestTeleport(c *C) {
 	c.Assert(err, IsNil)
 
 	// Check unit position
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return isNearby(data.Units[unit.Id].Position, pos2)
-	})
+	c.Assert(isNearby(client.Model.GetUnit(unit.Id).Position, pos2), Equals, true)
 
 	// Should work with engaged unit
 	err = client.SetAutomatMode(automat.Id, true)
@@ -384,11 +382,7 @@ func (s *TestSuite) TestTeleport(c *C) {
 	// Teleport unit
 	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos1)
 	c.Assert(err, IsNil)
-
-	// Check unit position
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return isNearby(data.Units[unit.Id].Position, pos1)
-	})
+	c.Assert(isNearby(client.Model.GetUnit(unit.Id).Position, pos1), Equals, true)
 }
 
 func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
