@@ -679,7 +679,7 @@ Reason: %3
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -2911,6 +2911,17 @@ This data can&apos;t be projected.</source>
     <message>
         <source>N/A</source>
         <translation>N/A</translation>
+    </message>
+</context>
+<context>
+    <name>PathfindLayer</name>
+    <message>
+        <source>Delete</source>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edit</translation>
     </message>
 </context>
 <context>

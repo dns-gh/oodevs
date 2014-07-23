@@ -12,6 +12,11 @@
 
 #include "Entity_ABC.h"
 
+namespace sword
+{
+    class PathResult;
+}
+
 namespace kernel
 {
 // =============================================================================
@@ -22,10 +27,23 @@ namespace kernel
 class Pathfind_ABC : public Entity_ABC
 {
 public:
+    //! @name Static
+    //@{
+    static const std::string typeName_;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              Pathfind_ABC();
     virtual ~Pathfind_ABC();
+    //@}
+
+    //! @name Methods
+    //@{
+    virtual const Entity_ABC& GetUnit() const = 0;
+    virtual void SetVisible( bool visible ) = 0;
+    virtual sword::PathResult GetPathfind() const = 0;
     //@}
 
     //! @name Operations

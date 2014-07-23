@@ -26,6 +26,7 @@ enum E_LayerTypes
     eLayerTypes_Drawers,
     eLayerTypes_Knowledges,
     eLayerTypes_Inhabitants,
+    eLayerTypes_Pathfinds,
     eNbrLayerTypes
 };
 

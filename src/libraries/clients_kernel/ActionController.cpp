@@ -23,6 +23,7 @@
 #include "Knowledge_ABC.h"
 #include "KnowledgeGroup_ABC.h"
 #include "Object_ABC.h"
+#include "Pathfind_ABC.h"
 #include "TacticalLine_ABC.h"
 #include "Team_ABC.h"
 #include "Drawing_ABC.h"
@@ -74,6 +75,7 @@ void ActionController::InitializeSelectionners()
     selectionners_.push_back( new Selectionner< TacticalLine_ABC   >() );
     selectionners_.push_back( new Selectionner< Team_ABC           >() );
     selectionners_.push_back( new Selectionner< Drawing_ABC        >() );
+    selectionners_.push_back( new Selectionner< Pathfind_ABC       >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -73,6 +73,7 @@ public:
     tools::Iterator< const DotationCapacityType& > CreateResourcesIterator() const;
     const CarryingSupplyFunction* GetLogSupplyFunctionCarrying() const;
     const MaintenanceFunctions* GetMaintenanceFunctions() const;
+    static std::unique_ptr< EquipmentType > MakeFakeEquipment( unsigned long id );
     //@}
 
 private:
@@ -85,6 +86,7 @@ private:
 private:
     //! @name Helpers
     //@{
+    explicit EquipmentType( unsigned long id );
     void ReadWeaponSystem( xml::xistream& xis, const  tools::Resolver_ABC< WeaponSystemType, std::string >& weapons );
     void ReadBreakdown( xml::xistream& xis );
     void ReadResourceCategory( xml::xistream& xis );

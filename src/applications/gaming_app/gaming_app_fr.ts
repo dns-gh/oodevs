@@ -2928,6 +2928,17 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
+    <name>PathfindLayer</name>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editer</translation>
+    </message>
+</context>
+<context>
     <name>PlanificationModePanel</name>
     <message>
         <source>Planification mode</source>

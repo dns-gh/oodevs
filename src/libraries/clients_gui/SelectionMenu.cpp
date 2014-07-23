@@ -27,6 +27,7 @@
 #include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -154,7 +155,7 @@ QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, f
             drawingTemplate = drawingCategory->Find( code );
         }
     }
-    else 
+    else
         drawingTemplate = drawingCategory->Find( code );
 
     if( drawingTemplate )
@@ -260,6 +261,11 @@ bool SelectionMenu::GenerateIcons()
                     }
                     if( allIconsGenerated && ( !mode3d_ && pixmap.isNull() ) )
                         allIconsGenerated = false;
+                }
+                else if( entity->GetTypeName() == kernel::Pathfind_ABC::typeName_ )
+                {
+                    static const QPixmap pathfind( "resources/symbols/pathfind.png" );
+                    pixmap = pathfind;
                 }
             }
         }

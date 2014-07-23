@@ -89,10 +89,11 @@ namespace
 {
     geometry::Point2f GetPosition( const Entity_ABC& entity )
     {
-        if( const kernel::UrbanPositions_ABC* urbanPositions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
-            return urbanPositions->Barycenter();
-        const kernel::Positions& positions = entity.Get< kernel::Positions >();
-        return positions.GetPosition();
+        if( auto pos = entity.Retrieve< kernel::UrbanPositions_ABC >() )
+            return pos->Barycenter();
+        if( auto pos = entity.Retrieve< kernel::Positions >() )
+            return pos->GetPosition();
+        return geometry::Point2f();
     }
 }
 

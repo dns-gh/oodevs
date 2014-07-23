@@ -147,7 +147,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     // Itinerary edition
     {
         itineraryDockWidget_ = new ItineraryEditionDockWidget( parent, controllers );
-        itineraryDockWidget_->SetModes( eModes_AllGaming - eModes_Itinerary, eModes_Itinerary );
+        itineraryDockWidget_->SetModes( eModes_AllGaming & ~eModes_Itinerary, eModes_Itinerary );
         parent->addDockWidget( Qt::LeftDockWidgetArea, itineraryDockWidget_ );
     }
     // -----------------------------------------------------------------------------

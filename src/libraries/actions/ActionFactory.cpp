@@ -1090,14 +1090,16 @@ Action_ABC* ActionFactory::CreateInvalidAction( const kernel::OrderType& mission
     return action.release();
 }
 
-Action_ABC* ActionFactory::CreatePathfindCreation( const kernel::Entity_ABC& entity,
+Action_ABC* ActionFactory::CreatePathfindCreation( uint32_t unit,
+                                                   const kernel::Entity_ABC& entity,
                                                    const std::vector< geometry::Point2f >& points ) const
 {
     kernel::MagicActionType& actionType = magicActions_.Get( "pathfind_creation" );
     std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     sword::Pathfind pathfind;
-    parameters::FillPathfindRequest( *pathfind.mutable_request(), coordinateConverter_, entity, points );
+    pathfind.set_id( 0 );
+    parameters::FillPathfindRequest( *pathfind.mutable_request(), unit, coordinateConverter_, entity, points );
     action->AddParameter( *new parameters::Itinerary( it.NextElement(), coordinateConverter_, pathfind ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();

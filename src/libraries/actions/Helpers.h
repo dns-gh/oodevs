@@ -34,6 +34,7 @@ namespace actions
                                 const sword::PointList& list,
                                 const kernel::CoordinateConverter_ABC& converter );
         void FillPathfindRequest( sword::PathfindRequest& dst,
+                                  uint32_t id,
                                   const kernel::CoordinateConverter_ABC& converter,
                                   const kernel::Entity_ABC& entity,
                                   const std::vector< geometry::Point2f >& points );
