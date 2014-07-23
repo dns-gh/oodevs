@@ -37,7 +37,7 @@
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
 PHY_ZURBPerceptionComputer::PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, double roll, unsigned int tick )
-    : PHY_PerceptionComputer_ABC( perceiver )
+    : perceiver_( perceiver )
     , roll_( roll )
     , tick_( tick )
 {

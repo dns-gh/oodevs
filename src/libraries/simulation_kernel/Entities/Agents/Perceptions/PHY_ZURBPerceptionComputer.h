@@ -10,10 +10,10 @@
 #ifndef __PHY_ZURBPerceptionComputer_h_
 #define __PHY_ZURBPerceptionComputer_h_
 
-#include "PHY_PerceptionComputer_ABC.h"
-
 class MT_Vector2D;
 class TER_Polygon;
+class MIL_Agent_ABC;
+class PHY_PerceptionLevel;
 
 // =============================================================================
 /** @class  PHY_ZURBComputer
@@ -21,18 +21,18 @@ class TER_Polygon;
 */
 // Created: SLG 2010-04-29
 // =============================================================================
-class PHY_ZURBPerceptionComputer : public PHY_PerceptionComputer_ABC
+class PHY_ZURBPerceptionComputer : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, double roll, unsigned int tick );
-    virtual ~PHY_ZURBPerceptionComputer();
+     PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, double roll, unsigned int tick );
+    ~PHY_ZURBPerceptionComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& target ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& target ) const;
     //@}
 
 private:
@@ -62,9 +62,11 @@ private:
     bool ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
     const PHY_PerceptionLevel& GetLevelWithDelay( unsigned int delay, const PHY_PerceptionLevel& level ) const;
     //@}
+
 private:
     //! @name Member data
     //@{
+    const MIL_Agent_ABC& perceiver_;
     double roll_;
     unsigned int tick_;
     //@}
