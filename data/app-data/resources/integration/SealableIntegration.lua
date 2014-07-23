@@ -46,7 +46,8 @@ local startedSealOffLocation = function( location, knowledge )
 end
 
 local stopSealOffLocation = function( knowledge )
-    if knowledge.constructedObject  then 
+    if knowledge.constructedObject then
+        local DEC_ConnaissanceObjet_NiveauAnimation = DEC_ConnaissanceObjet_NiveauAnimation
         if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) > 0 then
             DEC__StopAction( knowledge.constructedObject.actionAnimation )
             reportFunction( eRC_FinAnimationObjet, knowledge.constructedObject )
