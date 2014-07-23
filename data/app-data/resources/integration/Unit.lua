@@ -203,6 +203,20 @@ integration.getName = function( agent )
     return DEC_GetSzName( agent.source )
 end
 
+--- Returns the name of the provided agent
+-- @param agent Simulation agent
+-- @return String, the name of the agent
+integration.getMilName = function( agent )
+    return DEC_Pion_GetMilPionName( agent )
+end
+
+--- Returns the number of energy dotation for the provided agent 
+-- @param agent Simulation agent
+-- @return Double, the number of energy dotation
+integration.getEnergyDotationNumber = function( agent )
+    return DEC_Agent_GetFuelDotationNumber( agent )
+end
+
 --- Returns a list of all detected agent knowledges in
 -- this entity's current area of responsibility.
 -- This method can only be called by an agent.
