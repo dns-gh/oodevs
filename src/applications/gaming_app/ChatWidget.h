@@ -57,6 +57,7 @@ private:
     virtual void NotifyDeleted( const kernel::UserProfile_ABC& profile );
     virtual void Receive( const Command& command );
     void Select( const QString& name );
+    void ChangeCloseTabTooltip();
     //@}
 
     //! @name Types

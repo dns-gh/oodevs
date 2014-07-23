@@ -33,6 +33,7 @@ ChatWidget::ChatWidget( QWidget* parent, kernel::Controllers& controllers, Publi
     {
         QWidget* tab = new ChatRoom( tabs_, *publisher_, handler_ );
         tabs_->addTab( tab, tr( "General" ) );
+        ChangeCloseTabTooltip();
     }
     profiles_ = new ChatProfiles( this, controllers );
     setStretchFactor( tabs_, 4 );
@@ -103,6 +104,7 @@ void ChatWidget::Select( const QString& name )
     {
         tab = new ChatRoom( tabs_, *publisher_, handler_, name );
         tabs_->addTab( tab, name );
+        ChangeCloseTabTooltip();
     }
     tabs_->showPage( tab );
 }
@@ -116,4 +118,19 @@ void ChatWidget::Receive( const Command& command )
     const QString sender = command.Source().c_str();
     if( !sender.isEmpty() && !command.Target().empty() && sender != publisher_->SelfProfile() )
         Select( sender );  // $$$$ AGE 2008-08-14: reetrance dans CommandHandler.Receive
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChatWidget::ChangeCloseTabTooltip
+// Created: JSR 2014-07-22
+// -----------------------------------------------------------------------------
+void ChatWidget::ChangeCloseTabTooltip()
+{
+    QList< QAbstractButton* > allPButtons = tabs_->findChildren< QAbstractButton* >();
+    for( int i = 0; i < allPButtons.size(); ++i )
+    {
+        QAbstractButton* item = allPButtons.at( i );
+        if( item->inherits( "CloseButton" ) )
+            item->setToolTip( tr( "Close tab" ) );
+    }
 }

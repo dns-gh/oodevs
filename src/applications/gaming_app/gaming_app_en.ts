@@ -354,6 +354,10 @@
         <source>General</source>
         <translation>General</translation>
     </message>
+    <message>
+        <source>Close tab</source>
+        <translation>Close tab</translation>
+    </message>
 </context>
 <context>
     <name>ClockDock</name>
