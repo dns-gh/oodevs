@@ -530,10 +530,7 @@ void MIL_Population::UpdateState()
         trashedFlows_.clear();
         Update( flows_, trashedFlows_ );
         Update( concentrations_, trashedConcentrations_ );
-        if( !trashedFlows_.empty() || !trashedConcentrations_.empty() )
-            UpdateBarycenter();
-        wasInFire_ = isInFire_;
-        isInFire_ = false;
+        UpdateBarycenter();
         UpdateAttackedPopulations();
     }
     catch( const std::exception& e )
@@ -556,6 +553,8 @@ void MIL_Population::Clean()
     for( auto itFlow = flows_.cbegin(); itFlow != flows_.end(); ++itFlow )
         ( **itFlow ).Clean();
     bHasDoneMagicMove_ = false;
+    wasInFire_ = isInFire_;
+    isInFire_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -1102,7 +1101,7 @@ void MIL_Population::FireOnPions( double rIntensity, PHY_FireResults_Population&
             ( **itConcentration ).FireOnPions( rIntensity, fireResult );
         for( auto itFlow = flows_.cbegin(); itFlow != flows_.end(); ++itFlow )
             ( **itFlow ).FireOnPions( rIntensity, fireResult );
-}
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1327,17 +1326,19 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParame
 {
     protocol::CheckCount( msg, 1 );
     const auto& point = protocol::GetPoint( msg, 0 );
-    MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( point, vPosTmp );
+    MT_Vector2D position;
+    MIL_Tools::ConvertCoordMosToSim( point, position );
    // merge all concentrations into new
-    T_ConcentrationVector concentrations = concentrations_;
+    T_ConcentrationVector concentrations;
+    concentrations.swap( concentrations_ );
     for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
-        ( **it ).MagicMove( vPosTmp );
-    // merge all flows into new concentration
+        (*it)->MagicMove( position );
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).MagicMove( vPosTmp );
-    UpdateState();
+        (*it)->MagicMove( position );
+    flows_.clear();
     bHasDoneMagicMove_ = true;
+    UpdateState();
+    UpdateNetwork();
 }
 
 // -----------------------------------------------------------------------------

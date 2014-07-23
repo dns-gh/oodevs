@@ -120,7 +120,6 @@ private:
     std::unique_ptr< MIL_AttackController > pAttackController_;
     std::vector< boost::shared_ptr< MT_Vector2D > > pathForNextPullingFlow_;
     std::size_t waypointForNextPullingFlow_;
-    bool hasDoneMagicMove_;
     static MIL_IDManager idManager_;
     //@}
 };
