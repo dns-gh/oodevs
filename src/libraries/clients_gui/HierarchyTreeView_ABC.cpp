@@ -240,15 +240,6 @@ const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyTreeView_ABC::CanChangeSuperior
-// Created: JSR 2012-09-07
-// -----------------------------------------------------------------------------
-bool HierarchyTreeView_ABC::CanChangeSuperior( const kernel::Entity_ABC& /*entity*/, const kernel::Entity_ABC& /*superior*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC::ItemSpecificFlags
 // Created: JSR 2012-09-21
 // -----------------------------------------------------------------------------

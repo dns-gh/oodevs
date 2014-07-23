@@ -54,6 +54,8 @@ protected:
     virtual void NotifyDeleted( const kernel::TacticalHierarchies& hierarchy );
     //@}
 
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+
 private slots:
     //! @name Slots
     //@{

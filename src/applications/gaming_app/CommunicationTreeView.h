@@ -73,6 +73,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const;
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );

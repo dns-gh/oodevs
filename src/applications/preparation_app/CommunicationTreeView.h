@@ -55,6 +55,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyCreated( const kernel::KnowledgeGroup_ABC& kg );

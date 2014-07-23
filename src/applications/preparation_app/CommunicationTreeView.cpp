@@ -25,31 +25,6 @@
 
 // TODO factoriser avec gaming
 
-namespace
-{
-    bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
-    {
-        auto automat   = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
-        auto formation = dynamic_cast< const kernel::Formation_ABC* >     ( &entity );
-        auto ghost     = dynamic_cast< const kernel::Ghost_ABC* >         ( &entity );
-        auto group     = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
-        if( ghost && ghost->GetGhostType() != eGhostType_Automat )
-            return false;
-        if( ( automat || ghost || formation ) && group )
-            return &entity.Get< kernel::TacticalHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-        else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
-        {
-            const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
-            const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
-            if( com && com == team )
-                return true;
-            else if( group && ( knowledgegroup != group ) )
-                return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-        }
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: CommunicationTreeView constructor
 // Created: JSR 2012-09-11
@@ -67,7 +42,7 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName,
     connect( this,                   SIGNAL( SelectionChanged( const std::vector< const kernel::Entity_ABC* >& ) ),
              &changeSuperiorDialog_, SLOT( OnKnowledgeGroupSelectionChanged( const std::vector< const kernel::Entity_ABC* >& ) ) );
     changeSuperiorDialog_.SetKnowledgeGroupFunctors(
-        &::CanChangeSuperior,
+        boost::bind( &CommunicationTreeView::CanChangeSuperior, this, _1, _2 ),
         [&] ( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) {
             if( auto automat = dynamic_cast< kernel::Automat_ABC* >( &entity ) )
                 Drop( *automat, superior );
@@ -89,6 +64,28 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName,
 CommunicationTreeView::~CommunicationTreeView()
 {
     controllers_.Unregister( *this );
+}
+
+bool CommunicationTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+{
+    auto automat   = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
+    auto formation = dynamic_cast< const kernel::Formation_ABC* >     ( &entity );
+    auto ghost     = dynamic_cast< const kernel::Ghost_ABC* >         ( &entity );
+    auto group     = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
+    if( ghost && ghost->GetGhostType() != eGhostType_Automat )
+        return false;
+    if( ( automat || ghost || formation ) && group )
+        return &entity.Get< kernel::TacticalHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+    else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+    {
+        const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
+        const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
+        if( com && com == team )
+            return true;
+        else if( group && ( knowledgegroup != group ) )
+            return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

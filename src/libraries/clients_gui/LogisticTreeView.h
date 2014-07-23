@@ -125,6 +125,8 @@ private:
     virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
     //@}
 
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+
 protected:
     //! @name Member data
     //@{
