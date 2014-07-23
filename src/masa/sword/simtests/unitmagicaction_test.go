@@ -360,9 +360,6 @@ func (s *TestSuite) TestTeleport(c *C) {
 	unit, err := client.CreateUnit(automat.Id, UnitType, pos1)
 	c.Assert(err, IsNil)
 
-	_, err = client.Pause()
-	c.Assert(err, IsNil)
-
 	// No tasker
 	err = client.Teleport(swapi.MakeUnitTasker(0), pos2)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
@@ -376,7 +373,9 @@ func (s *TestSuite) TestTeleport(c *C) {
 	c.Assert(err, IsNil)
 
 	// Check unit position
-	c.Assert(isNearby(client.Model.GetUnit(unit.Id).Position, pos2), Equals, true)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return isNearby(data.Units[unit.Id].Position, pos2)
+	})
 
 	// Should work with engaged unit
 	err = client.SetAutomatMode(automat.Id, true)
@@ -385,7 +384,11 @@ func (s *TestSuite) TestTeleport(c *C) {
 	// Teleport unit
 	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos1)
 	c.Assert(err, IsNil)
-	c.Assert(isNearby(client.Model.GetUnit(unit.Id).Position, pos1), Equals, true)
+
+	// Check unit position
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return isNearby(data.Units[unit.Id].Position, pos1)
+	})
 }
 
 func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
