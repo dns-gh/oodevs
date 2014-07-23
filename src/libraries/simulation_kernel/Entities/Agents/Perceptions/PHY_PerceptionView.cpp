@@ -6,8 +6,6 @@
 #include "PHY_PerceptionView.h"
 #include "PHY_PerceptionLevel.h"
 #include "PHY_ZURBPerceptionComputer.h"
-#include "PHY_ZOPerceptionComputer.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
@@ -84,6 +82,26 @@ PHY_PerceptionView::T_PerceptionParameterPair PHY_PerceptionView::GetParameter( 
     return T_PerceptionParameterPair( tick, roll );
 }
 
+namespace
+{
+    const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_Agent_ABC& target )
+    {
+        const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
+        const auto& surfaces = perceiver.GetSurfacesAgent();
+        for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        {
+            const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver, target );
+            if( currentLevel > *pBestLevel )
+            {
+                pBestLevel = &currentLevel;
+                if( pBestLevel->IsBestLevel() )
+                    return *pBestLevel;
+            }
+        }
+        return *pBestLevel;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Compute
 // Created: NLD 2004-08-20
@@ -101,8 +119,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
     if( !bIsEnabled_ )
         return PHY_PerceptionLevel::notSeen_;
 
-    PHY_ZOPerceptionComputer computer( perceiver_.GetPion() );
-    const PHY_PerceptionLevel& result = computer.ComputePerception( target );
+    const PHY_PerceptionLevel& result = ComputePerception( perceiver_, target );
     if( result == PHY_PerceptionLevel::notSeen_ ||
         !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
         return result;
