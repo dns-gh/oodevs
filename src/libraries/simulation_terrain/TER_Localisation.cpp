@@ -1038,7 +1038,8 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation, dou
     for( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
     {
         const MT_Vector2D* pCurPoint = &*itPoint;
-        if( localisation.IsInside( *pPrevPoint, rPrecision ) || localisation.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ), rPrecision ) )
+        if( localisation.IsInside( *pPrevPoint, rPrecision ) ||
+            localisation.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ), rPrecision ) )
             return true;
         pPrevPoint = pCurPoint;
     }
@@ -1223,13 +1224,20 @@ bool TER_Localisation::IsInside( const MT_Vector2D& vPos, double rPrecision ) co
 {
     switch( nType_ )
     {
-//        case ePoint:   return vPos.SquareDistance( pointVector_[0] ) <= ( rPrecision_ * rPrecision_ );
-        case ePoint:   return polygon_ .IsInside( vPos, rPrecision );
-        case ePolygon: return polygon_ .IsInside( vPos, rPrecision );
-        case eLine:    return boundingBox_.IsInside( vPos, rPrecision ) && polyline_.IsInside( vPos, rPrecision );
-        default:
-            return false;
+        case ePoint:
+            return polygon_ .IsInside( vPos, rPrecision );
+        case ePolygon:
+        {
+            if( IsEmptyCircle() )
+                // Degenerate point case
+                return pointVector_.at( 0 ).Distance( vPos ) < rPrecision;
+            return polygon_ .IsInside( vPos, rPrecision );
+        }
+        case eLine:
+            return boundingBox_.IsInside( vPos, rPrecision ) &&
+                polyline_.IsInside( vPos, rPrecision );
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -1366,7 +1374,7 @@ bool TER_Localisation::IsValid() const
         // Null() polygon are invalid unless they were generated from
         // zero-radius circles. We consider zero-radius circle to be valid
         // and degenerated to point, to handle containment tests.
-        ( nType_ == ePolygon && polygon_.IsNull() && !bWasCircle_ )
+        ( nType_ == ePolygon && polygon_.IsNull() && !IsEmptyCircle() )
     );
 }
 
@@ -1390,6 +1398,11 @@ std::string TER_Localisation::ToString() const
     }
     s << "))";
     return s.str();
+}
+
+bool TER_Localisation::IsEmptyCircle() const
+{
+    return bWasCircle_ && polygon_.IsNull();
 }
 
 std::ostream& operator<<( std::ostream& os, const TER_Localisation& loc )

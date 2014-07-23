@@ -58,6 +58,7 @@ BOOST_AUTO_TEST_CASE( TER_Localisation_IsIntersecting )
     FakeWorld world( "worldwide/tests/EmptyParis-ML" );
 
     const std::string wkt1 = "POLYGON (0 0, 3 0, 3 3, 0 3)";
+    const std::string emptyCircle = "CIRCLE(1 1, 1 1)";
 
     // Empty and invalid
     CheckIntersecting( wkt1, "POLYGON ()", false );
@@ -75,5 +76,23 @@ BOOST_AUTO_TEST_CASE( TER_Localisation_IsIntersecting )
 
     // Disjoint
     CheckIntersecting( wkt1, "POLYGON (5 5, 5 6, 6 6, 6 5)", false );
+
+    // Empty circle within polygon
+    CheckIntersecting( wkt1, "CIRCLE(1 1, 1 1)", true );
+
+    // Empty circle outside polygon
+    CheckIntersecting( wkt1, "CIRCLE(5 5, 5 5)", false );
+
+    // Intersecting circle
+    CheckIntersecting( wkt1, "CIRCLE(1 1, 4 1)", true );
+
+    // Non-intersecting circle
+    CheckIntersecting( wkt1, "CIRCLE(5 5, 5 6)", false );
+
+    // Degenerate circle one onto the other
+    CheckIntersecting( emptyCircle, emptyCircle, true );
+
+    // Disjoin circle one onto the other
+    CheckIntersecting( emptyCircle, "CIRCLE(5 5, 5 5)", false );
 }
 
