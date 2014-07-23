@@ -138,16 +138,6 @@ const MIL_Automate& PHY_MedicalHumanState::GetAutomate() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalHumanState::GetPionPosition
-// Created: NLD 2004-12-24
-// -----------------------------------------------------------------------------
-const MT_Vector2D& PHY_MedicalHumanState::GetPionPosition() const
-{
-    assert( pPion_ );
-    return pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState::NotifyHandledByMedical
 // Created: NLD 2004-12-24
 // -----------------------------------------------------------------------------
