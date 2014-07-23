@@ -981,6 +981,7 @@
                 <arg value="-pkg=masa/(sword|testproto)"/>
                 <arg value="-port=${test.port}"/>
                 <arg value="-j=${ninja.jobs}"/>
+                <arg value="${go.race}"/>
                 <arg value="${root.dir}"/>
                 <arg value="--"/>
                 <!-- Make timeline tests compatible with gotester and reset
