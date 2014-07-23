@@ -199,6 +199,7 @@ int TextEditor::Exec( kernel::Location_ABC* location )
     actionTextUnderline_->setChecked( font.underline() );
     actionTextItalic_->setChecked( font.italic() );
     comboSize_->setCurrentIndex( comboSize_->findText( QString::number( font.pointSize() ) ) );
+    textEdit_->setFocus();
     return exec();
 }
 
