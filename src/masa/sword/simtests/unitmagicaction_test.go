@@ -352,15 +352,12 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 }
 
 func (s *TestSuite) TestTeleport(c *C) {
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	automat := createAutomat(c, client)
 	pos1 := swapi.Point{X: -15.9219, Y: 28.3456}
 	pos2 := swapi.Point{X: -15.8219, Y: 28.2456}
 	unit, err := client.CreateUnit(automat.Id, UnitType, pos1)
-	c.Assert(err, IsNil)
-
-	_, err = client.Pause()
 	c.Assert(err, IsNil)
 
 	// No tasker
@@ -382,6 +379,9 @@ func (s *TestSuite) TestTeleport(c *C) {
 
 	// Should work with engaged unit
 	err = client.SetAutomatMode(automat.Id, true)
+	c.Assert(err, IsNil)
+
+	_, err = client.Pause()
 	c.Assert(err, IsNil)
 
 	// Teleport unit
