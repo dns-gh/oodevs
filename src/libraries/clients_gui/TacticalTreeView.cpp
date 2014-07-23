@@ -83,6 +83,13 @@ bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
 {
     if( !superior.Retrieve< kernel::TacticalHierarchies >() )
         return false;
+    if( controllers_.GetCurrentMode() != eModes_Prepare )
+    {
+        const kernel::Entity_ABC& team1 = entity.Get< kernel::TacticalHierarchies >().GetTop();
+        const kernel::Entity_ABC& team2 = superior.Get< kernel::TacticalHierarchies >().GetTop();
+        if( &team1 != &team2 )
+            return false;
+    }
     if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
         return superior.GetTypeName() == kernel::Automat_ABC::typeName_;
     if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
