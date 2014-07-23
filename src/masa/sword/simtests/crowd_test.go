@@ -267,32 +267,27 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 	// simulation is not fast enough for the crowd movement to end between
 	// here and the teleportation below, otherwise the mission would be
 	// terminated.
-	knownElements := map[uint32]*swapi.CrowdElement{}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		done := len(data.Crowds[crowd.Id].CrowdElements) == 2
-		if done {
-			swapi.DeepCopy(&knownElements, data.Crowds[crowd.Id].CrowdElements)
-		}
-		return done
+		return len(data.Crowds[crowd.Id].CrowdElements) == 2
 	})
+
+	_, err = client.Pause()
+	c.Assert(err, IsNil)
 
 	// Teleport the crowd, the flow and concentrations are destroyed.
 	// A new concentration is created.
 	teleport := swapi.Point{X: -15.8193, Y: 128.3456}
 	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), teleport)
 	c.Assert(err, IsNil)
-	elements := client.Model.GetData().Crowds[crowd.Id].CrowdElements
+	elements := client.Model.GetCrowd(crowd.Id).CrowdElements
 	c.Assert(elements, HasLen, 0)
+
+	_, _, err = client.Resume(0)
+	c.Assert(err, IsNil)
 
 	// A new flow is created when the crowd restarts its movement.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		elements := data.Crowds[crowd.Id].CrowdElements
-		for id := range elements {
-			if knownElements[id] != nil {
-				return false
-			}
-		}
-		return len(elements) > 1
+		return len(data.Crowds[crowd.Id].CrowdElements) > 1
 	})
 }
 

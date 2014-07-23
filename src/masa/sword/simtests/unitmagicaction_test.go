@@ -360,6 +360,9 @@ func (s *TestSuite) TestTeleport(c *C) {
 	unit, err := client.CreateUnit(automat.Id, UnitType, pos1)
 	c.Assert(err, IsNil)
 
+	_, err = client.Pause()
+	c.Assert(err, IsNil)
+
 	// No tasker
 	err = client.Teleport(swapi.MakeUnitTasker(0), pos2)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
