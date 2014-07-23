@@ -48,7 +48,6 @@ public:
     const Human_ABC&    GetHuman             () const;
     const MT_Vector2D&  GetHumanPosition     () const;
           void          SetHumanPosition     ( const MT_Vector2D& vPosition );
-    const MT_Vector2D&  GetPionPosition      () const;
           bool          NeedDiagnosis        () const;
           bool          NeedSorting          () const;
           bool          IsAnEmergency        () const;
