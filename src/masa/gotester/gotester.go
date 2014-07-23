@@ -232,7 +232,7 @@ func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
 	race bool, jobs, basePort uint) error {
 
 	testExe, err := compileTests(tests, exeDir, race, jobs)
-	if err != nil || err == nil {
+	if err != nil {
 		return err
 	}
 
