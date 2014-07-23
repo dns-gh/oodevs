@@ -45,7 +45,7 @@ boost::shared_ptr< TER_Localisation > CircleFromWKT( const std::string& wkt )
                           boost::lexical_cast< double >( result[2] ));
     const MT_Vector2D p2( boost::lexical_cast< double >( result[3] ),
                           boost::lexical_cast< double >( result[4] ));
-    const MT_Vector2D center( ( p1.rX_ + p2.rY_ ) / 2, ( p1.rY_ + p2.rY_ ) / 2 );
+    const MT_Vector2D center( ( p1.rX_ + p2.rX_ ) / 2, ( p1.rY_ + p2.rY_ ) / 2 );
     const double radius = p1.Distance( p2 ) / 2;
     return boost::make_shared< TER_Localisation >( center, radius );
 }
