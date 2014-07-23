@@ -284,7 +284,7 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), teleport)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.Crowds[crowd.Id].CrowdElements) == 0
+		return len(data.Crowds[crowd.Id].CrowdElements) == 1
 	})
 
 	// A new flow is created when the crowd restarts its movement.
