@@ -55,46 +55,6 @@
         <translation type="unfinished">القطاع</translation>
     </message>
     <message>
-        <source>Ammunition</source>
-        <translation type="unfinished">الذخيرة</translation>
-    </message>
-    <message>
-        <source>Fuel</source>
-        <translation type="unfinished">الوقود</translation>
-    </message>
-    <message>
-        <source>Explosive</source>
-        <translation type="unfinished">المتفجرة</translation>
-    </message>
-    <message>
-        <source>Mine</source>
-        <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
-    </message>
-    <message>
-        <source>Barbed wire</source>
-        <translation type="unfinished">أسلاك شائكة</translation>
-    </message>
-    <message>
-        <source>Parts</source>
-        <translation type="unfinished">أجزاء</translation>
-    </message>
-    <message>
-        <source>Food/water</source>
-        <translation type="unfinished">المواد الغذائية والمياه</translation>
-    </message>
-    <message>
-        <source>Extinguisher agent</source>
-        <translation type="unfinished">عامل مطفأة</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished">الطاقة</translation>
-    </message>
-    <message>
-        <source>Funeral</source>
-        <translation type="unfinished">جنازة</translation>
-    </message>
-    <message>
         <source>Shell</source>
         <translation type="unfinished">شل</translation>
     </message>
@@ -861,6 +821,49 @@
     <message>
         <source>Itinerary</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::DotationType</name>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">الذخيرة</translation>
+    </message>
+    <message>
+        <source>Fuel</source>
+        <translation type="unfinished">الوقود</translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation type="unfinished">المتفجرة</translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
+    </message>
+    <message>
+        <source>Barbed wire</source>
+        <translation type="unfinished">أسلاك شائكة</translation>
+    </message>
+    <message>
+        <source>Parts</source>
+        <translation type="unfinished">أجزاء</translation>
+    </message>
+    <message>
+        <source>Food/water</source>
+        <translation type="unfinished">المواد الغذائية والمياه</translation>
+    </message>
+    <message>
+        <source>Extinguisher agent</source>
+        <translation type="unfinished">عامل مطفأة</translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished">الطاقة</translation>
+    </message>
+    <message>
+        <source>Funeral</source>
+        <translation type="unfinished">جنازة</translation>
     </message>
 </context>
 <context>

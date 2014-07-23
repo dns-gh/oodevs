@@ -249,7 +249,6 @@ QAction* ContextMenu::InsertItem( const std::string& category, const QString& te
     if( a == action )
         QObject::connect( action, SIGNAL( triggered() ), receiver, member );
     return a;
-    return action;
 }
 
 // -----------------------------------------------------------------------------
