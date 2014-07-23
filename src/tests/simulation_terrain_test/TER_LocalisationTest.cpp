@@ -17,25 +17,25 @@ BOOST_AUTO_TEST_CASE( TER_Localisation_IsValid )
     FakeWorld world( "worldwide/tests/EmptyParis-ML" );
 
     const auto empty = LocalisationFromWKT( "POLYGON ()" );
-    BOOST_CHECK( empty->IsValid() );
+    BOOST_CHECK( !empty->IsValid() );
 
     const auto onePoint = LocalisationFromWKT( "POLYGON (0 0)" );
-    BOOST_CHECK( onePoint->IsValid() );
+    BOOST_CHECK( !onePoint->IsValid() );
 
     const auto twoPoints = LocalisationFromWKT( "POLYGON (0 0, 1 0)" );
-    BOOST_CHECK( twoPoints->IsValid() );
+    BOOST_CHECK( !twoPoints->IsValid() );
 
     const auto invalid = LocalisationFromWKT( "POLYGON (0 0, 1 0, 0 0)" );
-    BOOST_CHECK( invalid->IsValid() );
+    BOOST_CHECK( !invalid->IsValid() );
 
     const auto valid = LocalisationFromWKT( "POLYGON (0 0, 1 0, 1 1)" );
-    BOOST_CHECK( !valid->IsValid() );
+    BOOST_CHECK( valid->IsValid() );
 
     const auto emptyCircle = LocalisationFromWKT( "CIRCLE (0 0, 0 0)" );
-    BOOST_CHECK( !valid->IsValid() );
+    BOOST_CHECK( valid->IsValid() );
 
     const auto validCircle = LocalisationFromWKT( "CIRCLE (0 1, 1 1)" );
-    BOOST_CHECK( !valid->IsValid() );
+    BOOST_CHECK( valid->IsValid() );
 }
 
 namespace
@@ -55,6 +55,8 @@ void CheckIntersecting( std::string wkt1, std::string wkt2, bool intersect )
 
 BOOST_AUTO_TEST_CASE( TER_Localisation_IsIntersecting )
 {
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
+
     const std::string wkt1 = "POLYGON (0 0, 3 0, 3 3, 0 3)";
 
     // Empty and invalid
@@ -65,7 +67,7 @@ BOOST_AUTO_TEST_CASE( TER_Localisation_IsIntersecting )
     CheckIntersecting( wkt1, "POLYGON (1 1, 4 4)", false );
     CheckIntersecting( wkt1, "POLYGON (1 1, 4 4, 1 1)", false );
 
-        // Intersecting
+    // Intersecting
     CheckIntersecting( wkt1, "POLYGON (1 1, 1 4, 4 4, 4 1)", true );
 
     // Included
