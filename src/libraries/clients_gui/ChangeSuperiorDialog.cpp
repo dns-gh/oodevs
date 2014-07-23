@@ -18,7 +18,6 @@
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "preparation/TacticalHierarchies.h"
 
 using namespace gui;
 
@@ -240,7 +239,6 @@ namespace
                           gui::TaskerWidget& tasker,
                           const boost::optional< ChangeSuperiorDialog::ChangeSuperiorFunctors >& functors )
     {
-
         bool canChange = !IsSuperiorActivated( tasker );
         auto superior = tasker.GetTasker();
         canChange |= entity && superior && functors->canChange_( *entity, *superior );

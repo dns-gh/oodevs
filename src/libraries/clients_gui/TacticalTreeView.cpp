@@ -27,28 +27,6 @@
 
 using namespace gui;
 
-namespace
-{
-    bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
-    {
-        if( !superior.Retrieve< kernel::TacticalHierarchies >() )
-            return false;
-        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
-            return superior.GetTypeName() == kernel::Automat_ABC::typeName_;
-        if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
-            return superior.GetTypeName() == kernel::Formation_ABC::typeName_;
-        if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
-            return superior.GetTypeName() == kernel::Formation_ABC::typeName_ && entity.GetId() != superior.GetId() ||
-                   superior.GetTypeName() == kernel::Team_ABC::typeName_;
-        if( const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
-            return ghost->GetGhostType() == eGhostType_Automat && superior.GetTypeName() == kernel::Formation_ABC::typeName_ ||
-                   ghost->GetGhostType() == eGhostType_Agent && superior.GetTypeName() == kernel::Automat_ABC::typeName_;
-        if( entity.GetTypeName() == kernel::KnowledgeGroup_ABC::typeName_ )
-            return superior.GetTypeName() == kernel::Formation_ABC::typeName_;
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: TacticalTreeView constructor
 // Created: JSR 2012-08-31
@@ -99,6 +77,32 @@ TacticalTreeView::TacticalTreeView( const QString& objectName,
 TacticalTreeView::~TacticalTreeView()
 {
     controllers_.Unregister( *this );
+}
+
+bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+{
+    if( !superior.Retrieve< kernel::TacticalHierarchies >() )
+        return false;
+    if( controllers_.GetCurrentMode() != eModes_Prepare )
+    {
+        const kernel::Entity_ABC& team1 = entity.Get< kernel::TacticalHierarchies >().GetTop();
+        const kernel::Entity_ABC& team2 = superior.Get< kernel::TacticalHierarchies >().GetTop();
+        if( &team1 != &team2 )
+            return false;
+    }
+    if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
+        return superior.GetTypeName() == kernel::Automat_ABC::typeName_;
+    if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
+        return superior.GetTypeName() == kernel::Formation_ABC::typeName_;
+    if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
+        return superior.GetTypeName() == kernel::Formation_ABC::typeName_ && entity.GetId() != superior.GetId() ||
+                superior.GetTypeName() == kernel::Team_ABC::typeName_;
+    if( const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
+        return ghost->GetGhostType() == eGhostType_Automat && superior.GetTypeName() == kernel::Formation_ABC::typeName_ ||
+                ghost->GetGhostType() == eGhostType_Agent && superior.GetTypeName() == kernel::Automat_ABC::typeName_;
+    if( entity.GetTypeName() == kernel::KnowledgeGroup_ABC::typeName_ )
+        return superior.GetTypeName() == kernel::Formation_ABC::typeName_;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

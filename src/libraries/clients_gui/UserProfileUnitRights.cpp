@@ -155,3 +155,8 @@ void UserProfileUnitRights::Commit()
     UserProfileRights_ABC::Commit();
     emit NotifyRightsChanged();
 }
+
+bool UserProfileUnitRights::CanChangeSuperior( const kernel::Entity_ABC& /*entity*/, const kernel::Entity_ABC& /*superior*/ ) const
+{
+    return true;
+}

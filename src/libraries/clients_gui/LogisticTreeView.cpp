@@ -408,6 +408,11 @@ void LogisticTreeView::dragMoveEvent( QDragMoveEvent* pEvent )
     pEvent->ignore();
 }
 
+bool LogisticTreeView::CanChangeSuperior( const kernel::Entity_ABC& /*entity*/, const kernel::Entity_ABC& /*superior*/ ) const
+{
+    return true; // $$$$ MCO 2014-07-23: never called because dragMoveEvent is being overriden
+}
+
 namespace
 {
     sword::EnumLogisticLevel* GetTargetLogistic( QStandardItem& targetItem, const StandardModel& model )

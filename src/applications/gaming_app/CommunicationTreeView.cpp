@@ -42,43 +42,6 @@
 
 // TODO factoriser avec prepa
 
-namespace
-{
-    bool IsKgDeactivated( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
-            return !kg->IsActivated();
-        return false;
-    }
-    
-    bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
-    {
-        const kernel::Agent_ABC*          agent   = dynamic_cast< const kernel::Agent_ABC* >         ( &entity );
-        const kernel::Automat_ABC*        automat = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
-        const kernel::KnowledgeGroup_ABC* group   = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
-        if( automat && group )
-            return &entity.Get< kernel::CommunicationHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-        else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
-        {
-            const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
-            const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
-            if( com && com == team )
-                return true;
-            else if( group && ( knowledgegroup != group ) )
-                return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-        }
-        else if( agent )
-        {
-            const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &superior );
-            if( !automat )
-                automat = dynamic_cast< const kernel::Automat_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetUp() );
-            if( automat != &agent->Get< kernel::CommunicationHierarchies >().GetUp() )
-                return true;
-        }
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: CommunicationTreeView constructor
 // Created: JSR 2012-09-28
@@ -106,7 +69,7 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName,
     connect( this,                   SIGNAL( SelectionChanged( const std::vector< const kernel::Entity_ABC* >& ) ),
              &changeSuperiorDialog_, SLOT( OnKnowledgeGroupSelectionChanged( const std::vector< const kernel::Entity_ABC* >& ) ) );
     changeSuperiorDialog_.SetKnowledgeGroupFunctors(
-        &::CanChangeSuperior,
+        boost::bind( &CommunicationTreeView::CanChangeSuperior, this, _1, _2 ),
         [&] ( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) {
             if( auto automat = dynamic_cast< kernel::Automat_ABC* >( &entity ) )
                 Drop( *automat, superior );
@@ -126,6 +89,16 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName,
 CommunicationTreeView::~CommunicationTreeView()
 {
     controllers_.Unregister( *this );
+}
+
+namespace
+{
+    bool IsKgDeactivated( const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+            return !kg->IsActivated();
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -154,6 +127,33 @@ void CommunicationTreeView::OnChangeKnowledgeGroup()
     if( list.size() == 1)
         if( auto entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( list.front() ) )
             changeSuperiorDialog_.Show( *entity, tr( "Select new knowledge group" ), gui::ChangeSuperiorDialog::eKnowledgeGroup );
+}
+
+bool CommunicationTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+{
+    const kernel::Agent_ABC*          agent   = dynamic_cast< const kernel::Agent_ABC* >         ( &entity );
+    const kernel::Automat_ABC*        automat = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
+    const kernel::KnowledgeGroup_ABC* group   = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
+    if( automat && group )
+        return &entity.Get< kernel::CommunicationHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+    else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+    {
+        const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
+        const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
+        if( com && com == team )
+            return true;
+        else if( group && ( knowledgegroup != group ) )
+            return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+    }
+    else if( agent )
+    {
+        const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &superior );
+        if( !automat )
+            automat = dynamic_cast< const kernel::Automat_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetUp() );
+        if( automat != &agent->Get< kernel::CommunicationHierarchies >().GetUp() )
+            return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

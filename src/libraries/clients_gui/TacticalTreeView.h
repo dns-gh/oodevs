@@ -74,6 +74,8 @@ protected:
     bool AddCommonMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+
 protected slots:
     //! @name Slots
     //@{

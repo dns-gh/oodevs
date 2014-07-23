@@ -77,7 +77,7 @@ protected:
 protected:
     //! @name Drag n drop
     //@{
-    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const = 0;
     virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     virtual QStringList MimeTypes() const;
     virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
