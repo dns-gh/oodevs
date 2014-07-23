@@ -81,7 +81,6 @@ bool MIL_ItineraryParameter::ToPath( std::vector< boost::shared_ptr< MT_Vector2D
     if( !message_->has_result() )
         return false;
     value = ::Convert( Convert( message_->result() ) );
-    value.push_back( value.back() );
     return true;
 }
 

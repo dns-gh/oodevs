@@ -1597,7 +1597,7 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_planned_work, Fixture )
 BOOST_FIXTURE_TEST_CASE( serializes_parameter_itinerary, Fixture )
 {
     const auto checker = [&]( const sword::MissionParameter_Value& value ){
-        const auto& req = value.pathfind_request();
+        const auto& req = value.pathfind().request();
         BOOST_CHECK_EQUAL( req.unit().id(), 13u );
         sword::Location loc;
         loc.set_type( sword::Location_Geometry_point ); // whatever
@@ -1613,16 +1613,19 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_itinerary, Fixture )
         [&]( const std::string& suffix ) {
             return
             "<parameter name='Itinerary" + suffix + "' type='itinerary'>"
-            "  <unit id='13'/>"
-            "  <positions>"
-            "    <point coordinates='" + point1 + "'/>"
-            "    <point coordinates='" + point2 + "'/>"
-            "  </positions>"
-            "  <equipments>"
-            "    <type id='7'/>"
-            "    <type id='17'/>"
-            "  </equipments>"
-            "  <ignore_dynamic_objects value='true'/>"
+            "  <id value='1'/>"
+            "  <request>"
+            "    <unit id='13'/>"
+            "    <positions>"
+            "      <point coordinates='" + point1 + "'/>"
+            "      <point coordinates='" + point2 + "'/>"
+            "    </positions>"
+            "    <equipments>"
+            "      <type id='7'/>"
+            "      <type id='17'/>"
+            "    </equipments>"
+            "    <ignore_dynamic_objects value='true'/>"
+            "  </request>"
             "</parameter>";
     });
 }
