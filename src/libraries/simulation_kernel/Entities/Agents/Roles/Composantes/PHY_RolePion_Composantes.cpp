@@ -510,9 +510,9 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
     else
         rMajorOperationalState_ = 0.;
 
-    E_OperationalState newState = rOperationalState_      == 0 ? eOpStateFullyDestroyed :
-        rMajorOperationalState_ == 0 ? eOpStateTacticallyDestroyed:
-        eOpStateOperational;
+    const E_OperationalState newState = rOperationalState_      == 0 ? eOpStateFullyDestroyed :
+                                        rMajorOperationalState_ == 0 ? eOpStateTacticallyDestroyed:
+                                                                       eOpStateOperational;
     static_cast< DEC_RolePion_Decision& >( owner_->GetDecision() ).NotifyOperationalStateChanged( newState );
 }
 
