@@ -403,15 +403,28 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	c.Assert(err, IsNil)
 
 	// Check flow and concentation have an excited attitude
+	knownElements := map[uint32]*swapi.CrowdElement{}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckAttitude(data.Crowds[crowd.Id], Excited)
+		done := CheckAttitude(data.Crowds[crowd.Id], Excited)
+		if done {
+			swapi.DeepCopy(&knownElements, data.Crowds[crowd.Id].CrowdElements)
+		}
+		return done
 	})
 
-	// Teleport and check attitude returned to Peaceful
+	// Teleport and check attitude is unchanged (SWBUG-12816)
 	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), to)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckAttitude(data.Crowds[crowd.Id], Peaceful)
+		// First, check the teleportation has been fully processed, previous
+		// elements must have disappeared.
+		elements := data.Crowds[crowd.Id].CrowdElements
+		for id := range elements {
+			if knownElements[id] != nil {
+				return false
+			}
+		}
+		return CheckAttitude(data.Crowds[crowd.Id], Excited)
 	})
 }
 
