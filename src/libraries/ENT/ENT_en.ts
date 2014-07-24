@@ -51,10 +51,6 @@
         <translation>sector</translation>
     </message>
     <message>
-        <source>Mine</source>
-        <translation>Mine</translation>
-    </message>
-    <message>
         <source>none</source>
         <translation>none</translation>
     </message>
@@ -117,30 +113,6 @@
     <message>
         <source>agressive</source>
         <translation>aggressive</translation>
-    </message>
-    <message>
-        <source>Ammunition</source>
-        <translation>Ammunition</translation>
-    </message>
-    <message>
-        <source>Fuel</source>
-        <translation>Fuel</translation>
-    </message>
-    <message>
-        <source>Explosive</source>
-        <translation>Explosive</translation>
-    </message>
-    <message>
-        <source>Barbed wire</source>
-        <translation>Barbed wire</translation>
-    </message>
-    <message>
-        <source>Parts</source>
-        <translation>Parts</translation>
-    </message>
-    <message>
-        <source>Food/water</source>
-        <translation>Food/water</translation>
     </message>
     <message>
         <source>unwounded</source>
@@ -395,14 +367,6 @@
         <translation>Illumination shell</translation>
     </message>
     <message>
-        <source>Extinguisher agent</source>
-        <translation>Extinguisher agent</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Resources</translation>
-    </message>
-    <message>
         <source>forest</source>
         <translation>forest</translation>
     </message>
@@ -639,10 +603,6 @@
         <translation>Gaseous</translation>
     </message>
     <message>
-        <source>Funeral</source>
-        <translation>Funeral</translation>
-    </message>
-    <message>
         <source>None</source>
         <translation>None</translation>
     </message>
@@ -861,6 +821,49 @@
     <message>
         <source>Itinerary</source>
         <translation>Itinerary</translation>
+    </message>
+</context>
+<context>
+    <name>sword::DotationType</name>
+    <message>
+        <source>Ammunition</source>
+        <translation>Ammunition</translation>
+    </message>
+    <message>
+        <source>Fuel</source>
+        <translation>Fuel</translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation>Explosive</translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation>Mine</translation>
+    </message>
+    <message>
+        <source>Barbed wire</source>
+        <translation>Barbed wire</translation>
+    </message>
+    <message>
+        <source>Parts</source>
+        <translation>Parts</translation>
+    </message>
+    <message>
+        <source>Food/water</source>
+        <translation>Food/water</translation>
+    </message>
+    <message>
+        <source>Extinguisher agent</source>
+        <translation>Extinguisher agent</translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation>Resources</translation>
+    </message>
+    <message>
+        <source>Funeral</source>
+        <translation>Funeral</translation>
     </message>
 </context>
 <context>
