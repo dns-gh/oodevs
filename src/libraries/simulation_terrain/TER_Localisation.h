@@ -182,6 +182,7 @@ private:
     //@{
     void ReadPoint( xml::xistream& xis );
     bool IsIntersectingWithBorderLines( const MT_Line& line ) const;
+    bool IsEmptyCircle() const;
     //@}
 
 protected:
