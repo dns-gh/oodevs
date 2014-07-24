@@ -1,14 +1,34 @@
 -- Sealable Implementation
 
-local startSealOffLocation = function( location, knowledge )
-    if not knowledge.constructedObject then
-        local border = DEC_Geometrie_CreerLocalisationPolyligne( DEC_Geometrie_ListePointsLocalisation( location ) )
-        knowledge.sealPerceptionID = DEC_Perception_ActivateLocationProgressiveRecce( DEC_Geometrie_AgrandirLocalisation( location, 10 ), 2 )
-        local sealoffarea = integration.obtenirObjetProcheDe( location, eTypeObjectSealOffArea, 10 )
-        if sealoffarea == nil then -- need to create seal off area
-            DEC_MagicGetOrCreateObject( eTypeObjectSealOffArea, border )
-            reportFunction( eRC_DebutBouclageZone )			
+--- Agent send message to the rest of the commander agents
+-- that it build a sealoff area to prevent for multiple building of the same object
+-- @param clearSealOffArea Boolean, if set to true send a message that sealoff area is removed otherwise thate the objetc is built
+-- @param objectLocation Area knowledge
+integration.warnFriendsForBuildingObject = function( clearSealOffArea, objectLocation )
+    if not meKnowledge:isSelfCommanding() then -- automat mission
+        local simAgents = DEC_Pion_PionsAvecPC()
+        for i = 1, #simAgents do
+            local friend = CreateKnowledge( sword.military.world.PlatoonAlly, simAgents[i] )
+            if clearSealOffArea then -- clear 
+                meKnowledge:sendClearBuildingSealOffArea( friend )  
+            else
+                if friend ~= meKnowledge then -- warn friends that I built seal off area
+                    meKnowledge:sendStartBuildingObject( friend, meKnowledge, objectLocation )
+                end
+            end
         end
+    end
+end
+
+local startSealOffLocation = function( location, knowledge )
+    local border = DEC_Geometrie_CreerLocalisationPolyligne( DEC_Geometrie_ListePointsLocalisation( location ) )
+    knowledge.sealPerceptionID = DEC_Perception_ActivateLocationProgressiveRecce( DEC_Geometrie_AgrandirLocalisation( location, 10 ), 2 )
+    local sealOffArea = integration.obtenirObjetProcheDe( location, eTypeObjectSealOffArea, 10 )
+    myself.buildingObject = myself.buildingObject or false
+    if sealOffArea == nil and (not myself.buildingObject or myself.buildingObject ~= border ) then -- need to create seal off area
+        DEC_MagicGetOrCreateObject( eTypeObjectSealOffArea, border )
+        myself.buildingObject = border
+        integration.warnFriendsForBuildingObject( false, border )
     end
     return true
 end
@@ -25,27 +45,21 @@ local startedSealOffLocation = function( location, knowledge )
     return true
 end
 
-local stopSealOffLocation = function( location, knowledge )
-    local DEC_ConnaissanceObjet_NiveauAnimation = DEC_ConnaissanceObjet_NiveauAnimation
-    local DEC_DetruireObjetSansDelais = DEC_DetruireObjetSansDelais
-
-    if knowledge.constructedObject  then 
+local stopSealOffLocation = function( knowledge )
+    if knowledge.constructedObject then
+        local DEC_ConnaissanceObjet_NiveauAnimation = DEC_ConnaissanceObjet_NiveauAnimation
         if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) > 0 then
             DEC__StopAction( knowledge.constructedObject.actionAnimation )
             reportFunction( eRC_FinAnimationObjet, knowledge.constructedObject )
         end
-        if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) == 0 then
-            DEC_DetruireObjetSansDelais( knowledge.constructedObject ) -- destroy it
-            DEC_Perception_DesactiverReconnaissanceLocalisation( knowledge.sealPerceptionID )
-            reportFunction( eRC_FinBouclageZone )
-            knowledge.constructedObject = nil
-        end
-    end
-    local ptRef = integration.getBarycentreZoneFromLocalisation( location )
-    local lstObjets = integration.getKnowledgesObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
-    for i = 1, #lstObjets do
-        if DEC_ConnaissanceObjet_NiveauAnimation( lstObjets[i] ) == 0 then
-            DEC_DetruireObjetSansDelais( lstObjets[i] ) -- destroy it
+        if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) < 0.1 then
+            if myself.buildingObject then
+                DEC_DetruireObjetSansDelais( knowledge.constructedObject ) -- destroy it
+                DEC_Perception_DesactiverReconnaissanceLocalisation( knowledge.sealPerceptionID )
+                integration.warnFriendsForBuildingObject( true )
+                myself.buildingObject = false
+                knowledge.constructedObject = nil
+            end
         end
     end
     return true
@@ -80,7 +94,7 @@ end
 -- @param area Area knowledge, the area to stop sealing off
 -- @return Boolean, true
 integration.stopSealOffArea  = function( area )
-    return stopSealOffLocation( area.source, area )
+    return stopSealOffLocation( area )
 end
 
 --- Starts sealing off the given urban block.
@@ -114,6 +128,5 @@ end
 -- @param urban block Urban block knowledge, the urban block to stop sealing off
 -- @return Boolean, true
 integration.stopSealOffUrbanBlock = function( urbanBlock )
-    local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
-    return stopSealOffLocation( buArea, urbanBlock )
+    return stopSealOffLocation( urbanBlock )
 end
