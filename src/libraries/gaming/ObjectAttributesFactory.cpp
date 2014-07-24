@@ -70,13 +70,28 @@ ObjectAttributesFactory::~ObjectAttributesFactory()
     // NOTHING
 }
 
+namespace
+{
+    bool HasSinglePoint( const kernel::Entity_ABC* entity )
+    {
+        if( !entity )
+            return false;
+        const LocationPositions* pPositions = dynamic_cast< const LocationPositions* >( entity->Retrieve< kernel::Positions >() );
+        if( !pPositions )
+            return false;
+        if( pPositions && pPositions->GetLocation() )
+            return ( dynamic_cast< const kernel::Point* >( pPositions->GetLocation() ) != nullptr );
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesFactory::Register
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 void ObjectAttributesFactory::Register( kernel::Object_ABC& entity, const sword::ObjectAttributes& attributes ) const
 {
-    Register( *static_cast< kernel::Entity_ABC* >( &entity ), attributes );
+    Register( entity, attributes, HasSinglePoint( &entity ) );
     if( attributes.has_propagation() && entity.Retrieve< kernel::DisasterAttribute_ABC >() == 0 )
         entity.Attach< kernel::DisasterAttribute_ABC >( *new PropagationAttribute( controllers_.controller_, static_.coordinateConverter_,
                                                                                    entity.GetType(), static_.disasterTypes_, simulation_ ) );
@@ -88,7 +103,7 @@ void ObjectAttributesFactory::Register( kernel::Object_ABC& entity, const sword:
 // -----------------------------------------------------------------------------
 void ObjectAttributesFactory::Register( kernel::ObjectKnowledge_ABC& entity, const sword::ObjectAttributes& attributes ) const
 {
-    Register( *static_cast< kernel::Entity_ABC* >( &entity ), attributes );
+    Register( entity, attributes, HasSinglePoint( entity.GetEntity() ) );
     if( attributes.has_propagation() && entity.Retrieve< kernel::DisasterAttribute_ABC >() == 0 )
     {
         const kernel::Object_ABC* object = entity.GetEntity();
@@ -98,24 +113,11 @@ void ObjectAttributesFactory::Register( kernel::ObjectKnowledge_ABC& entity, con
     }
 }
 
-namespace
-{
-    bool HasSinglePoint( kernel::Entity_ABC& entity )
-    {
-        const LocationPositions* pPositions = dynamic_cast< const LocationPositions* >( entity.Retrieve< kernel::Positions >() );
-        if( !pPositions )
-            return false;
-        if( pPositions && pPositions->GetLocation() )
-            return ( dynamic_cast< const kernel::Point* >( pPositions->GetLocation() ) != nullptr );
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesFactory::Register
 // Created: LGY 2012-11-21
 // -----------------------------------------------------------------------------
-void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes ) const
+void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes, bool singlePoint ) const
 {
     if( attributes.has_logistic() && entity.Retrieve< kernel::LogisticAttribute_ABC >() == 0 )
         entity.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_, model_.teams_ ) );
@@ -124,16 +126,16 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
         entity.Attach< kernel::LodgingAttribute_ABC >( *new LodgingAttribute( controllers_.controller_, model_.agents_ ) );
 
     if( attributes.has_construction() && entity.Retrieve< kernel::ConstructionAttribute_ABC >() == 0 )
-        entity.Attach< kernel::ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_, HasSinglePoint( entity ) ) );
+        entity.Attach< kernel::ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_, singlePoint ) );
 
     if( attributes.has_mine() && entity.Retrieve< kernel::MineAttribute_ABC >() == 0 )
         entity.Attach< kernel::MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
     if( attributes.has_bypass() && entity.Retrieve< kernel::BypassAttribute_ABC >() == 0 )
-        entity.Attach< kernel::BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_, HasSinglePoint( entity ) ) );
+        entity.Attach< kernel::BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_, singlePoint ) );
 
     if( attributes.has_obstacle() && entity.Retrieve< kernel::ObstacleAttribute_ABC >() == 0 )
-        entity.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_, HasSinglePoint( entity ) ) );
+        entity.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_, singlePoint ) );
 
     if( attributes.has_life_time() && entity.Retrieve< kernel::TimeLimitedAttribute_ABC >() == 0 )
         entity.Attach< kernel::TimeLimitedAttribute_ABC >( *new TimeLimitedAttribute( controllers_.controller_ ) );
