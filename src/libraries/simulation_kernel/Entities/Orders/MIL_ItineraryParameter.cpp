@@ -21,7 +21,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ItineraryParameter )
 // Name: MIL_ItineraryParameter constructor
 // -----------------------------------------------------------------------------
 MIL_ItineraryParameter::MIL_ItineraryParameter( const sword::Pathfind& message )
-    : message_( boost::make_shared< sword::Pathfind >( message ) )
+    : message_( message )
 {
     // NOTHING
 }
@@ -42,32 +42,19 @@ bool MIL_ItineraryParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) cons
     return type == MIL_ParameterType_ABC::eItinerary || type == MIL_ParameterType_ABC::ePath;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_ItineraryParameter::Convert
-// Created: SLI 2014-07-18
-// -----------------------------------------------------------------------------
-std::vector< MT_Vector2D > MIL_ItineraryParameter::Convert( const sword::PathResult& src )
-{
-    std::vector< MT_Vector2D > dst;
-    const auto& points = src.points();
-    for( auto it = points.begin(); it != points.end(); ++it )
-    {
-        if( it->waypoint() < 0 )
-            continue;
-        MT_Vector2D point;
-        MIL_Tools::ConvertCoordMosToSim( it->coordinate(), point );
-        dst.push_back( point );
-    }
-    return dst;
-}
-
 namespace
 {
-    std::vector< boost::shared_ptr< MT_Vector2D > > Convert( const std::vector< MT_Vector2D >& source )
+    std::vector< boost::shared_ptr< MT_Vector2D > > ConvertPointsToWaypoints( const sword::PathResult& src )
     {
         std::vector< boost::shared_ptr< MT_Vector2D > > result;
-        for( auto it = source.begin(); it != source.end(); ++it )
-            result.push_back( boost::make_shared< MT_Vector2D >( *it ) );
+        const auto& points = src.points();
+        for( auto it = points.begin(); it != points.end(); ++it )
+        {
+            if( it->waypoint() < 0 )
+                continue;
+            result.push_back( boost::make_shared< MT_Vector2D >() );
+            MIL_Tools::ConvertCoordMosToSim( it->coordinate(), *result.back() );
+        }
         return result;
     }
 }
@@ -78,9 +65,9 @@ namespace
 // -----------------------------------------------------------------------------
 bool MIL_ItineraryParameter::ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >& value ) const
 {
-    if( !message_->has_result() )
+    if( !message_.has_result() )
         return false;
-    value = ::Convert( Convert( message_->result() ) );
+    value = ConvertPointsToWaypoints( message_.result() );
     return true;
 }
 
@@ -90,7 +77,7 @@ bool MIL_ItineraryParameter::ToPath( std::vector< boost::shared_ptr< MT_Vector2D
 // -----------------------------------------------------------------------------
 bool MIL_ItineraryParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    *elem.mutable_pathfind() = *message_;
+    *elem.mutable_pathfind() = message_;
     return true;
 }
 
@@ -98,7 +85,7 @@ bool MIL_ItineraryParameter::ToElement( sword::MissionParameter_Value& elem ) co
 // Name: MIL_ItineraryParameter::ToItinerary
 // Created: SLI 2014-07-18
 // -----------------------------------------------------------------------------
-bool MIL_ItineraryParameter::ToItinerary( boost::shared_ptr< sword::Pathfind >& dst ) const
+bool MIL_ItineraryParameter::ToItinerary( sword::Pathfind& dst ) const
 {
     dst = message_;
     return true;
@@ -131,7 +118,7 @@ void MIL_ItineraryParameter::save( Archive& file, const unsigned int ) const
 template< typename Archive >
 void save_construct_data( Archive& ar, const MIL_ItineraryParameter* ptr, const unsigned int  )
 {
-    ar << *ptr->message_;
+    ar << ptr->message_;
 }
 
 // -----------------------------------------------------------------------------

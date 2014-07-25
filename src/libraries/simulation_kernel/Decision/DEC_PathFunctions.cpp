@@ -13,7 +13,7 @@
 #include "DEC_PathFunctions.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathFind_Manager_ABC.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_PathComputer.h"
@@ -61,22 +61,23 @@ namespace
     class Visitor : public MIL_MissionParameterVisitor_ABC
     {
     public:
-        void Accept( const std::string& /*dianame*/, const MIL_OrderTypeParameter& /*type*/, MIL_MissionParameter_ABC& element )
+        explicit Visitor( sword::Pathfind& pathfind )
+            : pathfind_( pathfind )
+        {}
+        void Accept( const std::string& /*p*/, const MIL_OrderTypeParameter& /*type*/, MIL_MissionParameter_ABC& element )
         {
-            if( !data_ )
-                element.ToItinerary( data_ );
+            element.ToItinerary( pathfind_ );
         }
-        boost::shared_ptr< sword::Pathfind > data_;
+        sword::Pathfind& pathfind_;
     };
 
-    boost::shared_ptr< sword::Pathfind > FindPathfind( DEC_Decision_ABC& decision )
+    void FindItinerary( DEC_Decision_ABC& decision, sword::Pathfind& pathfind )
     {
         const auto mission = decision.GetMission();
         if( !mission )
-            return boost::shared_ptr< sword::Pathfind >();
-        Visitor visitor;
+            return;
+        Visitor visitor( pathfind );
         mission->Visit( visitor );
-        return visitor.data_;
     }
 
     boost::shared_ptr< DEC_Agent_Path > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points,
@@ -88,10 +89,9 @@ namespace
             path->Cancel();
         else
         {
-            if( const auto pathfind = FindPathfind( agent.GetRole< DEC_Decision_ABC >() ) )
-                MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer, pathfind );
-            else
-                MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer, false );
+            sword::Pathfind pathfind;
+            FindItinerary( agent.GetRole< DEC_Decision_ABC >(), pathfind );
+            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer, pathfind );
         }
         return path;
     }

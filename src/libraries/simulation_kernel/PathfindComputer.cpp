@@ -17,7 +17,7 @@
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_EquipmentListContext.h"
 #include "Decision/DEC_PathComputer.h"
-#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathFind_Manager_ABC.h"
 #include "Decision/DEC_PathSection.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PopulationContext.h"
@@ -41,7 +41,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PathfindComputer )
 // Name: PathfindComputer constructor
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-PathfindComputer::PathfindComputer( DEC_PathFind_Manager& manager, const TER_World& world )
+PathfindComputer::PathfindComputer( DEC_PathFind_Manager_ABC& manager, const TER_World& world )
     : manager_( manager )
     , world_( world )
     , ids_( 0 )
@@ -155,7 +155,9 @@ void PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& com
 {
     const uint32_t id = ++ids_;
     results_[ id ] = boost::make_shared< PathRequest >( computer, ctx, clientId, id, message, magic );
-    manager_.StartCompute( computer, message.ignore_dynamic_objects() );
+    sword::Pathfind pathfind;
+    *pathfind.mutable_request() = message;
+    manager_.StartCompute( computer, pathfind );
 }
 
 // -----------------------------------------------------------------------------

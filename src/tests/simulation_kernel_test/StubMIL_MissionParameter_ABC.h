@@ -128,7 +128,7 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToItinerary( boost::shared_ptr< sword::Pathfind >& ) const
+    virtual bool ToItinerary( sword::Pathfind& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }

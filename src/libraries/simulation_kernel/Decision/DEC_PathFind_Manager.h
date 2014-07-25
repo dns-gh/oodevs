@@ -12,6 +12,7 @@
 #ifndef __DEC_PathFind_Manager_h_
 #define __DEC_PathFind_Manager_h_
 
+#include "DEC_Pathfind_Manager_ABC.h"
 #pragma warning( push, 0 )
 #include <tools/thread/MessageQueue_ABC.h>
 #include <boost/thread/mutex.hpp>
@@ -20,11 +21,9 @@
 #include <deque>
 #include <vector>
 
-class DEC_PathComputer_ABC;
 class DEC_PathFindRequest;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
-class MIL_Agent_ABC;
 class MIL_Config;
 
 namespace xml
@@ -35,8 +34,8 @@ namespace xml
 // =============================================================================
 // Created: NLD 2003-08-14
 // =============================================================================
-class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
-                           , private boost::noncopyable
+class DEC_PathFind_Manager : public DEC_PathFind_Manager_ABC
+                           , private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
 {
 public:
              DEC_PathFind_Manager( MIL_Config& config, double maxAvoidanceDistance,
@@ -46,21 +45,20 @@ public:
     //! @name Main
     //@{
     // Returns computation time since last update.
-    double Update();
-    void UpdateInSimulationThread();
-    void StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& pPath, bool ignoreDynamicObjects );
-    void StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& pPath, const sword::Pathfind& pathfind );
-    void CancelJobForUnit( MIL_Agent_ABC* pion );
-    void CleanPathAfterComputation( double duration );
+    virtual double Update();
+    virtual void UpdateInSimulationThread();
+    virtual void StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& pPath, const sword::Pathfind& pathfind );
+    virtual void CancelJobForUnit( MIL_Agent_ABC* pion );
+    virtual void CleanPathAfterComputation( double duration );
     //@}
 
     //! @name Accessors
     //@{
-    int GetCurrentThread() const;
-    unsigned int GetNbrShortRequests() const;
-    unsigned int GetNbrLongRequests() const;
-    unsigned int GetNbrTreatedRequests() const;
-    unsigned int GetMaxComputationDuration() const;
+    virtual int GetCurrentThread() const;
+    virtual unsigned int GetNbrShortRequests() const;
+    virtual unsigned int GetNbrLongRequests() const;
+    virtual unsigned int GetNbrTreatedRequests() const;
+    virtual unsigned int GetMaxComputationDuration() const;
     //@}
 
 private:

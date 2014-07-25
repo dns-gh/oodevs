@@ -26,8 +26,6 @@ public:
     virtual ~MIL_ItineraryParameter();
     //@}
 
-    static std::vector< MT_Vector2D > Convert( const sword::PathResult& );
-
     //! @name Type checking
     //@{
     virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
@@ -37,7 +35,7 @@ public:
     //@{
     virtual bool ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >& path ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
-    virtual bool ToItinerary( boost::shared_ptr< sword::Pathfind >& ) const;
+    virtual bool ToItinerary( sword::Pathfind& ) const;
     //@}
 
     //! @name Serialization
@@ -52,7 +50,7 @@ public:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< sword::Pathfind > message_;
+    sword::Pathfind message_;
     //@}
 };
 

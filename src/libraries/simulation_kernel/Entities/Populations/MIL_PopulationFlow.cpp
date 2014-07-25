@@ -14,7 +14,7 @@
 #include "MIL_PopulationType.h"
 #include "MIL_FlowCollisionManager.h"
 #include "Decision/DEC_Population_Path.h"
-#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathFind_Manager_ABC.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_Population_PathClass.h"
 #include "Decision/DEC_PathType.h"
@@ -222,10 +222,10 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
     }
     const auto headComputer = boost::make_shared< DEC_PathComputer >( GetPopulation().GetID() );
     pHeadPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ), headComputer );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( headComputer, false );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( headComputer, sword::Pathfind() );
     const auto tailComputer = boost::make_shared< DEC_PathComputer >( GetPopulation().GetID() );
     pTailPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ), tailComputer );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( tailComputer, false );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( tailComputer, sword::Pathfind() );
 }
 
 // -----------------------------------------------------------------------------

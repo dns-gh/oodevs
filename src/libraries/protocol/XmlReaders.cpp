@@ -817,26 +817,31 @@ namespace
 
     void ReadPathfindRequest( const Reader_ABC& reader, sword::PathfindRequest& request, xml::xisubstream xis )
     {
-        xis >> xml::start( "request" );
-        if( auto id = TestAttribute< uint32_t >( xml::xisubstream( xis ) >> xml::start( "unit" ), "id" ) )
+        xis >> xml::start( "request" )
+                >> xml::start( "unit" );
+        if( auto id = TestAttribute< uint32_t >( xis, "id" ) )
             request.mutable_unit()->set_id( *id );
+        xis >> xml::end;
         PointList positions;
         AddPointList( reader, positions, "positions", xis );
         for( auto it = positions.elem().begin(); it != positions.elem().end(); ++it )
             if( it->location().coordinates().elem().size() )
                 *request.add_positions() = it->location().coordinates().elem( 0 );
-        xml::xisubstream( xis )
-            >> xml::start( "equipments" )
-            >> xml::list( "type", [&]( xml::xistream& xis ){
-            if( auto id = TestAttribute< uint32_t >( xis, "id" ) )
-                request.add_equipment_types()->set_id( *id );
-        });
-        if( auto dyn = TestAttribute< bool >( xml::xisubstream( xis ) >> xml::start( "ignore_dynamic_objects" ), "value" ) )
+        xis >> xml::start( "equipments" )
+                >> xml::list( "type", [&]( xml::xistream& xis )
+                {
+                    if( auto id = TestAttribute< uint32_t >( xis, "id" ) )
+                        request.add_equipment_types()->set_id( *id );
+                } )
+            >> xml::end
+            >> xml::start( "ignore_dynamic_objects" );
+        if( auto dyn = TestAttribute< bool >( xis, "value" ) )
             request.set_ignore_dynamic_objects( *dyn );
     }
 
-    void ReadTerrainData( xml::xisubstream xis, sword::TerrainData& data )
+    void ReadTerrainData( xml::xisubstream xis, sword::TerrainData& data, const std::string& tag )
     {
+        xis >> xml::start( tag );
         data.set_area( xis.attribute< uint32_t >( "area" ) );
         data.set_linear( xis.attribute< uint32_t >( "linear" ) );
         data.set_left( xis.attribute< uint32_t >( "left" ) );
@@ -855,9 +860,11 @@ namespace
                         point.set_waypoint( *waypoint );
                     if( auto reached = TestAttribute< bool >( xis, "reached" ) )
                         point.set_reached( *reached );
-                    xis >> xml::list( "current", boost::bind( &ReadTerrainData, _1, boost::ref( *point.mutable_current() ) ) )
-                        >> xml::list( "next", boost::bind( &ReadTerrainData, _1, boost::ref( *point.mutable_next() ) ) );
-                } );
+                    if( xis.has_child( "current" ) )
+                        ReadTerrainData( xis, *point.mutable_current(), "current" );
+                    if( xis.has_child( "next" ) )
+                        ReadTerrainData( xis, *point.mutable_next(), "next" );
+        } );
     }
 
     void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )

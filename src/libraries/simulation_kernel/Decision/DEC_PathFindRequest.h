@@ -21,8 +21,9 @@ namespace sword
 }
 
 class DEC_PathComputer_ABC;
-class DEC_PathFind_Manager;
+class DEC_PathFind_Manager_ABC;
 class MIL_Agent_ABC;
+class TER_World_ABC;
 
 // DEC_PathFindRequest insulates DEC_Path_ABC cleanup logic from
 // TER_PathFinderThread. While the cleanup code itself belongs to DEC_Path_ABC,
@@ -35,8 +36,8 @@ class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathFindRequest( DEC_PathFind_Manager& m, const boost::shared_ptr< DEC_PathComputer_ABC >& p,
-                                  bool ignoreDynamicObjects, const sword::Pathfind* pathfind );
+             DEC_PathFindRequest( DEC_PathFind_Manager_ABC& manager, const boost::shared_ptr< DEC_PathComputer_ABC >& computer,
+                                  const sword::Pathfind& pathfind, const TER_World_ABC& world );
     virtual ~DEC_PathFindRequest();
     //@}
 
@@ -55,10 +56,10 @@ private:
 private:
     //! @name Member data
     //@{
-    DEC_PathFind_Manager& manager_;
-    boost::weak_ptr< DEC_PathComputer_ABC > path_;
-    const bool ignoreDynamicObjects_;
-    std::unique_ptr< sword::Pathfind > pathfind_;
+    DEC_PathFind_Manager_ABC& manager_;
+    boost::weak_ptr< DEC_PathComputer_ABC > computer_;
+    sword::Pathfind pathfind_;
+    const TER_World_ABC& world_;
     //@}
 };
 
