@@ -109,6 +109,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
     , bHasChanged_         ( false )
     , markedForDestruction_( false )
     , brainDeleted_        ( false )
+    , updateDecisionsDead_ ( true )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
@@ -144,6 +145,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
     , bHasChanged_         ( false )
     , markedForDestruction_( false )
     , brainDeleted_        ( false )
+    , updateDecisionsDead_ ( true )
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
@@ -495,10 +497,20 @@ void MIL_AgentPion::UpdateDecision( float duration )
     try
     {
         pOrderManager_->Update();
-        if( !IsDead() )
-            GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
-        else
+        if( IsDead() )
+        {
             CancelAllActions();
+            if( updateDecisionsDead_ )
+            {
+                updateDecisionsDead_ = false;
+                GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+            }
+        }
+        else
+        {
+            updateDecisionsDead_ = true;
+            GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+        }
     }
     catch( const std::exception& e )
     {
