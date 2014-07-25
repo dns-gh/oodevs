@@ -51,7 +51,7 @@ public:
     //@{
     unsigned int GetDotationNumber( const TER_Localisation& location ) const;
     template <typename T> void FinalizeAttribute( MIL_Object_ABC& object );
-    void SetDensity( double density );
+    void SetDensity( double density, const TER_Localisation& location );
     //@}
     
     //! @name Accessors

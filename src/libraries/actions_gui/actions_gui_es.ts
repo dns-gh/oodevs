@@ -131,10 +131,6 @@
         <translation>TC2</translation>
     </message>
     <message>
-        <source>Density per 100 square meter</source>
-        <translation>Densidad por cada 100 metros cuadrados</translation>
-    </message>
-    <message>
         <source>Altitude modifier</source>
         <translation>Modificador de Altitud</translation>
     </message>
@@ -172,6 +168,10 @@
     </message>
     <message>
         <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of supplies per 100m/100m²</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

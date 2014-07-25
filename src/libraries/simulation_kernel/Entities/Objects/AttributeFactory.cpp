@@ -251,7 +251,7 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                 double density = attributes.list( 1 ).areal();
                 BuildableCapacity* capacity = object.Retrieve< BuildableCapacity >();
                 if( capacity )
-                    capacity->SetDensity( density );
+                    capacity->SetDensity( density, object.GetLocalisation() );
                 ConstructionAttribute* attribute = object.RetrieveAttribute< ConstructionAttribute >();
                 if( attribute )
                     attribute->SetDensity( density );
