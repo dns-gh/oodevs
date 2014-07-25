@@ -52,7 +52,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes ) const;
+    void Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes, bool singlePoint ) const;
     //@}
 
 private:
