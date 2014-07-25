@@ -544,8 +544,7 @@ integration.setAvailableDrones = function( minFuelQuantity, maxDistance )
     for _,pion in pairs( listePions or emptyTable ) do
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
         local fuelDotationNumber = DEC_Agent_GetFuelDotationNumber( pion )	
-        -- if DEC_GetSzName( pion ) == "Masalife.RENS.Drone SDTI" and operationalLevel ~= 0 and fuelDotationNumber > 0 then
-        if operationalLevel ~= 0 and fuelDotationNumber > minFuelQuantity then -- Le drone doit être opérationnel et avoir un minimum de carburant
+        if operationalLevel ~= 0 and fuelDotationNumber > minFuelQuantity then -- The drone should be operational
             if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < maxDistance and not pion:GetbMiseEnOeuvre_() then
                 integration.setUAVDeployed( pion, true ) -- mandatory to permit the flight
                 integration.removeFromLoadedUnits( pion )
@@ -610,6 +609,10 @@ end
 -- @return Boolean, true if the unit can cover the fly track, false otherwise
 integration.checkFlyTrack = function ( distance, agent )
     if agent then
+        local unitPC = meKnowledge:getUnitPC()
+        if unitPC.source.pluggedUnits and unitPC.source.pluggedUnits[ agent ] then
+            return false
+        end
         local tempsDeParcours = integration.getTheoricTimeToCoverDistance( agent, distance, true )
         local autonomy = DEC_AutonomieEnDeplacement( agent )
         if autonomy < tempsDeParcours then
@@ -1224,7 +1227,7 @@ integration.startDeployDrone = function ( self, distance, listPoints )
         end
     else
         DEC_Agent_Deploy()
-        reportFunction( eRC_DebutMiseEnOeuvreDrone )
+        reportFunction( eRC_DebutMiseEnOeuvreDrone, myself.droneAvailable )
     end
 end
 
@@ -1234,7 +1237,7 @@ integration.startedDeployDrone = function ( self, distance, listPoints )
         myself.Deployed = true
         myself.droneAvailable:SetbMiseEnOeuvre_( true ) -- mandatory to permit the flight
         local droneKn = CreateKnowledge( sword.military.world.PlatoonAlly, myself.droneAvailable )
-        reportFunction( eRC_FinMiseEnOeuvreDrone )
+        reportFunction( eRC_FinMiseEnOeuvreDrone, myself.droneAvailable )
         meKnowledge:sendRC( droneKn, eRC_DroneDisponible )
         meKnowledge:sendDisponibleDrone(meKnowledge:getAutomat(), droneKn)
     end
@@ -1259,8 +1262,13 @@ integration.setAvailableDronesForFlyTrack = function ( distance, listPoints )
             if DEC_Agent_GetFuelDotationNumber( pion ) <= 3 then
                 possible = false
             end
-        else
-            possible = integration.checkFlyTrack( distance, pion )
+        end
+        if string.find (nomPion, "DRAC") then
+            if string.find (nomPion, "PVP") then
+                possible = false
+            else
+                possible = integration.checkFlyTrack( distance, pion )
+            end
         end
         if possible then
             autonomie = true
