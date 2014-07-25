@@ -105,7 +105,7 @@ namespace
         {
             T_Waypoints result;
             for( int i = 0; i < points.size(); ++i )
-                if( points[ i ].first.Point().SquareDistance( point ) < 0.01 )
+                if( points[ i ].second >= 0 && points[ i ].first.Point().SquareDistance( point ) < 0.01 )
                     result.push_back( std::make_pair( i, points[ i ].second ) );
             return result;
         }
@@ -130,7 +130,7 @@ namespace
                                   tools::thread::Handler_ABC< TerrainPathPoint >& handler )
         {
             const T_PathPoints points = ReadPathPoints( pathfind_.result(), world_ );
-            std::pair< int, int > segment = MatchWaypoints( FindWaypoints( points, from ),
+            const auto segment = MatchWaypoints( FindWaypoints( points, from ),
                                                             FindWaypoints( points, to ) );
             if( segment.first < 0 || segment.second < 0 )
                 return pathfinder_.ComputePath( from, to, rule, handler );

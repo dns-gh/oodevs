@@ -44,11 +44,6 @@ class TER_LimitDataManager;
 
 namespace tools
 {
-namespace thread
-{
-    template< typename T > class MessageQueue_ABC;
-}
-
     class ExerciseConfig;
 }
 

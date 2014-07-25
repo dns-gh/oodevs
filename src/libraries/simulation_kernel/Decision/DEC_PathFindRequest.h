@@ -58,7 +58,7 @@ private:
     //@{
     DEC_PathFind_Manager_ABC& manager_;
     boost::weak_ptr< DEC_PathComputer_ABC > computer_;
-    sword::Pathfind pathfind_;
+    const sword::Pathfind pathfind_;
     const TER_World_ABC& world_;
     //@}
 };
