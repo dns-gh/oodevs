@@ -20,6 +20,7 @@
 #include "clients_kernel/Curve.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Rectangle.h"
+#include "clients_kernel/Text.h"
 #include <svgl/svgl.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -51,7 +52,8 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const QString& category,
     , polygonPixmap_( MAKE_PIXMAP( polygon ) )
     , circlePixmap_ ( MAKE_PIXMAP( circle ) )
     , curvePixmap_  ( MAKE_PIXMAP( curve ) )
-    , rectanglePixmap_  ( MAKE_PIXMAP( rectangle ) )
+    , rectanglePixmap_( MAKE_PIXMAP( rectangle ) )
+    , textPixmap_   ( MAKE_PIXMAP( text ) )
     , sampleColor_  ( new svg::Color( "blue" ) )
     , isDrawingSample_( false )
     , sampleMarkerRatio_( 1.f )
@@ -165,6 +167,8 @@ const QPixmap& DrawingTemplate::GetPixmap() const
         return curvePixmap_;
     else if( type_ == "rectangle" )
         return rectanglePixmap_;
+    else if( type_ == "text" )
+        return textPixmap_;
 
     throw MASA_EXCEPTION( "Invalid drawing type " + type_.toStdString() );
 }
@@ -211,6 +215,8 @@ kernel::Location_ABC* DrawingTemplate::CreateLocation() const
         return new kernel::Curve();
     else if( type_ == "rectangle" )
         return new kernel::Rectangle();
+    else if( type_ == "text" )
+        return new kernel::Text();
 
     throw MASA_EXCEPTION( "Invalid drawing geometry type." );
 }

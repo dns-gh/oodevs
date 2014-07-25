@@ -50,7 +50,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     panels_->AddPanel( objects_ = new ObjectCreationPanel( panels_, *panels_, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools, config ) );
     panels_->AddPanel( fires_ = new FireCreationPanel( panels_, *panels_, controllers, model.actions_, simulation, staticModel, paramLayer, tools ) );
     panels_->AddPanel( weather_ = new ::WeatherPanel( panels_, *panels_, controllers, model.actions_, staticModel, simulation, weatherLayer ) );
-    panels_->AddPanel( drawings_ = new DrawerPanel( panels_, *panels_, paramLayer, controllers, model.drawings_, config ) );
+    panels_->AddPanel( drawings_ = new DrawerPanel( panels_, *panels_, paramLayer, controllers, model.drawings_, staticModel.drawings_, config ) );
     controllers_.Update( *this );
 }
 

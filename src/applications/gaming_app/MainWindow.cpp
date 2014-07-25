@@ -117,6 +117,7 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/TerrainProfilerLayer.h"
+#include "clients_gui/TextEditor.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/UrbanLayer.h"
 #include "clients_gui/WatershedLayer.h"
@@ -163,6 +164,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );
     controllers_.modes_.AddRegistryEntry( eModes_Replay, "Replayer" );
+
+    // Text editor
+    textEditor_.reset( new gui::TextEditor( this ) );
 
     // Strategy
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
@@ -213,7 +217,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
 
     // First layers
-    parameters_ = new gui::ParametersLayer( *glProxy_ );
+    parameters_ = new gui::ParametersLayer( *glProxy_, *textEditor_ );
     gui::LocationsLayer* locationsLayer      = new gui::LocationsLayer( *glProxy_ );
     gui::TerrainPicker* picker               = new gui::TerrainPicker( this );
     WeatherLayer* meteoLayer                 = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, profile_ );

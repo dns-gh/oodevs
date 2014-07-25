@@ -74,6 +74,7 @@ private:
     //@{
     void ReadPoint( xml::xistream& xis );
     void SerializePoint( const sword::CoordLatLong& point, xml::xostream& xos ) const;
+    void SerializeShape( sword::Shape& shape ) const;
     //@}
 
 private:
@@ -88,6 +89,8 @@ private:
     std::vector< sword::CoordLatLong > points_;
     boost::optional< sword::Diffusion > diffusion_;
     boost::optional< sword::EnumPenStyle > style_;
+    boost::optional< std::string > text_;
+    boost::optional< std::string > font_;
     //@}
 };
 

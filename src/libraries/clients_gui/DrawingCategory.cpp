@@ -20,11 +20,13 @@ using namespace gui;
 // Name: DrawingCategory constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-DrawingCategory::DrawingCategory( xml::xistream& xis, svg::TextRenderer& renderer, kernel::Controller& controller )
+DrawingCategory::DrawingCategory( xml::xistream& xis, svg::TextRenderer& renderer, kernel::Controller& controller,
+                                  bool internalCategory )
     : controller_( controller )
     , name_( xis.attribute< std::string >( "name" ).c_str() )
     , id_( xis.attribute< std::string >( "id", "" ).c_str() )
     , description_( xis.content< std::string >( "description", "" ).c_str() )
+    , internalCategory_( internalCategory )
 {
     xis >> xml::list( "template", *this, &DrawingCategory::ReadTemplate, renderer );
     controller_.Create( *this );
@@ -83,4 +85,13 @@ const DrawingTemplate& DrawingCategory::GetTemplate( const std::string& template
     if( const DrawingTemplate* result = Find( name ) )
         return *result;
     return Get( templateName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingCategory::IsInternal
+// Created: LGY 2014-07-23
+// -----------------------------------------------------------------------------
+bool DrawingCategory::IsInternal() const
+{
+    return internalCategory_;
 }

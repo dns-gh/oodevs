@@ -11,6 +11,7 @@
 #include "SimpleLocationDrawer.h"
 
 #include "GlTools_ABC.h"
+#include "Tools.h"
 
 using namespace gui;
 
@@ -20,6 +21,17 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 SimpleLocationDrawer::SimpleLocationDrawer( const GlTools_ABC& tools )
     : tools_( tools )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimpleLocationDrawer constructor
+// Created: LGY 2014-07-22
+// -----------------------------------------------------------------------------
+SimpleLocationDrawer::SimpleLocationDrawer( const GlTools_ABC& tools, const QColor& color )
+    : tools_( tools )
+    , color_( color )
 {
     // NOTHING
 }
@@ -138,4 +150,14 @@ void SimpleLocationDrawer::VisitPoint( const geometry::Point2f& point )
 {
     if( !point.IsZero() )
         tools_.DrawCross( point, -1.f, GlTools_ABC::pixels );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimpleLocationDrawer::VisitText
+// Created: LGY 2014-07-21
+// -----------------------------------------------------------------------------
+void SimpleLocationDrawer::VisitText( const QString& text, const QFont& font, const geometry::Point2f& point )
+{
+    if( color_.isValid() )
+        tools_.DrawShapeText( tools::DrawText( text, font, color_ ), point );
 }

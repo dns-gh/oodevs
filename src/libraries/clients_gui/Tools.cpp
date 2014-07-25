@@ -11,6 +11,7 @@
 #include "Tools.h"
 #include "AutomatDecisions.h"
 
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -19,6 +20,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include <boost/assign.hpp>
 
 #include <tools/Path.h>
 
@@ -98,4 +100,36 @@ bool tools::CanOneSubordinateBeOrdered( const kernel::Profile_ABC& profile, cons
         if( CanOneSubordinateBeOrdered( profile, it.NextElement() ) )
             return true;
     return false;
+}
+
+QImage tools::DrawText( const QString& text, const QFont& font, const QColor& color )
+{
+    if( text.isEmpty() )
+        return QImage();
+
+    const QFontMetrics metrics( font );
+    QStringList list = QStringList::split( '\n', text, true );
+    QPixmap pix( metrics.boundingRect( text ).width(), metrics.height() * list.size() );
+    pix.fill( Qt::transparent );
+    QPainter painter( &pix );
+    painter.setPen( color );
+    painter.setFont( font );
+    painter.drawText( QRectF( 0, 0, pix.width(), pix.height() ), Qt::AlignVCenter, text );
+    return pix.convertToImage();
+}
+
+void tools::DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GlTools_ABC& tools )
+{
+    const QFontMetrics metrics( font );
+    QStringList list = QStringList::split( '\n', text, true );
+    const auto height = metrics.height() * list.size();
+    const auto width = metrics.boundingRect( text ).width();
+    const geometry::Rectangle2f box( geometry::Point2f( point.X(), point.Y() - height * tools.Pixels() ),
+                                     geometry::Point2f( point.X() + width * tools.Pixels(), point.Y() ) );
+    const T_PointVector polygon = boost::assign::list_of( geometry::Point2f( box.Left(), box.Top() ) )
+                                                     ( geometry::Point2f( box.Right(), box.Top() ) )
+                                                     ( geometry::Point2f( box.Right(), box.Bottom() ) )
+                                                     ( geometry::Point2f( box.Left(), box.Bottom() ) )
+                                                     ( geometry::Point2f( box.Left(), box.Top() ) );
+    tools.DrawPolygon( polygon );
 }

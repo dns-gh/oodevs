@@ -896,6 +896,10 @@
 Please check access permissions or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add text</source>
+        <translation>Ajouter du texte</translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawingCategory</name>
@@ -2130,6 +2134,33 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Terrain profile unit path</source>
         <translation>Coupe de terrain du chemin de cette unité</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TextEditor</name>
+    <message>
+        <source>Text edition</source>
+        <translation>Edition de texte</translation>
+    </message>
+    <message>
+        <source>&amp;Bold</source>
+        <translation>&amp;Gras</translation>
+    </message>
+    <message>
+        <source>&amp;Italic</source>
+        <translation>&amp;Italique</translation>
+    </message>
+    <message>
+        <source>&amp;Underline</source>
+        <translation>&amp;Souligné</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>

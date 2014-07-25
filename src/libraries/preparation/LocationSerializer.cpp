@@ -61,9 +61,9 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void LocationSerializer::VisitRectangle( const T_PointVector& /*points*/ )
 {
-    /**xos_ << xml::attribute( "type", "ligne" );
-    SetPoints( points );*///TODO
+    // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: LocationSerializer::VisitPolygon
 // Created: SBO 2006-09-12
@@ -106,6 +106,15 @@ void LocationSerializer::VisitCurve( const T_PointVector& points )
 {
     *xos_ << xml::attribute( "type", "curve" );
     SetPoints( points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationSerializer::VisitText
+// Created: LGY 2014-07-21
+// -----------------------------------------------------------------------------
+void LocationSerializer::VisitText( const QString& /*text*/, const QFont& /*font*/, const geometry::Point2f& /*point*/ )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

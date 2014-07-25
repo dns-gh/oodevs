@@ -648,3 +648,11 @@ bool GlProxy::HasFocus()
     return tools_ && tools_->HasFocus();
 }
 
+// -----------------------------------------------------------------------------
+// Name: GlProxy::DrawShapeText
+// Created: LGY 2014-06-12
+// -----------------------------------------------------------------------------
+void GlProxy::DrawShapeText( const QImage& image, const geometry::Point2f& where ) const
+{
+    tools_->DrawShapeText( image, where );
+}

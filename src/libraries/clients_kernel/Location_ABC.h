@@ -10,9 +10,8 @@
 #ifndef __Location_ABC_h_
 #define __Location_ABC_h_
 
-#pragma warning( push, 0 )
-#include <QtCore/qstring.h>
-#pragma warning( pop )
+class QString;
+class QFont;
 
 #include <geometry/types.h>
 #include "Types.h"
@@ -40,6 +39,7 @@ public:
     //@{
     virtual void PopPoint() = 0;
     virtual void AddPoint( const geometry::Point2f& point ) = 0;
+    virtual void AddText( const QString& text, const QFont& font ) = 0;
     virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision ) = 0;
     virtual Location_ABC& Clone() const = 0;
     virtual std::string GetTypeName() const = 0;

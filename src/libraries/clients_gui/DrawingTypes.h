@@ -66,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadCategory( xml::xistream& xis );
+    void ReadCategory( xml::xistream& xis, bool internalCategory );
     void Read( xml::xistream& xis );
     //@}
 

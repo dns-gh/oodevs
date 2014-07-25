@@ -54,8 +54,16 @@ void DrawingTypes::Load( const tools::ExerciseConfig& config )
 void DrawingTypes::Read( xml::xistream& xis )
 {
     xis >> xml::start( "templates" )
-            >> xml::list( "category", *this, &DrawingTypes::ReadCategory )
+            >> xml::list( "category", boost::bind( &DrawingTypes::ReadCategory, this, _1, false ) )
           >> xml::end;
+
+    // Add internal category
+    xml::xistringstream text( "<category name='Internal'>"
+                              "  <template name='Text' type='text'>"
+                              "    <segment/>"
+                              "  </template>"
+                              "</category>" );
+    ReadCategory( text >> xml::start( "category" ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,16 +73,16 @@ void DrawingTypes::Read( xml::xistream& xis )
 void DrawingTypes::Purge()
 {
     DeleteAll();
-    renderer_.reset(  new svg::TextRenderer() );
+    renderer_.reset( new svg::TextRenderer() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawingTypes::ReadCategory
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-void DrawingTypes::ReadCategory( xml::xistream& xis )
+void DrawingTypes::ReadCategory( xml::xistream& xis, bool internalCategory )
 {
-    std::unique_ptr< DrawingCategory > category( new DrawingCategory( xis, *renderer_, controller_ ) );
+    std::unique_ptr< DrawingCategory > category( new DrawingCategory( xis, *renderer_, controller_, internalCategory ) );
     Register( category->GetName(), *category );
     category.release();
 }

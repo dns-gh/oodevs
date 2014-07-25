@@ -59,13 +59,14 @@ private:
 
     //! @name Operations
     //@{
-    virtual void VisitLines     ( const T_PointVector& points );
-    virtual void VisitRectangle ( const T_PointVector& points );
-    virtual void VisitPolygon   ( const T_PointVector& points );
-    virtual void VisitPath      ( const geometry::Point2f& point, const T_PointVector& points );
-    virtual void VisitCircle    ( const geometry::Point2f& center, float radius );
-    virtual void VisitCurve     ( const T_PointVector& points );
-    virtual void VisitPoint     ( const geometry::Point2f& point );
+    virtual void VisitLines    ( const T_PointVector& points );
+    virtual void VisitRectangle( const T_PointVector& points );
+    virtual void VisitPolygon  ( const T_PointVector& points );
+    virtual void VisitPath     ( const geometry::Point2f& point, const T_PointVector& points );
+    virtual void VisitCircle   ( const geometry::Point2f& center, float radius );
+    virtual void VisitCurve    ( const T_PointVector& points );
+    virtual void VisitPoint    ( const geometry::Point2f& point );
+    virtual void VisitText     ( const QString& text, const QFont& font, const geometry::Point2f& point );
     //@}
 
     //! @name Helpers
@@ -89,9 +90,13 @@ private:
     QColor complement_;
     float zoom_;
     bool overlined_;
+    bool colorChanged_;
     E_Dash_style dashStyle_;
     svg::DashArray dashed_;
     svg::DashArray dashDot_;
+    QImage imageText_;
+    QString text_;
+    QFont font_;
     //@}
 };
 

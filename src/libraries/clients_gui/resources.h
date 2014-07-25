@@ -112,5 +112,6 @@ DECLARE_ICON( pen_cursor );
 DECLARE_ICON( point_cursor );
 DECLARE_ICON( polygon_cursor );
 DECLARE_ICON( rectangle_cursor );
+DECLARE_ICON( text_cursor );
 
 #endif // __demo_resources_h_

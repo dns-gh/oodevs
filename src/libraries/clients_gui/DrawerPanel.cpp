@@ -10,21 +10,24 @@
 #include "clients_gui_pch.h"
 #include "DrawerPanel.h"
 #include "moc_DrawerPanel.cpp"
-#include "ParametersLayer.h"
 #include "ColorButton.h"
 #include "DrawerModel.h"
 #include "Drawing.h"
 #include "DrawingCategory.h"
-#include "DrawingTemplate.h"
 #include "DrawingCategoryItem.h"
+#include "DrawingTemplate.h"
+#include "DrawingTypes.h"
 #include "FileDialog.h"
+#include "ParametersLayer.h"
 #include "RichGroupBox.h"
 #include "RichWidget.h"
-#include "SubObjectName.h"
 #include "RichWidget.h"
+#include "SimpleLocationDrawer.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 #include "resources.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
@@ -52,11 +55,13 @@ namespace
 // Name: DrawerPanel constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers, DrawerModel& model, const tools::ExerciseConfig& config )
+DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers,
+                          DrawerModel& model, DrawingTypes& types, const tools::ExerciseConfig& config )
     : InfoPanel_ABC( parent, panel, tr( "Drawings" ) )
     , controllers_    ( controllers )
     , layer_          ( layer )
     , model_          ( model )
+    , types_          ( types )
     , config_         ( config )
     , selectedStyle_  ( 0 )
     , selectedDrawing_( controllers )
@@ -97,6 +102,13 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     toolBox_->setMargin( 0 );
     toolBox_->setBackgroundColor( Qt::white );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
+
+    btn = new RichWidget< QToolButton >( "startText", box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( text ) );
+    btn->setFixedSize( 25, 25 );
+    QToolTip::add( btn, tr( "Add text" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( StartTextEdition() ) );
 
     btn = new RichWidget< QToolButton >( "startDrawing", box );
     btn->setAutoRaise( true );
@@ -174,11 +186,14 @@ void DrawerPanel::setEnabled( bool b )
 // -----------------------------------------------------------------------------
 void DrawerPanel::NotifyCreated( const DrawingCategory& category )
 {
-    DrawingCategoryItem* item = new DrawingCategoryItem( this, category );
-    connect( item, SIGNAL( Selected( const DrawingTemplate& ) ), SLOT( OnSelect( const DrawingTemplate& ) ) );
-    const int id = toolBox_->addItem( item, MAKE_PIXMAP( drawings ), category.GetName() );
-    toolBox_->setItemToolTip( id, category.GetDescription() );
-    categories_[ &category ] = item;
+    if( !category.IsInternal() )
+    {
+        DrawingCategoryItem* item = new DrawingCategoryItem( this, category );
+        connect( item, SIGNAL( Selected( const DrawingTemplate& ) ), SLOT( OnSelect( const DrawingTemplate& ) ) );
+        const int id = toolBox_->addItem( item, MAKE_PIXMAP( drawings ), category.GetName() );
+        toolBox_->setItemToolTip( id, category.GetDescription() );
+        categories_[ &category ] = item;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -296,9 +311,21 @@ void DrawerPanel::StartDrawing()
             layer_.StartCurve( *this );
         else if( selectedStyle_->GetType() == "rectangle" )
             layer_.StartRectangle( *this );
-        else
-            throw MASA_EXCEPTION( "Unhandled shape geometry." );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::StartTextEdition
+// Created: LGY 2014-06-10
+// -----------------------------------------------------------------------------
+void DrawerPanel::StartTextEdition()
+{
+    for( auto it = categories_.begin(); it != categories_.end(); ++it )
+        it->second->ClearSelection();
+
+    color_->Commit();
+    selectedStyle_ = &types_.Get( "Internal" ).GetTemplate( "Text" );
+    layer_.StartText( *this, color_->GetColor() );
 }
 
 // -----------------------------------------------------------------------------
@@ -363,7 +390,6 @@ void DrawerPanel::OnLineChanged( int index )
     dashStyle_ = E_Dash_style( index );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DrawerPanel::Handle
 // Created: LGY 2014-05-14
@@ -372,4 +398,14 @@ void DrawerPanel::Handle( kernel::Location_ABC& location )
 {
     if( selectedStyle_ )
         model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_, dashStyle_, location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::Draw
+// Created: LGY 2014-05-14
+// -----------------------------------------------------------------------------
+void DrawerPanel::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GlTools_ABC& tools ) const
+{
+    gui::SimpleLocationDrawer drawer( tools, color_->GetColor() );
+    location.Accept( drawer );
 }

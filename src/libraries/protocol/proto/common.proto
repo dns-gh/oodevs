@@ -995,6 +995,8 @@ message Shape {
     optional Diffusion        diffusion = 5;
     optional EnumPenStyle     pen_style = 6;
     optional string           name      = 7;
+    optional string           text      = 8;
+    optional string           font      = 9;
 }
 
 /** @struct ChatTarget

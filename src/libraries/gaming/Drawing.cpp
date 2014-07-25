@@ -9,13 +9,13 @@
 
 #include "gaming_pch.h"
 #include "Drawing.h"
+#include "DrawingTools.h"
 #include "clients_gui/DrawingTypes.h"
 #include "clients_gui/DrawingCategory.h"
 #include "clients_gui/DrawingTemplate.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/LocationProxy.h"
 #include "protocol/Protocol.h"
 
@@ -44,6 +44,7 @@ Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& 
     , controller_( controllers.controller_ )
 {
     SetLocation( message.shape().points() );
+    SetText( message.shape() );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +54,20 @@ Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& 
 Drawing::~Drawing()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::SetText
+// Created: LGY 2014-07-23
+// -----------------------------------------------------------------------------
+void Drawing::SetText( const sword::Shape& shape )
+{
+    if( shape.has_text() && shape.has_font() )
+    {
+        QFont font;
+        font.fromString( shape.font().c_str() );
+        location_.AddText( shape.text().c_str(), font );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +117,8 @@ void Drawing::SendUpdateRequest() const
     message().mutable_color()->set_blue( color_.blue() );
     message().set_pattern( style_.GetName().toStdString() );
     message().set_name( name_ );
-    SerializeLocation( *message().mutable_points() );
+
+    tools::SerializeLocation( message, converter_, location_ );
     message.Send( publisher_ );
 }
 
@@ -120,66 +136,10 @@ void Drawing::DoUpdate( const sword::ShapeUpdate& message )
         SetLocation( shape.points() );
     if( shape.has_name() )
         name_ = shape.name().c_str();
+
+    SetText( shape );
     controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
     gui::DrawerShape::Update();
-}
-
-namespace
-{
-    struct Serializer : public kernel::LocationVisitor_ABC
-    {
-        explicit Serializer( const kernel::CoordinateConverter_ABC& converter ) : converter_( &converter ) {}
-        virtual void VisitLines( const T_PointVector& points )
-        {
-            for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
-            {
-                sword::CoordLatLong latlong;
-                converter_->ConvertToGeo( *it, latlong );
-                points_.push_back( latlong );
-            }
-        }
-        virtual void VisitRectangle( const T_PointVector& points )
-        {
-            VisitLines( points );
-        }
-        virtual void VisitPolygon( const T_PointVector& points )
-        {
-            VisitLines( points );
-            points_.pop_back();
-        }
-        virtual void VisitCircle( const geometry::Point2f& center, float radius )
-        {
-            VisitPoint( center );
-            const geometry::Point2f point( center + geometry::Vector2f( 0, 1.f ) * radius );
-            VisitPoint( point );
-        }
-        virtual void VisitPoint( const geometry::Point2f& point )
-        {
-            VisitLines( T_PointVector( 1, point ) );
-        }
-        virtual void VisitPath( const geometry::Point2f& , const T_PointVector& points )
-        {
-            VisitLines( points );
-        }
-        virtual void VisitCurve( const T_PointVector& points )
-        {
-            VisitLines( points );
-        }
-        std::vector< sword::CoordLatLong > points_;
-        const kernel::CoordinateConverter_ABC* converter_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: Drawing::SerializeLocation
-// Created: SBO 2008-06-05
-// -----------------------------------------------------------------------------
-void Drawing::SerializeLocation( sword::CoordLatLongList& list ) const
-{
-    Serializer serializer( converter_ );
-    location_.Accept( serializer );
-    for( unsigned int i = 0; i < serializer.points_.size(); ++i )
-        *list.add_elem() = serializer.points_[i];
 }
 
 // -----------------------------------------------------------------------------

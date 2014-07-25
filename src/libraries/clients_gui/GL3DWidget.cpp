@@ -959,3 +959,45 @@ bool Gl3dWidget::HasFocus()
 {
     return hasFocus() && QApplication::widgetAt( QCursor::pos() ) == this;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawShapeText
+// Created: LGY 2014-06-12
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawShapeText( const QImage& image, const geometry::Point2f& where ) const
+{
+    if( image.bits() )
+    {
+        glPushMatrix();
+        glPushAttrib( GL_TEXTURE_BIT | GL_CURRENT_BIT );
+        glEnable( GL_TEXTURE_2D );
+        glDisable( GL_TEXTURE_GEN_S );
+        glDisable( GL_TEXTURE_GEN_T );
+        glColor3f( 1.f, 1.f, 1.f );
+
+        unsigned int texture;
+        glGenTextures( 1, & texture );
+        glBindTexture( GL_TEXTURE_2D, texture );
+        glTexImage2D( GL_TEXTURE_2D, 0, 4, image.width(), image.height(), 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
+        glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
+        glScalef( (float)image.width() *  Pixels(), (float)image.height() * Pixels(), 1.f );
+        glBegin( GL_QUADS );
+        glTexCoord2f( 0.f, 1.f );
+        glVertex2f( 0.f, -1.f );
+        glTexCoord2f( 0.f, 0.f );
+        glVertex2f( 0.f, 0 );
+        glTexCoord2f( 1.f, 0.f );
+        glVertex2f( 1, 0 );
+        glTexCoord2f( 1.f, 1.f );
+        glVertex2f( 1, -1.f );
+        glEnd();
+
+        glPopMatrix();
+        glPopAttrib();
+
+        glDeleteTextures( 1, &texture );
+    }
+}

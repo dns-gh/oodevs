@@ -10,8 +10,9 @@
 #include "clients_gui_pch.h"
 #include "SvgLocationDrawer.h"
 #include "DrawingTemplate.h"
-#include "clients_kernel/Location_ABC.h"
 #include "GlTools_ABC.h"
+#include "Tools.h"
+#include "clients_kernel/Location_ABC.h"
 #include <boost/assign.hpp>
 #include <svgl/svgl.h>
 #include <svgl/Opacity.h>
@@ -42,14 +43,15 @@ std::vector< geometry::Vector2f > SvgLocationDrawer::circle_;
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
 SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
-    : context_  ( new svg::RenderingContext() )
-    , style_    ( style )
-    , overlined_( false )
-    , tools_    ( 0 )
-    , zoom_     ( 1.f )
-    , dashStyle_( eSolid )
-    , dashed_   ( "8px,8px" )
-    , dashDot_  ( "24px,8px,8px,8px" )
+    : context_     ( new svg::RenderingContext() )
+    , style_       ( style )
+    , overlined_   ( false )
+    , tools_       ( 0 )
+    , zoom_        ( 1.f )
+    , dashStyle_   ( eSolid )
+    , dashed_      ( "8px,8px" )
+    , dashDot_     ( "24px,8px,8px,8px" )
+    , colorChanged_( false )
 {
     GenerateCircle();
 }
@@ -84,6 +86,7 @@ void SvgLocationDrawer::GenerateCircle()
 // -----------------------------------------------------------------------------
 void SvgLocationDrawer::SetColor( const QColor& color )
 {
+    colorChanged_ = color_ != color;
     color_ = color;
     complement_ = Complement( color );
 }
@@ -213,6 +216,26 @@ void SvgLocationDrawer::VisitCurve( const T_PointVector& points )
         for( unsigned int i = 0; i <= segment; ++i )
             newPoints.push_back( Compute( points[ 0 ], points[ 2 ], points[ 1 ], i, segment ) );
         DrawShape( newPoints );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SvgLocationDrawer::VisitText
+// Created: LGY 2014-07-21
+// -----------------------------------------------------------------------------
+void SvgLocationDrawer::VisitText( const QString& text, const QFont& font, const geometry::Point2f& point )
+{
+    if( tools_->IsPickingMode() )
+        tools::DrawPickingText( text, font, point, *tools_ );
+    else
+    {
+        if( imageText_.isNull() || text_ != text || font_ != font || colorChanged_ )
+        {
+            imageText_ = tools::DrawText( text, font, overlined_ ? color_.light( 120 ) : color_ );
+            text_ = text;
+            font_ = font;
+        }
+        tools_->DrawShapeText( imageText_, point );
     }
 }
 
