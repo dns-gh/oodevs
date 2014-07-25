@@ -10,11 +10,23 @@
 #include "clients_gui_pch.h"
 #include "TextEditor.h"
 #include "moc_TextEditor.cpp"
+#include "RichWidget.h"
 #include "Tools.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 
 using namespace gui;
+
+namespace
+{
+    QPushButton* CreatePushButton( const QString& objectName, const QString& text, const QObject* receiver, const char* slot )
+    {
+        QPushButton* button = new RichWidget< QPushButton >( objectName );
+        button->setText( text );
+        QObject::connect( button, SIGNAL( clicked() ), receiver, slot );
+        return button;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: TextEditor constructor
@@ -70,7 +82,7 @@ TextEditor::TextEditor( QWidget* parent )
     toolsLayout->addWidget( separator );
 
     // Size
-    comboSize_ = new QComboBox();
+    comboSize_ = new RichWidget< QComboBox >( "comboSize", this );
     comboSize_->setEditable( true );
     QFontDatabase database;
     Q_FOREACH( int size, database.standardSizes() )
@@ -80,17 +92,13 @@ TextEditor::TextEditor( QWidget* parent )
     toolsLayout->addStretch();
 
     // TextEdit
-    textEdit_ = new QTextEdit( this );
+    textEdit_ = new RichWidget< QTextEdit >( "textEdit", this );
     connect( textEdit_, SIGNAL( textChanged() ), SLOT( OnTextChanged() ) );
 
     // Buttons
-    QPushButton* okButton = new QPushButton( tr( "Ok" ), this );
-    connect( okButton, SIGNAL( clicked() ), SLOT( Accept() ) );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), this );
-    connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    buttonLayout->addWidget( okButton );
-    buttonLayout->addWidget( cancelButton );
+    buttonLayout->addWidget( CreatePushButton( "okButton", tr( "Ok" ), this, SLOT( Accept() ) ) );
+    buttonLayout->addWidget( CreatePushButton( "okCancel", tr( "Cancel" ), this, SLOT( Reject() ) ) );
 
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->addLayout( toolsLayout );
