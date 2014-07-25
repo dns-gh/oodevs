@@ -27,6 +27,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
@@ -508,6 +509,11 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
         rMajorOperationalState_ = rNonMajorOpStateValue / nNonMajorOpStateNbr;
     else
         rMajorOperationalState_ = 0.;
+
+    const E_OperationalState newState = rOperationalState_      == 0 ? eOpStateFullyDestroyed :
+                                        rMajorOperationalState_ == 0 ? eOpStateTacticallyDestroyed:
+                                                                       eOpStateOperational;
+    static_cast< DEC_RolePion_Decision& >( owner_->GetDecision() ).NotifyOperationalStateChanged( newState );
 }
 
 // -----------------------------------------------------------------------------
