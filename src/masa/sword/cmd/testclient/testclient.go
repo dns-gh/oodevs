@@ -81,6 +81,10 @@ type tickInfo struct {
 	Tick     int
 }
 
+const (
+	LogTimeLayout = "2006-01-02T15:04:05.999"
+)
+
 func run() error {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, ""+
@@ -145,7 +149,8 @@ used to exercise swapi.Model update against real world scenarii.
 			if !in {
 				prefix = "out"
 			}
-			logWriter.WriteString(fmt.Sprintf("%s=%d ", prefix, size))
+			now := time.Now().Format(LogTimeLayout)
+			logWriter.WriteString(fmt.Sprintf("%s %s=%d ", now, prefix, size))
 			_, err = logWriter.Write(s)
 			if err != nil {
 				log.Fatalf("error: cannot write message to log file: %s", err)
