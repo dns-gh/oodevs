@@ -39,9 +39,8 @@ namespace tools
     tools::Path SanitizeFileName( QString text, const QString& after = "-" );
     void SetKarma( const kernel::Entity_ABC& entity, std::string& symbol );
     void SetLevel( const kernel::Entity_ABC& entity, std::string& level );
-    void DrawText( const QString& text, const QFont& font, const geometry::Point2f& point,
-                   const QColor& color, const gui::GlTools_ABC& tools );
-
+    QImage DrawText( const QString& text, const QFont& font, const QColor& color );
+    void DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GlTools_ABC& tools );
 }  //! namespace tools
 
 #endif  // CLIENTS_GUI_TOOLS_H

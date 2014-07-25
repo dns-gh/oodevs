@@ -90,9 +90,13 @@ private:
     QColor complement_;
     float zoom_;
     bool overlined_;
+    bool colorChanged_;
     E_Dash_style dashStyle_;
     svg::DashArray dashed_;
     svg::DashArray dashDot_;
+    QImage imageText_;
+    QString text_;
+    QFont font_;
     //@}
 };
 

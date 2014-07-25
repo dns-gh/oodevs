@@ -10,10 +10,8 @@
 #ifndef __Location_ABC_h_
 #define __Location_ABC_h_
 
-#pragma warning( push, 0 )
-#include <QtCore/qstring.h>
-#include <QtGui/qfont.h>
-#pragma warning( pop )
+class QString;
+class QFont;
 
 #include <geometry/types.h>
 #include "Types.h"

@@ -13,10 +13,8 @@
 #include <boost/noncopyable.hpp>
 #include "Types.h"
 
-#pragma warning( push, 0 )
-#include <QtCore/QString>
-#include <QtGui/QFont>
-#pragma warning( pop )
+class QString;
+class QFont;
 
 namespace kernel
 {

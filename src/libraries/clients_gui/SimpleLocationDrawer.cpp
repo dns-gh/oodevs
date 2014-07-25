@@ -159,5 +159,5 @@ void SimpleLocationDrawer::VisitPoint( const geometry::Point2f& point )
 void SimpleLocationDrawer::VisitText( const QString& text, const QFont& font, const geometry::Point2f& point )
 {
     if( color_.isValid() )
-        tools::DrawText( text, font, point, color_, tools_ );
+        tools_.DrawShapeText( tools::DrawText( text, font, color_ ), point );
 }

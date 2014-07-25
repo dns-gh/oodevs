@@ -102,31 +102,34 @@ bool tools::CanOneSubordinateBeOrdered( const kernel::Profile_ABC& profile, cons
     return false;
 }
 
-void tools::DrawText( const QString& text, const QFont& font, const geometry::Point2f& point,
-                      const QColor& color, const gui::GlTools_ABC& tools )
+QImage tools::DrawText( const QString& text, const QFont& font, const QColor& color )
 {
-    if( !text.isEmpty() )
-    {
-        const QFontMetrics metrics( font );
-        auto width = 0;
-        QStringList list = QStringList::split( '\n', text, true );
-        for( auto it = list.constBegin(); it != list.constEnd(); ++it )
-        {
-            const auto value =  metrics.width( *it );
-            if( value > width )
-                width = value;
-        }
-        ++width;
-        const auto height = metrics.height() * list.size();
-        QPixmap pix( width, height );
-        pix.fill( tools.IsPickingMode() ? tools.GetPickingColor() : Qt::transparent );
-        if( !tools.IsPickingMode() )
-        {
-            QPainter painter( &pix );
-            painter.setPen( color );
-            painter.setFont( font );
-            painter.drawText( QRectF( 0, 0, pix.width(), pix.height() ), Qt::AlignVCenter, text );
-        }
-        tools.DrawShapeText( pix.convertToImage(), point );
-    }
+    if( text.isEmpty() )
+        return QImage();
+
+    const QFontMetrics metrics( font );
+    QStringList list = QStringList::split( '\n', text, true );
+    QPixmap pix( metrics.boundingRect( text ).width(), metrics.height() * list.size() );
+    pix.fill( Qt::transparent );
+    QPainter painter( &pix );
+    painter.setPen( color );
+    painter.setFont( font );
+    painter.drawText( QRectF( 0, 0, pix.width(), pix.height() ), Qt::AlignVCenter, text );
+    return pix.convertToImage();
+}
+
+void tools::DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GlTools_ABC& tools )
+{
+    const QFontMetrics metrics( font );
+    QStringList list = QStringList::split( '\n', text, true );
+    const auto height = metrics.height() * list.size();
+    const auto width = metrics.boundingRect( text ).width();
+    const geometry::Rectangle2f box( geometry::Point2f( point.X(), point.Y() - height * tools.Pixels() ),
+                                     geometry::Point2f( point.X() + width * tools.Pixels(), point.Y() ) );
+    const T_PointVector polygon = boost::assign::list_of( geometry::Point2f( box.Left(), box.Top() ) )
+                                                     ( geometry::Point2f( box.Right(), box.Top() ) )
+                                                     ( geometry::Point2f( box.Right(), box.Bottom() ) )
+                                                     ( geometry::Point2f( box.Left(), box.Bottom() ) )
+                                                     ( geometry::Point2f( box.Left(), box.Top() ) );
+    tools.DrawPolygon( polygon );
 }
