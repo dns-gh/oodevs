@@ -101,7 +101,7 @@ namespace
         T_Waypoints FindWaypoints( const T_PathPoints& points, const geometry::Point2f& point )
         {
             T_Waypoints result;
-            for( int i = 0; i < points.size(); ++i )
+            for( size_t i = 0; i < points.size(); ++i )
                 if( points[ i ].second >= 0 && points[ i ].first.Point().SquareDistance( point ) < 0.01 )
                     result.push_back( std::make_pair( i, points[ i ].second ) );
             return result;
