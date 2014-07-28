@@ -279,6 +279,7 @@ T_ConverterMissionParameterType MissionParameterTypeConverter_[] =
     T_ConverterMissionParameterType( "ResourceNetworkType",   QT_TRANSLATE_NOOP("ADN_Tr", "Resource network type" ),  eMissionParameterTypeResourceNetworkType ),
     T_ConverterMissionParameterType( "Stage",                 QT_TRANSLATE_NOOP("ADN_Tr", "Stage" ),                  eMissionParameterTypeStage ),
     T_ConverterMissionParameterType( "LimaFunction",          QT_TRANSLATE_NOOP("ADN_Tr", "LimaFunction" ),           eMissionParameterTypeLimaFunction ),
+    T_ConverterMissionParameterType( "Itinerary",             QT_TRANSLATE_NOOP("ADN_Tr", "Itinerary" ),              eMissionParameterTypeItinerary ),
 
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };

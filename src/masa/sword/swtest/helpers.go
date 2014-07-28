@@ -72,7 +72,7 @@ func Stringify(a interface{}) string {
 	cfg.SortKeys = true
 	s := cfg.Sdump(a)
 	s = rePointer.ReplaceAllString(s, "")
-	s = reCap.ReplaceAllString(s, `(\1)`)
+	s = reCap.ReplaceAllString(s, `$1`)
 	return s
 }
 

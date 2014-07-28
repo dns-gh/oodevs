@@ -1788,9 +1788,23 @@ func ReadPathPoints(pathPoints []*sword.PathPoint) []PathPoint {
 		if reached := v.Reached; reached != nil {
 			point.Reached = *reached
 		}
+		if current := v.Current; current != nil {
+			point.Current = NewTerrainData(current.GetArea(), current.GetLinear(), current.GetLeft(), current.GetRight())
+		}
+		if next := v.Next; next != nil {
+			point.Next = NewTerrainData(next.GetArea(), next.GetLinear(), next.GetLeft(), next.GetRight())
+		}
 		points = append(points, point)
 	}
 	return points
+}
+
+func ReadIds(list []*sword.Id) []uint32 {
+	ids := []uint32{}
+	for _, id := range list {
+		ids = append(ids, id.GetId())
+	}
+	return ids
 }
 
 func (c *Client) PathfindRequest(request *sword.PathfindRequest, position ...Point) ([]PathPoint, error) {

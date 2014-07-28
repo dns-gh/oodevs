@@ -45,10 +45,10 @@ class MT_Vector2D;
 
 namespace tools
 {
-    namespace thread
-    {
-        template< typename T > class MessageQueue_ABC;
-    }
+namespace thread
+{
+    template< typename T > class MessageQueue_ABC;
+}
 
     class ExerciseConfig;
 }

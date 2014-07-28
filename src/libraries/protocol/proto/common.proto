@@ -373,12 +373,16 @@ message Path {
 /** @struct PathPoint
 */
 message PathPoint {
-    // The coordinate point
+    //! The coordinate point
     required CoordLatLong coordinate = 1;
-    // The index of the associated waypoint
+    //! The index of the associated waypoint
     optional int32        waypoint   = 2;
-    // if the associated waypoint is reached
+    //! if the associated waypoint is reached
     optional bool         reached    = 3;
+    //! The terrain data picked at current point
+    optional TerrainData  current    = 4;
+    //! The terrain data picked at next point
+    optional TerrainData  next       = 5;
 }
 
 /** @struct PathResult
@@ -813,7 +817,7 @@ message MissionParameter {
         //! A phase line function type
         optional PhaseLineOrder.Function  phase_line_function      = 53;
         //! A pathfind request
-        optional PathfindRequest          pathfind_request         = 54;
+        optional Pathfind                 pathfind                 = 54;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;
@@ -2742,6 +2746,18 @@ message PathfindRequest {
     optional bool         ignore_dynamic_objects = 4;
 }
 
+/** @struct Pathfind
+    @brief Notifies of the creation of a pathfind
+*/
+message Pathfind {
+    //! The pathfind identifier
+    required uint32          id          = 1;
+    //! The pathfind request
+    required PathfindRequest request     = 2;
+    //! Computed path
+    optional PathResult      result      = 3;
+}
+
 //! Creates a new path.
 //! (see PathfindRequest)
 message ComputePathfind {
@@ -2770,18 +2786,6 @@ message ComputePathfindAck {
     optional PathResult path        = 4;
 }
 
-/** @struct Pathfind
-    @brief Notifies of the creation of a pathfind
-*/
-message Pathfind {
-    //! The pathfind identifier
-    required uint32     id          = 1;
-    //! The associated unit
-    required uint32     unit        = 2;
-    //! Computed path
-    required PathResult path        = 3;
-}
-
 /** @struct PathfindDestruction
     @brief Notifies of the destruction of a pathfind
 */
@@ -2796,4 +2800,14 @@ message PathfindDestruction {
 message Timeskip {
     optional uint32 tick = 1;
     optional string time = 2;
+}
+
+/** @struct TerrainData
+    @brief Describes a terrain data at a point
+*/
+message TerrainData {
+    required uint32 linear = 1;
+    required uint32 area   = 2;
+    required uint32 left   = 3;
+    required uint32 right  = 4;
 }

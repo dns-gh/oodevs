@@ -815,25 +815,67 @@ namespace
         AddPointList( reader, *pull.mutable_waybackpath(), "waybackpath", xis );
     }
 
-    void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    void ReadPathfindRequest( const Reader_ABC& reader, sword::PathfindRequest& request, xml::xisubstream xis )
     {
-        dst.set_null_value( false );
-        auto& req = *dst.add_value()->mutable_pathfind_request();
-        if( auto id = TestAttribute< uint32_t >( xml::xisubstream( xis ) >> xml::start( "unit" ), "id" ) )
-            req.mutable_unit()->set_id( *id );
+        xis >> xml::start( "request" )
+                >> xml::start( "unit" );
+        if( auto id = TestAttribute< uint32_t >( xis, "id" ) )
+            request.mutable_unit()->set_id( *id );
+        xis >> xml::end;
         PointList positions;
         AddPointList( reader, positions, "positions", xis );
         for( auto it = positions.elem().begin(); it != positions.elem().end(); ++it )
             if( it->location().coordinates().elem().size() )
-                *req.add_positions() = it->location().coordinates().elem( 0 );
-        xml::xisubstream( xis )
-            >> xml::start( "equipments" )
-            >> xml::list( "type", [&]( xml::xistream& xis ){
-            if( auto id = TestAttribute< uint32_t >( xis, "id" ) )
-                req.add_equipment_types()->set_id( *id );
-        });
-        if( auto dyn = TestAttribute< bool >( xml::xisubstream( xis ) >> xml::start( "ignore_dynamic_objects" ), "value" ) )
-            req.set_ignore_dynamic_objects( *dyn );
+                *request.add_positions() = it->location().coordinates().elem( 0 );
+        xis >> xml::start( "equipments" )
+                >> xml::list( "type", [&]( xml::xistream& xis )
+                {
+                    if( auto id = TestAttribute< uint32_t >( xis, "id" ) )
+                        request.add_equipment_types()->set_id( *id );
+                } )
+            >> xml::end
+            >> xml::start( "ignore_dynamic_objects" );
+        if( auto dyn = TestAttribute< bool >( xis, "value" ) )
+            request.set_ignore_dynamic_objects( *dyn );
+    }
+
+    void ReadTerrainData( xml::xisubstream xis, sword::TerrainData& data, const std::string& tag )
+    {
+        xis >> xml::start( tag );
+        data.set_area( xis.attribute< uint32_t >( "area" ) );
+        data.set_linear( xis.attribute< uint32_t >( "linear" ) );
+        data.set_left( xis.attribute< uint32_t >( "left" ) );
+        data.set_right( xis.attribute< uint32_t >( "right" ) );
+    }
+
+    void ReadPathResult( const Reader_ABC& reader, sword::PathResult& result, xml::xisubstream xis )
+    {
+        xis >> xml::start( "result" )
+                >> xml::list( "point", [&]( xml::xistream& xis ){
+                    auto& point = *result.add_points();
+                    auto coordinate = reader.Convert( xis.attribute< std::string >( "coordinates" ) );
+                    point.mutable_coordinate()->set_longitude( coordinate.x );
+                    point.mutable_coordinate()->set_latitude( coordinate.y );
+                    if( auto waypoint = TestAttribute< int32_t >( xis, "waypoint" ) )
+                        point.set_waypoint( *waypoint );
+                    if( auto reached = TestAttribute< bool >( xis, "reached" ) )
+                        point.set_reached( *reached );
+                    if( xis.has_child( "current" ) )
+                        ReadTerrainData( xis, *point.mutable_current(), "current" );
+                    if( xis.has_child( "next" ) )
+                        ReadTerrainData( xis, *point.mutable_next(), "next" );
+        } );
+    }
+
+    void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        dst.set_null_value( false );
+        auto& pathfind = *dst.add_value()->mutable_pathfind();
+        if( auto id = TestAttribute< uint32_t >( xml::xisubstream( xis ) >> xml::start( "id" ), "value" ) )
+            pathfind.set_id( *id );
+        ReadPathfindRequest( reader, *pathfind.mutable_request(), xis );
+        if( xis.has_child( "result" ) )
+            ReadPathResult( reader, *pathfind.mutable_result(), xis );
     }
 
     void AddListParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )

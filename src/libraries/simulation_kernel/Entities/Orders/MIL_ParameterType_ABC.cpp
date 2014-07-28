@@ -59,6 +59,7 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType( "Numeric", eNumeric );
     RegisterParameterType( "ObjectKnowledge", eObjectKnowledge );
     RegisterParameterType( "Path", ePath );
+    RegisterParameterType( "Itinerary", eItinerary );
     RegisterParameterType( "PhaseLine", ePhaseLine );
     RegisterParameterType( "PlannedWork", ePlannedWork );
     RegisterParameterType( "Point", ePoint );

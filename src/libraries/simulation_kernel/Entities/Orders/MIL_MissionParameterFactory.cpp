@@ -22,6 +22,7 @@
 #include "MIL_EnumerationParameter.h"
 #include "MIL_EquipmentTypeParameter.h"
 #include "MIL_IntegerParameter.h"
+#include "MIL_ItineraryParameter.h"
 #include "MIL_LimaFunctionParameter.h"
 #include "MIL_LimaListParameter.h"
 #include "MIL_ListParameter.h"
@@ -172,6 +173,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_ResourceNetworkTypeParameter( message.resourcenetworktype() );
     else if( message.has_limit() )
         throw MASA_BADPARAM_ORDER( "limit parameters are only allowed in mission context" );
+    else if( message.has_pathfind() )
+        ptr = new MIL_ItineraryParameter( message.pathfind() );
     else
         ptr = new MIL_ListParameter( resolver, message.list() );
 

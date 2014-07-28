@@ -5641,6 +5641,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>crowd</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Itinerary</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_LocalizedString</name>

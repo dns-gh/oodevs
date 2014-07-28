@@ -24,6 +24,10 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Orders/MIL_ItineraryParameter.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
+#include "Entities/Orders/MIL_MissionParameter_ABC.h"
+#include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -32,6 +36,7 @@
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
+#include <geometry/Types.h>
 #include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
@@ -53,14 +58,41 @@ namespace
                analysis.CanMoveOnKnowledgeObject( points );
     }
 
-    boost::shared_ptr< DEC_Agent_Path > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points, const DEC_PathType& pathType )
+    class Visitor : public MIL_MissionParameterVisitor_ABC
+    {
+    public:
+        explicit Visitor( sword::Pathfind& pathfind )
+            : pathfind_( pathfind )
+        {}
+        void Accept( const std::string& /*p*/, const MIL_OrderTypeParameter& /*type*/, MIL_MissionParameter_ABC& element )
+        {
+            element.ToItinerary( pathfind_ );
+        }
+        sword::Pathfind& pathfind_;
+    };
+
+    void FindItinerary( DEC_Decision_ABC& decision, sword::Pathfind& pathfind )
+    {
+        const auto mission = decision.GetMission();
+        if( !mission )
+            return;
+        Visitor visitor( pathfind );
+        mission->Visit( visitor );
+    }
+
+    boost::shared_ptr< DEC_Agent_Path > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points,
+                                                      const DEC_PathType& pathType )
     {
         const auto computer = boost::make_shared< DEC_PathComputer >( agent.GetID() );
         const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType, computer );
         if( !IsDestinationTrafficable( agent, points ) )
             path->Cancel();
         else
-            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer );
+        {
+            sword::Pathfind pathfind;
+            FindItinerary( agent.GetRole< DEC_Decision_ABC >(), pathfind );
+            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer, pathfind );
+        }
         return path;
     }
 }
@@ -84,7 +116,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
 // Name: DEC_PathFunctions::CreatePathToPointList
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType  )
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType )
 {
     assert( !listPt.empty() );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );

@@ -1592,6 +1592,7 @@ void InitFunctions()
         functors[ "Heading" ] = DirectionFunction;
         functors[ "IndirectFire" ] = IndirectFireFunction;
         functors[ "Integer" ] = NumericFunction;
+        functors[ "Itinerary" ] = PathFunction;
         functors[ "Location" ] = LocationFunction;
         functors[ "LocationComposite" ] = LocationCompositeFunction;
         functors[ "LocationCompositeList" ] = LocationCompositeListFunction;
@@ -1635,6 +1636,7 @@ void InitFunctions()
         functorsBM[ "Heading" ] = DirectionFunctionBM;
         functorsBM[ "Integer" ] = NumericFunctionBM;
         functorsBM[ "IntegerList" ] = NumericListFunctionBM;
+        functorsBM[ "Itinerary" ] = PathFunctionBM;
         functorsBM[ "LocationComposite" ] = LocationCompositeFunctionBM;
         functorsBM[ "LocationCompositeList" ] = LocationCompositeListFunctionBM;
         functorsBM[ "MaintenancePriorities" ] = MaintenancePrioritiesFunctionBM;

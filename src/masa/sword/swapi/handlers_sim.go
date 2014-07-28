@@ -249,10 +249,7 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 		unit.TransporterId = transportingUnit.GetId()
 	}
 	if transported := mm.GetTransportedUnits(); transported != nil {
-		unit.TransportedIds = make([]uint32, 0, len(transported.Elem))
-		for _, it := range transported.Elem {
-			unit.TransportedIds = append(unit.TransportedIds, it.GetId())
-		}
+		unit.TransportedIds = ReadIds(transported.Elem)
 	}
 	if mm.Adhesions != nil {
 		unit.Adhesions = map[uint32]float32{}
@@ -1386,13 +1383,7 @@ func (model *ModelData) handleFireEffectCreation(m *sword.SimToClient_Content) e
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	points := []Point{}
-	for _, p := range mm.GetLocation().GetCoordinates().GetElem() {
-		points = append(points, Point{
-			X: *p.Longitude,
-			Y: *p.Latitude,
-		})
-	}
+	points := ReadPoints(mm.GetLocation().GetCoordinates().GetElem())
 	effect := &FireEffect{
 		Id:   mm.GetFireEffect().GetId(),
 		Type: mm.GetType(),
@@ -1473,10 +1464,7 @@ func (model *ModelData) handleFireDetectionCreation(m *sword.SimToClient_Content
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	units := []uint32{}
-	for _, unit := range mm.GetUnits() {
-		units = append(units, unit.GetId())
-	}
+	units := ReadIds(mm.GetUnits())
 	perception := &FireDetection{
 		Id:    mm.GetFire().GetId(),
 		Units: units,
@@ -1492,10 +1480,7 @@ func (model *ModelData) handleFireDetectionDestruction(m *sword.SimToClient_Cont
 		return ErrSkipHandler
 	}
 	id := mm.GetFire().GetId()
-	units := []uint32{}
-	for _, unit := range mm.GetUnits() {
-		units = append(units, unit.GetId())
-	}
+	units := ReadIds(mm.GetUnits())
 	if !model.removeFireDetection(id, units) {
 		return fmt.Errorf("cannot destroy fire perception %d", id)
 	}
@@ -1509,9 +1494,12 @@ func (model *ModelData) handlePathfindCreation(m *sword.SimToClient_Content) err
 	}
 	id := mm.GetId()
 	model.Pathfinds[id] = &Pathfind{
-		Id:     id,
-		UnitId: mm.GetUnit(),
-		Points: ReadPathPoints(mm.GetPath().GetPoints()),
+		Id:                   id,
+		UnitId:               mm.GetRequest().GetUnit().GetId(),
+		Positions:            ReadPoints(mm.GetRequest().GetPositions()),
+		EquipmentTypes:       ReadIds(mm.GetRequest().GetEquipmentTypes()),
+		IgnoreDynamicObjects: mm.GetRequest().GetIgnoreDynamicObjects(),
+		Result:               ReadPathPoints(mm.GetResult().GetPoints()),
 	}
 	return nil
 }

@@ -5270,7 +5270,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Itinéraire</translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Point</source>
@@ -5667,6 +5667,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Crowd</source>
         <translation>Foule</translation>
+    </message>
+    <message>
+        <source>Itinerary</source>
+        <translation>Itinéraire</translation>
     </message>
 </context>
 <context>

@@ -1096,8 +1096,8 @@ Action_ABC* ActionFactory::CreatePathfindCreation( const kernel::Entity_ABC& ent
     kernel::MagicActionType& actionType = magicActions_.Get( "pathfind_creation" );
     std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-    sword::PathfindRequest pathfind;
-    parameters::FillPathfindRequest( pathfind, coordinateConverter_, entity, points );
+    sword::Pathfind pathfind;
+    parameters::FillPathfindRequest( *pathfind.mutable_request(), coordinateConverter_, entity, points );
     action->AddParameter( *new parameters::Itinerary( it.NextElement(), coordinateConverter_, pathfind ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
