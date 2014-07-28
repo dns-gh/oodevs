@@ -148,6 +148,12 @@ void PathfindLayer::Select( const kernel::Formation_ABC& element )
         selectedEntity_ = &element;
 }
 
+void PathfindLayer::Select( const kernel::Pathfind_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        target_ = selectedPathfind_ = &element;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer::Select
 // Created: LGY 2014-02-28
@@ -439,12 +445,20 @@ void PathfindLayer::OnOpenEditingMode()
     ClearPositions();
 }
 
-bool PathfindLayer::HandleKeyPress( QKeyEvent* key )
+bool PathfindLayer::HandleKeyPress( QKeyEvent* keyEvent )
 {
-    if( controllers_.GetCurrentMode() != eModes_Itinerary
-        || key->key() != Qt::Key_Escape )
+    const auto mode = controllers_.GetCurrentMode();
+    const auto key = keyEvent->key();
+    if( key == Qt::Key_Escape && mode == eModes_Itinerary )
+    {
+        OnRejectEdit();
         return false;
-    OnRejectEdit();
+    }
+    if( key == Qt::Key_Delete && mode == eModes_Gaming )
+    {
+        OnDeletePathfind();
+        return false;
+    }
     return true;
 }
 
