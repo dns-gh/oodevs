@@ -16,6 +16,8 @@
 #include "clients_kernel/Equipments_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/SimpleHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -141,6 +143,7 @@ Pathfind::Pathfind( Controller& controller,
 {
     AddExtension( *this );
     Attach< kernel::Equipments_ABC >( *new Equipments( msg ) );
+    Attach< kernel::TacticalHierarchies >( *new SimpleHierarchies< kernel::TacticalHierarchies >( *this, &entity_ ) );
 }
 
 Pathfind::~Pathfind()
