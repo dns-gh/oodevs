@@ -92,23 +92,11 @@ TimelineWebView::~TimelineWebView()
 
 namespace
 {
-    // find a lib which does that
     std::string UrlEncode( const std::string& value )
     {
-        std::ostringstream escaped;
-        escaped.fill( '0' );
-        escaped << std::hex;
-        for( auto it = value.begin(); it != value.end(); ++it )
-        {
-            const auto& c = *it;
-            if( std::isalnum( c ) || c == '-' || c == '_' || c == '.' || c == '~')
-                escaped << c;
-            else if( c == ' ' )
-                escaped << '+';
-            else
-                escaped << '%' << std::setw(2) << static_cast< int >( c ) << std::setw(0);
-        }
-        return escaped.str();
+        const auto src = QString::fromStdString( value );
+        const auto dst = QUrl::toPercentEncoding( src );
+        return std::string( dst.data(), dst.size() );
     }
 
     std::string MakeQuery( const std::map< std::string, std::string >& parameters )
