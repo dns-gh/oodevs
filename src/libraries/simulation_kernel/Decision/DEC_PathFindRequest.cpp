@@ -103,7 +103,7 @@ namespace
             T_Waypoints result;
             for( size_t i = 0; i < points.size(); ++i )
                 if( points[ i ].second >= 0 && points[ i ].first.Point().SquareDistance( point ) < 0.01 )
-                    result.push_back( std::make_pair( i, points[ i ].second ) );
+                    result.push_back( std::make_pair( static_cast< int >( i ), points[ i ].second ) );
             return result;
         }
 
