@@ -13,7 +13,7 @@
 #include "DEC_PathFunctions.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathFind_Manager_ABC.h"
+#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_PathComputer.h"

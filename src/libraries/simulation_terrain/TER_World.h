@@ -19,7 +19,6 @@
 #ifndef __TER_World_h_
 #define __TER_World_h_
 
-#include "TER_World_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <memory>
@@ -41,16 +40,23 @@ class TER_StaticData;
 class TER_PathFindManager;
 class TER_Analyzer;
 class TER_LimitDataManager;
+class MT_Rect;
+class MT_Vector2D;
 
 namespace tools
 {
+namespace thread
+{
+    template< typename T > class MessageQueue_ABC;
+}
+
     class ExerciseConfig;
 }
 
 // =============================================================================
 // Created: AGE 2005-01-28
 // =============================================================================
-class TER_World : public TER_World_ABC
+class TER_World : boost::noncopyable
 {
 public:
     //! @name Types
@@ -76,20 +82,20 @@ public:
 
     //! @name Coordinates
     //@{
-    virtual void MosToSimMgrsCoord( const std::string& strMgrs, MT_Vector2D& pos ) const;
-    virtual void SimToMosMgrsCoord( const MT_Vector2D& pos, std::string& strMgrs ) const;
+    void MosToSimMgrsCoord( const std::string& strMgrs, MT_Vector2D& pos ) const;
+    void SimToMosMgrsCoord( const MT_Vector2D& pos, std::string& strMgrs ) const;
 
-    virtual void MosToSimMgrsCoord( double latitude, double longitude, MT_Vector2D& pos ) const;
-    virtual void SimToMosMgrsCoord( const MT_Vector2D& pos, double& latitude, double& longitude ) const;
+    void MosToSimMgrsCoord( double latitude, double longitude, MT_Vector2D& pos ) const;
+    void SimToMosMgrsCoord( const MT_Vector2D& pos, double& latitude, double& longitude ) const;
 
-    virtual double GetWeldValue() const;
-    virtual double GetWidth    () const;
-    virtual double GetHeight   () const;
-    virtual const MT_Rect& GetExtent() const;
+    double GetWeldValue() const;
+    double GetWidth    () const;
+    double GetHeight   () const;
+    const MT_Rect& GetExtent() const;
 
-    virtual bool IsValidPosition( const MT_Vector2D& pos ) const;
-    virtual void ClipPointInsideWorld( MT_Vector2D& pos ) const;
-    virtual MT_Vector2D ClipPointInsideWorld( const MT_Vector2D& pos ) const;
+    bool IsValidPosition( const MT_Vector2D& pos ) const;
+    void ClipPointInsideWorld( MT_Vector2D& pos ) const;
+    MT_Vector2D ClipPointInsideWorld( const MT_Vector2D& pos ) const;
     //@}
 
     //! @name Accessors

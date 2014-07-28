@@ -18,7 +18,7 @@
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_PathComputer.h"
-#include "Decision/DEC_PathFind_Manager_ABC.h"
+#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathWalker.h"
 #include "Decision/DEC_Agent_PathClass.h"

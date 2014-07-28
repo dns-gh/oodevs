@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathComputer.h"
-#include "DEC_PathFind_Manager_ABC.h"
+#include "DEC_PathFind_Manager.h"
 #include "DEC_PathSection.h"
 #include "DEC_PathPoint.h"
 #include "MIL_AgentServer.h"

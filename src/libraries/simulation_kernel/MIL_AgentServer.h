@@ -36,7 +36,7 @@ namespace xml
 
 class ActionManager;
 class DEC_Workspace;
-class DEC_PathFind_Manager_ABC;
+class DEC_PathFind_Manager;
 class MIL_CheckPointManager;
 class MIL_EffectManager;
 class MIL_EntityManager_ABC;
@@ -109,7 +109,7 @@ public:
     MIL_UrbanCache& GetUrbanCache() const;
     DEC_Workspace& GetWorkspaceDIA() const;
     NET_AgentServer& GetAgentServer() const;
-    DEC_PathFind_Manager_ABC& GetPathFindManager() const;
+    DEC_PathFind_Manager& GetPathFindManager() const;
     PHY_MeteoDataManager& GetMeteoDataManager() const;
     MIL_CheckPointManager& GetCheckPointManager() const;
     resource::ResourceNetworkModel& GetResourceNetworkModel() const;
@@ -195,7 +195,7 @@ private:
     DEC_Workspace* pWorkspaceDIA_;
     PHY_MeteoDataManager* pMeteoDataManager_;
     MT_TimerManager timerManager_;
-    DEC_PathFind_Manager_ABC* pPathFindManager_;
+    DEC_PathFind_Manager* pPathFindManager_;
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;
     MIL_UrbanCache* pUrbanCache_;

@@ -9,23 +9,21 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFindRequest.h"
-#include "DEC_PathFind_Manager_ABC.h"
+#include "DEC_PathFind_Manager.h"
 #include "DEC_PathComputer_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_PathFinder_ABC.h"
-#include "simulation_terrain/TER_World_ABC.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <tools/thread/Handler_ABC.h>
 #include <boost/foreach.hpp>
 
-DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager_ABC& manager, const boost::shared_ptr< DEC_PathComputer_ABC >& computer,
-                                          const sword::Pathfind& pathfind, const TER_World_ABC& world )
+DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager& manager, const boost::shared_ptr< DEC_PathComputer_ABC >& computer,
+                                          const sword::Pathfind& pathfind )
     : manager_( manager )
     , computer_( computer )
     , pathfind_( pathfind )
-    , world_( world )
 {
     // NOTHING
 }
@@ -53,30 +51,29 @@ namespace
                             static_cast< unsigned short >( data.linear() ) );
     }
 
-    TerrainPathPoint ReadPathPoint( const sword::PathPoint& point, const TER_World_ABC& world )
+    TerrainPathPoint ReadPathPoint( const sword::PathPoint& point )
     {
         MT_Vector2D position;
-        world.MosToSimMgrsCoord( point.coordinate().latitude(), point.coordinate().longitude(), position );
+        MIL_Tools::ConvertCoordMosToSim( point.coordinate(), position );
         return TerrainPathPoint( geometry::Point2f( static_cast< float >( position.GetX() ),
                                                     static_cast< float >( position.GetY() ) ),
                                  ReadTerrainData( point.current() ), ReadTerrainData( point.next() ) );
     }
 
-    T_PathPoints ReadPathPoints( const sword::PathResult& result, const TER_World_ABC& world )
+    T_PathPoints ReadPathPoints( const sword::PathResult& result )
     {
         T_PathPoints points;
         BOOST_FOREACH( const auto& point, result.points() )
-            points.push_back( std::make_pair( ReadPathPoint( point, world ), point.waypoint() ) );
+            points.push_back( std::make_pair( ReadPathPoint( point ), point.waypoint() ) );
         return points;
     }
 
     struct PathfinderProxy : public TER_Pathfinder_ABC
                            , public boost::noncopyable
     {
-        PathfinderProxy( TER_Pathfinder_ABC& pathfinder, const sword::Pathfind& pathfind, const TER_World_ABC& world )
+        PathfinderProxy( TER_Pathfinder_ABC& pathfinder, const sword::Pathfind& pathfind )
             : pathfinder_( pathfinder )
             , pathfind_( pathfind )
-            , world_( world )
         {
             // NOTHING
         }
@@ -129,7 +126,7 @@ namespace
                                   TerrainRule_ABC& rule,
                                   tools::thread::Handler_ABC< TerrainPathPoint >& handler )
         {
-            const T_PathPoints points = ReadPathPoints( pathfind_.result(), world_ );
+            const T_PathPoints points = ReadPathPoints( pathfind_.result() );
             const auto segment = MatchWaypoints( FindWaypoints( points, from ),
                                                             FindWaypoints( points, to ) );
             if( segment.first < 0 || segment.second < 0 )
@@ -148,7 +145,6 @@ namespace
     private:
         TER_Pathfinder_ABC& pathfinder_;
         const sword::Pathfind& pathfind_;
-        const TER_World_ABC& world_;
     };
 }
 
@@ -161,7 +157,7 @@ void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
     profiler.Start();
     if( IsItinerary() )
     {
-        PathfinderProxy proxy( pathfinder, pathfind_, world_ );
+        PathfinderProxy proxy( pathfinder, pathfind_ );
         computer->Execute( proxy );
     }
     else
