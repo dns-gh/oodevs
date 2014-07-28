@@ -15,7 +15,9 @@
 #include "actions/Helpers.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/RichDockWidget.h"
+#include "clients_gui/View_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -49,15 +51,18 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
                               const kernel::CoordinateConverter_ABC& converter,
                               const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
                               const tools::Resolver_ABC< kernel::Population_ABC >& populations,
+                              gui::ModelObserver_ABC& model,
                               actions::ActionsModel& actions )
     : EntityLayer< kernel::Pathfind_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Pathfinds )
     , controllers_( controllers )
     , tools_( tools )
+    , view_( view )
     , target_( controllers )
     , selectedEntity_( controllers )
     , selectedPathfind_( controllers )
     , publisher_( publisher )
     , converter_( converter )
+    , model_( model )
     , actions_( actions )
     , agents_( agents )
     , populations_( populations )
@@ -487,7 +492,8 @@ void PathfindLayer::ProcessEvents()
 
 void PathfindLayer::OnAcceptEdit()
 {
-    OnDeletePathfind();
+    if( selectedPathfind_ )
+        actions_.PublishDestroyPathfind( selectedPathfind_->GetId() );
     if( HasValidPathfind() )
         actions_.PublishCreatePathfind( GetUnitId(), *target_, edited_->GetDots() );
     ClearPositions();
@@ -510,7 +516,7 @@ void PathfindLayer::OnDeletePathfind()
         return;
     if( !profile_.CanBeOrdered( *selectedPathfind_ ) )
         return;
-    actions_.PublishDestroyPathfind( selectedPathfind_->GetId() );
+    model_.DeleteEntity( *selectedPathfind_ );
 }
 
 void PathfindLayer::OnEditPathfind()
@@ -565,4 +571,9 @@ bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
     if( !filter_.IsSet( selected, superior, profile_.CanBeOrdered( element ) ) )
         return false;
     return gui::EntityLayer< kernel::Pathfind_ABC >::ShouldDisplay( entity );
+}
+
+void PathfindLayer::ActivateEntity( const kernel::Entity_ABC& entity )
+{
+    view_.CenterOn( static_cast< const kernel::Pathfind_ABC& >( entity ).GetPosition() );
 }

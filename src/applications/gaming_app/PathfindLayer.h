@@ -41,6 +41,7 @@ namespace kernel
 namespace gui
 {
     class GlTools_ABC;
+    class ModelObserver_ABC;
 }
 
 class Publisher_ABC;
@@ -77,6 +78,7 @@ public:
                             const kernel::CoordinateConverter_ABC& converter,
                             const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
                             const tools::Resolver_ABC< kernel::Population_ABC >& populations,
+                            gui::ModelObserver_ABC& model,
                             actions::ActionsModel& actions );
     virtual ~PathfindLayer();
 
@@ -106,6 +108,7 @@ private:
     virtual void MultipleSelect( const std::vector< const kernel::Pathfind_ABC* >& elements );
     virtual void BeforeSelection();
     virtual void AfterSelection();
+    virtual void ActivateEntity( const kernel::Entity_ABC& entity );
 
     void OpenEditingMode( const kernel::Entity_ABC* entity, const sword::Pathfind& pathfind );
     void DrawLines( float width ) const;
@@ -141,6 +144,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::GlTools_ABC& tools_;
+    gui::ModelObserver_ABC& model_;
+    gui::View_ABC& view_;
     Publisher_ABC& publisher_;
     actions::ActionsModel& actions_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;

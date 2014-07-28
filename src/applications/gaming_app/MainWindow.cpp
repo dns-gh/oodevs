@@ -159,7 +159,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , glProxy_           ( new gui::GlProxy( logger ) )
     , connected_         ( false )
     , onPlanif_          ( false )
-    , drawingsBuilder_   ( new DrawingsBuilder( controllers_, profile_ ) )
+    , drawingsBuilder_   ( new DrawingsBuilder( controllers_, profile_, model_.actions_ ) )
 {
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );
@@ -389,7 +389,8 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
 
     if( config_.IsActivated( "pathfind" ) )
     {
-        gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.publisher_, staticModel_.coordinateConverter_, model_.agents_, model_.agents_, model_.actions_ );
+        gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.publisher_, staticModel_.coordinateConverter_,
+                                                        model_.agents_, model_.agents_, *drawingsBuilder_, model_.actions_ );
         connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), &pathfindLayer, SLOT( OnAcceptEdit() ) );
         connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( OnRejectEdit() ) );
         AddLayer( pathfindLayer, "main" );

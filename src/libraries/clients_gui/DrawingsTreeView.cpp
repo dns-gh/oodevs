@@ -16,6 +16,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Tools.h"
 
 using namespace gui;
@@ -31,6 +32,7 @@ DrawingsTreeView::DrawingsTreeView( const QString& objectName, kernel::Controlle
     , entity_( controllers )
 {
     drawingsItem_ = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, tools::translate( "DrawingsTreeView", "Drawings" ), "" );
+    itinerariesItem_ = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, tools::translate( "DrawingsTreeView", "Itineraries" ), "" );
     limitsItem_ = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, tools::translate( "DrawingsTreeView", "Limits" ), "" );
     phaseLinesItem_ = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, tools::translate( "DrawingsTreeView", "Phase lines" ), "" );
     controllers.Update( *this );
@@ -83,6 +85,17 @@ void DrawingsTreeView::NotifyCreated( const kernel::Drawing_ABC& drawing )
 // Name: DrawingsTreeView::NotifyCreated
 // Created: LGY 2014-05-07
 // -----------------------------------------------------------------------------
+void DrawingsTreeView::NotifyCreated( const kernel::Pathfind_ABC& pathfind )
+{
+    dataModel_.AddChildSafeItem( itinerariesItem_, itinerariesItem_->rowCount(), 0, pathfind.GetName(),
+        pathfind.GetTooltip(), pathfind, Qt::ItemIsEditable | ItemSpecificFlags( pathfind ) );
+    EntityTreeView_ABC::ApplyProfileFilter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsTreeView::NotifyCreated
+// Created: LGY 2014-05-07
+// -----------------------------------------------------------------------------
 void DrawingsTreeView::NotifyCreated( const kernel::Team_ABC& /*team*/ )
 {
     // NOTHING
@@ -97,6 +110,7 @@ void DrawingsTreeView::Purge()
     dataModel_.PurgeChildren( *drawingsItem_ );
     dataModel_.PurgeChildren( *limitsItem_ );
     dataModel_.PurgeChildren( *phaseLinesItem_ );
+    dataModel_.PurgeChildren( *itinerariesItem_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -62,6 +62,7 @@ public:
     virtual const kernel::Entity_ABC& GetUnit() const;
     virtual void SetVisible( bool visible );
     virtual sword::PathResult GetPathfind() const;
+    virtual geometry::Point2f GetPosition() const;
     //@}
 
     struct Point

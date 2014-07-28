@@ -1117,6 +1117,13 @@
     </message>
 </context>
 <context>
+    <name>Pathfind</name>
+    <message>
+        <source>itinerary</source>
+        <translation>itinéraire</translation>
+    </message>
+</context>
+<context>
     <name>Profile</name>
     <message>
         <source>Too many connections</source>

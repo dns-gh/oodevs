@@ -21,6 +21,11 @@ namespace kernel
     class Profile_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 // =============================================================================
 /** @class  DrawingsBuilder
     @brief  DrawingsBuilder
@@ -37,7 +42,8 @@ class DrawingsBuilder : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawingsBuilder( kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
+             DrawingsBuilder( kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
+                              actions::ActionsModel& actions );
     virtual ~DrawingsBuilder();
     //@}
 
@@ -50,7 +56,7 @@ public:
     virtual void ClearSelection();
     virtual void CreateFormation( int level );
     virtual kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type );
-    virtual void DeleteEntity( const kernel::Entity_ABC& entity );;
+    virtual void DeleteEntity( const kernel::Entity_ABC& entity );
     virtual void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     virtual void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
 
@@ -70,6 +76,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > toDelete_;
     const kernel::Profile_ABC& profile_;
+    actions::ActionsModel& actions_;
     std::unique_ptr< QMessageBox > confirmation_;
     //@}
 };

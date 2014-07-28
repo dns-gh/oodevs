@@ -44,6 +44,7 @@ public:
     virtual const Entity_ABC& GetUnit() const = 0;
     virtual void SetVisible( bool visible ) = 0;
     virtual sword::PathResult GetPathfind() const = 0;
+    virtual geometry::Point2f GetPosition() const = 0;
     //@}
 
     //! @name Operations

@@ -132,7 +132,7 @@ Pathfind::Pathfind( Controller& controller,
                     const tools::Resolver_ABC< Population_ABC >& populations,
                     const sword::Pathfind& msg,
                     bool edition )
-    : EntityImplementation< Pathfind_ABC >( controller, msg.id(), QString() /* no name yet */, true )
+    : EntityImplementation< Pathfind_ABC >( controller, msg.id(), tools::translate( "Pathfind", "itinerary" ), true )
     , controller_( controller )
     , actions_( actions )
     , converter_( converter )
@@ -386,4 +386,11 @@ void Pathfind::SetVisible( bool visible )
 sword::PathResult Pathfind::GetPathfind() const
 {
     return GetPoints( converter_, path_ );
+}
+
+geometry::Point2f Pathfind::GetPosition() const
+{
+    if( path_.empty() )
+        return geometry::Point2f();
+    return path_.front().where;
 }
