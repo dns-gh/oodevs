@@ -172,7 +172,7 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
     // Density
     {
         QWidget* densityBox = density_->BuildInterface( "densityBox", parent );
-        density_->SetLimits( 0.f, 5.f );
+        density_->SetLimits( 0.f, std::numeric_limits< float >::max() );
         densityBox->layout()->setMargin( 0 );
         densityBox->layout()->setSpacing( 0 );
         layout->addWidget( densityBox );
