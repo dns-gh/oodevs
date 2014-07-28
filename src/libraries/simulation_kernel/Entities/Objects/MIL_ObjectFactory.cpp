@@ -118,7 +118,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const std::string& name, const 
     {
         BuildableCapacity* capacity = object->Retrieve< BuildableCapacity >();
         if( capacity )
-            capacity->SetDensity( density );
+            capacity->SetDensity( density, object->GetLocalisation() );
         ConstructionAttribute* attribute = object->RetrieveAttribute< ConstructionAttribute >();
         if( attribute )
             attribute->SetDensity( density );

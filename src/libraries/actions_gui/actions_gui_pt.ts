@@ -131,10 +131,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Density per 100 square meter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TC2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -172,6 +168,10 @@
     </message>
     <message>
         <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of supplies per 100m/100m²</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

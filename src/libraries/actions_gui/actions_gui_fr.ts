@@ -127,10 +127,6 @@
 <context>
     <name>actions::gui::ParamObstacle</name>
     <message>
-        <source>Density per 100 square meter</source>
-        <translation>Densité par 100 mètres carrés</translation>
-    </message>
-    <message>
         <source>TC2</source>
         <translation>TC2</translation>
     </message>
@@ -173,6 +169,10 @@
     <message>
         <source>Type:</source>
         <translation>Type:</translation>
+    </message>
+    <message>
+        <source>Number of supplies per 100m/100m²</source>
+        <translation>Nombre de dotations par 100m/100m²</translation>
     </message>
 </context>
 <context>

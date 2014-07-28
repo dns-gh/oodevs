@@ -58,7 +58,7 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     SetRecursive( true );
 
     location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Construction location" ).toStdString(), true ) );
-    density_ = static_cast< ParamFloat* >( &builder.BuildOne( kernel::OrderParameter( tr( "Density per 100 square meter" ).toStdString(), "float", false ), false ) );
+    density_ = static_cast< ParamFloat* >( &builder.BuildOne( kernel::OrderParameter( tr( "Number of supplies per 100m/100m²" ).toStdString(), "float", false ), false ) );
     tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toStdString(), true ) );
     kernel::OrderParameter activatedParameter( tr( "Activation" ).toStdString(), "obstacletype", false );
     activatedCombo_ = static_cast< ParamObstacleType* >( &builder.BuildOne( activatedParameter, false ) );

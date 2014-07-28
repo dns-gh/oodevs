@@ -131,9 +131,13 @@ unsigned int SuppliableCapacity::GetDotationNumber( const TER_Localisation& loca
 // Name: SuppliableCapacity::SetDensity
 // Created: LDC 2012-06-25
 // -----------------------------------------------------------------------------
-void SuppliableCapacity::SetDensity( double density )
+void SuppliableCapacity::SetDensity( double density, const TER_Localisation& location )
 {
-    nFullNbrDotation_ = static_cast< unsigned int >( density * 10000 ); // $$$$ LDC Density of 0.1 = 1 mine per 100 square meter (from TTA 702 \\install\Masa\simulation\projects\scipio\doc\V1.STAB\DOC MODELISATION\DOCTRINE et memento\GEN\Doctrine page 131)
+    // $$$$ JSR nFullNbrDotation_ is in number per 1km (linear) or 1km² (surfacic)
+    // density is in number per 100m (linear) or 100m² (surfacic)
+    // We multiply density by 10 if linear (100m->1km), or by 10000 if surfacic(100m²->1km²).
+    const int factor = location.GetType() == TER_Localisation::eLine ? 10 : 10000;
+    nFullNbrDotation_ = static_cast< unsigned int >( density * factor ); // $$$$ LDC Density of 0.1 = 1 mine per 100 square meter (from TTA 702 \\install\Masa\simulation\projects\scipio\doc\V1.STAB\DOC MODELISATION\DOCTRINE et memento\GEN\Doctrine page 131)
 }
 
 // -----------------------------------------------------------------------------
