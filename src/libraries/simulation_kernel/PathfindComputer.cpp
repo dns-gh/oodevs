@@ -154,8 +154,10 @@ void PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& com
                                 unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic )
 {
     const uint32_t id = ++ids_;
-    results_[ id ] = boost::make_shared< PathRequest >( computer, ctx, clientId, id, message.unit().id(), magic );
-    manager_.StartCompute( computer, message.ignore_dynamic_objects() );
+    results_[ id ] = boost::make_shared< PathRequest >( computer, ctx, clientId, id, message, magic );
+    sword::Pathfind pathfind;
+    *pathfind.mutable_request() = message;
+    manager_.StartCompute( computer, pathfind );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,8 +257,8 @@ bool PathfindComputer::OnReceivePathfindCreation( const sword::MagicAction& mess
     const auto& params = message.parameters();
     protocol::CheckCount( params, 1 );
     const auto& value = message.parameters().elem( 0 ).value( 0 );
-    protocol::Check( value.has_pathfind_request(), "invalid parameters" );
-    const auto& request = value.pathfind_request();
+    protocol::Check( value.has_pathfind(), "invalid parameters" );
+    const auto& request = value.pathfind().request();
     protocol::Check( request.ignore_dynamic_objects(), "invalid ignore dynamic objects not set" );
     const auto& positions = request.positions();
     protocol::Check( positions.size() > 1, "must have at least two points" );

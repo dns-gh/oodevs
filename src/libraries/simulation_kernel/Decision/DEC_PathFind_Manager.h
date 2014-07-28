@@ -48,7 +48,7 @@ public:
     // Returns computation time since last update.
     double Update();
     void UpdateInSimulationThread();
-    void StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& pPath, bool ignoreDynamicObjects = false );
+    void StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& pPath, const sword::Pathfind& pathfind );
     void CancelJobForUnit( MIL_Agent_ABC* pion );
     void CleanPathAfterComputation( double duration );
     //@}

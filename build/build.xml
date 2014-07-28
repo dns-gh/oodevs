@@ -930,6 +930,7 @@
                  they were still being prototyped.
             -->
             <arg value="--exclude=SimToClient.Content.ComputePathfindAck.*"/>
+            <arg value="--exclude=*MissionParameter.Value.Pathfind*"/>
         </compare-proto>
     </target>
 

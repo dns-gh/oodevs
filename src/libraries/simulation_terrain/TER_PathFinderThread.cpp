@@ -188,7 +188,7 @@ namespace
         }
     private:
         static boost::uint32_t    s_idx_;
-        const tools::Path&          dump_;
+        const tools::Path&        dump_;
         const std::set< size_t >& filter_;
         TerrainPathfinder&        root_;
         size_t                    id_;

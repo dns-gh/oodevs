@@ -94,10 +94,10 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 // Name: DEC_PathFind_Manager::StartCompute
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& path, bool ignoreDynamicObjects )
+void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
 {
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ) );
-    auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, ignoreDynamicObjects );
+    auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, pathfind );
     boost::mutex::scoped_lock locker( mutex_ );
     if( path->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );

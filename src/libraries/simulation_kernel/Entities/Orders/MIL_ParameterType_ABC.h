@@ -58,7 +58,8 @@ public:
         eResourceNetworkNode        = 26,
         eResourceNetworkType        = 27,
         eStage                      = 28,
-        eLimaFunction               = 29
+        eLimaFunction               = 29,
+        eItinerary                  = 30,
     };
 
 public:

@@ -5668,6 +5668,10 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
         <source>crowd</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Itinerary</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_LocalizedString</name>

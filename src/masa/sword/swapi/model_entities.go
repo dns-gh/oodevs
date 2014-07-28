@@ -39,10 +39,28 @@ func (p Point) Shift(dx, dy float64) Point {
 	return Point{X: p.X + dx, Y: p.Y + dy}
 }
 
+type TerrainData struct {
+	Area   uint32
+	Linear uint32
+	Left   uint32
+	Right  uint32
+}
+
+func NewTerrainData(area, linear, left, right uint32) TerrainData {
+	return TerrainData{
+		Area:   area,
+		Linear: linear,
+		Left:   left,
+		Right:  right,
+	}
+}
+
 type PathPoint struct {
 	Point    Point
 	Waypoint int32
 	Reached  bool
+	Current  TerrainData
+	Next     TerrainData
 }
 
 func NewPathPoint(point Point) PathPoint {
@@ -444,9 +462,12 @@ type LocalWeather struct {
 }
 
 type Pathfind struct {
-	Id     uint32
-	UnitId uint32
-	Points []PathPoint
+	Id                   uint32
+	UnitId               uint32
+	Positions            []Point
+	EquipmentTypes       []uint32
+	IgnoreDynamicObjects bool
+	Result               []PathPoint
 }
 
 type OrderKind int

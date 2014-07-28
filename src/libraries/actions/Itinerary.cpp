@@ -21,17 +21,17 @@ Itinerary::Itinerary( const kernel::OrderParameter& parameter,
                       const kernel::CoordinateConverter_ABC& converter )
     : Parameter< QString >( parameter )
     , converter_( converter )
-    , request_( new sword::PathfindRequest() )
+    , pathfind_( new sword::Pathfind() )
 {
     // NOTHING
 }
 
 Itinerary::Itinerary( const kernel::OrderParameter& parameter,
                       const kernel::CoordinateConverter_ABC& converter,
-                      const sword::PathfindRequest& request )
+                      const sword::Pathfind& pathfind )
     : Parameter< QString >( parameter )
     , converter_( converter )
-    , request_( new sword::PathfindRequest( request ) )
+    , pathfind_( new sword::Pathfind( pathfind ) )
 {
     // NOTHING
 }
@@ -49,7 +49,7 @@ void Itinerary::CommitTo( sword::MissionParameter& message ) const
 
 void Itinerary::CommitTo( sword::MissionParameter_Value& message ) const
 {
-    *message.mutable_pathfind_request() = *request_;
+    *message.mutable_pathfind() = *pathfind_;
 }
 
 void Itinerary::Serialize( xml::xostream& xos ) const

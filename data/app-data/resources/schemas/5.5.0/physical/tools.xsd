@@ -117,6 +117,7 @@
 			<xs:enumeration value="Polygon"/>
 			<xs:enumeration value="Location"/>
 			<xs:enumeration value="Path"/>
+			<xs:enumeration value="Itinerary"/>
 			<xs:enumeration value="Limit"/>
 			<xs:enumeration value="PhaseLine"/>
 			<xs:enumeration value="Automat"/>

@@ -529,26 +529,66 @@ namespace
         WritePointList( xos, "waybackpath", writer, pull.waybackpath().elem() );
     }
 
-    void WriteItinerary( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
+    void WritePathfindRequest( xml::xosubstream xos, const Writer_ABC& writer, const PathfindRequest& request )
     {
-        const auto& req = src.pathfind_request();
-        xos << xml::attribute( "type", "itinerary" );
+        xos << xml::start( "request" );
         xml::xosubstream( xos )
             << xml::start( "unit" )
-            << xml::attribute( "id", req.unit().id() );
+            << xml::attribute( "id", request.unit().id() );
         PointList positions;
-        const auto& list = req.positions();
+        const auto& list = request.positions();
         for( auto it = list.begin(); it != list.end(); ++it )
             *positions.add_elem()->mutable_location()->mutable_coordinates()->add_elem() = *it;
         WritePointList( xos, "positions", writer, positions.elem() );
         xml::xosubstream eqs = xml::xosubstream( xos ) << xml::start( "equipments" );
-        for( auto it = req.equipment_types().begin(); it != req.equipment_types().end(); ++it )
+        for( auto it = request.equipment_types().begin(); it != request.equipment_types().end(); ++it )
             xml::xosubstream( eqs )
                 << xml::start( "type" )
                 << xml::attribute( "id", it->id() );
         xml::xosubstream( xos )
             << xml::start( "ignore_dynamic_objects" )
-            << xml::attribute( "value", req.ignore_dynamic_objects() );
+            << xml::attribute( "value", request.ignore_dynamic_objects() );
+    }
+
+    void WriteTerrainData( xml::xosubstream xos, const sword::TerrainData& data, const std::string& tag )
+    {
+        xos << xml::start( tag )
+            << xml::attribute( "area", data.area() )
+            << xml::attribute( "linear", data.linear() )
+            << xml::attribute( "left", data.left() )
+            << xml::attribute( "right", data.right() );
+    }
+
+    void WritePathResult( xml::xosubstream xos, const Writer_ABC& writer, const PathResult& result )
+    {
+        xos << xml::start( "result" );
+        for( auto it = result.points().begin(); it != result.points().end(); ++it )
+        {
+            const auto& coordinate = it->coordinate();
+            xos << xml::start( "point" )
+                << xml::attribute( "coordinates", writer.Convert( coordinate.longitude(), coordinate.latitude() ) );
+            if( it->has_waypoint() )
+                xos << xml::attribute( "waypoint", it->waypoint() );
+            if( it->has_reached() )
+                xos << xml::attribute( "reached", it->reached() );
+            if( it->has_current() )
+                WriteTerrainData( xos, it->current(), "current" );
+            if( it->has_next() )
+                WriteTerrainData( xos, it->next(), "next" );
+            xos << xml::end;
+        }
+    }
+
+    void WriteItinerary( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
+    {
+        const auto& pathfind = src.pathfind();
+        xos << xml::attribute( "type", "itinerary" );
+        xml::xosubstream( xos )
+            << xml::start( "id" )
+                << xml::attribute( "value", pathfind.id() );
+        WritePathfindRequest( xos, writer, pathfind.request() );
+        if( pathfind.has_result() )
+            WritePathResult( xos, writer, pathfind.result() );
     }
 
     typedef bool( Value::* T_Has )() const;
@@ -597,7 +637,7 @@ namespace
         { &Value::has_locationlist,         &WriteLocationList },
         { &Value::has_objectknowledgelist,  &WriteObjectKnowledgeList },
         { &Value::has_path,                 &WritePath },
-        { &Value::has_pathfind_request,     &WriteItinerary },
+        { &Value::has_pathfind,             &WriteItinerary },
         { &Value::has_pathlist,             &WritePathList },
         { &Value::has_phaseline,            &WritePhaseLine },
         { &Value::has_plannedwork,          &WritePlannedWork },

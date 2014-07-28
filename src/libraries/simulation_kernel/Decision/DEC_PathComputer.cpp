@@ -159,6 +159,19 @@ DEC_Path_ABC::E_State DEC_PathComputer::GetState() const
     return nState_;
 }
 
+namespace
+{
+    sword::TerrainData Convert( const TerrainData& point )
+    {
+        sword::TerrainData data;
+        data.set_linear( point.Linear() );
+        data.set_area( point.Area() );
+        data.set_left( point.Left() );
+        data.set_right( point.Right() );
+        return data;
+    }
+}
+
 void DEC_PathComputer::Serialize( sword::PathResult& msg ) const
 {
     unsigned int index = 0;
@@ -172,6 +185,8 @@ void DEC_PathComputer::Serialize( sword::PathResult& msg ) const
             point->set_waypoint( index++ );
             point->set_reached( !partial );
         }
+        *point->mutable_current() = Convert( (*it)->GetObjectTypes() );
+        *point->mutable_next() = Convert( (*it)->GetObjectTypesToNextPoint() );
         NET_ASN_Tools::WritePoint( position, *point->mutable_coordinate() );
     }
 }

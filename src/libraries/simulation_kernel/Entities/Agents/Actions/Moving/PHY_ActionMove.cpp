@@ -218,7 +218,7 @@ void PHY_ActionMove::CreateNewPath()
     const DEC_PathType& pathType = pMainPath_->GetPathType();
     const auto computer = boost::make_shared< DEC_PathComputer >( pion_.GetID() );
     const auto pNewPath = boost::make_shared< DEC_Agent_Path >( pion_, nextWaypoints, pathType, computer );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer, sword::Pathfind() );
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();
     pMainPath_ = pNewPath;

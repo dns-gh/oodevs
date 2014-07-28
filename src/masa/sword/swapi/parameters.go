@@ -230,10 +230,10 @@ func ReadPoint(value *sword.CoordLatLong) Point {
 	return Point{X: value.GetLongitude(), Y: value.GetLatitude()}
 }
 
-func ReadPoints(msg *sword.CoordLatLongList) []Point {
+func ReadPoints(coordinates []*sword.CoordLatLong) []Point {
 	points := []Point{}
-	for _, v := range msg.Elem {
-		points = append(points, ReadPoint(v))
+	for _, p := range coordinates {
+		points = append(points, ReadPoint(p))
 	}
 	return points
 }
@@ -362,10 +362,51 @@ func MakePathfindRequest(unitId uint32, ignoreDynamicObjects bool, points ...Poi
 	}
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			PathfindRequest: &sword.PathfindRequest{
-				Unit:                 MakeId(unitId),
-				Positions:            positions,
-				IgnoreDynamicObjects: proto.Bool(ignoreDynamicObjects),
+			Pathfind: &sword.Pathfind{
+				Id: proto.Uint32(0),
+				Request: &sword.PathfindRequest{
+					Unit:                 MakeId(unitId),
+					Positions:            positions,
+					IgnoreDynamicObjects: proto.Bool(ignoreDynamicObjects),
+				},
+			},
+		})
+}
+
+func MakeTerrainData(data TerrainData) *sword.TerrainData {
+	return &sword.TerrainData{
+		Area:   proto.Uint32(data.Area),
+		Linear: proto.Uint32(data.Linear),
+		Left:   proto.Uint32(data.Left),
+		Right:  proto.Uint32(data.Right),
+	}
+}
+
+func MakePathfind(pathfind *Pathfind) *sword.MissionParameter {
+	positions := []*sword.CoordLatLong{}
+	for _, p := range pathfind.Positions {
+		positions = append(positions, MakeCoordLatLong(p))
+	}
+	result := []*sword.PathPoint{}
+	for _, p := range pathfind.Result {
+		result = append(result, &sword.PathPoint{
+			Coordinate: MakeCoordLatLong(p.Point),
+			Waypoint:   proto.Int32(p.Waypoint),
+			Reached:    proto.Bool(p.Reached),
+			Current:    MakeTerrainData(p.Current),
+			Next:       MakeTerrainData(p.Next),
+		})
+	}
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Pathfind: &sword.Pathfind{
+				Id: proto.Uint32(pathfind.Id),
+				Request: &sword.PathfindRequest{
+					Unit:                 MakeId(pathfind.UnitId),
+					Positions:            positions,
+					IgnoreDynamicObjects: proto.Bool(pathfind.IgnoreDynamicObjects),
+				},
+				Result: &sword.PathResult{Points: result},
 			},
 		})
 }
