@@ -26,6 +26,7 @@ ignoredleaves = set([
     "Q3VButtonGroup",
     "Q3VGroupBox",
     "QComboBoxPrivateContainer",
+    "QCompleter",
     "QFrame",
     "QHeaderView",
     "QMenu",

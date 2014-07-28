@@ -46,7 +46,7 @@ TextEditor::TextEditor( QWidget* parent )
     actionTextBold_->setFont( bold );
     actionTextBold_->setCheckable( true );
     connect( actionTextBold_, SIGNAL( triggered() ), this, SLOT( ToggleBold() ) );
-    QToolButton* button = new QToolButton();
+    QToolButton* button = new RichWidget< QToolButton >( "boldButon" );
     button->setDefaultAction( actionTextBold_ );
     button->setAutoRaise( true );
     toolsLayout->addWidget( button );
@@ -58,7 +58,7 @@ TextEditor::TextEditor( QWidget* parent )
     actionTextItalic_->setFont( italic );
     actionTextItalic_->setCheckable( true );
     connect( actionTextItalic_, SIGNAL( triggered() ), this, SLOT( ToggleItalic() ) );
-    button = new QToolButton();
+    button = new RichWidget< QToolButton >( "boldItalic" );
     button->setDefaultAction( actionTextItalic_ );
     button->setAutoRaise( true );
     toolsLayout->addWidget( button );
@@ -70,7 +70,7 @@ TextEditor::TextEditor( QWidget* parent )
     actionTextUnderline_->setFont( underline );
     actionTextUnderline_->setCheckable( true );
     connect( actionTextUnderline_, SIGNAL( triggered() ), this, SLOT( ToggleUnderline() ) );
-    button = new QToolButton();
+    button = new RichWidget< QToolButton >( "boldUnderline" );
     button->setDefaultAction( actionTextUnderline_ );
     button->setAutoRaise( true );
     toolsLayout->addWidget( button );
@@ -84,6 +84,7 @@ TextEditor::TextEditor( QWidget* parent )
     // Size
     comboSize_ = new RichWidget< QComboBox >( "comboSize", this );
     comboSize_->setEditable( true );
+    comboSize_->lineEdit()->setObjectName( "comboEditLine" );
     QFontDatabase database;
     Q_FOREACH( int size, database.standardSizes() )
         comboSize_->addItem( QString::number( size ) );
