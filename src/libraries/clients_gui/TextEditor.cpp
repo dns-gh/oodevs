@@ -46,7 +46,7 @@ TextEditor::TextEditor( QWidget* parent )
     actionTextBold_->setFont( bold );
     actionTextBold_->setCheckable( true );
     connect( actionTextBold_, SIGNAL( triggered() ), this, SLOT( ToggleBold() ) );
-    QToolButton* button = new RichWidget< QToolButton >( "boldButon" );
+    QToolButton* button = new RichWidget< QToolButton >( "boldButton" );
     button->setDefaultAction( actionTextBold_ );
     button->setAutoRaise( true );
     toolsLayout->addWidget( button );
@@ -58,7 +58,7 @@ TextEditor::TextEditor( QWidget* parent )
     actionTextItalic_->setFont( italic );
     actionTextItalic_->setCheckable( true );
     connect( actionTextItalic_, SIGNAL( triggered() ), this, SLOT( ToggleItalic() ) );
-    button = new RichWidget< QToolButton >( "boldItalic" );
+    button = new RichWidget< QToolButton >( "italicButton" );
     button->setDefaultAction( actionTextItalic_ );
     button->setAutoRaise( true );
     toolsLayout->addWidget( button );
@@ -70,7 +70,7 @@ TextEditor::TextEditor( QWidget* parent )
     actionTextUnderline_->setFont( underline );
     actionTextUnderline_->setCheckable( true );
     connect( actionTextUnderline_, SIGNAL( triggered() ), this, SLOT( ToggleUnderline() ) );
-    button = new RichWidget< QToolButton >( "boldUnderline" );
+    button = new RichWidget< QToolButton >( "underlineButton" );
     button->setDefaultAction( actionTextUnderline_ );
     button->setAutoRaise( true );
     toolsLayout->addWidget( button );
