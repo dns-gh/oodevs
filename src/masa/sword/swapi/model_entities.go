@@ -468,6 +468,7 @@ type Pathfind struct {
 	EquipmentTypes       []uint32
 	IgnoreDynamicObjects bool
 	Result               []PathPoint
+	Name                 string
 }
 
 type OrderKind int
@@ -1124,6 +1125,7 @@ var (
 		(*ModelData).handlePartyCreation,
 		(*ModelData).handlePathfindCreation,
 		(*ModelData).handlePathfindDestruction,
+		(*ModelData).handlePathfindUpdate,
 		(*ModelData).handlePopulationCreation,
 		(*ModelData).handlePopulationUpdate,
 		(*ModelData).handleSupplyRequestCreation,

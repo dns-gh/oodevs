@@ -287,6 +287,19 @@ bool PathfindComputer::OnReceivePathfindCreation( const sword::MagicAction& mess
     return true;
 }
 
+void PathfindComputer::OnReceivePathfindUpdate( const sword::MagicAction& message )
+{
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto& value = message.parameters().elem( 0 ).value( 0 );
+    protocol::Check( value.has_pathfind(), "invalid parameters" );
+    const auto& pathfind = value.pathfind();
+    auto it = results_.find( pathfind.id() );
+    protocol::Check( it != results_.end(), "invalid pathfind identifier" );
+    protocol::Check( it->second->IsPublished(), "the pathfinder must be calculated to be updated" );
+    protocol::Check( it->second->Update( pathfind ), "only the name can be updated" );
+}
+
 void PathfindComputer::OnReceivePathfindDestruction( const sword::MagicAction& message, sword::MagicActionAck& ack )
 {
     const auto& params = message.parameters();
@@ -295,5 +308,5 @@ void PathfindComputer::OnReceivePathfindDestruction( const sword::MagicAction& m
     if( Destroy( id ) )
         return;
     ack.set_error_code( sword::MagicActionAck::error_invalid_parameter );
-    ack.set_error_msg( "invalid pathfind identifier");
+    ack.set_error_msg( "invalid pathfind identifier" );
 }

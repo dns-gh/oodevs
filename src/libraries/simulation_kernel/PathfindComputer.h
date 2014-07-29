@@ -50,6 +50,7 @@ public:
 
     bool OnReceivePathfindCreation   ( const sword::MagicAction& message,
                                        unsigned int nCtx, unsigned int clientId, uint32_t magicId );
+    void OnReceivePathfindUpdate     ( const sword::MagicAction& message );
     void OnReceivePathfindDestruction( const sword::MagicAction& message, sword::MagicActionAck& ack );
     void OnPathfindRequest           ( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId );
 

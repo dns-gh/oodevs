@@ -1672,6 +1672,10 @@ message MagicAction {
         //! Destroy a pathfind
         //! parameters[0], Identifier: the pathfind identifier.
         pathfind_destruction               = 14;
+        //! Update a pathfind
+        //! parameters[0], PathfindRequest: the new name.
+        //! Only the pathfind name can be changed.
+        pathfind_update                    = 15;
     }
     required Type              type       = 1;
     required MissionParameters parameters = 2;
@@ -2744,6 +2748,8 @@ message PathfindRequest {
     //! Indicate whether or not the request
     //! should ignore the dynamic objects.
     optional bool         ignore_dynamic_objects = 4;
+    //! The pathfind name
+    optional string       name                   = 5;
 }
 
 /** @struct Pathfind

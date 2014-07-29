@@ -37,9 +37,11 @@ void actions::parameters::FillPathfindRequest( sword::PathfindRequest& dst,
                                                uint32_t unit,
                                                const kernel::CoordinateConverter_ABC& converter,
                                                const kernel::Entity_ABC& entity,
-                                               const std::vector< geometry::Point2f >& points )
+                                               const std::vector< geometry::Point2f >& points,
+                                               const std::string& name )
 {
     dst.mutable_unit()->set_id( unit );
+    dst.set_name( name );
     for( auto it = points.begin(); it != points.end(); ++it )
         converter.ConvertToGeo( *it, *dst.add_positions() );
     auto& equipments = entity.Get< kernel::Equipments_ABC >();

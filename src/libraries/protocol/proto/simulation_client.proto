@@ -3518,6 +3518,7 @@ message SimToClient {
             log_supply_request_destruction = 160;
         optional Pathfind pathfind_creation = 161;
         optional PathfindDestruction pathfind_destruction = 162;
+        optional Pathfind pathfind_update = 163;
     }
     /** @property context
         @brief Identifies the request matching the response

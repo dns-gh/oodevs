@@ -183,6 +183,15 @@ void DrawingsTreeView::NotifyContextMenu( const kernel::TacticalLine_ABC& line, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawingsTreeView::NotifyContextMenu
+// Created: LGY 2014-05-07
+// -----------------------------------------------------------------------------
+void DrawingsTreeView::NotifyContextMenu( const kernel::Pathfind_ABC& pathfind, kernel::ContextMenu& menu )
+{
+    AddCommonMenu( pathfind, menu );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawingsTreeView::OnRename
 // Created: LGY 2014-05-07
 // -----------------------------------------------------------------------------

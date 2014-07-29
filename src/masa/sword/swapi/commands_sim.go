@@ -1911,8 +1911,8 @@ func (c *Client) PathfindTest(params *sword.MissionParameters, action sword.Magi
 	return id, err
 }
 
-func (c *Client) CreatePathfindTest(unitId uint32, ignoreDynamicObjects bool, points ...Point) (*Pathfind, error) {
-	id, err := c.PathfindTest(MakeParameters(MakePathfindRequest(unitId, ignoreDynamicObjects, points...)),
+func (c *Client) CreatePathfindTest(unitId uint32, name string, ignoreDynamicObjects bool, points ...Point) (*Pathfind, error) {
+	id, err := c.PathfindTest(MakeParameters(MakePathfindRequest(unitId, name, ignoreDynamicObjects, points...)),
 		sword.MagicAction_pathfind_creation)
 	if err != nil {
 		return nil, err
@@ -1933,7 +1933,23 @@ func (c *Client) CreatePathfindTest(unitId uint32, ignoreDynamicObjects bool, po
 }
 
 func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, error) {
-	return c.CreatePathfindTest(unitId, true, points...)
+	return c.CreatePathfindTest(unitId, "pathfind", true, points...)
+}
+
+func (c *Client) UpdatePathfind(parameter *sword.MissionParameter) error {
+	msg := CreateMagicAction(MakeParameters(parameter), sword.MagicAction_pathfind_update)
+	handlers := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.MagicActionAck_no_error {
+			return makeError(reply, int32(code), sword.MagicActionAck_ErrorCode_name)
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handlers)
 }
 
 func (c *Client) DestroyPathfind(pathfindId uint32) error {

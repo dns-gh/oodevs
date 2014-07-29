@@ -225,7 +225,7 @@ func (s *TestSuite) TestCreateDestroyPathfind(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid not ignoring dynamic objects
-	_, err = client.CreatePathfindTest(unit.Id, false, positions...)
+	_, err = client.CreatePathfindTest(unit.Id, "pathfind", false, positions...)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Create pathfind
@@ -282,4 +282,36 @@ func (s *TestSuite) TestUnitOrderWithItineraryParameter(c *C) {
 			return isNearby(p.Point, m.Units[unit.Id].Position)
 		})
 	}
+}
+
+func (s *TestSuite) TestPathfindName(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+
+	automat := createAutomat(c, client)
+	positions := []swapi.Point{
+		{X: -15.9248, Y: 28.2645},
+		{X: -15.9216, Y: 28.2718},
+		{X: -15.9150, Y: 28.2659},
+		{X: -15.9248, Y: 28.2645},
+		{X: -15.9252, Y: 28.2713},
+	}
+
+	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])
+	c.Assert(err, IsNil)
+
+	// Create pathfind
+	name := "pathfind_test"
+	pathfind, err := client.CreatePathfindTest(unit.Id, name, true, positions...)
+	c.Assert(err, IsNil)
+	c.Assert(pathfind.Name, Equals, name)
+
+	// Pathfind name updated
+	pathfind.Name = "newName"
+	err = client.UpdatePathfind(swapi.MakePathfind(pathfind))
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Pathfinds[pathfind.Id].Name == "newName"
+	})
 }

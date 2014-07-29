@@ -39,9 +39,11 @@ void Pathfind::SendCreation( ClientPublisher_ABC& publisher ) const
     msg.Send( publisher );
 }
 
-void Pathfind::SendFullUpdate( ClientPublisher_ABC& /*publisher */) const
+void Pathfind::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    // NOTHING
+    sword::SimToClient message;
+    *message.mutable_message()->mutable_pathfind_update()= *data_;
+    publisher.Send( message );
 }
 
 void Pathfind::SendDestruction( ClientPublisher_ABC& publisher ) const

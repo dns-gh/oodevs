@@ -29,6 +29,11 @@ namespace sword
     class PathResult;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 // =============================================================================
 /** @class  Note
     @brief  Note
@@ -37,17 +42,18 @@ namespace sword
 class Pathfind : public gui::EntityImplementation< kernel::Pathfind_ABC >
                , public kernel::Extension_ABC
                , public gui::Drawable_ABC
+               , public kernel::Updatable_ABC< sword::Pathfind >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              Pathfind( kernel::Controller& controller,
-                       const kernel::ActionController& actions,
+                       actions::ActionsModel& actionsModel,
                        const kernel::CoordinateConverter_ABC& converter,
-                       const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
-                       const tools::Resolver_ABC< kernel::Population_ABC >& populations,
+                       kernel::Entity_ABC& entity,
                        const sword::Pathfind& msg,
-                       bool edition );
+                       bool edition,
+                       bool canBeOrdered );
     virtual ~Pathfind();
     //@}
 
@@ -55,6 +61,8 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Rename( const QString& name );
+    virtual void NotifyDestruction() const;
     //@}
 
     //! @name kernel::Pathfind_ABC methods
@@ -62,6 +70,7 @@ public:
     virtual const kernel::Entity_ABC& GetUnit() const;
     virtual void SetVisible( bool visible );
     virtual sword::PathResult GetPathfind() const;
+    virtual sword::Pathfind GetCreationMessage() const;
     virtual geometry::Point2f GetPosition() const;
     //@}
 
@@ -111,14 +120,16 @@ private:
     void DrawPoints( gui::GlTools_ABC& tools, const QColor& current, bool picking ) const;
     void DrawPoint( gui::GlTools_ABC& tools, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const;
     bool IsNear( const gui::GlTools_ABC& tools, float squareDistance, const geometry::Point2f& point ) const;
+    virtual void DoUpdate( const sword::Pathfind& msg );
     //@{
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::ActionController& actions_;
+    actions::ActionsModel& actionsModel_;
     const kernel::CoordinateConverter_ABC& converter_;
+    sword::Pathfind pathfind_;
     kernel::Entity_ABC& entity_;
     T_Points path_;
     T_Points waypoints_;

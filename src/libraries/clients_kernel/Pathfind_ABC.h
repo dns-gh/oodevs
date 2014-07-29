@@ -15,6 +15,7 @@
 namespace sword
 {
     class PathResult;
+    class Pathfind;
 }
 
 namespace kernel
@@ -44,7 +45,9 @@ public:
     virtual const Entity_ABC& GetUnit() const = 0;
     virtual void SetVisible( bool visible ) = 0;
     virtual sword::PathResult GetPathfind() const = 0;
+    virtual sword::Pathfind GetCreationMessage() const = 0;
     virtual geometry::Point2f GetPosition() const = 0;
+    virtual void NotifyDestruction() const = 0;
     //@}
 
     //! @name Operations

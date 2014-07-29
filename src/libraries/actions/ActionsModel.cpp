@@ -317,9 +317,15 @@ int ActionsModel::PublishSelectMaintenanceRepairTeam( unsigned int consignId, un
     return Publish( *action );
 }
 
-int ActionsModel::PublishCreatePathfind( uint32_t unit, const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points )
+int ActionsModel::PublishCreatePathfind( uint32_t unit, const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points, const std::string& name )
 {
-    std::unique_ptr< Action_ABC > action( factory_.CreatePathfindCreation( unit, entity, points ) );
+    std::unique_ptr< Action_ABC > action( factory_.CreatePathfindCreation( unit, entity, points, name ) );
+    return Publish( *action );
+}
+
+int ActionsModel::PublishUpdatePathfind( const sword::Pathfind& pathfind )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreatePathfindUpdate( pathfind ) );
     return Publish( *action );
 }
 

@@ -344,6 +344,7 @@ private:
 
     // Pathfinds
     void OnReceivePathfindCreation   ( const sword::SimToClient& msg );
+    void OnReceivePathfindUpdate     ( const sword::SimToClient& msg );
     void OnReceivePathfindDestruction( const sword::SimToClient& msg );
     //@}
 

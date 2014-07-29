@@ -1092,14 +1092,25 @@ Action_ABC* ActionFactory::CreateInvalidAction( const kernel::OrderType& mission
 
 Action_ABC* ActionFactory::CreatePathfindCreation( uint32_t unit,
                                                    const kernel::Entity_ABC& entity,
-                                                   const std::vector< geometry::Point2f >& points ) const
+                                                   const std::vector< geometry::Point2f >& points,
+                                                   const std::string& name ) const
 {
-    kernel::MagicActionType& actionType = magicActions_.Get( "pathfind_creation" );
-    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     sword::Pathfind pathfind;
     pathfind.set_id( 0 );
-    parameters::FillPathfindRequest( *pathfind.mutable_request(), unit, coordinateConverter_, entity, points );
+    parameters::FillPathfindRequest( *pathfind.mutable_request(), unit, coordinateConverter_, entity, points, name );
+    return CreatePathfindRequest( "pathfind_creation", pathfind );
+}
+
+Action_ABC* ActionFactory::CreatePathfindUpdate( const sword::Pathfind& pathfind ) const
+{
+    return CreatePathfindRequest( "pathfind_update", pathfind );
+}
+
+Action_ABC* ActionFactory::CreatePathfindRequest( const std::string& name, const sword::Pathfind& pathfind ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( name );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Itinerary( it.NextElement(), coordinateConverter_, pathfind ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();

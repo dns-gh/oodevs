@@ -10,17 +10,22 @@
 #include "gaming_pch.h"
 #include "PathfindModel.h"
 #include "Pathfind.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 
 PathfindModel::PathfindModel( kernel::Controller& controller,
-                              const kernel::ActionController& actions,
+                              actions::ActionsModel& actionsModel,
                               const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
                               const tools::Resolver_ABC< kernel::Population_ABC >& populations,
-                              const kernel::CoordinateConverter_ABC& converter )
+                              const kernel::CoordinateConverter_ABC& converter,
+                              const kernel::Profile_ABC& profile )
     : controller_( controller )
-    , actions_( actions )
+    , actionsModel_( actionsModel )
     , agents_( agents )
     , populations_( populations )
     , converter_( converter )
+    , profile_( profile )
 {
     controller_.Register( *this );
 }
@@ -35,11 +40,24 @@ void PathfindModel::Purge()
     tools::Resolver< kernel::Pathfind_ABC >::DeleteAll();
 }
 
+namespace
+{
+    kernel::Entity_ABC& GetUnit( const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
+                                 const tools::Resolver_ABC< kernel::Population_ABC >& populations,
+                                 uint32_t id )
+    {
+        if( auto popu = populations.Find( id ) )
+            return *popu;
+        return agents.Get( id );
+    }
+}
+
 void PathfindModel::Create( const sword::Pathfind& msg )
 {
     if( !T_Resolver::Find( msg.id() ) )
     {
-        auto entity = new Pathfind( controller_, actions_, converter_, agents_, populations_, msg, false );
+        auto& unit =  GetUnit( agents_, populations_, msg.request().unit().id() );
+        auto entity = new Pathfind( controller_, actionsModel_, converter_, unit, msg, false, profile_.CanBeOrdered( unit ) );
         Register( msg.id(), *entity );
         entity->Polish();
     }

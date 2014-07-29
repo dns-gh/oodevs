@@ -498,6 +498,7 @@ T_ConverterMagicActionType MagicActionTypeConverter_[] =
     T_ConverterMagicActionType( "local_weather_destruction",      QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Local Weather Destruction" ), sword::MagicAction::local_weather_destruction ),
     T_ConverterMagicActionType( "pathfind_creation",              QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Create pathfind" ), sword::MagicAction::pathfind_creation ),
     T_ConverterMagicActionType( "pathfind_destruction",           QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Destroy pathfind" ), sword::MagicAction::pathfind_destruction ),
+    T_ConverterMagicActionType( "pathfind_update",                QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Update pathfind" ), sword::MagicAction::pathfind_update ),
     T_ConverterMagicActionType( "select_diagnosis_team",          QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select Diagnosis Team" ), sword::MagicAction::select_diagnosis_team ),
     T_ConverterMagicActionType( "select_maintenance_transporter", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select Maintenance Transporter" ), sword::MagicAction::select_maintenance_transporter ),
     T_ConverterMagicActionType( "select_new_logistic_state",      QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select logistic automated resolution" ), sword::MagicAction::select_new_logistic_state ),
