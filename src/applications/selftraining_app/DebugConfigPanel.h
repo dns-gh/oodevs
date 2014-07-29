@@ -12,6 +12,7 @@
 
 #include "frontend/PluginConfig_ABC.h"
 #include <boost/optional.hpp>
+#include <unordered_set>
 
 namespace tools
 {
@@ -45,9 +46,13 @@ struct DebugGaming
 
 struct DebugConfig
 {
+    QString GetDevFeatures() const;
+
     DebugGaming gaming;
     DebugSim sim;
     DebugTimeline timeline;
+
+    std::unordered_set< std::string > features;
 };
 
 class Config;
@@ -79,7 +84,6 @@ public:
 
     //! @name Accessors
     //@{
-    QString GetDevFeatures() const;
     boost::optional< DebugConfig > GetConfig() const;
     //@}
 

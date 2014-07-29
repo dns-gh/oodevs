@@ -42,6 +42,8 @@ DebugConfig LoadDebugConfig()
     config.timeline.cefLog = registry::ReadPath( "CefLog" );
     config.timeline.legacyTimeline = registry::ReadBool( "EnableLegacyTimeline" );
 
+    config.features = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
+
     return config;
 }
 
@@ -59,6 +61,8 @@ void SaveDebugConfig( const DebugConfig& config )
     registry::WritePath( "TimelineClientLog", config.timeline.clientLogPath );
     registry::WritePath( "CefLog", config.timeline.cefLog );
     registry::WriteBool( "EnableLegacyTimeline", config.timeline.legacyTimeline );
+
+    registry::WriteString( "DevFeatures", tools::JoinFeatures( config.features ).c_str() );
 }
 
 }  // namespace
@@ -70,6 +74,11 @@ tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& lo
     if( logPath.IsAbsolute() )
         return logPath;
     return sessionDir.Absolute() / logPath;
+}
+
+QString DebugConfig::GetDevFeatures() const
+{
+    return tools::JoinFeatures( features ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -221,15 +230,13 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
 
     // development features
     const auto& availableFeatures = tools::GetAvailableFeatures();
-    const auto savedFeatures = tools::SplitFeatures(
-            registry::ReadFeatures().toStdString() );
     featuresBox_ = new QGroupBox();
     featuresBox_->setTitle( "Features" );
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
     for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
     {
         QCheckBox* checkbox = new QCheckBox( QString::fromStdString( *it ) );
-        checkbox->setChecked( savedFeatures.count( *it ) != 0 );
+        checkbox->setChecked( debug_.features.count( *it ) != 0 );
         featuresLayout->addWidget( checkbox );
         features_.push_back( checkbox );
         connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged() ));
@@ -430,16 +437,11 @@ void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
 
 void DebugConfigPanel::OnDevFeaturesChanged()
 {
-    registry::WriteString( "DevFeatures", GetDevFeatures() );
-}
-
-QString DebugConfigPanel::GetDevFeatures() const
-{
-    std::unordered_set< std::string > checked;
+    debug_.features.clear();
     for( auto it = features_.begin(); it != features_.end(); ++it )
         if( (*it)->isChecked() )
-            checked.insert( (*it)->text() );
-    return tools::JoinFeatures( checked ).c_str();
+            debug_.features.insert( (*it)->text() );
+    SaveDebugConfig( debug_ );
 }
 
 boost::optional< DebugConfig > DebugConfigPanel::GetConfig() const

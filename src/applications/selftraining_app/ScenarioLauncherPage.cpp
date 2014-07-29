@@ -273,7 +273,7 @@ void ScenarioLauncherPage::OnStart()
     if( hasClient_ )
     {
         auto profile = profile_.GetLogin();
-        QString devFeatures = configPanel_ ? configPanel_->GetDevFeatures() : QString();
+        QString devFeatures = debug ? debug->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session.first, &profile, devFeatures, tools::Path(),
             config_.GetCefLog() ) );
