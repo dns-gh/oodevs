@@ -30,6 +30,8 @@ DebugConfig LoadDebugConfig()
 {
     DebugConfig config;
 
+    config.gaming.hasMapnik = registry::ReadBool( "HasMapnikLayer" );
+
     config.sim.integrationDir = registry::ReadPath( "IntegrationLayerPath" );
     config.sim.pathfindFilter = registry::ReadString( "DebugPathfindFilter" ).toStdString();
     config.sim.pathfindDumpDir = registry::ReadPath( "DebugPathfindDumpPath" );
@@ -45,6 +47,8 @@ DebugConfig LoadDebugConfig()
 
 void SaveDebugConfig( const DebugConfig& config )
 {
+    registry::WriteBool( "HasMapnikLayer", config.gaming.hasMapnik );
+
     registry::WriteString( "IntegrationLayerPath",
             config.sim.integrationDir.ToUTF8().c_str() );
     registry::WriteString( "DebugPathfindFilter", config.sim.pathfindFilter.c_str() );
@@ -211,7 +215,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     QGridLayout* mapnik = new QGridLayout( mapnikBox_, 1, 1 );
     mapnik->setMargin( 10 );
     mapnikLayerBox_ = new QCheckBox();
-    mapnikLayerBox_->setChecked( registry::ReadBool( "HasMapnikLayer" ) );
+    mapnikLayerBox_->setChecked( debug_.gaming.hasMapnik );
     connect( mapnikLayerBox_, SIGNAL( clicked( bool ) ), SLOT( OnMapnikLayerChecked( bool ) ) );
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
@@ -346,7 +350,7 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
     action.SetOption( "session/config/timeline/@enabled", debug_.timeline.legacyTimeline );
     if( decCallsBox_->isChecked() )
         action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-    if( mapnikLayerBox_->isChecked() )
+    if( debug_.gaming.hasMapnik )
         action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
     action.Commit();
 }
@@ -420,7 +424,8 @@ void DebugConfigPanel::OnExerciseNumberChanged( int exerciseNumber )
 
 void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
 {
-    registry::WriteBool( "HasMapnikLayer", checked );
+    debug_.gaming.hasMapnik = checked;
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnDevFeaturesChanged()

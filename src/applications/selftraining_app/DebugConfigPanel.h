@@ -38,8 +38,14 @@ struct DebugTimeline
     bool legacyTimeline;
 };
 
+struct DebugGaming
+{
+    bool hasMapnik;
+};
+
 struct DebugConfig
 {
+    DebugGaming gaming;
     DebugSim sim;
     DebugTimeline timeline;
 };
