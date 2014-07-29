@@ -2914,6 +2914,17 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>PathfindLayer</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlanificationModePanel</name>
     <message>
         <source>Planification mode</source>

@@ -13,17 +13,24 @@
 
 #include "actions/ActionsModel.h"
 #include "actions/Helpers.h"
-#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
+#include "gaming/Pathfind.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -35,15 +42,25 @@
 // -----------------------------------------------------------------------------
 PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
                               gui::GlTools_ABC& tools,
+                              gui::ColorStrategy_ABC& strategy,
+                              gui::View_ABC& view,
+                              const kernel::Profile_ABC& profile,
                               Publisher_ABC& publisher,
                               const kernel::CoordinateConverter_ABC& converter,
+                              const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
+                              const tools::Resolver_ABC< kernel::Population_ABC >& populations,
                               actions::ActionsModel& actions )
-    : controllers_( controllers )
+    : EntityLayer< kernel::Pathfind_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Pathfinds )
+    , controllers_( controllers )
     , tools_( tools )
-    , element_( controllers )
+    , target_( controllers )
+    , selectedEntity_( controllers )
+    , selectedPathfind_( controllers )
     , publisher_( publisher )
     , converter_( converter )
     , actions_( actions )
+    , agents_( agents )
+    , populations_( populations )
     , replaceable_( false )
     , lock_( false )
 {
@@ -53,18 +70,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
                 return;
             const auto& request = message.message().compute_pathfind_ack();
             if( request.error_code() == sword::ComputePathfindAck_ErrorCode_no_error )
-            {
-                path_.clear();
-                const auto& points = request.path().points();
-                for( auto it = points.begin(); it != points.end(); ++it )
-                {
-                    boost::optional< uint32_t > waypoint;
-                    if( it->has_waypoint() )
-                        waypoint = it->waypoint();
-                    const Point p = { converter_.ConvertToXY( it->coordinate() ), waypoint };
-                    path_.push_back( p );
-                }
-            }
+                edited_->LoadPoints( request.path() );
             ProcessEvents();
         } ) );
     publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
@@ -82,7 +88,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
             }
             ProcessEvents();
         } ) );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +97,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 PathfindLayer::~PathfindLayer()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 void PathfindLayer::NotifyUpdated( const kernel::ModelUnLoaded& )
@@ -105,105 +111,19 @@ void PathfindLayer::Initialize( const geometry::Rectangle2f& extent )
     world_ = extent;
 }
 
-namespace
-{
-    void SetColor( QColor color )
-    {
-        glColor3d( color.redF(), color.greenF(), color.blueF() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer::Paint
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
-void PathfindLayer::Paint( gui::Viewport_ABC& )
+void PathfindLayer::Paint( gui::Viewport_ABC& view )
 {
-    switch( controllers_.GetCurrentMode() )
+    if( edited_ )
     {
-        case eModes_Itinerary:
-            glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-            SetColor( "#2269BB" );
-            DrawLines( 5 );
-            SetColor( "#00B3FD" );
-            DrawLines( 3 );
-            DrawPoints();
-            glPopAttrib();
-            break;
+        edited_->SetHover( hovered_ );
+        if( controllers_.GetCurrentMode() == eModes_Itinerary )
+            EntityLayer< kernel::Pathfind_ABC >::Draw( *edited_, view, false );
     }
-}
-
-void PathfindLayer::DrawLines( float width ) const
-{
-    if( path_.empty() )
-        return;
-    tools_.DrawDisc( path_.front().coordinate_, width / 2, gui::GlTools_ABC::pixels );
-    for( auto it = path_.begin(); it != path_.end() - 1; ++it )
-    {
-        tools_.DrawLine( it->coordinate_, (it + 1)->coordinate_, width );
-        tools_.DrawDisc( (it + 1)->coordinate_, width / 2, gui::GlTools_ABC::pixels );
-    }
-}
-
-void PathfindLayer::DrawPoints() const
-{
-    for( std::size_t i = 0; i < positions_.size(); ++i )
-        DrawPoint( positions_[i],
-            hovered_ && hovered_->onWaypoint_ && hovered_->lastWaypoint_ == i );
-    if( hovered_ && !hovered_->onWaypoint_ && hovered_->coordinate_ )
-        DrawPoint( *hovered_->coordinate_, false );
-}
-
-namespace
-{
-    const int size = 20;
-    const float half = size / 2.f;
-
-    void DrawDisc( QPainter& p, QColor contour, QColor inside, float radius )
-    {
-        p.setPen( QPen( contour, 2 ) );
-        p.setBrush( QBrush( inside ) );
-        p.drawEllipse( QPointF( half, half ), radius, radius );
-    }
-    QImage MakeBitmap( QColor disc, QColor circle )
-    {
-        QPixmap pm( size, size );
-        pm.fill( Qt::transparent );
-        QPainter p( &pm );
-        p.setRenderHint( QPainter::Antialiasing, true );
-        DrawDisc( p, disc, disc, 5 );
-        DrawDisc( p, circle, disc, 4 );
-        return pm.convertToImage().mirror();
-    }
-}
-
-void PathfindLayer::DrawPoint( geometry::Point2f p, bool highlight ) const
-{
-    static const QImage normal = MakeBitmap( Qt::white, Qt::black );
-    static const QImage highlighted = MakeBitmap( Qt::black, Qt::white );
-    const float factor = tools_.Pixels( p );
-    tools_.DrawImage( highlight ? highlighted : normal,
-        geometry::Point2f( p.X() - half * factor, p.Y() - half * factor ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PathfindLayer::Select
-// Created: LGY 2014-02-28
-// -----------------------------------------------------------------------------
-void PathfindLayer::Select( const kernel::Agent_ABC& element )
-{
-    if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        element_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PathfindLayer::Select
-// Created: LGY 2014-02-28
-// -----------------------------------------------------------------------------
-void PathfindLayer::Select( const kernel::Population_ABC& element )
-{
-    if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        element_ = &element;
+    EntityLayer< kernel::Pathfind_ABC >::Paint( view );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +132,7 @@ void PathfindLayer::Select( const kernel::Population_ABC& element )
 // -----------------------------------------------------------------------------
 void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
-    if( !element_ || lock_ )
+    if( !target_ || lock_ )
         return;
     point_ = point;
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
@@ -224,8 +144,21 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
         }
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
     }
-    else
-        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OpenEditingMode() ) );
+    else if( profile_.CanBeOrdered( *target_ ) )
+        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OnOpenEditingMode() ) );
+}
+
+void PathfindLayer::NotifyContextMenu( const kernel::Pathfind_ABC& pathfind, kernel::ContextMenu& menu )
+{
+    if( controllers_.GetCurrentMode() == eModes_Itinerary )
+        return;
+    if( !profile_.CanBeOrdered( pathfind ) )
+        return;
+    target_ = &pathfind;
+    selectedEntity_ = nullptr;
+    selectedPathfind_ = &pathfind;
+    menu.InsertItem( "Itinerary", tr( "Edit" ), this, SLOT( OnEditPathfind() ) );
+    menu.InsertItem( "Itinerary", tr( "Delete" ), this, SLOT( OnDeletePathfind() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,8 +169,8 @@ void PathfindLayer::ClearPositions()
 {
     HandleEvent( [&]()
         {
-            positions_.clear();
-            path_.clear();
+            if( edited_ )
+                edited_->Clear();
             hovered_ = boost::none;
             events_.clear();
             lock_ = false;
@@ -251,10 +184,7 @@ void PathfindLayer::SetStartPosition()
 {
     if( lock_ )
         return;
-    if( positions_.size() > 1 )
-        positions_.front() = point_;
-    else
-        positions_.push_front( point_ );
+    edited_->StartOn( point_ );
     SendRequest();
 }
 
@@ -265,16 +195,13 @@ void PathfindLayer::SetEndPosition()
 {
     if( lock_ )
         return;
-    if( positions_.size() > 1 )
-        positions_.back() = point_;
-    else
-        positions_.push_back( point_ );
+    edited_->StopOn( point_ );
     SendRequest();
 }
 
-bool PathfindLayer::HasPathfind() const
+bool PathfindLayer::HasValidPathfind() const
 {
-    return element_ && positions_.size() > 1;
+    return target_ && edited_->HasWaypoints();
 }
 
 // -----------------------------------------------------------------------------
@@ -283,11 +210,12 @@ bool PathfindLayer::HasPathfind() const
 // -----------------------------------------------------------------------------
 void PathfindLayer::SendRequest()
 {
-    if( !HasPathfind() )
+    if( !HasValidPathfind() )
         return;
     sword::ClientToSim msg;
-    actions::parameters::FillPathfindRequest( *msg.mutable_message()->mutable_compute_pathfind()->mutable_request(),
-        converter_, *element_, std::vector< geometry::Point2f >( positions_.begin(), positions_.end() ) );
+    auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
+    actions::parameters::FillPathfindRequest( *request, GetUnitId(),
+        converter_, *target_, edited_->GetDots() );
     publisher_.Send( msg );
     lock_ = true;
     hovered_ = boost::none;
@@ -300,7 +228,38 @@ void PathfindLayer::SendRequest()
 void PathfindLayer::BeforeSelection()
 {
     if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        element_ = 0;
+        target_ = selectedEntity_ = selectedPathfind_ = 0;
+}
+
+void PathfindLayer::Select( const kernel::Agent_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        target_ = selectedEntity_ = &element;
+}
+
+void PathfindLayer::Select( const kernel::Automat_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        selectedEntity_ = &element;
+}
+
+void PathfindLayer::Select( const kernel::Formation_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        selectedEntity_ = &element;
+}
+
+void PathfindLayer::MultipleSelect( const std::vector< const kernel::Pathfind_ABC* >& elements )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary && !elements.empty() )
+        target_ = selectedPathfind_ = elements.front();
+    EntityLayer< kernel::Pathfind_ABC >::MultipleSelect( elements );
+}
+
+void PathfindLayer::Select( const kernel::Population_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        target_ = selectedEntity_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -312,63 +271,17 @@ void PathfindLayer::AfterSelection()
     // NOTHING
 }
 
-namespace
-{
-    const auto threshold = 200; // pixels
-}
-
-bool PathfindLayer::IsNear( float squareDistance, geometry::Point2f point ) const
-{
-    const auto pixels = tools_.Pixels( point );
-    return squareDistance < threshold * pixels * pixels;
-}
-
 bool PathfindLayer::PickWaypoint( geometry::Point2f point )
 {
-    // path iterated backwards to select the waypoint on top
-    // when several of them overlap
-    for( auto i = positions_.size(); i > 0; --i )
-    {
-        const auto& position = positions_[ i - 1 ];
-        if( IsNear( point.SquareDistance( position ), point ) )
-        {
-            const Hover hover = {
-                point,
-                position,
-                i - 1,
-                true
-            };
-            hovered_ = hover;
-            return true;
-        }
-    }
-    return false;
+    if( auto hover = edited_->PickWaypoint( tools_, point ) )
+        hovered_ = *hover;
+    return hovered_;
 }
 
 void PathfindLayer::PickSegment( geometry::Point2f point )
 {
-    std::size_t waypoint = 0;
-    float distance = std::numeric_limits< float >::infinity();
-    for( auto it = path_.begin(); it != path_.end() - 1; ++it )
-    {
-        if( it->waypoint_ )
-            waypoint = *it->waypoint_;
-        const auto projection =
-            geometry::Segment2f( (it + 1)->coordinate_, it->coordinate_ )
-                .Project( point );
-        const auto d = point.SquareDistance( projection );
-        if( d < distance && IsNear( d, point ) )
-        {
-            distance = d;
-            const Hover hover = {
-                projection,
-                boost::none,
-                waypoint,
-                false
-            };
-            hovered_ = hover;
-        }
-    }
+    if( auto hover = edited_->PickSegment( tools_, point ) )
+        hovered_ = *hover;
 }
 
 bool PathfindLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
@@ -377,7 +290,7 @@ bool PathfindLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f
         HandleEvent( [this,point]()
             {
                 hovered_ = boost::none;
-                if( path_.empty() || !element_ )
+                if( !edited_ || !edited_->HasPath() || !target_ )
                     return;
                 if( PickWaypoint( point ) )
                     return;
@@ -404,8 +317,8 @@ bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
             else if( button == Qt::RightButton )
             {
                 if( hovered_->onWaypoint_ )
-                    positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
-                if( positions_.size() < 2 )
+                    edited_->EraseWaypoint( hovered_->lastWaypoint_ );
+                if( !edited_->HasWaypoints() )
                     ClearPositions();
                 else
                     SendRequest();
@@ -475,7 +388,7 @@ bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
         return false;
     HandleEvent( [this]()
         {
-            positions_.insert( positions_.begin() + hovered_->lastWaypoint_, *hovered_->coordinate_ );
+            edited_->InsertWaypoint( hovered_->lastWaypoint_, *hovered_->coordinate_ );
             SendRequest();
         } );
     return true;
@@ -488,7 +401,7 @@ bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
     HandleEvent( [this]()
         {
             if( hovered_->origin_ )
-                positions_.insert( positions_.begin() + hovered_->lastWaypoint_, *hovered_->origin_ );
+                edited_->InsertWaypoint( hovered_->lastWaypoint_, *hovered_->origin_ );
             hovered_->coordinate_ = boost::none;
         } );
     return true;
@@ -502,30 +415,47 @@ bool PathfindLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry
     HandleEvent( [this, snap, point]()
         {
             if( hovered_->origin_ )
-                positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
+                edited_->EraseWaypoint( hovered_->lastWaypoint_ );
             UpdateHovered( snap, point );
         } );
     return true;
 }
 
-void PathfindLayer::OpenEditingMode()
+void PathfindLayer::OpenEditingMode( const kernel::Entity_ABC* entity,
+                                     const sword::Pathfind& pathfind )
 {
-    const kernel::Entity_ABC* element = element_;
-    if( !element )
+    if( !entity )
         return;
+    edited_.reset( new Pathfind( controllers_.controller_, controllers_.actions_, converter_, agents_, populations_, pathfind, true ) );
+    target_ = entity;
     controllers_.ChangeMode( eModes_Itinerary );
-    element->Select( controllers_.actions_ );
-    element->MultipleSelect( controllers_.actions_, boost::assign::list_of( element ) );
+    entity->Select( controllers_.actions_ );
+    entity->MultipleSelect( controllers_.actions_, boost::assign::list_of( entity ) );
+}
+
+void PathfindLayer::OnOpenEditingMode()
+{
+    sword::Pathfind pathfind;
+    if( target_ )
+        pathfind.mutable_request()->mutable_unit()->set_id( target_->GetId() );
+    OpenEditingMode( target_, pathfind );
     ClearPositions();
 }
 
-bool PathfindLayer::HandleKeyPress( QKeyEvent* key )
+bool PathfindLayer::HandleKeyPress( QKeyEvent* keyEvent )
 {
-    if( controllers_.GetCurrentMode() != eModes_Itinerary
-        || key->key() != Qt::Key_Escape )
+    const auto mode = controllers_.GetCurrentMode();
+    const auto key = keyEvent->key();
+    if( key == Qt::Key_Escape && mode == eModes_Itinerary )
+    {
+        OnRejectEdit();
         return false;
-    ClearPositions();
-    controllers_.ChangeMode( eModes_Gaming );
+    }
+    if( key == Qt::Key_Delete && mode == eModes_Gaming )
+    {
+        OnDeletePathfind();
+        return false;
+    }
     return true;
 }
 
@@ -557,14 +487,82 @@ void PathfindLayer::ProcessEvents()
 
 void PathfindLayer::OnAcceptEdit()
 {
-    if( HasPathfind() )
-        actions_.PublishCreatePathfind( *element_, std::vector< geometry::Point2f >( positions_.begin(), positions_.end() ) );
+    OnDeletePathfind();
+    if( HasValidPathfind() )
+        actions_.PublishCreatePathfind( GetUnitId(), *target_, edited_->GetDots() );
     ClearPositions();
+    edited_.reset();
     controllers_.ChangeMode( eModes_Gaming );
 }
 
 void PathfindLayer::OnRejectEdit()
 {
     ClearPositions();
+    if( selectedPathfind_ )
+        selectedPathfind_.ConstCast()->SetVisible( true );
+    edited_.reset();
     controllers_.ChangeMode( eModes_Gaming );
+}
+
+void PathfindLayer::OnDeletePathfind()
+{
+    if( !selectedPathfind_ )
+        return;
+    if( !profile_.CanBeOrdered( *selectedPathfind_ ) )
+        return;
+    actions_.PublishDestroyPathfind( selectedPathfind_->GetId() );
+}
+
+void PathfindLayer::OnEditPathfind()
+{
+    if( !selectedPathfind_ )
+        return;
+    selectedPathfind_.ConstCast()->SetVisible( false );
+    sword::Pathfind pathfind;
+    pathfind.mutable_request()->mutable_unit()->set_id( selectedPathfind_->GetUnit().GetId() );
+    *pathfind.mutable_result() = selectedPathfind_->GetPathfind();
+    OpenEditingMode( selectedPathfind_, pathfind );
+}
+
+uint32_t PathfindLayer::GetUnitId() const
+{
+    return target_ == selectedPathfind_ ? selectedPathfind_->GetUnit().GetId() : target_->GetId();
+}
+
+void PathfindLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "TacticalLines" )
+        filter_ = value.To< kernel::FourStateOption >();
+}
+
+ namespace
+ {
+    template< typename T >
+    bool IsSubordinate( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& candidate )
+    {
+        if( &entity == &candidate )
+            return true;
+        if( const auto hierarchy = entity.Retrieve< T >() )
+            return hierarchy->IsSubordinateOf( candidate );
+        return false;
+    }
+
+    bool IsSuperior( const kernel::Entity_ABC* superior, const kernel::Entity_ABC& unit )
+    {
+        return superior &&
+            ( IsSubordinate< kernel::TacticalHierarchies >( unit, *superior ) ||
+              IsSubordinate< kernel::CommunicationHierarchies >( unit, *superior ) );
+    }
+ }
+
+bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
+{
+    if( !filter_.IsSet( true, true, true ) )
+        return false;
+    const auto& element = static_cast< const kernel::Pathfind_ABC& >( entity ).GetUnit();
+    const bool selected = selectedEntity_ && IsSuperior( &element, *selectedEntity_ );
+    const bool superior = IsSuperior( selectedEntity_, element );
+    if( !filter_.IsSet( selected, superior, profile_.CanBeOrdered( element ) ) )
+        return false;
+    return gui::EntityLayer< kernel::Pathfind_ABC >::ShouldDisplay( entity );
 }

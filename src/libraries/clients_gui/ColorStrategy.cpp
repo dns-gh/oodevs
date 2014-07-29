@@ -25,6 +25,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
@@ -157,6 +158,11 @@ void ColorStrategy::SelectColor( const Formation_ABC& formation )
 void ColorStrategy::SelectColor( const kernel::Ghost_ABC& ghost )
 {
     Process( ghost );
+}
+
+void ColorStrategy::SelectColor( const kernel::Pathfind_ABC& pathfind )
+{
+    ApplyColor( ApplyModifiers( pathfind, QColor( "#00B3FD" ) ) );
 }
 
 // -----------------------------------------------------------------------------

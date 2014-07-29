@@ -13,6 +13,8 @@
 
 using namespace kernel;
 
+const std::string Pathfind_ABC::typeName_ = "pathfind";
+
 Pathfind_ABC::Pathfind_ABC()
 {
     // NOTHING
@@ -25,8 +27,7 @@ Pathfind_ABC::~Pathfind_ABC()
 
 const std::string& Pathfind_ABC::GetTypeName() const
 {
-    static const std::string name = "pathfind";
-    return name;
+    return typeName_;
 }
 
 void Pathfind_ABC::Select( ActionController& controller ) const

@@ -822,6 +822,10 @@
         <source>Itinerary</source>
         <translation>Itinéraire</translation>
     </message>
+    <message>
+        <source>Itineraries</source>
+        <translation>Itinéraires</translation>
+    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

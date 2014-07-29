@@ -10,10 +10,14 @@
 #ifndef __PathfindLayer_h_
 #define __PathfindLayer_h_
 
-#include "clients_gui/Layer.h"
-#include "clients_kernel/SafePointer.h"
+#include "clients_gui/EntityLayer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/ModesObserver_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
+#include "gaming/Pathfind.h"
+#include <tools/Resolver_ABC.h>
 #include <tools/SelectionObserver_ABC.h>
 #include <boost/optional.hpp>
 #include <functional>
@@ -26,12 +30,12 @@ namespace actions
 
 namespace kernel
 {
-    class Controllers;
-    class Entity_ABC;
     class Agent_ABC;
-    class Population_ABC;
+    class Controllers;
     class CoordinateConverter_ABC;
+    class Entity_ABC;
     class ModelUnLoaded;
+    class Population_ABC;
 }
 
 namespace gui
@@ -47,12 +51,16 @@ class Publisher_ABC;
 */
 // Created: LGY 2014-02-28
 // =============================================================================
-class PathfindLayer : public gui::Layer
+class PathfindLayer : public gui::EntityLayer< kernel::Pathfind_ABC >
                     , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                     , public tools::SelectionObserver_ABC
                     , public tools::SelectionObserver_Base< kernel::Agent_ABC >
+                    , public tools::SelectionObserver_Base< kernel::Automat_ABC >
+                    , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                     , public tools::SelectionObserver_Base< kernel::Population_ABC >
                     , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
+                    , public kernel::ContextMenuObserver_ABC< kernel::Pathfind_ABC >
+                    , public kernel::OptionsObserver_ABC
                     , private kernel::ModesObserver_ABC
 {
     Q_OBJECT;
@@ -62,10 +70,16 @@ public:
     //@{
              PathfindLayer( kernel::Controllers& controllers,
                             gui::GlTools_ABC& tools,
+                            gui::ColorStrategy_ABC& strategy,
+                            gui::View_ABC& view,
+                            const kernel::Profile_ABC& profile,
                             Publisher_ABC& publisher,
                             const kernel::CoordinateConverter_ABC& converter,
+                            const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
+                            const tools::Resolver_ABC< kernel::Population_ABC >& populations,
                             actions::ActionsModel& actions );
     virtual ~PathfindLayer();
+
     //@}
 
 private:
@@ -74,6 +88,8 @@ private:
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( gui::Viewport_ABC& viewport );
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Pathfind_ABC& pathfind, kernel::ContextMenu& menu );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
 
     virtual bool HandleKeyPress( QKeyEvent* key );
     virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
@@ -84,10 +100,14 @@ private:
     virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
 
     virtual void Select( const kernel::Agent_ABC& element );
+    virtual void Select( const kernel::Automat_ABC& element );
+    virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
+    virtual void MultipleSelect( const std::vector< const kernel::Pathfind_ABC* >& elements );
     virtual void BeforeSelection();
     virtual void AfterSelection();
 
+    void OpenEditingMode( const kernel::Entity_ABC* entity, const sword::Pathfind& pathfind );
     void DrawLines( float width ) const;
     void DrawPoints() const;
     void DrawPoint( geometry::Point2f p, bool highlight ) const;
@@ -104,35 +124,17 @@ private slots:
     void SetStartPosition();
     void SetEndPosition();
     void SendRequest();
-    void OpenEditingMode();
-
-private:
-    struct Point
-    {
-        // position of the point
-        geometry::Point2f coordinate_;
-        // index in the list of waypoints
-        boost::optional< uint32_t > waypoint_;
-    };
-
-    struct Hover
-    {
-        // current position of the dragged (possibly new) waypoint
-        boost::optional< geometry::Point2f > coordinate_;
-        // original position of the waypoint being dragged which would
-        // only be valid when moving around an already existing one
-        boost::optional< geometry::Point2f > origin_;
-        // hint describing where to insert a new waypoint
-        std::size_t lastWaypoint_;
-        // whether the mouse hovers an existing waypoint or not
-        bool onWaypoint_;
-    };
+    void OnOpenEditingMode();
+    void OnDeletePathfind();
+    void OnEditPathfind();
 
 private:
     void UpdateHovered( bool snap, const geometry::Point2f& point );
     bool HandleEvent( const std::function< void() >& event, bool replaceable = false );
     void ProcessEvents();
-    bool HasPathfind() const;
+    bool HasValidPathfind() const;
+    uint32_t GetUnitId() const;
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
 private:
     //! @name Member data
@@ -141,16 +143,21 @@ private:
     gui::GlTools_ABC& tools_;
     Publisher_ABC& publisher_;
     actions::ActionsModel& actions_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
+    const tools::Resolver_ABC< kernel::Population_ABC >& populations_;
     const kernel::CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f world_;
-    kernel::SafePointer< kernel::Entity_ABC > element_;
-    // the waypoints including the one being currently added or dragged
-    std::deque< geometry::Point2f > positions_;
-    // the last received path
-    std::vector< Point > path_;
+    // current selection where pathfind is applicable
+    kernel::SafePointer< kernel::Entity_ABC > target_;
+    // current selected entity
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    // current selected pathfind
+    kernel::SafePointer< kernel::Pathfind_ABC > selectedPathfind_;
+    // current edited pathfind, kept separate from the model
+    std::unique_ptr< Pathfind > edited_;
     // information about the objects under the mouse if not too far from the
     // current path
-    boost::optional< Hover > hovered_;
+    boost::optional< Pathfind::Hover > hovered_;
     geometry::Point2f point_;
     // pending events stored while waiting for a reply to the previous request
     // from the server
@@ -162,6 +169,8 @@ private:
     // whether a request has been sent to the server and a reply is expected
     // before letting the user make more changes to the displayed path
     bool lock_;
+    // current tactical lines filter
+    kernel::FourStateOption filter_;
     //@}
 };
 

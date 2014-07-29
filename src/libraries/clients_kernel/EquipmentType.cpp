@@ -64,6 +64,19 @@ EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< Wea
      maxSpeed_ *= 1000. / 3600.;
 }
 
+EquipmentType::EquipmentType( unsigned long id )
+    : id_( id )
+    , weight_( 0 )
+    , maxSpeed_( 0 )
+{
+    // NOTHING
+}
+
+std::unique_ptr< EquipmentType > EquipmentType::MakeFakeEquipment( unsigned long id )
+{
+    return std::unique_ptr< EquipmentType >( new EquipmentType( id ) );
+}
+
 // -----------------------------------------------------------------------------
 // Name: EquipmentType destructor
 // Created: AGE 2006-02-21

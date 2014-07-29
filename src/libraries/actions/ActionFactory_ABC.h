@@ -141,7 +141,7 @@ public:
     virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const = 0;
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const = 0;
 
-    virtual Action_ABC* CreatePathfindCreation( const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points ) const = 0;
+    virtual Action_ABC* CreatePathfindCreation( uint32_t unit, const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points ) const = 0;
     virtual Action_ABC* CreatePathfindDestruction( uint32_t id ) const = 0;
     virtual Action_ABC* CreateChangeLogisticLinks( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* currentSuperior ) const = 0;
     virtual Action_ABC* CreateUnitChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Automat_ABC& superior ) const = 0;

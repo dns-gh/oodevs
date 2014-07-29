@@ -2923,6 +2923,17 @@ Los datos no pueden ser proyectados.</translation>
     </message>
 </context>
 <context>
+    <name>PathfindLayer</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Editar</translation>
+    </message>
+</context>
+<context>
     <name>PlanificationModePanel</name>
     <message>
         <source>Planification mode</source>

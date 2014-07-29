@@ -443,6 +443,7 @@ T_ConverterLayerTypes LayerTypesConverter_[] =
     T_ConverterLayerTypes( "knowledges",        QT_TRANSLATE_NOOP( "ENT_Tr", "Knowledges" ),        eLayerTypes_Knowledges ),
     T_ConverterLayerTypes( "inhabitants",       QT_TRANSLATE_NOOP( "ENT_Tr", "Inhabitants" ),       eLayerTypes_Inhabitants ),
     T_ConverterLayerTypes( "resource_networks", QT_TRANSLATE_NOOP( "ENT_Tr", "Resource networks" ), eLayerTypes_ResourceNetworks ),
+    T_ConverterLayerTypes( "pathfinds",         QT_TRANSLATE_NOOP( "ENT_Tr", "Itineraries" ),       eLayerTypes_Pathfinds ),
     T_ConverterLayerTypes( "", "", (E_LayerTypes)-1 )
 };
 
