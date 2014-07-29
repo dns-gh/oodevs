@@ -90,9 +90,6 @@ private:
     QLabel* hostLabel_;
     QLabel* portLabel_;
     QLabel* timelineLabel_;
-
-    QCheckBox* mapnik_;
-    QCheckBox* oldTimeline_;
     //@}
 };
 
