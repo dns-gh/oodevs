@@ -560,9 +560,9 @@ bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
     if( !filter_.IsSet( true, true, true ) )
         return false;
     const auto& element = static_cast< const kernel::Pathfind_ABC& >( entity ).GetUnit();
-    const bool selected = selectedEntity_ == &element;
+    const bool selected = selectedEntity_ && IsSuperior( &element, *selectedEntity_ );
     const bool superior = IsSuperior( selectedEntity_, element );
-    if( !filter_.IsSet( selected, superior, profile_.IsVisible( element ) ) )
+    if( !filter_.IsSet( selected, superior, profile_.CanBeOrdered( element ) ) )
         return false;
     return gui::EntityLayer< kernel::Pathfind_ABC >::ShouldDisplay( entity );
 }
