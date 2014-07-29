@@ -145,8 +145,9 @@ public:
     // Etats du pion
     static bool IsFlying( const MIL_Agent_ABC& callerAgent );
     static void SetFlyingHeight( MIL_Agent_ABC& callerAgent, double height );
-    static float TimeLeftForMoving( const MIL_Agent_ABC& callerAgent );
+    static float TimeLeftForMoving( const DEC_Decision_ABC* callerAgent );
     static float TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance );
+    static float TheoricTimeToMoveDistance( const DEC_Decision_ABC* pAgent, float distance, bool loaded );
     static void Suicide( MIL_Agent_ABC& callerAgent );
     static bool CanIlluminate( DEC_Decision_ABC* pAgent );
     static float GetIlluminatingRange( const MIL_Agent_ABC&  callerAgent );

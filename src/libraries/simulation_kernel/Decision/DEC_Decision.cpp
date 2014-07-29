@@ -115,6 +115,8 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Automate_PerceptionPourPion", &DEC_AutomateFunctions::GetPerceptionForPion );
     brain.RegisterFunction( "DEC_Automate_CalculerPositionParRapportALimaPourPion", &DEC_AutomateFunctions::ComputePointBeforeLimaForPion );
     brain.RegisterFunction( "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite", &DEC_AutomateFunctions::PionTimeToMoveDistance );
+    brain.RegisterFunction( "DEC_PionTempsTheoriquePourParcourirDistanceEnLigneDroite", &DEC_AgentFunctions::TheoricTimeToMoveDistance );
+    brain.RegisterFunction( "DEC_AutonomieEnDeplacement", &DEC_AgentFunctions::TimeLeftForMoving );
     brain.RegisterFunction( "DEC_GetRawMission", &DEC_AutomateFunctions::GetMission );
     brain.RegisterFunction( "DEC_SetMission", &DEC_AutomateFunctions::SetMission );
     brain.RegisterFunction( "DEC_GetDirectionDanger", &DEC_AgentFunctions::GetDirectionDanger );

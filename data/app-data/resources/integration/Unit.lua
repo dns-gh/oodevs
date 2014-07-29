@@ -203,6 +203,34 @@ integration.getName = function( agent )
     return DEC_GetSzName( agent.source )
 end
 
+--- Returns the name of the provided agent
+-- @param agent Simulation agent
+-- @return String, the name of the agent
+integration.getMilName = function( agent )
+    return DEC_Pion_GetMilPionName( agent )
+end
+
+--- Returns the number of energy dotation for the provided agent 
+-- @param agent Simulation agent
+-- @return Double, the number of energy resources
+integration.getEnergyDotationNumber = function( agent )
+    return DEC_Agent_GetFuelDotationNumber( agent )
+end
+
+--- Returns the maximum capacity of the energy resources
+-- @param agent Simulation agent
+-- @return Double, the number of the maximum capacity of energy dotation
+integration.getEnergyDotationCapacity = function( agent )
+    return DEC_Agent_GetFuelDotationCapacity( agent)
+end
+
+--- Supply fuel resources for the provided agent
+-- @param agent Simulation agent
+-- @param ratio between 0 and 1 (if value is 1 the maximum capacity for fuel resources is reached, if value is 0 the fuel resources is 0) 
+integration.resupplyFuel = function( agent, ratio )
+    DEC_Agent_ResupplyFuel( agent, ratio )
+end
+
 --- Returns a list of all detected agent knowledges in
 -- this entity's current area of responsibility.
 -- This method can only be called by an agent.

@@ -544,8 +544,7 @@ integration.setAvailableDrones = function( minFuelQuantity, maxDistance )
     for _,pion in pairs( listePions or emptyTable ) do
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
         local fuelDotationNumber = DEC_Agent_GetFuelDotationNumber( pion )	
-        -- if DEC_GetSzName( pion ) == "Masalife.RENS.Drone SDTI" and operationalLevel ~= 0 and fuelDotationNumber > 0 then
-        if operationalLevel ~= 0 and fuelDotationNumber > minFuelQuantity then -- Le drone doit être opérationnel et avoir un minimum de carburant
+        if operationalLevel ~= 0 and fuelDotationNumber > minFuelQuantity then -- The drone should be operational
             if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < maxDistance and not pion:GetbMiseEnOeuvre_() then
                 integration.setUAVDeployed( pion, true ) -- mandatory to permit the flight
                 integration.removeFromLoadedUnits( pion )
@@ -590,6 +589,59 @@ integration.numberOfAvailableDrones = function( droneTask )
         end
     end
     return availableDroneCount
+end
+
+--- Returns time in minutes to cover a distance in a straight line
+-- The theorical maximum speed is used to compute time
+-- @param agent Simulation agent
+-- @param distance Float the distance in meter to cover 
+-- @param loaded Boolean, whether or not the agent is embarked
+-- @return Float, time to cover the distance
+integration.getTheoricTimeToCoverDistance = function( agent, distance, loaded )
+    return DEC_PionTempsTheoriquePourParcourirDistanceEnLigneDroite( agent, distance, loaded )
+end
+
+--- Returns time in minutes to cover a distance in a straight line
+-- The theorical maximum speed is used to compute time
+-- @param agent Simulation agent
+-- @param distance Float the distance in meter to cover 
+-- @param loaded Boolean, whether or not the agent is embarked
+-- @return Boolean, true if the unit can cover the fly track, false otherwise
+integration.checkFlyTrack = function ( distance, agent )
+    if agent then
+        local unitPC = meKnowledge:getUnitPC()
+        if unitPC.source.pluggedUnits and unitPC.source.pluggedUnits[ agent ] then
+            return false
+        end
+        local tempsDeParcours = integration.getTheoricTimeToCoverDistance( agent, distance, true )
+        local autonomy = DEC_AutonomieEnDeplacement( agent )
+        if autonomy < tempsDeParcours then
+            return false
+        end
+        return true
+    else
+        local tempsDeParcours = DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( distance )
+        local autonomy = DEC_Agent_AutonomieEnDeplacement(  )
+        if autonomy < tempsDeParcours then
+            return false
+        end
+        return true
+    end
+end
+
+--- Returns time in minutes to cover a distance in a straight line
+-- The theorical maximum speed is used to compute time
+-- @param distance Float the distance in meter to cover 
+-- @return Float, time to cover the distance
+integration.getTimeToFlyOverDistance = function( distance )
+    return DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( distance )
+end
+
+--- Returns the autonomy in minutes for an agent
+-- The time is computed on the assumption that the agent is moving
+-- @return Float, the time in minutes
+integration.movingAutonomy = function( )
+    return DEC_Agent_AutonomieEnDeplacement()
 end
 
 --- Returns true if this agent is moving, false otherwise.
@@ -1163,3 +1215,74 @@ integration.bodyIsMoving = integration.AgentIsMoving
 
 --- Deprecated
 integration.meKnowledgeIsTranported = integration.meKnowledgeIsTransported
+
+--- Deprecated, use integration.startActivateDrone
+integration.startDeployDrone = function ( self, distance, listPoints )
+    integration.setAvailableDronesForFlyTrack( distance, listPoints )
+    myself.Deployed = false
+    if myself.droneAvailable == nil then
+        reportFunction( eRC_PasDeDroneDisponible )
+        if not meKnowledge:isSelfCommanding() then
+            meKnowledge:sendNoDisponibleDrone( meKnowledge:getAutomat() )
+        end
+    else
+        DEC_Agent_Deploy()
+        reportFunction( eRC_DebutMiseEnOeuvreDrone, myself.droneAvailable )
+    end
+end
+
+--- Deprecated, use integration.startedActivateDrone
+integration.startedDeployDrone = function ( self, distance, listPoints )
+    if not myself.Deployed and meKnowledge:isDeployed() and myself.droneAvailable then
+        myself.Deployed = true
+        myself.droneAvailable:SetbMiseEnOeuvre_( true ) -- mandatory to permit the flight
+        local droneKn = CreateKnowledge( sword.military.world.PlatoonAlly, myself.droneAvailable )
+        reportFunction( eRC_FinMiseEnOeuvreDrone, myself.droneAvailable )
+        meKnowledge:sendRC( droneKn, eRC_DroneDisponible )
+        meKnowledge:sendDisponibleDrone(meKnowledge:getAutomat(), droneKn)
+    end
+end
+
+--- Deprecated, use integration.stopActivateDrone
+integration.stopDeployDrone = function( self, distance, listPoints )
+    DEC_Agent_Undeploye()
+    return true
+end
+
+--- Deprecated, use integration.setAvailableDrones
+integration.setAvailableDronesForFlyTrack = function ( distance, listPoints )
+    myself.droneAvailable  = nil
+    local listePions = DEC_Pion_PionsSansPC()
+    local autonomie = false
+    for _,pion in pairs( listePions or emptyTable ) do
+        local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
+        local nomPion = DEC_Pion_GetMilPionName( pion )
+        local possible = true
+        if string.find (nomPion, "SDTI") then
+            if DEC_Agent_GetFuelDotationNumber( pion ) <= 3 then
+                possible = false
+            end
+        end
+        if string.find (nomPion, "DRAC") then
+            if string.find (nomPion, "PVP") then
+                possible = false
+            else
+                possible = integration.checkFlyTrack( distance, pion )
+            end
+        end
+        if possible then
+            autonomie = true
+        end	
+        if operationalLevel ~= 0 and possible then
+            if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < 80 and  not pion:GetbMiseEnOeuvre_() then
+                DEC_Transport_DebarquerPionSansDelais( pion )
+                myself.droneAvailable = pion
+                meKnowledge:sendFlyTrack( CreateKnowledge( sword.military.world.PlatoonAlly, pion ), listPoints )
+                break
+            end
+        end
+    end
+    if not autonomie then
+        reportFunction( eRC_AutonomyDrone )
+    end
+end

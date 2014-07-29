@@ -342,7 +342,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AgentFunctions::AgentCanExtinguish, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Agent_CanFly", boost::bind( &DEC_AgentFunctions::AgentCanFly, boost::cref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_GetFuelDotationNumber",  boost::function< double ( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::GetFuelDotationNumber, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Agent_AutonomieEnDeplacement", boost::bind( &DEC_AgentFunctions::TimeLeftForMoving, boost::cref( GetPion() ) ) );
+    RegisterFunction( "DEC_Agent_AutonomieEnDeplacement", boost::bind( &DEC_AgentFunctions::TimeLeftForMoving, this ) );
     RegisterFunction( "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite",
         boost::function< float ( float ) >( boost::bind( &DEC_AgentFunctions::TimeToMoveDistance, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Agent_TempsPourDegagerUnObjet",

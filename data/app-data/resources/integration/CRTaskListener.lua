@@ -237,6 +237,15 @@ integration.RC_Pion_Pion = function( myself, typeMessage, id, firstList, secondL
     DEC_RC_Pion_Pion( myself, typeMessage, id, firstList, secondList )
 end
 
+--- Emits a message with an Agent parameter
+-- @param myself the message sender
+-- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id the number of the message
+-- @param list the Simulation Agent parameter
+integration.RC_Pion = function( myself, typeMessage, id, list )
+    DEC_RC_Pion( myself, typeMessage, id, list )
+end
+
 --- Emits a message with a Crowd parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)

@@ -954,9 +954,9 @@ bool DEC_AgentFunctions::IsInCrowd( const MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::TimeLeftForMoving
 // Created: JVT 2005-02-07
 // -----------------------------------------------------------------------------
-float DEC_AgentFunctions::TimeLeftForMoving( const MIL_Agent_ABC& callerAgent )
+float DEC_AgentFunctions::TimeLeftForMoving( const DEC_Decision_ABC* callerAgent )
 {
-    const double rTime = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
+    const double rTime = callerAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
     return static_cast< float >( MIL_Tools::ConvertSimToMinutes( rTime ) );
 }
 
@@ -970,6 +970,23 @@ float DEC_AgentFunctions::TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, 
    if( rMaxSpeed == 0 )
        return std::numeric_limits< float >::max();
     return static_cast< float >( MIL_Tools::ConvertSimToMinutes( MIL_Tools::ConvertMeterToSim( distance ) / rMaxSpeed ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::TheoricTimeToMoveDistance
+// Created: GGE 2014-07-10
+// -----------------------------------------------------------------------------
+float DEC_AgentFunctions::TheoricTimeToMoveDistance( const DEC_Decision_ABC* pAgent, float distance, bool loaded )
+{
+    if( !pAgent )
+       throw MASA_EXCEPTION( "Invalid pion in TheoricTimeToMoveDistance" );
+    const double rDistance = MIL_Tools::ConvertMeterToSim( distance );
+    double rMaxSpeed = 0.;
+    if ( loaded ) 
+        rMaxSpeed = pAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetTheoricMaxSpeed();
+    else
+        rMaxSpeed = pAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
+    return rMaxSpeed != 0. ? float( MIL_Tools::ConvertSimToMinutes( rDistance / rMaxSpeed ) ) : std::numeric_limits< float >::max();
 }
 
 // -----------------------------------------------------------------------------
