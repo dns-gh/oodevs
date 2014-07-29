@@ -29,11 +29,12 @@
 // Name: ScenarioJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises )
+ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises, const DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonJoin )
     , controllers_      ( controllers )
     , exerciseContainer_( exercises )
     , config_           ( config )
+    , debug_            ( debug )
     , fileLoader_       ( fileLoader )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
@@ -184,10 +185,12 @@ void ScenarioJoinPage::OnJoin()
     log = GetTimelineLog( sessionPath.Parent(), log );
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    const auto devFeatures = registry::ReadFeatures();
+    QString features;
+    if( debug_ )
+        features = debug_->GetDevFeatures();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-        exercise_->GetName(), "remote", static_cast< const QString* >( 0 ), devFeatures, log,
-        config_.GetCefLog() ) );
+        exercise_->GetName(), "remote", static_cast< const QString* >( 0 ),
+        features, log, config_.GetCefLog() ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

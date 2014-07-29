@@ -33,6 +33,7 @@ class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
 class QSpinBox;
+struct DebugConfig;
 
 // =============================================================================
 /** @class  ScenarioJoinPage
@@ -50,7 +51,8 @@ public:
              ScenarioJoinPage( Application& app, QStackedWidget* pages,
                                Page_ABC& previous, kernel::Controllers& controllers,
                                const Config& config, const tools::Loader_ABC& fileLoader,
-                               ExerciseContainer& exercises );
+                               ExerciseContainer& exercises,
+                               const DebugConfig* debug );
     virtual ~ScenarioJoinPage();
     //@}
 
@@ -75,6 +77,7 @@ private:
     kernel::Controllers& controllers_;
     ExerciseContainer& exerciseContainer_;
     const Config& config_;
+    const DebugConfig* debug_;
     const tools::Loader_ABC& fileLoader_;
     QTabWidget* tabs_;
     ProgressPage* progressPage_;

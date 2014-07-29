@@ -17,7 +17,6 @@
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
-#include "Registry.h"
 #include "SessionList.h"
 
 #include "frontend/Config.h"
@@ -106,13 +105,17 @@ void ReplayPage::StartExercise()
     if( !exercise_ || session_.IsEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
         return;
     const tools::Path exerciseName = exercise_->GetName();
-    const auto features = registry::ReadFeatures();
     ConfigureSession( exerciseName, session_ );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, "" ) );
+    QString features;
     boost::optional< tools::Path > wwwDir;
     if( debug_ && !debug_->timeline.debugWwwDir.IsEmpty() )
-        wwwDir = debug_->timeline.debugWwwDir;
+    {
+        if( !debug_->timeline.debugWwwDir.IsEmpty() )
+            wwwDir = debug_->timeline.debugWwwDir;
+        features = debug_->GetDevFeatures();
+    }
     process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_, wwwDir ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,

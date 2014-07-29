@@ -34,7 +34,7 @@ SelfTrainingPage::SelfTrainingPage( Application& app, QStackedWidget* pages,
             fileLoader, exercises, debug );
     startButton_ = AddLink( *launcher_, false );
     connect( startButton_, SIGNAL( clicked() ), this, SLOT( OnStart() ) );
-    joinButton_ = AddLink( *new ScenarioJoinPage( app, pages, *this, controllers, config, fileLoader, exercises ) );
+    joinButton_ = AddLink( *new ScenarioJoinPage( app, pages, *this, controllers, config, fileLoader, exercises, debug ) );
 }
 
 // -----------------------------------------------------------------------------
