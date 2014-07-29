@@ -32,6 +32,7 @@ DebugConfig LoadDebugConfig()
 
     config.gaming.hasMapnik = registry::ReadBool( "HasMapnikLayer" );
 
+    config.sim.decProfiling = registry::ReadBool( "DebugDecProfiling" );
     config.sim.integrationDir = registry::ReadPath( "IntegrationLayerPath" );
     config.sim.pathfindFilter = registry::ReadString( "DebugPathfindFilter" ).toStdString();
     config.sim.pathfindDumpDir = registry::ReadPath( "DebugPathfindDumpPath" );
@@ -51,6 +52,7 @@ void SaveDebugConfig( const DebugConfig& config )
 {
     registry::WriteBool( "HasMapnikLayer", config.gaming.hasMapnik );
 
+    registry::WriteBool( "DebugDecProfiling", config.sim.decProfiling );
     registry::WriteString( "IntegrationLayerPath",
             config.sim.integrationDir.ToUTF8().c_str() );
     registry::WriteString( "DebugPathfindFilter", config.sim.pathfindFilter.c_str() );
@@ -85,11 +87,11 @@ QString DebugConfig::GetDevFeatures() const
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
-DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
-    : PluginConfig_ABC( parent )
+DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config, DebugConfig& debug )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , visible_( !!parent )
     , config_( config )
-    , debug_( LoadDebugConfig() )
+    , debug_( debug )
     , profilingBox_( 0 )
     , decCallsBox_( 0 )
     , pathfindsBox_( 0 )
@@ -100,6 +102,8 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     , mapnikBox_( 0 )
     , mapnikLayerBox_( 0 )
 {
+    debug_ = LoadDebugConfig();
+
     //integration level label
     integrationLabel_ = new QLabel();
 
@@ -188,6 +192,8 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     QGridLayout* profiling = new QGridLayout( profilingBox_, 1, 1 );
     profiling->setMargin( 10 );
     decCallsBox_ = new QCheckBox();
+    decCallsBox_->setChecked( debug_.sim.decProfiling );
+    connect( decCallsBox_, SIGNAL( clicked( bool ) ), SLOT( OnDecProfilingChanged( bool ) ) );
     profiling->addWidget( decCallsBox_, 0, 0 );
 
     //pathfinds group box
@@ -329,39 +335,6 @@ QString DebugConfigPanel::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::IsVisible
-// Created: BAX 2013-11-25
-// -----------------------------------------------------------------------------
-bool DebugConfigPanel::IsVisible() const
-{
-    return visible_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::Commit
-// Created: LGY 2013-02-05
-// -----------------------------------------------------------------------------
-void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
-{
-    frontend::CreateSession action( config_, exercise, session );
-    action.SetOption( "session/config/timeline/@debug-port", debug_.timeline.debugPort );
-    if( !debug_.timeline.clientLogPath.IsEmpty() )
-    {
-        const auto log = GetTimelineLog( action.GetPath().Parent(), debug_.timeline.clientLogPath );
-        action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
-    }
-    if( !debug_.timeline.debugWwwDir.IsEmpty() )
-        action.SetOption( "session/config/timeline/@debug",
-                debug_.timeline.debugWwwDir.ToUTF8() );
-    action.SetOption( "session/config/timeline/@enabled", debug_.timeline.legacyTimeline );
-    if( decCallsBox_->isChecked() )
-        action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-    if( debug_.gaming.hasMapnik )
-        action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
-    action.Commit();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DebugConfigPanel::OnChangeDataDirectory
 // Created: LGY 2013-02-05
 // -----------------------------------------------------------------------------
@@ -379,6 +352,12 @@ void DebugConfigPanel::OnSelectDataDirectory()
         return;
     dataDirectory_->setText( QString::fromStdWString( directory.ToUnicode() ) );
     OnChangeDataDirectory();
+}
+
+void DebugConfigPanel::OnDecProfilingChanged( bool checked )
+{
+    debug_.sim.decProfiling = checked;
+    SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,9 +413,3 @@ void DebugConfigPanel::OnDevFeaturesChanged()
     SaveDebugConfig( debug_ );
 }
 
-boost::optional< DebugConfig > DebugConfigPanel::GetConfig() const
-{
-    if( !config_.IsOnDebugMode() )
-        return boost::none;
-    return debug_;
-}

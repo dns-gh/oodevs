@@ -11,6 +11,7 @@
 #include "HomePage.h"
 #include "AuthoringPage.h"
 #include "Config.h"
+#include "DebugConfigPanel.h"
 #include "MenuButton.h"
 #include "OptionsPage.h"
 #include "ReplayPage.h"
@@ -29,7 +30,9 @@ HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
                     ExerciseContainer& exercises )
     : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
-    , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader, controllers, exercises ) )
+    , debug_( config.IsOnDebugMode() ? new DebugConfig() : 0 )
+    , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader,
+                controllers, exercises, debug_.get() ) )
 {
     setWindowTitle( "HomePage" );
 
@@ -40,7 +43,8 @@ HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
     prepare_ = AddLink( *editPage_, false );
     connect( prepare_, SIGNAL( clicked() ), this, SLOT( OnPrepare() ) );
 
-    playPage_ = new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, exercises );
+    playPage_ = new SelfTrainingPage( app, pages, *this, config, fileLoader,
+            controllers, exercises, debug_.get() );
     play_ =    AddLink( *playPage_ );
 
     replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, exercises );

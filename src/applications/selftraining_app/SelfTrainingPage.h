@@ -23,9 +23,10 @@ namespace tools
 }
 
 class Application;
-class ExerciseContainer;
 class Config;
+class ExerciseContainer;
 class ScenarioLauncherPage;
+struct DebugConfig;
 
 // =============================================================================
 /** @class  SelfTrainingPage
@@ -43,7 +44,8 @@ public:
                                Page_ABC& previous, const Config& config,
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,
-                               ExerciseContainer& exercises );
+                               ExerciseContainer& exercises,
+                               const DebugConfig* debug );
     virtual ~SelfTrainingPage();
     //@}
 

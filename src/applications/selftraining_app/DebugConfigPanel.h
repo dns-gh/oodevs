@@ -10,7 +10,8 @@
 #ifndef __DebugConfigPanel_h_
 #define __DebugConfigPanel_h_
 
-#include "frontend/PluginConfig_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 #include <unordered_set>
 
@@ -25,6 +26,7 @@ tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& lo
 
 struct DebugSim
 {
+    bool decProfiling;
     tools::Path integrationDir;
     std::string pathfindFilter;
     tools::Path pathfindDumpDir;
@@ -63,28 +65,22 @@ class Config;
 */
 // Created: NPT 2013-01-03
 // =============================================================================
-class DebugConfigPanel : public frontend::PluginConfig_ABC
+class DebugConfigPanel : public gui::WidgetLanguageObserver_ABC< QWidget >
+                       , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugConfigPanel( QWidget* parent, const Config& config );
+             DebugConfigPanel( QWidget* parent, const Config& config, DebugConfig& debug );
     virtual ~DebugConfigPanel();
     //@}
 
     //! @name Operations
     //@{
-    virtual QString GetName() const;
-    virtual bool IsVisible() const;
-    virtual void Commit( const tools::Path& exercise, const tools::Path& session );
+    QString GetName() const;
     virtual void OnLanguageChanged();
-    //@}
-
-    //! @name Accessors
-    //@{
-    boost::optional< DebugConfig > GetConfig() const;
     //@}
 
 private slots:
@@ -101,6 +97,7 @@ private slots:
     void OnSelectDataDirectory();
     void OnChangeDataDirectory();
     void OnDevFeaturesChanged();
+    void OnDecProfilingChanged( bool checked );
     //@}
 
 private:
@@ -109,7 +106,7 @@ private:
     //config
     const bool visible_;
     const Config& config_;
-    DebugConfig debug_;
+    DebugConfig& debug_;
 
     QGroupBox* topBox_;
 

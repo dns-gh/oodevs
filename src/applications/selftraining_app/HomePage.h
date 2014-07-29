@@ -32,6 +32,7 @@ class ScenarioEditPage;
 class QuitPage;
 class SelfTrainingPage;
 class ReplayPage;
+struct DebugConfig;
 
 // =============================================================================
 /** @class  HomePage
@@ -73,6 +74,7 @@ private:
     //! @name Member data
     //@{
     Config& config_;
+    std::unique_ptr< DebugConfig > debug_;
     AuthoringPage* adaptPage_;
     OptionsPage* optionsPage_;
     ScenarioEditPage* editPage_;

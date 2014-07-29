@@ -114,16 +114,17 @@ namespace
 // -----------------------------------------------------------------------------
 ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages,
         Page_ABC& previous, kernel::Controllers& controllers, const Config& config,
-        const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises )
+        const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises,
+        const DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
     , exerciseContainer_( exercises )
+    , debug_            ( debug )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )
-    , configPanel_      ( 0 )
 {
     setWindowTitle( "ScenarioLauncherPage" );
 
@@ -162,10 +163,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     OrbatConfigPanel* pOrbatConfigPanel = AddPlugin( new OrbatConfigPanel( configTabs_, config_ ) );
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), pOrbatConfigPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
-
-    //debug config panel
-    auto parent = config.IsOnDebugMode() ? configTabs_ : nullptr;
-    configPanel_ = AddPlugin( new DebugConfigPanel( parent, config_ ) );
 
     //general settings tab
     QWidget* configBox = new QWidget();
@@ -251,17 +248,14 @@ void ScenarioLauncherPage::OnStart()
 
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
             ( "checkpoint", checkpoint_.ToUTF8().c_str() );
-    boost::optional< DebugConfig > debug;
-    if( configPanel_ )
-        debug = configPanel_->GetConfig();
-    if( debug && !debug->sim.integrationDir.IsEmpty() )
+    if( debug_ && !debug_->sim.integrationDir.IsEmpty() )
     {
-        if( !debug->sim.integrationDir.IsEmpty() )
-            arguments[ "integration-dir" ] = debug->sim.integrationDir.ToUTF8();
-        if( !debug->sim.pathfindDumpDir.IsEmpty() )
-            arguments[ "dump-pathfinds" ] = debug->sim.pathfindDumpDir.ToUTF8();
-        if( !debug->sim.pathfindFilter.empty() )
-            arguments[ "filter-pathfinds" ] = debug->sim.pathfindFilter;
+        if( !debug_->sim.integrationDir.IsEmpty() )
+            arguments[ "integration-dir" ] = debug_->sim.integrationDir.ToUTF8();
+        if( !debug_->sim.pathfindDumpDir.IsEmpty() )
+            arguments[ "dump-pathfinds" ] = debug_->sim.pathfindDumpDir.ToUTF8();
+        if( !debug_->sim.pathfindFilter.empty() )
+            arguments[ "filter-pathfinds" ] = debug_->sim.pathfindFilter;
     }
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
@@ -272,7 +266,7 @@ void ScenarioLauncherPage::OnStart()
     if( hasClient_ )
     {
         auto profile = profile_.GetLogin();
-        QString devFeatures = debug ? debug->GetDevFeatures() : QString();
+        QString devFeatures = debug_ ? debug_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session.first, &profile, devFeatures, tools::Path(),
             config_.GetCefLog() ) );
@@ -291,6 +285,26 @@ void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const too
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
+
+        if( debug_ )
+        {
+            action.SetOption( "session/config/timeline/@debug-port", debug_->timeline.debugPort );
+            if( !debug_->timeline.clientLogPath.IsEmpty() )
+            {
+                const auto log = GetTimelineLog( action.GetPath().Parent(),
+                        debug_->timeline.clientLogPath );
+                action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
+            }
+            if( !debug_->timeline.debugWwwDir.IsEmpty() )
+                action.SetOption( "session/config/timeline/@debug",
+                        debug_->timeline.debugWwwDir.ToUTF8() );
+            action.SetOption( "session/config/timeline/@enabled", debug_->timeline.legacyTimeline );
+            if( debug_->sim.decProfiling )
+                action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
+            if( debug_->gaming.hasMapnik )
+                action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
+        }
+
         action.Commit();
     }
     BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )

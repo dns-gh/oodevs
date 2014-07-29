@@ -15,9 +15,11 @@
 class Application;
 class Config;
 class DataWidget;
+class DebugConfigPanel;
 class ExerciseContainer;
 class ExportWidget;
 class ImportWidget;
+struct DebugConfig;
 
 namespace tools
 {
@@ -45,7 +47,7 @@ public:
              OptionsPage( Application& app, QWidget* parent, QStackedWidget* pages,
                   Page_ABC& previous, Config& config,
                   const tools::Loader_ABC& loader, kernel::Controllers& controllers,
-                  ExerciseContainer& exercises );
+                  ExerciseContainer& exercises, DebugConfig* debug );
     virtual ~OptionsPage();
     //@}
 
@@ -87,6 +89,7 @@ private:
     void SetImportLayout();
     void SetExportLayout();
     void SetDataLayout();
+    void SetDebugLayout( DebugConfig* debug );
     //@}
 
     //! @name Helpers
@@ -129,6 +132,7 @@ private:
     ImportWidget* import_;
     ExportWidget* export_;
     DataWidget* data_;
+    DebugConfigPanel* debug_;
     //@}
 };
 

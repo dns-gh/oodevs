@@ -36,7 +36,7 @@ class Application;
 class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
-class DebugConfigPanel;
+struct DebugConfig;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage
@@ -55,7 +55,8 @@ public:
                                    Page_ABC& previous, kernel::Controllers& controllers,
                                    const Config& config,
                                    const tools::Loader_ABC& fileLoader,
-                                   ExerciseContainer& exercises );
+                                   ExerciseContainer& exercises,
+                                   const DebugConfig* debug );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -94,6 +95,7 @@ private:
     const tools::Loader_ABC&      fileLoader_;
     kernel::Controllers&          controllers_;
     ExerciseContainer&            exerciseContainer_;
+    const DebugConfig*            debug_;
     ProgressPage*                 progressPage_;
     ExerciseList*                 exercises_;
     const frontend::Exercise_ABC* exercise_;
@@ -104,7 +106,6 @@ private:
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          hasClient_;
-    DebugConfigPanel*             configPanel_;
     //@}
 };
 
