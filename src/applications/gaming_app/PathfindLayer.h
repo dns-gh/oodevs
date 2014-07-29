@@ -80,7 +80,6 @@ public:
                             const tools::Resolver_ABC< kernel::Population_ABC >& populations,
                             actions::ActionsModel& actions );
     virtual ~PathfindLayer();
-
     //@}
 
 private:

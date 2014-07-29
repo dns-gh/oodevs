@@ -132,7 +132,7 @@ void PathfindLayer::Paint( gui::Viewport_ABC& view )
 // -----------------------------------------------------------------------------
 void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
-    if( !target_ || lock_ )
+    if( !selectedEntity_ || lock_ )
         return;
     point_ = point;
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
@@ -144,7 +144,7 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
         }
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
     }
-    else if( profile_.CanBeOrdered( *target_ ) )
+    else if( profile_.CanBeOrdered( *selectedEntity_ ) )
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OnOpenEditingMode() ) );
 }
 
