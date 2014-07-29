@@ -11,6 +11,7 @@
 #define __DebugConfigPanel_h_
 
 #include "frontend/PluginConfig_ABC.h"
+#include <boost/optional.hpp>
 
 namespace tools
 {
@@ -24,12 +25,16 @@ tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& lo
 struct DebugSim
 {
     tools::Path integrationDir;
+    std::string pathfindFilter;
+    tools::Path pathfindDumpDir;
 };
 
 struct DebugConfig
 {
     DebugSim sim;
 };
+
+class Config;
 
 // =============================================================================
 /** @class  DebugConfigPanel
@@ -44,7 +49,7 @@ class DebugConfigPanel : public frontend::PluginConfig_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
+             DebugConfigPanel( QWidget* parent, const Config& config );
     virtual ~DebugConfigPanel();
     //@}
 
@@ -59,13 +64,7 @@ public:
     //! @name Accessors
     //@{
     QString GetDevFeatures() const;
-    const DebugConfig& GetConfig() const;
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void DumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
+    boost::optional< DebugConfig > GetConfig() const;
     //@}
 
 private slots:
@@ -82,7 +81,6 @@ private slots:
     void OnEditIntegrationDirectory( const QString& );
     void OnSelectDataDirectory();
     void OnChangeDataDirectory();
-    void OnChangeDataFilter();
     void OnDevFeaturesChanged();
     //@}
 
@@ -91,7 +89,7 @@ private:
     //@{
     //config
     const bool visible_;
-    const tools::GeneralConfig& config_;
+    const Config& config_;
     DebugConfig debug_;
 
     QGroupBox* topBox_;

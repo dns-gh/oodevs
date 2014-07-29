@@ -67,7 +67,6 @@ private slots:
     void ClearSelection();
     void OnSelectCheckpoint( const tools::Path& session, const tools::Path& checkpoint );
     void OnClientEnabled( bool enabled );
-    void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
 
 private:
@@ -101,8 +100,6 @@ private:
     frontend::Profile             profile_;
     tools::Path                   session_;
     tools::Path                   checkpoint_;
-    QString                       pathfindFilter_;
-    tools::Path                   dumpPathfindDirectory_;
     T_Plugins                     plugins_;
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;

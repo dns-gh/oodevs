@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "DebugConfigPanel.h"
 #include "moc_DebugConfigPanel.cpp"
+#include "Config.h"
 #include "Registry.h"
 
 #include "clients_gui/FileDialog.h"
@@ -29,8 +30,9 @@ DebugConfig LoadDebugConfig()
 {
     DebugConfig config;
 
-    QString integrationDir = registry::ReadString( "IntegrationLayerPath" ).trimmed();
-    config.sim.integrationDir = tools::Path::FromUTF8( integrationDir.toStdString() );
+    config.sim.integrationDir = registry::ReadPath( "IntegrationLayerPath" );
+    config.sim.pathfindFilter = registry::ReadString( "DebugPathfindFilter" ).toStdString();
+    config.sim.pathfindDumpDir = registry::ReadPath( "DebugPathfindDumpPath" );
 
     return config;
 }
@@ -39,6 +41,8 @@ void SaveDebugConfig( const DebugConfig& config )
 {
     registry::WriteString( "IntegrationLayerPath",
             config.sim.integrationDir.ToUTF8().c_str() );
+    registry::WriteString( "DebugPathfindFilter", config.sim.pathfindFilter.c_str() );
+    registry::WritePath( "DebugPathfindDumpPath", config.sim.pathfindDumpDir );
 }
 
 }  // namespace
@@ -56,7 +60,7 @@ tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& lo
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
-DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
+DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     : PluginConfig_ABC( parent )
     , visible_( !!parent )
     , config_( config )
@@ -173,6 +177,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     dataButton_ = new QPushButton();
     connect( dataButton_, SIGNAL( clicked() ), SLOT( OnSelectDataDirectory() ) );
     dataDirectory_ = new QLineEdit();
+    dataDirectory_->setText( QString::fromStdWString( debug_.sim.pathfindDumpDir.ToUnicode() ) );
     connect( dataDirectory_, SIGNAL( textEdited( const QString& ) ), SLOT( OnChangeDataDirectory() ) );
     dumpLayout->addWidget( dumpLabel_ );
     dumpLayout->addWidget( dataDirectory_ );
@@ -182,9 +187,10 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     filterLayout->setSpacing( 10 );
     filterLabel_ = new QLabel();
     filterEdit_ = new QLineEdit();
+    filterEdit_->setText( debug_.sim.pathfindFilter.c_str() );
     filterLayout->addWidget( filterLabel_ );
     filterLayout->addWidget( filterEdit_ );
-    connect( filterEdit_, SIGNAL( editingFinished() ), SLOT( OnChangeDataFilter() ) );
+    connect( filterEdit_, SIGNAL( editingFinished() ), SLOT( OnChangeDataDirectory() ) );
 
     pathfinds->addLayout( dumpLayout );
     pathfinds->addLayout( filterLayout );
@@ -341,8 +347,9 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnChangeDataDirectory()
 {
-    emit DumpPathfindOptionsChanged( filterEdit_->text(),
-            tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
+    debug_.sim.pathfindFilter = filterEdit_->text().toStdString();
+    debug_.sim.pathfindDumpDir = tools::Path::FromUnicode( dataDirectory_->text().toStdWString() );
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnSelectDataDirectory()
@@ -352,15 +359,6 @@ void DebugConfigPanel::OnSelectDataDirectory()
         return;
     dataDirectory_->setText( QString::fromStdWString( directory.ToUnicode() ) );
     OnChangeDataDirectory();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::OnChangeDataFilter
-// Created: LGY 2013-02-06
-// -----------------------------------------------------------------------------
-void DebugConfigPanel::OnChangeDataFilter()
-{
-    emit DumpPathfindOptionsChanged( filterEdit_->text(), tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -424,7 +422,9 @@ QString DebugConfigPanel::GetDevFeatures() const
     return tools::JoinFeatures( checked ).c_str();
 }
 
-const DebugConfig& DebugConfigPanel::GetConfig() const
+boost::optional< DebugConfig > DebugConfigPanel::GetConfig() const
 {
+    if( !config_.IsOnDebugMode() )
+        return boost::none;
     return debug_;
 }

@@ -10,12 +10,19 @@
 #ifndef SELFTRAINING_REGISTRY_H__
 #define SELFTRAINING_REGISTRY_H__
 
+namespace tools
+{
+    class Path;
+}
+
 namespace registry
 {
     bool    ReadBool( const QString& key, bool defaultValue = false );
     void    WriteBool( const QString& key, bool value );
     QString ReadString( const QString& key );
     void    WriteString( const QString& key, const QString& value );
+    tools::Path ReadPath( const QString& key );
+    void WritePath( const QString& key, const tools::Path& path );
     int     ReadInt( const QString& key, int defaultValue = 0 );
     void    WriteInt( const QString& key, int value );
     QString ReadFeatures();

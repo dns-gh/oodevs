@@ -166,7 +166,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     //debug config panel
     auto parent = config.IsOnDebugMode() ? configTabs_ : nullptr;
     configPanel_ = AddPlugin( new DebugConfigPanel( parent, config_ ) );
-    connect( configPanel_, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
     connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel_, SLOT( OnExerciseNumberChanged( int ) ) );
 
     //general settings tab
@@ -252,15 +251,19 @@ void ScenarioLauncherPage::OnStart()
         CreateSession( exerciseName, session.first );
 
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
-            ( "checkpoint", checkpoint_.ToUTF8().c_str() )
-            ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
+            ( "checkpoint", checkpoint_.ToUTF8().c_str() );
     boost::optional< DebugConfig > debug;
-    if( configPanel_ && config_.IsOnDebugMode() )
+    if( configPanel_ )
         debug = configPanel_->GetConfig();
     if( debug && !debug->sim.integrationDir.IsEmpty() )
-        arguments[ "integration-dir" ] = debug->sim.integrationDir.ToUTF8();
-    if( !dumpPathfindDirectory_.IsEmpty() )
-        arguments[ "dump-pathfinds" ] = dumpPathfindDirectory_.ToUTF8();
+    {
+        if( !debug->sim.integrationDir.IsEmpty() )
+            arguments[ "integration-dir" ] = debug->sim.integrationDir.ToUTF8();
+        if( !debug->sim.pathfindDumpDir.IsEmpty() )
+            arguments[ "dump-pathfinds" ] = debug->sim.pathfindDumpDir.ToUTF8();
+        if( !debug->sim.pathfindFilter.empty() )
+            arguments[ "filter-pathfinds" ] = debug->sim.pathfindFilter;
+    }
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartExercise >(
@@ -365,14 +368,4 @@ void ScenarioLauncherPage::OnClientEnabled( bool enabled )
 {
     registry::WriteBool( "NoClientSelected", !enabled );
     hasClient_ = enabled;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::OnDumpPathfindOptionsChanged
-// Created: LGY 2013-02-06
-// -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory )
-{
-    pathfindFilter_ = filter;
-    dumpPathfindDirectory_ = directory;
 }
