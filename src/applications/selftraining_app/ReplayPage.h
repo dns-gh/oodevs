@@ -34,6 +34,7 @@ class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
 class SessionList;
+struct DebugConfig;
 
 // =============================================================================
 /** @class  ReplayPage
@@ -52,7 +53,8 @@ public:
                          const Config& config,
                          const tools::Loader_ABC& fileLoader,
                          kernel::Controllers& controllers,
-                         ExerciseContainer& exercises );
+                         ExerciseContainer& exercises,
+                         const DebugConfig* debug );
     virtual ~ReplayPage();
     //@}
 
@@ -81,6 +83,7 @@ private:
     const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
     ExerciseContainer& exerciseContainer_;
+    const DebugConfig* debug_;
     ProgressPage* progressPage_;
     ExerciseList* exercises_;
     SessionList* sessions_;

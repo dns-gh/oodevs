@@ -246,6 +246,7 @@ void ScenarioLauncherPage::OnStart()
     if( session.second )
         CreateSession( exerciseName, session.first );
 
+    boost::optional< tools::Path > wwwDir;
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
             ( "checkpoint", checkpoint_.ToUTF8().c_str() );
     if( debug_ && !debug_->sim.integrationDir.IsEmpty() )
@@ -256,13 +257,15 @@ void ScenarioLauncherPage::OnStart()
             arguments[ "dump-pathfinds" ] = debug_->sim.pathfindDumpDir.ToUTF8();
         if( !debug_->sim.pathfindFilter.empty() )
             arguments[ "filter-pathfinds" ] = debug_->sim.pathfindFilter;
+        if( !debug_->timeline.debugWwwDir.IsEmpty() )
+            wwwDir = debug_->timeline.debugWwwDir;
     }
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartExercise >(
         config_, exerciseName, session.first, arguments, true, "" ) );
     process->Add( boost::make_shared< frontend::StartTimeline >(
-        config_, exerciseName, session.first ) );
+        config_, exerciseName, session.first, wwwDir ) );
     if( hasClient_ )
     {
         auto profile = profile_.GetLogin();
@@ -295,9 +298,6 @@ void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const too
                         debug_->timeline.clientLogPath );
                 action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
             }
-            if( !debug_->timeline.debugWwwDir.IsEmpty() )
-                action.SetOption( "session/config/timeline/@debug",
-                        debug_->timeline.debugWwwDir.ToUTF8() );
             action.SetOption( "session/config/timeline/@enabled", debug_->timeline.legacyTimeline );
             if( debug_->sim.decProfiling )
                 action.SetOption( "session/config/simulation/profiling/@decisional", "true" );

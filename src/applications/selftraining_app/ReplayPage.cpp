@@ -37,9 +37,10 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises )
+ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises, const DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_( config )
+    , debug_( debug )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
     , exerciseContainer_( exercises )
@@ -109,7 +110,10 @@ void ReplayPage::StartExercise()
     ConfigureSession( exerciseName, session_ );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, "" ) );
-    process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_ ) );
+    boost::optional< tools::Path > wwwDir;
+    if( debug_ && !debug_->timeline.debugWwwDir.IsEmpty() )
+        wwwDir = debug_->timeline.debugWwwDir;
+    process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_, wwwDir ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
             exerciseName, session_, &profile, features, tools::Path(),

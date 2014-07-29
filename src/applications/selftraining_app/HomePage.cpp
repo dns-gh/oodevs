@@ -47,7 +47,7 @@ HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
             controllers, exercises, debug_.get() );
     play_ =    AddLink( *playPage_ );
 
-    replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, exercises );
+    replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, exercises, debug_.get() );
     replay_ =  AddLink( *replayPage_, false );
     connect( replay_,  SIGNAL( clicked() ), this, SLOT( OnReplay() ) );
 }

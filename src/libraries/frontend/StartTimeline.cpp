@@ -90,7 +90,8 @@ namespace
 // -----------------------------------------------------------------------------
 StartTimeline::StartTimeline( const tools::GeneralConfig& config,
                               const tools::Path& exercise,
-                              const tools::Path& session )
+                              const tools::Path& session,
+                              boost::optional< tools::Path > wwwDir )
     : SpawnCommand( config, "timeline_server.exe", "timeline_server" )
 {
     ConfigurationManipulator xpath( config, exercise, session );
@@ -102,11 +103,10 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
     AddArgument( "log", log.ToUTF8() );
     const tools::Path run = root / "timeline.run";
     AddArgument( "run", run.ToUTF8() );
-    const auto debug = "session/config/timeline/@debug";
-    if( xpath.HasNode( debug ) )
+    if( wwwDir )
     {
         AddArgument( "-debug" );
-        AddArgument( "www", xpath.GetValue< std::string >( debug ) );
+        AddArgument( "www", wwwDir->ToUTF8() );
     }
     WriteRunScript( run, boost::lexical_cast< int >( dispatcher ) );
 }
