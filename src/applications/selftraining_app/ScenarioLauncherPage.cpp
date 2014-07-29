@@ -37,6 +37,7 @@
 #include <boost/foreach.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -122,7 +123,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )
-    , integrationDir_   ( "" )
     , configPanel_      ( 0 )
 {
     setWindowTitle( "ScenarioLauncherPage" );
@@ -166,7 +166,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     //debug config panel
     auto parent = config.IsOnDebugMode() ? configTabs_ : nullptr;
     configPanel_ = AddPlugin( new DebugConfigPanel( parent, config_ ) );
-    connect( configPanel_, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
     connect( configPanel_, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
     connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel_, SLOT( OnExerciseNumberChanged( int ) ) );
 
@@ -255,8 +254,11 @@ void ScenarioLauncherPage::OnStart()
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
             ( "checkpoint", checkpoint_.ToUTF8().c_str() )
             ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
-    if( !integrationDir_.IsEmpty() )
-        arguments[ "integration-dir" ] = integrationDir_.ToUTF8();
+    boost::optional< DebugConfig > debug;
+    if( configPanel_ && config_.IsOnDebugMode() )
+        debug = configPanel_->GetConfig();
+    if( debug && !debug->sim.integrationDir.IsEmpty() )
+        arguments[ "integration-dir" ] = debug->sim.integrationDir.ToUTF8();
     if( !dumpPathfindDirectory_.IsEmpty() )
         arguments[ "dump-pathfinds" ] = dumpPathfindDirectory_.ToUTF8();
 
@@ -363,15 +365,6 @@ void ScenarioLauncherPage::OnClientEnabled( bool enabled )
 {
     registry::WriteBool( "NoClientSelected", !enabled );
     hasClient_ = enabled;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::OnIntegrationPathSelected
-// Created: NPT 2013-01-04
-// -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnIntegrationPathSelected( const tools::Path& integrationDir )
-{
-    integrationDir_ = integrationDir;
 }
 
 // -----------------------------------------------------------------------------

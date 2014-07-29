@@ -67,7 +67,6 @@ private slots:
     void ClearSelection();
     void OnSelectCheckpoint( const tools::Path& session, const tools::Path& checkpoint );
     void OnClientEnabled( bool enabled );
-    void OnIntegrationPathSelected( const tools::Path& integrationDir );
     void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
 
@@ -102,7 +101,6 @@ private:
     frontend::Profile             profile_;
     tools::Path                   session_;
     tools::Path                   checkpoint_;
-    tools::Path                   integrationDir_;
     QString                       pathfindFilter_;
     tools::Path                   dumpPathfindDirectory_;
     T_Plugins                     plugins_;

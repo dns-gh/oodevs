@@ -24,8 +24,24 @@
 
 namespace
 {
-    const int maxIntegrationDir = 5;
+
+DebugConfig LoadDebugConfig()
+{
+    DebugConfig config;
+
+    QString integrationDir = registry::ReadString( "IntegrationLayerPath" ).trimmed();
+    config.sim.integrationDir = tools::Path::FromUTF8( integrationDir.toStdString() );
+
+    return config;
 }
+
+void SaveDebugConfig( const DebugConfig& config )
+{
+    registry::WriteString( "IntegrationLayerPath",
+            config.sim.integrationDir.ToUTF8().c_str() );
+}
+
+}  // namespace
 
 tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath )
 {
@@ -44,6 +60,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     : PluginConfig_ABC( parent )
     , visible_( !!parent )
     , config_( config )
+    , debug_( LoadDebugConfig() )
     , profilingBox_( 0 )
     , decCallsBox_( 0 )
     , pathfindsBox_( 0 )
@@ -59,15 +76,9 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     integrationLabel_ = new QLabel();
 
     //integration level combobox
-    integrationComboBox_ = new QComboBox();
-    integrationComboBox_->setEditable( true );
-    QString pathValue = registry::ReadString( "IntegrationLayerPaths" );
-    if( !pathValue.isEmpty() )
-    {
-        pathList_ = pathValue.split( ';' );
-        integrationComboBox_->addItems( pathList_ );
-    }
-    connect( integrationComboBox_, SIGNAL( editTextChanged( const QString& ) ), SLOT( OnEditIntegrationDirectory( const QString& ) ) );
+    integrationDir_ = new QLineEdit();
+    integrationDir_->setText( debug_.sim.integrationDir.ToUTF8().c_str() );
+    connect( integrationDir_, SIGNAL( textEdited( const QString& ) ), SLOT( OnEditIntegrationDirectory( const QString& ) ) );
 
     //integration level button
     integrationButton_ = new QPushButton();
@@ -77,7 +88,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     //integration level group box
     QHBoxLayout* integrationBoxLayout = new QHBoxLayout();
     integrationBoxLayout->addWidget( integrationLabel_ );
-    integrationBoxLayout->addWidget( integrationComboBox_ );
+    integrationBoxLayout->addWidget( integrationDir_ );
     integrationBoxLayout->addWidget( integrationButton_ );
     integrationBoxLayout->setStretch( 0, 2 );
     integrationBoxLayout->setStretch( 1, 10 );
@@ -239,8 +250,10 @@ DebugConfigPanel::~DebugConfigPanel()
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnChangeIntegrationDirectory()
 {
-    const tools::Path directory = gui::FileDialog::getExistingDirectory( this , "" );
-    integrationComboBox_->setCurrentText( QString::fromStdWString( directory.ToUnicode() ) );
+    const tools::Path directory = gui::FileDialog::getExistingDirectory( this ,
+            QString::fromStdWString( debug_.sim.integrationDir.ToUnicode() ) );
+    integrationDir_->setText( QString::fromStdWString( directory.ToUnicode() ) );
+    OnEditIntegrationDirectory( integrationDir_->text() );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,22 +263,10 @@ void DebugConfigPanel::OnChangeIntegrationDirectory()
 void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 {
     tools::Path path = tools::Path::FromUnicode( directory.toStdWString() );
-    if( path.IsDirectory() )
-    {
-        if ( !pathList_.contains( directory, Qt::CaseSensitive ) )
-        {
-            //maj of combobox
-            pathList_.push_front( directory );
-            if( pathList_.count() > maxIntegrationDir )
-                pathList_.removeLast();
-            integrationComboBox_->clear();
-            integrationComboBox_->addItems( pathList_ );
-
-            //save in registry
-            registry::WriteString( "IntegrationLayerPaths", pathList_.join( ";" ) );
-        }
-        emit IntegrationPathSelected( path );
-    }
+    if( !path.IsEmpty() && !path.IsDirectory() )
+        return;
+    debug_.sim.integrationDir = path;
+    SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -421,4 +422,9 @@ QString DebugConfigPanel::GetDevFeatures() const
         if( (*it)->isChecked() )
             checked.insert( (*it)->text() );
     return tools::JoinFeatures( checked ).c_str();
+}
+
+const DebugConfig& DebugConfigPanel::GetConfig() const
+{
+    return debug_;
 }

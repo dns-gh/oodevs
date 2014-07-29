@@ -21,6 +21,16 @@ namespace tools
 // relatively to sessionDir. If logPath is empty, an empty path is returned.
 tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath );
 
+struct DebugSim
+{
+    tools::Path integrationDir;
+};
+
+struct DebugConfig
+{
+    DebugSim sim;
+};
+
 // =============================================================================
 /** @class  DebugConfigPanel
     @brief  DebugConfigPanel
@@ -49,12 +59,12 @@ public:
     //! @name Accessors
     //@{
     QString GetDevFeatures() const;
+    const DebugConfig& GetConfig() const;
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void IntegrationPathSelected( const tools::Path& integrationPath );
     void DumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
 
@@ -82,8 +92,7 @@ private:
     //config
     const bool visible_;
     const tools::GeneralConfig& config_;
-
-    QStringList pathList_; // $$$$ ABR 2013-03-04: TODO Extract this to a new ComboBox class which will handle a registry based history
+    DebugConfig debug_;
 
     QGroupBox* topBox_;
 
@@ -102,7 +111,7 @@ private:
 
     //Integration Layer Configuration
     QLabel* integrationLabel_;
-    QComboBox* integrationComboBox_;
+    QLineEdit* integrationDir_;
     QPushButton* integrationButton_;
 
     //profiling configuration
