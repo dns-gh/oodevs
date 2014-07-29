@@ -97,7 +97,6 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     , dumpLabel_( 0 )
     , dataDirectory_( 0 )
     , dataButton_( 0 )
-    , exerciseNumber_( 1 )
     , mapnikBox_( 0 )
     , mapnikLayerBox_( 0 )
 {
@@ -418,15 +417,6 @@ void DebugConfigPanel::OnCefLogChanged( const QString& path )
 {
     debug_.timeline.cefLog = tools::Path::FromUnicode( path.trimmed().toStdWString() );
     SaveDebugConfig( debug_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::OnExerciseNumberChanged
-// Created: ABR 2013-05-16
-// -----------------------------------------------------------------------------
-void DebugConfigPanel::OnExerciseNumberChanged( int exerciseNumber )
-{
-    exerciseNumber_ = exerciseNumber;
 }
 
 void DebugConfigPanel::OnMapnikLayerChecked( bool checked )

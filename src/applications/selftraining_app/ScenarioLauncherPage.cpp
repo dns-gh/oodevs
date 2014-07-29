@@ -149,7 +149,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     connect( checkpointPanel, SIGNAL( CheckpointSelected( const tools::Path&, const tools::Path& ) ), SLOT( OnSelectCheckpoint( const tools::Path&, const tools::Path& ) ) );
 
     //session config config panel
-    auto* panel = AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_ ) );
+    AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_ ) );
 
     //random config panel
     AddPlugin( new frontend::RandomPluginConfigPanel( configTabs_, config_ ) );
@@ -166,7 +166,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     //debug config panel
     auto parent = config.IsOnDebugMode() ? configTabs_ : nullptr;
     configPanel_ = AddPlugin( new DebugConfigPanel( parent, config_ ) );
-    connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel_, SLOT( OnExerciseNumberChanged( int ) ) );
 
     //general settings tab
     QWidget* configBox = new QWidget();

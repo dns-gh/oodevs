@@ -47,9 +47,6 @@ public:
     virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     //@}
 
-signals:
-    void exerciseNumberChanged( int );
-
 private:
     //! @name Member data
     //@{

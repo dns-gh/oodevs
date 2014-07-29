@@ -62,7 +62,6 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     exerciseNumber_->setRange( 1, 10 );
     exerciseNumber_->setSingleStep( 1 );
     exerciseNumber_->setValue( 1 );
-    connect( exerciseNumber_, SIGNAL( valueChanged( int ) ), SIGNAL( exerciseNumberChanged( int ) ) );
 
     //Exercise box
     QWidget* exerciseNumberBox = new QWidget();
