@@ -29,9 +29,19 @@ struct DebugSim
     tools::Path pathfindDumpDir;
 };
 
+struct DebugTimeline
+{
+    int debugPort;
+    tools::Path debugWwwDir;
+    tools::Path clientLogPath;
+    tools::Path cefLog;
+    bool legacyTimeline;
+};
+
 struct DebugConfig
 {
     DebugSim sim;
+    DebugTimeline timeline;
 };
 
 class Config;

@@ -34,6 +34,12 @@ DebugConfig LoadDebugConfig()
     config.sim.pathfindFilter = registry::ReadString( "DebugPathfindFilter" ).toStdString();
     config.sim.pathfindDumpDir = registry::ReadPath( "DebugPathfindDumpPath" );
 
+    config.timeline.debugPort = registry::ReadInt( "TimelineDebugPort" );
+    config.timeline.debugWwwDir = registry::ReadPath( "TimelineDebugDir" );
+    config.timeline.clientLogPath = registry::ReadPath( "TimelineClientLog" );
+    config.timeline.cefLog = registry::ReadPath( "CefLog" );
+    config.timeline.legacyTimeline = registry::ReadBool( "EnableLegacyTimeline" );
+
     return config;
 }
 
@@ -43,6 +49,12 @@ void SaveDebugConfig( const DebugConfig& config )
             config.sim.integrationDir.ToUTF8().c_str() );
     registry::WriteString( "DebugPathfindFilter", config.sim.pathfindFilter.c_str() );
     registry::WritePath( "DebugPathfindDumpPath", config.sim.pathfindDumpDir );
+
+    registry::WriteInt( "TimelineDebugPort", config.timeline.debugPort );
+    registry::WritePath( "TimelineDebugDir", config.timeline.debugWwwDir );
+    registry::WritePath( "TimelineClientLog", config.timeline.clientLogPath );
+    registry::WritePath( "CefLog", config.timeline.cefLog );
+    registry::WriteBool( "EnableLegacyTimeline", config.timeline.legacyTimeline );
 }
 
 }  // namespace
@@ -112,7 +124,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     timelineDebugPortLabel_ = new QLabel();
     timelineDebugPortSpinBox_ = new QSpinBox();
     timelineDebugPortSpinBox_->setRange( 0, 65535 );
-    timelineDebugPortSpinBox_->setValue( registry::ReadInt( "TimelineDebugPort" ) );
+    timelineDebugPortSpinBox_->setValue( debug_.timeline.debugPort );
     connect( timelineDebugPortSpinBox_, SIGNAL( valueChanged( int ) ), SLOT( OnTimelineDebugPortChanged( int ) ) );
 
     QHBoxLayout* debugPortBox = new QHBoxLayout();
@@ -123,7 +135,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     timelineLogLayout->setSpacing( 10 );
     timelineLogLabel_ = new QLabel();
     timelineLog_ = new QLineEdit();
-    timelineLog_->setText( registry::ReadString( "TimelineClientLog" ) );
+    timelineLog_->setText( QString::fromStdWString( debug_.timeline.clientLogPath.ToUnicode() ) );
     connect( timelineLog_, SIGNAL( textEdited( const QString& ) ), SLOT( OnTimelineLogChanged( const QString& ) ) );
     timelineLogLayout->addWidget( timelineLogLabel_ );
     timelineLogLayout->addWidget( timelineLog_ );
@@ -132,7 +144,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     debugLayout->setSpacing( 10 );
     timelineDebugLabel_ = new QLabel();
     timelineDebug_ = new QLineEdit();
-    timelineDebug_->setText( registry::ReadString( "TimelineDebugDir" ) );
+    timelineDebug_->setText( QString::fromStdWString( debug_.timeline.debugWwwDir.ToUnicode() ) );
     connect( timelineDebug_, SIGNAL( textEdited( const QString& ) ), SLOT( OnTimelineDebugChanged( const QString& ) ) );
     debugLayout->addWidget( timelineDebugLabel_ );
     debugLayout->addWidget( timelineDebug_ );
@@ -141,14 +153,13 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config )
     cefLogLayout->setSpacing( 10 );
     cefLogLabel_ = new QLabel();
     cefLog_ = new QLineEdit();
-    cefLog_->setText( registry::ReadString( "CefLog" ) );
-    auto test = registry::ReadString( "CefLog" );
+    cefLog_->setText( QString::fromStdWString( debug_.timeline.cefLog.ToUnicode() ) );
     connect( cefLog_, SIGNAL( textEdited( const QString& ) ), SLOT( OnCefLogChanged( const QString& ) ) );
     cefLogLayout->addWidget( cefLogLabel_ );
     cefLogLayout->addWidget( cefLog_ );
 
     oldTimeline_ = new QCheckBox();
-    oldTimeline_->setChecked( registry::ReadBool( "EnableLegacyTimeline" ) );
+    oldTimeline_->setChecked( debug_.timeline.legacyTimeline );
     QHBoxLayout* oldTimelineLayout = new QHBoxLayout();
     oldTimelineLayout->addWidget( oldTimeline_ );
     connect( oldTimeline_, SIGNAL( toggled( bool ) ), this, SLOT( OnTimelineChecked( bool ) ) );
@@ -323,17 +334,16 @@ bool DebugConfigPanel::IsVisible() const
 void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     frontend::CreateSession action( config_, exercise, session );
-    action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );
-    if( !timelineLog_->text().isEmpty() )
+    action.SetOption( "session/config/timeline/@debug-port", debug_.timeline.debugPort );
+    if( !debug_.timeline.clientLogPath.IsEmpty() )
     {
-        auto log = tools::Path::FromUTF8( timelineLog_->text().toStdString() );
-        log = GetTimelineLog( action.GetPath().Parent(), log );
+        const auto log = GetTimelineLog( action.GetPath().Parent(), debug_.timeline.clientLogPath );
         action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
     }
-    const auto debug = timelineDebug_->text().trimmed();
-    if( !debug.isEmpty() )
-        action.SetOption( "session/config/timeline/@debug", debug.toStdString() );
-    action.SetOption( "session/config/timeline/@enabled", oldTimeline_->isChecked() );
+    if( !debug_.timeline.debugWwwDir.IsEmpty() )
+        action.SetOption( "session/config/timeline/@debug",
+                debug_.timeline.debugWwwDir.ToUTF8() );
+    action.SetOption( "session/config/timeline/@enabled", debug_.timeline.legacyTimeline );
     if( decCallsBox_->isChecked() )
         action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
     if( mapnikLayerBox_->isChecked() )
@@ -367,7 +377,8 @@ void DebugConfigPanel::OnSelectDataDirectory()
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnTimelineChecked( bool checked )
 {
-    registry::WriteBool( "EnableLegacyTimeline", checked );
+    debug_.timeline.legacyTimeline = checked;
+    SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,22 +387,26 @@ void DebugConfigPanel::OnTimelineChecked( bool checked )
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnTimelineDebugPortChanged( int port )
 {
-    registry::WriteInt( "TimelineDebugPort", port );
+    debug_.timeline.debugPort = port;
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnTimelineLogChanged( const QString& path )
 {
-    registry::WriteString( "TimelineClientLog", path );
+    debug_.timeline.clientLogPath = tools::Path::FromUnicode( path.trimmed().toStdWString() );
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnTimelineDebugChanged( const QString& path )
 {
-    registry::WriteString( "TimelineDebugDir", path );
+    debug_.timeline.debugWwwDir = tools::Path::FromUnicode( path.trimmed().toStdWString() );
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnCefLogChanged( const QString& path )
 {
-    registry::WriteString( "CefLog", path );
+    debug_.timeline.cefLog = tools::Path::FromUnicode( path.trimmed().toStdWString() );
+    SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
