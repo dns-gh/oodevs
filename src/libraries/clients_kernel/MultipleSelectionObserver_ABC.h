@@ -31,8 +31,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BeforeSelection() = 0;
-    virtual void AfterSelection() = 0;
+    virtual void BeforeMultiSelection() = 0;
+    virtual void AfterMultiSelection() = 0;
     //@}
 };
 
@@ -84,8 +84,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BeforeSelection() { elements_.clear(); }
-    virtual void AfterSelection() { NotifySelectionChanged( elements_ ); }
+    virtual void BeforeMultiSelection() { elements_.clear(); }
+    virtual void AfterMultiSelection() { NotifySelectionChanged( elements_ ); }
     virtual void MultipleSelect( const T_Elements& elements ) { elements_ = elements; }
 
     virtual void NotifySelectionChanged( const T_Elements& elements ) = 0;

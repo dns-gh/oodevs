@@ -134,10 +134,10 @@ ResourceLinksDialog_ABC::~ResourceLinksDialog_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::BeforeSelection
+// Name: ResourceLinksDialog_ABC::BeforeMultiSelection
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::BeforeSelection()
+void ResourceLinksDialog_ABC::BeforeMultiSelection()
 {
     selected_.clear();
     selectedItem_ = 0;
@@ -145,10 +145,10 @@ void ResourceLinksDialog_ABC::BeforeSelection()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::AfterSelection
+// Name: ResourceLinksDialog_ABC::AfterMultiSelection
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::AfterSelection()
+void ResourceLinksDialog_ABC::AfterMultiSelection()
 {
     Show();
 }

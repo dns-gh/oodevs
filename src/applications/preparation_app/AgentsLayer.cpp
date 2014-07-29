@@ -55,12 +55,12 @@ AgentsLayer::~AgentsLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer::BeforeSelection
+// Name: AgentsLayer::BeforeMultiSelection
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsLayer::BeforeSelection()
+void AgentsLayer::BeforeMultiSelection()
 {
-    gui::AgentsLayer::BeforeSelection();
+    gui::AgentsLayer::BeforeMultiSelection();
     selectedAgent_ = 0;
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
@@ -102,15 +102,6 @@ void AgentsLayer::MultipleSelect( const std::vector< const kernel::Formation_ABC
 void AgentsLayer::MultipleSelect( const std::vector< const kernel::Team_ABC* >& elements )
 {
     selectedTeam_ = elements.size() == 1 ? elements.front() : 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::AfterSelection
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void AgentsLayer::AfterSelection()
-{
-    gui::AgentsLayer::AfterSelection();
 }
 
 // -----------------------------------------------------------------------------

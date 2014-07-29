@@ -37,7 +37,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void BeforeSelection();
+    virtual void BeforeMultiSelection();
     virtual void MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements );
     bool IsEligibleForDrag() const;
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );

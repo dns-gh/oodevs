@@ -52,8 +52,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void BeforeSelection();
-    virtual void AfterSelection();
+    virtual void BeforeMultiSelection();
     virtual void MultipleSelect( const std::vector< const kernel::Entity_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Population_ABC* >& elements );
     bool IsEligibleForDrag();

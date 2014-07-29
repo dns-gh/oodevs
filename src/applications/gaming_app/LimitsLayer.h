@@ -47,12 +47,12 @@ private:
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
 
-    virtual void tools::SelectionObserver_ABC::BeforeSelection();
+    virtual void BeforeSelection();
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::TacticalLine_ABC& element );
-    virtual void tools::SelectionObserver_ABC::AfterSelection();
+    virtual void AfterSelection();
     //@}
 
 private:

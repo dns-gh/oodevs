@@ -53,12 +53,11 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void BeforeSelection();
+    virtual void BeforeMultiSelection();
     virtual void MultipleSelect( const std::vector< const kernel::Agent_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Team_ABC* >& elements );
-    virtual void AfterSelection();
 
     bool IsValidTemplate( QDropEvent* event ) const;
     bool IsEligibleForDrag() const;

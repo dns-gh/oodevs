@@ -249,11 +249,10 @@ void PathfindLayer::Select( const kernel::Formation_ABC& element )
         selectedEntity_ = &element;
 }
 
-void PathfindLayer::MultipleSelect( const std::vector< const kernel::Pathfind_ABC* >& elements )
+void PathfindLayer::Select( const kernel::Pathfind_ABC& element )
 {
-    if( controllers_.GetCurrentMode() != eModes_Itinerary && !elements.empty() )
-        target_ = selectedPathfind_ = elements.front();
-    EntityLayer< kernel::Pathfind_ABC >::MultipleSelect( elements );
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        target_ = selectedPathfind_ = &element;
 }
 
 void PathfindLayer::Select( const kernel::Population_ABC& element )
