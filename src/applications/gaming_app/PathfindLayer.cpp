@@ -127,50 +127,12 @@ void PathfindLayer::Paint( gui::Viewport_ABC& view )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PathfindLayer::Select
-// Created: LGY 2014-02-28
-// -----------------------------------------------------------------------------
-void PathfindLayer::Select( const kernel::Agent_ABC& element )
-{
-    if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        target_ = selectedEntity_ = &element;
-}
-
-void PathfindLayer::Select( const kernel::Automat_ABC& element )
-{
-    if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        selectedEntity_ = &element;
-}
-
-void PathfindLayer::Select( const kernel::Formation_ABC& element )
-{
-    if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        selectedEntity_ = &element;
-}
-
-void PathfindLayer::Select( const kernel::Pathfind_ABC& element )
-{
-    if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        target_ = selectedPathfind_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PathfindLayer::Select
-// Created: LGY 2014-02-28
-// -----------------------------------------------------------------------------
-void PathfindLayer::Select( const kernel::Population_ABC& element )
-{
-    if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        target_ = selectedEntity_ = &element;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PathfindLayer::NotifyContextMenu
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
-    if( !selectedEntity_ || lock_ )
+    if( !target_ || lock_ )
         return;
     point_ = point;
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
@@ -190,6 +152,8 @@ void PathfindLayer::NotifyContextMenu( const kernel::Pathfind_ABC& pathfind, ker
 {
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
         return;
+    target_ = &pathfind;
+    selectedEntity_ = nullptr;
     selectedPathfind_ = &pathfind;
     menu.InsertItem( "Itinerary", tr( "Edit" ), this, SLOT( OnEditPathfind() ) );
     menu.InsertItem( "Itinerary", tr( "Delete" ), this, SLOT( OnDeletePathfind() ) );
@@ -262,7 +226,38 @@ void PathfindLayer::SendRequest()
 void PathfindLayer::BeforeSelection()
 {
     if( controllers_.GetCurrentMode() != eModes_Itinerary )
-        target_ = selectedEntity_ = 0;
+        target_ = selectedEntity_ = selectedPathfind_ = 0;
+}
+
+void PathfindLayer::Select( const kernel::Agent_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        target_ = selectedEntity_ = &element;
+}
+
+void PathfindLayer::Select( const kernel::Automat_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        selectedEntity_ = &element;
+}
+
+void PathfindLayer::Select( const kernel::Formation_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        selectedEntity_ = &element;
+}
+
+void PathfindLayer::MultipleSelect( const std::vector< const kernel::Pathfind_ABC* >& elements )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary && !elements.empty() )
+        target_ = selectedPathfind_ = elements.front();
+    EntityLayer< kernel::Pathfind_ABC >::MultipleSelect( elements );
+}
+
+void PathfindLayer::Select( const kernel::Population_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        target_ = selectedEntity_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -509,8 +504,9 @@ void PathfindLayer::OnRejectEdit()
 
 void PathfindLayer::OnDeletePathfind()
 {
-    if( selectedPathfind_ )
-        actions_.PublishDestroyPathfind( selectedPathfind_->GetId() );
+    if( !selectedPathfind_ )
+        return;
+    actions_.PublishDestroyPathfind( selectedPathfind_->GetId() );
 }
 
 void PathfindLayer::OnEditPathfind()
