@@ -144,13 +144,15 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
         }
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
     }
-    else
+    else if( profile_.CanBeOrdered( *target_ ) )
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OnOpenEditingMode() ) );
 }
 
 void PathfindLayer::NotifyContextMenu( const kernel::Pathfind_ABC& pathfind, kernel::ContextMenu& menu )
 {
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
+        return;
+    if( !profile_.CanBeOrdered( pathfind ) )
         return;
     target_ = &pathfind;
     selectedEntity_ = nullptr;
@@ -505,6 +507,8 @@ void PathfindLayer::OnRejectEdit()
 void PathfindLayer::OnDeletePathfind()
 {
     if( !selectedPathfind_ )
+        return;
+    if( !profile_.CanBeOrdered( *selectedPathfind_ ) )
         return;
     actions_.PublishDestroyPathfind( selectedPathfind_->GetId() );
 }
