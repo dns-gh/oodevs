@@ -15,8 +15,9 @@
 
 namespace kernel
 {
-    class TacticalLine_ABC;
     class Drawing_ABC;
+    class Pathfind_ABC;
+    class TacticalLine_ABC;
 }
 
 namespace gui
@@ -31,6 +32,7 @@ namespace gui
 class DrawingsTreeView : public EntityTreeView_ABC
                        , public tools::ElementObserver_ABC< kernel::Drawing_ABC >
                        , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
+                       , public tools::ElementObserver_ABC< kernel::Pathfind_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Drawing_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
 {
@@ -52,6 +54,7 @@ protected:
     virtual void NotifyCreated( const kernel::TacticalLine_ABC& line );
     virtual void NotifyCreated( const kernel::Drawing_ABC& drawing );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyCreated( const kernel::Pathfind_ABC& pathfind );
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     virtual void NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& line, kernel::ContextMenu& menu );
@@ -78,6 +81,7 @@ private:
     QStandardItem* drawingsItem_;
     QStandardItem* limitsItem_;
     QStandardItem* phaseLinesItem_;
+    QStandardItem* itinerariesItem_;
     //@}
 };
 

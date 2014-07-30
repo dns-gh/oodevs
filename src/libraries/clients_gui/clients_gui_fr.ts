@@ -209,6 +209,10 @@
         <source>Phase lines</source>
         <translation>Limas</translation>
     </message>
+    <message>
+        <source>Itineraries</source>
+        <translation>Itinéraires</translation>
+    </message>
 </context>
 <context>
     <name>DurationEditor</name>

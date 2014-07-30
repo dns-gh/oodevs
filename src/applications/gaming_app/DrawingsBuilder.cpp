@@ -10,10 +10,12 @@
 #include "gaming_app_pch.h"
 #include "DrawingsBuilder.h"
 #include "moc_DrawingsBuilder.cpp"
+#include "actions/ActionsModel.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
@@ -46,10 +48,12 @@ namespace
     };
 }
 
-DrawingsBuilder::DrawingsBuilder( kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
+DrawingsBuilder::DrawingsBuilder( kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
+                                  actions::ActionsModel& actions )
     : controllers_( controllers )
     , toDelete_( controllers )
     , profile_ ( profile )
+    , actions_ ( actions )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &DrawingsBuilder::OnConfirmDeletion, this, _1 ) ) )
 {
     controllers_.Register( *this );
@@ -108,6 +112,7 @@ void DrawingsBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
 {
     toDelete_ = 0;
     if( entity.GetTypeName() == kernel::Drawing_ABC::typeName_ ||
+        entity.GetTypeName() == kernel::Pathfind_ABC::typeName_ ||
         ( entity.GetTypeName() == kernel::TacticalLine_ABC::typeName_ && CanBeOrdered( entity, profile_ ) ) )
     {
         toDelete_ = &entity;
@@ -157,6 +162,9 @@ void DrawingsBuilder::OnConfirmDeletion( int result )
         if( toDelete_->GetTypeName() == kernel::TacticalLine_ABC::typeName_ )
             if( kernel::TacticalLine_ABC* line = static_cast< kernel::TacticalLine_ABC* >( toDelete_.ConstCast() ) )
                 line->NotifyDestruction();
+
+         if( toDelete_->GetTypeName() == kernel::Pathfind_ABC::typeName_ )
+             actions_.PublishDestroyPathfind( toDelete_->GetId() );
 
         toDelete_ = 0;
         controllers_.actions_.DeselectAll();
