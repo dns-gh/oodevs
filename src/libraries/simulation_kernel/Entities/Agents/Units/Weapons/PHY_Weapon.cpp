@@ -87,24 +87,6 @@ int PHY_Weapon::GetNumberOfDotationPerBurst( const PHY_DotationCategory& dotatio
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Weapon::GetMaxRangeToFireOn
-// Created: NLD 2004-10-15
-// -----------------------------------------------------------------------------
-double PHY_Weapon::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
-{
-    return type_.GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH, 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Weapon::GetMinRangeToFireOn
-// Created: JVT 2004-12-17
-// -----------------------------------------------------------------------------
-double PHY_Weapon::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
-{
-    return type_.GetMinRangeToFireOn( firer, targetComposanteType, rWantedPH );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_Weapon::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
@@ -129,15 +111,6 @@ double PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_A
 bool PHY_Weapon::IsReady() const
 {
     return static_cast< unsigned int >( rNextTimeStepToFire_ ) <= time_.GetCurrentTimeStep();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Weapon::GetMaxRangeToDirectFire
-// Created: MCO 2012-11-23
-// -----------------------------------------------------------------------------
-double PHY_Weapon::GetMaxRangeToDirectFire() const
-{
-    return type_.GetMaxRangeToDirectFire();
 }
 
 // -----------------------------------------------------------------------------
