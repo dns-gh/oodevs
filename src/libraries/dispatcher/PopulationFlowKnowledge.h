@@ -23,7 +23,6 @@ namespace sword
 namespace kernel
 {
     class PopulationKnowledge_ABC;
-    class PopulationFlow_ABC;
     class ModelVisitor_ABC;
 }
 
@@ -81,7 +80,7 @@ private:
     //! @name Member data
     //@{
     const kernel::PopulationKnowledge_ABC& populationKnowledge_;
-    const kernel::PopulationFlow_ABC*      pFlow_;
+    unsigned int                           flowId_;
     std::vector< PopulationFlowPart >      flowParts_;
     unsigned int                           nDirection_;
     unsigned int                           nSpeed_;
