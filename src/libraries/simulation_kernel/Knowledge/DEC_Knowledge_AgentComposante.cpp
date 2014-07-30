@@ -120,7 +120,7 @@ double DEC_Knowledge_AgentComposante::GetMaxRangeToFireOn( const MIL_Agent_ABC& 
     assert( pType_ );
     if( !bCanFire_ )
         return 0.;
-    return pType_->GetMaxRangeToFireOn( firer, compTarget.GetType(), rWantedPH, 0 );
+    return pType_->GetMaxRangeToFireOn( firer, compTarget.GetType(), rWantedPH, nullptr, false );
 }
 
 // -----------------------------------------------------------------------------

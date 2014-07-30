@@ -317,11 +317,13 @@ double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_Com
 // Name: PHY_WeaponType::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation ) const
+double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation, bool useAmmo ) const
 {
     if( !pDirectFireData_ )
         return 0.;
     assert( pDotationCategory_ );
+    if( !dotation && useAmmo )
+        dotation = pDotationCategory_;
     if( dotation )
     {
         if( dotation != pDotationCategory_ )
