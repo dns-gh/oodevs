@@ -39,7 +39,7 @@
 					<xs:attribute name="longitude" type="xs:double" use="required"/>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="text" minOccurs="0" maxOccurs="1">
 				<xs:complexType>
 					<xs:simpleContent>
 						<xs:extension base="xs:string">
