@@ -20,6 +20,7 @@
 namespace runtime
 {
     struct FileSystem_ABC;
+    struct Pool_ABC;
 }
 
 namespace gui
@@ -53,7 +54,10 @@ signals:
 
 size_t GetDownloadId( const QNetworkReply* rpy );
 
-boost::shared_ptr< Download_ABC > MakeDownload( size_t id, QNetworkReply* rpy, const runtime::FileSystem_ABC& fs, const Path& root );
+boost::shared_ptr< Download_ABC > MakeDownload( size_t id, QNetworkReply* rpy,
+                                                const runtime::FileSystem_ABC& fs,
+                                                runtime::Pool_ABC& pool,
+                                                const Path& root );
 }
 
 #endif // DOWNLOAD_H_

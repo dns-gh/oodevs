@@ -11,17 +11,17 @@
 #include "moc_Download.cpp"
 
 #include "Helpers.h"
-#include "QAsync.h"
 
+#include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 
+#include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
 
 #include <QCoreApplication>
 #include <QPointer>
-#include <QtConcurrentRun>
 
 using namespace gui;
 using runtime::FileSystem_ABC;
@@ -39,7 +39,10 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
     // Name: Download::Download
     // Created: BAX 2012-09-21
     // -----------------------------------------------------------------------------
-    Download( size_t id, QNetworkReply* rpy, const FileSystem_ABC& fs, const Path& root )
+    Download( size_t id, QNetworkReply* rpy,
+              const FileSystem_ABC& fs,
+              runtime::Pool_ABC& pool,
+              const Path& root )
         : fs_      ( fs )
         , buffer_  ( buffer_size )
         , id_      ( id )
@@ -53,7 +56,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         , eof_     ( false )
         , headers_ ( false )
         , finished_( false )
-        , async_   ()
+        , async_   ( pool )
     {
         rpy->setReadBufferSize( buffer_size );
         connect( this, SIGNAL( ReadyWrite() ), rpy, SIGNAL( readyRead() ) );
@@ -61,7 +64,9 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         connect( rpy, SIGNAL( readyRead() ), this, SLOT( OnReadyRead() ) );
         connect( rpy, SIGNAL( error( QNetworkReply::NetworkError ) ), this, SLOT( OnFinished() ) );
         connect( rpy, SIGNAL( finished() ), this, SLOT( OnFinished() ) );
-        async_.Register( QtConcurrent::run( this, &Download::Unpack ) );
+        async_.Post( [=]{
+            Unpack();
+        } );
     }
 
     // -----------------------------------------------------------------------------
@@ -222,7 +227,6 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         {
             OnReadyRead();
             QCoreApplication::processEvents();
-            QThread::yieldCurrentThread();
         }
         Close();
     }
@@ -261,7 +265,7 @@ private:
     bool eof_;
     bool headers_;
     bool finished_;
-    QAsync async_;
+    runtime::Async async_;
 };
 }
 
@@ -269,7 +273,10 @@ private:
 // Name: gui::MakeDownload
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-boost::shared_ptr< gui::Download_ABC > gui::MakeDownload( size_t id, QNetworkReply* rpy, const runtime::FileSystem_ABC& fs, const Path& root )
+boost::shared_ptr< gui::Download_ABC > gui::MakeDownload( size_t id, QNetworkReply* rpy,
+                                                          const runtime::FileSystem_ABC& fs,
+                                                          runtime::Pool_ABC& pool,
+                                                          const Path& root )
 {
-    return boost::make_shared< Download >( id, rpy, fs, root );
+    return boost::make_shared< Download >( id, rpy, fs, pool, root );
 }
