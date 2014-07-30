@@ -121,7 +121,7 @@ bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item ) const
 {
     const auto index = item.index();
     if( drawingsItem_->index() == index || limitsItem_->index() == index ||
-        phaseLinesItem_->index() == index )
+        phaseLinesItem_->index() == index || itinerariesItem_->index() == index )
         return true;
     if( const kernel::Entity_ABC* drawing = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
         if( drawing->GetTypeName() == kernel::Drawing_ABC::typeName_ )
