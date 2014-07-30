@@ -105,6 +105,16 @@ void LogisticPrototype_ABC::NotifyCreated( const Formation_ABC& formation )
         selected_ = &formation;
 }
 
+void LogisticPrototype_ABC::NotifyUpdated( const Automat_ABC& automat )
+{
+    UpdateDisplayName( automat );
+}
+
+void LogisticPrototype_ABC::NotifyUpdated( const Formation_ABC& formation )
+{
+    UpdateDisplayName( formation );
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticPrototype_ABC::NotifyDeleted
 // Created: SBO 2006-04-19
@@ -127,7 +137,7 @@ void LogisticPrototype_ABC::NotifyDeleted( const Formation_ABC& formation )
 // Name: LogisticPrototype_ABC::NotifyUpdated
 // Created: JSR 2011-09-28
 // -----------------------------------------------------------------------------
-void LogisticPrototype_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
+void LogisticPrototype_ABC::UpdateDisplayName( const kernel::Entity_ABC& entity )
 {
     int pos = logSuperiors_->GetItemIndex( &entity );
     if( pos != -1 )
