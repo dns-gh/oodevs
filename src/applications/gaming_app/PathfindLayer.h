@@ -59,6 +59,7 @@ class PathfindLayer : public gui::EntityLayer< kernel::Pathfind_ABC >
                     , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                     , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                     , public tools::SelectionObserver_Base< kernel::Population_ABC >
+                    , public tools::SelectionObserver_Base< kernel::Pathfind_ABC >
                     , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                     , public kernel::ContextMenuObserver_ABC< kernel::Pathfind_ABC >
                     , public kernel::OptionsObserver_ABC
@@ -81,7 +82,6 @@ public:
                             gui::ModelObserver_ABC& model,
                             actions::ActionsModel& actions );
     virtual ~PathfindLayer();
-
     //@}
 
 private:
@@ -105,7 +105,7 @@ private:
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
-    virtual void MultipleSelect( const std::vector< const kernel::Pathfind_ABC* >& elements );
+    virtual void Select( const kernel::Pathfind_ABC& element );
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );

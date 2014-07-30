@@ -34,12 +34,12 @@ AutomatsLayer::~AutomatsLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatsLayer::BeforeSelection
+// Name: AutomatsLayer::BeforeMultiSelection
 // Created: JSR 2013-05-29
 // -----------------------------------------------------------------------------
-void AutomatsLayer::BeforeSelection()
+void AutomatsLayer::BeforeMultiSelection()
 {
-    gui::AutomatsLayer::BeforeSelection();
+    gui::AutomatsLayer::BeforeMultiSelection();
     selectedAutomat_ = 0;
 }
 

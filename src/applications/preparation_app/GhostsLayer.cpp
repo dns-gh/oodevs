@@ -276,23 +276,14 @@ bool GhostsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostsLayer::BeforeSelection
+// Name: GhostsLayer::BeforeMultiSelection
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-void GhostsLayer::BeforeSelection()
+void GhostsLayer::BeforeMultiSelection()
 {
     selectedGhost_ = 0;
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GhostsLayer::AfterSelection
-// Created: ABR 2011-10-19
-// -----------------------------------------------------------------------------
-void GhostsLayer::AfterSelection()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

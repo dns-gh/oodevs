@@ -137,7 +137,7 @@ void PathfindLayer::Paint( gui::Viewport_ABC& view )
 // -----------------------------------------------------------------------------
 void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
-    if( !target_ || lock_ )
+    if( !selectedEntity_ || lock_ )
         return;
     point_ = point;
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
@@ -149,7 +149,7 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
         }
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
     }
-    else if( profile_.CanBeOrdered( *target_ ) )
+    else if( profile_.CanBeOrdered( *selectedEntity_ ) )
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OnOpenEditingMode() ) );
 }
 
@@ -254,11 +254,10 @@ void PathfindLayer::Select( const kernel::Formation_ABC& element )
         selectedEntity_ = &element;
 }
 
-void PathfindLayer::MultipleSelect( const std::vector< const kernel::Pathfind_ABC* >& elements )
+void PathfindLayer::Select( const kernel::Pathfind_ABC& element )
 {
-    if( controllers_.GetCurrentMode() != eModes_Itinerary && !elements.empty() )
-        target_ = selectedPathfind_ = elements.front();
-    EntityLayer< kernel::Pathfind_ABC >::MultipleSelect( elements );
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        target_ = selectedPathfind_ = &element;
 }
 
 void PathfindLayer::Select( const kernel::Population_ABC& element )

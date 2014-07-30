@@ -218,7 +218,7 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
         selectedMap_ = toAppend;
     selectInRectangle_ = true;
     Apply( & kernel::RectangleSelectionHandler_ABC::HandleRectangleSelection, topLeft, bottomRight );
-    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeMultiSelection );
     CleanSelectedMap(); // utile?
     for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
     {
@@ -226,7 +226,7 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
         if( it->second.size() == 1 )
             it->second.front()->Select( *this );
     }
-    Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+    Apply( & kernel::MultipleSelectionObserver_ABC::AfterMultiSelection );
     selectInRectangle_ = false;
 }
 
@@ -247,7 +247,7 @@ void ActionController::SetMultipleSelection( const GraphicalEntity_ABC::T_Graphi
             selectedMap_[ selectionner ].push_back( *it );
     }
     CleanSelectedMap(); // utile?
-    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeMultiSelection );
     if( !selectedMap_.empty() )
         for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
         {
@@ -255,7 +255,7 @@ void ActionController::SetMultipleSelection( const GraphicalEntity_ABC::T_Graphi
             if( it->second.size() == 1 )
                 it->second.front()->Select( *this );
         }
-    Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+    Apply( & kernel::MultipleSelectionObserver_ABC::AfterMultiSelection );
 }
 
 // -----------------------------------------------------------------------------
@@ -323,8 +323,8 @@ void ActionController::ClearSingleSelection()
 // -----------------------------------------------------------------------------
 void ActionController::ClearMultipleSelection()
 {
-    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
-    Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeMultiSelection );
+    Apply( & kernel::MultipleSelectionObserver_ABC::AfterMultiSelection );
     selectedMap_.clear();
 }
 

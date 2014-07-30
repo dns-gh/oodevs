@@ -34,12 +34,12 @@ FormationLayer::~FormationLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationLayer::BeforeSelection
+// Name: FormationLayer::BeforeMultiSelection
 // Created: JSR 2013-05-29
 // -----------------------------------------------------------------------------
-void FormationLayer::BeforeSelection()
+void FormationLayer::BeforeMultiSelection()
 {
-    gui::FormationLayer::BeforeSelection();
+    gui::FormationLayer::BeforeMultiSelection();
     selectedFormation_ = 0;
 }
 

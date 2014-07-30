@@ -146,22 +146,13 @@ bool PopulationsLayer::HandleKeyPress( QKeyEvent* key )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationsLayer::BeforeSelection
+// Name: PopulationsLayer::BeforeMultiSelection
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-void PopulationsLayer::BeforeSelection()
+void PopulationsLayer::BeforeMultiSelection()
 {
     selectedEntity_ = 0;
     selectedPopulation_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationsLayer::AfterSelection
-// Created: SBO 2006-11-09
-// -----------------------------------------------------------------------------
-void PopulationsLayer::AfterSelection()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

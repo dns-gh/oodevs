@@ -83,8 +83,8 @@ private:
     //! @name Helpers
     //@{
     virtual void DoValidate( kernel::Entity_ABC* element = 0 ) = 0;
-    virtual void BeforeSelection();
-    virtual void AfterSelection();
+    virtual void BeforeMultiSelection();
+    virtual void AfterMultiSelection();
     virtual void MultipleSelect( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Object_ABC* >& elements );
 

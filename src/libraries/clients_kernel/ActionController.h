@@ -132,10 +132,10 @@ public:
         {
             selecting_ = true;
             if( !selectInRectangle_ )
-                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeMultiSelection );
             Apply( & kernel::MultipleSelectionObserver_Base< T >::MultipleSelect, elements );
             if( !selectInRectangle_ )
-                Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+                Apply( & kernel::MultipleSelectionObserver_ABC::AfterMultiSelection );
             selecting_ = false;
         }
     }
@@ -147,11 +147,11 @@ public:
         {
             selecting_ = true;
             if( !selectInRectangle_ )
-                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeMultiSelection );
             Apply( & kernel::MultipleSelectionObserver_Base< T1 >::MultipleSelect, firstElements );
             Apply( & kernel::MultipleSelectionObserver_Base< T2 >::MultipleSelect, secondElements );
             if( !selectInRectangle_ )
-                Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+                Apply( & kernel::MultipleSelectionObserver_ABC::AfterMultiSelection );
             selecting_ = false;
         }
     }
@@ -163,12 +163,12 @@ public:
         {
             selecting_ = true;
             if( !selectInRectangle_ )
-                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeMultiSelection );
             Apply( & kernel::MultipleSelectionObserver_Base< T1 >::MultipleSelect, firstElements );
             Apply( & kernel::MultipleSelectionObserver_Base< T2 >::MultipleSelect, secondElements );
             Apply( & kernel::MultipleSelectionObserver_Base< T3 >::MultipleSelect, thirdElements );
             if( !selectInRectangle_ )
-                Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+                Apply( & kernel::MultipleSelectionObserver_ABC::AfterMultiSelection );
             selecting_ = false;
         }
     }

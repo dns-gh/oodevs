@@ -55,8 +55,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void BeforeSelection();
-    virtual void AfterSelection();
+    virtual void BeforeMultiSelection();
     virtual void MultipleSelect( const std::vector< const kernel::Ghost_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements );
