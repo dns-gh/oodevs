@@ -110,7 +110,8 @@ bool Config::HasFeature( Feature feature ) const
 // -----------------------------------------------------------------------------
 bool Config::IsOnDebugMode() const
 {
-    return IsSet( "debug" );
+    static const bool debugMode = std::getenv( "MASA_DEBUG" ) != 0;
+    return debugMode || IsSet( "debug" );
 }
 
 // -----------------------------------------------------------------------------
