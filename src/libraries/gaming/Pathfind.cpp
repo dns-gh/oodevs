@@ -230,7 +230,7 @@ void Pathfind::DrawPoints( GlTools_ABC& tools, const QColor& current, bool picki
 {
     const bool selected = tools.ShouldDisplay();
     const auto& waypoints = waypoints_.empty() ? path_ : waypoints_;
-    int i = 0;
+    std::size_t i = 0;
     for( auto it = waypoints.begin(); it != waypoints.end(); ++it )
     {
         if( !it->waypoint )
