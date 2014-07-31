@@ -159,7 +159,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , glProxy_           ( new gui::GlProxy( logger ) )
     , connected_         ( false )
     , onPlanif_          ( false )
-    , drawingsBuilder_   ( new DrawingsBuilder( controllers_, profile_, model_.actions_ ) )
+    , drawingsBuilder_   ( new DrawingsBuilder( controllers_, profile_ ) )
 {
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );

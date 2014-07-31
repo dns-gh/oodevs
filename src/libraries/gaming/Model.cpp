@@ -120,7 +120,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , eventFactory_            ( *new gui::EventFactory( actions_, controllers ) )
     , events_                  ( *new gui::EventsModel( eventFactory_, controllers.controller_ ) )
     , timelinePublisher_       ( *new gui::TimelinePublisher() )
-    , pathfinds_               ( *new PathfindModel( controllers.controller_, controllers.actions_, agents_, agents_, staticModel.coordinateConverter_ ) )
+    , pathfinds_               ( *new PathfindModel( controllers.controller_, actions_, agents_, agents_, staticModel.coordinateConverter_, profile ) )
 {
     symbolsFactory_.Load( config );
     controllers_.Register( *this );

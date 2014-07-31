@@ -220,7 +220,7 @@ void PathfindLayer::SendRequest()
     sword::ClientToSim msg;
     auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
     actions::parameters::FillPathfindRequest( *request, GetUnitId(),
-        converter_, *target_, edited_->GetDots() );
+         converter_, *target_, edited_->GetDots(), edited_->GetName().toStdString() );
     publisher_.Send( msg );
     lock_ = true;
     hovered_ = boost::none;
@@ -425,12 +425,12 @@ bool PathfindLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry
     return true;
 }
 
-void PathfindLayer::OpenEditingMode( const kernel::Entity_ABC* entity,
+void PathfindLayer::OpenEditingMode( kernel::Entity_ABC* entity,
                                      const sword::Pathfind& pathfind )
 {
     if( !entity )
         return;
-    edited_.reset( new Pathfind( controllers_.controller_, controllers_.actions_, converter_, agents_, populations_, pathfind, true ) );
+    edited_.reset( new Pathfind( controllers_.controller_, actions_, converter_, *entity, pathfind, true, false ) );
     target_ = entity;
     controllers_.ChangeMode( eModes_Itinerary );
     entity->Select( controllers_.actions_ );
@@ -442,7 +442,7 @@ void PathfindLayer::OnOpenEditingMode()
     sword::Pathfind pathfind;
     if( target_ )
         pathfind.mutable_request()->mutable_unit()->set_id( target_->GetId() );
-    OpenEditingMode( target_, pathfind );
+    OpenEditingMode( target_.ConstCast(), pathfind );
     ClearPositions();
 }
 
@@ -494,7 +494,7 @@ void PathfindLayer::OnAcceptEdit()
     if( selectedPathfind_ )
         actions_.PublishDestroyPathfind( selectedPathfind_->GetId() );
     if( HasValidPathfind() )
-        actions_.PublishCreatePathfind( GetUnitId(), *target_, edited_->GetDots() );
+        actions_.PublishCreatePathfind( GetUnitId(), *target_, edited_->GetDots(), edited_->GetName().toStdString() );
     ClearPositions();
     edited_.reset();
     controllers_.ChangeMode( eModes_Gaming );
@@ -526,7 +526,7 @@ void PathfindLayer::OnEditPathfind()
     sword::Pathfind pathfind;
     pathfind.mutable_request()->mutable_unit()->set_id( selectedPathfind_->GetUnit().GetId() );
     *pathfind.mutable_result() = selectedPathfind_->GetPathfind();
-    OpenEditingMode( selectedPathfind_, pathfind );
+    OpenEditingMode( selectedPathfind_.ConstCast(), pathfind );
 }
 
 uint32_t PathfindLayer::GetUnitId() const

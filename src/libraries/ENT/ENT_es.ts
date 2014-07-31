@@ -1182,6 +1182,10 @@
         <source>Destroy pathfind</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Update pathfind</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>

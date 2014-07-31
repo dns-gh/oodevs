@@ -37,7 +37,8 @@ namespace actions
                                   uint32_t id,
                                   const kernel::CoordinateConverter_ABC& converter,
                                   const kernel::Entity_ABC& entity,
-                                  const std::vector< geometry::Point2f >& points );
+                                  const std::vector< geometry::Point2f >& points,
+                                  const std::string& name );
     }
 }
 

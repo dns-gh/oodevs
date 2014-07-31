@@ -46,6 +46,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -1994,6 +1995,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_order_ack,                                   &AgentServerMsgMgr::OnReceiveOrderAck },
         { &sword::SimToClient_Content::has_party_creation,                              &AgentServerMsgMgr::OnReceiveMsgPartyCreation },
         { &sword::SimToClient_Content::has_pathfind_creation,                           &AgentServerMsgMgr::OnReceivePathfindCreation },
+        { &sword::SimToClient_Content::has_pathfind_update  ,                           &AgentServerMsgMgr::OnReceivePathfindUpdate },
         { &sword::SimToClient_Content::has_pathfind_destruction,                        &AgentServerMsgMgr::OnReceivePathfindDestruction },
         { &sword::SimToClient_Content::has_population_creation,                         &AgentServerMsgMgr::OnPopulationCreation },
         { &sword::SimToClient_Content::has_population_update,                           &AgentServerMsgMgr::OnPopulationUpdate },
@@ -2405,6 +2407,12 @@ void AgentServerMsgMgr::UpdateHandlers( const sword::ReplayToClient& message )
 void AgentServerMsgMgr::OnReceivePathfindCreation( const sword::SimToClient& msg )
 {
     GetModel().pathfinds_.Create( msg.message().pathfind_creation() );
+}
+
+void AgentServerMsgMgr::OnReceivePathfindUpdate( const sword::SimToClient& msg )
+{
+    const auto& message = msg.message().pathfind_update();
+    GetModel().pathfinds_.Get( message.id() ).Update( message );
 }
 
 void AgentServerMsgMgr::OnReceivePathfindDestruction( const sword::SimToClient& msg )

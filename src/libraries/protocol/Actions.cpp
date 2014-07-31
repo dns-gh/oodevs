@@ -835,6 +835,11 @@ const ActionParam pathfind_destruction_params[] =
 {
     { "Identifier", "identifier", 0, 0, 0, 0 },
 };
+
+const ActionParam pathfind_update_params[] =
+{
+    { "Itinerary", "itinerary", 0, 0, 0, 0 },
+};
 }  // namespace
 
 const Action actions[] =
@@ -923,6 +928,7 @@ const Action actions[] =
     ACTION( local_weather_destruction ),
     ACTION( pathfind_creation ),
     ACTION( pathfind_destruction ),
+    ACTION( pathfind_update ),
     ACTION( select_diagnosis_team ),
     ACTION( select_maintenance_transporter ),
     ACTION( select_new_logistic_state ),

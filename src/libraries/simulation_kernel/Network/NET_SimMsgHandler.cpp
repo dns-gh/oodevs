@@ -213,6 +213,9 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
             case sword::MagicAction::pathfind_creation:
                 delayed = pathfinds.OnReceivePathfindCreation( msg, ctx, clientId, actionId );
                 break;
+            case sword::MagicAction::pathfind_update:
+                pathfinds.OnReceivePathfindUpdate( msg );
+                break;
             case sword::MagicAction::pathfind_destruction:
                 pathfinds.OnReceivePathfindDestruction( msg, ack() );
                 break;

@@ -105,7 +105,8 @@ public:
     virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const;
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const;
 
-    virtual Action_ABC* CreatePathfindCreation( uint32_t unit, const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points ) const;
+    virtual Action_ABC* CreatePathfindCreation( uint32_t unit, const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points, const std::string& name ) const;
+    virtual Action_ABC* CreatePathfindUpdate( const sword::Pathfind& pathfind ) const;
     virtual Action_ABC* CreatePathfindDestruction( uint32_t id ) const;
 
     virtual Action_ABC* CreateChangeLogisticLinks( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* currentSuperior ) const;
@@ -127,6 +128,7 @@ private:
     const kernel::Entity_ABC* AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation = true ) const;
     const kernel::Entity_ABC* AddTasker( Action_ABC& action, unsigned int id, const std::string& type, bool isSimulation = true ) const;
     const kernel::Entity_ABC* AddTasker( Action_ABC& action, const kernel::Entity_ABC* entity, bool isSimulation = true ) const;
+    virtual Action_ABC* CreatePathfindRequest( const std::string& name, const sword::Pathfind& pathfind ) const;
     //@}
 
 private:

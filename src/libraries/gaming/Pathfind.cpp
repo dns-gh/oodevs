@@ -9,13 +9,11 @@
 
 #include "gaming_pch.h"
 #include "Pathfind.h"
+#include "actions/ActionsModel.h"
 #include "clients_gui/GlTools_ABC.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Equipments_ABC.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
@@ -114,29 +112,22 @@ namespace
     private:
         const T_Equipments eqs_;
     };
-
-    kernel::Entity_ABC& GetUnit( const tools::Resolver_ABC< Agent_ABC >& agents,
-                                 const tools::Resolver_ABC< Population_ABC >& populations,
-                                 uint32_t id )
-    {
-        if( auto popu = populations.Find( id ) )
-            return *popu;
-        return agents.Get( id );
-    }
 }
 
 Pathfind::Pathfind( Controller& controller,
-                    const kernel::ActionController& actions,
+                    actions::ActionsModel& actionsModel,
                     const CoordinateConverter_ABC& converter,
-                    const tools::Resolver_ABC< Agent_ABC >& agents,
-                    const tools::Resolver_ABC< Population_ABC >& populations,
+                    kernel::Entity_ABC& entity,
                     const sword::Pathfind& msg,
-                    bool edition )
-    : EntityImplementation< Pathfind_ABC >( controller, msg.id(), tools::translate( "Pathfind", "itinerary" ), true )
+                    bool edition,
+                    bool canBeOrdered )
+    : EntityImplementation< Pathfind_ABC >( controller, msg.id(), msg.request().has_name() ?
+                        msg.request().name().c_str() : tools::translate( "Pathfind", "itinerary" ), !canBeOrdered )
     , controller_( controller )
-    , actions_( actions )
+    , actionsModel_( actionsModel )
     , converter_( converter )
-    , entity_( ::GetUnit( agents, populations, msg.request().unit().id() ) )
+    , pathfind_( msg )
+    , entity_( entity )
     , path_( GetPoints( converter, msg.result() ) )
     , waypoints_( edition ? GetWaypoints( path_ ) : T_Points() )
     , visible_( true )
@@ -393,4 +384,32 @@ geometry::Point2f Pathfind::GetPosition() const
     if( path_.empty() )
         return geometry::Point2f();
     return path_.front().where;
+}
+
+sword::Pathfind Pathfind::GetCreationMessage() const
+{
+    return pathfind_;
+}
+
+void Pathfind::DoUpdate( const sword::Pathfind& msg )
+{
+    if( msg.request().has_name() )
+    {
+        pathfind_ = msg;
+        name_ = pathfind_.request().name().c_str();
+        controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
+        Touch();
+    }
+}
+
+void Pathfind::Rename( const QString& name )
+{
+    auto pathfind = pathfind_;
+    pathfind.mutable_request()->set_name( name.toStdString() );
+    actionsModel_.PublishUpdatePathfind( pathfind );
+}
+
+void Pathfind::NotifyDestruction() const
+{
+    actionsModel_.PublishDestroyPathfind( GetId() );
 }

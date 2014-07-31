@@ -1500,6 +1500,7 @@ func (model *ModelData) handlePathfindCreation(m *sword.SimToClient_Content) err
 		EquipmentTypes:       ReadIds(mm.GetRequest().GetEquipmentTypes()),
 		IgnoreDynamicObjects: mm.GetRequest().GetIgnoreDynamicObjects(),
 		Result:               ReadPathPoints(mm.GetResult().GetPoints()),
+		Name:                 mm.GetRequest().GetName(),
 	}
 	return nil
 }
@@ -1514,6 +1515,19 @@ func (model *ModelData) handlePathfindDestruction(m *sword.SimToClient_Content) 
 		return fmt.Errorf("cannot destroy pathfind %d", id)
 	}
 	return nil
+}
+
+func (model *ModelData) handlePathfindUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetPathfindUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetId()
+	if p, ok := model.Pathfinds[id]; ok {
+		p.Name = mm.GetRequest().GetName()
+		return nil
+	}
+	return fmt.Errorf("cannot update pathfind %d", id)
 }
 
 func (model *ModelData) handleSupplyRequestCreation(m *sword.SimToClient_Content) error {

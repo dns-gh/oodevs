@@ -1665,13 +1665,17 @@ message MagicAction {
         //!   values.
         select_repair_team                 = 12;
         //! Create a pathfind
-        //! parameters[0], PathfindRequest: the unit and waypoints.
+        //! parameters[0], Pathfind: the unit and waypoints.
         //! result[0], Identifier: created pathfind identifier.
         //! The pathfind identifier will be sent along in a ComputePathfindAck.
         pathfind_creation                  = 13;
         //! Destroy a pathfind
         //! parameters[0], Identifier: the pathfind identifier.
         pathfind_destruction               = 14;
+        //! Update a pathfind
+        //! parameters[0], Pathfind: the new name.
+        //! Only the pathfind name can be changed.
+        pathfind_update                    = 15;
     }
     required Type              type       = 1;
     required MissionParameters parameters = 2;
@@ -2744,6 +2748,8 @@ message PathfindRequest {
     //! Indicate whether or not the request
     //! should ignore the dynamic objects.
     optional bool         ignore_dynamic_objects = 4;
+    //! The pathfind name
+    optional string       name                   = 5;
 }
 
 /** @struct Pathfind

@@ -507,6 +507,8 @@ void Model::Update( const sword::SimToClient& wrapper )
         Destroy( actions_, message.action_destruction().id(), nullptr );
     else if( message.has_pathfind_creation() )
         CreateUpdate< Pathfind >( pathfinds_, message.pathfind_creation().id(), message.pathfind_creation() );
+    else if( message.has_pathfind_update() )
+        pathfinds_.Get( message.pathfind_update().id() ).DoUpdate( message.pathfind_update() );
     else if( message.has_pathfind_destruction() )
         Destroy( pathfinds_, message.pathfind_destruction().id(), nullptr );
 //        default:

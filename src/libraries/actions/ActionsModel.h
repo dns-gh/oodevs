@@ -129,7 +129,8 @@ public:
     int PublishGlobalWeather( const ::gui::WeatherParameters& params );
     int PublishLocalWeather( const ::gui::LocalWeatherParameters& params );
     int PublishLocalDestruction( unsigned int weatherId );
-    int PublishCreatePathfind( uint32_t unit, const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points );
+    int PublishCreatePathfind( uint32_t unit, const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points, const std::string& name );
+    int PublishUpdatePathfind( const sword::Pathfind& pathfind );
     int PublishDestroyPathfind( uint32_t id );
     int PublishChangeLogisticLinks( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* currentSuperior );
     int PublishUnitChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Automat_ABC& superior );

@@ -110,7 +110,7 @@ private:
     virtual void AfterSelection();
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
 
-    void OpenEditingMode( const kernel::Entity_ABC* entity, const sword::Pathfind& pathfind );
+    void OpenEditingMode( kernel::Entity_ABC* entity, const sword::Pathfind& pathfind );
     void DrawLines( float width ) const;
     void DrawPoints() const;
     void DrawPoint( geometry::Point2f p, bool highlight ) const;

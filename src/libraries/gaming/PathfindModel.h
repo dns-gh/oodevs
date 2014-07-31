@@ -17,18 +17,23 @@ class Pathfind;
 
 namespace kernel
 {
-    class ActionController;
     class Agent_ABC;
     class Controller;
     class CoordinateConverter_ABC;
     class Pathfind_ABC;
     class Population_ABC;
+    class Profile_ABC;
 }
 
 namespace sword
 {
     class Pathfind;
     class PathfindDestruction;
+}
+
+namespace actions
+{
+    class ActionsModel;
 }
 
 // =============================================================================
@@ -43,10 +48,11 @@ public:
     //! @name Constructors/Destructor
     //@{
              PathfindModel( kernel::Controller& controller,
-                            const kernel::ActionController& actions,
+                            actions::ActionsModel& actionsModel,
                             const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
                             const tools::Resolver_ABC< kernel::Population_ABC >& populations,
-                            const kernel::CoordinateConverter_ABC& converter );
+                            const kernel::CoordinateConverter_ABC& converter,
+                            const kernel::Profile_ABC& profile );
     virtual ~PathfindModel();
     //@}
 
@@ -71,10 +77,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::ActionController& actions_;
+    actions::ActionsModel& actionsModel_;
     const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
     const tools::Resolver_ABC< kernel::Population_ABC >& populations_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

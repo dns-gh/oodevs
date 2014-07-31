@@ -111,15 +111,32 @@ void PathRequest::SendStateToNewClient()
     if( !magic_ || !path_ )
         return;
     client::Pathfind msg;
-    msg().set_id( id_ );
-    *msg().mutable_request() = request_;
-    *msg().mutable_result() = *path_;
+    FillPathfindMessage( msg() );
     msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+void PathRequest::FillPathfindMessage( sword::Pathfind& msg ) const
+{
+    msg.set_id( id_ );
+    *msg.mutable_request() = request_;
+    *msg.mutable_result() = *path_;
 }
 
 bool PathRequest::IsPublished() const
 {
     return path_;
+}
+
+bool PathRequest::Update( const sword::Pathfind& pathfind )
+{
+    if( !pathfind.request().has_name() )
+        return false;
+
+    request_.set_name( pathfind.request().name() );
+    sword::SimToClient message;
+    FillPathfindMessage( *message.mutable_message()->mutable_pathfind_update() );
+    NET_Publisher_ABC::Publisher().Send( message );
+    return true;
 }
 
 template< typename Archive >
@@ -160,3 +177,4 @@ void load_construct_data( Archive& ar, PathRequest* ptr, const unsigned int /*ve
     // we don't care anymore about the computer, our path is computed and ready to use
     ::new( ptr ) PathRequest( boost::shared_ptr< DEC_PathComputer >(), ctx, clientId, id, request, magic );
 }
+

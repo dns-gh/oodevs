@@ -47,13 +47,15 @@ public:
     //! @name Operations
     //@{
     bool Update( ActionManager& actions );
+    bool Update( const sword::Pathfind& pathfind );
     void SendStateToNewClient();
     bool IsPublished() const;
     //@}
 
 private:
     void SendComputePathfindAck( bool ok );
-    void SendPathfindCreation  ( ActionManager& actions, bool ok );
+    void SendPathfindCreation( ActionManager& actions, bool ok );
+    void FillPathfindMessage( sword::Pathfind& msg ) const;
 
 private:
     //! @name Member data
@@ -62,7 +64,7 @@ private:
     const unsigned int ctx_;
     const unsigned int clientId_;
     const uint32_t id_;
-    const sword::PathfindRequest request_;
+    sword::PathfindRequest request_;
     const boost::optional< uint32_t > magic_;
     boost::optional< sword::PathResult > path_;
     //@}

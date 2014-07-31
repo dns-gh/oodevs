@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "DrawingsBuilder.h"
 #include "moc_DrawingsBuilder.cpp"
-#include "actions/ActionsModel.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Drawing_ABC.h"
@@ -21,6 +20,7 @@
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Drawing.h"
+#include "gaming/Pathfind.h"
 #include "gaming/TacticalLine_ABC.h"
 
 namespace
@@ -48,12 +48,10 @@ namespace
     };
 }
 
-DrawingsBuilder::DrawingsBuilder( kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                                  actions::ActionsModel& actions )
+DrawingsBuilder::DrawingsBuilder( kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
     : controllers_( controllers )
     , toDelete_( controllers )
     , profile_ ( profile )
-    , actions_ ( actions )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &DrawingsBuilder::OnConfirmDeletion, this, _1 ) ) )
 {
     controllers_.Register( *this );
@@ -72,6 +70,9 @@ void DrawingsBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newNa
     if( entity.GetTypeName() == kernel::TacticalLine_ABC::typeName_ )
         if( ::TacticalLine_ABC* line = static_cast< ::TacticalLine_ABC* >( &entity ) )
             line->Rename( newName );
+    if( entity.GetTypeName() == kernel::Pathfind_ABC::typeName_ )
+        if( ::Pathfind* pathfind = static_cast< ::Pathfind* >( &entity ) )
+            pathfind->Rename( newName );
 }
 
 void DrawingsBuilder::CreateCommunication()
@@ -164,7 +165,8 @@ void DrawingsBuilder::OnConfirmDeletion( int result )
                 line->NotifyDestruction();
 
          if( toDelete_->GetTypeName() == kernel::Pathfind_ABC::typeName_ )
-             actions_.PublishDestroyPathfind( toDelete_->GetId() );
+             if( kernel::Pathfind_ABC* pathfind = static_cast< kernel::Pathfind_ABC* >( toDelete_.ConstCast() ) )
+                 pathfind->NotifyDestruction();
 
         toDelete_ = 0;
         controllers_.actions_.DeselectAll();
