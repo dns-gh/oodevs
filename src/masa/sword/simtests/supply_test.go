@@ -308,7 +308,6 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 }
 
 func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
-	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-12855")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
@@ -399,6 +398,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseManual(c *C) {
 }
 
 func (s *TestSuite) TestSupplyHandlingsBaseToBaseManual(c *C) {
+	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-12855")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
