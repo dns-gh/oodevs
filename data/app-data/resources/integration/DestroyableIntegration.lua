@@ -312,7 +312,8 @@ end
 -- @return numeric the distance in meters.
 integration.getMaxRangeToFireAgentForPH = function( agent, pH )
     if not pH then -- Scipio compatibility
-        if integration.isAgentInsideTown() then
+        local unit = CreateKnowledge(integration.ontology.types.agent, agent)
+        if integration.AgentIsInTown( unit ) then
             pH = PH_TIR_ZURB
         else
             pH = PH_TIR_ZO
