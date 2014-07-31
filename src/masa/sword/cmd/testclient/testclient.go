@@ -76,9 +76,15 @@ func addRawMessageHandler(c *swapi.Client, ch chan *compressionInfo) {
 }
 
 func addMessageLogger(client *swapi.Client, w io.Writer) {
+	tick := int32(0)
 	client.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
 		if msg == nil {
 			return
+		}
+		if msg.SimulationToClient != nil &&
+			msg.SimulationToClient.Message != nil &&
+			msg.SimulationToClient.Message.ControlBeginTick != nil {
+			tick = msg.SimulationToClient.Message.ControlBeginTick.GetCurrentTick()
 		}
 		s, err := json.MarshalIndent(msg.GetMessage(), "", "")
 		if err != nil {
@@ -95,7 +101,8 @@ func addMessageLogger(client *swapi.Client, w io.Writer) {
 			prefix = "out"
 		}
 		now := time.Now().Format(LogTimeLayout)
-		_, err = io.WriteString(w, fmt.Sprintf("%s %s=%d ", now, prefix, size))
+		_, err = io.WriteString(w, fmt.Sprintf("%s tick=%d %s=%d ",
+			now, tick, prefix, size))
 		if err != nil {
 			log.Fatalf("error: cannot write message to log file: %s", err)
 		}
