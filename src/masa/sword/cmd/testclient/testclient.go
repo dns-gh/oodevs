@@ -75,6 +75,41 @@ func addRawMessageHandler(c *swapi.Client, ch chan *compressionInfo) {
 	c.RawMessageHandler = h
 }
 
+func addMessageLogger(client *swapi.Client, w io.Writer) {
+	client.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
+		if msg == nil {
+			return
+		}
+		s, err := json.MarshalIndent(msg.GetMessage(), "", "")
+		if err != nil {
+			log.Fatalf("error: cannot serialize message to json: %s", err)
+		}
+		eol, space := byte('\n'), byte(' ')
+		for i, c := range s {
+			if c == eol {
+				s[i] = space
+			}
+		}
+		prefix := "in"
+		if !in {
+			prefix = "out"
+		}
+		now := time.Now().Format(LogTimeLayout)
+		_, err = io.WriteString(w, fmt.Sprintf("%s %s=%d ", now, prefix, size))
+		if err != nil {
+			log.Fatalf("error: cannot write message to log file: %s", err)
+		}
+		_, err = w.Write(s)
+		if err != nil {
+			log.Fatalf("error: cannot write message to log file: %s", err)
+		}
+		_, err = io.WriteString(w, "\n")
+		if err != nil {
+			log.Fatalf("error: cannot write message to log file: %s", err)
+		}
+	}
+}
+
 type tickInfo struct {
 	Automats int
 	Units    int
@@ -133,30 +168,8 @@ used to exercise swapi.Model update against real world scenarii.
 	}
 	termination := make(chan int, 2)
 
-	client.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
-		if msg != nil && logWriter != nil {
-			s, err := json.MarshalIndent(msg.GetMessage(), "", "")
-			if err != nil {
-				log.Fatalf("error: cannot serialize message to json: %s", err)
-			}
-			eol, space := byte('\n'), byte(' ')
-			for i, c := range s {
-				if c == eol {
-					s[i] = space
-				}
-			}
-			prefix := "in"
-			if !in {
-				prefix = "out"
-			}
-			now := time.Now().Format(LogTimeLayout)
-			logWriter.WriteString(fmt.Sprintf("%s %s=%d ", now, prefix, size))
-			_, err = logWriter.Write(s)
-			if err != nil {
-				log.Fatalf("error: cannot write message to log file: %s", err)
-			}
-			logWriter.WriteString("\n")
-		}
+	if logWriter != nil {
+		addMessageLogger(client, logWriter)
 	}
 
 	// Get tick information
