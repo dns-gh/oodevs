@@ -35,5 +35,9 @@
         <source>urbanknowledge</source>
         <translation>bloc urbain</translation>
     </message>
+    <message>
+        <source>location</source>
+        <translation>position</translation>
+    </message>
 </context>
 </TS>
