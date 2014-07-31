@@ -35,5 +35,9 @@
         <source>urbanknowledge</source>
         <translation>conocimiento urbano</translation>
     </message>
+    <message>
+        <source>location</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
