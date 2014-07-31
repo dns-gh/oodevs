@@ -122,13 +122,12 @@ void PathfindLayer::Initialize( const geometry::Rectangle2f& extent )
 // -----------------------------------------------------------------------------
 void PathfindLayer::Paint( gui::Viewport_ABC& view )
 {
-    if( edited_ )
-    {
-        edited_->SetHover( hovered_ );
-        if( controllers_.GetCurrentMode() == eModes_Itinerary )
-            EntityLayer< kernel::Pathfind_ABC >::Draw( *edited_, view, false );
-    }
     EntityLayer< kernel::Pathfind_ABC >::Paint( view );
+    if( !edited_ )
+        return;
+    edited_->SetHover( hovered_ );
+    if( controllers_.GetCurrentMode() == eModes_Itinerary )
+        EntityLayer< kernel::Pathfind_ABC >::Draw( *edited_, view, false );
 }
 
 // -----------------------------------------------------------------------------
