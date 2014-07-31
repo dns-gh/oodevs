@@ -926,6 +926,8 @@
         </compare-proto>
         <compare-proto olddir="${proto.dir}/5.4.1" newdir="${proto.dir}/5.4.2"/>
         <compare-proto olddir="${proto.dir}/5.4.2" newdir="${src.dir}/libraries/protocol/proto/">
+            <!-- New magic actions are fine -->
+            <arg value="--exclude=*.MagicAction.Type"/>
             <!-- Pathfind objects were changed between 5.4 and 5.5. This is fine
                  they were still being prototyped.
             -->
