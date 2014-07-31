@@ -43,7 +43,6 @@ namespace gui
     typedef boost::filesystem::path Path;
     struct  Download_ABC;
     class   ItemModel;
-    struct  QAsync;
 }
 
 namespace gui
@@ -72,7 +71,7 @@ public:
      Context( const runtime::Runtime_ABC& runtime,
               const runtime::FileSystem_ABC& fs,
               runtime::Pool_ABC& pool,
-              QAsync& async,
+              runtime::Async& async,
               ItemModel& items );
     ~Context();
 
@@ -124,7 +123,7 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const runtime::FileSystem_ABC& fs_;
     runtime::Pool_ABC& pool_;
-    QAsync& async_;
+    runtime::Async& async_;
     runtime::Async io_;
     QNetworkAccessManager net_;
     Command cmd_;

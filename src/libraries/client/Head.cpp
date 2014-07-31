@@ -16,7 +16,8 @@
 #include <QMessageBox>
 #include <QMetaType>
 #include <QSettings>
-#include <QtConcurrentRun>
+
+#include <boost/function.hpp>
 
 using namespace gui;
 using namespace runtime;
@@ -28,6 +29,7 @@ using namespace runtime;
 Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool )
     : QMainWindow( 0 )
     , ui_        ( new Ui::Head() )
+    , async_     ( new runtime::Async( pool ) )
 {
     qRegisterMetaType< size_t >( "size_t" );
     qRegisterMetaType< HttpCommand >( "HttpCommand" );
@@ -47,7 +49,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     OnModifiedItems();
 
     LoadSettings();
-    ctx_.reset( new Context( runtime, fs, pool, async_, items_ ) );
+    ctx_.reset( new Context( runtime, fs, pool, *async_, items_ ) );
     connect( ctx_.get(), SIGNAL( StatusMessage( const QString& ) ), ui_->status, SLOT( showMessage( const QString& ) ) );
     connect( ctx_.get(), SIGNAL( ClearMessage() ), ui_->status, SLOT( clearMessage() ) );
     connect( ctx_.get(), SIGNAL( ShowProgress( int, int ) ), this, SLOT( OnShowProgress( int, int ) ) );
@@ -57,7 +59,9 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     connect( ctx_.get(), SIGNAL( Show() ), this, SLOT( show() ) );
     connect( ctx_.get(), SIGNAL( EnableEdition() ), this, SLOT( OnEnableEdition() ) );
     connect( ctx_.get(), SIGNAL( SingleInstanceError() ), this, SLOT( OnSingleInstanceError() ) );
-    async_.Register( QtConcurrent::run( ctx_.get(), &Context::Start ) );
+    async_->Post( [&]{
+        ctx_->Start();
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +71,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
 Head::~Head()
 {
     SaveSettings();
-    async_.Join();
+    async_->Join();
     ctx_.reset();
 }
 

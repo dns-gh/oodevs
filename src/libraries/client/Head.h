@@ -10,7 +10,6 @@
 #ifndef HEAD_H_
 #define HEAD_H_
 
-#include "QAsync.h"
 #include "ItemModel.h"
 
 #include <QLabel>
@@ -21,6 +20,7 @@
 
 namespace runtime
 {
+    struct Async;
     struct FileSystem_ABC;
     struct Pool_ABC;
     struct Runtime_ABC;
@@ -63,7 +63,7 @@ private:
     QLabel count_;
     ItemModel items_;
     boost::scoped_ptr< Context > ctx_;
-    QAsync async_;
+    boost::scoped_ptr< runtime::Async > async_;
 };
 }
 

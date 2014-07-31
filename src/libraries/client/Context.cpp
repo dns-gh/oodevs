@@ -13,7 +13,6 @@
 #include "Download.h"
 #include "Helpers.h"
 #include "ItemModel.h"
-#include "QAsync.h"
 
 #include <runtime/win32/Api.h>
 #include "runtime/FileSystem_ABC.h"
@@ -32,7 +31,6 @@
 #include <QSettings>
 #include <QSslSocket>
 #include <QStringList>
-#include <QtConcurrentRun>
 
 using namespace gui;
 using namespace property_tree;
@@ -56,7 +54,7 @@ namespace
 // Created: BAX 2012-09-20
 // -----------------------------------------------------------------------------
 Context::Context( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool,
-                  QAsync& async, ItemModel& items )
+                  runtime::Async& async, ItemModel& items )
     : runtime_  ( runtime )
     , fs_       ( fs )
     , pool_     ( pool )
@@ -322,7 +320,10 @@ void Context::OnGetSession()
     }
 
     emit StatusMessage( "Downloading package(s)..." );
-    async_.Register( QtConcurrent::run( this, &Context::ParseSession, rpy->readAll() ) );
+    const auto data = rpy->readAll();
+    async_.Post( [=]{
+        ParseSession( data );
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,7 +412,7 @@ void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
 void Context::OpenDownload( QNetworkReply* rpy )
 {
     const size_t id = static_cast< size_t >( rpy->request().attribute( id_attribute ).toULongLong() );
-    T_Download down = MakeDownload( id, rpy, fs_, root_ / tmp_dir );
+    T_Download down = MakeDownload( id, rpy, fs_, pool_, root_ / tmp_dir );
     connect( down.get(), SIGNAL( Progress( size_t, size_t, int ) ), this, SLOT( OnDownloadProgress( size_t, size_t, int ) ) );
     connect( down.get(), SIGNAL( Error( size_t, const QString& ) ), this, SLOT( OnDownloadError( size_t, const QString& ) ) );
     connect( down.get(), SIGNAL( End( size_t, bool ) ), this, SLOT( OnCloseDownload( size_t, bool ) ) );
@@ -488,7 +489,9 @@ void Context::OnCloseDownload( size_t id, bool valid )
     }
     if( !downloads_.empty() )
         return;
-    async_.Register( QtConcurrent::run( this, &Context::ParsePackages ) );
+    async_.Post( [=]{
+        ParsePackages();
+    } );
     emit StatusMessage( "Parsing package(s)..." );
 }
 
