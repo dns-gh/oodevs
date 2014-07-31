@@ -75,11 +75,57 @@ func addRawMessageHandler(c *swapi.Client, ch chan *compressionInfo) {
 	c.RawMessageHandler = h
 }
 
+func addMessageLogger(client *swapi.Client, w io.Writer) {
+	tick := int32(0)
+	client.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
+		if msg == nil {
+			return
+		}
+		if msg.SimulationToClient != nil &&
+			msg.SimulationToClient.Message != nil &&
+			msg.SimulationToClient.Message.ControlBeginTick != nil {
+			tick = msg.SimulationToClient.Message.ControlBeginTick.GetCurrentTick()
+		}
+		s, err := json.MarshalIndent(msg.GetMessage(), "", "")
+		if err != nil {
+			log.Fatalf("error: cannot serialize message to json: %s", err)
+		}
+		eol, space := byte('\n'), byte(' ')
+		for i, c := range s {
+			if c == eol {
+				s[i] = space
+			}
+		}
+		prefix := "in"
+		if !in {
+			prefix = "out"
+		}
+		now := time.Now().Format(LogTimeLayout)
+		_, err = io.WriteString(w, fmt.Sprintf("%s tick=%d %s=%d ",
+			now, tick, prefix, size))
+		if err != nil {
+			log.Fatalf("error: cannot write message to log file: %s", err)
+		}
+		_, err = w.Write(s)
+		if err != nil {
+			log.Fatalf("error: cannot write message to log file: %s", err)
+		}
+		_, err = io.WriteString(w, "\n")
+		if err != nil {
+			log.Fatalf("error: cannot write message to log file: %s", err)
+		}
+	}
+}
+
 type tickInfo struct {
 	Automats int
 	Units    int
 	Tick     int
 }
+
+const (
+	LogTimeLayout = "2006-01-02T15:04:05.999"
+)
 
 func run() error {
 	flag.Usage = func() {
@@ -129,29 +175,8 @@ used to exercise swapi.Model update against real world scenarii.
 	}
 	termination := make(chan int, 2)
 
-	client.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
-		if msg != nil && logWriter != nil {
-			s, err := json.MarshalIndent(msg.GetMessage(), "", "")
-			if err != nil {
-				log.Fatalf("error: cannot serialize message to json: %s", err)
-			}
-			eol, space := byte('\n'), byte(' ')
-			for i, c := range s {
-				if c == eol {
-					s[i] = space
-				}
-			}
-			prefix := "in"
-			if !in {
-				prefix = "out"
-			}
-			logWriter.WriteString(fmt.Sprintf("%s=%d ", prefix, size))
-			_, err = logWriter.Write(s)
-			if err != nil {
-				log.Fatalf("error: cannot write message to log file: %s", err)
-			}
-			logWriter.WriteString("\n")
-		}
+	if logWriter != nil {
+		addMessageLogger(client, logWriter)
 	}
 
 	// Get tick information
@@ -181,12 +206,18 @@ used to exercise swapi.Model update against real world scenarii.
 			case t := <-tickCh:
 				now := time.Now()
 				dtime := now.Sub(prevNow)
-				bitrate := float64(c.Size-prevc.Size) / (float64(dtime) / float64(time.Second))
+				dsize := c.Size - prevc.Size
+				dseen := c.Seen - prevc.Seen
+				dcompressed := c.Compressed - prevc.Compressed
+				bitrate := float64(dsize) / (float64(dtime) / float64(time.Second))
 				log.Printf("Tick %d, %d units, %d automats\n", t.Tick, t.Units,
 					t.Automats)
-				ratio := 100.0 * float32(c.Compressed) / float32(c.Size)
-				fmt.Printf("  messages: %d, size: %dkb, compressed: %dkb (%.2f%%), %.2fkb/s\n",
-					c.Seen, c.Size/1024, c.Compressed/1024, ratio, bitrate/1024.0)
+				ratio := 100.0 * float32(dcompressed) / float32(dsize)
+				totalRatio := 100.0 * float32(c.Compressed) / float32(c.Size)
+				fmt.Printf("  all messages: %8d, size: %7dkb, compressed: %7dkb (%.2f%%)\n",
+					c.Seen, c.Size/1024, c.Compressed/1024, totalRatio)
+				fmt.Printf("      messages: %8d, size: %7.1fkb, compressed: %7.1fkb (%.2f%%), %.2fkb/s\n",
+					dseen, float32(dsize)/1024, float32(dcompressed)/1024, ratio, bitrate/1024.0)
 				prevNow = now
 				prevc = c
 				if t.Tick == *endtick {
