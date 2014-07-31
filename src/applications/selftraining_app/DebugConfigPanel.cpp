@@ -64,7 +64,8 @@ void SaveDebugConfig( const DebugConfig& config )
     registry::WritePath( "CefLog", config.timeline.cefLog );
     registry::WriteBool( "EnableLegacyTimeline", config.timeline.legacyTimeline );
 
-    registry::WriteString( "DevFeatures", tools::JoinFeatures( config.features ).c_str() );
+    registry::WriteString( "DevFeatures",
+        QString::fromStdString( tools::JoinFeatures( config.features ) ) );
 }
 
 }  // namespace
@@ -109,7 +110,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config, Debug
 
     //integration level combobox
     integrationDir_ = new QLineEdit();
-    integrationDir_->setText( debug_.sim.integrationDir.ToUTF8().c_str() );
+    integrationDir_->setText( QString::fromStdWString( debug_.sim.integrationDir.ToUnicode() ) );
     connect( integrationDir_, SIGNAL( textEdited( const QString& ) ), SLOT( OnEditIntegrationDirectory( const QString& ) ) );
 
     //integration level button

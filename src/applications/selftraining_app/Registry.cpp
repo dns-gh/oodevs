@@ -78,5 +78,5 @@ tools::Path registry::ReadPath( const QString& key )
 
 void registry::WritePath( const QString& key, const tools::Path& path )
 {
-    registry::WriteString( key, path.ToUTF8().c_str() );
+    registry::WriteString( key, QString::fromStdString( path.ToUTF8() ) );
 }

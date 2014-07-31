@@ -12,7 +12,7 @@
 
 #include "clients_gui/WidgetLanguageObserver_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 #include <unordered_set>
 
 namespace tools
