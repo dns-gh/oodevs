@@ -699,10 +699,10 @@ func (s *TestSuite) TestDecGetMaxRangeToFireOn(c *C) {
 	// Drops 1km ammunitions
 	const dotation = 117
 	resource := swapi.Resource{
-		Quantity: 0,
+		Quantity:      0,
 		LowThreshold:  100,
 		HighThreshold: 100,
-	}	
+	}
 	err = client.ChangeResource(follower.Id, map[uint32]*swapi.Resource{dotation: &resource})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -712,5 +712,5 @@ func (s *TestSuite) TestDecGetMaxRangeToFireOn(c *C) {
 	// Checks max range to fire falls back to 500m
 	maxRange, err = DecGetMaxRangeToFireOn(client, 1, follower.Id, followedKgId)
 	c.Assert(err, IsNil)
-	c.Assert(maxRange, Equals, 500.0)	
+	c.Assert(maxRange, Equals, 500.0)
 }
