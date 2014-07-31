@@ -369,3 +369,7 @@ eActionIllumination_NoAmmo = 3
 eActionIllumination_Running = 4
 eActionIllumination_Finished = 5
 eActionIllumination_None = 6
+
+-- Fire condition -- Scipio compatibility
+PH_TIR_ZURB = 0.4
+PH_TIR_ZO = 0.5
