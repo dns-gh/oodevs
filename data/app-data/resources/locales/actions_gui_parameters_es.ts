@@ -39,5 +39,9 @@
         <source>location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>path</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

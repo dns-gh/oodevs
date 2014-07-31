@@ -39,5 +39,9 @@
         <source>location</source>
         <translation>position</translation>
     </message>
+    <message>
+        <source>path</source>
+        <translation>chemin</translation>
+    </message>
 </context>
 </TS>
