@@ -2588,6 +2588,10 @@ This data can&apos;t be projected.</source>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Destroyed units</source>
+        <translation>Destroyed units</translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>

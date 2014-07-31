@@ -2591,6 +2591,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>&amp;Settings</source>
         <translation>&amp;Réglages</translation>
     </message>
+    <message>
+        <source>Destroyed units</source>
+        <translation>Unités détruites</translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>
