@@ -561,6 +561,9 @@ void PathfindLayer::OptionChanged( const std::string& name, const kernel::Option
 
 bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
+    if( controllers_.GetCurrentMode() == eModes_Itinerary )
+        if( edited_.get() == &entity )
+            return true;
     if( !filter_.IsSet( true, true, true ) )
         return false;
     const auto& element = static_cast< const kernel::Pathfind_ABC& >( entity ).GetUnit();
