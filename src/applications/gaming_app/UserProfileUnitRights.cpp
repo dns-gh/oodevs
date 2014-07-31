@@ -11,6 +11,7 @@
 #include "UserProfileUnitRights.h"
 #include "moc_UserProfileUnitRights.cpp"
 #include "clients_gui/LongNameHelper.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
@@ -89,6 +90,18 @@ void UserProfileUnitRights::AdditionalUpdateItem( QStandardItem& entityItem, con
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
+    if( dynamic_cast< const kernel::AgentKnowledge_ABC* >( &entity ) )
+        // SWBUG-12850: spamming with agent knowledge updates massively slows
+        // down gaming because the FindDataItem() below and possibly the
+        // following invalidate() are super slow.
+        // 
+        // This is harmless here because we do not store agent knowledge in
+        // this widget. This is also simpler and more efficient than doing it
+        // in NotifyUpdated( TacticalHierarchies ) because EntityTreeView_ABC
+        // also implements NotifyUpdated( Entity_ABC ) and we would have to
+        // filter it twice.
+        return;
+
     QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
     {
