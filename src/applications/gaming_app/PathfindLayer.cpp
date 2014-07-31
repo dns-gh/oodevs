@@ -149,7 +149,7 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
         }
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
     }
-    else if( profile_.CanBeOrdered( *selectedEntity_ ) )
+    else if( selectedEntity_ == target_ && profile_.CanBeOrdered( *selectedEntity_ ) )
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OnOpenEditingMode() ) );
 }
 
