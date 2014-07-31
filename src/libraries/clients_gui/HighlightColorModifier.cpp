@@ -56,7 +56,7 @@ HighlightColorModifier::~HighlightColorModifier()
 // -----------------------------------------------------------------------------
 QColor HighlightColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base ) const
 {
-    if( highlighted_.find( &entity ) != highlighted_.end() )
+    if( entity.IsHighlighted() )
         return Highlight( base );
     return base;
 }
@@ -79,10 +79,8 @@ void HighlightColorModifier::UpdateContextMenu( const kernel::Entity_ABC& entity
     if( !profile_.IsVisible( entity ) )
         return;
     selected_ = &entity;
-    if( highlighted_.find( &entity ) == highlighted_.end() )
-        menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Highlight" ), this, SLOT( Highlight() ) );
-    else
-        menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Remove highlight" ), this, SLOT( Unhighlight() ) );
+    menu.InsertItem( "Interface", entity.IsHighlighted() ? tools::translate( "gui::HighlightColorModifier", "Remove highlight" ) :
+        tools::translate( "gui::HighlightColorModifier", "Highlight" ), this, SLOT( ToggleHighlight() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,32 +156,13 @@ void HighlightColorModifier::NotifyContextMenu( const kernel::ObjectKnowledge_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: HighlightColorModifier::Highlight
-// Created: AGE 2008-05-15
+// Name: HighlightColorModifier::ToggleHighlight
+// Created: LGY 2014-07-31
 // -----------------------------------------------------------------------------
-void HighlightColorModifier::Highlight()
+void HighlightColorModifier::ToggleHighlight()
 {
     if( selected_ )
-        highlighted_.insert( selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HighlightColorModifier::Unhighlight
-// Created: AGE 2008-05-15
-// -----------------------------------------------------------------------------
-void HighlightColorModifier::Unhighlight()
-{
-    if( selected_ )
-        highlighted_.erase( selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HighlightColorModifier::NotifyDeleted
-// Created: AGE 2008-05-15
-// -----------------------------------------------------------------------------
-void HighlightColorModifier::NotifyDeleted( const kernel::Entity_ABC& entity )
-{
-    highlighted_.erase( &entity );
+        selected_.ConstCast()->ToggleHighlight();
 }
 
 // -----------------------------------------------------------------------------

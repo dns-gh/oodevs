@@ -100,10 +100,12 @@ public:
     virtual void Apply( ExtensionVisitor_ABC& visitor ) const;
     //@}
 
-    //! @name Aggregation
+    //! @name Graphics
     //@{
     void Aggregate( bool aggregate );
     bool IsAggregated() const;
+    void ToggleHighlight();
+    bool IsHighlighted() const;
     //@}
 
 private:
@@ -111,6 +113,7 @@ private:
     //@{
     std::vector< Extension_ABC* > extensions_;
     bool aggregated_;
+    bool highlighted_;
     //@}
 };
 

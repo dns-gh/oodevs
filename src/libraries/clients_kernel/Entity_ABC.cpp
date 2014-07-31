@@ -28,6 +28,7 @@ void EntityBase_ABC::AddExtension( Extension_ABC& ext )
 // -----------------------------------------------------------------------------
 Entity_ABC::Entity_ABC()
     : aggregated_( false )
+    , highlighted_( false )
 {
     // NOTHING
 }
@@ -97,4 +98,14 @@ void Entity_ABC::Aggregate( bool aggregate )
 bool Entity_ABC::IsAggregated() const
 {
     return aggregated_;
+}
+
+void Entity_ABC::ToggleHighlight()
+{
+    highlighted_ = !highlighted_;
+}
+
+bool Entity_ABC::IsHighlighted() const
+{
+    return highlighted_;
 }

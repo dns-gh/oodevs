@@ -75,9 +75,16 @@ void EntityLayerBase::Paint( Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );
     bool pickingMode = tools_.IsPickingMode();
+
+    // Draw the entities
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
-        if( *it != &*selected_ )
+        if( *it != &*selected_ && !(*it)->IsHighlighted() )
             Draw( **it, viewport, pickingMode );
+    // Draw the highlighted entities
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
+        if( *it != &*selected_ && (*it)->IsHighlighted() )
+            Draw( **it, viewport, pickingMode );
+    // Draw the selected entity
     if( selected_ )
         Draw( *selected_, viewport, pickingMode );
 
