@@ -125,7 +125,7 @@ public:
     virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& object ) = 0;
     virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo ) const = 0;
     virtual double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
-    virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH, const PHY_DotationCategory* dotation = 0 ) const = 0;
+    virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH, const PHY_DotationCategory* dotation, bool useAmmo ) const = 0;
     virtual double GetMinRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOnActualPosture ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMinRangeToFireOnActualPosture ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;

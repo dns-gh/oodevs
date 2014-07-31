@@ -1082,11 +1082,11 @@ double PHY_ComposanteTypePion::GetDangerosity( const MIL_Agent_ABC& firer, const
 // Name: PHY_ComposanteTypePion::GetMaxRangeToFireOn
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-double PHY_ComposanteTypePion::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation ) const
+double PHY_ComposanteTypePion::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation, bool useAmmo ) const
 {
     double rRange = 0;
     for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
-        rRange = std::max( rRange, it->first->GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH, dotation ) );
+        rRange = std::max( rRange, it->first->GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH, dotation, useAmmo ) );
     return rRange;
 }
 

@@ -634,3 +634,83 @@ func (s *TestSuite) TestDecGetTerrainData(c *C) {
 		c.Assert(output, Equals, t.expected)
 	}
 }
+
+func DecGetMaxRangeToFireOn(client *swapi.Client, requiredPh float64,
+	followerId, followedKgId uint32) (float64, error) {
+
+	script := `function TestFunction()
+        local kg = DEC_GetAgentKnowledge({{.followerId}}, {{.followedKgId}})
+        local range = DEC_Tir_PorteeMaxPourTirerSurUnite(kg, {{.requiredPh}})
+        return range
+	end`
+	output, err := client.ExecTemplate(followerId, "TestFunction", script,
+		map[string]interface{}{
+			"followerId":   followerId,
+			"followedKgId": followedKgId,
+			"requiredPh":   requiredPh,
+		})
+	if err != nil {
+		return 0, err
+	}
+	maxRange, err := strconv.ParseFloat(output, 64)
+	return maxRange, err
+}
+
+func (s *TestSuite) TestDecGetMaxRangeToFireOn(c *C) {
+	phydb := loadPhysical(c, "test")
+
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
+	defer stopSimAndClient(c, sim, client)
+
+	// The VW Direct Fire has two weapon systems, one firing up to 500m, the
+	// second up to 1000m
+	pos := swapi.Point{X: -15.9268, Y: 28.3453}
+	//ammo500m := getResourceTypeFromName(c, phydb, "direct fire ammo 500m")
+	//ammo1km := getResourceTypeFromName(c, phydb, "direct fire ammo 1km")
+
+	// Create following unit
+	follower := CreateUnitInParty(c, client, phydb, "party1", "VW Combi Rally",
+		"VW Direct Fire", pos)
+	data := client.Model.GetData()
+	kg := data.KnowledgeGroups[data.Automats[follower.AutomatId].KnowledgeGroupId]
+	c.Assert(kg, NotNil)
+
+	// Create followed unit
+	followed := CreateUnitInParty(c, client, phydb, "party2", "VW Combi Rally",
+		"VW Combi", pos)
+
+	// Wait for follower to aquire followed knowledge
+	followedKgId := uint32(0)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, k := range data.UnitKnowledges {
+			if k.KnowledgeGroupId == kg.Id && k.UnitId == followed.Id {
+				followedKgId = k.Id
+				return true
+			}
+		}
+		return false
+	})
+
+	// Checks max range to fire is 1km
+	maxRange, err := DecGetMaxRangeToFireOn(client, 1, follower.Id, followedKgId)
+	c.Assert(err, IsNil)
+	c.Assert(maxRange, Equals, 1000.0)
+
+	// Drops 1km ammunitions
+	const dotation = 117
+	resource := swapi.Resource{
+		Quantity: 0,
+		LowThreshold:  100,
+		HighThreshold: 100,
+	}	
+	err = client.ChangeResource(follower.Id, map[uint32]*swapi.Resource{dotation: &resource})
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[follower.Id].Resources[dotation] == resource
+	})
+
+	// Checks max range to fire falls back to 500m
+	maxRange, err = DecGetMaxRangeToFireOn(client, 1, follower.Id, followedKgId)
+	c.Assert(err, IsNil)
+	c.Assert(maxRange, Equals, 500.0)	
+}

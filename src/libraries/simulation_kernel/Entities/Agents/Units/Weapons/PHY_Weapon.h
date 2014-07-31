@@ -59,9 +59,6 @@ public:
     double ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, PHY_FireResults_ABC& fireResult );
     double GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH, bool bUseAmmo ) const;
     double GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo ) const;
-    double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
-    double GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
-    double GetMaxRangeToDirectFire() const;
     double GetMaxRangeToIndirectFire() const;
     double GetMinRangeToIndirectFire() const;
     int GetNumberOfDotationPerBurst( const PHY_DotationCategory& ) const;

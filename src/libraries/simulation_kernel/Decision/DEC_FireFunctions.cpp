@@ -29,7 +29,7 @@ using namespace firing;
 // -----------------------------------------------------------------------------
 float DEC_FireFunctions::GetMaxRangeToFireOnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH )
 {
-    return GetMaxRangeToFireOnEnemyWithDotation( callerAgent, pKnowledge, rWantedPH, 0 );
+    return GetMaxRangeToFireOnEnemyWithDotation( callerAgent, pKnowledge, rWantedPH, nullptr );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,8 +40,7 @@ float DEC_FireFunctions::GetMaxRangeToFireOnEnemyWithDotation( const MIL_AgentPi
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return -1.f;
-    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFireOn( *pKnowledge, rWantedPH, dotation ) );
-
+    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFireOn( *pKnowledge, rWantedPH, dotation, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +54,7 @@ float DEC_FireFunctions::GetMinRangeToFireOnEnemy( const MIL_AgentPion& callerAg
     const double rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMinRangeToFireOn( *pKnowledge, rWantedPH );
     if( rRange == std::numeric_limits< double >::max() )
         return -1.f;
-    return MIL_Tools::ConvertSimToMeter( (float)rRange );
+    return MIL_Tools::ConvertSimToMeter( rRange );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +66,7 @@ float DEC_FireFunctions::GetMaxRangeToFire( const MIL_Agent_ABC& callerAgent, fl
     const double rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFire( callerAgent, rWantedPH );
     if( rRange == std::numeric_limits< double >::max() )
         return -1.f;
-    return MIL_Tools::ConvertSimToMeter( (float)rRange );
+    return MIL_Tools::ConvertSimToMeter( rRange );
 }
 
 // -----------------------------------------------------------------------------
