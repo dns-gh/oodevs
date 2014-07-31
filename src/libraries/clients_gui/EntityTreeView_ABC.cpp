@@ -13,6 +13,7 @@
 #include "moc_EntityTreeView_ABC.cpp"
 #include "LongNameHelper.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -111,6 +112,15 @@ void EntityTreeView_ABC::NotifyDeleted( const kernel::Entity_ABC& /* team */ )
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
+    if( dynamic_cast< const kernel::AgentKnowledge_ABC* >( &entity ) )
+        // SWBUG-12850: spamming with agent knowledge updates massively slows
+        // down gaming because the FindDataItem() below and possibly the
+        // following invalidate() are super slow.
+        // 
+        // Ignoring agent knowledge name changes here is ugly but better than
+        // freezing gaming.
+        return;
+
     QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
     {

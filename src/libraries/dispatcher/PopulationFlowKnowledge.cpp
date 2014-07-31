@@ -26,7 +26,7 @@ using namespace dispatcher;
 PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const sword::CrowdFlowKnowledgeCreation& msg )
     : SimpleEntity< >     ( msg.knowledge().id() )
     , populationKnowledge_( populationKnowledge )
-    , pFlow_              ( msg.flow().id() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.flow().id() ) )
+    , flowId_             ( msg.flow().id() )
     , nDirection_         ( 0 )
     , nSpeed_             ( 0 )
     , nNbrAliveHumans_    ( 0 )
@@ -60,7 +60,7 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 void PopulationFlowKnowledge::Update( const sword::CrowdFlowKnowledgeUpdate& msg )
 {
     if( msg.has_flow()  )
-        pFlow_ = msg.flow().id() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.flow().id() );
+        flowId_ = msg.flow().id();
     if( msg.has_parts() )
     {
         flowParts_.clear();
@@ -109,7 +109,7 @@ void PopulationFlowKnowledge::SendCreation( ClientPublisher_ABC& publisher ) con
     client::CrowdFlowKnowledgeCreation asn;
     asn().mutable_knowledge()->set_id( GetId() );
     asn().mutable_crowd()->set_id( populationKnowledge_.GetId() );
-    asn().mutable_flow()->set_id( pFlow_ ? pFlow_->GetId() : 0 );
+    asn().mutable_flow()->set_id( populationKnowledge_.GetEntity()->FindFlow( flowId_ ) ? flowId_ : 0 );
     asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     asn.Send( publisher );
 }
@@ -126,7 +126,7 @@ void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) c
     asn().mutable_crowd()->set_id( populationKnowledge_.GetId() );
     asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
 
-    asn().mutable_flow()->set_id( pFlow_ ? pFlow_->GetId() : 0 );
+    asn().mutable_flow()->set_id( populationKnowledge_.GetEntity()->FindFlow( flowId_ ) ? flowId_ : 0 );
 
     {
         for( std::vector< PopulationFlowPart >::const_iterator it = flowParts_.begin(); it != flowParts_.end(); ++it )

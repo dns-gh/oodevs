@@ -28,6 +28,7 @@
 #include "clients_gui/Tools.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
@@ -209,6 +210,15 @@ bool CommunicationTreeView::ApplyProfileFilter( QStandardItem& item ) const
 // -----------------------------------------------------------------------------
 void CommunicationTreeView::NotifyCreated( const kernel::Entity_ABC& entity )
 {
+    if( dynamic_cast< const kernel::AgentKnowledge_ABC* >( &entity ) )
+        // SWBUG-12850: spamming with agent knowledge updates massively slows
+        // down gaming because the FindDataItem() below and possibly the
+        // following invalidate() are super slow.
+        // 
+        // This is harmless here as CommunicationTreeView does not store
+        // agent knowledges, and the knowledge groups will be created by
+        // units and other entities as their parent items.
+        return;
     gui::HierarchyTreeView< kernel::CommunicationHierarchies >::ElementObserver_ABC< kernel::Entity_ABC >::NotifyCreated( entity );
     UpdateLongName( entity );
 }
@@ -219,6 +229,14 @@ void CommunicationTreeView::NotifyCreated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void CommunicationTreeView::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
+    if( dynamic_cast< const kernel::AgentKnowledge_ABC* >( &entity ) )
+        // SWBUG-12850: spamming with agent knowledge updates massively slows
+        // down gaming because the FindDataItem() below and possibly the
+        // following invalidate() are super slow.
+        // 
+        // This is harmless here as CommunicationTreeView does not store
+        // agent knowledges.
+        return;
     gui::HierarchyTreeView< kernel::CommunicationHierarchies >::ElementObserver_ABC< kernel::Entity_ABC >::NotifyUpdated( entity );
     UpdateLongName( entity );
 }

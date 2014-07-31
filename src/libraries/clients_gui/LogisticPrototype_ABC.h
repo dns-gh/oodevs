@@ -38,7 +38,6 @@ class LogisticPrototype_ABC : public ObjectAttributePrototype_ABC
                             , public tools::Observer_ABC
                             , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                             , public tools::ElementObserver_ABC< kernel::Formation_ABC >
-                            , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
@@ -67,14 +66,16 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Automat_ABC& automat );
+    virtual void NotifyUpdated( const kernel::Automat_ABC& automat );
     virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
 
     virtual void NotifyCreated( const kernel::Formation_ABC& formation );
+    virtual void NotifyUpdated( const kernel::Formation_ABC& formation );
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
     virtual void NotifyContextMenu( const kernel::Formation_ABC&, kernel::ContextMenu& );
 
-    virtual void NotifyUpdated( const kernel::Entity_ABC& automat );
+    void UpdateDisplayName( const kernel::Entity_ABC& entity );
     //@}
 
 protected:
