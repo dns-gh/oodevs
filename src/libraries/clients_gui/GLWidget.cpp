@@ -1313,6 +1313,8 @@ void GlWidget::DrawShapeText( const QImage& image, const geometry::Point2f& wher
         glEnable( GL_TEXTURE_2D );
         glDisable( GL_TEXTURE_GEN_S );
         glDisable( GL_TEXTURE_GEN_T );
+        glEnable( GL_ALPHA_TEST );
+        glAlphaFunc( GL_GREATER, 0.1f );
         glColor3f( 1.f, 1.f, 1.f );
 
         unsigned int texture;
@@ -1335,6 +1337,7 @@ void GlWidget::DrawShapeText( const QImage& image, const geometry::Point2f& wher
         glVertex2f( 1, -1.f );
         glEnd();
 
+        glDisable( GL_ALPHA_TEST );
         glPopMatrix();
         glPopAttrib();
 
