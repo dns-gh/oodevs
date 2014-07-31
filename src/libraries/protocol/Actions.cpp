@@ -838,8 +838,7 @@ const ActionParam pathfind_destruction_params[] =
 
 const ActionParam pathfind_update_params[] =
 {
-    { "Identifier", "identifier", 0, 0, 0, 0 },
-    { "Name", "string", 0, 0, 0, 0 },
+    { "Itinerary", "itinerary", 0, 0, 0, 0 },
 };
 }  // namespace
 

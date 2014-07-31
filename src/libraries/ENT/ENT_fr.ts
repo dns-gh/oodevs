@@ -1184,7 +1184,7 @@
     </message>
     <message>
         <source>Update pathfind</source>
-        <translation type="unfinished"></translation>
+        <translation>Mettre à jour un chemin</translation>
     </message>
 </context>
 <context>
