@@ -42,7 +42,6 @@ namespace gui
 class HighlightColorModifier : public QObject
                              , public ColorModifier_ABC
                              , public tools::Observer_ABC
-                             , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
@@ -70,8 +69,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void Highlight();
-    void Unhighlight();
+    void ToggleHighlight();
     void OnBlink();
     //@}
 
@@ -86,7 +84,6 @@ private slots:
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity, kernel::ContextMenu& menu );
-    virtual void NotifyDeleted( const kernel::Entity_ABC& );
     QColor Highlight( const QColor& base ) const;
     //@}
 
@@ -95,7 +92,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
-    std::set< const kernel::Entity_ABC* > highlighted_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     bool blink_;
     //@}
