@@ -14,6 +14,7 @@
 #include "MenuButton.h"
 #include "ScenarioLauncherPage.h"
 #include "clients_kernel/Tools.h"
+#include "frontend/DebugConfig.h"
 #include "moc_SelfTrainingPage.cpp"
 
 // -----------------------------------------------------------------------------
@@ -25,7 +26,7 @@ SelfTrainingPage::SelfTrainingPage( Application& app, QStackedWidget* pages,
                                     const tools::Loader_ABC& fileLoader,
                                     kernel::Controllers& controllers,
                                     ExerciseContainer& exercises,
-                                    const DebugConfig* debug )
+                                    const frontend::DebugConfig* debug )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
 {

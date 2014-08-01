@@ -21,6 +21,7 @@
 
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
+#include "frontend/DebugConfig.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/StartReplay.h"
 #include "frontend/StartTimeline.h"
@@ -36,7 +37,7 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises, const DebugConfig* debug )
+ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises, const frontend::DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_( config )
     , debug_( debug )

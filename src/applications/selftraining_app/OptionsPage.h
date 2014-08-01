@@ -19,16 +19,20 @@ class DebugConfigPanel;
 class ExerciseContainer;
 class ExportWidget;
 class ImportWidget;
-struct DebugConfig;
-
-namespace tools
-{
-    class Loader_ABC;
-}
 
 namespace kernel
 {
     class Controllers;
+}
+
+namespace frontend
+{
+    struct DebugConfig;
+}
+
+namespace tools
+{
+    class Loader_ABC;
 }
 
 // =============================================================================
@@ -47,7 +51,7 @@ public:
              OptionsPage( Application& app, QWidget* parent, QStackedWidget* pages,
                   Page_ABC& previous, Config& config,
                   const tools::Loader_ABC& loader, kernel::Controllers& controllers,
-                  ExerciseContainer& exercises, DebugConfig* debug );
+                  ExerciseContainer& exercises, frontend::DebugConfig* debug );
     virtual ~OptionsPage();
     //@}
 
@@ -89,7 +93,7 @@ private:
     void SetImportLayout();
     void SetExportLayout();
     void SetDataLayout();
-    void SetDebugLayout( DebugConfig* debug );
+    void SetDebugLayout( frontend::DebugConfig* debug );
     //@}
 
     //! @name Helpers

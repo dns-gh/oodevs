@@ -17,6 +17,7 @@
 #include "ProgressPage.h"
 #include "ProcessDialogs.h"
 #include "frontend/CreateSession.h"
+#include "frontend/DebugConfig.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinExercise.h"
 #include "frontend/ProcessWrapper.h"
@@ -28,7 +29,7 @@
 // Name: ScenarioJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises, const DebugConfig* debug )
+ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises, const frontend::DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonJoin )
     , controllers_      ( controllers )
     , exerciseContainer_( exercises )

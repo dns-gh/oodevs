@@ -20,6 +20,7 @@
 #include "frontend/CheckpointConfigPanel.h"
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
+#include "frontend/DebugConfig.h"
 #include "frontend/EditExercise.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinExercise.h"
@@ -115,7 +116,7 @@ namespace
 ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages,
         Page_ABC& previous, kernel::Controllers& controllers, const Config& config,
         const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises,
-        const DebugConfig* debug )
+        const frontend::DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_           ( config )
     , fileLoader_       ( fileLoader )

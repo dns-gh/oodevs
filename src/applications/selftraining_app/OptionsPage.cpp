@@ -22,6 +22,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LanguageController.h"
 #include "clients_kernel/Tools.h"
+#include "frontend/DebugConfig.h"
 #include "tools/Languages.h"
 #include <boost/foreach.hpp>
 #pragma warning( push, 1 )
@@ -38,7 +39,7 @@ OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pag
                           const tools::Loader_ABC& loader,
                           kernel::Controllers& controllers,
                           ExerciseContainer& exercises,
-                          DebugConfig* debug )
+                          frontend::DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonApply )
     , app_               ( app )
     , parent_            ( parent )
@@ -165,7 +166,7 @@ void OptionsPage::SetDataLayout()
              SLOT( OnButtonChanged( bool, const QString& ) ) );
 }
 
-void OptionsPage::SetDebugLayout( DebugConfig* debug )
+void OptionsPage::SetDebugLayout( frontend::DebugConfig* debug )
 {
     if( !debug )
         return;

@@ -15,6 +15,7 @@
 
 namespace frontend
 {
+    struct DebugConfig;
     class Exercise_ABC;
 }
 
@@ -34,7 +35,6 @@ class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
 class SessionList;
-struct DebugConfig;
 
 // =============================================================================
 /** @class  ReplayPage
@@ -54,7 +54,7 @@ public:
                          const tools::Loader_ABC& fileLoader,
                          kernel::Controllers& controllers,
                          ExerciseContainer& exercises,
-                         const DebugConfig* debug );
+                         const frontend::DebugConfig* debug );
     virtual ~ReplayPage();
     //@}
 
@@ -83,7 +83,7 @@ private:
     const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
     ExerciseContainer& exerciseContainer_;
-    const DebugConfig* debug_;
+    const frontend::DebugConfig* debug_;
     ProgressPage* progressPage_;
     ExerciseList* exercises_;
     SessionList* sessions_;

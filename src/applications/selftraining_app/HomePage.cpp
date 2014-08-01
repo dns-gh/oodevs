@@ -18,6 +18,7 @@
 #include "ScenarioEditPage.h"
 #include "SelfTrainingPage.h"
 #include "clients_kernel/Tools.h"
+#include "frontend/DebugConfig.h"
 #include "moc_HomePage.cpp"
 
 // -----------------------------------------------------------------------------
@@ -30,7 +31,7 @@ HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
                     ExerciseContainer& exercises )
     : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
-    , debug_( config.IsOnDebugMode() ? new DebugConfig() : 0 )
+    , debug_( config.IsOnDebugMode() ? new frontend::DebugConfig() : 0 )
     , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader,
                 controllers, exercises, debug_.get() ) )
 {

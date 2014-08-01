@@ -17,6 +17,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace frontend
+{
+    struct DebugConfig;
+}
+
 namespace tools
 {
     class Loader_ABC;
@@ -26,7 +31,6 @@ class Application;
 class Config;
 class ExerciseContainer;
 class ScenarioLauncherPage;
-struct DebugConfig;
 
 // =============================================================================
 /** @class  SelfTrainingPage
@@ -45,7 +49,7 @@ public:
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,
                                ExerciseContainer& exercises,
-                               const DebugConfig* debug );
+                               const frontend::DebugConfig* debug );
     virtual ~SelfTrainingPage();
     //@}
 
