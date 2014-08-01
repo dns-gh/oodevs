@@ -288,7 +288,6 @@ tools::Path ScenarioLauncherPage::CreateSession( const tools::Path& exercise,
 
         if( debug_.timeline.debugPort )
             action.SetOption( "session/config/timeline/@debug-port", debug_.timeline.debugPort );
-        action.SetOption( "session/config/timeline/@enabled", debug_.timeline.legacyTimeline );
         if( debug_.sim.decProfiling )
             action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
 

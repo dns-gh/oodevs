@@ -59,6 +59,8 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
     }
     if( !debug.timeline.cefLog.IsEmpty() )
         AddArgument( "cef-log", debug.timeline.cefLog.ToUTF8() );
+    if( debug.timeline.legacyTimeline )
+        AddArgument( "--legacy-timeline" );
     if( debug.gaming.hasMapnik )
         AddArgument( "--mapnik" );
 }

@@ -17,7 +17,6 @@
 #include "ProgressPage.h"
 #include "ProcessDialogs.h"
 #include "frontend/CreateSession.h"
-#include "frontend/DebugConfig.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinExercise.h"
 #include "frontend/ProcessWrapper.h"
@@ -155,8 +154,6 @@ void ScenarioJoinPage::OnJoin()
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( port_->text() ) );
         action.SetOption( "session/config/timeline/@url", QString( "%1:%2" ).arg( host_->text() ).arg( timeline_->text() ) );
-        if( debug_.timeline.legacyTimeline )
-            action.SetOption( "session/config/timeline/@enabled", "true" );
         action.Commit();
     }
 
