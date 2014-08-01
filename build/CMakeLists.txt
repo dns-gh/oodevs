@@ -580,6 +580,11 @@ target_link_libraries( preparation_app
     frontend
     preparation
     ${EXTRACTOR_LIBRARIES}
+    ${TERRAIN_LIBRARIES}
+    ${GEODATA_LIBRARIES}
+    ${GRAPHICS_LIBRARIES}
+    ${MAPNIK_LIBRARIES}
+    ${GEOS_I_LIBRARIES}
 )
 
 # selftraining_app

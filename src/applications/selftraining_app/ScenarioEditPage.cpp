@@ -29,13 +29,15 @@
 // -----------------------------------------------------------------------------
 ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, QStackedWidget* pages,
     Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader,
-    kernel::Controllers& controllers, ExerciseContainer& exerciseContainer )
+    kernel::Controllers& controllers, ExerciseContainer& exerciseContainer,
+    const frontend::DebugConfig& debug )
     : ContentPage( pages, previous, eButtonBack | eButtonEdit )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
     , progressPage_( new ProgressPage( app, pages, *this ) )
     , exerciseContainer_( exerciseContainer )
+    , debug_( debug )
 {
     setWindowTitle( "ScenarioEditPage" );
     QWidget* box = new QWidget( this );
@@ -131,7 +133,7 @@ void ScenarioEditPage::OnEdit()
 void ScenarioEditPage::Edit( const tools::Path& exercise )
 {
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::EditExercise >( config_, exercise ) );
+    process->Add( boost::make_shared< frontend::EditExercise >( config_, exercise, debug_ ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();
@@ -249,7 +251,7 @@ void ScenarioEditPage::LaunchScenarioImport( const tools::Path& inputScenario, c
 void ScenarioEditPage::LaunchPreparation( const tools::Path& outputScenario )
 {
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::EditExercise >( config_, outputScenario ) );
+    process->Add( boost::make_shared< frontend::EditExercise >( config_, outputScenario, debug_ ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

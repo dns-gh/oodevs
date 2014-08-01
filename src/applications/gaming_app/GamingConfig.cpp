@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "GamingConfig.h"
 #include "gaming/Network.h"
+#include "clients_gui/GamingCommonConfig.h"
 #include "clients_kernel/Tools.h"
 #include "tools/NullFileLoaderObserver.h"
 #include <xeumeuleu/xml.hpp>
@@ -30,7 +31,7 @@ GamingConfig::GamingConfig( int argc, char** argv )
     , hasTimeline_( false )
     , timelineUrl_( "" )
     , timelineDebugPort_( 0 )
-    , mapnik_( false )
+    , common_( new gui::GamingCommonConfig() )
 {
     std::string timelineLog, cefLog;
     po::options_description desc( "Gaming options" );
@@ -42,8 +43,8 @@ GamingConfig::GamingConfig( int argc, char** argv )
         ( "timeline-log", po::value( &timelineLog ), "timeline log file" )
         ( "cef-log", po::value( &cefLog ), "chrome embedded log file" )
         ( "legacy-timeline", po::value( &hasTimeline_ )->zero_tokens(), "enable legacy timeline" )
-        ( "timeline-debug-port",  po::value( &timelineDebugPort_ ), "timeline chrome debugger port" )
-        ( "mapnik", po::value( &mapnik_ )->zero_tokens(), "enable mapnik layer" );
+        ( "timeline-debug-port",  po::value( &timelineDebugPort_ ), "timeline chrome debugger port" );
+    gui::AddGamingCommonOptions( desc, *common_ );
 
     AddOptions( desc );
     Parse( argc, argv );
@@ -185,5 +186,5 @@ tools::Path GamingConfig::GetCefLogFile() const
 
 bool GamingConfig::HasMapnik() const
 {
-    return mapnik_;
+    return common_->hasMapnik;
 }

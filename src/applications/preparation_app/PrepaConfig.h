@@ -12,6 +12,11 @@
 
 #include "tools/ExerciseConfig.h"
 
+namespace gui
+{
+    struct GamingCommonConfig;
+}
+
 namespace tools
 {
     class RealFileLoaderObserver_ABC;
@@ -38,6 +43,7 @@ public:
     bool HasGenerateScores() const;
     const tools::Path& GetFolderToMigrate() const;
     const tools::Path& GetQtNamesPath() const;
+    bool HasMapnik() const;
     //@}
 
 private:
@@ -46,6 +52,7 @@ private:
     bool generateScores_;
     tools::Path folderToMigrate_;
     tools::Path qtNamesPath_;
+    std::unique_ptr< gui::GamingCommonConfig > common_;
     //@}
 };
 

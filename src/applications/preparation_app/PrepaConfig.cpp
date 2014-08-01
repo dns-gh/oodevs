@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "PrepaConfig.h"
+#include "clients_gui/GamingCommonConfig.h"
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
@@ -22,11 +23,13 @@ namespace po = boost::program_options;
 PrepaConfig::PrepaConfig( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer )
     : ExerciseConfig( observer )
     , generateScores_( false )
+    , common_( new gui::GamingCommonConfig() )
 {
     po::options_description desc( "Preparation options" );
     desc.add_options()( "generate_scores", "generate default scores" );
     desc.add_options()( "migrate", po::value( &folderToMigrate_ )->default_value( "" ), "migrate a specific exercises directory" );
     desc.add_options()( "debug-qt-names", po::value( &qtNamesPath_ )->default_value( "" ), "Qt hierarchy names debug path" );
+    gui::AddGamingCommonOptions( desc, *common_ );
     AddOptions( desc );
     Parse( argc, argv );
     if( IsSet( "generate_scores" ) )
@@ -74,4 +77,9 @@ const tools::Path& PrepaConfig::GetFolderToMigrate() const
 const tools::Path& PrepaConfig::GetQtNamesPath() const
 {
     return qtNamesPath_;
+}
+
+bool PrepaConfig::HasMapnik() const
+{
+    return common_->hasMapnik;
 }

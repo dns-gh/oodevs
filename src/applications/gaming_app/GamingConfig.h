@@ -14,6 +14,11 @@
 
 class Network;
 
+namespace gui
+{
+    struct GamingCommonConfig;
+}
+
 // =============================================================================
 /** @class  GamingConfig
     @brief  GamingConfig
@@ -45,7 +50,6 @@ public:
     tools::Path GetTimelineClientLogFile() const;
     // Disabled if empty
     tools::Path GetCefLogFile() const;
-
     bool HasMapnik() const;
     //@}
 
@@ -69,7 +73,7 @@ private:
     int timelineDebugPort_;
     tools::Path timelineLogFile_;
     tools::Path cefLogFile_;
-    bool mapnik_;
+    std::unique_ptr< gui::GamingCommonConfig > common_;
     //@}
 };
 

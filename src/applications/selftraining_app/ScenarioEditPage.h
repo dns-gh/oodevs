@@ -15,6 +15,7 @@
 namespace frontend
 {
     class Config;
+    struct DebugConfig;
     class Exercise_ABC;
 }
 
@@ -51,7 +52,8 @@ public:
                                Page_ABC& previous, const frontend::Config& config,
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,
-                               ExerciseContainer& exerciseContainer );
+                               ExerciseContainer& exerciseContainer,
+                               const frontend::DebugConfig& debug );
     virtual ~ScenarioEditPage();
     //@}
 
@@ -102,6 +104,7 @@ private:
     QTabWidget* mainTabs_;
     CreateExerciceWidget* createExerciceWidget_;
     ExerciseContainer& exerciseContainer_;
+    const frontend::DebugConfig& debug_;
     //@}
 };
 

@@ -40,7 +40,7 @@ HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
     adaptPage_ = new AuthoringPage( app, parent, pages, *this, config, controllers );
     adapt_ =   AddLink( *adaptPage_ );
 
-    editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, exercises );
+    editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, exercises, *debug_ );
     prepare_ = AddLink( *editPage_, false );
     connect( prepare_, SIGNAL( clicked() ), this, SLOT( OnPrepare() ) );
 
