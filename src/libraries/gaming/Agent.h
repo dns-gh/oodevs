@@ -50,8 +50,8 @@ public:
     //! @name Constructors/Destructor
     //@{
             Agent( const sword::UnitCreation& message,
-                    kernel::Controller& controller,
-                    const tools::Resolver_ABC< kernel::AgentType >& resolver );
+                   kernel::Controller& controller,
+                   const tools::Resolver_ABC< kernel::AgentType >& resolver );
     virtual ~Agent();
     //@}
 

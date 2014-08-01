@@ -2590,6 +2590,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>&amp;Settings</source>
         <translation>&amp;Configuración</translation>
     </message>
+    <message>
+        <source>Destroyed units</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>

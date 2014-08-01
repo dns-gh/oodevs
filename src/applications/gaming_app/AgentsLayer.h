@@ -11,6 +11,7 @@
 #define __AgentsLayer_h_
 
 #include "clients_gui/AgentsLayer.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace actions
 {
@@ -29,6 +30,7 @@ namespace kernel
 // Created: SBO 2006-08-18
 // =============================================================================
 class AgentsLayer : public gui::AgentsLayer
+                  , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -41,6 +43,7 @@ public:
     //@{
     virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    virtual void Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode );
     //@}
 
 private:
@@ -50,12 +53,18 @@ private:
     void RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
 private:
     //! @name Member data
     //@{
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     kernel::SafePointer< kernel::Agent_ABC > selected_;
+    bool displayDestroyedUnits_;
     //@}
 };
 
