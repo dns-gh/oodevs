@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Config_h_
-#define __Config_h_
+#ifndef PREPARATION_PREPACONFIG_H
+#define PREPARATION_PREPACONFIG_H
 
 #include "tools/ExerciseConfig.h"
 
@@ -24,13 +24,13 @@ namespace tools
 */
 // Created: NLD 2007-01-12
 // =============================================================================
-class Config : public tools::ExerciseConfig
+class PrepaConfig : public tools::ExerciseConfig
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer );
-    virtual ~Config();
+             PrepaConfig( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer );
+    virtual ~PrepaConfig();
     //@}
 
     //! @name Accessor
@@ -49,4 +49,4 @@ private:
     //@}
 };
 
-#endif // __Config_h_
+#endif // PREPARATION_PREPACONFIG_H

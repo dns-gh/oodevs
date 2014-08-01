@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "Config.h"
+#include "PrepaConfig.h"
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
@@ -16,10 +16,10 @@
 namespace po = boost::program_options;
 
 // -----------------------------------------------------------------------------
-// Name: Config constructor
+// Name: PrepaConfig constructor
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
-Config::Config( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer )
+PrepaConfig::PrepaConfig( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer )
     : ExerciseConfig( observer )
     , generateScores_( false )
 {
@@ -41,37 +41,37 @@ Config::Config( int argc, char** argv, const boost::shared_ptr< tools::RealFileL
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config destructor
+// Name: PrepaConfig destructor
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
-Config::~Config()
+PrepaConfig::~PrepaConfig()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::HasGenerateScores
+// Name: PrepaConfig::HasGenerateScores
 // Created: JSR 2011-07-27
 // -----------------------------------------------------------------------------
-bool Config::HasGenerateScores() const
+bool PrepaConfig::HasGenerateScores() const
 {
     return generateScores_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetFolderToMigrate
+// Name: PrepaConfig::GetFolderToMigrate
 // Created: JSR 2011-09-07
 // -----------------------------------------------------------------------------
-const tools::Path& Config::GetFolderToMigrate() const
+const tools::Path& PrepaConfig::GetFolderToMigrate() const
 {
     return folderToMigrate_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetFolderToMigrate
+// Name: PrepaConfig::GetFolderToMigrate
 // Created: JSR 2011-09-07
 // -----------------------------------------------------------------------------
-const tools::Path& Config::GetQtNamesPath() const
+const tools::Path& PrepaConfig::GetQtNamesPath() const
 {
     return qtNamesPath_;
 }

@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
-#include "Config.h"
+#include "PrepaConfig.h"
 #include "FileLoaderObserver.h"
 #include "MainWindow.h"
 #include "clients_kernel/Controllers.h"
@@ -38,7 +38,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
 
     // Data
     observer_.reset( new FileLoaderObserver() );
-    config_.reset( new Config( argc, argv, observer_ ) );
+    config_.reset( new PrepaConfig( argc, argv, observer_ ) );
     LoadCommandLineLanguage( config_->GetLanguages(), config_->GetCommandLineLanguage() );
     controllers_.reset( new kernel::Controllers() );
     staticModel_.reset( new StaticModel( *controllers_ ) );

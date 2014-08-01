@@ -13,7 +13,7 @@
 #include "AgentsLayer.h"
 #include "AutomatsLayer.h"
 #include "UrbanLayer.h"
-#include "Config.h"
+#include "PrepaConfig.h"
 #include "InhabitantLayer.h"
 #include "ExerciseCreationDialog.h"
 #include "DialogContainer.h"
@@ -138,7 +138,7 @@ namespace
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Config& config, const QString& expiration )
+MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, PrepaConfig& config, const QString& expiration )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
