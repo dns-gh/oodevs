@@ -196,11 +196,14 @@ void Pathfind::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& /*v
     if( !visible_ )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+    glEnable( GL_ALPHA_TEST );
+    glAlphaFunc( GL_GREATER, 0.1f );
     SetColor( current.darker(), picking );
     DrawLines( tools, 5 );
     SetColor( current, picking );
     DrawLines( tools, 3 );
     DrawPoints( tools, current, picking );
+    glDisable( GL_ALPHA_TEST );
     glPopAttrib();
 }
 
