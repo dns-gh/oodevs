@@ -47,7 +47,7 @@ Config::Config( int argc, char** argv )
     isLoginInCommandLine_ = IsSet( "login" );
     if( isLoginInCommandLine_ && login_ == "anonymous" )
         login_ = "";
-    timelineLogFileCli_ = tools::Path::FromUTF8( timelineLog );
+    timelineLogFile_ = tools::Path::FromUTF8( timelineLog );
     cefLogFile_ = tools::Path::FromUTF8( cefLog );
     ReadSession();
 }
@@ -85,8 +85,7 @@ void Config::ReadSession()
         xis >> xml::optional >> xml::start( "timeline" )
                 >> xml::attribute( "url", timelineUrl_ )
                 >> xml::optional >> xml::attribute( "debug-port", timelineDebugPort_ )
-                >> xml::optional >> xml::attribute( "enabled", hasTimeline_ )
-                >> xml::optional >> xml::attribute( "client-log", timelineLogFile_ );
+                >> xml::optional >> xml::attribute( "enabled", hasTimeline_ );
     }
     else
     {
@@ -177,8 +176,6 @@ int Config::GetTimelineDebugPort() const
 
 tools::Path Config::GetTimelineClientLogFile() const
 {
-    if( !timelineLogFileCli_.IsEmpty() )
-        return timelineLogFileCli_;
     return timelineLogFile_;
 }
 

@@ -69,15 +69,6 @@ void SaveDebugConfig( const DebugConfig& config )
 
 }  // namespace
 
-tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath )
-{
-    if( logPath.IsEmpty() )
-        return logPath;
-    if( logPath.IsAbsolute() )
-        return logPath;
-    return sessionDir.Absolute() / logPath;
-}
-
 QString DebugConfig::GetDevFeatures() const
 {
     return tools::JoinFeatures( features ).c_str();

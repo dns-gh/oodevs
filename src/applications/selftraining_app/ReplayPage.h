@@ -73,7 +73,7 @@ private:
     virtual void OnLanguageChanged();
     virtual void Update();
     void StartExercise();
-    void ConfigureSession( const tools::Path& exercise, const tools::Path& session );
+    tools::Path ConfigureSession( const tools::Path& exercise, const tools::Path& session );
     //@}
 
 private:

@@ -243,11 +243,12 @@ void ScenarioLauncherPage::OnStart()
         return;
     const tools::Path exerciseName = exercise_->GetName();
     const auto session = BuildSessionName();
+    tools::Path sessionDir;
     if( session.second )
-        CreateSession( exerciseName, session.first );
+        sessionDir = CreateSession( exerciseName, session.first );
 
     bool mapnik = false;
-    tools::Path cefLog;
+    tools::Path cefLog, timelineLog;
     boost::optional< tools::Path > wwwDir;
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
             ( "checkpoint", checkpoint_.ToUTF8() );
@@ -261,6 +262,7 @@ void ScenarioLauncherPage::OnStart()
             arguments[ "filter-pathfinds" ] = debug_->sim.pathfindFilter;
         if( !debug_->timeline.debugWwwDir.IsEmpty() )
             wwwDir = debug_->timeline.debugWwwDir;
+        timelineLog = debug_->timeline.clientLogPath;
         cefLog = debug_->timeline.cefLog;
         mapnik = debug_->gaming.hasMapnik;
     }
@@ -275,7 +277,7 @@ void ScenarioLauncherPage::OnStart()
         auto profile = profile_.GetLogin();
         QString devFeatures = debug_ ? debug_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
-            config_, exerciseName, session.first, &profile, devFeatures, tools::Path(),
+            config_, exerciseName, session.first, &profile, sessionDir, devFeatures, timelineLog,
             cefLog, mapnik ) );
     }
     progressPage_->Attach( process );
@@ -287,21 +289,18 @@ void ScenarioLauncherPage::OnStart()
 // Name: ScenarioLauncherPage::CreateSession
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const tools::Path& session ) const
+tools::Path ScenarioLauncherPage::CreateSession( const tools::Path& exercise,
+        const tools::Path& session ) const
 {
+    tools::Path sessionDir;
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
+        sessionDir = action.GetPath().Parent();
 
         if( debug_ )
         {
             action.SetOption( "session/config/timeline/@debug-port", debug_->timeline.debugPort );
-            if( !debug_->timeline.clientLogPath.IsEmpty() )
-            {
-                const auto log = GetTimelineLog( action.GetPath().Parent(),
-                        debug_->timeline.clientLogPath );
-                action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
-            }
             action.SetOption( "session/config/timeline/@enabled", debug_->timeline.legacyTimeline );
             if( debug_->sim.decProfiling )
                 action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
@@ -311,6 +310,7 @@ void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const too
     }
     BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
         plugin->Commit( exercise, session );
+    return sessionDir;
 }
 
 // -----------------------------------------------------------------------------
