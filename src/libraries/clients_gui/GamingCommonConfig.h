@@ -32,9 +32,11 @@ struct GamingCommonConfig
 {
     GamingCommonConfig()
         : hasMapnik( false )
+        , mapnikThreads( 0 )
     {}
 
     bool hasMapnik;
+    uint32_t mapnikThreads;
 };
 
 void AddGamingCommonOptions( boost::program_options::options_description& desc,

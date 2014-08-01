@@ -44,6 +44,7 @@ public:
     const tools::Path& GetFolderToMigrate() const;
     const tools::Path& GetQtNamesPath() const;
     bool HasMapnik() const;
+    uint32_t GetMapnikThreads() const;
     //@}
 
 private:

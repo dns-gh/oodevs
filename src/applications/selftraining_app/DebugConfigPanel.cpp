@@ -41,6 +41,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
     , dataButton_( 0 )
     , mapnikBox_( 0 )
     , mapnikLayerBox_( 0 )
+    , mapnikThreads_( 0 )
 {
     debug_ = frontend::LoadDebugConfig();
 
@@ -166,12 +167,19 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
 
     //mapnik group box
     mapnikBox_ = new QGroupBox();
-    QGridLayout* mapnik = new QGridLayout( mapnikBox_, 1, 1 );
+    QGridLayout* mapnik = new QGridLayout( mapnikBox_, 2, 1 );
     mapnik->setMargin( 10 );
     mapnikLayerBox_ = new QCheckBox();
     mapnikLayerBox_->setChecked( debug_.gaming.hasMapnik );
     connect( mapnikLayerBox_, SIGNAL( clicked( bool ) ), SLOT( OnMapnikLayerChecked( bool ) ) );
+    mapnikThreads_ = new QSpinBox();
+    mapnikThreads_->setRange( 0, 128 );
+    mapnikThreads_->setValue( debug_.gaming.mapnikThreads );
+    connect( mapnikThreads_, SIGNAL( valueChanged( int ) ), SLOT( OnMapnikThreadsChanged( int ) ) );
+    mapnikThreadsLabel_ = new QLabel();
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
+    mapnik->addWidget( mapnikThreadsLabel_, 1, 0 );
+    mapnik->addWidget( mapnikThreads_, 1, 1 );
 
     // development features
     const auto& availableFeatures = tools::GetAvailableFeatures();
@@ -262,6 +270,7 @@ void DebugConfigPanel::OnLanguageChanged()
     dumpLabel_->setText( tools::translate( "DebugConfigPanel", "Dump pathfinds directory :" ) );
     mapnikBox_->setTitle( tools::translate( "DebugConfigPanel", "Mapnik settings" ) );
     mapnikLayerBox_->setText( tools::translate( "DebugConfigPanel", "Activate layer" ) );
+    mapnikThreadsLabel_->setText( tools::translate( "DebugConfigPanel", "Rendering threads" ) );
     dataButton_->setText( "..." );
 }
 
@@ -341,6 +350,12 @@ void DebugConfigPanel::OnCefLogChanged( const QString& path )
 void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
 {
     debug_.gaming.hasMapnik = checked;
+    frontend::SaveDebugConfig( debug_ );
+}
+
+void DebugConfigPanel::OnMapnikThreadsChanged( int threads )
+{
+    debug_.gaming.mapnikThreads = threads;
     frontend::SaveDebugConfig( debug_ );
 }
 

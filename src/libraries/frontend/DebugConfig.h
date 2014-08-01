@@ -47,9 +47,11 @@ struct DebugGaming
 {
     DebugGaming()
         : hasMapnik( false )
+        , mapnikThreads( 0 )
     {}
 
     bool hasMapnik;
+    int mapnikThreads;
 };
 
 struct DebugConfig

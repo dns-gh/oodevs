@@ -83,3 +83,8 @@ bool PrepaConfig::HasMapnik() const
 {
     return common_->hasMapnik;
 }
+
+uint32_t PrepaConfig::GetMapnikThreads() const
+{
+    return common_->mapnikThreads;
+}

@@ -58,6 +58,7 @@ private slots:
     void OnTimelineDebugChanged( const QString& );
     void OnCefLogChanged( const QString& );
     void OnMapnikLayerChecked( bool checked );
+    void OnMapnikThreadsChanged( int threads );
     void OnChangeIntegrationDirectory();
     void OnEditIntegrationDirectory( const QString& );
     void OnSelectDataDirectory();
@@ -108,6 +109,8 @@ private:
     // mapnik
     QGroupBox* mapnikBox_;
     QCheckBox* mapnikLayerBox_;
+    QSpinBox* mapnikThreads_;
+    QLabel* mapnikThreadsLabel_;
 
     // development features
     QGroupBox* featuresBox_;

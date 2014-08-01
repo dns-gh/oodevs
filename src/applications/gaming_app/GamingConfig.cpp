@@ -188,3 +188,8 @@ bool GamingConfig::HasMapnik() const
 {
     return common_->hasMapnik;
 }
+
+uint32_t GamingConfig::GetMapnikThreads() const
+{
+    return common_->mapnikThreads;
+}

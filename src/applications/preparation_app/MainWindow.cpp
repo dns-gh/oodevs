@@ -309,7 +309,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     gui::Layer& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
     gui::Layer& indicatorCreationLayer  = *new gui::MiscLayer< ScoreDialog >( dialogContainer_->GetScoreDialog() );
     gui::Layer& raster                  = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer* mapnik                  = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_ ) : 0;
+    gui::Layer* mapnik                  = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_, config_.GetMapnikThreads() ) : 0;
     gui::Layer& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     gui::Layer& resourceNetworksLayer   = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );

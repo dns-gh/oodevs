@@ -51,6 +51,7 @@ public:
     // Disabled if empty
     tools::Path GetCefLogFile() const;
     bool HasMapnik() const;
+    uint32_t GetMapnikThreads() const;
     //@}
 
 private:

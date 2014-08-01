@@ -19,5 +19,7 @@ void gui::AddGamingCommonOptions( po::options_description& desc,
 {
     desc.add_options()
         ( "mapnik", po::value( &config.hasMapnik )->zero_tokens(),
-             "enable mapnik layer" );
+             "enable mapnik layer" )
+        ( "mapnik-threads", po::value( &config.mapnikThreads ),
+             "mapnik rendering threads count" );
 }

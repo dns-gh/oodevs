@@ -67,6 +67,9 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
                 boost::lexical_cast< std::string >( debug.timeline.debugPort ) );
     if( debug.gaming.hasMapnik )
         AddArgument( "--mapnik" );
+    if( debug.gaming.mapnikThreads )
+        AddArgument( "mapnik-threads",
+            boost::lexical_cast< std::string >( debug.gaming.mapnikThreads ) );
 }
 
 // -----------------------------------------------------------------------------

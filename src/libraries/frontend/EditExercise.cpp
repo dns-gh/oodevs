@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "EditExercise.h"
 #include "DebugConfig.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace frontend;
 
@@ -24,6 +25,9 @@ EditExercise::EditExercise( const tools::GeneralConfig& config, const tools::Pat
     AddExerciseArgument( name );
     if( debug.gaming.hasMapnik )
         AddArgument( "--mapnik" );
+    if( debug.gaming.mapnikThreads )
+        AddArgument( "mapnik-threads",
+            boost::lexical_cast< std::string >( debug.gaming.mapnikThreads ) );
 }
 
 // -----------------------------------------------------------------------------
