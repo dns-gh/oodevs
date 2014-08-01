@@ -12,6 +12,7 @@
 #pragma warning( disable: 4503 )
 #include "ConfigurationManipulator.h"
 #include "StartTimeline.h"
+#include "DebugConfig.h"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -91,7 +92,7 @@ namespace
 StartTimeline::StartTimeline( const tools::GeneralConfig& config,
                               const tools::Path& exercise,
                               const tools::Path& session,
-                              boost::optional< tools::Path > wwwDir )
+                              const frontend::DebugConfig& debug )
     : SpawnCommand( config, "timeline_server.exe", "timeline_server" )
 {
     ConfigurationManipulator xpath( config, exercise, session );
@@ -103,10 +104,10 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
     AddArgument( "log", log.ToUTF8() );
     const tools::Path run = root / "timeline.run";
     AddArgument( "run", run.ToUTF8() );
-    if( wwwDir )
+    if( !debug.timeline.debugWwwDir.IsEmpty() )
     {
         AddArgument( "-debug" );
-        AddArgument( "www", wwwDir->ToUTF8() );
+        AddArgument( "www", debug.timeline.debugWwwDir.ToUTF8() );
     }
     WriteRunScript( run, boost::lexical_cast< int >( dispatcher ) );
 }

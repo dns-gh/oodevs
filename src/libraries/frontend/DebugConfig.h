@@ -19,6 +19,10 @@ namespace frontend
 
 struct DebugSim
 {
+    DebugSim()
+        : decProfiling( false )
+    {}
+
     bool decProfiling;
     tools::Path integrationDir;
     std::string pathfindFilter;
@@ -27,6 +31,11 @@ struct DebugSim
 
 struct DebugTimeline
 {
+    DebugTimeline()
+        : debugPort( 0 )
+        , legacyTimeline( false )
+    {}
+
     int debugPort;
     tools::Path debugWwwDir;
     tools::Path clientLogPath;
@@ -36,6 +45,10 @@ struct DebugTimeline
 
 struct DebugGaming
 {
+    DebugGaming()
+        : hasMapnik( false )
+    {}
+
     bool hasMapnik;
 };
 

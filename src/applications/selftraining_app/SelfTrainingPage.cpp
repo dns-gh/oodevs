@@ -26,7 +26,7 @@ SelfTrainingPage::SelfTrainingPage( Application& app, QStackedWidget* pages,
                                     const tools::Loader_ABC& fileLoader,
                                     kernel::Controllers& controllers,
                                     ExerciseContainer& exercises,
-                                    const frontend::DebugConfig* debug )
+                                    const frontend::DebugConfig& debug )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
 {

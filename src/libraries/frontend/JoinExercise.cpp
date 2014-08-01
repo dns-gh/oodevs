@@ -9,6 +9,7 @@
 
 #include "frontend_pch.h"
 #include "JoinExercise.h"
+#include "DebugConfig.h"
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #pragma warning( push, 0 )
@@ -40,8 +41,7 @@ tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& lo
 // -----------------------------------------------------------------------------
 JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
         const tools::Path& session, const QString* profile, const tools::Path& sessionDir,
-        const QString& devFeatures, const tools::Path& timelineLog,
-        const tools::Path& cefLog, bool mapnik )
+        const frontend::DebugConfig& debug )
     : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
     AddRootArgument();
@@ -50,16 +50,16 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
         AddSessionArgument( session );
     if( profile )
         AddArgument( "login", !profile->isEmpty() ? profile->toStdString() : "anonymous" );
-    if( !devFeatures.isEmpty() )
-        AddArgument( "features", devFeatures.toStdString() );
-    if( !timelineLog.IsEmpty() && !sessionDir.IsEmpty() )
+    if( !debug.features.empty() )
+        AddArgument( "features", debug.GetDevFeatures().toStdString() );
+    if( !debug.timeline.clientLogPath.IsEmpty() && !sessionDir.IsEmpty() )
     {
-        const auto log = GetTimelineLog( sessionDir, timelineLog );
+        const auto log = GetTimelineLog( sessionDir, debug.timeline.clientLogPath );
         AddArgument( "timeline-log", log.ToUTF8() );
     }
-    if( !cefLog.IsEmpty() )
-        AddArgument( "cef-log", cefLog.ToUTF8() );
-    if( mapnik )
+    if( !debug.timeline.cefLog.IsEmpty() )
+        AddArgument( "cef-log", debug.timeline.cefLog.ToUTF8() );
+    if( debug.gaming.hasMapnik )
         AddArgument( "--mapnik" );
 }
 

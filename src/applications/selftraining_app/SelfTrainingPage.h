@@ -49,7 +49,7 @@ public:
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,
                                ExerciseContainer& exercises,
-                               const frontend::DebugConfig* debug );
+                               const frontend::DebugConfig& debug );
     virtual ~SelfTrainingPage();
     //@}
 

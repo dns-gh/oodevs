@@ -37,7 +37,7 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises, const frontend::DebugConfig* debug )
+ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises, const frontend::DebugConfig& debug )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_( config )
     , debug_( debug )
@@ -109,23 +109,10 @@ void ReplayPage::StartExercise()
     const auto sessionDir = ConfigureSession( exerciseName, session_ );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, "" ) );
-    QString features;
-    tools::Path cefLog, timelineLog;
-    boost::optional< tools::Path > wwwDir;
-    bool mapnik = false;
-    if( debug_ )
-    {
-        if( !debug_->timeline.debugWwwDir.IsEmpty() )
-            wwwDir = debug_->timeline.debugWwwDir;
-        features = debug_->GetDevFeatures();
-        timelineLog = debug_->timeline.clientLogPath;
-        cefLog = debug_->timeline.cefLog;
-        mapnik = debug_->gaming.hasMapnik;
-    }
-    process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_, wwwDir ) );
+    process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_, debug_ ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-            exerciseName, session_, &profile, sessionDir, features, timelineLog, cefLog, mapnik ));
+            exerciseName, session_, &profile, sessionDir, debug_ ));
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

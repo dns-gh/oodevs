@@ -29,7 +29,7 @@
 // Name: ScenarioJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises, const frontend::DebugConfig* debug )
+ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises, const frontend::DebugConfig& debug )
     : ContentPage( pages, previous, eButtonBack | eButtonJoin )
     , controllers_      ( controllers )
     , exerciseContainer_( exercises )
@@ -148,31 +148,22 @@ void ScenarioJoinPage::OnJoin()
 {
     if( !exercise_ )
         return;
-    QString features;
-    tools::Path sessionDir, timelineLog, cefLog;
-    bool mapnik = false;
+    tools::Path sessionDir;
     {
         frontend::CreateSession action( config_, exercise_->GetName(), "remote" );
         sessionDir = action.GetPath().Parent();
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( port_->text() ) );
         action.SetOption( "session/config/timeline/@url", QString( "%1:%2" ).arg( host_->text() ).arg( timeline_->text() ) );
-        if( debug_ )
-        {
-            if( debug_->timeline.legacyTimeline )
-                action.SetOption( "session/config/timeline/@enabled", "true" );
-            timelineLog = debug_->timeline.clientLogPath;
-            cefLog = debug_->timeline.cefLog;
-            features = debug_->GetDevFeatures();
-            mapnik = debug_->gaming.hasMapnik;
-        }
+        if( debug_.timeline.legacyTimeline )
+            action.SetOption( "session/config/timeline/@enabled", "true" );
         action.Commit();
     }
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
         exercise_->GetName(), "remote", static_cast< const QString* >( 0 ),
-        sessionDir, features, timelineLog, cefLog, mapnik ) );
+        sessionDir, debug_ ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

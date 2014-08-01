@@ -116,7 +116,7 @@ namespace
 ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages,
         Page_ABC& previous, kernel::Controllers& controllers, const Config& config,
         const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises,
-        const frontend::DebugConfig* debug )
+        const frontend::DebugConfig& debug )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
@@ -248,38 +248,25 @@ void ScenarioLauncherPage::OnStart()
     if( session.second )
         sessionDir = CreateSession( exerciseName, session.first );
 
-    bool mapnik = false;
-    tools::Path cefLog, timelineLog;
-    boost::optional< tools::Path > wwwDir;
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
             ( "checkpoint", checkpoint_.ToUTF8() );
-    if( debug_ )
-    {
-        if( !debug_->sim.integrationDir.IsEmpty() )
-            arguments[ "integration-dir" ] = debug_->sim.integrationDir.ToUTF8();
-        if( !debug_->sim.pathfindDumpDir.IsEmpty() )
-            arguments[ "dump-pathfinds" ] = debug_->sim.pathfindDumpDir.ToUTF8();
-        if( !debug_->sim.pathfindFilter.empty() )
-            arguments[ "filter-pathfinds" ] = debug_->sim.pathfindFilter;
-        if( !debug_->timeline.debugWwwDir.IsEmpty() )
-            wwwDir = debug_->timeline.debugWwwDir;
-        timelineLog = debug_->timeline.clientLogPath;
-        cefLog = debug_->timeline.cefLog;
-        mapnik = debug_->gaming.hasMapnik;
-    }
+    if( !debug_.sim.integrationDir.IsEmpty() )
+        arguments[ "integration-dir" ] = debug_.sim.integrationDir.ToUTF8();
+    if( !debug_.sim.pathfindDumpDir.IsEmpty() )
+        arguments[ "dump-pathfinds" ] = debug_.sim.pathfindDumpDir.ToUTF8();
+    if( !debug_.sim.pathfindFilter.empty() )
+        arguments[ "filter-pathfinds" ] = debug_.sim.pathfindFilter;
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartExercise >(
         config_, exerciseName, session.first, arguments, true, "" ) );
     process->Add( boost::make_shared< frontend::StartTimeline >(
-        config_, exerciseName, session.first, wwwDir ) );
+        config_, exerciseName, session.first, debug_ ) );
     if( hasClient_ )
     {
         auto profile = profile_.GetLogin();
-        QString devFeatures = debug_ ? debug_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
-            config_, exerciseName, session.first, &profile, sessionDir, devFeatures, timelineLog,
-            cefLog, mapnik ) );
+            config_, exerciseName, session.first, &profile, sessionDir, debug_ ) );
     }
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
@@ -299,13 +286,11 @@ tools::Path ScenarioLauncherPage::CreateSession( const tools::Path& exercise,
         action.SetDefaultValues();
         sessionDir = action.GetPath().Parent();
 
-        if( debug_ )
-        {
-            action.SetOption( "session/config/timeline/@debug-port", debug_->timeline.debugPort );
-            action.SetOption( "session/config/timeline/@enabled", debug_->timeline.legacyTimeline );
-            if( debug_->sim.decProfiling )
-                action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-        }
+        if( debug_.timeline.debugPort )
+            action.SetOption( "session/config/timeline/@debug-port", debug_.timeline.debugPort );
+        action.SetOption( "session/config/timeline/@enabled", debug_.timeline.legacyTimeline );
+        if( debug_.sim.decProfiling )
+            action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
 
         action.Commit();
     }

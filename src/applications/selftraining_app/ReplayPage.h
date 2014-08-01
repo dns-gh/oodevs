@@ -54,7 +54,7 @@ public:
                          const tools::Loader_ABC& fileLoader,
                          kernel::Controllers& controllers,
                          ExerciseContainer& exercises,
-                         const frontend::DebugConfig* debug );
+                         const frontend::DebugConfig& debug );
     virtual ~ReplayPage();
     //@}
 
@@ -83,7 +83,7 @@ private:
     const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
     ExerciseContainer& exerciseContainer_;
-    const frontend::DebugConfig* debug_;
+    const frontend::DebugConfig& debug_;
     ProgressPage* progressPage_;
     ExerciseList* exercises_;
     SessionList* sessions_;
