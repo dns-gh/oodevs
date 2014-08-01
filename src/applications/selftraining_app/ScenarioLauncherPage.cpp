@@ -249,7 +249,7 @@ void ScenarioLauncherPage::OnStart()
     boost::optional< tools::Path > wwwDir;
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
             ( "checkpoint", checkpoint_.ToUTF8() );
-    if( debug_ && !debug_->sim.integrationDir.IsEmpty() )
+    if( debug_ )
     {
         if( !debug_->sim.integrationDir.IsEmpty() )
             arguments[ "integration-dir" ] = debug_->sim.integrationDir.ToUTF8();

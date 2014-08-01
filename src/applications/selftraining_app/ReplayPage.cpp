@@ -110,7 +110,7 @@ void ReplayPage::StartExercise()
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, "" ) );
     QString features;
     boost::optional< tools::Path > wwwDir;
-    if( debug_ && !debug_->timeline.debugWwwDir.IsEmpty() )
+    if( debug_ )
     {
         if( !debug_->timeline.debugWwwDir.IsEmpty() )
             wwwDir = debug_->timeline.debugWwwDir;
