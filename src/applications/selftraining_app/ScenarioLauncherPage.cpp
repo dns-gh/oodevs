@@ -246,6 +246,7 @@ void ScenarioLauncherPage::OnStart()
     if( session.second )
         CreateSession( exerciseName, session.first );
 
+    tools::Path cefLog;
     boost::optional< tools::Path > wwwDir;
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
             ( "checkpoint", checkpoint_.ToUTF8() );
@@ -259,6 +260,7 @@ void ScenarioLauncherPage::OnStart()
             arguments[ "filter-pathfinds" ] = debug_->sim.pathfindFilter;
         if( !debug_->timeline.debugWwwDir.IsEmpty() )
             wwwDir = debug_->timeline.debugWwwDir;
+        cefLog = debug_->timeline.cefLog;
     }
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
@@ -272,7 +274,7 @@ void ScenarioLauncherPage::OnStart()
         QString devFeatures = debug_ ? debug_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session.first, &profile, devFeatures, tools::Path(),
-            config_.GetCefLog() ) );
+            cefLog ) );
     }
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );

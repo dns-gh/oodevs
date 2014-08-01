@@ -109,18 +109,19 @@ void ReplayPage::StartExercise()
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, "" ) );
     QString features;
+    tools::Path cefLog;
     boost::optional< tools::Path > wwwDir;
     if( debug_ )
     {
         if( !debug_->timeline.debugWwwDir.IsEmpty() )
             wwwDir = debug_->timeline.debugWwwDir;
         features = debug_->GetDevFeatures();
+        cefLog = debug_->timeline.cefLog;
     }
     process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_, wwwDir ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-            exerciseName, session_, &profile, features, tools::Path(),
-            config_.GetCefLog() ) );
+            exerciseName, session_, &profile, features, tools::Path(), cefLog ));
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();
