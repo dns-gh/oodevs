@@ -152,21 +152,17 @@ void EventOrderPresenter::OnMissionChanged( const QString& mission )
     BuildView();
 }
 
-namespace
+boost::optional< bool > EventOrderPresenter::IsMisengaged() const
 {
-    bool IsValidTarget( const kernel::Entity_ABC* entity )
-    {
-        if( !entity )
-            return false;
-        if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
-        {
-            if( const kernel::Entity_ABC* superior = entity->Get< kernel::TacticalHierarchies >().GetSuperior() )
-                return !tools::IsEngaged( *superior );
-        }
-        else if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
-            return tools::IsEngaged( *entity );
-        return true;
-    }
+    if( !entity_ )
+        return boost::none;
+    if( entity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
+        return tools::IsEngaged( *entity_ ) ? boost::none : boost::make_optional( false );
+    else if( entity_->GetTypeName() == kernel::Agent_ABC::typeName_ )
+        if( auto hierarchy = entity_->Retrieve< kernel::TacticalHierarchies >() )
+            if( auto superior = hierarchy->GetSuperior() )
+                return tools::IsEngaged( *superior ) ? boost::make_optional( true ) : boost::none;
+    return boost::none;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +171,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool EventOrderPresenter::ShouldEnableTrigger() const
 {
-    return IsValidTarget( entity_ ) &&          // check target validity
+    return entity_ && !IsMisengaged() &&        // check target validity
            missionInterface_.CheckValidity() && // check parameters validity
            !state_->invalid_ &&                 // check mission validity
            !state_->missionSelector_ &&

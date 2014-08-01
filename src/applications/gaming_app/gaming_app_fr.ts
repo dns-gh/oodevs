@@ -672,6 +672,14 @@ Raison: %3
         <source>Show/hide details</source>
         <translation>Afficher/cacher les détails</translation>
     </message>
+    <message>
+        <source>Automat is engaged</source>
+        <translation>L&apos;automate est engagé</translation>
+    </message>
+    <message>
+        <source>Automat is disengaged</source>
+        <translation>L&apos;automate est désengagé</translation>
+    </message>
 </context>
 <context>
     <name>EventDockWidget</name>
