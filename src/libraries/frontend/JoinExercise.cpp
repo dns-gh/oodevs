@@ -16,6 +16,7 @@
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace frontend;
 
@@ -61,6 +62,9 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
         AddArgument( "cef-log", debug.timeline.cefLog.ToUTF8() );
     if( debug.timeline.legacyTimeline )
         AddArgument( "--legacy-timeline" );
+    if( debug.timeline.debugPort )
+        AddArgument( "timeline-debug-port",
+                boost::lexical_cast< std::string >( debug.timeline.debugPort ) );
     if( debug.gaming.hasMapnik )
         AddArgument( "--mapnik" );
 }

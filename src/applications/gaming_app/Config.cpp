@@ -41,8 +41,10 @@ Config::Config( int argc, char** argv )
         ( "order-file", po::value( &orderFile_ ), "specify an order file to load" )
         ( "timeline-log", po::value( &timelineLog ), "timeline log file" )
         ( "cef-log", po::value( &cefLog ), "chrome embedded log file" )
-        ( "mapnik", po::value( &mapnik_ )->zero_tokens(), "enable mapnik layer" )
-        ( "legacy-timeline", po::value( &hasTimeline_ )->zero_tokens(), "enable legacy timeline" );
+        ( "legacy-timeline", po::value( &hasTimeline_ )->zero_tokens(), "enable legacy timeline" )
+        ( "timeline-debug-port",  po::value( &timelineDebugPort_ ), "timeline chrome debugger port" )
+        ( "mapnik", po::value( &mapnik_ )->zero_tokens(), "enable mapnik layer" );
+
     AddOptions( desc );
     Parse( argc, argv );
     isLoginInCommandLine_ = IsSet( "login" );
@@ -81,10 +83,8 @@ void Config::ReadSession()
             xis >> xml::attribute( "server", host_ );
         xis             >> xml::end // network
                     >> xml::end; // gaming
-        timelineDebugPort_ = 0;
         xis >> xml::optional >> xml::start( "timeline" )
-                >> xml::attribute( "url", timelineUrl_ )
-                >> xml::optional >> xml::attribute( "debug-port", timelineDebugPort_ );
+                >> xml::attribute( "url", timelineUrl_ );
     }
     else
     {

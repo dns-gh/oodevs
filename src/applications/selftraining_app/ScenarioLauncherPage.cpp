@@ -286,8 +286,6 @@ tools::Path ScenarioLauncherPage::CreateSession( const tools::Path& exercise,
         action.SetDefaultValues();
         sessionDir = action.GetPath().Parent();
 
-        if( debug_.timeline.debugPort )
-            action.SetOption( "session/config/timeline/@debug-port", debug_.timeline.debugPort );
         if( debug_.sim.decProfiling )
             action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
 
