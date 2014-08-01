@@ -10,9 +10,10 @@
 #include "frontend_pch.h"
 #include "StartExercise.h"
 
-#include "StartDispatcher.h"
 #include "ConfigurationManipulator.h"
+#include "DebugConfig.h"
 #include "SimulationMonitor.h"
+#include "StartDispatcher.h"
 #include "clients_kernel/Tools.h"
 #include "tools/IpcQueue.h"
 
@@ -41,30 +42,37 @@ namespace
 StartExercise::StartExercise( const tools::GeneralConfig& config,
                               const tools::Path& exercise,
                               const tools::Path& session,
-                              const std::map< std::string, std::string >& arguments,
                               bool launchDispatchedIfNotEmbedded,
-                              const std::string& name )
+                              const std::string& name,
+                              const tools::Path& checkpoint,
+                              const frontend::DebugConfig& debug )
     : SpawnCommand( config, MakeBinaryName( "simulation_app" ), name )
     , exercise_ ( exercise )
     , session_ ( session )
     , configManipulator_ ( new ConfigurationManipulator( config, exercise_, session_ ) )
     , percentage_( 0 )
 {
-    auto it = arguments.find( "checkpoint" );
-    const std::string checkpoint = it != arguments.end() ? it->second : "";
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
     {
         tools::Path dispatcher_path = GetEmbeddedDispatcherPath( *configManipulator_ );
-        dispatcher_.reset( new frontend::StartDispatcher( config, exercise, session, checkpoint.c_str(), dispatcher_path, "dispatcher" ) );
+        dispatcher_.reset( new frontend::StartDispatcher( config, exercise, session,
+                checkpoint, dispatcher_path, "dispatcher" ) );
     }
 
     AddRootArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
 
-    for( auto it = arguments.begin(); it != arguments.end(); ++it )
-        if( !it->second.empty() )
-            AddArgument( it->first, it->second );
+    if( !checkpoint.IsEmpty() )
+        AddArgument( "checkpoint", checkpoint.ToUTF8() );
+    if( !debug.sim.integrationDir.IsEmpty() )
+        AddArgument( "integration-dir", debug.sim.integrationDir.ToUTF8() );
+    if( !debug.sim.pathfindDumpDir.IsEmpty() )
+        AddArgument( "dump-pathfinds", debug.sim.pathfindDumpDir.ToUTF8() );
+    if( !debug.sim.pathfindFilter.empty() )
+        AddArgument( "filter-pathfinds", debug.sim.pathfindFilter );
+    if( debug.sim.decProfiling )
+        AddArgument( "--profile-dec" );
 }
 
 // -----------------------------------------------------------------------------

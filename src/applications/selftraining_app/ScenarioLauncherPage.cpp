@@ -36,9 +36,7 @@
 #include "tools/Loader_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
-#include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -248,18 +246,9 @@ void ScenarioLauncherPage::OnStart()
     if( session.second )
         sessionDir = CreateSession( exerciseName, session.first );
 
-    std::map< std::string, std::string > arguments = boost::assign::map_list_of
-            ( "checkpoint", checkpoint_.ToUTF8() );
-    if( !debug_.sim.integrationDir.IsEmpty() )
-        arguments[ "integration-dir" ] = debug_.sim.integrationDir.ToUTF8();
-    if( !debug_.sim.pathfindDumpDir.IsEmpty() )
-        arguments[ "dump-pathfinds" ] = debug_.sim.pathfindDumpDir.ToUTF8();
-    if( !debug_.sim.pathfindFilter.empty() )
-        arguments[ "filter-pathfinds" ] = debug_.sim.pathfindFilter;
-
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartExercise >(
-        config_, exerciseName, session.first, arguments, true, "" ) );
+        config_, exerciseName, session.first, true, "", checkpoint_, debug_ ) );
     process->Add( boost::make_shared< frontend::StartTimeline >(
         config_, exerciseName, session.first, debug_ ) );
     if( hasClient_ )
@@ -285,10 +274,6 @@ tools::Path ScenarioLauncherPage::CreateSession( const tools::Path& exercise,
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
         sessionDir = action.GetPath().Parent();
-
-        if( debug_.sim.decProfiling )
-            action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-
         action.Commit();
     }
     BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )

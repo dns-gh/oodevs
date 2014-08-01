@@ -71,7 +71,9 @@ MIL_Config::MIL_Config( const boost::shared_ptr< tools::RealFileLoaderObserver_A
         ( "dump-pathfinds", po::value( &pathfindDir_ )                    , "set pathfind dump directory" )
         ( "filter-pathfinds", po::value( &pathfindFilter_ )               , "set pathfind id filter, separate multiple values with commas" )
         ( "simulation-address", po::value( &networkAddress_ )             , "specify the simulation server address (ip:port)" )
-        ( "test-commands"                                                 , "enable test commands" );
+        ( "test-commands"                                                 , "enable test commands" )
+        ( "profile-dec", po::value( &bDecisionalProfilingEnabled_ )->zero_tokens(),
+              "enable decisional functions profiling" );
     AddOptions( desc );
 }
 
@@ -140,10 +142,8 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                         >> xml::end
                     >> xml::end
                     >> xml::start( "profiling" )
-                        >> xml::optional >> xml::attribute( "enabled", bDecisionalProfilingEnabled_ )
                         >> xml::optional >> xml::attribute( "hook", bHookProfilingEnabled_ )
                         >> xml::optional >> xml::attribute( "command", bCommandProfilingEnabled_ )
-                        >> xml::optional >> xml::attribute( "decisional", bDecisionalProfilingEnabled_ )
                     >> xml::end
                     >> xml::start( "dispatcher" )
                         >> xml::attribute( "embedded", bEmbeddedDispatcher_ )
