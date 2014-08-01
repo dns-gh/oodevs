@@ -11,7 +11,6 @@
 #include "DebugConfigPanel.h"
 #include "moc_DebugConfigPanel.cpp"
 #include "Config.h"
-#include "Registry.h"
 
 #include "clients_gui/FileDialog.h"
 
@@ -19,6 +18,7 @@
 
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+#include "frontend/Registry.h"
 
 #include <QScrollArea>
 
