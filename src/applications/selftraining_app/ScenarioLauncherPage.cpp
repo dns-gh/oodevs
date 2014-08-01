@@ -246,6 +246,7 @@ void ScenarioLauncherPage::OnStart()
     if( session.second )
         CreateSession( exerciseName, session.first );
 
+    bool mapnik = false;
     tools::Path cefLog;
     boost::optional< tools::Path > wwwDir;
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
@@ -261,6 +262,7 @@ void ScenarioLauncherPage::OnStart()
         if( !debug_->timeline.debugWwwDir.IsEmpty() )
             wwwDir = debug_->timeline.debugWwwDir;
         cefLog = debug_->timeline.cefLog;
+        mapnik = debug_->gaming.hasMapnik;
     }
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
@@ -274,7 +276,7 @@ void ScenarioLauncherPage::OnStart()
         QString devFeatures = debug_ ? debug_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session.first, &profile, devFeatures, tools::Path(),
-            cefLog ) );
+            cefLog, mapnik ) );
     }
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
@@ -303,8 +305,6 @@ void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const too
             action.SetOption( "session/config/timeline/@enabled", debug_->timeline.legacyTimeline );
             if( debug_->sim.decProfiling )
                 action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-            if( debug_->gaming.hasMapnik )
-                action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
         }
 
         action.Commit();

@@ -149,6 +149,7 @@ void ScenarioJoinPage::OnJoin()
         return;
     QString features;
     tools::Path sessionPath, timelineLog, cefLog;
+    bool mapnik = false;
     {
         frontend::CreateSession action( config_, exercise_->GetName(), "remote" );
         sessionPath = action.GetPath();
@@ -159,12 +160,11 @@ void ScenarioJoinPage::OnJoin()
         {
             if( debug_->timeline.legacyTimeline )
                 action.SetOption( "session/config/timeline/@enabled", "true" );
-            if( debug_->gaming.hasMapnik )
-                action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
             timelineLog = GetTimelineLog(
                     sessionPath.Parent(), debug_->timeline.clientLogPath );
             cefLog = debug_->timeline.cefLog;
             features = debug_->GetDevFeatures();
+            mapnik = debug_->gaming.hasMapnik;
         }
         action.Commit();
     }
@@ -172,7 +172,7 @@ void ScenarioJoinPage::OnJoin()
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
         exercise_->GetName(), "remote", static_cast< const QString* >( 0 ),
-        features, timelineLog, cefLog ) );
+        features, timelineLog, cefLog, mapnik ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

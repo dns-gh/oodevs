@@ -111,17 +111,19 @@ void ReplayPage::StartExercise()
     QString features;
     tools::Path cefLog;
     boost::optional< tools::Path > wwwDir;
+    bool mapnik = false;
     if( debug_ )
     {
         if( !debug_->timeline.debugWwwDir.IsEmpty() )
             wwwDir = debug_->timeline.debugWwwDir;
         features = debug_->GetDevFeatures();
         cefLog = debug_->timeline.cefLog;
+        mapnik = debug_->gaming.hasMapnik;
     }
     process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_, wwwDir ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-            exerciseName, session_, &profile, features, tools::Path(), cefLog ));
+            exerciseName, session_, &profile, features, tools::Path(), cefLog, mapnik ));
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

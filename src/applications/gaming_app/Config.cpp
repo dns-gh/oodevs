@@ -40,7 +40,8 @@ Config::Config( int argc, char** argv )
         ( "password", po::value( &password_ ), "specify password" )
         ( "order-file", po::value( &orderFile_ ), "specify an order file to load" )
         ( "timeline-log", po::value( &timelineLog ), "timeline log file" )
-        ( "cef-log", po::value( &cefLog ), "chrome embedded log file" );
+        ( "cef-log", po::value( &cefLog ), "chrome embedded log file" )
+        ( "mapnik", po::value( &mapnik_ )->zero_tokens(), "enable mapnik layer" );
     AddOptions( desc );
     Parse( argc, argv );
     isLoginInCommandLine_ = IsSet( "login" );
@@ -73,9 +74,6 @@ void Config::ReadSession()
         xis >> xml::start( "session" )
                 >> xml::start( "config" )
                     >> xml::start( "gaming" )
-                        >> xml::optional >> xml::start( "mapnik" )
-                            >> xml::attribute( "activate", mapnik_ )
-                        >> xml::end
                         >> xml::start( "network" )
                             >> xml::optional >> xml::attribute( "timeout", networkTimeOut_ );
         if( host_.empty() )
