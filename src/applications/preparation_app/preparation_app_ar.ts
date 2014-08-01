@@ -1027,6 +1027,10 @@ This data can&apos;t be projected.</source>
         <source>Resource networks</source>
         <translation type="unfinished">شبكات للموارد</translation>
     </message>
+    <message>
+        <source>Mapnik</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaxStockNaturesTable</name>
