@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "Registry.h"
 #include "tools/GeneralConfig.h"
+#include <tools/Path.h>
 #include <QSettings>
 
 namespace
@@ -67,4 +68,15 @@ QString registry::ReadFeatures()
     // Normalize registry input before passing it to gaming
     return QString::fromStdString( tools::JoinFeatures(
                 tools::SplitFeatures( features.toStdString() )));
+}
+
+tools::Path registry::ReadPath( const QString& key )
+{
+    const QString s = registry::ReadString( key ).trimmed();
+    return tools::Path::FromUTF8( s.toStdString() );
+}
+
+void registry::WritePath( const QString& key, const tools::Path& path )
+{
+    registry::WriteString( key, QString::fromStdString( path.ToUTF8() ) );
 }

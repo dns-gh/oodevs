@@ -37,6 +37,7 @@
 #include <boost/foreach.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -113,17 +114,17 @@ namespace
 // -----------------------------------------------------------------------------
 ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages,
         Page_ABC& previous, kernel::Controllers& controllers, const Config& config,
-        const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises )
+        const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises,
+        const DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
     , exerciseContainer_( exercises )
+    , debug_            ( debug )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )
-    , integrationDir_   ( "" )
-    , configPanel_      ( 0 )
 {
     setWindowTitle( "ScenarioLauncherPage" );
 
@@ -149,7 +150,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     connect( checkpointPanel, SIGNAL( CheckpointSelected( const tools::Path&, const tools::Path& ) ), SLOT( OnSelectCheckpoint( const tools::Path&, const tools::Path& ) ) );
 
     //session config config panel
-    auto* panel = AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_ ) );
+    AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_ ) );
 
     //random config panel
     AddPlugin( new frontend::RandomPluginConfigPanel( configTabs_, config_ ) );
@@ -162,13 +163,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     OrbatConfigPanel* pOrbatConfigPanel = AddPlugin( new OrbatConfigPanel( configTabs_, config_ ) );
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), pOrbatConfigPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
-
-    //debug config panel
-    auto parent = config.IsOnDebugMode() ? configTabs_ : nullptr;
-    configPanel_ = AddPlugin( new DebugConfigPanel( parent, config_ ) );
-    connect( configPanel_, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
-    connect( configPanel_, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
-    connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel_, SLOT( OnExerciseNumberChanged( int ) ) );
 
     //general settings tab
     QWidget* configBox = new QWidget();
@@ -252,23 +246,30 @@ void ScenarioLauncherPage::OnStart()
     if( session.second )
         CreateSession( exerciseName, session.first );
 
+    boost::optional< tools::Path > wwwDir;
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
-            ( "checkpoint", checkpoint_.ToUTF8().c_str() )
-            ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
-    if( !integrationDir_.IsEmpty() )
-        arguments[ "integration-dir" ] = integrationDir_.ToUTF8();
-    if( !dumpPathfindDirectory_.IsEmpty() )
-        arguments[ "dump-pathfinds" ] = dumpPathfindDirectory_.ToUTF8();
+            ( "checkpoint", checkpoint_.ToUTF8() );
+    if( debug_ )
+    {
+        if( !debug_->sim.integrationDir.IsEmpty() )
+            arguments[ "integration-dir" ] = debug_->sim.integrationDir.ToUTF8();
+        if( !debug_->sim.pathfindDumpDir.IsEmpty() )
+            arguments[ "dump-pathfinds" ] = debug_->sim.pathfindDumpDir.ToUTF8();
+        if( !debug_->sim.pathfindFilter.empty() )
+            arguments[ "filter-pathfinds" ] = debug_->sim.pathfindFilter;
+        if( !debug_->timeline.debugWwwDir.IsEmpty() )
+            wwwDir = debug_->timeline.debugWwwDir;
+    }
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartExercise >(
         config_, exerciseName, session.first, arguments, true, "" ) );
     process->Add( boost::make_shared< frontend::StartTimeline >(
-        config_, exerciseName, session.first ) );
+        config_, exerciseName, session.first, wwwDir ) );
     if( hasClient_ )
     {
         auto profile = profile_.GetLogin();
-        QString devFeatures = configPanel_ ? configPanel_->GetDevFeatures() : QString();
+        QString devFeatures = debug_ ? debug_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session.first, &profile, devFeatures, tools::Path(),
             config_.GetCefLog() ) );
@@ -287,6 +288,23 @@ void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const too
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
+
+        if( debug_ )
+        {
+            action.SetOption( "session/config/timeline/@debug-port", debug_->timeline.debugPort );
+            if( !debug_->timeline.clientLogPath.IsEmpty() )
+            {
+                const auto log = GetTimelineLog( action.GetPath().Parent(),
+                        debug_->timeline.clientLogPath );
+                action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
+            }
+            action.SetOption( "session/config/timeline/@enabled", debug_->timeline.legacyTimeline );
+            if( debug_->sim.decProfiling )
+                action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
+            if( debug_->gaming.hasMapnik )
+                action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
+        }
+
         action.Commit();
     }
     BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
@@ -363,23 +381,4 @@ void ScenarioLauncherPage::OnClientEnabled( bool enabled )
 {
     registry::WriteBool( "NoClientSelected", !enabled );
     hasClient_ = enabled;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::OnIntegrationPathSelected
-// Created: NPT 2013-01-04
-// -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnIntegrationPathSelected( const tools::Path& integrationDir )
-{
-    integrationDir_ = integrationDir;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::OnDumpPathfindOptionsChanged
-// Created: LGY 2013-02-06
-// -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory )
-{
-    pathfindFilter_ = filter;
-    dumpPathfindDirectory_ = directory;
 }

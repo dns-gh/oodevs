@@ -36,7 +36,7 @@ class Application;
 class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
-class DebugConfigPanel;
+struct DebugConfig;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage
@@ -55,7 +55,8 @@ public:
                                    Page_ABC& previous, kernel::Controllers& controllers,
                                    const Config& config,
                                    const tools::Loader_ABC& fileLoader,
-                                   ExerciseContainer& exercises );
+                                   ExerciseContainer& exercises,
+                                   const DebugConfig* debug );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -67,8 +68,6 @@ private slots:
     void ClearSelection();
     void OnSelectCheckpoint( const tools::Path& session, const tools::Path& checkpoint );
     void OnClientEnabled( bool enabled );
-    void OnIntegrationPathSelected( const tools::Path& integrationDir );
-    void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
 
 private:
@@ -96,20 +95,17 @@ private:
     const tools::Loader_ABC&      fileLoader_;
     kernel::Controllers&          controllers_;
     ExerciseContainer&            exerciseContainer_;
+    const DebugConfig*            debug_;
     ProgressPage*                 progressPage_;
     ExerciseList*                 exercises_;
     const frontend::Exercise_ABC* exercise_;
     frontend::Profile             profile_;
     tools::Path                   session_;
     tools::Path                   checkpoint_;
-    tools::Path                   integrationDir_;
-    QString                       pathfindFilter_;
-    tools::Path                   dumpPathfindDirectory_;
     T_Plugins                     plugins_;
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          hasClient_;
-    DebugConfigPanel*             configPanel_;
     //@}
 };
 

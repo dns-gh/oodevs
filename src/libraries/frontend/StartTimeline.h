@@ -11,6 +11,7 @@
 #define __StartTimeline_h_
 
 #include "SpawnCommand.h"
+#include <boost/optional.hpp>
 
 namespace tools
 {
@@ -32,7 +33,8 @@ public:
     //@{
     StartTimeline( const tools::GeneralConfig& config,
                    const tools::Path& exercise,
-                   const tools::Path& session );
+                   const tools::Path& session,
+                   boost::optional< tools::Path > wwwDir );
     virtual ~StartTimeline();
     //@}
 };

@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "DebugConfigPanel.h"
 #include "moc_DebugConfigPanel.cpp"
+#include "Config.h"
 #include "Registry.h"
 
 #include "clients_gui/FileDialog.h"
@@ -24,8 +25,50 @@
 
 namespace
 {
-    const int maxIntegrationDir = 5;
+
+DebugConfig LoadDebugConfig()
+{
+    DebugConfig config;
+
+    config.gaming.hasMapnik = registry::ReadBool( "HasMapnikLayer" );
+
+    config.sim.decProfiling = registry::ReadBool( "DebugDecProfiling" );
+    config.sim.integrationDir = registry::ReadPath( "IntegrationLayerPath" );
+    config.sim.pathfindFilter = registry::ReadString( "DebugPathfindFilter" ).toStdString();
+    config.sim.pathfindDumpDir = registry::ReadPath( "DebugPathfindDumpPath" );
+
+    config.timeline.debugPort = registry::ReadInt( "TimelineDebugPort" );
+    config.timeline.debugWwwDir = registry::ReadPath( "TimelineDebugDir" );
+    config.timeline.clientLogPath = registry::ReadPath( "TimelineClientLog" );
+    config.timeline.cefLog = registry::ReadPath( "CefLog" );
+    config.timeline.legacyTimeline = registry::ReadBool( "EnableLegacyTimeline" );
+
+    config.features = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
+
+    return config;
 }
+
+void SaveDebugConfig( const DebugConfig& config )
+{
+    registry::WriteBool( "HasMapnikLayer", config.gaming.hasMapnik );
+
+    registry::WriteBool( "DebugDecProfiling", config.sim.decProfiling );
+    registry::WriteString( "IntegrationLayerPath",
+            config.sim.integrationDir.ToUTF8().c_str() );
+    registry::WriteString( "DebugPathfindFilter", config.sim.pathfindFilter.c_str() );
+    registry::WritePath( "DebugPathfindDumpPath", config.sim.pathfindDumpDir );
+
+    registry::WriteInt( "TimelineDebugPort", config.timeline.debugPort );
+    registry::WritePath( "TimelineDebugDir", config.timeline.debugWwwDir );
+    registry::WritePath( "TimelineClientLog", config.timeline.clientLogPath );
+    registry::WritePath( "CefLog", config.timeline.cefLog );
+    registry::WriteBool( "EnableLegacyTimeline", config.timeline.legacyTimeline );
+
+    registry::WriteString( "DevFeatures",
+        QString::fromStdString( tools::JoinFeatures( config.features ) ) );
+}
+
+}  // namespace
 
 tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath )
 {
@@ -36,14 +79,20 @@ tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& lo
     return sessionDir.Absolute() / logPath;
 }
 
+QString DebugConfig::GetDevFeatures() const
+{
+    return tools::JoinFeatures( features ).c_str();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
-DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
-    : PluginConfig_ABC( parent )
+DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config, DebugConfig& debug )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , visible_( !!parent )
     , config_( config )
+    , debug_( debug )
     , profilingBox_( 0 )
     , decCallsBox_( 0 )
     , pathfindsBox_( 0 )
@@ -51,23 +100,18 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     , dumpLabel_( 0 )
     , dataDirectory_( 0 )
     , dataButton_( 0 )
-    , exerciseNumber_( 1 )
     , mapnikBox_( 0 )
     , mapnikLayerBox_( 0 )
 {
+    debug_ = LoadDebugConfig();
+
     //integration level label
     integrationLabel_ = new QLabel();
 
     //integration level combobox
-    integrationComboBox_ = new QComboBox();
-    integrationComboBox_->setEditable( true );
-    QString pathValue = registry::ReadString( "IntegrationLayerPaths" );
-    if( !pathValue.isEmpty() )
-    {
-        pathList_ = pathValue.split( ';' );
-        integrationComboBox_->addItems( pathList_ );
-    }
-    connect( integrationComboBox_, SIGNAL( editTextChanged( const QString& ) ), SLOT( OnEditIntegrationDirectory( const QString& ) ) );
+    integrationDir_ = new QLineEdit();
+    integrationDir_->setText( QString::fromStdWString( debug_.sim.integrationDir.ToUnicode() ) );
+    connect( integrationDir_, SIGNAL( textEdited( const QString& ) ), SLOT( OnEditIntegrationDirectory( const QString& ) ) );
 
     //integration level button
     integrationButton_ = new QPushButton();
@@ -77,7 +121,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     //integration level group box
     QHBoxLayout* integrationBoxLayout = new QHBoxLayout();
     integrationBoxLayout->addWidget( integrationLabel_ );
-    integrationBoxLayout->addWidget( integrationComboBox_ );
+    integrationBoxLayout->addWidget( integrationDir_ );
     integrationBoxLayout->addWidget( integrationButton_ );
     integrationBoxLayout->setStretch( 0, 2 );
     integrationBoxLayout->setStretch( 1, 10 );
@@ -97,7 +141,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     timelineDebugPortLabel_ = new QLabel();
     timelineDebugPortSpinBox_ = new QSpinBox();
     timelineDebugPortSpinBox_->setRange( 0, 65535 );
-    timelineDebugPortSpinBox_->setValue( registry::ReadInt( "TimelineDebugPort" ) );
+    timelineDebugPortSpinBox_->setValue( debug_.timeline.debugPort );
     connect( timelineDebugPortSpinBox_, SIGNAL( valueChanged( int ) ), SLOT( OnTimelineDebugPortChanged( int ) ) );
 
     QHBoxLayout* debugPortBox = new QHBoxLayout();
@@ -108,7 +152,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     timelineLogLayout->setSpacing( 10 );
     timelineLogLabel_ = new QLabel();
     timelineLog_ = new QLineEdit();
-    timelineLog_->setText( registry::ReadString( "TimelineClientLog" ) );
+    timelineLog_->setText( QString::fromStdWString( debug_.timeline.clientLogPath.ToUnicode() ) );
     connect( timelineLog_, SIGNAL( textEdited( const QString& ) ), SLOT( OnTimelineLogChanged( const QString& ) ) );
     timelineLogLayout->addWidget( timelineLogLabel_ );
     timelineLogLayout->addWidget( timelineLog_ );
@@ -117,7 +161,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     debugLayout->setSpacing( 10 );
     timelineDebugLabel_ = new QLabel();
     timelineDebug_ = new QLineEdit();
-    timelineDebug_->setText( registry::ReadString( "TimelineDebugDir" ) );
+    timelineDebug_->setText( QString::fromStdWString( debug_.timeline.debugWwwDir.ToUnicode() ) );
     connect( timelineDebug_, SIGNAL( textEdited( const QString& ) ), SLOT( OnTimelineDebugChanged( const QString& ) ) );
     debugLayout->addWidget( timelineDebugLabel_ );
     debugLayout->addWidget( timelineDebug_ );
@@ -126,14 +170,13 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     cefLogLayout->setSpacing( 10 );
     cefLogLabel_ = new QLabel();
     cefLog_ = new QLineEdit();
-    cefLog_->setText( registry::ReadString( "CefLog" ) );
-    auto test = registry::ReadString( "CefLog" );
+    cefLog_->setText( QString::fromStdWString( debug_.timeline.cefLog.ToUnicode() ) );
     connect( cefLog_, SIGNAL( textEdited( const QString& ) ), SLOT( OnCefLogChanged( const QString& ) ) );
     cefLogLayout->addWidget( cefLogLabel_ );
     cefLogLayout->addWidget( cefLog_ );
 
     oldTimeline_ = new QCheckBox();
-    oldTimeline_->setChecked( registry::ReadBool( "EnableLegacyTimeline" ) );
+    oldTimeline_->setChecked( debug_.timeline.legacyTimeline );
     QHBoxLayout* oldTimelineLayout = new QHBoxLayout();
     oldTimelineLayout->addWidget( oldTimeline_ );
     connect( oldTimeline_, SIGNAL( toggled( bool ) ), this, SLOT( OnTimelineChecked( bool ) ) );
@@ -150,6 +193,8 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     QGridLayout* profiling = new QGridLayout( profilingBox_, 1, 1 );
     profiling->setMargin( 10 );
     decCallsBox_ = new QCheckBox();
+    decCallsBox_->setChecked( debug_.sim.decProfiling );
+    connect( decCallsBox_, SIGNAL( clicked( bool ) ), SLOT( OnDecProfilingChanged( bool ) ) );
     profiling->addWidget( decCallsBox_, 0, 0 );
 
     //pathfinds group box
@@ -162,6 +207,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     dataButton_ = new QPushButton();
     connect( dataButton_, SIGNAL( clicked() ), SLOT( OnSelectDataDirectory() ) );
     dataDirectory_ = new QLineEdit();
+    dataDirectory_->setText( QString::fromStdWString( debug_.sim.pathfindDumpDir.ToUnicode() ) );
     connect( dataDirectory_, SIGNAL( textEdited( const QString& ) ), SLOT( OnChangeDataDirectory() ) );
     dumpLayout->addWidget( dumpLabel_ );
     dumpLayout->addWidget( dataDirectory_ );
@@ -171,9 +217,10 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     filterLayout->setSpacing( 10 );
     filterLabel_ = new QLabel();
     filterEdit_ = new QLineEdit();
+    filterEdit_->setText( debug_.sim.pathfindFilter.c_str() );
     filterLayout->addWidget( filterLabel_ );
     filterLayout->addWidget( filterEdit_ );
-    connect( filterEdit_, SIGNAL( editingFinished() ), SLOT( OnChangeDataFilter() ) );
+    connect( filterEdit_, SIGNAL( editingFinished() ), SLOT( OnChangeDataDirectory() ) );
 
     pathfinds->addLayout( dumpLayout );
     pathfinds->addLayout( filterLayout );
@@ -183,21 +230,19 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     QGridLayout* mapnik = new QGridLayout( mapnikBox_, 1, 1 );
     mapnik->setMargin( 10 );
     mapnikLayerBox_ = new QCheckBox();
-    mapnikLayerBox_->setChecked( registry::ReadBool( "HasMapnikLayer" ) );
+    mapnikLayerBox_->setChecked( debug_.gaming.hasMapnik );
     connect( mapnikLayerBox_, SIGNAL( clicked( bool ) ), SLOT( OnMapnikLayerChecked( bool ) ) );
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     // development features
     const auto& availableFeatures = tools::GetAvailableFeatures();
-    const auto savedFeatures = tools::SplitFeatures(
-            registry::ReadFeatures().toStdString() );
     featuresBox_ = new QGroupBox();
     featuresBox_->setTitle( "Features" );
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
     for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
     {
         QCheckBox* checkbox = new QCheckBox( QString::fromStdString( *it ) );
-        checkbox->setChecked( savedFeatures.count( *it ) != 0 );
+        checkbox->setChecked( debug_.features.count( *it ) != 0 );
         featuresLayout->addWidget( checkbox );
         features_.push_back( checkbox );
         connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged() ));
@@ -239,8 +284,10 @@ DebugConfigPanel::~DebugConfigPanel()
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnChangeIntegrationDirectory()
 {
-    const tools::Path directory = gui::FileDialog::getExistingDirectory( this , "" );
-    integrationComboBox_->setCurrentText( QString::fromStdWString( directory.ToUnicode() ) );
+    const tools::Path directory = gui::FileDialog::getExistingDirectory( this ,
+            QString::fromStdWString( debug_.sim.integrationDir.ToUnicode() ) );
+    integrationDir_->setText( QString::fromStdWString( directory.ToUnicode() ) );
+    OnEditIntegrationDirectory( integrationDir_->text() );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,22 +297,10 @@ void DebugConfigPanel::OnChangeIntegrationDirectory()
 void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 {
     tools::Path path = tools::Path::FromUnicode( directory.toStdWString() );
-    if( path.IsDirectory() )
-    {
-        if ( !pathList_.contains( directory, Qt::CaseSensitive ) )
-        {
-            //maj of combobox
-            pathList_.push_front( directory );
-            if( pathList_.count() > maxIntegrationDir )
-                pathList_.removeLast();
-            integrationComboBox_->clear();
-            integrationComboBox_->addItems( pathList_ );
-
-            //save in registry
-            registry::WriteString( "IntegrationLayerPaths", pathList_.join( ";" ) );
-        }
-        emit IntegrationPathSelected( path );
-    }
+    if( !path.IsEmpty() && !path.IsDirectory() )
+        return;
+    debug_.sim.integrationDir = path;
+    SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,47 +336,14 @@ QString DebugConfigPanel::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::IsVisible
-// Created: BAX 2013-11-25
-// -----------------------------------------------------------------------------
-bool DebugConfigPanel::IsVisible() const
-{
-    return visible_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::Commit
-// Created: LGY 2013-02-05
-// -----------------------------------------------------------------------------
-void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
-{
-    frontend::CreateSession action( config_, exercise, session );
-    action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );
-    if( !timelineLog_->text().isEmpty() )
-    {
-        auto log = tools::Path::FromUTF8( timelineLog_->text().toStdString() );
-        log = GetTimelineLog( action.GetPath().Parent(), log );
-        action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
-    }
-    const auto debug = timelineDebug_->text().trimmed();
-    if( !debug.isEmpty() )
-        action.SetOption( "session/config/timeline/@debug", debug.toStdString() );
-    action.SetOption( "session/config/timeline/@enabled", oldTimeline_->isChecked() );
-    if( decCallsBox_->isChecked() )
-        action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-    if( mapnikLayerBox_->isChecked() )
-        action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
-    action.Commit();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DebugConfigPanel::OnChangeDataDirectory
 // Created: LGY 2013-02-05
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnChangeDataDirectory()
 {
-    emit DumpPathfindOptionsChanged( filterEdit_->text(),
-            tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
+    debug_.sim.pathfindFilter = filterEdit_->text().toStdString();
+    debug_.sim.pathfindDumpDir = tools::Path::FromUnicode( dataDirectory_->text().toStdWString() );
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnSelectDataDirectory()
@@ -353,13 +355,10 @@ void DebugConfigPanel::OnSelectDataDirectory()
     OnChangeDataDirectory();
 }
 
-// -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::OnChangeDataFilter
-// Created: LGY 2013-02-06
-// -----------------------------------------------------------------------------
-void DebugConfigPanel::OnChangeDataFilter()
+void DebugConfigPanel::OnDecProfilingChanged( bool checked )
 {
-    emit DumpPathfindOptionsChanged( filterEdit_->text(), tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
+    debug_.sim.decProfiling = checked;
+    SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,7 +367,8 @@ void DebugConfigPanel::OnChangeDataFilter()
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnTimelineChecked( bool checked )
 {
-    registry::WriteBool( "EnableLegacyTimeline", checked );
+    debug_.timeline.legacyTimeline = checked;
+    SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -377,48 +377,40 @@ void DebugConfigPanel::OnTimelineChecked( bool checked )
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnTimelineDebugPortChanged( int port )
 {
-    registry::WriteInt( "TimelineDebugPort", port );
+    debug_.timeline.debugPort = port;
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnTimelineLogChanged( const QString& path )
 {
-    registry::WriteString( "TimelineClientLog", path );
+    debug_.timeline.clientLogPath = tools::Path::FromUnicode( path.trimmed().toStdWString() );
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnTimelineDebugChanged( const QString& path )
 {
-    registry::WriteString( "TimelineDebugDir", path );
+    debug_.timeline.debugWwwDir = tools::Path::FromUnicode( path.trimmed().toStdWString() );
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnCefLogChanged( const QString& path )
 {
-    registry::WriteString( "CefLog", path );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::OnExerciseNumberChanged
-// Created: ABR 2013-05-16
-// -----------------------------------------------------------------------------
-void DebugConfigPanel::OnExerciseNumberChanged( int exerciseNumber )
-{
-    exerciseNumber_ = exerciseNumber;
+    debug_.timeline.cefLog = tools::Path::FromUnicode( path.trimmed().toStdWString() );
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
 {
-    registry::WriteBool( "HasMapnikLayer", checked );
+    debug_.gaming.hasMapnik = checked;
+    SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnDevFeaturesChanged()
 {
-    registry::WriteString( "DevFeatures", GetDevFeatures() );
-}
-
-QString DebugConfigPanel::GetDevFeatures() const
-{
-    std::unordered_set< std::string > checked;
+    debug_.features.clear();
     for( auto it = features_.begin(); it != features_.end(); ++it )
         if( (*it)->isChecked() )
-            checked.insert( (*it)->text() );
-    return tools::JoinFeatures( checked ).c_str();
+            debug_.features.insert( (*it)->text() );
+    SaveDebugConfig( debug_ );
 }
+

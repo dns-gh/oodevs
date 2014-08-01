@@ -16,6 +16,7 @@
 #include "ImportWidget.h"
 #include "ExportWidget.h"
 #include "Config.h"
+#include "DebugConfigPanel.h"
 #include "ExerciseContainer.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Controllers.h"
@@ -36,7 +37,8 @@ OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pag
                           Page_ABC& previous, Config& config,
                           const tools::Loader_ABC& loader,
                           kernel::Controllers& controllers,
-                          ExerciseContainer& exercises )
+                          ExerciseContainer& exercises,
+                          DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonApply )
     , app_               ( app )
     , parent_            ( parent )
@@ -56,6 +58,7 @@ OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pag
     SetImportLayout();
     SetExportLayout();
     SetDataLayout();
+    SetDebugLayout( debug );
     AddContent( tabs_ );
 
     connect( tabs_, SIGNAL( currentChanged( int ) ), SLOT( UpdateButton() ) );
@@ -160,6 +163,14 @@ void OptionsPage::SetDataLayout()
     data_ = new DataWidget( parent_, tabs_, config_ );
     connect( data_, SIGNAL( ButtonChanged( bool, const QString& ) ),
              SLOT( OnButtonChanged( bool, const QString& ) ) );
+}
+
+void OptionsPage::SetDebugLayout( DebugConfig* debug )
+{
+    if( !debug )
+        return;
+    debug_ = new DebugConfigPanel( parent_, config_, *debug );
+    tabs_->addTab( debug_, debug_->GetName() );
 }
 
 // -----------------------------------------------------------------------------

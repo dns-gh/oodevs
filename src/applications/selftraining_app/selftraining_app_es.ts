@@ -607,14 +607,6 @@ Do you want to replace it?</source>
         <translation>General</translation>
     </message>
     <message>
-        <source>Enable Mapnik</source>
-        <translation>Habilitar Mapnik</translation>
-    </message>
-    <message>
-        <source>Enable Legacy Timeline</source>
-        <translation>Línea de tiempo anterior</translation>
-    </message>
-    <message>
         <source>Debug</source>
         <translation>Depurar</translation>
     </message>

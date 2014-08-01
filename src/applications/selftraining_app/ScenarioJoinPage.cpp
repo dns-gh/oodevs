@@ -16,7 +16,6 @@
 #include "ExerciseList.h"
 #include "ProgressPage.h"
 #include "ProcessDialogs.h"
-#include "Registry.h"
 #include "frontend/CreateSession.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinExercise.h"
@@ -29,11 +28,12 @@
 // Name: ScenarioJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises )
+ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises, const DebugConfig* debug )
     : ContentPage( pages, previous, eButtonBack | eButtonJoin )
     , controllers_      ( controllers )
     , exerciseContainer_( exercises )
     , config_           ( config )
+    , debug_            ( debug )
     , fileLoader_       ( fileLoader )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
@@ -51,11 +51,6 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
     timeline_ = new QSpinBox();
     timeline_->setMaximum( 65535 );
     timeline_->setValue( 10002 );
-
-    mapnik_ = new QCheckBox();
-    mapnik_->setChecked( registry::ReadBool( "HasMapnikLayer" ) );
-    oldTimeline_ = new QCheckBox();
-    oldTimeline_->setChecked( registry::ReadBool( "EnableLegacyTimeline" ) );
 
     auto gen = new QWidget( this );
     auto genlayout = new QVBoxLayout( gen );
@@ -80,20 +75,6 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
         genlayout->addWidget( exercises_ );
     }
     tabs_->addTab( gen, "" );
-
-    {
-        auto w = new QWidget( this );
-        auto layout = new QVBoxLayout( w );
-        layout->setMargin( 10 );
-        layout->setSpacing( 10 );
-        layout->addWidget( mapnik_ );
-        layout->addWidget( oldTimeline_ );
-        layout->addStretch();
-        if( config.IsOnDebugMode() )
-            tabs_->addTab( w, "" );
-        else
-            w->setVisible( false );
-    }
 
     EnableButton( eButtonJoin, false );
     auto w = new QWidget( this );
@@ -124,8 +105,6 @@ void ScenarioJoinPage::OnLanguageChanged()
     hostLabel_->setText(     tools::translate( "ScenarioJoinPage", "Host" ) );
     portLabel_->setText(     tools::translate( "ScenarioJoinPage", "Port" ) );
     timelineLabel_->setText( tools::translate( "ScenarioJoinPage", "Timeline" ) );
-    mapnik_->setText(        tools::translate( "ScenarioJoinPage", "Enable Mapnik" ) );
-    oldTimeline_->setText(   tools::translate( "ScenarioJoinPage", "Enable Legacy Timeline" ) );
 
     ContentPage::OnLanguageChanged();
 }
@@ -168,26 +147,31 @@ void ScenarioJoinPage::OnJoin()
 {
     if( !exercise_ )
         return;
-    tools::Path sessionPath;
+    QString features;
+    tools::Path sessionPath, timelineLog;
     {
         frontend::CreateSession action( config_, exercise_->GetName(), "remote" );
         sessionPath = action.GetPath();
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( port_->text() ) );
         action.SetOption( "session/config/timeline/@url", QString( "%1:%2" ).arg( host_->text() ).arg( timeline_->text() ) );
-        action.SetOption( "session/config/timeline/@enabled", oldTimeline_->isChecked() );
-        action.SetOption( "session/config/gaming/mapnik/@activate", mapnik_->isChecked() );
+        if( debug_ )
+        {
+            if( debug_->timeline.legacyTimeline )
+                action.SetOption( "session/config/timeline/@enabled", "true" );
+            if( debug_->gaming.hasMapnik )
+                action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
+            timelineLog = GetTimelineLog(
+                    sessionPath.Parent(), debug_->timeline.clientLogPath );
+            features = debug_->GetDevFeatures();
+        }
         action.Commit();
     }
 
-    auto log = tools::Path::FromUTF8( registry::ReadString( "TimelineClientLog" ).toStdString() );
-    log = GetTimelineLog( sessionPath.Parent(), log );
-
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    const auto devFeatures = registry::ReadFeatures();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-        exercise_->GetName(), "remote", static_cast< const QString* >( 0 ), devFeatures, log,
-        config_.GetCefLog() ) );
+        exercise_->GetName(), "remote", static_cast< const QString* >( 0 ),
+        features, timelineLog, config_.GetCefLog() ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();
