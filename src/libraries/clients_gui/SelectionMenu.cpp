@@ -251,6 +251,11 @@ bool SelectionMenu::GenerateIcons()
                     pixmap = QPixmap( 32, 32 );
                     pixmap.fill( color );
                 }
+                else if( entity->GetTypeName() == kernel::Pathfind_ABC::typeName_ )
+                {
+                    static const QPixmap pathfind( "resources/symbols/pathfind.png" );
+                    pixmap = pathfind;
+                }
                 else if( const TacticalHierarchies* hierarchies = entity->Retrieve< TacticalHierarchies >() )   // Entity & Knowledge ?
                 {
                     if( const kernel::Symbol_ABC* symbol = entity->Retrieve< kernel::TacticalHierarchies >() )
@@ -261,11 +266,6 @@ bool SelectionMenu::GenerateIcons()
                     }
                     if( allIconsGenerated && ( !mode3d_ && pixmap.isNull() ) )
                         allIconsGenerated = false;
-                }
-                else if( entity->GetTypeName() == kernel::Pathfind_ABC::typeName_ )
-                {
-                    static const QPixmap pathfind( "resources/symbols/pathfind.png" );
-                    pixmap = pathfind;
                 }
             }
         }

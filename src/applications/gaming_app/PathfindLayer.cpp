@@ -122,13 +122,12 @@ void PathfindLayer::Initialize( const geometry::Rectangle2f& extent )
 // -----------------------------------------------------------------------------
 void PathfindLayer::Paint( gui::Viewport_ABC& view )
 {
-    if( edited_ )
-    {
-        edited_->SetHover( hovered_ );
-        if( controllers_.GetCurrentMode() == eModes_Itinerary )
-            EntityLayer< kernel::Pathfind_ABC >::Draw( *edited_, view, false );
-    }
     EntityLayer< kernel::Pathfind_ABC >::Paint( view );
+    if( !edited_ )
+        return;
+    edited_->SetHover( hovered_ );
+    if( controllers_.GetCurrentMode() == eModes_Itinerary )
+        EntityLayer< kernel::Pathfind_ABC >::Draw( *edited_, view, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +148,7 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
         }
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
     }
-    else if( profile_.CanBeOrdered( *selectedEntity_ ) )
+    else if( selectedEntity_ == target_ && profile_.CanBeOrdered( *selectedEntity_ ) )
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OnOpenEditingMode() ) );
 }
 
@@ -562,6 +561,9 @@ void PathfindLayer::OptionChanged( const std::string& name, const kernel::Option
 
 bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
+    if( controllers_.GetCurrentMode() == eModes_Itinerary )
+        if( edited_.get() == &entity )
+            return true;
     if( !filter_.IsSet( true, true, true ) )
         return false;
     const auto& element = static_cast< const kernel::Pathfind_ABC& >( entity ).GetUnit();
