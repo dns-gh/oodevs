@@ -22,6 +22,8 @@ namespace kernel
     class Controllers;
 }
 
+class GLUtesselator;
+
 namespace gui
 {
     class IconLayout;

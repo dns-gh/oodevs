@@ -16,7 +16,7 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Language.h"
 #pragma warning( push, 0 )
-#include <Qt/qapplication.h>
+#include <QtGui/QApplication>
 #include <QtCore/qsettings.h>
 #include <QtCore/qstring.h>
 #include <QtGui/qtooltip.h>

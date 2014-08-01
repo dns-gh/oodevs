@@ -24,6 +24,7 @@
 #include <graphics/Visitor3d.h>
 
 #include <boost/bind.hpp>
+#include <GL/glu.h>
 
 using namespace geometry;
 using namespace kernel;

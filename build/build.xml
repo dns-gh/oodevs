@@ -1177,7 +1177,7 @@
         <update name="proj4" version="4.8.0"/>
         <update name="protobuf" version="2.3.0"/>
         <update name="python" version="2.7.3-3"/>
-        <update name="qt" version="4.7.0.r660"/>
+        <update name="qt" version="4.8.6"/>
         <update name="spatialite" version="3.1.0.r669"/>
         <update name="sqlite" version="3.7.13.r229"/>
         <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>

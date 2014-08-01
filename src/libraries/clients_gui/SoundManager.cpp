@@ -13,7 +13,7 @@
 #include "tools/GeneralConfig.h"
 
 #pragma warning( push, 0 )
-#include <Qt/qapplication.h>
+#include <QtGui/QApplication>
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
 #pragma warning( pop )
