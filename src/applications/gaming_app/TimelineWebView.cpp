@@ -11,7 +11,7 @@
 #include "TimelineWebView.h"
 
 #include "moc_TimelineWebView.cpp"
-#include "Config.h"
+#include "GamingConfig.h"
 #include "TimelineToolBar.h"
 
 #include "actions/Action_ABC.h"
@@ -47,7 +47,7 @@
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
 TimelineWebView::TimelineWebView( QWidget* parent,
-                                  const Config& config,
+                                  const GamingConfig& config,
                                   kernel::Controllers& controllers,
                                   Model& model )
     : QWidget( parent )

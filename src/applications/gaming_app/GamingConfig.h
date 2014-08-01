@@ -7,26 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __Config_h_
-#define __Config_h_
+#ifndef GAMING_GAMING_CONFIG_H
+#define GAMING_GAMING_CONFIG_H
 
 #include "tools/SessionConfig.h"
 
 class Network;
 
 // =============================================================================
-/** @class  Config
-    @brief  Config
+/** @class  GamingConfig
+    @brief  GamingConfig
 */
 // Created: NLD 2007-01-12
 // =============================================================================
-class Config : public tools::SessionConfig
+class GamingConfig : public tools::SessionConfig
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( int argc, char** argv );
-    virtual ~Config();
+             GamingConfig( int argc, char** argv );
+    virtual ~GamingConfig();
     //@}
 
     //! @name Operations
@@ -73,4 +73,4 @@ private:
     //@}
 };
 
-#endif // __Config_h_
+#endif // GAMING_GAMING_CONFIG_H

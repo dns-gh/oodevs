@@ -27,7 +27,7 @@ namespace actions
 
 class ActionsScheduler;
 class ActionsToolbar;
-class Config;
+class GamingConfig;
 class Model;
 class TimelineWidget;
 
@@ -44,7 +44,7 @@ class TimelinePanel : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, Model& model, ActionsScheduler& scheduler, const Config& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor );
+             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, Model& model, ActionsScheduler& scheduler, const GamingConfig& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor );
     virtual ~TimelinePanel();
     //@}
 

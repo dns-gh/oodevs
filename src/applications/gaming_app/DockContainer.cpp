@@ -14,7 +14,7 @@
 #include "AutomatsLayer.h"
 #include "ChatDock.h"
 #include "ClockDock.h"
-#include "Config.h"
+#include "GamingConfig.h"
 #include "CreationPanels.h"
 #include "EventDockWidget.h"
 #include "ExtensionsPanel.h"
@@ -67,7 +67,7 @@ DockContainer::DockContainer( QMainWindow* parent,
                               Model& model,
                               Network& network,
                               const Simulation& simulation,
-                              const Config& config,
+                              const GamingConfig& config,
                               ProfileFilter& profile,
                               gui::ParametersLayer& paramLayer,
                               gui::TerrainProfilerLayer& profilerLayer,

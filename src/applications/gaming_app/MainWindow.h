@@ -56,7 +56,7 @@ namespace tools
     class Path;
 }
 
-class Config;
+class GamingConfig;
 class Services;
 class StatusBar;
 class Model;
@@ -97,7 +97,7 @@ public:
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
                          SimulationController& simulationController, Network& network, ProfileFilter& profile,
-                         Config& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license );
+                         GamingConfig& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license );
     virtual ~MainWindow();
     //@}
 
@@ -150,7 +150,7 @@ private:
     Model& model_;
     Network& network_;
     QString login_;
-    Config& config_;
+    GamingConfig& config_;
     const kernel::Profile_ABC& profile_;
     kernel::Workers& workers_;
     std::unique_ptr< gui::GraphicPreferences > graphicPreferences_;

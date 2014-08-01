@@ -30,7 +30,7 @@ namespace gui
     class RichAction;
 }
 
-class Config;
+class GamingConfig;
 class Services;
 
 // =============================================================================
@@ -51,7 +51,7 @@ class ActionsToolbar : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsToolbar( QWidget* parent, actions::ActionsModel& actions, const Config& config, kernel::Controllers& controllers );
+             ActionsToolbar( QWidget* parent, actions::ActionsModel& actions, const GamingConfig& config, kernel::Controllers& controllers );
     virtual ~ActionsToolbar();
     //@}
 
@@ -92,7 +92,7 @@ private:
     //@{
     kernel::Controllers&              controllers_;
     actions::ActionsModel&            actions_;
-    const Config&                     config_;
+    const GamingConfig&                config_;
     const actions::ActionsFilter_ABC* filter_;
     QMessageBox*                      confirmation_;
     bool                              initialized_;

@@ -17,7 +17,6 @@
 #include "AutomatsLayer.h"
 #include "ClientCommandFacade.h"
 #include "CommandFacade.h"
-#include "Config.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "DockContainer.h"
@@ -26,6 +25,7 @@
 #include "FirePlayer.h"
 #include "FogLayer.h"
 #include "FormationLayer.h"
+#include "GamingConfig.h"
 #include "icons.h"
 #include "IndicatorExportDialog.h"
 #include "IndicatorPlotFactory.h"
@@ -144,7 +144,7 @@ namespace
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, SimulationController& simulationController,
-                        Network& network, ProfileFilter& filter, Config& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license )
+                        Network& network, ProfileFilter& filter, GamingConfig& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license )
     : QMainWindow()
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "Config.h"
+#include "GamingConfig.h"
 #include "gaming/Network.h"
 #include "clients_kernel/Tools.h"
 #include "tools/NullFileLoaderObserver.h"
@@ -20,10 +20,10 @@
 namespace po  = boost::program_options;
 
 // -----------------------------------------------------------------------------
-// Name: Config constructor
+// Name: GamingConfig constructor
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
-Config::Config( int argc, char** argv )
+GamingConfig::GamingConfig( int argc, char** argv )
     : SessionConfig( tools::CreateNullFileLoaderObserver() )
     , orderFile_     ( "" )
     , networkTimeOut_( 10000 )
@@ -56,19 +56,19 @@ Config::Config( int argc, char** argv )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config destructor
+// Name: GamingConfig destructor
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
-Config::~Config()
+GamingConfig::~GamingConfig()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::ReadSession
+// Name: GamingConfig::ReadSession
 // Created: ABR 2013-05-15
 // -----------------------------------------------------------------------------
-void Config::ReadSession()
+void GamingConfig::ReadSession()
 {
     const tools::Path session = GetSessionFile();
     if( !session.IsEmpty() && session.Exists() )
@@ -93,97 +93,97 @@ void Config::ReadSession()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::Connect
+// Name: GamingConfig::Connect
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-void Config::Connect( Network& network ) const
+void GamingConfig::Connect( Network& network ) const
 {
     network.DoConnect( host_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetLogin
+// Name: GamingConfig::GetLogin
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-const std::string& Config::GetLogin() const
+const std::string& GamingConfig::GetLogin() const
 {
     return login_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetPassword
+// Name: GamingConfig::GetPassword
 // Created: BAX 2013-10-24
 // -----------------------------------------------------------------------------
-const std::string& Config::GetPassword() const
+const std::string& GamingConfig::GetPassword() const
 {
     return password_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetOrbatFile
+// Name: GamingConfig::GetOrbatFile
 // Created: ABR 2011-10-10
 // -----------------------------------------------------------------------------
-tools::Path Config::GetOrderFile() const
+tools::Path GamingConfig::GetOrderFile() const
 {
     return orderFile_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::IsLoginInCommandLine
+// Name: GamingConfig::IsLoginInCommandLine
 // Created: JSR 2010-05-18
 // -----------------------------------------------------------------------------
-bool Config::IsLoginInCommandLine() const
+bool GamingConfig::IsLoginInCommandLine() const
 {
     return isLoginInCommandLine_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetNetworkTimeOut
+// Name: GamingConfig::GetNetworkTimeOut
 // Created: JSR 2011-10-19
 // -----------------------------------------------------------------------------
-unsigned long Config::GetNetworkTimeOut() const
+unsigned long GamingConfig::GetNetworkTimeOut() const
 {
     return networkTimeOut_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::HasTimeline
+// Name: GamingConfig::HasTimeline
 // Created: ABR 2013-05-15
 // -----------------------------------------------------------------------------
-bool Config::HasTimeline() const
+bool GamingConfig::HasTimeline() const
 {
     return hasTimeline_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetTimelineUrl
+// Name: GamingConfig::GetTimelineUrl
 // Created: ABR 2013-05-15
 // -----------------------------------------------------------------------------
-std::string Config::GetTimelineUrl() const
+std::string GamingConfig::GetTimelineUrl() const
 {
     return timelineUrl_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetTimelineDebugPort
+// Name: GamingConfig::GetTimelineDebugPort
 // Created: ABR 2013-05-15
 // -----------------------------------------------------------------------------
-int Config::GetTimelineDebugPort() const
+int GamingConfig::GetTimelineDebugPort() const
 {
     return timelineDebugPort_;
 }
 
-tools::Path Config::GetTimelineClientLogFile() const
+tools::Path GamingConfig::GetTimelineClientLogFile() const
 {
     return timelineLogFile_;
 }
 
-tools::Path Config::GetCefLogFile() const
+tools::Path GamingConfig::GetCefLogFile() const
 {
     return cefLogFile_;
 }
 
-bool Config::HasMapnik() const
+bool GamingConfig::HasMapnik() const
 {
     return mapnik_;
 }

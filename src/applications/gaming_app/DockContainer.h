@@ -43,11 +43,11 @@ namespace kernel
 class ActionsScheduler;
 class AfterAction;
 class AutomatsLayer;
-class Config;
 class CreationPanels;
 class DrawingsBuilder;
 class EventDockWidget;
 class FormationLayer;
+class GamingConfig;
 class IndicatorExportDialog;
 class IndicatorPlotFactory;
 class ItineraryEditionDockWidget;
@@ -81,7 +81,7 @@ public:
                    Model& model,
                    Network& network,
                    const Simulation& simulation,
-                   const Config& config,
+                   const GamingConfig& config,
                    ProfileFilter& profile,
                    gui::ParametersLayer& paramLayer,
                    gui::TerrainProfilerLayer& profilerLayer,
