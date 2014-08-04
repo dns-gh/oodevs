@@ -12,6 +12,7 @@
 
 #include "Event.h"
 #include "ENT/ENT_Enums.h"
+#include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace gui
@@ -80,6 +81,10 @@ struct EventViewState
     boost::shared_ptr< gui::Event > event_;
     E_EventDockModes mode_;
     bool trigger_;
+    // Set on engagement errors
+    // true: unit order when automat is engaged
+    // false: automat order when automat is disengaged
+    boost::optional< bool > misengaged_;
     bool save_;
     bool saveAs_;
     bool clear_;

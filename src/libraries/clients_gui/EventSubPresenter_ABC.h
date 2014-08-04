@@ -12,6 +12,7 @@
 
 #include "ENT/ENT_Enums.h"
 #include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 #include <boost/scoped_ptr.hpp>
 
 namespace timeline
@@ -50,6 +51,10 @@ public:
     {
         return false;
     }
+    virtual boost::optional< bool > IsMisengaged() const
+    {
+        return boost::none;
+    }
     virtual bool ShouldEnableClear() const
     {
         return false;
@@ -82,7 +87,6 @@ private:
     E_EventTypes type_;
     //@}
 };
-
 
 // =============================================================================
 /** @class  EventSubPresenter_ABC

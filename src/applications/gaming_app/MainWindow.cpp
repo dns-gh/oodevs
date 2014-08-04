@@ -491,12 +491,7 @@ namespace
 
     QString ExtractExerciceName( const tools::Path& filename )
     {
-        if( !filename.Exists() )
-            return "";
-        tools::Xifstream xis( filename );
-        xis >> xml::start( "exercise" )
-                >> xml::optional >> xml::start( "meta" );
-        return filename.Parent().FileName().ToUTF8().c_str();
+        return QString::fromStdString( filename.Parent().FileName().ToUTF8() );
     }
 }
 

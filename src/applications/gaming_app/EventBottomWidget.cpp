@@ -36,6 +36,12 @@ EventBottomWidget::EventBottomWidget( gui::EventPresenter& presenter )
     : EventDefaultWidget_ABC( presenter )
     , detailAction_( 0 )
 {
+    // Engagement warning
+    misengageBox_ = new gui::RichGroupBox( "misengage-box" );
+    misengageLabel_ = new gui::RichLabel( "misengage_label" );
+    QVBoxLayout* misengageLayout = new QVBoxLayout( misengageBox_ );
+    misengageLayout->addWidget( misengageLabel_, 0, Qt::AlignCenter );
+
     // Warning
     warningBox_ = new gui::RichGroupBox( "warning-box" );
     warningLabel_ = new gui::RichLabel( "acknowledged_label" );
@@ -66,6 +72,7 @@ EventBottomWidget::EventBottomWidget( gui::EventPresenter& presenter )
 #endif
 
     // Layout
+    mainLayout_->addWidget( misengageBox_ );
     mainLayout_->addWidget( warningBox_ );
     mainLayout_->addWidget( toolBar_ );
 }
@@ -85,6 +92,10 @@ EventBottomWidget::~EventBottomWidget()
 // -----------------------------------------------------------------------------
 void EventBottomWidget::Purge()
 {
+    misengageBox_->setVisible( false );
+    misengageBox_->EnableStaticWarning( false );
+    misengageLabel_->setText( "" );
+    misengageLabel_->EnableStaticWarning( false );
     warningBox_->setVisible( false );
     warningBox_->EnableStaticWarning( false );
     warningLabel_->setText( "" );
@@ -102,6 +113,15 @@ void EventBottomWidget::Purge()
 void EventBottomWidget::Build( const gui::EventViewState& state )
 {
     toolBar_->setVisible( state.bottomToolBar_ || detailAction_->isVisible() );
+    misengageBox_->setVisible( state.misengaged_ );
+    if( state.misengaged_ )
+    {
+        static const auto color = QColor( "#FF7700" );
+        misengageBox_->EnableStaticWarning( true, color );
+        misengageLabel_->setText( *state.misengaged_ ?
+            tr( "Automat is engaged" ) : tr( "Automat is disengaged" ) );
+        misengageLabel_->EnableStaticWarning( true, color );
+    }
     warningBox_->setVisible( !state.warning_.empty() );
     warningBox_->EnableStaticWarning( true, state.warningColor_ );
     warningLabel_->setText( QString::fromStdString( state.warning_ ) );

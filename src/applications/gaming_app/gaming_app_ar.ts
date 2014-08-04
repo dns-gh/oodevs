@@ -670,6 +670,14 @@ Reason: %3
         <source>Show/hide details</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automat is engaged</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat is disengaged</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventDockWidget</name>
