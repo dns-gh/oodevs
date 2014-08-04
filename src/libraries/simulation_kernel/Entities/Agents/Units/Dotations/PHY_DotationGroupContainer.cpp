@@ -280,6 +280,23 @@ double PHY_DotationGroupContainer::GetFuelDotationNumber() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::GetFuelDotationCapacity
+// Created: JSR 2014-07-21
+// -----------------------------------------------------------------------------
+double PHY_DotationGroupContainer::GetFuelDotationCapacity() const
+{
+    double ret = 0;
+    const PHY_DotationGroup* pGroup = GetDotationGroup( *PHY_DotationType::carburant_ );
+    if( pGroup )
+    {
+        const PHY_DotationGroup::T_DotationMap& dotations = pGroup->GetDotations();
+        for( auto it = dotations.begin(); it != dotations.end(); ++it )
+            ret += it->second->GetCapacity();
+    }
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::GetilluminatingRange
 // Created: GGE 2010-06-23
 // -----------------------------------------------------------------------------

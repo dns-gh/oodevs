@@ -44,6 +44,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
@@ -1339,6 +1340,28 @@ double DEC_AgentFunctions::GetFuelDotationNumber(  MIL_AgentPion& /*callerAgent*
     if( !pPion )
         throw MASA_EXCEPTION( "Invalid pion in GetFuelDotationNumber" );
     return pPion->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().GetFuelDotationNumber();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetFuelDotationCapacity
+// Created: JSR 2014-07-21
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetFuelDotationCapacity( MIL_AgentPion& /*callerAgent*/, const DEC_Decision_ABC* pPion )
+{
+    if( !pPion )
+        throw MASA_EXCEPTION( "Invalid pion in GetFuelDotationCapacity" );
+    return pPion->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().GetFuelDotationCapacity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::ResupplyFuel
+// Created: JSR 2014-07-21
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::ResupplyFuel( DEC_Decision_ABC* pAgent, float percentage )
+{
+    if( !pAgent )
+        throw MASA_EXCEPTION( "Invalid pion in ResuplyFuel" );
+    pAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().ResupplyDotations( *PHY_DotationType::carburant_, percentage );
 }
 
 // -----------------------------------------------------------------------------

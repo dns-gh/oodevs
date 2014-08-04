@@ -197,6 +197,8 @@ public:
     static bool HasDotationForFiring( DEC_Decision_ABC* agent, const PHY_DotationCategory* category, int iterations );
     static bool CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
     static double GetFuelDotationNumber( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion );
+    static double GetFuelDotationCapacity( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion );
+    static void ResupplyFuel( DEC_Decision_ABC* pAgent, float percentage );
     static bool AgentHasRadar( const DEC_Decision_ABC* agent, int typeRadar );
 
     // Old deployment

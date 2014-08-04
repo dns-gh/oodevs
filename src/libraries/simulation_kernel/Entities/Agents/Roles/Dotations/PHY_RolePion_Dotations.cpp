@@ -521,6 +521,16 @@ double PHY_RolePion_Dotations::GetFuelDotationNumber() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::GetFuelDotationCapacity
+// Created: JSR 2014-07-21
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Dotations::GetFuelDotationCapacity() const
+{
+    assert( pDotations_ );
+    return pDotations_->GetFuelDotationCapacity();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::GetIlluminationDotations
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
