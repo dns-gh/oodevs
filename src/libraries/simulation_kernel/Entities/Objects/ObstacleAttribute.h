@@ -46,7 +46,7 @@ public:
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
-    //! @name Accessors
+    //! @name Setters/Getters
     //@{
     void SetActivityTime( unsigned int activityTime );
     void SetActivationTime( unsigned int activationTime );
@@ -54,6 +54,8 @@ public:
     int GetActivityTime() const;
     int GetEndActivity() const;
     bool IsTimesUndefined() const;
+    void SetActivatedAfterConstruction( bool activatedAfterConstruction );
+    bool ActivatedAfterConstruction() const;
     bool IsActivated() const;
     void Activate( bool activate );
     //@}
@@ -69,6 +71,7 @@ private:
     //! @name Member data
     //@{
     bool bActivated_;
+    bool activatedAfterConstruction_;
     int activationTime_;
     int activityTime_;
     unsigned int creationTime_;

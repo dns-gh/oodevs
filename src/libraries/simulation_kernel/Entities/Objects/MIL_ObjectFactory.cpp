@@ -111,9 +111,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const std::string& name, const 
     builder.Build( *object );
     attributes_->Initialize( *object );
     if( ObstacleAttribute* pObstacle = object->RetrieveAttribute< ObstacleAttribute >() )
-    {
-        pObstacle->Activate( activated );
-    }
+        pObstacle->SetActivatedAfterConstruction( activated );
     if( density )
     {
         BuildableCapacity* capacity = object->Retrieve< BuildableCapacity >();

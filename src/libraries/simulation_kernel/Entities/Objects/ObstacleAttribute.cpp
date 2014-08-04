@@ -28,10 +28,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< Obs
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute()
-    : bActivated_    ( false )
+    : bActivated_( false )
+    , activatedAfterConstruction_( false )
     , activationTime_( 0 )
-    , activityTime_  ( 0 )
-    , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
+    , activityTime_( 0 )
+    , creationTime_( MIL_Time_ABC::GetTime().GetRealTime() )
 {
     // NOTHING
 }
@@ -86,6 +87,7 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & bActivated_
+         & activatedAfterConstruction_
          & activationTime_
          & activityTime_
          & creationTime_;
@@ -143,6 +145,24 @@ int ObstacleAttribute::GetEndActivity() const
 bool ObstacleAttribute::IsTimesUndefined() const
 {
     return activationTime_<= 0 && activityTime_ <= 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::SetActivatedAfterConstruction
+// Created: JSR 2014-08-04
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::SetActivatedAfterConstruction( bool activatedAfterConstruction )
+{
+    activatedAfterConstruction_ = activatedAfterConstruction;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::ActivatedAfterConstruction
+// Created: JSR 2014-08-04
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::ActivatedAfterConstruction() const
+{
+    return activatedAfterConstruction_;
 }
 
 // -----------------------------------------------------------------------------
