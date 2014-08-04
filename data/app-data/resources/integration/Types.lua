@@ -373,3 +373,9 @@ eActionIllumination_None = 6
 -- Fire condition -- Scipio compatibility
 PH_TIR_ZURB = 0.25
 PH_TIR_ZO = 0.5
+
+-- Seuil de Rapport de rapport de force -- Scipio compatibility
+RAPFOR_ZURB_FAVORABLE = 0.95
+RAPFOR_ZURB_DEFAVORABLE = 0.45
+RAPFOR_ZO_FAVORABLE = 0.55
+RAPFOR_ZO_DEFAVORABLE = 0.45
