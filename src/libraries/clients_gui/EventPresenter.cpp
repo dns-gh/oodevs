@@ -124,7 +124,6 @@ bool EventPresenter::IsCurrentEvent( const gui::Event& event ) const
     return event_ && event_->GetEvent().uuid == event.GetEvent().uuid;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: EventPresenter::GetConsistencyError
 // Created: ABR 2014-06-05
@@ -499,6 +498,7 @@ void EventPresenter::BuildView()
     {
         EventPresenter_ABC& current = GetCurrentPresenter();
         current.BuildView();
+        state_->misengaged_ = current.IsMisengaged();
         state_->trigger_ = current.ShouldEnableTrigger();
         state_->clear_ = current.ShouldEnableClear();
     }
@@ -541,6 +541,7 @@ void EventPresenter::ChangeMode( E_EventDockModes mode,
     state_->warning_ = warning;
     state_->raise_ = raise;
     state_->trigger_ = false;
+    state_->misengaged_ = boost::none;
     state_->clear_ = false;
     state_->detail_ = detail;
     state_->bottomToolBar_ = event_ && event_->GetType() == eEventTypes_Order;

@@ -48,8 +48,10 @@ private:
 private:
     //! @name Member data
     //@{
+    gui::RichGroupBox* misengageBox_;
+    gui::RichLabel*    misengageLabel_;
     gui::RichGroupBox* warningBox_;
-    gui::RichLabel* warningLabel_;
+    gui::RichLabel*    warningLabel_;
 
     QAction* detailAction_;
     QAction* clearAction_;

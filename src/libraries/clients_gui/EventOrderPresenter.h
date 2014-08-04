@@ -92,6 +92,7 @@ public slots:
 private:
     //! @name EventSubPresenter_ABC implementation
     //@{
+    virtual boost::optional< bool > IsMisengaged() const;
     virtual bool ShouldEnableTrigger() const;
     virtual bool ShouldEnableClear() const;
 
