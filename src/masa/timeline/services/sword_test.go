@@ -14,9 +14,9 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 	"masa/timeline/swfake"
-	"masa/timeline/util"
 	"net/url"
 	"os"
 	"strconv"
@@ -71,7 +71,7 @@ func (f *Fixture) Close() {
 
 func (t *TestSuite) makeFixtureWith(c *C, f *Fixture) {
 	local := fmt.Sprintf("localhost:%v", t.port)
-	log := util.MakeGocheckLogger(c)
+	log := swtest.MakeGocheckLogger(c)
 	server, err := swfake.NewSwordServer(log, local, true, false)
 	c.Assert(err, IsNil)
 	f.server = server

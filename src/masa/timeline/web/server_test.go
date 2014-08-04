@@ -16,7 +16,6 @@ import (
 	"masa/sword/swtest"
 	"masa/timeline/i18n"
 	"masa/timeline/server"
-	"masa/timeline/util"
 	"os"
 	"testing"
 )
@@ -78,7 +77,7 @@ func (TestSuite) TestServerLoadTranslations(c *C) {
 	c.Assert(err, IsNil)
 	defer os.Remove(zipFile)
 
-	log := util.MakeGocheckLogger(c)
+	log := swtest.MakeGocheckLogger(c)
 	controller := server.MakeController(log)
 	serv, err := NewServer(log, false, 8081, zipFile, "", controller)
 	c.Assert(err, IsNil)

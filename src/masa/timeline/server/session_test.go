@@ -50,7 +50,7 @@ func (f *Fixture) Rewind() {
 
 func (t *TestSuite) MakeFixture(c *C) *Fixture {
 	local := fmt.Sprintf("localhost:%v", 1+t.port)
-	log := util.MakeGocheckLogger(c)
+	log := swtest.MakeGocheckLogger(c)
 	server, err := swfake.NewSwordServer(log, local, false, false)
 	c.Assert(err, IsNil)
 	session := NewSession(log, uuid.New(), "session_name")
