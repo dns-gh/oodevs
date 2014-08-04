@@ -2588,6 +2588,10 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Destroyed units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>100km</source>
         <translation type="unfinished"></translation>
     </message>

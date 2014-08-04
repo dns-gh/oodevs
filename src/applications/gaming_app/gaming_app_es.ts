@@ -2591,6 +2591,10 @@ Los datos no pueden ser proyectados.</translation>
         <translation>&amp;Configuración</translation>
     </message>
     <message>
+        <source>Destroyed units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>100km</source>
         <translation type="unfinished">100km</translation>
     </message>

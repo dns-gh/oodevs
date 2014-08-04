@@ -15,6 +15,8 @@
 #include "actions/ActionTiming.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Options.h"
+#include "gaming/Attributes.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
@@ -25,8 +27,9 @@ AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& to
     , selected_( controllers )
     , actionsModel_( actionsModel )
     , simulation_( simulation )
+    , displayDestroyedUnits_( true )
 {
-    // NOTHING
+    controllers_.options_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +38,7 @@ AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& to
 // -----------------------------------------------------------------------------
 AgentsLayer::~AgentsLayer()
 {
-    // NOTHING
+    controllers_.options_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,4 +86,30 @@ void AgentsLayer::RequestCreation( const geometry::Point2f& point, const kernel:
     if( !parent )
         return;
     actionsModel_.PublishAgentCreationAction( type, point, *parent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Draw
+// Created: SLI 2014-07-30
+// -----------------------------------------------------------------------------
+void AgentsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode )
+{
+    if( displayDestroyedUnits_ )
+        gui::AgentsLayer::Draw( entity, viewport, pickingMode );
+    else
+    {
+        const Attributes* attributes = entity.Retrieve< Attributes >();
+        if( attributes && !attributes->bDead_ )
+            gui::AgentsLayer::Draw( entity, viewport, pickingMode );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::OptionChanged
+// Created: SLI 2014-07-31
+// -----------------------------------------------------------------------------
+void AgentsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "DisplayDestroyedUnits" )
+        displayDestroyedUnits_ = value.To< bool >();
 }

@@ -31,6 +31,7 @@
 #include "gaming/Network.h"
 #include "gaming/Profile.h"
 #include "gaming/StaticModel.h"
+#include "gaming/statusicons.h"
 #include "tools/GeneralConfig.h"
 
 using namespace gui;
@@ -180,6 +181,12 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters", kernel::FourStateOption::Selected() );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState", kernel::FourStateOption::Selected() );
+    {
+        CompositeMenu< bool > composite( subMenu, toolBar, tools::translate( "Menu", "Destroyed units" ), MAKE_ICON( skull ), controllers.options_, "DisplayDestroyedUnits" );
+        composite.AddItem( tools::translate( "Menu", "On" ), true );
+        composite.AddItem( tools::translate( "Menu", "Off" ), false );
+        composite.menu_->OnSelected( 0 );
+    }
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
