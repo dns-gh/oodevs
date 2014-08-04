@@ -645,8 +645,11 @@ void ADN_Table::Sort( int column /* = 0 */, Qt::SortOrder order /* = Qt::Ascendi
 void ADN_Table::CheckValidity( int row, int col /* = -1 */ )
 {
     if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row, 0 ) ) ) // each column have the same parent data
-        if( ADN_Ref_ABC* parentData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
-            parentData->CheckValidity();
+    {
+        QObject* parentData = reinterpret_cast< QObject* >( item->GetData() );
+        if( ADN_Ref_ABC* parentRef = dynamic_cast< ADN_Ref_ABC* >( parentData ) )
+            parentRef->CheckValidity();
+    }
     if( col == -1 )
         for( col = 0; col < dataModel_.columnCount(); ++col )
             Warn( row, col );
