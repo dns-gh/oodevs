@@ -403,7 +403,7 @@ namespace
                 speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( entity ) );
             const DisasterAttribute* disaster = object.RetrieveAttribute< DisasterAttribute >();
             if( disaster )
-                speed = std::min( speed, disaster->ApplySpeedPolicy( entity, rAgentSpeedWithinObject ) );
+                speed = std::min( speed, disaster->ApplySpeedPolicy( entity, rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment ) );
         }
         return std::min( speed, rAgentSpeedWithinObject );
     }
