@@ -2592,6 +2592,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>&amp;Réglages</translation>
     </message>
     <message>
+        <source>Destroyed units</source>
+        <translation>Unités détruites</translation>
+    </message>
+    <message>
         <source>100km</source>
         <translation>100km</translation>
     </message>
