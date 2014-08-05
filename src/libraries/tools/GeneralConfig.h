@@ -12,17 +12,10 @@
 
 #include "CommandLineConfig_ABC.h"
 #include <tools/Path.h>
-#include <unordered_set>
 
 namespace tools
 {
     class Languages;
-    
-// Returns the set of features extracted from input string. Identifiers are
-// split on ';' and trimmed.
-std::unordered_set< std::string > SplitFeatures( const std::string& s );
-std::string JoinFeatures( const std::unordered_set< std::string >& features );
-const std::vector< std::string >& GetAvailableFeatures();
 
 // =============================================================================
 /** @class  GeneralConfig
@@ -78,8 +71,6 @@ public:
 
     const Languages& GetLanguages() const;
     const std::string& GetCommandLineLanguage() const;
-
-    bool IsActivated( const std::string& feature ) const;
     //@}
 
 protected:
@@ -106,7 +97,6 @@ private:
     std::string features_;
     std::unique_ptr< const Languages > languages_;
     std::string commandLineLanguage_;
-    std::unordered_set< std::string > devFeatures_;
     //@}
 };
 
