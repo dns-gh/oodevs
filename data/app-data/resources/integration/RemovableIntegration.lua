@@ -85,7 +85,7 @@ integration.canRemoveIt = function( object )
     if masalife.brain.core.class.isOfType( object, integration.ontology.types.object ) then
         return DEC_Agent_PeutDetruireObjet( object.source )
     elseif masalife.brain.core.class.isOfType( object, integration.ontology.types.urbanBlock ) then
-        return true -- decreasing the structural state of urban blocks don't require specific physical ability.
+        return true -- decreasing the structural state of urban blocks doesn't require specific physical ability.
     end
     return false
 end
