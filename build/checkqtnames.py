@@ -54,6 +54,7 @@ ignoredleaves = set([
     "QHBoxLayout",
     "QHeaderView",
     "QLabel",
+    "QLineControl",
     "QMenu",
     "QObject",
     "QProcess",
