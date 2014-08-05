@@ -524,6 +524,7 @@ void PathfindLayer::OnEditPathfind()
     selectedPathfind_.ConstCast()->SetVisible( false );
     sword::Pathfind pathfind;
     pathfind.mutable_request()->mutable_unit()->set_id( selectedPathfind_->GetUnit().GetId() );
+    pathfind.mutable_request()->set_name( selectedPathfind_->GetName() );
     *pathfind.mutable_result() = selectedPathfind_->GetPathfind();
     OpenEditingMode( selectedPathfind_.ConstCast(), pathfind );
 }
