@@ -138,6 +138,7 @@ private:
     bool HasValidPathfind() const;
     uint32_t GetUnitId() const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    void StopEdition() const;
 
 private:
     //! @name Member data

@@ -424,6 +424,15 @@ bool PathfindLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry
     return true;
 }
 
+namespace
+{
+    void Select( kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
+    {
+        entity.Select( controllers.actions_ );
+        entity.MultipleSelect( controllers.actions_, boost::assign::list_of( &entity ) );
+    }
+}
+
 void PathfindLayer::OpenEditingMode( kernel::Entity_ABC* entity,
                                      const sword::Pathfind& pathfind )
 {
@@ -432,8 +441,7 @@ void PathfindLayer::OpenEditingMode( kernel::Entity_ABC* entity,
     edited_.reset( new Pathfind( controllers_.controller_, actions_, converter_, *entity, pathfind, true, false ) );
     target_ = entity;
     controllers_.ChangeMode( eModes_Itinerary );
-    entity->Select( controllers_.actions_ );
-    entity->MultipleSelect( controllers_.actions_, boost::assign::list_of( entity ) );
+    ::Select( controllers_, *entity );
 }
 
 void PathfindLayer::OnOpenEditingMode()
@@ -488,6 +496,14 @@ void PathfindLayer::ProcessEvents()
     }
 }
 
+void PathfindLayer::StopEdition() const
+{
+    const kernel::SafePointer< kernel::Entity_ABC > selected( controllers_, selectedPathfind_ ? selectedPathfind_.ConstCast() : selectedEntity_.ConstCast() );
+    controllers_.ChangeMode( eModes_Gaming );
+    if( selected )
+        ::Select( controllers_, *selected );
+}
+
 void PathfindLayer::OnAcceptEdit()
 {
     if( selectedPathfind_ )
@@ -496,7 +512,7 @@ void PathfindLayer::OnAcceptEdit()
         actions_.PublishCreatePathfind( GetUnitId(), *target_, edited_->GetDots(), edited_->GetName().toStdString() );
     ClearPositions();
     edited_.reset();
-    controllers_.ChangeMode( eModes_Gaming );
+    StopEdition();
 }
 
 void PathfindLayer::OnRejectEdit()
@@ -505,7 +521,7 @@ void PathfindLayer::OnRejectEdit()
     if( selectedPathfind_ )
         selectedPathfind_.ConstCast()->SetVisible( true );
     edited_.reset();
-    controllers_.ChangeMode( eModes_Gaming );
+    StopEdition();
 }
 
 void PathfindLayer::OnDeletePathfind()
