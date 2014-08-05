@@ -173,6 +173,22 @@ void ADN_Connector_Vector_ABC::AddItemNoEmit( void* pObj )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Connector_Vector_ABC::AddItemsNoEmit
+// Created: SLI 2014-08-05
+// -----------------------------------------------------------------------------
+void ADN_Connector_Vector_ABC::AddItemsNoEmit( const std::vector< void* >& pObjs )
+{
+    if( ! SlotsBlocked() )
+    {
+        BlockSlots( true );
+        for( auto it = pObjs.begin(); it != pObjs.end(); ++it )
+            AddItemPrivate( *it );
+        AddItemPrivate( 0 );
+        BlockSlots( false );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Connector_Vector_ABC::AddItemPrivate
 // Created: AGN 2004-03-19
 // -----------------------------------------------------------------------------
