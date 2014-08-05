@@ -10,6 +10,8 @@
 #ifndef __ModelObserver_ABC_h_
 #define __ModelObserver_ABC_h_
 
+#include "clients_kernel/SafePointer.h"
+
 namespace kernel
 {
     class Automat_ABC;
@@ -39,7 +41,7 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void OnRename( kernel::Entity_ABC& entity, const QString& newName ) = 0;
+    virtual void OnRename( kernel::SafePointer< kernel::Entity_ABC > entity, const QString& newName ) = 0;
     virtual void CreateCommunication() = 0;
     virtual void CreateTeam() = 0;
     virtual void ClearSelection() = 0;

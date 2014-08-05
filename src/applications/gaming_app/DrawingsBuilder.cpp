@@ -62,17 +62,16 @@ DrawingsBuilder::~DrawingsBuilder()
     controllers_.Unregister( *this );
 }
 
-void DrawingsBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName )
+void DrawingsBuilder::OnRename( kernel::SafePointer< kernel::Entity_ABC > entity, const QString& newName )
 {
-    if( entity.GetTypeName() == kernel::Drawing_ABC::typeName_ )
-        if( Drawing* drawing = static_cast< Drawing* >( &entity ) )
-            drawing->Rename( newName );
-    if( entity.GetTypeName() == kernel::TacticalLine_ABC::typeName_ )
-        if( ::TacticalLine_ABC* line = static_cast< ::TacticalLine_ABC* >( &entity ) )
-            line->Rename( newName );
-    if( entity.GetTypeName() == kernel::Pathfind_ABC::typeName_ )
-        if( ::Pathfind* pathfind = static_cast< ::Pathfind* >( &entity ) )
-            pathfind->Rename( newName );
+    if( !entity )
+        return;
+    if( auto drawing = dynamic_cast< Drawing* >( &entity ) )
+        drawing->Rename( newName );
+    if( auto line = dynamic_cast< ::TacticalLine_ABC* >( &entity ) )
+        line->Rename( newName );
+    if( auto pathfind = dynamic_cast< ::Pathfind* >( &entity ) )
+        pathfind->Rename( newName );
 }
 
 void DrawingsBuilder::CreateCommunication()

@@ -513,8 +513,10 @@ namespace
 // Name: ModelBuilder::OnRename
 // Created: JSR 2012-08-31
 // -----------------------------------------------------------------------------
-void ModelBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName )
+void ModelBuilder::OnRename( kernel::SafePointer< kernel::Entity_ABC > entity, const QString& newName )
 {
+    if( !entity )
+        return;
     Rename< Team >( &entity, newName, controllers_, property_ );
     Rename< Agent >( &entity, newName, controllers_, property_ );
     Rename< Automat >( &entity, newName, controllers_, property_ );
