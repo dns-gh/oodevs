@@ -18,6 +18,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "tools/DevFeatures.h"
 
 using namespace gui;
 
@@ -121,7 +122,7 @@ bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item ) const
 {
     const auto index = item.index();
     if( drawingsItem_->index() == index || limitsItem_->index() == index ||
-        phaseLinesItem_->index() == index || itinerariesItem_->index() == index )
+        phaseLinesItem_->index() == index || ( itinerariesItem_->index() == index && tools::DevFeatures::Instance().HasFeature( "pathfind" ) ) )
         return true;
     if( const kernel::Entity_ABC* drawing = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
         if( drawing->GetTypeName() == kernel::Drawing_ABC::typeName_ )
