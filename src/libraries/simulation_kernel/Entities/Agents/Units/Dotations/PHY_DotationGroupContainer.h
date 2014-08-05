@@ -93,6 +93,7 @@ public:
     float  GetIlluminatingRange() const;
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
     double GetFuelDotationNumber() const;
+    double GetFuelDotationCapacity() const;
     //@}
 
     //! @name Accessors

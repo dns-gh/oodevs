@@ -34,6 +34,7 @@ MOCK_BASE_CLASS( MockRoleDotations, dotation::PHY_RoleInterface_Dotations )
     MOCK_METHOD( AddFireReservation, 2 );
     MOCK_METHOD( GetDotationNumber, 1 );
     MOCK_METHOD( GetFuelDotationNumber, 0 );
+    MOCK_METHOD( GetFuelDotationCapacity, 0 );
     MOCK_METHOD( GetIlluminationDotations, 2 );
     MOCK_METHOD( SetForbiddenDotation, 1 );
     MOCK_METHOD( RemoveForbiddenDotation, 1 );

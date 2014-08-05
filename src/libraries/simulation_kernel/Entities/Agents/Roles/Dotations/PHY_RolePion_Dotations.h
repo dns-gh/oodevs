@@ -111,6 +111,7 @@ public:
     virtual double AddFireReservation( const PHY_DotationCategory& category, double rNbr );
     virtual double GetDotationNumber( const PHY_DotationCategory& category ) const;
     virtual double GetFuelDotationNumber() const;
+    virtual double GetFuelDotationCapacity() const;
     virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
     virtual float GetIlluminatingRange( ) const;
     virtual void SetForbiddenDotation( const PHY_DotationCategory& category );
