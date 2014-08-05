@@ -71,7 +71,7 @@ public:
     bool Update( const DisasterAttribute& rhs );
     const std::vector< boost::shared_ptr< Extractor_ABC > >& GetExtractors() const;
     float GetDose( const MT_Vector2D& position ) const;
-    double ApplySpeedPolicy( const MIL_Entity_ABC& entity, double speed ) const;
+    double ApplySpeedPolicy( const MIL_Entity_ABC& entity, double speedWithinObject, double speedWithinEnvironment ) const;
     DisasterAttribute& operator=( const DisasterAttribute& ); //!< Assignment operator
     void OnUpdate( const sword::MissionParameter_Value& /*attribute*/ );
     //@}

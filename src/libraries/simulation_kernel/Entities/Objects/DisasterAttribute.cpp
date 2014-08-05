@@ -206,15 +206,15 @@ float DisasterAttribute::GetDose( const MT_Vector2D& position ) const
 // Name: DisasterAttribute::ApplySpeedPolicy
 // Created: JSR 2014-05-14
 // -----------------------------------------------------------------------------
-double DisasterAttribute::ApplySpeedPolicy( const MIL_Entity_ABC& entity, double speed ) const
+double DisasterAttribute::ApplySpeedPolicy( const MIL_Entity_ABC& entity, double speedWithinObject, double speedWithinEnvironment ) const
 {
     const PHY_RoleInterface_Location* location = entity.RetrieveRole< PHY_RoleInterface_Location >();
     if( !location )
-        return speed;
+        return std::min( speedWithinObject, speedWithinEnvironment );
     const double dose = GetDose( location->GetPosition() );
     DisasterImpactComputer computer( dose );
     const_cast< MIL_Entity_ABC& >( entity ).Execute< OnComponentComputer_ABC >( computer );
-    return speed * std::max( 0.1, computer.GetModifier() ); // limit modifier to 0.1 to avoid unit to be permanently blocked
+    return std::min( speedWithinEnvironment, speedWithinObject * std::max( 0.1, computer.GetModifier() ) ); // limit modifier to 0.1 to avoid unit to be permanently blocked
 }
 
 // -----------------------------------------------------------------------------
