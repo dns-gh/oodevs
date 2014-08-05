@@ -43,3 +43,9 @@ ItineraryEditionDockWidget::~ItineraryEditionDockWidget()
 {
     // NOTHING
 }
+
+void ItineraryEditionDockWidget::showEvent( QShowEvent* event )
+{
+    gui::RichDockWidget::showEvent( event );
+    raise();
+}

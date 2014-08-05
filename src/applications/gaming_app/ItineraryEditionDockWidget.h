@@ -43,6 +43,9 @@ signals:
     void ItineraryAccepted();
     void ItineraryRejected();
     //@}
+
+private:
+    virtual void showEvent( QShowEvent* event );
 };
 
 #endif // __ItineraryEditionDockWidget_h_
