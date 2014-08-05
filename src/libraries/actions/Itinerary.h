@@ -10,7 +10,8 @@
 #ifndef __ActionParameterItinerary_h_
 #define __ActionParameterItinerary_h_
 
-#include "Parameter.h"
+#include "Entity.h"
+#include "clients_kernel/Pathfind_ABC.h"
 
 namespace sword
 {
@@ -20,6 +21,7 @@ namespace sword
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class EntityResolver_ABC;
 }
 
 namespace actions
@@ -32,16 +34,19 @@ namespace actions
     @brief  Itinerary
 */
 // =============================================================================
-class Itinerary : public Parameter< QString >
+class Itinerary : public Entity< kernel::Pathfind_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              Itinerary( const kernel::OrderParameter& parameter,
-                        const kernel::CoordinateConverter_ABC& converter );
+                        const kernel::CoordinateConverter_ABC& converter,
+                        kernel::Controller& controller );
              Itinerary( const kernel::OrderParameter& parameter,
                         const kernel::CoordinateConverter_ABC& converter,
-                        const sword::Pathfind& parameters );
+                        const sword::Pathfind& pathfind,
+                        const kernel::EntityResolver_ABC& resolver,
+                        kernel::Controller& controller );
     virtual ~Itinerary();
     //@}
 
@@ -50,6 +55,7 @@ public:
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual std::string SerializeType() const;
     virtual bool IsSet() const;
     //@}

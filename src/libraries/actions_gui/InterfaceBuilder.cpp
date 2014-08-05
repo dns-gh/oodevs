@@ -27,6 +27,7 @@
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
 #include "ParamInhabitant.h"
+#include "ParamItinerary.h"
 #include "ParamLocation.h"
 #include "ParamLocation_ABC.h"
 #include "ParamLocationComposite.h"
@@ -99,6 +100,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
     AddFunctor< actions::gui::ParamRectangle >          ( "rectangle" );
     AddFunctor< actions::gui::ParamLocation >           ( "location" );
     AddFunctor< actions::gui::ParamLocationComposite >  ( "locationcomposite" );
+    AddFunctor< actions::gui::ParamItinerary >          ( "itinerary" );
     // Entities
     AddFunctor< actions::gui::ParamAgent >              ( "agent" );
     AddFunctor< actions::gui::ParamAutomat >            ( "automat" );

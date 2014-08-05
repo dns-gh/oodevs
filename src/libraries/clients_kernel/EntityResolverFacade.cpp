@@ -203,6 +203,11 @@ UrbanObject_ABC& EntityResolverFacade::GetUrbanObject( unsigned int id ) const
     return model_.GetUrbanObjectResolver().Get( id );
 }
 
+kernel::Pathfind_ABC* EntityResolverFacade::FindPathfind( unsigned int id ) const
+{
+    return model_.GetPathfindResolver().Find( id );
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindEntity
 // Created: JSR 2013-01-31
