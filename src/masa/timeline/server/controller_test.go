@@ -10,6 +10,7 @@ package server
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"masa/timeline/util"
 	"net/http"
 	"os"
@@ -71,7 +72,7 @@ func stopSession(c *Controller, uuid string) int {
 
 func (TestSuite) TestCrudSession(c *C) {
 	uuid := "3E6DCB9A-222A-4606-A0FB-D5C8A28C9DBB"
-	ctl := MakeController(util.MakeGocheckLogger(c))
+	ctl := MakeController(swtest.MakeGocheckLogger(c))
 	c.Assert(ctl.ListSessions(), HasLen, 0)
 	err := addSession(ctl, NilUuid, "buzz")
 	c.Assert(err, Equals, StatusOk)
@@ -95,7 +96,7 @@ func (TestSuite) TestCrudSession(c *C) {
 
 func (TestSuite) TestSessionStart(c *C) {
 	uuid := "3E6DCB9A-222A-4606-A0FB-D5C8A28C9DBB"
-	ctl := MakeController(util.MakeGocheckLogger(c))
+	ctl := MakeController(swtest.MakeGocheckLogger(c))
 	addSession(ctl, uuid, "buzz")
 	err := attachTimer(ctl, uuid, "2006-01-02T15:04:05+07:00")
 	c.Assert(err, Equals, StatusOk)
