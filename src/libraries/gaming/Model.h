@@ -118,6 +118,7 @@ public:
     virtual tools::Resolver_ABC< kernel::Population_ABC     >& GetPopulationResolver() const;
     virtual tools::Resolver_ABC< kernel::Inhabitant_ABC     >& GetInhabitantResolver() const;
     virtual tools::Resolver_ABC< kernel::UrbanObject_ABC    >& GetUrbanObjectResolver() const;
+    virtual tools::Resolver_ABC< kernel::Pathfind_ABC       >& GetPathfindResolver() const;
     //@}
 
     //! @name Operations
@@ -136,7 +137,7 @@ public:
     const StaticModel& static_;
     const tools::ExerciseConfig& config_;
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
-    ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
+    ObjectKnowledgeFactory& objectKnowledgeFactory_;
     UrbanKnowledgeFactory& urbanKnowledgeFactory_;
     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;

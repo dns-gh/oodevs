@@ -216,6 +216,11 @@ tools::Resolver_ABC< kernel::UrbanObject_ABC >& Model::GetUrbanObjectResolver() 
     return urbanObjects_;
 }
 
+tools::Resolver_ABC< kernel::Pathfind_ABC >& Model::GetPathfindResolver() const
+{
+    return pathfinds_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Model destructor
 // Created: AGE 2006-02-15

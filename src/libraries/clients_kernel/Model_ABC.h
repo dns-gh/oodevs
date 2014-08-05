@@ -25,6 +25,7 @@ namespace kernel
     class Population_ABC;
     class Inhabitant_ABC;
     class UrbanObject_ABC;
+    class Pathfind_ABC;
 
 // =============================================================================
 /** @class  Model_ABC
@@ -53,6 +54,7 @@ public:
     virtual tools::Resolver_ABC< Population_ABC     >& GetPopulationResolver() const = 0;
     virtual tools::Resolver_ABC< Inhabitant_ABC     >& GetInhabitantResolver() const = 0;
     virtual tools::Resolver_ABC< UrbanObject_ABC    >& GetUrbanObjectResolver() const = 0;
+    virtual tools::Resolver_ABC< Pathfind_ABC       >& GetPathfindResolver() const = 0;
     //@}
 };
 

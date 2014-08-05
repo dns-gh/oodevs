@@ -32,6 +32,7 @@ namespace parameters
     class FireClass;
     class Identifier;
     class Inhabitant;
+    class Itinerary;
     class KnowledgeGroup;
     class Lima;
     class Limit;
@@ -106,6 +107,7 @@ public:
     virtual void Visit( const parameters::FireClass&             ) {}
     virtual void Visit( const parameters::Identifier&            ) {}
     virtual void Visit( const parameters::Inhabitant&            ) {}
+    virtual void Visit( const parameters::Itinerary&             ) {}
     virtual void Visit( const parameters::KnowledgeGroup&        ) {}
     virtual void Visit( const parameters::Lima&                  ) {}
     virtual void Visit( const parameters::Limit&                 ) {}
