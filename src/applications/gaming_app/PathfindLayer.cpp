@@ -29,6 +29,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
@@ -263,6 +264,14 @@ void PathfindLayer::Select( const kernel::Population_ABC& element )
 {
     if( controllers_.GetCurrentMode() != eModes_Itinerary )
         target_ = selectedEntity_ = &element;
+}
+
+void PathfindLayer::Select( const kernel::TacticalLine_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        if( auto hierarchies = element.Retrieve< kernel::TacticalHierarchies >() )
+            if( auto automat = hierarchies->GetSuperior() )
+                selectedEntity_ = automat;
 }
 
 // -----------------------------------------------------------------------------

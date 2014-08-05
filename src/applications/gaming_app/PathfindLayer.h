@@ -36,6 +36,7 @@ namespace kernel
     class Entity_ABC;
     class ModelUnLoaded;
     class Population_ABC;
+    class TacticalLine_ABC;
 }
 
 namespace gui
@@ -60,6 +61,7 @@ class PathfindLayer : public gui::EntityLayer< kernel::Pathfind_ABC >
                     , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                     , public tools::SelectionObserver_Base< kernel::Population_ABC >
                     , public tools::SelectionObserver_Base< kernel::Pathfind_ABC >
+                    , public tools::SelectionObserver_Base< kernel::TacticalLine_ABC >
                     , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                     , public kernel::ContextMenuObserver_ABC< kernel::Pathfind_ABC >
                     , public kernel::OptionsObserver_ABC
@@ -106,6 +108,7 @@ private:
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
     virtual void Select( const kernel::Pathfind_ABC& element );
+    virtual void Select( const kernel::TacticalLine_ABC& element );
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
