@@ -92,7 +92,7 @@ private:
     //@{
     kernel::Controllers&              controllers_;
     actions::ActionsModel&            actions_;
-    const GamingConfig&                config_;
+    const GamingConfig&               config_;
     const actions::ActionsFilter_ABC* filter_;
     QMessageBox*                      confirmation_;
     bool                              initialized_;

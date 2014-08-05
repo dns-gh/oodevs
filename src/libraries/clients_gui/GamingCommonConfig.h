@@ -20,11 +20,6 @@ namespace boost
     }
 }
 
-namespace tools
-{
-    class RealFileLoaderObserver_ABC;
-}
-
 namespace gui
 {
 

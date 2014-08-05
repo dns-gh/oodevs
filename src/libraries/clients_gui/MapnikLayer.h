@@ -54,7 +54,7 @@ private:
     kernel::Controller& controller_;
     boost::scoped_ptr< graphics::MapnikLayer > layer_;
     tools::Path terrain_;
-    uint32_t threads_;
+    const uint32_t threads_;
 };
 
 }
