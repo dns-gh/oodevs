@@ -17,6 +17,7 @@
 #include "DEC_Decision_ABC.h"
 #include "DEC_Objective.h"
 #include "Brain.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -25,6 +26,7 @@
 #include "Entities/Agents/Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/TerrainHeuristicCapacity.h"
@@ -1266,6 +1268,25 @@ bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
         }
         if( ( *it )->GetLocalisation().IsInside( point ) )
             return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::IsPointInObject
+// Created: GGE 2013-01-29
+// -----------------------------------------------------------------------------
+bool DEC_GeometryFunctions::IsPointInObject( DEC_Decision_ABC& callerAgent, const MT_Vector2D& point, const std::string& capacity, int isFriend )
+{ 
+    TER_Object_ABC::T_ObjectVector objectsColliding;
+    TER_World::GetWorld().GetObjectManager().GetListAt( point, objectsColliding );
+    for( auto itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
+    {
+        const MIL_Object_ABC& object =  static_cast< MIL_Object_ABC& >( **itObject );
+        const MIL_ObjectType_ABC& type = object.GetType();
+        const MIL_Army_ABC* army = object.GetArmy();
+        if( CapacityRetriever::RetrieveCapacity( type, capacity ) != 0 && army && army->IsAnEnemy( callerAgent.GetPion().GetArmy() ) == isFriend )
+             return true;
     }
     return false;
 }
