@@ -53,6 +53,7 @@ public:
     void OnReceivePathfindUpdate     ( const sword::MagicAction& message );
     void OnReceivePathfindDestruction( const sword::MagicAction& message, sword::MagicActionAck& ack );
     void OnPathfindRequest           ( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId );
+    void DeletePathfindsFromUnit     ( uint32_t unitId );
 
     //! @name Serialization
     //@{

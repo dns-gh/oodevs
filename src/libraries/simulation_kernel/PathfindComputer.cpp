@@ -310,3 +310,13 @@ void PathfindComputer::OnReceivePathfindDestruction( const sword::MagicAction& m
     ack.set_error_code( sword::MagicActionAck::error_invalid_parameter );
     ack.set_error_msg( "invalid pathfind identifier" );
 }
+
+void PathfindComputer::DeletePathfindsFromUnit( uint32_t id )
+{
+    std::vector< uint32_t > todo;
+    for( auto it = results_.begin(); it != results_.end(); ++it )
+        if( it->second->GetUnitId() == id )
+            todo.push_back( it->first );
+    for( auto it = todo.begin(); it != todo.end(); ++it )
+        Destroy( *it );
+}

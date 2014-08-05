@@ -139,6 +139,11 @@ bool PathRequest::Update( const sword::Pathfind& pathfind )
     return true;
 }
 
+uint32_t PathRequest::GetUnitId() const
+{
+    return request_.unit().id();
+}
+
 template< typename Archive >
 void PathRequest::load( Archive& ar, const unsigned int /*version*/ )
 {

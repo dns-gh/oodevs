@@ -315,3 +315,24 @@ func (s *TestSuite) TestPathfindName(c *C) {
 		return data.Pathfinds[pathfind.Id].Name == "newName"
 	})
 }
+
+func (s *TestSuite) TestPathfindDieWithItsUnit(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	automat := createAutomat(c, client)
+	positions := []swapi.Point{
+		{X: -15.9248, Y: 28.2645},
+		{X: -15.9216, Y: 28.2718},
+		{X: -15.9150, Y: 28.2659},
+	}
+	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])
+	c.Assert(err, IsNil)
+	pathfind, err := client.CreatePathfindTest(unit.Id, "johndoe", true, positions...)
+	c.Assert(err, IsNil)
+	err = client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		_, ok := data.Pathfinds[pathfind.Id]
+		return !ok
+	})
+}

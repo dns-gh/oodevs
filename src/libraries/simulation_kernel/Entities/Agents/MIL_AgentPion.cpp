@@ -55,6 +55,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "PathfindComputer.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessageParameters.h"
 #include "Roles/Communications/PHY_RolePion_Communications.h"
@@ -894,7 +895,9 @@ void MIL_AgentPion::DeleteUnit( unsigned int nCtx, unsigned int clientId )
 
     markedForDestruction_ = true;
 
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CleanDeletedAgentKnowledges();
+    const auto& workspace = MIL_AgentServer::GetWorkspace();
+    workspace.GetEntityManager().CleanDeletedAgentKnowledges();
+    workspace.GetPathfindComputer().DeletePathfindsFromUnit( GetID() );
 
     client::UnitDestruction msg;
     msg().mutable_unit()->set_id( GetID() );
