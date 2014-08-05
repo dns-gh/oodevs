@@ -160,26 +160,6 @@ void MIL_ObjectInteraction::UpdateAgents( MIL_Object_ABC& object, const TER_Loca
     boost::set_difference( inside, agents, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutInsideObject, _1, boost::ref( object ) ) ), Comparator() );
 }
 
-namespace
-{
-    template< typename P >
-    void GetConcentrations( const TER_Localisation& location, P& populations, double precision )
-    {
-        TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
-        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( location, concentrations, precision );
-        for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
-            populations.insert( static_cast< MIL_PopulationConcentration* >( *it ) );
-    }
-    template< typename P >
-    void GetFlows( const TER_Localisation& location, P& populations, double precision )
-    {
-        TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
-        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( location, flows, precision );
-        for( auto it = flows.begin(); it != flows.end(); ++it )
-            populations.insert( static_cast< MIL_PopulationFlow* >( *it ) );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction::UpdatePopulations
 // Created: MCO 2013-02-13
@@ -187,8 +167,14 @@ namespace
 void MIL_ObjectInteraction::UpdatePopulations( const TER_Localisation& location, double precision )
 {
     T_Populations populations;
-    GetConcentrations( location, populations, precision );
-    GetFlows( location, populations, precision );
+    TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( location, concentrations, precision );
+    for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
+        populations.insert( static_cast< MIL_PopulationConcentration* >( *it ) );
+    TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( location, flows, precision );
+    for( auto it = flows.begin(); it != flows.end(); ++it )
+        populations.insert( static_cast< MIL_PopulationFlow* >( *it ) );
     populations.swap( populationsInside_ );
 }
 
