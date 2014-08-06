@@ -9,15 +9,62 @@
 
 #include "tools_pch.h"
 #include "GeneralConfig.h"
-#include "DevFeatures.h"
 #include "Languages.h"
 #pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
+#include <boost/assign.hpp>
 #pragma warning( pop )
 
 using namespace tools;
 namespace po = boost::program_options;
 
+namespace
+{
+    std::unordered_set< std::string > devFeatures_;
+}
+
+std::unordered_set< std::string > tools::SplitFeatures( const std::string& s )
+{
+    std::vector< std::string > features;
+    boost::algorithm::split( features, s, boost::algorithm::is_any_of( ";" ) );
+    std::unordered_set< std::string > featuresSet;
+    for( auto it = features.begin(); it != features.end(); ++it )
+    {
+        auto f = *it;
+        boost::algorithm::trim( f );
+        if( !f.empty() )
+            featuresSet.insert( f ); 
+    }
+    return featuresSet;
+}
+
+std::string tools::JoinFeatures( const std::unordered_set< std::string >& features )
+{
+    std::vector< std::string > sorted;
+    for( auto it = features.begin(); it != features.end(); ++it )
+    {
+        auto f = *it;
+        boost::algorithm::trim( f );
+        if( !f.empty() )
+            sorted.push_back( f );
+    }
+    std::sort( sorted.begin(), sorted.end() );
+    return boost::algorithm::join( sorted, ";" );
+}
+
+const std::vector< std::string >& tools::GetAvailableFeatures()
+{
+    // Fill this with experimental feature switches
+    static const std::vector< std::string > features =
+        boost::assign::list_of< std::string >( "pathfind" );
+    return features;
+}
+
+bool tools::HasFeature( const std::string& feature )
+{
+    return devFeatures_.count( feature ) > 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig constructor
@@ -62,7 +109,7 @@ void GeneralConfig::Parse( int argc, char** argv )
     ResolveRelativePath( rootDir_, modelsDir_ );
     ResolveRelativePath( rootDir_, exercisesDir_ );
     ResolveRelativePath( rootDir_, populationDir_ );
-    DevFeatures::Instance().Initialize( features_ );
+    devFeatures_ = SplitFeatures( features_ );
 }
 
 // -----------------------------------------------------------------------------

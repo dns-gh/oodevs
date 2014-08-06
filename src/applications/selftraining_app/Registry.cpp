@@ -9,7 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "Registry.h"
-#include "tools/DevFeatures.h"
+#include "tools/GeneralConfig.h"
 #include <tools/Path.h>
 #include <QSettings>
 

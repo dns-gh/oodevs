@@ -122,7 +122,6 @@
 #include "clients_gui/UrbanLayer.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_kernel/Workers.h"
-#include "tools/DevFeatures.h"
 #include "geodata/ProjectionException.h"
 #include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
@@ -388,7 +387,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     forward_->Register( elevation3d );
     forward_->Register( weather );
 
-    if( tools::DevFeatures::Instance().HasFeature( "pathfind" ) )
+    if( tools::HasFeature( "pathfind" ) )
     {
         gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.publisher_, staticModel_.coordinateConverter_,
                                                         model_.agents_, model_.agents_, *drawingsBuilder_, model_.actions_ );

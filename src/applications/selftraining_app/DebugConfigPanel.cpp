@@ -19,7 +19,6 @@
 
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
-#include "tools/DevFeatures.h"
 
 #include <QScrollArea>
 
