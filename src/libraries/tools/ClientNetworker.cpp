@@ -13,7 +13,7 @@
 #include "Connector.h"
 #include "BufferedMessageCallback.h"
 #include "ObjectMessageService.h"
-#include "WaitEvent.h"
+#include <tools/WaitEvent.h>
 #include <boost/bind.hpp>
 #include "asio.h"
 

@@ -12,7 +12,7 @@
 
 #include "IpcHandler_ABC.h"
 #include "IpcQueue.h"
-#include "WaitEvent.h"
+#include <tools/WaitEvent.h>
 
 namespace tools
 {

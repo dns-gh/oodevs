@@ -13,7 +13,7 @@
 #include "ObjectMessageService.h"
 #include "SocketManager.h"
 #include "Acceptor.h"
-#include "WaitEvent.h"
+#include <tools/WaitEvent.h>
 #include "asio.h"
 
 using namespace tools;
