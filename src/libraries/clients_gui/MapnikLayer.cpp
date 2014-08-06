@@ -14,7 +14,6 @@
 #include "tools/ExerciseConfig.h"
 #include "MT_Tools/MT_Logger.h"
 #include <graphics/MapnikLayer.h>
-#include <extractor/MapnikUtils.h>
 
 using namespace gui;
 
@@ -48,10 +47,8 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
         return;
     if( !layer_ )
     {
-        const auto levels = extractor::GetMapnikLevels();
-        extractor::BuildMapnikData( terrain_, true, 0 );
         MT_LOG_INFO_MSG( "mapnik-threads: " << threads_ );
-        layer_.reset( new graphics::MapnikLayer( 0, levels, terrain_,
+        layer_.reset( new graphics::MapnikLayer( 0, terrain_,
                     "resources/mapnik.xml", threads_ ) );
     }
     layer_->Paint( viewport, GetAlpha() );
