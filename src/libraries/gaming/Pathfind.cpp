@@ -407,6 +407,7 @@ void Pathfind::DoUpdate( const sword::Pathfind& msg )
 
 void Pathfind::Rename( const QString& name )
 {
+    EntityImplementation< Pathfind_ABC >::Rename( name );
     auto pathfind = pathfind_;
     pathfind.mutable_request()->set_name( name.toStdString() );
     actionsModel_.PublishUpdatePathfind( pathfind );
