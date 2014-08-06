@@ -313,10 +313,10 @@ void PathfindComputer::OnReceivePathfindDestruction( const sword::MagicAction& m
 
 void PathfindComputer::DeletePathfindsFromUnit( uint32_t id )
 {
-    std::vector< uint32_t > todo;
+    std::vector< uint32_t > deletions;
     for( auto it = results_.begin(); it != results_.end(); ++it )
         if( it->second->GetUnitId() == id )
-            todo.push_back( it->first );
-    for( auto it = todo.begin(); it != todo.end(); ++it )
+            deletions.push_back( it->first );
+    for( auto it = deletions.begin(); it != deletions.end(); ++it )
         Destroy( *it );
 }
