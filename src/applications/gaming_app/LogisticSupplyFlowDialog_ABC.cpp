@@ -313,6 +313,8 @@ void LogisticSupplyFlowDialog_ABC::AddCarryingEquipment( const Entity_ABC& entit
 {
     if( auto agent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
     {
+        if( !agent->Retrieve< SupplyStates >() )
+            return;
         auto equipments = static_cast< const Equipments* >( entity.Retrieve< Equipments_ABC >() );
         if( !equipments || !profile_.CanBeOrdered( *agent ) )
             return;
@@ -327,7 +329,7 @@ void LogisticSupplyFlowDialog_ABC::AddCarryingEquipment( const Entity_ABC& entit
                 while( it.HasMoreElements() )
                 {
                     const Equipment& equipment = it.NextElement();
-                    if( equipment.type_.GetId() == id )
+                    if( equipment.type_.GetLogSupplyFunctionCarrying() != 0 && equipment.type_.GetId() == id )
                     {
                         carriersTypes_[ equipment.GetName() ] += equipment.available_;
                         carriersTypeNames_[ equipment.GetName() ] = &equipment.type_;
