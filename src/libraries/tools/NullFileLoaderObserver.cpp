@@ -50,7 +50,7 @@ bool NullFileLoaderObserver::NotifyInvalidXml( const Path& fileName, const xml::
 // -----------------------------------------------------------------------------
 void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const Path& fileName )
 {
-    MT_LOG_ERROR_MSG( "Xml file " << fileName << " doesn't have any schema " );
+    MT_LOG_WARNING_MSG( "Xml file " << fileName << " doesn't have any schema " );
 }
 
 // -----------------------------------------------------------------------------

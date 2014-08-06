@@ -310,5 +310,5 @@ void ClientsNetworker::OnNewTick()
         if( ! it->second->HasAnsweredSinceLastTick() )
             errors.push_back( it->first );
     for( auto it = errors.begin(); it != errors.end(); ++it )
-        MT_LOG_ERROR_MSG( "Client hasn't answered messages from last tick! Client should be checked or disconnected: " << *it );
+        MT_LOG_WARNING_MSG( "Client hasn't answered messages from last tick! Client should be checked or disconnected: " << *it );
 }

@@ -114,17 +114,11 @@ func makePattern(patterns ...string) string {
 }
 
 var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
-	// Many log files have no schemas. This can be fixed but is certainly not a
-	// fatal error.
-	`doesn't have any schema`,
 	// Probably happens when the dispatcher waits for the simulation, attempts
 	// should not be logged as fatal errors, only when the time out is reached.
 	`<Dispatcher> <functERR> exception caught: Not connected to`,
 	// Invalid coordinates may be a problem but not a functERR
 	`Exception caught in TER_CoordinateManager::MosToSimMgrsCoord.*out of valid range`,
-	// Happens if client is a bit slow and simulation wants to disconnect it,
-	// not a fatal error...
-	`Client hasn't answered messages from last tick!`,
 ))
 
 var reError *regexp.Regexp = regexp.MustCompile(makePattern(
