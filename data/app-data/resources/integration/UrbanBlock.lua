@@ -230,6 +230,13 @@ integration.getUrbanBlockBarycenter = function( urbanBlock )
     return DEC_ConnaissanceUrbanBlock_Barycentre( urbanBlock )
 end
 
+--- Returns a list of all urban blocks which are inside or intersect the provided area
+-- @param area Simulation area
+-- @return List of urban block knowledges
+integration.getUrbanBlockInsideOrIntersectArea = function( area )
+    return DEC_Connaissances_BlocUrbainDansOuIntersectentZone( area )
+end
+
 ------------------------------------------------------------------
 -- CROWD METHODS ON URBAN BLOCK
 ------------------------------------------------------------------

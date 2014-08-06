@@ -92,6 +92,7 @@ public:
     static DEC_Objective* GetNextObjectiveInFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pRefPoint, const std::vector< DEC_Objective* >& objectives );
     static boost::shared_ptr< TER_Localisation > ComputeAreaInZone( const MIL_Fuseau* zone, const MT_Vector2D* center );
     static double ComputeAreaSize( TER_Localisation* pLocalisation );
+    static double ComputeIntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 );
     static boost::shared_ptr< MT_Vector2D > GetLeavingAreaPosition( const MIL_AgentPion& caller, TER_Localisation* pLocalisation );
     static boost::shared_ptr< MT_Vector2D > ComputeNearestBorder( const MT_Vector2D* position, TER_Localisation* pLocalisation );
     static double ComputeAreaDiameter( TER_Localisation* pLocalisation );

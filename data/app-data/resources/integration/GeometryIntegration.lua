@@ -368,6 +368,21 @@ integration.getTerrainData = function( point )
     return DEC_Geometrie_GetTerrainData( point )
 end
 
+--- Returns the surface of the provided area
+-- @param area Simulation area
+-- @return Double, the surface of the area in meter²
+integration.getAreaSize = function( area )
+    return DEC_Geometrie_AreaSize( area )
+end
+
+--- Returns the surface of the intersection of the two provided area
+-- @param area1 Simulation area
+-- @param area2 Simulation area
+-- @return Double, the surface of the area in meter²
+integration.getIntersectionSize = function( area1, area2 )
+    return DEC_Geometrie_IntersectionSize( area1, area2 )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
