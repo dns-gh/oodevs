@@ -15,6 +15,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/OptionVariant.h"
@@ -156,6 +157,11 @@ void LimitsLayer::Select( const kernel::Automat_ABC& element )
 // Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
 void LimitsLayer::Select( const kernel::Formation_ABC& element )
+{
+    selectedEntity_ = &element;
+}
+
+void LimitsLayer::Select( const kernel::Pathfind_ABC& element )
 {
     selectedEntity_ = &element;
 }

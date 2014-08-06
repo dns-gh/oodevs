@@ -27,6 +27,7 @@ class LimitsLayer : public gui::TacticalLinesLayer
                   , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Pathfind_ABC >
                   , public tools::SelectionObserver_Base< kernel::TacticalLine_ABC >
 {
 public:
@@ -51,6 +52,7 @@ private:
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
+    virtual void Select( const kernel::Pathfind_ABC& element );
     virtual void Select( const kernel::TacticalLine_ABC& element );
     virtual void AfterSelection();
     //@}

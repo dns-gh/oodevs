@@ -29,6 +29,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
@@ -265,6 +266,14 @@ void PathfindLayer::Select( const kernel::Population_ABC& element )
         target_ = selectedEntity_ = &element;
 }
 
+void PathfindLayer::Select( const kernel::TacticalLine_ABC& element )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        if( auto hierarchies = element.Retrieve< kernel::TacticalHierarchies >() )
+            if( auto automat = hierarchies->GetSuperior() )
+                selectedEntity_ = automat;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer::AfterSelection
 // Created: LGY 2014-02-28
@@ -424,6 +433,15 @@ bool PathfindLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry
     return true;
 }
 
+namespace
+{
+    void Select( kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
+    {
+        entity.Select( controllers.actions_ );
+        entity.MultipleSelect( controllers.actions_, boost::assign::list_of( &entity ) );
+    }
+}
+
 void PathfindLayer::OpenEditingMode( kernel::Entity_ABC* entity,
                                      const sword::Pathfind& pathfind )
 {
@@ -432,8 +450,7 @@ void PathfindLayer::OpenEditingMode( kernel::Entity_ABC* entity,
     edited_.reset( new Pathfind( controllers_.controller_, actions_, converter_, *entity, pathfind, true, false ) );
     target_ = entity;
     controllers_.ChangeMode( eModes_Itinerary );
-    entity->Select( controllers_.actions_ );
-    entity->MultipleSelect( controllers_.actions_, boost::assign::list_of( entity ) );
+    ::Select( controllers_, *entity );
 }
 
 void PathfindLayer::OnOpenEditingMode()
@@ -488,6 +505,14 @@ void PathfindLayer::ProcessEvents()
     }
 }
 
+void PathfindLayer::StopEdition() const
+{
+    const kernel::SafePointer< kernel::Entity_ABC > selected( controllers_, selectedPathfind_ ? selectedPathfind_.ConstCast() : selectedEntity_.ConstCast() );
+    controllers_.ChangeMode( eModes_Gaming );
+    if( selected )
+        ::Select( controllers_, *selected );
+}
+
 void PathfindLayer::OnAcceptEdit()
 {
     if( selectedPathfind_ )
@@ -496,7 +521,7 @@ void PathfindLayer::OnAcceptEdit()
         actions_.PublishCreatePathfind( GetUnitId(), *target_, edited_->GetDots(), edited_->GetName().toStdString() );
     ClearPositions();
     edited_.reset();
-    controllers_.ChangeMode( eModes_Gaming );
+    StopEdition();
 }
 
 void PathfindLayer::OnRejectEdit()
@@ -505,7 +530,7 @@ void PathfindLayer::OnRejectEdit()
     if( selectedPathfind_ )
         selectedPathfind_.ConstCast()->SetVisible( true );
     edited_.reset();
-    controllers_.ChangeMode( eModes_Gaming );
+    StopEdition();
 }
 
 void PathfindLayer::OnDeletePathfind()
@@ -566,8 +591,10 @@ bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
             return true;
     if( !filter_.IsSet( true, true, true ) )
         return false;
-    const auto& element = static_cast< const kernel::Pathfind_ABC& >( entity ).GetUnit();
-    const bool selected = selectedEntity_ && IsSuperior( &element, *selectedEntity_ );
+    const auto& pathfind = static_cast< const kernel::Pathfind_ABC& >( entity );
+    const auto& element = pathfind.GetUnit();
+    const bool selected = selectedEntity_ && IsSuperior( &element, *selectedEntity_ ) ||
+                          selectedPathfind_ == &pathfind;
     const bool superior = IsSuperior( selectedEntity_, element );
     if( !filter_.IsSet( selected, superior, profile_.CanBeOrdered( element ) ) )
         return false;
