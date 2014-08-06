@@ -314,6 +314,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_DecouperLocalisation", boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisation, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_ClipperLocalisation", &DEC_GeometryFunctions::ClipLocalisation );
     brain.RegisterFunction( "DEC_IsPointInCity", &DEC_GeometryFunctions::IsPointInCity );
+    brain.RegisterFunction( "DEC_IsPointInObject", &DEC_GeometryFunctions::IsPointInObject );
     brain.RegisterFunction( "DEC_Geometrie_ComputeNearestBorder", &DEC_GeometryFunctions::ComputeNearestBorder );
     brain.RegisterFunction( "DEC_Geometrie_CalculerTrafficablePointPourPoint",
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) ) );

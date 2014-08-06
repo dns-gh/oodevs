@@ -23,6 +23,7 @@
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_Entity_ABC.h"
+#include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -570,6 +571,26 @@ bool DEC_KnowledgeAgentFunctions::IsInObject( const MIL_Entity_ABC& callerAgent,
         {
             const MIL_ObjectType_ABC& type = (*it)->GetType();
             if( type.GetName() == objectType && static_cast< int >( (*it)->IsAnEnemy( callerAgent.GetArmy() ) ) == isFriend )
+                return true;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity
+// Created: LDC 2014-08-05
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity( const MIL_Entity_ABC& callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        T_KnowledgeObjectDiaIDVector objectsColliding;
+        pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
+        for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+        {
+            const MIL_ObjectType_ABC& type = (*it)->GetType();
+            if( CapacityRetriever::RetrieveCapacity( type, capacity ) != 0 && static_cast< int >( (*it)->IsAnEnemy( callerAgent.GetArmy() ) ) == isFriend )
                 return true;
         }
     }

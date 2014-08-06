@@ -127,29 +127,27 @@ integration.firePermitted = function( target )
 end
 
 --- Informs if the agent has the authorization to open fire onto a given position.
--- Checks that the current rule of engagement is "free fire" or "retaliation fire" and that 
+-- Checks that the current rule of engagement is not "fire upon order" and that 
 -- the position is not located inside a fire restricted area.
 -- This method can only be called by an agent.
 -- @param target a DirectIA 'LocalizedElement 'knowledge.
 -- @return a boolean 'true' if the agent can open fire, 'false' otherwise.
 integration.firePermittedForPoint = function( target )
     local stateROE = integration.getROE()
-    local localisation = DEC_Geometrie_CreerLocalisationCercle( target:getPosition(), 10 ) -- 10 meters
-    local object = integration.obtenirObjetProcheDe( localisation, eTypeObjectFireForbiddenArea, 10000 ) -- 10 km
-    if object then
-        local area = DEC_GenObjectKnowledge_Localisation( object )
-        if ( not integration.isPointInSimLocalisation( target, area ) ) 
-             and ( stateROE ~= eRoeStateFireByOrder ) then
-            return true
-        else
-            return false
-        end
-    end 
+    local friendly = 1 -- tristate: 0 = enemy, 1 = friendly, 2 = unknown
+    if DEC_IsPointInObject( myself, target:getPosition(), "fire-forbidden", friendly ) then
+        reportOnceFunction( eRC_FireNotPermittedDueToForbiddenArea )
+        return false
+    end
+    if ( stateROE == eRoeStateFireByOrder ) then
+        reportOnceFunction( eRC_FireNotPermittedDueToROE )
+        return false
+    end
     return true
 end
 
 --- Informs if the agent has the authorization to open fire at the given target.
--- Checks if the current rule of engagement is "free fire" or "retaliation fire"  and if 
+-- Checks if the current rule of engagement is not "fire upon order" and if
 -- the target is not located inside a fire restricted area. 
 -- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge
@@ -169,7 +167,7 @@ end
 -- @return a boolean 'true' if the target is located inside a "firing forbidden area" type of object, 'false' otherwise.
 integration.isInForbiddenFireArea = function( target )
     local friendly = 1 -- tristate: 0 = enemy, 1 = friendly, 2 = unknown
-    return DEC_KnowledgeAgent_IsInObject( eTypeObjectFiringForbiddenArea, target.source, friendly )
+    return DEC_KnowledgeAgent_IsInObjectWithCapacity( "fire-forbidden", target.source, friendly )
 end
 
 --- Returns the estimation of the agent attrition power regarding the provided target, position and PH (Probability to Hit).

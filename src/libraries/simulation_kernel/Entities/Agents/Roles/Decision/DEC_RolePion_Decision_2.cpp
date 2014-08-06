@@ -430,6 +430,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsTransported, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_KnowledgeAgent_IsInObject",
         boost::function< bool( const std::string&, boost::shared_ptr< DEC_Knowledge_Agent >, int ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInObject, boost::cref( GetPion() ), _1, _2, _3 ) ) );
+    RegisterFunction( "DEC_KnowledgeAgent_IsInObjectWithCapacity",
+        boost::function< bool( const std::string&, boost::shared_ptr< DEC_Knowledge_Agent >, int ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity, boost::cref( GetPion() ), _1, _2, _3 ) ) );
 
     // Object knowledges accessors
     RegisterFunction( "DEC_ConnaissanceObjet_EstUnEnnemi",
