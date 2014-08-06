@@ -42,7 +42,7 @@ public:
     const T& operator *() const { return *element_; };
     const T* operator->() const { return &*element_; };
     SafePointer& operator=( const T* element ) { element_ = element; return *this; };
-    SafePointer& operator=( const SafePointer& other ) { element_ = other.element_; return *this; }
+    SafePointer& operator=( const SafePointer& other );
     T* ConstCast() const { return const_cast< T* >( element_ ); }
     //@}
 
@@ -119,6 +119,19 @@ void SafePointer< T >::NotifyDeleted( const T& element )
 {
     if( &element == element_ )
         element_ = 0;
+}
+
+template< typename T >
+SafePointer< T >& SafePointer< T >::operator=( const SafePointer& other )
+{
+    if( controller_ != other.controller_ )
+    {
+        controller_->Unregister( *this );
+        controller_ = other.controller_;
+        controller_->Register( *this );
+    }
+    element_ = other.element_;
+    return *this;
 }
 
 }
