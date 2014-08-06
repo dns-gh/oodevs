@@ -15,9 +15,9 @@
 #include "MT_Tools/MT_Logger.h"
 #include "resource.h"
 #include "tools/IpcWatch.h"
-#include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
 #include <tools/Exception.h>
+#include <tools/WaitEvent.h>
 
 #include <boost/bind.hpp>
 

@@ -10,13 +10,13 @@
 #include "dispatcher_pch.h"
 #include "MessageLoader.h"
 #include "MessageHandler_ABC.h"
-#include "tools/WaitEvent.h"
 #include "tools/InputBinaryWrapper.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/ReplaySenders.h"
 #include "tools/ThreadPool.h"
 #include "MT_Tools/MT_Logger.h"
+#include <tools/WaitEvent.h>
 #include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>

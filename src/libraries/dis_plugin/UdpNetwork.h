@@ -12,11 +12,11 @@
 
 #include "Serializer.h"
 #include "tools/asio.h"
+#include <tools/WaitEvent.h>
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
-#include "tools/WaitEvent.h"
 
 namespace dispatcher
 {

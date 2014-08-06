@@ -12,7 +12,7 @@
 #include "dispatcher/DispatcherLoader.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/IpcWatch.h"
-#include "tools/WaitEvent.h"
+#include <tools/WaitEvent.h>
 
 // -----------------------------------------------------------------------------
 // Name: Application constructor

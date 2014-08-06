@@ -26,8 +26,8 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/IpcWatch.h"
 #include "tools/VersionHelper.h"
-#include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
+#include <tools/WaitEvent.h>
 
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
