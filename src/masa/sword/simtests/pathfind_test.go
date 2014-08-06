@@ -316,7 +316,7 @@ func (s *TestSuite) TestPathfindName(c *C) {
 	})
 }
 
-func (s *TestSuite) TestPathfindDieWithItsUnit(c *C) {
+func (s *TestSuite) TestPathfindDeletingUnitsDeletesRelatedPathfinds(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	automat := createAutomat(c, client)
