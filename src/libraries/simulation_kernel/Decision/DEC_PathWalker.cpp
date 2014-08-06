@@ -40,6 +40,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , bForcePathCheck_   ( true )
     , bHasMoved_         ( false )
     , bFuelReportSent_   ( false )
+    , bImpossibleReportSent_( false )
     , pathSet_           ( eFinished )
 {
     // NOTHING
@@ -471,11 +472,17 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
     DEC_PathResult::E_State nPathState = pPath->GetState();
     if( nPathState == DEC_Path_ABC::eImpossible )
     {
-        if( movingEntity_.IsUnderground() )
-            movingEntity_.SendRC( report::eRC_NotActivatedUndergroundNetwork );
-        else
-            movingEntity_.SendRC( report::eRC_TerrainDifficile );
+        if( !bImpossibleReportSent_ )
+        {
+            if( movingEntity_.IsUnderground() )
+                movingEntity_.SendRC( report::eRC_NotActivatedUndergroundNetwork );
+            else
+                movingEntity_.SendRC( report::eRC_TerrainDifficile );
+            bImpossibleReportSent_ = true;
+        }
     }
+    else
+        bImpossibleReportSent_ = false;
     if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible || nPathState == DEC_Path_ABC::eCanceled )
         return eNotAllowed;
 

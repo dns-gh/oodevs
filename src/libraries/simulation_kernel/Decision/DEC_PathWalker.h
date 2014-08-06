@@ -158,6 +158,7 @@ private:
     bool bForcePathCheck_;
     bool bHasMoved_;
     bool bFuelReportSent_;
+    bool bImpossibleReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
     E_ReturnCode pathSet_;
     //@}
