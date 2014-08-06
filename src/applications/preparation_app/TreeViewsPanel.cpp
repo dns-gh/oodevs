@@ -348,5 +348,5 @@ void TreeViewsPanel::OnRename()
     kernel::Entity_ABC& entity = *contextMenuEntity_.ConstCast();
     if( !::Rename( entity, firstUnitViews_ ) )
         if( !::Rename( entity, secondUnitViews_ ) )
-            gui::longname::ShowRenameDialog( this, kernel::SafePointer< kernel::Entity_ABC >( controllers_, &entity ), modelBuilder_ );
+            gui::longname::ShowRenameDialog( this, contextMenuEntity_, modelBuilder_ );
 }
