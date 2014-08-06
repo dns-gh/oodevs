@@ -38,6 +38,7 @@ public:
     virtual void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& );
     virtual void AddModifier( double ratio, bool isMax = true );
     virtual double GetSpeed() const;
+    virtual bool IsTheoric() const;
     //@}
 protected:
     //! @name Attributes
