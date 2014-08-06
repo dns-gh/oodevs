@@ -119,9 +119,6 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
 	`<Dispatcher> <functERR> exception caught: Not connected to`,
 	// Invalid coordinates may be a problem but not a functERR
 	`Exception caught in TER_CoordinateManager::MosToSimMgrsCoord.*out of valid range`,
-	// Happens if client is a bit slow and simulation wants to disconnect it,
-	// not a fatal error...
-	`Client hasn't answered messages from last tick!`,
 ))
 
 var reError *regexp.Regexp = regexp.MustCompile(makePattern(
