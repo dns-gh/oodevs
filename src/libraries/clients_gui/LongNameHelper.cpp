@@ -44,7 +44,7 @@ bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item )
     return true;
 }
 
-void ShowRenameDialog( QWidget* parent, kernel::SafePointer< kernel::Entity_ABC > entity, ModelObserver_ABC& modelObserver )
+void ShowRenameDialog( QWidget* parent, const kernel::SafePointer< kernel::Entity_ABC >& entity, ModelObserver_ABC& modelObserver )
 {
     bool ok = false;
     const auto text = QInputDialog::getText( parent, tools::translate( "RenameDialog", "Rename" ),

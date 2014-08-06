@@ -498,10 +498,10 @@ void ModelBuilder::Select( const kernel::Object_ABC& element )
 
 namespace
 {
-    template< typename Concrete, typename T >
-    void Rename( T* entity, const QString& text, kernel::Controllers& controllers, const QString& property )
+    template< typename Concrete >
+    void Rename( const kernel::SafePointer< kernel::Entity_ABC >& entity, const QString& text, kernel::Controllers& controllers, const QString& property )
     {
-        if( Concrete* concrete = dynamic_cast< Concrete* >( entity ) )
+        if( auto* concrete = dynamic_cast< Concrete* >( entity.ConstCast() ) )
         {
             concrete->Rename( text );
             controllers.controller_.Update( gui::DictionaryUpdated( *concrete, property ) );
@@ -513,21 +513,21 @@ namespace
 // Name: ModelBuilder::OnRename
 // Created: JSR 2012-08-31
 // -----------------------------------------------------------------------------
-void ModelBuilder::OnRename( kernel::SafePointer< kernel::Entity_ABC > entity, const QString& newName )
+void ModelBuilder::OnRename( const kernel::SafePointer< kernel::Entity_ABC >& entity, const QString& newName )
 {
     if( !entity )
         return;
-    Rename< Team >( &entity, newName, controllers_, property_ );
-    Rename< Agent >( &entity, newName, controllers_, property_ );
-    Rename< Automat >( &entity, newName, controllers_, property_ );
-    Rename< Formation >( &entity, newName, controllers_, property_ );
-    Rename< KnowledgeGroup >( &entity, newName, controllers_, property_ );
-    Rename< Ghost >( &entity, newName, controllers_, property_ );
-    Rename< Object >( &entity, newName, controllers_, property_ );
-    Rename< gui::UrbanObject >( &entity, newName, controllers_, property_ );
-    Rename< Population >( &entity, newName, controllers_, property_ );
-    Rename< gui::Drawing >( &entity, newName, controllers_, property_ );
-    Rename< TacticalLine_ABC >( &entity, newName, controllers_, property_ );
+    Rename< Team >( entity, newName, controllers_, property_ );
+    Rename< Agent >( entity, newName, controllers_, property_ );
+    Rename< Automat >( entity, newName, controllers_, property_ );
+    Rename< Formation >( entity, newName, controllers_, property_ );
+    Rename< KnowledgeGroup >( entity, newName, controllers_, property_ );
+    Rename< Ghost >( entity, newName, controllers_, property_ );
+    Rename< Object >( entity, newName, controllers_, property_ );
+    Rename< gui::UrbanObject >( entity, newName, controllers_, property_ );
+    Rename< Population >( entity, newName, controllers_, property_ );
+    Rename< gui::Drawing >( entity, newName, controllers_, property_ );
+    Rename< TacticalLine_ABC >( entity, newName, controllers_, property_ );
 }
 
 // -----------------------------------------------------------------------------

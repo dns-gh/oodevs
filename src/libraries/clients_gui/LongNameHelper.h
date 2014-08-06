@@ -30,7 +30,7 @@ namespace longname
 std::string GetEntityLongName( const kernel::Entity_ABC& entity );
 
 bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item );
-void ShowRenameDialog( QWidget* parent, kernel::SafePointer< kernel::Entity_ABC > entity, ModelObserver_ABC& modelObserver );
+void ShowRenameDialog( QWidget* parent, const kernel::SafePointer< kernel::Entity_ABC >& entity, ModelObserver_ABC& modelObserver );
 
 }  // namespace longname
 
