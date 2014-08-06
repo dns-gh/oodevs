@@ -87,3 +87,12 @@ void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component
         hasComponent_ = true;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultSpeedComputer::IsTheoric
+// Created: LDC 2014-08-05
+// -----------------------------------------------------------------------------
+bool DefaultSpeedComputer::IsTheoric() const
+{
+    return strategy_.IsTheoric();
+}

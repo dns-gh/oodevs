@@ -107,7 +107,14 @@ double SpeedComputerStrategy::ApplyOnPopulation( const DEC_Knowledge_PopulationC
 // -----------------------------------------------------------------------------
 double SpeedComputerStrategy::AddModifier( double ratio, bool isMax ) const
 {
-    if( isTheoric_ != ! isMax )
-        return 1;
     return isMax == isMax_ ? ratio : 1.0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpeedComputerStrategy::IsTheoric
+// Created: LDC 2014-08-05
+// -----------------------------------------------------------------------------
+bool SpeedComputerStrategy::IsTheoric() const
+{
+    return isTheoric_;
 }

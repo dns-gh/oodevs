@@ -43,6 +43,7 @@ public:
     virtual double ApplyOnReinforcement( const MIL_Agent_ABC& pion ) const;
     virtual double ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population ) const;
     virtual double AddModifier( double ratio, bool isMax = true ) const;
+    virtual bool IsTheoric() const;
     //@}
 
 private:

@@ -121,7 +121,8 @@ double PHY_RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    algorithm.AddModifier( rMaxSpeedModificator_ * rTrafficModificator_, true );
+    if( !algorithm.IsTheoric() )
+        algorithm.AddModifier( rMaxSpeedModificator_ * rTrafficModificator_, true );
     algorithm.AddModifier( rSpeedModificator_, false );
 }
 
