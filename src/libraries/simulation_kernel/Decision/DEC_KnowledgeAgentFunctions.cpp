@@ -345,6 +345,18 @@ int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion&
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax
+// Created: JSR 2014-08-06
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax( const MIL_Entity_ABC& /*caller*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    // For compatibility with Scipio decisional.
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pKnowledge->GetCurrentPerceptionLevel() == PHY_PerceptionLevel::identified_;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsIlluminated
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
