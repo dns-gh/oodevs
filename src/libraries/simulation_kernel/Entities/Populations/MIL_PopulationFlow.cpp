@@ -237,6 +237,16 @@ void MIL_PopulationFlow::MagicMove( const MT_Vector2D& destination )
     MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
     newConcentration.PushHumans( PullHumans( GetAllHumans() ) );
     newConcentration.SetAttitude( GetAttitude() );
+    flowShape_ = T_FlowShape( 2, std::make_pair( newConcentration.GetPosition(), newConcentration.GetWaypointForNextPullingFlow() ) );
+    bFlowShapeUpdated_ = true;
+    computedFlowShape_.clear();
+    CancelMove();
+    if( pTailPath_ )
+    {
+        pTailPath_->Cancel();
+        pTailPath_.reset();
+    }
+    UpdateLocation();
     DetachFromDestConcentration();
 }
 
