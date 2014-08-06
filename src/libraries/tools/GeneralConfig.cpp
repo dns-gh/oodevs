@@ -19,6 +19,11 @@
 using namespace tools;
 namespace po = boost::program_options;
 
+namespace
+{
+    std::unordered_set< std::string > devFeatures_;
+}
+
 std::unordered_set< std::string > tools::SplitFeatures( const std::string& s )
 {
     std::vector< std::string > features;
@@ -56,6 +61,11 @@ const std::vector< std::string >& tools::GetAvailableFeatures()
     return features;
 }
 
+bool tools::HasFeature( const std::string& feature )
+{
+    return devFeatures_.count( feature ) > 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig constructor
 // Created: NLD 2007-01-10
@@ -75,7 +85,7 @@ GeneralConfig::GeneralConfig( const Path& defaultRoot /* = "../"*/ )
         ( "exercises-dir" , po::value( &exercisesDir_ )->default_value( "exercises"        ), "specify exercises root directory"  )
         ( "plugins-dir"   , po::value( &pluginsDir_ )->default_value( "plugins"            ), "specify plugins root directory"    )
         ( "language,l"    , po::value( &commandLineLanguage_ )->default_value( ""          ), "specify current language"          )
-        ( "features"  , po::value( &features_                                              ), "specify development features to be activated" );
+        ( "features"      , po::value( &features_                                          ), "specify development features to be activated" );
     AddOptions( desc );
 }
 
@@ -371,9 +381,4 @@ const Languages& GeneralConfig::GetLanguages() const
 const std::string& GeneralConfig::GetCommandLineLanguage() const
 {
     return commandLineLanguage_;
-}
-
-bool GeneralConfig::IsActivated( const std::string& feature ) const
-{
-    return devFeatures_.count( feature ) > 0;
 }
