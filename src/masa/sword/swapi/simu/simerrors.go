@@ -114,9 +114,6 @@ func makePattern(patterns ...string) string {
 }
 
 var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
-	// Many log files have no schemas. This can be fixed but is certainly not a
-	// fatal error.
-	`doesn't have any schema`,
 	// Probably happens when the dispatcher waits for the simulation, attempts
 	// should not be logged as fatal errors, only when the time out is reached.
 	`<Dispatcher> <functERR> exception caught: Not connected to`,
