@@ -55,6 +55,7 @@ class Publisher_ABC;
 // =============================================================================
 class PathfindLayer : public gui::EntityLayer< kernel::Pathfind_ABC >
                     , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
+                    , public tools::ElementObserver_ABC< kernel::Agent_ABC >
                     , public tools::SelectionObserver_ABC
                     , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                     , public tools::SelectionObserver_Base< kernel::Automat_ABC >
@@ -120,6 +121,7 @@ private:
     bool IsNear( float squareDistance, geometry::Point2f point ) const;
     bool PickWaypoint( geometry::Point2f point );
     void PickSegment( geometry::Point2f point );
+    void NotifyDeleted( const kernel::Agent_ABC& unit );
 
 public slots:
     void OnAcceptEdit();

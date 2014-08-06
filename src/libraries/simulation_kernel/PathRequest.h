@@ -50,6 +50,7 @@ public:
     bool Update( const sword::Pathfind& pathfind );
     void SendStateToNewClient();
     bool IsPublished() const;
+    uint32_t GetUnitId() const;
     //@}
 
 private:

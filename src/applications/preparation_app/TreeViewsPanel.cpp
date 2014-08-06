@@ -343,11 +343,10 @@ namespace
 // -----------------------------------------------------------------------------
 void TreeViewsPanel::OnRename()
 {
-    if( contextMenuEntity_ )
-    {
-        kernel::Entity_ABC& entity = *contextMenuEntity_.ConstCast();
-        if( !::Rename( entity, firstUnitViews_ ) )
-            if( !::Rename( entity, secondUnitViews_ ) )
-                gui::longname::ShowRenameDialog( this, entity, modelBuilder_ );
-    }
+    if( !contextMenuEntity_ )
+        return;
+    kernel::Entity_ABC& entity = *contextMenuEntity_.ConstCast();
+    if( !::Rename( entity, firstUnitViews_ ) )
+        if( !::Rename( entity, secondUnitViews_ ) )
+            gui::longname::ShowRenameDialog( this, contextMenuEntity_, modelBuilder_ );
 }

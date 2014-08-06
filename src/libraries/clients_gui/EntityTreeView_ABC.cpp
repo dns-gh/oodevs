@@ -116,7 +116,7 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
         // SWBUG-12850: spamming with agent knowledge updates massively slows
         // down gaming because the FindDataItem() below and possibly the
         // following invalidate() are super slow.
-        // 
+        //
         // Ignoring agent knowledge name changes here is ugly but better than
         // freezing gaming.
         return;
@@ -233,7 +233,7 @@ void EntityTreeView_ABC::OnDataChanged( const QModelIndex& index, const QVariant
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity, const QString& name )
 {
-    modelObserver_.OnRename( entity, name );
+    modelObserver_.OnRename( kernel::SafePointer< kernel::Entity_ABC >( controllers_, &entity ), name );
     if( QStandardItem* item = dataModel_.FindDataItem( entity ) )
     {
         item->setData( QVariant( entity.GetName() ), Qt::DisplayRole );
@@ -250,7 +250,7 @@ void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity )
     if( isVisible() )
         Edit( entity );
     else
-        gui::longname::ShowRenameDialog( this, entity, modelObserver_ );
+        gui::longname::ShowRenameDialog( this, kernel::SafePointer< kernel::Entity_ABC >( controllers_, &entity ), modelObserver_ );
 }
 
 // -----------------------------------------------------------------------------

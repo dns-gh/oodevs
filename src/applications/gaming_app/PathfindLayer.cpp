@@ -606,3 +606,10 @@ void PathfindLayer::ActivateEntity( const kernel::Entity_ABC& entity )
 {
     view_.CenterOn( static_cast< const kernel::Pathfind_ABC& >( entity ).GetPosition() );
 }
+
+void PathfindLayer::NotifyDeleted( const kernel::Agent_ABC& unit )
+{
+    if( controllers_.GetCurrentMode() == eModes_Itinerary )
+        if( !target_ || target_ == &unit )
+            OnRejectEdit();
+}
