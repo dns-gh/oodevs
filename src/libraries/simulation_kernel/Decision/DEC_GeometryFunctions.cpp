@@ -43,6 +43,7 @@
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
+#include "simulation_terrain/TER_Geometry.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_Analyzer.h"
@@ -1300,6 +1301,15 @@ double DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation )
     if( !pLocalisation )
         throw MASA_EXCEPTION( "Invalid location" );
     return MIL_Tools::ConvertSimToMeterSquare( pLocalisation->GetArea() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeIntersectionArea
+// Created: GGE 2014-08-01
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::ComputeIntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 )
+{
+    return TER_Geometry::IntersectionArea( localisation1, localisation2 );
 }
 
 // -----------------------------------------------------------------------------

@@ -310,6 +310,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau", &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
     brain.RegisterFunction( "DEC_Geometrie_DistanceBetweenPoints", &DEC_GeometryFunctions::ComputeDistance );
     brain.RegisterFunction( "DEC_Geometrie_AreaSize", &DEC_GeometryFunctions::ComputeAreaSize );
+    brain.RegisterFunction( "DEC_Geometrie_IntersectionSize", &DEC_GeometryFunctions::ComputeIntersectionArea );
     brain.RegisterFunction( "DEC_Geometrie_AreaDiameter", &DEC_GeometryFunctions::ComputeAreaDiameter );
     brain.RegisterFunction( "DEC_Geometrie_DecouperLocalisation", boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisation, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_ClipperLocalisation", &DEC_GeometryFunctions::ClipLocalisation );

@@ -379,6 +379,24 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInZone( const MIL_Agent
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetUrbanBlockInOrIntersectZone
+// Created: GGE 2014-08-04
+// -----------------------------------------------------------------------------
+T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInOrIntersectZone( const MIL_AgentPion& pion, TER_Localisation* pLocalisation )
+{
+    T_UrbanObjectVector result;
+    if( pLocalisation )
+    {
+        T_UrbanObjectVector blocks;
+        pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
+        for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); ++it )
+            if( ( *it ) && pLocalisation->IsIntersecting( ( *it )->GetLocalisation() ) )
+                result.push_back( *it );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDestroyableKnowledge
 // Created: MGD 2010-02-10
 // -----------------------------------------------------------------------------
