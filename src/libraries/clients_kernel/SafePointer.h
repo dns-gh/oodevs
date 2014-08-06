@@ -32,6 +32,7 @@ public:
     //@{
     explicit SafePointer( Controller& controller, const T* element = 0 );
     explicit SafePointer( Controllers& controllers, const T* element = 0 );
+             SafePointer( const SafePointer& other );
     virtual ~SafePointer();
     //@}
 
@@ -41,6 +42,7 @@ public:
     const T& operator *() const { return *element_; };
     const T* operator->() const { return &*element_; };
     SafePointer& operator=( const T* element ) { element_ = element; return *this; };
+    SafePointer& operator=( const SafePointer& other ) { element_ = other.element_; return *this; }
     T* ConstCast() const { return const_cast< T* >( element_ ); }
     //@}
 
@@ -86,6 +88,14 @@ template< typename T >
 SafePointer< T >::SafePointer( kernel::Controller& controller, const T* element /*= 0*/ )
     : controller_( &controller )
     , element_( element )
+{
+    controller_->Register( *this );
+}
+
+template< typename T >
+SafePointer< T >::SafePointer( const SafePointer& other )
+    : controller_( other.controller_ )
+    , element_( other.element_ )
 {
     controller_->Register( *this );
 }
