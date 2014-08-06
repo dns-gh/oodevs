@@ -42,7 +42,6 @@ public:
     void ReadArchive( xml::xistream& input );
     void ReadValue( xml::xistream& input );
     void ReadChoiceVector( xml::xistream& input, T_Choice_Vector& data );
-    void ReadChoiceGenObjects( xml::xistream& input, helpers::T_MissionGenObjectTypes_Infos_Vector& data );
     void WriteArchive( xml::xostream& output ) const;
     void UpdateObjectsVectors();
     virtual void CheckValidity();

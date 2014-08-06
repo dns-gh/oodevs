@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MissionParameter_GroupBox.h"
 #include "moc_ADN_MissionParameter_GroupBox.cpp"
+#include <boost/assign.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameter_GroupBox constructor
@@ -17,6 +18,14 @@
 // -----------------------------------------------------------------------------
 ADN_MissionParameter_GroupBox::ADN_MissionParameter_GroupBox( int strips, Qt::Orientation orientation,
                                                               const QString& title, E_MissionParameterType authorized )
+    : Q3GroupBox( strips, orientation, title )
+    , authorized_( 1, authorized )
+{
+    hide();
+}
+
+ADN_MissionParameter_GroupBox::ADN_MissionParameter_GroupBox( int strips, Qt::Orientation orientation, const QString& title,
+                                                              const std::vector< E_MissionParameterType >& authorized )
     : Q3GroupBox( strips, orientation, title )
     , authorized_( authorized )
 {
@@ -38,5 +47,5 @@ ADN_MissionParameter_GroupBox::~ADN_MissionParameter_GroupBox()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameter_GroupBox::OnTypeChanged( E_MissionParameterType type )
 {
-    setVisible( authorized_ == type );
+    setVisible( std::find( authorized_.begin(), authorized_.end(), type ) != authorized_.end() );
 }

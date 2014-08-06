@@ -82,7 +82,7 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
         return;
 
     const Qt::ItemFlags contextFlag = ( pMissionParameter->isContext_ && ( missionType_ == eEntityType_Pawn || missionType_ == eEntityType_Automat ) )
-        ? Qt::ItemIsSelectable
+        ? ( pMissionParameter->type_.GetData() == eMissionParameterTypePhaseLine ? Qt::ItemIsEnabled | Qt::ItemIsSelectable : Qt::ItemIsSelectable )
         : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
     const QBrush brush = pMissionParameter->isContext_ ? QBrush( Qt::lightGray ) : QBrush( Qt::transparent );
 
@@ -267,7 +267,7 @@ void ADN_MissionParameters_Table::Reconnect( const QModelIndex& index )
         }
         else if( current == eMissionParameterTypeGenObject )
             itemConnectors_[ADN_Missions_GUI::eGenObjects]->Connect( &param->genObjects_ );
-        else if( current == eMissionParameterTypeObjectKnowledge )
+        else if( current == eMissionParameterTypeObjectKnowledge || current == eMissionParameterTypePhaseLine )
             itemConnectors_[ADN_Missions_GUI::eKnowledgeObjects]->Connect( &param->knowledgeObjects_ );
         else if( current == eMissionParameterTypeDotationType )
             itemConnectors_[ADN_Missions_GUI::eDotations]->Connect( &param->indirectFire_ );

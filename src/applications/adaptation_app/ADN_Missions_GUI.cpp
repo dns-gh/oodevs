@@ -37,6 +37,7 @@
 #include "clients_kernel/LanguageController.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/assign.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI constructor
@@ -179,7 +180,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         new ADN_MissionGenObjectTypes_Table( all, builder.GetChildName( "gen-objects-table" ), vInfosConnectors[ eGenObjects ], pGenObject );
         connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pGenObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
     }
-    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeObjectKnowledge );
+    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ),
+        std::vector< E_MissionParameterType >( boost::assign::list_of( eMissionParameterTypeObjectKnowledge )( eMissionParameterTypePhaseLine ) ) );
     {
         QCheckBox* all = new QCheckBox( pKnowledgeObject );
         all->setText( tr( "all" ) );

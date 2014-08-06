@@ -457,7 +457,7 @@ namespace
             for( auto itParam = ( *itMission )->parameters_.begin(); itParam != ( *itMission )->parameters_.end(); ++itParam )
                 if( ( *itParam )->type_.GetData() == eMissionParameterTypeGenObject )
                     FillUsingMissionFromObjectVector( objectName, ( *itMission )->strName_.GetData(), ( *itParam )->genObjects_, result, prefix );
-                else if( ( *itParam )->type_.GetData() == eMissionParameterTypeObjectKnowledge )
+                else if( ( *itParam )->type_.GetData() == eMissionParameterTypeObjectKnowledge || ( *itParam )->type_.GetData() == eMissionParameterTypePhaseLine )
                     FillUsingMissionFromObjectVector( objectName, ( *itMission )->strName_.GetData(), ( *itParam )->knowledgeObjects_, result, prefix );
     }
 }

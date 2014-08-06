@@ -29,6 +29,8 @@ public:
     //@{
              ADN_MissionParameter_GroupBox( int strips, Qt::Orientation orientation, const QString& title,
                                             E_MissionParameterType authorized );
+             ADN_MissionParameter_GroupBox( int strips, Qt::Orientation orientation, const QString& title,
+                                            const std::vector< E_MissionParameterType >& authorized );
     virtual ~ADN_MissionParameter_GroupBox();
     //@}
 
@@ -41,7 +43,7 @@ public slots:
 private:
     //! @name Member Data
     //@{
-    E_MissionParameterType authorized_;
+    const std::vector< E_MissionParameterType > authorized_;
     //@}
 };
 
