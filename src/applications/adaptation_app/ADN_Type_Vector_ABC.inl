@@ -156,12 +156,10 @@ template <class T>
 void ADN_Type_Vector_ABC<T>::Initialize( ADN_Connector_Vector_ABC& dest ) const
 {
     dest.Clear( true );
+    std::vector< void* > objects;
     for( auto it = begin(); it != end(); ++it )
-    {
-        T* pObj = *it;
-        dest.AddItemNoEmit( pObj );
-    }
-    dest.AddItemNoEmit( 0 );
+        objects.push_back( *it );
+    dest.AddItemsNoEmit( objects );
 }
 
 // -----------------------------------------------------------------------------

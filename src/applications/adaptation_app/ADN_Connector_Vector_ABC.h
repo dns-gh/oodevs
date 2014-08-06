@@ -56,6 +56,7 @@ public slots:
     void RemItem( void* pObj );
 
     void AddItemNoEmit( void* pObj );
+    void AddItemsNoEmit( const std::vector< void* >& pObjs );
     void RemItemNoEmit( void* pObj );
 
     void Clear( bool bInConnection = false );
