@@ -186,9 +186,9 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
         perceiverUrbanBlockHeight = sensorHeight;
     assert( perceiverUrbanBlockHeight );
 
-    int numberOfBlocksInBetween = 0;
     for( auto itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
+        int numberOfBlocksInBetween = 0;
         double worstFactor = 1.;
         for( auto it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
             if( perceiverUrbanBlock == 0 || !( perceiverUrbanBlock == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
