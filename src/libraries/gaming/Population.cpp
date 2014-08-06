@@ -320,7 +320,7 @@ namespace
             const Rectangle2f bbox = concreteEntity.GetBoundingBox();
             boundingBox.Incorporate( bbox.TopRight() );
             boundingBox.Incorporate( bbox.BottomLeft() );
-            if( center.IsZero() )
+            if( center.IsZero() && !bbox.IsEmpty() )
                 center = concreteEntity.GetPosition( true );
         }
     }
@@ -336,6 +336,8 @@ void Population::ComputeCenter()
     center_ = Point2f();
     IncorporateBoundingBox< PopulationConcentration_ABC, PopulationConcentration >( *this, boundingBox_, center_ );
     IncorporateBoundingBox< PopulationFlow_ABC, PopulationFlow >( *this, boundingBox_, center_ );
+    if( center_.IsZero() )
+        center_ = boundingBox_.Center();
 }
 
 // -----------------------------------------------------------------------------

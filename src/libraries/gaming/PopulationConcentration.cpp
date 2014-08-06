@@ -244,6 +244,7 @@ geometry::Point2f PopulationConcentration::GetPosition( bool ) const
 {
     return position_;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration::IsIn
 // Created: AGE 2006-04-10
