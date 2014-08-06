@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "TimelineDockWidget.h"
 #include "moc_TimelineDockWidget.cpp"
-#include "Config.h"
+#include "GamingConfig.h"
 #include "TimelineToolBar.h"
 #include "TimelineWebView.h"
 #include "clients_gui/Event.h"
@@ -37,7 +37,7 @@ int TimelineDockWidget::maxTabNumber_ = 0;
 // -----------------------------------------------------------------------------
 TimelineDockWidget::TimelineDockWidget( QWidget* parent,
                                         kernel::Controllers& controllers,
-                                        const Config& config,
+                                        const GamingConfig& config,
                                         Model& model )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , config_( config )

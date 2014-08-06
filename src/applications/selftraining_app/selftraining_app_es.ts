@@ -200,6 +200,10 @@
         <source>Chrome embedded log file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rendering threads</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

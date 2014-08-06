@@ -30,7 +30,7 @@ class Model;
 class Simulation;
 class SimulationController;
 class Profile;
-class Config;
+class GamingConfig;
 class LoggerProxy;
 class Services;
 class RcEntityResolver_ABC;
@@ -68,7 +68,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    std::unique_ptr< Config >                            config_;
+    std::unique_ptr< GamingConfig >                      config_;
     std::unique_ptr< kernel::Controllers >               controllers_;
     std::unique_ptr< RcEntityResolver_ABC >              rcResolver_;
     std::unique_ptr< StaticModel >                       staticModel_;

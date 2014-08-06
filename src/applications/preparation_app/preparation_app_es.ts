@@ -1028,6 +1028,10 @@ Este dato no puede ser proyectado.</translation>
         <source>Resource networks</source>
         <translation>Redes de recursos</translation>
     </message>
+    <message>
+        <source>Mapnik</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaxStockNaturesTable</name>

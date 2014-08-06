@@ -11,7 +11,7 @@
 #include "Application.h"
 #include "moc_Application.cpp"
 #include "MainWindow.h"
-#include "Config.h"
+#include "GamingConfig.h"
 #include "LoggerProxy.h"
 #include "RcEntityResolver.h"
 #include "gaming/Network.h"
@@ -47,7 +47,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     Initialize();
 
     // Data
-    config_.reset( new Config( argc, argv ) );
+    config_.reset( new GamingConfig( argc, argv ) );
     LoadCommandLineLanguage( config_->GetLanguages(), config_->GetCommandLineLanguage() );
     controllers_.reset( new Controllers() );
     logger_.reset( new LoggerProxy() );

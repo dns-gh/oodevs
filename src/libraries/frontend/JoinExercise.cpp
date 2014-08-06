@@ -9,22 +9,40 @@
 
 #include "frontend_pch.h"
 #include "JoinExercise.h"
+#include "DebugConfig.h"
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace frontend;
+
+namespace
+{
+
+// Returns an absolute path to timeline client log file. logPath is resolved
+// relatively to sessionDir. If logPath is empty, an empty path is returned.
+tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath )
+{
+    if( logPath.IsEmpty() )
+        return logPath;
+    if( logPath.IsAbsolute() )
+        return logPath;
+    return sessionDir.Absolute() / logPath;
+}
+
+} // namespace
 
 // -----------------------------------------------------------------------------
 // Name: JoinExercise constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
 JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
-        const tools::Path& session, const QString* profile, const QString& devFeatures,
-        const tools::Path& timelineLog, const tools::Path& cefLog )
+        const tools::Path& session, const QString* profile, const tools::Path& sessionDir,
+        const frontend::DebugConfig& debug )
     : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
     AddRootArgument();
@@ -33,12 +51,25 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
         AddSessionArgument( session );
     if( profile )
         AddArgument( "login", !profile->isEmpty() ? profile->toStdString() : "anonymous" );
-    if( !devFeatures.isEmpty() )
-        AddArgument( "features", devFeatures.toStdString() );
-    if( !timelineLog.IsEmpty() )
-        AddArgument( "timeline-log", timelineLog.ToUTF8() );
-    if( !cefLog.IsEmpty() )
-        AddArgument( "cef-log", cefLog.ToUTF8() );
+    if( !debug.features.empty() )
+        AddArgument( "features", debug.GetDevFeatures().toStdString() );
+    if( !debug.timeline.clientLogPath.IsEmpty() && !sessionDir.IsEmpty() )
+    {
+        const auto log = GetTimelineLog( sessionDir, debug.timeline.clientLogPath );
+        AddArgument( "timeline-log", log.ToUTF8() );
+    }
+    if( !debug.timeline.cefLog.IsEmpty() )
+        AddArgument( "cef-log", debug.timeline.cefLog.ToUTF8() );
+    if( debug.timeline.legacyTimeline )
+        AddArgument( "--legacy-timeline" );
+    if( debug.timeline.debugPort )
+        AddArgument( "timeline-debug-port",
+                boost::lexical_cast< std::string >( debug.timeline.debugPort ) );
+    if( debug.gaming.hasMapnik )
+        AddArgument( "--mapnik" );
+    if( debug.gaming.mapnikThreads )
+        AddArgument( "mapnik-threads",
+            boost::lexical_cast< std::string >( debug.gaming.mapnikThreads ) );
 }
 
 // -----------------------------------------------------------------------------

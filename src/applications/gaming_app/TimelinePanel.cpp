@@ -84,7 +84,7 @@ namespace
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, Model& model, ActionsScheduler& scheduler, const Config& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor )
+TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, Model& model, ActionsScheduler& scheduler, const GamingConfig& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor )
     : gui::RichDockWidget( controllers, parent, "timeline" )
 {
     // Init

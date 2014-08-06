@@ -1030,6 +1030,10 @@ This data can&apos;t be projected.</translation>
         <source>Resource networks</source>
         <translation type="unfinished">Resource networks</translation>
     </message>
+    <message>
+        <source>Mapnik</source>
+        <translation>Mapnik</translation>
+    </message>
 </context>
 <context>
     <name>MaxStockNaturesTable</name>

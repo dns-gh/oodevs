@@ -43,7 +43,7 @@ namespace tools
     class ExerciseConfig;
 }
 
-class Config;
+class GamingConfig;
 class Model;
 
 // =============================================================================
@@ -64,7 +64,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TimelineWebView( QWidget* parent,
-                              const Config& config,
+                              const GamingConfig& config,
                               kernel::Controllers& controllers,
                               Model& model );
     virtual ~TimelineWebView();

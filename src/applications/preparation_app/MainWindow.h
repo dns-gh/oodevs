@@ -42,12 +42,12 @@ namespace gui
 }
 
 class ColorController;
-class Config;
 class DialogContainer;
 class DockContainer;
 class Menu;
 class Model;
 class ModelBuilder;
+class PrepaConfig;
 class StaticModel;
 class ToolbarContainer;
 
@@ -73,7 +73,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Config& config, const QString& expiration );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, PrepaConfig& config, const QString& expiration );
     virtual ~MainWindow();
     //@}
 
@@ -137,7 +137,7 @@ private:
     kernel::Controllers& controllers_;
     StaticModel&         staticModel_;
     Model&               model_;
-    Config&              config_;
+    PrepaConfig&         config_;
     bool                 loading_;
     bool                 needsSaving_;
 

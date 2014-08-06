@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "selftraining_app_pch.h"
+#include "frontend_pch.h"
 #include "Registry.h"
 #include "tools/GeneralConfig.h"
 #include <tools/Path.h>

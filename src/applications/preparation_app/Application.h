@@ -27,7 +27,7 @@ class FileLoaderObserver;
 class MainWindow;
 class StaticModel;
 class Model;
-class Config;
+class PrepaConfig;
 
 // =============================================================================
 /** @class  Application
@@ -54,7 +54,7 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< FileLoaderObserver >  observer_;
-    std::unique_ptr< Config >              config_;
+    std::unique_ptr< PrepaConfig >              config_;
     std::unique_ptr< kernel::Controllers > controllers_;
     std::unique_ptr< StaticModel >         staticModel_;
     std::unique_ptr< Model >               model_;

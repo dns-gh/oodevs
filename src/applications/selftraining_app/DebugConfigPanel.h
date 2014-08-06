@@ -12,50 +12,16 @@
 
 #include "clients_gui/WidgetLanguageObserver_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <boost/optional/optional_fwd.hpp>
-#include <unordered_set>
+
+namespace frontend
+{
+    struct DebugConfig;
+}
 
 namespace tools
 {
     class GeneralConfig;
 }
-
-// Returns an absolute path to timeline client log file. logPath is resolved
-// relatively to sessionDir. If logPath is empty, an empty path is returned.
-tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath );
-
-struct DebugSim
-{
-    bool decProfiling;
-    tools::Path integrationDir;
-    std::string pathfindFilter;
-    tools::Path pathfindDumpDir;
-};
-
-struct DebugTimeline
-{
-    int debugPort;
-    tools::Path debugWwwDir;
-    tools::Path clientLogPath;
-    tools::Path cefLog;
-    bool legacyTimeline;
-};
-
-struct DebugGaming
-{
-    bool hasMapnik;
-};
-
-struct DebugConfig
-{
-    QString GetDevFeatures() const;
-
-    DebugGaming gaming;
-    DebugSim sim;
-    DebugTimeline timeline;
-
-    std::unordered_set< std::string > features;
-};
 
 class Config;
 
@@ -73,7 +39,7 @@ class DebugConfigPanel : public gui::WidgetLanguageObserver_ABC< QWidget >
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugConfigPanel( QWidget* parent, const Config& config, DebugConfig& debug );
+             DebugConfigPanel( QWidget* parent, const Config& config, frontend::DebugConfig& debug );
     virtual ~DebugConfigPanel();
     //@}
 
@@ -92,6 +58,7 @@ private slots:
     void OnTimelineDebugChanged( const QString& );
     void OnCefLogChanged( const QString& );
     void OnMapnikLayerChecked( bool checked );
+    void OnMapnikThreadsChanged( int threads );
     void OnChangeIntegrationDirectory();
     void OnEditIntegrationDirectory( const QString& );
     void OnSelectDataDirectory();
@@ -106,7 +73,7 @@ private:
     //config
     const bool visible_;
     const Config& config_;
-    DebugConfig& debug_;
+    frontend::DebugConfig& debug_;
 
     QGroupBox* topBox_;
 
@@ -142,6 +109,8 @@ private:
     // mapnik
     QGroupBox* mapnikBox_;
     QCheckBox* mapnikLayerBox_;
+    QSpinBox* mapnikThreads_;
+    QLabel* mapnikThreadsLabel_;
 
     // development features
     QGroupBox* featuresBox_;

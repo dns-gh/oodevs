@@ -13,7 +13,7 @@
 #include "AgentsLayer.h"
 #include "AutomatsLayer.h"
 #include "UrbanLayer.h"
-#include "Config.h"
+#include "PrepaConfig.h"
 #include "InhabitantLayer.h"
 #include "ExerciseCreationDialog.h"
 #include "DialogContainer.h"
@@ -59,6 +59,7 @@
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationsLayer.h"
+#include "clients_gui/MapnikLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MiscLayer.h"
 #include "clients_gui/OverFlyingColorModifier.h"
@@ -138,7 +139,7 @@ namespace
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Config& config, const QString& expiration )
+MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, PrepaConfig& config, const QString& expiration )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
@@ -308,6 +309,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     gui::Layer& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
     gui::Layer& indicatorCreationLayer  = *new gui::MiscLayer< ScoreDialog >( dialogContainer_->GetScoreDialog() );
     gui::Layer& raster                  = *new gui::RasterLayer( controllers_.controller_ );
+    gui::Layer* mapnik                  = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_, config_.GetMapnikThreads() ) : 0;
     gui::Layer& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     gui::Layer& resourceNetworksLayer   = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
@@ -329,6 +331,8 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     AddLayer( *glProxy_, preferences, defaultLayer );
     AddLayer( *glProxy_, preferences, elevation2d,              "main",                         tools::translate( "MainWindow", "Elevation" ) );
     AddLayer( *glProxy_, preferences, raster,                   "main",                         tools::translate( "MainWindow", "Raster" ) );
+    if( mapnik )
+        AddLayer( *glProxy_, preferences, *mapnik,              "main,composition,miniviews",   tools::translate( "MainWindow", "Mapnik" ) );
     AddLayer( *glProxy_, preferences, terrain,                  "main",                         tools::translate( "MainWindow", "Terrain" ) );
     AddLayer( *glProxy_, preferences, contour,                  "main,composition,miniviews",   tools::translate( "MainWindow", "Contour Lines" ) );
     AddLayer( *glProxy_, preferences, urbanLayer,               "main",                         tools::translate( "MainWindow", "Urban blocks" ) );

@@ -7,10 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __Config_h_
-#define __Config_h_
+#ifndef PREPARATION_PREPACONFIG_H
+#define PREPARATION_PREPACONFIG_H
 
 #include "tools/ExerciseConfig.h"
+
+namespace gui
+{
+    struct GamingCommonConfig;
+}
 
 namespace tools
 {
@@ -24,13 +29,13 @@ namespace tools
 */
 // Created: NLD 2007-01-12
 // =============================================================================
-class Config : public tools::ExerciseConfig
+class PrepaConfig : public tools::ExerciseConfig
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer );
-    virtual ~Config();
+             PrepaConfig( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer );
+    virtual ~PrepaConfig();
     //@}
 
     //! @name Accessor
@@ -38,6 +43,8 @@ public:
     bool HasGenerateScores() const;
     const tools::Path& GetFolderToMigrate() const;
     const tools::Path& GetQtNamesPath() const;
+    bool HasMapnik() const;
+    uint32_t GetMapnikThreads() const;
     //@}
 
 private:
@@ -46,7 +53,8 @@ private:
     bool generateScores_;
     tools::Path folderToMigrate_;
     tools::Path qtNamesPath_;
+    std::unique_ptr< gui::GamingCommonConfig > common_;
     //@}
 };
 
-#endif // __Config_h_
+#endif // PREPARATION_PREPACONFIG_H

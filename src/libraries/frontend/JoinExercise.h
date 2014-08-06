@@ -15,6 +15,8 @@
 namespace frontend
 {
 
+struct DebugConfig;
+
 // =============================================================================
 /** @class  JoinExercise
     @brief  JoinExercise
@@ -30,8 +32,7 @@ public:
              // empty string to log anonymously.
              JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
                  const tools::Path& session, const QString* profile,
-                 const QString& devFeatures, const tools::Path& timelineLog,
-                 const tools::Path& cefLog );
+                 const tools::Path& sessionDir, const frontend::DebugConfig& debug );
     virtual ~JoinExercise();
     //@}
 

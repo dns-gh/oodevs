@@ -15,6 +15,7 @@
 namespace frontend
 {
     class ConfigurationManipulator;
+    struct DebugConfig;
 
 // =============================================================================
 /** @class  StartExercise
@@ -27,7 +28,7 @@ class StartExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-    StartExercise(  const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const std::map< std::string, std::string >& arguments, bool launchDispatchedIfNotEmbedded, const std::string& name );
+    StartExercise(  const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, bool launchDispatchedIfNotEmbedded, const std::string& name, const tools::Path& checkpoint, const frontend::DebugConfig& debug );
     virtual ~StartExercise();
     //@}
 

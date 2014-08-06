@@ -30,7 +30,7 @@ namespace tools
     class ExerciseConfig;
 }
 
-class Config;
+class GamingConfig;
 class Model;
 class TimelineWebView;
 class TimelineToolBar;
@@ -50,7 +50,7 @@ class TimelineDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, Model& model );
+             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const GamingConfig& config, Model& model );
     virtual ~TimelineDockWidget();
     //@}
 

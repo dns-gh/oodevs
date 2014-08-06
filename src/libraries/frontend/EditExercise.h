@@ -14,6 +14,7 @@
 
 namespace frontend
 {
+    struct DebugConfig;
 
 // =============================================================================
 /** @class  EditExercise
@@ -26,7 +27,8 @@ class EditExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             EditExercise( const tools::GeneralConfig& config, const tools::Path& name );
+             EditExercise( const tools::GeneralConfig& config,
+                     const tools::Path& name, const DebugConfig& debug );
     virtual ~EditExercise();
     //@}
 };

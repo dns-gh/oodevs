@@ -17,7 +17,6 @@
 #include "AutomatsLayer.h"
 #include "ClientCommandFacade.h"
 #include "CommandFacade.h"
-#include "Config.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "DockContainer.h"
@@ -26,6 +25,7 @@
 #include "FirePlayer.h"
 #include "FogLayer.h"
 #include "FormationLayer.h"
+#include "GamingConfig.h"
 #include "icons.h"
 #include "IndicatorExportDialog.h"
 #include "IndicatorPlotFactory.h"
@@ -144,7 +144,7 @@ namespace
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, SimulationController& simulationController,
-                        Network& network, ProfileFilter& filter, Config& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license )
+                        Network& network, ProfileFilter& filter, GamingConfig& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license )
     : QMainWindow()
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
@@ -309,7 +309,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
     gui::Layer& eventLayer           = *new gui::MiscLayer< EventDockWidget >( dockContainer_->GetEventDockWidget() );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer* mapnik               = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_ ) : 0;
+    gui::Layer* mapnik               = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_, config_.GetMapnikThreads() ) : 0;
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     gui::Layer& resourceNetworksLayer = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );

@@ -18,6 +18,7 @@
 namespace frontend
 {
     class Config;
+    struct DebugConfig;
     class Exercise_ABC;
     class PluginConfig_ABC;
 }
@@ -36,7 +37,6 @@ class Application;
 class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
-struct DebugConfig;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage
@@ -56,7 +56,7 @@ public:
                                    const Config& config,
                                    const tools::Loader_ABC& fileLoader,
                                    ExerciseContainer& exercises,
-                                   const DebugConfig* debug );
+                                   const frontend::DebugConfig& debug );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -76,7 +76,7 @@ private:
     virtual void OnLanguageChanged();
     virtual void Update();
 
-    void CreateSession( const tools::Path& exercise, const tools::Path& session ) const;
+    tools::Path CreateSession( const tools::Path& exercise, const tools::Path& session ) const;
     std::pair< tools::Path, bool > BuildSessionName() const;
     template< typename T >
     T* AddPlugin( T* plugin );
@@ -95,7 +95,7 @@ private:
     const tools::Loader_ABC&      fileLoader_;
     kernel::Controllers&          controllers_;
     ExerciseContainer&            exerciseContainer_;
-    const DebugConfig*            debug_;
+    const frontend::DebugConfig&  debug_;
     ProgressPage*                 progressPage_;
     ExerciseList*                 exercises_;
     const frontend::Exercise_ABC* exercise_;

@@ -42,7 +42,6 @@ public:
     bool HasFeature( Feature feature ) const;
     bool IsOnDebugMode() const;
     const tools::Path& GetSession() const;
-    tools::Path GetCefLog() const;
     //@}
 
 private:

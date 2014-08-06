@@ -11,7 +11,6 @@
 #include "DebugConfigPanel.h"
 #include "moc_DebugConfigPanel.cpp"
 #include "Config.h"
-#include "Registry.h"
 
 #include "clients_gui/FileDialog.h"
 
@@ -19,75 +18,16 @@
 
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+#include "frontend/DebugConfig.h"
 
 #include <QScrollArea>
-
-namespace
-{
-
-DebugConfig LoadDebugConfig()
-{
-    DebugConfig config;
-
-    config.gaming.hasMapnik = registry::ReadBool( "HasMapnikLayer" );
-
-    config.sim.decProfiling = registry::ReadBool( "DebugDecProfiling" );
-    config.sim.integrationDir = registry::ReadPath( "IntegrationLayerPath" );
-    config.sim.pathfindFilter = registry::ReadString( "DebugPathfindFilter" ).toStdString();
-    config.sim.pathfindDumpDir = registry::ReadPath( "DebugPathfindDumpPath" );
-
-    config.timeline.debugPort = registry::ReadInt( "TimelineDebugPort" );
-    config.timeline.debugWwwDir = registry::ReadPath( "TimelineDebugDir" );
-    config.timeline.clientLogPath = registry::ReadPath( "TimelineClientLog" );
-    config.timeline.cefLog = registry::ReadPath( "CefLog" );
-    config.timeline.legacyTimeline = registry::ReadBool( "EnableLegacyTimeline" );
-
-    config.features = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
-
-    return config;
-}
-
-void SaveDebugConfig( const DebugConfig& config )
-{
-    registry::WriteBool( "HasMapnikLayer", config.gaming.hasMapnik );
-
-    registry::WriteBool( "DebugDecProfiling", config.sim.decProfiling );
-    registry::WriteString( "IntegrationLayerPath",
-            config.sim.integrationDir.ToUTF8().c_str() );
-    registry::WriteString( "DebugPathfindFilter", config.sim.pathfindFilter.c_str() );
-    registry::WritePath( "DebugPathfindDumpPath", config.sim.pathfindDumpDir );
-
-    registry::WriteInt( "TimelineDebugPort", config.timeline.debugPort );
-    registry::WritePath( "TimelineDebugDir", config.timeline.debugWwwDir );
-    registry::WritePath( "TimelineClientLog", config.timeline.clientLogPath );
-    registry::WritePath( "CefLog", config.timeline.cefLog );
-    registry::WriteBool( "EnableLegacyTimeline", config.timeline.legacyTimeline );
-
-    registry::WriteString( "DevFeatures",
-        QString::fromStdString( tools::JoinFeatures( config.features ) ) );
-}
-
-}  // namespace
-
-tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& logPath )
-{
-    if( logPath.IsEmpty() )
-        return logPath;
-    if( logPath.IsAbsolute() )
-        return logPath;
-    return sessionDir.Absolute() / logPath;
-}
-
-QString DebugConfig::GetDevFeatures() const
-{
-    return tools::JoinFeatures( features ).c_str();
-}
 
 // -----------------------------------------------------------------------------
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
-DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config, DebugConfig& debug )
+DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
+        frontend::DebugConfig& debug )
     : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , visible_( !!parent )
     , config_( config )
@@ -101,8 +41,9 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config, Debug
     , dataButton_( 0 )
     , mapnikBox_( 0 )
     , mapnikLayerBox_( 0 )
+    , mapnikThreads_( 0 )
 {
-    debug_ = LoadDebugConfig();
+    debug_ = frontend::LoadDebugConfig();
 
     //integration level label
     integrationLabel_ = new QLabel();
@@ -226,12 +167,19 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config, Debug
 
     //mapnik group box
     mapnikBox_ = new QGroupBox();
-    QGridLayout* mapnik = new QGridLayout( mapnikBox_, 1, 1 );
+    QGridLayout* mapnik = new QGridLayout( mapnikBox_, 2, 1 );
     mapnik->setMargin( 10 );
     mapnikLayerBox_ = new QCheckBox();
     mapnikLayerBox_->setChecked( debug_.gaming.hasMapnik );
     connect( mapnikLayerBox_, SIGNAL( clicked( bool ) ), SLOT( OnMapnikLayerChecked( bool ) ) );
+    mapnikThreads_ = new QSpinBox();
+    mapnikThreads_->setRange( 0, 128 );
+    mapnikThreads_->setValue( debug_.gaming.mapnikThreads );
+    connect( mapnikThreads_, SIGNAL( valueChanged( int ) ), SLOT( OnMapnikThreadsChanged( int ) ) );
+    mapnikThreadsLabel_ = new QLabel();
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
+    mapnik->addWidget( mapnikThreadsLabel_, 1, 0 );
+    mapnik->addWidget( mapnikThreads_, 1, 1 );
 
     // development features
     const auto& availableFeatures = tools::GetAvailableFeatures();
@@ -299,7 +247,7 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
     if( !path.IsEmpty() && !path.IsDirectory() )
         return;
     debug_.sim.integrationDir = path;
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,6 +270,7 @@ void DebugConfigPanel::OnLanguageChanged()
     dumpLabel_->setText( tools::translate( "DebugConfigPanel", "Dump pathfinds directory :" ) );
     mapnikBox_->setTitle( tools::translate( "DebugConfigPanel", "Mapnik settings" ) );
     mapnikLayerBox_->setText( tools::translate( "DebugConfigPanel", "Activate layer" ) );
+    mapnikThreadsLabel_->setText( tools::translate( "DebugConfigPanel", "Rendering threads" ) );
     dataButton_->setText( "..." );
 }
 
@@ -342,7 +291,7 @@ void DebugConfigPanel::OnChangeDataDirectory()
 {
     debug_.sim.pathfindFilter = filterEdit_->text().toStdString();
     debug_.sim.pathfindDumpDir = tools::Path::FromUnicode( dataDirectory_->text().toStdWString() );
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnSelectDataDirectory()
@@ -357,7 +306,7 @@ void DebugConfigPanel::OnSelectDataDirectory()
 void DebugConfigPanel::OnDecProfilingChanged( bool checked )
 {
     debug_.sim.decProfiling = checked;
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -367,7 +316,7 @@ void DebugConfigPanel::OnDecProfilingChanged( bool checked )
 void DebugConfigPanel::OnTimelineChecked( bool checked )
 {
     debug_.timeline.legacyTimeline = checked;
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -377,31 +326,37 @@ void DebugConfigPanel::OnTimelineChecked( bool checked )
 void DebugConfigPanel::OnTimelineDebugPortChanged( int port )
 {
     debug_.timeline.debugPort = port;
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnTimelineLogChanged( const QString& path )
 {
     debug_.timeline.clientLogPath = tools::Path::FromUnicode( path.trimmed().toStdWString() );
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnTimelineDebugChanged( const QString& path )
 {
     debug_.timeline.debugWwwDir = tools::Path::FromUnicode( path.trimmed().toStdWString() );
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnCefLogChanged( const QString& path )
 {
     debug_.timeline.cefLog = tools::Path::FromUnicode( path.trimmed().toStdWString() );
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
 {
     debug_.gaming.hasMapnik = checked;
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
+}
+
+void DebugConfigPanel::OnMapnikThreadsChanged( int threads )
+{
+    debug_.gaming.mapnikThreads = threads;
+    frontend::SaveDebugConfig( debug_ );
 }
 
 void DebugConfigPanel::OnDevFeaturesChanged()
@@ -410,6 +365,6 @@ void DebugConfigPanel::OnDevFeaturesChanged()
     for( auto it = features_.begin(); it != features_.end(); ++it )
         if( (*it)->isChecked() )
             debug_.features.insert( (*it)->text() );
-    SaveDebugConfig( debug_ );
+    frontend::SaveDebugConfig( debug_ );
 }
 

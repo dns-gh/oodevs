@@ -18,7 +18,7 @@
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichAction.h"
-#include "Config.h"
+#include "GamingConfig.h"
 #include "gaming/Services.h"
 #include "icons.h"
 #include "protocol/Dispatcher.h"
@@ -63,7 +63,7 @@ using namespace actions;
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const Config& config, kernel::Controllers& controllers )
+ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const GamingConfig& config, kernel::Controllers& controllers )
     : Q3HBox       ( parent, "ActionsToolbar" )
     , controllers_( controllers )
     , actions_    ( actions )

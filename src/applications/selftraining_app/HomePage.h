@@ -17,6 +17,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace frontend
+{
+    struct DebugConfig;
+}
+
 namespace tools
 {
     class Loader_ABC;
@@ -32,7 +37,6 @@ class ScenarioEditPage;
 class QuitPage;
 class SelfTrainingPage;
 class ReplayPage;
-struct DebugConfig;
 
 // =============================================================================
 /** @class  HomePage
@@ -74,7 +78,7 @@ private:
     //! @name Member data
     //@{
     Config& config_;
-    std::unique_ptr< DebugConfig > debug_;
+    std::unique_ptr< frontend::DebugConfig > debug_;
     AuthoringPage* adaptPage_;
     OptionsPage* optionsPage_;
     ScenarioEditPage* editPage_;

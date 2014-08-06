@@ -201,6 +201,10 @@
         <source>Chrome embedded log file</source>
         <translation>Fichier de log de Chrome embedded</translation>
     </message>
+    <message>
+        <source>Rendering threads</source>
+        <translation>Threads de rendu</translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

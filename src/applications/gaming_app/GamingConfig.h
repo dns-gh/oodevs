@@ -7,26 +7,31 @@
 //
 // *****************************************************************************
 
-#ifndef __Config_h_
-#define __Config_h_
+#ifndef GAMING_GAMING_CONFIG_H
+#define GAMING_GAMING_CONFIG_H
 
 #include "tools/SessionConfig.h"
 
 class Network;
 
+namespace gui
+{
+    struct GamingCommonConfig;
+}
+
 // =============================================================================
-/** @class  Config
-    @brief  Config
+/** @class  GamingConfig
+    @brief  GamingConfig
 */
 // Created: NLD 2007-01-12
 // =============================================================================
-class Config : public tools::SessionConfig
+class GamingConfig : public tools::SessionConfig
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( int argc, char** argv );
-    virtual ~Config();
+             GamingConfig( int argc, char** argv );
+    virtual ~GamingConfig();
     //@}
 
     //! @name Operations
@@ -45,8 +50,8 @@ public:
     tools::Path GetTimelineClientLogFile() const;
     // Disabled if empty
     tools::Path GetCefLogFile() const;
-
     bool HasMapnik() const;
+    uint32_t GetMapnikThreads() const;
     //@}
 
 private:
@@ -67,12 +72,10 @@ private:
     bool hasTimeline_;
     std::string timelineUrl_;
     int timelineDebugPort_;
-    // Timeline client log file can be set from CLI or session file
     tools::Path timelineLogFile_;
-    tools::Path timelineLogFileCli_;
     tools::Path cefLogFile_;
-    bool mapnik_;
+    std::unique_ptr< gui::GamingCommonConfig > common_;
     //@}
 };
 
-#endif // __Config_h_
+#endif // GAMING_GAMING_CONFIG_H

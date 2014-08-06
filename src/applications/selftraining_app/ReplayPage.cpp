@@ -21,6 +21,7 @@
 
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
+#include "frontend/DebugConfig.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/StartReplay.h"
 #include "frontend/StartTimeline.h"
@@ -36,7 +37,7 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises, const DebugConfig* debug )
+ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises, const frontend::DebugConfig& debug )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_( config )
     , debug_( debug )
@@ -105,22 +106,13 @@ void ReplayPage::StartExercise()
     if( !exercise_ || session_.IsEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
         return;
     const tools::Path exerciseName = exercise_->GetName();
-    ConfigureSession( exerciseName, session_ );
+    const auto sessionDir = ConfigureSession( exerciseName, session_ );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, "" ) );
-    QString features;
-    boost::optional< tools::Path > wwwDir;
-    if( debug_ )
-    {
-        if( !debug_->timeline.debugWwwDir.IsEmpty() )
-            wwwDir = debug_->timeline.debugWwwDir;
-        features = debug_->GetDevFeatures();
-    }
-    process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_, wwwDir ) );
+    process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_, debug_ ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
-            exerciseName, session_, &profile, features, tools::Path(),
-            config_.GetCefLog() ) );
+            exerciseName, session_, &profile, sessionDir, debug_ ));
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();
@@ -178,9 +170,11 @@ void ReplayPage::OnSelectSession( const tools::Path& session )
 // Name: ReplayPage::ConfigureSession
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
-void ReplayPage::ConfigureSession( const tools::Path& exercise, const tools::Path& session )
+tools::Path ReplayPage::ConfigureSession( const tools::Path& exercise, const tools::Path& session )
 {
     frontend::CreateSession action( config_, exercise, session );
+    tools::Path sessionDir = action.GetPath().Parent();
     action.SetDefaultValues(); // reset specific parameters
     action.Commit();
+    return sessionDir;
 }

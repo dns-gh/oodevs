@@ -18,6 +18,7 @@
 #include "ScenarioEditPage.h"
 #include "SelfTrainingPage.h"
 #include "clients_kernel/Tools.h"
+#include "frontend/DebugConfig.h"
 #include "moc_HomePage.cpp"
 
 // -----------------------------------------------------------------------------
@@ -30,24 +31,25 @@ HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
                     ExerciseContainer& exercises )
     : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
-    , debug_( config.IsOnDebugMode() ? new DebugConfig() : 0 )
+    , debug_( new frontend::DebugConfig() )
     , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader,
-                controllers, exercises, debug_.get() ) )
+                controllers, exercises, config.IsOnDebugMode() ? debug_.get() : 0 ) )
 {
     setWindowTitle( "HomePage" );
 
     adaptPage_ = new AuthoringPage( app, parent, pages, *this, config, controllers );
     adapt_ =   AddLink( *adaptPage_ );
 
-    editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, exercises );
+    editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, exercises, *debug_ );
     prepare_ = AddLink( *editPage_, false );
     connect( prepare_, SIGNAL( clicked() ), this, SLOT( OnPrepare() ) );
 
     playPage_ = new SelfTrainingPage( app, pages, *this, config, fileLoader,
-            controllers, exercises, debug_.get() );
+            controllers, exercises, *debug_ );
     play_ =    AddLink( *playPage_ );
 
-    replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, exercises, debug_.get() );
+    replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader,
+            controllers, exercises, *debug_ );
     replay_ =  AddLink( *replayPage_, false );
     connect( replay_,  SIGNAL( clicked() ), this, SLOT( OnReplay() ) );
 }
