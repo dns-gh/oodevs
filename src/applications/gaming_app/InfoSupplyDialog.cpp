@@ -43,7 +43,12 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
 
     QWidget* transportersWidget = new QWidget();
     QVBoxLayout* transporterslayout = new QVBoxLayout( transportersWidget );
-    transporterslayout->addWidget( new SupplyTransportersListView( this, controllers ) );
+    auto transportersListView = new SupplyTransportersListView( this, controllers );
+    auto filter = [&]( const kernel::Availability& availability, const SupplyStates& ) {
+        return availability.type_ && availability.type_->GetLogSupplyFunctionCarrying() != 0;
+    };
+    transportersListView->SetFilter( filter );
+    transporterslayout->addWidget( transportersListView );
 
     QWidget* statusWidget = new QWidget();
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
