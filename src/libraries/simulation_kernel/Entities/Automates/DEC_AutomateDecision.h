@@ -53,7 +53,7 @@ public:
     //! @name Operations
     //@{
     void Clean();
-    virtual void Reload( bool doInitBrain );
+    virtual void Reload( bool force, bool doInitBrain );
     virtual void ActivateBrainDebug( bool activate );
 
     bool HasStateChanged() const;

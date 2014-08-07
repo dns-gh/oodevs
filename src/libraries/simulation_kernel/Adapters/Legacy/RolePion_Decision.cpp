@@ -84,9 +84,9 @@ RolePion_Decision::~RolePion_Decision()
 // Name: RolePion_Decision::Reload
 // Created: SLI 2012-07-16
 // -----------------------------------------------------------------------------
-void RolePion_Decision::Reload( bool doInitBrain )
+void RolePion_Decision::Reload( bool force, bool doInitBrain )
 {
-    DEC_RolePion_Decision::Reload( doInitBrain );
+    DEC_RolePion_Decision::Reload( force, doInitBrain );
     RegisterFunctions();
 }
 

@@ -56,7 +56,7 @@ public:
     const DEC_Model_ABC& GetModel() const;
     virtual void UpdateDecision( float duration );
     virtual void Reset( std::string groupName = "" );
-    virtual void Reload( bool doInitBrain );
+    virtual void Reload( bool force, bool doInitBrain );
     virtual void IncDIARef();
     virtual void DecDIARef();
     virtual bool IsUsedByDIA() const;
@@ -1384,10 +1384,10 @@ bool DEC_Decision< T >::IsDead() const
 // Created: LDC 2011-08-18
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::Reload( bool doInitBrain )
+void DEC_Decision< T >::Reload( bool force, bool doInitBrain )
 {
     if( doInitBrain )
-        InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), true, model_->GetIntegrationDir() );
+        InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), force, model_->GetIntegrationDir() );
     StartDefaultBehavior();
 }
 

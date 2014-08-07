@@ -504,7 +504,7 @@ void MIL_AgentPion::UpdateDecision( float duration )
             if( updateDecisionsDead_ )
             {
                 updateDecisionsDead_ = false;
-                GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+                GetDecision().Reload( false, true ); 
             }
         }
         else
@@ -1973,7 +1973,7 @@ void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
     const bool modified = model && model != &role.GetModel();
     if( modified )
         role.SetModel( *model );
-    GetDecision().Reload( !modified );
+    GetDecision().Reload( true, !modified );
     pOrderManager_->CancelMission();
 }
 
