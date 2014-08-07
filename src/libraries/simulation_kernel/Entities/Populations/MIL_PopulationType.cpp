@@ -210,8 +210,8 @@ void MIL_PopulationType::ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlow
         >> xml::attribute( "population-density", rPopulationDensity )
         >> xml::attribute( "max-speed", rMaxSpeed );
 
-    if( rPopulationDensity <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "unit: population-density <= 0" );
+    if( rPopulationDensity < 0 )
+        throw MASA_EXCEPTION( xis.context() + "unit: population-density < 0" );
     if( rMaxSpeed < 0 )
         throw MASA_EXCEPTION( xis.context() + "unit: max-speed < 0" );
 
