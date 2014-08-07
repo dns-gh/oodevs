@@ -75,6 +75,7 @@ private:
     bool HasNewLima() const;
     virtual bool InternalCheckValidity() const;
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyUpdated( const kernel::TacticalLine_ABC& entity );
     virtual void NotifyDeleted( const kernel::TacticalLine_ABC& entity );
     virtual void CreateInternalMenu( kernel::ContextMenu& menu );
     //@}
