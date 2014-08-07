@@ -355,7 +355,8 @@ void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geom
         if( const kernel::ObjectType* type = objectTypes_->GetValue() )
         {
             const std::string locationType = location.GetTypeName();
-            tools.DrawTacticalGraphics( type->GetSymbol( locationType ), location, true, dynamic_cast< const kernel::Point* >( &location ) != nullptr );
+            tools.DrawTacticalGraphics( type->GetSymbol( locationType ), location, true, type->GetPointSize(),
+                dynamic_cast< const kernel::Point* >( &location ) != nullptr );
         }
 }
 

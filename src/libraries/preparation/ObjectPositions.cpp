@@ -29,6 +29,7 @@
 ObjectPositions::ObjectPositions( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const kernel::Location_ABC& location )
     : controller_( controller)
     , converter_ ( converter )
+    , type_      ( type )
     , location_  ( &location.Clone() )
 {
     const std::string locationType = location.GetTypeName();
@@ -43,6 +44,7 @@ ObjectPositions::ObjectPositions( kernel::Controller& controller, const kernel::
 ObjectPositions::ObjectPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type )
     : controller_( controller )
     , converter_ ( converter )
+    , type_      ( type )
     , location_  ( 0 )
 {
     ReadLocation( xis, type );
@@ -286,7 +288,7 @@ void ObjectPositions::Draw( const geometry::Point2f&, const gui::Viewport_ABC& v
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
-    tools.DrawTacticalGraphics( symbol_, *location_, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location_ ) != nullptr );
+    tools.DrawTacticalGraphics( symbol_, *location_, tools.ShouldDisplay(), type_.GetPointSize(), dynamic_cast< const kernel::Point* >( location_ ) != nullptr );
 }
 
 // -----------------------------------------------------------------------------

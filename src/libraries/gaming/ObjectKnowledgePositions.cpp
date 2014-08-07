@@ -11,6 +11,7 @@
 #include "ObjectKnowledgePositions.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Point.h"
 #include "protocol/Protocol.h"
 
@@ -18,9 +19,11 @@
 // Name: ObjectKnowledgePositions constructor
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-ObjectKnowledgePositions::ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectKnowledge_ABC& knowledge )
+ObjectKnowledgePositions::ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectKnowledge_ABC& knowledge,
+                                                    const kernel::ObjectType& type )
     : LocationPositions( converter )
     , knowledge_( knowledge )
+    , type_     ( type )
 {
     // NOTHING
 }
@@ -51,7 +54,8 @@ void ObjectKnowledgePositions::DoUpdate( const sword::ObjectKnowledgeUpdate& mes
 void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
-        tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location ) != nullptr );
+        tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay(), type_.GetPointSize(),
+            dynamic_cast< const kernel::Point* >( location ) != nullptr );
 }
 
 // -----------------------------------------------------------------------------

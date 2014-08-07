@@ -85,6 +85,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::ObjectType& type_;
     kernel::Location_ABC* location_;
     std::string symbol_;
     geometry::Rectangle2f boundingBox_;

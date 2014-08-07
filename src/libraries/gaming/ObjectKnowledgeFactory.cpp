@@ -19,6 +19,7 @@
 #include "ObjectKnowledgePositions.h"
 #include "ObjectPerceptions.h"
 #include "StaticModel.h"
+#include <tools/Resolver.h>
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeFactory constructor
@@ -49,9 +50,10 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // -----------------------------------------------------------------------------
 kernel::ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const kernel::Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message )
 {
+    const kernel::ObjectType& type = static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( message.type().id() );
     ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, model_.GetObjectResolver(),
-                                                      model_.GetTeamResolver(), static_.objectTypes_ );
-    knowledge->Attach< kernel::Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_, *knowledge ) );
+                                                      model_.GetTeamResolver(), type );
+    knowledge->Attach< kernel::Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_, *knowledge, type ) );
     knowledge->Attach( *new ObjectPerceptions( controllers_.controller_, model_.agents_ ) );
     knowledge->Polish();
     return knowledge;

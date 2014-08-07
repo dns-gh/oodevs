@@ -31,11 +31,11 @@ using namespace kernel;
 ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message, Controller& controller,
                                   const tools::Resolver_ABC< Object_ABC >& objectResolver,
                                   const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver,
-                                  const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
+                                  const kernel::ObjectType& type )
     : gui::EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "", true )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
-    , type_          ( & typeResolver.Get( message.type().id() ) )
+    , type_          ( &type )
     , entityId_      ( message.object().id() )
     , pTeam_         ( message.has_object_party() ? teamResolver.Find( message.object_party().id() ) : 0 )
     , objectName_    ( message.has_object_name() ? QString::fromStdString( message.object_name() ) : tools::translate( "Object", "Unknown object" ) )

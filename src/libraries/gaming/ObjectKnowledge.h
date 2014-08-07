@@ -51,7 +51,7 @@ public:
                               kernel::Controller& controller,
                               const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver,
                               const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver,
-                              const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
+                              const kernel::ObjectType& type );
     virtual ~ObjectKnowledge();
     //@}
 

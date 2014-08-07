@@ -1081,9 +1081,10 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
 // Name: GlWidget::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize /*= true*/ ) const
+void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location,
+                                     bool overlined, float pointSize, bool fixedSize /*= true*/ ) const
 {
-    Base().DrawTacticalGraphics( symbol, location, viewport_, overlined, GetAdaptiveZoomFactor( !fixedSize ) );
+    Base().DrawTacticalGraphics( symbol, location, viewport_, overlined, pointSize, GetAdaptiveZoomFactor( !fixedSize ) );
 }
 
 // -----------------------------------------------------------------------------

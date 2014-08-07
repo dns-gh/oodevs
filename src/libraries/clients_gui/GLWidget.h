@@ -98,7 +98,7 @@ public:
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const;
     virtual void DrawCell         ( const geometry::Point2f& center ) const;
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f, bool fixedSize = true ) const;
-    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize = true ) const;
+    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, float pointSize, bool fixedSize = true ) const;
     virtual void DrawShapeText( const QImage& image, const geometry::Point2f& where ) const;
 
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
