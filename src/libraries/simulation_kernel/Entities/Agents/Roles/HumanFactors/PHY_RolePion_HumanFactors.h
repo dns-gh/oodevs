@@ -124,7 +124,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef void (PHY_RolePion_HumanFactors::*T_EvolutionFunction)(void);
+    typedef void (PHY_RolePion_HumanFactors::*T_EvolutionFunction)();
     //@}
 
     //! @name Member data
