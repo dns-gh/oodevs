@@ -1328,12 +1328,15 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParame
     const auto& point = protocol::GetPoint( msg, 0 );
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point, position );
-   // merge all concentrations into new
-    T_ConcentrationVector concentrations = concentrations_;
+    T_ConcentrationVector concentrations;
+    concentrations.swap( concentrations_ );
     for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
         (*it)->MagicMove( position );
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
         (*it)->MagicMove( position );
+    trashedConcentrations_.insert( trashedConcentrations_.end(), concentrations.begin(), concentrations.end() );
+    trashedFlows_.insert( trashedFlows_.end(), flows_.begin(), flows_.end() );
+    flows_.clear();
     bHasDoneMagicMove_ = true;
     UpdateBarycenter();
     UpdateNetwork();
