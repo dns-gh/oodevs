@@ -79,8 +79,8 @@ public:
     static void  ShareKnowledgesWith ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float minutes );
     static DEC_Decision_ABC* GetAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );	
     static void SwitchAutomateLogistic( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static bool IsInObject( const MIL_Entity_ABC& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
-    static bool IsInObjectWithCapacity( const MIL_Entity_ABC& callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
+    static bool IsInObject( const MIL_AgentPion& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
+    static bool IsInObjectWithCapacity( const MIL_AgentPion& callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
     //@}
 };
 
