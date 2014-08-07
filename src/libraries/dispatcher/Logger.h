@@ -13,7 +13,6 @@
 #include "tools/Log.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 
 namespace dispatcher
@@ -30,8 +29,8 @@ class Logger
 public:
     //! @name Types
     //@{
-    typedef boost::function< void( const std::string&, const T& ) > T_ConstCallback;
-    typedef boost::function< void( const std::string&, T& ) >       T_Callback;
+    typedef std::function< void( const std::string&, const T& ) > T_ConstCallback;
+    typedef std::function< void( const std::string&, T& ) >       T_Callback;
     //@}
 
 public:
@@ -97,7 +96,7 @@ private:
 };
 
 template< typename C, typename T >
-boost::function< void( const std::string&, const T& ) > MakeConstLogger(
+std::function< void( const std::string&, const T& ) > MakeConstLogger(
     tools::Log& log, const std::string& prefix,
     C& instance, void (C::*callback)( const std::string&, const T& ) )
 {
@@ -105,7 +104,7 @@ boost::function< void( const std::string&, const T& ) > MakeConstLogger(
 }
 
 template< typename C, typename T >
-boost::function< void( const std::string&, T& ) > MakeLogger(
+std::function< void( const std::string&, T& ) > MakeLogger(
     tools::Log& log, const std::string& prefix,
     C& instance, void (C::*callback)( const std::string&, T& ) )
 {

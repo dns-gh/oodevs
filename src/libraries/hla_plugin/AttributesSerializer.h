@@ -11,7 +11,6 @@
 #define plugins_hla_AttributesSerializer_h
 
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <string>
@@ -113,7 +112,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::function< void( ::hla::Serializer_ABC& ) > T_Serializer;
+    typedef std::function< void( ::hla::Serializer_ABC& ) > T_Serializer;
     typedef std::pair< std::string, T_Serializer > T_Attribute;
     typedef std::vector< T_Attribute > T_Attributes;
     typedef std::vector< std::string > T_Updates;

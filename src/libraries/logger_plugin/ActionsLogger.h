@@ -10,9 +10,10 @@
 #ifndef __ActionsLogger_h_
 #define __ActionsLogger_h_
 
-#include <vector>
+#include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include <boost/noncopyable.hpp>
 
@@ -91,7 +92,7 @@ public:
     //@{
     typedef std::pair< boost::posix_time::ptime, sword::ClientToSim > T_Action;
     typedef std::vector< T_Action >                                   T_Actions;
-    typedef boost::function< bool( const sword::ClientToSim& ) > T_Filter;
+    typedef std::function< bool( const sword::ClientToSim& ) > T_Filter;
     //@}
 
 private:

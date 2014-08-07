@@ -18,7 +18,6 @@
 #include <directia/brain/Brain.h>
 #undef private
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <boost/preprocessor/iteration/iterate.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
@@ -78,7 +77,7 @@ public:
 #undef BRAIN_FUNCTION_MAX_ARITY
 
     template< typename Signature >
-    void RegisterFunction( const char* const name, const boost::function< Signature >& function )
+    void RegisterFunction( const char* const name, const std::function< Signature >& function )
     {
         (*brain_)[ name ] = ProfilerProxy< Signature >( logger_, name, profilers_[ name ], function, brain_.get() );
     }
@@ -86,7 +85,7 @@ public:
     template< typename Function >
     void RegisterFunction( const char* const name, const Function& function )
     {
-        RegisterFunction( name, boost::function< boost::result_of< Function() >::type() >( function ) );
+        RegisterFunction( name, std::function< boost::result_of< Function() >::type() >( function ) );
     }
 
     static void ResetProfiling( bool log );

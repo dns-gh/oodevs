@@ -517,7 +517,7 @@ void ADN_MainWindow::OnAbout()
 namespace
 {
     template< typename Dialog, typename Element >
-    bool ShowConsistencyDialog( const QString& name, const std::map< QString, boost::function< QWidget*() > >& map )
+    bool ShowConsistencyDialog( const QString& name, const std::map< QString, std::function< QWidget*() > >& map )
     {
         auto it = map.find( name );
         if( it == map.end() )

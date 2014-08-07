@@ -57,7 +57,7 @@ public:
     int GetMaxHeat() const;
     int GetWeatherDecreateRate( const weather::PHY_Precipitation& ) const;
     void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
-    const PHY_DotationCategory* FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const;
+    const PHY_DotationCategory* FindBestExtinguisherAgent( std::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const;
     int GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const;
     const PHY_UrbanAttritionData& GetUrbanAttritionData() const;
     //@}

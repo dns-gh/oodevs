@@ -55,7 +55,7 @@ void PHY_ActionRecoLima::Execute()
         return;
     previousAgentsPos_.swap( agentsPos_ );
     agentsPos_.clear();
-    boost::function< void( DEC_Knowledge_Agent& ) > agentFunctor = boost::bind( &PHY_ActionRecoLima::CheckAgentKnowledgesNearLimas, this, _1 );
+    std::function< void( DEC_Knowledge_Agent& ) > agentFunctor = boost::bind( &PHY_ActionRecoLima::CheckAgentKnowledgesNearLimas, this, _1 );
     const MIL_Automate& automat = caller_.GetAutomate();
     if( !automat.IsEngaged() || ( automat.IsEngaged() && IsFirstInAutomatValidWithMission() ) )
     {

@@ -10,8 +10,6 @@
 #ifndef __MessageLoader_ABC_h_
 #define __MessageLoader_ABC_h_
 
-#include <boost/function.hpp>
-
 namespace dispatcher
 {
     class MessageHandler_ABC;
@@ -27,7 +25,7 @@ class MessageLoader_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::function0< void > T_Callback;
+    typedef std::function< void() > T_Callback;
     //@}
 
 public:

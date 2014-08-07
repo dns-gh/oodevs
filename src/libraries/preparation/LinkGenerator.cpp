@@ -158,7 +158,7 @@ void LinkGenerator::DeleteLink( const kernel::Entity_ABC& entity, const kernel::
 // Name: LinkGenerator::CreateLink
 // Created: LGY 2011-10-12
 // -----------------------------------------------------------------------------
-void LinkGenerator::CreateLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base, boost::function< bool( const kernel::Entity_ABC& ) > fun )
+void LinkGenerator::CreateLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base, std::function< bool( const kernel::Entity_ABC& ) > fun )
 {
     const gui::LogisticHierarchiesBase* pHierarchy = entity.Retrieve< gui::LogisticHierarchiesBase >();
     if( pHierarchy )

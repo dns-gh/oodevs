@@ -12,7 +12,6 @@
 #include "gaming/CommandHandler.h"
 #include "gaming/Command.h"
 #include <string>
-#include <boost/function.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DockCommand constructor
@@ -43,7 +42,7 @@ void DockCommand::Receive( const Command& command )
     if( command.ArgumentCount() == 0 )
         return;
 
-    boost::function1< void, QDockWidget* > func = command.Argument( 1 ) == "show" ? std::mem_fun( &QDockWidget::show ) : std::mem_fun( &QDockWidget::hide );
+    const auto func = command.Argument( 1 ) == "show" ? std::mem_fun( &QDockWidget::show ) : std::mem_fun( &QDockWidget::hide );
     QStringList list;
     for( unsigned int i = 2; i <= command.ArgumentCount(); ++i )
         list.append( command.Argument( i ).c_str() );

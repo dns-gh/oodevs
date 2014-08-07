@@ -55,7 +55,7 @@ class DEC_Model_ABC;
 
 namespace parameters
 {
-    typedef boost::function< const DEC_Model_ABC*( const std::string& model ) > ModelFinder;
+    typedef std::function< const DEC_Model_ABC*( const std::string& model ) > ModelFinder;
     const DEC_Model_ABC* GetModel( const sword::MissionParameters& params, const ModelFinder& finder );
     uint32_t GetPartyId( const sword::MissionParameters& params, int i );
 }

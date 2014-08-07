@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 #include <tools/Resolver.h>
-#include <boost/function.hpp>
 #include <vector>
 #include <map>
 
@@ -82,7 +81,7 @@ public:
     void WriteODB( xml::xostream& xos ) const;
     void ReadUrbanState( xml::xistream& xis );
     MIL_Object_ABC* Find( unsigned int nID ) const;
-    void VisitUniversalObjects( const boost::function< void( MIL_Object_ABC& ) >& visitor ) const;
+    void VisitUniversalObjects( const std::function< void( MIL_Object_ABC& ) >& visitor ) const;
     const std::map< unsigned int, MIL_Object_ABC* >& GetObjects() const;
     //@}
 

@@ -53,13 +53,13 @@ private:
     template< typename Role >
     struct RoleFactory : RoleExtender_ABC::RoleFactory_ABC
     {
-        RoleFactory( boost::function< Role*( MIL_AgentPion& ) > func ) : func_( func ) {}
+        RoleFactory( std::function< Role*( MIL_AgentPion& ) > func ) : func_( func ) {}
         virtual void RegisterRole( MIL_AgentPion& pion )
         {
             pion.RegisterRole< Role >( *(func_( pion ) ) );
         }
     private:
-        boost::function< Role*( MIL_AgentPion& ) > func_;
+        std::function< Role*( MIL_AgentPion& ) > func_;
     };
     //@}
 

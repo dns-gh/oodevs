@@ -53,7 +53,7 @@ public:
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output ) const;
     virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
-    virtual bool ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor ) const;
+    virtual bool ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const;
 
     virtual std::string GetInvalidDataErrorMsg() const;
     const boost::shared_ptr< kernel::Context >& GetContext( const std::string& context ) const;
@@ -67,8 +67,8 @@ public:
 protected:
     //! @name Types
     //@{
-    typedef boost::function< void ( xml::xistream& ) > T_Loader;
-    typedef boost::function< void ( xml::xostream& ) > T_Saver;
+    typedef std::function< void ( xml::xistream& ) > T_Loader;
+    typedef std::function< void ( xml::xostream& ) > T_Saver;
     //@}
 
     //! @name Helpers

@@ -16,7 +16,6 @@
 
 #include "clients_kernel/ModesObserver_ABC.h"
 #include <QtGui/qtreeview.h>
-#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -43,7 +42,7 @@ class RichTreeView : public QTreeView
 public:
     //! @name Types
     //@{
-    typedef boost::function< bool( const QModelIndex&, const QModelIndex&, bool& ) > T_LessThanFunctor;
+    typedef std::function< bool( const QModelIndex&, const QModelIndex&, bool& ) > T_LessThanFunctor;
     //@}
 
     //! @name Constructors/Destructor

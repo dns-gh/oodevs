@@ -47,7 +47,7 @@ class EntityTreeView_ABC : public RichTreeView
 public:
     //! @name Types
     //@{
-    typedef boost::function< bool( const kernel::Entity_ABC&, const kernel::Entity_ABC& ) > T_LessThanEntityFunctor;
+    typedef std::function< bool( const kernel::Entity_ABC&, const kernel::Entity_ABC& ) > T_LessThanEntityFunctor;
     //@}
 
     //! @name Constructors/Destructor

@@ -13,7 +13,6 @@
 #include "ThreadPool.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
-#include <boost/function.hpp>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/interprocess/detail/os_thread_functions.hpp>
 #include <boost/interprocess/ipc/message_queue.hpp>

@@ -215,7 +215,7 @@ void PHY_RoleInterface_Supply::Clean()
 // Name: PHY_RoleInterface_Supply::Apply
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
+void PHY_RoleInterface_Supply::Apply( std::function< void( PHY_DotationStock& ) > visitor ) const
 {
     // NOTHING
 }

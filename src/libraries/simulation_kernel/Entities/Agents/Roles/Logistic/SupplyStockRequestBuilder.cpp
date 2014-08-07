@@ -61,7 +61,7 @@ SupplyStockRequestBuilder::~SupplyStockRequestBuilder()
 // -----------------------------------------------------------------------------
 void SupplyStockRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
-    boost::function< void( const MIL_AgentPion& pion, PHY_DotationStock& ) > visitor =
+    std::function< void( const MIL_AgentPion& pion, PHY_DotationStock& ) > visitor =
         boost::bind( &SupplyStockRequestBuilder::VisitStock, this, _1, _2, boost::ref( container ) );
     automate_->Apply2( visitor );
     MIL_AutomateLOG* logisticManager = automate_->FindLogisticManager();

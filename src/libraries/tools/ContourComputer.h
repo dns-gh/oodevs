@@ -11,7 +11,7 @@
 #define __tools_CONTOURCOMPUTER_H_
 
 #include <geometry/Types.h>
-#include <boost/function.hpp>
+#include <functional>
 
 namespace tools
 {
@@ -31,11 +31,11 @@ typedef std::vector< geometry::Point2f > T_PointVector;
 // returns true if completed, false otherwise
 bool ComputeContour( const unsigned int width, const unsigned int height,
         const int linesHeight, const float cellSize,
-        boost::function< short(int, int) > data,
-        boost::function< void(short) > progress,
-        boost::function< bool() > valid,
-        boost::function< void( boost::shared_ptr< T_PointVector >, int, bool )> loop,
-        boost::function< bool() > checkStop, const int nc );
+        const std::function< short(int, int) >& data,
+        const std::function< void(short) >& progress,
+        const std::function< bool() >& valid,
+        const std::function< void( boost::shared_ptr< T_PointVector >, int, bool )>& loop,
+        const std::function< bool() >& checkStop, const int nc );
 
 } // namespace tools
 

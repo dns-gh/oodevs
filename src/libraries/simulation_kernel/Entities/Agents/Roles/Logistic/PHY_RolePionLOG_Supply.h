@@ -92,7 +92,7 @@ public:
     //! @name Stock supply
     //@{
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
-    virtual void Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const;
+    virtual void Apply( std::function< void( PHY_DotationStock& ) > visitor ) const;
     virtual void ResupplyStocks    ( bool withLog );
     virtual void ResupplyStocks    ( const PHY_DotationCategory& category, double rNbr );
     virtual void ConnectToResourceNode( unsigned int objectId, const std::string& resource );

@@ -11,7 +11,6 @@
 #define __SpeedComputerStrategy_h_
 
 #include "SpeedStrategy_ABC.h"
-#include <boost/function.hpp>
 
 class MIL_Object_ABC;
 class TerrainData;
@@ -51,8 +50,8 @@ private:
     //@{
     bool isMax_;
     bool isTheoric_;
-    boost::function< double( const PHY_ComposantePion& ) > compFunctor_;
-    boost::function< double( const PHY_RoleAction_InterfaceMoving& ) > pionFunctor_;
+    std::function< double( const PHY_ComposantePion& ) > compFunctor_;
+    std::function< double( const PHY_RoleAction_InterfaceMoving& ) > pionFunctor_;
     //@}
 };
 

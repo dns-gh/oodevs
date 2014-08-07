@@ -62,7 +62,7 @@ SupplyDotationRequestBuilder::~SupplyDotationRequestBuilder()
 // -----------------------------------------------------------------------------
 void SupplyDotationRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
-    const boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > f =
+    const std::function< void( const MIL_AgentPion&, PHY_Dotation& ) > f =
         [&]( const MIL_AgentPion& pion, PHY_Dotation& dotation )
         {
             if( !dotation.NeedSupply() )

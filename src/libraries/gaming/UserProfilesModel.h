@@ -46,7 +46,7 @@ public:
     virtual void CommitFromEditor( kernel::ProfileEditor& editor );
     virtual kernel::ProfileEditor* CreateProfileEditor() const;
     virtual kernel::ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const;
-    virtual void Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor );
+    virtual void Apply( std::function< void( kernel::UserProfile_ABC& ) > functor );
     //@}
 
     //! @name Operations

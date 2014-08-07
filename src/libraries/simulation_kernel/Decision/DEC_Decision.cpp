@@ -143,7 +143,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Agent_IsInSmoke", &DEC_AgentFunctions::IsInSmoke );
     brain.RegisterFunction( "DEC_Agent_GetCurrentSpeed", &DEC_AgentFunctions::GetCurrentSpeed );
     brain.RegisterFunction( "DEC_Agent_DisableCrowdEffect", &DEC_AgentFunctions::DisableCrowdEffect );
-    brain.RegisterFunction( "DEC_Agent_PionCanFly", boost::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::PionCanFly, _1 ) ) );
+    brain.RegisterFunction( "DEC_Agent_PionCanFly", std::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::PionCanFly, _1 ) ) );
     brain.RegisterFunction( "DEC_Agent_GetStandardFlyingHeight", &DEC_AgentFunctions::GetStandardFlyingHeight );
     brain.RegisterFunction( "DEC_Agent_GetTacticalFlyingHeight", &DEC_AgentFunctions::GetTacticalFlyingHeight );
     brain.RegisterFunction( "DEC_Agent_MaxSpeed", &DEC_AgentFunctions::GetMaxSpeed );
@@ -312,19 +312,19 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_AreaSize", &DEC_GeometryFunctions::ComputeAreaSize );
     brain.RegisterFunction( "DEC_Geometrie_IntersectionSize", &DEC_GeometryFunctions::ComputeIntersectionArea );
     brain.RegisterFunction( "DEC_Geometrie_AreaDiameter", &DEC_GeometryFunctions::ComputeAreaDiameter );
-    brain.RegisterFunction( "DEC_Geometrie_DecouperLocalisation", boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisation, _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Geometrie_DecouperLocalisation", std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisation, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_ClipperLocalisation", &DEC_GeometryFunctions::ClipLocalisation );
     brain.RegisterFunction( "DEC_IsPointInCity", &DEC_GeometryFunctions::IsPointInCity );
     brain.RegisterFunction( "DEC_IsPointInObject", &DEC_GeometryFunctions::IsPointInObject );
     brain.RegisterFunction( "DEC_Geometrie_ComputeNearestBorder", &DEC_GeometryFunctions::ComputeNearestBorder );
     brain.RegisterFunction( "DEC_Geometrie_CalculerTrafficablePointPourPoint",
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) ) );
+        std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) ) );
     brain.RegisterFunction( "DEC_IsPointInUrbanBlockTrafficableForPlatoon",
-        boost::function< bool( DEC_Decision_ABC*, MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon, _1, _2 ) ) );
+        std::function< bool( DEC_Decision_ABC*, MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_PositionsParRapportALocalisation",
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const std::vector< DEC_Decision_ABC* >&, TER_Localisation*, MT_Vector2D*, double ) >( boost::bind( &DEC_GeometryFunctions ::ComputeLocalisationPointsForPionsInFuseau, _1, _2, _3, _4 ) ) );
+        std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const std::vector< DEC_Decision_ABC* >&, TER_Localisation*, MT_Vector2D*, double ) >( boost::bind( &DEC_GeometryFunctions ::ComputeLocalisationPointsForPionsInFuseau, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointArriveePourFuseau",
-        boost::function< boost::shared_ptr< MT_Vector2D >( MIL_Fuseau& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDestPointForFuseau, _1 ) ) );
+        std::function< boost::shared_ptr< MT_Vector2D >( MIL_Fuseau& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDestPointForFuseau, _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerLocalisationsBU", &DEC_GeometryFunctions::ComputeUrbanBlockLocalisations );
     brain.RegisterFunction( "DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau", &DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau );
     brain.RegisterFunction( "DEC_Geometrie_LocalisationsEgales", &DEC_GeometryFunctions::CompareLocalisations );
@@ -605,13 +605,13 @@ void RegisterMissionParametersFunctions( sword::Brain& brain, bool isMasalife )
     brain.RegisterFunction( "DEC_IsAutomateMissionAvailable", &DEC_OrdersFunctions::IsAutomateMissionAvailable );
     directia::tools::binders::ScriptRef initParameterFunction = brain.GetScriptRef( "InitTaskParameter" );
     brain.RegisterFunction( "DEC_FillMissionParameters",
-        boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2, isMasalife ) ) );
+        std::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2, isMasalife ) ) );
     brain.RegisterFunction( "DEC_AssignerFuseauAMissionPion_Mission",
-        boost::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToPionMission , _1, _2 ) ) );
+        std::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToPionMission , _1, _2 ) ) );
     brain.RegisterFunction( "DEC_AssignerFuseauAMissionAutomate_Mission",
-            boost::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToAutomateMission , _1, _2 ) ) );
+            std::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToAutomateMission , _1, _2 ) ) );
     brain.RegisterFunction( "DEC_AssignerDirectionAMissionAutomate_Mission",
-            boost::function< void (MT_Vector2D* ,  boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) ) );
+            std::function< void (MT_Vector2D* ,  boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) ) );
     brain.RegisterFunction( "DEC_AssignMissionListParameter", &MIL_MissionParameterFactory::AssignMissionListParameter );
 }
 
@@ -660,39 +660,39 @@ void RegisterReportFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ItineraireToString", &DEC_DIAFunctions::PathToString  );
     brain.RegisterFunction( "DEC_UnitDecisionalState", &DEC_KnowledgeAgentFunctions::UnitDecisionalState );
     brain.RegisterFunction( "DEC_RC1",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::Report, _1, _2, _3 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::Report, _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_AgentKnowledge",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_DotationType",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_EquipmentType",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const PHY_ComposanteTypePion* ) >( boost::bind( &DEC_MiscFunctions::ReportEquipmentType, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, const PHY_ComposanteTypePion* ) >( boost::bind( &DEC_MiscFunctions::ReportEquipmentType, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Float",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloat, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloat, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Int_Int",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportIntInt, _1, _2, _3, _4, _5 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportIntInt, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_AgentKnowledge_Int",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Agent >, int ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledgeInt, _1, _2, _3, _4, _5 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Agent >, int ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledgeInt, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_Float_Float",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, float, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloatFloat, _1, _2, _3, _4, _5 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, float, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloatFloat, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_Id",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportId, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportId, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_ObjectKnowledge",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion_Automate",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate, _1, _2, _3, _4, _5 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion_Pion",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionPion, _1, _2, _3, _4, _5 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionPion, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_PopulationKnowledge",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_TirPion",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_String",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Stage",
-        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportStage, _1, _2, _3, _4 ) ) );
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportStage, _1, _2, _3, _4 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1809,7 +1809,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN46( "errorhandler" )
             + PLUGIN46( "devtools" )
             + "} cwd='" + includePath.ToUTF8() + "'", logger ) );
-    pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
+    pArchetypeBrain->RegisterFunction( "LoadResourcesFile", std::function< void( const std::string& ) >(
         boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
     pArchetypeBrain->GetScriptRef( "include" )( brainFile, includePath, type );
     if( !reload )

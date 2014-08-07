@@ -15,7 +15,6 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -104,7 +103,7 @@ void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::Conte
 // -----------------------------------------------------------------------------
 void AutomatsLayer::NotifyActivated( const kernel::Automat_ABC& automat )
 {
-    if( HasSubordinate( automat, boost::function< bool( const kernel::Entity_ABC& ) >( boost::lambda::constant( true ) ) ) )
+    if( HasSubordinate( automat, []( const kernel::Entity_ABC& ){ return true; } ) )
         EntityLayer< kernel::Automat_ABC >::NotifyActivated( automat );
 }
 
@@ -150,7 +149,7 @@ void AutomatsLayer::NotifySelectionChanged( const std::vector< const kernel::Aut
 // Name: AutomatsLayer::HasSubordinate
 // Created: LGY 2011-03-07
 // -----------------------------------------------------------------------------
-bool AutomatsLayer::HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const
+bool AutomatsLayer::HasSubordinate( const kernel::Entity_ABC& entity, std::function< bool( const kernel::Entity_ABC& ) > fun ) const
 {
     bool children = false;
     tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();

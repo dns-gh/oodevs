@@ -11,7 +11,6 @@
 #define __ActionParameterKarma_h_
 
 #include "Parameter.h"
-#include <boost/function.hpp>
 
 namespace sword
 {
@@ -38,7 +37,7 @@ class Karma : public Parameter< QString >
 public:
     //! @name Functors
     //@{
-    typedef boost::function< void ( const sword::EnumDiplomacy& ) > T_Setter;
+    typedef std::function< void ( const sword::EnumDiplomacy& ) > T_Setter;
     //@}
 
 public:

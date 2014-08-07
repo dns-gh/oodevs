@@ -14,7 +14,6 @@
 #include "tic/PlatformVisitor_ABC.h"
 
 #include <boost/shared_ptr.hpp>
-#include <boost/function.hpp>
 
 namespace tic
 {
@@ -56,7 +55,7 @@ class AgentAdapter : private dispatcher::Observer< sword::UnitAttributes >
 public:
     //! @name Public types
     //@{
-    typedef boost::function< void( Agent_ABC&, dispatcher::Agent_ABC&, const tic::Platform_ABC&, int childIndex ) > T_NotificationCallback;
+    typedef std::function< void( Agent_ABC&, dispatcher::Agent_ABC&, const tic::Platform_ABC&, int childIndex ) > T_NotificationCallback;
     //@}
 
     //! @name Constructors/Destructor

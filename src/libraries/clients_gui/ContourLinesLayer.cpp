@@ -141,84 +141,6 @@ void ContourLinesLayer::Reset()
     }
 }
 
-//#define DATA( x, y ) ( data[ ( y )  * width + ( x ) ] )
-
-namespace
-{
-    struct DataFunc : boost::noncopyable
-    {
-        DataFunc( const short* data, const unsigned int width ) : data_( data ), width_( width ) {}
-        short operator()(int x, int y)
-        {
-            return  data_[ ( y )  * width_ + ( x ) ];
-        }
-    private:
-        const short* data_;
-        const unsigned int width_;
-    };
-    struct ProgressFunc : boost::noncopyable
-    {
-        ProgressFunc( ContourLinesObserver& observer, Controller& controller ) : observer_(observer), controller_(controller){}
-        void operator()( short p)
-        {
-            observer_.SetPercentage( p );
-            controller_.Update( observer_ );
-        }
-    private:
-        ContourLinesObserver& observer_;
-        Controller& controller_;
-    };
-    struct ValidFunc : boost::noncopyable
-    {
-        ValidFunc( bool& valid ) : valid_(valid) {}
-        bool operator()() { return valid_; }
-    private:
-        bool& valid_;
-    };
-    struct LoopFunc : boost::noncopyable
-    {
-        LoopFunc( std::vector< boost::shared_ptr< T_PointVector> > (&loops)[4] ) : loops_( loops ){}
-        void operator()( boost::shared_ptr< T_PointVector > v, int k, bool loop)
-        {
-            const bool large = ( k +1 ) % 5 == 0;
-            if( loop )
-                loops_[ large ? 0 : 2 ].push_back( boost::shared_ptr< T_PointVector >( v ) );
-            else
-                loops_[ large ? 1 : 3 ].push_back( boost::shared_ptr< T_PointVector >( v ) );
-        }
-    private:
-        std::vector< boost::shared_ptr< T_PointVector> > (&loops_)[4];
-    };
-    struct CheckStopFunc : boost::noncopyable
-    {
-        CheckStopFunc( bool& stopThread, bool& threadRunning, ContourLinesObserver& observer, Controller& controller, boost::mutex& mutex,
-                std::vector< boost::shared_ptr< T_PointVector> > (&loops)[4] ) : stopThread_(stopThread), threadRunning_(threadRunning), observer_(observer), controller_(controller), mutex_(mutex), loops_(loops){}
-        bool operator()()
-        {
-            const bool retval = stopThread_;
-            if( stopThread_ )
-            {
-                boost::mutex::scoped_lock locker( mutex_ );
-                loops_[ 0 ].clear();
-                loops_[ 1 ].clear();
-                loops_[ 2 ].clear();
-                loops_[ 3 ].clear();
-                stopThread_ = false;
-                threadRunning_ = false;
-                observer_.SetPercentage( 0 );
-                controller_.Update( observer_ );
-            }
-            return retval;
-        }
-        bool& stopThread_;
-        bool& threadRunning_;
-        ContourLinesObserver& observer_;
-        Controller& controller_;
-        boost::mutex& mutex_;
-        std::vector< boost::shared_ptr< T_PointVector> > (&loops_)[4];
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ContourLinesLayer::Conrec
 // Created: JSR 2012-01-19
@@ -233,15 +155,43 @@ void ContourLinesLayer::Conrec()
 
     const int nc = elevation.MaximumElevation() / linesHeight_;
 
-    DataFunc dataFunc( data, width );
-    ProgressFunc progressFunc( observer_, controllers_.controller_ );
-    ValidFunc validFunc( valid_ );
-    LoopFunc loopFunc( loops_ );
-    CheckStopFunc checkStopFunc( stopThread_, threadRunning_, observer_, controllers_.controller_, mutex_, loops_ );
+    const auto dataFunc = [&]( int x, int y )
+    {
+        return  data[ ( y )  * width + ( x ) ];
+    };
+    const auto progressFunc = [&]( short p )
+    {
+        observer_.SetPercentage( p );
+        controllers_.controller_.Update( observer_ );
+    };
+    const auto validFunc = [&]{ return valid_; };
+    const auto loopFunc = [&]( boost::shared_ptr< T_PointVector > v, int k, bool loop )
+    {
+        const bool large = ( k +1 ) % 5 == 0;
+        if( loop )
+            loops_[ large ? 0 : 2 ].push_back( boost::shared_ptr< T_PointVector >( v ) );
+        else
+            loops_[ large ? 1 : 3 ].push_back( boost::shared_ptr< T_PointVector >( v ) );
+    };
+    const auto checkStopFunc = [&]() -> bool
+    {
+        const bool retval = stopThread_;
+        if( stopThread_ )
+        {
+            boost::mutex::scoped_lock locker( mutex_ );
+            loops_[ 0 ].clear();
+            loops_[ 1 ].clear();
+            loops_[ 2 ].clear();
+            loops_[ 3 ].clear();
+            stopThread_ = false;
+            threadRunning_ = false;
+            observer_.SetPercentage( 0 );
+            controllers_.controller_.Update( observer_ );
+        }
+        return retval;
+    };
     if( !tools::ComputeContour( width, height, linesHeight_, cellSize,
-            boost::ref( dataFunc ), boost::ref( progressFunc ),
-            boost::ref( validFunc ), boost::ref( loopFunc ),
-            boost::ref( checkStopFunc ), nc ) )
+            dataFunc, progressFunc, validFunc, loopFunc, checkStopFunc, nc ) )
         return;
 
     observer_.SetPercentage( 0 );

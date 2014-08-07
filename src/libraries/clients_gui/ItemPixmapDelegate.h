@@ -10,7 +10,6 @@
 #ifndef __ItemPixmapDelegate_h_
 #define __ItemPixmapDelegate_h_
 
-#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -30,7 +29,7 @@ class StandardModel;
 class ItemPixmapDelegate : public QItemDelegate
 
 {
-    typedef boost::function< std::vector< const QPixmap* >( const kernel::Entity_ABC& ) > T_PixmapGetter;
+    typedef std::function< std::vector< const QPixmap* >( const kernel::Entity_ABC& ) > T_PixmapGetter;
 
 public:
     //! @name Constructors/Destructor

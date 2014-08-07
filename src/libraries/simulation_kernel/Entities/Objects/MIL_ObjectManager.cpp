@@ -508,7 +508,7 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
 // Name: MIL_ObjectManager::VisitUniversalObjects
 // Created: LDC 2012-01-26
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::VisitUniversalObjects( const boost::function< void( MIL_Object_ABC& ) >& visitor ) const
+void MIL_ObjectManager::VisitUniversalObjects( const std::function< void( MIL_Object_ABC& ) >& visitor ) const
 {
     for( auto it = universalObjects_.begin(); it != universalObjects_.end(); ++it )
         if( !(*it)->IsMarkedForDestruction() )

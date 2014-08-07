@@ -92,7 +92,7 @@ public:
     //! @name Supply
     //@{
     void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
-    void Apply             ( boost::function< void( PHY_DotationStock& ) > visitor ) const;
+    void Apply             ( std::function< void( PHY_DotationStock& ) > visitor ) const;
     void UpdateSupplyNeeded();
     //@}
 

@@ -13,7 +13,6 @@
 #include "ObjectMessageCallback.h"
 #include "MessageIdentifierFactory.h"
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 
 namespace tools
@@ -46,7 +45,7 @@ public:
         RegisterMessage< T >( boost::bind( callback, &instance, _2 ) );
     }
     template< typename T >
-    void RegisterMessage( boost::function< void( const std::string&, const T& ) > callback )
+    void RegisterMessage( std::function< void( const std::string&, const T& ) > callback )
     {
         const unsigned int id = MessageIdentifierFactory::GetIdentifier< T >();
         ObjectMessageCallback< T >* composite = static_cast< ObjectMessageCallback< T >* >( Retrieve( id ) );
@@ -59,7 +58,7 @@ public:
     }
 
     template< typename T >
-    void RegisterMessage( boost::function< void( const std::string&, T& ) > callback )
+    void RegisterMessage( std::function< void( const std::string&, T& ) > callback )
     {
         const unsigned int id = MessageIdentifierFactory::GetIdentifier< T >();
         ObjectMessageCallback< T >* composite = static_cast< ObjectMessageCallback< T >* >( Retrieve( id ) );

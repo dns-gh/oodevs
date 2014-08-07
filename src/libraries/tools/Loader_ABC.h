@@ -11,7 +11,6 @@
 #define __Loader_ABC_h__
 
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 #include <string>
 #include <memory>
 
@@ -35,7 +34,7 @@ class Loader_ABC : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef boost::function< void ( xml::xistream& ) > T_Loader;
+    typedef std::function< void ( xml::xistream& ) > T_Loader;
     //@}
 
 public:

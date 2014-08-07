@@ -371,7 +371,7 @@ namespace
                 dst.add_value()->set_phase_line_function ( *type );
     }
 
-    typedef boost::function< void( Value&, xml::xistream& ) > T_ListOperand;
+    typedef std::function< void( Value&, xml::xistream& ) > T_ListOperand;
 
     template< typename T >
     void ReadList( MissionParameter& dst, xml::xistream& xis, const T& operand )

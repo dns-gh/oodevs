@@ -13,7 +13,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/VariantPointer.h"
 #include "Roles.h"
-#include <boost/function.hpp>
 #include "Filter_ABC.h"
 
 namespace gui
@@ -35,7 +34,7 @@ class StandardModel : public QStandardItemModel
 public:
     //! @name Types
     //@{
-    typedef boost::function< bool ( QStandardItem& ) > T_Filter;
+    typedef std::function< bool ( QStandardItem& ) > T_Filter;
     //@}
 
     //! @name Static values

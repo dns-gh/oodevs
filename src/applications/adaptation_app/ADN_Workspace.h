@@ -163,8 +163,8 @@ public:
 
     //! @name Accessors
     //@{
-    bool ApplyOnData( const boost::function< bool( ADN_Data_ABC& data ) >& functor );
-    bool ApplyOnGui( const boost::function< bool( ADN_GUI_ABC& data ) >& functor );
+    bool ApplyOnData( const std::function< bool( ADN_Data_ABC& data ) >& functor );
+    bool ApplyOnGui( const std::function< bool( ADN_GUI_ABC& data ) >& functor );
 
     const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, const std::string& context );
     const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, int subElement, const std::string& context );

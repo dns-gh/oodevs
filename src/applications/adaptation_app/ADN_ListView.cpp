@@ -598,7 +598,7 @@ bool ADN_ListView::ApplyFilterList( ADN_StandardItem* item )
 // Name: ADN_ListView::ApplyFilter
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-void ADN_ListView::ApplyFilter( boost::function< bool( ADN_StandardItem* ) > func )
+void ADN_ListView::ApplyFilter( std::function< bool( ADN_StandardItem* ) > func )
 {
     const int rowCount = dataModel_.rowCount();
     for( int i = 0; i < rowCount; ++i )

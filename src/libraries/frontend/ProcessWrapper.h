@@ -11,7 +11,6 @@
 #define __ProcessWrapper_h_
 
 #include "frontend/Process_ABC.h"
-#include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace boost
@@ -74,7 +73,7 @@ private:
     void Run();
     void SetCurrent( const T_Spawn& spawn );
 
-    void Apply( const boost::function< void( SpawnCommand& ) >& operand );
+    void Apply( const std::function< void( SpawnCommand& ) >& operand );
     //@}
 
 private:

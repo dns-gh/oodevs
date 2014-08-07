@@ -1407,7 +1407,7 @@ const T_PointList& MIL_PopulationFlow::GetFlowShape() const
 // Name: MIL_PopulationFlow::ApplyOnShape
 // Created: JSR 2014-01-15
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::ApplyOnShape( const boost::function< bool( const MT_Line& ) >& f ) const
+void MIL_PopulationFlow::ApplyOnShape( const std::function< bool( const MT_Line& ) >& f ) const
 {
     auto itStart = flowShape_.begin();
     auto itEnd = std::next( itStart );

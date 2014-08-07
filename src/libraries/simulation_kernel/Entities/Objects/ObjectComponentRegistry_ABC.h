@@ -10,8 +10,6 @@
 #ifndef __ObjectComponentRegistry_ABC_h_
 #define __ObjectComponentRegistry_ABC_h_
 
-#include <boost/function.hpp>
-
 namespace xml
 {
     class xistream;
@@ -29,7 +27,7 @@ class ObjectComponentRegistry_ABC : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef boost::function2< void, Component&, xml::xistream& > T_CallBack;
+    typedef std::function< void( Component&, xml::xistream& ) > T_CallBack;
     //@}
 
 public:

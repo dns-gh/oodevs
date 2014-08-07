@@ -44,9 +44,9 @@ PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors()
     , tirednessValue_( 0.f )
 {
     if( MIL_AgentServer::GetWorkspace().GetSettings().GetValue< bool >( "human-evolution" ) )
-        evolutionFunction_ = boost::bind( &PHY_RolePion_HumanFactors::Evolution, this );
+        evolutionFunction_ = &PHY_RolePion_HumanFactors::Evolution;
     else
-        evolutionFunction_ = boost::bind( &PHY_RolePion_HumanFactors::NoEvolution, this );
+        evolutionFunction_ = &PHY_RolePion_HumanFactors::NoEvolution;
 }
 
 // -----------------------------------------------------------------------------
@@ -64,9 +64,9 @@ PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity )
     , tirednessValue_( 0.f )
 {
     if( MIL_AgentServer::GetWorkspace().GetSettings().GetValue< bool >( "human-evolution" ) )
-        evolutionFunction_ = boost::bind( &PHY_RolePion_HumanFactors::Evolution, this );
+        evolutionFunction_ = &PHY_RolePion_HumanFactors::Evolution;
     else
-        evolutionFunction_ = boost::bind( &PHY_RolePion_HumanFactors::NoEvolution, this );
+        evolutionFunction_ = &PHY_RolePion_HumanFactors::NoEvolution;
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void PHY_RolePion_HumanFactors::SendChangedState( client::UnitAttributes& msg ) 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::Update( bool /*bIsDead*/ )
 {
-    evolutionFunction_();
+    ( this->*evolutionFunction_ )();
     if( HasChanged() )
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
@@ -294,7 +294,7 @@ void PHY_RolePion_HumanFactors::UpdateStressValue()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::NotifyAttacked()
 {
-    if( evolutionFunction_ == boost::bind( &PHY_RolePion_HumanFactors::Evolution, this ) )
+    if( evolutionFunction_ == &PHY_RolePion_HumanFactors::Evolution )
     {
         stressValue_ += PHY_Stress::evolution_.incPerShot_;
         UpdateStress();

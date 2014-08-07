@@ -334,7 +334,7 @@ void PHY_DotationStockContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 // Name: PHY_DotationStockContainer::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
+void PHY_DotationStockContainer::Apply( std::function< void( PHY_DotationStock& ) > visitor ) const
 {
     for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
         visitor( *it->second );

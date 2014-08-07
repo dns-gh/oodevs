@@ -67,7 +67,7 @@ ProcessWrapper::T_Spawns ProcessWrapper::GetSpawns() const
 // Name: ProcessWrapper::Apply
 // Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
-void ProcessWrapper::Apply( const boost::function< void( SpawnCommand& ) >& operand )
+void ProcessWrapper::Apply( const std::function< void( SpawnCommand& ) >& operand )
 {
     const T_Spawns spawns = GetSpawns();
     for( auto it = spawns.begin(); it != spawns.end(); ++it )

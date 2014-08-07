@@ -191,7 +191,7 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
 // Name: XmlTranslations::ApplyOnTranslations
 // Created: ABR 2013-10-08
 // -----------------------------------------------------------------------------
-bool XmlTranslations::ApplyOnTranslations( boost::function< bool( LocalizedString& ) > functor )
+bool XmlTranslations::ApplyOnTranslations( std::function< bool( LocalizedString& ) > functor )
 {
     for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         if( itContext->second->Apply( functor ) )

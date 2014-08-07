@@ -552,7 +552,7 @@ float PHY_RolePion_Dotations::GetIlluminatingRange( ) const
 // Name: PHY_RolePion_Dotations::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::Apply( boost::function< void( PHY_Dotation& ) > visitor ) const
+void PHY_RolePion_Dotations::Apply( std::function< void( PHY_Dotation& ) > visitor ) const
 {
     assert( pDotations_ );
     pDotations_->Apply( visitor );

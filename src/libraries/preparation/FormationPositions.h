@@ -11,7 +11,6 @@
 #define __FormationPositions_h_
 
 #include "clients_kernel/Moveable_ABC.h"
-#include <boost/function.hpp>
 
 namespace kernel
 {

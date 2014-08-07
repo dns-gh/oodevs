@@ -13,7 +13,6 @@
 #include "Parameter.h"
 #include "ENT/ENT_Enums.h"
 #include <tools/Resolver_ABC.h>
-#include <boost/function.hpp>
 
 namespace sword
 {
@@ -35,7 +34,7 @@ class Level : public Parameter< QString >
 public:
     //! @name Functors
     //@{
-    typedef boost::function< void ( const sword::EnumNatureLevel& ) > T_Setter;
+    typedef std::function< void ( const sword::EnumNatureLevel& ) > T_Setter;
     //@}
 
 public:

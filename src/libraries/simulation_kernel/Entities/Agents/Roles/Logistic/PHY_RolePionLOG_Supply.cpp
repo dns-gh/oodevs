@@ -394,7 +394,7 @@ void PHY_RolePionLOG_Supply::UpdateSupplyNeeded()
 // Name: PHY_RolePionLOG_Supply::Apply
 // Created: NLD 2005-01-31
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
+void PHY_RolePionLOG_Supply::Apply( std::function< void( PHY_DotationStock& ) > visitor ) const
 {
     pStocks_->Apply( visitor );
 }

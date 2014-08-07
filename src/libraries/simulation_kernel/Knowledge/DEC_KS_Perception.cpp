@@ -85,7 +85,7 @@ void DEC_KS_Perception::serialize( Archive& archive, const unsigned int )
 void DEC_KS_Perception::Prepare()
 {
     assert( pBlackBoard_ );
-    boost::function< void( DEC_Knowledge_AgentPerception& ) > agentFunctor =  boost::bind( &DEC_Knowledge_AgentPerception::Prepare, _1 );
+    std::function< void( DEC_Knowledge_AgentPerception& ) > agentFunctor =  boost::bind( &DEC_Knowledge_AgentPerception::Prepare, _1 );
     pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( agentFunctor );
     std::mem_fun_ref_t< void, DEC_Knowledge_ObjectPerception > objectFunctor = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::Prepare );
     pBlackBoard_->GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( objectFunctor );
@@ -345,7 +345,7 @@ void DEC_KS_Perception::Talk( int /*currentTimeStep*/ )
 
     if( bMakePerceptionsAvailable_ )
     {
-        boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( &DEC_Knowledge_AgentPerception::MakeAvailable, _1, 0 );
+        std::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( &DEC_Knowledge_AgentPerception::MakeAvailable, _1, 0 );
         pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );
         bMakePerceptionsAvailable_ = false;
     }

@@ -327,7 +327,7 @@ void DEC_Decision< T >::InitBrain( const tools::Path& brainFile, const std::stri
 
     //Enregistrement à la main de BreakForDebug
     pBrain_->RegisterFunction( "BreakForDebug",
-        boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) );
+        std::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) );
 
     RegisterSpecific( *pBrain_, isMasalife_, groupName );
 

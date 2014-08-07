@@ -48,7 +48,6 @@
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -64,7 +63,7 @@ namespace
     private:
         //! @name Types
         //@{
-        typedef boost::function3< void, Object_ABC&, gui::PropertiesDictionary&, xml::xistream& > T_CallBack;
+        typedef std::function< void( Object_ABC&, gui::PropertiesDictionary&, xml::xistream& ) > T_CallBack;
         typedef std::map< std::string, T_CallBack > T_CallBacks;
         typedef T_CallBacks::const_iterator       CIT_Callbacks;
         //@}

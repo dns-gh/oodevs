@@ -135,7 +135,7 @@ public:
 
     //! @name Pret de composantes
     //@{
-    typedef boost::function< bool( const PHY_ComposantePion& composante ) > T_ComponentPredicate;
+    typedef std::function< bool( const PHY_ComposantePion& composante ) > T_ComponentPredicate;
     bool CanLendComposantes( const T_ComponentPredicate& funcPredicate ) const;
     unsigned int LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
     unsigned int GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
@@ -360,7 +360,7 @@ BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Composantes )
 // Name: PHY_RolePion_Composantes::ApplyOnWeapons
 // Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )

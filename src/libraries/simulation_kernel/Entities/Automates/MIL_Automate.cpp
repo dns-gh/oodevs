@@ -1253,11 +1253,11 @@ void MIL_Automate::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
 // Name: MIL_Automate::Apply2
 // Created: NLD 2011-08-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::Apply2( boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > visitor ) const
+void MIL_Automate::Apply2( std::function< void( const MIL_AgentPion&, PHY_Dotation& ) > visitor ) const
 {
     BOOST_FOREACH( MIL_AgentPion* pion, pions_ )
     {
-        boost::function< void( PHY_Dotation& ) > f = boost::bind( visitor, boost::ref( *pion ), _1 );
+        std::function< void( PHY_Dotation& ) > f = boost::bind( visitor, boost::ref( *pion ), _1 );
         pion->Apply2( f );
     }
 }
@@ -1266,11 +1266,11 @@ void MIL_Automate::Apply2( boost::function< void( const MIL_AgentPion&, PHY_Dota
 // Name: MIL_Automate::Apply2
 // Created: NLD 2011-08-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::Apply2( boost::function< void( const MIL_AgentPion&, PHY_DotationStock& ) > visitor ) const
+void MIL_Automate::Apply2( std::function< void( const MIL_AgentPion&, PHY_DotationStock& ) > visitor ) const
 {
     BOOST_FOREACH( MIL_AgentPion* pion, pions_ )
     {
-        boost::function< void( PHY_DotationStock& ) > f = boost::bind( visitor, boost::ref( *pion ), _1 );
+        std::function< void( PHY_DotationStock& ) > f = boost::bind( visitor, boost::ref( *pion ), _1 );
         pion->Apply2( f );
     }
 }

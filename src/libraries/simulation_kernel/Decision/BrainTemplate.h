@@ -50,7 +50,7 @@
         : public directia::tools::binders::ScriptFunction_ABC
         , BOOST_PP_CAT(Reader, BRAIN_NUM_ARGS)< T, R BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) >
     {
-        typedef boost::function< R( T& BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) ) > Function;
+        typedef std::function< R( T& BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) ) > Function;
         BOOST_PP_CAT(ScriptMemberFunction, BRAIN_NUM_ARGS)( directia::tools::VirtualMachine_ABC& vm, const char* const name, Function f )
             : f_( f )
         {
@@ -96,7 +96,7 @@
     template< typename R BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, typename P) >
     void RegisterFunction( const char* const name, R(*function)( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) ) )
     {
-        RegisterFunction( name, boost::function< R( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) ) >( function ) );
+        RegisterFunction( name, std::function< R( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) ) >( function ) );
     }
 
     template< typename Signature >
@@ -105,7 +105,7 @@
     template< typename R BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, typename P) >
     struct ProfilerProxy< R( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS,P) ) >
     {
-        typedef typename boost::function< R( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS,P) ) > function_type;
+        typedef typename std::function< R( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS,P) ) > function_type;
         typedef typename function_type::result_type result_type;
         ProfilerProxy( DEC_Logger* logger, const char* const name, MT_Profiler& profiler, const function_type& f, directia::brain::Brain* brain )
             : logger_  ( logger )

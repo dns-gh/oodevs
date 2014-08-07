@@ -76,7 +76,7 @@ public:
     virtual kernel::ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const;
     virtual void CommitFromEditor( kernel::ProfileEditor& editor );
 
-    virtual void Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor );
+    virtual void Apply( std::function< void( kernel::UserProfile_ABC& ) > functor );
 
     bool Exists( const QString& login ) const;
     kernel::UserProfile_ABC* Find( const std::string& name ) const;

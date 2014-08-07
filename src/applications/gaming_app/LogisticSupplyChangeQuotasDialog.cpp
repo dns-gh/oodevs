@@ -43,7 +43,6 @@
 #include <tools/Iterator.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 
 using namespace kernel;

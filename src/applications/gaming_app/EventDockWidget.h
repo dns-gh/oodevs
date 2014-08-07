@@ -103,7 +103,7 @@ public:
 private:
     //! @name types
     //@{
-    typedef boost::function< void( gui::EventDefaultView_ABC* ) > T_ViewFunctor;
+    typedef std::function< void( gui::EventDefaultView_ABC* ) > T_ViewFunctor;
     //@}
 
 private:

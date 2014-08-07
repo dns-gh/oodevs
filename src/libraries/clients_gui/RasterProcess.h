@@ -10,7 +10,6 @@
 #ifndef CLIENTS_GUI_RASTER_PROCESS_H
 #define CLIENTS_GUI_RASTER_PROCESS_H
 
-#include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 #include <tools/TemporaryDirectory.h>
 
@@ -22,7 +21,7 @@ namespace tools
 
 class QProcess;
 
-typedef boost::function<void (int, const tools::Path&, const std::string&)> RasterCallback;
+typedef std::function<void (int, const tools::Path&, const std::string&)> RasterCallback;
 
 // This should be an implementation detail but cmake current Qt moc'ing
 // rules force me to put it in a header. I prefer to avoid adding another

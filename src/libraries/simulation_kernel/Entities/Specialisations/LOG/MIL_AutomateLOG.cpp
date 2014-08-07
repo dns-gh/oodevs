@@ -697,7 +697,7 @@ boost::optional< unsigned int > MIL_AutomateLOG::CreateDotationRequest( const PH
                                                                         unsigned int requester )
 {
     std::vector< SupplyDotationQuantity > pionDotations;
-    recipient.Apply2( (boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) >)
+    recipient.Apply2( (std::function< void( const MIL_AgentPion&, PHY_Dotation& ) >)
         [&]( const MIL_AgentPion& pion, PHY_Dotation& dotation ) {
             if( &dotation.GetCategory() == &dotationCategory )
                 pionDotations.push_back( SupplyDotationQuantity( &pion, &dotation ) );

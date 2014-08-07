@@ -40,7 +40,7 @@ class ADN_MainWindow : public QMainWindow
 public:
     //! @name Types
     //@{
-    typedef boost::function< QWidget*() > T_ConsistencyCallBack;
+    typedef std::function< QWidget*() > T_ConsistencyCallBack;
     //@}
 
 public:

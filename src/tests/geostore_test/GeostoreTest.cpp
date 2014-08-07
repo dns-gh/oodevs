@@ -65,7 +65,7 @@ BOOST_FIXTURE_TEST_CASE( CreateDatabaseTwice_Test, Fixture )
 
 namespace
 {
-    void Watch( boost::exception_ptr& error, const boost::function< void() >& f )
+    void Watch( boost::exception_ptr& error, const std::function< void() >& f )
     {
         try
         {

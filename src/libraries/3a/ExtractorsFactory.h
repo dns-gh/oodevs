@@ -12,7 +12,6 @@
 
 #include "ElementFactory_ABC.h"
 #include <map>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 
 namespace aar
@@ -43,7 +42,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::function< void( const std::string&, xml::xistream&, Task& ) > T_Extractor;
+    typedef std::function< void( const std::string&, xml::xistream&, Task& ) > T_Extractor;
     typedef std::map< std::string, T_Extractor > T_Extractors;
     //@}
 

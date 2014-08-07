@@ -12,7 +12,6 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include <boost/function.hpp>
 
 namespace kernel
 {

@@ -46,7 +46,7 @@ private:
     //! @name Types
     //@{
     typedef ObjectComponentRegistry_ABC< ObjectPrototype >::T_CallBack   Prototype_CallBack;
-    typedef boost::function< void( ObjectPrototype& ) >                  FinalizePrototype_CallBack;
+    typedef std::function< void( ObjectPrototype& ) >                  FinalizePrototype_CallBack;
     typedef ObjectComponentRegistry_ABC< MIL_Object_ABC >::T_CallBack    Object_CallBack;
     typedef std::map< std::string, Prototype_CallBack >                  Prototype_CallBacks;
     typedef Prototype_CallBacks::const_iterator                        CIPrototype_Callbacks;

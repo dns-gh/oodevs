@@ -11,7 +11,6 @@
 #define __ObjectAttributePrototypeFactory_h_
 
 #include "ObjectAttributePrototypeFactory_ABC.h"
-#include <boost/function.hpp>
 
 namespace xml
 {
@@ -34,9 +33,9 @@ class ObjectAttributePrototypeFactory : public ObjectAttributePrototypeFactory_A
 public:
     //! @name Types
     //@{
-    typedef boost::function3< void, xml::xistream&, T_AttributeContainer&, QWidget* > T_CallBack;
-    typedef boost::function< void() >                                                 FinalizePrototype_CallBack;
-    typedef std::vector< FinalizePrototype_CallBack >                                 FinalizePrototype_CallBacks;
+    typedef std::function< void( xml::xistream&, T_AttributeContainer&, QWidget* ) > T_CallBack;
+    typedef std::function< void() >                                                  FinalizePrototype_CallBack;
+    typedef std::vector< FinalizePrototype_CallBack >                                FinalizePrototype_CallBacks;
     //@}
 
 public:

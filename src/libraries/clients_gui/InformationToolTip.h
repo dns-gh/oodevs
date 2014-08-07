@@ -12,7 +12,6 @@
 
 #include "NoLinkDisplayer.h"
 #include "clients_kernel/Styles.h"
-#include <boost/function.hpp>
 
 namespace gui
 {
@@ -45,7 +44,7 @@ public:
     //@{
     void Draw();
     virtual operator kernel::Displayer_ABC& ();
-    typedef boost::function< void ( QPainter&, const QRect& ) > FrameDrawer;
+    typedef std::function< void ( QPainter&, const QRect& ) > FrameDrawer;
     void SetFrameDrawer( const FrameDrawer& frameDrawer );
     QSize Size() const;
     virtual void paintEvent( QPaintEvent * event );

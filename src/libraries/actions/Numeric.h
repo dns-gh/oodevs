@@ -11,7 +11,6 @@
 #define __ActionParameterNumeric_h_
 
 #include "Parameter.h"
-#include <boost/function.hpp>
 
 namespace actions {
     namespace parameters {
@@ -27,7 +26,7 @@ class Numeric : public Parameter< float >
 public:
     //! @name Functors
     //@{
-    typedef boost::function< void ( const float& ) > T_Setter;
+    typedef std::function< void ( const float& ) > T_Setter;
     //@}
 
 public:
