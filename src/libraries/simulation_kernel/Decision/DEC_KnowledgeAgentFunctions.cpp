@@ -575,7 +575,9 @@ void DEC_KnowledgeAgentFunctions::SwitchAutomateLogistic( DEC_Decision_ABC& call
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeAgentFunctions::IsInObject( const MIL_Entity_ABC& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
+    // The test on isDead is to allow the use of GetObjectsColliding - otherwise it finds invalid knowledge and a bad result
+    // A better solution would be to check for all objects at the location but it's expensive and the function is not needed for dead units anyway.
+    if( pKnowledge && pKnowledge->IsValid() && !pKnowledge->IsDead() )
     {
         T_KnowledgeObjectDiaIDVector objectsColliding;
         pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
@@ -595,7 +597,9 @@ bool DEC_KnowledgeAgentFunctions::IsInObject( const MIL_Entity_ABC& callerAgent,
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity( const MIL_Entity_ABC& callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
+    // The test on isDead is to allow the use of GetObjectsColliding - otherwise it finds invalid knowledge and a bad result
+    // A better solution would be to check for all objects at the location but it's expensive and the function is not needed for dead units anyway.
+    if( pKnowledge && pKnowledge->IsValid() && !pKnowledge->IsDead() )
     {
         T_KnowledgeObjectDiaIDVector objectsColliding;
         pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
