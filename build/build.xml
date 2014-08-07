@@ -715,6 +715,7 @@
                                    libiconv.dll,
                                    libpq.dll,
                                    libpng16.dll,
+                                   mapnikgen.exe,
                                    mapnik*-mt.dll,
                                    phonon4.dll,
                                    proj.dll,
