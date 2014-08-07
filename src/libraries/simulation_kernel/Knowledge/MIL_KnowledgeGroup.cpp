@@ -1133,9 +1133,9 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::ApplyPopulationPerception( const MIL_Agent_ABC& pion, int currentTimeStep )
 {
-    boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+    std::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
     pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
-    boost::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+    std::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
     pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( functorPopulationCollision );
 }
 
@@ -1145,7 +1145,7 @@ void MIL_KnowledgeGroup::ApplyPopulationPerception( const MIL_Agent_ABC& pion, i
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::ApplyAgentPerception( const MIL_Agent_ABC& pion, int currentTimeStep )
 {
-    boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref( currentTimeStep ) );
+    std::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref( currentTimeStep ) );
     pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );
 }
 
@@ -1156,7 +1156,7 @@ namespace
     {
         typedef const std::vector< T* >&( MIL_PopulationElement_ABC::*T_Getter )() const;
     public:
-        explicit sCollidingPopulationVisitor( boost::function< void( T& ) > fun, T_Getter getter )
+        explicit sCollidingPopulationVisitor( std::function< void( T& ) > fun, T_Getter getter )
             : fun_( fun )
             , getter_( getter )
         {
@@ -1169,7 +1169,7 @@ namespace
                 fun_( **it );
         }
     private:
-        boost::function< void( T& ) > fun_;
+        std::function< void( T& ) > fun_;
         T_Getter getter_;
     };
         
@@ -1245,9 +1245,9 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
             const MIL_KnowledgeGroup& innerKg = **itKG;
             if( innerKg.IsEnabled() && IsEnabled() && innerKg.IsJammed() && innerKg.CanReport() && innerKg.GetKnowledge() )
             {
-                boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+                std::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
                 innerKg.ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
-                boost::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+                std::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
                 innerKg.ApplyOnKnowledgesPopulationCollision( functorPopulationCollision );
             }
         }
@@ -1270,7 +1270,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
     // Acquisition des connaissances parents /!\ Transfert de connaissance appui
     if( IsJammed() && IsEnabled() && CanReport( ) && parent_ && parent_->GetKnowledge() )
     {
-        boost::function< void( DEC_Knowledge_Population& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+        std::function< void( DEC_Knowledge_Population& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
         parent_->GetKnowledge()->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( functorObject );
     }
 
@@ -1281,7 +1281,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes connaissances
     for( auto it = sharingKnowledgesGroup_.begin(); it != sharingKnowledgesGroup_.end(); ++it )
     {
-        boost::function< void( DEC_Knowledge_Population& ) > functorPopulation = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
+        std::function< void( DEC_Knowledge_Population& ) > functorPopulation = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
         (*it)->GetKnowledgeGroup()->knowledgeBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( functorPopulation );
     }
 }
@@ -1305,7 +1305,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                  // Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
                 if( pion.CallRole( &PHY_RoleInterface_Communications::CanEmit, false ) )
                 {
-                    boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
+                    std::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
                     pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );
                 }
             }
@@ -1317,7 +1317,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
             const MIL_KnowledgeGroup& innerKg = **it;
             if( innerKg.IsEnabled() && IsEnabled() && !innerKg.IsJammed() && innerKg.GetKnowledge() )
             {
-                boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+                std::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
                 innerKg.GetKnowledge()->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( functorAgent );
             }
         }
@@ -1326,7 +1326,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
             const MIL_KnowledgeGroup& innerKg = **itKG;
             if( innerKg.IsEnabled() && IsEnabled() && innerKg.IsJammed() && innerKg.CanReport() && innerKg.GetKnowledge() )
             {
-                boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
+                std::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
                 innerKg.ApplyOnKnowledgesAgentPerception( functorAgent );
             }
         }
@@ -1351,7 +1351,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                 auto bbKg = parent_->GetKnowledge();
                 if( bbKg )
                 {
-                    boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+                    std::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
                     bbKg->GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( functorAgent );
                     bbKg->GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
                 }
@@ -1372,7 +1372,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes connaissances
     for( auto it = sharingKnowledgesGroup_.begin(); it != sharingKnowledgesGroup_.end(); ++it )
     {
-        boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
+        std::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
         (*it)->GetKnowledgeGroup()->knowledgeBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( functorAgent );
     }
 }
@@ -1383,9 +1383,9 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateObjectPerception( const MIL_KnowledgeGroup& group, int currentTimeStep )
 {
-    boost::function< void( DEC_Knowledge_ObjectPerception& ) > functorPerception = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+    std::function< void( DEC_Knowledge_ObjectPerception& ) > functorPerception = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
     group.ApplyOnKnowledgesObjectPerception( functorPerception );
-    boost::function< void( DEC_Knowledge_ObjectCollision& ) > functorCollision = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+    std::function< void( DEC_Knowledge_ObjectCollision& ) > functorCollision = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
     group.ApplyOnKnowledgesObjectCollision( functorCollision );
 }
 
@@ -1411,7 +1411,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
         {
             if( parent_ && IsEnabled() && parent_->GetKnowledge() )
             {
-                boost::function< void( DEC_Knowledge_Object& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+                std::function< void( DEC_Knowledge_Object& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
                 parent_->GetKnowledge()->GetKnowledgeObjectContainer().ApplyOnPreviousKnowledgesObject( functorObject );
                 parent_->GetKnowledge()->GetKnowledgeObjectContainer().SaveAllCurrentKnowledgeObject();
             }
@@ -1430,7 +1430,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
     // Acquisition des connaissances parents /!\ Transfert de connaissance appui
     if( IsJammed() && IsEnabled() && CanReport( ) && parent_ &&  parent_->GetKnowledge() )
     {
-        boost::function< void( DEC_Knowledge_Object& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+        std::function< void( DEC_Knowledge_Object& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
         parent_->GetKnowledge()->GetKnowledgeObjectContainer().ApplyOnPreviousKnowledgesObject( functorObject );
         parent_->GetKnowledge()->GetKnowledgeObjectContainer().SaveAllCurrentKnowledgeObject();
     }
@@ -1442,7 +1442,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes connaissances
     for( auto it = sharingKnowledgesGroup_.begin(); it != sharingKnowledgesGroup_.end(); ++it )
     {
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >) > functorObject = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
+        std::function< void( boost::shared_ptr< DEC_Knowledge_Object >) > functorObject = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
         (*it)->GetKnowledgeGroup()->knowledgeBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( functorObject );
     }
 }

@@ -2851,7 +2851,7 @@ void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
 // Name: MIL_EntityManager::VisitUniversalObjects
 // Created: LDC 2012-01-26
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::VisitUniversalObjects( const boost::function< void( MIL_Object_ABC& ) >& visitor ) const
+void MIL_EntityManager::VisitUniversalObjects( const std::function< void( MIL_Object_ABC& ) >& visitor ) const
 {
     pObjectManager_->VisitUniversalObjects( visitor );
 }

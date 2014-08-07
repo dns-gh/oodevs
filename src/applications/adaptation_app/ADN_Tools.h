@@ -28,7 +28,7 @@ namespace ADN_Tools
 {
     // -----------------------------------------------------------------------------
     template< typename T, typename FieldType >
-    bool FieldCompare( const T& element, boost::function< const typename ADN_Type_ABC< FieldType >& ( const T& ) > fieldExtractor, const FieldType& value )
+    bool FieldCompare( const T& element, std::function< const typename ADN_Type_ABC< FieldType >& ( const T& ) > fieldExtractor, const FieldType& value )
     {
         return fieldExtractor( element ) == value;
     }

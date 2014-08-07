@@ -13,7 +13,6 @@
 #include "ADN_SymbolWidget_ABC.h"
 #include "ADN_Symbols_Data.h"
 #include <geometry/Types.h>
-#include <boost/function.hpp>
 
 // =============================================================================
 /** @class  ADN_UnitSymbolWidget
@@ -28,8 +27,8 @@ class ADN_UnitSymbolWidget : public ADN_SymbolWidget_ABC
 public:
     //! @name Types
     //@{
-   typedef boost::function< const QPixmap& ( ADN_Symbols_Data::SymbolsUnit* ) > T_PixmapExtractor;
-   typedef boost::function< const std::string& ( ADN_Symbols_Data::SymbolsUnit* ) > T_StringExtractor;
+   typedef std::function< const QPixmap& ( ADN_Symbols_Data::SymbolsUnit* ) > T_PixmapExtractor;
+   typedef std::function< const std::string& ( ADN_Symbols_Data::SymbolsUnit* ) > T_StringExtractor;
     //@}
 
 public:

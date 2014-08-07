@@ -48,7 +48,7 @@ namespace
     // Name: HasSubordinate
     // Created: LGY 2011-03-10
     // -----------------------------------------------------------------------------
-    bool HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun )
+    bool HasSubordinate( const kernel::Entity_ABC& entity, std::function< bool( const kernel::Entity_ABC& ) > fun )
     {
         tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
         while( it.HasMoreElements() )

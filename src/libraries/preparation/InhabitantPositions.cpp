@@ -28,7 +28,6 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 
 #include <boost/bind.hpp>
-#include <boost/function.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -36,7 +35,7 @@ namespace
     class IntersectionVisitor : public kernel::LocationVisitor_ABC
     {
     public:
-        IntersectionVisitor( const UrbanModel& model, boost::function< void( const kernel::UrbanObject_ABC&, const geometry::Polygon2f& ) > fun )
+        IntersectionVisitor( const UrbanModel& model, std::function< void( const kernel::UrbanObject_ABC&, const geometry::Polygon2f& ) > fun )
             : model_( model )
             , fun_  ( fun )
         {
@@ -68,7 +67,7 @@ namespace
 
     private :
         const UrbanModel& model_;
-        boost::function< void( const kernel::UrbanObject_ABC&, const geometry::Polygon2f& ) > fun_;
+        std::function< void( const kernel::UrbanObject_ABC&, const geometry::Polygon2f& ) > fun_;
     };
 }
 

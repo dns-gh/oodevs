@@ -14,7 +14,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Types.h"
 #include <tools/Resolver_ABC.h>
-#include <boost/function.hpp>
 
 namespace kernel
 {

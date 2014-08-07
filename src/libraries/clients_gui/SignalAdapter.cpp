@@ -13,7 +13,7 @@
 
 using namespace gui;
 
-SignalAdapter::SignalAdapter( QObject* parent, const boost::function< void() >& f )
+SignalAdapter::SignalAdapter( QObject* parent, const std::function< void() >& f )
     : QObject( parent )
     , f_( f )
 {

@@ -13,7 +13,6 @@
 #pragma warning( push, 0 )
 #include <QtCore/qstringlist.h>
 #pragma warning( pop )
-#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -29,7 +28,7 @@ class AtlasNature
 public:
     //! @name Functors
     //@{
-    typedef boost::function< void ( const std::string& ) > T_Setter;
+    typedef std::function< void ( const std::string& ) > T_Setter;
     //@}
 
 public:

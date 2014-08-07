@@ -14,7 +14,6 @@
 #include "AttributesDeserializer.h"
 
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 
 namespace hla
 {
@@ -39,7 +38,7 @@ class AttributesUpdater : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef boost::function< void( ::hla::Deserializer_ABC&, const std::string&, ObjectListener_ABC& ) > T_Notification;
+    typedef std::function< void( ::hla::Deserializer_ABC&, const std::string&, ObjectListener_ABC& ) > T_Notification;
     //@}
 
 public:

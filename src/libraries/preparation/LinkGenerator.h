@@ -11,7 +11,6 @@
 #define __LinkGenerator_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -48,7 +47,7 @@ private:
     //@{
     void AddLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior );
     void RemoveLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior );
-    void CreateLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base, boost::function< bool( const kernel::Entity_ABC& ) > fun );
+    void CreateLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base, std::function< bool( const kernel::Entity_ABC& ) > fun );
     void DeleteLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base );
     //@}
 };

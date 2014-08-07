@@ -10,7 +10,6 @@
 #ifndef tools_PhyLoader_h
 #define tools_PhyLoader_h
 
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
@@ -40,7 +39,7 @@ class PhyLoader : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef boost::function< void ( xml::xistream& ) > T_Loader;
+    typedef std::function< void ( xml::xistream& ) > T_Loader;
     //@}
 
 public:

@@ -10,8 +10,6 @@
 #ifndef __SignalAdapter_h_
 #define __SignalAdapter_h_
 
-#include <boost/function.hpp>
-
 namespace gui
 {
 // =============================================================================
@@ -25,16 +23,16 @@ class SignalAdapter : public QObject
     Q_OBJECT
 
 public:
-    SignalAdapter( QObject* parent, const boost::function< void() >& f );
+    SignalAdapter( QObject* parent, const std::function< void() >& f );
 
 public slots:
     void Handle();
 
 private:
-      boost::function< void() > f_;
+      std::function< void() > f_;
 };
 
-inline bool connect( QObject* sender, const char * signal, const boost::function< void() >& f )
+inline bool connect( QObject* sender, const char * signal, const std::function< void() >& f )
 {
     return QObject::connect( sender, signal, new gui::SignalAdapter( sender, f ), SLOT( Handle() ) );
 }

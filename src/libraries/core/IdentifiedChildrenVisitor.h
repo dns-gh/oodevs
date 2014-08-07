@@ -11,7 +11,6 @@
 #define CORE_IDENTIFIED_CHILDREN_VISITOR_H
 
 #include "ModelVisitor_ABC.h"
-#include <boost/function.hpp>
 
 namespace core
 {
@@ -28,7 +27,7 @@ class IdentifiedChildrenVisitor : private ModelVisitor_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::function< void( std::size_t, const Model& ) > T_Functor;
+    typedef std::function< void( std::size_t, const Model& ) > T_Functor;
     //@}
 
 public:

@@ -11,7 +11,6 @@
 #define __ScorePrimitivesPage_h_
 
 #include <tools/ElementObserver_ABC.h>
-#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -47,7 +46,7 @@ class ScorePrimitivesPage : public Q3VBox
 public:
     //! @name Types
     //@{
-    typedef boost::function< bool( const indicators::Primitive& ) > T_Filter;
+    typedef std::function< bool( const indicators::Primitive& ) > T_Filter;
     //@}
 
 public:

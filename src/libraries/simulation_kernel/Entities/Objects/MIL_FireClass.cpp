@@ -341,7 +341,7 @@ void MIL_FireClass::GetSurfaceFirePotentials( const TerrainData& terrainData, in
 // Name: MIL_FireClass::function< bool
 // Created: BCI 2011-01-25
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* MIL_FireClass::FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const
+const PHY_DotationCategory* MIL_FireClass::FindBestExtinguisherAgent( std::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const
 {
     for( T_ExtinguisherAgentEffectVector::const_iterator it = extinguisherAgentEffects_.begin(); it != extinguisherAgentEffects_.end(); ++it )
         if( isExtinguisherAgentOkFun( *it->pExtinguisherAgent_ ) )

@@ -417,7 +417,7 @@ void RegisterFunction( const std::string& name,  sword::Brain& brain,
 {
     if( name == "DEC_DecontaminerZone" )
         brain.RegisterFunction( name.c_str(),
-            boost::function< void( const TER_Localisation* ) >(
+            std::function< void( const TER_Localisation* ) >(
                 boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone,
                     boost::cref( agent ), _1 ) ) );
     else if( name == "DEC_Agent_SeDecontaminer" )

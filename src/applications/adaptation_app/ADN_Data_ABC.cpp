@@ -207,7 +207,7 @@ const boost::shared_ptr< kernel::Context >& ADN_Data_ABC::GetContext( const std:
 // Name: ADN_Data_ABC::ApplyOnTranslations
 // Created: ABR 2013-10-08
 // -----------------------------------------------------------------------------
-bool ADN_Data_ABC::ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor ) const
+bool ADN_Data_ABC::ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const
 {
     return translations_->ApplyOnTranslations( functor );
 }

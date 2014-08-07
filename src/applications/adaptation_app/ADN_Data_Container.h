@@ -42,7 +42,7 @@ public:
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
-    virtual bool ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor ) const;
+    virtual bool ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const;
     virtual void Save() const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}

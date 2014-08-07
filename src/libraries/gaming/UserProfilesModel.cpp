@@ -77,7 +77,7 @@ kernel::ProfileEditor* UserProfilesModel::CreateProfileEditor( kernel::UserProfi
 // Name: UserProfilesModel::function< void
 // Created: JSR 2014-06-06
 // -----------------------------------------------------------------------------
-void UserProfilesModel::Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor )
+void UserProfilesModel::Apply( std::function< void( kernel::UserProfile_ABC& ) > functor )
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         functor( **it );

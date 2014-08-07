@@ -18,7 +18,6 @@
 #include "ADN_NavigationInfos.h"
 #include "clients_gui/RichTreeView.h"
 #include "tools/LanguageObserver_ABC.h"
-#include <boost/function.hpp>
 
 namespace YExcel
 {
@@ -72,7 +71,7 @@ public:
     void CreateTableFrom( std::stringstream& stream ) const;
     void RemoveCurrentElement();
 
-    virtual void ConnectItem( bool /*bConnect*/ ) {} 
+    virtual void ConnectItem( bool /*bConnect*/ ) {}
 
     void SetDeletionEnabled( bool enable, bool warning = true );
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
@@ -109,7 +108,7 @@ private:
     virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; }
     bool ApplyFilterLine( ADN_StandardItem* item );
     bool ApplyFilterList( ADN_StandardItem* item );
-    void ApplyFilter( boost::function< bool( ADN_StandardItem* ) > func );
+    void ApplyFilter( std::function< bool( ADN_StandardItem* ) > func );
     void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, QStandardItem* item, int maxDepth, int nbRow ) const;
     void RecursiveFillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
     void FillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;

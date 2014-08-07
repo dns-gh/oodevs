@@ -11,7 +11,6 @@
 #define __ActionParameterBool_h_
 
 #include "Parameter.h"
-#include <boost/function.hpp>
 
 namespace actions
 {
@@ -28,7 +27,7 @@ class Bool : public Parameter< bool >
 public:
     //! @name Functors
     //@{
-    typedef boost::function< void ( const bool& ) > T_Setter;
+    typedef std::function< void ( const bool& ) > T_Setter;
     //@}
 
 public:

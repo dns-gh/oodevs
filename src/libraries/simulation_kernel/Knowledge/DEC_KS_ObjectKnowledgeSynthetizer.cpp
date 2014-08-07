@@ -236,7 +236,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
     ProcessEphemeralKnowledges();
 
     // Universal objects
-    boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > universalFunctor = boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateUniversalKnowledge, this, _1 );
+    std::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > universalFunctor = boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateUniversalKnowledge, this, _1 );
     pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( universalFunctor );
 
     // Objects to forget
@@ -246,7 +246,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
     ProcessKnowledgesObjectToForget();
 
     // Relevance
-    boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, this, _1 );
+    std::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, this, _1 );
     pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( objectFunctor );
 }
 

@@ -328,7 +328,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 // Name: ProfilesModel::Apply
 // Created: JSR 2014-06-03
 // -----------------------------------------------------------------------------
-void ProfilesModel::Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor )
+void ProfilesModel::Apply( std::function< void( kernel::UserProfile_ABC& ) > functor )
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         functor( **it );

@@ -16,7 +16,6 @@
 #include "RichWidget.h"
 #include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 
 namespace kernel
 {

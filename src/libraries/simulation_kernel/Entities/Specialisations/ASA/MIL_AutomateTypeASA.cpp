@@ -49,9 +49,9 @@ const MIL_AutomateType* MIL_AutomateTypeASA::Create( const std::string& strName,
 void MIL_AutomateTypeASA::RegisterFunctions( sword::Brain& brain, MIL_Automate& automat ) const
 {
     brain.RegisterFunction( "DEC_Geometrie_PosDeploiementASAOmni",
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASAOmni, boost::cref( automat ), _1, _2, _3 ) ) );
+        std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASAOmni, boost::cref( automat ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_PosDeploiementMistralNasse",
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASANasse, _1, _2, _3, _4, _5, _6 ) ) );
+        std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASANasse, _1, _2, _3, _4, _5, _6 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_PosDeploiementDoubleRideau",
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau, _1, _2, _3, _4, _5, _6 ) ) );
+        std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau, _1, _2, _3, _4, _5, _6 ) ) );
 }

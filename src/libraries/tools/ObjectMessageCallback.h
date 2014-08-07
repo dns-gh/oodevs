@@ -19,7 +19,6 @@
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
-#include <boost/function.hpp>
 #include <vector>
 
 namespace tools
@@ -36,8 +35,8 @@ class ObjectMessageCallback : public ObjectMessageCallback_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::function< void( const std::string&, const T& ) > T_ConstCallback;
-    typedef boost::function< void( const std::string&, T& ) >       T_Callback;
+    typedef std::function< void( const std::string&, const T& ) > T_ConstCallback;
+    typedef std::function< void( const std::string&, T& ) >       T_Callback;
     //@}
 
 public:
@@ -96,7 +95,7 @@ public:
             throw MASA_EXCEPTION( "Error deserializing message of type \"" + t.GetDescriptor()->full_name() + '"' );
         static const unsigned long threshold = 32 * 1024; // 32 kB
         if( message.Size() > threshold )
-            callback.OnWarning( link, "Long message detected (" + 
+            callback.OnWarning( link, "Long message detected (" +
                 boost::lexical_cast< std::string >( message.Size() ) + " bytes): " +
                 t.ShortDebugString() );
         OnMessage( link, t );

@@ -121,8 +121,8 @@ public:
     //! @name logistic
     //@{
     virtual logistic::LogisticHierarchy_ABC& GetLogisticHierarchy() const;
-            void Apply2( boost::function< void( PHY_Dotation& ) > visitor ) const;
-            void Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const;
+            void Apply2( std::function< void( PHY_Dotation& ) > visitor ) const;
+            void Apply2( std::function< void( PHY_DotationStock& ) > visitor ) const;
     //@}
 
     //! @name Operations

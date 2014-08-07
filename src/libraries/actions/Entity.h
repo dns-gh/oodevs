@@ -17,7 +17,6 @@
 #ifndef Q_MOC_RUN
 #include <boost/lexical_cast.hpp>
 #endif
-#include <boost/function.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace actions {
@@ -37,7 +36,7 @@ class Entity : public Parameter< const ConcreteEntity* >
 public:
     //! @name Functors
     //@{
-    typedef boost::function< void ( const int& ) > T_Setter;
+    typedef std::function< void ( const int& ) > T_Setter;
     //@}
 
 public:

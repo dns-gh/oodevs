@@ -9,7 +9,7 @@
 #ifndef plugins_hla_TransferSender_ABC_h
 #define plugins_hla_TransferSender_ABC_h
 
-#include <boost/function.hpp>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -39,7 +39,7 @@ public:
         E_EntityPull  = 2,
     };
 
-    typedef boost::function< void ( bool ) > TransferRequestCallback;
+    typedef std::function< void ( bool ) > TransferRequestCallback;
 
     //! @name Constructors/Destructor
     //@{

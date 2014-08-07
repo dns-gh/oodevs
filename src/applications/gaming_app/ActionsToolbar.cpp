@@ -25,14 +25,13 @@
 #include "protocol/ReplaySenders.h"
 #include "ENT/ENT_Enums.h"
 #include <boost/bind.hpp>
-#include <boost/function.hpp>
 
 namespace
 {
     class ConfirmationBox : public QMessageBox
     {
     private:
-        typedef boost::function1< void, int > T_Callback;
+        typedef std::function< void( int ) > T_Callback;
     public:
         ConfirmationBox( const QString& title, T_Callback callback )
             : QMessageBox( title, "", QMessageBox::Question, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, Qt::NoButton )

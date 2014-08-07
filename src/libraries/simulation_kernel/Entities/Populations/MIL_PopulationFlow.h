@@ -73,7 +73,7 @@ public:
     virtual double GetDefaultDensity( const MIL_PopulationType& type ) const;
     virtual bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& shape ) const;
     const T_PointList& GetFlowShape() const;
-    void ApplyOnShape( const boost::function< bool( const MT_Line& ) >& f ) const;
+    void ApplyOnShape( const std::function< bool( const MT_Line& ) >& f ) const;
     //@}
 
     //! @name Concentration management
@@ -180,7 +180,7 @@ private:
     MT_Vector2D direction_;
     double rSpeed_;
     double rWalkedDistance_;
-    T_FlowShape flowShape_; 
+    T_FlowShape flowShape_;
     mutable T_PointList computedFlowShape_;
     std::vector< MT_Vector2D > pointsToInsert_;
     TER_Localisation location_; // For terrain

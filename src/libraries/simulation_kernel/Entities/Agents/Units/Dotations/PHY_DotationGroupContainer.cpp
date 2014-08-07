@@ -391,7 +391,7 @@ void PHY_DotationGroupContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 // Name: PHY_DotationGroupContainer::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::Apply( boost::function< void( PHY_Dotation& ) > visitor ) const
+void PHY_DotationGroupContainer::Apply( std::function< void( PHY_Dotation& ) > visitor ) const
 {
     for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->Apply( visitor );

@@ -18,8 +18,6 @@
 #include <boost/bind.hpp>
 #include <boost/bind/protect.hpp>
 #include <boost/enable_shared_from_this.hpp>
-#include <boost/function.hpp>
-#include <boost/lambda/lambda.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/noncopyable.hpp>
@@ -32,6 +30,7 @@
 #include <boost/variant.hpp>
 #include <xeumeuleu/xml.hpp>
 #include "protocol/Protocol.h"
+#include <functional>
 
 #endif //AAR_PCH_H
 

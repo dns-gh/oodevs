@@ -103,7 +103,7 @@ boost::shared_ptr< LocalizedString > Context::CreateNew( const std::string& key 
 // Name: Context::Apply
 // Created: ABR 2013-10-08
 // -----------------------------------------------------------------------------
-bool Context::Apply( const boost::function< bool( LocalizedString& ) >& functor )
+bool Context::Apply( const std::function< bool( LocalizedString& ) >& functor )
 {
     for( auto it = begin(); it != end(); ++it )
         if( *it && functor( **it ) )

@@ -69,7 +69,7 @@ public:
     int GetMaxCombustionEnergy() const;
     int GetWeatherDecreateRate( const MIL_Object_ABC& object ) const;
     void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
-    const PHY_DotationCategory* FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const;
+    const PHY_DotationCategory* FindBestExtinguisherAgent( std::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const;
     int GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const;
     MIL_BurnEffectManipulator GetBurnEffect();
     const MIL_FireClass& GetClass() const;

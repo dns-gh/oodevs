@@ -12,7 +12,6 @@
 
 #include "MessageDispatcher_ABC.h"
 #include "MessageCallback_ABC.h"
-#include <boost/function.hpp>
 #include <map>
 
 namespace tools
@@ -31,7 +30,7 @@ class ObjectMessageService : public MessageDispatcher_ABC
 private:
     //! @name Types
     //@{
-    typedef boost::function< void( const std::string&, const std::string& ) > T_Callback;
+    typedef std::function< void( const std::string&, const std::string& ) > T_Callback;
     //@}
 
 public:

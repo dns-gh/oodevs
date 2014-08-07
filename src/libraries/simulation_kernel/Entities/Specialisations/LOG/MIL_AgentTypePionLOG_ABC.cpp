@@ -54,11 +54,11 @@ void MIL_AgentTypePionLOG_ABC::RegisterFunctions( sword::Brain& brain, MIL_Agent
     brain.RegisterFunction( "DEC_Maintenance_DesactiverChaine",
         boost::bind( &DEC_LogisticFunctions::PionMaintenanceDisableSystem, boost::ref( agent ) ) );
     brain.RegisterFunction( "DEC_Maintenance_ChangerPriorites",
-        boost::function< void( const std::vector< const PHY_ComposanteTypePion* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangePriorities, boost::ref( agent ), _1 ) ) );
+        std::function< void( const std::vector< const PHY_ComposanteTypePion* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangePriorities, boost::ref( agent ), _1 ) ) );
     brain.RegisterFunction( "DEC_Maintenance_ChangerPrioritesTactiques",
-        boost::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities, boost::ref( agent ), _1 ) ) );
+        std::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities, boost::ref( agent ), _1 ) ) );
     brain.RegisterFunction( "DEC_Maintenance_ChangerRegimeTravail",
-        boost::function< void( int ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangeWorkRate, boost::ref( agent ), _1 ) ) );
+        std::function< void( int ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangeWorkRate, boost::ref( agent ), _1 ) ) );
 
     brain.RegisterFunction( "DEC_Sante_ActiverChaine",
         boost::bind( &DEC_LogisticFunctions::PionMedicalEnableSystem, boost::ref( agent ) ) );
@@ -73,9 +73,9 @@ void MIL_AgentTypePionLOG_ABC::RegisterFunctions( sword::Brain& brain, MIL_Agent
     brain.RegisterFunction( "DEC_Sante_DesactiverFonctionSoin",
         boost::bind( &DEC_LogisticFunctions::PionMedicalDisableHealingFunction, boost::ref( agent ) ) );
     brain.RegisterFunction( "DEC_Sante_ChangerPriorites",
-        boost::function< void( const std::vector< const PHY_HumanWound* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMedicalChangePriorities, boost::ref( agent ), _1 ) ) );
+        std::function< void( const std::vector< const PHY_HumanWound* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMedicalChangePriorities, boost::ref( agent ), _1 ) ) );
     brain.RegisterFunction( "DEC_Sante_ChangerPrioritesTactiques",
-        boost::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities, boost::ref( agent ), _1 ) ) );
+        std::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities, boost::ref( agent ), _1 ) ) );
 
     brain.RegisterFunction( "DEC_Ravitaillement_ActiverChaine",
         boost::bind( &DEC_LogisticFunctions::PionSupplyEnableSystem, boost::ref( agent ) ) );

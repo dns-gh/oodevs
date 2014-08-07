@@ -124,7 +124,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef boost::function< void() > T_EvolutionFunction;
+    typedef void (PHY_RolePion_HumanFactors::*T_EvolutionFunction)(void);
     //@}
 
     //! @name Member data

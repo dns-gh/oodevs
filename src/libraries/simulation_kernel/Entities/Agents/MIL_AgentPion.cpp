@@ -1645,7 +1645,7 @@ logistic::LogisticHierarchy_ABC& MIL_AgentPion::GetLogisticHierarchy() const
 // Name: MIL_AgentPion::Apply2
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::Apply2( boost::function< void( PHY_Dotation& ) > visitor ) const
+void MIL_AgentPion::Apply2( std::function< void( PHY_Dotation& ) > visitor ) const
 {
     GetRole< dotation::PHY_RoleInterface_Dotations >().Apply( visitor );
 }
@@ -1654,7 +1654,7 @@ void MIL_AgentPion::Apply2( boost::function< void( PHY_Dotation& ) > visitor ) c
 // Name: MIL_AgentPion::Apply2
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const
+void MIL_AgentPion::Apply2( std::function< void( PHY_DotationStock& ) > visitor ) const
 {
     const PHY_RoleInterface_Supply* itf = RetrieveRole< PHY_RoleInterface_Supply >();
     if( itf )

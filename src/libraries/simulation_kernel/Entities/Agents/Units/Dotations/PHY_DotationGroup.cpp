@@ -310,7 +310,7 @@ void PHY_DotationGroup::ConsumeFireReservations()
 // Name: PHY_DotationGroup::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::Apply( boost::function< void( PHY_Dotation& ) > visitor ) const
+void PHY_DotationGroup::Apply( std::function< void( PHY_Dotation& ) > visitor ) const
 {
     for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         visitor( *it->second );

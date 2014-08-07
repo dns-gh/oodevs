@@ -20,7 +20,6 @@
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
-#include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/thread/locks.hpp>
@@ -43,7 +42,7 @@ namespace
 template< typename T >
 struct MessageObserver : public Observer, public tools::MessageObserver< T >
 {
-    typedef typename boost::function< void( const T& ) > Update;
+    typedef typename std::function< void( const T& ) > Update;
     MessageObserver( const Update& update )
         : update_( update )
     {
@@ -68,7 +67,7 @@ private:
 template< typename T, sword::EnumSimulationState Next >
 struct ControlAckUpdate : public Observer, public tools::MessageObserver< T >
 {
-    typedef boost::function< void( sword::EnumSimulationState ) > Update;
+    typedef std::function< void( sword::EnumSimulationState ) > Update;
     ControlAckUpdate( const Update& update )
         : update_( update )
     {

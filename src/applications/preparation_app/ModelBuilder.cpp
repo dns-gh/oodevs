@@ -38,14 +38,13 @@
 #include "preparation/UrbanModel.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
-#include <boost/function.hpp>
 
 namespace
 {
     class ConfirmationBox : public QMessageBox
     {
     private:
-        typedef boost::function1< void, int > T_Callback;
+        typedef std::function< void( int ) > T_Callback;
     public:
         ConfirmationBox( const QString& title, T_Callback callback )
             : QMessageBox( title, "", QMessageBox::Warning, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, Qt::NoButton )

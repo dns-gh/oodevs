@@ -28,7 +28,6 @@
 #include "MIL.h"
 
 #include <boost/bind.hpp>
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/preprocessor.hpp>
 #include <boost/serialization/export.hpp>
@@ -48,9 +47,10 @@
 #pragma warning( pop )
 
 #include <cassert>
-#include <vector>
+#include <functional>
 #include <list>
 #include <map>
 #include <set>
+#include <vector>
 
 #endif // __MIL_pch_h_

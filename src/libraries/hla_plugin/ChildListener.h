@@ -11,7 +11,7 @@
 #define plugins_hla_ChildListener_h
 
 #include "EventListener_ABC.h"
-#include <boost/function.hpp>
+#include <functional>
 #include <set>
 
 namespace plugins
@@ -30,7 +30,7 @@ struct ChildListener : public EventListener_ABC
 {
     //! @name Types
     //@{
-    typedef boost::function< void( const ChildListener& ) > T_Callback;
+    typedef std::function< void( const ChildListener& ) > T_Callback;
     struct LocationStruct
     {
         LocationStruct( double lat, double lon, float alt, float spd, float dir )

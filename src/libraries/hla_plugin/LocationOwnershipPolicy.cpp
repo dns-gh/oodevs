@@ -17,7 +17,6 @@
 #include "TransferSender_ABC.h"
 #include "protocol/Protocol.h"
 #include <hla/VariableLengthData.h>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 
 using namespace plugins::hla;
@@ -44,7 +43,7 @@ struct LocationOwnershipPolicy::OwnershipState
     , private boost::noncopyable
 {
 public:
-    typedef boost::function< bool(double,double) > LocationCheckFunctor;
+    typedef std::function< bool(double,double) > LocationCheckFunctor;
     enum State
     {
         S_Local = 0,

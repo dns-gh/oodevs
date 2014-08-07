@@ -14,7 +14,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Formation_ABC.h"
 #include <tools/SelectionObserver_ABC.h>
-#include <boost/function.hpp>
 #include <set>
 
 namespace kernel

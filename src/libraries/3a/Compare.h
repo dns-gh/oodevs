@@ -13,8 +13,6 @@
 #include "Functions.h"
 #include "TypeChecks.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/function.hpp>
-#include <boost/lambda/lambda.hpp>
 
 // =============================================================================
 /** @class  Compare
@@ -69,7 +67,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::function2< bool, T, T > T_Operator;
+    typedef std::function< bool( T, T ) > T_Operator;
     //@}
 
     //! @name Operations
@@ -81,13 +79,12 @@ private:
     static T_Operator MakeOperator( xml::xistream& xis )
     {
         const std::string op = xis.attribute< std::string >( "operator" );
-        namespace bl = boost::lambda;
-        if( op == "less" )          return bl::_1 < bl::_2;
-        if( op == "greater" )       return bl::_1 > bl::_2;
-        if( op == "less_equal" )    return bl::_1 <= bl::_2;
-        if( op == "greater_equal" ) return bl::_1 >= bl::_2;
-        if( op == "equal" )         return bl::_1 == bl::_2;
-        if( op == "not_equal" )     return bl::_1 != bl::_2;
+        if( op == "less" )          return []( T a, T b ){ return a < b; };
+        if( op == "greater" )       return []( T a, T b ){ return a > b; };
+        if( op == "less_equal" )    return []( T a, T b ){ return a <= b; };
+        if( op == "greater_equal" ) return []( T a, T b ){ return a >= b; };
+        if( op == "equal" )         return []( T a, T b ){ return a == b; };
+        if( op == "not_equal" )     return []( T a, T b ){ return a != b; };
         throw MASA_EXCEPTION( xis.context() + "Invalid operator '" + op + "'" );
     }
     //@}

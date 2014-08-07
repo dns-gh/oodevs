@@ -11,7 +11,6 @@
 #define __Quantity_h_
 
 #include "Parameter.h"
-#include <boost/function.hpp>
 
 namespace actions {
     namespace parameters {
@@ -27,7 +26,7 @@ class Quantity : public Parameter< int >
 public:
     //! @name Functors
     //@{
-    typedef boost::function< void ( const int& ) > T_Setter;
+    typedef std::function< void ( const int& ) > T_Setter;
     //@}
 
 public:

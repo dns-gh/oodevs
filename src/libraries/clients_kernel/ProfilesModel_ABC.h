@@ -35,7 +35,7 @@ public:
     virtual void CommitFromEditor( kernel::ProfileEditor& editor ) = 0;
     virtual kernel::ProfileEditor* CreateProfileEditor() const = 0;
     virtual kernel::ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const = 0;
-    virtual void Apply( boost::function< void( kernel::UserProfile_ABC& ) > functor ) = 0;
+    virtual void Apply( std::function< void( kernel::UserProfile_ABC& ) > functor ) = 0;
     //@}
 };
 

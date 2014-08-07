@@ -142,7 +142,7 @@ void ADN_Languages_Data::ChangeLanguage( const std::string& language ) const
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::InitializeLanguages() const
 {
-    boost::function< bool ( kernel::LocalizedString& ) > initializer = boost::bind( &kernel::LocalizedString::Initialize, _1, GetActiveLanguages() );
+    std::function< bool ( kernel::LocalizedString& ) > initializer = boost::bind( &kernel::LocalizedString::Initialize, _1, GetActiveLanguages() );
     ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref( initializer ) ) );
     ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( initializer );
 }
@@ -162,7 +162,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::SwapMaster()
 {
-    const boost::function< bool ( kernel::LocalizedString& ) > swapper = boost::bind( &kernel::LocalizedString::SwapKey, _1, Master(), tools::Language::Current() ) ;
+    const std::function< bool ( kernel::LocalizedString& ) > swapper = boost::bind( &kernel::LocalizedString::SwapKey, _1, Master(), tools::Language::Current() ) ;
     ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref( swapper ) ) );
     ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( boost::bind( &SetFinished, _1, tools::Language::Current() ) );
     ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( swapper );

@@ -12,7 +12,6 @@
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
 #include <boost/foreach.hpp>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 

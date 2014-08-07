@@ -11,7 +11,6 @@
 #define __ActionParameterObstacleType_h_
 
 #include "Parameter.h"
-#include <boost/function.hpp>
 
 namespace sword
 {
@@ -33,7 +32,7 @@ public:
     //! @name Functors
     //@{
 
-    typedef boost::function< void ( const sword::ObstacleType_DemolitionTargetType& ) > T_Setter;
+    typedef std::function< void ( const sword::ObstacleType_DemolitionTargetType& ) > T_Setter;
     //@}
 
 public:

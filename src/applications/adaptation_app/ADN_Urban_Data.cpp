@@ -897,7 +897,7 @@ const boost::shared_ptr< kernel::Context >& ADN_Urban_Data::GetTemplateContext( 
 // Name: ADN_Urban_Data::function< bool
 // Created: ABR 2013-10-23
 // -----------------------------------------------------------------------------
-bool ADN_Urban_Data::ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor ) const
+bool ADN_Urban_Data::ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const
 {
     if( ADN_Data_ABC::ApplyOnTranslations( functor ) )
         return true;

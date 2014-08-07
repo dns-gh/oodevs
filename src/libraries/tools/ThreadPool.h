@@ -38,7 +38,7 @@ public:
 
     //! @name Typedefs
     //@{
-    typedef boost::function< void() >    Task;
+    typedef std::function< void() >    Task;
     typedef boost::shared_future< void > Future;
     //@}
 
