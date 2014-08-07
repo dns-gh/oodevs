@@ -63,6 +63,10 @@
 #include <set>
 
 #include <boost/bind.hpp>
+#include <boost/container/flat_map.hpp>
+#include <boost/tuple/tuple.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <geometry/Types.h>
 #include <tools/Exception.h>
 #include <tools/Path.h>
 #include "clients_gui/ObjectNameManager.h"
