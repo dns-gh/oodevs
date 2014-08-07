@@ -25,9 +25,9 @@ namespace kernel
 
 namespace actions
 {
-    namespace gui
-    {
-        class InterfaceBuilder_ABC;
+namespace gui
+{
+    class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  LimitParameter
@@ -38,9 +38,7 @@ namespace actions
 class LimitParameter : public Param_ABC
                      , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
                      , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
-
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -70,6 +68,7 @@ private:
     virtual bool InternalCheckValidity() const;
     void Display( const QString& what );
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyUpdated( const kernel::TacticalLine_ABC& entity );
     virtual void NotifyDeleted( const kernel::TacticalLine_ABC& entity );
     //@}
 

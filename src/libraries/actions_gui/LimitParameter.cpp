@@ -107,6 +107,12 @@ void LimitParameter::OnMenuClick()
     Update();
 }
 
+void LimitParameter::NotifyUpdated( const kernel::TacticalLine_ABC& entity )
+{
+    if( &entity == selected_ )
+        Display( entity.GetName() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: LimitParameter::NotifyDeleted
 // Created: SBO 2008-04-16
