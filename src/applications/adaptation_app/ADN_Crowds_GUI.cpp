@@ -136,7 +136,7 @@ void ADN_Crowds_GUI::Build()
     ADN_Crowds_SpeedEffect_Volume_ListView* pVolumeList = builder.AddWidget< ADN_Crowds_SpeedEffect_Volume_ListView >( "volume-list", pSpeedEffectGroup );
     vInfosConnectors[ eSpeedEffectVolume ] = &pVolumeList->GetConnector();
     Q3GroupBox* pSpeedEffectVolumeGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect" ), pSpeedEffectGroup );
-    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, "density", tr( "Density" ), vInfosConnectors[eSpeedEffectDensity], tr( "people/m²" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, "density", tr( "Density" ), vInfosConnectors[eSpeedEffectDensity], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, "max-speed", tr( "Max speed" ), vInfosConnectors[eSpeedEffectMaxSpeed], tr( "km/h" ), eGreaterEqualZero );
 
     // Fire effects
