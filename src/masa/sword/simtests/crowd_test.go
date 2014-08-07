@@ -276,15 +276,15 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 		return done
 	})
 
-	// Teleport the crowd, the flow and concentrations are destroyed
-	// A new concentration is created.
+	// Teleport the crowd, the flow is teleported and the concentrations
+	// are emptied. A new concentration is created.
 	_, err = client.Pause()
 	c.Assert(err, IsNil)
 	teleport := swapi.Point{X: -15.8193, Y: 128.3456}
 	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), teleport)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.Crowds[crowd.Id].CrowdElements) == 1
+		return len(data.Crowds[crowd.Id].CrowdElements) == 3
 	})
 
 	// A new flow is created when the crowd restarts its movement.

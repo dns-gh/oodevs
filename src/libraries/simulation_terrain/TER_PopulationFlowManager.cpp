@@ -116,7 +116,7 @@ void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisatio
     while( view.HasMoreElements() )
     {
         TER_PopulationFlow_ABC* pFlow = view.NextElement();
-        if( pFlow && pFlow->IsIntersecting( localisation, precision ) )
+        if( pFlow && pFlow->IsValid() && pFlow->IsIntersecting( localisation, precision ) )
             flows.push_back( pFlow );
     }
 }
