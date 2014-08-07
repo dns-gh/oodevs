@@ -412,6 +412,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     // Agent knowledge accessors
     RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant",
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_KnowledgeAgent_IsPerceptionLevelMax",
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ConnaissanceAgent_EstPercuParUnite",
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivedByAgent, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ConnaissanceAgent_EstUnEnnemi",

@@ -191,7 +191,6 @@ integration.isAgentPerceivesAgent = function( agent )
     return DEC_ConnaissanceAgent_PercoitUnite( agent )
 end
 
-
 --- Deprecated
 --- Returns the agent maximum identification distance (in meters) regarding physical characteristics of 
 -- one of the major components.
@@ -200,4 +199,11 @@ end
 -- @return Numeric the identification distance in meters
 integration.getIdentificationDistance = function()
     return DEC_Identification_DistanceMaxCompMajeure()
+end
+
+---Returns true if the perception level of the given DirectIA agent knowledge is the maximum.
+-- @param knowledge DirectIA agent knowledge.
+-- @return true if the perception level of the given DirectIA agent knowledge is the maximum , false otherwise.
+integration.isPerceptionLevelMaxForUnit = function( knowledge )
+    return DEC_KnowledgeAgent_IsPerceptionLevelMax( knowledge )
 end

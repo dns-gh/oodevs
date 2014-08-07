@@ -42,6 +42,7 @@ public:
 
     static int   GetMaxPerceptionLevelForKnowledgeGroup ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static int   GetCurrentPerceptionLevel              ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool  IsPerceptionLevelMax                   ( const MIL_Entity_ABC& caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static float GetDangerosityOnPion                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget );
     static float GetDangerosityOnKnowledge              ( boost::shared_ptr< DEC_Knowledge_Agent > pSource, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );
     static boost::shared_ptr< MT_Vector2D > GetPositionPtr( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
