@@ -49,7 +49,7 @@ namespace
         for( auto it = points.begin(); it != points.end(); ++it )
         {
             auto point = reply.add_points();
-            if( it ->waypoint )
+            if( it->waypoint )
                 point->set_waypoint( *it->waypoint );
             const auto src = converter.ConvertToGeo( it->where );
             auto dst = point->mutable_coordinate();

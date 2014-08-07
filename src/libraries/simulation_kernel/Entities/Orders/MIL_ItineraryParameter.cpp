@@ -50,7 +50,7 @@ namespace
         const auto& points = src.points();
         for( auto it = points.begin(); it != points.end(); ++it )
         {
-            if( it->waypoint() < 0 )
+            if( !it->has_waypoint() || it->waypoint() < 0 )
                 continue;
             result.push_back( boost::make_shared< MT_Vector2D >() );
             MIL_Tools::ConvertCoordMosToSim( it->coordinate(), *result.back() );
