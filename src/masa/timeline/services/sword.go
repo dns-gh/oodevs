@@ -565,7 +565,7 @@ func (s *Sword) waitAck(errors chan<- error, msg *swapi.SwordMessage, client, co
 		err = processAck(int32(code), ack.GetErrorMsg(), code.String())
 	} else if ack := m.UnitMagicActionAck; ack != nil {
 		code := ack.GetErrorCode()
-		err = processAck(int32(code), ack.GetErrorMsg(), code.String())
+		err = processAck(code, ack.GetErrorMsg(), proto.EnumName(sword.UnitActionAck_ErrorCode_name, code))
 	} else if ack := m.ObjectMagicActionAck; ack != nil {
 		code := ack.GetErrorCode()
 		err = processAck(int32(code), ack.GetErrorMsg(), code.String())

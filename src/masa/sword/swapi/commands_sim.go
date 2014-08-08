@@ -25,7 +25,7 @@ func getUnitMagicActionAck(msg *sword.SimToClient_Content) (*sword.UnitMagicActi
 		return nil, 0, unexpected(msg)
 	}
 	code := ack.GetErrorCode()
-	if code == sword.UnitActionAck_no_error {
+	if code == int32(sword.UnitActionAck_no_error) {
 		id := ack.GetUnit().GetId()
 		return ack, id, nil
 	}

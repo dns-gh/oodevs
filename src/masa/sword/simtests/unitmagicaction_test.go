@@ -57,8 +57,8 @@ func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) e
 		m := msg.SimulationToClient.GetMessage()
 		if reply := m.GetUnitMagicActionAck(); reply != nil {
 			code := reply.GetErrorCode()
-			if code != sword.UnitActionAck_error_invalid_unit {
-				name := sword.UnitActionAck_ErrorCode_name[int32(code)]
+			if code != int32(sword.UnitActionAck_error_invalid_unit) {
+				name := sword.UnitActionAck_ErrorCode_name[code]
 				err = fmt.Errorf("Got unexpected error: %v", name)
 			} else {
 				err = fmt.Errorf("error_invalid_unit")
@@ -68,7 +68,6 @@ func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) e
 		}
 		quit <- err
 		return true
-
 	}
 	client.Post(*msg, handler)
 	err := <-quit

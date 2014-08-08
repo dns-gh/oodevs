@@ -33,6 +33,13 @@ namespace log_tools
         return google::protobuf::internal::NameOfEnum( enumDesc, error );
     }
 
+    template< typename T >
+    const std::string& GetErrorName( int32_t error )
+    {
+        const google::protobuf::EnumDescriptor* enumDesc = google::protobuf::GetEnumDescriptor< T >();
+        return google::protobuf::internal::NameOfEnum( enumDesc, error );
+    }
+
     void LogAcknowledge( kernel::Logger_ABC& logger, const std::string& messageName );
     void LogAcknowledge( kernel::Logger_ABC& logger, const char* messageName );
     bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const std::string& errorMessage, const std::string& messageName, bool display );
@@ -49,6 +56,14 @@ namespace log_tools
     bool CheckAcknowledge( kernel::Logger_ABC& logger, const T& message, bool display = true )
     {
         const std::string& errorMessage = GetErrorName( message.error_code() );
+        const std::string& messageName = message.descriptor()->name();
+        return CheckAcknowledge( logger, message.error_code(), errorMessage, messageName, display );
+    }
+
+    template< typename Enum, typename T >
+    bool CheckAcknowledge( kernel::Logger_ABC& logger, const T& message, bool display = true )
+    {
+        const std::string& errorMessage = GetErrorName< Enum >( message.error_code() );
         const std::string& messageName = message.descriptor()->name();
         return CheckAcknowledge( logger, message.error_code(), errorMessage, messageName, display );
     }
