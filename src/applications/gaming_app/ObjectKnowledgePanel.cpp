@@ -148,12 +148,23 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
     ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), element.Count(), *display_ );
     int i = 0;
     tools::Iterator< const kernel::ObjectKnowledge_ABC& > iterator = element.CreateIterator();
+    QStandardItem* toSelect = 0;
     while( iterator.HasMoreElements() )
     {
         const kernel::ObjectKnowledge_ABC& knowledge = iterator.NextElement();
-        knowledgeModel_.item( i )->setText( knowledge.GetName() );
-        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        QStandardItem* item = knowledgeModel_.item( i );
+        item->setText( knowledge.GetName() );
+        item->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
         ++i;
+        if( subSelected_ == &knowledge )
+            toSelect = item;
+    }
+    if( toSelect )
+    {
+        QModelIndex index = toSelect->index();
+        pKnowledgeListView_->selectionModel()->select( index, QItemSelectionModel::ClearAndSelect );
+        pKnowledgeListView_->scrollTo( index );
+        UpdateAllExtensions();
     }
 }
 
@@ -350,16 +361,7 @@ void ObjectKnowledgePanel::OnSelectionChanged()
         {
             subSelected_->Activate( controllers_.actions_ );
             NotifyUpdated( *subSelected_ );
-            UpdateExtension< ConstructionAttribute_ABC >( *subSelected_ );
-            UpdateExtension< BypassAttribute_ABC >( *subSelected_ );
-            UpdateExtension< ObstacleAttribute_ABC >( *subSelected_ );
-            UpdateExtension< LogisticAttribute_ABC >( *subSelected_ );
-            UpdateExtension< CrossingSiteAttribute_ABC >( *subSelected_ );
-            UpdateExtension< SupplyRouteAttribute_ABC >( *subSelected_ );
-            UpdateExtension< NBCAttribute_ABC >( *subSelected_ );
-            UpdateExtension< TimeLimitedAttribute_ABC >( *subSelected_ );
-            UpdateExtension< MineAttribute_ABC >( *subSelected_ );
-
+            UpdateAllExtensions();
             const ObjectPerceptions* perceptions = subSelected_->Retrieve< ObjectPerceptions >();
             if( perceptions )
                 NotifyUpdated( *perceptions );
@@ -380,4 +382,21 @@ void ObjectKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
     if( item && item->data( KnowledgeRole ).isValid() )
         item->data( KnowledgeRole ).value< const ObjectKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::UpdateAllExtensions
+// Created: JSR 2014-08-08
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::UpdateAllExtensions()
+{
+    UpdateExtension< ConstructionAttribute_ABC >( *subSelected_ );
+    UpdateExtension< BypassAttribute_ABC >( *subSelected_ );
+    UpdateExtension< ObstacleAttribute_ABC >( *subSelected_ );
+    UpdateExtension< LogisticAttribute_ABC >( *subSelected_ );
+    UpdateExtension< CrossingSiteAttribute_ABC >( *subSelected_ );
+    UpdateExtension< SupplyRouteAttribute_ABC >( *subSelected_ );
+    UpdateExtension< NBCAttribute_ABC >( *subSelected_ );
+    UpdateExtension< TimeLimitedAttribute_ABC >( *subSelected_ );
+    UpdateExtension< MineAttribute_ABC >( *subSelected_ );
 }
