@@ -46,7 +46,7 @@ namespace
 
         void RegisterVariable( const std::string& name, const std::string& type, const std::string& value )
         {
-            variables_.Register( name, boost::shared_ptr< indicators::Element_ABC >( new indicators::Variable( name, types_.Instanciate( type ), value ) ) );
+            variables_.Register( name, boost::make_shared< indicators::Variable >( name, types_.Instanciate( type ), value ) );
         }
 
     private:

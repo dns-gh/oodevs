@@ -31,6 +31,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace human;
 
@@ -672,7 +673,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGet
         if( wayPoints )
         {
             BOOST_FOREACH( const MT_Vector2D& wayPoint, *wayPoints )
-                result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( wayPoint ) ) );
+                result.push_back( boost::make_shared< MT_Vector2D >( wayPoint ) );
         }
     }
     return result;
@@ -735,7 +736,7 @@ namespace
     {
         return &composante.GetType() == type;
     }
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::UndoLendSpecificComposantes

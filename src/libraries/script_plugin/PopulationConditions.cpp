@@ -20,6 +20,7 @@
 #include "PopulationManipulator.h"
 #include "SimpleEntityCondition.h"
 #include <directia/brain/Brain.h>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::script;
 using namespace dispatcher;
@@ -138,7 +139,7 @@ namespace
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > PopulationConditions::PopulationEnters( const dispatcher::Zone& zone )
 {
-    return boost::shared_ptr< Condition_ABC >( new ::Enters( zone, controller_, converter_ ) );
+    return boost::make_shared< ::Enters >( zone, controller_, converter_ );
 }
 
 // -----------------------------------------------------------------------------

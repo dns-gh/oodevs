@@ -30,6 +30,7 @@
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_UrbanObjectFunctions::GetCurrentPerceptionLevel
@@ -75,8 +76,8 @@ T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( cons
 boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetCurrentBarycenter( MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
-        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
-    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D() );
+        return boost::make_shared< MT_Vector2D >( pUrbanObject->GetLocalisation().ComputeBarycenter() );
+    return boost::make_shared< MT_Vector2D >();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,9 +104,9 @@ boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetBarycenter( MIL_Ur
                 distance = result;
             }
         }
-        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) );
+        return boost::make_shared< MT_Vector2D >( point );
     }
-    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D() );
+    return boost::make_shared< MT_Vector2D >();
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +122,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_UrbanObjectFunctions::GetBou
         const MT_Vector2D barycenter = pUrbanObject->GetLocalisation().ComputeBarycenter();
         static const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
         for( auto it = points.begin(); it != points.end(); ++it )
-            result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + ( *it - barycenter ).Normalize() * distance ) ) );
+            result.push_back( boost::make_shared< MT_Vector2D >( *it + ( *it - barycenter ).Normalize() * distance ) );
     }
     return result;
 }

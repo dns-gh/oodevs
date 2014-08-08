@@ -13,6 +13,7 @@
 #include "MiscEvents.h"
 #include <tools/ElementObserver_ABC.h>
 #include <directia/brain/Brain.h>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::script;
 
@@ -69,5 +70,5 @@ boost::shared_ptr< Condition_ABC > ScriptConditions::PhaseChanged()
             Trigger( ev.phase );
         };
     };
-    return boost::shared_ptr< Condition_ABC >( new PhaseChanged( controller_ ) );
+    return boost::make_shared< PhaseChanged >( controller_ );
 }

@@ -17,6 +17,7 @@
 #include "tic/PlatformDelegate_ABC.h"
 #include "tic/PlatformDelegateFactory_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::dis;
 
@@ -54,7 +55,8 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Create( dispatcher::Agent& entity )
 {
-    agents_.push_back( boost::shared_ptr< AgentProxy >( new AgentProxy( time_, *this, converter_, network_, resolver_, entity, exercise_, lag_, factory_.Create( entity ) ) ) );
+    IdentifierFactory_ABC& that = *this;
+    agents_.push_back( boost::make_shared< AgentProxy >( time_, that, converter_, network_, resolver_, entity, exercise_, lag_, factory_.Create( entity ) ) );
 }
 
 // -----------------------------------------------------------------------------

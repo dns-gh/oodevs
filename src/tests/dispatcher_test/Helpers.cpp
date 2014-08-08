@@ -32,7 +32,7 @@ boost::shared_ptr< kernel::DecisionalModel > StaticModel::MakeDecisionalModel()
     const std::string xml( "<model name='my_model'/>" );
     xml::xistringstream xis( xml );
     xis >> xml::start( "model" );
-    return boost::shared_ptr< kernel::DecisionalModel >( new kernel::DecisionalModel( xis, factory, &kernel::MissionFactory::CreateAgentMission, fragOrdersResolver ) );
+    return boost::make_shared< kernel::DecisionalModel >( xis, factory, &kernel::MissionFactory::CreateAgentMission, fragOrdersResolver );
 }
 
 boost::shared_ptr< kernel::AgentType > StaticModel::MakeAgentType()
@@ -54,7 +54,7 @@ boost::shared_ptr< kernel::AgentType > StaticModel::MakeAgentType()
     kernel::XmlTranslations translations;
     xml::xistringstream xis( xml );
     xis >> xml::start( "type" );
-    return boost::shared_ptr< kernel::AgentType >( new kernel::AgentType( xis, componentResolver, modelResolver, symbolFactory, translations ) );
+    return boost::make_shared< kernel::AgentType >( xis, componentResolver, modelResolver, symbolFactory, translations );
 }
 
 boost::shared_ptr< kernel::AutomatType > StaticModel::MakeAutomatType( const kernel::SymbolFactory& symbolFactory )
@@ -74,5 +74,5 @@ boost::shared_ptr< kernel::AutomatType > StaticModel::MakeAutomatType( const ker
 
     boost::shared_ptr< kernel::AgentType > agent( MakeAgentType() );
     MOCK_EXPECT( agentResolver.Get ).once().with( "automat_pc" ).returns( boost::ref( *agent ) );
-    return boost::shared_ptr< kernel::AutomatType >( new kernel::AutomatType( xis, agentResolver, modelResolver, symbolFactory ) );
+    return boost::make_shared< kernel::AutomatType >( xis, agentResolver, modelResolver, symbolFactory );
 }

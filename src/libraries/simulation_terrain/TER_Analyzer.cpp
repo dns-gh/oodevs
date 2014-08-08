@@ -15,6 +15,7 @@
 #include "TER_Polygon.h"
 #include <spatialcontainer/Node.h>
 #include <analysis/TerrainAnalyzer.h>
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TER_Analyzer constructor
@@ -52,7 +53,7 @@ namespace
     }
     boost::shared_ptr< MT_Vector2D > MakeVectorPointer( const geometry::Point2f& p )
     {
-        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( p.X() ), static_cast< double >( p.Y() ) ) );
+        return boost::make_shared< MT_Vector2D >( static_cast< double >( p.X() ), static_cast< double >( p.Y() ) );
     }
     geometry::Polygon2f MakePolygon( const TER_Polygon& p )
     {

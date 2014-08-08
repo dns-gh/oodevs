@@ -39,7 +39,7 @@ namespace
 {
     boost::shared_ptr< ElementTypeResolver > NewResolver()
     {
-        return boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() );
+        return boost::make_shared< ElementTypeResolver >();
     }
 }
 

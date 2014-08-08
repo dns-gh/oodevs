@@ -13,6 +13,7 @@
 #include "ElementTypeResolver.h"
 #include "SimpleDataType.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
@@ -41,7 +42,7 @@ DataTypeFactory::~DataTypeFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DataType_ABC > DataTypeFactory::Instanciate( const std::string& type ) const
 {
-    return Instanciate( type, boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() ) );
+    return Instanciate( type, boost::make_shared< ElementTypeResolver >() );
 }
 
 namespace
@@ -59,6 +60,6 @@ namespace
 boost::shared_ptr< DataType_ABC > DataTypeFactory::Instanciate( const std::string& type, boost::shared_ptr< ElementTypeResolver > resolver ) const
 {
     if( IsCollection( type ) )
-        return boost::shared_ptr< DataType_ABC >( new CollectionDataType( type, resolver ) );
-    return boost::shared_ptr< DataType_ABC >( new SimpleDataType( type, resolver ) );
+        return boost::make_shared< CollectionDataType >( type, resolver );
+    return boost::make_shared< SimpleDataType >( type, resolver );
 }

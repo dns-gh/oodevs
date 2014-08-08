@@ -78,7 +78,7 @@ namespace
         tools::Iterator< const T_Result& > MakeIterator( const T_Identifiers& identifiers, T_Vector& elements )
         {
             BOOST_FOREACH( unsigned long identifier, identifiers )
-                elements.push_back( boost::shared_ptr< T_Mock >( new T_Mock( identifier ) ) );
+                elements.push_back( boost::make_shared< T_Mock >( identifier ) );
             tools::SimpleIterator< const T_Result&, T_Vector >* it = new tools::SimpleIterator< const T_Result&, T_Vector >( elements );
             return tools::Iterator< const T_Result& >( it );
         }

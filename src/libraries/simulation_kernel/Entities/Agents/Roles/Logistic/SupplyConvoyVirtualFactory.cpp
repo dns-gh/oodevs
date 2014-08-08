@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "SupplyConvoyVirtualFactory.h"
 #include "SupplyConvoyVirtual.h"
+#include <boost/make_shared.hpp>
 
 using namespace logistic;
 
@@ -21,5 +22,5 @@ SupplyConvoyVirtualFactory SupplyConvoyVirtualFactory::instance_;
 // -----------------------------------------------------------------------------
 boost::shared_ptr< SupplyConvoy_ABC > SupplyConvoyVirtualFactory::Create( SupplyConvoyEventsObserver_ABC& eventsObserver, SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters ) const
 {
-    return boost::shared_ptr< SupplyConvoy_ABC >( new SupplyConvoyVirtual( eventsObserver, supplier, parameters ) );
+    return boost::make_shared< SupplyConvoyVirtual >( eventsObserver, supplier, parameters );
 }

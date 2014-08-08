@@ -19,6 +19,7 @@
 #include <boost/serialization/deque.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace logistic;
 
@@ -140,7 +141,7 @@ LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, M
     , useQuotas_   ( useQuotas )
     , linksUpdated_( true )
 {
-    superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( owner, nominalSuperior, useQuotas ) ) );
+    superiorLinks_.push_back( boost::make_shared< LogisticLink >( owner, nominalSuperior, useQuotas ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +153,7 @@ LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, M
     , useQuotas_   ( useQuotas )
     , linksUpdated_( true )
 {
-    superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( owner, nominalSuperior, useQuotas, xis ) ) );
+    superiorLinks_.push_back( boost::make_shared< LogisticLink >( owner, nominalSuperior, useQuotas, xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +263,7 @@ void LogisticHierarchy::SwitchToHierarchy( const LogisticHierarchy_ABC& newHiera
     superiorLinks_.clear();
     tools::Iterator< MIL_AutomateLOG& > it = newHierarchy.CreateSuperiorsIterator();
     while( it.HasMoreElements() )
-        superiorLinks_.push_front( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( *owner_, it.NextElement(), useQuotas_ ) ) );
+        superiorLinks_.push_front( boost::make_shared< LogisticLink >( *owner_, it.NextElement(), useQuotas_ ) );
     linksUpdated_ = true;
     notifier.Notify();
 }
@@ -305,7 +306,7 @@ void LogisticHierarchy::ChangeLinks( const std::vector< MIL_AutomateLOG* >& supe
     superiorLinks_.clear();
     BOOST_FOREACH( MIL_AutomateLOG* superior, superiors )
         if( superiorLinks_.empty() || &superiorLinks_.back()->GetSuperior() != superior )
-            superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( *owner_, *superior, useQuotas_ ) ) );
+            superiorLinks_.push_back( boost::make_shared< LogisticLink >( *owner_, *superior, useQuotas_ ) );
     linksUpdated_ = true;
     notifier.Notify();
 }

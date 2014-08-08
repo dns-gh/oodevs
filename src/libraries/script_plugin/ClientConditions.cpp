@@ -19,6 +19,7 @@
 #include "protocol/Protocol.h"
 #include <tools/ElementObserver_ABC.h>
 #include <directia/brain/Brain.h>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::script;
 
@@ -80,7 +81,7 @@ boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
                 Trigger( command.Arg( 1 ), command.Arg( 2 ) );
         };
     };
-    return boost::shared_ptr< Condition_ABC >( new UserChoice( controller_ ) );
+    return boost::make_shared< UserChoice >( controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +116,7 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
         };
         std::unique_ptr< ModelResolver > resolver_;
     };
-    return boost::shared_ptr< Condition_ABC >( new MissionChoice( controller_, model_ ) );
+    return boost::make_shared< MissionChoice >( controller_, model_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,5 +149,5 @@ boost::shared_ptr< Condition_ABC > ClientConditions::EntitySelected()
         };
         std::unique_ptr< ModelResolver > resolver_;
     };
-    return boost::shared_ptr< Condition_ABC >( new EntitySelected( controller_, model_ ) );
+    return boost::make_shared< EntitySelected >( controller_, model_ );
 }

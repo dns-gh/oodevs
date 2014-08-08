@@ -26,6 +26,7 @@
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include <boost/make_shared.hpp>
 
 namespace
 {
@@ -46,8 +47,8 @@ boost::shared_ptr< MT_Vector2D > DEC_ResourceNetworkFunctions::GetResourceNetwor
 {
     if( resourceNetwork )
         if( MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( resourceNetwork->GetObjectId() ) )
-            return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( object->GetLocalisation().ComputeBarycenter() ) );
-    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D() );
+            return boost::make_shared< MT_Vector2D >( object->GetLocalisation().ComputeBarycenter() );
+    return boost::make_shared< MT_Vector2D >();
 }
 
 // -----------------------------------------------------------------------------

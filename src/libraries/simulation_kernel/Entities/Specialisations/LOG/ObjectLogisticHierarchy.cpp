@@ -14,6 +14,7 @@
 #include "ObjectLogisticLink.h"
 #include "CheckPoints/SerializationTools.h"
 #include <tools/Iterator.h>
+#include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( logistic::ObjectLogisticHierarchy )
 
@@ -83,7 +84,7 @@ ObjectLogisticHierarchy::ObjectLogisticHierarchy()
 // Created: NLD 2011-01-05
 // -----------------------------------------------------------------------------
 ObjectLogisticHierarchy::ObjectLogisticHierarchy( MIL_AutomateLOG& superior )
-    : superiorLink_( boost::shared_ptr< LogisticLink_ABC >( new ObjectLogisticLink( superior ) ) )
+    : superiorLink_( boost::make_shared< ObjectLogisticLink >( superior ) )
 {
 }
 

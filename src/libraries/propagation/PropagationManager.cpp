@@ -14,6 +14,7 @@
 #include "tools/XmlStreamOperators.h"
 #include "tools/Exception.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PropagationManager constructor
@@ -68,8 +69,8 @@ void PropagationManager::Initialize( const tools::Path& config, const std::strin
 boost::shared_ptr< Extractor_ABC > PropagationManager::CreateExtractor( const tools::Path& file ) const
 {
     if( timeZone_ )
-        return boost::shared_ptr< Extractor_ABC >( new DATExtractor( file, *timeZone_ ) );
-    return boost::shared_ptr< Extractor_ABC >( new ASCExtractor( file, projection_ ) );
+        return boost::make_shared< DATExtractor >( file, *timeZone_ );
+    return boost::make_shared< ASCExtractor >( file, projection_ );
 }
 
 namespace

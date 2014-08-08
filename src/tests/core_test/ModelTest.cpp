@@ -496,7 +496,7 @@ BOOST_AUTO_TEST_CASE( model_can_store_shared_pointer_user_data )
     boost::shared_ptr< int > retrieved;
     {
         core::Model model;
-        model.SetUserData( boost::shared_ptr< int >( new int( 3 ) ) );
+        model.SetUserData( boost::make_shared< int >( 3 ) );
         retrieved = model.GetUserData< boost::shared_ptr< int > >();
     }
     BOOST_CHECK_EQUAL( 3, *retrieved );

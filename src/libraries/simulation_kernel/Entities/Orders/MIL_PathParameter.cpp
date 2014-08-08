@@ -14,6 +14,7 @@
 #include "MIL.h"
 #include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
+#include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PathParameter )
 
@@ -46,7 +47,7 @@ MIL_PathParameter::MIL_PathParameter( const sword::Path& asn )
     path_.reserve( asn.location().coordinates().elem_size() );
     for( int i = 0; i < asn.location().coordinates().elem_size(); ++i )
     {
-        path_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D() ) );
+        path_.push_back( boost::make_shared< MT_Vector2D >() );
         MIL_Tools::ConvertCoordMosToSim( asn.location().coordinates().elem( i ), *path_[i] );
     }
 }
