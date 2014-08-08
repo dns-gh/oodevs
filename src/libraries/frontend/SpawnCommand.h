@@ -20,6 +20,7 @@ namespace posix_time
 {
     class time_duration;
 }
+    template< typename T > class shared_ptr;
 }
 
 namespace tools
