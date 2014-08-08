@@ -105,6 +105,7 @@ private:
     virtual void Select( const kernel::Team_ABC* );
     virtual void Select( const kernel::KnowledgeGroup_ABC* );
     void Select( const ObjectKnowledges* );
+    void UpdateAllExtensions();
     //@}
 
 private:
