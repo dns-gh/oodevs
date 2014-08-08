@@ -42,7 +42,6 @@ public:
     virtual void CommitTo( sword::MissionParameter& message ) const;
     void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    unsigned long GetLimitId() const;
     //@}
 
 protected:
@@ -55,7 +54,6 @@ private:
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
-    unsigned long limitId_;
     //@}
 };
 

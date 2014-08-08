@@ -21,7 +21,6 @@ using namespace parameters;
 // -----------------------------------------------------------------------------
 Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
     : Location( parameter, converter )
-    , limitId_( 0 )
 {
     // NOTHING
 }
@@ -32,7 +31,6 @@ Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateC
 // -----------------------------------------------------------------------------
 Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Line& line )
     : Location( parameter, converter, line.location() )
-    , limitId_( 0 )
 {
     // NOTHING
 }
@@ -43,7 +41,6 @@ Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateC
 // -----------------------------------------------------------------------------
 Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : Location( parameter, converter, location )
-    , limitId_( 0 )
 {
     // NOTHING
 }
@@ -102,13 +99,4 @@ std::string Limit::SerializeType() const
 void Limit::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit::GetLimitId
-// Created: ABR 2013-06-17
-// -----------------------------------------------------------------------------
-unsigned long Limit::GetLimitId() const
-{
-    return limitId_;
 }
