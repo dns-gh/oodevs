@@ -24,8 +24,10 @@ ObjectType::ObjectType( xml::xistream& xis )
     , description_   ( xis.attribute< std::string >( "description", "" ) )
     , canBeValorized_( false )
     , canBeBypassed_ ( false )
+    , pointSize_     ( 0 )
 {
-    xis >> xml::optional >> xml::start( "geometries" )
+    xis >> xml::optional >> xml::attribute( "point-size", pointSize_ )
+        >> xml::optional >> xml::start( "geometries" )
             >> xml::list( "geometry", *this, &ObjectType::ReadGeometry )
         >> xml::end
         >> xml::optional >> xml::start( "constructor" )
@@ -335,4 +337,9 @@ bool ObjectType::CanBePolygon() const
 bool ObjectType::CanBeCircle() const
 {
     return geometrySymbols_.find( "circle" ) != geometrySymbols_.end();
+}
+
+float ObjectType::GetPointSize() const
+{
+    return pointSize_;
 }

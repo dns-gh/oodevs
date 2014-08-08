@@ -66,7 +66,8 @@ public:
     static std::string DefaultStyle();
     void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480, bool checkAlpha = true );
     void DrawSvg  ( const std::string& filename, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
-    void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, bool overlined, float zoom );
+    void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport,
+                               bool overlined, float pointSize, float zoom );
     void DrawBillboardRect();
     //@}
 

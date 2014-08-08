@@ -16,6 +16,7 @@
 namespace kernel
 {
     class ObjectKnowledge_ABC;
+    class ObjectType;
 }
 
 namespace sword
@@ -35,7 +36,8 @@ class ObjectKnowledgePositions : public LocationPositions
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectKnowledge_ABC& knowledge );
+             ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectKnowledge_ABC& knowledge,
+                                       const kernel::ObjectType& type );
     virtual ~ObjectKnowledgePositions();
     //@}
 
@@ -61,6 +63,7 @@ private:
     //! @name Member data
     //@{
     const kernel::ObjectKnowledge_ABC& knowledge_;
+    const kernel::ObjectType& type_;
     //@}
 };
 

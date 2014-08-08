@@ -76,7 +76,8 @@ void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewp
     if( const kernel::Location_ABC* location = GetLocation() )
     {
         if( viewport.IsVisible( boundingBox_ ) )
-            tools.DrawTacticalGraphics( symbol_, *location, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location ) != nullptr );
+            tools.DrawTacticalGraphics( symbol_, *location, tools.ShouldDisplay(), type_.GetPointSize(),
+                dynamic_cast< const kernel::Point* >( location ) != nullptr );
     }
 }
 

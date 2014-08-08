@@ -48,7 +48,8 @@ public:
     //! @name Operations
     //@{
     void SetCurrentColor( float r, float g, float b, float a = 1 );
-    void Draw( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined, float zoom );
+    void Draw( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport,
+               const GlTools_ABC& tools, bool overlined, float pointSize, float zoom );
     //@}
 
 private:

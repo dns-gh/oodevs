@@ -186,9 +186,10 @@ void GlToolsBase::DrawSvg( const std::string& filename, const geometry::Rectangl
 // Name: GlToolsBase::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void GlToolsBase::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, bool overlined, float zoom )
+void GlToolsBase::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport,
+                                        bool overlined, float pointSize, float zoom )
 {
-    graphics_->Draw( symbol, location, viewport, *this, overlined, zoom );
+    graphics_->Draw( symbol, location, viewport, *this, overlined, pointSize, zoom );
 }
 
 // -----------------------------------------------------------------------------

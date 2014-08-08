@@ -60,6 +60,7 @@ public:
     const std::string& GetSymbol( const std::string& locationType ) const;
     const std::string& GetDescription() const;
     const std::string& GetDisasterType() const;
+    float GetPointSize() const;
 
     CIT_Capacities CapacitiesBegin() const;
     CIT_Capacities CapacitiesEnd() const;
@@ -106,6 +107,7 @@ private:
     T_Capacities capacities_;
     bool canBeValorized_;
     bool canBeBypassed_;
+    float pointSize_;
     //@}
 };
 

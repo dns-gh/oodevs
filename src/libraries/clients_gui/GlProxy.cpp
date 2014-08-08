@@ -514,10 +514,10 @@ void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, 
 // Name: GlProxy::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize /*= true*/ ) const
+void GlProxy::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, float pointSize, bool fixedSize /*= true*/ ) const
 {
     if( tools_ )
-        tools_->DrawTacticalGraphics( symbol, location, overlined, fixedSize );
+        tools_->DrawTacticalGraphics( symbol, location, overlined, pointSize, fixedSize );
 }
 
 // -----------------------------------------------------------------------------

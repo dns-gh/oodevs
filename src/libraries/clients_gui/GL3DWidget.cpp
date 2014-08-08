@@ -580,7 +580,8 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 // Name: Gl3dWidget::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kernel::Location_ABC& location, bool /*overlined*/, bool /*fixedSize = true*/ ) const
+void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kernel::Location_ABC& location, bool /*overlined*/,
+                                       float /*pointSize*/, bool /*fixedSize = true*/ ) const
 {
     // $$$$ SBO 2009-05-29: TODO: use SVG renderer instead
     glPushAttrib( GL_LINE_BIT );
