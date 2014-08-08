@@ -83,7 +83,7 @@ const sword::Pathfind& Itinerary::GetPathfind() const
 {
     if( pathfind_ )
         return *pathfind_;
-    const static sword::Pathfind empty;
+    static const sword::Pathfind empty;
     return empty;
 }
 

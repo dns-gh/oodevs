@@ -58,14 +58,12 @@ void ItineraryParameter::NotifyContextMenu( const kernel::Pathfind_ABC& entity, 
 {
     potential_ = &entity;
     kernel::ContextMenu::T_MenuVariant variant = Param_ABC::CreateMenu( menu );
-    if( QAction* const* action = boost::get< QAction* >( &variant ) )
-    {
+    if( auto action = boost::get< QAction* >( &variant ) )
         if( *action )
         {
             (*action)->setCheckable( true );
             (*action)->setChecked( selected_ != 0 );
         }
-    }
 }
 
 void ItineraryParameter::OnMenuClick()
