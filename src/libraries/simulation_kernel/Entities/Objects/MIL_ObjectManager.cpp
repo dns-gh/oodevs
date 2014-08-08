@@ -476,6 +476,22 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
             const int count = protocol::GetCount( params, 0 );
             protocol::Check( count > 0, "invalid specific attributes" );
             pObject->OnUpdate( params );
+            MIL_Army_ABC* army = pObject->GetArmy();
+            if( army )
+            {
+                auto knowledges = army->GetKnowledgeGroups();
+                for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+                {
+                    if( it->second->IsJammed() )
+                        continue;
+                    auto bbKg = it->second->GetKnowledge();
+                    if( !bbKg )
+                        continue;
+                    auto knowledge = bbKg->ResolveKnowledgeObject( *pObject );
+                    if( knowledge )
+                        knowledge->ForceUpdate();
+                }
+            }
         }
     }
     catch( const NET_AsnBadParam< sword::ObjectMagicActionAck::ErrorCode >& e )

@@ -491,6 +491,17 @@ void DEC_Knowledge_Object::UpdateUniversalKnowledge()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::ForceUpdate
+// Created: JSR 2014-08-08
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::ForceUpdate()
+{
+    DEC_Knowledge_ObjectMagicPerception param( *this, PHY_PerceptionLevel::identified_ );
+    UpdateAttributes( boost::bind( &DEC_Knowledge_IObjectAttributeProxy::UpdateOnPerceptionLevel, _1, boost::ref( *this ), boost::ref( param ) ) );
+    UpdateOnNetwork();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::UpdateLocalisationPartially
 // Created: JCR 2009-12-09
 // -----------------------------------------------------------------------------
