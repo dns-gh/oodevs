@@ -48,7 +48,7 @@ ParamObjectKnowledge::~ParamObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( agent_ && !entity.GetType().IsUrban() && parameter_.HasGenObject( entity.GetType().GetType() ) )
+    if( agent_ && !entity.GetType().IsUrban() && parameter_.HasObject( entity.GetType().GetType() ) )
     {
         const kernel::Hierarchies* hierarchies = agent_->Retrieve< kernel::CommunicationHierarchies >();
         if( hierarchies )

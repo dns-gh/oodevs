@@ -294,6 +294,7 @@
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
+		<xs:attribute name="all" type="xs:boolean" use="optional"/>
 	</xs:complexType>
 	<xs:complexType name="EnumerationEntryType">
 		<xs:annotation>
