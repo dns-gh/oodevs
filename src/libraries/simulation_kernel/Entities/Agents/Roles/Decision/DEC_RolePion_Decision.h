@@ -61,7 +61,7 @@ public:
     //@{
     void Clean();
 
-    virtual void Reload( bool doInitBrain );
+    virtual void Reload( bool force, bool doInitBrain );
     virtual void ActivateBrainDebug( bool activate );
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );

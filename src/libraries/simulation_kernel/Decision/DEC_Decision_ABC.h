@@ -74,7 +74,7 @@ public:
     virtual MIL_OrderManager_ABC& GetOrderManager() const = 0;
 
     virtual void GarbageCollect() = 0;
-    virtual void Reload( bool doInitBrain ) = 0;
+    virtual void Reload( bool force, bool doInitBrain ) = 0;
     virtual void IncDIARef() = 0;
     virtual void DecDIARef() = 0;
     virtual bool IsUsedByDIA() const = 0;

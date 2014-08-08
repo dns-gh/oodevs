@@ -569,42 +569,56 @@ void DEC_KnowledgeAgentFunctions::SwitchAutomateLogistic( DEC_Decision_ABC& call
     }
 }
 
+namespace
+{
+    template< typename T > bool IsAgentKnowledgeInObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend, T& typeChecker )
+    {
+        // The test on isDead is to allow the use of GetObjectsColliding - otherwise it finds invalid knowledge and a bad result
+        // A better solution would be to check for all objects at the location but it's expensive and the function is not needed for dead units anyway.
+        if( pKnowledge && pKnowledge->IsValid() && !pKnowledge->IsDead() )
+        {
+            T_KnowledgeObjectDiaIDVector objectsColliding;
+            pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
+            for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+            {
+                const auto object = *it;
+                const MIL_ObjectType_ABC& type = (*it)->GetType();
+                unsigned int id = object->GetObjectId();
+                boost::shared_ptr< DEC_Knowledge_Object > callerObjectKnowledge;
+                if( !callerAgent.GetKnowledgeGroup()->IsJammed() )
+                    callerObjectKnowledge = callerAgent.GetArmy().GetKnowledge().ResolveKnowledgeObjectByObjectID( id );
+                if( !callerObjectKnowledge.get() && callerAgent.GetKnowledgeGroup() )
+                {
+                    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+                    if( bbKg )
+                        callerObjectKnowledge = bbKg->ResolveKnowledgeObjectByObjectID( id );
+                }
+                if( !callerObjectKnowledge || !callerObjectKnowledge->IsValid() )
+                    continue;
+                if( typeChecker( type ) && static_cast< int >( object->IsAnEnemy( callerAgent.GetArmy() ) ) == isFriend )
+                    return true;
+            }
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsInObject
 // Created: JSR 2012-01-26
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInObject( const MIL_Entity_ABC& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
+bool DEC_KnowledgeAgentFunctions::IsInObject( const MIL_AgentPion& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-    {
-        T_KnowledgeObjectDiaIDVector objectsColliding;
-        pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
-        for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
-        {
-            const MIL_ObjectType_ABC& type = (*it)->GetType();
-            if( type.GetName() == objectType && static_cast< int >( (*it)->IsAnEnemy( callerAgent.GetArmy() ) ) == isFriend )
-                return true;
-        }
-    }
-    return false;
+    auto func = [&]( const MIL_ObjectType_ABC& type ) { return type.GetName() == objectType; };
+    return IsAgentKnowledgeInObject( callerAgent, pKnowledge, isFriend, func );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity
 // Created: LDC 2014-08-05
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity( const MIL_Entity_ABC& callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
+bool DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity( const MIL_AgentPion& callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-    {
-        T_KnowledgeObjectDiaIDVector objectsColliding;
-        pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
-        for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
-        {
-            const MIL_ObjectType_ABC& type = (*it)->GetType();
-            if( CapacityRetriever::RetrieveCapacity( type, capacity ) != 0 && static_cast< int >( (*it)->IsAnEnemy( callerAgent.GetArmy() ) ) == isFriend )
-                return true;
-        }
-    }
-    return false;
+    auto func = [&]( const MIL_ObjectType_ABC& type ) { return CapacityRetriever::RetrieveCapacity( type, capacity ) != 0; };
+    return IsAgentKnowledgeInObject( callerAgent, pKnowledge, isFriend, func );
 }

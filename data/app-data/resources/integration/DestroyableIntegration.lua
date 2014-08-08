@@ -161,10 +161,11 @@ integration.fireNotForbbiden = function( target )
 end
 
 --- Informs if the provided target is located inside a fire restricted area. 
--- Tests if the target is inside a "firing forbidden area" type of object.
+-- Tests if the target is inside a "firing forbidden area" type of object of a friendly side.
+-- Always returns false if the target is dead.
 -- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge
--- @return a boolean 'true' if the target is located inside a "firing forbidden area" type of object, 'false' otherwise.
+-- @return a boolean 'true' if the target is located inside a "firing forbidden area" type of object, 'false' otherwise or if the target is dead.
 integration.isInForbiddenFireArea = function( target )
     local friendly = 1 -- tristate: 0 = enemy, 1 = friendly, 2 = unknown
     return DEC_KnowledgeAgent_IsInObjectWithCapacity( "fire-forbidden", target.source, friendly )

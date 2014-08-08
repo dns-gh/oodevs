@@ -1602,7 +1602,7 @@ void MIL_Automate::OnReloadBrain( const sword::MissionParameters& msg )
     const bool modified = model && model != &role.GetModel();
     if( modified )
         role.SetModel( *model );
-    GetDecision().Reload( !modified );
+    GetDecision().Reload( true, !modified );
     pOrderManager_->CancelMission();
 }
 

@@ -1986,7 +1986,7 @@ void MIL_Population::OnReloadBrain( const sword::MissionParameters& msg )
     const bool modified = model && model != &role.GetModel();
     if( modified )
         role.SetModel( *model );
-    GetDecision().Reload( !modified );
+    GetDecision().Reload( true, !modified );
     orderManager_->CancelMission();
 }
 

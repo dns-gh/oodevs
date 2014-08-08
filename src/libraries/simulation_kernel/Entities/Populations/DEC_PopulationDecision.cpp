@@ -432,9 +432,9 @@ void DEC_PopulationDecision::RegisterSpecific( sword::Brain& brain, bool isMasal
 // Name: DEC_PopulationDecision::Reload
 // Created: AHC 2012-01-25
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::Reload( bool doInitBrain )
+void DEC_PopulationDecision::Reload( bool force, bool doInitBrain )
 {
-    DEC_Decision< MIL_Population >::Reload( doInitBrain );
+    DEC_Decision< MIL_Population >::Reload( force, doInitBrain );
     bStateHasChanged_ = true;
 }
 
