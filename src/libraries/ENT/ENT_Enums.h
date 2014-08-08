@@ -359,7 +359,6 @@ enum E_Modes
     eModes_Prepare      = 0x0002,
     eModes_Terrain      = 0x0004,
     eModes_LivingArea   = 0x0008,
-    eModes_Preparation  = 0x000F,
 
     eModes_Gaming       = 0x0001 << 4,
     eModes_Planning     = 0x0002 << 4,
@@ -369,7 +368,7 @@ enum E_Modes
 
     eModes_All          = 0xFFFF,       // Filter
 
-    eNbrModes = 12 // hardcoded
+    eNbrModes = 11 // hardcoded
 };
 
 enum E_AgentNbcSuit
