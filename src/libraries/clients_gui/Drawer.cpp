@@ -21,6 +21,7 @@ using namespace gui;
 namespace
 {
     const std::map< std::string, unsigned > positions = boost::assign::map_list_of
+        ( "Direction",  0 )
         ( "Lives",      0 )
         ( "Positions",  1 )
         ( "Object",     2 )
