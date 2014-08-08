@@ -52,7 +52,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
 {
     if( !resultList_.empty() )
         throw MASA_EXCEPTION( "List of path points is not empty before running pathfind" );
-    if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
+    if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this << " computation begin" <<
                             ", Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
@@ -89,7 +89,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
 void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
 {
     unsigned int nComputationEndTime = 0;
-    const unsigned int nMaxComputationDuration = MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
+    const unsigned int nMaxComputationDuration = MIL_AgentServer::IsInitialized() ? MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration() : std::numeric_limits< unsigned int >::max();
     if( nMaxComputationDuration == std::numeric_limits< unsigned int >::max() )
         nComputationEndTime = std::numeric_limits< unsigned int >::max();
     else
@@ -244,7 +244,7 @@ void DEC_PathComputer::AddResultPoint( const MT_Vector2D& vPos, const TerrainDat
         if( !resultList_.empty() )
             return;
     }
-    if( !resultList_.empty() )
+    if( !resultList_.empty() && MIL_AgentServer::IsInitialized() )
     {
         SlopeSpeedModifier slopeSpeedModifier;
         const PHY_RawVisionData& elevation = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
