@@ -10,8 +10,6 @@
 #include "actions_pch.h"
 #include "Itinerary.h"
 #include "ParameterVisitor_ABC.h"
-#include "clients_kernel/EntityResolver_ABC.h"
-#include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/XmlAdapter.h"
 #include "protocol/Protocol.h"
 
@@ -19,9 +17,8 @@ using namespace actions;
 using namespace parameters;
 
 Itinerary::Itinerary( const kernel::OrderParameter& parameter,
-                      const kernel::CoordinateConverter_ABC& converter,
-                      kernel::Controller& controller )
-    : Entity< kernel::Pathfind_ABC >( parameter, controller )
+                      const kernel::CoordinateConverter_ABC& converter )
+    : Parameter< QString >( parameter )
     , converter_( converter )
 {
     // NOTHING
@@ -29,10 +26,8 @@ Itinerary::Itinerary( const kernel::OrderParameter& parameter,
 
 Itinerary::Itinerary( const kernel::OrderParameter& parameter,
                       const kernel::CoordinateConverter_ABC& converter,
-                      const sword::Pathfind& pathfind,
-                      const kernel::EntityResolver_ABC& resolver,
-                      kernel::Controller& controller )
-    : Entity< kernel::Pathfind_ABC >( parameter, resolver.FindPathfind( pathfind.id() ), controller )
+                      const sword::Pathfind& pathfind )
+    : Parameter< QString >( parameter )
     , converter_( converter )
     , pathfind_( new sword::Pathfind( pathfind ) )
 {
@@ -54,8 +49,6 @@ void Itinerary::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( pathfind_ )
         *message.mutable_pathfind() = *pathfind_;
-    else if( IsSet() && GetValue() )
-        *message.mutable_pathfind() = GetValue()->GetCreationMessage();
 }
 
 void Itinerary::Serialize( xml::xostream& xos ) const
@@ -65,7 +58,7 @@ void Itinerary::Serialize( xml::xostream& xos ) const
 
 bool Itinerary::IsSet() const
 {
-    return pathfind_ || T_Parameter::IsSet();
+    return pathfind_;
 }
 
 void Itinerary::Accept( ParameterVisitor_ABC& visitor ) const
@@ -76,4 +69,19 @@ void Itinerary::Accept( ParameterVisitor_ABC& visitor ) const
 std::string Itinerary::SerializeType() const
 {
     return "itinerary";
+}
+
+unsigned int Itinerary::GetId() const
+{
+    if( pathfind_ )
+        return pathfind_->id();
+    return 0;
+}
+
+const sword::Pathfind& Itinerary::GetPathfind() const
+{
+    if( pathfind_ )
+        return *pathfind_;
+    const static sword::Pathfind empty;
+    return empty;
 }

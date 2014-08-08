@@ -27,6 +27,7 @@ namespace kernel
     class TacticalLine_ABC;
     class OrderParameter;
     class OrderType;
+    class Pathfind_ABC;
 }
 
 namespace gui
@@ -39,9 +40,10 @@ namespace tools
     class ExerciseConfig;
 }
 
-namespace actions {
-namespace gui {
-
+namespace actions
+{
+namespace gui
+{
     class MissionInterface;
     class Param_ABC;
     class ParamInterface_ABC;
@@ -77,6 +79,7 @@ public:
     virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const = 0;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const = 0;
     virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const = 0;
+    virtual tools::Resolver< kernel::Pathfind_ABC >& GetPathfindResolver() const = 0;
     virtual const QDateTime GetCurrentDateTime() const = 0;
     virtual const kernel::StaticModel& GetStaticModel() const = 0;
     virtual const tools::ExerciseConfig& GetConfig() const = 0;

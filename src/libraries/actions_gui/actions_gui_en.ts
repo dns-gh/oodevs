@@ -9,6 +9,13 @@
     </message>
 </context>
 <context>
+    <name>ItineraryParameter</name>
+    <message>
+        <source>New itinerary</source>
+        <translation>New itinerary</translation>
+    </message>
+</context>
+<context>
     <name>LimaParameter</name>
     <message>
         <source>Schedule</source>

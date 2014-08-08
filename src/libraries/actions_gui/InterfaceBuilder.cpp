@@ -12,6 +12,7 @@
 
 #include "LimaParameter.h"
 #include "LimitParameter.h"
+#include "ItineraryParameter.h"
 #include "ListParameter.h"
 #include "MissionInterface.h"
 #include "ParamAgent.h"
@@ -27,7 +28,6 @@
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
 #include "ParamInhabitant.h"
-#include "ParamItinerary.h"
 #include "ParamLocation.h"
 #include "ParamLocation_ABC.h"
 #include "ParamLocationComposite.h"
@@ -69,7 +69,8 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
                                     kernel::AgentKnowledgeConverter_ABC* knowledgeConverter /* = 0*/,
                                     kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter /* = 0*/,
                                     const kernel::Time_ABC* simulation /* = 0*/,
-                                    tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver /* = 0 */ )
+                                    tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver /* = 0 */,
+                                    tools::Resolver< kernel::Pathfind_ABC >* pathfindResolver /* = 0 */ )
     : controllers_             ( controllers )
     , config_                  ( config )
     , layer_                   ( layer )
@@ -78,6 +79,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
     , staticModel_             ( staticModel )
     , simulation_              ( simulation )
     , tacticalLineResolver_    ( tacticalLineResolver )
+    , pathfindResolver_        ( pathfindResolver )
     , missionInterface_        ( 0 )
 {
     // Base types
@@ -100,7 +102,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
     AddFunctor< actions::gui::ParamRectangle >          ( "rectangle" );
     AddFunctor< actions::gui::ParamLocation >           ( "location" );
     AddFunctor< actions::gui::ParamLocationComposite >  ( "locationcomposite" );
-    AddFunctor< actions::gui::ParamItinerary >          ( "itinerary" );
+    AddFunctor< actions::gui::ItineraryParameter >      ( "itinerary" );
     // Entities
     AddFunctor< actions::gui::ParamAgent >              ( "agent" );
     AddFunctor< actions::gui::ParamAutomat >            ( "automat" );
@@ -291,12 +293,19 @@ void InterfaceBuilder::SetParamInterface( ParamInterface_ABC& paramInterface )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Resolver< kernel::TacticalLine_ABC >* InterfaceBuilder::GetTacticalLineResolver
+// Name: InterfaceBuilder::GetTacticalLineResolver
 // Created: ABR 2013-06-17
 // -----------------------------------------------------------------------------
 tools::Resolver< kernel::TacticalLine_ABC >* InterfaceBuilder::GetTacticalLineResolver() const
 {
     return tacticalLineResolver_;
+}
+
+tools::Resolver< kernel::Pathfind_ABC >& InterfaceBuilder::GetPathfindResolver() const
+{
+    if( !pathfindResolver_ )
+        throw MASA_EXCEPTION( "no pathfind resolver" );
+    return *pathfindResolver_;
 }
 
 // -----------------------------------------------------------------------------

@@ -193,7 +193,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_pull_flow_parameters() )
         return ( nullValue ) ? new parameters::PullFlowParameters( parameter, converter_ ) : new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.pull_flow_parameters() );
     if( message.has_pathfind() )
-        return ( nullValue ) ? new parameters::Itinerary( parameter, converter_, controller_ ) : new parameters::Itinerary( parameter, converter_, message.pathfind(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::Itinerary( parameter, converter_ ) : new parameters::Itinerary( parameter, converter_, message.pathfind() );
     if( message.list_size() || parameter.IsList() )
         return new parameters::ParameterList( parameter, message.list(), *this, entity );
     return 0;
