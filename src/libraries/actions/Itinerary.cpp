@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "Itinerary.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/XmlAdapter.h"
 #include "protocol/Protocol.h"
 
@@ -84,4 +85,19 @@ const sword::Pathfind& Itinerary::GetPathfind() const
         return *pathfind_;
     const static sword::Pathfind empty;
     return empty;
+}
+
+void Itinerary::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( "", GetName() );
+}
+
+geometry::Point2f Itinerary::GetPosition() const
+{
+    if( !pathfind_ )
+        return geometry::Point2f();
+    const auto& points = pathfind_->result().points();
+    if( points.size() == 0 )
+        return geometry::Point2f();
+    return converter_.ConvertToXY( points.begin()->coordinate() );
 }

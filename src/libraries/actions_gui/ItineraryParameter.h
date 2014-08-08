@@ -62,6 +62,8 @@ private:
 
     void Display( const QString& what );
 
+    sword::Pathfind GetPathfind() const;
+
 private:
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;

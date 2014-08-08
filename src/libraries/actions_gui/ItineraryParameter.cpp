@@ -16,6 +16,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/StaticModel.h"
+#include "clients_gui/Itinerary.h"
 #include "protocol/Protocol.h"
 
 using namespace actions::gui;
@@ -98,9 +99,21 @@ void ItineraryParameter::Display( const QString& what )
     entityLabel_->setText( what );
 }
 
-void ItineraryParameter::Draw( const geometry::Point2f& /*point*/, const ::gui::Viewport_ABC& /*viewport*/, ::gui::GlTools_ABC& /*tools*/ ) const
+void ItineraryParameter::Draw( const geometry::Point2f& /*point*/, const ::gui::Viewport_ABC& /*viewport*/, ::gui::GlTools_ABC& tools ) const
 {
-    // $$$$ MCO 2014-08-08: TODO
+    Itinerary( converter_, GetPathfind(), false ).Draw( tools, boost::none, false );
+}
+
+sword::Pathfind ItineraryParameter::GetPathfind() const
+{
+    if( IsChecked() )
+    {
+        if( selected_ )
+            return selected_->GetCreationMessage();
+        if( pathfind_ )
+            return *pathfind_;
+    }
+    return sword::Pathfind();
 }
 
 void ItineraryParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
@@ -108,14 +121,17 @@ void ItineraryParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) 
     if( IsChecked() )
     {
         if( selected_ )
+        {
             parameter.AddParameter( *new actions::parameters::Itinerary( parameter_, converter_, selected_->GetCreationMessage() ) );
-        else if( pathfind_ )
+            return;
+        }
+        if( pathfind_ )
+        {
             parameter.AddParameter( *new actions::parameters::Itinerary( parameter_, converter_, *pathfind_ ) );
-        else
-            parameter.AddParameter( *new actions::parameters::Itinerary( parameter_, converter_ ) );
+            return;
+        }
     }
-    else
-        parameter.AddParameter( *new actions::parameters::Itinerary( parameter_, converter_ ) );
+    parameter.AddParameter( *new actions::parameters::Itinerary( parameter_, converter_ ) );
 }
 
 void ItineraryParameter::Visit( const actions::parameters::Itinerary& param )

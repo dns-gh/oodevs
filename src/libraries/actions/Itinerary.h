@@ -47,9 +47,13 @@ public:
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual std::string SerializeType() const;
     virtual bool IsSet() const;
+    virtual geometry::Point2f GetPosition() const;
 
     unsigned int GetId() const;
     const sword::Pathfind& GetPathfind() const;
+
+protected:
+    virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
 private:
     const kernel::CoordinateConverter_ABC& converter_;
