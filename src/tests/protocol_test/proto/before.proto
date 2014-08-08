@@ -24,6 +24,7 @@ message UintToIntMsg {
 
 enum ExternalEnum {
     external0 = 42;
+    external1 = -1;
 }
 
 message EmbeddingEnum {
@@ -42,10 +43,15 @@ message SomethingIdList {
     repeated SomethingId elem = 1;
 }
 
+message EnumToInt {
+    required ExternalEnum value = 1;
+}
+
 message Root {
     optional EnumNewValueMsg enum_new_value_msg = 1;
     optional UintToIntMsg uint_to_int_msg = 2;
     optional EmbeddingEnum embedding_enum = 3;
     optional IntToEnum int_to_enum = 4;
     optional SomethingIdList typed_list_to_untyped = 5;
+    optional EnumToInt enum_to_int = 6;
 }

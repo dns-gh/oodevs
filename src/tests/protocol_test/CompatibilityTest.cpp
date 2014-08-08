@@ -83,6 +83,15 @@ BOOST_AUTO_TEST_CASE( compat_int_to_enum )
     BOOST_CHECK_EQUAL( int(after::value1), decoded->int_to_enum().value() );
 }
 
+BOOST_AUTO_TEST_CASE( compat_enum_to_int )
+{
+    after::Root msg;
+    msg.mutable_enum_to_int()->set_value( -1 );
+    auto decoded = EncodeDecode( msg );
+    BOOST_REQUIRE( decoded );
+    BOOST_CHECK_EQUAL( before::external1, decoded->enum_to_int().value() );
+}
+
 BOOST_AUTO_TEST_CASE( typed_list_to_untyped )
 {
     after::Root msg;
