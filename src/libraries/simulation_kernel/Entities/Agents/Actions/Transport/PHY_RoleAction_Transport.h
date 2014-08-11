@@ -13,8 +13,9 @@
 #define __PHY_RoleAction_Transport_h_
 
 #include "MIL.h"
+#include "NetworkUnitAttributesMessageSender_ABC.h"
+#include "ObjectCollisionNotificationHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
 #include <tools/Map.h>
 
@@ -38,6 +39,7 @@ namespace transport
 class PHY_RoleAction_Transport : public tools::Role_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public network::NetworkUnitAttributesMessageSender_ABC
+                               , public terrain::ObjectCollisionNotificationHandler_ABC
 {
 public:
     //! @name Types
@@ -127,6 +129,13 @@ public:
     void UnloadSuspended();
     //@}
 
+    //! @name ObjectCollisionNotificationHandler_ABC implementation
+    virtual void NotifyMovingInsideObject( MIL_Object_ABC& object );
+    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
+    virtual void NotifyPutInsideObject( MIL_Object_ABC& object );
+    virtual void NotifyPutOutsideObject( MIL_Object_ABC& object );
+    //@}
+
     //! @name Notifications on transporter
     //@{
     virtual void ApplyContamination();
@@ -174,6 +183,7 @@ private:
     E_State              nState_;
     bool                 bHasChanged_;
     bool                 bLoadUnloadHasBeenUpdated_;
+    bool                 propagating_;
     T_TransportedPionMap transportedPions_;
     double               rWeightTransported_;
     //@}

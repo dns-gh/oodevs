@@ -15,6 +15,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -145,6 +146,8 @@ namespace
 void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     if( object.GetArmy() && object.GetArmy()->GetID() == agent.GetArmy().GetID() )
+        return;
+    if( agent.GetRole< transport::PHY_RolePion_Transported >().IsTransported() )
         return;
     ApplyExplosion< PHY_RoleInterface_Composantes >( *this, object, dotation_, agent.GetRole< PHY_RoleInterface_Composantes >() );
 }
