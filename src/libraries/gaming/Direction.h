@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Speeds_h_
-#define __Speeds_h_
+#ifndef __Direction_h_
+#define __Direction_h_
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -22,35 +22,29 @@ namespace sword
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class Entity_ABC;
 }
 
 // =============================================================================
-/** @class  Speeds
-    @brief  Speeds
+/** @class  Direction
+    @brief  Direction
 */
 // Created: AGE 2007-12-17
 // =============================================================================
-class Speeds : public kernel::Extension_ABC
-             , public kernel::Updatable_ABC< sword::UnitAttributes >
-             , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
-             , public gui::Drawable_ABC
+class Direction : public kernel::Extension_ABC
+                , public kernel::Updatable_ABC< sword::UnitAttributes >
+                , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
+                , public gui::Drawable_ABC
+                , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Speeds( const kernel::Entity_ABC& entity );
-    virtual ~Speeds();
+    explicit Direction( const kernel::Entity_ABC& entity );
+    virtual ~Direction();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Speeds( const Speeds& );            //!< Copy constructor
-    Speeds& operator=( const Speeds& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& attributes );
@@ -63,8 +57,7 @@ private:
     //@{
     const kernel::Entity_ABC& entity_;
     geometry::Vector2f direction_;
-    float speed_;
     //@}
 };
 
-#endif // __Speeds_h_
+#endif // __Direction_h_

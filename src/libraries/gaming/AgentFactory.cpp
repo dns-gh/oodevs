@@ -29,6 +29,7 @@
 #include "DebugPoints.h"
 #include "DecisionalStates.h"
 #include "DictionaryExtensions.h"
+#include "Direction.h"
 #include "Dotations.h"
 #include "Equipments.h"
 #include "Explosions.h"
@@ -57,7 +58,6 @@
 #include "PopulationPositions.h"
 #include "Reinforcements.h"
 #include "Reports.h"
-#include "Speeds.h"
 #include "StaticModel.h"
 #include "Symbol.h"
 #include "TeamsModel.h"
@@ -171,6 +171,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< Lives_ABC >( *new Lives( *result, controllers_.controller_ ) );
+    result->Attach( *new Direction( *result ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, message, static_.types_ ) ); // $$$$ LDC Warning: Must be before new Attributes because Attributes uses it without knowing it to paint the headquarters symbol...
     result->Attach( *new Attributes( *result, controllers_.controller_, static_.detection_, static_.coordinateConverter_, dictionary, model_.teams_ ) );
     result->Attach< gui::Decisions_ABC >( *new AgentDecisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
@@ -196,7 +197,6 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new Contaminations( controllers_.controller_, *result, static_.objectTypes_, dictionary, result->GetType() ) );
     result->Attach< ConvexHulls >( *new AgentConvexHulls( *result, static_.coordinateConverter_ ) );
     result->Attach( *new DecisionalStates( *result ) );
-    result->Attach( *new Speeds( *result ) );
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     if( message.has_color() )

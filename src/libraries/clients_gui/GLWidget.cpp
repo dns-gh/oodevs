@@ -786,7 +786,7 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
     radius = Radius( radius, unit );
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glMatrixMode(GL_MODELVIEW);
+    glMatrixMode( GL_MODELVIEW );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -970,7 +970,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     width = width ? width / 360 : 1;
     float symbolDepth = 240;
     float baseDepth = depth;
-    depth = depth ? depth / symbolDepth : 1;           
+    depth = depth ? depth / symbolDepth : 1;
     bool mirror = direction > 180;
     float xFactor = mirror ? -1.f : 1.f;
     if( isMoving )

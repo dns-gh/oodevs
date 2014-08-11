@@ -20,7 +20,7 @@
 #include "PopulationKnowledgePositions.h"
 #include "Lives.h"
 #include "Lives_ABC.h"
-#include "Speeds.h"
+#include "Direction.h"
 
 using namespace kernel;
 
@@ -55,7 +55,7 @@ AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const Knowledge
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.GetAutomatResolver() ) );
     result->Attach< Positions >( *new AgentKnowledgePositions( converter_ ) );
     result->Attach< Lives_ABC >( *new Lives( *result, controllers_.controller_ ) );
-    result->Attach< Speeds >( *new Speeds( *result ) );
+    result->Attach< Direction >( *new Direction( *result ) );
     result->Polish();
     return result;
 }
