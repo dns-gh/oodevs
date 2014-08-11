@@ -39,7 +39,7 @@ bool tools::IsCommandPost( const kernel::Entity_ABC& entity )
 bool tools::IsEngaged( const kernel::Entity_ABC& entity )
 {
     if( const gui::AutomatDecisions* decisions =
-        static_cast< const gui::AutomatDecisions* >( entity.Retrieve< gui::Decisions_ABC >() ) )
+        dynamic_cast< const gui::AutomatDecisions* >( entity.Retrieve< gui::Decisions_ABC >() ) )
         return decisions->IsEngaged();
     return false;
 }

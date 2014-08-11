@@ -336,7 +336,7 @@ void TacticalTreeView::Engage()
 {
     if( contextMenuEntity_ )
         if( gui::AutomatDecisions* decisions =
-            static_cast< gui::AutomatDecisions* >( contextMenuEntity_.ConstCast()->Retrieve< gui::Decisions_ABC >() ) )
+            dynamic_cast< gui::AutomatDecisions* >( contextMenuEntity_.ConstCast()->Retrieve< gui::Decisions_ABC >() ) )
             decisions->SetEngaged( true );
     doItemsLayout();
 }
@@ -349,7 +349,7 @@ void TacticalTreeView::Disengage()
 {
     if( contextMenuEntity_ )
         if( gui::AutomatDecisions* decisions =
-            static_cast< gui::AutomatDecisions* >( contextMenuEntity_.ConstCast()->Retrieve< gui::Decisions_ABC >() ) )
+            dynamic_cast< gui::AutomatDecisions* >( contextMenuEntity_.ConstCast()->Retrieve< gui::Decisions_ABC >() ) )
             decisions->SetEngaged( false );
     doItemsLayout();
 }
