@@ -24,8 +24,6 @@
 
 #include <tools/Helpers.h>
 
-#include <boost/static_assert.hpp>
-
 using namespace ENT_Tr;
 
 namespace
@@ -765,7 +763,7 @@ E_EntityType ADN_Tr::ConvertToEntityType( const std::string& strName )
 }
 
 #define INIT_TR( NAME )\
-    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
+    static_assert( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1, "missing " BOOST_PP_STRINGIZE(NAME ) " converters" );\
     InitTr( ( NAME ## Converter_ ), "ADN_Tr" );
 
 // -----------------------------------------------------------------------------

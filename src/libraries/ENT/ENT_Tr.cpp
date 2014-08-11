@@ -13,7 +13,8 @@
 #include "protocol/Simulation.h"
 
 #include <tools/Helpers.h>
-#include <boost/static_assert.hpp>
+
+#include <boost/preprocessor/stringize.hpp>
 
 namespace
 {
@@ -691,7 +692,7 @@ T_ConverterDotationType DotationTypeConverter_[] =
 }  // namespace
 
 #define INIT_TRANSLATION( NAME, CONTEXT )\
-    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
+    static_assert( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1, "missing " CONTEXT "::" BOOST_PP_STRINGIZE( NAME ) " converters" );\
     InitTr( ( NAME ## Converter_ ), CONTEXT );
 
 #define INIT_TR( NAME ) INIT_TRANSLATION( NAME, "ENT_Tr" )
@@ -699,11 +700,11 @@ T_ConverterDotationType DotationTypeConverter_[] =
 #define INIT_TR_WITH_CONTEXT( NAME ) INIT_TRANSLATION( NAME, #NAME )
 
 #define INIT_PROTO_TR( CLASS, ALIAS )\
-    BOOST_STATIC_ASSERT( COUNT_OF( ALIAS ## Converter_ ) == ( sword:: ## CLASS ## _ARRAYSIZE ) + 1 );\
+    static_assert( COUNT_OF( ALIAS ## Converter_ ) == ( sword:: ## CLASS ## _ARRAYSIZE ) + 1, "missing " BOOST_PP_STRINGIZE( CLASS ) " converters" );\
     InitTr( ( ALIAS ## Converter_ ), "sword::" # CLASS );
 
 #define INIT_SUB_PROTO_TR( CLASS, NAME, ALIAS )\
-    BOOST_STATIC_ASSERT( COUNT_OF( ALIAS ## Converter_ ) == ( sword:: ## CLASS ## :: ## NAME ## _ARRAYSIZE ) + 1 );\
+    static_assert( COUNT_OF( ALIAS ## Converter_ ) == ( sword:: ## CLASS ## :: ## NAME ## _ARRAYSIZE ) + 1, "missing " BOOST_PP_STRINGIZE( CLASS ) " converters" );\
     InitTr( ( ALIAS ## Converter_ ), "sword::" # CLASS "::" # NAME );
 
 #define IMPLEMENT_CONVERT_METHODS( NAME )                                               \

@@ -14,7 +14,6 @@
 #include "MockModelVisitor.h"
 #include "TextArchive.h"
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/static_assert.hpp>
 #include <string>
 
 namespace

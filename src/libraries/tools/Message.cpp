@@ -123,7 +123,7 @@ void Message::Write( const char* data, std::size_t size )
     std::copy( data, data + size, std::back_inserter( *data_ ) );
 }
 
-BOOST_STATIC_ASSERT( sizeof( unsigned long ) == 4 );
+static_assert( sizeof( unsigned long ) == 4, "invalid unsigned long size" );
 
 // -----------------------------------------------------------------------------
 // Name: Message::MakeOutputBuffer

@@ -17,7 +17,6 @@
 #include <boost/interprocess/detail/os_thread_functions.hpp>
 #include <boost/interprocess/ipc/message_queue.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/static_assert.hpp>
 
 using namespace tools::ipc;
 namespace bip = boost::interprocess;
@@ -126,7 +125,7 @@ void write_u32be( void* data, size_t size, uint32_t value )
     ptr[3] = uint8_t( value       & 0xFF );
 }
 
-BOOST_STATIC_ASSERT( sizeof(Command) == sizeof(uint32_t) );
+static_assert( sizeof(Command) == sizeof(uint32_t), "invalid Command size" );
 
 // use protobuf the day we need something more than one integer
 Command Unpack( const void* data, size_t size )

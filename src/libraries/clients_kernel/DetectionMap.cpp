@@ -11,11 +11,10 @@
 #include "DetectionMap.h"
 #include "tools/ExerciseConfig.h"
 #include <tools/InputBinaryStream.h>
-#include <boost/static_assert.hpp>
 
 using namespace kernel;
 
-BOOST_STATIC_ASSERT( sizeof( DetectionMap::Environment ) == 1 );
+static_assert( sizeof( DetectionMap::Environment ) == 1, "Invalid DetectionMap::Environment size" );
 
 namespace
 {
@@ -26,7 +25,7 @@ namespace
         unsigned char e;
     };
 
-    BOOST_STATIC_ASSERT( sizeof( ArchiveCell ) == 4 );
+    static_assert( sizeof( ArchiveCell ) == 4, "Invalid ArchiveCell size" );
 }
 
 // -----------------------------------------------------------------------------

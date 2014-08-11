@@ -11,7 +11,6 @@
 #include "ENT/ENT_Enums.h"
 
 #include <tools/Helpers.h>
-#include <boost/static_assert.hpp>
 
 // Defines an enum <name>_enum and it's values <name>_values
 #define ENUM( name, ... )                                                               \
@@ -937,11 +936,12 @@ const Action actions[] =
     ACTION_EMPTY( debug_internal ),
 };
 const size_t actionsCount = COUNT_OF( actions );
-BOOST_STATIC_ASSERT( actionsCount ==
+static_assert( actionsCount ==
     sword::UnitMagicAction::Type_ARRAYSIZE
   + sword::KnowledgeMagicAction::Type_ARRAYSIZE
   + sword::ObjectMagicAction::Type_ARRAYSIZE
-  + sword::MagicAction::Type_ARRAYSIZE );
+  + sword::MagicAction::Type_ARRAYSIZE
+  , "missing action descriptors" );
 
 }  // namespace mapping
 }  // namespace protocol
