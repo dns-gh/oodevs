@@ -114,7 +114,7 @@ void Agent::InitializeSymbol() const
 // -----------------------------------------------------------------------------
 void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() )
+    if( viewport.IsHotpointVisible() && !IsAggregated() )
     {
         InitializeSymbol();
 
