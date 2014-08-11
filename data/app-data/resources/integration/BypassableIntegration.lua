@@ -73,9 +73,6 @@ integration.stopBypassIt = function( object )
         DEC_Trace( "pause work bypass" )
         return false
     end
-    object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
-    object[myself].actionBypassState = nil
-    return true
 end
 
 --- Returns true if the unit has the ability to do work to permit bypassing the selected object, false otherwise
