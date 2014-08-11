@@ -136,7 +136,7 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
                 >> xml::list( "parameter", boost::bind( &ReadObjects, _1, boost::ref( objects_ ) ) )
               >> xml::end;
         if( all )
-            for( auto i = 0; i < objects_.size(); ++i )
+            for( std::size_t i = 0; i < objects_.size(); ++i )
                 objects_[ i ]->isAllowed_ = true;
     }
 }
@@ -190,7 +190,7 @@ void ADN_Missions_Parameter::UpdateObjectsVectors()
         if( objects_.empty() )
         {
             objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-            for( auto i = 0; i < objects_.size(); ++i )
+            for( std::size_t i = 0; i < objects_.size(); ++i )
                 objects_[ i ]->isAllowed_ = type_.GetData() != eMissionParameterTypePhaseLine;
         }
     }
@@ -238,7 +238,7 @@ namespace
         if( CountObject( vector ) == vector.size() )
             output << xml::attribute( "all", true );
         else
-            for( auto i = 0; i < vector.size(); ++i )
+            for( std::size_t i = 0; i < vector.size(); ++i )
                 vector[i]->WriteArchive( output );
         output << xml::end;
     }
