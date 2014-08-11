@@ -42,6 +42,7 @@ namespace
 {
     typedef std::vector< std::pair< TerrainPathPoint, int > > T_PathPoints;
     typedef std::vector< std::pair< int, int > > T_Waypoints;
+    const float squareEpsilon = 100; // 10 meters
 
     TerrainData ReadTerrainData( const sword::TerrainData& data )
     {
@@ -102,7 +103,7 @@ namespace
         {
             T_Waypoints result;
             for( size_t i = 0; i < points.size(); ++i )
-                if( points[ i ].second >= 0 && points[ i ].first.Point().SquareDistance( point ) < 100 )
+                if( points[ i ].second >= 0 && points[ i ].first.Point().SquareDistance( point ) < squareEpsilon )
                     result.push_back( std::make_pair( static_cast< int >( i ), points[ i ].second ) );
             return result;
         }
