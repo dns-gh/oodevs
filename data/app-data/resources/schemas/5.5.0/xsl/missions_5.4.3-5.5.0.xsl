@@ -5,7 +5,7 @@
   <xsl:template match="parameter">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
-      <xsl:if test="(./@type = 'ObjectKnowledge' or ./@type ='PlannedWork') and not(objects)">
+      <xsl:if test="(./@type = 'ObjectKnowledge' or ./@type ='PlannedWork' or ./@type ='Plannedwork') and not(objects)">
         <xsl:element name="objects">
           <xsl:attribute name="all">true</xsl:attribute>
         </xsl:element>
