@@ -62,8 +62,8 @@ end
 -- @return Boolean, true if work is completed or impossible, false if work is paused (it could be resumed later)
 integration.stopBypassIt = function( object )
     object[myself] = object[myself] or {}
+    reportFunction(eRC_FinTravaux )
     if object[myself].actionBypassState == eActionObjetTerminee then
-        reportFunction(eRC_FinTravaux )
         object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
         object[myself].actionBypassState = nil
         return true
