@@ -547,20 +547,23 @@ namespace
 
     void CreateObjectNames( const tools::Path& path )
     {
-        tools::Xofstream xos( path );
-        xos << xml::start( "objects" );
-        tools::SchemaWriter schemaWriter;
-        schemaWriter.WritePhysicalSchema( xos, "ObjectNames" );
-        const ADN_Objects_Data::T_ObjectsInfos_Vector& objects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
-        unsigned int objectId = 0;
-        for( auto it = objects.begin(); it != objects.end(); ++it, ++objectId )
+        if( !path.Exists() ) // I'm not even sure we should write something as the values written will most likely be wrong and may not map Type_Objets.bms
         {
-            if( ( *it )->strType_.GetData().empty() )
-                ( *it )->strType_ = ADN_Objects_Data_ObjectInfos::GenerateNextType();
-            xos << xml::start( "object" )
-                    << xml::attribute( "id", objectId )
-                    << xml::attribute( "type", ( *it )->strType_.GetData() )
-                << xml::end;
+            tools::Xofstream xos( path );
+            xos << xml::start( "objects" );
+            tools::SchemaWriter schemaWriter;
+            schemaWriter.WritePhysicalSchema( xos, "ObjectNames" );
+            const ADN_Objects_Data::T_ObjectsInfos_Vector& objects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
+            unsigned int objectId = 0;
+            for( auto it = objects.begin(); it != objects.end(); ++it, ++objectId )
+            {
+                if( ( *it )->strType_.GetData().empty() )
+                    ( *it )->strType_ = ADN_Objects_Data_ObjectInfos::GenerateNextType();
+                xos << xml::start( "object" )
+                        << xml::attribute( "id", objectId )
+                        << xml::attribute( "type", ( *it )->strType_.GetData() )
+                    << xml::end;
+            }
         }
     }
     void CreateEmptyFileIfNeeded( const tools::Path& path, const std::string& openning, const tools::Path& schema = "" )
