@@ -280,7 +280,11 @@ end
 -- @param object Object knowledge
 -- @return Boolean, whether or not the object needs improvement
 integration.objectNeedsImprovement = function( object )
-    return DEC_ObjectKnowledge_MustBeMined( object.source )
+    if masalife.brain.core.class.isOfType( object, integration.ontology.types.object) then
+        return DEC_ObjectKnowledge_MustBeMined( object.source )
+    else
+        return false
+    end
 end
 
 --- Returns a position outside the convex hull of the provided list of objects, at a specified distance.
