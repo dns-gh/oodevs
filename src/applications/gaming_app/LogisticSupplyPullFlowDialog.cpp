@@ -72,6 +72,7 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent,
     : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
     , formations_( formations )
     , supplier_( 0 )
+    , lastContext_( 0 )
 {
     setCaption( tr( "Pull supply flow" ) );
     supplierCombo_ = new ValuedComboBox< const Entity_ABC* >( "supplierCombo", resourcesTab_ );
@@ -80,6 +81,20 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent,
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab_ );
     resourcesLayout->addWidget( supplierCombo_ );
     resourcesLayout->addWidget( resourcesTable_ );
+    actionsModel.RegisterHandler( [&]( const sword::SimToClient& message )
+    {
+        if( !lastContext_ || !isVisible() ||
+            !message.message().has_unit_magic_action_ack() || lastContext_ != message.context() )
+            return;
+        if( message.message().unit_magic_action_ack().error_code() != sword::UnitActionAck_ErrorCode_no_error )
+        {
+            QMessageBox::warning( this, tr( "SWORD" ), GetErrorText( message.message().unit_magic_action_ack() ) );
+            EnableButtons( true );
+            return;
+        }
+        accept();
+        Clear();
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,6 +152,9 @@ void LogisticSupplyPullFlowDialog::SetSuppliesToTable()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::Clear()
 {
+    layer_.Reset();
+    controllers_.Unregister( *waypointLocationCreator_ );
+    controllers_.Unregister( *routeLocationCreator_ );
     ClearSuppliersTable();
     ClearSuppliersData();
     resourcesTable_->Clear();
@@ -146,6 +164,7 @@ void LogisticSupplyPullFlowDialog::Clear()
     ClearRouteList();
     ClearRouteData();
     selected_ = 0;
+    EnableButtons( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,13 +200,10 @@ void LogisticSupplyPullFlowDialog::Validate()
     if( carriersUseCheck_->isChecked() )
         carriersTable_->GetQuantities( carriers );
 
-    accept();
-    layer_.Reset();
-    controllers_.Unregister( *waypointLocationCreator_ );
-    controllers_.Unregister( *routeLocationCreator_ );
-
     if( !selected_ )
-        return;
+        return Reject();
+
+    EnableButtons( false );
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_pull_flow" );
@@ -237,9 +253,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     action->AddParameter( *pullFlowParameters );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( controllers_.controller_, selected_, false ) );
-    actionsModel_.Publish( *action );
-
-    Clear();
+    lastContext_ = actionsModel_.Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,9 +263,6 @@ void LogisticSupplyPullFlowDialog::Validate()
 void LogisticSupplyPullFlowDialog::Reject()
 {
     reject();
-    layer_.Reset();
-    controllers_.Unregister( *waypointLocationCreator_ );
-    controllers_.Unregister( *routeLocationCreator_ );
     Clear();
 }
 

@@ -81,6 +81,7 @@ private:
     gui::ValuedComboBox< const kernel::Entity_ABC* >* supplierCombo_;
     const kernel::Entity_ABC* supplier_;
     T_SuppliersNames suppliersNames_;
+    int32_t lastContext_;
     //@}
 };
 

@@ -1877,6 +1877,18 @@ Do you want to replace it?</source>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The request has been denied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing deployed suppliers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This request cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyPullFlowDialog</name>
@@ -1899,6 +1911,10 @@ Do you want to replace it?</source>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">السيف</translation>
     </message>
 </context>
 <context>
@@ -1934,6 +1950,10 @@ Do you want to replace it?</source>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">السيف</translation>
     </message>
 </context>
 <context>

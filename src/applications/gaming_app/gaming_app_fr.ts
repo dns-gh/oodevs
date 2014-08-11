@@ -1880,6 +1880,18 @@ Voulez-vous le remplacer ?</translation>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
+    <message>
+        <source>The request has been denied</source>
+        <translation>Cette requête a été refusée</translation>
+    </message>
+    <message>
+        <source>Missing deployed suppliers</source>
+        <translation>Impossible de trouver des fournisseurs deployés</translation>
+    </message>
+    <message>
+        <source>This request cannot be resolved.</source>
+        <translation>Cette requête ne peut être resolue.</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyPullFlowDialog</name>
@@ -1902,6 +1914,10 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation>Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
 </context>
 <context>
@@ -1937,6 +1953,10 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation>Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
 </context>
 <context>

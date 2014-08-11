@@ -97,10 +97,10 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     tabs_->addTab( resourcesTab_, tr( "Supplies" ) );
     tabs_->addTab( carriersTab, tr( "Carriers" ) );
     tabs_->addTab( routeTab, tr( "Route" ) );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), tabs_ );
-    QPushButton* okButton = new QPushButton( tr( "Ok" ), tabs_ );
-    connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
-    connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
+    cancel_ = new QPushButton( tr( "Cancel" ), tabs_ );
+    ok_ = new QPushButton( tr( "Ok" ), tabs_ );
+    connect( cancel_, SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( ok_, SIGNAL( clicked() ), SLOT( Validate() ) );
 
     moveUpButton_ = new QPushButton( upDownGroup );
     moveDownButton_ = new QPushButton( upDownGroup );
@@ -120,8 +120,8 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     connect( addWaypointButton_, SIGNAL( clicked() ), SLOT( AddWaypoint() ) );
     connect( tabs_, SIGNAL( currentChanged( int ) ), SLOT( OnTabChanged( int ) ) );
 
-    tabLayout->addWidget( okButton, 1, 0, 1, 1 );
-    tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
+    tabLayout->addWidget( ok_, 1, 0, 1, 1 );
+    tabLayout->addWidget( cancel_, 1, 2, 1, 1 );
     setMinimumSize( 750, 420 );
     tabLayout->setMargin( 5 );
     tabLayout->setSpacing( 5 );
@@ -478,4 +478,23 @@ void LogisticSupplyFlowDialog_ABC::Draw( const Location_ABC& /*location*/, const
 void LogisticSupplyFlowDialog_ABC::OnTabChanged( int index )
 {
     addWaypointButton_->setVisible( index == 2 );
+}
+
+QString LogisticSupplyFlowDialog_ABC::GetErrorText( const sword::UnitMagicActionAck& ack )
+{
+    if( ack.has_error_code() )
+        switch( ack.error_code() )
+        {
+        case sword::UnitActionAck::error_supply_denied:
+            return tools::translate( "LogisticSupplyFlowDialog_ABC", "The request has been denied" );
+        case sword::UnitActionAck::error_undeployed:
+            return tools::translate( "LogisticSupplyFlowDialog_ABC", "Missing deployed suppliers" );
+        }
+    return tools::translate( "LogisticSupplyFlowDialog_ABC", "This request cannot be resolved." );
+}
+
+void LogisticSupplyFlowDialog_ABC::EnableButtons( bool enabled )
+{
+    ok_->setEnabled( enabled );
+    cancel_->setEnabled( enabled );
 }

@@ -151,6 +151,10 @@ message UnitActionAck {
         //! it can execute the order : it must not have surrendered to be
         //! able to receive orders @todo rename to error_agent_surrendered
         error_unit_surrendered  = 4;
+        //! Operation failed because the supply flow was denied
+        error_supply_denied     = 5;
+        //! Operation failed because the target is undeployed
+        error_undeployed        = 6;
     }
 }
 
