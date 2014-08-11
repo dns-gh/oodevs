@@ -42,7 +42,6 @@ public:
     void ReadArchive( xml::xistream& input );
     void ReadValue( xml::xistream& input );
     void ReadChoiceVector( xml::xistream& input, T_Choice_Vector& data );
-    void ReadChoiceGenObjects( xml::xistream& input, helpers::T_MissionGenObjectTypes_Infos_Vector& data );
     void WriteArchive( xml::xostream& output ) const;
     void UpdateObjectsVectors();
     virtual void CheckValidity();
@@ -60,8 +59,7 @@ public:
     ADN_Type_Int                                                      maxValue_;
     T_MissionParameterValue_Vector                                    values_;
     T_Choice_Vector                                                   choices_;
-    helpers::T_MissionGenObjectTypes_Infos_Vector                     genObjects_;
-    helpers::T_MissionGenObjectTypes_Infos_Vector                     knowledgeObjects_;
+    helpers::T_MissionGenObjectTypes_Infos_Vector                     objects_;
     ADN_Type_String                                                   diaName_;
     bool                                                              isContext_;
     ADN_Type_LocalizedString                                          description_;

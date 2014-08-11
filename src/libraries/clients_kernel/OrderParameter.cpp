@@ -48,13 +48,15 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     , maxValue_    ( std::numeric_limits< double >::max() )
     , indirectFire_( false )
     , ownedEquipments_( false )
+    , allObjects_( false )
 {
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
         >> xml::optional >> xml::start( "choice" )
             >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( aliases_ ), true ) )
         >> xml::end
         >> xml::optional >> xml::start( "objects" )
-                >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( genObjects_ ), false ) )
+                >> xml::optional >> xml::attribute( "all", allObjects_ )
+                >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( objects_ ), false ) )
             >> xml::end
         >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
         >> xml::optional >> xml::attribute( "min-value", minValue_ )
@@ -104,7 +106,7 @@ OrderParameter::OrderParameter( const OrderParameter& other )
     , ownedEquipments_( other.ownedEquipments_ )
     , values_      ( other.values_ )
     , aliases_     ( other.aliases_ )
-    , genObjects_  ( other.genObjects_ )
+    , objects_     ( other.objects_ )
 {
     auto it = other.CreateIterator();
     while( it.HasMoreElements() )
@@ -363,12 +365,12 @@ bool OrderParameter::IsRepeated() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderParameter::HasGenObject
+// Name: OrderParameter::HasObject
 // Created: LGY 2012-04-20
 // -----------------------------------------------------------------------------
-bool OrderParameter::HasGenObject( const std::string& type ) const
+bool OrderParameter::HasObject( const std::string& type ) const
 {
-    return genObjects_.empty() || ( genObjects_.find( type ) != genObjects_.end() );
+    return allObjects_ || ( objects_.find( type ) != objects_.end() );
 }
 
 // -----------------------------------------------------------------------------

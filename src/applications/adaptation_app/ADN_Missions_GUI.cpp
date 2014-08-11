@@ -37,6 +37,7 @@
 #include "clients_kernel/LanguageController.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/assign.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI constructor
@@ -172,18 +173,12 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     builder.AddField< ADN_EditLine_Int >( pLimitHolder, "limit-max", tr( "Maximum" ), vInfosConnectors[ eMaxValue ] );
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pLimit, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
-    ADN_MissionParameter_GroupBox* pGenObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeGenObject );
-    {
-        QCheckBox* all = new QCheckBox( pGenObject );
-        all->setText( tr( "all" ) );
-        new ADN_MissionGenObjectTypes_Table( all, builder.GetChildName( "gen-objects-table" ), vInfosConnectors[ eGenObjects ], pGenObject );
-        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pGenObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-    }
-    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeObjectKnowledge );
+    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ),
+        std::vector< E_MissionParameterType >( boost::assign::list_of( eMissionParameterTypeObjectKnowledge )( eMissionParameterTypeGenObject )( eMissionParameterTypePhaseLine ) ) );
     {
         QCheckBox* all = new QCheckBox( pKnowledgeObject );
         all->setText( tr( "all" ) );
-        new ADN_MissionGenObjectTypes_Table( all, builder.GetChildName( "knowledge-objects-table" ), vInfosConnectors[ eKnowledgeObjects ], pKnowledgeObject );
+        new ADN_MissionGenObjectTypes_Table( all, builder.GetChildName( "knowledge-objects-table" ), vInfosConnectors[ eObjects ], pKnowledgeObject );
         connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pKnowledgeObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
     }
 
@@ -292,7 +287,6 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     parameterLayout->addWidget( pLimit );
     parameterLayout->addWidget( pEnum );
     parameterLayout->addWidget( pChoice );
-    parameterLayout->addWidget( pGenObject );
     parameterLayout->addWidget( pKnowledgeObject );
     parameterLayout->addWidget( pDotationFilter );
     parameterLayout->addWidget( pEquipmentFilter );

@@ -82,7 +82,7 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
         return;
 
     const Qt::ItemFlags contextFlag = ( pMissionParameter->isContext_ && ( missionType_ == eEntityType_Pawn || missionType_ == eEntityType_Automat ) )
-        ? Qt::ItemIsSelectable
+        ? ( pMissionParameter->type_.GetData() == eMissionParameterTypePhaseLine ? Qt::ItemIsEnabled | Qt::ItemIsSelectable : Qt::ItemIsSelectable )
         : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
     const QBrush brush = pMissionParameter->isContext_ ? QBrush( Qt::lightGray ) : QBrush( Qt::transparent );
 
@@ -265,10 +265,9 @@ void ADN_MissionParameters_Table::Reconnect( const QModelIndex& index )
             itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_ );
             itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_ );
         }
-        else if( current == eMissionParameterTypeGenObject )
-            itemConnectors_[ADN_Missions_GUI::eGenObjects]->Connect( &param->genObjects_ );
-        else if( current == eMissionParameterTypeObjectKnowledge )
-            itemConnectors_[ADN_Missions_GUI::eKnowledgeObjects]->Connect( &param->knowledgeObjects_ );
+        else if( current == eMissionParameterTypeGenObject || current == eMissionParameterTypeObjectKnowledge ||
+                 current == eMissionParameterTypePhaseLine )
+            itemConnectors_[ADN_Missions_GUI::eObjects]->Connect( &param->objects_ );
         else if( current == eMissionParameterTypeDotationType )
             itemConnectors_[ADN_Missions_GUI::eDotations]->Connect( &param->indirectFire_ );
         else if( current == eMissionParameterTypeEquipmentType )
@@ -289,8 +288,7 @@ void ADN_MissionParameters_Table::Disconnect( ADN_Missions_Parameter* param )
         itemConnectors_[ ADN_Missions_GUI::eChoiceValues ]->Disconnect( &param->choices_ );
         itemConnectors_[ ADN_Missions_GUI::eMinValue ]->Disconnect( &param->minValue_ );
         itemConnectors_[ ADN_Missions_GUI::eMaxValue ]->Disconnect( &param->maxValue_ );
-        itemConnectors_[ ADN_Missions_GUI::eGenObjects ]->Disconnect( &param->genObjects_ );
-        itemConnectors_[ ADN_Missions_GUI::eKnowledgeObjects ]->Disconnect( &param->knowledgeObjects_ );
+        itemConnectors_[ ADN_Missions_GUI::eObjects ]->Disconnect( &param->objects_ );
         itemConnectors_[ ADN_Missions_GUI::eDotations ]->Disconnect( &param->indirectFire_ );
         itemConnectors_[ ADN_Missions_GUI::eEquipments ]->Disconnect( &param->ownedEquipments_ );
     }

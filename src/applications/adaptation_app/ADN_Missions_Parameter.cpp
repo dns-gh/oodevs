@@ -74,27 +74,27 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
         assert( choices_[ i ]->name_ == newParam->choices_[ i ]->name_ );
         newParam->choices_[ i ]->isAllowed_ = choices_[ i ]->isAllowed_.GetData();
     }
-    if( type_.GetData() == eMissionParameterTypeGenObject )
+    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
+        type_.GetData() == eMissionParameterTypePhaseLine )
     {
-        newParam->genObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-        for( unsigned int i = 0; i < genObjects_.size(); ++i )
-            newParam->genObjects_[ i ]->isAllowed_ = genObjects_[ i ]->isAllowed_.GetData();
-    }
-    else if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
-    {
-        newParam->knowledgeObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-        for( unsigned int i = 0; i < knowledgeObjects_.size(); ++i )
-            newParam->knowledgeObjects_[ i ]->isAllowed_ = knowledgeObjects_[ i ]->isAllowed_.GetData();
+        newParam->objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+        for( unsigned int i = 0; i < objects_.size(); ++i )
+            newParam->objects_[ i ]->isAllowed_ = objects_[ i ]->isAllowed_.GetData();
     }
     return newParam;
 }
 
 namespace
 {
-    void FillGenObjects( helpers::T_MissionGenObjectTypes_Infos_Vector& vector )
+    void ReadObjects( xml::xistream& input, helpers::T_MissionGenObjectTypes_Infos_Vector& data )
     {
-        for( std::size_t i = 0; i < vector.size(); ++i )
-            vector[ i ]->isAllowed_ = true;
+        std::string name = input.attribute< std::string >( "type" );
+        for( std::size_t i = 0; i < data.size(); ++i )
+            if( data[ i ]->GetCrossedElement() && data[ i ]->GetCrossedElement()->strType_.GetData() == name )
+            {
+                data[ i ]->isAllowed_ = true;
+                return;
+            }
     }
 }
 
@@ -125,24 +125,19 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
           >> xml::start( "choice" )
             >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoiceVector, this, _1, boost::ref( choices_ ) ) )
           >> xml::end;
-    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge )
+
+    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
+        type_.GetData() == eMissionParameterTypePhaseLine )
     {
-        if( type_.GetData() == eMissionParameterTypeGenObject )
-            genObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-        if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
-            knowledgeObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-        helpers::T_MissionGenObjectTypes_Infos_Vector& vector = ( type_.GetData() == eMissionParameterTypeGenObject ) ? genObjects_ : knowledgeObjects_;
-        if( !input.has_child( "objects" ) )
-            FillGenObjects( vector );
-        else
-        {
-            for( auto it = vector.begin(); it != vector.end(); ++it )
-                if( *it )
-                    ( *it )->isAllowed_ = false;
-            input >> xml::start( "objects" )
-                      >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoiceGenObjects, this, _1, boost::ref( vector ) ) )
-                  >> xml::end;
-        }
+        objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+        bool all = false;
+        input >> xml::start( "objects" )
+                >> xml::optional >> xml::attribute( "all", all )
+                >> xml::list( "parameter", boost::bind( &ReadObjects, _1, boost::ref( objects_ ) ) )
+              >> xml::end;
+        if( all )
+            for( auto i = 0; i < objects_.size(); ++i )
+                objects_[ i ]->isAllowed_ = true;
     }
 }
 
@@ -189,40 +184,18 @@ void ADN_Missions_Parameter::ReadChoiceVector( xml::xistream& input, T_Choice_Ve
 // -----------------------------------------------------------------------------
 void ADN_Missions_Parameter::UpdateObjectsVectors()
 {
-    if( type_.GetData() == eMissionParameterTypeGenObject )
+    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
+        type_.GetData() == eMissionParameterTypePhaseLine )
     {
-        knowledgeObjects_.ResetFixedVector();
-        if( genObjects_.empty() )
-            genObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-    }
-    else if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
-    {
-        genObjects_.ResetFixedVector();
-        if( knowledgeObjects_.empty() )
-            knowledgeObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-    }
-    else
-    {
-        knowledgeObjects_.ResetFixedVector();
-        genObjects_.ResetFixedVector();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Parameter::ReadChoiceGenObjects
-// Created: JSR 2013-04-10
-// -----------------------------------------------------------------------------
-void ADN_Missions_Parameter::ReadChoiceGenObjects( xml::xistream& input, helpers::T_MissionGenObjectTypes_Infos_Vector& data )
-{
-    std::string name = input.attribute< std::string >( "type" );
-    for( std::size_t i = 0; i < data.size(); ++i )
-    {
-        if( data[ i ]->GetCrossedElement() && data[ i ]->GetCrossedElement()->strType_.GetData() == name )
+        if( objects_.empty() )
         {
-            data[ i ]->isAllowed_ = true;
-            return;
+            objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+            for( auto i = 0; i < objects_.size(); ++i )
+                objects_[ i ]->isAllowed_ = type_.GetData() != eMissionParameterTypePhaseLine;
         }
     }
+    else
+        objects_.ResetFixedVector();
 }
 
 namespace
@@ -257,6 +230,17 @@ namespace
             if( vector[ i ]->isAllowed_.GetData() )
                 ++result;
         return result;
+    }
+
+    void WriteObjects( xml::xostream& output, const helpers::T_MissionGenObjectTypes_Infos_Vector& vector )
+    {
+        output << xml::start( "objects" );
+        if( CountObject( vector ) == vector.size() )
+            output << xml::attribute( "all", true );
+        else
+            for( auto i = 0; i < vector.size(); ++i )
+                vector[i]->WriteArchive( output );
+        output << xml::end;
     }
 }
 
@@ -293,12 +277,9 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output ) const
         values_[i]->WriteArchive( output );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
 
-    std::size_t nbGenObject = CountObject( genObjects_ );
-    std::size_t nbKnowledgeObject = CountObject( knowledgeObjects_ );
-    if( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject != genObjects_.size() )
-        Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
-    if( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject != knowledgeObjects_.size() )
-        Write( output, knowledgeObjects_, type_.GetData(), eMissionParameterTypeObjectKnowledge, "objects" );
+    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
+        type_.GetData() == eMissionParameterTypePhaseLine )
+        WriteObjects( output, objects_ );
     output << xml::end;
 }
 
@@ -320,10 +301,8 @@ void ADN_Missions_Parameter::CheckValidity()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Parameter::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    std::size_t nbGenObject = CountObject( genObjects_ );
-    std::size_t nbKnowledgeObject = CountObject( knowledgeObjects_ );
-    if( ( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject == 0 ) ||
-        ( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject == 0 ) )
+    if( ( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge )
+        && CountObject( objects_ ) == 0 )
         checker.AddError( eMissingObjectParameter, strName_.GetData(), eMissions );
     std::set< int > ids;
     for( auto it = values_.begin(); it != values_.end(); ++it )

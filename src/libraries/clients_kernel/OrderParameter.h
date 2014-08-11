@@ -69,7 +69,7 @@ public:
     void SetKeyName( const std::string& name );
     bool IsOptional() const;
     bool IsContext() const;
-    bool HasGenObject( const std::string& type ) const; // $$$$ ABR 2013-01-08: Rename this method, not only about gen objects, that can be about object knowledge too
+    bool HasObject( const std::string& type ) const;
     unsigned int MinOccurs() const;
     unsigned int MaxOccurs() const;
     double MinValue() const;
@@ -129,7 +129,8 @@ private:
     bool ownedEquipments_;
     T_OrderParameterValues values_;
     T_Aliases aliases_;
-    T_Aliases genObjects_;
+    T_Aliases objects_;
+    bool allObjects_;
     //@}
 };
 
