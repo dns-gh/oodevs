@@ -48,6 +48,15 @@ short FloodProxy::GetElevationAt( const geometry::Point2f& point ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: FloodProxy::GetCellSize
+// Created: JSR 2014-08-11
+// -----------------------------------------------------------------------------
+float FloodProxy::GetCellSize() const
+{
+    return detection_.GetCellSize();
+}
+
+// -----------------------------------------------------------------------------
 // Name: FloodProxy::Draw
 // Created: JSR 2011-10-07
 // -----------------------------------------------------------------------------

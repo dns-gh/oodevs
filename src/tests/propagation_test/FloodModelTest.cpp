@@ -42,6 +42,8 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateSwimmingPool, Fixture )
 {
+    MOCK_EXPECT( elevationGetter_.GetCellSize ).returns( 100.f );
+
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( center_ ).returns( deepElevation_ );
 
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f( -100.f, 100.f ) ).returns( deepElevation_ );
@@ -71,6 +73,8 @@ BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateSwimmingPool, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateStrips, Fixture )
 {
+    MOCK_EXPECT( elevationGetter_.GetCellSize ).returns( 100.f );
+
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( center_ ).returns( middleElevation_ );
 
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f( -100.f, 100.f ) ).returns( lowElevation_ );

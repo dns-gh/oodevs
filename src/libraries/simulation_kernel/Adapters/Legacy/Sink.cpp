@@ -53,6 +53,10 @@ namespace
         {
             return static_cast< short >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( point.X(), point.Y(), true ) );
         }
+        virtual float GetCellSize() const
+        {
+            return static_cast< float >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetCellSize() );
+        }
     };
 }
 

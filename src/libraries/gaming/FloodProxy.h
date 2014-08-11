@@ -42,6 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual short GetElevationAt( const geometry::Point2f& point ) const;
+    virtual float GetCellSize() const;
     void Draw( unsigned int floodId ) const;
     void Remove( unsigned int floodId );
     unsigned int GenerateFlood( unsigned int floodId, const geometry::Point2f& point, int depth, int refDist );
