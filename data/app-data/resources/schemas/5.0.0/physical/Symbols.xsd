@@ -19,9 +19,7 @@
 			</xs:sequence>
 			<xs:attribute name="base" use="required">
 				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="levels/"/>
-					</xs:restriction>
+					<xs:restriction base="xs:string"/>
 				</xs:simpleType>
 			</xs:attribute>
 		</xs:complexType>
