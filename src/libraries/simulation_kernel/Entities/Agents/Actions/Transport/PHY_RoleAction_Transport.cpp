@@ -68,6 +68,7 @@ PHY_RoleAction_Transport::PHY_RoleAction_Transport()
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
     , bHasChanged_              ( true )
+    , propagating_              ( false )
     , rWeightTransported_       ( 0 )
 {
     // NOTHING
@@ -82,6 +83,7 @@ PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion )
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
     , bHasChanged_              ( true )
+    , propagating_              ( false )
     , rWeightTransported_       ( 0 )
 {
     // NOTHING
@@ -702,4 +704,50 @@ std::vector< DEC_Decision_ABC* > PHY_RoleAction_Transport::GetTransportedUnits()
                 v.push_back( &agent->GetDecision() );
     }
     return v;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::NotifyMovingInsideObject
+// Created: LDC 2014-08-11
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::NotifyMovingInsideObject( MIL_Object_ABC& object )
+{
+    if( propagating_ )
+        return;
+    propagating_ = true;
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
+        it->first->Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
+    propagating_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::NotifyMovingOutsideObject
+// Created: LDC 2014-08-11
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::NotifyMovingOutsideObject( MIL_Object_ABC& object )
+{
+    if( propagating_ )
+        return;
+    propagating_ = true;
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
+        it->first->Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
+    propagating_ = false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::NotifyPutInsideObject
+// Created: LDC 2014-08-11
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::NotifyPutInsideObject( MIL_Object_ABC& )
+{
+    // Already handled by objects themselves
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::NotifyPutOutsideObject
+// Created: LDC 2014-08-11
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::NotifyPutOutsideObject( MIL_Object_ABC& )
+{
+    // Already handled by objects themselves
 }
