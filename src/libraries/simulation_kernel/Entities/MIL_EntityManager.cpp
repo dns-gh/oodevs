@@ -1921,7 +1921,7 @@ namespace
             auto target = supplier.GetStockAutomat( *it->first, deployed );
             if( !target || !deployed )
                 throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
-                    sword::UnitActionAck::error_undeployed, STR( "unable to find any undeployed target for " << it->first->GetName() ) );
+                    sword::UnitActionAck::error_undeployed, STR( "unable to find any deployed target for " << it->first->GetName() ) );
         }
     }
 }
@@ -1955,7 +1955,7 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     CheckSuppliersAreDeployed( *supplier, supplies );
     if( !supplier->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
-            sword::UnitActionAck::error_supply_denied, STR( "supply is denied" ) );
+            sword::UnitActionAck::error_supply_denied, STR( "supply denied" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -2052,7 +2052,7 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     CheckSuppliersAreDeployed( *supplier, supplies );
     if( !pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier ) )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
-            sword::UnitActionAck::error_supply_denied, STR( "supply is denied" ) );
+            sword::UnitActionAck::error_supply_denied, STR( "supply denied" ) );
 }
 
 // -----------------------------------------------------------------------------
