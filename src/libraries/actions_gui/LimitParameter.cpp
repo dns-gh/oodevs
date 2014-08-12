@@ -125,7 +125,7 @@ void LimitParameter::NotifyDeleted( const kernel::TacticalLine_ABC& entity )
     if( &entity == selected_ )
     {
         selected_ = 0;
-        Display( "---" );
+        Display( tools::translate( "LimitParameter", "New limit") );
     }
 }
 
