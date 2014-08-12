@@ -44,7 +44,7 @@ end
 local function InferType( param )
     if param.GetTypeName then
         return param:GetTypeName()
-    elseif existsIndex(param , "__tag" ) then
+    elseif integration.isDirectiaKnowledge( param ) then
         return masalife.brain.core.class.getType(param)
     else
         return nil
@@ -103,7 +103,7 @@ local function fillParameters( mission, params )
     local masalife = masalife
     for parameterName, parameterValue in pairs( params ) do
         if type(parameterValue) == "table" then
-            if existsIndex(parameterValue , "__tag" ) then
+            if integration.isDirectiaKnowledge( parameterValue ) then
                 AssignMissionParameter( mission, parameterName, masalife.brain.core.class.getType(parameterValue), parameterValue.source )
             else
                 local tempList = {}
@@ -120,6 +120,13 @@ local function fillParameters( mission, params )
             AssignMissionParameter( mission, parameterName, type(parameterValue), parameterValue )
         end
     end
+end
+
+--- Returns true if the given table is a DirectIA knowledge, false otherwise.
+-- @param table Table
+-- @return Boolean
+integration.isDirectiaKnowledge = function( table )
+    return existsIndex( table, "__tag" )
 end
 
 --- Assign the mission to the calling DirectIA agent
