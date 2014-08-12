@@ -92,7 +92,7 @@ void ModeController::EnsureModeIsAvailableForRegistry( E_Modes mode )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModeController::LoadGeometry
+// Name: ModeController::LoadState
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
 void ModeController::LoadState( E_Modes mode )
@@ -108,7 +108,7 @@ void ModeController::LoadState( E_Modes mode )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModeController::SaveGeometry
+// Name: ModeController::SaveState
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
 void ModeController::SaveState( E_Modes mode )

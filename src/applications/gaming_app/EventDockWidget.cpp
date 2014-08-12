@@ -302,13 +302,14 @@ void EventDockWidget::NotifyUpdated( const gui::Event& event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDockWidget::SetEditing
+// Name: EventDockWidget::NotifyModeChanged
 // Created: LGY 2013-08-21
 // -----------------------------------------------------------------------------
 void EventDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
 {
     if( newMode == eModes_Default )
         presenter_->Purge();
+    if( firstChangeToSavedMode )
+        setVisible( false );
     gui::RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
-    setVisible( false );
 }

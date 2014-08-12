@@ -775,10 +775,6 @@
         <translation>Sin munición</translation>
     </message>
     <message>
-        <source>Preparation</source>
-        <translation>Preparación</translation>
-    </message>
-    <message>
         <source>All Gaming</source>
         <translation>Todo juego</translation>
     </message>
