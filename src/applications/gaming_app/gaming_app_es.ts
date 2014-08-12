@@ -1888,7 +1888,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This request cannot be resolved.</source>
+        <source>This request cannot be resolved</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

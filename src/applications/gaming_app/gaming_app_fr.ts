@@ -1889,8 +1889,8 @@ Voulez-vous le remplacer ?</translation>
         <translation>Impossible de trouver des fournisseurs deployés</translation>
     </message>
     <message>
-        <source>This request cannot be resolved.</source>
-        <translation>Cette requête ne peut être resolue.</translation>
+        <source>This request cannot be resolved</source>
+        <translation>Cette requête ne peut être résolue</translation>
     </message>
 </context>
 <context>

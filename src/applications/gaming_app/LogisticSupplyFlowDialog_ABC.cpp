@@ -490,7 +490,7 @@ QString LogisticSupplyFlowDialog_ABC::GetErrorText( const sword::UnitMagicAction
         case sword::UnitActionAck::error_undeployed:
             return tools::translate( "LogisticSupplyFlowDialog_ABC", "Missing deployed suppliers" );
         }
-    return tools::translate( "LogisticSupplyFlowDialog_ABC", "This request cannot be resolved." );
+    return tools::translate( "LogisticSupplyFlowDialog_ABC", "This request cannot be resolved" );
 }
 
 void LogisticSupplyFlowDialog_ABC::EnableButtons( bool enabled )
