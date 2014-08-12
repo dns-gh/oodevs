@@ -126,7 +126,7 @@ end
 -- @param table Table
 -- @return Boolean
 integration.isDirectiaKnowledge = function( table )
-    return existsIndex( table, "__tag" )
+    return table[ "__tag" ] ~= nil
 end
 
 --- Assign the mission to the calling DirectIA agent
