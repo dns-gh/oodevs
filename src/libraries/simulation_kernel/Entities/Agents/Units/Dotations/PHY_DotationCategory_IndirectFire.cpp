@@ -284,7 +284,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                             T_Content content;
                             fireResult.GetDamages( target ).Serialize( content );
                             for( auto it = content.begin(); it != content.end(); ++it )
-                                MIL_Report::PostEvent( observerAgent, report::eRC_FireObserver, target.GetID(),
+                                MIL_Report::PostEvent( observerAgent, report::eRC_FireObserver, knowledge,
                                                        it->get< 0 >(), it->get< 1 >(), it->get< 2 >(), it->get< 3 >() );
                         }
                     }

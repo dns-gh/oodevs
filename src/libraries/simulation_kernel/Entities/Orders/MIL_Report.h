@@ -88,7 +88,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, int nParam2 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge );
-    template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 );
+    template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const boost::shared_ptr< DEC_Knowledge_Agent >& agentKnowledge, const std::string& nParam2, int nParam3, int nParam4, int nParam5 );
     //@}
 
 public:
@@ -359,10 +359,10 @@ template< typename T > inline
 // Created: LGY 2012-06-28
 // -----------------------------------------------------------------------------
 template< typename T >
- void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 )
+ void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const boost::shared_ptr< DEC_Knowledge_Agent >& agentKnowledge, const std::string& nParam2, int nParam3, int nParam4, int nParam5 )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
-    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::CreateInteger( nParam1 ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::CreateAgentKnowledge( agentKnowledge ) );
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter2( MIL_MissionParameterFactory::Create( nParam2 ) );
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter3( MIL_MissionParameterFactory::CreateInteger( nParam3 ) );
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter4( MIL_MissionParameterFactory::CreateInteger( nParam4 ) );
