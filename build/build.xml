@@ -919,7 +919,7 @@
             <!-- New magic actions are fine -->
             <arg value="--exclude=*.MagicAction.Type"/>
             <arg value="--exclude=*.UnitMagicAction.Type"/>
-            <!-- The laucnher has been removed in 5.4 -->
+            <!-- The launcher has been removed in 5.4 -->
             <arg value="--exclude=AdminToLauncher*"/>
             <arg value="--exclude=LauncherToAdmin*"/>
         </compare-proto>
@@ -932,6 +932,9 @@
             -->
             <arg value="--exclude=SimToClient.Content.ComputePathfindAck.*"/>
             <arg value="--exclude=*MissionParameter.Value.Pathfind*"/>
+            <!-- Enable new error codes in future versions -->
+            <arg value="--exclude=SimToClient.Content.UnitCreationRequestAck.UnitActionAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitActionAck.ErrorCode"/>
         </compare-proto>
     </target>
 
