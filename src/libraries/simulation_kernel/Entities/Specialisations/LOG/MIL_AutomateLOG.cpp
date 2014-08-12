@@ -795,7 +795,7 @@ void MIL_AutomateLOG::ResetConsignsForProvider( const MIL_Agent_ABC& pion )
 // Name: MIL_AutomateLOG::CheckSupplyDeployed
 // Created: MMC 2013-06-04
 // -----------------------------------------------------------------------------
-MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dotationCategory, bool& deployed )
+MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dotationCategory, bool& deployed ) const
 {
     deployed = false;
     SupplyDeployementVisitor visitor( dotationCategory );

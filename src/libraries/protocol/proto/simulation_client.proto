@@ -151,6 +151,10 @@ message UnitActionAck {
         //! it can execute the order : it must not have surrendered to be
         //! able to receive orders @todo rename to error_agent_surrendered
         error_unit_surrendered  = 4;
+        //! Operation failed because the supply flow was denied
+        error_supply_denied     = 5;
+        //! Operation failed because the target is undeployed
+        error_undeployed        = 6;
     }
 }
 
@@ -162,7 +166,7 @@ message UnitActionAck {
 message UnitCreationRequestAck {
     //! Reason for the failure of the agent creation operation @see
     //! UnitActionAck.ErrorCode
-    required UnitActionAck.ErrorCode error_code = 1;
+    required int32 error_code = 1;
 }
 
 /** @struct UnitMagicActionAck
@@ -176,7 +180,7 @@ message UnitMagicActionAck {
     required Id                      unit       = 1;
     //! Reason for the failure of the agent magic action execution
     //! operation. @see UnitActionAck.ErrorCode
-    required UnitActionAck.ErrorCode error_code = 2;
+    required int32                   error_code = 2;
     //! More detailed account of the returned error
     optional string                  error_msg  = 3;
     //! Action results, depends on the action type and outcome.

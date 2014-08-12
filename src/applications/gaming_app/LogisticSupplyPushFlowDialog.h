@@ -91,6 +91,7 @@ private:
     T_RecipientSupplies recipientSupplies_;
     T_RecipientsNames recipientsNames_;
     const kernel::Automat_ABC* pRecipientSelected_;
+    int32_t lastContext_;
     //@}
 };
 

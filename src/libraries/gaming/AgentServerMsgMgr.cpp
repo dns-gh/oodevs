@@ -678,7 +678,7 @@ void AgentServerMsgMgr::OnReceiveUnitPathFind( const sword::SimToClient& msg )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveUnitMagicActionAck( const sword::SimToClient& msg )
 {
-    CheckAcknowledge( logger_, msg.message().unit_magic_action_ack(), GetProfile().DisplayMessage( msg.client_id() ) );
+    CheckAcknowledge< sword::UnitActionAck_ErrorCode >( logger_, msg.message().unit_magic_action_ack(), GetProfile().DisplayMessage( msg.client_id() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -996,7 +996,7 @@ void AgentServerMsgMgr::OnReceiveFragOrder( const sword::SimToClient& msg )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveUnitCreationRequestAck( const sword::SimToClient& msg )
 {
-    CheckAcknowledge( logger_, msg.message().unit_creation_request_ack() );
+    CheckAcknowledge< sword::UnitActionAck_ErrorCode >( logger_, msg.message().unit_creation_request_ack() );
 }
 
 namespace

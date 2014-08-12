@@ -1912,6 +1912,18 @@ namespace
             supplies[ category ] += quantity;
         }
     }
+
+    void CheckSuppliersAreDeployed( const MIL_AutomateLOG& supplier, const tools::Map< const PHY_DotationCategory*, double >& supplies )
+    {
+        for( auto it = supplies.begin(); it != supplies.end(); ++it )
+        {
+            bool deployed = false;
+            auto target = supplier.GetStockAutomat( *it->first, deployed );
+            if( !target || !deployed )
+                throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
+                    sword::UnitActionAck::error_undeployed, STR( "unable to find any deployed target for " << it->first->GetName() ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1923,8 +1935,8 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
         throw MASA_INVALIDTASKER;
-    MIL_AutomateLOG* pBrainLog = FindBrainLogistic( *tasker );
-    protocol::Check( pBrainLog, "invalid supplier" );
+    MIL_AutomateLOG* supplier = FindBrainLogistic( *tasker );
+    protocol::Check( supplier, "invalid supplier" );
     protocol::CheckCount( message.parameters(), 1 );
     const auto& value = message.parameters().elem( 0 ).value( 0 );
     protocol::Check( value.has_push_flow_parameters(), "invalid parameters" );
@@ -1940,8 +1952,10 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
         CheckSuppliesCanBeLoaded( transporters, supplies );
         CheckTransportersLoad( transporters, supplies, *states );
     }
-    if( !pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
-        throw MASA_EXCEPTION( "unable to create push flow request" );
+    CheckSuppliersAreDeployed( *supplier, supplies );
+    if( !supplier->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
+            sword::UnitActionAck::error_supply_denied, STR( "supply denied" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -2035,8 +2049,10 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
         CheckSuppliesCanBeLoaded( transporters, supplies );
         CheckTransportersLoad( transporters, supplies, *states );
     }
+    CheckSuppliersAreDeployed( *supplier, supplies );
     if( !pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier ) )
-        throw MASA_EXCEPTION( "unable to create pull flow request" );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
+            sword::UnitActionAck::error_supply_denied, STR( "supply denied" ) );
 }
 
 // -----------------------------------------------------------------------------

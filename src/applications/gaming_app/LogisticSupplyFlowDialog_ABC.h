@@ -39,6 +39,11 @@ namespace gui
     class ParametersLayer;
 }
 
+namespace sword
+{
+    class UnitMagicActionAck;
+}
+
 class Dotation;
 class StaticModel;
 class SupplyStates;
@@ -136,6 +141,9 @@ protected:
 
     //! @name Helpers
     //@{
+    static QString GetErrorText( const sword::UnitMagicActionAck& ack );
+    void EnableButtons( bool enabled );
+
     virtual void AddAvailable( const Dotation& dotation );
     virtual QString GetSelectedWaypoint();
 
@@ -189,6 +197,9 @@ protected:
     geometry::Point2f selectedPoint_;
     T_PointNames points_;
     std::vector< geometry::Point2f > routeDrawpoints_;
+
+    QPushButton* ok_;
+    QPushButton* cancel_;
     //@}
 };
 

@@ -38,6 +38,7 @@
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog constructor
@@ -53,6 +54,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent,
                                                             const kernel::Profile_ABC& profile )
     : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
     , isPushFlow_( true )
+    , lastContext_( 0 )
 {
     recipientsList_ = new LogisticSupplyExclusiveListWidget( this, tr( "Add recipient" ), tr( "Remove recipient" ) );
     connect( recipientsList_, SIGNAL( ItemAdded( const QString& ) ), SLOT( AddRecipient( const QString& ) ) );
@@ -62,6 +64,20 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent,
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab_ );
     resourcesLayout->addWidget( recipientsList_ );
     resourcesLayout->addWidget( resourcesTable_ );
+    actionsModel.RegisterHandler( [&]( const sword::SimToClient& message )
+    {
+        if( !lastContext_ || !isVisible() ||
+            !message.message().has_unit_magic_action_ack() || lastContext_ != message.context() )
+            return;
+        if( message.message().unit_magic_action_ack().error_code() != sword::UnitActionAck_ErrorCode_no_error )
+        {
+            QMessageBox::warning( this, tr( "SWORD" ), GetErrorText( message.message().unit_magic_action_ack() ) );
+            EnableButtons( true );
+            return;
+        }
+        accept();
+        Clear();
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,13 +176,10 @@ void LogisticSupplyPushFlowDialog::Validate()
     if( carriersUseCheck_->isChecked() )
         carriersTable_->GetQuantities( carriers );
 
-    accept();
-    layer_.Reset();
-    controllers_.Unregister( *waypointLocationCreator_ );
-    controllers_.Unregister( *routeLocationCreator_ );
-
     if( !selected_ )
-        return;
+        return Reject();
+
+    EnableButtons( false );
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_push_flow" );
@@ -210,10 +223,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     action->AddParameter( *pushFlowParameters );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
-    actionsModel_.Publish( *action );
-
-    Clear();
-    selected_ = 0;
+    lastContext_ = actionsModel_.Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,12 +233,7 @@ void LogisticSupplyPushFlowDialog::Validate()
 void LogisticSupplyPushFlowDialog::Reject()
 {
     reject();
-    layer_.Reset();
-    controllers_.Unregister( *waypointLocationCreator_ );
-    controllers_.Unregister( *routeLocationCreator_ );
-
     Clear();
-    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -272,6 +277,9 @@ void LogisticSupplyPushFlowDialog::RemoveRecipient( const QString& recipient )
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Clear()
 {
+    layer_.Reset();
+    controllers_.Unregister( *waypointLocationCreator_ );
+    controllers_.Unregister( *routeLocationCreator_ );
     recipientsList_->Clear();
     pRecipientSelected_ = 0;
     ClearRecipientsData();
@@ -281,6 +289,8 @@ void LogisticSupplyPushFlowDialog::Clear()
     ClearCarriersData();
     ClearRouteList();
     ClearRouteData();
+    selected_ = 0;
+    EnableButtons( true );
 }
 
 // -----------------------------------------------------------------------------

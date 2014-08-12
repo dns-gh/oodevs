@@ -43,10 +43,15 @@ message IdList {
     repeated Id elem = 1;
 }
 
+message EnumToInt {
+    required int32 value = 1;
+}
+
 message Root {
     optional EnumNewValueMsg enum_new_value_msg = 1;
     optional UintToIntMsg uint_to_int_msg = 2;
     optional EmbeddingEnum embedding_enum = 3;
     optional IntToEnum int_to_enum = 4;
     optional IdList typed_list_to_untyped = 5;
+    optional EnumToInt enum_to_int = 6;
 }

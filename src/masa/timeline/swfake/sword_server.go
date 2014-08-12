@@ -365,7 +365,7 @@ func (s *SwordServer) replyUnitMagicOrder(slink *SwordLink, ctx int32, order *sw
 		UnitMagicActionAck: &sword.UnitMagicActionAck{
 			Id:        id,
 			Unit:      order.GetTasker().GetUnit(),
-			ErrorCode: sword.UnitActionAck_ErrorCode(code).Enum(),
+			ErrorCode: &code,
 			ErrorMsg:  text,
 		},
 	})
