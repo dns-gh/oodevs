@@ -9,7 +9,6 @@
 
 #include "Helpers.h"
 
-#include <boost/static_assert.hpp>
 #include <stdint.h>
 
 using namespace protocol;
@@ -83,7 +82,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "unload_unit",                        sword::UnitMagicAction::unload_unit },
 };
 const size_t mapping::MagicUnitAction::size_ = COUNT_OF( mapping::MagicUnitAction::data_ );
-BOOST_STATIC_ASSERT( sword::UnitMagicAction::Type_ARRAYSIZE == mapping::MagicUnitAction::size_ );
+static_assert( sword::UnitMagicAction::Type_ARRAYSIZE == mapping::MagicUnitAction::size_, "missing magic unit action descriptors" );
 
 const mapping::MagicKnowledgeAction mapping::MagicKnowledgeAction::data_[] = {
     { "knowledge_group_add_knowledge",      sword::KnowledgeMagicAction::add_knowledge },
@@ -94,7 +93,7 @@ const mapping::MagicKnowledgeAction mapping::MagicKnowledgeAction::data_[] = {
 };
 
 const size_t mapping::MagicKnowledgeAction::size_ = COUNT_OF( mapping::MagicKnowledgeAction::data_ );
-BOOST_STATIC_ASSERT( sword::KnowledgeMagicAction::Type_ARRAYSIZE == mapping::MagicKnowledgeAction::size_ );
+static_assert( sword::KnowledgeMagicAction::Type_ARRAYSIZE == mapping::MagicKnowledgeAction::size_, "missing magic knowledge action descriptors" );
 
 const mapping::MagicObjectAction mapping::MagicObjectAction::data_[] = {
     { "create_object",  sword::ObjectMagicAction::create },
@@ -103,7 +102,7 @@ const mapping::MagicObjectAction mapping::MagicObjectAction::data_[] = {
 };
 
 const size_t mapping::MagicObjectAction::size_ = COUNT_OF( mapping::MagicObjectAction::data_ );
-BOOST_STATIC_ASSERT( sword::ObjectMagicAction::Type_ARRAYSIZE == mapping::MagicObjectAction::size_ );
+static_assert( sword::ObjectMagicAction::Type_ARRAYSIZE == mapping::MagicObjectAction::size_, "missing magic object action descriptors" );
 
 const mapping::MagicAction mapping::MagicAction::data_[] = {
     { "change_diplomacy",               sword::MagicAction::change_diplomacy },
@@ -125,7 +124,7 @@ const mapping::MagicAction mapping::MagicAction::data_[] = {
 };
 
 const size_t mapping::MagicAction::size_ = COUNT_OF( mapping::MagicAction::data_ );
-BOOST_STATIC_ASSERT( sword::MagicAction::Type_ARRAYSIZE == mapping::MagicAction::size_ );
+static_assert( sword::MagicAction::Type_ARRAYSIZE == mapping::MagicAction::size_, "missing magic action descriptors" );
 
 const mapping::PhaseLineType mapping::PhaseLineType::data_[] = {
     { "LCA",  sword::PhaseLineOrder::attitude_change_line },
@@ -141,7 +140,7 @@ const mapping::PhaseLineType mapping::PhaseLineType::data_[] = {
 };
 
 const size_t mapping::PhaseLineType::size_ = COUNT_OF( mapping::PhaseLineType::data_ );
-BOOST_STATIC_ASSERT( sword::PhaseLineOrder::Function_ARRAYSIZE == mapping::PhaseLineType::size_ );
+static_assert( sword::PhaseLineOrder::Function_ARRAYSIZE == mapping::PhaseLineType::size_, "missing phase line order descriptors" );
 
 const mapping::Service mapping::Service::data_[] = {
     { "struct aar::Service",                sword::service_aar },
@@ -152,5 +151,5 @@ const mapping::Service mapping::Service::data_[] = {
 };
 
 const size_t mapping::Service::size_ = COUNT_OF( mapping::Service::data_ );
-BOOST_STATIC_ASSERT( sword::EnumService_ARRAYSIZE == mapping::Service::size_ );
-BOOST_STATIC_ASSERT( sizeof sword::EnumService == sizeof uint32_t );
+static_assert( sword::EnumService_ARRAYSIZE == mapping::Service::size_, "missing service descriptor" );
+static_assert( sizeof sword::EnumService == sizeof uint32_t, "invalid EnumService size" );

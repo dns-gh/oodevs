@@ -19,7 +19,6 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/utility/enable_if.hpp>
-#include <boost/mpl/assert.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/bind.hpp>
 #include <boost/swap.hpp>
@@ -762,7 +761,7 @@ std::string Model::FindContext( const Model& child ) const
 std::string Model::Type() const
 {
     static const char* types[] = { "nothing", "value", "value", "value", "value", "string children", "integer children", "elements", "user data", "link" };
-    BOOST_STATIC_ASSERT( sizeof( types ) / sizeof( char* ) == boost::mpl::size< T_Content::types >::value );
+    static_assert( sizeof( types ) / sizeof( char* ) == boost::mpl::size< T_Content::types >::value, "T_Convert mismatch" );
     return types[ content_.which() ];
 }
 

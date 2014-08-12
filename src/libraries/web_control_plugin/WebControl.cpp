@@ -216,7 +216,7 @@ typedef enum HttpStatusCode
     HttpStatusCode_Count,
 };
 
-BOOST_STATIC_ASSERT( ( sizeof httpCodes / sizeof *httpCodes ) == HttpStatusCode_Count );
+static_assert( ( sizeof httpCodes / sizeof *httpCodes ) == HttpStatusCode_Count, "missing http codes" );
 
 // -----------------------------------------------------------------------------
 // Name: WriteHttpReply
