@@ -161,7 +161,7 @@ public:
 
     void ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion );
     void ResetConsignsForProvider( const MIL_Agent_ABC& pion );
-    MIL_Automate*  GetStockAutomat                    ( const PHY_DotationCategory& dotationCategory, bool& deployed ) const;
+    MIL_Automate*  GetStockAutomat                    ( const PHY_DotationCategory& dotationCategory, bool& deployed, bool checkLogisticType ) const;
 
     bool FinishAllHandlingsSuccessfullyWithoutDelay();
     //@}

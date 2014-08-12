@@ -401,11 +401,15 @@ class SupplyConvoyCapacityVisitor : public MIL_LogisticEntitiesVisitor
         MIL_AgentPion* selected_;
 };
 
-class SupplyDeployementVisitor : public MIL_LogisticEntitiesVisitor, private boost::noncopyable
+class SupplyDeployementVisitor : public MIL_LogisticEntitiesVisitor
+                               , private boost::noncopyable
 {
 public:
-    SupplyDeployementVisitor( const PHY_DotationCategory& dotation )
-        : dotation_( dotation ), pDeployedStock_( 0 ), pUndeployedStock_( 0 )
+    SupplyDeployementVisitor( const PHY_DotationCategory& dotation, bool checkLogisticType )
+        : dotation_( dotation )
+        , checkLogisticType_( checkLogisticType )
+        , pDeployedStock_( 0 )
+        , pUndeployedStock_( 0 )
     {
     }
 
@@ -418,17 +422,17 @@ public:
         if( !pDeployment )
             return;
         MIL_AgentPion* pAgent =  const_cast< MIL_AgentPion* >( &agent );
-        if( pAgent->GetType().GetUnitType().IsStockLogisticTypeDefined( dotation_.GetLogisticType() ) )
-        {
-            if( pDeployment->IsDeployed() && !agent.IsDead() )
-                pDeployedStock_ = pAgent;
-            else
-                pUndeployedStock_ = pAgent;
-        }
+        if( checkLogisticType_ && !pAgent->GetType().GetUnitType().IsStockLogisticTypeDefined( dotation_.GetLogisticType() ) )
+            return;
+        if( pDeployment->IsDeployed() && !agent.IsDead() )
+            pDeployedStock_ = pAgent;
+        else
+            pUndeployedStock_ = pAgent;
     }
 
 public:
     const PHY_DotationCategory& dotation_;
+    const bool checkLogisticType_;
     MIL_AgentPion* pDeployedStock_;
     MIL_AgentPion* pUndeployedStock_;
 };

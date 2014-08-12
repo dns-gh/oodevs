@@ -1804,7 +1804,7 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
     for( std::set< const PHY_DotationCategory* >::iterator typeIt = quotasTypes.begin(); typeIt != quotasTypes.end(); ++typeIt )
     {
         bool bDeployed = false;
-        MIL_Automate* pStockAutomat = pSupplier->GetStockAutomat( **typeIt, bDeployed );
+        MIL_Automate* pStockAutomat = pSupplier->GetStockAutomat( **typeIt, bDeployed, true );
         if( pStockAutomat && !bDeployed )
             unavailableSuppliers.insert( pStockAutomat );
     }
@@ -1915,16 +1915,14 @@ namespace
 
     void CheckSuppliersAreDeployed( const MIL_AutomateLOG& supplier, const tools::Map< const PHY_DotationCategory*, double >& supplies )
     {
-#if 0
         for( auto it = supplies.begin(); it != supplies.end(); ++it )
         {
             bool deployed = false;
-            auto target = supplier.GetStockAutomat( *it->first, deployed );
+            auto target = supplier.GetStockAutomat( *it->first, deployed, false );
             if( !target || !deployed )
                 throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
                     sword::UnitActionAck::error_undeployed, STR( "unable to find any deployed target for " << it->first->GetName() ) );
         }
-#endif
     }
 }
 
