@@ -51,7 +51,6 @@ public:
     virtual kernel::Team_ABC& GetTeam( unsigned int id ) const;
     virtual kernel::UrbanObject_ABC* FindUrbanObject( unsigned int id ) const;
     virtual kernel::UrbanObject_ABC& GetUrbanObject( unsigned int id ) const;
-    virtual kernel::Pathfind_ABC* FindPathfind( unsigned int id ) const;
     virtual kernel::Entity_ABC* FindEntity( unsigned int id ) const;
     //@}
 

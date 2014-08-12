@@ -73,7 +73,6 @@ MOCK_BASE_CLASS( MockEntityResolver, kernel::EntityResolver_ABC )
     MOCK_METHOD( GetFormation, 1 );
     MOCK_METHOD( FindTeam, 1 );
     MOCK_METHOD( GetTeam, 1 );
-    MOCK_METHOD( FindPathfind, 1 );
     MOCK_METHOD( FindEntity, 1 );
 };
 

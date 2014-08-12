@@ -64,7 +64,8 @@ public:
                                kernel::AgentKnowledgeConverter_ABC* knowledgeConverter = 0,
                                kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter = 0,
                                const kernel::Time_ABC* simulation = 0,
-                               tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver = 0 );
+                               tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver = 0,
+                               tools::Resolver< kernel::Pathfind_ABC >* pathfindResolver = 0 );
     virtual ~InterfaceBuilder();
     //@}
 
@@ -83,6 +84,7 @@ public:
     virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const;
     virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const;
+    virtual tools::Resolver< kernel::Pathfind_ABC >& GetPathfindResolver() const;
     virtual const QDateTime GetCurrentDateTime() const;
     virtual const kernel::StaticModel& GetStaticModel() const;
     virtual const tools::ExerciseConfig& GetConfig() const;
@@ -122,6 +124,7 @@ private:
     kernel::ObjectKnowledgeConverter_ABC*  objectKnowledgeConverter_;
     const kernel::Time_ABC*                simulation_;
     tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver_;
+    tools::Resolver< kernel::Pathfind_ABC >* pathfindResolver_;
 
     actions::gui::MissionInterface*        missionInterface_;
     QObject*                               parentObject_;

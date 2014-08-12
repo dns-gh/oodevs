@@ -95,6 +95,7 @@ namespace
         MOCK_METHOD( GetAgentKnowledgeConverter, 0 );
         MOCK_METHOD( GetObjectKnowledgeConverter, 0 );
         MOCK_METHOD( GetTacticalLineResolver, 0 );
+        MOCK_METHOD( GetPathfindResolver, 0 );
         MOCK_METHOD( GetCurrentDateTime, 0 );
         MOCK_METHOD( GetStaticModel, 0 );
         MOCK_METHOD( GetConfig, 0 );

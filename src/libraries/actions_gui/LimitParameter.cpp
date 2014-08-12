@@ -34,6 +34,7 @@ LimitParameter::LimitParameter( const InterfaceBuilder_ABC& builder, const kerne
     , controller_( builder.GetControllers().controller_ )
     , converter_ ( builder.GetStaticModel().coordinateConverter_ )
     , resolver_  ( builder.GetTacticalLineResolver() )
+    , entityLabel_( 0 )
     , potential_ ( 0 )
     , selected_  ( 0 )
 {
@@ -105,6 +106,12 @@ void LimitParameter::OnMenuClick()
     if( group_ && IsOptional() )
         group_->setChecked( selected_ != 0 );
     Update();
+}
+
+void LimitParameter::NotifyUpdated( const kernel::TacticalLine_ABC& entity )
+{
+    if( &entity == selected_ )
+        Display( entity.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,8 +210,7 @@ void LimitParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) cons
             for( auto it = newPoints_.begin(); it != newPoints_.end(); ++it )
                 lines.AddPoint( *it );
         }
-        std::unique_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, lines ) );
-        parameter.AddParameter( *param.release() );
+        parameter.AddParameter( *new actions::parameters::Limit( parameter_, converter_, lines ) );
     }
     else
         parameter.AddParameter( *new actions::parameters::Limit( parameter_, converter_ ) );

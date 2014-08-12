@@ -1609,7 +1609,6 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_itinerary, Fixture )
         BOOST_CHECK_EQUAL( req.equipment_types( 1 ).id(), 17u );
         BOOST_CHECK( req.ignore_dynamic_objects() );
     };
-    MOCK_EXPECT( entityResolver.FindPathfind ).with( 1u ).returns( 0 );
     CheckSingleAndListParameter( "Itinerary", "itinerary", checker,
         [&]( const std::string& suffix ) {
             return

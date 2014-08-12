@@ -118,7 +118,6 @@ public:
     virtual tools::Resolver_ABC< kernel::Population_ABC     >& GetPopulationResolver() const;
     virtual tools::Resolver_ABC< kernel::Inhabitant_ABC     >& GetInhabitantResolver() const;
     virtual tools::Resolver_ABC< kernel::UrbanObject_ABC    >& GetUrbanObjectResolver() const;
-    virtual tools::Resolver_ABC< kernel::Pathfind_ABC       >& GetPathfindResolver() const;
     //@}
 
     //! @name Operations

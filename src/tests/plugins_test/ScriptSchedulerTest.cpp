@@ -48,7 +48,6 @@ namespace
         MOCK_METHOD( GetTeam, 1 );
         MOCK_METHOD( FindUrbanObject, 1 );
         MOCK_METHOD( GetUrbanObject, 1 );
-        MOCK_METHOD( FindPathfind, 1 );
         MOCK_METHOD( FindEntity, 1 );
     };
 

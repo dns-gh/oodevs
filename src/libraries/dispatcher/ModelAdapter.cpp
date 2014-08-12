@@ -203,11 +203,6 @@ kernel::UrbanObject_ABC& ModelAdapter::GetUrbanObject( unsigned int id ) const
     return model_.UrbanBlocks().Get( id );
 }
 
-kernel::Pathfind_ABC* ModelAdapter::FindPathfind( unsigned int /*id*/ ) const
-{
-    throw MASA_EXCEPTION( "cannot adapt a dispatcher::Pathfind into a kernel::Pathfind_ABC" );
-}
-
 // -----------------------------------------------------------------------------
 // Name: ModelAdapter::FindEntity
 // Created: JSR 2013-01-31

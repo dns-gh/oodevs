@@ -203,11 +203,6 @@ tools::Resolver_ABC< kernel::UrbanObject_ABC >& Model::GetUrbanObjectResolver() 
     return *urban_;
 }
 
-tools::Resolver_ABC< kernel::Pathfind_ABC >& Model::GetPathfindResolver() const
-{
-    throw MASA_EXCEPTION( "no pathfind resolver in preparation" );
-}
-
 // -----------------------------------------------------------------------------
 // Name: Model::ClearLoadingErrors
 // Created: JSR 2012-01-05

@@ -168,7 +168,7 @@ private:
     std::unique_ptr< Pathfind > edited_;
     // information about the objects under the mouse if not too far from the
     // current path
-    boost::optional< Pathfind::Hover > hovered_;
+    boost::optional< Itinerary::Hover > hovered_;
     geometry::Point2f point_;
     // pending events stored while waiting for a reply to the previous request
     // from the server

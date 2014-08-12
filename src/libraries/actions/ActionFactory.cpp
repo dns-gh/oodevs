@@ -1111,7 +1111,7 @@ Action_ABC* ActionFactory::CreatePathfindRequest( const std::string& name, const
     kernel::MagicActionType& actionType = magicActions_.Get( name );
     std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Itinerary( it.NextElement(), coordinateConverter_, pathfind, entities_, controller_ ) );
+    action->AddParameter( *new parameters::Itinerary( it.NextElement(), coordinateConverter_, pathfind ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
 }

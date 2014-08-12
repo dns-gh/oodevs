@@ -134,6 +134,12 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
     Param_ABC::CreateMenu( menu );
 }
 
+void LimaParameter::NotifyUpdated( const kernel::TacticalLine_ABC& entity )
+{
+    if( &entity == selectedLine_ )
+        entityLabel_->setText( entity.GetName() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: LimaParameter::NotifyDeleted
 // Created: LDC 2012-10-17
