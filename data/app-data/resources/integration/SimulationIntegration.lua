@@ -371,6 +371,6 @@ function ActivateBrainDebug( activate )
     end
 end
 
-function GetMaxInt()
+integration.getMaxInt = function()
     return 2147483647
 end
