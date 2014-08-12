@@ -370,3 +370,7 @@ function ActivateBrainDebug( activate )
         end
     end
 end
+
+function GetMaxInt()
+    return 2147483647
+end
