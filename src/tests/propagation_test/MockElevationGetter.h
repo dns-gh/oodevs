@@ -21,6 +21,7 @@
 MOCK_BASE_CLASS( MockElevationGetter, propagation::ElevationGetter_ABC )
 {
     MOCK_METHOD( GetElevationAt, 1 );
+    MOCK_METHOD( GetCellSize, 0 );
 };
 
 #endif // __MockElevationGetter_h_

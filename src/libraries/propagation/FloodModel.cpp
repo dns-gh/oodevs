@@ -76,6 +76,28 @@ void FloodModel::GenerateFlood( const Point2d& center, T_Polygons& deepAreas, T_
 }
 
 // -----------------------------------------------------------------------------
+// Name: FloodModel::GetMaxElevationInCell
+// Created: JSR 2014-08-11
+// -----------------------------------------------------------------------------
+short FloodModel::GetMaxElevationInCell( const geometry::Point2f& center, int floodElevation ) const
+{
+    const float size = getter_.GetCellSize();
+    const float x1 = center.X() - cellWidth_ * 0.5f;
+    const float y1 = center.Y() - cellWidth_ * 0.5f;
+    const float x2 = center.X() + cellWidth_ * 0.5f;
+    const float y2 = center.Y() + cellWidth_ * 0.5f;
+    short ret = 0;
+    for( float y = y1; y < y2; y += size )
+        for( float x = x1; x < x2; x += size )
+        {
+            ret = std::max( ret, getter_.GetElevationAt( geometry::Point2f( x + 0.5f * size, y + 0.5f * size ) ) );
+            if( ret > floodElevation )
+                return ret;
+        }
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FloodModel::Propagate
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
@@ -85,27 +107,30 @@ void FloodModel::Propagate( int floodElevation, unsigned short halfWidth, const 
     queue.push( std::make_pair( halfWidth, halfWidth ) );
     while( !queue.empty() )
     {
-        unsigned short x = queue.front().first;
-        unsigned short y = queue.front().second;
-        Point2f cellCenter( center.X() + ( x - halfWidth ) * cellWidth_ , center.Y() + ( y - halfWidth ) * cellWidth_ );
+        const unsigned short x = queue.front().first;
+        const unsigned short y = queue.front().second;
         sCell& cell = ppCells[ x ][ y ];
         if( !cell.visited_ )
         {
-            short elevation = getter_.GetElevationAt( cellCenter );
+            const Point2f cellCenter( center.X() + ( x - halfWidth ) * cellWidth_ , center.Y() + ( y - halfWidth ) * cellWidth_ );
             cell.visited_ = true;
-            if( cellCenter.SquareDistance( center ) < refDist * refDist && elevation <= floodElevation )
+            if( cellCenter.SquareDistance( center ) < refDist * refDist )
             {
-                cell.polIndex_ = -1; // to be marked
-                if( floodElevation - elevation > 1 )
-                    cell.deep_ = true;
-                if( x > 0 && !ppCells[ x - 1 ][ y ].visited_ )
-                    queue.push( std::make_pair( x - 1, y ) );
-                if( x < 2 * halfWidth && !ppCells[ x + 1 ][ y ].visited_ )
-                    queue.push( std::make_pair( x + 1, y ) );
-                if( y > 0 && !ppCells[ x ][ y - 1 ].visited_ )
-                    queue.push( std::make_pair( x, y - 1 ) );
-                if( y < 2 * halfWidth && !ppCells[ x ][ y + 1 ].visited_ )
-                    queue.push( std::make_pair( x, y + 1 ) );
+                const short elevation = GetMaxElevationInCell( cellCenter, floodElevation );
+                if( elevation <= floodElevation )
+                {
+                    cell.polIndex_ = -1; // to be marked
+                    if( floodElevation - elevation > 1 )
+                        cell.deep_ = true;
+                    if( x > 0 && !ppCells[ x - 1 ][ y ].visited_ )
+                        queue.push( std::make_pair( x - 1, y ) );
+                    if( x < 2 * halfWidth && !ppCells[ x + 1 ][ y ].visited_ )
+                        queue.push( std::make_pair( x + 1, y ) );
+                    if( y > 0 && !ppCells[ x ][ y - 1 ].visited_ )
+                        queue.push( std::make_pair( x, y - 1 ) );
+                    if( y < 2 * halfWidth && !ppCells[ x ][ y + 1 ].visited_ )
+                        queue.push( std::make_pair( x, y + 1 ) );
+                }
             }
         }
         queue.pop();
@@ -156,10 +181,10 @@ int FloodModel::MarkAdjacentCells( int x, int y, bool deep, int nPolygonIndex, u
 // -----------------------------------------------------------------------------
 void FloodModel::MarkCells( int xStart, int yStart, int nPolygonIndex, unsigned short halfWidth, sCell** ppCells ) const
 {
-    bool deep = ppCells[ xStart ][ yStart ].deep_;
+    const bool deep = ppCells[ xStart ][ yStart ].deep_;
     while( xStart != -1 && yStart < 2 * halfWidth + 1 )
     {
-        int xEnd = MarkAdjacentCells( xStart, yStart, deep, nPolygonIndex, halfWidth, ppCells );
+        const int xEnd = MarkAdjacentCells( xStart, yStart, deep, nPolygonIndex, halfWidth, ppCells );
         xStart = FindUnmarkedOnNextLine( xStart, xEnd, yStart, deep, halfWidth, ppCells );
         ++yStart;
     }

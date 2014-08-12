@@ -135,6 +135,15 @@ short FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: FloodAttribute::GetCellSize
+// Created: JSR 2014-08-11
+// -----------------------------------------------------------------------------
+float FloodAttribute::GetCellSize() const
+{
+    return detection_.GetCellSize();
+}
+
+// -----------------------------------------------------------------------------
 // Name: FloodAttribute::SetValues
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------

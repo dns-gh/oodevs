@@ -72,6 +72,7 @@ private:
     int FindUnmarkedOnNextLine( int xStart, int xEnd, int y, bool deep, unsigned short halfWidth, sCell** ppCells ) const;
     int FindFirstMarkedOnLine( int y, int index, unsigned short halfWidth, sCell** ppCells ) const;
     int FindLastMarkedOnLine( int y, int index, unsigned short halfWidth, sCell** ppCells ) const;
+    short GetMaxElevationInCell( const geometry::Point2f& center, int floodElevation ) const;
     //@}
 
 private:

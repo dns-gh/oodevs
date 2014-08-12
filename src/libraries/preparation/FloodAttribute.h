@@ -72,6 +72,7 @@ public:
     virtual void NotifyUpdated( const FloodAttribute& attribute );
     virtual void NotifyUpdated( const kernel::AltitudeModified& attribute );
     virtual short GetElevationAt( const geometry::Point2f& point ) const;
+    virtual float GetCellSize() const;
     //@}
 
     //! @name Operations
