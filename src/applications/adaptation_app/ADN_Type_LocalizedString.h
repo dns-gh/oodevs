@@ -101,7 +101,7 @@ public:
     void SetKey( const std::string& key );
 
     void SetContext( boost::shared_ptr< kernel::Context > context );
-    const boost::shared_ptr< kernel::LocalizedString >& GetTranslation() const;;
+    const boost::shared_ptr< kernel::LocalizedString >& GetTranslation() const;
     //@}
 
 public slots:

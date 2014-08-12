@@ -281,9 +281,9 @@ bool ADN_Type_LocalizedString::CheckUniqueTranslation() const
 {
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized string." );
-    for( auto it = context_->begin(); it != context_->end(); ++it )
-        if( *it != translation_ && translation_->Key() == ( *it )->Key() && *translation_ != **it )
-            return false;
+    auto it = context_->find( translation_->Key() );
+    if( it != context_->end() && *translation_ != *it->second )
+        return false;
     return true;
 }
 
