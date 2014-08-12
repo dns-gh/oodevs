@@ -12,20 +12,10 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/phy"
-	"masa/sword/swapi/simu"
 	"masa/sword/sword"
 	"masa/sword/swtest"
 	"math"
 )
-
-// Simulation crashes when terminating because of some race between crowd
-// flows and pathfinding.
-// http://jira.masagroup.net/browse/SWBUG-11652
-func DisableDumpChecksForCrowds() *simu.SessionErrorsOpts {
-	return &simu.SessionErrorsOpts{
-		IgnoreDumps: true,
-	}
-}
 
 func CheckHumans(healthy, wounded, dead, contaminated int32, crowd *swapi.Crowd) bool {
 	return crowd.Healthy == healthy && crowd.Wounded == wounded &&
@@ -106,8 +96,7 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 
 func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer stopSim(c, sim, DisableDumpChecksForCrowds())
-	defer client.Close()
+	defer stopSimAndClient(c, sim, client)
 
 	crowd := CreateCrowd(c, client)
 
@@ -249,8 +238,7 @@ func (s *TestSuite) TestCrowdReloadBrain(c *C) {
 func (s *TestSuite) TestCrowdTeleportation(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallOrbat)
 	sim, client := connectAndWaitModel(c, opts)
-	defer stopSim(c, sim, DisableDumpChecksForCrowds())
-	defer client.Close()
+	defer stopSimAndClient(c, sim, client)
 	crowd := CreateCrowd(c, client)
 	// Initial crowd has a concentration
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -358,8 +346,7 @@ const (
 
 func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer stopSim(c, sim, DisableDumpChecksForCrowds())
-	defer client.Close()
+	defer stopSimAndClient(c, sim, client)
 	crowd := CreateCrowd(c, client)
 
 	// Wait crowd update
