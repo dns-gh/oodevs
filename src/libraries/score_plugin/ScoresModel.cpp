@@ -23,6 +23,7 @@
 #include <boost/foreach.hpp>
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::score;
 
@@ -175,7 +176,7 @@ void ScoresModel::RegisterIn( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Variable > ScoresModel::CreateVariable( const std::string& name, const std::string& type, const std::string& value )
 {
-    return boost::shared_ptr< Variable >( new Variable( name, type, value ) );
+    return boost::make_shared< Variable >( name, type, value );
 }
 
 // -----------------------------------------------------------------------------

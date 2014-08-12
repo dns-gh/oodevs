@@ -16,6 +16,7 @@
 #include "dispatcher/Logger_ABC.h"
 
 #include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
 
 #include <sstream>
 #include <set>
@@ -33,7 +34,7 @@ namespace
             // NOTHING
         }
         bool apply( rpr::ForceIdentifier& fId )
-        {   
+        {
             bool retval (true );
             if( rprIds.empty() )
             {
@@ -69,9 +70,9 @@ SideResolver::SideResolver( dispatcher::Model_ABC& dynamicModel, dispatcher::Log
         neutrals.insert( static_cast< rpr::ForceIdentifier >( i*3 + 3 ) );
     }
     std::map< kernel::Karma, boost::shared_ptr< Helper > > helpers;
-    helpers[ kernel::Karma::friend_ ] = boost::shared_ptr< Helper >( new Helper( friends, rpr::Friendly ) );
-    helpers[ kernel::Karma::neutral_ ] = boost::shared_ptr< Helper >( new Helper( neutrals, rpr::Neutral ) );
-    helpers[ kernel::Karma::enemy_ ] = boost::shared_ptr< Helper >( new Helper( enemies, rpr::Opposing ) );
+    helpers[ kernel::Karma::friend_ ] = boost::make_shared< Helper >( friends, rpr::Friendly );
+    helpers[ kernel::Karma::neutral_ ] = boost::make_shared< Helper >( neutrals, rpr::Neutral );
+    helpers[ kernel::Karma::enemy_ ] = boost::make_shared< Helper >( enemies, rpr::Opposing );
 
     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides( dynamicModel.Sides() );
     for( tools::Iterator< const dispatcher::Team_ABC& > it = sides.CreateIterator(); it.HasMoreElements(); )

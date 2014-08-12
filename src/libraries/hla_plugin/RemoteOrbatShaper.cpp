@@ -22,6 +22,7 @@
 #include <tools/Resolver_ABC.h>
 #include <algorithm>
 #include <set>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::hla;
 
@@ -108,7 +109,7 @@ RemoteOrbatShaper::~RemoteOrbatShaper()
 // -----------------------------------------------------------------------------
 void RemoteOrbatShaper::RemoteCreated(  const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    units_.insert( T_UnitsData::value_type( identifier, boost::shared_ptr<plugins::hla::RemoteOrbatShaper::UnitData>( new UnitData() ) ) );
+    units_.insert( T_UnitsData::value_type( identifier, boost::make_shared< UnitData >() ) );
     object.Register( *this );
 }
 

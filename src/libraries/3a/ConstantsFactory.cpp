@@ -40,8 +40,8 @@ template< typename T >
 void ConstantsFactory::MakeConstant( const std::string& name, xml::xistream& xis, Task& result ) const
 {
     typedef FunctionConnector< IdentifierValue::Type, T > Connector;
-    boost::shared_ptr< Connector > connector( new Connector() );
-    boost::shared_ptr< ModelFunction_ABC > function( new ::Constant< T >( xis, connector->handlers_.Parameter() ) );
+    auto connector = boost::make_shared< Connector >();
+    auto function = boost::make_shared< ::Constant< T > >( xis, connector->handlers_.Parameter() );
 
     result.AddExtractor( function );
     result.AddConnector( name, connector );

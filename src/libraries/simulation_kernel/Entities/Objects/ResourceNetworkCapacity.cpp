@@ -20,6 +20,7 @@
 #include "resource_network/NodeProperties.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "Urban/PHY_ResourceNetworkType.h"
+#include <boost/make_shared.hpp>
 
 using namespace resource;
 
@@ -352,7 +353,7 @@ const T_ResourceNetworkVector& ResourceNetworkCapacity::GetDECResourceNetworks( 
     {
         DECResourceNetworks_.clear();
         for( auto it = resources.begin(); it != resources.end(); ++it )
-            DECResourceNetworks_.push_back( boost::shared_ptr< DEC_ResourceNetwork >( new DEC_ResourceNetwork( objectId, *it ) ) );
+            DECResourceNetworks_.push_back( boost::make_shared< DEC_ResourceNetwork >( objectId, *it ) );
     }
     return DECResourceNetworks_;
 }

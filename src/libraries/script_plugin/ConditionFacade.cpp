@@ -21,6 +21,7 @@
 #include "MiscEvents.h"
 #include "dispatcher/Config.h"
 #include <directia/brain/Brain.h>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::script;
 
@@ -88,7 +89,7 @@ boost::shared_ptr< Condition_ABC > ConditionFacade::Once()
         }
         bool triggered_;
     };
-    return boost::shared_ptr< Condition_ABC >( new Once() );
+    return boost::make_shared< Once >();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,5 +113,5 @@ boost::shared_ptr< Condition_ABC > ConditionFacade::Timer( float seconds )
         float time_;
     };
 
-    return boost::shared_ptr< Condition_ABC >( new Timer( controller_, seconds ) );
+    return boost::make_shared< Timer >( controller_, seconds );
 }

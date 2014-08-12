@@ -24,6 +24,7 @@
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::messenger;
 
@@ -291,7 +292,7 @@ boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::strin
             >> xml::list( "shape", *this, &DrawingsModel::ReadNamedShape, p, name );
     if( !p )
         throw MASA_EXCEPTION( "Could not find drawing '" + name + "'" );
-    return boost::shared_ptr< DrawingProxy >( new DrawingProxy( *this, std::move( p ) ) );
+    return boost::make_shared< DrawingProxy >( *this, std::move( p ) );
 }
 
 // -----------------------------------------------------------------------------

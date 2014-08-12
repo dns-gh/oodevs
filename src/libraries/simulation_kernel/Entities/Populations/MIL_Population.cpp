@@ -865,7 +865,7 @@ boost::shared_ptr< MT_Vector2D > MIL_Population::GetConcentrationPosition( unsig
 {
     for( auto itC = concentrations_.cbegin(); itC != concentrations_.end(); ++itC )
         if( ( *itC )->GetID() == concentrationId )
-            return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ( *itC )->GetPosition() ) );
+            return boost::make_shared< MT_Vector2D >( ( *itC )->GetPosition() );
     return boost::shared_ptr< MT_Vector2D >();
 }
 

@@ -26,6 +26,7 @@
 #include "simulation_terrain/TER_World.h"
 #include <boost/lexical_cast.hpp>
 #include "tools/NET_AsnException.h"
+#include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_UrbanObject )
 
@@ -541,7 +542,7 @@ const std::vector< boost::shared_ptr< MT_Vector2D > >& MIL_UrbanObject::ComputeL
         const T_PointVector& points = GetLocalisation().GetPoints();
         const MT_Vector2D barycenter = GetLocalisation().ComputeBarycenter();
         for( auto it = points.begin(); it != points.end(); ++it )
-            stretchedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
+            stretchedArea_.push_back( boost::make_shared< MT_Vector2D >( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) );
     }
     return stretchedArea_;
 }

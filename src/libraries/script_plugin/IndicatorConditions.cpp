@@ -14,6 +14,7 @@
 #include "dispatcher/Config.h"
 #include <directia/brain/Brain.h>
 #include <tools/Path.h>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::script;
 
@@ -87,5 +88,5 @@ boost::shared_ptr< Condition_ABC > IndicatorConditions::IndicatorChanged()
         };
         std::map< std::string, double > indicators_;
     };
-    return boost::shared_ptr< Condition_ABC >( new IndicatorChanged( controller_ ) );
+    return boost::make_shared< IndicatorChanged >( controller_ );
 }

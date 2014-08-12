@@ -19,6 +19,7 @@
 #include "tools/Loader_ABC.h"
 #include "tools/SessionConfig.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 static std::ostream& operator<<( std::ostream& os, const QString& s )
 {
@@ -66,7 +67,7 @@ void IndicatorBuilder::AddVariable( const std::string& name, const std::string& 
 {
     if( ! variables_.get() )
         throw MASA_EXCEPTION( "indicator builder not initialized" );
-    variables_->Register( name, boost::shared_ptr< indicators::Element_ABC >( new indicators::Variable( name, typeFactory_->Instanciate( type ), value ) ) );
+    variables_->Register( name, boost::make_shared< indicators::Variable >( name, typeFactory_->Instanciate( type ), value ) );
 }
 
 // -----------------------------------------------------------------------------

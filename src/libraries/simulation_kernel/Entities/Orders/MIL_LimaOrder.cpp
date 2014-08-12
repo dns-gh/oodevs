@@ -17,6 +17,7 @@
 #include "MIL.h"
 #include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
+#include <boost/make_shared.hpp>
 
 unsigned int MIL_LimaOrder::nNextID_ = 0;
 
@@ -47,7 +48,7 @@ MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn )
     NET_ASN_Tools::ReadTick( asn.time(), nSchedule_);
 
     T_PointVector points;
-    localisation_ = boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::eLine, points ) );
+    localisation_ = boost::make_shared< TER_Localisation >( TER_Localisation::eLine, points );
     if( !NET_ASN_Tools::ReadLine( asn.line(), *localisation_ ) )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_lima );
 

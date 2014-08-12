@@ -13,6 +13,7 @@
 #include "MiscEvents.h"
 #include <directia/brain/Brain.h>
 #include <tools/ElementObserver_ABC.h>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::script;
 
@@ -72,7 +73,7 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::TickEnded()
             Trigger( ev.tick, ev.duration );
         }
     };
-    return boost::shared_ptr< Condition_ABC >( new ClientConnected( controller_ ) );
+    return boost::make_shared< ClientConnected >( controller_ );
 }
 
 namespace
@@ -101,7 +102,7 @@ namespace
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > SimulationConditions::AtDateTime( const std::string& triggerTime )
 {
-    return boost::shared_ptr< Condition_ABC >( new AtDateTimeCondition( controller_, triggerTime ) );
+    return boost::make_shared< AtDateTimeCondition >( controller_, triggerTime );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +123,7 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::ClientConnected()
             Trigger( client.client, client.profile );
         };
     };
-    return boost::shared_ptr< Condition_ABC >( new ClientConnected( controller_ ) );
+    return boost::make_shared< ClientConnected >( controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,5 +144,5 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::ClientLeft()
             Trigger( client.client );
         };
     };
-    return boost::shared_ptr< Condition_ABC >( new ClientLeft( controller_ ) );
+    return boost::make_shared< ClientLeft >( controller_ );
 }

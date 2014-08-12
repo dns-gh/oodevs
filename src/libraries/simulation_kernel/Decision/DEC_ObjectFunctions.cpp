@@ -25,6 +25,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
+#include <boost/make_shared.hpp>
 
 namespace
 {
@@ -231,7 +232,7 @@ void DEC_ObjectFunctions::MagicDestroyObjectId( int objectId )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObjectFromSharedLocalisation( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )
 {
-    return boost::shared_ptr< DEC_Gen_Object >( new DEC_Gen_Object( type, location.get(), preliminary ) );
+    return boost::make_shared< DEC_Gen_Object >( type, location.get(), preliminary );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +241,7 @@ boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObjectF
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObject( std::string type, TER_Localisation* location, bool preliminary )
 {
-    return boost::shared_ptr< DEC_Gen_Object >( new DEC_Gen_Object( type, location, preliminary ) );
+    return boost::make_shared< DEC_Gen_Object >( type, location, preliminary );
 }
 
 // -----------------------------------------------------------------------------

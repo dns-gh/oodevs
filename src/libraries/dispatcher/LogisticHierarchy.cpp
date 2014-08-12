@@ -17,6 +17,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <tools/Resolver_ABC.h>
+#include <boost/make_shared.hpp>
 
 using namespace dispatcher;
 
@@ -53,7 +54,7 @@ void LogisticHierarchy::DoUpdate( const sword::ChangeLogisticLinks& msg )
     {
         const LogisticEntity_ABC* superior = FindLogisticEntity( *it );
         assert( superior );
-        superiorLinks_.push_back( boost::shared_ptr< LogisticLink >( new LogisticLink( owner_, *superior ) ) );
+        superiorLinks_.push_back( boost::make_shared< LogisticLink >( owner_, *superior ) );
     }
 }
 

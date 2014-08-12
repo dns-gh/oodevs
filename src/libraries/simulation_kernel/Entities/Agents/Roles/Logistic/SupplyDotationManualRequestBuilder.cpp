@@ -21,6 +21,7 @@
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace logistic;
 
@@ -127,7 +128,7 @@ void SupplyDotationManualRequestBuilder::CreateRequest( MIL_Automate& recipient,
 
     BOOST_FOREACH( SupplyDotationQuantity& request, pionDotations )
         if( request.quantity_ > 0 )
-            container.AddResource( recipient.GetDotationSupplyManager(), *request.pion_, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceDotation( *request.dotation_ ) ), request.quantity_ );
+            container.AddResource( recipient.GetDotationSupplyManager(), *request.pion_, boost::make_shared< SupplyResourceDotation >( *request.dotation_ ), request.quantity_ );
 }
 
 // -----------------------------------------------------------------------------

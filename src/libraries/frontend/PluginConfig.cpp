@@ -24,6 +24,7 @@
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <boost/make_shared.hpp>
 #include <algorithm>
 
 using namespace frontend;
@@ -183,7 +184,7 @@ void PluginConfig::Commit( const tools::Path& exercise, const tools::Path& sessi
 // -----------------------------------------------------------------------------
 void PluginConfig::ReadSetting( xml::xistream& xis, QWidget* parent )
 {
-    settings_.push_back( boost::shared_ptr< PluginSetting >( new PluginSetting( parent, config_, xis ) ) );
+    settings_.push_back( boost::make_shared< PluginSetting >( parent, config_, xis ) );
 }
 
 // -----------------------------------------------------------------------------
