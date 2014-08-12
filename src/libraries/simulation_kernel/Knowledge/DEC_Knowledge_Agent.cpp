@@ -477,6 +477,14 @@ void DEC_Knowledge_Agent::UpdateRelevance( int currentTimeStep )
     {
         ChangeRelevance( 0. );
         return;
+    }    
+    auto transportedRole = pAgentKnown_->RetrieveRole< transport::PHY_RoleInterface_Transported >();
+    const MIL_Agent_ABC* transporter = transportedRole ? transportedRole->GetTransporter() : 0;
+    if( transporter && transporter->GetKnowledgeGroup()->GetId() == groupId_ )
+    {
+        ChangeRelevance( 1. );
+        nTimeLastUpdate_ = currentTimeStep;
+        return;
     }
     // Degradation : effacement au bout de X minutes
     const double rTimeRelevanceDegradation = ( currentTimeStep - nTimeLastUpdate_ ) / maxLifetime_;
