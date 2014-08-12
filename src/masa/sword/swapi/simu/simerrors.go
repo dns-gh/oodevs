@@ -90,8 +90,7 @@ func (p *LogParser) Err() error {
 type SessionErrorsOpts struct {
 	IgnorePatterns []string // A list of patterns matching log lines group
 	// to ignore.
-	IgnoreDumps bool // Ignore dump files
-	IgnoreLua   bool // Ignore Lua tracebacks
+	IgnoreLua bool // Ignore Lua tracebacks
 }
 
 // Returns a list of dump files found in a dump directory.
@@ -257,19 +256,6 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 		}
 	}
 
-	if !opts.IgnoreDumps {
-		// We assume the debug directory is set to its default value, otherwise
-		// we would have to pass all kind of options and make things much harder.
-		dumpDir := filepath.Join(sessionPath, "debug")
-		dumps, err := ListDmpFiles(dumpDir)
-		if err != nil && !os.IsNotExist(err) {
-			return err
-		}
-		if len(dumps) > 0 {
-			s := "dump files found:\n  " + strings.Join(dumps, "\n  ") + "\n"
-			output.WriteString(s)
-		}
-	}
 	found := output.String()
 	if len(found) > 0 {
 		return fmt.Errorf("%s", found)
