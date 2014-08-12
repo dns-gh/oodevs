@@ -1915,6 +1915,7 @@ namespace
 
     void CheckSuppliersAreDeployed( const MIL_AutomateLOG& supplier, const tools::Map< const PHY_DotationCategory*, double >& supplies )
     {
+#if 0
         for( auto it = supplies.begin(); it != supplies.end(); ++it )
         {
             bool deployed = false;
@@ -1923,6 +1924,7 @@ namespace
                 throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
                     sword::UnitActionAck::error_undeployed, STR( "unable to find any deployed target for " << it->first->GetName() ) );
         }
+#endif
     }
 }
 
