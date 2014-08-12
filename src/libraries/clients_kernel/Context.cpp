@@ -38,7 +38,7 @@ Context::~Context()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< LocalizedString > Context::operator[]( const std::string& key )
 {
-    auto it = (*this).find( key );
+    auto it = find( key );
     if( it != end() )
         return it->second;
     return CreateNew( key );
@@ -50,7 +50,7 @@ boost::shared_ptr< LocalizedString > Context::operator[]( const std::string& key
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< LocalizedString >& Context::operator[]( const std::string& key ) const
 {
-    auto it = (*this).find( key );
+    auto it = find( key );
     if( it != end() )
         return it->second;
     throw MASA_EXCEPTION( std::string( "Key not found: " ) + key );
