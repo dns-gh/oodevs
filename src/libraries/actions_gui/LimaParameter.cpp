@@ -149,7 +149,10 @@ void LimaParameter::NotifyDeleted( const kernel::TacticalLine_ABC& entity )
     if( &entity == clickedLine_ )
         clickedLine_ = 0;
     if( &entity == selectedLine_ )
+    {
         selectedLine_ = 0;
+        entityLabel_->setText( tools::translate( "LimaParameter", "New lima") );
+    }
 }
 
 // -----------------------------------------------------------------------------
