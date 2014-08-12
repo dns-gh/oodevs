@@ -1286,3 +1286,10 @@ integration.setAvailableDronesForFlyTrack = function ( distance, listPoints )
         reportFunction( eRC_AutonomyDrone )
     end
 end
+
+--- Returns if the provided agent is autonomous (i.e. unmanned vehicle)
+-- @param agent Simulation agent
+-- @return Boolean true if the given agent is autonomous, false otherwise.
+integration.agentIsAutonomous = function( agent )
+    return DEC_Agent_EstAutonome( agent )
+end

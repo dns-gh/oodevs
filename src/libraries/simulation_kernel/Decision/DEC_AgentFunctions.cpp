@@ -100,6 +100,15 @@ bool DEC_AgentFunctions::UpdateUnderIndirectFire( MIL_Agent_ABC& callerAgent )
     return callerAgent.UpdateUnderIndirectFire();
 }
 
+//-----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsAutonomous
+// Created: GGE 2014-08-14
+//-----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsAutonomous( DEC_Decision_ABC* pAgent )
+{
+    return pAgent->GetPion().IsAutonomous();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::WearNbcProtectionSuit
 // Created: NLD 2004-05-03
