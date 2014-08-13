@@ -1,12 +1,11 @@
+integration = {}
+utilities = {}
+
 include "integration/Reports.lua"
 include "integration/SimulationIntegration.lua"
 include "integration/KnowledgeManager.lua"
 include "integration/Types.lua"
 include "integration/BaseTaskKnowledge.lua"
-
-
-integration = {}
-utilities = {}
 
 include "integration/ToolsFunctions.lua"
 include "integration/TableIntegration.lua"
