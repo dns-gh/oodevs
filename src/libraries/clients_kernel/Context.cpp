@@ -62,8 +62,7 @@ const boost::shared_ptr< LocalizedString >& Context::operator[]( const std::stri
 // -----------------------------------------------------------------------------
 boost::shared_ptr< LocalizedString > Context::CreateNew( const std::string& key )
 {
-    auto result = insert( std::make_pair( key, boost::make_shared< LocalizedString >( key ) ) );
-    return result.first->second;
+    return insert( std::make_pair( key, boost::make_shared< LocalizedString >( key ) ) )->second;
 }
 
 // -----------------------------------------------------------------------------

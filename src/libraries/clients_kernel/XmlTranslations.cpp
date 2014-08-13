@@ -230,7 +230,7 @@ const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( con
     const boost::shared_ptr< Context >& context = GetContext( strContext );
     if( context->find( key ) == context->end() )
         context->CreateNew( key );
-    return context->at( key );
+    return static_cast< const Context& >(*context)[ key ];
 }
 
 // -----------------------------------------------------------------------------

@@ -12,6 +12,7 @@
 
 #include <boost/shared_ptr.hpp>
 #include <vector>
+#include <unordered_map>
 
 namespace kernel
 {
@@ -23,7 +24,7 @@ namespace kernel
 */
 // Created: ABR 2013-07-15
 // =============================================================================
-class Context : public std::map< std::string, boost::shared_ptr< LocalizedString > >
+class Context : public std::unordered_multimap< std::string, boost::shared_ptr< LocalizedString > >
 {
 public:
     //! @name Constructors/Destructor
@@ -36,8 +37,8 @@ public:
     //@{
     bool Apply( const std::function< bool( LocalizedString& ) >& functor );
 
-    boost::shared_ptr< LocalizedString > operator[] ( const std::string& key );
-    const boost::shared_ptr< LocalizedString >& operator[] ( const std::string& key ) const;
+    boost::shared_ptr< LocalizedString > operator[]( const std::string& key );
+    const boost::shared_ptr< LocalizedString >& operator[]( const std::string& key ) const;
 
     boost::shared_ptr< LocalizedString > CreateNew( const std::string& key );
     //@}
