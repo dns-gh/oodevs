@@ -24,7 +24,7 @@ namespace kernel
 */
 // Created: ABR 2013-07-15
 // =============================================================================
-class Context : public std::unordered_multimap< std::string, boost::shared_ptr< LocalizedString > >
+class Context : public std::multimap< std::string, boost::shared_ptr< LocalizedString > >
 {
 public:
     //! @name Constructors/Destructor
