@@ -552,33 +552,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>EfficientRangeDialog</name>
-    <message>
-        <source>Efficient Range</source>
-        <translation type="unfinished">مجموعة فعالة</translation>
-    </message>
-    <message>
-        <source>Display Parameters</source>
-        <translation type="unfinished">عرض معلمات</translation>
-    </message>
-    <message>
-        <source>Percentage (PH):</source>
-        <translation type="unfinished">النسبة المئوية (PH):</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="unfinished">الحجم:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
-    </message>
-</context>
-<context>
     <name>EquipmentTransferDialog</name>
     <message>
         <source>Equipment transfer</source>
@@ -2234,6 +2207,10 @@ This data can&apos;t be projected.</source>
         <source>Orbat</source>
         <translation>أوربات</translation>
     </message>
+    <message>
+        <source>Weapon Ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
@@ -2423,10 +2400,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Weapon ranges</source>
         <translation type="unfinished">نطاقات سلاح</translation>
-    </message>
-    <message>
-        <source>Efficient Range</source>
-        <translation type="unfinished">مجموعة فعالة</translation>
     </message>
     <message>
         <source>Routes</source>

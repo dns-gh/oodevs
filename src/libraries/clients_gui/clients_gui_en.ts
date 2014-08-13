@@ -2504,6 +2504,25 @@ Do you want to remove it?</translation>
     </message>
 </context>
 <context>
+    <name>gui::WeaponRangesPanel</name>
+    <message>
+        <source>Weapon ranges</source>
+        <translation>Weapon ranges</translation>
+    </message>
+    <message>
+        <source>Percentage (PH):</source>
+        <translation>Percentage (PH):</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation>Size:</translation>
+    </message>
+    <message>
+        <source>Direct fire efficient range</source>
+        <translation>Direct fire efficient range</translation>
+    </message>
+</context>
+<context>
     <name>gui::WeatherListView</name>
     <message>
         <source>Local weathers</source>

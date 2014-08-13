@@ -11,7 +11,6 @@
 #include "Menu.h"
 #include "ExerciseMenu.h"
 #include "ConnectionMenu.h"
-#include "EfficientRangeDialog.h"
 #include "PopulationOptionChooser.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
@@ -171,7 +170,6 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
-    subMenu->insertItem( tools::translate( "Menu", "Efficient Range" ), new EfficientRangeDialog( this, controllers, staticModel.objectTypes_, controllers.options_ ), SLOT( exec() ) );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths", kernel::FourStateOption::Selected() );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );

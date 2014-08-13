@@ -2507,6 +2507,25 @@ Permiso &apos;Controlar&apos; permite manejar una unidad.</translation>
     </message>
 </context>
 <context>
+    <name>gui::WeaponRangesPanel</name>
+    <message>
+        <source>Weapon ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Percentage (PH):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direct fire efficient range</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::WeatherListView</name>
     <message>
         <source>Add</source>

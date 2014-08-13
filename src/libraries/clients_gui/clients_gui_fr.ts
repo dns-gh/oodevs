@@ -2504,6 +2504,25 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::WeaponRangesPanel</name>
+    <message>
+        <source>Weapon ranges</source>
+        <translation>Portées des armes</translation>
+    </message>
+    <message>
+        <source>Percentage (PH):</source>
+        <translation>Pourcentage (PH):</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation>Volume:</translation>
+    </message>
+    <message>
+        <source>Direct fire efficient range</source>
+        <translation>Portée utile de combat en tir direct</translation>
+    </message>
+</context>
+<context>
     <name>gui::WeatherListView</name>
     <message>
         <source>Local weathers</source>

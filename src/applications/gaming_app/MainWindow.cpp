@@ -112,6 +112,7 @@
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/SelectionMenu.h"
 #include "clients_gui/SoundPanel.h"
+#include "clients_gui/WeaponRangesPanel.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/TerrainLayer.h"
 #include "clients_gui/TerrainPicker.h"
@@ -212,6 +213,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateConverter_, *pPainter_, *selector_, elevation2d, *graphicPreferences_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
+    preferenceDialog_->AddPage( tr( "Weapon Ranges" ), *new gui::WeaponRangesPanel( preferenceDialog_.get(), controllers_, staticModel_ ) );
     new VisionConesToggler( controllers, simulationController, this );
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, filter, staticModel.coordinateConverter_ );
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
