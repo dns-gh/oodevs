@@ -53,7 +53,7 @@ func (t *TestSuite) MakeFixture(c *C) *Fixture {
 	log := swtest.MakeGocheckLogger(c)
 	server, err := swfake.NewSwordServer(log, local, false, false)
 	c.Assert(err, IsNil)
-	session := NewSession(log, uuid.New(), "session_name")
+	session := NewSession(log, uuid.New(), "session_name", true)
 	sword := services.NewSword(log, session, true, "some_name", local)
 	err = session.Attach("some_name", sword)
 	c.Assert(err, IsNil)

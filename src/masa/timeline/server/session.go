@@ -68,6 +68,7 @@ type Session struct {
 	log       util.Logger
 	uuid      string
 	name      string
+	autostart bool       // automatically start events
 	mutex     sync.Mutex // protects SessionData
 	d         SessionData
 	fmutex    sync.Mutex     // protects filterers
@@ -76,7 +77,7 @@ type Session struct {
 	runner    sync.WaitGroup // wait for model updates
 }
 
-func NewSession(log util.Logger, uuid, name string) *Session {
+func NewSession(log util.Logger, uuid, name string, autostart bool) *Session {
 	filterers := EventFilterers{
 		&ServiceFilter{}:         struct{}{},
 		&KeywordFilter{}:         struct{}{},
@@ -87,6 +88,7 @@ func NewSession(log util.Logger, uuid, name string) *Session {
 		log:       log,
 		uuid:      uuid,
 		name:      name,
+		autostart: autostart,
 		filterers: filterers,
 		posts:     make(chan func(), 16),
 		d: SessionData{
@@ -445,7 +447,9 @@ func (s *Session) Tick(tick time.Time) {
 	if last.IsZero() {
 		last = tick
 	}
-	s.d.runEvents(s.Log, s.d.events, last, tick)
+	if s.autostart {
+		s.d.runEvents(s.Log, s.d.events, last, tick)
+	}
 }
 
 func (s *SessionData) runEvent(log Logger, event *Event) {

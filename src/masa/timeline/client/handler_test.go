@@ -38,7 +38,7 @@ type FakeHandler struct {
 	event   *sdk.Event
 }
 
-func (f *FakeHandler) CreateSession(uuid, name string) (*sdk.Session, error) {
+func (f *FakeHandler) CreateSession(uuid, name string, autostart bool) (*sdk.Session, error) {
 	f.uuid = uuid
 	f.name = name
 	return DummySession, DummyError

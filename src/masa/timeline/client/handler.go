@@ -48,7 +48,11 @@ func (s *SdkHandler) Process(msg *sdk.ClientRequest) error {
 }
 
 func (s *SdkHandler) Create(args *sdk.SessionCreate) error {
-	_, err := s.controller.CreateSession(args.GetUuid(), args.GetName())
+	_, err := s.controller.CreateSession(
+		args.GetUuid(),
+		args.GetName(),
+		args.GetAutostart(),
+	)
 	return err
 }
 

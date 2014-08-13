@@ -55,13 +55,13 @@ func CheckUuid(src string) bool {
 	return gouuid.Parse(src).Variant() != gouuid.Invalid
 }
 
-func (c *Controller) CreateSession(uuid, name string) (*sdk.Session, error) {
+func (c *Controller) CreateSession(uuid, name string, autostart bool) (*sdk.Session, error) {
 	if len(uuid) == 0 {
 		uuid = gouuid.New()
 	} else if !CheckUuid(uuid) {
 		return nil, util.NewError(http.StatusBadRequest, "invalid uuid parameter")
 	}
-	session := NewSession(c.log, uuid, name)
+	session := NewSession(c.log, uuid, name, autostart)
 	ok := c.addSession(session)
 	if !ok {
 		return nil, util.NewErrorCode(http.StatusConflict)

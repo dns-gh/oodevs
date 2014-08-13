@@ -19,7 +19,7 @@ type SdkObserver interface {
 
 type SdkController interface {
 	// sessions
-	CreateSession(uuid, name string) (*sdk.Session, error)
+	CreateSession(uuid, name string, autostart bool) (*sdk.Session, error)
 	ReadSession(uuid string) (*sdk.Session, error)
 	UpdateSession(uuid string, msg *sdk.Session) (*sdk.Session, error)
 	DeleteSession(uuid string) error
