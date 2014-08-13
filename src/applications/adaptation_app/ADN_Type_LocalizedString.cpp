@@ -281,8 +281,9 @@ bool ADN_Type_LocalizedString::CheckUniqueTranslation() const
 {
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized string." );
-    for( auto it = context_->begin(); it != context_->end(); ++it )
-        if( *it != translation_ && translation_->Key() == ( *it )->Key() && *translation_ != **it )
+    const auto range = context_->equal_range( translation_->Key() );
+    for( auto it = range.first; it != range.second; ++it )
+        if(  *translation_ != *it->second )
             return false;
     return true;
 }
@@ -318,6 +319,7 @@ xml::xostream& operator<<( xml::xostream& xos, const ADN_Type_LocalizedString& t
 {
     return xos << type.GetKey();
 }
+
 xml::xistream& operator>>( xml::xistream& xis, ADN_Type_LocalizedString& type )
 {
     std::string value;

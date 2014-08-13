@@ -112,7 +112,7 @@ void XmlTranslations::CleanTranslations()
 {
     for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); )
-            if( itTranslation->unique() )
+            if( itTranslation->second.unique() )
                 itTranslation = itContext->second->erase( itTranslation );
             else
                 ++itTranslation;
@@ -133,11 +133,15 @@ void XmlTranslations::MergeDuplicateTranslations()
     CleanTranslations();
     for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         for( auto lhs = itContext->second->begin(); lhs != itContext->second->end(); ++lhs )
-            for( auto rhs = lhs + 1; rhs != itContext->second->end(); )
-                if( ( *lhs )->Key() == ( *rhs )->Key() && **lhs == **rhs )
+        {
+            auto rhs = lhs;
+            ++rhs;
+            for( ; rhs != itContext->second->end(); )
+                if( lhs->second->Key() == rhs->second->Key() && *lhs->second == *rhs->second )
                     rhs = itContext->second->erase( rhs );
                 else
                     ++rhs;
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -171,13 +175,13 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
                     << xml::start( "name" ) << itContext->first << xml::end;
                 for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
                 {
-                    if( ( *itTranslation )->Key().empty() )
+                    if( itTranslation->second->Key().empty() )
                         continue;
                     xos << xml::start( "message" )
-                        << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
+                        << xml::start( "source" ) << itTranslation->second->Key() << xml::end
                         << xml::start( "translation" )
-                        << ( *itTranslation )->Value( languageCode )
-                        << ( *itTranslation )->Type( languageCode )
+                        << itTranslation->second->Value( languageCode )
+                        << itTranslation->second->Type( languageCode )
                         << xml::end //! translation
                         << xml::end; //! message
                 }
@@ -249,9 +253,13 @@ bool XmlTranslations::HasDuplicateErrors() const
 {
     for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         for( auto lhs = itContext->second->begin(); lhs != itContext->second->end(); ++lhs )
-            for( auto rhs = lhs + 1; rhs != itContext->second->end(); ++rhs )
-                if( ( *lhs )->Key() == ( *rhs )->Key() && **lhs != **rhs )
+        {
+            auto rhs = lhs;
+            ++rhs;
+            for( ; rhs != itContext->second->end(); ++rhs )
+                if( lhs->second->Key() == rhs->second->Key() && *lhs->second != *rhs->second )
                     return true;
+        }
     return false;
 }
 

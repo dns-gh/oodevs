@@ -33,51 +33,15 @@ Context::~Context()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Context::find
-// Created: ABR 2013-07-15
-// -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< LocalizedString > >::iterator Context::find( const std::string& key )
-{
-    for( auto it = begin(); it != end(); ++it )
-        if( ( *it )->Key() == key )
-            return it;
-    return end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Context::find
-// Created: ABR 2013-07-15
-// -----------------------------------------------------------------------------
-const std::vector< boost::shared_ptr< LocalizedString > >::const_iterator Context::find( const std::string& key ) const
-{
-    for( auto it = begin(); it != end(); ++it )
-        if( ( *it )->Key() == key )
-            return it;
-    return end();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Context::operator[]
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
 boost::shared_ptr< LocalizedString > Context::operator[]( const std::string& key )
 {
-    for( auto it = begin(); it != end(); ++it )
-        if( ( *it )->Key() == key )
-            return *it;
+    auto it = find( key );
+    if( it != end() )
+        return it->second;
     return CreateNew( key );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Context::operator[]
-// Created: ABR 2013-07-15
-// -----------------------------------------------------------------------------
-const boost::shared_ptr< LocalizedString >& Context::operator[]( const std::string& key ) const
-{
-    for( auto it = begin(); it != end(); ++it )
-        if( ( *it )->Key() == key )
-            return *it;
-    throw MASA_EXCEPTION( std::string( "Key not found: " ) + key );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +50,10 @@ const boost::shared_ptr< LocalizedString >& Context::operator[]( const std::stri
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< LocalizedString >& Context::at( const std::string& key ) const
 {
-    return ( *this )[ key ];
+    auto it = find( key );
+    if( it != end() )
+        return it->second;
+    throw MASA_EXCEPTION( std::string( "Key not found: " ) + key );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,8 +62,7 @@ const boost::shared_ptr< LocalizedString >& Context::at( const std::string& key 
 // -----------------------------------------------------------------------------
 boost::shared_ptr< LocalizedString > Context::CreateNew( const std::string& key )
 {
-    push_back( boost::make_shared< LocalizedString >( key ) );
-    return back();
+    return insert( std::make_pair( key, boost::make_shared< LocalizedString >( key ) ) )->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +72,7 @@ boost::shared_ptr< LocalizedString > Context::CreateNew( const std::string& key 
 bool Context::Apply( const std::function< bool( LocalizedString& ) >& functor )
 {
     for( auto it = begin(); it != end(); ++it )
-        if( *it && functor( **it ) )
+        if( it->second && functor( *it->second ) )
             return true;
     return false;
 }

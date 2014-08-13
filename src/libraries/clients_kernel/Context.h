@@ -12,7 +12,6 @@
 
 #include <boost/shared_ptr.hpp>
 #include <vector>
-
 namespace kernel
 {
     class LocalizedString;
@@ -23,7 +22,7 @@ namespace kernel
 */
 // Created: ABR 2013-07-15
 // =============================================================================
-class Context : public std::vector< boost::shared_ptr< LocalizedString > >
+class Context : public std::multimap< std::string, boost::shared_ptr< LocalizedString > >
 {
 public:
     //! @name Constructors/Destructor
@@ -35,15 +34,8 @@ public:
     //! @name Operations
     //@{
     bool Apply( const std::function< bool( LocalizedString& ) >& functor );
-
-    std::vector< boost::shared_ptr< LocalizedString > >::iterator find( const std::string& key );
-    const std::vector< boost::shared_ptr< LocalizedString > >::const_iterator find( const std::string& key ) const;
-
-    boost::shared_ptr< LocalizedString > operator[] ( const std::string& key );
-    const boost::shared_ptr< LocalizedString >& operator[] ( const std::string& key ) const;
-
+    boost::shared_ptr< LocalizedString > operator[]( const std::string& key );
     const boost::shared_ptr< LocalizedString >& at( const std::string& key ) const;
-
     boost::shared_ptr< LocalizedString > CreateNew( const std::string& key );
     //@}
 };
