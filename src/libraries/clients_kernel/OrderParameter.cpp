@@ -82,6 +82,7 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     , maxValue_    ( std::numeric_limits< double >::max() )
     , indirectFire_( false )
     , ownedEquipments_( false )
+    , allObjects_( false )
 {
     // NOTHING
 }
@@ -107,6 +108,7 @@ OrderParameter::OrderParameter( const OrderParameter& other )
     , values_      ( other.values_ )
     , aliases_     ( other.aliases_ )
     , objects_     ( other.objects_ )
+    , allObjects_  ( other.allObjects_ )
 {
     auto it = other.CreateIterator();
     while( it.HasMoreElements() )
