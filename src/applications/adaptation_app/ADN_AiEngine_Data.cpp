@@ -37,7 +37,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rRepairableModificator_      ( 100.f )
     , rRepairingModificator_       ( 100.f )
     , rCapturedModificator_        ( 100.f )
-    , bDetectDestroyedUnits_       ( false )
+    , bDetectDestroyedUnits_       ( true )
 {
     // NOTHING
 }

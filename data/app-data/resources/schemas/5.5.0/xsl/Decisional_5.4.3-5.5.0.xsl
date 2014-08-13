@@ -7,7 +7,7 @@
             <xsl:apply-templates select="node()|@*"/>
             <xsl:if test="count( ./perception ) = 0">
                 <xsl:element name="perception">
-                    <xsl:attribute name="detect-destroyed-units">false</xsl:attribute>
+                    <xsl:attribute name="detect-destroyed-units">true</xsl:attribute>
                 </xsl:element>
             </xsl:if>
         </xsl:copy>
