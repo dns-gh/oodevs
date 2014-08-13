@@ -9,12 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_LimaOrder.h"
+#include "Knowledge/DEC_KnowledgeResolver_ABC.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "MIL.h"
 #include "MIL_LimaFunction.h"
+#include "MT_Tools/MT_Line.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/NET_AsnException.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "MT_Tools/MT_Line.h"
-#include "MIL.h"
 #include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 #include <boost/make_shared.hpp>
@@ -40,7 +43,7 @@ MIL_LimaOrder::MIL_LimaOrder()
 // Name: MIL_LimaOrder constructor
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn )
+MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn, const DEC_KnowledgeResolver_ABC& resolver )
     : nID_          ( ++nNextID_ )
     , bFlag_        ( false )
     , bScheduleFlag_( false )
@@ -58,6 +61,13 @@ MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn )
         if( !pFunction )
             throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_lima_function );
         functions_.push_back( pFunction );
+    }
+    for( int i = 0; i < asn.objects_size(); ++i )
+    {
+        boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge = resolver.ResolveKnowledgeObjectByObjectID( asn.objects( i ) );
+        if( !objectKnowledge )
+            throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_lima_function );
+        objects_.push_back( objectKnowledge );
     }
 }
 
@@ -123,6 +133,9 @@ void MIL_LimaOrder::Serialize( sword::PhaseLineOrder& asn ) const
 
     for( auto it = functions_.begin(); it != functions_.end(); ++it )
         asn.add_fonctions( (*it)->GetAsnID() );
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
+        if( MIL_Object_ABC* object = (*it)->GetObjectKnown() )
+            asn.add_objects( object->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +240,8 @@ void MIL_LimaOrder::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bFlag_
          >> bScheduleFlag_
          >> nSchedule_
-         >> nNextID_;
+         >> nNextID_
+         >> objects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,5 +256,54 @@ void MIL_LimaOrder::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << bFlag_
          << bScheduleFlag_
          << nSchedule_
-         << nNextID_;
+         << nNextID_
+         << objects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::ReplacePointsByNearestObjectPositions
+// Created: LDC 2014-06-16
+// -----------------------------------------------------------------------------
+void MIL_LimaOrder::ReplacePointsByNearestObjectPositions( T_PointVector& points ) const
+{
+    T_PointVector objectPositions;
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
+    {
+        if( (*it)->IsValid() )
+            objectPositions.push_back( (*it)->GetLocalisation().ComputeBarycenter() );
+    }
+    if( objectPositions.empty() )
+        return;
+    T_PointVector candidates;
+    for( auto it = points.begin(); it != points.end(); ++it )
+    {
+        double distanceMin = std::numeric_limits< double >::max();
+        MT_Vector2D candidate;
+        for( auto oit = objectPositions.begin(); oit != objectPositions.end(); ++oit )
+        {
+            double distance = it->SquareDistance( *oit );
+            if( distanceMin > distance )
+            {
+                distanceMin = distance;
+                candidate = *oit;
+            }
+        }
+        candidates.push_back( candidate );
+    }
+    for( int i = 0; i < candidates.size(); ++i )
+    {
+        MT_Vector2D point = candidates[i];
+        double distance = point.SquareDistance( points[i] );
+        for( int j = 0; j < points.size(); ++j )
+        {
+            if( i == j )
+                continue;
+            if( point.SquareDistance( points[j] ) < distance )
+            {
+                candidates[i] = points[i];
+                break;
+            }
+        }
+    }
+    points = candidates;
 }

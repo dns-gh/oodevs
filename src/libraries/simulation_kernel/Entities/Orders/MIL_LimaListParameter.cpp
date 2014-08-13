@@ -17,10 +17,10 @@
 // Name: MIL_LimaListParameter constructor
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-MIL_LimaListParameter::MIL_LimaListParameter( const sword::PhaseLinesOrder& message )
+MIL_LimaListParameter::MIL_LimaListParameter( const sword::PhaseLinesOrder& message, const DEC_KnowledgeResolver_ABC& resolver )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        limas_.push_back( boost::make_shared< MIL_LimaOrder >( message.elem(i) ) );
+        limas_.push_back( boost::make_shared< MIL_LimaOrder >( message.elem(i), resolver ) );
 }
 
 // -----------------------------------------------------------------------------

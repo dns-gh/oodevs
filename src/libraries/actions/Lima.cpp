@@ -11,6 +11,8 @@
 #include "Lima.h"
 #include "Location.h"
 #include "DateTime.h"
+#include "ObjectKnowledge.h"
+#include "ParameterList.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
@@ -45,7 +47,9 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 // Name: Lima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::PhaseLineOrder& message )
+Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::PhaseLineOrder& message,
+            const Entity_ABC* owner, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter,
+            kernel::Controller& controller, const kernel::EntityResolver_ABC& entities )
     : Parameter< QString >( parameter )
 {
     QStringList functions;
@@ -54,6 +58,15 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
     SetValue( functions.join( ", " ) );
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).toStdString(), "location", false ), converter, message.line().location() ) );
     AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).toStdString(), "datetime", true ), message.time() ) );
+
+    ParameterList* objects = new ParameterList( OrderParameter( tools::translate( "Parameter", "Phase Line Objects" ).toAscii().constData(), "objectknowledge", false, 1, std::numeric_limits< unsigned int >::max() ) );
+    for( int i = 0; i < message.objects_size(); ++i )
+    {
+        OrderParameter parameter( tools::translate( "Parameter", "Phase Line Objects %1" ).arg( i + 1 ).toAscii().constData(), "objectknowledge", false );
+        ObjectKnowledge* next = new ObjectKnowledge( parameter, message.objects( i ), objectKnowledgeConverter, owner, controller, entities );
+        objects->AddParameter( *next );
+    }
+    AddParameter( *objects );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,6 +143,16 @@ void Lima::CommitTo( sword::PhaseLineOrder& message ) const
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_line()->mutable_location() );
         else if( type == "datetime" )
             static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_time() );
+        else if( type == "objectknowledge" )
+        {
+            auto limas = it->second->CreateIterator();
+            while( limas.HasMoreElements() )
+            {
+                const auto& object = static_cast< const ObjectKnowledge& >( limas.NextElement() );
+                if( object.IsSet() )
+                    message.add_objects( object.GetId() );
+            }
+        }
     }
 }
 

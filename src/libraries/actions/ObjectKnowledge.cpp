@@ -191,3 +191,8 @@ std::string ObjectKnowledge::SerializeType() const
 {
     return "objectknowledge";
 }
+
+unsigned int ObjectKnowledge::GetId() const
+{
+    return id_;
+}

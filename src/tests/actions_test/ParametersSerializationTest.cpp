@@ -1126,6 +1126,7 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_lima_list, Fixture )
                  "        </location>"
                  "      </parameter>"
                  "      <parameter name='Schedule' type='datetime' value='" + date1 + "'/>"
+                 "      <parameter name='Phase Line Objects' type='objectknowledge'/>"
                  "    </parameter>"
                  "    <parameter name='PhaseLine (item 2)' type='phaseline' value='LFM'>"
                  "      <parameter name='Location' type='location'>"
@@ -1136,6 +1137,7 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_lima_list, Fixture )
                  "        </location>"
                  "      </parameter>"
                  "      <parameter name='Schedule' type='datetime' value='" + date2 + "'/>"
+                 "      <parameter name='Phase Line Objects' type='objectknowledge'/>"
                  "    </parameter>"
                  "  </parameter>"
                  "</action>";

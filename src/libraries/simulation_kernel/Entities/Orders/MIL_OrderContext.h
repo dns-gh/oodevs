@@ -19,6 +19,7 @@ namespace sword
     class MissionParameters;
 }
 
+class DEC_KnowledgeResolver_ABC;
 class MIL_LimaFunction;
 
 #define ORDER_BADPARAM(reason)                     \
@@ -38,7 +39,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_OrderContext( bool present = false );
-             MIL_OrderContext( const sword::MissionParameters& asn, const MT_Vector2D& orientationReference );
+             MIL_OrderContext( const sword::MissionParameters& asn, const MT_Vector2D& orientationReference,
+                               const DEC_KnowledgeResolver_ABC& resolver );
              MIL_OrderContext( const MIL_OrderContext& rhs );
     virtual ~MIL_OrderContext();
     //@}

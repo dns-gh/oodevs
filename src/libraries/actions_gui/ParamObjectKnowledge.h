@@ -12,12 +12,12 @@
 
 #include "EntityParameter.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 
 namespace kernel
 {
     class Object_ABC;
     class Entity_ABC;
-    class ObjectKnowledge_ABC;
     class ObjectKnowledgeConverter_ABC;
 }
 

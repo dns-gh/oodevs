@@ -87,6 +87,27 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     // NOTHING
 }
 
+OrderParameter::OrderParameter( const std::string& name, const std::string& type, bool optional,
+                                const std::set< std::string >& objects, bool allObjects,
+                                unsigned int min /* = 1*/, unsigned int max /* = 1*/ )
+    : name_        ( name )
+    , type_        ( boost::algorithm::to_lower_copy( type ) )
+    , optional_    ( optional )
+    , context_     ( false )
+    , structure_   ( false )
+    , union_       ( false )
+    , minOccurs_   ( min )
+    , maxOccurs_   ( max )
+    , minValue_    ( std::numeric_limits< double >::min() )
+    , maxValue_    ( std::numeric_limits< double >::max() )
+    , indirectFire_( false )
+    , ownedEquipments_( false )
+    , objects_( objects )
+    , allObjects_( allObjects )
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameter constructor
 // Created: ABR 2014-03-05
@@ -373,6 +394,21 @@ bool OrderParameter::IsRepeated() const
 bool OrderParameter::HasObject( const std::string& type ) const
 {
     return allObjects_ || ( objects_.find( type ) != objects_.end() );
+}
+
+bool OrderParameter::HasObject() const
+{
+    return allObjects_ || !objects_.empty();
+}
+
+std::set< std::string > OrderParameter::GetObjects() const
+{
+    return objects_;
+}
+
+bool OrderParameter::HasAllObjects() const
+{
+    return allObjects_;
 }
 
 // -----------------------------------------------------------------------------

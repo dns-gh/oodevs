@@ -58,8 +58,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
     : type_             ( type )
     , id_               ( id )
     , parentId_         ( 0 )
-    , orientation_      ( orientation )
-    , context_          ( orientation ? MIL_OrderContext( parameters, *orientation ) : MIL_OrderContext( false ) )
+    , context_          ( orientation ? MIL_OrderContext( parameters, *orientation, knowledgeResolver ) : MIL_OrderContext( false ) )
     , knowledgeResolver_( knowledgeResolver )
 {
     FillParameters( context_.Length(), parameters );

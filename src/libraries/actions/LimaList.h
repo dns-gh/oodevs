@@ -20,6 +20,10 @@ namespace sword
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Entity_ABC;
+    class ObjectKnowledgeConverter_ABC;
+    class Controller;
+    class EntityResolver_ABC;
 }
 
 namespace actions {
@@ -37,7 +41,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LimaList( const kernel::OrderParameter& parameter );
-             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLinesOrder& limas );
+             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLinesOrder& limas,
+                       const kernel::Entity_ABC* owner, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter,
+                       kernel::Controller& controller, const kernel::EntityResolver_ABC& entities );
     virtual ~LimaList();
     //@}
 

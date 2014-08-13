@@ -54,6 +54,9 @@ public:
     //@{
     explicit OrderParameter( xml::xistream& xis );
              OrderParameter( const std::string& name, const std::string& type, bool optional, unsigned int min = 1, unsigned int max = 1 );
+             OrderParameter( const std::string& name, const std::string& type, bool optional,
+                             const std::set< std::string >& objects, bool allObjects,
+                             unsigned int min = 1, unsigned int max = 1 );
              OrderParameter( const OrderParameter& other );
     virtual ~OrderParameter();
     //@}
@@ -70,6 +73,9 @@ public:
     bool IsOptional() const;
     bool IsContext() const;
     bool HasObject( const std::string& type ) const;
+    bool HasObject() const;
+    bool HasAllObjects() const;
+    std::set< std::string > GetObjects() const;
     unsigned int MinOccurs() const;
     unsigned int MaxOccurs() const;
     double MinValue() const;

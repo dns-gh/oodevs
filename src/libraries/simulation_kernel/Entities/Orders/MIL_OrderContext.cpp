@@ -51,7 +51,7 @@ MT_Vector2D ReadDirections( const sword::MissionParameters& params, int index )
 }
 
 void ReadPhaseLines( const sword::MissionParameters& params, int index,
-        T_LimaVector& phaselines )
+                     T_LimaVector& phaselines, const DEC_KnowledgeResolver_ABC& resolver )
 {
     const auto& param = GetParam( params, index, "phaseline" );
     if( param.null_value() )
@@ -61,7 +61,7 @@ void ReadPhaseLines( const sword::MissionParameters& params, int index,
                 << "] is invalid, phaseline expected" );
     const int count = param.value().size();
     for( int i = 0; i < count; ++i )
-        phaselines.push_back( MIL_LimaOrder( param.value( i ).phaseline().elem( 0 )));
+        phaselines.push_back( MIL_LimaOrder( param.value( i ).phaseline().elem( 0 ), resolver));
 }
 
 void ReadPointVector( const sword::MissionParameters& params, int index,
@@ -94,12 +94,12 @@ MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
 // Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& params,
-        const MT_Vector2D& orientationReference )
+        const MT_Vector2D& orientationReference, const DEC_KnowledgeResolver_ABC& resolver )
     : hasContext_( true )
     , dirDanger_ ( new MT_Vector2D( defaultDirection ) )
 {
     *dirDanger_ = ReadDirections( params, 0 );
-    ReadPhaseLines( params, 1, limas_ );
+    ReadPhaseLines( params, 1, limas_, resolver );
 
     T_PointVector limit1, limit2;
     ReadPointVector( params, 2, limit1 );

@@ -11,6 +11,8 @@
 #define __LimaParameter_h_
 
 #include "Param_ABC.h"
+#include "ListParameter.h"
+
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/Types.h"
 #include <tools/ElementObserver_ABC.h>
@@ -31,6 +33,7 @@ namespace actions
     namespace gui
     {
         class ParamDateTime;
+        class ParamObjectKnowledge;
         class InterfaceBuilder_ABC;
 
 // =============================================================================
@@ -60,6 +63,9 @@ public:
     virtual void Visit( const actions::parameters::Lima& param );
     virtual void Visit( const actions::parameters::Location& param );
     virtual void Visit( const actions::parameters::DateTime& param );
+    virtual void Visit( const actions::Parameter_ABC& param );
+    virtual void SetEntity( const kernel::Entity_ABC* entity );
+    virtual bool HasParameter( const Param_ABC& parameter ) const;
     //@}
 
 public slots:
@@ -92,8 +98,10 @@ private:
     QListWidget* functions_;
     QLabel* entityLabel_;
     ParamDateTime* schedule_;
+    ListParameter< ParamObjectKnowledge >* objects_;
     T_Actions actions_;
     T_PointVector newPoints_;
+    const InterfaceBuilder_ABC& builder_;
     //@}
 };
 }
