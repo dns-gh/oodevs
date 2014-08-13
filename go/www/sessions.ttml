@@ -125,6 +125,7 @@
 [[ template "input_number" sub "id" "pathfind_threads" "label" "Path Find" "append" "Threads" "value" "{{pathfind.threads}}" ]]
 [[ template "input_number" sub "id" "recorder_frequency" "label" "Recorder Frequency" "append" "Ticks" "value" "{{recorder.frequency}}" ]]
 [[ template "input_number" sub "id" "reports_clean_frequency" "label" "Report Clean Frequency" "append" "Ticks" "value" "{{reports.clean_frequency}}" ]]
+[[ template "input_checkbox" sub "id" "timeline_autostart" "label" "Automatically start timeline events" "value" "{{#bool timeline.autostart}} checked='checked'{{/bool}}" ]]
 [[ template "input_checkbox" sub "id" "mapnik_enabled" "label" "Enable Mapnik" "value" "{{#bool mapnik.enabled}} checked='checked'{{/bool}}" ]]
 [[ end ]]
 

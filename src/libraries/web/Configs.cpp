@@ -147,6 +147,7 @@ session::Config::Config()
     sides.no_side_objects = true;
     mapnik.enabled = false;
     restricted.enabled = false;
+    timeline.autostart = true;
 }
 
 namespace
@@ -462,6 +463,7 @@ bool session::ReadConfig( session::Config& dst, const Plugins& plugins, const Tr
     modified |= ReadRngConfig( dst.rng.perception, src, "rng.perception." );
     modified |= ReadRngConfig( dst.rng.wound, src, "rng.wound." );
     modified |= ReadPlugins( dst.plugins, plugins, src );
+    modified |= TryRead( dst.timeline.autostart, src, "timeline.autostart" );
     return modified;
 }
 
@@ -496,6 +498,7 @@ void session::WriteConfig( Tree& dst, const session::Config& cfg )
     WriteRngConfig( dst, "rng.wound.", cfg.rng.wound );
     BOOST_FOREACH( const session::Config::T_Plugins::value_type& value, cfg.plugins )
         WritePluginConfig( dst, "plugins." + value.first + ".", value.second );
+    dst.put( "timeline.autostart", cfg.timeline.autostart );
 }
 
 // -----------------------------------------------------------------------------
