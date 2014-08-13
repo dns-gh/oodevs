@@ -830,6 +830,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     myself.leadData.taskError = false
     self.bestUnits = {}
     self.entitiesWithoutMission = copyTable( self.parameters.commandingEntities )
+    self.initialSupportingUnits = {}
     myself.feedback = false
     self.companyTask = integration.RetrieveAutomateTask( meKnowledge, self.params.companyTask )
     if self.params.mainTasks then
@@ -910,7 +911,10 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
 
     -- Le second echelon recoit les missions de "supportTask"
     if giveSupportTask and self.params.supportTasks and self.params.supportTasks ~= NIL then
-        integration.issueMission ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Second, nil, false, findBestsFunction, disengageTask )
+        local bestUnits = integration.issueMission ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Second, nil, false, findBestsFunction, disengageTask )
+        for i = 1, #bestUnits do
+            self.initialSupportingUnits[i] = bestUnits[i].entity
+        end
     end
 
     -- Les pions PEI
@@ -925,12 +929,13 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
 end
 
 --- Generic activate for Lead skills
--- @param self: The leading skill
--- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
--- @param manageReinforcement: defines if the skill should manage reinforcement if one of the subordinate can't perform work on an object (because of dotation or physical restriction).
+-- @param self The leading skill
+-- @param findBestsFunction The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
+-- @param manageReinforcement Whether or not the skill should manage reinforcement if one of the subordinate can't perform work on an object (because of dotation or physical restriction).
+-- @param removeSupportingUnits Whether or not the initial supporting units will be removed from the list of second echelon units given to the Support Manager
 -- @author NMI
 -- @release 2013-07-05
-integration.leadActivate = function( self, findBestsFunction, manageReinforcement )
+integration.leadActivate = function( self, findBestsFunction, manageReinforcement, removeSupportingUnits )
     local integration = integration
     local myself = myself
 
@@ -976,7 +981,12 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
 
     -- Gestion du soutien
     if self.params.taskForSupporting and self.params.taskForSupporting ~= NIL then
-       Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
+        if not self.supportingUnits then
+            self.supportingUnits = removeSupportingUnits
+                                    and utilities.removeListFromList( self.initialSupportingUnits, utilities.copyTable( pionsSE ) )
+                                    or pionsSE
+        end
+        Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = self.supportingUnits, taskForSupporting = self.params.taskForSupporting })
     end
 
     -- Reinforcement management
