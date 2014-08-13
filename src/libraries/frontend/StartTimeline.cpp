@@ -39,19 +39,28 @@ namespace
         }
     }
 
-    void WriteRunScript( const tools::Path& run, int port )
+    void WriteRunScript( const tools::Path& run, int port, bool autostart )
     {
         tools::Ofstream output( run );
         output << "[";
 
-        bpt::ptree create;
-        create.put( "type", "SESSION_CREATE" );
-        create.put( "session.create.uuid", ::uuid );
-        create.put( "session.create.name", "session" );
-        WriteTo( output, create, false );
-
         // manual serialization for invalid bool support from boost::property_tree
         // todo use a real json library
+        const QString create = QString(
+        "{"
+        "    \"type\": \"SESSION_CREATE\","
+        "    \"session\":"
+        "    {"
+        "        \"create\":"
+        "        {"
+        "            \"uuid\": \"%1\","
+        "            \"name\": \"session\","
+        "            \"autostart\": %2"
+        "        }"
+        "    }"
+        "}," );
+        output << create.arg( QString::fromStdString( ::uuid ) )
+                        .arg( autostart ? "true" : "false" );
         const QString attach = QString(
         "{"
         "    \"type\": \"SESSION_ATTACH\","
@@ -109,7 +118,7 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
         AddArgument( "-debug" );
         AddArgument( "www", debug.timeline.debugWwwDir.ToUTF8() );
     }
-    WriteRunScript( run, boost::lexical_cast< int >( dispatcher ) );
+    WriteRunScript( run, boost::lexical_cast< int >( dispatcher ), debug.timeline.autostart );
 }
 
 // -----------------------------------------------------------------------------

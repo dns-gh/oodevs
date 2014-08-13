@@ -205,6 +205,10 @@
         <source>Rendering threads</source>
         <translation>Threads de rendu</translation>
     </message>
+    <message>
+        <source>Automatically start events</source>
+        <translation>Démarrer les évènements automatiquement</translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

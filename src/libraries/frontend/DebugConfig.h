@@ -34,6 +34,7 @@ struct DebugTimeline
     DebugTimeline()
         : debugPort( 0 )
         , legacyTimeline( false )
+        , autostart( true )
     {}
 
     int debugPort;
@@ -41,6 +42,7 @@ struct DebugTimeline
     tools::Path clientLogPath;
     tools::Path cefLog;
     bool legacyTimeline;
+    bool autostart;
 };
 
 struct DebugGaming
