@@ -753,36 +753,36 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
     // manual serialization for invalid bool support from boost::property_tree
     // todo use a real json library
     const std::string create = ( boost::format(
-    "{"
-    "    \"type\": \"SESSION_CREATE\","
-    "    \"session\":"
-    "    {"
-    "        \"create\":"
-    "        {"
-    "            \"uuid\": \"%1%\","
-    "            \"name\": \"session\","
-    "            \"autostart\": %2%"
-    "        }"
-    "    }"
-    "}," ) % uuid % ( autostart ? "true" : "false" ) ).str();
+    "{\n"
+    "    \"type\": \"SESSION_CREATE\",\n"
+    "    \"session\":\n"
+    "    {\n"
+    "        \"create\":\n"
+    "        {\n"
+    "            \"uuid\": \"%1%\",\n"
+    "            \"name\": \"session\",\n"
+    "            \"autostart\": %2%\n"
+    "        }\n"
+    "    }\n"
+    "},\n" ) % uuid % ( autostart ? "true" : "false" ) ).str();
     output += create;
 
     const std::string attach = ( boost::format(
-    "{"
-    "    \"type\": \"SESSION_ATTACH\","
-    "    \"session\": {"
-    "        \"attach\": {"
-    "            \"uuid\": \"%1%\","
-    "            \"service\": {"
-    "                \"name\": \"simulation\","
-    "                \"clock\": true,"
-    "                \"sword\": {"
-    "                    \"address\": \"localhost:%2%\""
-    "                }"
-    "            }"
-    "        }"
-    "    }"
-    "}," ) % uuid % port ).str();
+    "{\n"
+    "    \"type\": \"SESSION_ATTACH\",\n"
+    "    \"session\": {\n"
+    "        \"attach\": {\n"
+    "            \"uuid\": \"%1%\",\n"
+    "            \"service\": {\n"
+    "                \"name\": \"simulation\",\n"
+    "                \"clock\": true,\n"
+    "                \"sword\": {\n"
+    "                    \"address\": \"localhost:%2%\"\n"
+    "                }\n"
+    "            }\n"
+    "        }\n"
+    "    }\n"
+    "},\n" ) % uuid % port ).str();
     output += attach;
 
     Tree start;
