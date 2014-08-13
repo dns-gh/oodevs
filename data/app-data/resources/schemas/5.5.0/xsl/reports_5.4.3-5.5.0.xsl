@@ -9,16 +9,14 @@
   </xsl:template> 
 
   <xsl:template match="report[@key='eRC_FireObserver']">
-    <report>
-      <xsl:copy>
-        <xsl:apply-templates select="@*"/>
-      </xsl:copy>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
       <parameter type="AgentKnowledge"/>
       <parameter type="String"/>
       <parameter type="Integer"/>
       <parameter type="Integer"/>
       <parameter type="Integer"/>
-    </report>
+    </xsl:copy>
   </xsl:template>
 
 </xsl:stylesheet>
