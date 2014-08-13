@@ -97,10 +97,9 @@ integration.pionRC = function ( ... )
 end
 
 --- Listen the state of the task and execute method for each state
--- OnNewTick; TaskStarted; StageChanged; Cleanup; TaskFinished; TaskDone
+-- OnNewTick; TaskStarted; StageStarted; StageFinished; Cleanup; TaskFinished; TaskDone
 function RegisterTaskListener()
     local taskListener = {
-        stage = {},
         OnNewTick = function( self )
             myself.newMission = false
             if myself.stealthTick == 2 then -- I wait 2 ticks
@@ -127,13 +126,14 @@ function RegisterTaskListener()
             end
             meKnowledge.currentTask =  masalife.brain.knowledge.me.tasks:accept( fun )
         end,
-        StageChanged = function( self, taskName, id, label)
+        StageStarted = function( self, taskName, id, label )
             if myself.currentMission == taskName then
-                if self.stage[ taskName ] then
-                    reportFunction( eRC_BM_FinPhase, self.stage[ taskName ] )
-                end
-                self.stage[ taskName ] = label
                 reportFunction( eRC_BM_DebutPhase, label )
+            end
+        end,
+        StageFinished = function( self, taskName, id, label )
+            if myself.currentMission == taskName then
+                reportFunction( eRC_BM_FinPhase, label )
             end
         end,
         Cleanup = function( self )
@@ -143,15 +143,12 @@ function RegisterTaskListener()
             myself.safetyAttitude = eAmbianceMission_None
         end,
         TaskFinished = function( self, taskName )
-            reportFunction( eRC_BM_FinPhase, self.stage[ taskName ] )
-
             meKnowledge.currentTask = nil
             if self.main == taskName then
                 self.main = nil
                 reportFunction( eRC_FinMission )
                 DEC_FinMission()
             end
-            self.stage[ taskName ] = nil
             self:Cleanup()
         end,
         TaskDone = function( self )
@@ -163,14 +160,17 @@ function RegisterTaskListener()
 end
 
 --- Listen the done state of the task depending of the cause
--- TaskStarted; StageChanged; TaskFinished; TaskDone
+-- TaskStarted; StageStarted; StageFinished; TaskFinished; TaskDone
 function RegisterDoneTaskListener()
     local doneTaskListener = {}
     doneTaskListener.stage = {}
     function doneTaskListener:TaskStarted( taskName )
         -- NOTHING
     end
-    function doneTaskListener:StageChanged( taskName, id, label)
+    function doneTaskListener:StageStarted( taskName, id, label )
+        -- NOTHING
+    end
+    function doneTaskListener:StageFinished( taskName, id, label )
         -- NOTHING
     end
     function doneTaskListener:TaskFinished( taskName )
