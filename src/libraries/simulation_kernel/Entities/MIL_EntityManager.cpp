@@ -2673,7 +2673,10 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_EntityManager::FindKnowledgeGroup( u
 // -----------------------------------------------------------------------------
 MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
 {
-    return sink_->Find( nID );
+    MIL_AgentPion* agent = sink_->Find( nID );
+    if( agent && !agent->IsMarkedForDestruction() )
+        return agent;
+    return nullptr;
 }
 
 // -----------------------------------------------------------------------------

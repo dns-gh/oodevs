@@ -72,7 +72,8 @@ void PHY_Population_ActionFireOnPion::Stop()
 // -----------------------------------------------------------------------------
 void PHY_Population_ActionFireOnPion::Execute()
 {
-    population_.FireOnPion( rIntensity_, *pTarget_, fireResults_ );
+    if( pTarget_ )
+        population_.FireOnPion( rIntensity_, *pTarget_, fireResults_ );
 }
 
 // -----------------------------------------------------------------------------
