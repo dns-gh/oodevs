@@ -50,12 +50,33 @@ void Weapons::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
     if( tools.ShouldDisplay( "WeaponRanges" ) && viewport.IsVisible( where ) &&
         ( minRange_ > 0 || maxRange_ > 0 || efficientRange_ > 0 ) )
     {
-        glPushAttrib( GL_ENABLE_BIT | GL_LINE_BIT );
+        glPushAttrib( GL_ENABLE_BIT | GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
+            // draw the min range disc to the stencil buffer
+            glEnable( GL_STENCIL_TEST );
+            glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );
+            glDepthMask( GL_FALSE );
+            glStencilFunc( GL_NEVER, 1, 0xFF );
+            glStencilOp( GL_REPLACE, GL_KEEP, GL_KEEP );
+            glStencilMask( 0xFF );
+            glClear( GL_STENCIL_BUFFER_BIT );
+            tools.DrawDisc( where, float( minRange_ ) );
+            // draw the max range disc using the stencil buffer to keep the
+            // min range disc clear
+            glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
+            glDepthMask( GL_TRUE );
+            glStencilMask( 0x00 );
+            glStencilFunc( GL_EQUAL, 0, 0xFF );
+            glPushAttrib( GL_CURRENT_BIT );
+                GLfloat color[ 4 ];
+                glGetFloatv( GL_CURRENT_COLOR, color );
+                color[ 3 ] = 0.5f;
+                glColor4fv( color );
+                tools.DrawDisc( where, float( maxRange_ ) );
+            glPopAttrib();
+            glDisable( GL_STENCIL_TEST );
             glEnable( GL_LINE_STIPPLE );
             glLineStipple( 1, 0x0F0F );
             glLineWidth( 2 );
-            tools.DrawCircle( where, float( minRange_ ) );
-            tools.DrawCircle( where, float( maxRange_ ) );
             tools.DrawCircle( where, float( efficientRange_ ) );
             glDisable( GL_LINE_STIPPLE );
         glPopAttrib();
