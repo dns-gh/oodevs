@@ -47,19 +47,16 @@ Weapons::~Weapons()
 // -----------------------------------------------------------------------------
 void Weapons::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( tools.ShouldDisplay( "WeaponRanges" ) && viewport.IsVisible( where )
-      && ( efficientRange_ > 0 || maxRange_ > 0 || ( minRange_ > 0 && minRange_ < std::numeric_limits< unsigned int >::max() ) ) )
+    if( tools.ShouldDisplay( "WeaponRanges" ) && viewport.IsVisible( where ) &&
+        ( minRange_ > 0 || maxRange_ > 0 || efficientRange_ > 0 ) )
     {
         glPushAttrib( GL_ENABLE_BIT | GL_LINE_BIT );
             glEnable( GL_LINE_STIPPLE );
             glLineStipple( 1, 0x0F0F );
             glLineWidth( 2 );
-            if( minRange_ > 0 && minRange_ < std::numeric_limits< unsigned int >::max() )
-                tools.DrawCircle( where, float( minRange_ ) );
-            if( maxRange_ > 0 )
-                tools.DrawCircle( where, float( maxRange_ ) );
-            if( efficientRange_ > 0 )
-                tools.DrawCircle( where, float( efficientRange_ ) );
+            tools.DrawCircle( where, float( minRange_ ) );
+            tools.DrawCircle( where, float( maxRange_ ) );
+            tools.DrawCircle( where, float( efficientRange_ ) );
             glDisable( GL_LINE_STIPPLE );
         glPopAttrib();
     }
@@ -72,10 +69,7 @@ void Weapons::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 void Weapons::OptionChanged( const std::string& name, const kernel::OptionVariant& )
 {
     if( name == "EfficientRangePh" || name == "EfficientRangeVolume" )
-    {
-        efficientRange_ = 0;
         UpdateRange();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -86,9 +80,6 @@ void Weapons::DoUpdate( const sword::UnitAttributes& message )
 {
     if( !message.has_equipment_dotations() )
         return;
-    minRange_ = std::numeric_limits< unsigned int >::max();
-    maxRange_ = 0;
-    efficientRange_ = 0;
     for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
     {
         const sword::EquipmentDotations_EquipmentDotation& value = message.equipment_dotations().elem( i );
@@ -109,6 +100,9 @@ void Weapons::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Weapons::UpdateRange()
 {
+    minRange_ = std::numeric_limits< unsigned int >::max();
+    maxRange_ = 0;
+    efficientRange_ = 0;
     tools::Iterator< const Equipment& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -116,6 +110,8 @@ void Weapons::UpdateRange()
         if( equipment.available_ > 0 )
             AddEquipmentRange( equipment.type_ );
     }
+    if( minRange_ == std::numeric_limits< unsigned int >::max() )
+        minRange_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,14 +120,14 @@ void Weapons::UpdateRange()
 // -----------------------------------------------------------------------------
 void Weapons::AddEquipmentRange( const kernel::EquipmentType& type )
 {
-    tools::Iterator< const kernel::WeaponSystemType& > it = type.CreateIterator();
+    auto it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::WeaponSystemType& weapon = it.NextElement();
         minRange_ = std::min( minRange_, weapon.GetMinRange() );
         maxRange_ = std::max( maxRange_, weapon.GetMaxRange() );
-        int ph = controllers_.options_.GetOption( "EfficientRangePh", 50 ).To< int >();
-        int volume = controllers_.options_.GetOption( "EfficientRangeVolume", 0 ).To< int >();
+        const int ph = controllers_.options_.GetOption( "EfficientRangePh", 50 ).To< int >();
+        const int volume = controllers_.options_.GetOption( "EfficientRangeVolume", 0 ).To< int >();
         efficientRange_ = std::max( efficientRange_, weapon.GetEfficientRange( volume, 0.01 * ph ) );
     }
 }
