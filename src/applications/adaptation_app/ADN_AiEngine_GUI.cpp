@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-06-15 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_AiEngine_GUI.cpp $
-// $Author: Nld $
-// $Modtime: 30/06/05 13:04 $
-// $Revision: 13 $
-// $Workfile: ADN_AiEngine_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_AiEngine_GUI.h"
@@ -93,21 +84,29 @@ void ADN_AiEngine_GUI::Build()
     Q3GroupBox* pForceRatioBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Force ratio feedback time" ) );
     builder.AddField< ADN_TimeField >( pForceRatioBox, "default-force-ratio-feedback-time", tr( "Default force ratio feedback time" ), data_.rDefaultFeedbackTime_ );
 
+    // Perception
+    Q3GroupBox* pPerceptionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Perception" ) );
+    ADN_CheckBox* destroyedUnits = new ADN_CheckBox( tr( "Destroyed units detection" ), pPerceptionBox, "destroyed-units-detection" );
+    destroyedUnits->GetConnector().Connect( &data_.bDetectDestroyedUnits_ );
+
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
     // Content layout
     QWidget* pContent = new QWidget();
-    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    QHBoxLayout* pContentLayout = new QHBoxLayout( pContent );
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
-    pContentLayout->addWidget( pDangerBox );
-    pContentLayout->addWidget( pOpStateBox );
-    pContentLayout->addWidget( pUrbanStateBox );
-    pContentLayout->addWidget( pCriticalIntelligenceBox );
-    pContentLayout->addWidget( pWoundEffectsBox );
-    pContentLayout->addWidget( pForceRatioBox );
+    QVBoxLayout* pLeftLayout = new QVBoxLayout( pContentLayout );
+    QVBoxLayout* pRightLayout = new QVBoxLayout( pContentLayout );
+    pLeftLayout->addWidget( pDangerBox );
+    pLeftLayout->addWidget( pOpStateBox );
+    pLeftLayout->addWidget( pCriticalIntelligenceBox );
+    pRightLayout->addWidget( pUrbanStateBox );
+    pRightLayout->addWidget( pWoundEffectsBox );
+    pRightLayout->addWidget( pForceRatioBox );
+    pRightLayout->addWidget( pPerceptionBox );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );

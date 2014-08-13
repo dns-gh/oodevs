@@ -36,14 +36,19 @@
             <xs:attribute name="neutral-affinity" type="T_Time" use="required"/>
           </xs:complexType>
         </xs:element>
-		<xs:element name="wound-effects-modificators">
-			<xs:complexType>
-			  <xs:attribute name="available" type="T_ZeroToOneDouble" use="required"/>
-			  <xs:attribute name="unavailable" type="T_ZeroToOneDouble" use="required"/>
-			  <xs:attribute name="repairable" type="T_ZeroToOneDouble" use="required"/>
-			  <xs:attribute name="repairing" type="T_ZeroToOneDouble" use="required"/>
-			  <xs:attribute name="captured" type="T_ZeroToOneDouble" use="required"/>
-			</xs:complexType>
+        <xs:element name="wound-effects-modificators">
+          <xs:complexType>
+            <xs:attribute name="available" type="T_ZeroToOneDouble" use="required"/>
+            <xs:attribute name="unavailable" type="T_ZeroToOneDouble" use="required"/>
+            <xs:attribute name="repairable" type="T_ZeroToOneDouble" use="required"/>
+            <xs:attribute name="repairing" type="T_ZeroToOneDouble" use="required"/>
+            <xs:attribute name="captured" type="T_ZeroToOneDouble" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="perception" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="detect-destroyed-units" type="xs:boolean" use="required"/>
+          </xs:complexType>
         </xs:element>
       </xs:sequence>
             <xs:attribute name="model-version" type="T_Version"/>

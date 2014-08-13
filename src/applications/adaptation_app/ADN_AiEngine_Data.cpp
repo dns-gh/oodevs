@@ -37,6 +37,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rRepairableModificator_      ( 100.f )
     , rRepairingModificator_       ( 100.f )
     , rCapturedModificator_        ( 100.f )
+    , bDetectDestroyedUnits_       ( false )
 {
     // NOTHING
 }
@@ -125,6 +126,10 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "captured", rCapturedModificator_ )
         >> xml::end;
 
+    input >> xml::optional >> xml::start( "perception" )
+            >> xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
+          >> xml::end;
+
     rAvailableModificator_ = rAvailableModificator_.GetData() * 100.f;
     rUnavailableModificator_ = rUnavailableModificator_.GetData() * 100.f;
     rRepairableModificator_ = rRepairableModificator_.GetData() * 100.f;
@@ -172,5 +177,8 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output ) const
                 << xml::attribute( "repairing", rRepairingModificator_.GetData() / 100.f )
                 << xml::attribute( "captured", rCapturedModificator_.GetData() / 100.f )
             << xml::end
-           << xml::end;
+            << xml::start( "perception" )
+                << xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
+            << xml::end
+          << xml::end;
 }
