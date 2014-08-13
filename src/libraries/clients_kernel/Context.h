@@ -12,8 +12,6 @@
 
 #include <boost/shared_ptr.hpp>
 #include <vector>
-#include <unordered_map>
-
 namespace kernel
 {
     class LocalizedString;
