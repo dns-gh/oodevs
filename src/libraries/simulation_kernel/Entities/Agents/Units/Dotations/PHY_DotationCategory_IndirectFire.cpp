@@ -239,7 +239,8 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         bool bRCSent = false;
         for( auto itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
-            MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
+            const PHY_RoleInterface_Location& targetLocation = static_cast< PHY_RoleInterface_Location& >( **itTarget );
+            MIL_Agent_ABC& target = targetLocation.GetAgent();
             if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
                 continue;
             target.GetRole< PHY_RoleInterface_HumanFactors >().NotifyAttacked();
@@ -253,7 +254,23 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 if( dotationCategory_.IsIED() )
                     MIL_Report::PostEvent( target, report::eRC_PrisSousTirIED, dotationCategory_ );
                 else
-                    MIL_Report::PostEvent( target, report::eRC_PrisSousTirArtillerie, dotationCategory_ );
+                {
+                    int angle = 0;
+                    if( pFirer )
+                    {
+                        const MT_Vector2D& firerPosition = pFirer->GetRole< PHY_RoleInterface_Location >().GetPosition();
+                        const MT_Vector2D& targetPosition = targetLocation.GetPosition();
+                        const double deltaX = firerPosition.GetX() - targetPosition.GetX();
+                        const double deltaY = firerPosition.GetY() - targetPosition.GetY();
+                        double rAngle = deltaY != 0 ? std::atan( std::abs( deltaX ) / deltaY ) : 0.5 * MT_PI;
+                        if( rAngle < 0 )
+                            rAngle = MT_PI + rAngle;
+                        if( deltaX < 0 )
+                            rAngle = 2 * MT_PI - rAngle;
+                        angle = static_cast< int >( rAngle * 180 / MT_PI );
+                    }
+                    MIL_Report::PostEvent( target, report::eRC_PrisSousTirArtillerie, dotationCategory_, angle );
+                }
                 double ratioComposanteHit = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( attritionSurface );
                 if( ratioComposanteHit > 0 )
                     targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit * phFactor );
