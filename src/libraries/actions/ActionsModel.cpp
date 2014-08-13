@@ -23,7 +23,6 @@
 #include <boost/bind.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <xeuseuleu/xsl.hpp>
 
 using namespace kernel;
 using namespace actions;
