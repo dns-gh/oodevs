@@ -128,11 +128,13 @@ function RegisterTaskListener()
         end,
         StageStarted = function( self, taskName, id, label )
             if myself.currentMission == taskName then
+                self.stage = label
                 reportFunction( eRC_BM_DebutPhase, label )
             end
         end,
         StageFinished = function( self, taskName, id, label )
             if myself.currentMission == taskName then
+                self.stage = nil
                 reportFunction( eRC_BM_FinPhase, label )
             end
         end,
@@ -146,6 +148,10 @@ function RegisterTaskListener()
             meKnowledge.currentTask = nil
             if self.main == taskName then
                 self.main = nil
+                if self.stage then
+                    reportFunction( eRC_BM_FinPhase, self.stage )
+                    self.stage = nil
+                end
                 reportFunction( eRC_FinMission )
                 DEC_FinMission()
             end
