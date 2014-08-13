@@ -55,6 +55,7 @@ public:
     static double rMaxDangerosityDegradationByRelevance_;
     static double rMaxDangerosityDegradationByOpState_;
     static double rMaxDangerosityDegradationByNeutralizedState_;
+    static bool detectDestroyedUnits_;
 
 public:
     //! @name Constructors/Destructor

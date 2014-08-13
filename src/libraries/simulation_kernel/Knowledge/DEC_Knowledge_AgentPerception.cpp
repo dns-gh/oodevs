@@ -16,6 +16,7 @@
 #include "Network/NET_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
@@ -143,7 +144,7 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
         pCurrentPerceptionLevel_ = &perceptionLevel;
     // $$$ bDummy demandé par DSRO : quand un pion voit une unité détruite, il la reconnait afin de ne pas en avoir peur ...
-    if( *pCurrentPerceptionLevel_ < PHY_PerceptionLevel::recognized_ && pAgentPerceived_->IsDead() )
+    if( DEC_Knowledge_Agent::detectDestroyedUnits_ && *pCurrentPerceptionLevel_ < PHY_PerceptionLevel::recognized_ && pAgentPerceived_->IsDead() )
         pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
     if( *pCurrentPerceptionLevel_ > *pMaxPerceptionLevel_ )
         pMaxPerceptionLevel_ = pCurrentPerceptionLevel_;

@@ -16,6 +16,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_kernel/DetectionComputer.h"
@@ -176,6 +177,8 @@ void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVec
         for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >(**it).GetAgent();
+            if( !DEC_Knowledge_Agent::detectDestroyedUnits_ && target.IsDead() )
+                continue;
             detection::DetectionComputer detectionComputer( target );
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );

@@ -10,6 +10,7 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_kernel/DetectionComputer.h"
@@ -83,7 +84,8 @@ void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
     for ( auto itAgent = vAgentDetectedList.begin(); itAgent != vAgentDetectedList.end(); ++itAgent )
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
-
+        if( !DEC_Knowledge_Agent::detectDestroyedUnits_ && agent.IsDead() )
+            continue;
         detection::DetectionComputer detectionComputer( agent );
         perceiver_.GetPion().Execute( detectionComputer );
         agent.Execute( detectionComputer );

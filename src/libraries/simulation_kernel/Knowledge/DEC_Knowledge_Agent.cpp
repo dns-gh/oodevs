@@ -47,6 +47,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
 double DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
 double DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
 double DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
+bool DEC_Knowledge_Agent::detectDestroyedUnits_ = false;
 MIL_IDManager DEC_Knowledge_Agent::idManager_;
 
 // -----------------------------------------------------------------------------
