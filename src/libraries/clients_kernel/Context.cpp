@@ -45,10 +45,10 @@ boost::shared_ptr< LocalizedString > Context::operator[]( const std::string& key
 }
 
 // -----------------------------------------------------------------------------
-// Name: Context::operator[]
+// Name: Context::at
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< LocalizedString >& Context::operator[]( const std::string& key ) const
+const boost::shared_ptr< LocalizedString >& Context::at( const std::string& key ) const
 {
     auto it = find( key );
     if( it != end() )

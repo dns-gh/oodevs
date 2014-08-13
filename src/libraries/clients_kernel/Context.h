@@ -34,10 +34,8 @@ public:
     //! @name Operations
     //@{
     bool Apply( const std::function< bool( LocalizedString& ) >& functor );
-
     boost::shared_ptr< LocalizedString > operator[]( const std::string& key );
-    const boost::shared_ptr< LocalizedString >& operator[]( const std::string& key ) const;
-
+    const boost::shared_ptr< LocalizedString >& at( const std::string& key ) const;
     boost::shared_ptr< LocalizedString > CreateNew( const std::string& key );
     //@}
 };
