@@ -42,6 +42,7 @@ namespace
 {
     typedef std::vector< std::pair< TerrainPathPoint, int > > T_PathPoints;
     typedef std::vector< std::pair< int, int > > T_Waypoints;
+    const float squareEpsilon = 100; // 10 meters
 
     TerrainData ReadTerrainData( const sword::TerrainData& data )
     {
@@ -64,7 +65,7 @@ namespace
     {
         T_PathPoints points;
         BOOST_FOREACH( const auto& point, result.points() )
-            points.push_back( std::make_pair( ReadPathPoint( point ), point.waypoint() ) );
+            points.push_back( std::make_pair( ReadPathPoint( point ), point.has_waypoint() ? point.waypoint() : -1 ) );
         return points;
     }
 
@@ -102,7 +103,7 @@ namespace
         {
             T_Waypoints result;
             for( size_t i = 0; i < points.size(); ++i )
-                if( points[ i ].second >= 0 && points[ i ].first.Point().SquareDistance( point ) < 0.01 )
+                if( points[ i ].second >= 0 && points[ i ].first.Point().SquareDistance( point ) < squareEpsilon )
                     result.push_back( std::make_pair( static_cast< int >( i ), points[ i ].second ) );
             return result;
         }
@@ -128,9 +129,12 @@ namespace
         {
             const T_PathPoints points = ReadPathPoints( pathfind_.result() );
             const auto segment = MatchWaypoints( FindWaypoints( points, from ),
-                                                            FindWaypoints( points, to ) );
+                                                 FindWaypoints( points, to ) );
             if( segment.first < 0 || segment.second < 0 )
+            {
+                MT_LOG_INFO_MSG( "Segment [" << from << "] -> [" << to << "] not found in itinerary id='" << pathfind_.id() << "', computing a new path." );
                 return pathfinder_.ComputePath( from, to, rule, handler );
+            }
             bool reached = false;
             for( int i = segment.first; i <= segment.second; ++i )
             {
