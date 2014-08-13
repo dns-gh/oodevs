@@ -370,3 +370,7 @@ function ActivateBrainDebug( activate )
         end
     end
 end
+
+integration.getMaxInt = function()
+    return 2147483647
+end
