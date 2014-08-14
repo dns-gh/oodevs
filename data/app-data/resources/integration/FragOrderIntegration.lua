@@ -503,14 +503,6 @@ integration.createFragOrder = function( fragOrderType )
     return CreateFragOrder( fragOrderType )
 end
 
---- Returns the fragmentary order's "activate smoke" parameter (orderConduiteActiverFumigene_).
--- Enable or disable the capacity to launch automatic smoke defined by an enumeration which values are set in the authoring tool. 
--- @param fragorder a directia fragmentary order
--- @return integer the value corresponding to the activation or disactivation
-integration.getDisableSmokeParameter = function( fragorder )
-    return integration.getIntegerParameter( fragorder, "orderConduiteActiverFumigene_" )
-end
-
 --- Manage the state of the automatic launch of smoke
 -- Enable or disable this action
 -- @see Types.lua for the state enumeration
