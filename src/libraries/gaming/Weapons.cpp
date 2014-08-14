@@ -148,10 +148,11 @@ void Weapons::AddEquipmentRange( const kernel::EquipmentType& type, const kernel
     while( it.HasMoreElements() )
     {
         const kernel::WeaponSystemType& weapon = it.NextElement();
-        if( filter && weapon.GetId() != filter->GetId() )
-            continue;
-        minRange_ = std::min( minRange_, weapon.GetMinRange() );
-        maxRange_ = std::max( maxRange_, weapon.GetMaxRange() );
+        if( !filter || weapon.GetId() == filter->GetId() )
+        {
+            minRange_ = std::min( minRange_, weapon.GetMinRange() );
+            maxRange_ = std::max( maxRange_, weapon.GetMaxRange() );
+        }
         const int ph = controllers_.options_.GetOption( "EfficientRangePh", 50 ).To< int >();
         const int volume = controllers_.options_.GetOption( "EfficientRangeVolume", 0 ).To< int >();
         efficientRange_ = std::max( efficientRange_, weapon.GetEfficientRange( volume, 0.01 * ph ) );

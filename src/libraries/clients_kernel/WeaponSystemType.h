@@ -47,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned int, MT_InterpolatedFunction >  T_HitProbabilities;
-    //@}
-
-private:
     //! @name Copy/Assignment
     //@{
     WeaponSystemType( const WeaponSystemType& );            //!< Copy constructor
@@ -63,7 +57,6 @@ private:
     //@{
     void ReadDirectFire( xml::xistream& xis );
     void ReadDirectFireHitProbabilities( xml::xistream& xis );
-    void ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction* phFunction );
     void ReadIndirectFire( xml::xistream& xis );
     //@}
 
@@ -74,10 +67,8 @@ private:
     std::string ammunition_;
     unsigned int maxIndirectRange_;
     unsigned int minIndirectRange_;
-    unsigned int maxDirectRange_;
-    unsigned int minDirectRange_;
     const tools::Resolver_ABC< VolumeType >& volumes_;
-    T_HitProbabilities phs_;
+    std::map< unsigned int, MT_InterpolatedFunction > phs_;
     //@}
 };
 
