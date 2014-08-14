@@ -502,3 +502,15 @@ end
 integration.createFragOrder = function( fragOrderType )
     return CreateFragOrder( fragOrderType )
 end
+
+--- Manage the state of the automatic launch of smoke
+-- Enable or disable this action
+-- @see Types.lua for the state enumeration
+-- @param enum Integer
+integration.disableSmoke = function( enum )
+    if enum == eDisableSmoke then
+        myself.disableSmoke = true
+    else
+        myself.disableSmoke = false  
+    end
+end
