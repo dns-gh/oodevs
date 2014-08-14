@@ -70,10 +70,10 @@ namespace
     const float fixedSize = 400;
     const float width = 2;
     const float arrowHeightPercent = 0.8f;
-    const float arrowheadHeightPercent = 0.25f;
-    const float arrowheadWidthPercent = 0.2f;
+    const float arrowheadHeightPercent = 0.35f;
+    const float arrowheadWidthPercent = 0.3f;
 
-    void DrawArrowhead( gui::GlTools_ABC& tools, float width,
+    void DrawArrowhead( gui::GlTools_ABC& tools,
                         const geometry::Point2f& end,
                         const geometry::Point2f& left,
                         const geometry::Point2f& right )
@@ -83,9 +83,9 @@ namespace
             glVertex2f( left.X(), left.Y() );
             glVertex2f( right.X(), right.Y() );
         glEnd();
-        tools.DrawLine( end, left, width );
-        tools.DrawLine( end, right, width );
-        tools.DrawLine( left, right, width );
+        tools.DrawLine( end, left );
+        tools.DrawLine( end, right );
+        tools.DrawLine( left, right );
     }
 }
 
@@ -108,6 +108,6 @@ void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
         glColor4f( COLOR_BLACK );
         tools.DrawLine( where, tail, width );
         tools.DrawLine( tail, arrowEnd, width );
-        DrawArrowhead( tools, width, arrowEnd, arrowCross + arrowWidth, arrowCross - arrowWidth );
+        DrawArrowhead( tools, arrowEnd, arrowCross + arrowWidth, arrowCross - arrowWidth );
     glPopAttrib();
 }
