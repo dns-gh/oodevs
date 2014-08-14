@@ -561,20 +561,20 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
     schemaWriter.WriteExerciseSchema( xos, "orders" );
     for( auto it = events.begin(); it != events.end(); ++it )
     {
-        gui::Event& event = GetOrCreateEvent( *it );
-        if( const actions::Action_ABC* action = event.GetAction() )
+        try
         {
-            xos << xml::start( "action" );
-            try
+            gui::Event& event = GetOrCreateEvent( *it );
+            if( const actions::Action_ABC* action = event.GetAction() )
             {
-                action->Serialize( xos );
+                xos << xml::start( "action" );
+                    action->Serialize( xos );
+                xos << xml::end; //! action
             }
-            catch( const std::exception& e )
-            {
-                saveError = true;
-                MT_LOG_ERROR_MSG( "An error occurred saving an action : " << tools::GetExceptionMsg( e ) );
-            }
-            xos << xml::end; //! action
+        }
+        catch( const std::exception& e )
+        {
+            saveError = true;
+            MT_LOG_ERROR_MSG( "An error occurred saving an action : " << tools::GetExceptionMsg( e ) );
         }
     }
     xos << xml::end; //! actions
