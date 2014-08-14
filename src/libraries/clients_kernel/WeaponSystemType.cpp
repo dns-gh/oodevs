@@ -141,3 +141,8 @@ unsigned int WeaponSystemType::GetEfficientRange( unsigned int volumeId, double 
         return unsigned int( it->second.GetMaxYForX( ph ) );
     return 0;
 }
+
+bool WeaponSystemType::IsIndirect() const
+{
+    return maxIndirectRange_ > 0;
+}

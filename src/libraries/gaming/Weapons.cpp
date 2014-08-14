@@ -89,7 +89,7 @@ void Weapons::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 // -----------------------------------------------------------------------------
 void Weapons::OptionChanged( const std::string& name, const kernel::OptionVariant& )
 {
-    if( name == "EfficientRangePh" || name == "EfficientRangeVolume" )
+    if( name.find( "EfficientRange" ) == 0 )
         UpdateRange();
 }
 
@@ -124,12 +124,15 @@ void Weapons::UpdateRange()
     minRange_ = std::numeric_limits< unsigned int >::max();
     maxRange_ = 0;
     efficientRange_ = 0;
+    const auto filter = controllers_.options_.GetOption( "EfficientRangeFilterIndirectWeapon", false ).To< bool >()
+        ? weapons_.Find( controllers_.options_.GetOption( "EfficientRangeIndirectWeapon", QString() ).To< QString >().toStdString() )
+        : 0;
     tools::Iterator< const Equipment& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
         const Equipment& equipment = it.NextElement();
         if( equipment.available_ > 0 )
-            AddEquipmentRange( equipment.type_ );
+            AddEquipmentRange( equipment.type_, filter );
     }
     if( minRange_ == std::numeric_limits< unsigned int >::max() )
         minRange_ = 0;
@@ -139,12 +142,14 @@ void Weapons::UpdateRange()
 // Name: Weapons::AddEquipmentRange
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
-void Weapons::AddEquipmentRange( const kernel::EquipmentType& type )
+void Weapons::AddEquipmentRange( const kernel::EquipmentType& type, const kernel::WeaponSystemType* filter )
 {
     auto it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::WeaponSystemType& weapon = it.NextElement();
+        if( filter && weapon.GetId() != filter->GetId() )
+            continue;
         minRange_ = std::min( minRange_, weapon.GetMinRange() );
         maxRange_ = std::max( maxRange_, weapon.GetMaxRange() );
         const int ph = controllers_.options_.GetOption( "EfficientRangePh", 50 ).To< int >();

@@ -37,12 +37,13 @@ public:
     virtual ~WeaponSystemType();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     std::string GetId() const;
     unsigned int GetMaxRange() const;
     unsigned int GetMinRange() const;
     unsigned int GetEfficientRange( unsigned int volumeId, double ph ) const;
+    bool IsIndirect() const;
     //@}
 
 private:

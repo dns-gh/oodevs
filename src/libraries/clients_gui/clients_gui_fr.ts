@@ -2521,6 +2521,14 @@ Voulez-vous le supprimer?</translation>
         <source>Direct fire efficient range</source>
         <translation>Portée utile de combat en tir direct</translation>
     </message>
+    <message>
+        <source>Indirect fire range</source>
+        <translation>Portée en tir indirect</translation>
+    </message>
+    <message>
+        <source>Display only the range of:</source>
+        <translation>Afficher uniquement la portée pour:</translation>
+    </message>
 </context>
 <context>
     <name>gui::WeatherListView</name>

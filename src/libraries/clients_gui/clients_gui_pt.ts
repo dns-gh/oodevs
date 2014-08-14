@@ -2511,6 +2511,14 @@ Do you want to remove it?</source>
         <source>Direct fire efficient range</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Indirect fire range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display only the range of:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::WeatherListView</name>

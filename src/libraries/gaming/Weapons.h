@@ -68,7 +68,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& message );
     void UpdateRange();
-    void AddEquipmentRange( const kernel::EquipmentType& type );
+    void AddEquipmentRange( const kernel::EquipmentType& type, const kernel::WeaponSystemType* filter );
     //@}
 
 private:

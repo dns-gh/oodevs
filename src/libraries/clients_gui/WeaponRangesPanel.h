@@ -47,6 +47,8 @@ public:
 private slots:
     void OnPhChanged( int value );
     void OnVolumeChanged( int index );
+    void OnFilterToggled( bool index );
+    void OnIndirectWeaponChanged( const QString& value );
 
 private:
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
@@ -57,8 +59,12 @@ private:
     const kernel::StaticModel& model_;
     QComboBox* volumeCombo_;
     QSpinBox* phSpinbox_;
+    QCheckBox* filterCheckBox_;
+    QComboBox* indirectWeaponCombo_;
     int ph_;
     int volume_;
+    bool filter_;
+    QString indirectWeapon_;
 };
 
 }
