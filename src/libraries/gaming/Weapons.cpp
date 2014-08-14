@@ -28,6 +28,7 @@ Weapons::Weapons( kernel::Controllers& controllers, const tools::Resolver_ABC< k
     , minRange_( 0 )
     , maxRange_( 0 )
     , efficientRange_( 0 )
+    , useColor_( false )
 {
     controllers_.Register( *this );
 }
@@ -67,10 +68,16 @@ void Weapons::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
             glStencilMask( 0x00 );
             glStencilFunc( GL_EQUAL, 0, 0xFF );
             glPushAttrib( GL_CURRENT_BIT );
-                GLfloat color[ 4 ];
-                glGetFloatv( GL_CURRENT_COLOR, color );
-                color[ 3 ] = 0.5f;
-                glColor4fv( color );
+                static const float alpha = 0.5f;
+                if( useColor_ )
+                    glColor4f( color_.red() / 255.f, color_.green() / 255.f, color_.blue() / 255.f, alpha );
+                else
+                {
+                    GLfloat color[ 4 ];
+                    glGetFloatv( GL_CURRENT_COLOR, color );
+                    color[ 3 ] = alpha;
+                    glColor4fv( color );
+                }
                 tools.DrawDisc( where, float( maxRange_ ) );
             glPopAttrib();
             glDisable( GL_STENCIL_TEST );
@@ -87,10 +94,17 @@ void Weapons::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 // Name: Weapons::OptionChanged
 // Created: JSR 2010-06-07
 // -----------------------------------------------------------------------------
-void Weapons::OptionChanged( const std::string& name, const kernel::OptionVariant& )
+void Weapons::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name.find( "EfficientRange" ) == 0 )
+    if( name == "EfficientRangeVolume"
+        || name == "EfficientRangePh"
+        || name == "EfficientRangeFilterIndirectWeapon"
+        || name == "EfficientRangeIndirectWeapon" )
         UpdateRange();
+    else if( name == "EfficientRangeUseCustomColor" )
+        useColor_ = value.To< bool >();
+    else if( name == "EfficientRangeCustomColor" )
+        color_.setNamedColor( value.To< QString >() );
 }
 
 // -----------------------------------------------------------------------------

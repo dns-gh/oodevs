@@ -2529,6 +2529,10 @@ Do you want to remove it?</translation>
         <source>Display only the range of:</source>
         <translation>Display only the range of:</translation>
     </message>
+    <message>
+        <source>Use custom color:</source>
+        <translation>Use custom color:</translation>
+    </message>
 </context>
 <context>
     <name>gui::WeatherListView</name>

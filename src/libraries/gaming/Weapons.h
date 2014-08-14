@@ -80,6 +80,8 @@ private:
     unsigned int minRange_;
     unsigned int maxRange_;
     unsigned int efficientRange_;
+    bool useColor_;
+    QColor color_;
     //@}
 };
 

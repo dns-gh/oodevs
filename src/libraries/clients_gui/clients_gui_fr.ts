@@ -2529,6 +2529,10 @@ Voulez-vous le supprimer?</translation>
         <source>Display only the range of:</source>
         <translation>Afficher uniquement la portée pour:</translation>
     </message>
+    <message>
+        <source>Use custom color:</source>
+        <translation>Utiliser la couleur personnalisée:</translation>
+    </message>
 </context>
 <context>
     <name>gui::WeatherListView</name>

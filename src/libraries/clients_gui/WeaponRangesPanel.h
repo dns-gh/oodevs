@@ -24,6 +24,8 @@ namespace kernel
 
 namespace gui
 {
+    class ColorButton;
+
 // =============================================================================
 /** @class  WeaponRangesPanel
     @brief  WeaponRangesPanel
@@ -47,8 +49,10 @@ public:
 private slots:
     void OnPhChanged( int value );
     void OnVolumeChanged( int index );
-    void OnFilterToggled( bool index );
+    void OnFilterToggled( bool state );
     void OnIndirectWeaponChanged( const QString& value );
+    void OnColorToggled( bool state );
+    void OnColorChanged( const QColor& color );
 
 private:
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
@@ -61,10 +65,14 @@ private:
     QSpinBox* phSpinbox_;
     QCheckBox* filterCheckBox_;
     QComboBox* indirectWeaponCombo_;
+    QCheckBox* colorCheckBox_;
+    ColorButton* colorButton_;
     int ph_;
     int volume_;
     bool filter_;
+    bool useColor_;
     QString indirectWeapon_;
+    QColor color_;
 };
 
 }
