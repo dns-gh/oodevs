@@ -37,18 +37,13 @@ public:
     virtual ~WeaponSystemType();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     std::string GetId() const;
     unsigned int GetMaxRange() const;
     unsigned int GetMinRange() const;
     unsigned int GetEfficientRange( unsigned int volumeId, double ph ) const;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned int, MT_InterpolatedFunction >  T_HitProbabilities;
+    bool IsIndirect() const;
     //@}
 
 private:
@@ -62,7 +57,6 @@ private:
     //@{
     void ReadDirectFire( xml::xistream& xis );
     void ReadDirectFireHitProbabilities( xml::xistream& xis );
-    void ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction* phFunction );
     void ReadIndirectFire( xml::xistream& xis );
     //@}
 
@@ -73,10 +67,8 @@ private:
     std::string ammunition_;
     unsigned int maxIndirectRange_;
     unsigned int minIndirectRange_;
-    unsigned int maxDirectRange_;
-    unsigned int minDirectRange_;
     const tools::Resolver_ABC< VolumeType >& volumes_;
-    T_HitProbabilities phs_;
+    std::map< unsigned int, MT_InterpolatedFunction > phs_;
     //@}
 };
 

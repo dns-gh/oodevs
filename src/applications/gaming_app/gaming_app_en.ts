@@ -552,33 +552,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>EfficientRangeDialog</name>
-    <message>
-        <source>Efficient Range</source>
-        <translation>Efficient Range</translation>
-    </message>
-    <message>
-        <source>Display Parameters</source>
-        <translation>Display Parameters</translation>
-    </message>
-    <message>
-        <source>Percentage (PH):</source>
-        <translation>Percentage (PH):</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation>Size:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
-    </message>
-</context>
-<context>
     <name>EquipmentTransferDialog</name>
     <message>
         <source>Equipment transfer</source>
@@ -2234,6 +2207,10 @@ This data can&apos;t be projected.</source>
         <source>Orbat</source>
         <translation>Orbat</translation>
     </message>
+    <message>
+        <source>Weapon Ranges</source>
+        <translation>Weapon Ranges</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
@@ -2423,10 +2400,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Weapon ranges</source>
         <translation>Weapon ranges</translation>
-    </message>
-    <message>
-        <source>Efficient Range</source>
-        <translation>Efficient Range</translation>
     </message>
     <message>
         <source>Routes</source>

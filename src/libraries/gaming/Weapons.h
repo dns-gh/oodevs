@@ -46,8 +46,8 @@ class Weapons : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Weapons( kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::EquipmentType >& equipments
-                    , const tools::Resolver_ABC< kernel::WeaponSystemType, std::string >& weapons );
+             Weapons( kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::EquipmentType >& equipments,
+                      const tools::Resolver_ABC< kernel::WeaponSystemType, std::string >& weapons );
     virtual ~Weapons();
     //@}
 
@@ -68,7 +68,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& message );
     void UpdateRange();
-    void AddEquipmentRange( const kernel::EquipmentType& type );
+    void AddEquipmentRange( const kernel::EquipmentType& type, const kernel::WeaponSystemType* filter );
     //@}
 
 private:
@@ -80,6 +80,8 @@ private:
     unsigned int minRange_;
     unsigned int maxRange_;
     unsigned int efficientRange_;
+    bool useColor_;
+    QColor color_;
     //@}
 };
 

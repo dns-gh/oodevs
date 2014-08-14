@@ -14,7 +14,6 @@
 #include "clients_gui/Viewport_ABC.h"
 #include "gaming/ConvexHulls.h"
 #include "gaming/MissionParameters.h"
-#include <ctime>
 
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer constructor
@@ -38,8 +37,6 @@ AutomatsLayer::~AutomatsLayer()
 {
     // NOTHING
 }
-
-// $$$$ AGE 2007-06-14: pas super terrible tout ca
 
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer::Draw

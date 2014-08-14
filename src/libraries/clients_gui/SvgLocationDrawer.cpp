@@ -98,6 +98,7 @@ void SvgLocationDrawer::SetColor( const QColor& color )
 void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools,
                               const QColor& color, bool overlined, E_Dash_style dashStyle, float zoom )
 {
+    glPushAttrib( GL_CURRENT_BIT );
     SetColor( color );
     viewport_ = viewport;
     overlined_ = overlined;
@@ -105,6 +106,7 @@ void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geomet
     zoom_ = zoom;
     dashStyle_ = dashStyle;
     location.Accept( *this );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

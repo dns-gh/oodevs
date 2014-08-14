@@ -554,33 +554,6 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>EfficientRangeDialog</name>
-    <message>
-        <source>Efficient Range</source>
-        <translation>Portée Utile de Combat</translation>
-    </message>
-    <message>
-        <source>Display Parameters</source>
-        <translation>Paramètres d&apos;affichage</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Percentage (PH):</source>
-        <translation>Pourcentage (PH):</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation>Volume:</translation>
-    </message>
-</context>
-<context>
     <name>EquipmentTransferDialog</name>
     <message>
         <source>Equipment transfer</source>
@@ -2237,6 +2210,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Orbat</source>
         <translation>ODB</translation>
     </message>
+    <message>
+        <source>Weapon Ranges</source>
+        <translation>Portées Utiles de Combat</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
@@ -2574,10 +2551,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Terrain toolbar</source>
         <translation>Barre d&apos;outils terrain</translation>
-    </message>
-    <message>
-        <source>Efficient Range</source>
-        <translation>Portée utile de combat</translation>
     </message>
     <message>
         <source>Resource networks</source>

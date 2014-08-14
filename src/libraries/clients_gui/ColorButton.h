@@ -36,8 +36,6 @@ public:
 
     //! @name Operations
     //@{
-    void SetAlpha( unsigned int alpha );
-
     void SetColor( const QColor& rgb );
     QColor GetColor() const;
 

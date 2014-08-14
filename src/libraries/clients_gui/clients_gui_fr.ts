@@ -2504,6 +2504,37 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::WeaponRangesPanel</name>
+    <message>
+        <source>Weapon ranges</source>
+        <translation>Portées des armes</translation>
+    </message>
+    <message>
+        <source>Percentage (PH):</source>
+        <translation>Pourcentage (PH):</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation>Volume:</translation>
+    </message>
+    <message>
+        <source>Direct fire efficient range</source>
+        <translation>Portée utile de combat en tir direct</translation>
+    </message>
+    <message>
+        <source>Indirect fire range</source>
+        <translation>Portée en tir indirect</translation>
+    </message>
+    <message>
+        <source>Display only the range of:</source>
+        <translation>Afficher uniquement la portée pour:</translation>
+    </message>
+    <message>
+        <source>Use custom color:</source>
+        <translation>Utiliser la couleur personnalisée:</translation>
+    </message>
+</context>
+<context>
     <name>gui::WeatherListView</name>
     <message>
         <source>Local weathers</source>

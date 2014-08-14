@@ -23,8 +23,6 @@ WeaponSystemType::WeaponSystemType( xml::xistream& xis, const tools::Resolver_AB
     , ammunition_      ( xis.attribute< std::string >( "munition" ) )
     , maxIndirectRange_( 0 )
     , minIndirectRange_( std::numeric_limits< unsigned int >::max() )
-    , maxDirectRange_  ( 0 )
-    , minDirectRange_  ( std::numeric_limits< unsigned int >::max() )
     , volumes_         ( volumes )
 {
     ReadDirectFire( xis );
@@ -59,35 +57,22 @@ void WeaponSystemType::ReadDirectFireHitProbabilities( xml::xistream& xis )
 {
     std::string targetType;
     xis >> xml::attribute( "target", targetType );
-    MT_InterpolatedFunction* phFunction = 0;
-    tools::Iterator< const kernel::VolumeType& > it = volumes_.CreateIterator();
+    auto it = volumes_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::VolumeType& volume = it.NextElement();
         if( volume.GetName() == targetType )
         {
-            phFunction = &phs_[ volume.GetId() ];
-            break;
+            xis >> xml::list( "hit-probability",
+                [&]( xml::xistream& xiss )
+                {
+                    phs_[ volume.GetId() ].AddNewPoint(
+                        xiss.attribute< unsigned int >( "distance" ),
+                        xiss.attribute< float >( "percentage" ) );
+                } );
+            return;
         }
     }
-    xis >> xml::list( "hit-probability", *this, &WeaponSystemType::ReadDirectFireHitProbability, phFunction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeaponSystemType::ReadDirectFireHitProbability
-// Created: SBO 2008-08-14
-// -----------------------------------------------------------------------------
-void WeaponSystemType::ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction* phFunction )
-{
-    unsigned int distance = 0;
-    float percentage = 0;
-    xis >> xml::attribute( "distance", distance )
-        >> xml::attribute( "percentage", percentage );
-    if( percentage > 0 )
-        minDirectRange_ = std::min( minDirectRange_, distance );
-    maxDirectRange_ = std::max( maxDirectRange_, distance );
-    if( phFunction )
-        phFunction->AddNewPoint( distance, percentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +81,7 @@ void WeaponSystemType::ReadDirectFireHitProbability( xml::xistream& xis, MT_Inte
 // -----------------------------------------------------------------------------
 void WeaponSystemType::ReadIndirectFire( xml::xistream& xis )
 {
-    xis >> xml::optional
-        >> xml::start( "indirect-fire" )
+    xis >> xml::optional >> xml::start( "indirect-fire" )
             >> xml::attribute( "max-range", maxIndirectRange_ )
             >> xml::attribute( "min-range", minIndirectRange_ )
         >> xml::end;
@@ -118,7 +102,7 @@ std::string WeaponSystemType::GetId() const
 // -----------------------------------------------------------------------------
 unsigned int WeaponSystemType::GetMaxRange() const
 {
-    return std::max( maxIndirectRange_, maxDirectRange_ );
+    return maxIndirectRange_;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +111,7 @@ unsigned int WeaponSystemType::GetMaxRange() const
 // -----------------------------------------------------------------------------
 unsigned int WeaponSystemType::GetMinRange() const
 {
-    return std::min( minIndirectRange_, minDirectRange_ );
+    return minIndirectRange_;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,8 +120,13 @@ unsigned int WeaponSystemType::GetMinRange() const
 // -----------------------------------------------------------------------------
 unsigned int WeaponSystemType::GetEfficientRange( unsigned int volumeId, double ph ) const
 {
-    T_HitProbabilities::const_iterator it = phs_.find( volumeId );
+    auto it = phs_.find( volumeId );
     if( it != phs_.end() )
         return unsigned int( it->second.GetMaxYForX( ph ) );
     return 0;
+}
+
+bool WeaponSystemType::IsIndirect() const
+{
+    return maxIndirectRange_ > 0;
 }

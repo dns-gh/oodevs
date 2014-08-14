@@ -553,33 +553,6 @@ Motivo: %3</translation>
     </message>
 </context>
 <context>
-    <name>EfficientRangeDialog</name>
-    <message>
-        <source>Efficient Range</source>
-        <translation>Rango eficiente</translation>
-    </message>
-    <message>
-        <source>Display Parameters</source>
-        <translation>Mostrar parámetros</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Percentage (PH):</source>
-        <translation>Porcentaje (PH):</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation>Tamaño:</translation>
-    </message>
-</context>
-<context>
     <name>EquipmentTransferDialog</name>
     <message>
         <source>Equipment transfer</source>
@@ -2236,6 +2209,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Orbat</source>
         <translation>Orbat</translation>
     </message>
+    <message>
+        <source>Weapon Ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
@@ -2573,10 +2550,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Terrain toolbar</source>
         <translation>Barra de herramientas de Terreno</translation>
-    </message>
-    <message>
-        <source>Efficient Range</source>
-        <translation>Rango eficiente</translation>
     </message>
     <message>
         <source>Resource networks</source>

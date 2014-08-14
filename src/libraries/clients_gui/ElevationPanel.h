@@ -22,7 +22,6 @@ namespace kernel
 namespace gui
 {
     class CheckBox;
-    class ColorButton;
     class Elevation2dLayer;
     class Gradient;
     class GradientPreferences;

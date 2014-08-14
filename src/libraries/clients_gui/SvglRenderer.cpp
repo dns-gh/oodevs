@@ -145,6 +145,7 @@ unsigned int SvglRenderer::RetrieveListId( svg::Node_ABC* node, const std::strin
 // -----------------------------------------------------------------------------
 void SvglRenderer::Draw( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
+    glPushAttrib( GL_CURRENT_BIT );
     const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
     ListPaint color( colorList_ );
     if( pickingMode )
@@ -161,6 +162,7 @@ void SvglRenderer::Draw( svg::Node_ABC* node, const std::string& style, const ge
     renderingContext_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
     renderingContext_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
     renderingContext_->PopProperty( RenderingContext::color );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

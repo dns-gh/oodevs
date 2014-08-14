@@ -2499,6 +2499,37 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
+    <name>gui::WeaponRangesPanel</name>
+    <message>
+        <source>Weapon ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Percentage (PH):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direct fire efficient range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display only the range of:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use custom color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::WeatherListView</name>
     <message>
         <source>Local weathers</source>
