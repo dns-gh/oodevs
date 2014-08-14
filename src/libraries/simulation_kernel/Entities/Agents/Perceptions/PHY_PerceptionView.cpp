@@ -4,6 +4,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionView.h"
+#include "DetectionComputer.h"
+#include "MIL_Random.h"
 #include "PHY_PerceptionLevel.h"
 #include "PHY_ZURBPerceptionComputer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -17,8 +19,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include "DetectionComputer.h"
-#include "MIL_Random.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
@@ -143,6 +144,8 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
     for( auto itAgent = perceivableAgents.begin(); itAgent != perceivableAgents.end(); ++itAgent )
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
+        if( !DEC_Knowledge_Agent::detectDestroyedUnits_ && agent.IsDead() )
+            continue;
         if( agent.BelongsTo( *perceiver_.GetKnowledgeGroup() ) && !agent.IsDead() )
             continue;
         if( agent.IsMarkedForDestruction() )

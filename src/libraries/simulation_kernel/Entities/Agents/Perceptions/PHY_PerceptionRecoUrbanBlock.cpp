@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoUrbanBlock.h"
+#include "DetectionComputer.h"
+#include "MIL_Random.h"
 #include "PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -16,10 +18,9 @@
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
-#include "DetectionComputer.h"
-#include "MIL_Random.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 
@@ -141,6 +142,8 @@ void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVecto
         for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
+            if( !DEC_Knowledge_Agent::detectDestroyedUnits_ && target.IsDead() )
+                continue;
             detection::DetectionComputer detectionComputer( target );
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );

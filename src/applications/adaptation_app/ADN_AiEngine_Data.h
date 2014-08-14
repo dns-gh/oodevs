@@ -53,6 +53,7 @@ public:
     ADN_Type_Double rRepairableModificator_;
     ADN_Type_Double rRepairingModificator_;
     ADN_Type_Double rCapturedModificator_;
+    ADN_Type_Bool bDetectDestroyedUnits_;
 };
 
 #endif // __ADN_AiEngine_Data_h_

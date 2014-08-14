@@ -141,6 +141,14 @@
         <source>Default force ratio feedback time</source>
         <translation>Default force ratio feedback time</translation>
     </message>
+    <message>
+        <source>Perception</source>
+        <translation>Perception</translation>
+    </message>
+    <message>
+        <source>Destroyed units detection</source>
+        <translation>Destroyed units detection</translation>
+    </message>
 </context>
 <context>
     <name>ADN_App</name>

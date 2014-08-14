@@ -139,6 +139,10 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
         throw MASA_EXCEPTION( "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1" ); // $$$$ ABL 2007-07-25: error context
 
     DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional, tickDuration );
+    
+    xisDecisional >> xml::optional >> xml::start( "perception" )
+                    >> xml::attribute( "detect-destroyed-units", DEC_Knowledge_Agent::detectDestroyedUnits_ )
+                  >> xml::end;
 
     xisDecisional >> xml::end;
 }

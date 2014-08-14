@@ -9,6 +9,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
@@ -55,6 +56,8 @@ void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perce
     {
         PHY_RoleInterface_Location& targetRoleLocation = static_cast< PHY_RoleInterface_Location& >( **itAgent );
         MIL_Agent_ABC& target = targetRoleLocation.GetAgent();
+        if( !DEC_Knowledge_Agent::detectDestroyedUnits_ && target.IsDead() )
+            continue;
         detection::DetectionComputer detectionComputer( target );
         perceiver_.GetPion().Execute( detectionComputer );
         target.Execute( detectionComputer );

@@ -142,6 +142,14 @@
         <source>Default force ratio feedback time</source>
         <translation>Tiempo de retroalimentación de relación de fuerza por defecto</translation>
     </message>
+    <message>
+        <source>Perception</source>
+        <translation type="unfinished">Percepción</translation>
+    </message>
+    <message>
+        <source>Destroyed units detection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_App</name>

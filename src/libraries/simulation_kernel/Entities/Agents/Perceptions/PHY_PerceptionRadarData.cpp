@@ -20,6 +20,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Sensors/DistanceModifiersHelpers.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
@@ -113,6 +114,8 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
     for( auto it = targets.begin(); it != targets.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
+        if( !DEC_Knowledge_Agent::detectDestroyedUnits_ && target.IsDead() )
+            continue;
         detection::DetectionComputer detectionComputer( target );
         perceiver.GetPion().Execute( detectionComputer );
         target.Execute( detectionComputer );
