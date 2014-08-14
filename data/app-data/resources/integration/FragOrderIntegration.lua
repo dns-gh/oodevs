@@ -516,7 +516,7 @@ end
 -- @see Types.lua for the state enumeration
 -- @param enum Integer
 integration.disableSmoke = function( enum )
-    if enum == eDisableSomke then
+    if enum == eDisableSmoke then
         myself.disableSmoke = true
     else
         myself.disableSmoke = false  

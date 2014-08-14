@@ -382,4 +382,4 @@ RAPFOR_ZO_DEFAVORABLE = 0.45
 
 -- Enable / disable smoke
 eEnableSmoke = 0
-eDisableSomke = 1
+eDisableSmoke = 1
