@@ -607,8 +607,11 @@ TER_Polygon MIL_UrbanObject::GetScaledLocation( double distance ) const
         auto it = lastUsedScaledLocations_.begin();
         for( ; it != lastUsedScaledLocations_.end(); ++it )
             if( *it == distance )
+            {
+                lastUsedScaledLocations_.erase( it );
+                lastUsedScaledLocations_.push_front( distance );
                 break;
-        lastUsedScaledLocations_.splice( lastUsedScaledLocations_.begin(), lastUsedScaledLocations_, it );
+            }
     }
     return polygon;
 }

@@ -171,7 +171,7 @@ private:
     mutable float livingSpace_;
     mutable std::vector< boost::shared_ptr< MT_Vector2D > > stretchedArea_;
     mutable std::map< double, TER_Polygon > scaledLocations_;
-    mutable std::list< double > lastUsedScaledLocations_;
+    mutable std::deque< double > lastUsedScaledLocations_;
     static const float stretchOffset_;
     static MIL_IDManager idManager_;
     //@}
