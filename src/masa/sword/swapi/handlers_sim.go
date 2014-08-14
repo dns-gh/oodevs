@@ -116,6 +116,7 @@ func (model *ModelData) handleLogSupplyState(m *sword.SimToClient_Content) error
 	if !ok {
 		return fmt.Errorf("cannot apply handle log supply state for unit %d", unitId)
 	}
+	unit.IsSupplyEnabled = mm.GetChain()
 	if stocks := mm.GetStocks(); stocks != nil {
 		for _, stock := range stocks.GetElem() {
 			unit.Stocks = append(unit.Stocks, &Stock{
@@ -124,6 +125,36 @@ func (model *ModelData) handleLogSupplyState(m *sword.SimToClient_Content) error
 			})
 		}
 	}
+	return nil
+}
+
+func (model *ModelData) handleLogMedicalState(m *sword.SimToClient_Content) error {
+	mm := m.GetLogMedicalState()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	unitId := mm.GetUnit().GetId()
+	unit, ok := model.Units[unitId]
+	if !ok {
+		return fmt.Errorf("cannot apply handle log medical state for unit %d", unitId)
+	}
+	unit.IsMedicalEnabled = mm.GetChain()
+	// unused fields
+	return nil
+}
+
+func (model *ModelData) handleLogMaintenanceState(m *sword.SimToClient_Content) error {
+	mm := m.GetLogMaintenanceState()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	unitId := mm.GetUnit().GetId()
+	unit, ok := model.Units[unitId]
+	if !ok {
+		return fmt.Errorf("cannot apply handle log maintenance state for unit %d", unitId)
+	}
+	unit.IsMaintenanceEnabled = mm.GetChain()
+	// unused fields
 	return nil
 }
 

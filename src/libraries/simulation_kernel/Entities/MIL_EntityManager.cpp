@@ -1919,10 +1919,11 @@ namespace
         {
             bool deployed = false;
             auto target = supplier.GetStockAutomat( *it->first, deployed, false );
-            if( !target || !deployed )
-                throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
-                    sword::UnitActionAck::error_undeployed, STR( "unable to find any deployed target for " << it->first->GetName() ) );
+            if( target && deployed && supplier.SupplyHasStock( *it->first ) )
+                return;
         }
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
+            sword::UnitActionAck::error_undeployed, "missing deployed suppliers" );
     }
 }
 

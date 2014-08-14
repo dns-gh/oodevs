@@ -337,31 +337,34 @@ type Stock struct {
 }
 
 type Unit struct {
-	Id                  uint32
-	Type                uint32
-	AutomatId           uint32
-	Name                string
-	Pc                  bool
-	Position            Point
-	Speed               int32
-	PathPoints          uint32
-	DebugBrain          bool
-	Equipments          map[uint32]*Equipment
-	LentEquipments      []*LentEquipment
-	BorrowedEquipments  []*BorrowedEquipment
-	PartySurrenderedTo  uint32
-	Humans              []*Human
-	Resources           map[uint32]Resource
-	Posture             Posture
-	VisionCones         VisionCones
-	TransporterId       uint32
-	TransportedIds      []uint32
-	Adhesions           map[uint32]float32
-	HumanFactors        HumanFactors
-	RawOperationalState int32
-	Neutralized         bool
-	Stocks              []*Stock
-	Installation        int32
+	Id                   uint32
+	Type                 uint32
+	AutomatId            uint32
+	Name                 string
+	Pc                   bool
+	Position             Point
+	Speed                int32
+	PathPoints           uint32
+	DebugBrain           bool
+	Equipments           map[uint32]*Equipment
+	LentEquipments       []*LentEquipment
+	BorrowedEquipments   []*BorrowedEquipment
+	PartySurrenderedTo   uint32
+	Humans               []*Human
+	Resources            map[uint32]Resource
+	Posture              Posture
+	VisionCones          VisionCones
+	TransporterId        uint32
+	TransportedIds       []uint32
+	Adhesions            map[uint32]float32
+	HumanFactors         HumanFactors
+	RawOperationalState  int32
+	Neutralized          bool
+	Stocks               []*Stock
+	Installation         int32
+	IsSupplyEnabled      bool
+	IsMaintenanceEnabled bool
+	IsMedicalEnabled     bool
 }
 
 type Automat struct {
@@ -1061,6 +1064,8 @@ func (model *ModelData) removeSupplyRequest(id uint32) bool {
 
 var (
 	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
+		(*ModelData).handleActionCreation,
+		(*ModelData).handleActionDestruction,
 		(*ModelData).handleAutomatAttributes,
 		(*ModelData).handleAutomatChangeKnowledgeGroup,
 		(*ModelData).handleAutomatChangeLogisticLinks,
@@ -1089,10 +1094,10 @@ var (
 		(*ModelData).handleCrowdKnowledgeDestruction,
 		(*ModelData).handleCrowdOrder,
 		(*ModelData).handleCrowdUpdate,
-		(*ModelData).handleFireEffectCreation,
-		(*ModelData).handleFireEffectDestruction,
 		(*ModelData).handleFireDetectionCreation,
 		(*ModelData).handleFireDetectionDestruction,
+		(*ModelData).handleFireEffectCreation,
+		(*ModelData).handleFireEffectDestruction,
 		(*ModelData).handleFormationChangeSuperior,
 		(*ModelData).handleFormationCreation,
 		(*ModelData).handleFormationDestruction,
@@ -1107,16 +1112,16 @@ var (
 		(*ModelData).handleLogMaintenanceHandlingCreation,
 		(*ModelData).handleLogMaintenanceHandlingDestruction,
 		(*ModelData).handleLogMaintenanceHandlingUpdate,
+		(*ModelData).handleLogMaintenanceState,
 		(*ModelData).handleLogMedicalHandlingCreation,
 		(*ModelData).handleLogMedicalHandlingDestruction,
 		(*ModelData).handleLogMedicalHandlingUpdate,
+		(*ModelData).handleLogMedicalState,
 		(*ModelData).handleLogSupplyHandlingCreation,
 		(*ModelData).handleLogSupplyHandlingDestruction,
 		(*ModelData).handleLogSupplyHandlingUpdate,
 		(*ModelData).handleLogSupplyQuotas,
 		(*ModelData).handleLogSupplyState,
-		(*ModelData).handleActionCreation,
-		(*ModelData).handleActionDestruction,
 		(*ModelData).handleObjectCreation,
 		(*ModelData).handleObjectDestruction,
 		(*ModelData).handleObjectKnowledgeCreation,
@@ -1136,8 +1141,8 @@ var (
 		(*ModelData).handleUnitCreation,
 		(*ModelData).handleUnitDestruction,
 		(*ModelData).handleUnitKnowledgeCreation,
-		(*ModelData).handleUnitKnowledgeUpdate,
 		(*ModelData).handleUnitKnowledgeDestruction,
+		(*ModelData).handleUnitKnowledgeUpdate,
 		(*ModelData).handleUnitOrder,
 		(*ModelData).handleUnitPathfind,
 		(*ModelData).handleUnitVisionCones,
