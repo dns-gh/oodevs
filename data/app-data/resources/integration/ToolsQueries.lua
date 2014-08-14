@@ -625,20 +625,24 @@ end
 -- @param elements List of company knowledges and/or DirectIA agent knowledges.
 -- Agent knowledges must define a "isValid" method returning true if the knowledge is valid,
 -- false otherwise.
+-- @param removeDuplicates Whether or not duplicates should be removed from the returned list
 -- @return List of valid DirectIA agents
-integration.getAgentFromListOfElements = function ( elements )
+integration.getAgentFromListOfElements = function ( elements, removeDuplicates )
     local entities = {}
     for i = 1, #elements do
         if masalife.brain.core.class.isOfType( elements[i], integration.ontology.types.automat ) then -- it can be a company
-            local entitiesFromAutomat = integration.getEntitiesFromAutomat( elements[i], "none", true)
+            local entitiesFromAutomat = integration.getEntitiesFromAutomat( elements[i], "none", true )
             for j = 1, #entitiesFromAutomat do
-                if entitiesFromAutomat[j]:isValid() then
-                    entities[#entities + 1] = entitiesFromAutomat[j]
+                if entitiesFromAutomat[j]:isValid() and ( ( not removeDuplicates ) or ( not utilities.exists( entities, entitiesFromAutomat[j] ) ) ) then
+                    entities[ #entities + 1 ] = entitiesFromAutomat[j]
                 end
             end
-        else -- wa can support units
+        else -- we can support units
             if elements[i]:isValid() then
-                entities[#entities + 1] = integration.getAgentFromKnowledge(elements[i])
+                local agentFromKnowledge = integration.getAgentFromKnowledge( elements[i] )
+                if ( not removeDuplicates ) or ( not utilities.exists( entities, agentFromKnowledge ) ) then
+                    entities[ #entities + 1 ] = agentFromKnowledge
+                end
             end
         end
     end
