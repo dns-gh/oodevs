@@ -10,7 +10,9 @@
 #ifndef DEFAULTCOMPONENTFUNCTORCOMPUTER_H
 #define DEFAULTCOMPONENTFUNCTORCOMPUTER_H
 
-#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentComputer_ABC.h"
+
+class OnComponentFunctor_ABC;
 
 // =============================================================================
 /** @class  DefaultDotationcomputer
@@ -18,7 +20,7 @@
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class DefaultComponentFunctorComputer : public OnComponentFunctorComputer_ABC
+class DefaultComponentFunctorComputer : public OnComponentComputer_ABC
 {
 public:
     //! @name Constructors/Destructor
