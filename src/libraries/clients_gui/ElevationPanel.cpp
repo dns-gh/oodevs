@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "ElevationPanel.h"
 #include "moc_ElevationPanel.cpp"
-#include "ColorButton.h"
 #include "CheckBox.h"
 #include "Elevation2dLayer.h"
 #include "GradientWidget.h"
