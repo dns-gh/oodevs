@@ -629,18 +629,21 @@ end
 -- @return List of valid DirectIA agents
 integration.getAgentFromListOfElements = function ( elements, removeDuplicates )
     local entities = {}
+    local shouldBeAdded = function( entity )
+        return ( ( not removeDuplicates ) or ( not utilities.exists( entities, entity ) ) )
+    end
     for i = 1, #elements do
         if masalife.brain.core.class.isOfType( elements[i], integration.ontology.types.automat ) then -- it can be a company
             local entitiesFromAutomat = integration.getEntitiesFromAutomat( elements[i], "none", true )
             for j = 1, #entitiesFromAutomat do
-                if entitiesFromAutomat[j]:isValid() and ( ( not removeDuplicates ) or ( not utilities.exists( entities, entitiesFromAutomat[j] ) ) ) then
+                if entitiesFromAutomat[j]:isValid() and shouldBeAdded( entitiesFromAutomat[j] ) then
                     entities[ #entities + 1 ] = entitiesFromAutomat[j]
                 end
             end
         else -- we can support units
             if elements[i]:isValid() then
                 local agentFromKnowledge = integration.getAgentFromKnowledge( elements[i] )
-                if ( not removeDuplicates ) or ( not utilities.exists( entities, agentFromKnowledge ) ) then
+                if shouldBeAdded( agentFromKnowledge ) then
                     entities[ #entities + 1 ] = agentFromKnowledge
                 end
             end
