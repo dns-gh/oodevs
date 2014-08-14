@@ -51,6 +51,7 @@ public:
     virtual void GetUrbanBlocks( std::vector< const MIL_UrbanObject_ABC* >& blocks ) const = 0;
     virtual float GetLivingSpace() const = 0;
     virtual unsigned int GetTotalInhabitants() const = 0;
+    virtual TER_Polygon GetScaledLocation( double distance ) const = 0;
     //@}
 
     //! @name Operations

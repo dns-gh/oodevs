@@ -85,6 +85,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned int GetTotalInhabitants() const;
+    virtual TER_Polygon GetScaledLocation( double distance ) const;
     virtual const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock() const;
     virtual bool IsBlock() const;
     //@}
@@ -169,8 +170,16 @@ private:
     mutable float complexity_;
     mutable float livingSpace_;
     mutable std::vector< boost::shared_ptr< MT_Vector2D > > stretchedArea_;
+    mutable std::map< double, TER_Polygon > scaledLocations_;
+    mutable std::list< double > lastUsedScaledLocations_;
     static const float stretchOffset_;
     static MIL_IDManager idManager_;
+    //@}
+
+public:
+    //! @name Member data
+    //@{
+    static int maxScaledLocationsNumber_;
     //@}
 };
 
