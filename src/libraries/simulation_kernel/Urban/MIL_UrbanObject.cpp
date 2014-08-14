@@ -594,26 +594,27 @@ unsigned int MIL_UrbanObject::GetTotalInhabitants() const
 // -----------------------------------------------------------------------------
 TER_Polygon MIL_UrbanObject::GetScaledLocation( double distance ) const
 {
-    TER_Polygon& polygon = scaledLocations_[ distance ];
-    if( polygon.IsNull() )
+    auto it = scaledLocations_.find( distance );
+    if( it == scaledLocations_.end() )
     {
+        TER_Polygon polygon;
         TER_Geometry::Buffer( polygon, GetLocalisation().GetPoints(), distance );
-        if( lastUsedScaledLocations_.size() > maxScaledLocationsNumber_ )
-            lastUsedScaledLocations_.pop_back();
         lastUsedScaledLocations_.push_front( distance );
+        scaledLocations_.insert( std::make_pair( distance,
+            std::make_pair( polygon, lastUsedScaledLocations_.begin() )));
+        if( lastUsedScaledLocations_.size() > maxScaledLocationsNumber_ )
+        {
+            scaledLocations_.erase( lastUsedScaledLocations_.back() );
+            lastUsedScaledLocations_.pop_back();
+        }
+        return polygon;
     }
     else
     {
-        auto it = lastUsedScaledLocations_.begin();
-        for( ; it != lastUsedScaledLocations_.end(); ++it )
-            if( *it == distance )
-            {
-                lastUsedScaledLocations_.erase( it );
-                lastUsedScaledLocations_.push_front( distance );
-                break;
-            }
+        lastUsedScaledLocations_.splice( lastUsedScaledLocations_.begin(),
+                lastUsedScaledLocations_, it->second.second );
+        return it->second.first;
     }
-    return polygon;
 }
 
 // -----------------------------------------------------------------------------

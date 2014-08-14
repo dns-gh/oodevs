@@ -13,6 +13,7 @@
 #include "MIL_UrbanObject_ABC.h"
 #include <tools/Map.h>
 #include "Tools/MIL_IDManager.h"
+#include <unordered_map>
 
 namespace sword
 {
@@ -170,8 +171,9 @@ private:
     mutable float complexity_;
     mutable float livingSpace_;
     mutable std::vector< boost::shared_ptr< MT_Vector2D > > stretchedArea_;
-    mutable std::map< double, TER_Polygon > scaledLocations_;
-    mutable std::deque< double > lastUsedScaledLocations_;
+    typedef std::list< double > T_LastLocations;
+    mutable T_LastLocations lastUsedScaledLocations_;
+    mutable std::map< double, std::pair< TER_Polygon, T_LastLocations::iterator > > scaledLocations_;
     static const float stretchOffset_;
     static MIL_IDManager idManager_;
     //@}
