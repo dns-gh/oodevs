@@ -27,7 +27,7 @@
 
 #include <QtOpenGL/qgl.h>
 
-#include <Qt/qapplication.h>
+#include <QtGui/QApplication>
 
 #include <QtCore/qobject.h>
 #include <QtCore/qpoint.h>

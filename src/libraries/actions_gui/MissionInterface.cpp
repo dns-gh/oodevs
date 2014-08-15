@@ -21,7 +21,10 @@
 #include "clients_kernel/Controllers.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/assign.hpp>
+
+#pragma warning( push, 0 )
 #include <QtWebKit/qwebview.h>
+#pragma warning( pop )
 
 using namespace actions::gui;
 

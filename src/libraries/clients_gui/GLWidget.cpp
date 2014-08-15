@@ -20,6 +20,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <iterator>
 #include <ctime>
+#include <GL/glu.h>
 
 using namespace geometry;
 using namespace kernel;
