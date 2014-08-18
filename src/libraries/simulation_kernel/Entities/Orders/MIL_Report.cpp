@@ -121,8 +121,6 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
         MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (parameters missing)" );
         return false;
     }
-    else if( receivedSize > expectedSize )
-        MT_LOG_INFO_MSG( "Report '" << strMessage_ << "' optional parameters omitted" );
 
     message().mutable_report()->set_id( nextMessageId_-- ); // descending order
     message().mutable_type()->set_id( nID_ );

@@ -13,6 +13,7 @@
 #include "MIL_UrbanObject_ABC.h"
 #include <tools/Map.h>
 #include "Tools/MIL_IDManager.h"
+#include <map>
 
 namespace sword
 {
@@ -85,6 +86,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned int GetTotalInhabitants() const;
+    virtual TER_Polygon GetScaledLocation( double distance ) const;
     virtual const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock() const;
     virtual bool IsBlock() const;
     //@}
@@ -169,8 +171,17 @@ private:
     mutable float complexity_;
     mutable float livingSpace_;
     mutable std::vector< boost::shared_ptr< MT_Vector2D > > stretchedArea_;
+    typedef std::list< double > T_LastLocations;
+    mutable T_LastLocations lastUsedScaledLocations_;
+    mutable std::map< double, std::pair< TER_Polygon, T_LastLocations::iterator > > scaledLocations_;
     static const float stretchOffset_;
     static MIL_IDManager idManager_;
+    //@}
+
+public:
+    //! @name Member data
+    //@{
+    static int maxScaledLocationsNumber_;
     //@}
 };
 

@@ -32,6 +32,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_UrbanObject )
 
 const float MIL_UrbanObject::stretchOffset_ = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
 MIL_IDManager MIL_UrbanObject::idManager_;
+int MIL_UrbanObject::maxScaledLocationsNumber_ = 16;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject constructor
@@ -585,6 +586,35 @@ unsigned int MIL_UrbanObject::GetTotalInhabitants() const
         for( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             ret += it2->second;
     return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::GetScaledLocation
+// Created: LDC 2014-08-14
+// -----------------------------------------------------------------------------
+TER_Polygon MIL_UrbanObject::GetScaledLocation( double distance ) const
+{
+    auto it = scaledLocations_.find( distance );
+    if( it == scaledLocations_.end() )
+    {
+        TER_Polygon polygon;
+        TER_Geometry::Buffer( polygon, GetLocalisation().GetPoints(), distance );
+        lastUsedScaledLocations_.push_front( distance );
+        scaledLocations_.insert( std::make_pair( distance,
+            std::make_pair( polygon, lastUsedScaledLocations_.begin() )));
+        if( lastUsedScaledLocations_.size() > maxScaledLocationsNumber_ )
+        {
+            scaledLocations_.erase( lastUsedScaledLocations_.back() );
+            lastUsedScaledLocations_.pop_back();
+        }
+        return polygon;
+    }
+    else
+    {
+        lastUsedScaledLocations_.splice( lastUsedScaledLocations_.begin(),
+                lastUsedScaledLocations_, it->second.second );
+        return it->second.first;
+    }
 }
 
 // -----------------------------------------------------------------------------
