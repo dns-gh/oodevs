@@ -126,7 +126,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
     , hasSavedCurrentKnowledge_( false )
     , jammedPion_( 0 )
 {
-    if( !crowd_)
+    if( !crowd_ )
         SendCreation();
 }
 
@@ -146,7 +146,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , hasBeenUpdated_( true )
     , isJammed_( false )
     , createdByJamming_( false )
-    , crowd_( false )
+    , crowd_( xis.has_attribute( "crowd" ) && xis.attribute< bool >( "crowd" ) == true )
     , bDiffuseToKnowledgeGroup_( false )
     , hasSavedCurrentKnowledge_( false )
     , jammedPion_( 0 )
