@@ -89,7 +89,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     if( canCreateChildren )
     {
         xis >> xml::start( "communication" )
-                >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory )
+                >> xml::list( "knowledge-group", *this, &MIL_Army::ReadKnowledgeGroup, knowledgegroupFactory )
             >> xml::end
             >> xml::start( "tactical" )
                 >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
@@ -347,10 +347,9 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::ReadLogistic
-// LTO
+// Name: MIL_Army::ReadKnowledgeGroup
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+void MIL_Army::ReadKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
 {
     knowledgeGroupFactory.Create( xis, *this, 0 );
 }
