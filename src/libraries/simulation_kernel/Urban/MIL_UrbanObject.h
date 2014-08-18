@@ -181,7 +181,7 @@ private:
 public:
     //! @name Member data
     //@{
-    static int maxScaledLocationsNumber_;
+    static size_t maxScaledLocationsNumber_;
     //@}
 };
 
