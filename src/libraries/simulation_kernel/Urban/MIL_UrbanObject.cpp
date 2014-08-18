@@ -32,7 +32,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_UrbanObject )
 
 const float MIL_UrbanObject::stretchOffset_ = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
 MIL_IDManager MIL_UrbanObject::idManager_;
-int MIL_UrbanObject::maxScaledLocationsNumber_ = 16;
+size_t MIL_UrbanObject::maxScaledLocationsNumber_ = 16;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject constructor
