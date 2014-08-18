@@ -566,9 +566,9 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
             gui::Event& event = GetOrCreateEvent( *it );
             if( const actions::Action_ABC* action = event.GetAction() )
             {
-                xos << xml::start( "action" );
-                    action->Serialize( xos );
-                xos << xml::end; //! action
+                xml::xosubstream xoss( xos );
+                xoss << xml::start( "action" );
+                    action->Serialize( xoss );
             }
         }
         catch( const std::exception& e )
