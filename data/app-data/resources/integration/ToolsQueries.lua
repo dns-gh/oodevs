@@ -638,9 +638,7 @@ integration.getAgentFromListOfElements = function ( elements, removeDuplicates )
         if masalife.brain.core.class.isOfType( elements[i], integration.ontology.types.automat ) then -- it can be a company
             local entitiesFromAutomat = integration.getEntitiesFromAutomat( elements[i], "none", true )
             for j = 1, #entitiesFromAutomat do
-                if entitiesFromAutomat[j]:isValid() then
-                    addIfNeeded( entitiesFromAutomat[j] )
-                end
+                addIfNeeded( entitiesFromAutomat[j] )
             end
         else -- wa can support units
             if elements[i]:isValid() then
