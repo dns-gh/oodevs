@@ -25,7 +25,7 @@ local startSealOffLocation = function( location, knowledge )
     knowledge.sealPerceptionID = DEC_Perception_ActivateLocationProgressiveRecce( DEC_Geometrie_AgrandirLocalisation( location, 10 ), 2 )
     local sealOffArea = integration.obtenirObjetProcheDe( location, eTypeObjectSealOffArea, 10 )
     myself.buildingObject = myself.buildingObject or false
-    if sealOffArea == nil and (not myself.buildingObject or myself.buildingObject ~= border ) then -- need to create seal off area
+    if sealOffArea == nil and not myself.buildingObject then -- need to create seal off area
         DEC_MagicGetOrCreateObject( eTypeObjectSealOffArea, border )
         myself.buildingObject = border
         integration.warnFriendsForBuildingObject( false, border )
