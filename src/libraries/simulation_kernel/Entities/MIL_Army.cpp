@@ -540,11 +540,15 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 void MIL_Army::Finalize()
 {
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::Finalize, _1 ) );
-    const MIL_KnowledgeGroupType* knowledgeGroupType = MIL_KnowledgeGroupType::FindTypeOrAny( "Standard" );
-    if( !knowledgeGroupType )
-        throw MASA_EXCEPTION( "No Knowledge group types defined in physical database." );
-    boost::shared_ptr< MIL_KnowledgeGroup > crowdKnowledgeGroup( new MIL_KnowledgeGroup( *knowledgeGroupType, *this, true ) );
-    RegisterKnowledgeGroup( crowdKnowledgeGroup );
+    boost::shared_ptr< MIL_KnowledgeGroup > crowdKnowledgeGroup = FindCrowdKnowledgeGroup();
+    if( !crowdKnowledgeGroup )
+    {
+        const MIL_KnowledgeGroupType* knowledgeGroupType = MIL_KnowledgeGroupType::FindTypeOrAny( "Standard" );
+        if( !knowledgeGroupType )
+            throw MASA_EXCEPTION( "No Knowledge group types defined in physical database." );
+        crowdKnowledgeGroup.reset( new MIL_KnowledgeGroup( *knowledgeGroupType, *this, true ) );
+        RegisterKnowledgeGroup( crowdKnowledgeGroup );
+    }
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SetKnowledgeGroup, _1, crowdKnowledgeGroup ) );
     if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = crowdKnowledgeGroup->GetKnowledge() )
     {

@@ -146,7 +146,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , hasBeenUpdated_( true )
     , isJammed_( false )
     , createdByJamming_( false )
-    , crowd_( xis.has_attribute( "crowd" ) && xis.attribute< bool >( "crowd" ) == true )
+    , crowd_( xis.attribute< bool >( "crowd", false ) )
     , bDiffuseToKnowledgeGroup_( false )
     , hasSavedCurrentKnowledge_( false )
     , jammedPion_( 0 )
