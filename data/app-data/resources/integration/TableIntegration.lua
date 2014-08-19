@@ -168,6 +168,7 @@ utilities.createTableWithSimIndexes = function()
                                __newindex = function( t, k, v )
                                                 for key in pairs( t ) do
                                                     if key == k then
+                                                        rawset( t, key, v )
                                                         return
                                                     end
                                                 end
