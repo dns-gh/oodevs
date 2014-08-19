@@ -40,16 +40,28 @@ void CheckForDirectories( tools::Path::T_Paths& result, const tools::Path::T_Pat
     }
 }
 
-bool IsValidTerrain( const tools::Path& dir )
+tools::Path::T_Paths ListDirectories( const tools::Path& rootDir,
+        const std::function< bool( const tools::Path& ) >& callback )
 {
-    return dir.IsDirectory() && ( dir / "terrain.xml" ).Exists();
+    tools::Path::T_Paths kept;
+    rootDir.Walk( [&]( const tools::Path& p ) -> tools::WalkStatus
+    {
+        if( !p.IsDirectory() || !callback( p ) )
+            return tools::WalkContinue;
+        kept.push_back( p.Relative( rootDir ) );
+        return tools::WalkSkipDir;
+    });
+    return kept;
 }
 
 }  // namespace
 
 tools::Path::T_Paths fcmd::ListTerrains( const tools::GeneralConfig& config )
 {
-    return config.GetTerrainsDir().ListElements( boost::bind( &IsValidTerrain, _1 ) );
+    return ListDirectories( config.GetTerrainsDir(), []( const tools::Path& p )
+    {
+        return ( p / "terrain.xml" ).Exists();
+    });
 }
 
 namespace
