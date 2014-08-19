@@ -151,8 +151,10 @@ std::map< unsigned int, QString > fcmd::ListSides( const tools::GeneralConfig& c
     return result;
 }
 
-tools::Path::T_Paths fcmd::RemoveCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise,
-                                             const tools::Path& session, const tools::Path::T_Paths& checkpoints )
+tools::Path::T_Paths fcmd::RemoveCheckpoint( const tools::GeneralConfig& config,
+                                             const tools::Path& exercise,
+                                             const tools::Path& session,
+                                             const tools::Path::T_Paths& checkpoints )
 {
     tools::Path::T_Paths result;
     const tools::Path path( config.GetCheckpointsDir( exercise, session ) );
@@ -165,22 +167,17 @@ tools::Path::T_Paths fcmd::RemoveCheckpoint( const tools::GeneralConfig& config,
     return result;
 }
 
-namespace
-{
-
-bool IsValidModel( const tools::Path& record )
-{
-    return record.IsDirectory() &&
-           ( record / "decisional" ).Exists() && ( record / "decisional" ).IsDirectory() &&
-           ( record / "decisional" / "decisional.xml" ).Exists() &&
-           ( record / "physical" ).Exists();
-}
-
-} // namespace
-
 tools::Path::T_Paths fcmd::ListModels( const tools::GeneralConfig& config )
 {
-    return config.GetModelsDir().ListElements( boost::bind( &IsValidModel, _1 ), false );
+    return ListDirectories( config.GetModelsDir(), []( const tools::Path& dir )
+    {
+        return dir.IsDirectory() &&
+               ( dir / "decisional" ).Exists() &&
+               ( dir / "decisional" ).IsDirectory() &&
+               ( dir / "decisional" / "decisional.xml" ).Exists() &&
+               ( dir / "physical" ).Exists();
+    });
+        
 }
 
 namespace
