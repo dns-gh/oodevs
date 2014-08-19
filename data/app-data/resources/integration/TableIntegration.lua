@@ -151,6 +151,31 @@ utilities.shuffleList = function( list )
     return list
 end
 
+--- Creates a new table, that can be safely used with simulation sources as indexes.
+-- When indexing usual tables with simulation sources,
+-- the propriety "(a == b) => (t[a] == t[b])" is not necessarily true,
+-- whereas it is guaranteed to be true for tables created with this method.
+-- @return Table
+utilities.createTableWithSimIndexes = function()
+    return setmetatable( {}, { __index = function( t, k )
+                                             for key, value in pairs( t ) do
+                                                 if key == k then
+                                                     return value
+                                                 end
+                                             end
+                                         end,
+                                         
+                               __newindex = function( t, k, v )
+                                                for key in pairs( t ) do
+                                                    if key == k then
+                                                        rawset( t, key, v )
+                                                        return
+                                                    end
+                                                end
+                                                rawset( t, k, v )
+                                            end, } )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
