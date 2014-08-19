@@ -180,19 +180,13 @@ tools::Path::T_Paths fcmd::ListModels( const tools::GeneralConfig& config )
         
 }
 
-namespace
+tools::Path::T_Paths fcmd::ListPhysicalModels( const tools::GeneralConfig& config,
+        const tools::Path& model )
 {
-
-bool IsValidPhysicalModel( const tools::Path& record )
-{
-    return record.IsDirectory() && ( record / "physical.xml" ).Exists();
-}
-
-} // namespace
-
-tools::Path::T_Paths fcmd::ListPhysicalModels( const tools::GeneralConfig& config, const tools::Path& model )
-{
-    return config.GetPhysicalsDir( model ).ListElements( boost::bind( &IsValidPhysicalModel, _1 ), false );
+    return ListDirectories( config.GetPhysicalsDir( model ), []( const tools::Path& dir )
+    {
+        return ( dir / "physical.xml" ).Exists();
+    });
 }
 
 namespace
