@@ -64,26 +64,16 @@ tools::Path::T_Paths fcmd::ListTerrains( const tools::GeneralConfig& config )
     });
 }
 
-namespace
+tools::Path::T_Paths fcmd::ListExercises( const tools::GeneralConfig& config,
+        const tools::Path& subDir )
 {
-
-bool IsValidExercise( const tools::Path& dir )
-{
-    return dir.IsDirectory() && ( dir / "exercise.xml" ).Exists();
-}
-
-}  // namespace
-
-tools::Path::T_Paths fcmd::ListExercises( const tools::GeneralConfig& config, const tools::Path& subDirs )
-{
-    const tools::Path baseDirectory = config.GetExercisesDir();
-    tools::Path::T_Paths result;
-    if( !baseDirectory.IsEmpty() )
+    const tools::Path baseDir = config.GetExercisesDir();
+    if( baseDir.IsEmpty() )
+        return tools::Path::T_Paths();
+    return ListDirectories( baseDir / subDir, []( const tools::Path& dir )
     {
-        tools::Path::T_Paths directories = ( baseDirectory / subDirs ).ListDirectories( false, false );
-        CheckForDirectories( result, directories, ( baseDirectory / subDirs ), boost::bind( &IsValidExercise, _1 ) );
-    }
-    return result;
+        return ( dir / "exercise.xml" ).Exists();
+    });
 }
 
 namespace
