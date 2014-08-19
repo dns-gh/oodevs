@@ -189,49 +189,13 @@ tools::Path::T_Paths fcmd::ListPhysicalModels( const tools::GeneralConfig& confi
     });
 }
 
-namespace
+tools::Path::T_Paths fcmd::ListOtherDirectories( const tools::GeneralConfig& config,
+        const tools::Path& exercise )
 {
-
-bool IsValidScript( const tools::Path& child )
-{
-    return child.IsRegularFile() && child.Extension() == ".lua";
-}
-
-} // namespace
-
-tools::Path::T_Paths fcmd::ListScripts( const tools::GeneralConfig& config, const tools::Path& exercise )
-{
-    return ( config.GetExerciseDir( exercise ) / "scripts" ).ListElements( boost::bind( &IsValidScript, _1 ) );
-}
-
-namespace
-{
-
-bool IsValidOrder( const tools::Path& child )
-{
-    return child.IsRegularFile() && child.Extension() == ".ord";
-}
-
-} // namespace
-
-tools::Path::T_Paths fcmd::ListOrders( const tools::GeneralConfig& config, const tools::Path& exercise )
-{
-    return ( config.GetExerciseDir( exercise ) / "orders" ).ListElements( boost::bind( &IsValidOrder, _1 ) );
-}
-
-namespace
-{
-
-bool IsOther( const tools::Path& child )
-{
-    return child.IsDirectory() && child.FileName() != "sessions";
-}
-
-} // namespace
-
-tools::Path::T_Paths fcmd::ListOtherDirectories( const tools::GeneralConfig& config, const tools::Path& exercise )
-{
-    return config.GetExerciseDir( exercise ).ListElements( boost::bind( &IsOther, _1 ), false );
+    return config.GetExerciseDir( exercise ).ListElements( []( const tools::Path& p )
+    {
+        return p.IsDirectory() && p.FileName() != "sessions";
+    }, false );
 }
 
 bool fcmd::ExerciseExists( const tools::GeneralConfig& config, const tools::Path& exercise )
@@ -240,13 +204,15 @@ bool fcmd::ExerciseExists( const tools::GeneralConfig& config, const tools::Path
     return std::find( exercises.begin(), exercises.end(), exercise ) != exercises.end();
 }
 
-bool fcmd::SessionExists( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
+bool fcmd::SessionExists( const tools::GeneralConfig& config, const tools::Path& exercise,
+        const tools::Path& session )
 {
     const tools::Path::T_Paths sessions = ListSessions( config, exercise, true );
     return std::find( sessions.begin(), sessions.end(), session ) != sessions.end();
 }
 
-bool fcmd::CheckpointExists( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const tools::Path& checkpoint )
+bool fcmd::CheckpointExists( const tools::GeneralConfig& config, const tools::Path& exercise,
+        const tools::Path& session, const tools::Path& checkpoint )
 {
     const tools::Path::T_Paths checkpoints = ListCheckpoints( config, exercise, session );
     return std::find( checkpoints.begin(), checkpoints.end(), checkpoint ) != checkpoints.end();
