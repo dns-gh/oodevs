@@ -203,10 +203,9 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
     if not pos1 or not pos2 then
         return 1
     end
-    if integration.isFlying() then -- distance scale is much bigger for flying agents
-        local distanceMax = 20000
-    else
-        local distanceMax = DEC_Detection_Distance and DEC_Detection_Distance() or 4000 -- Scipio compatibility
+    local distanceMax = 20000
+    if not integration.isFlying() then -- distance scale is much bigger for flying agents
+        distanceMax = DEC_Detection_Distance and DEC_Detection_Distance() or 4000 -- Scipio compatibility
     end
     if pos1.getLocalisation and pos1:getLocalisation() then
         return normalizedInverseDistanceSimList( listLocalisationPoints( pos1 ), pos2, distanceMax )
