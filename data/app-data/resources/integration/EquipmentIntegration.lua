@@ -258,7 +258,14 @@ integration.switchOnSafetyMode = function()
     DEC_Perception_ActiverCoupsDeSonde()
     DEC_Agent_ChangerAmbianceEnSurete( true )
     if integration.isFlying() then
-        DEC_Agent_HauteurDeVol( DEC_Agent_GetTacticalFlyingHeight( myself ) )
+        local tacticalFlyingHeight = DEC_Agent_GetTacticalFlyingHeight( myself ) 
+        if tacticalFlyingHeight > 0 then
+            DEC_Agent_HauteurDeVol( DEC_Agent_GetTacticalFlyingHeight( myself ) )
+        else
+            if DEC_Agent_EstEnVol() and myself.altitude then
+                DEC_Agent_HauteurDeVol( myself.altitude * 0.2 )
+            end
+        end
     end
     if not myself.reportSafetyMode or myself.reportSafetyMode == nil then
          myself.reportSafetyMode = true
