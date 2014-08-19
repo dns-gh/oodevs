@@ -199,15 +199,11 @@ local normalizedInverseDistanceSimList = function( posList, pos2, distanceMax )
 end
 
 -- Return 1 if positions are far, 100 if they are near. 'Near/far' is defined according to detection distance.
-integration.normalizedInversedDistance = function( pos1, pos2 )
+integration.normalizedInversedDistance = function( pos1, pos2, distanceMaxGiven )
     if not pos1 or not pos2 then
         return 1
     end
-    if integration.isFlying() then -- distance scale is much bigger for flying agents
-        local distanceMax = 20000
-    else
-        local distanceMax = DEC_Detection_Distance and DEC_Detection_Distance() or 4000 -- Scipio compatibility
-    end
+    local distanceMax = distanceMaxGiven or 100000 -- hard coded : same order of scale for an operational theater ; distanceMaxGiven for scipio compatibility
     if pos1.getLocalisation and pos1:getLocalisation() then
         return normalizedInverseDistanceSimList( listLocalisationPoints( pos1 ), pos2, distanceMax )
     end
