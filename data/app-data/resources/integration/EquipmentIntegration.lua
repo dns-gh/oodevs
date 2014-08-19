@@ -260,7 +260,7 @@ integration.switchOnSafetyMode = function()
     if integration.isFlying() then
         local tacticalFlyingHeight = DEC_Agent_GetTacticalFlyingHeight( myself ) 
         if tacticalFlyingHeight > 0 then
-            DEC_Agent_HauteurDeVol( DEC_Agent_GetTacticalFlyingHeight( myself ) )
+            DEC_Agent_HauteurDeVol( tacticalFlyingHeight )
         else
             if DEC_Agent_EstEnVol() and myself.altitude then
                 DEC_Agent_HauteurDeVol( myself.altitude * 0.2 )
