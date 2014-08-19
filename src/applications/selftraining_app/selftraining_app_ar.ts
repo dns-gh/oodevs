@@ -127,17 +127,6 @@
     </message>
 </context>
 <context>
-    <name>DataWidget</name>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished">حذف</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DebugConfigPanel</name>
     <message>
         <source>Debug</source>
@@ -394,6 +383,17 @@ Do you want to replace it?</source>
     <message>
         <source>No</source>
         <translation type="unfinished">لا</translation>
+    </message>
+</context>
+<context>
+    <name>ModelsWidget</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -665,6 +665,17 @@ Do you want to replace it?</source>
     <message>
         <source>Show window</source>
         <translation type="unfinished">إظهار نافذة</translation>
+    </message>
+</context>
+<context>
+    <name>TerrainsWidget</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

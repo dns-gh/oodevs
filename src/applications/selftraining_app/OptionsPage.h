@@ -14,11 +14,12 @@
 
 class Application;
 class Config;
-class DataWidget;
 class DebugConfigPanel;
 class ExerciseContainer;
 class ExportWidget;
 class ImportWidget;
+class ModelsWidget;
+class TerrainsWidget;
 
 namespace kernel
 {
@@ -92,7 +93,6 @@ private:
     void SetSettingsLayout();
     void SetImportLayout();
     void SetExportLayout();
-    void SetDataLayout();
     void SetDebugLayout( frontend::DebugConfig* debug );
     //@}
 
@@ -135,7 +135,8 @@ private:
     //@{
     ImportWidget* import_;
     ExportWidget* export_;
-    DataWidget* data_;
+    TerrainsWidget* terrains_;
+    ModelsWidget* models_;
     DebugConfigPanel* debug_;
     //@}
 };

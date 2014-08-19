@@ -128,17 +128,6 @@
     </message>
 </context>
 <context>
-    <name>DataWidget</name>
-    <message>
-        <source>Delete</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete?</source>
-        <translation>¿Está seguro que desea eliminar?</translation>
-    </message>
-</context>
-<context>
     <name>DebugConfigPanel</name>
     <message>
         <source>Debug</source>
@@ -398,6 +387,17 @@ Do you want to replace it?</source>
     <message>
         <source>No</source>
         <translation>No</translation>
+    </message>
+</context>
+<context>
+    <name>ModelsWidget</name>
+    <message>
+        <source>Delete</source>
+        <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation>¿Está seguro que desea eliminar?</translation>
     </message>
 </context>
 <context>
@@ -669,6 +669,17 @@ Do you want to replace it?</source>
     <message>
         <source>Show window</source>
         <translation>Mostrar Ventana</translation>
+    </message>
+</context>
+<context>
+    <name>TerrainsWidget</name>
+    <message>
+        <source>Delete</source>
+        <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation>¿Está seguro que desea eliminar?</translation>
     </message>
 </context>
 <context>
