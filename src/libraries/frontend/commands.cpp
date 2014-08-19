@@ -11,8 +11,6 @@
 #include "commands.h"
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
-#include <boost/foreach.hpp>
-#include <boost/bind.hpp>
 #include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -20,26 +18,6 @@ namespace fcmd = frontend::commands;
 
 namespace
 {
-
-void DeleteDirectory( const tools::Path path, tools::Path::T_Paths& result )
-{
-    if( path.Exists() && path.IsDirectory() )
-    {
-        result.push_back( path );
-        path.RemoveAll();
-    }
-}
-
-void CheckForDirectories( tools::Path::T_Paths& result, const tools::Path::T_Paths& directories, const tools::Path& root, const tools::Path::T_Functor& validator )
-{
-    for( auto it = directories.begin(); it != directories.end(); ++it )
-    {
-        if( validator( *it ) )
-            result.push_back( it->Relative( root ) );
-        else if ( it->IsDirectory() )
-            CheckForDirectories( result, it->ListDirectories( false, false ), root, validator );
-    }
-}
 
 // Invokes callback on each subdirectory of rootDir, recursively. If callback,
 // returns boost::none, keep iterating. Otherwise, stop recursing in current
@@ -148,22 +126,6 @@ std::map< unsigned int, QString > fcmd::ListSides( const tools::GeneralConfig& c
                     const auto id = x.attribute< unsigned int >( "id" );
                     result[ id ] = x.attribute< std::string >( "name", "" ).c_str();
                 });
-    return result;
-}
-
-tools::Path::T_Paths fcmd::RemoveCheckpoint( const tools::GeneralConfig& config,
-                                             const tools::Path& exercise,
-                                             const tools::Path& session,
-                                             const tools::Path::T_Paths& checkpoints )
-{
-    tools::Path::T_Paths result;
-    const tools::Path path( config.GetCheckpointsDir( exercise, session ) );
-    if( !checkpoints.empty() )
-        BOOST_FOREACH( const tools::Path& checkpoint, checkpoints )
-            DeleteDirectory( path / checkpoint, result );
-    else
-        for( auto it = path.begin(); it != path.end(); ++it )
-            DeleteDirectory( *it, result );
     return result;
 }
 
