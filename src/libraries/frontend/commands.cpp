@@ -13,6 +13,7 @@
 #include "clients_gui/Tools.h"
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace fcmd = frontend::commands;
@@ -40,15 +41,23 @@ void CheckForDirectories( tools::Path::T_Paths& result, const tools::Path::T_Pat
     }
 }
 
+// Invokes callback on each subdirectory of rootDir, recursively. If callback,
+// returns boost::none, keep iterating. Otherwise, stop recursing in current
+// directory children and if it returned true, add it to the result entries
+// set.
 tools::Path::T_Paths ListDirectories( const tools::Path& rootDir,
-        const std::function< bool( const tools::Path& ) >& callback )
+        const std::function< boost::optional< bool >( const tools::Path& ) >& callback )
 {
     tools::Path::T_Paths kept;
     rootDir.Walk( [&]( const tools::Path& p ) -> tools::WalkStatus
     {
-        if( !p.IsDirectory() || !callback( p ) )
+        if( !p.IsDirectory() )
             return tools::WalkContinue;
-        kept.push_back( p.Relative( rootDir ) );
+        const auto res = callback( p );
+        if( !res )
+            return tools::WalkContinue;
+        if( *res )
+            kept.push_back( p.Relative( rootDir ) );
         return tools::WalkSkipDir;
     });
     return kept;
@@ -59,8 +68,11 @@ tools::Path::T_Paths ListDirectories( const tools::Path& rootDir,
 tools::Path::T_Paths fcmd::ListTerrains( const tools::GeneralConfig& config )
 {
     return ListDirectories( config.GetTerrainsDir(), []( const tools::Path& p )
+        -> boost::optional< bool >
     {
-        return ( p / "terrain.xml" ).Exists();
+        if( ( p / "terrain.xml" ).Exists() )
+            return true;
+        return boost::none;
     });
 }
 
@@ -71,37 +83,39 @@ tools::Path::T_Paths fcmd::ListExercises( const tools::GeneralConfig& config,
     if( baseDir.IsEmpty() )
         return tools::Path::T_Paths();
     return ListDirectories( baseDir / subDir, []( const tools::Path& dir )
+        -> boost::optional< bool >
     {
-        return ( dir / "exercise.xml" ).Exists();
+        if( ( dir / "exercise.xml" ).Exists() )
+            return true;
+        return boost::none;
     });
 }
 
-namespace
+tools::Path::T_Paths fcmd::ListSessions( const tools::GeneralConfig& config,
+        const tools::Path& exercise, bool useValidator )
 {
-
-bool IsValidReplay( const tools::Path& session )
-{
-    tools::Path record = session / "record";
-    if( !session.IsDirectory() || !record.Exists() || !record.IsDirectory() )
-        return false;
-
-    for( auto it = record.begin(); it != record.end(); ++it )
+    return ListDirectories( config.GetSessionsDir( exercise ), [&]( const tools::Path& dir )
+            -> boost::optional< bool >
     {
-        const tools::Path child = *it;
-        if( child.IsDirectory() && ( child / "info" ).Exists() && ( child / "index" ).Exists() &&
-            ( child / "keyindex" ).Exists() && ( child / "key" ).Exists() && ( child / "update" ).Exists() )
-            return true; // un seul dossier valide suffit
-    }
-    return false;
-}
+        if( !useValidator )
+            return true;
+        const auto record = dir / "record";
+        if( !record.Exists() || !record.IsDirectory() )
+            return false;
 
-}  // namespace
-
-tools::Path::T_Paths fcmd::ListSessions( const tools::GeneralConfig& config, const tools::Path& exercise, bool useValidator )
-{
-    if( useValidator )
-        return config.GetSessionsDir( exercise ).ListElements( boost::bind( &IsValidReplay, _1 ) );
-    return config.GetSessionsDir( exercise ).ListElements( 0, false );
+        for( auto it = record.begin(); it != record.end(); ++it )
+        {
+            const tools::Path child = *it;
+            if( child.IsDirectory() &&
+                ( child / "info" ).Exists() &&
+                ( child / "index" ).Exists() &&
+                ( child / "keyindex" ).Exists() &&
+                ( child / "key" ).Exists() && 
+                ( child / "update" ).Exists() )
+                return true;
+        }
+        return false;
+    });
 }
 
 namespace
