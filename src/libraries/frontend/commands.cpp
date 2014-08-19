@@ -133,27 +133,21 @@ tools::Path::T_Paths fcmd::ListCheckpoints( const tools::GeneralConfig& config, 
     return config.GetCheckpointsDir( exercise, session ).ListDirectories( true );
 }
 
-namespace
-{
-
-void ReadSide( xml::xistream& xis, std::map< unsigned int, QString >& result )
-{
-    result[ xis.attribute< unsigned int >( "id" ) ] = xis.attribute< std::string >( "name", "" ).c_str();
-}
-
-} // namespace
-
-std::map< unsigned int, QString > fcmd::ListSides( const tools::GeneralConfig& config, const tools::Path& exercise )
+std::map< unsigned int, QString > fcmd::ListSides( const tools::GeneralConfig& config,
+        const tools::Path& exercise )
 {
     std::map< unsigned int, QString > result;
     const tools::Path orbatFile = config.GetExerciseDir( exercise ) / "orbat.xml";
-    if( orbatFile.Exists() )
-    {
-        tools::Xifstream xis( orbatFile );
-        xis >> xml::start( "orbat" )
-                >> xml::start( "parties" )
-                    >> xml::list( "party", boost::bind( &ReadSide, _1, boost::ref( result ) ) );
-    }
+    if( !orbatFile.Exists() )
+        return result;
+    tools::Xifstream xis( orbatFile );
+    xis >> xml::start( "orbat" )
+            >> xml::start( "parties" )
+                >> xml::list( "party", [&]( xml::xistream& x )
+                {
+                    const auto id = x.attribute< unsigned int >( "id" );
+                    result[ id ] = x.attribute< std::string >( "name", "" ).c_str();
+                });
     return result;
 }
 
