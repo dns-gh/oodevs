@@ -118,19 +118,14 @@ tools::Path::T_Paths fcmd::ListSessions( const tools::GeneralConfig& config,
     });
 }
 
-namespace
+tools::Path::T_Paths fcmd::ListSessionsWithCheckpoint( const tools::GeneralConfig& config,
+        const tools::Path& exercise )
 {
-
-bool HasCheckpoints( const tools::Path& session )
-{
-    return session.IsDirectory() && ( session / "checkpoints" ).Exists();
-}
-
-}  // namespace
-
-tools::Path::T_Paths fcmd::ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise )
-{
-    return config.GetSessionsDir( exercise ).ListElements( boost::bind( &HasCheckpoints, _1 ) );
+    return ListDirectories( config.GetSessionsDir( exercise ), [&]( const tools::Path& dir )
+            -> boost::optional< bool >
+    {
+        return ( dir / "checkpoints" ).Exists();
+    });
 }
 
 tools::Path::T_Paths fcmd::ListCheckpoints( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
