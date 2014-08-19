@@ -151,7 +151,7 @@ private:
     void ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory );
     void ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
     void ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabitantFactory );
-    void ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory ); // LTO
+    void ReadKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory ); // LTO
     void ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory );
     void ReadLogisticLinkSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory , MIL_AutomateLOG& superior );
     void ReadDiplomacy( xml::xistream& xis );

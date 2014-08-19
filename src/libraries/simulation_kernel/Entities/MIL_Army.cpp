@@ -89,7 +89,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     if( canCreateChildren )
     {
         xis >> xml::start( "communication" )
-                >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory )
+                >> xml::list( "knowledge-group", *this, &MIL_Army::ReadKnowledgeGroup, knowledgegroupFactory )
             >> xml::end
             >> xml::start( "tactical" )
                 >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
@@ -347,10 +347,9 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::ReadLogistic
-// LTO
+// Name: MIL_Army::ReadKnowledgeGroup
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+void MIL_Army::ReadKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
 {
     knowledgeGroupFactory.Create( xis, *this, 0 );
 }
@@ -541,11 +540,15 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 void MIL_Army::Finalize()
 {
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::Finalize, _1 ) );
-    const MIL_KnowledgeGroupType* knowledgeGroupType = MIL_KnowledgeGroupType::FindTypeOrAny( "Standard" );
-    if( !knowledgeGroupType )
-        throw MASA_EXCEPTION( "No Knowledge group types defined in physical database." );
-    boost::shared_ptr< MIL_KnowledgeGroup > crowdKnowledgeGroup( new MIL_KnowledgeGroup( *knowledgeGroupType, *this, true ) );
-    RegisterKnowledgeGroup( crowdKnowledgeGroup );
+    boost::shared_ptr< MIL_KnowledgeGroup > crowdKnowledgeGroup = FindCrowdKnowledgeGroup();
+    if( !crowdKnowledgeGroup )
+    {
+        const MIL_KnowledgeGroupType* knowledgeGroupType = MIL_KnowledgeGroupType::FindTypeOrAny( "Standard" );
+        if( !knowledgeGroupType )
+            throw MASA_EXCEPTION( "No Knowledge group types defined in physical database." );
+        crowdKnowledgeGroup.reset( new MIL_KnowledgeGroup( *knowledgeGroupType, *this, true ) );
+        RegisterKnowledgeGroup( crowdKnowledgeGroup );
+    }
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SetKnowledgeGroup, _1, crowdKnowledgeGroup ) );
     if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = crowdKnowledgeGroup->GetKnowledge() )
     {
