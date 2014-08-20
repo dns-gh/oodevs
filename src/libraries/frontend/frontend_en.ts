@@ -2,49 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en" sourcelanguage="en">
 <context>
-    <name>AdvancedConfigPanel</name>
-    <message>
-        <source>Time</source>
-        <translation>Time</translation>
-    </message>
-    <message>
-        <source>Time step:</source>
-        <translation>Time step:</translation>
-    </message>
-    <message>
-        <source>Time factor:</source>
-        <translation type="unfinished">Speed factor:</translation>
-    </message>
-    <message>
-        <source>End tick:</source>
-        <translation>End tick:</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Advanced</translation>
-    </message>
-    <message>
-        <source>Paused at startup:</source>
-        <translation>Paused at startup:</translation>
-    </message>
-    <message>
-        <source>Do not start gaming client</source>
-        <translation>Do not start gaming client</translation>
-    </message>
-    <message>
-        <source>Report clean frequency: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of pathfind threads:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recorder fragmentation frequency: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
@@ -235,6 +192,49 @@
     <message>
         <source>Simulation started</source>
         <translation>Simulation started</translation>
+    </message>
+</context>
+<context>
+    <name>frontend::AdvancedConfigPanel</name>
+    <message>
+        <source>Time</source>
+        <translation>Time</translation>
+    </message>
+    <message>
+        <source>Time step</source>
+        <translation>Time step</translation>
+    </message>
+    <message>
+        <source>Time factor</source>
+        <translation type="unfinished">Speed factor</translation>
+    </message>
+    <message>
+        <source>End tick</source>
+        <translation>End tick</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Advanced</translation>
+    </message>
+    <message>
+        <source>Paused at startup</source>
+        <translation>Paused at startup</translation>
+    </message>
+    <message>
+        <source>Do not start gaming client</source>
+        <translation>Do not start gaming client</translation>
+    </message>
+    <message>
+        <source>Report clean frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of pathfind threads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recorder fragmentation frequency</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

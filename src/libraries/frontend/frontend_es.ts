@@ -2,49 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="es" sourcelanguage="en">
 <context>
-    <name>AdvancedConfigPanel</name>
-    <message>
-        <source>Time</source>
-        <translation>Tiempo</translation>
-    </message>
-    <message>
-        <source>Time step:</source>
-        <translation>Iterar cada (s):</translation>
-    </message>
-    <message>
-        <source>Time factor:</source>
-        <translation>Factor de tiempo:</translation>
-    </message>
-    <message>
-        <source>End tick:</source>
-        <translation>Iteración final (0 significa sin límite):</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avanzada</translation>
-    </message>
-    <message>
-        <source>Paused at startup:</source>
-        <translation>Iniciar en pausa:</translation>
-    </message>
-    <message>
-        <source>Do not start gaming client</source>
-        <translation>No iniciar interfaz de juego</translation>
-    </message>
-    <message>
-        <source>Report clean frequency: </source>
-        <translation>Máximo número de reportes mostrados por unidad: </translation>
-    </message>
-    <message>
-        <source>Number of pathfind threads:</source>
-        <translation>Número de procesos para autoruteo:</translation>
-    </message>
-    <message>
-        <source>Recorder fragmentation frequency: </source>
-        <translation>Número de iteraciones en cada archivo/fragmento de grabación:</translation>
-    </message>
-</context>
-<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
@@ -235,6 +192,49 @@
     <message>
         <source>Simulation started</source>
         <translation>Simulación iniciada</translation>
+    </message>
+</context>
+<context>
+    <name>frontend::AdvancedConfigPanel</name>
+    <message>
+        <source>Time</source>
+        <translation>Tiempo</translation>
+    </message>
+    <message>
+        <source>Time step</source>
+        <translation>Iterar cada (s)</translation>
+    </message>
+    <message>
+        <source>Time factor</source>
+        <translation>Factor de tiempo</translation>
+    </message>
+    <message>
+        <source>End tick</source>
+        <translation>Iteración final (0 significa sin límite)</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avanzada</translation>
+    </message>
+    <message>
+        <source>Paused at startup</source>
+        <translation>Iniciar en pausa</translation>
+    </message>
+    <message>
+        <source>Do not start gaming client</source>
+        <translation>No iniciar interfaz de juego</translation>
+    </message>
+    <message>
+        <source>Report clean frequency</source>
+        <translation>Máximo número de reportes mostrados por unidad</translation>
+    </message>
+    <message>
+        <source>Number of pathfind threads</source>
+        <translation>Número de procesos para autoruteo</translation>
+    </message>
+    <message>
+        <source>Recorder fragmentation frequency</source>
+        <translation>Número de iteraciones en cada archivo/fragmento de grabación</translation>
     </message>
 </context>
 <context>

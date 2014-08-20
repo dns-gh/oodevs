@@ -2,49 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pt" sourcelanguage="en">
 <context>
-    <name>AdvancedConfigPanel</name>
-    <message>
-        <source>Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time step:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time factor:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End tick:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Paused at startup:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of pathfind threads:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recorder fragmentation frequency: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do not start gaming client</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Report clean frequency: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
@@ -234,6 +191,49 @@
     </message>
     <message>
         <source>Simulation started</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>frontend::AdvancedConfigPanel</name>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End tick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of pathfind threads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recorder fragmentation frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not start gaming client</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Report clean frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

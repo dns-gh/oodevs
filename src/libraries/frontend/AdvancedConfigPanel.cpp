@@ -135,16 +135,16 @@ AdvancedConfigPanel::~AdvancedConfigPanel()
 // -----------------------------------------------------------------------------
 void AdvancedConfigPanel::OnLanguageChanged()
 {
-    timeBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Time" ) );
-    stepLabel_->setText( tools::translate( "AdvancedConfigPanel", "Time step:" ) );
-    factorLabel_->setText( tools::translate( "AdvancedConfigPanel", "Time factor:" ) );
-    endtickLabel_->setText( tools::translate( "AdvancedConfigPanel", "End tick:" ) );
-    pausedLabel_->setText( tools::translate( "AdvancedConfigPanel", "Paused at startup:" ) );
+    timeBox_->setTitle( tr( "Time" ) );
+    stepLabel_->setText( tr( "Time step" ) );
+    factorLabel_->setText( tr( "Time factor" ) );
+    endtickLabel_->setText( tr( "End tick" ) );
+    pausedLabel_->setText( tr( "Paused at startup" ) );
 
-    pathThreadsLabel_->setText( tools::translate( "AdvancedConfigPanel", "Number of pathfind threads:" ) );
-    fragmentsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Recorder fragmentation frequency: " ) );
-    noClientLabel_->setText( tools::translate( "AdvancedConfigPanel", "Do not start gaming client" ) );
-    reportsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Report clean frequency: " ) );
+    pathThreadsLabel_->setText( tr( "Number of pathfind threads" ) );
+    fragmentsFrequencyLabel_->setText( tr( "Recorder fragmentation frequency" ) );
+    noClientLabel_->setText( tr( "Do not start gaming client" ) );
+    reportsFrequencyLabel_->setText( tr( "Report clean frequency" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void AdvancedConfigPanel::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 QString AdvancedConfigPanel::GetName() const
 {
-    return tools::translate( "AdvancedConfigPanel", "Advanced" );
+    return tr( "Advanced" );
 }
 
 // -----------------------------------------------------------------------------
