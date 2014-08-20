@@ -21,8 +21,10 @@
 #include "clients_kernel/Tools.h"
 #include "protocol/Helpers.h"
 #include "protocol/Simulation.h"
+#include "tools/DefaultLoader.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/FileWrapper.h"
+#include "tools/NullFileLoaderObserver.h"
 #include "tools/XmlStreamOperators.h"
 #include <tools/Path.h>
 #include <tools/Exception.h>
@@ -71,8 +73,10 @@ void ReportFactory::Load( const tools::ExerciseConfig& config  )
     const tools::Path reports = config.GetOptionalPhysicalChildFile( "reports" );
     if( reports.IsEmpty() )
         throw MASA_EXCEPTION( "cannot load reports file: " + reports.ToUTF8() );
-    tools::Xifstream xis( reports );
-    xis >> xml::start( "reports" )
+    tools::NullFileLoaderObserver observer;
+    tools::DefaultLoader loader( observer );
+    std::unique_ptr< xml::xistream > xis = loader.LoadFile( reports );
+    *xis >> xml::start( "reports" )
             >> xml::list( "report", *this, &ReportFactory::ReadReport );
 }
 
