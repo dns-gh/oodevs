@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AdvancedConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
-                                  bool hasClient );
+                                  bool hasClient, bool autostartEvents );
     virtual ~AdvancedConfigPanel();
     //@}
 
@@ -52,6 +52,7 @@ signals:
     //! @name Signals
     //@{
     void OnClientEnabled( bool enabled );
+    void OnAutostartEvents( bool enabled );
     //@}
 
 private slots:
@@ -86,6 +87,9 @@ private:
 
     QLabel*                     reportsFrequencyLabel_;
     QSpinBox*                   reportsFrequencySpin_;
+
+    QLabel*                     autostartEventsLabel_;
+    QCheckBox*                  autostartEvents_;
     //@}
 };
 }

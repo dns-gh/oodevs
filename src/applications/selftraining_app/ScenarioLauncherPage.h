@@ -68,6 +68,7 @@ private slots:
     void ClearSelection();
     void OnSelectCheckpoint( const tools::Path& session, const tools::Path& checkpoint );
     void OnClientEnabled( bool enabled );
+    void OnAutostartEvents( bool enabled );
     //@}
 
 private:
@@ -106,6 +107,7 @@ private:
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          hasClient_;
+    bool                          autostartEvents_;
     //@}
 };
 

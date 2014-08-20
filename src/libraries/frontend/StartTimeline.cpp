@@ -101,7 +101,8 @@ namespace
 StartTimeline::StartTimeline( const tools::GeneralConfig& config,
                               const tools::Path& exercise,
                               const tools::Path& session,
-                              const frontend::DebugConfig& debug )
+                              const frontend::DebugConfig& debug,
+                              bool autostartEvents )
     : SpawnCommand( config, "timeline_server.exe", "timeline_server" )
 {
     ConfigurationManipulator xpath( config, exercise, session );
@@ -118,7 +119,7 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
         AddArgument( "-debug" );
         AddArgument( "www", debug.timeline.debugWwwDir.ToUTF8() );
     }
-    WriteRunScript( run, boost::lexical_cast< int >( dispatcher ), debug.timeline.autostart );
+    WriteRunScript( run, boost::lexical_cast< int >( dispatcher ), autostartEvents );
 }
 
 // -----------------------------------------------------------------------------

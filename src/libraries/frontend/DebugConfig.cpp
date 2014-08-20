@@ -30,7 +30,6 @@ DebugConfig frontend::LoadDebugConfig()
     config.timeline.clientLogPath = registry::ReadPath( "TimelineClientLog" );
     config.timeline.cefLog = registry::ReadPath( "CefLog" );
     config.timeline.legacyTimeline = registry::ReadBool( "EnableLegacyTimeline" );
-    config.timeline.autostart = registry::ReadBool( "AutostartEvents", true );
 
     config.features = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
 
@@ -53,7 +52,6 @@ void frontend::SaveDebugConfig( const DebugConfig& config )
     registry::WritePath( "TimelineClientLog", config.timeline.clientLogPath );
     registry::WritePath( "CefLog", config.timeline.cefLog );
     registry::WriteBool( "EnableLegacyTimeline", config.timeline.legacyTimeline );
-    registry::WriteBool( "AutostartEvents", config.timeline.autostart );
 
     registry::WriteString( "DevFeatures",
         QString::fromStdString( tools::JoinFeatures( config.features ) ) );

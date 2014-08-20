@@ -203,10 +203,6 @@
         <source>Rendering threads</source>
         <translation>Rendering threads</translation>
     </message>
-    <message>
-        <source>Automatically start events</source>
-        <translation>Automatically start events</translation>
-    </message>
 </context>
 <context>
     <name>ExerciseList</name>

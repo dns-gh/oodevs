@@ -236,6 +236,10 @@
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically start timeline events</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>frontend::FileList</name>

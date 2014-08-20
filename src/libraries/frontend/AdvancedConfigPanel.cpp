@@ -57,7 +57,7 @@ namespace
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
 AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
-                                          bool hasClient )
+                                          bool hasClient, bool autostartEvents )
     : PluginConfig_ABC( parent )
     , config_( config )
 {
@@ -113,6 +113,9 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
 
     AddSpinBox( miscellaneousBoxLayout, reportsFrequencyLabel_, reportsFrequencySpin_, 1, std::numeric_limits< int >::max(), 1, 100 );
 
+    AddCheckBox( miscellaneousBoxLayout, autostartEventsLabel_, autostartEvents_, autostartEvents );
+    connect( autostartEvents_, SIGNAL( clicked( bool ) ), this, SIGNAL( OnAutostartEvents( bool ) ) );
+
     //general panel
     QVBoxLayout* boxLayout = new QVBoxLayout( this );
     boxLayout->setMargin( 5 );
@@ -145,6 +148,7 @@ void AdvancedConfigPanel::OnLanguageChanged()
     fragmentsFrequencyLabel_->setText( tr( "Recorder fragmentation frequency" ) );
     noClientLabel_->setText( tr( "Do not start gaming client" ) );
     reportsFrequencyLabel_->setText( tr( "Report clean frequency" ) );
+    autostartEventsLabel_->setText( tr( "Automatically start timeline events" ) );
 }
 
 // -----------------------------------------------------------------------------

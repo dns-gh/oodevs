@@ -236,6 +236,10 @@
         <source>Report clean frequency</source>
         <translation>Fréquence de nettoyage des comptes-rendus</translation>
     </message>
+    <message>
+        <source>Automatically start timeline events</source>
+        <translation>Démarrer les évènements de la chronologie automatiquement</translation>
+    </message>
 </context>
 <context>
     <name>frontend::FileList</name>

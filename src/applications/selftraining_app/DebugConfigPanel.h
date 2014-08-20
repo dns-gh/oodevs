@@ -56,7 +56,6 @@ private slots:
     void OnTimelineDebugPortChanged( int port );
     void OnTimelineLogChanged( const QString& );
     void OnTimelineDebugChanged( const QString& );
-    void OnTimelineAutostart( bool checked );
     void OnCefLogChanged( const QString& );
     void OnMapnikLayerChecked( bool checked );
     void OnMapnikThreadsChanged( int threads );
@@ -89,7 +88,6 @@ private:
     QLabel* cefLogLabel_;
     QLineEdit* cefLog_;
     QCheckBox* oldTimeline_;
-    QCheckBox* autostartEvents_;
 
     //Integration Layer Configuration
     QLabel* integrationLabel_;

@@ -119,19 +119,12 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
     oldTimelineLayout->addWidget( oldTimeline_ );
     connect( oldTimeline_, SIGNAL( toggled( bool ) ), this, SLOT( OnTimelineChecked( bool ) ) );
 
-    autostartEvents_ = new QCheckBox();
-    autostartEvents_->setChecked( debug_.timeline.autostart );
-    QHBoxLayout* autostartLayout = new QHBoxLayout();
-    autostartLayout->addWidget( autostartEvents_ );
-    connect( autostartEvents_, SIGNAL( toggled( bool ) ), this, SLOT( OnTimelineAutostart( bool ) ) );
-
     QVBoxLayout* timelineGroupLayout = new QVBoxLayout( timelineBox_ );
     timelineGroupLayout->addLayout( debugPortBox );
     timelineGroupLayout->addLayout( timelineLogLayout );
     timelineGroupLayout->addLayout( debugLayout );
     timelineGroupLayout->addLayout( cefLogLayout );
     timelineGroupLayout->addLayout( oldTimelineLayout );
-    timelineGroupLayout->addLayout( autostartLayout );
 
     //profiling group box
     profilingBox_ = new QGroupBox();
@@ -267,7 +260,6 @@ void DebugConfigPanel::OnLanguageChanged()
     timelineDebugLabel_->setText( tr( "Debug directory" ) );
     cefLogLabel_->setText( tr( "Chrome embedded log file" ) );
     oldTimeline_->setText( tr( "Enable legacy timeline" ) );
-    autostartEvents_->setText( tr( "Automatically start events" ) );
     integrationLabel_->setText( tr( "Integration layer directory" ) );
     profilingBox_->setTitle( tr( "Profiling settings" ) );
     decCallsBox_->setText( tr( "Decisional functions" ) );
@@ -322,12 +314,6 @@ void DebugConfigPanel::OnDecProfilingChanged( bool checked )
 void DebugConfigPanel::OnTimelineChecked( bool checked )
 {
     debug_.timeline.legacyTimeline = checked;
-    frontend::SaveDebugConfig( debug_ );
-}
-
-void DebugConfigPanel::OnTimelineAutostart( bool checked )
-{
-    debug_.timeline.autostart = checked;
     frontend::SaveDebugConfig( debug_ );
 }
 

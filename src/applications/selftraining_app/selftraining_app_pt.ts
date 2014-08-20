@@ -203,10 +203,6 @@
         <source>Rendering threads</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Automatically start events</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ExerciseList</name>

@@ -124,6 +124,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )
+    , autostartEvents_  ( registry::ReadBool( "AutostartEvents", true ) )
 {
     setWindowTitle( "ScenarioLauncherPage" );
 
@@ -155,8 +156,10 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     AddPlugin( new frontend::RandomPluginConfigPanel( configTabs_, config_ ) );
 
     //advanced config panel
-    frontend::AdvancedConfigPanel* advancedPanel = AddPlugin( new frontend::AdvancedConfigPanel( configTabs_, config_, hasClient_ ) );
+    frontend::AdvancedConfigPanel* advancedPanel = AddPlugin( new frontend::AdvancedConfigPanel( configTabs_, config_,
+        hasClient_, autostartEvents_ ) );
     connect( advancedPanel, SIGNAL( OnClientEnabled( bool ) ), SLOT( OnClientEnabled( bool ) ) );
+    connect( advancedPanel, SIGNAL( OnAutostartEvents( bool ) ), SLOT( OnAutostartEvents( bool ) ) );
 
     //orbat config panel
     OrbatConfigPanel* pOrbatConfigPanel = AddPlugin( new OrbatConfigPanel( configTabs_, config_ ) );
@@ -250,7 +253,7 @@ void ScenarioLauncherPage::OnStart()
     process->Add( boost::make_shared< frontend::StartExercise >(
         config_, exerciseName, session.first, true, "", checkpoint_, debug_ ) );
     process->Add( boost::make_shared< frontend::StartTimeline >(
-        config_, exerciseName, session.first, debug_ ) );
+        config_, exerciseName, session.first, debug_, autostartEvents_ ) );
     if( hasClient_ )
     {
         auto profile = profile_.GetLogin();
@@ -351,4 +354,10 @@ void ScenarioLauncherPage::OnClientEnabled( bool enabled )
 {
     registry::WriteBool( "NoClientSelected", !enabled );
     hasClient_ = enabled;
+}
+
+void ScenarioLauncherPage::OnAutostartEvents( bool enabled )
+{
+    registry::WriteBool( "AutostartEvents", enabled );
+    autostartEvents_ = enabled;
 }

@@ -236,6 +236,10 @@
         <source>Recorder fragmentation frequency</source>
         <translation>Número de iteraciones en cada archivo/fragmento de grabación</translation>
     </message>
+    <message>
+        <source>Automatically start timeline events</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>frontend::FileList</name>
