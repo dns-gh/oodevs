@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.4.0/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.5.0/exercise/orbat.xsd">
   <parties>
     <party id="1" name="party1" type="friend">
       <objects/>
@@ -41,21 +41,40 @@
             </automat>
           </formation>
         </formation>
-        <formation id="175" level="xxx" name="Pull/Push flow F1" symbol="symbols/sfgpuss">
-          <automat engaged="true" id="126" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1a" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
-            <unit command-post="true" id="127" name="Supply Log Unit 1a" position="28RDS2579129477" type="Supply Log Unit 1">
-              <stocks>
-                <resource name="ammunition" quantity="100"/>
-              </stocks>
-            </unit>
-          </automat>
-          <automat engaged="true" id="128" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1b" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
-            <unit command-post="true" id="129" name="Supply Log Unit 1b" position="28RDS2614229750" type="Supply Log Unit 1">
-              <stocks>
-                <resource name="electrogen 1" quantity="50"/>
-              </stocks>
-            </unit>
-          </automat>
+        <formation id="175" level="xxx" name="PushPull F3" symbol="symbols/sfgpuss">
+          <formation id="219" level="xx" name="PushPull F2" symbol="symbols/sfgpuss">
+            <formation id="227" level="x" name="PushPull F1" symbol="symbols/sfgpuss">
+              <automat engaged="true" id="250" knowledge-group="3" logistic-level="logistic-base" name="PushPull Automat 1" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+                <unit command-post="true" id="251" name="PushPull Unit 1" position="28RDS2430332201" type="Supply Log Unit 1"/>
+              </automat>
+              <automat engaged="true" id="252" knowledge-group="3" name="PushPull Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
+                <unit command-post="true" id="253" name="Mobile Infantry" position="28RDS2502832172" type="Mobile Infantry"/>
+                <unit command-post="false" id="254" name="Mobile Infantry" position="28RDS2502932272" type="Mobile Infantry"/>
+                <unit command-post="false" id="255" name="Mobile Infantry" position="28RDS2511532122" type="Mobile Infantry"/>
+                <unit command-post="false" id="256" name="Mobile Infantry" position="28RDS2494132123" type="Mobile Infantry"/>
+              </automat>
+            </formation>
+            <formation id="228" level="x" logistic-level="logistic-base" name="PushPull BLD" symbol="symbols/sfgpuss">
+              <automat engaged="true" id="266" knowledge-group="3" name="PushPull Automat 2" symbol="symbols/sfgpuss" type="Supply Log Automat 2">
+                <unit command-post="false" id="267" name="PushPull System 2" position="28RDS2366932667" type="Supply Log Unit System">
+                  <stocks>
+                    <resource name="ammunition" quantity="10"/>
+                  </stocks>
+                </unit>
+                <unit command-post="true" id="268" name="PushPull CP 2" position="28RDS2366832567" type="Supply Log Unit CP"/>
+              </automat>
+            </formation>
+          </formation>
+          <formation id="220" level="xx" logistic-level="logistic-base" name="PushPull BLT" symbol="symbols/sfgpuss">
+            <automat engaged="true" id="263" knowledge-group="3" name="PushPull Automat 3" symbol="symbols/sfgpuss" type="Supply Log Automat 3">
+              <unit command-post="true" id="264" name="PushPull CP 3" position="28RDS2287832474" type="Supply Log Unit CP"/>
+              <unit command-post="false" id="265" name="PushPull System 3" position="28RDS2287832574" type="Supply Log Unit System">
+                <stocks>
+                  <resource name="ammunition" quantity="10"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
         </formation>
         <formation id="176" level="xxx" name="Supply F5" symbol="symbols/sfgpuss">
           <formation id="130" level="xx" name="Supply F1" symbol="symbols/sfgpu">
@@ -171,6 +190,15 @@
               <resource name="gyroscope 2" quantity="1"/>
             </quotas>
           </subordinate>
+        </logistic-base>
+        <logistic-base id="250">
+          <subordinate id="252"/>
+        </logistic-base>
+        <logistic-base id="228">
+          <subordinate id="250"/>
+        </logistic-base>
+        <logistic-base id="220">
+          <subordinate id="228"/>
         </logistic-base>
         <logistic-base id="180">
           <subordinate id="131"/>

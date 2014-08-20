@@ -142,7 +142,8 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 
 	// Waiting for deployment
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[supply].Installation == 100
+		u := data.Units[supply]
+		return u.IsMaintenanceEnabled && u.IsMedicalEnabled && u.IsSupplyEnabled
 	})
 
 	// Generate maintenance activity
