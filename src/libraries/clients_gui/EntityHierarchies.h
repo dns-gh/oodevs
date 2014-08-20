@@ -56,7 +56,7 @@ public:
     virtual void RemoveSubordinate    ( const kernel::Entity_ABC& entity );
     virtual void UnregisterSubordinate( const kernel::Entity_ABC& entity );
     virtual void UnregisterParent     ();
-    virtual void NotifySuperiorChanged( const kernel::Entity_ABC* /*newSuperior*/ ){};
+    virtual void NotifySuperiorChanged( const kernel::Entity_ABC* /*newSuperior*/ ) {}
     //@}
 
 protected:

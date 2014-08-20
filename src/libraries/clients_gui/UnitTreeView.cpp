@@ -110,7 +110,7 @@ void UnitTreeView::FillList()
          FillListByNature();
      else
     {
-        tools::Iterator< const kernel::AutomatType& > it( types_.Resolver< kernel::AutomatType >::CreateIterator() );
+        auto it = types_.Resolver< kernel::AutomatType >::CreateIterator();
         while( it.HasMoreElements() )
         {
             const kernel::AutomatType& type = it.NextElement();
@@ -128,7 +128,7 @@ void UnitTreeView::FillList()
 // -----------------------------------------------------------------------------
 void UnitTreeView::FillListBy( const std::string&( kernel::AgentNature::*function )() const )
 {
-    tools::Iterator< const kernel::AgentType& > it( types_.Resolver< kernel::AgentType >::CreateIterator() );
+    auto it = types_.Resolver< kernel::AgentType >::CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::AgentType& type = it.NextElement();
@@ -178,7 +178,7 @@ QStandardItem* UnitTreeView::CreateNaturePath( const std::string& path )
 // -----------------------------------------------------------------------------
 void UnitTreeView::FillListByNature()
 {
-    tools::Iterator< const kernel::AgentType& > it( types_.Resolver< kernel::AgentType >::CreateIterator() );
+    auto it = types_.Resolver< kernel::AgentType >::CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::AgentType& type = it.NextElement();
@@ -223,7 +223,7 @@ void UnitTreeView::FillAutomatComposition( QStandardItem& parent, const kernel::
 // -----------------------------------------------------------------------------
 void UnitTreeView::FillAgentComposition( QStandardItem& parent, const kernel::AgentType& type )
 {
-    tools::Iterator< const kernel::AgentComposition& > it = type.CreateIterator();
+    auto it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::AgentComposition& composante = it.NextElement();

@@ -116,7 +116,7 @@ void LogisticSupplyChangeQuotasDialog::Show( const kernel::Entity_ABC& entity )
     selected_ = &entity;
     targetCombo_->Clear();
     {
-        tools::Iterator< const Automat_ABC& > it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
+        auto it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
             const Automat_ABC& agent = it.NextElement();
@@ -126,7 +126,7 @@ void LogisticSupplyChangeQuotasDialog::Show( const kernel::Entity_ABC& entity )
         }
     }
     {
-        tools::Iterator< const Formation_ABC& > it = model_.teams_.Resolver< Formation_ABC >::CreateIterator();
+        auto it = model_.teams_.Resolver< Formation_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
             const Formation_ABC& agent = it.NextElement();
