@@ -33,6 +33,7 @@ public:
     //@{
     virtual void Apply( MIL_EntityVisitor_ABC< T >& visitor ) const = 0;
     virtual void Apply( MIL_EntitiesVisitor_ABC& visitor ) const = 0;
+    virtual void Apply( const std::function< void( const T& ) >& visitor ) const = 0;
     //@}
 };
 

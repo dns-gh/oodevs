@@ -458,6 +458,17 @@ void MIL_Formation::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Formation::function< void
+// Created: LDC 2014-08-20
+// -----------------------------------------------------------------------------
+void MIL_Formation::Apply( const std::function< void( const MIL_AgentPion& ) >& visitor ) const
+{
+    VisitorApplyer< const std::function< void( const MIL_AgentPion& ) > > applyer( visitor );
+    tools::Resolver< MIL_Formation >::Apply( applyer );
+    tools::Resolver< MIL_Automate  >::Apply( applyer );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Formation::UpdateNetwork
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------

@@ -1250,6 +1250,16 @@ void MIL_Automate::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::function< void
+// Created: LDC 2014-08-20
+// -----------------------------------------------------------------------------
+void MIL_Automate::Apply( const std::function< void( const MIL_AgentPion& ) >& visitor ) const
+{
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
+        visitor( **it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::Apply2
 // Created: NLD 2011-08-03
 // -----------------------------------------------------------------------------

@@ -1624,6 +1624,18 @@ void MIL_Population::Apply( MIL_EntitiesVisitor_ABC& ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::function< void
+// Created: LDC 2014-08-20
+// -----------------------------------------------------------------------------
+void MIL_Population::Apply( const std::function< void( const MIL_PopulationElement_ABC& ) >& visitor ) const
+{
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        visitor( **it );
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
+        visitor( **it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetKnowledge
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------

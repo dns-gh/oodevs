@@ -1703,59 +1703,6 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
 
 namespace
 {
-    class DotationVisitor : private boost::noncopyable
-    {
-    public:
-        explicit DotationVisitor( std::set< const PHY_DotationCategory* >& dotations )
-            : dotations_( dotations )
-        {
-            // NOTHING
-        }
-
-        virtual ~DotationVisitor()
-        {
-            // NOTHING
-        }
-
-        void Visit( const MIL_AgentPion& /*pion*/, PHY_Dotation& dotation )
-        {
-            dotations_.insert( &dotation.GetCategory() );
-        }
-
-    private:
-        std::set< const PHY_DotationCategory* >& dotations_;
-    };
-
-    class NormalizedConsumptionVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
-    {
-    public:
-        explicit NormalizedConsumptionVisitor( const PHY_DotationCategory& category )
-            : category_( category )
-            , normalizedConsumption_( 0 )
-        {
-            // NOTHING
-        }
-
-        virtual ~NormalizedConsumptionVisitor()
-        {
-            // NOTHING
-        }
-
-        virtual void Visit( const MIL_AgentPion& element )
-        {
-            normalizedConsumption_ += element.GetType().GetUnitType().GetNormalizedConsumption( category_ );
-        }
-
-        double GetNormalizedConsumption() const
-        {
-            return normalizedConsumption_;
-        }
-
-    private:
-        const PHY_DotationCategory& category_;
-        double normalizedConsumption_;
-    };
-
     PHY_RolePionLOG_Supply* GetRoleSupply( MIL_AutomateLOG* automatLog )
     {
         if( automatLog )
@@ -1773,16 +1720,16 @@ namespace
         if( !oldSupplyer || !newSupplyer )
             return;
         std::set< const PHY_DotationCategory* > dotations;
-        DotationVisitor visitor( dotations );
-        typedef boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > T_Functor;
-        std::function< void( const MIL_AgentPion&, PHY_Dotation& ) > fun = [&] ( const MIL_AgentPion& pion, PHY_Dotation& dotation ) { visitor.Visit( pion, dotation ); };
-        transferedAutomat->Apply2( fun );
+        std::function< void( const MIL_AgentPion&, PHY_Dotation& ) > dotationFunction =
+            [&] ( const MIL_AgentPion&, PHY_Dotation& dotation ) { dotations.insert( &dotation.GetCategory() ); };
+        transferedAutomat->Apply2( dotationFunction );
         for( auto it = dotations.begin(); it != dotations.end(); ++it )
         {
             const PHY_DotationCategory& category = **it;
-            NormalizedConsumptionVisitor visitor( category );
-            transferedAutomat->Apply( visitor );
-            double normalizedConsumption = visitor.GetNormalizedConsumption();
+            double normalizedConsumption = 0;
+            std::function< void( const MIL_AgentPion& ) > consumptionFunction = 
+                [&] ( const MIL_AgentPion& pion ) { normalizedConsumption += pion.GetType().GetUnitType().GetNormalizedConsumption( category ); };        
+            transferedAutomat->Apply( consumptionFunction );
             PHY_DotationStock* dotationStockSrc = oldSupplyer->GetStock( category );
             PHY_DotationStock* dotationStockDst = newSupplyer->GetStock( category );
             double dstValue = dotationStockDst ? dotationStockDst->GetValue() : 0;
