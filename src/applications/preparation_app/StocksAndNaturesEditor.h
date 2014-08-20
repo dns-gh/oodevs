@@ -48,7 +48,7 @@ private slots:
     //! @name Slots
     //@{
     void NotifyStocksUserChange();
-    void NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks );
+    void NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks, const kernel::Entity_ABC& entity );
     //@}
 
 private:

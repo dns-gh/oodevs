@@ -32,7 +32,7 @@ namespace kernel
 
 // =============================================================================
 /** @class  LogisticEditor
-@brief  Color editor
+    @brief  Color editor
 */
 // Created: MMC 2011-06-23
 // =============================================================================
@@ -90,10 +90,15 @@ private slots:
     void closeEvent( QCloseEvent* pEvent );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     const StaticModel& staticModel_;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStandardItemModel* dataModel_;

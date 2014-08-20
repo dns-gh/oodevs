@@ -75,9 +75,9 @@ void StocksAndNaturesEditor::SupplyStocks( kernel::Entity_ABC& entity ) const
 // Name: StocksAndNaturesEditor::NotifyAutomaticStocks
 // Created: JSR 2014-03-04
 // -----------------------------------------------------------------------------
-void StocksAndNaturesEditor::NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks )
+void StocksAndNaturesEditor::NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks, const kernel::Entity_ABC& entity )
 {
-    stockResourcesTable_->UpdateStocks( stocks );
+    stockResourcesTable_->UpdateStocks( stocks, &entity );
 }
 
 // -----------------------------------------------------------------------------

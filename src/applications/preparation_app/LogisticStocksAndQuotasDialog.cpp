@@ -52,9 +52,10 @@ LogisticStocksAndQuotasDialog::LogisticStocksAndQuotasDialog( QWidget* parent, k
     automaticStocksEditor_ = new LogisticStockEditor( parent, controllers, staticModel );
     automaticQuotaEditor_ = new LogisticQuotaEditor( parent, controllers, staticModel );
 
-    connect( automaticStocksEditor_, SIGNAL( DotationsStocksComputed( const std::map< const kernel::DotationType*, unsigned int >& ) ), stockAndNaturesEditor_, SLOT( NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& ) ) );
-    connect( automaticQuotaEditor_, SIGNAL( DotationsQuotasComputed( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& ) )
-           , quotasEditor_, SLOT( NotifyAutomaticQuotas( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& ) ) );
+    connect( automaticStocksEditor_, SIGNAL( DotationsStocksComputed( const std::map< const kernel::DotationType*, unsigned int >&, const kernel::Entity_ABC& ) ),
+             stockAndNaturesEditor_, SLOT( NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >&, const kernel::Entity_ABC& ) ) );
+    connect( automaticQuotaEditor_, SIGNAL( DotationsQuotasComputed( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& ) ),
+             quotasEditor_, SLOT( NotifyAutomaticQuotas( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& ) ) );
     connect( automaticEditButton, SIGNAL( clicked() ), SLOT( ShowAutomaticDialog() ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( Accept() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );

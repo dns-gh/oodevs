@@ -2410,6 +2410,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Quantity</source>
         <translation>Quantité</translation>
     </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation>Quantité normalisée</translation>
+    </message>
 </context>
 <context>
     <name>SuccessFactorConditionItem</name>

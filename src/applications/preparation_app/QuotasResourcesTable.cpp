@@ -51,6 +51,6 @@ void QuotasResourcesTable::SetQuotas( const std::map< const kernel::DotationType
     Disconnect();
     OnClearItems();
     for( auto it = stocks.begin(); it != stocks.end(); ++it )
-        AddResource( *it->first, it->second );
+        AddResource( *it->first, nullptr, it->second );
     Connect();
 }

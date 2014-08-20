@@ -2408,6 +2408,10 @@ This data can&apos;t be projected.</source>
         <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SuccessFactorConditionItem</name>

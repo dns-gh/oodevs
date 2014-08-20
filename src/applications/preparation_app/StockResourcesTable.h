@@ -40,9 +40,9 @@ public:
     //! @name Operations
     //@{
     void UpdateInitStocks( const kernel::Entity_ABC& entity );
-    void UpdateStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks );
+    void UpdateStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks, const kernel::Entity_ABC* entity );
     void SupplyStocks( kernel::Entity_ABC& entity ) const;
-    virtual void AddResource( const kernel::DotationType& resource, int value = 0 );
+    virtual void AddResource( const kernel::DotationType& resource, const kernel::Entity_ABC* entity, int value = 0 );
     virtual void UpdateLine( int row, int value );
     virtual void CustomizeMenuAction( QAction* action, const kernel::DotationType& actionDotation ) const;
     void SetAllowedNatures( const std::set< std::string >& allowedNatures );
