@@ -11,6 +11,7 @@
 #include "LogisticStockEditor.h"
 #include "moc_LogisticStockEditor.cpp"
 #include "clients_gui/LogisticHierarchiesBase.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/tools.h"
 #include "preparation/StaticModel.h"
@@ -40,12 +41,12 @@ LogisticStockEditor::~LogisticStockEditor()
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::SupplyHierarchy( const gui::LogisticHierarchiesBase& logHierarchy )
 {
-    T_Requirements requirements;
-    auto days = GetDaysBySupplyClass();
-    for( auto it = days.begin(); it != days.end(); ++it )
+    logistic_helpers::T_Requirements requirements;
+    auto classes = GetDaysBySupplyClass();
+    for( auto it = classes.begin(); it != classes.end(); ++it )
     {
-        T_Requirements curRequirements;
-        SupplyLogisticBaseStocks( logHierarchy.GetEntity(), *it->first, curRequirements );
+        logistic_helpers::T_Requirements curRequirements;
+        logistic_helpers::ComputeLogisticConsumptions( staticModel_, logHierarchy.GetEntity(), *it->first, curRequirements, true );
         for( auto itReq = curRequirements.begin(); itReq != curRequirements.end(); ++itReq )
             requirements[ itReq->first ] += static_cast< unsigned int >( it->second * itReq->second + 0.5 );
     }

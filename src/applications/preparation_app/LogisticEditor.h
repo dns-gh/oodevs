@@ -57,7 +57,6 @@ public:
 protected:
     //! @name Types
     //@{
-    typedef std::map< const kernel::DotationType*, unsigned int > T_Requirements;
     enum
     {
         eCategory,
@@ -73,7 +72,6 @@ protected:
 
     //! @name Helpers
     //@{
-    void SupplyLogisticBaseStocks( const kernel::Entity_ABC& logBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements );
     std::map< const kernel::LogisticSupplyClass*, double > GetDaysBySupplyClass() const;
     //@}
 
@@ -81,8 +79,6 @@ private:
     //! @name Helpers
     //@{
     void SupplyHierarchy( kernel::SafePointer< kernel::Entity_ABC > entity );
-    void ComputeRequirements( const kernel::Agent_ABC& agent, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements );
-    void FillSupplyRequirements( const kernel::Entity_ABC& entity,const kernel::LogisticSupplyClass& logType, T_Requirements& requirements );
     //@}
 
 private slots:
