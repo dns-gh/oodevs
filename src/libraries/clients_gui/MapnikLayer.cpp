@@ -48,8 +48,7 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
     if( !layer_ )
     {
         MT_LOG_INFO_MSG( "mapnik-threads: " << threads_ );
-        layer_.reset( new graphics::MapnikLayer( 0, terrain_,
-                    "resources/mapnik.xml", threads_ ) );
+        layer_.reset( new graphics::MapnikLayer( 0, terrain_, threads_ ) );
     }
     layer_->Paint( viewport, GetAlpha() );
 }
