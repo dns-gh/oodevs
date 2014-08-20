@@ -3333,6 +3333,10 @@ This data can&apos;t be projected.</source>
         <source>Volume (m3)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SupplyTransportersListView</name>

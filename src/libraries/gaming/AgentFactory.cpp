@@ -80,6 +80,7 @@
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy.h"
@@ -154,6 +155,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach( *new DecisionalStates( *result ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
+    result->Attach< gui::LogisticHierarchiesBase >( *new kernel::LogisticHierarchies( controllers_.controller_, *result, model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );

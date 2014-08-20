@@ -34,11 +34,11 @@
 #include "Color.h"
 #include "Symbol.h"
 #include "UrbanKnowledges.h"
-
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
@@ -128,9 +128,9 @@ kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreation& message )
 {
-    kernel::Entity_ABC* superior = message.has_parent()  ?
-        (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) :
-        (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() );
+    kernel::Entity_ABC* superior = message.has_parent() ?
+        static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) ) :
+        static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() ) );
 
     Formation* result = new Formation( message, controllers_.controller_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
@@ -154,6 +154,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 4.f ) );
     result->Attach< kernel::DictionaryExtensions >( *new ::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
+    result->Attach< gui::LogisticHierarchiesBase >( *new kernel::LogisticHierarchies( controllers_.controller_, *result, model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );
