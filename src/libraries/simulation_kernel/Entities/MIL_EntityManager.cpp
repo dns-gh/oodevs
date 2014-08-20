@@ -2516,7 +2516,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
             geometry::Point2d( 0, 0 ),
             geometry::Point2d( wk.GetConfig().GetTerrainWidth(), wk.GetConfig().GetTerrainHeight() ) ) );
     pFloodModel_.reset( sink_->CreateFloodModel().release() );
-    pObjectManager_->FinalizeObjects( *pFloodModel_ );
     missionController_->Initialize( *sink_, *populationFactory_ );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , sink_->Count() ) );

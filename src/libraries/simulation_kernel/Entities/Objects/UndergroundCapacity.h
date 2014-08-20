@@ -61,7 +61,6 @@ private:
 private:
     //! @name Member data
     //@{
-    //unsigned int urbanBlockId_;
     MIL_UrbanObject_ABC* urbanBlock_;
     UndergroundAttribute* attribute_;
     //@}
