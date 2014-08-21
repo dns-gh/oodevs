@@ -186,6 +186,6 @@ QStringList fcmd::PathListToQStringList( const tools::Path::T_Paths& paths )
 {
     QStringList result;
     for( auto it = paths.begin(); it != paths.end(); ++it )
-        result += it->ToUTF8().c_str();
+        result += QString::fromStdWString( it->ToUnicode() );
     return result;
 }
