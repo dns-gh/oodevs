@@ -168,6 +168,10 @@ struct Config
         bool        enabled;
     }               mapnik;
     T_Profiles      profiles;
+    struct
+    {
+        bool autostart;
+    }        timeline;
 };
 
 bool ReadConfig ( Config& dst, const Plugins& plugins, const Tree& src );

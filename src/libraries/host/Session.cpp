@@ -742,36 +742,47 @@ namespace
 void WriteTimelineConfig( const UuidFactory_ABC& uuids,
                           const FileSystem_ABC& fs,
                           const Path& filename,
-                          int port )
+                          int port,
+                          bool autostart )
 {
     const std::string uuid = boost::lexical_cast< std::string >( uuids.Create() );
 
     std::string output;
     output += "[";
-    Tree create;
-    create.put( "type", "SESSION_CREATE" );
-    create.put( "session.create.uuid", uuid );
-    create.put( "session.create.name", "session" );
-    output += ToJson( create ) + ",";
 
     // manual serialization for invalid bool support from boost::property_tree
     // todo use a real json library
+    const std::string create = ( boost::format(
+    "{\n"
+    "    \"type\": \"SESSION_CREATE\",\n"
+    "    \"session\":\n"
+    "    {\n"
+    "        \"create\":\n"
+    "        {\n"
+    "            \"uuid\": \"%1%\",\n"
+    "            \"name\": \"session\",\n"
+    "            \"autostart\": %2%\n"
+    "        }\n"
+    "    }\n"
+    "},\n" ) % uuid % ( autostart ? "true" : "false" ) ).str();
+    output += create;
+
     const std::string attach = ( boost::format(
-    "{"
-    "    \"type\": \"SESSION_ATTACH\","
-    "    \"session\": {"
-    "        \"attach\": {"
-    "            \"uuid\": \"%1%\","
-    "            \"service\": {"
-    "                \"name\": \"simulation\","
-    "                \"clock\": true,"
-    "                \"sword\": {"
-    "                    \"address\": \"localhost:%2%\""
-    "                }"
-    "            }"
-    "        }"
-    "    }"
-    "}," ) % uuid % port ).str();
+    "{\n"
+    "    \"type\": \"SESSION_ATTACH\",\n"
+    "    \"session\": {\n"
+    "        \"attach\": {\n"
+    "            \"uuid\": \"%1%\",\n"
+    "            \"service\": {\n"
+    "                \"name\": \"simulation\",\n"
+    "                \"clock\": true,\n"
+    "                \"sword\": {\n"
+    "                    \"address\": \"localhost:%2%\"\n"
+    "                }\n"
+    "            }\n"
+    "        }\n"
+    "    }\n"
+    "},\n" ) % uuid % port ).str();
     output += attach;
 
     Tree start;
@@ -785,10 +796,11 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
 Session::T_Process StartTimeline( const SessionDependencies& deps,
                                   const Path& app,
                                   const Path& root,
-                                  int base )
+                                  int base,
+                                  bool autostart )
 {
     const Path config = root / "timeline.run";
-    WriteTimelineConfig( deps.uuids, deps.fs, config, base + DISPATCHER_PORT );
+    WriteTimelineConfig( deps.uuids, deps.fs, config, base + DISPATCHER_PORT, autostart );
     const auto options = boost::assign::list_of< std::string >
         ( "--port" )( boost::lexical_cast< std::string >( base + TIMELINE_PORT ) )
         ( "--run" )( Utf8( config ) );
@@ -898,7 +910,7 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
         return false;
     }
 
-    T_Process time = StartTimeline( deps_, timeline, GetRoot(), port_->Get() + DISPATCHER_PORT );
+    T_Process time = StartTimeline( deps_, timeline, GetRoot(), port_->Get() + DISPATCHER_PORT, cfg_.timeline.autostart );
     if( !time )
     {
         LOG_ERROR( deps_.log ) << "[session] Unable to start timeline " << id_;
