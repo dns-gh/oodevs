@@ -175,17 +175,19 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
 
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
-    pAgentServer_ = new NET_AgentServer( config_, *this, *actions_ );
-
+    
     pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     if( config_.HasCheckpoint() )
     {
         updateState_ = !config_.GetPausedAtStartup();
         MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_, world );
+        // pAgentServer_ must be initialised after LoadCheckpoint because actions_ is recreated during Load
+        pAgentServer_ = new NET_AgentServer( config_, *this, *actions_ );
     }
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
+        pAgentServer_ = new NET_AgentServer( config_, *this, *actions_ );
         pMeteoDataManager_ = CreateMeteoManager( world, config, GetTickDuration() );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_,
                 config_, world, *actions_ );
@@ -195,6 +197,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_->Finalize();
         pathfinds_.reset( new PathfindComputer( *pPathFindManager_, TER_World::GetWorld() ) );
     }
+
     MIL_IDManager::SetKeepIdsMode( false );
     Resume( nextPause_, 0, 0 );
     timerManager_.Register( *this );
