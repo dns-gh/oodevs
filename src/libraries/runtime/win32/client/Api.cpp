@@ -43,14 +43,11 @@ HANDLE MakeFileHandle( const wchar_t* file )
     return reply;
 }
 
-HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, STARTUPINFOW* ex, int& pid )
+HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, STARTUPINFOW* ex, bool inherit, int& pid )
 {
     PROCESS_INFORMATION info = {};
-    bool extended = ex->cb == sizeof( STARTUPINFOEXW );
     int flags = NORMAL_PRIORITY_CLASS | DETACHED_PROCESS;
-    if( extended )
-        flags |= EXTENDED_STARTUPINFO_PRESENT;
-    bool valid = !!CreateProcessW( app, args, 0, 0, extended, flags, 0, run, ex, &info );
+    bool valid = !!CreateProcessW( app, args, 0, 0, inherit, flags, 0, run, ex, &info );
     if( !valid )
         return NULL;
     Scoper thread( boost::bind( &TryCloseHandle, info.hThread ) );
@@ -60,12 +57,10 @@ HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, START
 
 HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log, int& pid )
 {
+    STARTUPINFOW info = { sizeof info };
     pid = 0;
     if( !log )
-    {
-        STARTUPINFOW info = { sizeof info };
-        return MakeProcess( app, args, run, &info, pid );
-    }
+        return MakeProcess( app, args, run, &info, false, pid );
 
     HANDLE inherits[2] = {};
     inherits[0] = MakeFileHandle( log );
@@ -78,12 +73,10 @@ HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const
         return NULL;
     Scoper err( boost::bind( &TryCloseHandle, inherits[1] ) );
 
-    STARTUPINFOEXW ex = {};
-    ex.StartupInfo.cb = sizeof ex;
-    ex.StartupInfo.dwFlags = STARTF_USESTDHANDLES;
-    ex.StartupInfo.hStdOutput = inherits[0];
-    ex.StartupInfo.hStdError = inherits[1];
-    return ::MakeProcess( app, args, run, &ex.StartupInfo, pid );
+    info.dwFlags = STARTF_USESTDHANDLES;
+    info.hStdOutput = inherits[0];
+    info.hStdError = inherits[1];
+    return ::MakeProcess( app, args, run, &info, true, pid );
 }
 }
 
