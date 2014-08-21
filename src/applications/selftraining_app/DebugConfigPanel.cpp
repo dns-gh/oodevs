@@ -14,8 +14,6 @@
 
 #include "clients_gui/FileDialog.h"
 
-#include "clients_kernel/tools.h"
-
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
 #include "frontend/DebugConfig.h"
@@ -256,21 +254,21 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnLanguageChanged()
 {
-    timelineBox_->setTitle( tools::translate( "DebugConfigPanel", "Timeline" ) );
-    timelineDebugPortLabel_->setText( tools::translate( "DebugConfigPanel", "Debug port" ) );
-    timelineLogLabel_->setText( tools::translate( "DebugConfigPanel", "Client log file" ) );
-    timelineDebugLabel_->setText( tools::translate( "DebugConfigPanel", "Debug directory" ) );
-    cefLogLabel_->setText( tools::translate( "DebugConfigPanel", "Chrome embedded log file" ) );
-    oldTimeline_->setText( tools::translate( "DebugConfigPanel", "Enable legacy timeline" ) );
-    integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
-    profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
-    decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional functions" ) );
-    pathfindsBox_->setTitle( tools::translate( "DebugConfigPanel", "Pathfind settings" ) );
-    filterLabel_->setText( tools::translate( "DebugConfigPanel", "Filter :" ) );
-    dumpLabel_->setText( tools::translate( "DebugConfigPanel", "Dump pathfinds directory :" ) );
-    mapnikBox_->setTitle( tools::translate( "DebugConfigPanel", "Mapnik settings" ) );
-    mapnikLayerBox_->setText( tools::translate( "DebugConfigPanel", "Activate layer" ) );
-    mapnikThreadsLabel_->setText( tools::translate( "DebugConfigPanel", "Rendering threads" ) );
+    timelineBox_->setTitle( tr( "Timeline" ) );
+    timelineDebugPortLabel_->setText( tr( "Debug port" ) );
+    timelineLogLabel_->setText( tr( "Client log file" ) );
+    timelineDebugLabel_->setText( tr( "Debug directory" ) );
+    cefLogLabel_->setText( tr( "Chrome embedded log file" ) );
+    oldTimeline_->setText( tr( "Enable legacy timeline" ) );
+    integrationLabel_->setText( tr( "Integration layer directory" ) );
+    profilingBox_->setTitle( tr( "Profiling settings" ) );
+    decCallsBox_->setText( tr( "Decisional functions" ) );
+    pathfindsBox_->setTitle( tr( "Pathfind settings" ) );
+    filterLabel_->setText( tr( "Filter :" ) );
+    dumpLabel_->setText( tr( "Dump pathfinds directory :" ) );
+    mapnikBox_->setTitle( tr( "Mapnik settings" ) );
+    mapnikLayerBox_->setText( tr( "Activate layer" ) );
+    mapnikThreadsLabel_->setText( tr( "Rendering threads" ) );
     dataButton_->setText( "..." );
 }
 
@@ -280,7 +278,7 @@ void DebugConfigPanel::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 QString DebugConfigPanel::GetName() const
 {
-    return tools::translate( "DebugConfigPanel", "Debug" );
+    return tr( "Debug" );
 }
 
 // -----------------------------------------------------------------------------

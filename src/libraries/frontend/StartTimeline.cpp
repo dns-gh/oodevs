@@ -39,35 +39,44 @@ namespace
         }
     }
 
-    void WriteRunScript( const tools::Path& run, int port )
+    void WriteRunScript( const tools::Path& run, int port, bool autostart )
     {
         tools::Ofstream output( run );
         output << "[";
 
-        bpt::ptree create;
-        create.put( "type", "SESSION_CREATE" );
-        create.put( "session.create.uuid", ::uuid );
-        create.put( "session.create.name", "session" );
-        WriteTo( output, create, false );
-
         // manual serialization for invalid bool support from boost::property_tree
         // todo use a real json library
+        const QString create = QString(
+        "{\n"
+        "    \"type\": \"SESSION_CREATE\",\n"
+        "    \"session\":\n"
+        "    {\n"
+        "        \"create\":\n"
+        "        {\n"
+        "            \"uuid\": \"%1\",\n"
+        "            \"name\": \"session\",\n"
+        "            \"autostart\": %2\n"
+        "        }\n"
+        "    }\n"
+        "},\n" );
+        output << create.arg( QString::fromStdString( ::uuid ) )
+                        .arg( autostart ? "true" : "false" );
         const QString attach = QString(
-        "{"
-        "    \"type\": \"SESSION_ATTACH\","
-        "    \"session\": {"
-        "        \"attach\": {"
-        "            \"uuid\": \"%1\","
-        "            \"service\": {"
-        "                \"name\": \"simulation\","
-        "                \"clock\": true,"
-        "                \"sword\": {"
-        "                    \"address\": \"localhost:%2\""
-        "                }"
-        "            }"
-        "        }"
-        "    }"
-        "}," );
+        "{\n"
+        "    \"type\": \"SESSION_ATTACH\",\n"
+        "    \"session\": {\n"
+        "        \"attach\": {\n"
+        "            \"uuid\": \"%1\",\n"
+        "            \"service\": {\n"
+        "                \"name\": \"simulation\",\n"
+        "                \"clock\": true,\n"
+        "                \"sword\": {\n"
+        "                    \"address\": \"localhost:%2\"\n"
+        "                }\n"
+        "            }\n"
+        "        }\n"
+        "    }\n"
+        "},\n" );
         output << attach.arg( QString::fromStdString( ::uuid ) )
                         .arg( port );
 
@@ -92,7 +101,8 @@ namespace
 StartTimeline::StartTimeline( const tools::GeneralConfig& config,
                               const tools::Path& exercise,
                               const tools::Path& session,
-                              const frontend::DebugConfig& debug )
+                              const frontend::DebugConfig& debug,
+                              bool autostartEvents )
     : SpawnCommand( config, "timeline_server.exe", "timeline_server" )
 {
     ConfigurationManipulator xpath( config, exercise, session );
@@ -109,7 +119,7 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
         AddArgument( "-debug" );
         AddArgument( "www", debug.timeline.debugWwwDir.ToUTF8() );
     }
-    WriteRunScript( run, boost::lexical_cast< int >( dispatcher ) );
+    WriteRunScript( run, boost::lexical_cast< int >( dispatcher ), autostartEvents );
 }
 
 // -----------------------------------------------------------------------------

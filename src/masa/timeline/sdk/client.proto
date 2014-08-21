@@ -23,8 +23,9 @@ enum Type
 
 message SessionCreate
 {
-    optional string uuid = 1; ///< auto-generated server-side if nil
-    required string name = 2;
+    optional string uuid      = 1; ///< auto-generated server-side if nil
+    required string name      = 2;
+    optional bool   autostart = 3 [default = true]; ///< auto start events
 }
 
 message SessionAttach

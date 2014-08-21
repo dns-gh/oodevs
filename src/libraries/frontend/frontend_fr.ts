@@ -2,49 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr" sourcelanguage="en">
 <context>
-    <name>AdvancedConfigPanel</name>
-    <message>
-        <source>Time</source>
-        <translation>Temps</translation>
-    </message>
-    <message>
-        <source>Time step:</source>
-        <translation>Pas de temps:</translation>
-    </message>
-    <message>
-        <source>Time factor:</source>
-        <translation type="unfinished">Facteur de vitesse:</translation>
-    </message>
-    <message>
-        <source>End tick:</source>
-        <translation>Tic de fin:</translation>
-    </message>
-    <message>
-        <source>Number of pathfind threads:</source>
-        <translation>Nombre de threads du cherche-chemin:</translation>
-    </message>
-    <message>
-        <source>Recorder fragmentation frequency: </source>
-        <translation>Fréquence de fragmentation de l&apos;enregistreur: </translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avancé</translation>
-    </message>
-    <message>
-        <source>Paused at startup:</source>
-        <translation>Démarrage en pause</translation>
-    </message>
-    <message>
-        <source>Do not start gaming client</source>
-        <translation>Ne pas démarrer le client de jeu</translation>
-    </message>
-    <message>
-        <source>Report clean frequency: </source>
-        <translation>Fréquence de nettoyage des comptes-rendus</translation>
-    </message>
-</context>
-<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
@@ -235,6 +192,53 @@
     <message>
         <source>Simulation started</source>
         <translation>Simulation démarrée</translation>
+    </message>
+</context>
+<context>
+    <name>frontend::AdvancedConfigPanel</name>
+    <message>
+        <source>Time</source>
+        <translation>Temps</translation>
+    </message>
+    <message>
+        <source>Time step</source>
+        <translation>Pas de temps</translation>
+    </message>
+    <message>
+        <source>Time factor</source>
+        <translation type="unfinished">Facteur de vitesse</translation>
+    </message>
+    <message>
+        <source>End tick</source>
+        <translation>Tic de fin</translation>
+    </message>
+    <message>
+        <source>Number of pathfind threads</source>
+        <translation>Nombre de threads du cherche-chemin</translation>
+    </message>
+    <message>
+        <source>Recorder fragmentation frequency</source>
+        <translation>Fréquence de fragmentation de l&apos;enregistreur</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avancé</translation>
+    </message>
+    <message>
+        <source>Paused at startup</source>
+        <translation>Démarrage en pause</translation>
+    </message>
+    <message>
+        <source>Do not start gaming client</source>
+        <translation>Ne pas démarrer le client de jeu</translation>
+    </message>
+    <message>
+        <source>Report clean frequency</source>
+        <translation>Fréquence de nettoyage des comptes-rendus</translation>
+    </message>
+    <message>
+        <source>Automatically start timeline events</source>
+        <translation>Démarrer les évènements de la chronologie automatiquement</translation>
     </message>
 </context>
 <context>

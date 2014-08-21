@@ -47,7 +47,7 @@ func getcode(err error) int {
 }
 
 func addSession(c *Controller, uuid, name string) int {
-	_, err := c.CreateSession(uuid, name)
+	_, err := c.CreateSession(uuid, name, true)
 	return getcode(err)
 }
 
