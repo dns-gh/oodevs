@@ -71,6 +71,7 @@ public:
     double GetStockLogisticThresholdRatio( const PHY_DotationLogisticType& type ) const;
     double GetDefaultLowThreshold( const PHY_DotationCategory& category ) const;
     double GetDefaultHighThreshold( const PHY_DotationCategory& category ) const;
+    double GetNormalizedConsumption( const PHY_DotationCategory& category ) const;
     bool CanFly() const;
     unsigned int GetStandardFlyingHeight() const;
     unsigned int GetTacticalFlyingHeight() const;

@@ -135,6 +135,7 @@ public:
     //@{
     virtual void Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const;
     virtual void Apply( MIL_EntitiesVisitor_ABC& visitor ) const;
+    virtual void Apply( const std::function< void( const MIL_AgentPion& ) >& visitor ) const;
     void Apply2( std::function< void( const MIL_AgentPion&, PHY_Dotation& ) > visitor ) const;
     void Apply2( std::function< void( const MIL_AgentPion&, PHY_DotationStock& ) > visitor ) const;
     //@}
