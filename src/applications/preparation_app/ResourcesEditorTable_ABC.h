@@ -58,7 +58,7 @@ public slots:
 protected:
     //! @name Helpers
     //@{
-    virtual void AddResource( const kernel::DotationType& resource, const kernel::Entity_ABC* entity, int value = 0 );
+    virtual void AddResource( const kernel::DotationType& resource, int value = 0 );
     void Connect();
     void Disconnect();
     void SetData( int row, int col, const QVariant& value, int role = Qt::DisplayRole, bool isSortType = false, Qt::Alignment aligment = 0 );

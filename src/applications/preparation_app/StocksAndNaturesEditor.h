@@ -12,6 +12,7 @@
 
 namespace kernel
 {
+    class Controllers;
     class DotationType;
     class Entity_ABC;
 }
@@ -33,7 +34,7 @@ class StocksAndNaturesEditor : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             StocksAndNaturesEditor( QWidget* parent, const StaticModel& model );
+             StocksAndNaturesEditor( QWidget* parent, const StaticModel& model, kernel::Controllers& controllers );
     virtual ~StocksAndNaturesEditor();
     //@}
 
@@ -48,7 +49,7 @@ private slots:
     //! @name Slots
     //@{
     void NotifyStocksUserChange();
-    void NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks, const kernel::Entity_ABC& entity );
+    void NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks );
     //@}
 
 private:

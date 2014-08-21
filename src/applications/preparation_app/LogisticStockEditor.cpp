@@ -50,5 +50,5 @@ void LogisticStockEditor::SupplyHierarchy( const gui::LogisticHierarchiesBase& l
         for( auto itReq = curRequirements.begin(); itReq != curRequirements.end(); ++itReq )
             requirements[ itReq->first ] += static_cast< unsigned int >( it->second * itReq->second + 0.5 );
     }
-    emit DotationsStocksComputed( requirements, logHierarchy.GetEntity() );
+    emit DotationsStocksComputed( requirements );
 }

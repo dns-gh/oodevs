@@ -36,9 +36,19 @@ namespace
                              << tools::translate( "StockResourcesTable", "Normalized quantity" )
                              << tools::translate( "StockResourcesTable", "Quantity" );
     }
+
     double ComputeNormalizedConsumption( double quantity, double consumption )
     {
         return consumption > 0 ? quantity / consumption : 0.;
+    }
+
+    int ComputeConsumption( const kernel::StaticModel& staticModel, const kernel::Entity_ABC* entity, const kernel::DotationType& resource )
+    {
+        if( !entity )
+            return 0;
+        logistic_helpers::T_Requirements requirements;
+        logistic_helpers::ComputeLogisticConsumptions( staticModel, *entity, resource.GetLogisticSupplyClass(), requirements, true );
+        return requirements[ &resource ];
     }
 }
 
@@ -46,9 +56,10 @@ namespace
 // Name: StockResourcesTable Constructor
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-StockResourcesTable::StockResourcesTable( const QString& objectName, QWidget* parent, const StaticModel& staticModel )
+StockResourcesTable::StockResourcesTable( const QString& objectName, QWidget* parent, const StaticModel& staticModel, kernel::Controllers& controllers )
     : ResourcesEditorTable_ABC( GetHeaders(), objectName, parent, staticModel.objectTypes_ )
     , staticModel_( staticModel )
+    , entity_( controllers )
 {
     // NOTHING
 }
@@ -68,11 +79,26 @@ StockResourcesTable::~StockResourcesTable()
 // -----------------------------------------------------------------------------
 void StockResourcesTable::UpdateLine( int row, int value )
 {
-    const kernel::DotationType* pDotation = GetDotation( row );
-    SetData( row, 2, QString::number( value * pDotation->GetUnitWeight(), 'f', 2 ), Qt::DisplayRole, true );
-    SetData( row, 3, QString::number( value * pDotation->GetUnitVolume(), 'f', 2 ), Qt::DisplayRole, true );
-    const int consumption = dataModel_->item( row, 4 )->data( Qt::UserRole ).toInt();
+    const kernel::DotationType& dotation = *GetDotation( row );
+    SetData( row, 2, QString::number( value * dotation.GetUnitWeight(), 'f', 2 ), Qt::DisplayRole, true );
+    SetData( row, 3, QString::number( value * dotation.GetUnitVolume(), 'f', 2 ), Qt::DisplayRole, true );
+    auto item = dataModel_->item( row, 4 );
+    int consumption = item ? item->data( Qt::UserRole + 1 ).toInt() : 0;
+    if( !item )
+        SetData( row, 4, consumption, Qt::UserRole + 1, true, Qt::AlignRight | Qt::AlignVCenter );
     SetData( row, 4, QString::number( ComputeNormalizedConsumption( value, consumption ), 'f', 2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StockResourcesTable::Initialize
+// Created: SLI 2014-08-21
+// -----------------------------------------------------------------------------
+void StockResourcesTable::Initialize( const kernel::Entity_ABC& entity )
+{
+    entity_ = &entity;
+    OnClearItems();
+    UpdateAllowedSupplyClasses( entity );
+    UpdateInitStocks( entity );
 }
 
 namespace
@@ -99,19 +125,19 @@ void StockResourcesTable::UpdateInitStocks( const kernel::Entity_ABC& entity )
 {
     std::map< const kernel::DotationType*, unsigned int > initialStocks;
     ComputeInitStocks( entity, initialStocks );
-    UpdateStocks( initialStocks, &entity );
+    UpdateStocks( initialStocks );
 }
 
 // -----------------------------------------------------------------------------
 // Name: StockResourcesTable::UpdateStocks
 // Created: JSR 2014-03-04
 // -----------------------------------------------------------------------------
-void StockResourcesTable::UpdateStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks, const kernel::Entity_ABC* entity )
+void StockResourcesTable::UpdateStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks )
 {
     Disconnect();
     OnClearItems();
     for( auto it = stocks.begin(); it != stocks.end(); ++it )
-        AddResource( *it->first, entity, it->second );
+        AddResource( *it->first, it->second );
     emit ResourceValueChanged();
     Connect();
 }
@@ -238,29 +264,17 @@ void StockResourcesTable::SupplyStocks( kernel::Entity_ABC& entity ) const
     }
 }
 
-namespace
-{
-    int ComputeConsumption( const kernel::StaticModel& staticModel, const kernel::Entity_ABC* entity, const kernel::DotationType& resource )
-    {
-        if( !entity )
-            return 0;
-        logistic_helpers::T_Requirements requirements;
-        logistic_helpers::ComputeLogisticConsumptions( staticModel, *entity, resource.GetLogisticSupplyClass(), requirements, true );
-        return requirements[ &resource ];
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: StockResourcesTable::AddResource
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void StockResourcesTable::AddResource( const kernel::DotationType& resource, const kernel::Entity_ABC* entity, int value /*= 0.0*/ )
+void StockResourcesTable::AddResource( const kernel::DotationType& resource, int value /*= 0.0*/ )
 {
-    ResourcesEditorTable_ABC::AddResource( resource, entity, value );
+    ResourcesEditorTable_ABC::AddResource( resource, value );
     const int rowIndex = model()->rowCount() - 1;
     const double weight = value * resource.GetUnitWeight();
     const double volume = value * resource.GetUnitVolume();
-    const int consumption = ComputeConsumption( staticModel_, entity, resource );
+    const int consumption = ComputeConsumption( staticModel_, entity_, resource );
     SetData( rowIndex, 1, QString::fromStdString( resource.GetNature() ), Qt::DisplayRole, true );
     SetData( rowIndex, 2, QString::number( weight, 'f', 2 ) );
     SetData( rowIndex, 2, weight, Qt::UserRole + 1, true, Qt::AlignRight | Qt::AlignVCenter );

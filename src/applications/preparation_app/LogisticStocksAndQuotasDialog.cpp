@@ -32,7 +32,7 @@ LogisticStocksAndQuotasDialog::LogisticStocksAndQuotasDialog( QWidget* parent, k
     gui::SubObjectName subObject( "LogisticStocksAndQuotasDialog" );
     resize( 550, 500 );
 
-    stockAndNaturesEditor_ = new StocksAndNaturesEditor( parent, staticModel );
+    stockAndNaturesEditor_ = new StocksAndNaturesEditor( parent, staticModel, controllers );
     quotasEditor_ = new QuotasEditor( parent, staticModel );
     tabs_ = new QTabWidget( this );
     tabs_->addTab( stockAndNaturesEditor_, tr( "Stocks" ) );
@@ -52,8 +52,8 @@ LogisticStocksAndQuotasDialog::LogisticStocksAndQuotasDialog( QWidget* parent, k
     automaticStocksEditor_ = new LogisticStockEditor( parent, controllers, staticModel );
     automaticQuotaEditor_ = new LogisticQuotaEditor( parent, controllers, staticModel );
 
-    connect( automaticStocksEditor_, SIGNAL( DotationsStocksComputed( const std::map< const kernel::DotationType*, unsigned int >&, const kernel::Entity_ABC& ) ),
-             stockAndNaturesEditor_, SLOT( NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >&, const kernel::Entity_ABC& ) ) );
+    connect( automaticStocksEditor_, SIGNAL( DotationsStocksComputed( const std::map< const kernel::DotationType*, unsigned int >& ) ),
+             stockAndNaturesEditor_, SLOT( NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& ) ) );
     connect( automaticQuotaEditor_, SIGNAL( DotationsQuotasComputed( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& ) ),
              quotasEditor_, SLOT( NotifyAutomaticQuotas( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& ) ) );
     connect( automaticEditButton, SIGNAL( clicked() ), SLOT( ShowAutomaticDialog() ) );
