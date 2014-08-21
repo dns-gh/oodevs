@@ -27,12 +27,7 @@ namespace frontend
         tools::Path::T_Paths ListCheckpoints     ( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
         tools::Path::T_Paths ListModels          ( const tools::GeneralConfig& config );
         tools::Path::T_Paths ListPhysicalModels  ( const tools::GeneralConfig& config, const tools::Path& model );
-        tools::Path::T_Paths ListScripts         ( const tools::GeneralConfig& config, const tools::Path& exercise );
-        tools::Path::T_Paths ListOrders          ( const tools::GeneralConfig& config, const tools::Path& exercise );
         tools::Path::T_Paths ListOtherDirectories( const tools::GeneralConfig& config, const tools::Path& exercise );
-
-        tools::Path::T_Paths RemoveCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise,
-                                               const tools::Path& session, const tools::Path::T_Paths& checkpoints );
 
         bool ExerciseExists( const tools::GeneralConfig& config, const tools::Path& exercise );
         bool SessionExists( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
