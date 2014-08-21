@@ -221,10 +221,12 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation )
 {
-    const double area = object.GetLocalisation().GetArea();
     const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
+    if( !materialAttribute )
+        return;
+    const double area = object.GetLocalisation().GetArea();
     // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
-    if( area == 0 || materialAttribute == 0 )
+    if( area == 0 )
         return;
     structuralState_ = (float)std::max( 0., (double)structuralState_ - ( 1 - dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) ) / area );
     object.ApplyStructuralState( structuralState_ );
@@ -364,7 +366,7 @@ void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Loca
             {
                 MineAttribute* mineAttribute = pObject->RetrieveAttribute< MineAttribute >();
                 if( mineAttribute )
-                    mineAttribute->Set(0.);//default valorization is set to 100%
+                    mineAttribute->Set( 0. );//default valorization is set to 100%
             }
         }
     }

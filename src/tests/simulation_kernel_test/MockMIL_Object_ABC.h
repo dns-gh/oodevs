@@ -58,6 +58,7 @@ MOCK_BASE_CLASS( MockMIL_Object_ABC, MIL_Object_ABC )
     MOCK_METHOD( Register, 1, void (ObjectAttribute_ABC *), RegisterAttribute );
     MOCK_METHOD( Register, 1, void (MIL_InteractiveContainer_ABC *), RegisterContainer );
     MOCK_METHOD( Register, 1, void (MIL_StructuralStateNotifier_ABC &), RegisterNotifier );
+    MOCK_METHOD_EXT( Unregister, 1, void (MIL_StructuralStateNotifier_ABC &), UnregisterNotifier );
 };
 
 #endif // __MockMIL_Object_ABC_h_

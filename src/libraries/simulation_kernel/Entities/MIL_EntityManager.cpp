@@ -580,7 +580,17 @@ void MIL_EntityManager::Finalize()
     armyFactory_->Finalize();
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
     inhabitantFactory_->Finalize();
+    FinalizeObjects();
     UpdateStates();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FinalizeObjects
+// Created: JSR 2012-07-24
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::FinalizeObjects()
+{
+    pObjectManager_->FinalizeObjects( *pFloodModel_ );
 }
 
 namespace
@@ -659,8 +669,6 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis, const MIL_Config& 
     xis >> xml::start( "parties" )
         >> xml::list( boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _2, _3, boost::cref( config ) ) )
         >> xml::end;
-
-    pObjectManager_->FinalizeObjects( *pFloodModel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -2563,7 +2571,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
             geometry::Point2d( 0, 0 ),
             geometry::Point2d( wk.GetConfig().GetTerrainWidth(), wk.GetConfig().GetTerrainHeight() ) ) );
     pFloodModel_.reset( sink_->CreateFloodModel().release() );
-    pObjectManager_->FinalizeObjects( *pFloodModel_ );
     missionController_->Initialize( *sink_, *populationFactory_ );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , sink_->Count() ) );

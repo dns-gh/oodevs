@@ -418,6 +418,8 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> localTime_
          >> actions_
          >> pathfinds_;
+    if( pEntityManager_ )
+        pEntityManager_->FinalizeObjects();
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( *pEntityManager_ );
 }

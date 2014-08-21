@@ -17,6 +17,7 @@
 #include "FloodAttribute.h"
 #include "LogisticAttribute.h"
 #include "SpawnedAttribute.h"
+#include "UndergroundCapacity.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
@@ -399,6 +400,8 @@ void MIL_ObjectManager::FinalizeObjects( const propagation::FloodModel_ABC& floo
             altitude->ModifyAltitude( it->second->GetLocalisation(), it->second->GetID() );
         if( LogisticAttribute* logistic = it->second->RetrieveAttribute< LogisticAttribute >() )
             logistic->Finalize();
+        if( UndergroundCapacity* underground = it->second->Retrieve< UndergroundCapacity >() )
+            underground->RegisterUrbanBlock( *it->second );
     }
     for( auto it = objects_.begin(); it != objects_.end(); ++it )
         if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )

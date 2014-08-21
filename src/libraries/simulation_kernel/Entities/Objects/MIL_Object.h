@@ -58,6 +58,7 @@ public:
     //! @name StructuralStateNotifier
     //@{
     virtual void Register( MIL_StructuralStateNotifier_ABC& notifier );
+    virtual void Unregister( MIL_StructuralStateNotifier_ABC& notifier );
     virtual void ApplyStructuralState( float structuralState ) const;
     //@}
 

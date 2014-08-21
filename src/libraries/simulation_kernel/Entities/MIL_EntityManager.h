@@ -183,6 +183,7 @@ public:
     void Clean();
     void CleanDeletedAgentKnowledges();
     void Finalize();
+    void FinalizeObjects();
     void LogInfo();
     //@}
 

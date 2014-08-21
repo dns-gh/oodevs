@@ -18,7 +18,7 @@ class MIL_Object_ABC;
 */
 // Created: JSR 2011-01-14
 // =============================================================================
-class MIL_StructuralStateNotifier_ABC : boost::noncopyable
+class MIL_StructuralStateNotifier_ABC
 {
 public:
     //! @name Constructors/Destructor
