@@ -67,6 +67,7 @@ namespace report
     MAKE_REPORT( eRC_FriendUnitRecognized )
     MAKE_REPORT( eRC_HumainRetourDeSante )
     MAKE_REPORT( eRC_InfrastructureDamaged )
+    MAKE_REPORT( eRC_Jammed )
     MAKE_REPORT( eRC_LivingAreaDamaged )
     MAKE_REPORT( eRC_LogNoStock )
     MAKE_REPORT( eRC_LogNoSuperior )

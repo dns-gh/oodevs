@@ -15,6 +15,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Objects/InteractWithSideCapacity.h"
+#include "Entities/Orders/MIL_Report.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InterferenceCapacity )
 
@@ -104,4 +105,13 @@ void InterferenceCapacity::ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agen
     const InteractWithSideCapacity* pSideInteraction = object.Retrieve< InteractWithSideCapacity >();
     if( !pSideInteraction || !object.GetArmy() || pSideInteraction->IsPossible( *object.GetArmy(), agent ) )
         agent.CallRole( &PHY_RoleInterface_Communications::Unjam, object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InterferenceCapacity::ProcessAgentEntering
+// Created: JCR 2008-05-22
+// -----------------------------------------------------------------------------
+void InterferenceCapacity::ProcessAgentEntering( MIL_Object_ABC&, MIL_Agent_ABC& agent )
+{
+    MIL_Report::PostEvent( agent, report::eRC_Jammed );
 }

@@ -42,6 +42,7 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentEntering( MIL_Object_ABC&, MIL_Agent_ABC& agent );
     //@}
 
 private:
