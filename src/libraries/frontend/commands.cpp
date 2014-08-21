@@ -84,8 +84,7 @@ tools::Path::T_Paths fcmd::ListSessions( const tools::GeneralConfig& config,
         for( auto it = record.begin(); it != record.end(); ++it )
         {
             const tools::Path child = *it;
-            if( child.IsDirectory() &&
-                ( child / "info" ).Exists() &&
+            if( ( child / "info" ).Exists() &&
                 ( child / "index" ).Exists() &&
                 ( child / "keyindex" ).Exists() &&
                 ( child / "key" ).Exists() && 
@@ -133,10 +132,7 @@ tools::Path::T_Paths fcmd::ListModels( const tools::GeneralConfig& config )
 {
     return ListDirectories( config.GetModelsDir(), []( const tools::Path& dir )
     {
-        return dir.IsDirectory() &&
-               ( dir / "decisional" ).Exists() &&
-               ( dir / "decisional" ).IsDirectory() &&
-               ( dir / "decisional" / "decisional.xml" ).Exists() &&
+        return ( dir / "decisional" / "decisional.xml" ).Exists() &&
                ( dir / "physical" ).Exists();
     });
         
