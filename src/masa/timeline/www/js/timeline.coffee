@@ -327,7 +327,7 @@ class VerticalLayout
     # vertical curve link generator
     init_linker: ->
         diagonal = d3.svg.diagonal()
-            .projection (d) -> return [d.y, d.x]
+            .projection((d) -> return [d.y, d.x])
         @linker = (x0, y0, x1, y1, invert) ->
             source = x: y0, y: x0
             target = x: y1, y: x1
@@ -829,7 +829,7 @@ class Timeline
             .on("dragend",   (d) -> that.range_drag_end   this, d)
         lanes
             .classed("selected", (d) -> d.selected)
-            .attr @layout.lane_attributes()
+            .attr(@layout.lane_attributes())
         lanes.exit().remove()
 
     get_range_zone: (el) ->
@@ -1018,9 +1018,9 @@ class Timeline
             .append("path")
             .classed("link", true)
             .attr "data-id": (d) -> d.id
-        links.classed "fill", (d) -> is_range d, offsets[d.col]
-        links.classed "selected", (d) -> d.selected
-        links.attr "data-col": (d) -> d.col
+        links.classed("fill", (d) -> is_range d, offsets[d.col])
+             .classed("selected", (d) -> d.selected)
+             .attr "data-col": (d) -> d.col
         links.exit().remove()
         animated = if root? then selector root else links
         animated.attr d: (d) => @layout.render_link d, ctx, offsets[d.col]
@@ -1053,7 +1053,7 @@ class Timeline
         nodes.classed "selected", (d) -> d.selected
         nodes.exit()
             .remove()
-            .each (d) -> d.view.remove()
+            .each((d) -> d.view.remove())
         animated = if root? then selector root else nodes
         animated
             .attr
@@ -1133,13 +1133,13 @@ class Timeline
             .classed("tick", true)
             .classed(@layout.name, true)
             .each((d) -> d.view = new TickView model: d, el: this)
-        ticks.each (d) ->
+        ticks.each((d) ->
             d.width = d.view.el.offsetWidth
-            d.height = d.view.el.offsetHeight
-        ticks.style @layout.tick_attributes()
+            d.height = d.view.el.offsetHeight)
+            .style(@layout.tick_attributes())
         ticks.exit()
             .remove()
-            .each (d) -> d.view.remove()
+            .each((d) -> d.view.remove())
 
     render_ticks: ->
         ticks = @layout.get_ticks()
