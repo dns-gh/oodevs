@@ -50,7 +50,7 @@ namespace
     // -----------------------------------------------------------------------------
     bool HasSubordinate( const kernel::Entity_ABC& entity, std::function< bool( const kernel::Entity_ABC& ) > fun )
     {
-        tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
+        auto it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
         while( it.HasMoreElements() )
             return fun( it.NextElement() );
         return false;
@@ -79,7 +79,7 @@ Point2f AggregatedPositions::GetPosition( bool aggregated ) const
         Point2f aggregatedPosition;
         unsigned int count = 0;
         Point2f fallback;
-        tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+        auto children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
             const kernel::Entity_ABC& child = children.NextElement();
@@ -107,7 +107,7 @@ float AggregatedPositions::GetHeight( bool aggregated ) const
     {
         float height = 0;
         unsigned int count = 0;
-        tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+        auto children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
             const Positions& childPositions = children.NextElement().Get< Positions >();
@@ -135,7 +135,7 @@ bool AggregatedPositions::IsIn( const Rectangle2f& rectangle ) const
 Rectangle2f AggregatedPositions::GetBoundingBox() const
 {
     Rectangle2f result;
-    tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    auto children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
@@ -169,7 +169,7 @@ void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& v
 // -----------------------------------------------------------------------------
 bool AggregatedPositions::CanAggregate() const
 {
-    tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    auto children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();

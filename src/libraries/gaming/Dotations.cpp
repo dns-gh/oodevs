@@ -11,13 +11,10 @@
 #include "Dotations.h"
 #include "Dotation.h"
 #include "clients_gui/DictionaryUpdated.h"
-#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/PropertiesDictionary.h"
-#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Tools.h"
-#include "statusicons.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;
@@ -89,14 +86,14 @@ void Dotations::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Dotations::Update( const std::vector< Dotation >& differences )
 {
-    for( std::vector< Dotation >::const_iterator it = differences.begin(); it != differences.end(); ++it )
+    for( auto it = differences.begin(); it != differences.end(); ++it )
     {
         Dotation* dotation = Find( it->type_->GetId() );
         if( !dotation )
         {
             dotation = new Dotation( *it );
             Register( it->type_->GetId(), *dotation );
-            dictionary_.RegisterExtension( entity_, this, property_ + "/" + it->type_->GetName().c_str(), ( ( const Dotation& ) *dotation ).quantity_ ); // $$$$ AGE 2006-06-22:
+            dictionary_.RegisterExtension( entity_, this, property_ + "/" + it->type_->GetName().c_str(), dotation->quantity_ );
         }
         else
             *dotation = *dotation + *it;
@@ -140,16 +137,6 @@ void Dotations::SetSuperior( const kernel::Entity_ABC& superior )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Dotations::Draw
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-void Dotations::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
-{
-    if( bEmptyGasTank_ && viewport.IsHotpointVisible() )
-        tools.DrawIcon( xpm_gas, where, 150.f, gui::GlTools_ABC::pixels );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Dotations::Accept
 // Created: LDC 2010-06-07
 // -----------------------------------------------------------------------------
@@ -157,4 +144,13 @@ bool Dotations::Accept( const kernel::DotationType& type ) const
 {
     Dotation* dotation = Find( type.GetId() );
     return dotation != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dotations::IsEmptyGasTank
+// Created: SLI 2014-08-22
+// -----------------------------------------------------------------------------
+bool Dotations::IsEmptyGasTank() const
+{
+    return bEmptyGasTank_;
 }

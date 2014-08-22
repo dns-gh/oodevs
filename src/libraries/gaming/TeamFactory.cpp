@@ -79,7 +79,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
     result->Attach< kernel::Equipments_ABC >( *new Equipments( *result, controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach< kernel::Dotations_ABC>( *new Dotations( *result,controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach< kernel::Dotations_ABC >( *new Dotations( *result,controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach< kernel::DictionaryExtensions >( *new ::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );

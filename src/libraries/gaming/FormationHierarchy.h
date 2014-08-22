@@ -31,7 +31,7 @@ namespace kernel {
 // Created: AGE 2006-10-19
 // =============================================================================
 class FormationHierarchy : public gui::MergingTacticalHierarchies
-                          , public kernel::Updatable_ABC< sword::FormationChangeSuperior >
+                         , public kernel::Updatable_ABC< sword::FormationChangeSuperior >
 {
 public:
     //! @name Constructors/Destructor

@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual bool Accept( const kernel::DotationType& type ) const = 0;
+    virtual bool IsEmptyGasTank() const = 0;
     //@}
 };
 
