@@ -313,7 +313,6 @@ class VerticalLayout
             next.x0 = x
             next.y0 = d.y
         next.x1 = x if next.x1 < x
-        x += @t.link_w
         win.w = x if x > win.w
         return left
 
