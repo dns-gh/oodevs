@@ -1009,7 +1009,7 @@ class Timeline
 
     # render all links from <data> groups, using coordinates from <offsets>
     # if <root> is defined, it will be used to enable synced transitions
-    # with nodes, insted of the default d3 dom selection
+    # with nodes, instead of the default d3 dom selection
     render_links: (data, ctx, root, offsets) ->
         data = @layout.filter_links data, ctx
         selector = (d) -> d.select("#links").selectAll "path.link"
