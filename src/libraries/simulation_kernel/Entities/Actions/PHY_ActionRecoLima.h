@@ -51,7 +51,7 @@ private:
     void CheckAgentKnowledgesNearLimas( const DEC_Knowledge_Agent& agent );
     void CheckAgentsNearLimas( const std::vector< MIL_Automate* >& automats );
     void CheckAgentsNearLimas( const MIL_Agent_ABC& agent );
-    bool IsFirstInAutomatValidWithMission();
+    bool IsFirstInAutomatValid();
     //@}
 
 private:
