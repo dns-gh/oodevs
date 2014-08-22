@@ -575,7 +575,7 @@ namespace
     {
         // The test on isDead is to allow the use of GetObjectsColliding - otherwise it finds invalid knowledge and a bad result
         // A better solution would be to check for all objects at the location but it's expensive and the function is not needed for dead units anyway.
-        if( pKnowledge && pKnowledge->IsValid() && !pKnowledge->IsDead() )
+        if( pKnowledge && pKnowledge->IsValid() && !pKnowledge->GetAgentKnown().IsDead() )
         {
             T_KnowledgeObjectDiaIDVector objectsColliding;
             pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
