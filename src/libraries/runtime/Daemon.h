@@ -9,8 +9,8 @@
 #ifndef DAEMON_H__
 #define DAEMON_H__
 
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -40,8 +40,8 @@ public:
     //! @name Typedef helpers
     //@{
     typedef std::vector< std::string > T_Args;
-    typedef boost::function< void( void ) > T_Waiter;
-    typedef boost::function< int( const T_Waiter& ) > T_Task;
+    typedef std::function< void( void ) > T_Waiter;
+    typedef std::function< int( const T_Waiter& ) > T_Task;
     //@}
 
     //! @name Methods

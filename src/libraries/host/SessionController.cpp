@@ -68,7 +68,7 @@ namespace
 {
 void AsyncStop( Async& async, SessionController::T_Session session )
 {
-    async.Post( boost::bind( &Session_ABC::Stop, session ) );
+    async.Post( [=]{ session->Stop(); } );
 }
 }
 
@@ -266,7 +266,7 @@ SessionController::T_Session SessionController::Create( const web::User& user, c
 void SessionController::Save( const Session_ABC& session ) const
 {
     const Path path = session.GetRoot() / "session.id";
-    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( session.Save() ) ) );
+    Post( async_, boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( session.Save() ) ) );
 }
 
 namespace

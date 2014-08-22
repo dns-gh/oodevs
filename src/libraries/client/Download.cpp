@@ -15,7 +15,6 @@
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 
-#include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>

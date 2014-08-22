@@ -51,6 +51,12 @@ private:
     T_Futures futures_;
     //@}
 };
+
+template< typename T >
+void Post( Async& async, const T& functor )
+{
+    async.Post( [=]{ functor(); } );
+}
 }
 
 #endif // ASYNC_H

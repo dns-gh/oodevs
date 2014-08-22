@@ -104,7 +104,7 @@ private:
     //@{
     template< typename T >
     T_Session Dispatch( const web::User& user, const Uuid& id, const T& operand ) const;
-    typedef boost::function< bool( const T_Session& ) > T_Operand;
+    typedef std::function< bool( const T_Session& ) > T_Operand;
     void Apply( T_Session session, const T_Operand& operand ) const;
     //@}
 

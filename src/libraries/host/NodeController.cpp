@@ -283,7 +283,7 @@ NodeController::T_Node NodeController::Create( const std::string& ident, const w
     bool valid = nodes_.AttachUnless( node, boost::bind( &HasSameIdent, ident, _1 ) );
     if( !valid )
     {
-        async_.Post( boost::bind( &FileSystem_ABC::Remove, &fs_, output ) );
+        Post( async_, boost::bind( &FileSystem_ABC::Remove, &fs_, output ) );
         return T_Node();
     }
 
@@ -298,7 +298,7 @@ NodeController::T_Node NodeController::Create( const std::string& ident, const w
 void NodeController::Save( const Node_ABC& node ) const
 {
     const Path path = node.GetRoot() / ( type_ + ".id" );
-    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( node.Save() ) ) );
+    Post( async_, boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( node.Save() ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 #include "Pool_ABC.h"
 #include "Event.h"
 
-#include <boost/function.hpp>
 #include <boost/thread/future.hpp>
 #include <boost/make_shared.hpp>
 

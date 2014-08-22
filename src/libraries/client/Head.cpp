@@ -17,7 +17,6 @@
 #include <QMetaType>
 #include <QSettings>
 
-#include <boost/function.hpp>
 
 using namespace gui;
 using namespace runtime;

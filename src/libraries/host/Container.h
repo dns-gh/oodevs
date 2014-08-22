@@ -14,7 +14,6 @@
 
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <vector>
@@ -41,7 +40,7 @@ public:
     typedef Container< T > T_Container;
     typedef boost::shared_ptr< T_Object > T_ObjectPtr;
     typedef boost::unordered_map< Uuid, T_ObjectPtr > T_Objects;
-    typedef boost::function< bool( const T_Object& ) > T_Predicate;
+    typedef std::function< bool( const T_Object& ) > T_Predicate;
 
 public:
     Container()

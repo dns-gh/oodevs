@@ -10,7 +10,6 @@
 #include "Error.h"
 #include "runtime/FileSystem_ABC.h"
 #include <boost/filesystem.hpp>
-#include <boost/function.hpp>
 #include <boost/xpressive/xpressive.hpp>
 
 namespace

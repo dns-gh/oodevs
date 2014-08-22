@@ -11,10 +11,10 @@
 #define TIMER_ABC_H__
 
 #include <boost/noncopyable.hpp>
+#include <functional>
 
 namespace boost
 {
-    template< typename T > class function;
     template< typename T > class shared_ptr;
 namespace posix_time
 {
@@ -24,7 +24,7 @@ namespace posix_time
 
 namespace runtime
 {
-    typedef boost::function< void( void ) > Task;
+    typedef std::function< void( void ) > Task;
     struct Pool_ABC;
 // =============================================================================
 /** @class  Timer_ABC

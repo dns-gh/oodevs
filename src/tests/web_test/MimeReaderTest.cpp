@@ -102,7 +102,7 @@ BOOST_FIXTURE_TEST_CASE( reader_parse_truncated_mime, Fixture )
            << "--" + limit.substr( 0, limit.size() - 1 ) + "--\r\n";
     reader.PutHeader( "Content-Type", "multipart/form-data; boundary=" + limit );
     BOOST_CHECK_EQUAL( reader.IsValid(), true );
-    reader.Register( "my_name", &SinkStream );
+    reader.Register( "my_name", []( io::Reader_ABC& src ){ SinkStream( src ); } );
     StreamReader src( buffer );
     reader.Parse( pool, src );
 }
@@ -118,7 +118,7 @@ BOOST_FIXTURE_TEST_CASE( reader_parse_evil_delimiter, Fixture )
            << "--" + limit.substr( 0, limit.size()>>2 ) + "--\r\n";
     reader.PutHeader( "Content-Type", "multipart/form-data; boundary=" + limit );
     BOOST_CHECK_EQUAL( reader.IsValid(), true );
-    reader.Register( "my_name", &SinkStream );
+    reader.Register( "my_name", []( io::Reader_ABC& src ){ SinkStream( src ); } );
     StreamReader src( buffer );
     reader.Parse( pool, src );
 }

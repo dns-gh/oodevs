@@ -540,7 +540,7 @@ int StartServer( int argc, const char* argv[] )
         case CMD_EXECUTE:
         default:
             PrintConfiguration( log, cfg );
-            facade.Start( runtime, fs, &std::getchar );
+            facade.Start( runtime, fs, []{ std::getchar(); } );
             break;
         }
     }

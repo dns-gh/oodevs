@@ -22,7 +22,6 @@
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
-#include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/thread/lock_guard.hpp>
@@ -38,7 +37,7 @@ using runtime::Utf8;
 
 namespace
 {
-    typedef boost::function< void( const Path& ) > PathOperand;
+    typedef std::function< void( const Path& ) > PathOperand;
 }
 
 struct Package_ABC::Item_ABC : public boost::noncopyable
@@ -207,7 +206,7 @@ namespace
                 return false;
             const Path next = fs.MakeAnyPath( tomb_ );
             fs.Rename( root, next / "_" );
-            async.Post( boost::bind( &FileSystem_ABC::Remove, &fs, next ) );
+            Post( async, boost::bind( &FileSystem_ABC::Remove, &fs, next ) );
             return true;
         }
 

@@ -12,7 +12,6 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/format.hpp>
-#include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -25,7 +24,7 @@ namespace
 class PortLink : public Port_ABC
 {
 public:
-    explicit PortLink( int port, boost::function< void( int ) > deleter )
+    explicit PortLink( int port, std::function< void( int ) > deleter )
         : port_   ( port )
         , deleter_( deleter )
     {
@@ -40,7 +39,7 @@ public:
         return port_;
     }
     int port_;
-    boost::function< void( int ) > deleter_;
+    std::function< void( int ) > deleter_;
 };
 }
 
