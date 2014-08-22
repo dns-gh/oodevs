@@ -1022,8 +1022,8 @@ class Timeline
         links.classed "selected", (d) -> d.selected
         links.attr "data-col": (d) -> d.col
         links.exit().remove()
-        updated = if root? then selector root else links
-        updated.attr d: (d) => @layout.render_link d, ctx, offsets[d.col]
+        animated = if root? then selector root else links
+        animated.attr d: (d) => @layout.render_link d, ctx, offsets[d.col]
         links.order()
 
     node_top: (d) => to_pixel d.y - @node_y
@@ -1054,8 +1054,8 @@ class Timeline
         nodes.exit()
             .remove()
             .each (d) -> d.view.remove()
-        updated = if root? then selector root else nodes
-        updated
+        animated = if root? then selector root else nodes
+        animated
             .attr
                 "data-col": (d) -> d.col
             .style
