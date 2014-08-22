@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"log"
+	"masa/admin/server"
 	"runtime"
-	"server"
 )
 
 func main() {
