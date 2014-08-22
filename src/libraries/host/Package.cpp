@@ -915,7 +915,7 @@ bool FillItems( Async& async, const FileSystem_ABC& fs, const Path& path, Packag
 // -----------------------------------------------------------------------------
 bool Package::Parse()
 {
-    std::auto_ptr< Metadata > meta;
+    std::unique_ptr< Metadata > meta;
 
     if( !reference_ )
     {

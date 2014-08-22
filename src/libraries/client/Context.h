@@ -15,7 +15,6 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/scoped_ptr.hpp>
 
 #include <QReadWriteLock>
 #include <QNetworkAccessManager>
@@ -135,7 +134,7 @@ private:
     Tree session_;
     T_Links links_;
     T_Downloads downloads_;
-    boost::scoped_ptr< QSharedMemory > single_;
+    std::unique_ptr< QSharedMemory > single_;
 };
 }
 
