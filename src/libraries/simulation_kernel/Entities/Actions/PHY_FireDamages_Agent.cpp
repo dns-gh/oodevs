@@ -128,18 +128,34 @@ void PHY_FireDamages_Agent::DoSerializeDamages( T& msg ) const
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_FireDamages_Agent::Serialize
-// Created: LGY 2012-06-28
-// -----------------------------------------------------------------------------
-void PHY_FireDamages_Agent::Serialize( std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > >& content ) const
+void PHY_FireDamages_Agent::VisitComponents( const std::function< void( const std::string&, unsigned int ,unsigned int, unsigned int ) >& visitor ) const
 {
     for( auto it = composanteResults_.begin(); it != composanteResults_.end(); ++it )
+        visitor(
+            it->first->GetName(),
+            it->second[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ],
+            it->second[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ],
+            it->second[ PHY_ComposanteState::dead_.GetID() ] );
+}
+
+unsigned int PHY_FireDamages_Agent::GetWounded() const
+{
+    unsigned int result = 0;
+    for( auto it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it )
     {
-        const PHY_ComposanteType_ABC& type = *it->first;
-        const T_ComposanteStates& states = it->second;
-        content.push_back( boost::make_tuple( type.GetName(), states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ],
-                                                              states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ],
-                                                              states[ PHY_ComposanteState::dead_.GetID() ] ) );
+        const auto& wounds = humanResults_[ it->second->GetID() ];
+        result += wounds[ PHY_HumanWound::woundedU1_.GetID() ]
+            + wounds[ PHY_HumanWound::woundedU2_.GetID() ]
+            + wounds[ PHY_HumanWound::woundedU3_.GetID() ]
+            + wounds[ PHY_HumanWound::woundedUE_.GetID() ];
     }
+    return result;
+}
+
+unsigned int PHY_FireDamages_Agent::GetDead() const
+{
+    unsigned int result = 0;
+    for( auto it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it )
+        result += humanResults_[ it->second->GetID() ][ PHY_HumanWound::killed_.GetID() ];
+    return result;
 }

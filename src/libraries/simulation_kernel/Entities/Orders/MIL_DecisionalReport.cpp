@@ -147,4 +147,5 @@ namespace report
     MAKE_REPORT( eRC_RecognizedUnitSurrendered )
     MAKE_REPORT( eRC_IEDHeard )
     MAKE_REPORT( eRC_InFireObject )
+    MAKE_REPORT( eRC_IndirectFireObserved )
 }

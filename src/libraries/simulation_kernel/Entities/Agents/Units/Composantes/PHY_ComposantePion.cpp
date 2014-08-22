@@ -790,6 +790,11 @@ double PHY_ComposantePion::GetOperationalState() const
     return ( 1. - rOpStateWeightHumans_ ) + rOpStateWeightHumans_ * pHumans_->GetOperationalState();
 }
 
+unsigned int PHY_ComposantePion::GetNbrHumans() const
+{
+    return pHumans_->GetNbrHumans();
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetNbrUsableHumans
 // Created: NLD 2005-01-07

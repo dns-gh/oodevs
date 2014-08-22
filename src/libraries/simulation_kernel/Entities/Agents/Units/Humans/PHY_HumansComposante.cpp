@@ -380,6 +380,11 @@ unsigned int PHY_HumansComposante::GetNbrUsableHumans() const
     return nNbrUsableHumans_;
 }
 
+unsigned int PHY_HumansComposante::GetNbrHumans() const
+{
+    return static_cast< unsigned int >( humans_.size() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::GetComposante
 // Created: NLD 2006-02-09
