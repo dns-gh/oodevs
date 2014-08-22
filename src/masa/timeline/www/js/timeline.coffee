@@ -1020,11 +1020,10 @@ class Timeline
             .attr "data-id": (d) -> d.id
         links.classed "fill", (d) -> is_range d, offsets[d.col]
         links.classed "selected", (d) -> d.selected
-        links.attr
-            "data-col": (d) -> d.col
+        links.attr "data-col": (d) -> d.col
+        links.exit().remove()
         updated = if root? then selector root else links
         updated.attr d: (d) => @layout.render_link d, ctx, offsets[d.col]
-        links.exit().remove()
         links.order()
 
     node_top: (d) => to_pixel d.y - @node_y
@@ -1052,6 +1051,9 @@ class Timeline
             .on("drag",    (d) -> that.event_drag_move this, d)
             .on("dragend", (d) -> that.event_drag_end  this, d)
         nodes.classed "selected", (d) -> d.selected
+        nodes.exit()
+            .remove()
+            .each (d) -> d.view.remove()
         updated = if root? then selector root else nodes
         updated
             .attr
@@ -1059,9 +1061,6 @@ class Timeline
             .style
                 top:  @node_top
                 left: @node_left offsets, win
-        nodes.exit()
-            .remove()
-            .each (d) -> d.view.remove()
         @set_width win.w
         @layout.stop_offsets offsets
         return offsets
