@@ -60,6 +60,7 @@ add_popover = (layout, el, event) ->
         trigger:   "hover"
         container: "#range_popovers"
         placement: layout.lane_orientation()
+        delay:     show: 500, hide: 100
     title = render_event event, false, false
     if event.get("info")?.length
         el.popover _.extend data,
@@ -67,6 +68,14 @@ add_popover = (layout, el, event) ->
             content: event.get "info"
     else
         el.popover _.extend data, content: title
+
+enable_popover = (el, enabled) ->
+    el = $ el
+    if enabled
+        el.popover "enable"
+    else
+        el.popover "disable"
+        el.popover "hide"
 
 get_zone = (y, h, pos) ->
     # each zone is at least 1 pixel
@@ -847,11 +856,11 @@ class Timeline
 
     range_drag_move: (dom, d) ->
         return unless @layout.select d3.event.dx, d3.event.dy
-        $(dom).popover "destroy"
         el = d3.select dom
         pos = @layout.select d3.event.x, d3.event.y
         event = @model.get d.id
         unless @range_offsets?
+            enable_popover dom, false
             first = pos - @layout.select d3.event.dx, d3.event.dy
             @range_zone = @get_range_zone el
             @range_offsets = (first - @scale x for x in [d.min, d.max])
@@ -878,10 +887,9 @@ class Timeline
         delete @range_children
         event = @model.get d.id
         make_plain()
+        enable_popover dom, true
         if event?
-            event.save {},
-                wait: true
-                success: => add_popover @layout, dom, event
+            event.save {}, wait: true
         @unlock()
 
     # returns visible events
@@ -1040,6 +1048,7 @@ class Timeline
             .classed("node", true)
             .each((d) -> d.view = view_factory d, this)
             .filter((d) -> d.data.length == 1)
+            .each((d) -> add_popover that.layout, this, _.first d.data)
             .call d3.behavior.drag()
             .on("drag",    (d) -> that.event_drag_move this, d)
             .on("dragend", (d) -> that.event_drag_end  this, d)
@@ -1068,6 +1077,7 @@ class Timeline
         [offsets] = @layout.start_offsets()
         win = w: @w
         unless @event_drag_offset?
+            enable_popover dom, false
             @lock()
             xoff = d3.event.x - d3.event.dx - d.x
             yoff = d3.event.y - d3.event.dy - d.y
@@ -1093,6 +1103,7 @@ class Timeline
         delete d.dragged
         make_plain()
         model = _.first d.data
+        enable_popover el, true
         model.save {}, wait: true
         @unlock()
 
