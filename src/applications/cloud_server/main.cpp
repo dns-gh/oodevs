@@ -36,8 +36,8 @@
 #include <cpplog/cpplog.hpp>
 
 #pragma warning( push, 0 )
-#include <Qt/qsettings.h>
-#include <Qt/qstring.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 #include <boost/filesystem/operations.hpp>
