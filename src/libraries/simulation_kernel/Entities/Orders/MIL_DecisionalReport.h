@@ -92,6 +92,7 @@ namespace report
     extern const MIL_DecisionalReport eRC_FriendUnitRecognized;
     extern const MIL_DecisionalReport eRC_HumainRetourDeSante;
     extern const MIL_DecisionalReport eRC_InfrastructureDamaged;
+    extern const MIL_DecisionalReport eRC_Jammed;
     extern const MIL_DecisionalReport eRC_LivingAreaDamaged;
     extern const MIL_DecisionalReport eRC_LogNoStock;
     extern const MIL_DecisionalReport eRC_LogNoSuperior;
