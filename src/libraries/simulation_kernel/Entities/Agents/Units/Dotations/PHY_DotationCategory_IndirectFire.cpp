@@ -311,9 +311,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                             target.Execute< OnComponentComputer_ABC >( counter );
                             MIL_Report::PostEvent( observerAgent, report::eRC_IndirectFireObserved,
                                 knowledge,
-                                killed * 100 / ( counter.humans_ ? counter.humans_ : killed ),
-                                wounded * 100 / ( counter.humans_ ? counter.humans_ : wounded ),
-                                damaged * 100 / ( counter.components_ ? counter.components_ : damaged ) );
+                                counter.humans_ ? ( killed * 100 / counter.humans_ ) : 0,
+                                counter.humans_ ? ( wounded * 100 / counter.humans_ ) : 0,
+                                counter.components_ ? ( damaged * 100 / counter.components_ ) : 0 );
                         }
                     }
                 }
