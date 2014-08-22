@@ -195,9 +195,9 @@ namespace logistic_helpers
             FillSupplyRequirements( logBase, logType, requirements, staticModel );
     }
 
-    kernel::Entity_ABC* FindLogisticEntity( const sword::ParentEntity& message,
-                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
-                                            const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver )
+    kernel::Entity_ABC* FindParentEntity( const sword::ParentEntity& message,
+                                          const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                                          const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver )
     {
         if( message.has_automat() )
             return automatResolver.Find( message.automat().id() );

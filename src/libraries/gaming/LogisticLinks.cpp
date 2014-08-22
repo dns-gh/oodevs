@@ -88,7 +88,7 @@ LogisticLink* LogisticLinks::FindLogisticLink( const kernel::Entity_ABC& superio
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
 {
-    const kernel::Entity_ABC* supplier = logistic_helpers::FindLogisticEntity( message.supplier(), automatResolver_, formationResolver_ );
+    const kernel::Entity_ABC* supplier = logistic_helpers::FindParentEntity( message.supplier(), automatResolver_, formationResolver_ );
     assert( supplier );
     if( LogisticLink* link = FindLogisticLink( *supplier ) )
         link->Update( message.quotas(), dotationResolver_ );
@@ -107,7 +107,7 @@ void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
     superiors_.clear();
     BOOST_FOREACH( const sword::ParentEntity& parentEntity, message.superior() )
     {
-        const kernel::Entity_ABC* superior = logistic_helpers::FindLogisticEntity( parentEntity, automatResolver_, formationResolver_ );
+        const kernel::Entity_ABC* superior = logistic_helpers::FindParentEntity( parentEntity, automatResolver_, formationResolver_ );
         assert( superior );
         auto link = ::FindLogisticLink( oldLinks, *superior );
         if( !link )

@@ -57,8 +57,6 @@ private:
     virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
     virtual void DoUpdate( const sword::ObjectUpdate& message );
 
-    kernel::Entity_ABC* FindLogisticEntity( const sword::ParentEntity& message ) const;
-
     template< typename T >
     void UpdateData( const T& message );
     //@}
