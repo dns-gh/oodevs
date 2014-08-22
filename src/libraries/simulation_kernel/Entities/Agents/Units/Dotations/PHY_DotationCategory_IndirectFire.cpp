@@ -10,6 +10,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
+#include "MIL_AgentServer.h"
+#include "MIL_Random.h"
+#include "OnComponentComputer_ABC.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -17,9 +20,10 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
-#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Units/Humans/PHY_HumansComposante.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Effects/MIL_Effect_Explosion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
@@ -34,8 +38,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "MIL_AgentServer.h"
-#include "MIL_Random.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Circle.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -47,7 +49,6 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <boost/tuple/tuple.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
@@ -129,10 +130,9 @@ namespace
                         double intersection = TER_Geometry::IntersectionArea( location, explosionArea );
                         if( 0 < intersection )
                             targets.push_back( *it );
-    }
+                    }
             }
         }
-
     }
 
     void DamageObjects( const MT_Vector2D& vTargetPosition, double distanceForObjects, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotationCategory, const MIL_Agent_ABC* pFirer )
@@ -180,6 +180,21 @@ namespace
             }
         }
     }
+
+    struct ComponentCounter : OnComponentComputer_ABC
+    {
+        ComponentCounter()
+            : components_( 0 )
+            , humans_( 0 )
+        {}
+        virtual void ApplyOnComponent( PHY_ComposantePion& component )
+        {
+            ++components_;
+            humans_ += component.GetNbrHumans();
+        }
+        unsigned int components_;
+        unsigned int humans_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -267,11 +282,10 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 TER_Agent_ABC::T_AgentPtrVector localObservers;
                 TER_World::GetWorld().GetAgentManager().GetListWithinCircle ( vTargetPosition, 5000.0, localObservers );
 
-                //RC
                 for( auto itobserver = localObservers.begin(); itobserver != localObservers.end(); ++itobserver )
                 {
                     MIL_Agent_ABC& observerAgent = static_cast< PHY_RoleInterface_Location& >( **itobserver ).GetAgent();
-                    //only take those observers belonging to same army as firer:
+                    // only the observers belonging to same army as firer
                     if( &observerAgent != requester && pFirer && observerAgent.GetArmy().GetID() != pFirer->GetArmy().GetID() )
                         continue;
                     PHY_RoleInterface_Perceiver& perceiver = observerAgent.GetRole< PHY_RoleInterface_Perceiver >();
@@ -280,12 +294,26 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                         boost::shared_ptr< DEC_Knowledge_Agent > knowledge = perceiver.GetKnowledgeGroup()->GetKnowledge()->GetKnowledgeAgentContainer().GetKnowledgeAgent( target );
                         if( knowledge && knowledge->GetRelevance() == 1. && knowledge->GetCurrentPerceptionLevel() >= PHY_PerceptionLevel::detected_ )
                         {
-                            typedef std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > > T_Content;
-                            T_Content content;
-                            fireResult.GetDamages( target ).Serialize( content );
-                            for( auto it = content.begin(); it != content.end(); ++it )
-                                MIL_Report::PostEvent( observerAgent, report::eRC_FireObserver, knowledge,
-                                                       it->get< 0 >(), it->get< 1 >(), it->get< 2 >(), it->get< 3 >() );
+                            const auto& damages = fireResult.GetDamages( target );
+                            unsigned int damaged = 0;
+                            damages.VisitComponents(
+                                [&]( const std::string& equipment, unsigned int repairableWithEvacuation,
+                                    unsigned int repairableWithoutEvacuation, unsigned int destroyed )
+                                {
+                                    MIL_Report::PostEvent( observerAgent, report::eRC_FireObserver, knowledge,
+                                                           equipment, repairableWithEvacuation,
+                                                           repairableWithoutEvacuation, destroyed );
+                                    damaged += repairableWithEvacuation + repairableWithoutEvacuation + destroyed;
+                                } );
+                            unsigned int killed = damages.GetDead();
+                            unsigned int wounded = damages.GetWounded();
+                            ComponentCounter counter;
+                            target.Execute< OnComponentComputer_ABC >( counter );
+                            MIL_Report::PostEvent( observerAgent, report::eRC_IndirectFireObserved,
+                                knowledge,
+                                killed * 100 / ( counter.humans_ ? counter.humans_ : killed ),
+                                wounded * 100 / ( counter.humans_ ? counter.humans_ : wounded ),
+                                damaged * 100 / ( counter.components_ ? counter.components_ : damaged ) );
                         }
                     }
                 }

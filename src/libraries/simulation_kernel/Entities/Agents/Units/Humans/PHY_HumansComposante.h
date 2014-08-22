@@ -96,6 +96,7 @@ public:
     //! @name Accessors
     //@{
     const PHY_ComposantePion& GetComposante() const;
+    unsigned int GetNbrHumans() const;
     unsigned int GetNbrUsableHumans() const;
     unsigned int GetNbrHealthyHumans( const PHY_HumanRank& rank ) const;
     //@}

@@ -13,7 +13,6 @@
 #define __PHY_FireDamages_Agent_h_
 
 #include <tools/Map.h>
-#include <boost/tuple/tuple.hpp>
 
 namespace sword
 {
@@ -50,10 +49,14 @@ public:
     //! @name Network
     //@{
     void Serialize( const MIL_Agent_ABC& target, sword::UnitFireDamages& asn ) const;
-    void Serialize( std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > >& content ) const;
     void SerializeDamages( sword::UnitDamagedByUnitFire& msg ) const;
     void SerializeDamages( sword::UnitDamagedByCrowdFire& msg ) const;
     //@}
+
+    void VisitComponents( const std::function< void( const std::string& equipment, unsigned int repairableWithEvacuation,
+                                                     unsigned int repairableWithoutEvacuation, unsigned int destroyed ) >& visitor ) const;
+    unsigned int GetWounded() const;
+    unsigned int GetDead() const;
 
 private:
     //! @name Types
