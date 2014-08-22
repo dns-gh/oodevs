@@ -1936,6 +1936,15 @@ const PHY_ComposanteTypePion* DEC_AgentFunctions::GetEquipmentFromID( unsigned i
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsValid
+// Created: LDC 2014-08-22
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsValid( DEC_Decision_ABC& callerAgent )
+{
+    return !callerAgent.GetPion().IsMarkedForDestruction();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::EnableSharedPerception
 // Created: LGY 2013-05-07
 // -----------------------------------------------------------------------------

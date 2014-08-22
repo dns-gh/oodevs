@@ -154,6 +154,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Agent_IsUnderground", &DEC_AgentFunctions::IsUnderground );
     brain.RegisterFunction( "DEC_Agent_GetTransportedUnits", &DEC_ActionFunctions::GetTransportedUnits );
     brain.RegisterFunction( "DEC_Agent_EstCompletementEmbarquable", &DEC_AgentFunctions::IsLoadable );
+    brain.RegisterFunction( "DEC_Agent_EstValide", &DEC_AgentFunctions::IsValid );
 }
 
 // -----------------------------------------------------------------------------

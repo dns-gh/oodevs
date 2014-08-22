@@ -162,6 +162,7 @@ public:
     static bool CreateBreakdown( MIL_Agent_ABC& callerAgent, const PHY_ComposanteTypePion* composanteType, unsigned int breakdown );
     static bool IsUnderground( DEC_Decision_ABC& callerAgent );
     static const PHY_ComposanteTypePion* GetEquipmentFromID( unsigned int equipmentID );
+    static bool IsValid( DEC_Decision_ABC& callerAgent );
 
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );
