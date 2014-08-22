@@ -29,14 +29,16 @@ class Page_ABC : public gui::WidgetLanguageObserver_ABC< QWidget >
 protected:
     enum EButtonFlags
     {
-        eButtonBack     = 0x01,
-        eButtonQuit     = 0x02,
-        eButtonAdmin    = 0x04,
-        eButtonStart    = 0x08,
-        eButtonJoin     = 0x10,
-        eButtonEdit     = 0x20,
-        eButtonApply    = 0x40,
-        eButtonDelete   = 0x80
+        eButtonBack     = 1 << 0,
+        eButtonQuit     = 1 << 1,
+        eButtonAdmin    = 1 << 2,
+        eButtonStart    = 1 << 3,
+        eButtonJoin     = 1 << 4,
+        eButtonEdit     = 1 << 5,
+        eButtonApply    = 1 << 6,
+        eButtonDelete   = 1 << 7,
+        eButtonUpgrade  = 1 << 8,
+        eButtonCancel   = 1 << 9,
     };
 
 public:
@@ -79,6 +81,8 @@ private slots:
     virtual void OnEdit() {}
     virtual void OnApply() {}
     virtual void OnDelete() {}
+    virtual void OnUpgrade() {}
+    virtual void OnCancel() {}
     void OnQuit();
     //@}
 
@@ -104,6 +108,8 @@ private:
     QPushButton* editButton_;
     QPushButton* applyButton_;
     QPushButton* deleteButton_;
+    QPushButton* upgradeButton_;
+    QPushButton* cancelButton_;
     QLabel*      titleLabel_;
     //@}
 };

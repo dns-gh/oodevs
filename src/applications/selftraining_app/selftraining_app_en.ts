@@ -516,6 +516,14 @@ Do you want to replace it?</source>
         <source>Admin</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Upgrade</source>
+        <translation>Upgrade</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancel</translation>
+    </message>
 </context>
 <context>
     <name>ProcessDialogs</name>
@@ -676,6 +684,10 @@ Do you want to replace it?</source>
     <message>
         <source>Are you sure you want to delete?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>upgrade</source>
+        <translation>upgrade</translation>
     </message>
 </context>
 <context>

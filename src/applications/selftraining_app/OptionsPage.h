@@ -66,13 +66,14 @@ public slots:
     //! @name Operations
     //@{
     void UpdateButton();
-    void OnButtonChanged( bool enabled, const QString& text );
+    void OnButtonChanged( bool enabled, const QString& text, bool upgrade );
     //@}
 
 private slots:
     //! @name Operations
     //@{
     virtual void OnApply();
+    virtual void OnUpgrade();
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
     void OnEditDataDirectory( const QString& text );

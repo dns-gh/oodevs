@@ -11,8 +11,19 @@
 #define SELFTRAINING_TERRAINS_WIDGET_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/optional/optional_fwd.hpp>
+#include <boost/shared_ptr.hpp>
 
+class Application;
 class Config;
+class LogProgressPage;
+class Page_ABC;
+class QTableView;
+
+namespace graphics
+{
+    class MapnikProcess_ABC;
+}
 
 class TerrainsWidget: public QObject
                     , public boost::noncopyable
@@ -20,28 +31,35 @@ class TerrainsWidget: public QObject
     Q_OBJECT
 
 public:
-             TerrainsWidget( QWidget* parent, const Config& config );
+             TerrainsWidget( QWidget* parent, const Config& config, Application& app,
+                QStackedWidget* pages, Page_ABC& parentPage );
     virtual ~TerrainsWidget();
 
     QWidget* GetMainWidget();
-
-signals:
-    void ButtonChanged( bool enable, const QString& text );
-
-public slots:
     void OnButtonChanged();
 
+signals:
+    void ButtonChanged( bool enable, const QString& text, bool upgrade );
+
+public slots:
+    void OnButtonChanged( const QModelIndex& index );
+    void OnUpdate();
+    void OnUpgrade();
+
 public:
-    void Update();
     void OnDelete();
 
 private:
-    QListWidgetItem* CurrentItem() const;
+    boost::optional< tools::Path > GetSelectedTerrain() const;
+    void UpdateButtons( bool remove, bool upgrade );
 
 private:
     QWidget* parent_;
     const Config& config_;
-    QListWidget* terrains_;
+    QStandardItemModel* model_;
+    QTableView* terrains_;
+    LogProgressPage* progress_;
+    boost::shared_ptr< graphics::MapnikProcess_ABC > generator_;
 };
 
 #endif // SELFTRAINING_TERRAINS_WIDGET_H

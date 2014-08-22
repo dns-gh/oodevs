@@ -26,7 +26,7 @@ public:
     QWidget* GetMainWidget();
 
 signals:
-    void ButtonChanged( bool enable, const QString& text );
+    void ButtonChanged( bool enable, const QString& text, bool upgrade );
 
 public slots:
     void OnButtonChanged();

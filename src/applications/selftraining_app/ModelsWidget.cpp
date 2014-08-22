@@ -71,7 +71,7 @@ QListWidgetItem* ModelsWidget::CurrentItem() const
 // -----------------------------------------------------------------------------
 void ModelsWidget::OnButtonChanged()
 {
-    emit ButtonChanged( !!CurrentItem(), tools::translate( "Page_ABC", "Delete" ) );
+    emit ButtonChanged( !!CurrentItem(), tools::translate( "Page_ABC", "Delete" ), false );
 }
 
 namespace

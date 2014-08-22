@@ -34,17 +34,19 @@ namespace
 // -----------------------------------------------------------------------------
 Page_ABC::Page_ABC( QStackedWidget* pages, Page_ABC& previous, unsigned short flags )
     : gui::WidgetLanguageObserver_ABC< QWidget >( pages )
-    , pages_       ( pages )
-    , previous_    ( previous )
-    , backButton_  ( 0 )
-    , adminButton_ ( 0 )
-    , quitButton_  ( 0 )
-    , startButton_ ( 0 )
-    , joinButton_  ( 0 )
-    , editButton_  ( 0 )
-    , applyButton_ ( 0 )
-    , deleteButton_( 0 )
-    , titleLabel_  ( 0 )
+    , pages_        ( pages )
+    , previous_     ( previous )
+    , backButton_   ( 0 )
+    , adminButton_  ( 0 )
+    , quitButton_   ( 0 )
+    , startButton_  ( 0 )
+    , joinButton_   ( 0 )
+    , editButton_   ( 0 )
+    , applyButton_  ( 0 )
+    , deleteButton_ ( 0 )
+    , upgradeButton_( 0 )
+    , cancelButton_ ( 0 )
+    , titleLabel_   ( 0 )
 {
     QVBoxLayout* layout = new QVBoxLayout( this );
     layout->setContentsMargins( 0, 0, 0, 0 ); 
@@ -73,6 +75,10 @@ Page_ABC::Page_ABC( QStackedWidget* pages, Page_ABC& previous, unsigned short fl
 
     if( flags & eButtonDelete )
         deleteButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnDelete() ) );
+    if( flags & eButtonUpgrade )
+        upgradeButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnUpgrade() ) );
+    if( flags & eButtonCancel )
+        cancelButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnCancel() ) );
 
     if( flags & eButtonStart )
         startButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnStart() ) );
@@ -118,6 +124,10 @@ void Page_ABC::OnLanguageChanged()
         applyButton_->setText(  tools::translate( "Page_ABC", "Apply" ) );
     if( deleteButton_ )
         deleteButton_->setText( tools::translate( "Page_ABC", "Delete" ) );
+    if( upgradeButton_ )
+        upgradeButton_->setText( tools::translate( "Page_ABC", "Upgrade" ) );
+    if( cancelButton_ )
+        cancelButton_->setText( tools::translate( "Page_ABC", "Cancel" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,6 +188,8 @@ const QString Page_ABC::GetTitle() const
 // -----------------------------------------------------------------------------
 void Page_ABC::EnableButton( unsigned short flags, bool enable )
 {
+    if( ( flags & eButtonBack ) && backButton_ )
+        backButton_->setEnabled( enable );
     if( ( flags & eButtonStart ) && startButton_ )
         startButton_->setEnabled( enable );
     if( ( flags & eButtonJoin ) && joinButton_ )
@@ -188,6 +200,10 @@ void Page_ABC::EnableButton( unsigned short flags, bool enable )
         applyButton_->setEnabled( enable );
     if( ( flags & eButtonDelete ) && deleteButton_ )
         deleteButton_->setEnabled( enable );
+    if( ( flags & eButtonUpgrade ) && upgradeButton_ )
+        upgradeButton_->setEnabled( enable );
+    if( ( flags & eButtonCancel ) && cancelButton_ )
+        cancelButton_->setEnabled( enable );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,6 +222,10 @@ void Page_ABC::SetButtonText( unsigned short flags, const QString& text )
         applyButton_->setText( text );
     if( ( flags & eButtonDelete ) && deleteButton_ )
         deleteButton_->setText( text );
+    if( ( flags & eButtonUpgrade ) && upgradeButton_ )
+        upgradeButton_->setText( text );
+    if( ( flags & eButtonCancel ) && cancelButton_ )
+        cancelButton_->setText( text );
 }
 
 // -----------------------------------------------------------------------------
