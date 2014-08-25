@@ -603,7 +603,7 @@ bool DEC_KnowledgeFunctions::IsPositionInsideObjectOfType( const DEC_Decision_AB
 {
     if( !callerAgent || !pCenter )
         throw MASA_EXCEPTION( "invalid parameter." );
-    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
         return container->IsPositionInsideObjectOfType( capacity, *pCenter );
     return false;
 }

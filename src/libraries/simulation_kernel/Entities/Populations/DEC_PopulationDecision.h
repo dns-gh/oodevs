@@ -64,6 +64,7 @@ public:
     //! @name Accessors
     //@{
     MIL_Population& GetPopulation() const;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     double GetDominationState() const;
     bool HasStateChanged() const; // Etat decisionnel
     virtual DEC_AutomateDecision* GetDecAutomate();
