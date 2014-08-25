@@ -58,7 +58,10 @@ private:
     //@{
     bool AvoidObstacles();
     bool UpdateObjectsToAvoid();
+    void ComputeNewKnowledges( T_KnowledgeObjectVector& newKnowledges );
+    bool ComputeNewKnowledge( const boost::shared_ptr< DEC_Knowledge_Object >& object, T_KnowledgeObjectVector& newKnowledges );
     bool IsDisasterToAvoid( const DisasterAttribute& disaster );
+    double ComputeImpact( const DisasterAttribute& disaster ) const;
     void CreateNewPath();
     //@}
 
@@ -71,7 +74,7 @@ private:
     bool executionSuspended_;
     bool isBlockedByObject_;
     unsigned int blockedTickCounter_;
-    int obstacleId_;
+    int obstacleId_; // $$$$ MCO 2014-08-25: no need to store
     bool blockedByDisaster_;
     double oldDisasterImpact_;
 };

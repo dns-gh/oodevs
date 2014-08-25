@@ -85,60 +85,42 @@ PHY_ActionMove::~PHY_ActionMove()
 bool PHY_ActionMove::UpdateObjectsToAvoid()
 {
     T_KnowledgeObjectVector knowledges;
-    T_KnowledgeObjectVector newKnowledges;
-    MIL_PathObjectFilter filter;
+    ComputeNewKnowledges( knowledges );
+    std::vector< TER_Localisation > signatures;
+    for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+        signatures.push_back( (*it)->GetLocalisation() );
+    const bool modified = knowledges != objectsToAvoid_ || signatures != geometrySignatures_;
+    objectsToAvoid_.swap( knowledges );
+    geometrySignatures_.swap( signatures );
+    return modified;
+}
+
+void PHY_ActionMove::ComputeNewKnowledges( T_KnowledgeObjectVector& newKnowledges )
+{
+    T_KnowledgeObjectVector knowledges;
     if( DEC_BlackBoard_CanContainKnowledgeObject* container = pion_.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
-        container->GetObjectsAtInteractionHeight( knowledges, pion_, filter );
+        container->GetObjectsAtInteractionHeight( knowledges, pion_, MIL_PathObjectFilter() );
     bool disasterFound = false;
     for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
-    {
-        const MIL_Object_ABC* obj = ( *it )->GetObjectKnown();
-        const DisasterAttribute* disaster = obj ? obj->RetrieveAttribute< DisasterAttribute >() : 0;
-        if( disaster )
-        {
+        if( ComputeNewKnowledge( *it, newKnowledges ) )
             disasterFound = true;
-            if( IsDisasterToAvoid( *disaster ) )
-                newKnowledges.push_back( *it );
-        }
-        else
-        {
-            const MIL_ObjectType_ABC& type = (*it)->GetType();
-            double cost = pMainPath_->GetPathClass().GetObjectCost( type );
-            if( 0. != cost || type.GetCapacity< TrafficabilityCapacity >() )
-                newKnowledges.push_back( *it );
-        }
-    }
     if( !disasterFound )
     {
         oldDisasterImpact_ = 1;
         blockedByDisaster_ = false;
     }
-    if( newKnowledges != objectsToAvoid_ )
-    {
-        objectsToAvoid_ = newKnowledges;
-        geometrySignatures_.clear();
-        for( auto it = newKnowledges.begin(); it != newKnowledges.end(); ++it )
-            geometrySignatures_.push_back( (*it)->GetLocalisation() );
-        return true;
-    }
-    else
-    {
-        bool modified = false;
-        for( std::size_t i = 0; i < newKnowledges.size(); ++i )
-        {
-            if( geometrySignatures_[i] != newKnowledges[i]->GetLocalisation() )
-            {
-                geometrySignatures_[i] = newKnowledges[i]->GetLocalisation();
-                modified = true;
-            }
-        }
-        if( modified )
-        {
-            objectsToAvoid_ = newKnowledges;
-            return true;
-        }
-    }
-    return false;
+}
+
+bool PHY_ActionMove::ComputeNewKnowledge( const boost::shared_ptr< DEC_Knowledge_Object >& object, T_KnowledgeObjectVector& newKnowledges )
+{
+    const MIL_Object_ABC* obj = object->GetObjectKnown();
+    const DisasterAttribute* disaster = obj ? obj->RetrieveAttribute< DisasterAttribute >() : 0;
+    const auto& type = object->GetType();
+    if( disaster && IsDisasterToAvoid( *disaster )
+        || pMainPath_->GetPathClass().GetObjectCost( type )
+        || type.GetCapacity< TrafficabilityCapacity >() )
+        newKnowledges.push_back( object );
+    return disaster != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,15 +129,7 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
 // -----------------------------------------------------------------------------
 bool PHY_ActionMove::IsDisasterToAvoid( const DisasterAttribute& disaster )
 {
-    double latitude, longitude;
-    TER_World::GetWorld().SimToMosMgrsCoord( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), latitude, longitude );
-    float maxValue = 0;
-    const auto& extractors = disaster.GetExtractors();
-    for( auto it = extractors.begin(); it != extractors.end(); ++it )
-        maxValue = std::max( maxValue, ( *it )->GetValue( longitude, latitude ) );
-    DisasterImpactComputer computer( maxValue );
-    pion_.Execute< OnComponentComputer_ABC >( computer );
-    const double disasterImpact = computer.GetModifier();
+    const double disasterImpact = ComputeImpact( disaster );
     bool ret = false;
     if( disasterImpact > oldDisasterImpact_ )
         blockedByDisaster_ = false;
@@ -166,6 +140,19 @@ bool PHY_ActionMove::IsDisasterToAvoid( const DisasterAttribute& disaster )
     }
     oldDisasterImpact_ = disasterImpact;
     return ret;
+}
+
+double PHY_ActionMove::ComputeImpact( const DisasterAttribute& disaster ) const
+{
+    double latitude, longitude;
+    TER_World::GetWorld().SimToMosMgrsCoord( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), latitude, longitude );
+    float maxValue = 0;
+    const auto& extractors = disaster.GetExtractors();
+    for( auto it = extractors.begin(); it != extractors.end(); ++it )
+        maxValue = std::max( maxValue, (*it)->GetValue( longitude, latitude ) );
+    DisasterImpactComputer computer( maxValue );
+    pion_.Execute< OnComponentComputer_ABC >( computer );
+    return computer.GetModifier();
 }
 
 // -----------------------------------------------------------------------------
