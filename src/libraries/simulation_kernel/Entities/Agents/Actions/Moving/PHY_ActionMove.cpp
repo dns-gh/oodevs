@@ -174,9 +174,9 @@ bool PHY_ActionMove::IsDisasterToAvoid( const DisasterAttribute& disaster )
 // -----------------------------------------------------------------------------
 bool PHY_ActionMove::AvoidObstacles()
 {
-    if( !pMainPath_.get() || pMainPath_->GetState() == DEC_Path_ABC::eComputing )
+    if( !pMainPath_ || pMainPath_->GetState() == DEC_Path_ABC::eComputing )
         return false;
-    
+
     if( !UpdateObjectsToAvoid() )
     {
         if( isBlockedByObject_ )
@@ -214,7 +214,7 @@ bool PHY_ActionMove::AvoidObstacles()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::CreateNewPath()
 {
-    assert( pMainPath_.get() );
+    assert( pMainPath_ );
     assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
     T_PointVector nextWaypoints = pMainPath_->GetNextWaypoints();
     nextWaypoints.insert( nextWaypoints.begin(), pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -240,7 +240,7 @@ void PHY_ActionMove::Execute()
     }
     if( !pion_.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed() ) // $$$$ ABR 2011-12-19: not IsUndeployed == IsDeployed || IsDeploying || IsUndeploying -> Can't move, no call back.
         return;
-    if( !pMainPath_.get() )
+    if( !pMainPath_ )
     {
         Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );
         return;
@@ -284,7 +284,7 @@ void PHY_ActionMove::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::ExecuteSuspended()
 {
-    if( pMainPath_.get() )
+    if( pMainPath_ )
     {
         role_.MoveSuspended( pMainPath_ );
         executionSuspended_ = true;
@@ -298,7 +298,7 @@ void PHY_ActionMove::ExecuteSuspended()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::StopAction()
 {
-    if( pMainPath_.get() )
+    if( pMainPath_ )
     {
         role_.MoveCanceled( pMainPath_ );
         role_.NotifyCurrentPathChanged();
