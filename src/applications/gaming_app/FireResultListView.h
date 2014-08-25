@@ -38,25 +38,19 @@ class Casualties;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class FireResultListView : public QTreeWidget
+class FireResultListView : public QTreeView
                          , public tools::Observer_ABC
                          , public tools::SelectionObserver< kernel::Entity_ABC >
                          , public tools::ElementObserver_ABC< Explosions >
+                         , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
              FireResultListView( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
     virtual ~FireResultListView();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const AgentFireResult& result, QTreeWidgetItem* item );
-    void Display( const PopulationFireResult& result, QTreeWidgetItem* item );
-    void Display( const Equipment& equipment, QTreeWidgetItem* item );
-    void Display( const Casualties& casualties, QTreeWidgetItem* item );
     //@}
 
 public slots:
@@ -68,17 +62,36 @@ public slots:
 private:
     //! @name Helpers
     //@{
+    QStandardItem* AddRoot( int row,
+                            int col,
+                            const QString& text );
+    QStandardItem* AddChild( QStandardItem& root,
+                             int row,
+                             int col,
+                             const QString& text,
+                             bool bold = false );
+
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Explosions& results );
-    void DisplayFirer( QTreeWidgetItem* item, const kernel::Entity_ABC* firer );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    void UpdateDisplay();
+    void DisplaySelection();
+    void Display( const AgentFireResult& result );
+    void Display( const PopulationFireResult& result );
+    void Display( const Equipment& equipment, QStandardItem& parent );
+    void Display( const Casualties& casualties, QStandardItem& parent );
+    QString GetFirerName( const kernel::Entity_ABC* firer );
     //@}
 
 private:
     //! @name Member data
     //@{
+    QStandardItemModel model_;
+    QSortFilterProxyModel proxy_;
     kernel::Controllers& controllers_;
     gui::DisplayExtractor& extractor_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
+    std::vector< const Explosions* > explosions_;
     //@}
 };
 
