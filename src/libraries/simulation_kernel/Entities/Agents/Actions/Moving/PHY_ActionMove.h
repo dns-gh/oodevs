@@ -63,6 +63,7 @@ private:
     bool IsDisasterToAvoid( const DisasterAttribute& disaster );
     double ComputeImpact( const DisasterAttribute& disaster ) const;
     void CreateNewPath();
+    boost::shared_ptr< DEC_Knowledge_Object > ComputeCollision() const;
     //@}
 
 private:
@@ -74,7 +75,6 @@ private:
     bool executionSuspended_;
     bool isBlockedByObject_;
     unsigned int blockedTickCounter_;
-    int obstacleId_; // $$$$ MCO 2014-08-25: no need to store
     bool blockedByDisaster_;
     double oldDisasterImpact_;
 };
