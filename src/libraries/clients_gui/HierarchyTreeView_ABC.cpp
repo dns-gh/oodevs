@@ -178,6 +178,7 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
                     newSuperiorItem->appendRow( rowItems );
                     dataModel_.blockSignals( false );
                     blockSignals( false );
+                    ApplyProfileFilter();
                 }
             }
             else
