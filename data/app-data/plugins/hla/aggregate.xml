@@ -2,17 +2,79 @@
 <dis-mapping default-type="1 1 225 1 1 0 0" default-name="ARMOR.MBT platoon" threshold="0 0 9 1 1 9 9">
     <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
     <!-- aggregates -->
+    <entry name="ARMOR.Scout patrol" dis="1 1 225 2 30 0 0"/>
+    <entry name="ARMOR.Antitank patrol" dis="1 1 225 2 3 0 0"/>
+    <entry name="ASY.Militia" dis="3 1 222 4 205 1 0"/>
+    <entry name="JOINT.Landing Crafts" dis="1 3 225 11 1 1 0"/>
+    <entry name="OOTW.Refugee" dis="3 1 225 3 1 0 0"/>
+    <entry name="JOINT.Aircraft Carrier" dis="1 3 225 1 1 1 0"/>
+    
+    <!-- MSG 106 Experiment -->
     <entry name="ARMOR.MBT platoon" dis="1 1 225 3 2 0 0"/>
     <entry name="ARMOR.Light armored platoon" dis="1 1 225 3 2 0 1"/>
     <entry name="ARMOR.Armored squadron CP" dis="1 1 225 5 20 0 0"/>
-    <entry name="ARMOR.Scout patrol" dis="1 1 225 2 30 0 0"/>
-    <entry name="ARMOR.Antitank patrol" dis="1 1 225 2 3 0 0"/>
+    <entry name="ART.Artillery firing platoon" dis="1 1 225 4 2 1 0"/>
     <entry name="INF.Infantry platoon" dis="1 1 225 3 3 0 0"/>
     <entry name="INF.Mortar troop" dis="1 1 225 2 11 1 0"/>
     <entry name="ENG.Engineer platoon" dis="1 1 225 3 5 0 0"/>
-    <entry name="ART.Artillery firing platoon" dis="1 1 225 4 2 1 0"/>
-    <entry name="ASY.Militia" dis="3 1 222 4 205 1 0"/>
-    <entry name="JOINT.Landing Crafts" dis="1 3 71 11 1 1 0"/>
-    <entry name="OOTW.Refugee" dis="3 1 225 3 1 0 0"/>
-    <entry name="JOINT.Aircraft Carrier" dis="1 3 71 1 1 1 0"/>
+    
+    <entry name="AAA.Surface To Air Battery CP" dis="1 1 225 28 1 1 0"/>
+    <entry name="AAA.Surface To Air Defense Troop" dis="1 1 225 5 12 0 10"/>
+    <entry name="AAVN.Attack helicopters patrol" dis="1 1 225 20 2 1 10"/>
+    <entry name="AAVN.Cargo helicopters patrol" dis="1 1 225 21 2 2 10"/>
+    <entry name="AAVN.Helicopter HQ" dis="1 1 225 20 0 0 10"/>
+    <entry name="AAVN.Reconnaissance helicopters patrol" dis="1 1 225 24 2 0 10"/>
+    <entry name="ART.Artillery locating radar group" dis="1 1 225 4 2 1 0"/>
+    <entry name="ART.Artillery LRSD" dis="1 1 225 3 2 0 0"/>
+    <entry name="ART.Artillery reconnaissance platoon" dis="1 1 225 2 36 1 0"/>
+    <entry name="ART.Artillery SD" dis="1 1 225 9 3 1 0"/>
+    <entry name="ART.Battery CP" dis="1 1 225 3 11 2 10"/>
+    <entry name="ART.MLRS firing platoon" dis="1 1 225 4 1 0 10"/>
+    <entry name="ART.MLRS reconnaissance platoon" dis="1 1 225 4 1 0 11"/>
+    <entry name="ART.Mortar firing platoon" dis="1 1 225 5 5 0 10"/>
+    <entry name="ASY.Sniper" dis="3 2 225 3 2 0 10"/>
+    <entry name="ASY.Terrorist" dis="3 2 222 3 2 0 10"/>
+    <entry name="CP.Battle group command post" dis="1 1 225 0 5 0 10"/>
+    <entry name="ENG.Bridging troop" dis="1 1 225 0 4 3 10"/>
+    <entry name="INF.Commando troop" dis="1 1 225 2 19 0 10"/>
+    <entry name="INF.Infantry company CP" dis="1 1 225 3 11 2 11"/>
+    <entry name="INF.Mechanized infantry platoon" dis="1 1 225 3 3 0 1"/>
+    <entry name="INF.MRA troop" dis="1 1 225 3 3 0 2"/>
+    <entry name="INT.Jamming station" dis="1 1 225 9 3 5 10"/>
+    <entry name="INT.Listening station" dis="1 1 225 9 3 5 11"/>
+    <entry name="INT.UAV station" dis="1 1 225 29 8 0 10"/>
+    <entry name="INT.UAV" dis="1 1 225 29 8 0 11"/>
+    <entry name="JOINT.Destroyer" dis="1 3 225 4 2 0 10"/>
+    <entry name="LOG.Ammo supply group" dis="1 1 225 3 2 0 0"/>
+    <entry name="LOG.Battalion CT" dis="1 1 225 7 18 0 10"/>
+    <entry name="LOG.Casualty assessment section" dis="1 1 225 3 2 0 0"/>
+    <entry name="LOG.Casualty evacuation group" dis="1 1 225 3 2 0 0"/>
+    <entry name="LOG.Firing mobility repairs section  (division)" dis="1 1 225 3 2 0 0"/>
+    <entry name="LOG.Firing mobility repairs section (corps)" dis="1 1 225 3 2 0 0"/>
+    <entry name="LOG.Logistic CT" dis="1 1 225 7 18 0 12"/>
+    <entry name="LOG.Logistic decontamination section" dis="1 1 225 3 2 0 0"/>
+    <entry name="LOG.Magazin section CAP" dis="1 1 225 3 2 0 0"/>
+    <entry name="LOG.Maintenance CP  (division)" dis="1 1 225 3 19 0 10"/>
+    <entry name="LOG.Maintenance evacuation group" dis="1 1 225 3 19 0 11"/>
+    <entry name="LOG.Medical CP (division)" dis="1 1 225 2 5 5 12"/>
+    <entry name="LOG.Medical group VAB" dis="1 1 225 2 5 5 13"/>
+    <entry name="LOG.Medical section" dis="1 1 225 2 5 5 14"/>
+    <entry name="LOG.Mobility repairs section (corps)" dis="1 1 225 3 19 0 12"/>
+    <entry name="LOG.Mobility repairs section (division)" dis="1 1 225 3 19 0 13"/>
+    <entry name="LOG.Psychological section" dis="1 1 225 2 5 5 14"/>
+    <entry name="LOG.Repairs section (corps)" dis="1 1 225 3 19 0 14"/>
+    <entry name="LOG.Repairs section (division)" dis="1 1 225 3 19 0 15"/>
+    <entry name="LOG.Supply CP (division)" dis="1 1 225 3 2 0 0"/>
+    <entry name="LOG.Supply group 35m3" dis="1 1 225 7 5 0 10"/>
+    <entry name="LOG.Supply group 60m3" dis="1 1 225 7 5 0 11"/>
+    <entry name="LOG.Supply group180m3" dis="1 1 225 7 5 0 15"/>
+    <entry name="LOG.Supply platoon (PR)" dis="1 1 225 7 5 0 12"/>
+    <entry name="LOG.Supply Transportation platoon (PT)" dis="1 1 225 7 5 0 13"/>
+    <entry name="LOG.Supply Transportation platoon" dis="1 1 225 7 5 0 14"/>
+    <entry name="LOG.Surgical section (modular)" dis="1 1 225 2 5 5 10"/>
+    <entry name="LOG.Surgical section HMC" dis="1 1 225 2 5 5 11"/>
+    <entry name="LOG.Teeth arms battalion CT" dis="1 1 225 7 18 0 11"/>
+    <entry name="LOG.Water supply group" dis="1 1 225 17 1 1 0"/>
+    <entry name="NBC.Decontamination troop" dis="1 1 225 2 5 8 10"/>
+    <entry name="NBC.Reconnaissance troop" dis="1 1 225 2 5 8 11"/>
 </dis-mapping>
