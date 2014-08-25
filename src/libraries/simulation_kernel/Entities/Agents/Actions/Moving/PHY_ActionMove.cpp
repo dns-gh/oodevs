@@ -161,13 +161,10 @@ double PHY_ActionMove::ComputeImpact( const DisasterAttribute& disaster ) const
 // -----------------------------------------------------------------------------
 bool PHY_ActionMove::AvoidObstacles()
 {
-    if( !pMainPath_ || pMainPath_->GetState() == DEC_Path_ABC::eComputing )
-        return false;
-
     if( !UpdateObjectsToAvoid() )
     {
         if( isBlockedByObject_ )
-            blockedTickCounter_++;
+            ++blockedTickCounter_;
         if( blockedTickCounter_ < 3 )
             return false;
     }
@@ -219,46 +216,36 @@ void PHY_ActionMove::Execute()
 {
     if( pion_.HasBeenTeleported() )
     {
-        Callback( static_cast< int >( DEC_PathWalker::eTeleported) );
+        Callback< int >( DEC_PathWalker::eTeleported );
         return;
     }
-    if( !pion_.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed() ) // $$$$ ABR 2011-12-19: not IsUndeployed == IsDeployed || IsDeploying || IsUndeploying -> Can't move, no call back.
+    if( !pion_.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed() )
         return;
     if( !pMainPath_ )
     {
-        Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );
+        Callback< int >( DEC_PathWalker::eNotAllowed );
         return;
     }
-    if( AvoidObstacles()
-        || executionSuspended_
-            && pMainPath_->GetState() != DEC_Path_ABC::eComputing
-            && ( pMainPath_->GetCurrentKeyOnPath() == pMainPath_->GetResult().end()
-                || pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() != (*pMainPath_->GetCurrentKeyOnPath())->GetPos() ) )
+    if( pMainPath_->GetState() != DEC_Path_ABC::eComputing
+        && ( AvoidObstacles()
+            || executionSuspended_
+                && ( pMainPath_->GetCurrentKeyOnPath() == pMainPath_->GetResult().end()
+                    || pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() != (*pMainPath_->GetCurrentKeyOnPath())->GetPos() ) ) )
     {
         // Recompute Pathfind in order to avoid obstacle or to get back previous path after suspension.
         CreateNewPath();
     }
-
     executionSuspended_ = false;
     isBlockedByObject_ = false;
     int nReturn = role_.Move( pMainPath_ );
-
-    if( nReturn == DEC_PathWalker::eRunning )
-    { // NOTHING. Pathfind is computing. Just don't try to do anything in this state.
-    }
-    else if( nReturn == DEC_PathWalker::eNotAllowed )
-    { // NOTHING. Unit will not move at all.
-    }
-    else if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
+    if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
     {
         CreateNewPath();
         nReturn = role_.Move( pMainPath_ );
     }
-    else if( nReturn == DEC_PathWalker::ePartialPath )
-    { // NOTHING. Unit will move to the nearest point of the target.
-    }
     else if( nReturn == DEC_PathWalker::eBlockedByObject )
-    { // Pathfind will be recomputed in a next tick once knowledge of the object has been obtained.
+    {
+        // Pathfind will be recomputed in a next tick once knowledge of the object has been obtained.
         isBlockedByObject_ = true;
     }
     Callback( nReturn );
@@ -275,7 +262,7 @@ void PHY_ActionMove::ExecuteSuspended()
         role_.MoveSuspended( pMainPath_ );
         executionSuspended_ = true;
     }
-    Callback( static_cast< int >( DEC_PathWalker::ePaused ) );
+    Callback< int >( DEC_PathWalker::ePaused );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,7 +277,7 @@ void PHY_ActionMove::StopAction()
         role_.NotifyCurrentPathChanged();
         executionSuspended_ = false;
     }
-    Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
+    Callback< int >( DEC_PathWalker::eFinished );
 }
 
 // -----------------------------------------------------------------------------
