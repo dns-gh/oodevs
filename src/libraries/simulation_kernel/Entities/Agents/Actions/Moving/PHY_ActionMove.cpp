@@ -202,7 +202,7 @@ bool PHY_ActionMove::AvoidObstacles()
 
     if( pMainPath_->GetPathClass().AvoidObjects() )
         role_.SendRC( report::eRC_DifficultMovementProgression, pObjectColliding->GetType().GetRealName() );
-    return true;
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( obstacleId_ ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,9 +242,11 @@ void PHY_ActionMove::Execute()
         Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );
         return;
     }
-    if( ( AvoidObstacles() && MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( obstacleId_ ) ) ||
-        ( executionSuspended_ && pMainPath_->GetState() != DEC_Path_ABC::eComputing &&
-        ( pMainPath_->GetCurrentKeyOnPath() == pMainPath_->GetResult().end() || pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() != (*pMainPath_->GetCurrentKeyOnPath())->GetPos() ) ) )
+    if( AvoidObstacles()
+        || executionSuspended_
+            && pMainPath_->GetState() != DEC_Path_ABC::eComputing
+            && ( pMainPath_->GetCurrentKeyOnPath() == pMainPath_->GetResult().end()
+                || pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() != (*pMainPath_->GetCurrentKeyOnPath())->GetPos() ) )
     {
         // Recompute Pathfind in order to avoid obstacle or to get back previous path after suspension.
         CreateNewPath();
