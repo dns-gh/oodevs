@@ -342,6 +342,15 @@ MIL_Population& DEC_PopulationDecision::GetPopulation() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::GetKnowledgeGroup
+// Created: NMI 2014-08-25
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_KnowledgeGroup > DEC_PopulationDecision::GetKnowledgeGroup() const
+{
+    return pEntity_->GetKnowledgeGroup();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::NotifyDominationStateChanged
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
