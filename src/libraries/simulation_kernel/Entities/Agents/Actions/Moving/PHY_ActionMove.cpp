@@ -88,10 +88,11 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     std::vector< TER_Localisation > signatures;
     for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
         signatures.push_back( (*it)->GetLocalisation() );
-    const bool modified = knowledges != objectsToAvoid_ || signatures != geometrySignatures_;
+    if( knowledges == objectsToAvoid_ && signatures == geometrySignatures_ )
+        return true;
     objectsToAvoid_.swap( knowledges );
     geometrySignatures_.swap( signatures );
-    return modified;
+    return false;
 }
 
 void PHY_ActionMove::ComputeNewKnowledges( T_KnowledgeObjectVector& newKnowledges )
@@ -160,7 +161,7 @@ double PHY_ActionMove::ComputeImpact( const DisasterAttribute& disaster ) const
 // -----------------------------------------------------------------------------
 bool PHY_ActionMove::AvoidObstacles()
 {
-    if( !UpdateObjectsToAvoid() )
+    if( UpdateObjectsToAvoid() )
     {
         if( isBlockedByObject_ )
             ++blockedTickCounter_;
