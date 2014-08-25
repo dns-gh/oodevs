@@ -331,7 +331,6 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
     || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ || bEmptyGasTank )
     || ! viewport.IsHotpointVisible() || ! tools.ShouldDisplay( "UnitDetails" ) )
         return;
-
     glPushAttrib( GL_CURRENT_BIT );
     glColor3f( 1, 1, 1 );
     if( bDead_ )
@@ -346,7 +345,6 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
         tools.DrawIcon( xpm_underground, where, 150.f, gui::GlTools_ABC::pixels );
     if( bEmptyGasTank )
         tools.DrawIcon( xpm_gas, where, 150.f, gui::GlTools_ABC::pixels );
-
     glPopAttrib();
 }
 
