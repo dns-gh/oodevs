@@ -56,7 +56,6 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , executionSuspended_( false )
     , isBlockedByObject_( false )
     , blockedTickCounter_( 0 )
-    , obstacleId_( 0 )
     , blockedByDisaster_( false )
     , oldDisasterImpact_( 1 )
 {
@@ -169,24 +168,20 @@ bool PHY_ActionMove::AvoidObstacles()
             return false;
     }
     blockedTickCounter_ = 0;
-
-    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-    for( auto it = objectsToAvoid_.begin(); it != objectsToAvoid_.end() && !pObjectColliding; ++it )
+    for( auto it = objectsToAvoid_.begin(); it != objectsToAvoid_.end(); ++it )
     {
-        const MIL_Object_ABC* obj = ( *it )->GetObjectKnown();
+        const MIL_Object_ABC* obj = (*it)->GetObjectKnown();
         if( obj && obj->RetrieveAttribute< DisasterAttribute>() )
-            pObjectColliding = *it;
+            return true;
     }
-    double rDistanceCollision = 0.;
-    if( !pObjectColliding && !role_.ComputeFutureObjectCollision( objectsToAvoid_, rDistanceCollision, pObjectColliding, pion_, isBlockedByObject_, true ) )
-        return false;
-
-    assert( pObjectColliding && pObjectColliding->IsValid() );
-    obstacleId_ = pObjectColliding->GetObjectKnown() ? pObjectColliding->GetObjectKnown()->GetID() : 0;
-
-    if( pMainPath_->GetPathClass().AvoidObjects() )
+    double distance = 0;
+    boost::shared_ptr< DEC_Knowledge_Object > collision;
+    role_.ComputeFutureObjectCollision( objectsToAvoid_, distance, collision, pion_, isBlockedByObject_, true );
+    if( collision &&
+        collision->IsValid() &&
+        pMainPath_->GetPathClass().AvoidObjects() )
     {
-        role_.SendRC( report::eRC_DifficultMovementProgression, pObjectColliding->GetType().GetRealName() );
+        role_.SendRC( report::eRC_DifficultMovementProgression, collision->GetType().GetRealName() );
         return true;
     }
     return false;

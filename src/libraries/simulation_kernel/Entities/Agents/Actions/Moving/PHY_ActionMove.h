@@ -74,7 +74,6 @@ private:
     bool executionSuspended_;
     bool isBlockedByObject_;
     unsigned int blockedTickCounter_;
-    int obstacleId_; // $$$$ MCO 2014-08-25: no need to store
     bool blockedByDisaster_;
     double oldDisasterImpact_;
 };
