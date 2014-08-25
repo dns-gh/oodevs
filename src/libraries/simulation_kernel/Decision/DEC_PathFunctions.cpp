@@ -154,7 +154,7 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const M
 
 namespace
 {
-    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( MIL_ObjectFilter& filter, const MIL_Agent_ABC& callerAgent, bool bCheckBypassed = true )
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( const MIL_ObjectFilter& filter, const MIL_Agent_ABC& callerAgent, bool bCheckBypassed = true )
     {
         std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
         boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
@@ -178,15 +178,9 @@ namespace
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, const std::vector< std::string >& params, bool bCheckBypassed = true )
     {
         if( params.empty() )
-        {
-            MIL_DangerousObjectFilter filter;
-            return ::GetNextObjectOnPath( filter, callerAgent, bCheckBypassed );
-        }
+            return ::GetNextObjectOnPath( MIL_DangerousObjectFilter(), callerAgent, bCheckBypassed );
         else
-        {
-            MIL_ObjectFilter filter( params );
-            return ::GetNextObjectOnPath( filter, callerAgent, bCheckBypassed );
-        }
+            return ::GetNextObjectOnPath( MIL_ObjectFilter( params ), callerAgent, bCheckBypassed );
     }
 }
 
