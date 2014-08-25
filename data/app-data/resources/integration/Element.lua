@@ -33,7 +33,7 @@ end
 -- @param agent DirectIA agent
 -- @return Boolean
 integration.agentEstBrouille = function( agent )
-    return self.source:DEC_Agent_EstBrouille()
+    return agent.source:DEC_Agent_EstBrouille()
 end
 
 --- Returns true if the given company's command post unit is jammed
