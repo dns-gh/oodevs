@@ -38,4 +38,31 @@
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="parameter[@type='tc2']">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+            <xsl:if test="parent::node()[@type='plannedwork']">
+                <xsl:attribute name="identifier">tc2</xsl:attribute>
+            </xsl:if>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="parameter[@type='string']">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+            <xsl:if test="parent::node()[@type='plannedwork']">
+                <xsl:attribute name="identifier">name</xsl:attribute>
+            </xsl:if>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="parameter[@type='obstacletype']">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+            <xsl:if test="parent::node()[@type='plannedwork']">
+                <xsl:attribute name="identifier">obstacletype</xsl:attribute>
+            </xsl:if>
+        </xsl:copy>
+    </xsl:template>
+
 </xsl:stylesheet>
