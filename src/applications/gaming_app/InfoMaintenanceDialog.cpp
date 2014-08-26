@@ -44,7 +44,7 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     pHaulersRepairersLayout->addWidget( repairers );
     pHaulersRepairersWidget->setLayout( pHaulersRepairersLayout );
     auto filter = [&]( const kernel::Availability& availability, const kernel::MaintenanceStates_ABC& ) {
-        return availability.entity_ && profile.CanBeOrdered( *availability.entity_ );
+        return availability.entity_ && profile.IsVisible( *availability.entity_ );
     };
     haulers->SetFilter( filter );
     repairers->SetFilter( filter );
