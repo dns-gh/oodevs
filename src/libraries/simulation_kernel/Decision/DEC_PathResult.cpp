@@ -131,9 +131,8 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, dou
     return InternalGetFuturePosition( itNextPathPoint, rDist - rLength, bBoundOnPath );
 }
 
-std::pair< TER_Polygon, std::size_t > DEC_PathResult::ComputePathHull() const
+std::pair< TER_Polygon, std::size_t > DEC_PathResult::ComputePathHull( const T_PathPoints::const_iterator& itCurrentPathPoint ) const
 {
-    const auto itCurrentPathPoint = GetCurrentKeyOnPath();
     TER_Polygon pathHull;
     T_PointVector hullPoints;
     hullPoints.reserve( 1 + resultList_.size() );
@@ -189,6 +188,34 @@ bool DEC_PathResult::HullIntersects( const TER_Polygon& hull, const TER_Localisa
         || localisationHull.Contains( location, epsilon );
 }
 
+void DEC_PathResult::ComputeFutureObjectCollision( double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
+    const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, const T_PathPoints::const_iterator& itCurrentPathPoint,
+    const TER_Localisation& location ) const
+{
+    double rDistanceSum = 0;
+    const MT_Vector2D* pPrevPos = &(*itCurrentPathPoint)->GetPos();
+    for( auto itPathPoint = std::next( itCurrentPathPoint ); itPathPoint != resultList_.end(); ++itPathPoint )
+    {
+        const MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
+        const TER_DistanceLess colCmp( *pPrevPos );
+        T_PointSet collisions( colCmp );
+        if( location.Intersect2D( lineTmp, collisions, epsilon ) )
+        {
+            if( collisions.empty() ) // should never happen
+                continue;
+            rDistanceSum += pPrevPos->Distance( *collisions.begin() );
+            if( !pObject || rDistanceSum < rDistance )
+            {
+                rDistance = rDistanceSum;
+                pObject = pKnowledge;
+            }
+            return;
+        }
+        rDistanceSum += pPrevPos->Distance( (*itPathPoint)->GetPos() );
+        pPrevPos = &(*itPathPoint)->GetPos();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
@@ -207,7 +234,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
     const auto itCurrentPathPoint = GetCurrentKeyOnPath();
     if( itCurrentPathPoint == resultList_.end() )
         return false;
-    const auto hull = ComputePathHull();
+    const auto hull = ComputePathHull( itCurrentPathPoint );
     const MT_Rect bbox = hull.first.GetBoundingBox();
     // Optimisation: Check bounding box instead of doing 345 intersection checks in case we have 345 points in the path (which happens)
     // Check intersection with convex hull of path if there are less segments.
@@ -227,29 +254,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
             continue;
         if( hullIntersectionIsFaster && !HullIntersects( hull.first, *pObjectLocation ) )
             continue;
-        double rDistanceSum = 0.;
-        const MT_Vector2D* pPrevPos = &(*itCurrentPathPoint)->GetPos();
-        for( auto itPathPoint = std::next( itCurrentPathPoint ); itPathPoint != resultList_.end(); ++itPathPoint )
-        {
-            MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
-            TER_DistanceLess colCmp( *pPrevPos );
-            T_PointSet collisions( colCmp );
-            if( pObjectLocation->Intersect2D( lineTmp, collisions, epsilon ) )
-            {
-                if( collisions.empty() ) // should never happen
-                    continue;
-                rDistanceSum += pPrevPos->Distance( *collisions.begin() );
-                if( !pObject || rDistanceSum < rDistance )
-                {
-                    rDistance = rDistanceSum;
-                    pObject = pKnowledge;
-                }
-                break;
-            }
-            else
-                rDistanceSum += pPrevPos->Distance( (*itPathPoint)->GetPos() );
-            pPrevPos = &(*itPathPoint)->GetPos();
-        }
+        ComputeFutureObjectCollision( rDistance, pObject, pKnowledge, itCurrentPathPoint, *pObjectLocation );
     }
     return pObject != 0;
 }
