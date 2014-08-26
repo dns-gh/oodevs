@@ -12,10 +12,12 @@
 #include "moc_FireResultListView.cpp"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/LinkItemDelegate.h"
+#include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/PopulationFireResult.h"
 #include "gaming/AgentFireResult.h"
@@ -28,27 +30,31 @@
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
-    : QTreeWidget( parent )
+    : QTreeView( parent )
     , controllers_( controllers )
     , extractor_( extractor )
     , selected_( controllers )
 {
-    setFrameStyle( Q3Frame::Plain );
-    setMouseTracking( true );
-    setColumnCount( 4 );
-    QStringList headers;
-    headers << tools::translate( "FireResultListView", "Date" )
-            << tools::translate( "FireResultListView", "Firer" )
-            << tools::translate( "FireResultListView", "Target" )
-            << "";
-    setHeaderLabels( headers );
-    setHeaderHidden( true );
-    setRootIsDecorated( false );
+    model_.setHorizontalHeaderLabels( QStringList() << tr( "Date" )
+                                                    << tr( "Firer" )
+                                                    << tr( "Target" )
+                                                    << "" );
+    header()->setResizeMode( QHeaderView::ResizeToContents );
+
+    proxy_.setSourceModel( &model_ );
+    proxy_.setDynamicSortFilter( true );
+    proxy_.setSortRole( gui::Roles::SortRole );
+    proxy_.sort( 0, Qt::DescendingOrder );
+    setModel( &proxy_ );
+    setSortingEnabled( true );
+    setSelectionBehavior( QAbstractItemView::SelectRows );
+    setSelectionMode( QAbstractItemView::SingleSelection );
+    setSortingEnabled( false );
+
     gui::LinkItemDelegate* delegate = new gui::LinkItemDelegate( this );
     setItemDelegateForColumn( 1, delegate );
     setItemDelegateForColumn( 2, delegate );
-    setAllColumnsShowFocus( true );
-    header()->setResizeMode( QHeaderView::ResizeToContents );
+
     connect( delegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
     controllers_.Register( *this );
 }
@@ -62,20 +68,6 @@ FireResultListView::~FireResultListView()
     controllers_.Unregister( *this );
 }
 
-namespace
-{
-    void SetNumberOfChildren( QTreeWidgetItem* item, int number )
-    {
-        if( item )
-        {
-            while( item->childCount() > number )
-                delete item->takeChild( number );
-            while( item->childCount() < number )
-                item->addChild( new QTreeWidgetItem );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: FireResultListView::OnLinkClicked
 // Created: JSR 2012-10-24
@@ -87,122 +79,122 @@ void FireResultListView::OnLinkClicked( const QString& url, const QModelIndex& i
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireResultListView::DisplayFirer
-// Created: JSR 2012-12-10
+// Name: FireResultListView::GetFirerName
+// Created: ABR 2014-08-25
 // -----------------------------------------------------------------------------
-void FireResultListView::DisplayFirer( QTreeWidgetItem* item, const kernel::Entity_ABC* firer )
+QString FireResultListView::GetFirerName( const kernel::Entity_ABC* firer )
 {
     if( !firer )
-        return;
+        return "";
     const std::string& typeName = firer->GetTypeName();
     if( typeName == kernel::Agent_ABC::typeName_ )
-        item->setText( 1, extractor_.GetDisplayName( *static_cast< const kernel::Agent_ABC* >( firer ) ) );
+        return extractor_.GetDisplayName( *static_cast< const kernel::Agent_ABC* >( firer ) );
     else if( typeName == kernel::Population_ABC::typeName_ )
-        item->setText( 1, extractor_.GetDisplayName( *static_cast< const kernel::Population_ABC* >( firer ) ) );
+        return extractor_.GetDisplayName( *static_cast< const kernel::Population_ABC* >( firer ) );
     else if( typeName == kernel::Object_ABC::typeName_ )
-        item->setText( 1, extractor_.GetDisplayName( *static_cast< const kernel::Object_ABC* >( firer ) ) );
+        return extractor_.GetDisplayName( *static_cast< const kernel::Object_ABC* >( firer ) );
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::AddRoot
+// Created: ABR 2014-08-25
+// -----------------------------------------------------------------------------
+QStandardItem* FireResultListView::AddRoot( int row,
+                                            int col,
+                                            const QString& text )
+{
+    if( auto root = model_.invisibleRootItem() )
+        return AddChild( *root, row, col, text );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::AddChild
+// Created: ABR 2014-08-25
+// -----------------------------------------------------------------------------
+QStandardItem* FireResultListView::AddChild( QStandardItem& root,
+                                             int row,
+                                             int col,
+                                             const QString& text,
+                                             bool bold /* = false */ )
+{
+    auto* item = new QStandardItem( text );
+    if( bold )
+    {
+        QFont font = item->font();
+        font.setBold( true );
+        item->setFont( font );
+    }
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+    root.setChild( row, col, item );
+    return item;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView::Display
 // Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
-void FireResultListView::Display( const AgentFireResult& result, QTreeWidgetItem* item )
+void FireResultListView::Display( const AgentFireResult& result )
 {
-    assert( item );
-    if( !item )
-        return;
-    item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
-    item->setText( 2, extractor_.GetDisplayName( result.target_ ) );
-    DisplayFirer( item, result.firer_ );
-    SetNumberOfChildren( item, 0 );
+    int row = model_.rowCount();
+    auto root = AddRoot( row, 0, extractor_.GetDisplayName( result.time_ ) );
+    root->setData( result.time_, gui::Roles::SortRole );
+    AddRoot( row, 1, GetFirerName( result.firer_ ) );
+    AddRoot( row, 2, extractor_.GetDisplayName( result.target_ ) );
 
     if( result.IsMiss() )
     {
-        QStringList noDamage;
-        noDamage << tools::translate( "FireResultListView", "No damage" );
-        QTreeWidgetItem* subItem = new QTreeWidgetItem( noDamage );
-        QFont font = subItem->font( 0 );
-        font.setBold( true );
-        subItem->setFont( 0, font );
-        item->addChild( subItem );
+        AddChild( *root, 0, 0, tr( "No damage" ), true );
         return;
     }
 
-    QStringList equipments;
-    equipments << tools::translate( "FireResultListView", "Equipments" )
-        << tools::translate( "FireResultListView", "avail" )
-        << tools::translate( "FireResultListView", "unavail" )
-        << tools::translate( "FireResultListView", "repairable" );
-    QTreeWidgetItem* subItem = new QTreeWidgetItem( equipments );
-    QFont font = subItem->font( 0 );
-    font.setBold( true );
-    subItem->setFont( 0, font );
-    subItem->setFont( 1, font );
-    subItem->setFont( 2, font );
-    subItem->setFont( 3, font );
-    item->addChild( subItem );
-    QStringList troops;
-    troops << tools::translate( "FireResultListView", "Troops" )
-        << tools::translate( "FireResultListView", "officer" )
-        << tools::translate( "FireResultListView", "warrant-off." )
-        << tools::translate( "FireResultListView", "private" );
-    subItem = new QTreeWidgetItem( troops );
-    subItem->setFont( 0, font );
-    subItem->setFont( 1, font );
-    subItem->setFont( 2, font );
-    subItem->setFont( 3, font );
-    item->addChild( subItem );
-    item->child( 0 )->setTextAlignment( 1, Qt::AlignCenter );
-    item->child( 0 )->setTextAlignment( 2, Qt::AlignCenter );
-    item->child( 0 )->setTextAlignment( 3, Qt::AlignCenter );
-    item->child( 1 )->setTextAlignment( 1, Qt::AlignCenter );
-    item->child( 1 )->setTextAlignment( 2, Qt::AlignCenter );
-    item->child( 1 )->setTextAlignment( 3, Qt::AlignCenter );
+    auto equipment = AddChild( *root, 0, 0, tr( "Equipments" ), true );
+    AddChild( *root, 0, 1, tr( "avail" ), true );
+    AddChild( *root, 0, 2, tr( "unavail" ), true );
+    AddChild( *root, 0, 3, tr( "repairable" ), true );
 
-    assert( item->childCount() == 2 );
-    SetNumberOfChildren( item->child( 0 ), result.Count() );
-    SetNumberOfChildren( item->child( 1 ), eNbrHumanWound );
+    auto troops = AddChild( *root, 1, 0, tr( "Troops" ), true );
+    AddChild( *root, 1, 1, tr( "officer" ), true );
+    AddChild( *root, 1, 2, tr( "warrant-off." ), true );
+    AddChild( *root, 1, 3, tr( "private" ), true );
 
-    int row = 0;
-    tools::Iterator< const Equipment& > it =  result.CreateIterator();
+    auto it =  result.CreateIterator();
     while( it.HasMoreElements() )
-        Display( it.NextElement(), item->child( 0 )->child( row++ ) );
-    for( row = 0; row < eNbrHumanWound; ++row )
-        Display( result.casualties_[ row ], item->child( 1 )->child( row ) );
+        Display( it.NextElement(), *equipment );
+    for( int row = 0; row < eNbrHumanWound; ++row )
+        Display( result.casualties_[ row ], *troops );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView::Display
 // Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
-void FireResultListView::Display( const PopulationFireResult& result, QTreeWidgetItem* item )
+void FireResultListView::Display( const PopulationFireResult& result )
 {
-    assert( item );
-    if( !item )
-        return;
-    item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
-    item->setText( 2, extractor_.GetDisplayName( result.target_ ) );
-    DisplayFirer( item, result.firer_ );
-    int lines = ( result.deadPeople_ == 0 ? 0 : 1 ) + ( result.woundedPeople_ == 0 ? 0 : 1 ) + ( result.scatteredPeople_ == 0 ? 0 : 1 );
-    SetNumberOfChildren( item, lines );
-    int row = 0;
+    int row = model_.rowCount();
+    auto root = AddRoot( row, 0, extractor_.GetDisplayName( result.time_ ) );
+    root->setData( result.time_, gui::Roles::SortRole );
+    AddRoot( row, 1, GetFirerName( result.firer_ ) );
+    AddRoot( row, 2, extractor_.GetDisplayName( result.target_ ) );
+    int subRow = 0;
     if( result.deadPeople_ != 0 )
     {
-        item->child( row )->setText( 1, tools::translate( "FireResultListView", "Dead:" ) );
-        item->child( row )->setText( 2, extractor_.GetDisplayName( result.deadPeople_ ) );
-        ++row;
+        AddChild( *root, subRow, 1, tr( "Dead:" ) );
+        AddChild( *root, subRow, 2, extractor_.GetDisplayName( result.deadPeople_ ) );
+        ++subRow;
     }
     if( result.woundedPeople_ != 0 )
     {
-        item->child( row )->setText( 1, tools::translate( "FireResultListView", "Wounded:" ) );
-        item->child( row )->setText( 2, extractor_.GetDisplayName( result.woundedPeople_ ) );
-        ++row;
+        AddChild( *root, subRow, 1, tr( "Wounded:" ) );
+        AddChild( *root, subRow, 2, extractor_.GetDisplayName( result.woundedPeople_ ) );
+        ++subRow;
     }
     if( result.scatteredPeople_ != 0 )
     {
-        item->child( row )->setText( 1, tools::translate( "FireResultListView", "Scattered:" ) );
-        item->child( row )->setText( 2, extractor_.GetDisplayName( result.scatteredPeople_ ) );
+        AddChild( *root, subRow, 1, tr( "Scattered:" ) );
+        AddChild( *root, subRow, 2, extractor_.GetDisplayName( result.scatteredPeople_ ) );
+        ++subRow;
     }
 }
 
@@ -210,30 +202,72 @@ void FireResultListView::Display( const PopulationFireResult& result, QTreeWidge
 // Name: FireResultListView::Display
 // Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
-void FireResultListView::Display( const Equipment& equipment, QTreeWidgetItem* item )
+void FireResultListView::Display( const Equipment& equipment, QStandardItem& root )
 {
-    item->setText( 0, extractor_.GetDisplayName( equipment.type_ ) );
-    item->setText( 1, extractor_.GetDisplayName( equipment.available_ ) );
-    item->setTextAlignment( 1, Qt::AlignCenter );
-    item->setText( 2, extractor_.GetDisplayName( equipment.unavailable_ ) );
-    item->setTextAlignment( 2, Qt::AlignCenter );
-    item->setText( 3, extractor_.GetDisplayName( equipment.repairable_ + equipment.onSiteFixable_ ) );
-    item->setTextAlignment( 3, Qt::AlignCenter );
+    int row = root.rowCount();
+    AddChild( root, row, 0, extractor_.GetDisplayName( equipment.type_ ) );
+    AddChild( root, row, 1, extractor_.GetDisplayName( equipment.available_ ) );
+    AddChild( root, row, 2, extractor_.GetDisplayName( equipment.unavailable_ ) );
+    AddChild( root, row, 3, extractor_.GetDisplayName( equipment.repairable_ + equipment.onSiteFixable_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView::Display
 // Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
-void FireResultListView::Display( const Casualties& casualties, QTreeWidgetItem* item )
+void FireResultListView::Display( const Casualties& casualties, QStandardItem& root )
 {
-    item->setText( 0, extractor_.GetDisplayName( casualties.wound_ ) );
-    item->setText( 1, extractor_.GetDisplayName( casualties.officers_ ) );
-    item->setTextAlignment( 1, Qt::AlignCenter );
-    item->setText( 2, extractor_.GetDisplayName( casualties.subOfficers_ ) );
-    item->setTextAlignment( 2, Qt::AlignCenter );
-    item->setText( 3, extractor_.GetDisplayName( casualties.troopers_ ) );
-    item->setTextAlignment( 3, Qt::AlignCenter );
+    int row = root.rowCount();
+    AddChild( root, row, 0, extractor_.GetDisplayName( casualties.wound_ ) );
+    AddChild( root, row, 1, extractor_.GetDisplayName( casualties.officers_ ) );
+    AddChild( root, row, 2, extractor_.GetDisplayName( casualties.subOfficers_ ) );
+    AddChild( root, row, 3, extractor_.GetDisplayName( casualties.troopers_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::UpdateDisplay
+// Created: ABR 2014-08-25
+// -----------------------------------------------------------------------------
+void FireResultListView::UpdateDisplay()
+{
+    model()->removeRows( 0, model()->rowCount() );
+    std::for_each( explosions_.begin(), explosions_.end(), [&]( const Explosions* explosion ){
+        if( !explosion )
+            return;
+        const auto& agentFires = explosion->GetAgentExplosions();
+        const auto& popFires = explosion->GetPopulationExplosions();
+        for( auto it = agentFires.rbegin(); it != agentFires.rend(); ++it )
+            Display( *it );
+        for( auto it = popFires.rbegin(); it != popFires.rend(); ++it )
+            Display( *it );
+    } );
+}
+
+namespace
+{
+    void ExtractExtensions( const kernel::Entity_ABC& entity, std::vector< const Explosions* >& explosions )
+    {
+        if( const auto* explosion = entity.Retrieve< Explosions >() )
+            explosions.push_back( explosion );
+        if( auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            auto childIterator = hierarchy->CreateSubordinateIterator();
+            while( childIterator.HasMoreElements() )
+                ExtractExtensions( childIterator.NextElement(), explosions );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::DisplaySelection
+// Created: ABR 2014-08-25
+// -----------------------------------------------------------------------------
+void FireResultListView::DisplaySelection()
+{
+    explosions_.clear();
+    if( selected_ )
+        ExtractExtensions( *selected_, explosions_ );
+    UpdateDisplay();
 }
 
 // -----------------------------------------------------------------------------
@@ -242,16 +276,10 @@ void FireResultListView::Display( const Casualties& casualties, QTreeWidgetItem*
 // -----------------------------------------------------------------------------
 void FireResultListView::NotifySelected( const kernel::Entity_ABC* element )
 {
-    if( element != selected_ )
-    {
-        selected_ = element;
-        const Explosions* results = selected_ ? selected_->Retrieve< Explosions >() : 0;
-        setHeaderHidden( true );
-        if( results )
-            NotifyUpdated( *results );
-        else
-            model()->removeRows( 0, model()->rowCount() );
-    }
+    if( element == selected_ )
+        return;
+    selected_ = element;
+    DisplaySelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -260,17 +288,19 @@ void FireResultListView::NotifySelected( const kernel::Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void FireResultListView::NotifyUpdated( const Explosions& results )
 {
-    if( selected_ && selected_->Retrieve< Explosions >() == &results )
-    {
-        const auto& agentFires = results.GetAgentExplosions();
-        const auto& popFires = results.GetPopulationExplosions();
-        const int count = static_cast< int >( agentFires.size() + popFires.size() );
-        setHeaderHidden( count == 0 );
-        SetNumberOfChildren( invisibleRootItem(), count );
-        int row = 0;
-        for( auto it = agentFires.rbegin(); it != agentFires.rend(); ++it )
-            Display( *it, topLevelItem( row++ ) );
-        for( auto it = popFires.rbegin(); it != popFires.rend(); ++it )
-            Display( *it, topLevelItem( row++ ) );
-    }
+    if( !selected_ || std::find( explosions_.begin(), explosions_.end(), &results ) == explosions_.end() )
+        return;
+    UpdateDisplay();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::NotifyDeleted
+// Created: ABR 2014-08-25
+// -----------------------------------------------------------------------------
+void FireResultListView::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+    if( selected_ == &entity ||
+        selected_ && hierarchy && hierarchy->IsSubordinateOf( *selected_ ) )
+        DisplaySelection();
 }
