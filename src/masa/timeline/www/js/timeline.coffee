@@ -60,6 +60,7 @@ add_popover = (layout, el, event) ->
         trigger:   "hover"
         container: "#range_popovers"
         placement: layout.lane_orientation()
+        delay:     show: 500, hide: 100
     title = render_event event, false, false
     if event.get("info")?.length
         el.popover _.extend data,
@@ -67,6 +68,14 @@ add_popover = (layout, el, event) ->
             content: event.get "info"
     else
         el.popover _.extend data, content: title
+
+enable_popover = (el, enabled) ->
+    el = $ el
+    if enabled
+        el.popover "enable"
+    else
+        el.popover "disable"
+        el.popover "hide"
 
 get_zone = (y, h, pos) ->
     # each zone is at least 1 pixel
@@ -304,7 +313,6 @@ class VerticalLayout
             next.x0 = x
             next.y0 = d.y
         next.x1 = x if next.x1 < x
-        x += @t.link_w
         win.w = x if x > win.w
         return left
 
@@ -319,7 +327,7 @@ class VerticalLayout
     # vertical curve link generator
     init_linker: ->
         diagonal = d3.svg.diagonal()
-            .projection (d) -> return [d.y, d.x]
+            .projection((d) -> return [d.y, d.x])
         @linker = (x0, y0, x1, y1, invert) ->
             source = x: y0, y: x0
             target = x: y1, y: x1
@@ -821,7 +829,7 @@ class Timeline
             .on("dragend",   (d) -> that.range_drag_end   this, d)
         lanes
             .classed("selected", (d) -> d.selected)
-            .attr @layout.lane_attributes()
+            .attr(@layout.lane_attributes())
         lanes.exit().remove()
 
     get_range_zone: (el) ->
@@ -847,11 +855,11 @@ class Timeline
 
     range_drag_move: (dom, d) ->
         return unless @layout.select d3.event.dx, d3.event.dy
-        $(dom).popover "destroy"
         el = d3.select dom
         pos = @layout.select d3.event.x, d3.event.y
         event = @model.get d.id
         unless @range_offsets?
+            enable_popover dom, false
             first = pos - @layout.select d3.event.dx, d3.event.dy
             @range_zone = @get_range_zone el
             @range_offsets = (first - @scale x for x in [d.min, d.max])
@@ -878,10 +886,9 @@ class Timeline
         delete @range_children
         event = @model.get d.id
         make_plain()
+        enable_popover dom, true
         if event?
-            event.save {},
-                wait: true
-                success: => add_popover @layout, dom, event
+            event.save {}, wait: true
         @unlock()
 
     # returns visible events
@@ -1002,7 +1009,7 @@ class Timeline
 
     # render all links from <data> groups, using coordinates from <offsets>
     # if <root> is defined, it will be used to enable synced transitions
-    # with nodes, insted of the default d3 dom selection
+    # with nodes, instead of the default d3 dom selection
     render_links: (data, ctx, root, offsets) ->
         data = @layout.filter_links data, ctx
         selector = (d) -> d.select("#links").selectAll "path.link"
@@ -1011,13 +1018,12 @@ class Timeline
             .append("path")
             .classed("link", true)
             .attr "data-id": (d) -> d.id
-        links.classed "fill", (d) -> is_range d, offsets[d.col]
-        links.classed "selected", (d) -> d.selected
-        links.attr
-            "data-col": (d) -> d.col
-        updated = if root? then selector root else links
-        updated.attr d: (d) => @layout.render_link d, ctx, offsets[d.col]
+        links.classed("fill", (d) -> is_range d, offsets[d.col])
+             .classed("selected", (d) -> d.selected)
+             .attr "data-col": (d) -> d.col
         links.exit().remove()
+        animated = if root? then selector root else links
+        animated.attr d: (d) => @layout.render_link d, ctx, offsets[d.col]
         links.order()
 
     node_top: (d) => to_pixel d.y - @node_y
@@ -1040,20 +1046,21 @@ class Timeline
             .classed("node", true)
             .each((d) -> d.view = view_factory d, this)
             .filter((d) -> d.data.length == 1)
+            .each((d) -> add_popover that.layout, this, _.first d.data)
             .call d3.behavior.drag()
             .on("drag",    (d) -> that.event_drag_move this, d)
             .on("dragend", (d) -> that.event_drag_end  this, d)
         nodes.classed "selected", (d) -> d.selected
-        updated = if root? then selector root else nodes
-        updated
+        nodes.exit()
+            .remove()
+            .each((d) -> d.view.remove())
+        animated = if root? then selector root else nodes
+        animated
             .attr
                 "data-col": (d) -> d.col
             .style
                 top:  @node_top
                 left: @node_left offsets, win
-        nodes.exit()
-            .remove()
-            .each (d) -> d.view.remove()
         @set_width win.w
         @layout.stop_offsets offsets
         return offsets
@@ -1068,6 +1075,7 @@ class Timeline
         [offsets] = @layout.start_offsets()
         win = w: @w
         unless @event_drag_offset?
+            enable_popover dom, false
             @lock()
             xoff = d3.event.x - d3.event.dx - d.x
             yoff = d3.event.y - d3.event.dy - d.y
@@ -1093,6 +1101,7 @@ class Timeline
         delete d.dragged
         make_plain()
         model = _.first d.data
+        enable_popover el, true
         model.save {}, wait: true
         @unlock()
 
@@ -1124,13 +1133,13 @@ class Timeline
             .classed("tick", true)
             .classed(@layout.name, true)
             .each((d) -> d.view = new TickView model: d, el: this)
-        ticks.each (d) ->
+        ticks.each((d) ->
             d.width = d.view.el.offsetWidth
-            d.height = d.view.el.offsetHeight
-        ticks.style @layout.tick_attributes()
+            d.height = d.view.el.offsetHeight)
+            .style(@layout.tick_attributes())
         ticks.exit()
             .remove()
-            .each (d) -> d.view.remove()
+            .each((d) -> d.view.remove())
 
     render_ticks: ->
         ticks = @layout.get_ticks()
