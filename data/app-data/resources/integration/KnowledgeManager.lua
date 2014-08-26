@@ -26,7 +26,6 @@ InitKnowledgeManager = function()
     knowledgeManager.TaskStarted = function()
         knowledgeManager.bCanCallStaticQuery = true
     end
-    knowledgeManager.StageChanged = function() end
     knowledgeManager.TaskFinished = function()
         knowledgeManager.queries = {}
         knowledgeManager.setQueryResult( "getPositionsToSupport", {} )
