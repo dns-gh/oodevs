@@ -267,7 +267,7 @@ void EventDockWidget::NotifyActivated( const gui::Event& event )
 void EventDockWidget::NotifySelected( const gui::Event* event )
 {
     if( event )
-        presenter_->StartEdition( *event, true );
+        presenter_->StartEdition( *event, false );
 }
 
 // -----------------------------------------------------------------------------
