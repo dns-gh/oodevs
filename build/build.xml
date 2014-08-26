@@ -23,7 +23,7 @@
     <property name="www.dir" value="${src.dir}/masa/timeline/www"/>
 
     <property name="version.project" value="5.4"/>
-    <property name="version.major" value="5.4.3"/>
+    <property name="version.major" value="5.4.4"/>
     <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
     <property name="unicode.extension" value=" ゑ"/>
     <!-- Maximum number of concurrently running simulations in data_migrations_test -->
