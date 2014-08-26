@@ -83,7 +83,7 @@ integration.isAgentImmobilized = function( agent )
 end
 
 --- Returns true if the provided agent is valid, false otherwise
--- @param agent Simulation agent knowledge
+-- @param agent Simulation agent
 -- @return Boolean, whether or not the agent is valid
 integration.isAgentValid = function( agent )
     return DEC_Agent_EstValide( agent )
