@@ -146,12 +146,11 @@ std::pair< TER_Polygon, std::size_t > DEC_PathResult::ComputePathHull( const T_P
 
 const TER_Localisation* DEC_PathResult::MakeLocation( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool applyScale ) const
 {
-    const TER_Localisation* pObjectLocation = 0;
     if( !applyScale )
         return &pKnowledge->GetLocalisation();
-    pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() ); // $$$$ MCO 2014-08-26: leak ?!
+    TER_Localisation* pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() ); // $$$$ MCO 2014-08-26: leak ?!
     if( pObjectLocation->GetType() != TER_Localisation::eNone )
-        const_cast< TER_Localisation* >( pObjectLocation )->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
+        pObjectLocation->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
     return pObjectLocation;
 }
 
