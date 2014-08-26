@@ -51,8 +51,7 @@ bool DEC_PathResult::IsOnPath( const MT_Vector2D& vPos ) const
     if( resultList_.size() == 1 )
         return ( vPos.Distance( resultList_.front()->GetPos() ) <= rWeldValue );
     auto itStart = resultList_.begin();
-    auto itEnd = resultList_.begin();
-    ++itEnd;
+    auto itEnd = std::next( resultList_.begin() );
     for( ; itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
         MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
@@ -72,15 +71,10 @@ DEC_PathResult::T_PathPoints::const_iterator DEC_PathResult::GetCurrentKeyOnPath
     if( itCurrentPathPoint_ == resultList_.end() )
         return itCurrentPathPoint_;
     auto itStart = itCurrentPathPoint_;
-    auto itEnd = itCurrentPathPoint_;
-    ++itEnd;
+    auto itEnd = std::next( itStart );
     for( ; itEnd != resultList_.end(); ++itStart, ++itEnd )
-    {
-        if( (*itStart)->GetPos() == (*itEnd)->GetPos() )
-            continue;
-        else
+        if( (*itStart)->GetPos() != (*itEnd)->GetPos() )
             return itStart;
-    }
     return itStart;
 }
 
@@ -123,8 +117,7 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, dou
     auto itCurrentPathPoint = GetCurrentKeyOnPath();
     if( itCurrentPathPoint == resultList_.end() )
         return vStartPos;
-    auto itNextPathPoint = itCurrentPathPoint;
-    ++itNextPathPoint;
+    const auto itNextPathPoint = std::next( itCurrentPathPoint );
     // Recherche du premier pathpoint
     if( itNextPathPoint == resultList_.end() )
     {
@@ -138,28 +131,9 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, dou
     return InternalGetFuturePosition( itNextPathPoint, rDist - rLength, bBoundOnPath );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_PathResult::ComputeFutureObjectCollision
-// Created: NLD 2003-10-08
-// -----------------------------------------------------------------------------
-bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
+std::pair< TER_Polygon, std::size_t > DEC_PathResult::ComputePathHull() const
 {
-    static const double epsilon = 1e-8;
-    rDistance = std::numeric_limits< double >::max();
-    pObject.reset();
-    E_State nPathState = GetState();
-    if( objectsToTest.empty() )
-        return false;
-    if( nPathState != eValid && nPathState != ePartial )
-        return false;
-    if( resultList_.empty() )
-        return false;
-    auto itCurrentPathPoint = GetCurrentKeyOnPath();
-    if( itCurrentPathPoint == resultList_.end() )
-        return false;
-    auto itNextPathPoint = itCurrentPathPoint;
-    ++itNextPathPoint;
-    // Path hull
+    const auto itCurrentPathPoint = GetCurrentKeyOnPath();
     TER_Polygon pathHull;
     T_PointVector hullPoints;
     hullPoints.reserve( 1 + resultList_.size() );
@@ -168,40 +142,68 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
     if( itCurrentPathPoint != resultList_.end() )
         hullPoints.push_back( (*itCurrentPathPoint)->GetPos() );
     pathHull.Reset( hullPoints, true );
-    MT_Rect bbox = pathHull.GetBoundingBox();
+    return std::make_pair( pathHull, hullPoints.size() );
+}
+
+const TER_Localisation* DEC_PathResult::MakeLocation( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge,
+    const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
+{
+    const TER_Localisation* pObjectLocation = 0;
+    if( !applyScale )
+        return &pKnowledge->GetLocalisation();
+    if( !resultList_.empty() && blockedByObject )
+    {
+        T_PointVector firstPointVector;
+        firstPointVector.push_back( (*resultList_.begin())->GetPos() );
+        if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, &agent ) )
+            return 0;
+    }
+    pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() ); // $$$$ MCO 2014-08-26: leak ?!
+    if( pObjectLocation->GetType() != TER_Localisation::eNone )
+        const_cast< TER_Localisation* >( pObjectLocation )->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
+    return pObjectLocation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::ComputeFutureObjectCollision
+// Created: NLD 2003-10-08
+// -----------------------------------------------------------------------------
+bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objects, double& rDistance,
+    boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
+{
+    static const double epsilon = 1e-8;
+    rDistance = std::numeric_limits< double >::max();
+    pObject.reset();
+    if( objects.empty() )
+        return false;
+    if( GetState() != eValid && GetState() != ePartial )
+        return false;
+    if( resultList_.empty() )
+        return false;
+    const auto itCurrentPathPoint = GetCurrentKeyOnPath();
+    if( itCurrentPathPoint == resultList_.end() )
+        return false;
+    const auto hull = ComputePathHull();
+    const MT_Rect bbox = hull.first.GetBoundingBox();
     // Optimisation: Check bounding box instead of doing 345 intersection checks in case we have 345 points in the path (which happens)
     // Check intersection with convex hull of path if there are less segments.
     // Worst case: Bounding hull has 1 more segment than the actual path, or Bounding hull has 2 segments (degenerate).
     // Best case: Bounding hull has 3 segments.
-    std::size_t hullSize = pathHull.GetBorderPoints().size();
-    bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hullPoints.size();
+    const std::size_t hullSize = hull.first.GetBorderPoints().size();
+    const bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hull.second;
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
-    for( auto itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
+    for( auto itKnowledge = objects.begin(); itKnowledge != objects.end(); ++itKnowledge )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
-        const TER_Localisation* pObjectLocation = 0;
-        if( applyScale )
-        {
-            pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() );
-            if( !resultList_.empty() && blockedByObject )
-            {
-                T_PointVector firstPointVector;
-                firstPointVector.push_back( (*resultList_.begin())->GetPos() );
-                if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, &agent ) )
-                    continue;
-            }
-            if( pObjectLocation->GetType() != TER_Localisation::eNone )
-                const_cast< TER_Localisation* >( pObjectLocation )->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
-        }
-        else
-            pObjectLocation = &pKnowledge->GetLocalisation();
-
-        MT_Rect objectBBox = pObjectLocation->GetBoundingBox();
+        const auto pKnowledge = *itKnowledge;
+        const TER_Localisation* pObjectLocation = MakeLocation( pKnowledge, agent, blockedByObject, applyScale );
+        if( !pObjectLocation )
+            continue;
+        const MT_Rect objectBBox = pObjectLocation->GetBoundingBox();
         if( !bbox.Intersect2D( objectBBox ) && !bbox.Contains( objectBBox ) && !objectBBox.Contains( bbox ) )
             continue;
         if( hullIntersectionIsFaster )
         {
-            const T_PointVector& borderPoints = pathHull.GetBorderPoints();
+            const T_PointVector& borderPoints = hull.first.GetBorderPoints();
             if( borderPoints.empty() )
                 continue;
             auto itPathHullPoint = borderPoints.begin();
@@ -219,14 +221,15 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
             }
             if( !hullIntersected )
             {
-                TER_Localisation localisationHull( pathHull );
-                if( !pObjectLocation->Contains( localisationHull, epsilon ) && !localisationHull.Contains( *pObjectLocation, epsilon ) )
+                TER_Localisation localisationHull( hull.first );
+                if( !pObjectLocation->Contains( localisationHull, epsilon )
+                    && !localisationHull.Contains( *pObjectLocation, epsilon ) )
                     continue;
             }
         }
         double rDistanceSum = 0.;
         const MT_Vector2D* pPrevPos = &(*itCurrentPathPoint)->GetPos();
-        for( auto itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
+        for( auto itPathPoint = std::next( itCurrentPathPoint ); itPathPoint != resultList_.end(); ++itPathPoint )
         {
             MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
             TER_DistanceLess colCmp( *pPrevPos );
@@ -248,9 +251,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
             pPrevPos = &(*itPathPoint)->GetPos();
         }
     }
-    if( !pObject )
-        return false;
-    return true;
+    return pObject != 0;
 }
 
 // -----------------------------------------------------------------------------
