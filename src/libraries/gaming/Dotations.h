@@ -11,7 +11,6 @@
 #define __Dotations_h_
 
 #include "HierarchicExtension_ABC.h"
-#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Dotations_ABC.h"
 #include <tools/Resolver.h>
@@ -45,7 +44,6 @@ class Dotations : public kernel::Dotations_ABC
                 , public HierarchicExtension_ABC
                 , public kernel::Updatable_ABC< sword::UnitAttributes >
                 , public tools::Resolver< Dotation >
-                , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -57,8 +55,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool Accept( const kernel::DotationType& type ) const;
+    virtual bool IsEmptyGasTank() const;
     //@}
 
 private:
