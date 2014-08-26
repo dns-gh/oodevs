@@ -208,9 +208,10 @@
   <migration from="5.4.0" to="5.4.1"/>
   <migration from="5.4.1" to="5.4.2"/>
   <migration from="5.4.2" to="5.4.3"/>
-  <migration from="5.4.3" to="5.5.0">
-    <upgrade schema="schemas/5.4.3/physical/Decisional.xsd" apply="schemas/5.5.0/xsl/decisional_5.4.3-5.5.0.xsl"/>
-    <upgrade schema="schemas/5.4.3/physical/Missions.xsd" apply="schemas/5.5.0/xsl/missions_5.4.3-5.5.0.xsl"/>
-    <upgrade schema="schemas/5.4.3/physical/Reports.xsd" apply="schemas/5.5.0/xsl/reports_5.4.3-5.5.0.xsl"/>
+  <migration from="5.4.3" to="5.4.4"/>
+  <migration from="5.4.4" to="5.5.0">
+    <upgrade schema="schemas/5.4.4/physical/Decisional.xsd" apply="schemas/5.5.0/xsl/decisional_5.4.4-5.5.0.xsl"/>
+    <upgrade schema="schemas/5.4.4/physical/Missions.xsd" apply="schemas/5.5.0/xsl/missions_5.4.4-5.5.0.xsl"/>
+    <upgrade schema="schemas/5.4.4/physical/Reports.xsd" apply="schemas/5.5.0/xsl/reports_5.4.4-5.5.0.xsl"/>
   </migration>
 </migrations>
