@@ -521,13 +521,7 @@ bool ADN_TableDelegate::editorEvent( QEvent* event, QAbstractItemModel* model, c
             return false;
         if( event->type() == QEvent::MouseButtonRelease )
         {
-            const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
-            QRect checkRect = QStyle::alignedRect( option.direction, Qt::AlignCenter,
-                option.decorationSize,
-                QRect( option.rect.x() + ( 2 * textMargin ), option.rect.y(),
-                option.rect.width() - ( 2 * textMargin ),
-                option.rect.height() ) );
-            if( !checkRect.contains( static_cast< QMouseEvent* >( event )->pos() ) )
+            if( !option.rect.contains( static_cast< QMouseEvent* >( event )->pos() ) )
                 return false;
         }
         else if( event->type() == QEvent::KeyPress )
