@@ -923,7 +923,8 @@
             <arg value="--exclude=*.UnitMagicAction.Type"/>
         </compare-proto>
         <compare-proto olddir="${proto.dir}/5.4.1" newdir="${proto.dir}/5.4.2"/>
-        <compare-proto olddir="${proto.dir}/5.4.2" newdir="${src.dir}/libraries/protocol/proto/"/>
+        <compare-proto olddir="${proto.dir}/5.4.2" newdir="${proto.dir}/5.4.3"/>
+        <compare-proto olddir="${proto.dir}/5.4.3" newdir="${src.dir}/libraries/protocol/proto/"/>
     </target>
 
     <target name="check" depends="checkreports,checkdec,checkproto"
