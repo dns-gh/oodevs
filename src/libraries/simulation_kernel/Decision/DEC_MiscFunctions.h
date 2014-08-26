@@ -107,7 +107,6 @@ public:
 
     static std::string  GetName                               ( DEC_Decision_ABC* pEntity );
     static DEC_Decision_ABC* GetAutomate                      ( DEC_Decision_ABC* pAgent );
-    static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void CopyDirectionDanger                           ( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission );
 };
 

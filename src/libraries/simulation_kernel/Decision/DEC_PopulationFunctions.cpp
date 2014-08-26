@@ -191,7 +191,7 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions
             std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledgesTmp; //T_KnowledgeObjectDiaIDVector
             bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, *pZone );
             for( auto it = knowledgesTmp.begin(); it != knowledgesTmp.end(); ++it )
-                if( IsKnowledgeObjectValid( *it) )
+                if( *it && (*it)->IsValid() )
                     knowledges.push_back( *it );
         }
     }
@@ -235,17 +235,6 @@ bool DEC_PopulationFunctions::HasFlow( MIL_Population& population )
 int DEC_PopulationFunctions::GetMovingState( MIL_Population& population )
 {
     return HasFlow( population ) ? PHY_Posture::mouvement_.GetID() : PHY_Posture::poste_.GetID();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::IsKnowledgeObjectValid
-// Created: NLD 2005-12-05
-// -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::IsKnowledgeObjectValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-{
-    bool isValid = pKnowledge && pKnowledge->IsValid();
-    const MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-    return isValid && pObject && (*pObject)().CanBePerceived();
 }
 
 // -----------------------------------------------------------------------------
@@ -326,17 +315,6 @@ double DEC_PopulationFunctions::GetDominationState( DEC_Decision_ABC& callerPopu
 {
     DEC_PopulationDecision* pop = dynamic_cast< DEC_PopulationDecision* >( &callerPopulation );
     return pop ? pop->GetDominationState() : 0.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::GetMission
-// Created: LDC 2009-05-19
-// -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_Mission_ABC > DEC_PopulationFunctions::GetMission( DEC_Decision_ABC* pAgent )
-{
-    if( !pAgent )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    return pAgent->GetMission();
 }
 
 // -----------------------------------------------------------------------------
