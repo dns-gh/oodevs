@@ -15,7 +15,6 @@
 #endif
 
 #include <boost/bind.hpp>
-#include <boost/function.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 #ifdef _MSC_VER

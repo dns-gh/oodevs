@@ -16,14 +16,13 @@
 #include <boost/optional/optional.hpp>
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/function.hpp>
 
 #include <string>
 #include <vector>
 
 namespace mocks
 {
-typedef std::vector< boost::function< void( const property_tree::T_Tree& src ) > > T_Constraints;
+typedef std::vector< std::function< void( const property_tree::T_Tree& src ) > > T_Constraints;
 
 inline void EqualValue( const property_tree::T_Tree& src, const std::string& key, const std::string& value )
 {

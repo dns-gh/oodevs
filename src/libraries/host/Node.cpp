@@ -24,7 +24,6 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
-#include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/thread/lock_guard.hpp>
@@ -387,7 +386,7 @@ void Node::UploadCache( io::Reader_ABC& src )
     }
     catch( ... )
     {
-        async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
+        Post( async_, boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
         throw;
     }
 
@@ -398,7 +397,7 @@ void Node::UploadCache( io::Reader_ABC& src )
     next.swap( cache_ );
     cache_size_ = cache_->GetSize();
     if( next )
-        async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, next->GetPath() ) );
+        Post( async_, boost::bind( &FileSystem_ABC::Remove, &deps_.fs, next->GetPath() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -465,7 +464,7 @@ Tree Node::DeleteCache()
 
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     next.swap( cache_ );
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, next->GetPath() ) );
+    Post( async_, boost::bind( &FileSystem_ABC::Remove, &deps_.fs, next->GetPath() ) );
     cache_size_ = 0;
     return next->GetProperties();
 }

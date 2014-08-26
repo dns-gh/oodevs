@@ -29,7 +29,7 @@ namespace
 
     const runtime::Path path = "some\\funky //\\\\path";
 
-    void PopulateLog( const boost::function< bool( const runtime::Path& ) >& f )
+    void PopulateLog( const std::function< bool( const runtime::Path& ) >& f )
     {
         f( path / "Sim.log" );
     }
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE( last_error_extracts_error_from_consecutive_errors )
 
 namespace
 {
-    bool PopulateLogs( const boost::function< bool( const runtime::Path& ) >& f )
+    bool PopulateLogs( const std::function< bool( const runtime::Path& ) >& f )
     {
         f( path / "Sim.20101104T110600.log" );
         f( path / "Sim.20131104T110600.log" );

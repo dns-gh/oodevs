@@ -40,12 +40,12 @@ namespace
         return count + 1;
     }
 
-    std::auto_ptr< Process > MakeProcess( const MockApi& api, int pid, const std::wstring& /*wname*/ )
+    std::unique_ptr< Process > MakeProcess( const MockApi& api, int pid, const std::wstring& /*wname*/ )
     {
         MOCK_EXPECT( api.OpenProcess ).once().with( mock::any, false, pid ).returns( dummy );
         MOCK_EXPECT( api.GetProcessName ).once().calls( boost::bind( &FakeGetProcessName, _1, _2, _3 ) );
         MOCK_EXPECT( api.CloseHandle ).once().with( dummy ).returns( true );
-        return std::auto_ptr< Process >( new Process( api, pid ) );
+        return std::unique_ptr< Process >( new Process( api, pid ) );
     }
 
     bool FakeGetExitCodeProcess( HANDLE handle, DWORD* code )
@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE( process_returns_correct_members )
 {
     MockApi api;
     int pid = 42;
-    std::auto_ptr< Process > process = MakeProcess( api, pid, wname );
+    std::unique_ptr< Process > process = MakeProcess( api, pid, wname );
     BOOST_CHECK_EQUAL( Utf8( wname ), process->GetName() );
     BOOST_CHECK_EQUAL( pid, process->GetPid() );
 }
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( process_returns_correct_members )
 BOOST_AUTO_TEST_CASE( process_joins )
 {
     MockApi api;
-    std::auto_ptr< Process > process = MakeProcess( api, 42, wname );
+    std::unique_ptr< Process > process = MakeProcess( api, 42, wname );
     int msTimeout = 3*1000;
     MOCK_EXPECT( api.WaitForSingleObjectEx ).once().with( dummy, msTimeout, false ).returns( WAIT_OBJECT_0 );
     bool done = process->Join( msTimeout );
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( process_joins )
 BOOST_AUTO_TEST_CASE( corrupted_process_terminates_unsafely )
 {
     MockApi api;
-    std::auto_ptr< Process > process = MakeProcess( api, 42, wname );
+    std::unique_ptr< Process > process = MakeProcess( api, 42, wname );
     MOCK_EXPECT( api.TerminateProcess ).once().with( dummy, mock::any ).returns( true );
     process->Kill();
 }

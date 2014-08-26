@@ -11,10 +11,10 @@
 #define POOL_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <functional>
 
 namespace boost
 {
-    template< typename T > class function;
     template< typename T > class shared_future;
 }
 
@@ -36,7 +36,7 @@ struct Pool_ABC : public boost::noncopyable
 
     //! @name Typedef helper
     //@{
-    typedef boost::function< void() > Task;
+    typedef std::function< void() > Task;
     typedef boost::shared_future< void > Future;
     //@}
 

@@ -18,7 +18,6 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
-#include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/thread/lock_guard.hpp>
 #include <set>
@@ -102,7 +101,7 @@ Proxy::~Proxy()
         process_->Kill();
         process_->Join( 1000 );
     }
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &fs_, config_.root / "proxy.id" ) );
+    Post( async_, boost::bind( &FileSystem_ABC::Remove, &fs_, config_.root / "proxy.id" ) );
 }
 
 namespace
@@ -278,7 +277,7 @@ void Proxy::Stop()
 // -----------------------------------------------------------------------------
 void Proxy::Save() const
 {
-    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &fs_, config_.root / "proxy.id", ToJson( GetProperties() ) ) );
+    Post( async_, boost::bind( &FileSystem_ABC::WriteFile, &fs_, config_.root / "proxy.id", ToJson( GetProperties() ) ) );
 }
 
 // -----------------------------------------------------------------------------

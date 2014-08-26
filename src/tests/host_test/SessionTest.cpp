@@ -412,13 +412,13 @@ BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_pr
 
     Event waitPause, endPause;
     ExpectBlockingWebRequest( "/pause", 200, waitPause, endPause );
-    Pool_ABC::Future pause = pool.Post( boost::bind( &Session_ABC::Pause, session ) );
+    Pool_ABC::Future pause = pool.Post( [=]{ session->Pause(); } );
     waitPause.Wait();
 
     Event waitPoll, endPoll;
     boost::shared_ptr< MockResponse > rpy = ExpectBlockingWebRequest( "/get", 200, waitPoll, endPoll );
     MOCK_EXPECT( rpy->GetBody ).once().returns( "{\"state\":\"paused\"}" );
-    Pool_ABC::Future poll = pool.Post( boost::bind( &Session_ABC::Poll, session ) );
+    Pool_ABC::Future poll = pool.Post( [=]{ session->Poll(); } );
     waitPoll.Wait();
 
     // stop has priority even with send states in flight
@@ -442,7 +442,7 @@ BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_cou
 
     Event waitPause, endPause;
     ExpectBlockingWebRequest( "/pause", 200, waitPause, endPause );
-    Pool_ABC::Future pause = pool.Post( boost::bind( &Session_ABC::Pause, session ) );
+    Pool_ABC::Future pause = pool.Post( [=]{ session->Pause(); } );
     waitPause.Wait();
 
     ExpectWebRequest( "/pause", 200 );

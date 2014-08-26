@@ -480,7 +480,7 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
 
     // uncompress package to random dir, and check it against source
     const Path output = fs.MakeAnyPath( testOptions.GetDataPath( "." ).ToBoost() );
-    const auto erase = runtime::Scoper( boost::bind( &runtime::FileSystem_ABC::Remove, &fs, output ) );
+    const auto erase = runtime::Scoper( [&]{ fs.Remove( output ); } );
     const Path pkgdir = output / "0";
     auto unpacker = fs.Unpack( pkgdir, buffer, 0 );
     unpacker->Unpack();

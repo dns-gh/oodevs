@@ -36,8 +36,8 @@
 #include <cpplog/cpplog.hpp>
 
 #pragma warning( push, 0 )
-#include <Qt/qsettings.h>
-#include <Qt/qstring.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 #include <boost/filesystem/operations.hpp>
@@ -540,7 +540,7 @@ int StartServer( int argc, const char* argv[] )
         case CMD_EXECUTE:
         default:
             PrintConfiguration( log, cfg );
-            facade.Start( runtime, fs, &std::getchar );
+            facade.Start( runtime, fs, []{ std::getchar(); } );
             break;
         }
     }

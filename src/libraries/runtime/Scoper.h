@@ -9,8 +9,9 @@
 #ifndef SCOPER_H
 #define SCOPER_H
 
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
+#include <cassert>
+#include <functional>
 
 namespace runtime
 {
@@ -22,7 +23,7 @@ namespace runtime
 // =============================================================================
 struct Scoper : public boost::noncopyable
 {
-    typedef boost::function< void( void ) > Task;
+    typedef std::function< void( void ) > Task;
     Scoper( const Task& task )
         : task_( task )
     {

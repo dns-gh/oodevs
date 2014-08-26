@@ -16,8 +16,6 @@
 #include <QMainWindow>
 #include <QProgressBar>
 
-#include <boost/scoped_ptr.hpp>
-
 namespace runtime
 {
     struct Async;
@@ -58,12 +56,12 @@ private slots:
     void OnSingleInstanceError();
 
 private:
-    boost::scoped_ptr< Ui::Head > ui_;
+    std::unique_ptr< Ui::Head > ui_;
     QProgressBar progress_;
     QLabel count_;
     ItemModel items_;
-    boost::scoped_ptr< Context > ctx_;
-    boost::scoped_ptr< runtime::Async > async_;
+    std::unique_ptr< Context > ctx_;
+    std::unique_ptr< runtime::Async > async_;
 };
 }
 

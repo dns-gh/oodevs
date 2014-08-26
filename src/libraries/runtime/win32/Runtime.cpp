@@ -20,7 +20,6 @@
 #include <boost/ref.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/bind.hpp>
-#include <boost/function.hpp>
 
 using namespace runtime;
 

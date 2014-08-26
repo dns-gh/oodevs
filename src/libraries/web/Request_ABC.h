@@ -9,7 +9,6 @@
 #ifndef REQUEST_ABC_H
 #define REQUEST_ABC_H
 
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
@@ -54,7 +53,7 @@ struct Request_ABC : public boost::noncopyable
 
     //! @name Mime methods
     //@{
-    typedef boost::function< void( io::Reader_ABC& ) > MimeHandler;
+    typedef std::function< void( io::Reader_ABC& ) > MimeHandler;
     virtual void RegisterMime( const std::string& name, const MimeHandler& handler ) = 0;
     virtual void ParseBodyAsMime() = 0;
     virtual Tree ParseBodyAsJson() = 0;

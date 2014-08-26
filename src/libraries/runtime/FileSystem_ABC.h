@@ -12,12 +12,12 @@
 
 #include <boost/noncopyable.hpp>
 #include <ctime>
+#include <functional>
 #include <string>
 
 namespace boost
 {
     template< typename T > class shared_ptr;
-    template< typename T > class function;
 namespace filesystem
 {
     class path;
@@ -73,7 +73,7 @@ struct Packer_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    typedef boost::function< bool( const Path& ) > T_Predicate;
+    typedef std::function< bool( const Path& ) > T_Predicate;
     //@}
 
     //! @name Methods
@@ -109,7 +109,7 @@ struct FileSystem_ABC : public boost::noncopyable
     typedef boost::shared_ptr< Unpacker_ABC > T_Unpacker;
     typedef boost::shared_ptr< Packer_ABC > T_Packer;
     typedef boost::shared_ptr< io::Writer_ABC > T_Writer;
-    typedef boost::function< bool( const Path& ) > T_Predicate;
+    typedef std::function< bool( const Path& ) > T_Predicate;
     //@}
 
     //! @name Methods

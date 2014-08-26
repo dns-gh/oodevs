@@ -19,7 +19,6 @@
 #include "web/User.h"
 
 #include <boost/foreach.hpp>
-#include <boost/function.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>

@@ -76,7 +76,7 @@ namespace
         return ptr;
     }
 
-    void CheckTree( const boost::function< Tree() >& operand, const Tree& expected, bool valid = true )
+    void CheckTree( const std::function< Tree() >& operand, const Tree& expected, bool valid = true )
     {
         if( valid )
             BOOST_CHECK( operand() == expected );
@@ -84,17 +84,17 @@ namespace
             BOOST_CHECK_THROW( operand(), web::HttpException );
     }
 
-    void CheckTree( const boost::function< Tree() >& operand, const std::string& expected, bool valid = true )
+    void CheckTree( const std::function< Tree() >& operand, const std::string& expected, bool valid = true )
     {
         CheckTree( operand, FromJson( expected ), valid );
     }
 
-    void CheckCount( const boost::function< size_t() >& operand, const size_t expected )
+    void CheckCount( const std::function< size_t() >& operand, const size_t expected )
     {
         BOOST_CHECK_EQUAL( operand(), expected );
     }
 
-    void CheckTreeList( const boost::function< std::vector< Tree >() >& operand, const std::string& expected, bool valid = true )
+    void CheckTreeList( const std::function< std::vector< Tree >() >& operand, const std::string& expected, bool valid = true )
     {
         if( valid )
         {
@@ -109,7 +109,7 @@ namespace
         }
     }
 
-    void CheckPathList( const boost::function< std::vector< Path >() >& operand, const std::string& expected, bool valid = true )
+    void CheckPathList( const std::function< std::vector< Path >() >& operand, const std::string& expected, bool valid = true )
     {
         if( valid )
         {

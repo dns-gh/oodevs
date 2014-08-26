@@ -10,7 +10,6 @@
 #ifndef MIME_READER_H
 #define MIME_READER_H
 
-#include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
@@ -32,7 +31,7 @@ public:
      MimeReader();
     ~MimeReader();
 
-    typedef boost::function< void( io::Reader_ABC& ) > Handler;
+    typedef std::function< void( io::Reader_ABC& ) > Handler;
 
     void PutHeader( const std::string& name, const std::string& value );
     bool IsValid() const;

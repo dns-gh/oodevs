@@ -12,12 +12,12 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <functional>
 #include <string>
 #include <vector>
 
 namespace boost
 {
-    template< typename T > class function;
     template< typename T > class shared_ptr;
     namespace uuids
     {
@@ -64,7 +64,7 @@ struct SessionController_ABC : public boost::noncopyable
     typedef boost::shared_ptr< T_Base > T_Session;
     typedef std::vector< T_Session > T_Sessions;
     typedef std::vector< std::string > T_Exercises;
-    typedef boost::function< bool( const T_Base& ) > T_Predicate;
+    typedef std::function< bool( const T_Base& ) > T_Predicate;
     //@}
 
     //! @name Methods
