@@ -55,7 +55,6 @@ public:
 
     // Knowledge objects
     static const TER_Localisation* GetKnowledgeObjectLocalisation( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
-    static bool IsKnowledgeObjectValid( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     static std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectsInZone( const MIL_Population& caller, const TER_Localisation* pZone, const std::vector< std::string >& parameters );
     static std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectsInCircle( const MIL_Population& caller, double radius, const std::vector< std::string >& parameters );
     static int DamageObject( boost::shared_ptr< DEC_Knowledge_Object > knowledge, double damageFactor ) ;
@@ -76,7 +75,6 @@ public:
     static double GetDominationState( DEC_Decision_ABC& callerPopulation );
     //@}
 
-    static boost::shared_ptr< MIL_Mission_ABC > GetMission( DEC_Decision_ABC* pAgent );
     static void SetMission( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission );
 
 };

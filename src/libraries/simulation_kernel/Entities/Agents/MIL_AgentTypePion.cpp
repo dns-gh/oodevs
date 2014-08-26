@@ -142,8 +142,6 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
             -> const MIL_AgentTypePion*
         {
             auto t = new MIL_AgentTypePion( name, type, xis );
-            t->SetBrainFunctions( boost::assign::list_of
-                    ( "DEC_Circulation_EquiperItineraireLogistique" ));
             return t;
         };
     pionTypeAllocators_[ "Pion MILICE" ] =
@@ -423,9 +421,6 @@ void RegisterFunction( const std::string& name,  sword::Brain& brain,
     else if( name == "DEC_Agent_SeDecontaminer" )
         brain.RegisterFunction( name.c_str(),
             boost::bind( &DEC_AgentFunctions::SelfDecontaminate, boost::ref( agent ) ) );
-    else if( name == "DEC_Circulation_EquiperItineraireLogistique" ) 
-        brain.RegisterFunction( name.c_str(),
-            &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
     else
         throw MASA_EXCEPTION(
                 "cannot register unknown unit decisional method: " + name );

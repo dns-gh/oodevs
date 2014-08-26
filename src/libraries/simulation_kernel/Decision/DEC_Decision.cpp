@@ -17,6 +17,7 @@
 #include "Decision/DEC_AutomateFunctions.h"
 #include "Decision/DEC_CommunicationFunctions.h"
 #include "Decision/DEC_DIAFunctions.h"
+#include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_KnowledgeFunctions.h"
@@ -28,6 +29,8 @@
 #include "Decision/DEC_Objective.h"
 #include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_PathFunctions.h"
+#include "Decision/DEC_PerceptionFunctions.h"
+#include "Decision/DEC_PopulationFunctions.h"
 #include "Decision/DEC_ResourceNetworkFunctions.h"
 #include "Decision/DEC_TelepathyFunctions.h"
 #include "Decision/DEC_Gen_Object.h"
@@ -155,6 +158,36 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Agent_GetTransportedUnits", &DEC_ActionFunctions::GetTransportedUnits );
     brain.RegisterFunction( "DEC_Agent_EstCompletementEmbarquable", &DEC_AgentFunctions::IsLoadable );
     brain.RegisterFunction( "DEC_Agent_EstValide", &DEC_AgentFunctions::IsValid );
+    
+    brain.RegisterFunction( "DEC_Tir_LancerFumigeneSurPosition",
+        std::function< double( const DEC_Decision_ABC&, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnPosition, _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirer", &DEC_FireFunctions::GetMaxRangeToFireDecision );
+    brain.RegisterFunction( "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition", &DEC_FireFunctions::GetMaxRangeToIndirectFireDecision );
+    
+    brain.RegisterFunction( "DEC_Agent_PeutIllumine", &DEC_AgentFunctions::CanIlluminate );
+    brain.RegisterFunction( "DEC_CanMount", &DEC_AgentFunctions::CanMount );
+    brain.RegisterFunction( "DEC_GetDirectionEnnemi", &DEC_AgentFunctions::GetDirectionDanger );
+    brain.RegisterFunction( "DEC_GetRawMission", &DEC_AgentFunctions::GetMission );
+    brain.RegisterFunction( "DEC_HasDotationForFiring", &DEC_AgentFunctions::HasDotationForFiring );    
+
+    brain.RegisterFunction( "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion", &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau );
+    brain.RegisterFunction( "DEC_Automate_GetEfficacite", &DEC_AutomateFunctions::GetPionEfficiency );
+
+    brain.RegisterFunction( "DEC_DonnerMissionADAAutomate", &DEC_OrdersFunctions::GiveMissionToAutomat );
+
+    brain.RegisterMethod( "DEC_Automate_PionEstNeutralise", &DEC_AutomateDecision::IsPionNeutralized );
+
+    // Elongation factor concept was removed but we keep the DEC function around
+    // to avoid breaking old models. This should be removed after their migration.
+    brain.RegisterFunction( "DEC_Elongation"     , std::function< void(double) >( []( double ) {} ));
+
+    brain.RegisterFunction( "DEC_EnableSharedPerceptionWithKnowledge", &DEC_AgentFunctions::EnableSharedPerceptionWithKnowledge );
+    brain.RegisterFunction( "DEC_DisabledSharedPerceptionWithKnowledge", &DEC_AgentFunctions::DisabledSharedPerceptionWithKnowledge );
+    brain.RegisterFunction( "DEC_Knowledge_EnableSharedPerceptionWithKnowledge", &DEC_AgentFunctions::KnowledgeEnableSharedPerceptionWithKnowledge );
+    brain.RegisterFunction( "DEC_Knowledge_DisabledSharedPerceptionWithKnowledge", &DEC_AgentFunctions::KnowledgeDisabledSharedPerceptionWithKnowledge );
+    brain.RegisterFunction( "DEC_EnableSharingKnowledgesWithKnowledge", &DEC_AgentFunctions::EnableSharingKnowledgesWithKnowledge );
+    brain.RegisterFunction( "DEC_DisabledSharingKnowledgesWithKnowledge", &DEC_AgentFunctions::DisabledSharingKnowledgesWithKnowledge );
+    brain.RegisterFunction( "DEC_Knowledge_CommunicateWithKnowledgeGroup", &DEC_AgentFunctions::KnowledgeCommunicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,6 +205,14 @@ void RegisterPopulationFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_GetNombrePersonnesDansFoule", &DEC_KnowledgePopulationFunctions::GetAllHumans );
     brain.RegisterFunction( "DEC_GetKnowledgeBrain", &DEC_KnowledgePopulationFunctions::GetBrain );
     brain.RegisterFunction( "DEC_ConnaissancePopulation_HasFlow", &DEC_KnowledgePopulationFunctions::IsFlowKnown );
+    brain.RegisterFunction( "DEC_CrowdKnowledge_CanLoadCrowdConcentration", &DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration );
+    brain.RegisterFunction( "DEC_GetDomination", &DEC_PopulationFunctions::GetDominationState );
+    brain.RegisterFunction( "DEC_ConnaissancePopulation_PointEnTeteDeFlux",
+        std::function< boost::shared_ptr<MT_Vector2D> (const DEC_Decision_ABC&, int) >(boost::bind( &DEC_KnowledgePopulationFunctions::GetFlowHead, _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_RoePopulation",
+        std::function< int ( int ) > ( boost::bind(&DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, _1 ) ) );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation", &DEC_PopulationFunctions::GetKnowledgeObjectLocalisation );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Degrader", &DEC_PopulationFunctions::DamageObject );
 
     // Inhabitants => je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
     brain.RegisterFunction( "DEC_Agent_Alert", &DEC_AgentFunctions::AlertInhabitants );
@@ -218,12 +259,23 @@ void RegisterAgentKnowledgeFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ObjectKnowledge_GetObjectsInZone", &DEC_KnowledgeFunctions::GetObjectsWithCapacityInZone );
     brain.RegisterFunction( "DEC_ObjectKnowledge_IsPositionInside", &DEC_KnowledgeFunctions::IsPositionInsideObjectOfType );
     brain.RegisterFunction( "DEC_GetModulationVitesseMax", &DEC_MiscFunctions::GetMaxSpeedModificator );
-    brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
     brain.RegisterMethod( "DEC_AgentKnowledge_Relevance", &DEC_Knowledge_Agent::GetRelevance );
     
     // Returns agent knownledge known by callerId and identified by knowledgeId,
     // throws an exception if the knowledge cannot be resolved.
     brain.RegisterFunction( "DEC_GetAgentKnowledge", &DEC_KnowledgeFunctions::GetAgentKnowledge );
+
+    brain.RegisterFunction( "DEC_Agent_ForcerSilenceRadio", &DEC_KnowledgeAgentFunctions::ForceRadioSilence );
+    brain.RegisterFunction( "DEC_AgentKnowledge_DisableCrowdEffect", &DEC_KnowledgeAgentFunctions::DisableCrowdEffect );
+    brain.RegisterFunction( "DEC_ChangerSuperieurLogistiqueConnaissance", &DEC_KnowledgeAgentFunctions::SwitchAutomateLogistic );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDansFoule", &DEC_KnowledgeAgentFunctions::IsInCrowd );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDefinitivementIllumine", &DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstIllumine", &DEC_KnowledgeAgentFunctions::IsIlluminated );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstTerroriste", &DEC_KnowledgeAgentFunctions::IsTerrorist );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_Neutraliser", &DEC_KnowledgeAgentFunctions::NeutralizeAgent );
+    brain.RegisterFunction( "DEC_Connaissance_GetRawMission", &DEC_KnowledgeAgentFunctions::GetMission );
+    brain.RegisterFunction( "DEC_GetAgentIdFromKnowledge", &DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge );
+    brain.RegisterFunction( "DEC_ObtenirRenseignementCritiqueSurPion", &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,6 +306,9 @@ void RegisterActionFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Agent_DebarquerRefugiesDansCamp", &DEC_ActionFunctions::UnLoadAgentInCamp );
     brain.RegisterFunction( "DEC_Agent_EstRendu", &DEC_ActionFunctions::IsSurrendered );
     brain.RegisterFunction( "DEC_Agent_EstRefugie", &DEC_ActionFunctions::IsRefugee );
+    brain.RegisterFunction( "DEC_Prisonniers_EstDebarqueDansCamp", &DEC_ActionFunctions::Prisoners_IsUnloadedInCamp );
+    brain.RegisterFunction( "DEC_Refugies_EstDebarqueDansCamp", &DEC_ActionFunctions::Refugees_IsUnloadedInCamp );
+    brain.RegisterFunction( "DEC_Connaissance_TransportNombreAllerRetour", &DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,6 +400,20 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_GetTerrainData", &DEC_TerrainFunctions::GetTerrainData );
     brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongAOR", &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau );
     brain.RegisterFunction( "DEC_Geometrie_CalculerEntreeFuseau", &DEC_GeometryFunctions::ComputeEntryPointForFuseau );
+    
+    brain.RegisterFunction( "DEC_Copie_DirectionDanger_Mission", &DEC_MiscFunctions::CopyDirectionDanger );
+    brain.RegisterFunction( "DEC_DebugPointXY", &DEC_MiscFunctions::GetPointXY );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerAutomateDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneArriere", &DEC_GeometryFunctions::ComputeDistanceFromBackLine );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerRetard", &DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule );
+    brain.RegisterFunction( "DEC_Geometrie_PionDerriere", &DEC_GeometryFunctions::ComputeBackestAgent );
+    brain.RegisterFunction( "DEC_Geometrie_PionDevant", &DEC_GeometryFunctions::GetFrontestPion );
+    brain.RegisterFunction( "DEC_Geometry_Pion_SplitLocalisation", &DEC_GeometryFunctions::SplitPionLocalisationInParts );
+    
+    brain.RegisterFunction( "DEC_Geometrie_PosDeploiementMistralNasse",
+        std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASANasse, _1, _2, _3, _4, _5, _6 ) ) );
+    brain.RegisterFunction( "DEC_Geometrie_PosDeploiementDoubleRideau",
+        std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau, _1, _2, _3, _4, _5, _6 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -363,6 +432,9 @@ void RegisterUrbanBlockFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_SetUrbanBlockState", &DEC_UrbanObjectFunctions::SetUrbanBlockState );
     brain.RegisterFunction( "DEC_IsPointInUrbanBlock", &DEC_GeometryFunctions::IsPointInUrbanBlock );
     brain.RegisterFunction( "DEC_UrbanBlocksInZone", &DEC_UrbanObjectFunctions::GetUrbanBlockInZone );
+    brain.RegisterFunction( "DEC_Connaissances_BlocUrbainDansCercle", &DEC_KnowledgeFunctions::GetUrbanBlockInCircle );
+    brain.RegisterFunction( "DEC_EtatBlocUrbain", 
+        std::function< float( MIL_UrbanObject_ABC* )>( boost::bind( &DEC_UrbanObjectFunctions::GetStateUrbanBlock, _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -464,6 +536,9 @@ void RegisterLogisticFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_InterdireEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation );
     brain.RegisterFunction( "DEC_AutoriserEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation );
     brain.RegisterFunction( "DEC_EnforceAviationResources", &DEC_LogisticFunctions::EnforceAviationResources );
+    brain.RegisterFunction( "DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::PionRequestSupply );
+    brain.RegisterFunction( "DEC_Stock_ConnectToResourceNode", &DEC_LogisticFunctions::ConnectToResourceNode );
+    brain.RegisterFunction( "DEC_Stock_DisconnectFromResourceNode", &DEC_LogisticFunctions::DisconnectFromResourceNode );
 }
 
 // -----------------------------------------------------------------------------
@@ -524,7 +599,20 @@ void RegisterObjectsFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceObjet_PointEstDansZoneEvitement", &DEC_KnowledgeObjectFunctions::IsInAvoidanceArea );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_PointEstProcheZoneEffet", &DEC_KnowledgeObjectFunctions::IsNearEffectArea );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_BurningLevel", &DEC_KnowledgeObjectFunctions::GetBurningLevel );
-    brain.RegisterFunction( "DEC_IsValidKnowledgeObject", &DEC_KnowledgeObjectFunctions::IsKnowledgeValid );
+    brain.RegisterFunction( "DEC_IsValidKnowledgeObject", &DEC_KnowledgeObjectFunctions::IsKnowledgeValid );    
+    brain.RegisterFunction( "DEC_ActiverObjet", &DEC_ObjectFunctions::ActivateObject );
+    brain.RegisterFunction( "DEC_CreateDynamicGenObject", &DEC_ObjectFunctions::CreateDynamicGenObject );
+    brain.RegisterFunction( "DEC_CreateDynamicGenObjectFromSharedLocalisation", &DEC_ObjectFunctions::CreateDynamicGenObjectFromSharedLocalisation );
+    brain.RegisterFunction( "DEC_DetruireObjetIdSansDelais", &DEC_ObjectFunctions::MagicDestroyObjectId );
+    brain.RegisterFunction( "DEC_DetruireObjetSansDelais", &DEC_ObjectFunctions::MagicDestroyObject );
+    brain.RegisterFunction( "DEC_Agent_SeDissimulerDansReseauSouterrain", &DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork );
+    brain.RegisterFunction( "DEC_Agent_SortirDuReseauSouterrain", &DEC_KnowledgeObjectFunctions::GetOutFromUndergroundNetwork );
+    brain.RegisterFunction( "DEC_Agent_TempsPourTraverserReseauSouterrain", &DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_DemandeDeDecontaminationSurPion",
+        std::function< int( DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination, _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Agent_DecontamineConnaissance",
+        std::function< int( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination, _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Circulation_EquiperItineraireLogistique", &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
 }
 
 // -----------------------------------------------------------------------------
@@ -760,6 +848,8 @@ void RegisterItineraryFunctions( sword::Brain& brain )
 void RegisterToolsFunctions( sword::Brain& brain )
 {
     brain.RegisterFunction( "DEC_RandomValue", &DEC_DIAFunctions::GetRandomValue );
+    brain.RegisterFunction( "DEC_Perception_AjouterPointReconnuAutomateParPion", &DEC_PerceptionFunctions::AddReconnoiteredPointBy );
+    brain.RegisterFunction( "DEC_Perception_EstPointReconnuParPionOuPersonne", &DEC_PerceptionFunctions::PointIsReconnoiteredByMeOrNoOne );
 }
 
 void RegisterTransportFunctions( sword::Brain& brain )

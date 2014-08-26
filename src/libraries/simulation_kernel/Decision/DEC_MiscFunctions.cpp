@@ -210,17 +210,6 @@ DEC_Decision_ABC* DEC_MiscFunctions::GetAutomate( DEC_Decision_ABC* pAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::GetDirectionEnnemi
-// Created: LDC 2009-04-20
-// -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_MiscFunctions::GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission )
-{
-    if( !pMission )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    return pMission->GetDirDanger();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::CopyDirectionDanger
 // Created: LDC 2009-04-21
 // -----------------------------------------------------------------------------

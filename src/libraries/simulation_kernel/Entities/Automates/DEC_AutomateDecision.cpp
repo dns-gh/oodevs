@@ -136,55 +136,7 @@ std::string DEC_AutomateDecision::GetGroupName()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( sword::Brain& brain )
 {
-    // Objets
-    brain.RegisterFunction( "DEC_ActiverObjet", &DEC_ObjectFunctions::ActivateObject );
-
-    // Connaissance
-    brain.RegisterFunction( "DEC_IsValidKnowledgeObject", &DEC_KnowledgeObjectFunctions::IsKnowledgeValid );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif", &DEC_KnowledgeObjectFunctions::IsObstacleActivated );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre", &DEC_KnowledgeObjectFunctions::IsActivableObstacle );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_DateActivationObstacle", &DEC_KnowledgeObjectFunctions::GetActivationTime );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstContourne", &DEC_KnowledgeObjectFunctions::IsBypassed );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstValorise", &DEC_KnowledgeObjectFunctions::IsMined );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation", &DEC_KnowledgeObjectFunctions::GetLocalisation );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_Type", &DEC_KnowledgeObjectFunctions::GetType );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_LargeurSiteFranchissement", &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstReconnu", &DEC_KnowledgeObjectFunctions::IsRecon );
-    brain.RegisterFunction( "DEC_Connaissances_BlocUrbainDansCercle", &DEC_KnowledgeFunctions::GetUrbanBlockInCircle );
-    brain.RegisterFunction( "DEC_KnowledgeAgent_IsPerceptionLevelMax", std::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax, boost::cref( GetAutomate() ), _1 ) ) );
-
-    // Geometry
-    brain.RegisterFunction( "DEC_Geometrie_StopCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StopComputingFrontAndBackLines );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceFromFrontLine );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerAutomateDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneArriere", &DEC_GeometryFunctions::ComputeDistanceFromBackLine );
-    brain.RegisterFunction( "DEC_Geometrie_PionDevant", &DEC_GeometryFunctions::GetFrontestPion );
-    brain.RegisterFunction( "DEC_Geometrie_PionDerriere", &DEC_GeometryFunctions::ComputeBackestAgent );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerRetard", &DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule );
-
-    // Accesseurs sur les pions
-    brain.RegisterMethod( "DEC_Automate_PionEstNeutralise", &DEC_AutomateDecision::IsPionNeutralized );
-    brain.RegisterFunction( "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion", &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau );
-    brain.RegisterFunction( "DEC_Automate_GetEfficacite", &DEC_AutomateFunctions::GetPionEfficiency );
-    brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirer", &DEC_FireFunctions::GetMaxRangeToFireDecision );
-    brain.RegisterFunction( "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition", &DEC_FireFunctions::GetMaxRangeToIndirectFireDecision );
-
-    // Objects
-    brain.RegisterFunction( "DEC_DetruireObjetSansDelais", &DEC_ObjectFunctions::MagicDestroyObject );
-    brain.RegisterFunction( "DEC_DetruireObjetIdSansDelais", &DEC_ObjectFunctions::MagicDestroyObjectId );
-
-    // Former szName_, mission_, automate_:
     brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
-    brain.RegisterFunction( "DEC_GetAutomate", &DEC_MiscFunctions::GetAutomate );
-    brain.RegisterFunction( "DEC_GetDirectionEnnemi", &DEC_MiscFunctions::GetDirectionEnnemi );
-
-    // Missions
-    brain.RegisterFunction( "DEC_DonnerMissionADAAutomate", &DEC_OrdersFunctions::GiveMissionToAutomat );
-    brain.RegisterFunction( "DEC_Copie_DirectionDanger_Mission", &DEC_MiscFunctions::CopyDirectionDanger );
-
-    brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion );
-    brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge );
-    brain.RegisterFunction( "DEC_Agent_RapportDeForceLocal", &DEC_AgentFunctions::GetRapForLocalAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,7 +201,6 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
         std::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeAutomatLocalisationBarycenterInFuseau, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometry_SplitLocalisation",
         std::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::SplitAutomatLocalisationInParts, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
-    brain.RegisterFunction( "DEC_Geometry_Pion_SplitLocalisation", &DEC_GeometryFunctions::SplitPionLocalisationInParts );
     brain.RegisterFunction( "DEC_Geometrie_DecoupeFuseauEnTroncons",
         std::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitAutomatLocalisationInSections, boost::ref( GetAutomate() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionObstacle",
@@ -388,8 +339,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
         std::function< void ( boost::shared_ptr< MIL_FragOrder > ) > ( boost::bind( &DEC_MiscFunctions::DeleteOrderRepresentation , boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_RemoveFromPointsCategory",
         std::function< void( boost::shared_ptr< DEC_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetAutomate() ), _1 ) ) );
-
-    // Former szName_, mission_, automate_:
+    
+    brain.RegisterFunction( "DEC_KnowledgeAgent_IsPerceptionLevelMax", std::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax, boost::cref( GetAutomate() ), _1 ) ) );
 
     pEntity_->GetType().RegisterFunctions( brain, GetAutomate() );
 }

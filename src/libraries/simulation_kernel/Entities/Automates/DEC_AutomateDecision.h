@@ -122,6 +122,8 @@ public:
     void NotifyRulesOfEngagementPopulationStateChanged( const PHY_RoePopulation& roe );
     const PHY_RoePopulation& GetRoePopulation() const;
     int GetRulesOfEngagementState() const;
+
+    bool IsPionNeutralized( DEC_Decision_ABC* );
     //@}
 
 protected:
@@ -142,11 +144,6 @@ private:
     //@{
     virtual void RegisterSelf( sword::Brain& brain );
     virtual void RegisterSpecific( sword::Brain& brain, bool isMasalife, const std::string& groupName );
-    //@}
-
-    //! @name Functions
-    //@{
-    bool IsPionNeutralized( DEC_Decision_ABC* );
     //@}
 
 private:
