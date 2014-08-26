@@ -17,6 +17,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult constructor
@@ -144,11 +145,11 @@ std::pair< TER_Polygon, std::size_t > DEC_PathResult::ComputePathHull( const T_P
     return std::make_pair( pathHull, hullPoints.size() );
 }
 
-const TER_Localisation* DEC_PathResult::MakeLocation( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool applyScale ) const
+boost::shared_ptr< const TER_Localisation > DEC_PathResult::MakeLocation( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool applyScale ) const
 {
     if( !applyScale )
-        return &pKnowledge->GetLocalisation();
-    TER_Localisation* pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() ); // $$$$ MCO 2014-08-26: leak ?!
+        return boost::shared_ptr< const TER_Localisation >( &pKnowledge->GetLocalisation(), [&]( const TER_Localisation* ) {} );
+    auto pObjectLocation = boost::make_shared< TER_Localisation >( pKnowledge->GetLocalisation() );
     if( pObjectLocation->GetType() != TER_Localisation::eNone )
         pObjectLocation->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
     return pObjectLocation;
@@ -244,7 +245,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
             if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, &agent ) )
                 continue;
         }
-        const TER_Localisation* pObjectLocation = MakeLocation( pKnowledge, applyScale );
+        const auto pObjectLocation = MakeLocation( pKnowledge, applyScale );
         if( !pObjectLocation )
             continue;
         const MT_Rect objectBBox = pObjectLocation->GetBoundingBox();
