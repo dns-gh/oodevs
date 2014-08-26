@@ -30,14 +30,14 @@ func readScript(path string) (string, error) {
 
 func run() error {
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, ""+
-			`exdec connects to the simulation and executes Lua code in the
-context of the unit specified by -unit or picked randomly. The script will be
-indented and wrapped in a function before being sent. If no "return" statement
-is passed, one will be appended.
+		fmt.Fprintf(os.Stderr, strings.Trim(`
+exdec connects to the simulation and executes Lua code in the context of the
+unit specified by -unit or picked randomly. The script will be indented and
+wrapped in a function before being sent. If no "return" statement is passed,
+one will be appended.
 
 If script path is "-", read from stdin.
-`)
+`))
 		flag.PrintDefaults()
 	}
 	host := flag.String("host", "localhost", "simulation server host name")
