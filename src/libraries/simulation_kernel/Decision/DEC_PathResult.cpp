@@ -144,19 +144,11 @@ std::pair< TER_Polygon, std::size_t > DEC_PathResult::ComputePathHull( const T_P
     return std::make_pair( pathHull, hullPoints.size() );
 }
 
-const TER_Localisation* DEC_PathResult::MakeLocation( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge,
-    const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
+const TER_Localisation* DEC_PathResult::MakeLocation( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool applyScale ) const
 {
     const TER_Localisation* pObjectLocation = 0;
     if( !applyScale )
         return &pKnowledge->GetLocalisation();
-    if( !resultList_.empty() && blockedByObject )
-    {
-        T_PointVector firstPointVector;
-        firstPointVector.push_back( (*resultList_.begin())->GetPos() );
-        if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, &agent ) )
-            return 0;
-    }
     pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() ); // $$$$ MCO 2014-08-26: leak ?!
     if( pObjectLocation->GetType() != TER_Localisation::eNone )
         const_cast< TER_Localisation* >( pObjectLocation )->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
@@ -246,7 +238,14 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
     for( auto itKnowledge = objects.begin(); itKnowledge != objects.end(); ++itKnowledge )
     {
         const auto pKnowledge = *itKnowledge;
-        const TER_Localisation* pObjectLocation = MakeLocation( pKnowledge, agent, blockedByObject, applyScale );
+        if( blockedByObject && applyScale ) // $$$$ MCO 2014-08-26: not sure why it's only if applyScale
+        {
+            T_PointVector firstPointVector;
+            firstPointVector.push_back( (*resultList_.begin())->GetPos() );
+            if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, &agent ) )
+                continue;
+        }
+        const TER_Localisation* pObjectLocation = MakeLocation( pKnowledge, applyScale );
         if( !pObjectLocation )
             continue;
         const MT_Rect objectBBox = pObjectLocation->GetBoundingBox();
