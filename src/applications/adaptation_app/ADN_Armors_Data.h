@@ -81,7 +81,7 @@ public:
 private:
     //! @name Serialization
     //@{
-    bool FixConsistency();
+    virtual bool FixConsistency();
     void ReadArchive( xml::xistream& input );
     void ReadArmor( xml::xistream& input );
     void WriteArchive( xml::xostream& output ) const;

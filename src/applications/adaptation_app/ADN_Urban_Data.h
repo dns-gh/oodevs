@@ -208,7 +208,7 @@ public:
     virtual void Save() const;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void ReadArchive( xml::xistream& input );
-    bool FixConsistency();
+    virtual bool FixConsistency();
     virtual void WriteArchive( xml::xostream& output ) const;
     void ReadTemplates( xml::xistream& input );
     void WriteTemplates( xml::xostream& output ) const;
@@ -228,6 +228,7 @@ public:
     QStringList GetUrbanTemplateThatUse( AccommodationInfos& infos );
 
     virtual bool ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const;
+    virtual bool ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const;
     const boost::shared_ptr< kernel::Context >& GetTemplateContext( const std::string& context );
 
 private:

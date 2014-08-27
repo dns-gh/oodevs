@@ -885,7 +885,7 @@ void ADN_Urban_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< kernel::Context >& ADN_Urban_Data::GetTemplateContext
+// Name: ADN_Urban_Data::GetTemplateContext
 // Created: ABR 2013-10-23
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< kernel::Context >& ADN_Urban_Data::GetTemplateContext( const std::string& context )
@@ -894,7 +894,7 @@ const boost::shared_ptr< kernel::Context >& ADN_Urban_Data::GetTemplateContext( 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::function< bool
+// Name: ADN_Urban_Data::ApplyOnTranslations
 // Created: ABR 2013-10-23
 // -----------------------------------------------------------------------------
 bool ADN_Urban_Data::ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const
@@ -902,4 +902,15 @@ bool ADN_Urban_Data::ApplyOnTranslations( const std::function< bool( kernel::Loc
     if( ADN_Data_ABC::ApplyOnTranslations( functor ) )
         return true;
     return templateTranslations_->ApplyOnTranslations( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::ApplyOnContexts
+// Created: SLI 2014-08-27
+// -----------------------------------------------------------------------------
+bool ADN_Urban_Data::ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const
+{
+    if( ADN_Data_ABC::ApplyOnContexts( functor ) )
+        return true;
+    return templateTranslations_->ApplyOnContexts( functor );
 }

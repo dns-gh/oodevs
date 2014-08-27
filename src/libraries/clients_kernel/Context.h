@@ -10,6 +10,7 @@
 #ifndef __Translations_h_
 #define __Translations_h_
 
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
@@ -23,7 +24,7 @@ namespace kernel
 */
 // Created: ABR 2013-07-15
 // =============================================================================
-class Context : public std::vector< boost::shared_ptr< LocalizedString > >
+class Context : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,16 +36,22 @@ public:
     //! @name Operations
     //@{
     bool Apply( const std::function< bool( LocalizedString& ) >& functor );
+    const boost::shared_ptr< LocalizedString >& operator[]( const std::string& key );
 
-    std::vector< boost::shared_ptr< LocalizedString > >::iterator find( const std::string& key );
-    const std::vector< boost::shared_ptr< LocalizedString > >::const_iterator find( const std::string& key ) const;
+    bool CheckUniqueTranslation( const LocalizedString& translation );
+    bool HasDuplicateErrors() const;
+    void CleanTranslations();
+    void MergeDuplicateTranslations();
+    bool IsEmpty() const;
+    void Serialize( xml::xostream& xos, const std::string& languageCode );
+    void SetKey( const boost::shared_ptr< LocalizedString >& translation, const std::string& key );
+    bool SwapKey( const std::string& oldKey, const std::string& newKey );
+    //@}
 
-    boost::shared_ptr< LocalizedString > operator[] ( const std::string& key );
-    const boost::shared_ptr< LocalizedString >& operator[] ( const std::string& key ) const;
-
-    const boost::shared_ptr< LocalizedString >& at( const std::string& key ) const;
-
-    boost::shared_ptr< LocalizedString > CreateNew( const std::string& key );
+private:
+    //! @name Member data
+    //@{
+    std::vector< boost::shared_ptr< LocalizedString > > strings_;
     //@}
 };
 

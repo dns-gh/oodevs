@@ -599,7 +599,7 @@ const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetCo
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetPathContext
+// Name: ADN_Missions_Data::GetMissionSheetPathContext
 // Created: ABR 2013-10-17
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetPathContext() const
@@ -617,6 +617,20 @@ bool ADN_Missions_Data::ApplyOnTranslations( const std::function< bool( kernel::
         return true;
     for( auto it = missionSheetContexts_.begin(); it != missionSheetContexts_.end(); ++it )
         if( *it && ( *it )->Apply( functor ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::ApplyOnContexts
+// Created: SLI 2014-08-27
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Data::ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const
+{
+    if( ADN_Data_ABC::ApplyOnContexts( functor ) )
+        return true;
+    for( auto it = missionSheetContexts_.begin(); it != missionSheetContexts_.end(); ++it )
+        if( *it && functor( **it ) )
             return true;
     return false;
 }
