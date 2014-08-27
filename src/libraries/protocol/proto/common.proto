@@ -274,11 +274,10 @@ message ControlResume {
     optional uint32 tick = 1;
 }
 
-/** @struct ControlChangeTimeFactor
-    @brief Changes the simulation time factor
-*/
+//! Change simulated durations to real durations ratio. The ratio must
+//! be greater than zero.
+//! Returns ControlChangeTimeFactorAck.
 message ControlChangeTimeFactor {
-    //! The new time multiplier
     required int32 time_factor = 1;
 }
 

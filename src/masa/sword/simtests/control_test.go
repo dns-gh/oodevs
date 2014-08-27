@@ -112,6 +112,8 @@ func (s *TestSuite) TestControlChangeTimeFactor(c *C) {
 	// Invalid values
 	_, err := client.SetTimeFactor(0)
 	c.Assert(err, NotNil)
+	_, err = client.SetTimeFactor(-1)
+	c.Assert(err, NotNil)
 
 	// Check response and model update
 	factor, err := client.SetTimeFactor(42)

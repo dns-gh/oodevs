@@ -32,7 +32,7 @@ public:
     virtual void Pause( unsigned int nCtx, unsigned int clientId ) = 0;
     virtual void Continue() = 0;
     virtual void Resume( unsigned int ticks, unsigned int nCtx, unsigned int clientId ) = 0;
-    virtual void SetTimeFactor( unsigned timeFactor, unsigned int nCtx, unsigned int clientId ) = 0;
+    virtual void SetTimeFactor( int32_t timeFactor, unsigned int nCtx, unsigned int clientId ) = 0;
     virtual void SetRealTime( const std::string& realTime, unsigned int nCtx, unsigned int clientId ) = 0;
     //@}
 };
