@@ -622,7 +622,7 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
 	data := client.Model.GetData()
