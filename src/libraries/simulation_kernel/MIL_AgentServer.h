@@ -87,7 +87,7 @@ public:
     virtual void Pause( unsigned int nCtx, unsigned int clientId );
     virtual void Continue();
     virtual void Resume( unsigned int ticks, unsigned int nCtx, unsigned int clientId );
-    virtual void SetTimeFactor( unsigned timeFactor );
+    virtual void SetTimeFactor( unsigned timeFactor, unsigned int nCtx, unsigned int clientId );
     virtual void SetRealTime( const std::string& realTime, unsigned int nCtx, unsigned int clientId );
     //@}
 

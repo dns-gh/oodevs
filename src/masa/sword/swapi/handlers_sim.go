@@ -65,6 +65,15 @@ func (model *ModelData) handleControlBeginTick(m *sword.SimToClient_Content) err
 	return nil
 }
 
+func (model *ModelData) handleControlChangeTimeFactor(m *sword.SimToClient_Content) error {
+	mm := m.GetControlChangeTimeFactorAck()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	model.TimeFactor = mm.GetTimeFactor()
+	return nil
+}
+
 func (model *ModelData) handleControlEndTick(m *sword.SimToClient_Content) error {
 	mm := m.GetControlEndTick()
 	if mm == nil {

@@ -566,6 +566,28 @@ func (c *Client) Stop() error {
 	return <-c.postSimRequest(msg, handler)
 }
 
+func (c *Client) SetTimeFactor(factor int32) (int32, error) {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlChangeTimeFactor: &sword.ControlChangeTimeFactor{
+					TimeFactor: proto.Int32(factor),
+				},
+			},
+		},
+	}
+	result := int32(0)
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlChangeTimeFactorAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		result = reply.GetTimeFactor()
+		return getControlAckError(reply)
+	}
+	return result, <-c.postSimRequest(msg, handler)
+}
+
 func (c *Client) SendFragOrder(tasker *sword.Tasker, fragOrderType uint32,
 	params *sword.MissionParameters) (*Order, error) {
 	msg := SwordMessage{

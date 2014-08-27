@@ -586,7 +586,8 @@ void MIL_AgentServer::Continue()
 // Name: MIL_AgentServer::SetTimeFactor
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
+void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor, unsigned int nCtx,
+        unsigned int clientId )
 {
     client::ControlChangeTimeFactorAck msg;
     if( timeFactor == 0 )
@@ -602,7 +603,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
         msg().set_error_code( sword::ControlAck::no_error );
     }
     msg().set_time_factor( nTimeFactor_ );
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    msg.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
