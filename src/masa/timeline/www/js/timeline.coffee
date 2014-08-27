@@ -70,19 +70,21 @@ get_area_intersect = (a, b) ->
 
 add_popover = (el, placement, event) ->
     el = $ el
-    data =
+    el.popover
         html:      true
         trigger:   "hover"
         container: "#range_popovers"
         placement: placement
         delay:     show: 500, hide: 100
-    title = render_event event, false, false
-    if event.get("info")?.length
-        el.popover _.extend data,
-            title: title
-            content: event.get "info"
-    else
-        el.popover _.extend data, content: title
+        title:     ->
+            if event.get("info")?.length
+                return render_event event, false, false
+            return null
+        content:   ->
+            info = event.get "info"
+            if info?.length
+                return info
+            return render_event event, false, false
 
 enable_popover = (el, enabled) ->
     el = $ el
