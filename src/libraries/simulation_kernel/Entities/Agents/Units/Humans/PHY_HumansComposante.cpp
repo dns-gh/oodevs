@@ -105,9 +105,9 @@ void PHY_HumansComposante::HealAllHumans( bool withLog )
 {
     for( auto it = humans_.begin(); it != humans_.end(); ++it )
     {
-        if( withLog && ( **it ).NeedMedical() )
+        if( withLog && eHumanLocation_Battlefield != ( *it )->GetLocation() )
             continue;
-        ( **it ).Heal();
+        ( *it )->Heal();
     }
 }
 
