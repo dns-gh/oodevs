@@ -55,8 +55,9 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , pMainPath_( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
     , executionSuspended_( false )
     , isBlockedByObject_( false )
-    , blockedTickCounter_( 0 )
     , blockedByDisaster_( false )
+    , waitingOnObject_( false )
+    , blockedTickCounter_( 0 )
     , oldDisasterImpact_( 1 )
 {
     if( suspended )
@@ -161,25 +162,29 @@ double PHY_ActionMove::ComputeImpact( const DisasterAttribute& disaster ) const
 // -----------------------------------------------------------------------------
 bool PHY_ActionMove::AvoidObstacles()
 {
-    if( UpdateObjectsToAvoid() )
+    const bool avoid = pMainPath_->GetPathClass().AvoidObjects();
+    if( UpdateObjectsToAvoid() && avoid )
     {
+        // We're blocked even if no change in the known collision objects.
         if( isBlockedByObject_ )
             ++blockedTickCounter_;
         if( blockedTickCounter_ < 3 )
+            // Do not recompute a path just yet, wait for maybe acquiring or
+            // loosing the knowledge of the object.
+            // In the latter case it probably means the object is gone.
             return false;
     }
     blockedTickCounter_ = 0;
-
     if( const auto pObjectColliding = ComputeCollision() )
     {
-        if( pMainPath_->GetPathClass().AvoidObjects() )
+        if( avoid )
             role_.SendRC( report::eRC_DifficultMovementProgression, pObjectColliding->GetType().GetRealName() );
         return pObjectColliding->GetObjectKnown() != 0;
     }
     return false;
 }
 
-boost::shared_ptr< DEC_Knowledge_Object > PHY_ActionMove::ComputeCollision() const
+boost::shared_ptr< DEC_Knowledge_Object > PHY_ActionMove::ComputeCollision()
 {
     for( auto it = objectsToAvoid_.begin(); it != objectsToAvoid_.end(); ++it )
     {
@@ -187,10 +192,19 @@ boost::shared_ptr< DEC_Knowledge_Object > PHY_ActionMove::ComputeCollision() con
         if( obj && obj->RetrieveAttribute< DisasterAttribute>() )
             return *it;
     }
-    double rDistanceCollision = 0;
+    double distance = 0;
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-    role_.ComputeFutureObjectCollision( objectsToAvoid_, rDistanceCollision, pObjectColliding, pion_, isBlockedByObject_, true );
-    return pObjectColliding;
+    role_.ComputeFutureObjectCollision( objectsToAvoid_, distance, pObjectColliding, pion_, isBlockedByObject_, true );
+    static const double threshold = TER_World::GetWorld().GetWeldValue();
+    const bool waitOnObject =
+        !pMainPath_->GetPathClass().AvoidObjects() &&
+        pObjectColliding &&
+        pObjectColliding->GetObjectKnown() &&
+        distance <= threshold;
+    if( waitOnObject && !waitingOnObject_ )
+        MIL_Report::PostEvent( pion_, report::eRC_BlockedByObject, pObjectColliding );
+    waitingOnObject_ = waitOnObject;
+    return waitingOnObject_ ? nullptr : pObjectColliding;
 }
 
 // -----------------------------------------------------------------------------
@@ -220,6 +234,9 @@ void PHY_ActionMove::Execute()
 {
     if( pion_.HasBeenTeleported() )
     {
+        if( waitingOnObject_ )
+            CreateNewPath();
+        waitingOnObject_ = false;
         Callback< int >( DEC_PathWalker::eTeleported );
         return;
     }
@@ -238,6 +255,11 @@ void PHY_ActionMove::Execute()
     {
         // Recompute Pathfind in order to avoid obstacle or to get back previous path after suspension.
         CreateNewPath();
+    }
+    if( waitingOnObject_ )
+    {
+        Callback< int >( DEC_PathWalker::eBlockedByObject );
+        return;
     }
     executionSuspended_ = false;
     isBlockedByObject_ = false;

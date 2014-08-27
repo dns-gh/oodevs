@@ -89,6 +89,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, int nParam2 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge );
+    template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const boost::shared_ptr< DEC_Knowledge_Agent >& agentKnowledge, const std::string& nParam2, int nParam3, int nParam4, int nParam5 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const boost::shared_ptr< DEC_Knowledge_Agent >& agentKnowledge, int nParam3, int nParam4, int nParam5 );
     //@}
@@ -350,6 +351,15 @@ void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nRepo
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
     boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::CreatePopulationKnowledge( populationKnowledge ) );
+    parameters.push_back( pParameter );
+    PostEvent( receiver, nReport, parameters );
+}
+
+template< typename T >
+void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+{
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateObjectKnowledge( knowledge ) );
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }

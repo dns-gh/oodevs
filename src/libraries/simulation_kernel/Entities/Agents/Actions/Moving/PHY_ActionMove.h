@@ -63,7 +63,7 @@ private:
     bool IsDisasterToAvoid( const DisasterAttribute& disaster );
     double ComputeImpact( const DisasterAttribute& disaster ) const;
     void CreateNewPath();
-    boost::shared_ptr< DEC_Knowledge_Object > ComputeCollision() const;
+    boost::shared_ptr< DEC_Knowledge_Object > ComputeCollision();
     //@}
 
 private:
@@ -74,8 +74,9 @@ private:
     std::vector< TER_Localisation > geometrySignatures_;
     bool executionSuspended_;
     bool isBlockedByObject_;
-    unsigned int blockedTickCounter_;
+    bool waitingOnObject_;
     bool blockedByDisaster_;
+    unsigned int blockedTickCounter_;
     double oldDisasterImpact_;
 };
 

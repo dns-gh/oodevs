@@ -234,11 +234,13 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
     // Best case: Bounding hull has 3 segments.
     const std::size_t hullSize = hull.first.GetBorderPoints().size();
     const bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hull.second;
-    // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
-    for( auto itKnowledge = objects.begin(); itKnowledge != objects.end(); ++itKnowledge )
+    for( auto it = objects.begin(); it != objects.end(); ++it )
     {
-        const auto pKnowledge = *itKnowledge;
-        if( blockedByObject && applyScale ) // $$$$ MCO 2014-08-26: not sure why it's only if applyScale
+        const auto& pKnowledge = *it;
+        // If a unit can be blocked by objects and is already in an object
+        // let's ignore it. This is to handle obstacles created with a unit
+        // inside, for instance NBC zones.
+        if( blockedByObject && applyScale )
         {
             T_PointVector firstPointVector;
             firstPointVector.push_back( (*resultList_.begin())->GetPos() );
