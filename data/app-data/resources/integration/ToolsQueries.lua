@@ -662,7 +662,12 @@ end
 
 --- Deprecated, use integration.getKnowledgeHQ instead
 integration.query.getPCUnit = function()
-    return CreateKnowledge( integration.ontology.types.agent, integration.commanderGetHQUnit() )
+    local HQUnit = DEC_Automate_PionPC()
+    if HQUnit then
+        return CreateKnowledge( integration.ontology.types.agent, HQUnit )
+    else
+        return nil
+    end
 end
 
 --- Deprecated

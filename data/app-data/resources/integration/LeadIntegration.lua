@@ -888,7 +888,10 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     -- Le pion PC rejoint le meetingPoint
     if givePCTask and self.params.pcTasks and self.params.pcTasks ~= NIL then
         self.parameters.pcObjective = self.params.pcObjective
-        integration.issueMission ( self, self.params.pcTasks, 1, eEtatEchelon_Reserve, { integration.query.getPCUnit() }, false, findBestsFunction, disengageTask )
+        local HQUnit = integration.query.getPCUnit()
+        if HQUnit then
+            integration.issueMission ( self, self.params.pcTasks, 1, eEtatEchelon_Reserve, { HQUnit }, false, findBestsFunction, disengageTask )
+        end
     end
 
     -- S'il y a des obstacles � construire, les pions GEN (ou PIA) vont le construire
