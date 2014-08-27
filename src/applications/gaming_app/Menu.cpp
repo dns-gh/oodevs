@@ -259,7 +259,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     }
 
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
+    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( show() ), Qt::CTRL + Qt::Key_P );
     addMenu( menu );
 
     // Profiles

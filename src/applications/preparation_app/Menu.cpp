@@ -165,7 +165,7 @@ Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers
         menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
         menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
         menu->insertSeparator();
-        menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &dialogs.GetPrefDialog(), SLOT( exec() ), Qt::CTRL + Qt::Key_P );
+        menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &dialogs.GetPrefDialog(), SLOT( show() ), Qt::CTRL + Qt::Key_P );
         addMenu( menu );
     }
     // Exercise
