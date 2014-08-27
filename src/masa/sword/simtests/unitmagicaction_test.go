@@ -497,7 +497,8 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	exercise := ExCrossroadLog
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(exercise))
 	defer stopSimAndClient(c, sim, client)
 
 	data := client.Model.GetData()
@@ -607,6 +608,17 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[unit].Equipments[transporter].Available == transporters-1
 	})
+
+	// remove all resources and check we don't get undeployed error
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(exercise))
+	c.Assert(admin, NotNil)
+	defer admin.Close()
+	_, err = admin.Pause()
+	c.Assert(err, IsNil)
+	_, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 9999}, nil)
+	c.Assert(err, IsNil)
+	_, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, nil)
+	c.Assert(err, IsSwordError, "error_supply_denied")
 }
 
 func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {

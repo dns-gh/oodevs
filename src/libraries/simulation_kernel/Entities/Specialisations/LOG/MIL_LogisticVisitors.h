@@ -26,12 +26,11 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RolePion_Deployment.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/MIL_Formation.h"
 #include <boost/foreach.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-
-class MIL_AutomateLOG;
 
 // =============================================================================
 // Visitor
@@ -405,8 +404,9 @@ class SupplyDeployementVisitor : public MIL_LogisticEntitiesVisitor
                                , private boost::noncopyable
 {
 public:
-    SupplyDeployementVisitor( const PHY_DotationCategory& dotation, bool checkLogisticType )
+    SupplyDeployementVisitor( const PHY_DotationCategory& dotation, const MIL_AutomateLOG& supplier, bool checkLogisticType )
         : dotation_( dotation )
+        , supplier_( supplier )
         , checkLogisticType_( checkLogisticType )
         , pDeployedStock_( 0 )
         , pUndeployedStock_( 0 )
@@ -421,10 +421,14 @@ public:
         const PHY_RolePion_Deployment* pDeployment = agent.RetrieveRole< PHY_RolePion_Deployment >();
         if( !pDeployment )
             return;
-        MIL_AgentPion* pAgent =  const_cast< MIL_AgentPion* >( &agent );
-        if( checkLogisticType_ && !pAgent->GetType().GetUnitType().IsStockLogisticTypeDefined( dotation_.GetLogisticType() ) )
+        MIL_AgentPion* pAgent = const_cast< MIL_AgentPion* >( &agent );
+        const bool hasLogisticType = pAgent->GetType().GetUnitType().IsStockLogisticTypeDefined( dotation_.GetLogisticType() );
+        if( checkLogisticType_ && !hasLogisticType )
             return;
-        if( pDeployment->IsDeployed() && !agent.IsDead() )
+        const bool deployed = pDeployment->IsDeployed() && !agent.IsDead() && pSupply->IsSystemEnabled();
+        // either we have stocks already, or we may get some in the future
+        const bool canStock = hasLogisticType || supplier_.SupplyHasStock( dotation_ );
+        if( deployed && canStock )
             pDeployedStock_ = pAgent;
         else
             pUndeployedStock_ = pAgent;
@@ -432,6 +436,7 @@ public:
 
 public:
     const PHY_DotationCategory& dotation_;
+    const MIL_AutomateLOG& supplier_;
     const bool checkLogisticType_;
     MIL_AgentPion* pDeployedStock_;
     MIL_AgentPion* pUndeployedStock_;

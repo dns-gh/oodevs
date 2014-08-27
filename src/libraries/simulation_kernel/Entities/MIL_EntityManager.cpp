@@ -1735,8 +1735,8 @@ namespace
         {
             const PHY_DotationCategory& category = **it;
             double normalizedConsumption = 0;
-            std::function< void( const MIL_AgentPion& ) > consumptionFunction = 
-                [&] ( const MIL_AgentPion& pion ) { normalizedConsumption += pion.GetType().GetUnitType().GetNormalizedConsumption( category ); };        
+            std::function< void( const MIL_AgentPion& ) > consumptionFunction =
+                [&] ( const MIL_AgentPion& pion ) { normalizedConsumption += pion.GetType().GetUnitType().GetNormalizedConsumption( category ); };
             transferedAutomat->Apply( consumptionFunction );
             PHY_DotationStock* dotationStockSrc = oldSupplyer->GetStock( category );
             PHY_DotationStock* dotationStockDst = newSupplyer->GetStock( category );
@@ -1981,7 +1981,7 @@ namespace
         {
             bool deployed = false;
             auto target = supplier.GetStockAutomat( *it->first, deployed, false );
-            if( target && deployed && supplier.SupplyHasStock( *it->first ) )
+            if( target && deployed )
                 return;
         }
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,

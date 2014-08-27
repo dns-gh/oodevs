@@ -799,7 +799,7 @@ MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dota
                                                 bool& deployed, bool checkLogisticType ) const
 {
     deployed = false;
-    SupplyDeployementVisitor visitor( dotationCategory, checkLogisticType );
+    SupplyDeployementVisitor visitor( dotationCategory, *this, checkLogisticType );
     Visit( visitor );
     if( visitor.pDeployedStock_ )
     {

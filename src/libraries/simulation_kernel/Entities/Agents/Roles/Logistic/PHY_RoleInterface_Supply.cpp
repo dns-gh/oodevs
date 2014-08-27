@@ -75,6 +75,12 @@ void PHY_RoleInterface_Supply::DisableSystem()
     // NOTHING
 }
 
+bool PHY_RoleInterface_Supply::IsSystemEnabled() const
+{
+    return false;
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::CanContainStock
 // Created: NLD 2005-03-17

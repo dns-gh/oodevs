@@ -659,6 +659,11 @@ void PHY_RolePionLOG_Supply::DisableSystem()
     bHasChanged_    = true;
 }
 
+bool PHY_RolePionLOG_Supply::IsSystemEnabled() const
+{
+    return bSystemEnabled_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::GetPion
 // Created: NLD 2006-01-03
