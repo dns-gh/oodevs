@@ -1175,10 +1175,6 @@
           $tip.addClass('fade')
         }
 
-        placement = typeof this.options.placement == 'function' ?
-          this.options.placement.call(this, $tip[0], this.$element[0]) :
-          this.options.placement
-
         $tip
           .detach()
           .css({ top: 0, left: 0, display: 'block' })
@@ -1189,6 +1185,10 @@
 
         actualWidth = $tip[0].offsetWidth
         actualHeight = $tip[0].offsetHeight
+
+        placement = typeof this.options.placement == 'function' ?
+          this.options.placement.call(this, $tip[0], this.$element[0]) :
+          this.options.placement
 
         switch (placement) {
           case 'bottom':
