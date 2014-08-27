@@ -588,6 +588,26 @@ func (c *Client) SetTimeFactor(factor int32) (int32, error) {
 	return result, <-c.postSimRequest(msg, handler)
 }
 
+func (c *Client) SetCheckpointFrequency(frequency int32) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlCheckpointSetFrequency: &sword.ControlCheckPointSetFrequency{
+					Frequency: proto.Int32(frequency),
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlCheckpointSetFrequencyAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
 func (c *Client) SendFragOrder(tasker *sword.Tasker, fragOrderType uint32,
 	params *sword.MissionParameters) (*Order, error) {
 	msg := SwordMessage{

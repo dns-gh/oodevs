@@ -123,3 +123,12 @@ func (s *TestSuite) TestControlChangeTimeFactor(c *C) {
 		return data.TimeFactor == factor
 	})
 }
+
+func (s *TestSuite) TestControlCheckpointSetFrequency(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+
+	// Check response and model update
+	err := client.SetCheckpointFrequency(42)
+	c.Assert(err, IsNil)
+}
