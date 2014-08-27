@@ -53,13 +53,28 @@ is_selected = (ids, data) ->
         return true unless need
     return false
 
-add_popover = (layout, el, event) ->
+# returns a rect object
+make_rect = (left, top, width, height) ->
+    x0: left
+    y0: top
+    x1: left + width
+    y1: top + height
+
+# returns area of a,b intersection
+get_area_intersect = (a, b) ->
+    x0 = imax a.x0, b.x0
+    y0 = imax a.y0, b.y0
+    x1 = imin a.x1, b.x1
+    y1 = imin a.y1, b.y1
+    return (x1 - x0) * (y1 - y0)
+
+add_popover = (el, placement, event) ->
     el = $ el
     data =
         html:      true
         trigger:   "hover"
         container: "#range_popovers"
-        placement: layout.lane_orientation()
+        placement: placement
         delay:     show: 500, hide: 100
     title = render_event event, false, false
     if event.get("info")?.length
@@ -795,11 +810,12 @@ class Timeline
         lanes = @svg.select("#lanes").selectAll(".lane")
             .data(data, (d) -> d.id)
         that = this
+        placement = @layout.lane_orientation()
         lanes.enter()
             .append("rect")
             .each((d) ->
                 d.color = that.lane_colors d.idx
-                add_popover that.layout, this, that.model.get d.id
+                add_popover this, placement, that.model.get d.id
             )
             .on("click", (d) ->
                 dom_stop_event d3.event
@@ -1040,13 +1056,33 @@ class Timeline
         nodes = selector(d3).data data, (d) -> d.id
         offsets = @layout.start_offsets()
         that = this
-        win = w: @w
         nodes.enter()
             .append("div")
             .classed("node", true)
             .each((d) -> d.view = view_factory d, this)
             .filter((d) -> d.data.length == 1)
-            .each((d) -> add_popover that.layout, this, _.first d.data)
+            .each((d) -> add_popover this, ((tip, el) ->
+                pos = this.getPosition()
+                win = make_rect 0, 0, that.w, that.h
+                w = tip.offsetWidth
+                h = tip.offsetHeight
+                x = pos.left + pos.width/2
+                y = pos.top + pos.height/2
+                score = 0
+                place = null
+                check_placement = (name, x, y) ->
+                    box = make_rect x, y, w, h
+                    current = get_area_intersect win, box
+                    return if current <= score
+                    score = current
+                    place = name
+                # find the layout with the biggest visible area
+                check_placement "top",    imax(0, x - w/2), pos.top - h
+                check_placement "bottom", imax(0, x - w/2), pos.bottom
+                check_placement "left",   pos.left - w, y - h/2
+                check_placement "right",  pos.right, y - h/2
+                return place
+            ), _.first d.data)
             .call d3.behavior.drag()
             .on("drag",    (d) -> that.event_drag_move this, d)
             .on("dragend", (d) -> that.event_drag_end  this, d)
@@ -1055,6 +1091,7 @@ class Timeline
             .remove()
             .each((d) -> d.view.remove())
         animated = if root? then selector root else nodes
+        win = w: @w
         animated
             .attr
                 "data-col": (d) -> d.col
