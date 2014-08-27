@@ -128,7 +128,11 @@ func (s *TestSuite) TestControlCheckpointSetFrequency(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer stopSimAndClient(c, sim, client)
 
+	// Invalid value
+	err := client.SetCheckpointFrequency(-1)
+	c.Assert(err, NotNil)
+
 	// Check response and model update
-	err := client.SetCheckpointFrequency(42)
+	err = client.SetCheckpointFrequency(42)
 	c.Assert(err, IsNil)
 }

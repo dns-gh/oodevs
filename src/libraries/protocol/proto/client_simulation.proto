@@ -59,13 +59,9 @@ message UnitCreationRequest {
     required CoordLatLong position = 3;
 }
 
-/** @struct ControlCheckPointSetFrequency
-    @brief Requests a checkpoint frequency change
-    @see ControlCheckPointSetFrequencyAck
-    @todo rename to ControlCheckpointSetFrequency
-*/
+// Returns ControlCheckPointsSetFrequencyAck.
 message ControlCheckPointSetFrequency {
-    //! The frequency of checkpoints in minutes
+    //! The frequency of checkpoints in minutes, positive or null.
     required int32 frequency = 1;
 }
 

@@ -2671,11 +2671,9 @@ message FolkGraphUpdate {
     repeated FolkGraphEdgeUpdate elem = 1;
 }
 
-/** @struct ControlCheckPointSetFrequencyAck
-    @brief Acknowledges a checkpoint frequency change request
-
-    @see ControlCheckPointSetFrequency
-*/
+//! Returned by ControlCheckPointSetFrequency
+//!
+//! Errors are reported in parent SimToClient.error_msg.
 message ControlCheckPointSetFrequencyAck {
 }
 
