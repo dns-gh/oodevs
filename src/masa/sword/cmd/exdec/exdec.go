@@ -37,7 +37,7 @@ wrapped in a function before being sent. If no "return" statement is passed,
 one will be appended.
 
 If script path is "-", read from stdin.
-`))
+`, " "))
 		flag.PrintDefaults()
 	}
 	host := flag.String("host", "localhost", "simulation server host name")
