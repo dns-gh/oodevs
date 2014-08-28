@@ -1081,15 +1081,16 @@ class Timeline
                     score = current
                     place = name
                 # find the layout with the biggest visible area
+                arrow_size = 11 # pixels
                 x = pos.left + pos.width/2
                 y = pos.top + pos.height/2
                 # take advantage of top/bottom tooltips
                 # which can slide horizontally
                 tbleft = imax 0, imin x - w/2, that.w - w
-                check_placement "top",    tbleft, pos.top - h
-                check_placement "bottom", tbleft, pos.top + pos.height
-                check_placement "left",   pos.left - w, y - h/2
-                check_placement "right",  pos.left + pos.width, y - h/2
+                check_placement "top",    tbleft, pos.top - h - arrow_size
+                check_placement "bottom", tbleft, pos.top + pos.height + arrow_size
+                check_placement "left",   pos.left - w - arrow_size, y - h/2
+                check_placement "right",  pos.left + pos.width + arrow_size, y - h/2
                 return place
             ), _.first d.data)
             .call d3.behavior.drag()
