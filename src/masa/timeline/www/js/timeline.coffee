@@ -66,6 +66,9 @@ get_area_intersect = (a, b) ->
     y0 = imax a.y0, b.y0
     x1 = imin a.x1, b.x1
     y1 = imin a.y1, b.y1
+    # make sure the rect is valid
+    x0 = imin x0, x1
+    y0 = imin y0, y1
     return (x1 - x0) * (y1 - y0)
 
 add_popover = (el, placement, event) ->
