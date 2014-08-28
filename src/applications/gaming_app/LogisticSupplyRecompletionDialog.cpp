@@ -134,7 +134,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     stockDelegate_ = new gui::CommonDelegate( this );
     stockTable_->setItemDelegate( stockDelegate_ );
     headers.clear();
-    headers << tr( "Supplies" ) << tr( "Quantity %" );
+    headers << tr( "Supplies" ) << tr( "Count" );
     stockTable_->setHorizontalHeaderLabels( headers );
     stockTable_->horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
     stockTable_->setColumnWidth( 0, 60 );
