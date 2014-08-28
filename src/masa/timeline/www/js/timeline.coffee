@@ -1065,6 +1065,10 @@ class Timeline
             .filter((d) -> d.data.length == 1)
             .each((d) -> add_popover this, ((tip, el) ->
                 pos = this.getPosition()
+                # remove scrollbar offset
+                $win = $ window
+                pos.left -= $win.scrollLeft()
+                pos.top -= $win.scrollTop()
                 win = make_rect 0, 0, that.w, that.h
                 w = tip.offsetWidth
                 h = tip.offsetHeight
@@ -1080,9 +1084,9 @@ class Timeline
                     place = name
                 # find the layout with the biggest visible area
                 check_placement "top",    imax(0, x - w/2), pos.top - h
-                check_placement "bottom", imax(0, x - w/2), pos.bottom
+                check_placement "bottom", imax(0, x - w/2), pos.top + pos.height
                 check_placement "left",   pos.left - w, y - h/2
-                check_placement "right",  pos.right, y - h/2
+                check_placement "right",  pos.left + pos.width, y - h/2
                 return place
             ), _.first d.data)
             .call d3.behavior.drag()
