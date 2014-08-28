@@ -137,6 +137,7 @@ public:
 
     //! @name Network
     //@{
+    virtual void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
     virtual void SendCreation() const;
     virtual void SendFullState() const;
     virtual void SendKnowledge() const;
@@ -157,6 +158,7 @@ private:
     void ReadDiplomacy( xml::xistream& xis );
 
     MIL_AutomateLOG* FindBrainLogistic( unsigned int nID, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory ) const; //$$$ Remplacer par une factory
+    void OnReceiveRename( const sword::MissionParameters& parameters );
     //@}
 
     //! @name CheckPoint

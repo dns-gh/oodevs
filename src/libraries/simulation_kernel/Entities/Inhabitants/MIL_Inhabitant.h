@@ -110,6 +110,7 @@ private:
     //! @name Magic actions
     //@{
     void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg );
+    void OnReceiveRename( const sword::MissionParameters& parameters );
     //@}
 
     //! @name Helpers

@@ -320,6 +320,9 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
             throw MASA_BADUNIT_UNIT( "formation must be a logistic base" );
         pBrainLogistic_->OnReceiveLogSupplySetManual( msg.parameters() );
         break;
+    case sword::UnitMagicAction::rename:
+        OnReceiveRename( msg.parameters() );
+        break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
             sword::UnitActionAck::error_invalid_unit );
@@ -541,4 +544,19 @@ void MIL_Formation::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, 
         pParent_ = 0;
         pArmy_->RegisterFormation( *this );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::OnReceiveRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_Formation::OnReceiveRename( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    const auto& name = protocol::GetString( parameters, 0 );
+    SetName( name );
+    client::FormationUpdate asn;
+    asn().mutable_formation()->set_id( GetID() );
+    asn().set_name( name.c_str() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }

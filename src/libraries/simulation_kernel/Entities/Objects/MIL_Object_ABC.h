@@ -188,6 +188,7 @@ public:
     //! @name Accessors
     //@{
     virtual const std::string& GetName() const = 0;
+    virtual void SetName( const std::string& name ) = 0;
     unsigned int GetID() const;
     const MIL_ObjectType_ABC& GetType() const;
     const MIL_Army_ABC* GetArmy() const;

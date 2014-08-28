@@ -815,3 +815,35 @@ MIL_AutomateLOG* MIL_Army::FindBrainLogistic( unsigned int nID, AutomateFactory_
         return pAutomate->GetBrainLogistic();
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::OnReceiveUnitMagicAction
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_Army::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg )
+{
+    switch( msg.type() )
+    {
+    case sword::UnitMagicAction::rename:
+        OnReceiveRename( msg.parameters() );
+        break;
+    default:
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
+            sword::UnitActionAck::error_invalid_unit );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::OnReceiveRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_Army::OnReceiveRename( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    const auto& name = protocol::GetString( parameters, 0 );
+    strName_ = name;
+    client::PartyUpdate asn;
+    asn().mutable_party()->set_id( nID_ );
+    asn().set_name( name.c_str() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
+}

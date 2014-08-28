@@ -1074,6 +1074,9 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
             throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
         pBrainLogistic_->OnReceiveLogSupplySetManual( msg.parameters() );
         break;
+    case sword::UnitMagicAction::rename:
+        OnReceiveRename( msg.parameters() );
+        break;
     default:
         {
             if( !pPionPC_ )
@@ -1625,4 +1628,19 @@ void MIL_Automate::OnChangeBrainDebug( const sword::MissionParameters& msg )
     protocol::CheckCount( msg, 1 );
     const bool activate = protocol::GetBool( msg, 0 );
     GetRole< DEC_AutomateDecision >().ActivateBrainDebug( activate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReceiveRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReceiveRename( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    const auto& name = protocol::GetString( parameters, 0 );
+    SetName( name );
+    client::AutomatAttributes asn;
+    asn().mutable_automat()->set_id( GetID() );
+    asn().set_name( name.c_str() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }

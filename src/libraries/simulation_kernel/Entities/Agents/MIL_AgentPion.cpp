@@ -1234,6 +1234,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
     case sword::UnitMagicAction::log_finish_handlings:
         OnReceiveFinishLogisticHandlings();
         break;
+    case sword::UnitMagicAction::rename:
+        OnReceiveRename( msg.parameters() );
+        break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
             sword::UnitActionAck::error_invalid_unit );
@@ -2126,4 +2129,19 @@ void MIL_AgentPion::SetAutomate( MIL_Automate* automate )
 const MissionController_ABC& MIL_AgentPion::GetController() const
 {
     return pOrderManager_->GetController();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveRename( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    const auto& name = protocol::GetString( parameters, 0 );
+    SetName( name );
+    client::UnitAttributes asn;
+    asn().mutable_unit()->set_id( GetID() );
+    asn().set_name( name.c_str() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }

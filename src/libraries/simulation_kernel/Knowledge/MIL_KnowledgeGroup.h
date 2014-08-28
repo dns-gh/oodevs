@@ -228,6 +228,7 @@ private:
     bool OnReceiveKnowledgeGroupChangeSuperior( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
     bool OnReceiveKnowledgeGroupSetType( const sword::MissionParameters& message );
     unsigned long OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& message );
+    void OnReceiveRename( const sword::MissionParameters& parameters );
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );

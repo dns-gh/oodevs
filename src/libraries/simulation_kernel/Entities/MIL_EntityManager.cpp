@@ -73,6 +73,7 @@
 #include "CheckPoints/SerializationTools.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Effects/MIL_EffectManager.h"
+#include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -776,6 +777,15 @@ MIL_Object_ABC* MIL_EntityManager::FindObject( unsigned int nID ) const
     return pObjectManager_->Find( nID );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindArmy
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+MIL_Army_ABC* MIL_EntityManager::FindArmy( unsigned int nID ) const
+{
+    return armyFactory_->Find( nID );
+}
+
 namespace
 {
     struct Profiler : boost::noncopyable
@@ -1168,7 +1178,9 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             ProcessExecScript( message, id, ack() );
             break;
         default:
-            if( MIL_Formation* pFormation = FindFormation( id ) )
+            if( MIL_Army_ABC* pArmy = FindArmy( id ) )
+                pArmy->OnReceiveUnitMagicAction( message );
+            else if( MIL_Formation* pFormation = FindFormation( id ) )
                 pFormation->OnReceiveUnitMagicAction( message );
             else if( MIL_Automate* pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveUnitMagicAction( message, *armyFactory_ );

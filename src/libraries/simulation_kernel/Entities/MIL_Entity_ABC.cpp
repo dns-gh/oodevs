@@ -52,6 +52,15 @@ const std::string& MIL_Entity_ABC::GetName() const
     return strName_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Entity_ABC::SetName
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_Entity_ABC::SetName( const std::string& name )
+{
+    strName_ = name;
+}
+
 unsigned int MIL_Entity_ABC::GetID() const
 {
     return id_;

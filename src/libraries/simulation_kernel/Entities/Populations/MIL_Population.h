@@ -220,6 +220,7 @@ private:
     void OnReceiveMsgChangeAttitude( const sword::MissionParameters& asn );
     void OnReloadBrain( const sword::MissionParameters& msg );
     void OnChangeBrainDebug( const sword::MissionParameters& msg );
+    void OnReceiveRename( const sword::MissionParameters& parameters );
     //@}
 
     //! @name Helpers

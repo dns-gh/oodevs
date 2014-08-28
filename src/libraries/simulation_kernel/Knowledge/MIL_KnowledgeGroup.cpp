@@ -865,6 +865,9 @@ void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMa
             ack.mutable_result()->add_elem()->add_value()->set_identifier( knowledgeId );
         }
         break;
+    case sword::KnowledgeMagicAction::rename:
+        OnReceiveRename( params );
+        break;
     default:
         throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck_ErrorCode,
             sword::KnowledgeGroupAck::error_invalid_type, "unknown magic action type" );
@@ -1859,4 +1862,19 @@ bool MIL_KnowledgeGroup::CanReport() const
     if( const PHY_RolePion_Communications* pCommunication = jammedPion_->RetrieveRole< PHY_RolePion_Communications >() )
         return pCommunication->CanReport();
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::OnReceiveRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::OnReceiveRename( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    const auto& name = protocol::GetString( parameters, 0 );
+    name_ = name;
+    client::KnowledgeGroupUpdate asn;
+    asn().mutable_knowledge_group()->set_id( id_ );
+    asn().set_name( name.c_str() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }

@@ -100,6 +100,7 @@ public:
     //! @name Accessors
     //@{
     virtual const std::string& GetName() const = 0;
+    virtual void SetName( const std::string& ) {};
     size_t CountAttributes() const;
     /*virtual*/ bool IsUniversal() const;
     const MIL_DictionaryExtensions* GetExtensions() const;

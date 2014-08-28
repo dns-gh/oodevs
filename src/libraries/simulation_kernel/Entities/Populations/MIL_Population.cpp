@@ -1312,6 +1312,9 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
     case sword::UnitMagicAction::change_brain_debug:
         OnChangeBrainDebug( msg.parameters() );
         break;
+    case sword::UnitMagicAction::rename:
+        OnReceiveRename( msg.parameters() );
+        break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
             sword::UnitActionAck::error_invalid_unit );
@@ -2038,4 +2041,19 @@ void MIL_Population::RemoveHidden( MIL_Agent_ABC& agent )
 const tools::Set< MIL_Agent_ABC* >& MIL_Population::GetHidden() const
 {
     return hidden_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_Population::OnReceiveRename( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    const auto& name = protocol::GetString( parameters, 0 );
+    SetName( name );
+    client::CrowdUpdate asn;
+    asn().mutable_crowd()->set_id( GetID() );
+    asn().set_name( name.c_str() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
