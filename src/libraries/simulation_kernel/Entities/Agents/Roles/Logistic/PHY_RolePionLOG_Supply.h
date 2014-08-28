@@ -69,6 +69,7 @@ public:
 
     virtual void EnableSystem ();
     virtual void DisableSystem();
+    virtual bool IsSystemEnabled() const;
 
     virtual bool                CanContainStock              ( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock*  AddStock                     ( const PHY_DotationCategory& dotationCategory ) const;
