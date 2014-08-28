@@ -1072,8 +1072,6 @@ class Timeline
                 win = make_rect 0, 0, that.w, that.h
                 w = tip.offsetWidth
                 h = tip.offsetHeight
-                x = pos.left + pos.width/2
-                y = pos.top + pos.height/2
                 score = 0
                 place = null
                 check_placement = (name, x, y) ->
@@ -1083,8 +1081,13 @@ class Timeline
                     score = current
                     place = name
                 # find the layout with the biggest visible area
-                check_placement "top",    imax(0, x - w/2), pos.top - h
-                check_placement "bottom", imax(0, x - w/2), pos.top + pos.height
+                x = pos.left + pos.width/2
+                y = pos.top + pos.height/2
+                # take advantage of top/bottom tooltips
+                # which can slide horizontally
+                tbleft = imax 0, imin x - w/2, that.w - w
+                check_placement "top",    tbleft, pos.top - h
+                check_placement "bottom", tbleft, pos.top + pos.height
                 check_placement "left",   pos.left - w, y - h/2
                 check_placement "right",  pos.left + pos.width, y - h/2
                 return place
