@@ -32,6 +32,7 @@ namespace kernel
 // =============================================================================
 class AutomatTacticalHierarchies : public gui::MergingTacticalHierarchies
                                  , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
+                                 , public kernel::Updatable_ABC< sword::AutomatChangeKnowledgeGroup >
 {
 public:
     //! @name Constructors/Destructor
@@ -60,6 +61,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::AutomatChangeSuperior& message );
     virtual void DoUpdate( const kernel::InstanciationComplete& message );
+    virtual void DoUpdate( const sword::AutomatChangeKnowledgeGroup& message );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
     virtual void UpdateLevel();
     static std::string Max( const std::string& lhs, const std::string& rhs );
