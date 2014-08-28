@@ -3347,6 +3347,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Volume (m3)</source>
         <translation>Volume (m3)</translation>
     </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation>Quantité normalisée</translation>
+    </message>
 </context>
 <context>
     <name>SupplyTransportersListView</name>

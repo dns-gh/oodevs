@@ -331,7 +331,7 @@ void LogisticTreeView::NotifyDeleted( const kernel::Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void LogisticTreeView::NotifyCreated( const kernel::Ghost_ABC& ghost )
 {
-    if( ghost.GetGhostType() == eGhostType_Automat)
+    if( ghost.GetGhostType() == eGhostType_Automat )
         CreateOrReplace( ghost );
 }
 
@@ -341,7 +341,7 @@ void LogisticTreeView::NotifyCreated( const kernel::Ghost_ABC& ghost )
 // -----------------------------------------------------------------------------
 void LogisticTreeView::NotifyUpdated( const kernel::Ghost_ABC& ghost )
 {
-    if( ghost.GetGhostType() == eGhostType_Automat)
+    if( ghost.GetGhostType() == eGhostType_Automat )
         UpdateLongName( ghost );
 }
 
@@ -351,7 +351,7 @@ void LogisticTreeView::NotifyUpdated( const kernel::Ghost_ABC& ghost )
 // -----------------------------------------------------------------------------
 void LogisticTreeView::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 {
-    if( ghost.GetGhostType() == eGhostType_Automat)
+    if( ghost.GetGhostType() == eGhostType_Automat )
         NotifyDeletedInternal( ghost );
 }
 

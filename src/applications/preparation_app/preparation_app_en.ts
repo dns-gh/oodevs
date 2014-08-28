@@ -2412,6 +2412,10 @@ This data can&apos;t be projected.</translation>
         <source>Quantity</source>
         <translation>Quantity</translation>
     </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation>Normalized quantity</translation>
+    </message>
 </context>
 <context>
     <name>SuccessFactorConditionItem</name>

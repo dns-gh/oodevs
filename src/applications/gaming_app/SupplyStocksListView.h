@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Entity_ABC;
+    class StaticModel;
 }
 
 #include "ResourcesListView_ABC.h"
@@ -31,7 +32,7 @@ class SupplyStocksListView : public ResourcesListView_ABC< SupplyStates >
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStocksListView( QWidget* parent, kernel::Controllers& controllers );
+             SupplyStocksListView( QWidget* parent, kernel::Controllers& controllers, const kernel::StaticModel& staticModel );
     virtual ~SupplyStocksListView();
     //@}
 
@@ -53,12 +54,12 @@ private:
     //@{
     void Update( const tools::Resolver< Dotation >& dotations );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    void TotalizeStocks( const Dotation& dotations );
     //@}
 
 private:
     //! @name Member data
     //@{
+    const kernel::StaticModel& staticModel_;
     std::map< unsigned long, Dotation > dotations_;
     //@}
 };

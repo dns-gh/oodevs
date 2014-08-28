@@ -29,7 +29,7 @@ LogisticStocksDialog::LogisticStocksDialog( QWidget* parent, kernel::Controllers
     gui::SubObjectName subObject( "LogisticStocksDialog" );
     resize( 550, 500 );
 
-    stockAndNaturesEditor_ = new StocksAndNaturesEditor( parent, staticModel );
+    stockAndNaturesEditor_ = new StocksAndNaturesEditor( parent, staticModel, controllers );
 
     QGridLayout* mainLayout = new QGridLayout( this, 2, 5, 10 );
     mainLayout->addWidget( stockAndNaturesEditor_, 0, 0, 1, 5 );

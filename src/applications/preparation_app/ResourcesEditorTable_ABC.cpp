@@ -119,7 +119,7 @@ void ResourcesEditorTable_ABC::contextMenuEvent( QContextMenuEvent* event )
         {
             const kernel::DotationType* pDotation = itD->second;
             QAction* action = pTypeMenu->addAction( QString::fromStdString( pDotation->GetName() ) );
-            gui::connect( action, SIGNAL( triggered() ), boost::bind( &ResourcesEditorTable_ABC::AddResource, this, boost::cref( *pDotation ), 0 ) );
+            gui::connect( action, SIGNAL( triggered() ), [=](){ AddResource( *pDotation, 0 ); } );
             CustomizeMenuAction( action, *pDotation );
         }
     }
@@ -195,7 +195,7 @@ void ResourcesEditorTable_ABC::AddResource( const kernel::DotationType& resource
 void ResourcesEditorTable_ABC::InitHeader()
 {
     dataModel_->setHorizontalHeaderLabels( headers_ );
-    horizontalHeader()->setResizeMode( QHeaderView::Interactive );
+    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
 }
 
 // -----------------------------------------------------------------------------

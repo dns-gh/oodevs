@@ -14,6 +14,7 @@
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Tools.h"
+#include "preparation/StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticQuotaEditor constructor
@@ -40,7 +41,7 @@ LogisticQuotaEditor::~LogisticQuotaEditor()
 // -----------------------------------------------------------------------------
 void LogisticQuotaEditor::SupplyHierarchy( const gui::LogisticHierarchiesBase& logHierarchy )
 {
-    std::map< const kernel::Entity_ABC*, T_Requirements > generatedQuotas;
+    std::map< const kernel::Entity_ABC*, logistic_helpers::T_Requirements > generatedQuotas;
     auto itLogChildren = logHierarchy.CreateSubordinateIterator();
     while( itLogChildren.HasMoreElements() )
     {
@@ -50,10 +51,10 @@ void LogisticQuotaEditor::SupplyHierarchy( const gui::LogisticHierarchiesBase& l
         const gui::LogisticHierarchiesBase* pLogChildrenHierarchy = logChildren.Retrieve< gui::LogisticHierarchiesBase >();
         if( !pLogChildrenHierarchy )
             continue;
-        T_Requirements requirements;
+        logistic_helpers::T_Requirements requirements;
         auto days = GetDaysBySupplyClass();
         for( auto it = days.begin(); it != days.end(); ++it )
-            SupplyLogisticBaseStocks( pLogChildrenHierarchy->GetEntity(), *it->first, requirements );
+            logistic_helpers::ComputeLogisticConsumptions( staticModel_, pLogChildrenHierarchy->GetEntity(), *it->first, requirements, true );
         for( auto itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
         {
             const kernel::DotationType& dotationType = *itRequired->first;

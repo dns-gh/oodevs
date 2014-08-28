@@ -20,10 +20,10 @@
 // Name: StocksAndNaturesEditor constructor
 // Created: JSR 2014-03-04
 // -----------------------------------------------------------------------------
-StocksAndNaturesEditor::StocksAndNaturesEditor( QWidget* parent, const StaticModel& model )
+StocksAndNaturesEditor::StocksAndNaturesEditor( QWidget* parent, const StaticModel& model, kernel::Controllers& controllers )
     : QWidget( parent )
 {
-    stockResourcesTable_ = new StockResourcesTable( "stocksTable", this, model );
+    stockResourcesTable_ = new StockResourcesTable( "stocksTable", this, model, controllers );
     maxStockNaturesTable_ = new MaxStockNaturesTable( "maxStocksTable", this, model.objectTypes_ );
 
     QVBoxLayout* layout = new QVBoxLayout;
@@ -56,10 +56,8 @@ StocksAndNaturesEditor::~StocksAndNaturesEditor()
 // -----------------------------------------------------------------------------
 void StocksAndNaturesEditor::Initialize( const kernel::Entity_ABC& entity )
 {
-    stockResourcesTable_->OnClearItems();
     maxStockNaturesTable_->UpdateMaxStocks( entity );
-    stockResourcesTable_->UpdateAllowedSupplyClasses( entity );
-    stockResourcesTable_->UpdateInitStocks( entity );
+    stockResourcesTable_->Initialize( entity );
 }
 
 // -----------------------------------------------------------------------------

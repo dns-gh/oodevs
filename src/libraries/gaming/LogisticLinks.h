@@ -88,7 +88,7 @@ private:
     virtual void DoUpdate( const sword::ChangeLogisticLinks& message );
     virtual void DoUpdate( const sword::LogSupplyQuotas& message );
 
-    kernel::Entity_ABC* FindLogisticEntity( const sword::ParentEntity& message ) const;
+    kernel::Entity_ABC* FindParentEntity( const sword::ParentEntity& message ) const;
     //@}
 
 private:

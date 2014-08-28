@@ -61,19 +61,6 @@ LogisticLinks::~LogisticLinks()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticLinks::FindLogisticEntity
-// Created: NLD 2011-01-19
-// -----------------------------------------------------------------------------
-kernel::Entity_ABC* LogisticLinks::FindLogisticEntity( const sword::ParentEntity& message ) const
-{
-    if( message.has_automat() )
-        return automatResolver_.Find( message.automat().id() );
-    else if( message.has_formation() )
-        return formationResolver_.Find( message.formation().id() );
-    return 0;
-}
-
 namespace
 {
     template< typename T >
@@ -101,7 +88,7 @@ LogisticLink* LogisticLinks::FindLogisticLink( const kernel::Entity_ABC& superio
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
 {
-    const kernel::Entity_ABC* supplier = FindLogisticEntity( message.supplier() );
+    const kernel::Entity_ABC* supplier = logistic_helpers::FindParentEntity( message.supplier(), automatResolver_, formationResolver_ );
     assert( supplier );
     if( LogisticLink* link = FindLogisticLink( *supplier ) )
         link->Update( message.quotas(), dotationResolver_ );
@@ -120,7 +107,7 @@ void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
     superiors_.clear();
     BOOST_FOREACH( const sword::ParentEntity& parentEntity, message.superior() )
     {
-        const kernel::Entity_ABC* superior = FindLogisticEntity( parentEntity );
+        const kernel::Entity_ABC* superior = logistic_helpers::FindParentEntity( parentEntity, automatResolver_, formationResolver_ );
         assert( superior );
         auto link = ::FindLogisticLink( oldLinks, *superior );
         if( !link )

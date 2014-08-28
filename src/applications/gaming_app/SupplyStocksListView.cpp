@@ -11,15 +11,16 @@
 #include "SupplyStocksListView.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "gaming/Dotation.h"
 #include "gaming/Tools.h"
 #include <boost/bind.hpp>
 #include <vector>
 
 using namespace kernel;
-using namespace logistic_helpers;
 
 namespace
 {
@@ -27,23 +28,34 @@ namespace
     {
         eStock,
         eQuantity,
+        eNormalizedQuantity,
         eMass,
         eVolume,
     };
+
+    float ComputeNormalizedQuantity( const kernel::StaticModel& staticModel, const kernel::Entity_ABC& logBase, const Dotation& dotation )
+    {
+        logistic_helpers::T_Requirements requirements;
+        logistic_helpers::ComputeLogisticConsumptions( staticModel, logBase, dotation.type_->GetLogisticSupplyClass(), requirements, false );
+        const float requirement = static_cast< float >( requirements[ dotation.type_ ] );
+        return requirement > 0 ? dotation.quantity_ / requirement : 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStocksListView constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-SupplyStocksListView::SupplyStocksListView( QWidget* parent, Controllers& controllers )
+SupplyStocksListView::SupplyStocksListView( QWidget* parent, Controllers& controllers, const kernel::StaticModel& staticModel )
     : ResourcesListView_ABC< SupplyStates >( parent, controllers )
+    , staticModel_( staticModel )
 {
     model_.setHorizontalHeaderLabels(
         QStringList() << tools::translate( "SupplyStocksListView", "Supplies" )
-            << tools::translate( "SupplyStocksListView", "Quantity" )
-            << tools::translate( "SupplyStocksListView", "Mass (T)" )
-            << tools::translate( "SupplyStocksListView", "Volume (m3)" ) );
+                      << tools::translate( "SupplyStocksListView", "Quantity" )
+                      << tools::translate( "SupplyStocksListView", "Normalized quantity" )
+                      << tools::translate( "SupplyStocksListView", "Mass (T)" )
+                      << tools::translate( "SupplyStocksListView", "Volume (m3)" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +81,7 @@ void SupplyStocksListView::Update( const tools::Resolver< Dotation >& dotations 
         const Dotation& dotation = iterator.NextElement();
         model_.item( i, eStock )->setText( QString( dotation.type_->GetName().c_str() ) );
         model_.item( i, eQuantity )->setText( QString::number( dotation.quantity_ ) );
+        model_.item( i, eNormalizedQuantity )->setText( locale().toString( ComputeNormalizedQuantity( staticModel_, *selected_, dotation ), 'f', 2 ) );
         model_.item( i, eMass )->setText( locale().toString( dotation.type_->GetUnitWeight() * dotation.quantity_, 'f', 2 ) );
         model_.item( i, eVolume )->setText( locale().toString( dotation.type_->GetUnitVolume() * dotation.quantity_, 'f', 2 ) );
         ++i;
@@ -109,24 +122,17 @@ void SupplyStocksListView::UpdateSelected( const kernel::Entity_ABC* entity )
         return;
     dotations_.clear();
     tools::Resolver< Dotation > dotations;
-    VisitBaseStocksDotations( *entity, boost::bind( &SupplyStocksListView::TotalizeStocks, this, _1 ) );
-    for( std::map< unsigned long, Dotation >::iterator it = dotations_.begin(); it != dotations_.end(); ++it )
-        dotations.Register( it->second.type_->GetId(), it->second );
-    Update( dotations );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyStocksListView::TotalizeStocks
-// Created: MMC 2012-10-10
-// -----------------------------------------------------------------------------
-void SupplyStocksListView::TotalizeStocks( const Dotation& dotation )
-{
-    if( dotation.type_ )
+    logistic_helpers::VisitBaseStocksDotations( *entity, [&]( const Dotation& dotation )
     {
+        if( !dotation.type_ )
+            return;
         Dotation& foundDotation = dotations_[ dotation.type_->GetId() ];
         foundDotation.type_ = dotation.type_;
         foundDotation.quantity_ += dotation.quantity_;
-    }
+    } );
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
+        dotations.Register( it->second.type_->GetId(), it->second );
+    Update( dotations );
 }
 
 // -----------------------------------------------------------------------------

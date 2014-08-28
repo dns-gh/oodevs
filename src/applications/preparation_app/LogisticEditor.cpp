@@ -14,19 +14,10 @@
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/ComponentType.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/DotationCapacityType.h"
-#include "clients_kernel/DotationType.h"
-#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/LogisticSupplyClass.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/tools.h"
 #include "preparation/StaticModel.h"
 
@@ -196,72 +187,6 @@ void LogisticEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_ABC > 
     if( !pLogHierarchy )
         return;
     SupplyHierarchy( *pLogHierarchy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::FillSupplyRequirements
-// Created: MMC 2011-08-31
-// -----------------------------------------------------------------------------
-void LogisticEditor::FillSupplyRequirements( const kernel::Entity_ABC& entity, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
-{
-    const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity );
-    if( pAgent )
-        ComputeRequirements( *pAgent, logType, requirements );
-    const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
-    if( pTacticalHierarchies )
-    {
-        auto children = pTacticalHierarchies->CreateSubordinateIterator();
-        while( children.HasMoreElements() )
-        {
-            const kernel::Entity_ABC& childrenEntity = children.NextElement();
-            FillSupplyRequirements( childrenEntity, logType, requirements );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::SupplyLogisticBaseStocks
-// Created: MMC 2011-08-31
-// -----------------------------------------------------------------------------
-void LogisticEditor::SupplyLogisticBaseStocks( const kernel::Entity_ABC& blLogBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
-{
-    auto logChildren = blLogBase.Get< gui::LogisticHierarchiesBase >().CreateSubordinateIterator();
-    while( logChildren.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& entity = logChildren.NextElement();
-        if( logistic_helpers::IsLogisticBase( entity ) )
-        {
-            if( blLogBase.GetId() != entity.GetId() )
-                SupplyLogisticBaseStocks( entity, logType, requirements );
-        }
-        else
-            FillSupplyRequirements( entity, logType, requirements );
-    }
-    if( blLogBase.GetTypeName() == kernel::Automat_ABC::typeName_ && logistic_helpers::IsLogisticBase( blLogBase ) )
-        FillSupplyRequirements( blLogBase, logType, requirements );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::ComputeRequirements
-// Created: MMC 2011-08-10
-// -----------------------------------------------------------------------------
-void LogisticEditor::ComputeRequirements( const kernel::Agent_ABC& agent, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
-{
-    kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( agent.GetType().GetId() );
-    auto agentCompositionIterator = agentType.CreateIterator();
-    while( agentCompositionIterator.HasMoreElements() )
-    {
-        const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
-        auto resourcesIterator = equipmentType.CreateResourcesIterator();
-        while( resourcesIterator.HasMoreElements() )
-        {
-            const kernel::DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
-            const kernel::DotationType& category = staticModel_.objectTypes_.Resolver2< kernel::DotationType >::Get( dotationCapacity.GetName() );
-            if( &category.GetLogisticSupplyClass() == &logType )
-                requirements[ &category ] += static_cast< unsigned int >( agentComposition.GetCount() * dotationCapacity.GetNormalizedConsumption() + 0.5 );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------

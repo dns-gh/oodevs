@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;
@@ -45,9 +46,9 @@ LogisticAttribute::~LogisticAttribute()
 template< typename T >
 void LogisticAttribute::UpdateData( const T& message )
 {
-    if( message.has_logistic()  )
+    if( message.has_logistic() )
     {
-        logisticSuperior_ = FindLogisticEntity( message.logistic().logistic_superior() );
+        logisticSuperior_ = logistic_helpers::FindParentEntity( message.logistic().logistic_superior(), automatResolver_, formationResolver_ );
         controller_.Update( *(LogisticAttribute_ABC*)this );
     }
 }
@@ -87,17 +88,4 @@ void LogisticAttribute::Display( Displayer_ABC& displayer ) const
 void LogisticAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     Display( displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticAttribute::FindLogisticEntity
-// Created: NLD 2011-01-19
-// -----------------------------------------------------------------------------
-kernel::Entity_ABC* LogisticAttribute::FindLogisticEntity( const sword::ParentEntity& message ) const
-{
-    if( message.has_automat() )
-        return (kernel::Entity_ABC*)automatResolver_.Find( message.automat().id() );
-    else if( message.has_formation() )
-        return (kernel::Entity_ABC*)formationResolver_.Find( message.formation().id() );
-    return 0;
 }

@@ -88,11 +88,16 @@ private:
     int GetValue( int row ) const;
     //@}
 
+protected:
+    //! @name Member data
+    //@{
+    QStandardItemModel* dataModel_;
+    //@}
+
 private:
     //! @name Member data
     //@{
     QStringList headers_;
-    QStandardItemModel* dataModel_;
     const kernel::Resolver2< kernel::DotationType >& dotations_;
     std::set< std::string > allowedSupplyClasses_;
     //@}
