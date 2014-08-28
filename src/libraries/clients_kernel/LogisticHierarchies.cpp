@@ -57,14 +57,14 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticHierarchies::DoUpdate( const sword::ChangeLogisticLinks& message )
 {
-    auto& requester = *logistic_helpers::FindLogisticEntity( message.requester(), automatResolver_, formationResolver_ );
+    auto& requester = *logistic_helpers::FindParentEntity( message.requester(), automatResolver_, formationResolver_ );
     if( requester.GetId() != entity_.GetId() )
         return;
     ClearSubordinate( automatResolver_, requester );
     ClearSubordinate( formationResolver_, requester );
     BOOST_FOREACH( const auto& parentEntity, message.superior() )
     {
-        const auto superior = logistic_helpers::FindLogisticEntity( parentEntity, automatResolver_, formationResolver_ );
+        const auto superior = logistic_helpers::FindParentEntity( parentEntity, automatResolver_, formationResolver_ );
         if( auto* logisticHierarchy = superior->Retrieve< gui::LogisticHierarchiesBase >() )
             logisticHierarchy->RegisterSubordinate( requester );
     }
