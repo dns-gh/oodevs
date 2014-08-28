@@ -35,17 +35,17 @@ Context::~Context()
 namespace
 {
     template< typename T >
-    typename T::iterator LowerBound( T& strings, const std::string& key )
+    typename T::const_iterator LowerBound( const T& strings, const std::string& key )
     {
         return std::lower_bound( strings.begin(), strings.end(), key, [&]( const boost::shared_ptr< LocalizedString >& translation, const std::string& key ) { return translation->Key() < key; } );
     }
     template< typename T >
-    typename T::iterator UpperBound( T& strings, const std::string& key )
+    typename T::const_iterator UpperBound( const T& strings, const std::string& key )
     {
         return std::upper_bound( strings.begin(), strings.end(), key, [&]( const std::string& key, const boost::shared_ptr< LocalizedString >& translation ) { return key < translation->Key(); } );
     }
     template< typename T >
-    std::pair< typename T::iterator, typename T::iterator > EqualRange( T& strings, const std::string& key )
+    std::pair< typename T::const_iterator, typename T::const_iterator > EqualRange( const T& strings, const std::string& key )
     {
         return std::make_pair( LowerBound( strings, key ), UpperBound( strings, key ) );
     }
@@ -116,7 +116,7 @@ bool Context::Apply( const std::function< bool( LocalizedString& ) >& functor )
 // Name: Context::CheckUniqueTranslation
 // Created: SLI 2014-08-25
 // -----------------------------------------------------------------------------
-bool Context::CheckUniqueTranslation( const LocalizedString& translation )
+bool Context::CheckUniqueTranslation( const LocalizedString& translation ) const
 {
     auto range = EqualRange( strings_, translation.Key() );
     for( auto it = range.first; it != range.second; ++it )
@@ -174,24 +174,4 @@ bool Context::HasDuplicateErrors() const
             if( ( *lhs )->Key() == ( *rhs )->Key() && **lhs != **rhs )
                 return true;
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Context::Serialize
-// Created: SLI 2014-08-26
-// -----------------------------------------------------------------------------
-void Context::Serialize( xml::xostream& xos, const std::string& languageCode )
-{
-    for( auto it = strings_.begin(); it != strings_.end(); ++it )
-    {
-        if( ( *it )->Key().empty() )
-            continue;
-        xos << xml::start( "message" )
-                << xml::content( "source", (*it)->Key() )
-                << xml::start( "translation" )
-                    << ( *it )->Value( languageCode )
-                    << ( *it )->Type( languageCode )
-                << xml::end
-            << xml::end;
-    }
 }

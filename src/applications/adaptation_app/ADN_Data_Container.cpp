@@ -136,7 +136,7 @@ bool ADN_Data_Container::FixConsistency()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Data_Container::function< bool
+// Name: ADN_Data_Container::ApplyOnContexts
 // Created: SLI 2014-08-27
 // -----------------------------------------------------------------------------
 bool ADN_Data_Container::ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const

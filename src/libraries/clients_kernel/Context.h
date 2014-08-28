@@ -38,12 +38,11 @@ public:
     bool Apply( const std::function< bool( LocalizedString& ) >& functor );
     const boost::shared_ptr< LocalizedString >& operator[]( const std::string& key );
 
-    bool CheckUniqueTranslation( const LocalizedString& translation );
+    bool CheckUniqueTranslation( const LocalizedString& translation ) const;
     bool HasDuplicateErrors() const;
     void CleanTranslations();
     void MergeDuplicateTranslations();
     bool IsEmpty() const;
-    void Serialize( xml::xostream& xos, const std::string& languageCode );
     void SetKey( const boost::shared_ptr< LocalizedString >& translation, const std::string& key );
     bool SwapKey( const std::string& oldKey, const std::string& newKey );
     //@}

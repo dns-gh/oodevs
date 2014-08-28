@@ -14,9 +14,10 @@
 #include "tools/FileWrapper.h"
 #include "tools/SchemaWriter.h"
 #include "tools/XmlStreamOperators.h"
+#include <tools/Path.h>
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
-#include <tools/Path.h>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 using namespace kernel;
 
@@ -112,9 +113,7 @@ void XmlTranslations::CleanTranslations()
 {
     for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
         it->second->CleanTranslations();
-    contexts_.erase( std::remove_if( contexts_.begin(), contexts_.end(),
-                                     [&]( const T_Contexts::value_type& context ){ return context.second->IsEmpty() || context.second.unique();} ),
-                     contexts_.end() );
+    boost::remove_erase_if( contexts_, [&]( const T_Contexts::value_type& context ){ return context.second->IsEmpty() || context.second.unique();} );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +155,19 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
                 continue;
             xos     << xml::start( "context" )
                         << xml::content( "name", it->first );
-            it->second->Serialize( xos, languageCode );
+            it->second->Apply( [&]( LocalizedString& translation ) -> bool
+            {
+                if( translation.Key().empty() )
+                    return false;
+                xos << xml::start( "message" )
+                        << xml::content( "source", translation.Key() )
+                        << xml::start( "translation" )
+                            << translation.Value( languageCode )
+                            << translation.Type( languageCode )
+                        << xml::end
+                    << xml::end;
+                return false;
+            } );
             xos     << xml::end;
         }
         xos << xml::end;
