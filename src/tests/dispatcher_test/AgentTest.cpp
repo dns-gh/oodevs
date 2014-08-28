@@ -119,6 +119,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             {
                 sword::UnitAttributes& message = *expectedAttributes.mutable_message()->mutable_unit_attributes();
                 message.mutable_unit()->set_id( 1 );
+                message.set_name( "test" );
 //            message.mutable_human_dotations();
 //            message.mutable_equipment_dotations();
 //            message.mutable_resource_dotations();

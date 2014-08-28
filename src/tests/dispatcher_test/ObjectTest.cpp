@@ -108,6 +108,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
         CreateObject();
         sword::ObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
         message.mutable_object()->set_id( 1 );
+        message.set_name( "test" );
         message.mutable_location()->set_type( sword::Location::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
@@ -149,6 +150,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
     {
         CreateObject();
         sword::ObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
+        message.set_name( "test" );
         message.mutable_object()->set_id( 1 );
         message.mutable_attributes();
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );

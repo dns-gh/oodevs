@@ -64,6 +64,8 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( GetKnowledgeGroups, 0 )
     MOCK_METHOD( GetObjects, 0 )
 
+    MOCK_METHOD( OnReceiveUnitMagicAction, 1 )
+
     template< typename Archive >
     void serialize( Archive& archive, const unsigned int )
     {

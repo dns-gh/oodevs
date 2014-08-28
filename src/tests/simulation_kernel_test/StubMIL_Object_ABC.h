@@ -68,14 +68,15 @@ public:
     virtual void Finalize() {}
     virtual bool CanBeSeen() const { return true; }
     virtual void OnUpdate( const sword::MissionParameters& ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual const std::string& GetName() const { return name_; };
+    virtual const std::string& GetName() const { return name_; }
+    virtual void SetName( const std::string& name ) { name_ = name; }
     virtual void SetExtensions( const MIL_DictionaryExtensions& ) {}
     //@}
 
 private:
     //! @name Member Data
     //@{
-    const std::string name_;
+    std::string name_;
     //@}
 };
 

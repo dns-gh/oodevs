@@ -338,6 +338,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_AttributesCanBeChanged, Fixture )
         expected.set_context( 0 );
         sword::AutomatAttributes& message = *expected.mutable_message()->mutable_automat_attributes();
         message.mutable_automat()->set_id( 1 );
+        message.set_name( "test" );
         message.set_mode( sword::disengaged );
         message.set_force_ratio( sword::ForceRatio::favorable );
         message.set_meeting_engagement( sword::avoiding );
