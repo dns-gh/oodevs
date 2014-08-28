@@ -30,7 +30,7 @@ class CallsignResolver_ABC;
 */
 // Created: SLI 2011-06-22
 // =============================================================================
-template< int Number >
+template< int Count >
 class UniqueIdBase
 {
 public:
@@ -51,20 +51,20 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        for( unsigned i = 0; i < Number; ++i )
+        for( unsigned i = 0; i < Count; ++i )
             archive << identifier_[ i ];
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        for( unsigned i = 0; i < Number; ++i )
+        for( unsigned i = 0; i < Count; ++i )
             archive >> identifier_[ i ];
     }
     std::string str() const
     {
         std::stringstream ss;
         ss << std::hex;
-        for( unsigned int i = 0; i < Number; ++i )
+        for( unsigned int i = 0; i < Count; ++i )
         {
             ss << (uint16_t)identifier_[ i ];
         }
@@ -72,20 +72,19 @@ public:
     }
     void Read( std::vector< char >& identifier ) const
     {
-        identifier.resize( Number, 0 );
-        std::copy( identifier_, identifier_+Number, identifier.begin() );
+        identifier.resize( Count, 0 );
+        std::copy( identifier_, identifier_+Count, identifier.begin() );
     }
     std::vector< char > data() const
     {
-        return std::vector< char >( &identifier_[0], &identifier_[0] + Number );
+        return std::vector< char >( &identifier_[0], &identifier_[0] + Count );
     }
-
     //@}
 
 private:
     //! @name Member data
     //@{
-    char identifier_[ Number ];
+    char identifier_[ Count ];
     //@}
 };
 
@@ -102,6 +101,7 @@ struct UniqueIdSerializer
 {
 public:
     static std::string GetAgentId( const NETN_UUID& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver );
+    static std::vector< char > GenerateUniqueId( std::size_t sz );
 
 public:
     UniqueIdSerializer( int netnVersion );

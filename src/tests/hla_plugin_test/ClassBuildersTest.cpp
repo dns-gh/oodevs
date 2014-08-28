@@ -355,9 +355,10 @@ BOOST_FIXTURE_TEST_CASE( rawdatahazardcontourgroup_builder_registers_attributes,
     RawDataHazardContourGroupBuilder builder;
     attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
                                         ( "Time" )
-                                        ( "Material" )
+                                        ( "Agent" )
                                         ( "HazardType" )
-                                        ( "Contours" );
+                                        ( "Contours" )
+                                        ( "UniqueID" );
     Check( builder, "RawDataHazardContourGroup", true, true );
 }
 
@@ -367,6 +368,9 @@ BOOST_FIXTURE_TEST_CASE( ATP45hazardarea_builder_registers_attributes, Fixture )
     attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
                                         ( "Locations" )
                                         ( "ATP45HazardAreaType" )
-                                        ( "AgentClass" );
+                                        ( "AgentClass" )
+                                        ( "Time" )
+                                        ( "ValidityTime" )
+                                        ( "UniqueID" );
     Check( builder, "ATP45HazardArea", true, true );
 }

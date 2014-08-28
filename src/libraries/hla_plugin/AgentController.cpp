@@ -16,6 +16,7 @@
 #include "FormationProxy.h"
 #include "LocalAgentResolver_ABC.h"
 #include "SideResolver_ABC.h"
+#include "UniqueId.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Team_ABC.h"
@@ -72,11 +73,7 @@ namespace
 
     void GenerateUniqueId( std::vector< char >& uniqueId, int netnVersion )
     {
-        static boost::uuids::random_generator gen;
-        boost::uuids::uuid uid = gen();
-        std::size_t sz = netnVersion == 1 ? 11 : uid.size();
-        uniqueId.resize( sz);
-        std::copy( uid.begin(), uid.begin() + sz, uniqueId.begin() );
+        uniqueId = UniqueIdSerializer::GenerateUniqueId( netnVersion == 1 ? 11 : 16 );
     }
 
     template< typename T >

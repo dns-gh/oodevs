@@ -14,6 +14,7 @@
 #include "TacticalObjectEventListener_ABC.h"
 #include "rpr/ForceIdentifier.h"
 #include "CBRNHazardArea.h"
+#include "UniqueId.h"
 
 namespace hla
 {
@@ -83,9 +84,10 @@ private:
     std::string identifier_;
     std::unique_ptr< AttributesUpdater > attributes_;
     uint64_t time_;
-    uint16_t material_;
+    uint16_t agent_;
     uint8_t hazardType_;
     std::vector< RawDataHazardContour > contours_;
+    NETN_UUID uniqueId_;
     //@}
 };
 

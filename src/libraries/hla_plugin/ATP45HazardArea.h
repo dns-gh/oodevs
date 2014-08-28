@@ -14,6 +14,7 @@
 #include "TacticalObjectEventListener_ABC.h"
 #include "rpr/ForceIdentifier.h"
 #include "CBRNHazardArea.h"
+#include "UniqueId.h"
 
 
 namespace hla
@@ -89,6 +90,9 @@ private:
     std::vector< rpr::WorldLocation > locations_;
     int16_t areaType_;
     int16_t agentClass_;
+    int64_t time_;
+    int64_t validityTime_;
+    NETN_UUID uniqueId_;
     //@}
 };
 
