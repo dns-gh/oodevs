@@ -26,10 +26,9 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 Population::Population( Model_ABC& model, const sword::CrowdCreation& msg, const std::string& decisionalModel )
-    : dispatcher::Population_ABC( msg.crowd().id(), QString( msg.name().c_str() ) )
+    : dispatcher::Population_ABC( msg.crowd().id(), QString::fromStdString( msg.name() ) )
     , model_           ( model )
     , nType_           ( msg.type().id() )
-    , strName_         ( msg.name() )
     , side_            ( model.Sides().Get( msg.party().id() ) )
     , male_            ( msg.repartition().male() )
     , female_          ( msg.repartition().female() )
@@ -89,6 +88,8 @@ void Population::DoUpdate( const sword::CrowdUpdate& msg )
         decisionalModel_ = msg.decisional_model();
     if( msg.has_brain_debug() )
         brainDebug_ = msg.brain_debug();
+    if( msg.has_name() )
+        SetName( QString::fromStdString( msg.name() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +200,7 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_crowd()->set_id( GetId() );
     asn().mutable_party()->set_id( side_.GetId() );
     asn().mutable_type()->set_id( nType_ );
-    asn().set_name( strName_ );
+    asn().set_name( GetName().toStdString() );
     if( color_ )
         *asn().mutable_color() = *color_;
     asn().mutable_repartition()->set_male( male_ );
@@ -231,6 +232,7 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_dead( GetDeadHumans() );
     asn().set_decisional_model( decisionalModel_ );
     asn().set_brain_debug( brainDebug_ );
+    asn().set_name( GetName().toStdString() );
 
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {

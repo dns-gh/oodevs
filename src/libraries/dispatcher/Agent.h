@@ -157,7 +157,6 @@ private:
 private:
     Model_ABC&                                 model_;
     const kernel::AgentType&                   type_;
-    const std::string                          name_;
     dispatcher::Automat_ABC*                   automat_;
     geometry::Point2d                          position_; // x = longitude, y = latitude
     std::unique_ptr< sword::RgbColor >         color_;

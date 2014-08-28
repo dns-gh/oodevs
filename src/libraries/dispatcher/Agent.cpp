@@ -33,10 +33,9 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types )
-    : dispatcher::Agent_ABC( msg.unit().id(), QString( msg.name().c_str() ) )
+    : dispatcher::Agent_ABC( msg.unit().id(), QString::fromStdString( msg.name() ) )
     , model_                      ( model )
     , type_                       ( types.Get( msg.type().id() ) )
-    , name_                       ( msg.name() )
     , automat_                    ( &model.Automats().Get( msg.automat().id() ) )
     , nDirection_                 ( 0 )
     , nSensorsDirection_          ( 0 )
@@ -348,7 +347,8 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         decisionalModel_ = message.decisional_model();
     if( message.has_brain_debug() )
         brainDebug_ = message.brain_debug();
-
+    if( message.has_name() )
+        SetName( QString::fromStdString( message.name() ) );
     Observable< sword::UnitAttributes >::Notify( message );
 }
 
@@ -498,7 +498,7 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
     client::UnitCreation message;
     message().mutable_unit()->set_id( GetId() );
     message().mutable_type()->set_id( type_.GetId() );
-    message().set_name( name_ );
+    message().set_name( GetName().toStdString() );
     message().mutable_automat()->set_id( automat_->GetId() );
     message().set_pc( bPC_ );
     if( color_ )
@@ -617,6 +617,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_decisional_model( decisionalModel_ );
         asn().set_brain_debug( brainDebug_ );
         asn().set_headquarters( bPC_ );
+        asn().set_name( GetName().toStdString() );
 
         asn.Send( publisher );
     }

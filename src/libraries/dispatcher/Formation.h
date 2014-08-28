@@ -91,7 +91,6 @@ private:
     //! @name Member data
     //@{
     const Model_ABC&                             model_;
-    const std::string                            name_;
     dispatcher::Team_ABC&                        team_;
     E_NatureLevel                                level_;
     std::string                                  app6symbol_;

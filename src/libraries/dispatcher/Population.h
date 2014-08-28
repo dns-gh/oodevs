@@ -99,7 +99,6 @@ private:
     //@{
     Model_ABC& model_;
     const unsigned long nType_;
-    const std::string strName_;
     std::unique_ptr< sword::RgbColor > color_;
     dispatcher::Team_ABC& side_;
     float male_;

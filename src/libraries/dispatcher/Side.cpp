@@ -28,7 +28,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Side::Side( const Model_ABC& model, const sword::PartyCreation& msg )
-    : Team_ABC( msg.party().id(), QString( msg.name().c_str() ) )
+    : Team_ABC( msg.party().id(), QString::fromStdString( msg.name() ) )
     , model_( model )
     , nType_( msg.type() )
 {
@@ -106,6 +106,10 @@ void Side::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Side::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
+    client::PartyUpdate msg;
+    msg().mutable_party()->set_id( GetId() );
+    msg().set_name( GetName().toStdString() );
+    msg.Send( publisher );
     for( auto it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         client::ChangeDiplomacy asn;
@@ -258,4 +262,14 @@ bool Side::GetExtension( const std::string& key, std::string& result ) const
         return false;
     result = it->second;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Side::DoUpdate
+// Created: ABR 2014-08-28
+// -----------------------------------------------------------------------------
+void Side::DoUpdate( const sword::PartyUpdate& msg )
+{
+    if( msg.has_name() )
+        SetName( QString::fromStdString( msg.name() ) );
 }

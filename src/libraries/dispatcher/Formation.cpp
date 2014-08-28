@@ -26,9 +26,8 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Formation::Formation( const Model_ABC& model, const sword::FormationCreation& msg )
-    : Formation_ABC        ( msg.formation().id(), QString( msg.name().c_str() ) )
+    : Formation_ABC        ( msg.formation().id(), QString::fromStdString( msg.name() ) )
     , model_               ( model )
-    , name_                ( msg.name() )
     , team_                ( model.Sides().Get( msg.party().id() ) )
     , level_               ( static_cast< E_NatureLevel >( msg.level() ) )
     , app6symbol_          ( msg.app6symbol() )
@@ -128,7 +127,7 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     message().mutable_formation()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     message().set_level( sword::EnumNatureLevel( level_ ) );
-    message().set_name( name_ );
+    message().set_name( GetName().toStdString() );
     message().set_app6symbol( app6symbol_ );
     message().set_symbol( app6symbol_ );
     if( logisticEntity_.get() )
@@ -167,6 +166,7 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
+        asn().set_name( GetName().toStdString() );
         asn.Send( publisher );
     }
     if( logisticEntity_.get() )
@@ -307,6 +307,8 @@ void Formation::DoUpdate( const sword::FormationUpdate& msg )
         logMaintenanceManual_ = msg.log_maintenance_manual();
     if( msg.has_log_supply_manual() )
         logSupplyManual_ = msg.log_supply_manual();
+    if( msg.has_name() )
+        SetName( QString::fromStdString( msg.name() ) );
 }
 
 // -----------------------------------------------------------------------------

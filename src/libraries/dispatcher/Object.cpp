@@ -23,7 +23,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Object::Object( Model_ABC& model, const sword::ObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types )
-    : Object_ABC   ( msg.object().id(), QString( msg.name().c_str() ) )
+    : Object_ABC   ( msg.object().id(), QString::fromStdString( msg.name() ) )
     , type_        ( types.Get( msg.type().id() ) )
     , localisation_( msg.location() )
     , side_        ( model.Sides().Get( msg.party().id() ) )
@@ -60,6 +60,8 @@ void Object::DoUpdate( const sword::ObjectUpdate& msg )
         optionals_.localisationPresent = 1;
     }
     attributes_.Update( msg.attributes() );
+    if( msg.has_name() )
+        SetName( QString::fromStdString( msg.name() ) );
     Observable< sword::ObjectUpdate >::Notify( msg );
 }
 
@@ -98,6 +100,7 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.localisationPresent )
         localisation_.Send( *asn().mutable_location() );
     attributes_.Send( *asn().mutable_attributes() );
+    asn().set_name( GetName().toStdString() );
     asn.Send( publisher );
 }
 
