@@ -2142,6 +2142,10 @@ message UnitMagicAction {
         //!         list { quantity: 10  } }
         //! result[0+], Identifier: created requests identifier
         create_stock_supply_request       = 63;
+        //! Rename the targeted unit.
+        //! The tasker is set to target unit.
+        //! parameters[0], String: the new name
+        rename                            = 64;
     }
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;
@@ -2177,6 +2181,9 @@ message ObjectMagicAction {
         /** @brief A destroy object magic action.
         */
         destroy = 2;
+        /** @brief A rename object magic action.
+        */
+        rename  = 3;
     }
     /** @enum Attribute
         @brief The type of object.
@@ -2265,6 +2272,9 @@ message KnowledgeMagicAction {
         //!   UnitIdentification::Level as defined in simulation_client.proto
         //!   This parameter can also be an Quantity (deprecated)
         add_knowledge       = 4;
+        //! Rename the knowldge group.
+        //! parameters[0], String: the new name
+        rename              = 5;
     }
     required Id                knowledge_group = 1;
     required Type              type            = 2;

@@ -895,6 +895,10 @@
         <source>Knowledge Group Change Type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rename knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus</name>
@@ -1197,6 +1201,10 @@
         <source>Object Update</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Object Renaming</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::UnitMagicAction::Type</name>
@@ -1402,6 +1410,10 @@
     </message>
     <message>
         <source>Create stock supply request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

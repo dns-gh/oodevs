@@ -125,6 +125,7 @@ namespace client
     GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ObjectMagicActionAck             , object_magic_action_ack                   )
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectUpdate                                   , object_update                             )
     GENERATE_MESSAGE( sword::SimToClient, sword, PartyCreation                                  , party_creation                            )
+    GENERATE_MESSAGE( sword::SimToClient, sword, PartyUpdate                                    , party_update                              )
     GENERATE_MESSAGE( sword::SimToClient, sword, Pathfind                                       , pathfind_creation                         )
     GENERATE_MESSAGE( sword::SimToClient, sword, PathfindDestruction                            , pathfind_destruction                      )
     GENERATE_MESSAGE( sword::SimToClient, sword, PopulationCreation                             , population_creation                       )

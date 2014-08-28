@@ -73,6 +73,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "recover_troops",                     sword::UnitMagicAction::recover_troops },
     { "recover_troops_except_log",          sword::UnitMagicAction::recover_troops_except_log },
     { "reload_brain",                       sword::UnitMagicAction::reload_brain },
+    { "rename",                             sword::UnitMagicAction::rename },
     { "surrender",                          sword::UnitMagicAction::surrender_to },
     { "teleport",                           sword::UnitMagicAction::move_to },
     { "transfer_equipment",                 sword::UnitMagicAction::transfer_equipment },
@@ -90,6 +91,7 @@ const mapping::MagicKnowledgeAction mapping::MagicKnowledgeAction::data_[] = {
     { "knowledge_group_update_side",        sword::KnowledgeMagicAction::update_party },
     { "knowledge_group_update_side_parent", sword::KnowledgeMagicAction::update_party_parent },
     { "knowledge_group_update_type",        sword::KnowledgeMagicAction::update_type },
+    { "knowledge_group_rename",             sword::KnowledgeMagicAction::rename },
 };
 
 const size_t mapping::MagicKnowledgeAction::size_ = COUNT_OF( mapping::MagicKnowledgeAction::data_ );
@@ -99,6 +101,7 @@ const mapping::MagicObjectAction mapping::MagicObjectAction::data_[] = {
     { "create_object",  sword::ObjectMagicAction::create },
     { "destroy_object", sword::ObjectMagicAction::destroy },
     { "update_object",  sword::ObjectMagicAction::update },
+    { "rename_object",  sword::ObjectMagicAction::rename },
 };
 
 const size_t mapping::MagicObjectAction::size_ = COUNT_OF( mapping::MagicObjectAction::data_ );
