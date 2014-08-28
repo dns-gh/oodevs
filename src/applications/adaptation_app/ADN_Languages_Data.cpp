@@ -147,25 +147,21 @@ void ADN_Languages_Data::InitializeLanguages() const
     ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( initializer );
 }
 
-namespace
-{
-    bool SetFinished( kernel::LocalizedString& text, const std::string& language )
-    {
-        text.SetType( language, kernel::eTranslationType_None );
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data::SwapMaster
 // Created: ABR 2013-10-08
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::SwapMaster()
 {
-    const std::function< bool ( kernel::LocalizedString& ) > swapper = boost::bind( &kernel::LocalizedString::SwapKey, _1, Master(), tools::Language::Current() ) ;
-    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref( swapper ) ) );
-    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( boost::bind( &SetFinished, _1, tools::Language::Current() ) );
-    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( swapper );
+    const auto swapper = [&]( kernel::Context& context ){ return context.SwapKey( Master(), tools::Language::Current() ); };
+    swapper( *ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext() );
+    ADN_Workspace::GetWorkspace().ApplyOnData( [&]( ADN_Data_ABC& data ){ return data.ApplyOnContexts( swapper ); } );
+    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply(
+        [&]( kernel::LocalizedString& translation ) -> bool
+        {
+            translation.SetType( tools::Language::Current(), kernel::eTranslationType_None );
+            return false;
+        } );
 
     if( IsMasterEmpty() )
         throw MASA_EXCEPTION ( "Can't swap languages if master is empty" );

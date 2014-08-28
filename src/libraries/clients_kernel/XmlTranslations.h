@@ -23,7 +23,7 @@ namespace kernel
 {
     class Context;
     class LocalizedString;
-    
+
 // =============================================================================
 /** @class  XmlTranslations
     @brief  XmlTranslations
@@ -32,16 +32,10 @@ namespace kernel
 // =============================================================================
 class XmlTranslations : private boost::noncopyable
 {
-
 public:
-    //! @name Types
-    //@{
-    typedef boost::container::flat_map< std::string, boost::shared_ptr< Context > > T_Contexts;
-    //@}
-
     //! @name Constructors/Destructor
     //@{
-    explicit XmlTranslations();
+             XmlTranslations();
     virtual ~XmlTranslations();
     //@}
 
@@ -53,6 +47,7 @@ public:
     //! @name Translations operations
     //@{
     bool ApplyOnTranslations( std::function< bool( LocalizedString& ) > function );
+    bool ApplyOnContexts( std::function< bool( Context& ) > function );
     void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& languageCode );
     void LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode );
     void MergeDuplicateTranslations();
@@ -61,7 +56,6 @@ public:
 
     //! @name Accessors
     //@{
-    bool HasTranslations() const;
     bool HasDuplicateErrors() const;
     const boost::shared_ptr< Context >& GetContext( const std::string& context );
     const boost::shared_ptr< LocalizedString >& GetTranslation( const std::string& context, const std::string& key );
@@ -75,6 +69,12 @@ private:
 
     void ReadContext( xml::xistream& xis, const std::string& languageCode );
     void ReadMessage( xml::xistream& xis, const std::string& languageCode, const std::string& translations );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef boost::container::flat_map< std::string, boost::shared_ptr< Context > > T_Contexts;
     //@}
 
 private:

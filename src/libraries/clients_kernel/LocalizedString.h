@@ -68,12 +68,10 @@ public:
     void CopyValues( const LocalizedString& other );
     bool IsUnfinished( const std::string& language ) const;
     bool Initialize( const tools::LanguagesVector& languages );
-    bool SwapKey( const std::string& oldKey, const std::string& newKey );
     //@}
 
     //! @name Operators
     //@{
-    LocalizedString& operator=( const LocalizedString& other );
     bool operator==( const LocalizedString& other ) const;
     bool operator!=( const LocalizedString& other ) const;
     //@}
@@ -86,7 +84,6 @@ public:
     const std::string& Translate() const;
     const std::string& Translate( const std::string& language ) const;
 
-    void SetKey( const std::string& key );
     void SetValue( const std::string& language, const std::string& value );
     void SetType( const std::string& language, E_TranslationType type );
     //@}
@@ -94,6 +91,9 @@ public:
 private:
     //! @name Helpers
     //@{
+    friend class Context;
+    void SetKey( const std::string& key );
+    bool SwapKey( const std::string& oldKey, const std::string& newKey );
     void CheckLanguageValidity( const std::string& language ) const;
     //@}
 

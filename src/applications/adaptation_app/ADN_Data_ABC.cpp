@@ -213,6 +213,15 @@ bool ADN_Data_ABC::ApplyOnTranslations( const std::function< bool( kernel::Local
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Data_ABC::function< bool
+// Created: SLI 2014-08-27
+// -----------------------------------------------------------------------------
+bool ADN_Data_ABC::ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const
+{
+    return translations_->ApplyOnContexts( functor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::FixConsistency
 // Created: ABR 2013-10-10
 // -----------------------------------------------------------------------------

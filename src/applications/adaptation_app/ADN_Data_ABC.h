@@ -54,6 +54,7 @@ public:
     virtual void WriteArchive( xml::xostream& output ) const;
     virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
     virtual bool ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const;
+    virtual bool ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const;
 
     virtual std::string GetInvalidDataErrorMsg() const;
     const boost::shared_ptr< kernel::Context >& GetContext( const std::string& context ) const;

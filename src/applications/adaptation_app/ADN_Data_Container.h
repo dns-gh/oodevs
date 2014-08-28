@@ -45,6 +45,8 @@ public:
     virtual bool ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const;
     virtual void Save() const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
+    virtual bool FixConsistency();
+    virtual bool ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const;
     //@}
 
 protected:

@@ -165,17 +165,6 @@ void LocalizedString::CopyValues( const LocalizedString& other )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalizedString::operator=
-// Created: ABR 2013-10-18
-// -----------------------------------------------------------------------------
-LocalizedString& LocalizedString::operator=( const LocalizedString& other )
-{
-    key_ = other.key_;
-    values_ = other.values_;
-    return *this;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LocalizedString::operator ==
 // Created: ABR 2013-08-26
 // -----------------------------------------------------------------------------

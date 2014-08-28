@@ -131,12 +131,12 @@ void ADN_Type_LocalizedString::SetValue( const std::string& language, const std:
         return;
     if( ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language ) && translation_.use_count() > 2 && data != translation_->Key() )
     {
-        boost::shared_ptr< kernel::LocalizedString > newTranslation = context_->CreateNew( data );
+        boost::shared_ptr< kernel::LocalizedString > newTranslation = (*context_)[ data ];
         newTranslation->CopyValues( *translation_ );
         translation_ = newTranslation;
     }
     else if( ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language ) )
-        translation_->SetKey( data );
+        context_->SetKey( translation_, data );
     else
         translation_->SetValue( language, data );
     emit DataChanged( ( void* ) &data );
@@ -158,7 +158,7 @@ const std::string& ADN_Type_LocalizedString::GetKey() const
 void ADN_Type_LocalizedString::SetKey( const std::string& key )
 {
     InitTranslation( key );
-    translation_->SetKey( key );
+    context_->SetKey( translation_, key );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,10 +281,7 @@ bool ADN_Type_LocalizedString::CheckUniqueTranslation() const
 {
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized string." );
-    for( auto it = context_->begin(); it != context_->end(); ++it )
-        if( *it != translation_ && translation_->Key() == ( *it )->Key() && *translation_ != **it )
-            return false;
-    return true;
+    return context_->CheckUniqueTranslation( *translation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -318,6 +315,7 @@ xml::xostream& operator<<( xml::xostream& xos, const ADN_Type_LocalizedString& t
 {
     return xos << type.GetKey();
 }
+
 xml::xistream& operator>>( xml::xistream& xis, ADN_Type_LocalizedString& type )
 {
     std::string value;

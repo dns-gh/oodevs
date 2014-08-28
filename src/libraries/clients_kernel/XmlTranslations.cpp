@@ -14,9 +14,10 @@
 #include "tools/FileWrapper.h"
 #include "tools/SchemaWriter.h"
 #include "tools/XmlStreamOperators.h"
+#include <tools/Path.h>
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
-#include <tools/Path.h>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 using namespace kernel;
 
@@ -71,7 +72,7 @@ void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const too
 void XmlTranslations::LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode )
 {
     xis >> xml::start( "TS" )
-        >> xml::list( "context", *this, &XmlTranslations::ReadContext, languageCode )
+            >> xml::list( "context", *this, &XmlTranslations::ReadContext, languageCode )
         >> xml::end;
 }
 
@@ -110,18 +111,9 @@ void XmlTranslations::ReadMessage( xml::xistream& xis, const std::string& langua
 // -----------------------------------------------------------------------------
 void XmlTranslations::CleanTranslations()
 {
-    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
-        for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); )
-            if( itTranslation->unique() )
-                itTranslation = itContext->second->erase( itTranslation );
-            else
-                ++itTranslation;
-
-    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); )
-        if( itContext->second->empty() || itContext->second.unique() )
-            itContext = contexts_.erase( itContext );
-        else
-            ++itContext;
+    for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
+        it->second->CleanTranslations();
+    boost::remove_erase_if( contexts_, [&]( const T_Contexts::value_type& context ){ return context.second->IsEmpty() || context.second.unique();} );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,13 +123,8 @@ void XmlTranslations::CleanTranslations()
 void XmlTranslations::MergeDuplicateTranslations()
 {
     CleanTranslations();
-    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
-        for( auto lhs = itContext->second->begin(); lhs != itContext->second->end(); ++lhs )
-            for( auto rhs = lhs + 1; rhs != itContext->second->end(); )
-                if( ( *lhs )->Key() == ( *rhs )->Key() && **lhs == **rhs )
-                    rhs = itContext->second->erase( rhs );
-                else
-                    ++rhs;
+    for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
+        it->second->MergeDuplicateTranslations();
 }
 
 // -----------------------------------------------------------------------------
@@ -160,30 +147,30 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
         tools::Xofstream xos( translationPath );
         // $$$$ ABR 2013-07-10: TODO: Insert <!DOCTYPE TS> here when xeumeuleu will handle it
         xos << xml::start( "TS" )
-            << xml::attribute( "version", "2.0" )
-            << xml::attribute( "language", languageCode );
-        if( !contexts_.empty() )
-            for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
+                << xml::attribute( "version", "2.0" )
+                << xml::attribute( "language", languageCode );
+        for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
+        {
+            if( it->second->IsEmpty() )
+                continue;
+            xos     << xml::start( "context" )
+                        << xml::content( "name", it->first );
+            it->second->Apply( [&]( LocalizedString& translation ) -> bool
             {
-                if( itContext->second->empty() )
-                    continue;
-                xos << xml::start( "context" )
-                    << xml::start( "name" ) << itContext->first << xml::end;
-                for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
-                {
-                    if( ( *itTranslation )->Key().empty() )
-                        continue;
-                    xos << xml::start( "message" )
-                        << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
+                if( translation.Key().empty() )
+                    return false;
+                xos << xml::start( "message" )
+                        << xml::content( "source", translation.Key() )
                         << xml::start( "translation" )
-                        << ( *itTranslation )->Value( languageCode )
-                        << ( *itTranslation )->Type( languageCode )
-                        << xml::end //! translation
-                        << xml::end; //! message
-                }
-                xos << xml::end; //! context
-            }
-        xos << xml::end; //! ts
+                            << translation.Value( languageCode )
+                            << translation.Type( languageCode )
+                        << xml::end
+                    << xml::end;
+                return false;
+            } );
+            xos     << xml::end;
+        }
+        xos << xml::end;
     }
 }
 
@@ -193,15 +180,23 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
 // -----------------------------------------------------------------------------
 bool XmlTranslations::ApplyOnTranslations( std::function< bool( LocalizedString& ) > functor )
 {
-    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
-        if( itContext->second->Apply( functor ) )
+    for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
+        if( it->second->Apply( functor ) )
             return true;
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Accessors
+// Name: XmlTranslations::ApplyOnContexts
+// Created: SLI 2014-08-27
 // -----------------------------------------------------------------------------
+bool XmlTranslations::ApplyOnContexts( std::function< bool( Context& ) > functor )
+{
+    for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
+        if( functor( *it->second ) )
+            return true;
+    return false;
+}
 
 // -----------------------------------------------------------------------------
 // Name: XmlTranslations::SetTranslation
@@ -223,10 +218,7 @@ void XmlTranslations::SetTranslation( const std::string& context, const std::str
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( const std::string& strContext, const std::string& key )
 {
-    const boost::shared_ptr< Context >& context = GetContext( strContext );
-    if( context->find( key ) == context->end() )
-        context->CreateNew( key );
-    return context->at( key );
+    return (*GetContext( strContext ))[ key ];
 }
 
 // -----------------------------------------------------------------------------
@@ -247,19 +239,8 @@ const boost::shared_ptr< Context >& XmlTranslations::GetContext( const std::stri
 // -----------------------------------------------------------------------------
 bool XmlTranslations::HasDuplicateErrors() const
 {
-    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
-        for( auto lhs = itContext->second->begin(); lhs != itContext->second->end(); ++lhs )
-            for( auto rhs = lhs + 1; rhs != itContext->second->end(); ++rhs )
-                if( ( *lhs )->Key() == ( *rhs )->Key() && **lhs != **rhs )
-                    return true;
+    for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
+        if( it->second->HasDuplicateErrors() )
+            return true;
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmlTranslations::HasTranslations
-// Created: ABR 2013-10-23
-// -----------------------------------------------------------------------------
-bool XmlTranslations::HasTranslations() const
-{
-    return hasTranslations_;
 }

@@ -94,6 +94,7 @@ public slots:
 
 private:
     virtual bool ApplyOnTranslations( const std::function< bool( kernel::LocalizedString& ) >& functor ) const;
+    virtual bool ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const;
 
     void AddMissionType( const std::string& xmltag );
     void ReadArchive( xml::xistream& input );

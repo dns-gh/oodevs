@@ -122,3 +122,28 @@ bool ADN_Data_Container::ApplyOnTranslations( const std::function< bool( kernel:
             return true;
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Data_Container::FixConsistency
+// Created: SLI 2014-08-27
+// -----------------------------------------------------------------------------
+bool ADN_Data_Container::FixConsistency()
+{
+    ADN_Data_ABC::FixConsistency();
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->FixConsistency();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Data_Container::ApplyOnContexts
+// Created: SLI 2014-08-27
+// -----------------------------------------------------------------------------
+bool ADN_Data_Container::ApplyOnContexts( const std::function< bool( kernel::Context& ) >& functor ) const
+{
+    ADN_Data_ABC::ApplyOnContexts( functor );
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->ApplyOnContexts( functor );
+    return false;
+
+}
