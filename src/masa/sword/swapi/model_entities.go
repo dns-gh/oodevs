@@ -616,8 +616,9 @@ type ModelData struct {
 	KnownScores map[string]struct{}
 	Scores      map[string]float32
 	// Tick and time of the most recent started tick
-	Tick int32
-	Time time.Time
+	Tick       int32
+	Time       time.Time
+	TimeFactor int32
 	// Latest ending tick
 	LastTick     int32
 	TickDuration int32
@@ -1075,6 +1076,7 @@ var (
 		(*ModelData).handleAutomatOrder,
 		(*ModelData).handleChangeDiplomacy,
 		(*ModelData).handleControlBeginTick,
+		(*ModelData).handleControlChangeTimeFactor,
 		(*ModelData).handleControlEndTick,
 		(*ModelData).handleControlGlobalWeather,
 		(*ModelData).handleControlInformation,

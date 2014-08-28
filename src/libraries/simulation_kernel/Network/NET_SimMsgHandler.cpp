@@ -90,7 +90,7 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
         simulation_.Resume( msg.control_resume().has_tick() ?
             msg.control_resume().tick() : 0, nCtx, clientId );
     else if( msg.has_control_change_time_factor() )
-        simulation_.SetTimeFactor( msg.control_change_time_factor().time_factor() );
+        simulation_.SetTimeFactor( msg.control_change_time_factor().time_factor(), nCtx, clientId );
     else if( msg.has_control_date_time_change() )
         simulation_.SetRealTime( msg.control_date_time_change().date_time().data(), nCtx, clientId );
     else if( msg.has_control_checkpoint_save_now() )
@@ -98,7 +98,7 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
             msg.control_checkpoint_save_now(), clientId, nCtx );
     else if( msg.has_control_checkpoint_set_frequency() )
         server.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency(
-            msg.control_checkpoint_set_frequency() );
+            msg.control_checkpoint_set_frequency(), clientId, nCtx );
     else if( msg.has_control_toggle_vision_cones() )
         manager.OnReceiveControlToggleVisionCones( msg.control_toggle_vision_cones() );
     else if( msg.has_unit_order() )

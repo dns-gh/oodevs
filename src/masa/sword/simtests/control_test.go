@@ -104,3 +104,35 @@ func (s *TestSuite) TestControlChangeDateTime(c *C) {
 		return data.Time.After(valid)
 	})
 }
+
+func (s *TestSuite) TestControlChangeTimeFactor(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+
+	// Invalid values
+	_, err := client.SetTimeFactor(0)
+	c.Assert(err, NotNil)
+	_, err = client.SetTimeFactor(-1)
+	c.Assert(err, NotNil)
+
+	// Check response and model update
+	factor, err := client.SetTimeFactor(42)
+	c.Assert(err, IsNil)
+	c.Assert(factor, Equals, int32(42))
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.TimeFactor == factor
+	})
+}
+
+func (s *TestSuite) TestControlCheckpointSetFrequency(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+
+	// Invalid value
+	err := client.SetCheckpointFrequency(-1)
+	c.Assert(err, NotNil)
+
+	// Check response and model update
+	err = client.SetCheckpointFrequency(42)
+	c.Assert(err, IsNil)
+}

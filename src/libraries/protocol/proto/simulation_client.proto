@@ -673,14 +673,10 @@ message ControlDateTimeChangeAck {
     required ControlAck.ErrorCode error_code = 1;
 }
 
-/** @struct ControlChangeTimeFactorAck
-    @brief A time factor change acknowledgement message
-    @see ControlChangeTimeFactor
-*/
+//! ControlChangeTimeFactor response.
 message ControlChangeTimeFactorAck {
-    //! The simulation time multiplier
+    //! The simulation time factor after the change command was applied.
     required int32                time_factor = 1;
-    //! Reason for the failure of the request
     required ControlAck.ErrorCode error_code  = 2;
 }
 
@@ -2675,11 +2671,9 @@ message FolkGraphUpdate {
     repeated FolkGraphEdgeUpdate elem = 1;
 }
 
-/** @struct ControlCheckPointSetFrequencyAck
-    @brief Acknowledges a checkpoint frequency change request
-
-    @see ControlCheckPointSetFrequency
-*/
+//! Returned by ControlCheckPointSetFrequency
+//!
+//! Errors are reported in parent SimToClient.error_msg.
 message ControlCheckPointSetFrequencyAck {
 }
 

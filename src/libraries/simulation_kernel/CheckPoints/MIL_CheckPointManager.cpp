@@ -374,10 +374,22 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow(
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency& msg )
+void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency(
+        const sword::ControlCheckPointSetFrequency& msg, unsigned int clientId, unsigned int ctx )
 {
-    nCheckPointsFrequency_ = msg.frequency() * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
-    client::ControlCheckPointSetFrequencyAck().Send( NET_Publisher_ABC::Publisher() );
+    sword::SimToClient ack;
+    ack.mutable_message()->mutable_control_checkpoint_set_frequency_ack();
+    if( msg.frequency() >= 0 )
+    {
+        nCheckPointsFrequency_ = msg.frequency() * 60;
+    }
+    else
+    {
+        ack.set_error_msg( "checkpoint frequency must be equal or greater than zero" );
+    }
+    ack.set_client_id( clientId );
+    ack.set_context( ctx );
+    NET_Publisher_ABC::Publisher().Send( ack );
     UpdateNextCheckPointTick();
 }
 
