@@ -25,16 +25,21 @@
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/LongNameHelper.h"
+#include "clients_gui/RenameInterface.h"
 #include "clients_gui/RichView.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Pathfind_ABC.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/FormationModel.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
+
 
 namespace
 {
@@ -42,6 +47,7 @@ namespace
     void Configure( View* richView,
                     std::vector< gui::RichView_ABC* >& treeViews,
                     const gui::AggregateToolbar& aggregateToolbar,
+                    gui::RenameInterface& renameInterface,
                     int readOnlyMode = -1 )
     {
         auto view = richView->GetView();
@@ -51,6 +57,7 @@ namespace
             view->SetReadOnlyModes( readOnlyMode );
         QObject::connect( &aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), view, SLOT( LockDragAndDrop( bool ) ) );
         treeViews.push_back( richView );
+        renameInterface.AddEntityTreeView( view );
     }
 
     void CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent,
@@ -63,6 +70,7 @@ namespace
                               std::vector< gui::RichView_ABC* >& treeViews,
                               const gui::AggregateToolbar& aggregateToolbar,
                               gui::ChangeSuperiorDialog& superiorDialog,
+                              gui::RenameInterface& renameInterface,
                               std::vector< gui::HierarchyTreeView_ABC* >& views )
     {
         gui::SubObjectName subObject( "UnitTabWidget" );
@@ -81,7 +89,7 @@ namespace
             views.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
             QObject::connect( views.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ),
                               tabWidget,    SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-            Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+            Configure( richView, treeViews, aggregateToolbar, renameInterface, eModes_Terrain );
             parent->addTab( richView, tools::translate( "DockContainer","Tactical" ) );
         }
         // Communication
@@ -97,7 +105,7 @@ namespace
             views.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
             QObject::connect( views.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ),
                               tabWidget,    SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-            Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+            Configure( richView, treeViews, aggregateToolbar, renameInterface, eModes_Terrain );
             parent->addTab( richView, tools::translate( "DockContainer","Communication" ) );
         }
         // Logistic
@@ -112,7 +120,7 @@ namespace
                                                                    superiorDialog );
             views.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
             QObject::connect( views.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), tabWidget, SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-            Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+            Configure( richView, treeViews, aggregateToolbar, renameInterface, eModes_Terrain );
             parent->addTab( richView, tools::translate( "DockContainer", "Logistic" ) );
         }
     }
@@ -132,10 +140,8 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                 const gui::AggregateToolbar& aggregateToolbar,
                                 gui::ParametersLayer& paramLayer )
     : gui::RichWidget< QTabWidget >( "TreeViewsPanel" )
-    , controllers_( controllers )
-    , contextMenuEntity_( controllers )
-    , modelBuilder_( modelBuilder )
     , changeSuperiorDialog_( new gui::ChangeSuperiorDialog( controllers, icons, this ) )
+    , renameInterface_( new gui::RenameInterface( controllers, this ) )
 {
     // Tactical
     gui::SubObjectName subObject( "TreeViewsPanel" );
@@ -143,13 +149,15 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
         gui::RichWidget< QTabWidget >* pFirstAgentsTabWidget = new gui::RichWidget< QTabWidget >( "FirstAgentsTabWidget" );
         {
             gui::SubObjectName subObject( "pFirstAgentsTabWidget" );
-            CreateUnitTabWidget( pFirstAgentsTabWidget, this, controllers, icons, modelBuilder, model, staticModel, treeViews, aggregateToolbar, *changeSuperiorDialog_, firstUnitViews_ );
+            CreateUnitTabWidget( pFirstAgentsTabWidget, this, controllers, icons, modelBuilder, model, staticModel, treeViews,
+                                 aggregateToolbar, *changeSuperiorDialog_, *renameInterface_, firstUnitViews_ );
         }
         pSecondAgentsTabWidget_ = new gui::RichWidget< QTabWidget >( "SecondAgentsTabWidget" );
         {
             gui::SubObjectName subObject( "pSecondAgentsTabWidget_" );
             pSecondAgentsTabWidget_->hide();
-            CreateUnitTabWidget( pSecondAgentsTabWidget_, this, controllers, icons, modelBuilder, model, staticModel, treeViews, aggregateToolbar, *changeSuperiorDialog_, secondUnitViews_ );
+            CreateUnitTabWidget( pSecondAgentsTabWidget_, this, controllers, icons, modelBuilder, model, staticModel, treeViews,
+                                 aggregateToolbar, *changeSuperiorDialog_, *renameInterface_, secondUnitViews_ );
         }
 
         QSplitter* splitter = new QSplitter();
@@ -175,7 +183,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                                              controllers,
                                                              PreparationProfile::GetProfile(),
                                                              modelBuilder );
-        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        Configure( richView, treeViews, aggregateToolbar, *renameInterface_, eModes_Terrain );
         addTab( richView, tools::translate( "DockContainer","Objects" ) );
     }
     // Urban
@@ -188,7 +196,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                                             modelBuilder,
                                                             symbols,
                                                             staticModel );
-        Configure( richView, treeViews, aggregateToolbar );
+        Configure( richView, treeViews, aggregateToolbar, *renameInterface_ );
         addTab( richView, tools::translate( "DockContainer","Urban" ) );
     }
     // Crowds
@@ -198,7 +206,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                                                  this, controllers,
                                                                  PreparationProfile::GetProfile(),
                                                                  modelBuilder );
-        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        Configure( richView, treeViews, aggregateToolbar, *renameInterface_, eModes_Terrain );
         addTab( richView, tools::translate( "DockContainer","Crowds" ) );
     }
     // Populations
@@ -209,7 +217,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                                                  controllers,
                                                                  PreparationProfile::GetProfile(),
                                                                  modelBuilder );
-        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        Configure( richView, treeViews, aggregateToolbar, *renameInterface_, eModes_Terrain );
         addTab( richView, tools::translate( "DockContainer","Populations" ) );
     }
     // Drawings
@@ -221,10 +229,9 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                                                     PreparationProfile::GetProfile(),
                                                                     modelBuilder,
                                                                     paramLayer );
-        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        Configure( richView, treeViews, aggregateToolbar, *renameInterface_, eModes_Terrain );
         addTab( richView, tools::translate( "DockContainer","Drawings" ) );
     }
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +240,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 TreeViewsPanel::~TreeViewsPanel()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -266,87 +273,4 @@ void TreeViewsPanel::FocusIn( gui::HierarchyTreeView_ABC* tree )
         for( it = secondUnitViews_.begin(); it != secondUnitViews_.end(); ++it )
             ( *it )->ActivateSelection( true );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::AddContextMenu
-// Created: LGY 2014-05-26
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::AddContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
-{
-    contextMenuEntity_ = &entity;
-    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::NotifyContextMenu
-// Created: LGY 2014-05-26
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
-{
-    AddContextMenu( agent, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::NotifyContextMenu
-// Created: LGY 2014-05-26
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
-{
-    AddContextMenu( automat, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::NotifyContextMenu
-// Created: LGY 2014-05-26
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
-{
-    AddContextMenu( formation, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::NotifyContextMenu
-// Created: LGY 2014-05-26
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
-{
-    AddContextMenu( team, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::NotifyContextMenu
-// Created: LGY 2014-05-26
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
-{
-    AddContextMenu( ghost, menu );
-}
-
-namespace
-{
-    bool Rename( kernel::Entity_ABC& entity, std::vector< gui::HierarchyTreeView_ABC* >& views )
-    {
-        for( auto it = views.begin(); it != views.end(); ++it )
-            if( (*it)->isVisible() && (*it)->IsActivated() && (*it)->Exist( entity ) )
-            {
-                (*it)->Rename( entity );
-                return true;
-            }
-        return false;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::OnRename
-// Created: LGY 2014-05-26
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::OnRename()
-{
-    if( !contextMenuEntity_ )
-        return;
-    kernel::Entity_ABC& entity = *contextMenuEntity_.ConstCast();
-    if( !::Rename( entity, firstUnitViews_ ) )
-        if( !::Rename( entity, secondUnitViews_ ) )
-            gui::longname::ShowRenameDialog( this, contextMenuEntity_, modelBuilder_ );
 }

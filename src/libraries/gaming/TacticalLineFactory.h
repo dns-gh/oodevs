@@ -39,7 +39,10 @@ class TacticalLineFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLineFactory( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, Model& model, Publisher_ABC& publisher,
+             TacticalLineFactory( kernel::Controllers& controllers,
+                                  const kernel::CoordinateConverter_ABC& converter,
+                                  Model& model,
+                                  Publisher_ABC& publisher,
                                   const kernel::Profile_ABC& profile );
     virtual ~TacticalLineFactory();
     //@}

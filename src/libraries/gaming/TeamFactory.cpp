@@ -34,12 +34,14 @@
 #include "Color.h"
 #include "Symbol.h"
 #include "UrbanKnowledges.h"
+#include "actions/ActionsModel.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 
@@ -47,10 +49,16 @@
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-TeamFactory::TeamFactory( kernel::Controllers& controllers, Model& model, const ::StaticModel& staticM )
+TeamFactory::TeamFactory( kernel::Controllers& controllers,
+                          Model& model,
+                          const ::StaticModel& staticModel,
+                          const kernel::Profile_ABC& profile,
+                          actions::ActionsModel& actionsModel )
     : controllers_( controllers )
-    , model_      ( model )
-    , static_     ( staticM )
+    , model_( model )
+    , static_( staticModel )
+    , profile_( profile )
+    , actionsModel_( actionsModel )
 {
     // NOTHING
 }
@@ -70,7 +78,8 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
-    Team* result = new Team( message, controllers_ );
+    Team* result = new Team( message, controllers_, [=]( const kernel::Team_ABC& team ){ return profile_.CanDoMagic( team ); } );
+    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
     result->Attach< kernel::Diplomacies_ABC > ( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
@@ -114,7 +123,10 @@ namespace
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
-    kernel::Team_ABC* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
+    auto* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0,
+                                                                      tools::translate( "TeamFactory", "No side" ),
+                                                                      [=]( const kernel::Team_ABC& team ){ return profile_.CanDoMagic( team ); } );
+    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Update( kernel::InstanciationComplete() );
@@ -132,7 +144,9 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
         static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) ) :
         static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() ) );
 
-    Formation* result = new Formation( message, controllers_.controller_ );
+    Formation* result = new Formation( message, controllers_.controller_,
+                                       [=]( const kernel::Formation_ABC& formation ){ return profile_.CanDoMagic( formation ); } );
+    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     std::string symbol = message.has_app6symbol() ? message.app6symbol() : std::string();

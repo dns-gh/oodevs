@@ -77,7 +77,6 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName,
                 Drop( *kg, superior );
     } );
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &CommunicationTreeView::GetEntityPixmap, this, _1 ), this ) );
-    setEditTriggers( 0 );
     SetLessThanEntityFunctor( &tools::LessThanByPC );
     controllers_.Update( *this );
 }

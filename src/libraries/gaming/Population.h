@@ -55,8 +55,11 @@ class Population : public gui::EntityImplementation< kernel::Population_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const sword::CrowdCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
-                         const kernel::PopulationType& type );
+             Population( const sword::CrowdCreation& message,
+                         kernel::Controllers& controllers,
+                         const kernel::CoordinateConverter_ABC& converter,
+                         const kernel::PopulationType& type,
+                         const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Population();
     //@}
 

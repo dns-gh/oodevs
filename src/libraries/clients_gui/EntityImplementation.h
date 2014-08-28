@@ -18,15 +18,13 @@
 namespace kernel
 {
     class Controller;
+    class Entity_ABC;
 }
 
 namespace gui
 {
     class PropertiesDictionary;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  EntityImplementation
     @brief  Entity implementation
@@ -38,9 +36,19 @@ class EntityImplementation : public I
                            , public kernel::Serializable_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::function< void( const QString& ) > T_RenameObserver;
+    typedef std::function< bool( const I& ) > T_CanBeRenamedFunctor;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
-             EntityImplementation( kernel::Controller& controller, unsigned long id, const QString& name, bool readOnly = false );
+             EntityImplementation( kernel::Controller& controller,
+                                   unsigned long id,
+                                   const QString& name,
+                                   const T_CanBeRenamedFunctor& canBeRenamedFunctor = T_CanBeRenamedFunctor() );
     virtual ~EntityImplementation();
     //@}
 
@@ -49,6 +57,8 @@ public:
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual void Rename( const QString& name );
+    virtual bool CanBeRenamed() const;
+    void SetRenameObserver( const T_RenameObserver& renameObserver );
 
     void Polish();
     void ForceNewId( unsigned long id );
@@ -83,6 +93,8 @@ private:
     //@{
     kernel::Controller& controller_;
     PropertiesDictionary* dictionary_;
+    const T_CanBeRenamedFunctor canBeRenamedFunctor_;
+    T_RenameObserver renameObserver_;
     //@}
 
 protected:
@@ -99,19 +111,38 @@ protected:
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
 template< typename I >
-EntityImplementation< I >::EntityImplementation( kernel::Controller& controller, unsigned long id, const QString& name, bool readOnly = false )
+EntityImplementation< I >::EntityImplementation( kernel::Controller& controller,
+                                                 unsigned long id,
+                                                 const QString& name,
+                                                 const T_CanBeRenamedFunctor& canBeRenamedFunctor /* = T_CanBeRenamedFunctor() */ )
     : controller_( controller )
-    , id_        ( id )
-    , displayId_ ( GetDisplayId() )
-    , name_      ( name )
+    , id_( id )
+    , displayId_( GetDisplayId() )
+    , name_( name )
     , dictionary_( new PropertiesDictionary( controller ) )
+    , canBeRenamedFunctor_( canBeRenamedFunctor )
 {
     Attach( *dictionary_ );
     dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Identifier" ), displayId_ );
-    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Name" ), name_, *this, &EntityImplementation::Rename, readOnly );
+    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Name" ), name_, *this, &EntityImplementation::Rename, !CanBeRenamed() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::Rename
+// Created: LGY 2012-08-24
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::Rename( const QString& name )
+{
+    const QString property = tools::translate( "EntityImplementation", "Info/Name" );
+    name_ = name;
+    controller_.Update( gui::DictionaryUpdated( This(), property ) );
+    Touch();
+    if( renameObserver_ )
+        renameObserver_( name );
 }
+
+} //! namespace gui
 
 #include "EntityImplementation.inl"
 

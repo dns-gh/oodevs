@@ -28,8 +28,14 @@ namespace
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, bool crowd, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
-    : gui::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ) )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId,
+                                const std::string& name,
+                                bool crowd,
+                                kernel::Controller& controller,
+                                const std::string& type,
+                                const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types,
+                                const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : gui::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ), canBeRenamedFunctor )
     , type_( type )
     , types_( types )
     , activated_( true )
@@ -83,14 +89,16 @@ const std::string& KnowledgeGroup::GetType() const
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
 {
-    if( message.type() != type_ )
+    if( message.has_type() && message.type() != type_ )
     {
         type_ = message.type();
         kernel::KnowledgeGroupType* pType = types_.Find( type_ );
         delay_ = pType ? pType->ShowCommunicationDelay() : "0m0s";
     }
-    if( message.enabled() != activated_ )
+    if( message.has_enabled() )
         activated_ = message.enabled();
+    if( message.has_name() )
+        name_ = QString::fromStdString( message.name() );
     Touch();
 }
 

@@ -25,8 +25,12 @@ using namespace kernel;
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( const sword::ObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
-    : gui::EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ), true )
+Object::Object( const sword::ObjectCreation& message,
+                Controller& controller,
+                const CoordinateConverter_ABC& converter,
+                const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver,
+                const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : gui::EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
     , converter_        ( converter )
     , type_             ( typeResolver.Get( message.type().id() ) )
 {
@@ -57,8 +61,10 @@ const kernel::ObjectType& Object::GetType() const
 // Name: Object::DoUpdate
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void Object::DoUpdate( const sword::ObjectUpdate& /*message*/ )
+void Object::DoUpdate( const sword::ObjectUpdate& message )
 {
+    if( message.has_name() )
+        name_ = QString::fromStdString( message.name() );
     Touch();
 }
 

@@ -261,25 +261,8 @@ void EntityTreeView_ABC::OnSelect( const QItemSelection& /*selected*/, const QIt
 void EntityTreeView_ABC::OnDataChanged( const QModelIndex& index, const QVariant& value )
 {
     if( value.type() == QVariant::String )
-    {
-        kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
-        if( entity )
-           Rename( *entity, value.toString() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityTreeView_ABC::Rename
-// Created: LGY 2014-05-2013
-// -----------------------------------------------------------------------------
-void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity, const QString& name )
-{
-    modelObserver_.OnRename( kernel::SafePointer< kernel::Entity_ABC >( controllers_, &entity ), name );
-    if( QStandardItem* item = dataModel_.FindDataItem( entity ) )
-    {
-        item->setData( QVariant( entity.GetName() ), Qt::DisplayRole );
-        item->setData( QVariant( entity.GetTooltip() ), Qt::ToolTipRole );
-    }
+        if( auto* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
+            entity->Rename( value.toString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -288,10 +271,15 @@ void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity, const QString& name
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity )
 {
-    if( isVisible() )
-        Edit( entity );
-    else
-        gui::longname::ShowRenameDialog( this, kernel::SafePointer< kernel::Entity_ABC >( controllers_, &entity ), modelObserver_ );
+    if( !isVisible() || !entity.CanBeRenamed() )
+        return;
+    QStandardItem* item = dataModel_.FindDataItem( entity );
+    if( item )
+    {
+        const auto index = proxyModel_->mapFromSource( item->index() );
+        expand( index.parent() );
+        edit( index );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -402,25 +390,19 @@ void EntityTreeView_ABC::SetLessThanEntityFunctor( const T_LessThanEntityFunctor
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityTreeView_ABC::Edit
-// Created: LGY 2014-05-22
-// -----------------------------------------------------------------------------
-void EntityTreeView_ABC::Edit( const kernel::Entity_ABC& entity )
-{
-    QStandardItem* item = dataModel_.FindDataItem( entity );
-    if( item )
-    {
-        const auto index = proxyModel_->mapFromSource( item->index() );
-        expand( index.parent() );
-        edit( index );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityTreeView_ABC::Exist
 // Created: LGY 2014-05-22
 // -----------------------------------------------------------------------------
 bool EntityTreeView_ABC::Exist( const kernel::Entity_ABC& entity )
 {
     return dataModel_.FindDataItem( entity ) ? true : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::IsActivated
+// Created: ABR 2014-09-03
+// -----------------------------------------------------------------------------
+bool EntityTreeView_ABC::IsActivated() const
+{
+    return true;
 }

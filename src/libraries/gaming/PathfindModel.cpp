@@ -56,8 +56,9 @@ void PathfindModel::Create( const sword::Pathfind& msg )
 {
     if( !T_Resolver::Find( msg.id() ) )
     {
-        auto& unit =  GetUnit( agents_, populations_, msg.request().unit().id() );
-        auto entity = new Pathfind( controller_, actionsModel_, converter_, unit, msg, false, profile_.CanBeOrdered( unit ) );
+        auto& unit = GetUnit( agents_, populations_, msg.request().unit().id() );
+        auto entity = new Pathfind( controller_, actionsModel_, converter_, unit, msg, false,
+                                    [&]( const kernel::Pathfind_ABC& pathfind ){ return profile_.CanBeOrdered( pathfind.GetUnit() ); } );
         Register( msg.id(), *entity );
         entity->Polish();
     }

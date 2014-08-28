@@ -1062,6 +1062,36 @@ Action_ABC* ActionFactory::CreateKnowledgeGroupUpdatePartyParent( const kernel::
     return action.release();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateRename( const kernel::Entity_ABC& entity, const QString& name )
+{
+    std::unique_ptr< Action_ABC > action;
+    const kernel::MagicActionType* actionType = 0;
+    if( entity.GetTypeName() == kernel::KnowledgeGroup_ABC::typeName_ )
+    {
+        actionType = &magicActions_.Get( "knowledge_group_rename" );
+        action.reset( new KnowledgeGroupMagicAction( *actionType, controller_, false ) );
+    }
+    else if( entity.GetTypeName() == kernel::Object_ABC::typeName_ )
+    {
+        actionType = &magicActions_.Get( "rename_object" );
+        action.reset( new ObjectMagicAction( *actionType, controller_, false ) );
+    }
+    else
+    {
+        actionType = &magicActions_.Get( "rename" );
+        action.reset( new UnitMagicAction( *actionType, controller_, false ) );
+    }
+    auto it = actionType->CreateIterator();
+    action->AddParameter( *new parameters::String( it.NextElement(), name.toStdString() ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &entity, false );
+    return action.release();
+}
+
 namespace
 {
     class InvalidAction : public Action_ABC

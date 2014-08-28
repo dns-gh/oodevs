@@ -22,8 +22,11 @@ using namespace kernel;
 // Name: Automat constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Automat::Automat( const sword::AutomatCreation& message, Controller& controller, const kernel::AutomatType& type )
-    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), true )
+Automat::Automat( const sword::AutomatCreation& message,
+                  Controller& controller,
+                  const kernel::AutomatType& type,
+                  const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
     , type_( type )
 {
     if( name_.isEmpty() )
@@ -66,4 +69,15 @@ void Automat::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 const kernel::AutomatType& Automat::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::DoUpdate
+// Created: ABR 2014-08-28
+// -----------------------------------------------------------------------------
+void Automat::DoUpdate( const sword::AutomatAttributes& message )
+{
+    if( message.has_name() )
+        name_ = QString::fromStdString( message.name() );
+    Touch();
 }

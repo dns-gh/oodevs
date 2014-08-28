@@ -51,8 +51,12 @@ class Inhabitant : public gui::EntityImplementation< kernel::Inhabitant_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Inhabitant( const sword::PopulationCreation& message, kernel::Controller& controller, const UrbanModel& model, const kernel::InhabitantType& type,
-                         const tools::Resolver_ABC< kernel::DotationType >& dotationResolver );
+             Inhabitant( const sword::PopulationCreation& message,
+                         kernel::Controller& controller,
+                         const UrbanModel& model,
+                         const kernel::InhabitantType& type,
+                         const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                         const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Inhabitant();
     //@}
 
@@ -71,12 +75,6 @@ public:
     //@}
 
 private:
-    //! @name Copy / Assignment
-    //@{
-    Inhabitant( const Inhabitant& );
-    Inhabitant& operator=( const Inhabitant& );
-    //@}
-
     //! @name Helpers
     //@{
     void DoUpdate( const sword::PopulationUpdate& message );

@@ -397,6 +397,16 @@ int ActionsModel::PublishKnowledgeGroupUpdatePartyParent( const kernel::Knowledg
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishRename( const kernel::Entity_ABC& entity, const QString& name )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateRename( entity, name ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

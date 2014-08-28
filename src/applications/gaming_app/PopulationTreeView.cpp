@@ -56,3 +56,12 @@ std::vector< const QPixmap* > PopulationTreeView::GetEntityPixmap( const kernel:
                     }
     return ret;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationTreeView::ItemSpecificFlags
+// Created: ABR 2014-09-02
+// -----------------------------------------------------------------------------
+Qt::ItemFlags PopulationTreeView::ItemSpecificFlags( const kernel::Entity_ABC& ) const
+{
+    return Qt::ItemIsEditable;
+}

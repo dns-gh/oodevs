@@ -64,7 +64,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnRename( const kernel::SafePointer< kernel::Entity_ABC >& entity, const QString& newName );
     virtual void CreateCommunication();
     virtual void CreateTeam();
     virtual void ClearSelection();

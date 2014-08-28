@@ -56,7 +56,7 @@ TacticalTreeView::TacticalTreeView( const QString& objectName,
     , icon_user_           ( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).ToUTF8().c_str() )
 {
     controllers_.Update( *this );
-    setEditTriggers( 0 );
+    //setEditTriggers( 0 );
 }
 
 // -----------------------------------------------------------------------------

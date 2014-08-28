@@ -22,9 +22,11 @@ using namespace sword;
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-            bool readOnly )
-    : TacticalLine_ABC( controller, tools::translate( "Lima", "Phase line" ), 0, publisher, converter, readOnly )
+Lima::Lima( kernel::Controller& controller,
+            Publisher_ABC& publisher,
+            const kernel::CoordinateConverter_ABC& converter,
+            const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : TacticalLine_ABC( controller, tools::translate( "Lima", "Phase line" ), 0, publisher, converter, canBeRenamedFunctor )
     , controller_     ( controller )
 {
     // NOTHING
@@ -34,9 +36,12 @@ Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kern
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-            const sword::PhaseLineCreation& message, bool readOnly )
-    : TacticalLine_ABC( controller, QString( message.tactical_line().name().c_str() ) , message.id().id(), publisher, converter, readOnly )
+Lima::Lima( kernel::Controller& controller,
+            Publisher_ABC& publisher,
+            const kernel::CoordinateConverter_ABC& converter,
+            const sword::PhaseLineCreation& message,
+            const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : TacticalLine_ABC( controller, QString( message.tactical_line().name().c_str() ) , message.id().id(), publisher, converter, canBeRenamedFunctor )
     , controller_     ( controller )
 {
     // NOTHING

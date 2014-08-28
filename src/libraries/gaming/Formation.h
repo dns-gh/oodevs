@@ -41,7 +41,9 @@ class Formation : public gui::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const sword::FormationCreation& message, kernel::Controller& controller );
+             Formation( const sword::FormationCreation& message,
+                        kernel::Controller& controller,
+                        const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Formation();
     //@}
 
@@ -57,12 +59,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Formation( const Formation& );            //!< Copy constructor
-    Formation& operator=( const Formation& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void InitializeSymbol() const;

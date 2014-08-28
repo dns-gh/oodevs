@@ -57,36 +57,11 @@ public:
     virtual ~EntityTreeView_ABC();
     //@}
 
-    //! @name ActivationObserver_ABC< kernel::Entity_ABC >
-    //@{
-    virtual void NotifyActivated( const kernel::Entity_ABC& entity );
-    //@}
-
-    //! @name Element_Observer_ABC< kernel::Entity_ABC >
-    //@{
-    virtual void NotifyCreated( const kernel::Team_ABC& team );
-    virtual void NotifyDeleted( const kernel::Entity_ABC& team );
-    //@}
-
-    //! @name Element_Observer_ABC< kernel::Entity_ABC >
-    //@{
-    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
-    //@}
-
-    //! @name Element_Observer_ABC< kernel::Profile_ABC >
-    //@{
-    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-    //@}
-
-    //! @name MultipleSelectionObserver
-    //@{
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
-    //@}
-
     //! @name Operations
     //@{
     virtual bool Exist( const kernel::Entity_ABC& entity );
     virtual void Rename( kernel::Entity_ABC& entity );
+    virtual bool IsActivated() const;
     //@}
 
 signals:
@@ -96,6 +71,16 @@ signals:
     //@}
 
 protected:
+    //! @name Observers implementations
+    //@{
+    virtual void NotifyActivated( const kernel::Entity_ABC& entity );
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& team );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
+    //@}
+
     //! @name QWidget
     //@{
     virtual void contextMenuEvent( QContextMenuEvent* event );
@@ -110,8 +95,6 @@ protected:
     virtual void ApplyProfileFilter();
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     virtual void SetLessThanEntityFunctor( const T_LessThanEntityFunctor& functor );
-    virtual void Edit( const kernel::Entity_ABC& entity );
-    virtual void Rename( kernel::Entity_ABC& entity, const QString& name );
     //@}
 
 protected slots:

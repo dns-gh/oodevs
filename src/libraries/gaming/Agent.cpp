@@ -29,8 +29,11 @@ using namespace kernel;
 // Name: Agent constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Agent::Agent( const sword::UnitCreation& message, Controller& controller, const tools::Resolver_ABC< AgentType >& resolver )
-    : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), true )
+Agent::Agent( const sword::UnitCreation& message,
+              Controller& controller,
+              const tools::Resolver_ABC< AgentType >& resolver,
+              const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
     , type_       ( resolver.Get( message.type().id() ) )
     , controller_( controller )
     , initialized_( false )
@@ -202,4 +205,7 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         direction_ = message.direction().heading();
     if( message.has_sensors_direction() )
         sensorsDirection_ = message.sensors_direction().heading();
+    if( message.has_name() )
+        name_ = QString::fromStdString( message.name() );
+    Touch();
 }

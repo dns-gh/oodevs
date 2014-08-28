@@ -20,16 +20,20 @@
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, unsigned long id,
-                                    Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-                                    bool readOnly )
-    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, readOnly )
+TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller,
+                                    const QString& baseName,
+                                    unsigned long id,
+                                    Publisher_ABC& publisher,
+                                    const kernel::CoordinateConverter_ABC& converter,
+                                    const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, canBeRenamedFunctor )
     , controller_( controller )
     , converter_ ( converter )
     , publisher_ ( publisher )
     , id_        ( id )
 {
     AddExtension( *this );
+    SetRenameObserver( [&]( const QString& ){ UpdateToSim( eStateModified ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,15 +147,4 @@ void TacticalLine_ABC::DoUpdate( const sword::PhaseLineUpdate& message )
 void TacticalLine_ABC::DoUpdate( const sword::LimitUpdate& message )
 {
     UpdateName( message.tactical_line().name() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Rename
-// Created: LGY 2014-05-19
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::Rename( const QString& name )
-{
-    name_ = name;
-    UpdateToSim( eStateModified );
-
 }

@@ -41,9 +41,13 @@ namespace
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& controller, const UrbanModel& model, const kernel::InhabitantType& type,
-                        const tools::Resolver_ABC< DotationType >& dotationResolver )
-    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ), true )
+Inhabitant::Inhabitant( const sword::PopulationCreation& message,
+                        Controller& controller,
+                        const UrbanModel& model,
+                        const kernel::InhabitantType& type,
+                        const tools::Resolver_ABC< DotationType >& dotationResolver,
+                        const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
     , controller_      ( controller )
     , male_            ( ToInt( type.GetMalePercentage() ) )
     , female_          ( ToInt( type.GetFemalePercentage() ) )
@@ -159,7 +163,9 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     if( msg.has_motivation() )
         motivation_ = msg.motivation();
     UpdateUrbanObjectsDictionnary();
-    controller_.Update( *static_cast< Entity_ABC* >( this ) );
+    if( msg.has_name() )
+        name_ = QString::fromStdString( msg.name() );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------

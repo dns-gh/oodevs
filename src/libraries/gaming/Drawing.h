@@ -54,7 +54,6 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const sword::ShapeUpdate& message );
-    virtual void Rename( const QString& name );
     virtual void NotifyDestruction() const;
     //@}
 

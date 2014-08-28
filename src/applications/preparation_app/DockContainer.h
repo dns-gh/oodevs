@@ -47,6 +47,7 @@ class InhabitantCreationPanel;
 class CreationPanels;
 class LivingAreaPanel;
 class UsagesDockWidget;
+class OrbatDockWidget;
 
 // =============================================================================
 /** @class  DockContainer
@@ -85,11 +86,11 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< gui::RichView_ABC* > views_;
-    CreationPanels*                   pCreationPanel_;
-    LivingAreaPanel*                  pLivingAreaPanel_;
-    gui::TerrainProfiler*             terrainProfiler_;
-    UsagesDockWidget*                 pUsagesPanel_;
+    CreationPanels*       pCreationPanel_;
+    LivingAreaPanel*      pLivingAreaPanel_;
+    gui::TerrainProfiler* terrainProfiler_;
+    UsagesDockWidget*     pUsagesPanel_;
+    OrbatDockWidget*      orbatDockWidget_;
     //@}
 };
 

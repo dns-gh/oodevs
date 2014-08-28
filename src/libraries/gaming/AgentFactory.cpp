@@ -70,6 +70,7 @@
 #include "Color.h"
 #include "CommandPostAttributes.h"
 
+#include "actions/ActionsModel.h"
 #include "clients_gui/AutomatDecisions.h"
 #include "clients_gui/CriticalIntelligence.h"
 #include "clients_gui/EntityType.h"
@@ -82,6 +83,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -91,13 +93,20 @@
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                            Publisher_ABC& publisher, kernel::Workers& workers )
+AgentFactory::AgentFactory( kernel::Controllers& controllers,
+                            Model& model,
+                            const StaticModel& staticModel,
+                            Publisher_ABC& publisher,
+                            kernel::Workers& workers,
+                            const kernel::Profile_ABC& profile,
+                            actions::ActionsModel& actionsModel )
     : controllers_( controllers )
-    , model_      ( model )
-    , static_     ( staticModel )
-    , publisher_  ( publisher )
-    , workers_    ( workers )
+    , model_( model )
+    , static_( staticModel )
+    , publisher_( publisher )
+    , workers_( workers )
+    , profile_( profile )
+    , actionsModel_( actionsModel )
 {
     // NOTHING
 }
@@ -120,12 +129,13 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     const kernel::AutomatType* type = static_.types_.tools::Resolver< kernel::AutomatType >::Find( message.type().id() );
     if( !type )
         return 0;
-    Automat* result = new Automat( message, controllers_.controller_, *type );
+    Automat* result = new Automat( message, controllers_.controller_, *type,
+                                   [=]( const kernel::Automat_ABC& automat ){ return profile_.CanDoMagic( automat ); } );
+    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dictionary ) );
     kernel::Entity_ABC* superior = 0;
-
     if( message.parent().has_formation() )
         superior = &model_.GetFormationResolver().Get( message.parent().formation().id() );
     else
@@ -169,7 +179,9 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
 // -----------------------------------------------------------------------------
 kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 {
-    Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
+    Agent* result = new Agent( message, controllers_.controller_, static_.types_,
+                               [=]( const kernel::Agent_ABC& agent ){ return profile_.CanDoMagic( agent ); } );
+    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< Lives_ABC >( *new Lives( *result, controllers_.controller_ ) );
@@ -223,7 +235,9 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     if( !type )
         return 0;
     const kernel::Team_ABC& team = model_.teams_.GetTeam( message.party().id() );
-    Population* result = new Population( message, controllers_, static_.coordinateConverter_, *type );
+    Population* result = new Population( message, controllers_, static_.coordinateConverter_, *type,
+                                         [=]( const kernel::Population_ABC& crowd ){ return profile_.CanDoMagic( crowd ); } );
+    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::CommunicationHierarchies >( *new PopulationHierarchiesCommunication( controllers_.controller_, *result, model_.knowledgeGroups_.FindCrowdKnowledgeGroup( team ) ) );
     result->Attach( *new gui::EntityType< kernel::PopulationType >( *result, *type, dictionary ) );
@@ -248,7 +262,9 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
 kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& message )
 {
     const kernel::InhabitantType& type = static_.types_.tools::Resolver< kernel::InhabitantType >::Get( message.type().id() );
-    Inhabitant* result = new Inhabitant( message, controllers_.controller_, model_.urbanObjects_, type, static_.objectTypes_ );
+    Inhabitant* result = new Inhabitant( message, controllers_.controller_, model_.urbanObjects_, type, static_.objectTypes_,
+                                         [=]( const kernel::Inhabitant_ABC& inhabitant ){ return profile_.CanDoMagic( inhabitant ); } );
+    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );

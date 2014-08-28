@@ -33,18 +33,24 @@ namespace
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& message, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types,
-                  kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( kernel::Controllers& controllers,
+                  const sword::ShapeCreation& message,
+                  const kernel::Entity_ABC* entity,
+                  const gui::DrawingTypes& types,
+                  kernel::LocationProxy& proxy,
+                  Publisher_ABC& publisher,
+                  const kernel::CoordinateConverter_ABC& converter )
     : gui::DrawerShape( controllers, message.id().id(), message.shape().name().c_str(),
-                         types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ),
-                         QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ),
-                         entity, proxy, converter, Convert( message ) )
+                        types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ),
+                        QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ),
+                        entity, proxy, converter, Convert( message ) )
     , publisher_ ( publisher )
     , converter_ ( converter )
     , controller_( controllers.controller_ )
 {
     SetLocation( message.shape().points() );
     SetText( message.shape() );
+    SetRenameObserver( [&]( const QString& ) { SendUpdateRequest(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,14 +146,4 @@ void Drawing::DoUpdate( const sword::ShapeUpdate& message )
     SetText( shape );
     controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
     gui::DrawerShape::Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Drawing::Rename
-// Created: LGY 2014-05-16
-// -----------------------------------------------------------------------------
-void Drawing::Rename( const QString& name )
-{
-    gui::DrawerShape::Rename( name );
-    SendUpdateRequest();
 }

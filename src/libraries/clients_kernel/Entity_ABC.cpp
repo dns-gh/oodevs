@@ -109,3 +109,13 @@ bool Entity_ABC::IsHighlighted() const
 {
     return highlighted_;
 }
+
+bool Entity_ABC::CanBeRenamed() const
+{
+    return true;
+}
+
+void Entity_ABC::Rename( const QString& )
+{
+    // NOTHING
+}

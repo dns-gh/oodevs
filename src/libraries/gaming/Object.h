@@ -43,8 +43,11 @@ class Object : public gui::EntityImplementation< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( const sword::ObjectCreation& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
+             Object( const sword::ObjectCreation& message,
+                     kernel::Controller& controller,
+                     const kernel::CoordinateConverter_ABC& converter,
+                     const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver,
+                     const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Object();
     //@}
 

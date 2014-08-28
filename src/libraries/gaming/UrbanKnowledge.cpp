@@ -19,9 +19,11 @@ using namespace kernel;
 // Name: UrbanKnowledge constructor
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const sword::UrbanKnowledgeCreation& message, Controller& controller,
+UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner,
+                                const sword::UrbanKnowledgeCreation& message,
+                                Controller& controller,
                                 const tools::Resolver< kernel::UrbanObject_ABC >& terrainObjectResolver )
-    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "", true )
+    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "", []( const kernel::Entity_ABC& ){ return false; } )
     , terrainObjectResolver_( terrainObjectResolver )
     , owner_                ( owner )
     , pRealUrban_           ( terrainObjectResolver_.Find( message.object().id() ) )

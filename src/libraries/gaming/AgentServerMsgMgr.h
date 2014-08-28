@@ -149,6 +149,7 @@ private:
     void OnReceiveKnowledgeGroupCreation   ( const sword::SimToClient& msg );
     void OnReceiveKnowledgeGroupDestruction( const sword::SimToClient& msg );
     void OnReceiveMsgPartyCreation         ( const sword::SimToClient& msg );
+    void OnReceiveMsgPartyUpdate           ( const sword::SimToClient& msg );
     void OnReceiveFormationCreation        ( const sword::SimToClient& msg );
     void OnReceiveFormationUpdate          ( const sword::SimToClient& msg );
     void OnReceiveFormationDestruction     ( const sword::SimToClient& msg );

@@ -13,6 +13,11 @@
 #include "ObjectFactory_ABC.h"
 #include "ObjectAttributesFactory.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace sword
 {
     class ObjectAttributes;
@@ -22,6 +27,7 @@ namespace sword
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 class Model;
@@ -38,8 +44,12 @@ class ObjectFactory : public ObjectFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                            const kernel::Time_ABC& simulation );
+             ObjectFactory( kernel::Controllers& controllers,
+                            Model& model,
+                            const StaticModel& staticModel,
+                            const kernel::Time_ABC& simulation,
+                            const kernel::Profile_ABC& profile,
+                            actions::ActionsModel& actionsModel );
     virtual ~ObjectFactory();
     //@}
 
@@ -64,6 +74,8 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
+    const kernel::Profile_ABC& profile_;
+    actions::ActionsModel& actionsModel_;
     //@}
 };
 

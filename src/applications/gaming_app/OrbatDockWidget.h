@@ -11,7 +11,6 @@
 #define __OrbatDockWidget_h_
 
 #include "clients_gui/RichDockWidget.h"
-#include "clients_gui/DummyModelObserver.h"
 
 namespace actions
 {
@@ -23,8 +22,10 @@ namespace gui
     class AutomatsLayer;
     class ChangeSuperiorDialog;
     class EntitySymbols;
+    class ModelObserver_ABC;
     class FormationLayer;
     class ParametersLayer;
+    class RenameInterface;
     class RichView_ABC;
 }
 
@@ -77,9 +78,10 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
-    LogisticTreeView* logisticListView_;
-    gui::DummyModelObserver observer_;
+    std::unique_ptr< gui::ModelObserver_ABC > observer_;
+    std::unique_ptr< gui::RenameInterface > renameInterface_;
     std::vector< gui::RichView_ABC* > views_;
+    LogisticTreeView* logisticListView_;
     //@}
 };
 

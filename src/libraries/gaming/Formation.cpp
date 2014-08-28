@@ -25,8 +25,10 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Formation::Formation( const sword::FormationCreation& message, Controller& controller )
-    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ), true )
+Formation::Formation( const sword::FormationCreation& message,
+                      Controller& controller,
+                      const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
     , controller_   ( controller )
     , level_        ( static_cast< E_NatureLevel >( message.level() ) )
 {
@@ -76,7 +78,9 @@ void Formation::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& v
 // Name: Formation::DoUpdate
 // Created: ABR 2011-05-11
 // -----------------------------------------------------------------------------
-void Formation::DoUpdate( const sword::FormationUpdate& /*message*/ )
+void Formation::DoUpdate( const sword::FormationUpdate& message )
 {
-    controller_.Update( *static_cast< Entity_ABC* >( this ) );
+    if( message.has_name() )
+        name_ = QString::fromStdString( message.name() );
+    Touch();
 }

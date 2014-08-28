@@ -34,10 +34,15 @@ class Limit : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-                    bool readOnly );
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-                    const sword::LimitCreation& message, bool readOnly );
+             Limit( kernel::Controller& controller,
+                    Publisher_ABC& publisher,
+                    const kernel::CoordinateConverter_ABC& converter,
+                    const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+             Limit( kernel::Controller& controller,
+                    Publisher_ABC& publisher,
+                    const kernel::CoordinateConverter_ABC& converter,
+                    const sword::LimitCreation& message,
+                    const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Limit();
     //@}
 

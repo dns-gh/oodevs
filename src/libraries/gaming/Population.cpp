@@ -33,8 +33,12 @@ using namespace kernel;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const sword::CrowdCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const kernel::PopulationType& type )
-    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ), true )
+Population::Population( const sword::CrowdCreation& message,
+                        Controllers& controllers,
+                        const CoordinateConverter_ABC& converter,
+                        const kernel::PopulationType& type,
+                        const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
     , controllers_         ( controllers )
     , converter_           ( converter )
     , male_                ( static_cast< unsigned int >( 100 * message.repartition().male() + 0.5f ) )
@@ -277,7 +281,9 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
     BOOST_FOREACH( const std::string& content, updated )
         controllers_.controller_.Update( gui::DictionaryUpdated( *static_cast< Entity_ABC* >( this ), tools::translate( "Crowd", content.c_str() ) ) );
 
-    controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
+    if( message.has_name() )
+        name_ = QString::fromStdString( message.name() );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------

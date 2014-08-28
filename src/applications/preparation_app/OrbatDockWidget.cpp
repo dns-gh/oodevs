@@ -11,6 +11,7 @@
 #include "OrbatDockWidget.h"
 #include "moc_OrbatDockWidget.cpp"
 #include "TreeViewsPanel.h"
+#include "clients_gui/RichView_ABC.h"
 #include "clients_gui/AggregateToolbar.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichWidget.h"
@@ -34,7 +35,6 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   ModelBuilder& modelBuilder,
                                   Model& model,
                                   StaticModel& staticModel,
-                                  std::vector< gui::RichView_ABC* >& views,
                                   gui::SymbolIcons& symbols,
                                   gui::ParametersLayer& paramLayer )
     : gui::RichDockWidget( controllers, parent, objectName, windowTitle )
@@ -56,7 +56,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
     expandButton_->setIcon( expandIcon_ );
     toolbarBox->addWidget( expandButton_, 0, 1, 1, 1, Qt::AlignRight );
 
-    pTreeViewPanel_ = new TreeViewsPanel( controllers, icons, modelBuilder, model, views, symbols, staticModel, *aggregateToolbar, paramLayer );
+    pTreeViewPanel_ = new TreeViewsPanel( controllers, icons, modelBuilder, model, views_, symbols, staticModel, *aggregateToolbar, paramLayer );
 
     QWidget* widget = new QWidget();
     QVBoxLayout* box = new QVBoxLayout( widget );
@@ -78,6 +78,26 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
 OrbatDockWidget::~OrbatDockWidget()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatDockWidget::Purge
+// Created: ABR 2014-09-03
+// -----------------------------------------------------------------------------
+void OrbatDockWidget::Purge()
+{
+    for( auto it = views_.begin(); it != views_.end(); ++it )
+        ( *it )->Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatDockWidget::Load
+// Created: ABR 2014-09-03
+// -----------------------------------------------------------------------------
+void OrbatDockWidget::Load()
+{
+    for( auto it = views_.begin(); it != views_.end(); ++it )
+        ( *it )->Load();
 }
 
 // -----------------------------------------------------------------------------
