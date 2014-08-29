@@ -1243,6 +1243,9 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
         return;
     point_ = CoordinatesToClient( point );
     pPickingSelector_->FillSelection( selection, boost::bind( &GlWidget::PickGL, this ) );
+    // Force a regular rendering to hide the picking one. For some reason, it
+    // does not work with updateGL.
+    paintGL();
 }
 
 // -----------------------------------------------------------------------------
@@ -1255,6 +1258,8 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
         return;
     point_ = CoordinatesToClient( point );
     pPickingSelector_->FillSelection( selection, type, boost::bind( &GlWidget::PickGL, this ) );
+    // Force a regular rendering to hide the picking one
+    paintGL();
 }
 
 // -----------------------------------------------------------------------------
