@@ -248,6 +248,13 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
     }
 }
 
+unsigned int RightsPlugin::AcquireClientId()
+{
+    while( !countID_ && ids_.count( countID_ ) )
+        ++countID_;
+    return countID_++;
+}
+
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::OnReceiveMsgAuthenticationRequest
 // Created: AGE 2007-08-24
@@ -304,20 +311,18 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         ack->set_terrain_name( config_.GetTerrainName().ToUTF8() );
         ack->set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack );
-        reply.set_client_id( countID_ );
+        const auto clientId = AcquireClientId();
+        reply.set_client_id( clientId );
         sender.Send( reply );
         authenticated_[ link ] = profile;
-        clientsID_[ link ] = countID_;
-        ids_[ countID_ ] = link;
+        clientsID_[ link ] = clientId;
+        ids_[ clientId ] = link;
         if( keyAuthenticated )
             silentClients_.insert( link );
         else
             ++currentConnections_;
         SendProfiles( sender );
-        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, countID_, keyAuthenticated );
-        ++countID_;
-        if( !countID_ )
-            ++countID_;
+        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, clientId, keyAuthenticated );
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }

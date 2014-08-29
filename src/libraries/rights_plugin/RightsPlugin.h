@@ -95,6 +95,8 @@ private:
     void Logout( dispatcher::ClientPublisher_ABC& client );
     void SendProfiles( AuthenticationSender& sender ) const;
     void SendReponse( sword::AuthenticationToClient& reply, AuthenticationSender& sender, const std::string& link ) const;
+
+    unsigned int AcquireClientId();
     //@}
 
 private:
