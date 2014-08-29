@@ -71,7 +71,8 @@ private:
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands,
-                            Plugin_ABC& container, const LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables, int maxConnections )
+                            Plugin_ABC& container, const LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables, int maxConnections,
+                            bool replayer )
     : clients_           ( clients )
     , config_            ( config )
     , profiles_          ( new ProfileManager( model, clients, config ) )
@@ -80,6 +81,7 @@ RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Co
     , maxConnections_    ( maxConnections )
     , currentConnections_( 0 )
     , countID_           ( 1 ) // non-nul client identifier
+    , replayer_          ( replayer )
 {
     clientCommands.RegisterMessage( *this, &RightsPlugin::OnReceive );
     registrables.Add( new dispatcher::RegistrableProxy( *profiles_ ) );
@@ -250,9 +252,15 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 
 unsigned int RightsPlugin::AcquireClientId()
 {
-    while( !countID_ && ids_.count( countID_ ) )
-        ++countID_;
-    return countID_++;
+    for(;;)
+    {
+        // reserve and set top bit for replayer clients
+        const int32_t mask = 1 << 31;
+        const auto id = replayer_ ? countID_ | mask : countID_ & ~mask;
+        if( id && !ids_.count( id ) )
+            return id;
+        countID_++;
+    }
 }
 
 // -----------------------------------------------------------------------------

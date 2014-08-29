@@ -61,7 +61,7 @@ public:
     //@{
              RightsPlugin( dispatcher::Model& model, dispatcher::ClientPublisher_ABC& clients, const dispatcher::Config& config,
                            tools::MessageDispatcher_ABC& clientCommands, dispatcher::Plugin_ABC& container, const dispatcher::LinkResolver_ABC& resolver,
-                           dispatcher::CompositeRegistrable& registrables, int maxConnections );
+                           dispatcher::CompositeRegistrable& registrables, int maxConnections, bool replayer );
     virtual ~RightsPlugin();
     //@}
 
@@ -125,6 +125,7 @@ private:
     unsigned int                                countID_;
     T_AuthenticationKeys                        authenticationKeys_;
     T_SilentClients                             silentClients_;
+    const bool                                  replayer_;
     //@}
 };
 

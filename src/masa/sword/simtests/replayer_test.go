@@ -17,11 +17,14 @@ import (
 	"math/rand"
 )
 
+const mask int32 = -1 << 31
+
 func replayAndWaitModel(c *C, simOpts *simu.SimOpts, clientOpts *ClientOpts) (
 	*simu.ReplayProcess, *swapi.Client) {
 
 	replay := startReplay(c, simOpts)
 	client := loginAndWaitModel(c, replay, clientOpts)
+	c.Check(client.GetClientId()&mask, Equals, mask)
 	return replay, client
 }
 
@@ -29,6 +32,7 @@ func replayAndWaitModel(c *C, simOpts *simu.SimOpts, clientOpts *ClientOpts) (
 func makeSimpleReplay(c *C) (*simu.SimOpts, *swapi.Formation) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer stopSimAndClient(c, sim, client)
+	c.Assert(client.GetClientId()&mask, Equals, int32(0))
 
 	// Create new formation and wait a bit
 	party := getSomeParty(c, client.Model.GetData())
