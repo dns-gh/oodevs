@@ -560,7 +560,6 @@ void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
 {
     // we need to reset connected_ here to ensure dockContainer_->Load is called when reconnecting
     connected_ = false;
-    network_.Disconnect();
     network_.Reconnect();
     Load();
     network_.GetMessageMgr().Reconnect( reconnection.login_, reconnection.password_ );

@@ -76,6 +76,7 @@ bool Network::DoConnect( const std::string& strHost )
 // -----------------------------------------------------------------------------
 bool Network::Reconnect()
 {
+    Disconnect();
     Update();
     return DoConnect( host_ );
 }
