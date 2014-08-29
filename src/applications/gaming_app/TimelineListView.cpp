@@ -290,9 +290,9 @@ void TimelineListView::NotifySelected( const kernel::Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void TimelineListView::SetContentsPos( int /*dx*/, int dy )
 {
-    blockSignals( true );
+    bool wasBlocked = blockSignals( true );
     verticalScrollBar()->setValue( dy );
-    blockSignals( false );
+    blockSignals( wasBlocked );
 }
 
 // -----------------------------------------------------------------------------

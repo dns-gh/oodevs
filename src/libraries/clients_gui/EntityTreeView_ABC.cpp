@@ -328,9 +328,9 @@ void EntityTreeView_ABC::OnScrollToSelected()
     {
         QModelIndexList indexList = selectedIndexes();
         QModelIndex index = indexList[ 0 ];
-        blockSignals( true );
+        bool wasBlocked = blockSignals( true );
         scrollTo( index );
-        blockSignals( false );
+        blockSignals( wasBlocked );
     }
 }
 
