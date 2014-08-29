@@ -87,6 +87,7 @@ void ADN_AiEngine_GUI::Build()
 
     // Search/Recon speeds
     QGroupBox* pSpeedsBox = new QGroupBox( tr( "Recon and search speeds" ) );
+    pSpeedsBox->setObjectName( builder.GetChildName( "speeds-box" ) );
     QVBoxLayout* pSpeedsLayout = new QVBoxLayout( pSpeedsBox );
 
     Q3GroupBox* pOpenSpeeds = new Q3GroupBox( 3, Qt::Horizontal );
