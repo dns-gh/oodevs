@@ -56,6 +56,15 @@ void AutomatTacticalHierarchies::DoUpdate( const sword::AutomatChangeSuperior& m
 
 // -----------------------------------------------------------------------------
 // Name: AutomatTacticalHierarchies::DoUpdate
+// Created: LDC 2014-08-27
+// -----------------------------------------------------------------------------
+void AutomatTacticalHierarchies::DoUpdate( const sword::AutomatChangeKnowledgeGroup& )
+{
+    controller_.Update< kernel::TacticalHierarchies >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatTacticalHierarchies::DoUpdate
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 void AutomatTacticalHierarchies::DoUpdate( const InstanciationComplete& message )
