@@ -11,6 +11,7 @@
 #define __MIL_ItineraryParameter_h_
 
 #include "MIL_BaseParameter.h"
+#include <boost/optional.hpp>
 
 // =============================================================================
 /** @class  MIL_ItineraryParameter
@@ -22,7 +23,7 @@ class MIL_ItineraryParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_ItineraryParameter( const sword::Pathfind& );
+             MIL_ItineraryParameter( const sword::Pathfind&, const boost::optional< MT_Vector2D >& position );
     virtual ~MIL_ItineraryParameter();
     //@}
 
@@ -51,6 +52,7 @@ private:
     //! @name Member data
     //@{
     sword::Pathfind message_;
+    boost::optional< MT_Vector2D > position_;
     //@}
 };
 

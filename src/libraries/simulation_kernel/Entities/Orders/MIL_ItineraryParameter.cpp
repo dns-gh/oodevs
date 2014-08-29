@@ -11,8 +11,8 @@
 #include "MIL_ItineraryParameter.h"
 #include "protocol/Serialization.h"
 #include "Tools/MIL_Tools.h"
-
 #include <boost/make_shared.hpp>
+#include <boost/serialization/optional.hpp>
 
 BOOST_SERIALIZATION_SPLIT_FREE( sword::Pathfind );
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ItineraryParameter )
@@ -20,10 +20,20 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ItineraryParameter )
 // -----------------------------------------------------------------------------
 // Name: MIL_ItineraryParameter constructor
 // -----------------------------------------------------------------------------
-MIL_ItineraryParameter::MIL_ItineraryParameter( const sword::Pathfind& message )
+MIL_ItineraryParameter::MIL_ItineraryParameter( const sword::Pathfind& message, const boost::optional< MT_Vector2D >& position )
     : message_( message )
+    , position_( position )
 {
-    // NOTHING
+    if( !message_.has_result() || message_.result().points().size() < 2 || !position )
+        return;
+    const auto& points = message_.result().points();
+    MT_Vector2D front, back;
+    MIL_Tools::ConvertCoordMosToSim( points.Get( 0 ).coordinate(), front );
+    MIL_Tools::ConvertCoordMosToSim( points.Get( points.size() - 1 ).coordinate(), back );
+    if( position->Distance( front ) < position->Distance( back ) )
+        return;
+    std::reverse( message_.mutable_request()->mutable_positions()->begin(), message_.mutable_request()->mutable_positions()->end() );
+    std::reverse( message_.mutable_result()->mutable_points()->begin(), message_.mutable_result()->mutable_points()->end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +128,8 @@ void MIL_ItineraryParameter::save( Archive& file, const unsigned int ) const
 template< typename Archive >
 void save_construct_data( Archive& ar, const MIL_ItineraryParameter* ptr, const unsigned int  )
 {
-    ar << ptr->message_;
+    ar << ptr->message_
+       << ptr->position_;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,6 +140,8 @@ template< typename Archive >
 void load_construct_data( Archive& ar, MIL_ItineraryParameter* ptr, const unsigned int )
 {
     sword::Pathfind message;
-    ar >> message;
-    ::new( ptr ) MIL_ItineraryParameter( message );
+    boost::optional< MT_Vector2D > position;
+    ar >> message
+       >> position;
+    ::new( ptr ) MIL_ItineraryParameter( message, position );
 }

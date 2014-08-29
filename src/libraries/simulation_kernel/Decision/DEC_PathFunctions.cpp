@@ -24,7 +24,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
-#include "Entities/Orders/MIL_ItineraryParameter.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameter_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
