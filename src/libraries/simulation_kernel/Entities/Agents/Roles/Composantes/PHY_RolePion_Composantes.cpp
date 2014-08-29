@@ -1512,7 +1512,16 @@ bool PHY_RolePion_Composantes::HasChanged() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::IsUsable() const
 {
-    return nNbrUsableComposantes_ > 0 || !lentComposantes_.empty();
+    if( nNbrUsableComposantes_ > 0 )
+        return true;
+    for( auto itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
+    {
+        const auto& composantes = itLoan->second;
+        for( auto it = composantes.begin(); it != composantes.end(); ++it )
+            if( ( **it ).IsUsable() )
+                return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
