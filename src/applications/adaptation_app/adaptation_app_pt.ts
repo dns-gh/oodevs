@@ -157,10 +157,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Recon and search speeds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open terrain recon speed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -170,6 +166,10 @@
     </message>
     <message>
         <source>Open terrain search speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recon and search speeds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
