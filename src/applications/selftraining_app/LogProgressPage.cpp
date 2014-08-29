@@ -65,7 +65,7 @@ void LogProgressPage::OnNotifyDone( const QString& message )
 {
     EnableButton( eButtonCancel, false );
     EnableButton( eButtonBack, true );
-    if( message.size() > 0 )
+    if( !message.isEmpty() )
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), message );
 }
 
