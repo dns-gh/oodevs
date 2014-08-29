@@ -127,7 +127,7 @@ void TerrainExportDialog::accept()
 {
     QDialog::accept();
     const tools::Path path = tools::Path::FromUnicode( exportPathEditor_->text().toStdWString() );
-    assert( !path.IsEmpty() && path.Exists() && path.IsDirectory() );
+    assert( !path.IsEmpty() && path.IsDirectory() );
     QProgressDialog progressDialog( "", "", 0, 100, this, Qt::SplashScreen );
     progressDialog.setAutoClose( true );
     progressDialog.setContentsMargins( 5, 5, 5, 5 );
@@ -184,5 +184,5 @@ void TerrainExportDialog::CheckExportReady()
 {
     const tools::Path newDirectory = tools::Path::FromUnicode( exportPathEditor_->text().toStdWString() );
     const bool isExportEnabled = shapeCheck_->isChecked() || rasterCheck_->isChecked() || elevationCheck_->isChecked();
-    okButton_->setEnabled( isExportEnabled && !newDirectory.IsEmpty() && newDirectory.Exists() && newDirectory.IsDirectory() );
+    okButton_->setEnabled( isExportEnabled && !newDirectory.IsEmpty() && newDirectory.IsDirectory() );
 }

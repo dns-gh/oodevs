@@ -78,7 +78,7 @@ tools::Path::T_Paths fcmd::ListSessions( const tools::GeneralConfig& config,
         if( !useValidator )
             return true;
         const auto record = dir / "record";
-        if( !record.Exists() || !record.IsDirectory() )
+        if( !record.IsDirectory() )
             return false;
 
         for( auto it = record.begin(); it != record.end(); ++it )

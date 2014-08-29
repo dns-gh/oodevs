@@ -78,7 +78,7 @@ void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const tool
     try
     {
         tools::Path detectionPath = config.GetDetectionDirectory();
-        if( detectionPath.Exists() && detectionPath.IsDirectory() )
+        if( detectionPath.IsDirectory() )
             for( auto it = detectionPath.begin(); it != detectionPath.end(); ++it )
                 if( !it->IsDirectory() && it->Extension() == ".dat" )
                     terrainMemSize += static_cast< float >( it->FileSize() );
