@@ -97,7 +97,7 @@ integration.pionRC = function ( ... )
 end
 
 --- Listen the state of the task and execute method for each state
--- OnNewTick; TaskStarted; StageStarted; StageFinished; Cleanup; TaskFinished; TaskDone
+-- OnNewTick; TaskStarted; StageStarted; StageFinished; Cleanup; TaskFinished; TaskDone; TaskInterrupted
 function RegisterTaskListener()
     local taskListener = {
         OnNewTick = function( self )
@@ -160,13 +160,18 @@ function RegisterTaskListener()
         TaskDone = function( self )
             self:Cleanup()
         end,
+        TaskInterrupted = function( self, taskName )
+            if self.main == taskName then
+                DEC_Trace( "mission interrupted" )
+            end
+        end,
     }
     masalife.brain.core.registerTaskListener( taskListener )
     masalife.brain.core.registerUpdateCallback( taskListener.OnNewTick )
 end
 
 --- Listen the done state of the task depending of the cause
--- TaskStarted; StageStarted; StageFinished; TaskFinished; TaskDone
+-- TaskStarted; StageStarted; StageFinished; TaskFinished; TaskDone; TaskInterrupted
 function RegisterDoneTaskListener()
     local doneTaskListener = {}
     doneTaskListener.stage = {}
@@ -184,6 +189,9 @@ function RegisterDoneTaskListener()
     end
     function doneTaskListener:TaskDone()
         integration.notifyTaskEnded()
+    end
+    function doneTaskListener:TaskInterrupted( taskName )
+        -- NOTHING
     end
     masalife.brain.core.registerTaskListener( doneTaskListener )
 end
