@@ -183,8 +183,8 @@ int MIL_UrbanObject::GetFloorNumber() const
 double MIL_UrbanObject::GetOccupation() const
 {
     const UrbanPhysicalCapacity* physical = Retrieve< UrbanPhysicalCapacity >();
-        if( physical )
-            return physical->GetOccupation();
+    if( physical )
+        return physical->GetOccupation();
     return 0;
 }
 
