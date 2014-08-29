@@ -65,8 +65,19 @@ bool Network::DoConnect( const std::string& strHost )
     if( IsConnected() )
         return false;
 
+    host_ = strHost;
     ClientNetworker::Connect( strHost, false );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Network::Reconnect
+// Created: LDC 2014-08-29
+// -----------------------------------------------------------------------------
+bool Network::Reconnect()
+{
+    Update();
+    return DoConnect( host_ );
 }
 
 // -----------------------------------------------------------------------------
