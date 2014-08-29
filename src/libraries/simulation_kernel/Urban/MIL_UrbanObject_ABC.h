@@ -52,12 +52,13 @@ public:
     virtual float GetLivingSpace() const = 0;
     virtual unsigned int GetTotalInhabitants() const = 0;
     virtual TER_Polygon GetScaledLocation( double distance ) const = 0;
+    virtual int GetFloorNumber() const = 0;
+    virtual double GetOccupation() const = 0;
     //@}
 
     //! @name Operations
     //@{
     virtual void ComputeConvexHull() = 0;
-    virtual float ComputeComplexity() const = 0;
     virtual const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock() const = 0;
     virtual void AddLivingArea( MIL_LivingArea& livingArea ) = 0;
     virtual unsigned int GetTotalInhabitantsForMotivation( const std::string& motivation ) const = 0;

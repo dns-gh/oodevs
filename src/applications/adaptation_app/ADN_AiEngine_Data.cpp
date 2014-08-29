@@ -13,6 +13,51 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
+
+// -----------------------------------------------------------------------------
+// Name: UrbanSpeedsInfos: Constructor
+// Created: JSR 2014-07-09
+// -----------------------------------------------------------------------------
+ADN_AiEngine_Data::UrbanSpeedsInfos::UrbanSpeedsInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
+    : ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
+    , searchSpeed_( 3 )
+    , reconSpeed_( 3 )
+{
+    BindExistenceTo( &ptrMaterial_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanSpeedsInfos::GetItemName
+// Created: JSR 2014-07-09
+// -----------------------------------------------------------------------------
+std::string ADN_AiEngine_Data::UrbanSpeedsInfos::GetItemName()
+{
+    return ptrMaterial_.GetData()->strName_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanSpeedsInfos::ReadArchive
+// Created: JSR 2014-07-09
+// -----------------------------------------------------------------------------
+void ADN_AiEngine_Data::UrbanSpeedsInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "recon-speed", reconSpeed_ )
+          >> xml::attribute( "search-speed", searchSpeed_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanSpeedsInfos::WriteArchive
+// Created: JSR 2014-07-09
+// -----------------------------------------------------------------------------
+void ADN_AiEngine_Data::UrbanSpeedsInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "urban-speeds" )
+                << xml::attribute( "type", ptrMaterial_.GetData()->strName_ )
+                << xml::attribute( "recon-speed", reconSpeed_ )
+                << xml::attribute( "search-speed", searchSpeed_ )
+        << xml::end;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data constructor
@@ -38,6 +83,8 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rRepairingModificator_       ( 100.f )
     , rCapturedModificator_        ( 100.f )
     , bDetectDestroyedUnits_       ( true )
+    , reconSpeed_                  ( 12 )
+    , searchSpeed_                 ( 6 )
 {
     // NOTHING
 }
@@ -130,6 +177,20 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
           >> xml::end;
 
+    urbanSearchSpeeds_.SetFixedVector( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() );
+    input >> xml::optional >> xml::start( "recon-and-search-speeds" )
+            >> xml::attribute( "recon-speed", reconSpeed_ )
+            >> xml::attribute( "search-speed", searchSpeed_ )
+            >> xml::list( "urban-speeds", [&]( xml::xistream& xis )
+            {
+                const std::string type = xis.attribute< std::string >( "type" );
+                auto it = std::find_if( urbanSearchSpeeds_.begin(), urbanSearchSpeeds_.end(), ADN_AiEngine_Data::UrbanSpeedsInfos::Cmp( type ) );
+                if( it == urbanSearchSpeeds_.end() )
+                    throw MASA_EXCEPTION( tools::translate( "ADN_AiEngine_Data", "Invalid data : Op. indicators - Invalid urban material '%1'" ).arg( type.c_str() ).toStdString() );
+                ( *it )->ReadArchive( xis );
+            })
+          >> xml::end;
+
     rAvailableModificator_ = rAvailableModificator_.GetData() * 100.f;
     rUnavailableModificator_ = rUnavailableModificator_.GetData() * 100.f;
     rRepairableModificator_ = rRepairableModificator_.GetData() * 100.f;
@@ -180,5 +241,11 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output ) const
             << xml::start( "perception" )
                 << xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
             << xml::end
+            << xml::start( "recon-and-search-speeds" )
+            << xml::attribute( "recon-speed", reconSpeed_ )
+            << xml::attribute( "search-speed", searchSpeed_ );
+    for( auto it = urbanSearchSpeeds_.begin(); it != urbanSearchSpeeds_.end(); ++it )
+        ( *it )->WriteArchive( output );
+    output  << xml::end
           << xml::end;
 }

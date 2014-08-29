@@ -175,7 +175,7 @@ bool PHY_PerceptionRecoUrbanBlock::HasLocalisationToHandle() const
 // Name: PHY_PerceptionRecoUrbanBlock::IsReconnoitering
 // Created: LDC 2013-10-07
 // -----------------------------------------------------------------------------
-bool PHY_PerceptionRecoUrbanBlock::IsReconnoitering( MIL_UrbanObject_ABC* urbanBlock ) const
+bool PHY_PerceptionRecoUrbanBlock::IsReconnoitering( const MIL_UrbanObject_ABC* urbanBlock ) const
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
         if ( it->GeturbanBlock() == urbanBlock )

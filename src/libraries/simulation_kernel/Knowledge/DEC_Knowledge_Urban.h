@@ -72,12 +72,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void SetProgress( float progress );
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::vector< const MIL_Automate* >   T_PerceptionSource;
@@ -106,6 +100,7 @@ private:
     //@{
     unsigned int armyId_;
     unsigned int objectId_;
+    const MIL_UrbanObject_ABC* urbanObject_;
     float rProgressPercent_;
     float rMaxProgressPercent_;
     T_PerceptionSource perceivedByAutomate_;

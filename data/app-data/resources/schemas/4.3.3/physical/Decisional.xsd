@@ -45,6 +45,21 @@
 			  <xs:attribute name="captured" type="T_ZeroToOneDouble" use="required"/>
 			</xs:complexType>
         </xs:element>
+        <xs:element name="recon-and-search-speeds" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="urban-speeds" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="type" type="xs:string" use="required"/>
+                  <xs:attribute name="recon-speed" type="T_NonNegativeDouble" use="required"/>
+                  <xs:attribute name="search-speed" type="T_NonNegativeDouble" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="recon-speed" type="T_NonNegativeDouble" use="required"/>
+            <xs:attribute name="search-speed" type="T_NonNegativeDouble" use="required"/>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
             <xs:attribute name="model-version" type="T_Version"/>
     </xs:complexType>

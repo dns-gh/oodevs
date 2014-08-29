@@ -184,7 +184,7 @@ public:
     virtual bool IsFireObserver() const;
     virtual bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const;
     virtual double GetPerception( const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    virtual bool IsReconnoitering( MIL_UrbanObject_ABC* pUrbanBlock ) const;
+    virtual bool IsReconnoitering( const MIL_UrbanObject_ABC* pUrbanBlock ) const;
     //@}
 
     //! @name Network

@@ -44,6 +44,13 @@
     </message>
 </context>
 <context>
+    <name>ADN_AiEngine_Data</name>
+    <message>
+        <source>Invalid data : Op. indicators - Invalid urban material &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AiEngine_GUI</name>
     <message>
         <source>Threat management</source>
@@ -148,6 +155,37 @@
     <message>
         <source>Destroyed units detection</source>
         <translation>Destroyed units detection</translation>
+    </message>
+    <message>
+        <source>Recon and search speeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open terrain recon speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m/min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open terrain search speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_AiEngine_UrbanSpeeds_Table</name>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished">Material</translation>
+    </message>
+    <message>
+        <source>Recon speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search speed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
