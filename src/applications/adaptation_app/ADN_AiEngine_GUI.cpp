@@ -86,7 +86,7 @@ void ADN_AiEngine_GUI::Build()
     builder.AddField< ADN_TimeField >( pForceRatioBox, "default-force-ratio-feedback-time", tr( "Default force ratio feedback time" ), data_.rDefaultFeedbackTime_ );
 
     // Search/Recon speeds
-    QGroupBox* pSpeedsBox = new QGroupBox( tr( "Recon and search speeds" ) );
+    QGroupBox* pSpeedsBox = new gui::RichGroupBox( "speeds-box", tr( "Recon and search speeds" ) );
     QVBoxLayout* pSpeedsLayout = new QVBoxLayout( pSpeedsBox );
 
     Q3GroupBox* pOpenSpeeds = new Q3GroupBox( 3, Qt::Horizontal );

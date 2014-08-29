@@ -157,35 +157,35 @@
         <translation>Détection des unités détruites</translation>
     </message>
     <message>
-        <source>Recon and search speeds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open terrain recon speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse de reconnaissance en terrain ouvert</translation>
     </message>
     <message>
         <source>m/min</source>
-        <translation type="unfinished"></translation>
+        <translation>m/min</translation>
     </message>
     <message>
         <source>Open terrain search speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse de fouille en terrain ouvert</translation>
+    </message>
+    <message>
+        <source>Recon and search speeds</source>
+        <translation>Vitesses de reconnaissance et fouille</translation>
     </message>
 </context>
 <context>
     <name>ADN_AiEngine_UrbanSpeeds_Table</name>
     <message>
         <source>Material</source>
-        <translation type="unfinished">Matériau</translation>
+        <translation>Matériau</translation>
     </message>
     <message>
         <source>Recon speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse de reconnaissance</translation>
     </message>
     <message>
         <source>Search speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse de fouille</translation>
     </message>
 </context>
 <context>
