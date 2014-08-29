@@ -14,6 +14,7 @@
 #include "GlTools_ABC.h"
 #include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
+#include <boost/optional/optional_fwd.hpp>
 #include <set>
 #include <tuple>
 
@@ -36,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    void FillSelection( GlTools_ABC::T_ObjectsPicking& selection, std::function< void() > paint );
-    void FillSelection( GlTools_ABC::T_ObjectsPicking& selection, E_LayerTypes type, std::function< void() > paint );
+    void FillSelection( GlTools_ABC::T_ObjectsPicking& selection,
+            const boost::optional< E_LayerTypes >& type, const std::function< void() >& paint );
     void Picking( QPoint point, unsigned int windowHeight );
     void RenderPicking( const GlTools_ABC::T_ObjectPicking& object, std::function< void( float, float, float, float ) > setCurrentColor );
     bool IsPickingMode() const;

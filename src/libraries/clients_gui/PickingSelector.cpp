@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "PickingSelector.h"
+#include <boost/optional.hpp>
 
 using namespace gui;
 
@@ -35,24 +36,17 @@ PickingSelector::~PickingSelector()
 // Name: PickingSelector::FillSelection
 // Created: LGY 2013-03-14
 // -----------------------------------------------------------------------------
-void PickingSelector::FillSelection( GlTools_ABC::T_ObjectsPicking& selection, std::function< void() > paint )
+void PickingSelector::FillSelection( GlTools_ABC::T_ObjectsPicking& selection,
+        const boost::optional< E_LayerTypes >& types, const std::function< void() >& paint )
 {
+    if( types )
+        pickingLayers_.insert( *types );
     pickingMode_ = true;
     paint();
     selection = pickObjects_;
     renderObjects_.clear();
     pickObjects_.clear();
     pickingMode_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PickingSelector::FillSelection
-// Created: LGY 2013-03-14
-// -----------------------------------------------------------------------------
-void PickingSelector::FillSelection( GlTools_ABC::T_ObjectsPicking& selection, E_LayerTypes type, std::function< void() > paint )
-{
-    pickingLayers_.insert( type );
-    FillSelection( selection, paint );
     pickingLayers_.clear();
 }
 

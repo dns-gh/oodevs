@@ -565,19 +565,10 @@ bool GlProxy::ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::FillSelection
-// Created: LGY 2013-02-20
-// -----------------------------------------------------------------------------
-void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
-{
-    if( tools_ )
-        tools_->FillSelection( point, selection );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::FillSelection
 // Created: LGY 2013-03-11
 // -----------------------------------------------------------------------------
-void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
+void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection,
+        const boost::optional< E_LayerTypes >& type )
 {
     if( tools_ )
         tools_->FillSelection( point, selection, type );

@@ -15,6 +15,7 @@
 #include "clients_kernel/Types.h"
 #include <QtGui/qfont.h>
 #include <boost/noncopyable.hpp>
+#include <boost/optional/optional_fwd.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <vector>
 
@@ -71,8 +72,8 @@ public:
 
     //! @name Picking
     //@{
-    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection ) = 0;
-    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type ) = 0;
+    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection,
+            const boost::optional< E_LayerTypes >& type ) = 0;
     virtual void Picking() = 0;
     virtual void RenderPicking( const T_ObjectPicking& object ) = 0;
     virtual bool IsPickingMode() const = 0;

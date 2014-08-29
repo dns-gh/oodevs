@@ -26,6 +26,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "ENT/ENT_Tr.h"
+#include <boost/optional.hpp>
 
 using namespace kernel;
 using namespace gui;

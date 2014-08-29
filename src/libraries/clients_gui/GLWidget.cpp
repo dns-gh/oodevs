@@ -1235,30 +1235,17 @@ bool GlWidget::IsInSelectionViewport( const geometry::Point2f& point ) const
 
 // -----------------------------------------------------------------------------
 // Name: GLWidget::FillSelection
-// Created: LGY 2013-02-15
-// -----------------------------------------------------------------------------
-void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
-{
-    if( !IsInSelectionViewport( point ) )
-        return;
-    point_ = CoordinatesToClient( point );
-    pPickingSelector_->FillSelection( selection, boost::bind( &GlWidget::PickGL, this ) );
-    // Force a regular rendering to hide the picking one. For some reason, it
-    // does not work with updateGL.
-    paintGL();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GLWidget::FillSelection
 // Created: LGY 2013-03-11
 // -----------------------------------------------------------------------------
-void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
+void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection,
+        const boost::optional< E_LayerTypes >& type )
 {
     if( !IsInSelectionViewport( point ) )
         return;
     point_ = CoordinatesToClient( point );
     pPickingSelector_->FillSelection( selection, type, boost::bind( &GlWidget::PickGL, this ) );
-    // Force a regular rendering to hide the picking one
+    // Force a regular rendering to hide the picking one. For some reason, it
+    // does not work with updateGL.
     paintGL();
 }
 
