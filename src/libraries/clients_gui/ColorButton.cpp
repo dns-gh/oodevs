@@ -108,6 +108,9 @@ void ColorButton::OnClick()
 // -----------------------------------------------------------------------------
 void ColorButton::SetColor( const QColor& rgb )
 {
+    if( current_ == rgb )
+        return;
+    previous_ = current_;
     current_ = rgb;
     repaint();
     emit ColorChanged( current_ );
@@ -128,7 +131,9 @@ QColor ColorButton::GetColor() const
 // -----------------------------------------------------------------------------
 void ColorButton::Revert()
 {
-    SetColor( previous_ );
+    current_ = previous_;
+    repaint();
+    emit ColorChanged( current_ );
 }
 
 // -----------------------------------------------------------------------------

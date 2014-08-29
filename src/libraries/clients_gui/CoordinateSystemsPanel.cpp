@@ -13,6 +13,7 @@
 
 #include "RichGroupBox.h"
 #include "RichWidget.h"
+#include "SignalAdapter.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -35,17 +36,22 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent,
     , previousCoordinateSystem_( coordConverter.GetDefaultCoordinateSystem() )
 {
     QLabel* coordinateLabel = new QLabel( tr( "Select current coordinate system:" ) );
-    listCoordSys_ = new RichWidget< QComboBox >( "listCoordSys" );
-    listCoordSys_->setEditable( false );
+    coordSysComboBox_ = new RichWidget< QComboBox >( "listCoordSys" );
+    coordSysComboBox_->setEditable( false );
 
     RichGroupBox* box = new RichGroupBox( "coordinateSystem", tr( "Coordinate System" ), this );
     QVBoxLayout* boxLayout = new QVBoxLayout( box );
     boxLayout->addWidget( coordinateLabel );
-    boxLayout->addWidget( listCoordSys_ );
+    boxLayout->addWidget( coordSysComboBox_ );
     boxLayout->addStretch( 1 );
 
     for( int i = 0; i < eNbrCoordinateSystem; ++i )
-        listCoordSys_->insertItem( QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( static_cast< E_CoordinateSystem >( i ) ) ), i );
+        coordSysComboBox_->insertItem( QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( static_cast< E_CoordinateSystem >( i ) ) ), i );
+
+    gui::connect( coordSysComboBox_, SIGNAL( currentIndexChanged( int ) ), [&]{
+        coordConverter_.SetDefaultCoordinateSystem( static_cast< E_CoordinateSystem >( coordSysComboBox_->currentItem() ) );
+        options_.Change( "CoordSystem", static_cast< int >( coordConverter_.GetDefaultCoordinateSystem() ) );
+    } );
 
     setWidget( box );
     controllers_.Register( *this );
@@ -66,8 +72,6 @@ CoordinateSystemsPanel::~CoordinateSystemsPanel()
 // -----------------------------------------------------------------------------
 void CoordinateSystemsPanel::Commit()
 {
-    coordConverter_.SetDefaultCoordinateSystem( static_cast< E_CoordinateSystem >( listCoordSys_->currentItem() ) );
-    options_.Change( "CoordSystem", static_cast< int >( coordConverter_.GetDefaultCoordinateSystem() ) );
     previousCoordinateSystem_ = coordConverter_.GetDefaultCoordinateSystem();
 }
 
@@ -77,7 +81,7 @@ void CoordinateSystemsPanel::Commit()
 // -----------------------------------------------------------------------------
 void CoordinateSystemsPanel::Reset()
 {
-    listCoordSys_->setCurrentItem( previousCoordinateSystem_ );
+    coordSysComboBox_->setCurrentIndex( previousCoordinateSystem_ );
     coordConverter_.SetDefaultCoordinateSystem( previousCoordinateSystem_ );
 }
 
@@ -88,8 +92,5 @@ void CoordinateSystemsPanel::Reset()
 void CoordinateSystemsPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
     if( name == "CoordSystem" )
-    {
-        listCoordSys_->setCurrentItem( value.To< int >() );
-        coordConverter_.SetDefaultCoordinateSystem( static_cast< E_CoordinateSystem >( listCoordSys_->currentItem() ) );
-    }
+        coordSysComboBox_->setCurrentIndex( value.To< int >() );
 }

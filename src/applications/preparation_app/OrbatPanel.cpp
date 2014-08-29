@@ -12,6 +12,7 @@
 #include "moc_OrbatPanel.cpp"
 #include "clients_gui/ColorButton.h"
 #include "clients_gui/RichGroupBox.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 
@@ -32,17 +33,8 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     layout->setAlignment( Qt::AlignTop );
     layout->addWidget( box );
     QVBoxLayout* mainLayout = new QVBoxLayout( box );
-    // ghost
-    QHBoxLayout* ghostLayout = new QHBoxLayout();
-    ghostLayout->addWidget( new QLabel( tr( "Ghost:" ) ) );
-    pGhostColor_ = new gui::ColorButton( "GhostColor", main, "", QColor( 60, 180, 90 ) );
-    ghostLayout->addWidget( pGhostColor_ );
-    mainLayout->addLayout( ghostLayout );
-    layout->addStretch( 1 );
-
-    if( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() == "" )
-        controllers_.options_.Change( "Color/Phantom", pGhostColor_->GetColor().name() );
-
+    pGhostColor_  = tools::AddColorButton( mainLayout, controllers_.options_, "ghost_color_button",
+                                           tr( "Ghost:" ), "Color/Phantom", QColor( 60, 180, 90 ) );
     setWidget( main );
     controllers_.Register( *this );
 }
@@ -63,7 +55,6 @@ OrbatPanel::~OrbatPanel()
 void OrbatPanel::Commit()
 {
     pGhostColor_->Commit();
-    controllers_.options_.Change( "Color/Phantom", pGhostColor_->GetColor().name() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,8 +76,5 @@ void OrbatPanel::OptionChanged( const std::string& name, const kernel::OptionVar
     if( !( option[ 0 ] == "Color" ) )
         return;
     else if( option[ 1 ] == "Phantom" )
-    {
         pGhostColor_->SetColor( QColor( value.To< QString >() ) );
-        pGhostColor_->Commit();
-    }
 }

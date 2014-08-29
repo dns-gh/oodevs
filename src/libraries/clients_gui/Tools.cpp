@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "Tools.h"
 #include "AutomatDecisions.h"
+#include "ColorButton.h"
+#include "SignalAdapter.h"
 
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/MergingTacticalHierarchies.h"
@@ -18,6 +20,7 @@
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <boost/assign.hpp>
@@ -132,4 +135,34 @@ void tools::DrawPickingText( const QString& text, const QFont& font, const geome
                                                      ( geometry::Point2f( box.Left(), box.Bottom() ) )
                                                      ( geometry::Point2f( box.Left(), box.Top() ) );
     tools.DrawPolygon( polygon );
+}
+
+namespace
+{
+    void ConnectColorOption( kernel::Options& options,
+                             const std::string& optionsName,
+                             gui::ColorButton& colorButton )
+    {
+        if( options.GetOption( optionsName, QString() ).To< QString >() == "" )
+            options.Change( optionsName, colorButton.GetColor().name() );
+        gui::connect( &colorButton, SIGNAL( ColorChanged( const QColor& ) ), [=,&options,&colorButton]{
+            options.Change( optionsName, colorButton.GetColor().name() );
+        } );
+    }
+}
+
+gui::ColorButton* tools::AddColorButton( QVBoxLayout* mainLayout,
+                                         kernel::Options& options,
+                                         const QString& objectName,
+                                         const QString& name,
+                                         const std::string& optionName,
+                                         const QColor& defaultColor )
+{
+    auto* button = new gui::ColorButton( objectName, 0, "", defaultColor );
+    QHBoxLayout* layout = new QHBoxLayout();
+    layout->addWidget( new QLabel( name ) );
+    layout->addWidget( button );
+    mainLayout->addLayout( layout );
+    ConnectColorOption( options, optionName, *button );
+    return button;
 }

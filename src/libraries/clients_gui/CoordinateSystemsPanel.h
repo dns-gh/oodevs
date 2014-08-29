@@ -58,7 +58,7 @@ private:
      kernel::Controllers& controllers_;
      kernel::CoordinateConverter_ABC& coordConverter_;
      kernel::Options& options_;
-     RichWidget< QComboBox >* listCoordSys_;
+     RichWidget< QComboBox >* coordSysComboBox_;
      E_CoordinateSystem previousCoordinateSystem_;
     //@}
 };
