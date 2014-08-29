@@ -127,17 +127,6 @@
     </message>
 </context>
 <context>
-    <name>DataWidget</name>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DebugConfigPanel</name>
     <message>
         <source>Debug</source>
@@ -397,6 +386,17 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>ModelsWidget</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OptionsPage</name>
     <message>
         <source>Settings</source>
@@ -515,6 +515,14 @@ Do you want to replace it?</source>
     <message>
         <source>Admin</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upgrade</source>
+        <translation>Upgrade</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancel</translation>
     </message>
 </context>
 <context>
@@ -665,6 +673,21 @@ Do you want to replace it?</source>
     <message>
         <source>Show window</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TerrainsWidget</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>upgrade</source>
+        <translation>upgrade</translation>
     </message>
 </context>
 <context>

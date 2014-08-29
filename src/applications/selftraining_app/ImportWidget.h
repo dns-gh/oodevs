@@ -45,7 +45,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void ButtonChanged( bool enable, const QString& text );
+    void ButtonChanged( bool enable, const QString& text, bool upgrade );
     //@}
 
 public slots:

@@ -14,11 +14,12 @@
 
 class Application;
 class Config;
-class DataWidget;
 class DebugConfigPanel;
 class ExerciseContainer;
 class ExportWidget;
 class ImportWidget;
+class ModelsWidget;
+class TerrainsWidget;
 
 namespace kernel
 {
@@ -65,13 +66,14 @@ public slots:
     //! @name Operations
     //@{
     void UpdateButton();
-    void OnButtonChanged( bool enabled, const QString& text );
+    void OnButtonChanged( bool enabled, const QString& text, bool upgrade );
     //@}
 
 private slots:
     //! @name Operations
     //@{
     virtual void OnApply();
+    virtual void OnUpgrade();
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
     void OnEditDataDirectory( const QString& text );
@@ -92,7 +94,6 @@ private:
     void SetSettingsLayout();
     void SetImportLayout();
     void SetExportLayout();
-    void SetDataLayout();
     void SetDebugLayout( frontend::DebugConfig* debug );
     //@}
 
@@ -135,7 +136,8 @@ private:
     //@{
     ImportWidget* import_;
     ExportWidget* export_;
-    DataWidget* data_;
+    TerrainsWidget* terrains_;
+    ModelsWidget* models_;
     DebugConfigPanel* debug_;
     //@}
 };

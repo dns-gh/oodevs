@@ -11,13 +11,14 @@
 #include "OptionsPage.h"
 #include "moc_OptionsPage.cpp"
 #include "Application.h"
-#include "MessageDialog.h"
-#include "DataWidget.h"
-#include "ImportWidget.h"
-#include "ExportWidget.h"
 #include "Config.h"
 #include "DebugConfigPanel.h"
 #include "ExerciseContainer.h"
+#include "ExportWidget.h"
+#include "ImportWidget.h"
+#include "MessageDialog.h"
+#include "ModelsWidget.h"
+#include "TerrainsWidget.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LanguageController.h"
@@ -30,6 +31,19 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
+namespace
+{
+    void AddTab( QWidget* target, QTabWidget* tabs )
+    {
+        QWidget* holder = new QWidget();
+        QHBoxLayout* layout = new QHBoxLayout( holder );
+        layout->setMargin( 5 );
+        layout->addWidget( target );
+        tabs->addTab( holder, "" );
+    }
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
@@ -40,7 +54,7 @@ OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pag
                           kernel::Controllers& controllers,
                           ExerciseContainer& exercises,
                           frontend::DebugConfig* debug )
-    : ContentPage( pages, previous, eButtonBack | eButtonApply )
+    : ContentPage( pages, previous, eButtonBack | eButtonApply | eButtonUpgrade )
     , app_               ( app )
     , parent_            ( parent )
     , tabs_              ( new QTabWidget() )
@@ -58,7 +72,19 @@ OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pag
     SetSettingsLayout();
     SetImportLayout();
     SetExportLayout();
-    SetDataLayout();
+
+    terrains_ = new TerrainsWidget( parent_, config_, app, pages, *this );
+    connect( terrains_, SIGNAL( ButtonChanged( bool, const QString&, bool ) ),
+                        SLOT( OnButtonChanged( bool, const QString&, bool ) ) );
+    AddTab( terrains_->GetMainWidget(), tabs_ );
+    terrains_->OnUpdate();
+
+    models_ = new ModelsWidget( parent_, config_ );
+    connect( models_, SIGNAL( ButtonChanged( bool, const QString&, bool ) ),
+                      SLOT( OnButtonChanged( bool, const QString&, bool ) ) );
+    AddTab( models_->GetMainWidget(), tabs_ );
+    models_->Update();
+
     SetDebugLayout( debug );
     AddContent( tabs_ );
 
@@ -139,8 +165,8 @@ void OptionsPage::SetImportLayout()
 {
     import_ = new ImportWidget( parent_, config_ );
     tabs_->addTab( import_, "" );
-    connect( import_, SIGNAL( ButtonChanged( bool, const QString& ) ),
-             SLOT( OnButtonChanged( bool, const QString& ) ) );
+    connect( import_, SIGNAL( ButtonChanged( bool, const QString&, bool ) ),
+             SLOT( OnButtonChanged( bool, const QString&, bool ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,19 +177,8 @@ void OptionsPage::SetExportLayout()
 {
     export_ = new ExportWidget( app_, parent_, config_, loader_, controllers_ );
     tabs_->addTab( export_, "" );
-    connect( export_, SIGNAL( ButtonChanged( bool, const QString& ) ),
-             SLOT( OnButtonChanged( bool, const QString& ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPage::SetModelsLayout
-// Created: BAX 2012-10-24
-// -----------------------------------------------------------------------------
-void OptionsPage::SetDataLayout()
-{
-    data_ = new DataWidget( parent_, tabs_, config_ );
-    connect( data_, SIGNAL( ButtonChanged( bool, const QString& ) ),
-             SLOT( OnButtonChanged( bool, const QString& ) ) );
+    connect( export_, SIGNAL( ButtonChanged( bool, const QString&, bool ) ),
+             SLOT( OnButtonChanged( bool, const QString&, bool ) ) );
 }
 
 void OptionsPage::SetDebugLayout( frontend::DebugConfig* debug )
@@ -267,10 +282,11 @@ void OptionsPage::OnBack()
 // Name: ScenarioEditPage::OnButtonChanged
 // Created: BAX 2012-24-10
 // -----------------------------------------------------------------------------
-void OptionsPage::OnButtonChanged( bool enabled, const QString& text )
+void OptionsPage::OnButtonChanged( bool enabled, const QString& text, bool upgrade )
 {
     EnableButton ( eButtonApply, enabled );
     SetButtonText( eButtonApply, text );
+    EnableButton ( eButtonUpgrade, upgrade );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,8 +314,11 @@ void OptionsPage::UpdateButton()
             break;
 
         case eTabs_Models:
+            models_->OnButtonChanged();
+            break;
+
         case eTabs_Terrains:
-            data_->OnButtonChanged();
+            terrains_->OnButtonChanged();
             break;
     }
 }
@@ -312,7 +331,8 @@ void OptionsPage::Reconnect()
 {
     exercises_.Refresh();
     export_->Update();
-    data_->Update();
+    terrains_->OnUpdate();
+    models_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -376,12 +396,27 @@ void OptionsPage::OnApply()
             break;
 
         case eTabs_Models:
+            models_->OnDelete();
+            Reconnect();
+            break;
+
         case eTabs_Terrains:
-            data_->OnDelete();
+            terrains_->OnDelete();
             Reconnect();
             break;
     }
     UpdateButton();
+}
+
+void OptionsPage::OnUpgrade()
+{
+    switch( tabs_->currentIndex() )
+    {
+        case eTabs_Terrains:
+            terrains_->OnUpgrade();
+            Reconnect();
+            break;
+    }
 }
 
 // -----------------------------------------------------------------------------

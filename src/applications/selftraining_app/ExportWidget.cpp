@@ -643,5 +643,5 @@ void ExportWidget::NotifyDeleted( const frontend::Exercise_ABC& exercise )
 // -----------------------------------------------------------------------------
 void ExportWidget::OnButtonChanged()
 {
-    emit ButtonChanged( IsButtonEnabled(), tools::translate( "Page_ABC", "Export" ) );
+    emit ButtonChanged( IsButtonEnabled(), tools::translate( "Page_ABC", "Export" ), false );
 }

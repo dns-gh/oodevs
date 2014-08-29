@@ -216,5 +216,5 @@ void ImportWidget::SelectPackage( const tools::Path& filename )
 // -----------------------------------------------------------------------------
 void ImportWidget::OnButtonChanged()
 {
-    emit ButtonChanged( IsButtonEnabled(), tools::translate( "Page_ABC", "Import" ) );
+    emit ButtonChanged( IsButtonEnabled(), tools::translate( "Page_ABC", "Import" ), false );
 }
