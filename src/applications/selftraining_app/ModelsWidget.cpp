@@ -104,7 +104,7 @@ void ModelsWidget::OnDelete()
     if( message.exec() != QMessageBox::Yes )
         return;
 
-    if( !path.Exists() || !path.IsDirectory() )
+    if( !path.IsDirectory() )
         return;
 
     path.RemoveAll();

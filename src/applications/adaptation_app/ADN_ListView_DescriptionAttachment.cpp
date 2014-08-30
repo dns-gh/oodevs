@@ -136,7 +136,7 @@ void ADN_ListView_DescriptionAttachment::RemoveFile()
     ADN_Connector_Vector_ABC& connector = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
     tools::Path imageDir = GetImageDir( missionName_->GetKey() );
     imageDir /= tools::Path::FromUnicode( GetModel().item( currentIndex().row() )->text().toStdWString() );
-    if( imageDir.Exists() && imageDir.IsRegularFile() )
+    if( imageDir.IsRegularFile() )
         imageDir.Remove();
     connector.RemItem( GetCurrentData() );
 }

@@ -140,7 +140,7 @@ void TimelineToolBar::OnLoadOrderFile()
 {
     tools::Path defaultPath = config_.BuildExerciseChildFile( "" ).Normalize();
     tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load actions file" ), defaultPath, filters_ );
-    if( !filename.IsEmpty() && filename.Exists() && filename.IsRegularFile() )
+    if( !filename.IsEmpty() && filename.IsRegularFile() )
     {
         if( filename.Extension() == ".ord" )
             emit LoadOrderFileRequest( filename );
