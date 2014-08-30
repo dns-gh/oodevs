@@ -48,7 +48,6 @@ private:
 private:
     Application& app_;
     QListWidget* log_;
-    QProgressBar* progressBar_;
     std::function< void() > backCallback_;
 };
 
