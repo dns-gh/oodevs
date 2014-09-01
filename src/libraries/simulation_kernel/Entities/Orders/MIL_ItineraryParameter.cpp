@@ -13,6 +13,7 @@
 #include "Tools/MIL_Tools.h"
 #include <boost/make_shared.hpp>
 #include <boost/serialization/optional.hpp>
+#include <boost/foreach.hpp>
 
 BOOST_SERIALIZATION_SPLIT_FREE( sword::Pathfind );
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ItineraryParameter )
@@ -34,6 +35,12 @@ MIL_ItineraryParameter::MIL_ItineraryParameter( const sword::Pathfind& message, 
         return;
     std::reverse( message_.mutable_request()->mutable_positions()->begin(), message_.mutable_request()->mutable_positions()->end() );
     std::reverse( message_.mutable_result()->mutable_points()->begin(), message_.mutable_result()->mutable_points()->end() );
+    BOOST_FOREACH( auto point, *message_.mutable_result()->mutable_points() )
+    { 
+        auto tmp = point.current();
+        *point.mutable_current() = point.next();
+        *point.mutable_next() = tmp;
+    }
 }
 
 // -----------------------------------------------------------------------------
