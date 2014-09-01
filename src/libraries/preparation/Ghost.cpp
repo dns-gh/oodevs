@@ -433,7 +433,7 @@ const std::string& Ghost::GetSymbol() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Ghost::GetSymbol
+// Name: Ghost::GetNature
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
 const std::string& Ghost::GetNature() const
