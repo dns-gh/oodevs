@@ -145,16 +145,6 @@ std::pair< TER_Polygon, std::size_t > DEC_PathResult::ComputePathHull( const T_P
     return std::make_pair( pathHull, hullPoints.size() );
 }
 
-boost::shared_ptr< const TER_Localisation > DEC_PathResult::MakeLocation( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool applyScale ) const
-{
-    if( !applyScale )
-        return boost::shared_ptr< const TER_Localisation >( &pKnowledge->GetLocalisation(), [&]( const TER_Localisation* ) {} );
-    auto pObjectLocation = boost::make_shared< TER_Localisation >( pKnowledge->GetLocalisation() );
-    if( pObjectLocation->GetType() != TER_Localisation::eNone )
-        pObjectLocation->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
-    return pObjectLocation;
-}
-
 namespace
 {
     static const double epsilon = 1e-8;
@@ -245,15 +235,15 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
             if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, &agent ) )
                 continue;
         }
-        const auto pObjectLocation = MakeLocation( pKnowledge, applyScale );
-        if( !pObjectLocation )
-            continue;
-        const MT_Rect objectBBox = pObjectLocation->GetBoundingBox();
+        TER_Localisation location( pKnowledge->GetLocalisation() );
+        if( applyScale && location.GetType() != TER_Localisation::eNone )
+            location.Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
+        const MT_Rect objectBBox = location.GetBoundingBox();
         if( !bbox.Intersect2D( objectBBox ) && !bbox.Contains( objectBBox ) && !objectBBox.Contains( bbox ) )
             continue;
-        if( hullIntersectionIsFaster && !HullIntersects( hull.first, *pObjectLocation ) )
+        if( hullIntersectionIsFaster && !HullIntersects( hull.first, location ) )
             continue;
-        ComputeFutureObjectCollision( rDistance, pObject, pKnowledge, itCurrentPathPoint, *pObjectLocation );
+        ComputeFutureObjectCollision( rDistance, pObject, pKnowledge, itCurrentPathPoint, location );
     }
     return pObject != 0;
 }
