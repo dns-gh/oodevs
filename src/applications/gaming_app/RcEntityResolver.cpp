@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "RcEntityResolver.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Population_ABC.h"
@@ -56,6 +57,16 @@ void RcEntityResolver::NotifyCreated( const Agent_ABC& element )
 void RcEntityResolver::NotifyDeleted( const Agent_ABC& element )
 {
     tools::Resolver< Agent_ABC >::Remove( element.GetId() );
+}
+
+void RcEntityResolver::NotifyCreated( const kernel::AgentKnowledge_ABC& element )
+{
+    tools::Resolver< AgentKnowledge_ABC >::Register( element.GetEntityId(), const_cast< AgentKnowledge_ABC& >( element ) );
+}
+
+void RcEntityResolver::NotifyDeleted( const kernel::AgentKnowledge_ABC& element )
+{
+    tools::Resolver< AgentKnowledge_ABC >::Remove( element.GetEntityId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +149,8 @@ QString RcEntityResolver::CreateLink( const std::string& type, unsigned long id 
 {
     if( type == Agent_ABC::typeName_ )
         return CreateLink< Agent_ABC >( id );
+    else if( type == AgentKnowledge_ABC::typeName_ )
+        return CreateLink< AgentKnowledge_ABC >( id );
     else if( type == Automat_ABC::typeName_ )
         return CreateLink< Automat_ABC >( id );
     else if( type == Object_ABC::typeName_ )

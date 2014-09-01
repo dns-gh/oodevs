@@ -20,6 +20,7 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Tools.h"
@@ -31,12 +32,19 @@ using namespace kernel;
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const sword::UnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< Team_ABC >& teamResolver )
+AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group,
+                                const sword::UnitKnowledgeCreation& message,
+                                Controller& controller,
+                                const CoordinateConverter_ABC& converter,
+                                const tools::Resolver_ABC< Agent_ABC >& resolver,
+                                const tools::Resolver_ABC< Team_ABC >& teamResolver,
+                                const kernel::Profile_ABC& profile )
     : EntityImplementation< AgentKnowledge_ABC >( controller, message.knowledge().id(), "", true )
     , converter_   ( converter )
     , resolver_    ( resolver )
     , teamResolver_( teamResolver )
     , group_       ( group )
+    , profile_     ( profile )
     , realAgent_   ( resolver_.Get( message.unit().id() ) )
     , team_        ( 0 )
     , nDirection_  ( 0u, false )
@@ -156,16 +164,6 @@ const kernel::Team_ABC* AgentKnowledge::GetTeam() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::IsRecognized
-// Created: SBO 2006-12-08
-// -----------------------------------------------------------------------------
-bool AgentKnowledge::IsRecognized() const
-{
-    E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
-    return perception > eDetection;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::GetOwner
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
@@ -180,9 +178,11 @@ const kernel::KnowledgeGroup_ABC& AgentKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 QString AgentKnowledge::GetName() const
 {
-    if( IsRecognized() )
+    if( profile_.IsVisible( realAgent_ ) )
         return realAgent_.GetName();
-    return tools::translate( "AgentKnowledge", "Unknown unit" );
+    return nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection
+        ? tools::translate( "AgentKnowledge", "unknown %1 %2" ).arg( currentNature_.c_str() ).arg( id_ )
+        : tools::translate( "AgentKnowledge", "unknown %1" ).arg( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,9 +200,12 @@ std::string AgentKnowledge::GetSymbol() const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "AgentKnowledge", "Identifier:" ), id_ )
-             .Display( tools::translate( "AgentKnowledge", "Associated agent:" ), realAgent_ )
-             .Display( tools::translate( "AgentKnowledge", "Location:" ), strPosition_ )
+    displayer.Display( tools::translate( "AgentKnowledge", "Identifier:" ), id_ );
+    if( profile_.IsVisible( realAgent_ ) )
+        displayer.Display( tools::translate( "AgentKnowledge", "Associated agent:" ), realAgent_ );
+    else
+        displayer.Display( tools::translate( "AgentKnowledge", "Associated agent:" ), GetName() );
+    displayer.Display( tools::translate( "AgentKnowledge", "Location:" ), strPosition_ )
              .Display( tools::translate( "AgentKnowledge", "Heading:" ), nDirection_ * Units::degrees )
              .Display( tools::translate( "AgentKnowledge", "Speed:" ), nSpeed_ * Units::kilometersPerHour )
              .Display( tools::translate( "AgentKnowledge", "Operational state:" ), nEtatOps_ * Units::percentage )
@@ -278,22 +281,6 @@ void AgentKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::ElementsToKeep
-// Created: AGE 2006-10-25
-// -----------------------------------------------------------------------------
-int AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) const
-{
-    switch( perception )
-    {
-    default:
-    case eNotSeen:
-    case eDetection:      return 3; // nothing                  sugpu
-    case eRecognition:    return 5; // side + category + weapon shgpuca
-    case eIdentification: return 9; // all                      shgpucaaaw
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::TeamCharacter
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
@@ -307,12 +294,24 @@ const kernel::Karma& AgentKnowledge::TeamKarma( E_PerceptionResult perception ) 
 
 namespace
 {
-    std::string Strip( const std::string& nature, int keep )
+    int ElementsToKeep( E_PerceptionResult perception )
     {
+        switch( perception )
+        {
+        default:
+        case eNotSeen:
+        case eDetection:      return 3; // nothing                  sugpu
+        case eRecognition:    return 5; // side + category + weapon shgpuca
+        case eIdentification: return 9; // all                      shgpucaaaw
+        }
+    }
+    std::string Strip( const std::string& nature, E_PerceptionResult perception )
+    {
+        const int keep = ElementsToKeep( perception ) - 3;
         QStringList list = QStringList::split( '/',  nature.c_str() );
         while( list.size() > keep )
             list.pop_back();
-        QString result = list.join( "/" );
+        const QString result = list.join( "/" );
         return result.isNull() ? "" : result.toStdString();
     }
 }
@@ -323,18 +322,13 @@ namespace
 // -----------------------------------------------------------------------------
 void AgentKnowledge::UpdateSymbol()
 {
-    E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
-    const int toKeep = ElementsToKeep( perception );
-
+    const E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
     currentSymbol_ = fullSymbol_;
     App6Symbol::SetKarma( currentSymbol_, TeamKarma( perception ) );
     App6Symbol::SetKarma( moveSymbol_, TeamKarma( perception ) );
     App6Symbol::SetKarma( staticSymbol_, TeamKarma( perception ) );
-
     App6Symbol::FilterPerceptionLevel( currentSymbol_, perception );
-
-    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25:
-
+    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), perception );
     if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
-        nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20:
+        nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() );
 }

@@ -18,6 +18,7 @@ namespace kernel
 {
     class Entity_ABC;
     class Agent_ABC;
+    class AgentKnowledge_ABC;
     class Automat_ABC;
     class Controllers;
     class Object_ABC;
@@ -33,12 +34,14 @@ namespace kernel
 // =============================================================================
 class RcEntityResolver : public RcEntityResolver_ABC
                        , public tools::Resolver< kernel::Agent_ABC >
+                       , public tools::Resolver< kernel::AgentKnowledge_ABC >
                        , public tools::Resolver< kernel::Automat_ABC >
                        , public tools::Resolver< kernel::Object_ABC >
                        , public tools::Resolver< kernel::UrbanObject_ABC >
                        , public tools::Resolver< kernel::Population_ABC >
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< kernel::Agent_ABC >
+                       , public tools::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
                        , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                        , public tools::ElementObserver_ABC< kernel::Object_ABC >
                        , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
@@ -67,6 +70,8 @@ private:
     //@{
     virtual void NotifyCreated( const kernel::Agent_ABC& element );
     virtual void NotifyDeleted( const kernel::Agent_ABC& element );
+    virtual void NotifyCreated( const kernel::AgentKnowledge_ABC& element );
+    virtual void NotifyDeleted( const kernel::AgentKnowledge_ABC& element );
     virtual void NotifyCreated( const kernel::Object_ABC& element );
     virtual void NotifyDeleted( const kernel::Object_ABC& element );
     virtual void NotifyCreated( const kernel::Automat_ABC& element );

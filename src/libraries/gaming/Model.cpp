@@ -75,7 +75,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , controllers_             ( controllers )
     , static_                  ( staticModel )
     , config_                  ( config )
-    , agentsKnowledgeFactory_  ( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
+    , agentsKnowledgeFactory_  ( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_, profile ) )
     , objectKnowledgeFactory_  ( *new ObjectKnowledgeFactory( controllers, *this, staticModel, simulation ) )
     , urbanKnowledgeFactory_   ( *new UrbanKnowledgeFactory( controllers.controller_, *this ) )
     , agentKnowledgeConverter_ ( *new AgentKnowledgeConverter( controllers ) )

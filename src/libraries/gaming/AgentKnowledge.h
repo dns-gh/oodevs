@@ -21,10 +21,11 @@
 
 namespace kernel
 {
-    class Displayer_ABC;
-    class Team_ABC;
     class CoordinateConverter_ABC;
+    class Displayer_ABC;
     class Karma;
+    class Profile_ABC;
+    class Team_ABC;
 }
 
 // =============================================================================
@@ -42,8 +43,13 @@ class AgentKnowledge : public gui::EntityImplementation< kernel::AgentKnowledge_
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const sword::UnitKnowledgeCreation& message, kernel::Controller& controller,
-                             const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group,
+                             const sword::UnitKnowledgeCreation& message,
+                             kernel::Controller& controller,
+                             const kernel::CoordinateConverter_ABC& converter,
+                             const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
+                             const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver,
+                             const kernel::Profile_ABC& profile );
     virtual ~AgentKnowledge();
     //@}
 
@@ -72,9 +78,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::UnitKnowledgeUpdate& message );
     void UpdateSymbol();
-    int ElementsToKeep( kernel::E_PerceptionResult perception ) const;
     const kernel::Karma& TeamKarma( kernel::E_PerceptionResult perception ) const;
-    bool IsRecognized() const;
     //@}
 
 public:
@@ -82,6 +86,7 @@ public:
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
     const kernel::KnowledgeGroup_ABC& group_;
+    const kernel::Profile_ABC& profile_;
 
     kernel::Agent_ABC&      realAgent_;
     const kernel::Team_ABC* team_;

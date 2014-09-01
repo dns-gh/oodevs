@@ -17,6 +17,7 @@ namespace kernel
 {
     class Controllers;
     class CoordinateConverter_ABC;
+    class Profile_ABC;
 }
 
 class Model;
@@ -33,7 +34,8 @@ class AgentKnowledgeFactory : public AgentKnowledgeFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgeFactory( kernel::Controllers& controllers, Model& model, const kernel::CoordinateConverter_ABC& converter );
+             AgentKnowledgeFactory( kernel::Controllers& controllers, Model& model,
+                 const kernel::CoordinateConverter_ABC& converter, const kernel::Profile_ABC& profile );
     virtual ~AgentKnowledgeFactory();
     //@}
 
@@ -56,6 +58,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

@@ -135,7 +135,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     while( iterator.HasMoreElements() )
     {
         const AgentKnowledge_ABC& knowledge = iterator.NextElement();
-        knowledgeModel_.item( i )->setText( knowledge.GetEntity()->GetName() );
+        knowledgeModel_.item( i )->setText( knowledge.GetName() );
         knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
         ++i;
     }

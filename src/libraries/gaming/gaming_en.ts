@@ -33,10 +33,6 @@
 <context>
     <name>AgentKnowledge</name>
     <message>
-        <source>Unknown unit</source>
-        <translation>Unknown unit</translation>
-    </message>
-    <message>
         <source>Identifier:</source>
         <translation>Identifier:</translation>
     </message>
@@ -103,6 +99,14 @@
     <message>
         <source>Critical intelligence:</source>
         <translation>Critical intelligence:</translation>
+    </message>
+    <message>
+        <source>unknown %1 %2</source>
+        <translation>unknown %1 %2</translation>
+    </message>
+    <message>
+        <source>unknown %1</source>
+        <translation>unknown %1</translation>
     </message>
 </context>
 <context>
