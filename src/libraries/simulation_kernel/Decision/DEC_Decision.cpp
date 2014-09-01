@@ -405,6 +405,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_GetOpenRecoSpeed", &DEC_GeometryFunctions::GetOpenRecoSpeed );
     brain.RegisterFunction( "DEC_GetUrbanSearchSpeed", &DEC_GeometryFunctions::GetUrbanSearchSpeed );
     brain.RegisterFunction( "DEC_GetUrbanRecoSpeed", &DEC_GeometryFunctions::GetUrbanRecoSpeed );
+    brain.RegisterFunction( "DEC_Geometrie_UrbanRatio", &DEC_GeometryFunctions::GetUrbanRatio );
     
     brain.RegisterFunction( "DEC_Copie_DirectionDanger_Mission", &DEC_MiscFunctions::CopyDirectionDanger );
     brain.RegisterFunction( "DEC_DebugPointXY", &DEC_MiscFunctions::GetPointXY );

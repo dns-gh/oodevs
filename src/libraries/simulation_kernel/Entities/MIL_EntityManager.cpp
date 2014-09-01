@@ -2938,6 +2938,15 @@ void MIL_EntityManager::VisitUniversalObjects( const std::function< void( MIL_Ob
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::function< void
+// Created: LDC 2014-09-01
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::VisitUrbanObjects( const std::function< void( const MIL_UrbanObject_ABC& ) >& functor ) const
+{
+    pObjectManager_->VisitUrbanObjects( functor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessFormationChangeSuperior
 // Created: AHC 2013-01-14
 // -----------------------------------------------------------------------------

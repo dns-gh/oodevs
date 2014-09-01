@@ -406,13 +406,22 @@ DEC_Geometrie_PositionAdvanceAlongFuseauAutomat = function( position )
 end
 
 --- Returns the corresponding area of the given AOR
--- @param AOR Sim AOR
--- @return Sim area
+-- @param AOR Simulation area of responsibility
+-- @return Simulation area
 integration.getAreaFromAOR = function ( AOR )
     return DEC_Geometrie_ConvertirFuseauEnLocalisation( AOR )
 end
 
+--- Deprecated
 integration.postionAdvanceAlongAOR = integration.positionAdvanceAlongAOR
 
 --- Deprecated
 integration.getPositionAlongDangerDirection = integration.advanceAlongDangerDirection
+
+--- Returns the ratio urban area/total area if an area
+-- @param area Simulation area
+-- @return number
+integration.getUrbanRatio = function( area )
+    return DEC_Geometrie_UrbanRatio( area )
+end        
+

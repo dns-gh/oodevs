@@ -2790,3 +2790,27 @@ double DEC_GeometryFunctions::GetUrbanSearchSpeed( const MIL_UrbanObject_ABC* pU
     }
     return 0.25;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetUrbanRatio
+// Created: LDC 2014-09-01
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::GetUrbanRatio( const TER_Localisation* localisation )
+{
+    double area = localisation->GetArea();
+    if( !area )
+        return 0;
+    double urbanArea = 0;
+    MIL_AgentServer::GetWorkspace().GetEntityManager().VisitUrbanObjects(
+    [&]( const MIL_UrbanObject_ABC& object )
+    {
+        if( 0 != object.GetParent() )
+            return;
+        auto blockLocation = object.GetLocalisation();
+        const double objectArea = blockLocation.GetArea();
+        if( !objectArea )
+            return;
+        urbanArea += TER_Geometry::IntersectionArea( *localisation, blockLocation );
+    });
+    return urbanArea / area;
+}

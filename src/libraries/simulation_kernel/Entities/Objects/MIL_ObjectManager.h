@@ -82,6 +82,7 @@ public:
     void ReadUrbanState( xml::xistream& xis );
     MIL_Object_ABC* Find( unsigned int nID ) const;
     void VisitUniversalObjects( const std::function< void( MIL_Object_ABC& ) >& visitor ) const;
+    void VisitUrbanObjects( const std::function< void( const MIL_UrbanObject_ABC& ) >& functor ) const;
     const std::map< unsigned int, MIL_Object_ABC* >& GetObjects() const;
     //@}
 
