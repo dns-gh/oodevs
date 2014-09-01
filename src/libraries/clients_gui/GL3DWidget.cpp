@@ -828,26 +828,10 @@ bool Gl3dWidget::IsInSelectionViewport( const geometry::Point2f& point ) const
 
 // -----------------------------------------------------------------------------
 // Name: GL3DWidget::FillSelection
-// Created: LGY 2013-02-20
-// -----------------------------------------------------------------------------
-void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
-{
-    if( !IsInSelectionViewport( point ) )
-        return;
-
-    glDisable( GL_DEPTH_TEST );
-
-    pPickingSelector_->FillSelection( selection, boost::bind( &Gl3dWidget::paintGL, this ) );
-
-    glEnable( GL_DEPTH_TEST );
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::FillSelection
 // Created: LGY 2013-03-11
 // -----------------------------------------------------------------------------
-void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
+void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection,
+        const boost::optional< E_LayerTypes >& type )
 {
     if( !IsInSelectionViewport( point ) )
         return;

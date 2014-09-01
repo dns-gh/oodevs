@@ -103,8 +103,8 @@ public:
     virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, float pointSize, bool fixedSize = true ) const;
     virtual void DrawShapeText( const QImage& image, const geometry::Point2f& where ) const;
 
-    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
-    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type );
+    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection,
+            const boost::optional< E_LayerTypes >& type );
     virtual void Picking();
     virtual void RenderPicking( const T_ObjectPicking& object );
     virtual bool IsPickingMode() const;
