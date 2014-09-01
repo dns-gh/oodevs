@@ -11,7 +11,7 @@
 #define __MIL_MissionParameterFactory_h_
 
 #include <boost/shared_ptr.hpp>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 namespace sword
 {
