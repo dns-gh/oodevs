@@ -12,11 +12,11 @@
 #include "moc_LogisticsRequestsTable.cpp"
 #include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/InternalLinks.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/Roles.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "gaming/LogisticHelpers.h"
 #include "gaming/LogisticsConsign_ABC.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )

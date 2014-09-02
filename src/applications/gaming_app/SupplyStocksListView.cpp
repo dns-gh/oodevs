@@ -32,14 +32,6 @@ namespace
         eMass,
         eVolume,
     };
-
-    float ComputeNormalizedQuantity( const kernel::StaticModel& staticModel, const kernel::Entity_ABC& logBase, const Dotation& dotation )
-    {
-        logistic_helpers::T_Requirements requirements;
-        logistic_helpers::ComputeLogisticConsumptions( staticModel, logBase, dotation.type_->GetLogisticSupplyClass(), requirements, false );
-        const float requirement = static_cast< float >( requirements[ dotation.type_ ] );
-        return requirement > 0 ? dotation.quantity_ / requirement : 0;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -75,13 +67,13 @@ void SupplyStocksListView::Update( const tools::Resolver< Dotation >& dotations 
 {
     ResizeModelOnNewContent( dotations.Count() );
     int i = 0;
-    tools::Iterator< const Dotation& > iterator = dotations.CreateIterator();
+    auto iterator = dotations.CreateIterator();
     while( iterator.HasMoreElements() )
     {
         const Dotation& dotation = iterator.NextElement();
         model_.item( i, eStock )->setText( QString( dotation.type_->GetName().c_str() ) );
         model_.item( i, eQuantity )->setText( QString::number( dotation.quantity_ ) );
-        model_.item( i, eNormalizedQuantity )->setText( locale().toString( ComputeNormalizedQuantity( staticModel_, *selected_, dotation ), 'f', 2 ) );
+        model_.item( i, eNormalizedQuantity )->setText( locale().toString( logistic_helpers::ComputeNormalizedQuantity( staticModel_, *selected_, *dotation.type_, dotation.quantity_ ), 'f', 2 ) );
         model_.item( i, eMass )->setText( locale().toString( dotation.type_->GetUnitWeight() * dotation.quantity_, 'f', 2 ) );
         model_.item( i, eVolume )->setText( locale().toString( dotation.type_->GetUnitVolume() * dotation.quantity_, 'f', 2 ) );
         ++i;

@@ -174,25 +174,28 @@ namespace logistic_helpers
         }
     }
 
-    void ComputeLogisticConsumptions( const kernel::StaticModel& staticModel, const kernel::Entity_ABC& logBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements, bool forceLogisticBase )
+    void ComputeLogisticConsumptions( const kernel::StaticModel& staticModel, const kernel::Entity_ABC& entity, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements, bool forceLogisticBase )
     {
-        auto hierarchiesBase = logBase.Retrieve< gui::LogisticHierarchiesBase >();
+        const auto logBase = GetLogisticBase( &entity );
+        if( !logBase )
+            return;
+        auto hierarchiesBase = logBase->Retrieve< gui::LogisticHierarchiesBase >();
         if( !hierarchiesBase )
             return;
         auto logChildren = hierarchiesBase->CreateSubordinateIterator();
         while( logChildren.HasMoreElements() )
         {
-            const kernel::Entity_ABC& entity = logChildren.NextElement();
-            if( logistic_helpers::IsLogisticBase( entity ) )
+            const kernel::Entity_ABC& child = logChildren.NextElement();
+            if( logistic_helpers::IsLogisticBase( child ) )
             {
-                if( logBase.GetId() != entity.GetId() )
-                    ComputeLogisticConsumptions( staticModel, entity, logType, requirements, forceLogisticBase );
+                if( logBase->GetId() != child.GetId() )
+                    ComputeLogisticConsumptions( staticModel, child, logType, requirements, forceLogisticBase );
             }
             else
-                FillSupplyRequirements( entity, logType, requirements, staticModel );
+                FillSupplyRequirements( child, logType, requirements, staticModel );
         }
-        if( logBase.GetTypeName() == kernel::Automat_ABC::typeName_ && ( !forceLogisticBase || logistic_helpers::IsLogisticBase( logBase ) ) )
-            FillSupplyRequirements( logBase, logType, requirements, staticModel );
+        if( logBase->GetTypeName() == kernel::Automat_ABC::typeName_ && ( !forceLogisticBase || logistic_helpers::IsLogisticBase( *logBase ) ) )
+            FillSupplyRequirements( *logBase, logType, requirements, staticModel );
     }
 
     kernel::Entity_ABC* FindParentEntity( const sword::ParentEntity& message,
@@ -204,5 +207,15 @@ namespace logistic_helpers
         else if( message.has_formation() )
             return formationResolver.Find( message.formation().id() );
         return 0;
+    }
+
+    const kernel::Entity_ABC* GetLogisticBase( const kernel::Entity_ABC* entity )
+    {
+        if( !entity )
+            return 0;
+        if( auto base = entity->Retrieve< gui::LogisticBase >() )
+            if( base->IsBase() )
+                return entity;
+        return GetLogisticBase( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
     }
 }
