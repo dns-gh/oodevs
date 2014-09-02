@@ -29,7 +29,8 @@ public:
     //@{
     static void SetKarma( std::string& symbol, const Karma& karma );
     static void FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception );
-    static std::string GetBase( const std::string& symbol, const Karma*& karma );
+    static std::string GetBase( const std::string& symbol, Karma& karma );
+    static std::string FilterNature( const std::string& nature, E_PerceptionResult perception );
     //@}
 };
 

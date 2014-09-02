@@ -292,30 +292,6 @@ const kernel::Karma& AgentKnowledge::TeamKarma( E_PerceptionResult perception ) 
     return Karma::unknown_;
 }
 
-namespace
-{
-    int ElementsToKeep( E_PerceptionResult perception )
-    {
-        switch( perception )
-        {
-        default:
-        case eNotSeen:
-        case eDetection:      return 3; // nothing                  sugpu
-        case eRecognition:    return 5; // side + category + weapon shgpuca
-        case eIdentification: return 9; // all                      shgpucaaaw
-        }
-    }
-    std::string Strip( const std::string& nature, E_PerceptionResult perception )
-    {
-        const int keep = ElementsToKeep( perception ) - 3;
-        QStringList list = QStringList::split( '/',  nature.c_str() );
-        while( list.size() > keep )
-            list.pop_back();
-        const QString result = list.join( "/" );
-        return result.isNull() ? "" : result.toStdString();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::UpdateSymbol
 // Created: AGE 2006-10-24
@@ -328,7 +304,7 @@ void AgentKnowledge::UpdateSymbol()
     App6Symbol::SetKarma( moveSymbol_, TeamKarma( perception ) );
     App6Symbol::SetKarma( staticSymbol_, TeamKarma( perception ) );
     App6Symbol::FilterPerceptionLevel( currentSymbol_, perception );
-    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), perception );
+    currentNature_ = App6Symbol::FilterNature( realAgent_.GetType().GetNature().GetNature(), perception );
     if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() );
 }
