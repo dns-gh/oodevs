@@ -61,51 +61,28 @@ std::string App6Symbol::GetBase( const std::string& symbol, Karma& karma )
     return result;
 }
 
-namespace
-{
-    unsigned int ElementsToKeep( E_PerceptionResult perception )
-    {
-        switch( perception )
-        {
-        default:
-        case eNotSeen:
-        case eDetection:      return 5;  // nothing                  sugpu
-        case eRecognition:    return 7;  // side + category + weapon shgpuca
-        case eIdentification: return 10; // all                      shgpucaaaw
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: App6Symbol::FilterPerceptionLevel
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------
 void App6Symbol::FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception )
 {
-    if( eIdentification != perception ) // keep all if identified
-        symbol = symbol.substr( 0, symbol.find_last_of( '/' ) + ElementsToKeep( perception ) + 1 );
-}
-
-namespace
-{
-    int ToKeep( E_PerceptionResult perception )
-    {
-        switch( perception )
-        {
-        default:
-        case eNotSeen:
-        case eDetection:      return 3; // nothing                  sugpu
-        case eRecognition:    return 5; // side + category + weapon shgpuca
-        case eIdentification: return 9; // all                      shgpucaaaw
-        }
-    }
+    if( perception == eIdentification ) // keep all if identified
+        return;
+    symbol = symbol.substr( 0, symbol.find_last_of( '/' ) + 1 +
+        ( perception == eRecognition
+            ? 7      // side + category + weapon shgpuca
+            : 5 ) ); // nothing                  sugpu
 }
 
 std::string App6Symbol::FilterNature( const std::string& nature, E_PerceptionResult perception )
 {
-    const int keep = ToKeep( perception ) - 3;
-    QStringList list = QStringList::split( '/',  nature.c_str() );
-    while( list.size() > keep )
+    if( perception < eRecognition )
+        return "";
+    if( perception == eIdentification ) // keep all if identified
+        return nature;
+    QStringList list = QStringList::split( '/', nature.c_str() );
+    while( list.size() > 2 )
         list.pop_back();
     const QString result = list.join( "/" );
     return result.isNull() ? "" : result.toStdString();
