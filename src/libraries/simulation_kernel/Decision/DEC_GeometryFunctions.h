@@ -171,6 +171,9 @@ public:
     static boost::shared_ptr< MT_Vector2D > ComputeEntryPointForFuseau( DEC_Decision_ABC* pPion, MIL_Fuseau& fuseau );
     static bool IsPointInObject( DEC_Decision_ABC& callerAgent, const MT_Vector2D& point, const std::string& capacity,  int isFriend );
     static double GetUrbanRatio( const TER_Localisation* localisation );
+    static std::vector< double > GetSurfaceParametersUrbanRatio( DEC_Decision_ABC* entity );
+    static std::vector< double > GetPointParametersUrbanRatio( DEC_Decision_ABC* entity );
+    static int GetUrbanParametersNumber( DEC_Decision_ABC* entity );
 
     // ASA
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePosDeploiementASAOmni( const MIL_Automate& automat, int positionCount, const MT_Vector2D* center, float radius );

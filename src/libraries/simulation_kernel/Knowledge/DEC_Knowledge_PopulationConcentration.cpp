@@ -463,3 +463,12 @@ double DEC_Knowledge_PopulationConcentration::GetRelevance() const
 {
     return rRelevance_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::GetPosition
+// Created: LDC 2014-09-02
+// -----------------------------------------------------------------------------
+MT_Vector2D DEC_Knowledge_PopulationConcentration::GetPosition() const
+{
+    return position_;
+}

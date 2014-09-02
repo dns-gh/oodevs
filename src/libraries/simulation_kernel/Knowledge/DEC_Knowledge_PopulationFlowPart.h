@@ -54,6 +54,7 @@ public:
     bool UpdateRelevance( const double rMaxLifeTime );
     bool Clean();
     double GetRelevance() const;
+    T_PointVector GetShape() const;
     //@}
 
     //! @name Network operations
