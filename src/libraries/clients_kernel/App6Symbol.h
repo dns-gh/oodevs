@@ -25,36 +25,11 @@ namespace kernel
 class App6Symbol
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-             App6Symbol();
-    virtual ~App6Symbol();
-    //@}
-
     //! @name Operations
     //@{
-    static void Initialize();
     static void SetKarma( std::string& symbol, const Karma& karma );
     static void FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception );
-    static std::string GetBase( const std::string& symbol, Karma*& karma );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    App6Symbol( const App6Symbol& );            //!< Copy constructor
-    App6Symbol& operator=( const App6Symbol& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< Karma, char > T_KarmaChars;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    static T_KarmaChars karmaChars_;
+    static std::string GetBase( const std::string& symbol, const Karma*& karma );
     //@}
 };
 
