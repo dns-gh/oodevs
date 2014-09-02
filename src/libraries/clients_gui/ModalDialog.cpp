@@ -14,8 +14,8 @@
 // Name: ModalDialog constructor
 // Created: JSR 2012-03-20
 // -----------------------------------------------------------------------------
-ModalDialog::ModalDialog( QWidget *parent, const char *name, Qt::WindowFlags f /*= 0*/)
-    : QDialog( parent, name, true, f )
+ModalDialog::ModalDialog( QWidget *parent, const char *name, bool modal /* = true */, Qt::WindowFlags f /*= 0*/)
+    : QDialog( parent, name, modal, f )
 {
     QShortcut* s = new QShortcut( QKeySequence( Qt::Key_F1 ), this );
     if( parent )

@@ -42,7 +42,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Commit();
     virtual void Reset();
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}

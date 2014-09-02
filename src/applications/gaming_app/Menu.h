@@ -53,10 +53,8 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
     virtual void NotifyUpdated( const Profile& profile );
-    //@}
+    void AddModdedAction( QAction* action, int hiddenModes = 0, int visibleModes = 0, bool visibleByDefault = true );
 
 private:
     //! @name Member data
@@ -65,6 +63,7 @@ private:
     gui::ProfileDialog& profileDialog_;
     int profileMenu_;
     gui::RichAction* windowAction_;
+    std::vector< gui::RichAction* > moddedActions_;
     //@}
 };
 

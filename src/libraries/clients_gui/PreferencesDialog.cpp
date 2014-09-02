@@ -43,7 +43,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
                                       GlSelector& selector,
                                       Elevation2dLayer& elevation2dLayer,
                                       GraphicPreferences& preferences )
-    : ModalDialog( parent, "PreferencesDialog" )
+    : ModalDialog( parent, "PreferencesDialog", false )
     , controllers_      ( controllers )
     , painter_          ( painter )
     , pGraphicPrefPanel_( 0 )
@@ -100,7 +100,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
 
     BuildSettings();
     hide();
-    controllers_.modes_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
 // -----------------------------------------------------------------------------
 PreferencesDialog::~PreferencesDialog()
 {
-    controllers_.modes_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,4 +206,13 @@ void PreferencesDialog::BuildSettings()
     AddPage( tools::translate( "PreferencesDialog", "2D/Elevation" ), *new ElevationPanel( this, elevation2dLayer_, controllers_, painter_ ) );
     AddPage( tools::translate( "PreferencesDialog", "3D" ), *new LightingPanel( this, lighting_, controllers_ ) );
     AddPage( tools::translate( "PreferencesDialog", "Refresh rate" ), *new RefreshRatePanel( this, controllers_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::NotifyUpdated
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void PreferencesDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    OnCancel();
 }

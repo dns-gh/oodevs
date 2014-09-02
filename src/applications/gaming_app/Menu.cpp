@@ -158,7 +158,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 
     // Display
     menu = new gui::RichMenu( "Settings", this, controllers_, tools::translate( "Menu", "&Settings" ) );
-    menu->SetModes( eModes_None, eModes_All, true );
+    menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
     kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
     gui::RichToolBar* toolBar = new gui::RichToolBar( controllers, pParent, "units toolbar" );
     toolBar->SetModes( eModes_Default, eModes_None, true );
@@ -259,7 +259,8 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     }
 
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
+    QAction* action = menu->addAction( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( show() ), QKeySequence( Qt::CTRL + Qt::Key_P ) );
+    AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
     addMenu( menu );
 
     // Profiles
@@ -303,8 +304,23 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 // -----------------------------------------------------------------------------
 Menu::~Menu()
 {
+    for( std::vector< gui::RichAction* >::iterator it = moddedActions_.begin(); it != moddedActions_.end(); ++it )
+        delete *it;
     delete windowAction_;
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::AddModdedAction
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+void Menu::AddModdedAction( QAction* action, int hiddenModes /* = 0 */, int visibleModes /* = 0 */, bool visibleByDefault /* = true */ )
+{
+    if( !action )
+        return;
+    gui::RichAction* richAction = new gui::RichAction( action, controllers_ );
+    richAction->SetModes( hiddenModes, visibleModes, visibleByDefault );
+    moddedActions_.push_back( richAction );
 }
 
 // -----------------------------------------------------------------------------

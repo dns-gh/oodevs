@@ -12,6 +12,7 @@
 #include "moc_RefreshRatePanel.cpp"
 #include "GlSelector.h"
 #include "RichSpinBox.h"
+#include "SignalAdapter.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 
@@ -30,6 +31,9 @@ RefreshRatePanel::RefreshRatePanel( QWidget* parent, kernel::Controllers& contro
     new QLabel( tr( "Select refresh rate (in ms):" ), box );
     spinBox_ = new RichSpinBox( "RefreshRateSpinBox", box, 10 );
     spinBox_->setValue( GlSelector::defaultFrameRate_ );
+    gui::connect( spinBox_, SIGNAL( valueChanged( int ) ), [&]{
+        options_.Change( "RefreshRate", spinBox_->value() );
+    } );
     setWidget( box );
     controllers_.Register( *this );
 }
@@ -44,22 +48,12 @@ RefreshRatePanel::~RefreshRatePanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RefreshRatePanel::Commit
-// Created: LDC 2014-02-21
-// -----------------------------------------------------------------------------
-void RefreshRatePanel::Commit()
-{
-    options_.Change( "RefreshRate", spinBox_->value() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RefreshRatePanel::Reset
 // Created: LDC 2014-02-21
 // -----------------------------------------------------------------------------
 void RefreshRatePanel::Reset()
 {
     spinBox_->setValue( GlSelector::defaultFrameRate_ );
-    options_.Change( "RefreshRate", GlSelector::defaultFrameRate_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -68,9 +62,6 @@ void RefreshRatePanel::Reset()
 // -----------------------------------------------------------------------------
 void RefreshRatePanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    QString option ( name.c_str() );
-    if( option == "RefreshRate" )
-    {
+    if( name == "RefreshRate" )
         spinBox_->setValue( value.To< int >() );
-    }
 }

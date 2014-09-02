@@ -12,12 +12,14 @@
 
 #include "ModalDialog.h"
 #include "SoundManager.h"
+#include <tools/ElementObserver_ABC.h>
 #include <tools/Observer_ABC.h>
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
     class Controllers;
+    class ModelUnLoaded;
 }
 
 namespace gui
@@ -42,6 +44,7 @@ namespace gui
 // =============================================================================
 class PreferencesDialog : public ModalDialog
                         , public tools::Observer_ABC
+                        , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT
 
@@ -89,6 +92,7 @@ private:
     //! @name Helpers
     //@{
     void BuildSettings();
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     //@}
 
     //! @name Types

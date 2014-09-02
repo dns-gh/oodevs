@@ -21,7 +21,7 @@ class ModalDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ModalDialog( QWidget *parent, const char *name, Qt::WindowFlags f = 0);
+             ModalDialog( QWidget *parent, const char *name, bool modal = true, Qt::WindowFlags f = 0);
     virtual ~ModalDialog();
     //@}
 };

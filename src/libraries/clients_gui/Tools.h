@@ -18,12 +18,16 @@ namespace kernel
 {
     class Entity_ABC;
     class Profile_ABC;
+    class Options;
 }
 
 namespace gui
 {
+    class ColorButton;
     class GlTools_ABC;
 }
+
+class QVBoxLayout;
 
 namespace tools
 {
@@ -41,6 +45,13 @@ namespace tools
     void SetLevel( const kernel::Entity_ABC& entity, std::string& level );
     QImage DrawText( const QString& text, const QFont& font, const QColor& color );
     void DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GlTools_ABC& tools );
+
+    gui::ColorButton* AddColorButton( QVBoxLayout* mainLayout,
+                                      kernel::Options& options,
+                                      const QString& objectName,
+                                      const QString& name,
+                                      const std::string& optionName,
+                                      const QColor& defaultColor );
 }  //! namespace tools
 
 #endif  // CLIENTS_GUI_TOOLS_H
