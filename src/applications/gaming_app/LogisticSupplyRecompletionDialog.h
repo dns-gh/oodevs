@@ -77,7 +77,7 @@ private:
     void InitializePersonal   ();
     void InitializeDotations  ();
     void InitializeAmmunitions();
-    void InitializeSupplies   ();
+    void InitializeStocks     ();
 
     void AddPersonal( unsigned pos, const QString& label, unsigned max );
     void AddAmmunition( unsigned pos, const QString& label );
@@ -86,7 +86,7 @@ private:
     void FillEquipments ( actions::parameters::ParameterList& list );
     void FillDotations  ( actions::parameters::ParameterList& list );
     void FillAmmunitions( actions::parameters::ParameterList& list );
-    void FillSupplies   ( actions::parameters::ParameterList& list );
+    void FillStocks     ( actions::parameters::ParameterList& list );
 
     QStringList FilterEquipmentList( int index ) const;
     //@}

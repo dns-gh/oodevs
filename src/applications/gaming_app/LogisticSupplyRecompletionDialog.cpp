@@ -19,6 +19,7 @@
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "gaming/Troops.h"
@@ -130,11 +131,11 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     stockGroupBox_->setFlat( true );
 
     stockTable_ = new QTableWidget( 0, 3, stockGroupBox_ );
-    stockTable_->setColumnCount( 2 );
+    stockTable_->setColumnCount( 3 );
     stockDelegate_ = new gui::CommonDelegate( this );
     stockTable_->setItemDelegate( stockDelegate_ );
     headers.clear();
-    headers << tr( "Supplies" ) << tr( "Count" );
+    headers << tr( "Supplies" ) << tr( "Count" ) << tr( "Norm. quantities" );
     stockTable_->setHorizontalHeaderLabels( headers );
     stockTable_->horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
     stockTable_->setColumnWidth( 0, 60 );
@@ -195,7 +196,7 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments()
     equipmentsMax_.clear();
     if( auto equipments = static_cast< const Equipments* >( selected_->Retrieve< Equipments_ABC >() ) )
     {
-        tools::Iterator< const Equipment& > it = equipments->CreateIterator();
+        auto it = equipments->CreateIterator();
         QStringList equipmentList;
         while( it.HasMoreElements() )
         {
@@ -207,7 +208,7 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments()
         equipmentsTable_->setRowCount( 0 );
         equipmentsTable_->insertRow( 0 );
         equipmentDelegate_->AddComboBox( 0, 0, 0, 0, equipmentsList_ );
-        equipmentsTable_->setItem( 0, 2,  new QTableWidgetItem( ) );
+        equipmentsTable_->setItem( 0, 2,  new QTableWidgetItem() );
         equipmentsTable_->setMinimumHeight( std::max< int >( equipmentsTable_->rowHeight( 0 ) * 3, 20 ) );
     }
 }
@@ -252,7 +253,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
     dotationsTable_->setRowCount( 0 );
     catetoriesNames_.clear();
     const tools::Resolver_ABC< DotationType >& dotations = static_.objectTypes_;
-    tools::Iterator< const DotationType& > it = dotations.CreateIterator();
+    auto it = dotations.CreateIterator();
     std::set< unsigned long > inserted;
     while( it.HasMoreElements() )
     {
@@ -301,10 +302,10 @@ void LogisticSupplyRecompletionDialog::AddAmmunition( unsigned nPos, const QStri
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyRecompletionDialog::InitializeSupplies
+// Name: LogisticSupplyRecompletionDialog::InitializeStocks
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeSupplies()
+void LogisticSupplyRecompletionDialog::InitializeStocks()
 {
     stocks_.clear();
     stockTable_->setRowCount( 0 );
@@ -312,11 +313,11 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
     if( supplies )
     {
         stockTable_->setRowCount( 0 );
-        tools::Iterator< const Dotation& > it = supplies->CreateIterator();
+        auto it = supplies->CreateIterator();
         while( it.HasMoreElements() )
         {
             const Dotation& stock = it.NextElement();
-            const unsigned nPos = stockTable_->rowCount();
+            const unsigned int nPos = stockTable_->rowCount();
             stockTable_->insertRow( nPos );
             QTableWidgetItem* item = new QTableWidgetItem( stock.type_->GetName().c_str() );
             item->setCheckState( Qt::Unchecked );
@@ -324,6 +325,8 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
             stockDelegate_->AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
             stockTable_->setItem( nPos, 1, new QTableWidgetItem( QString::number( stock.quantity_ ) ) );
             stocks_[ stock.type_->GetName().c_str() ] = &stock;
+            const float normalized = logistic_helpers::ComputeNormalizedQuantity( static_, *selected_, *stock.type_, stock.quantity_ );
+            stockTable_->setItem( nPos, 2, new QTableWidgetItem( QString::number( normalized, 'f', 2 ) ) );
         }
         stockTable_->setMinimumHeight( std::max< int >( stockTable_->rowHeight( 0 ) * 4, 20 ) );
         stockGroupBox_->setVisible( true );
@@ -344,7 +347,7 @@ void LogisticSupplyRecompletionDialog::Show()
     InitializePersonal   ();
     InitializeDotations  ();
     InitializeAmmunitions();
-    InitializeSupplies   ();
+    InitializeStocks     ();
     show();
 }
 
@@ -354,6 +357,31 @@ namespace
     {
         return QString( (str + " %L1" ).c_str() ).arg( index++ ).toStdString();
     }
+
+    bool MustFill( QTableWidget& table )
+    {
+        for( int nRow = 0; nRow < table.rowCount(); ++nRow )
+            if( table.item( nRow, 0 )->checkState() == Qt::Checked )
+                return true;
+        return false;
+    }
+
+    void Fill( ParameterList& list, QTableWidget& table, const std::string& name, const std::string& identifier, const std::string& quantity,
+               const std::function< unsigned int( int ) >& idFunctor, const std::function< bool( const QTableWidget&, int ) >& checker )
+    {
+        if( !MustFill( table ) )
+            return;
+        int index = 1;
+        for( int nRow = 0; nRow < table.rowCount(); ++nRow )
+        {
+            if( checker( table, nRow ) )
+            {
+                ParameterList& personalList = list.AddList( CreateName( name, index ) );
+                personalList.AddIdentifier( identifier, idFunctor( nRow ) );
+                personalList.AddQuantity( quantity, table.locale().toInt( table.item( nRow, 1 )->text() ) );
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -362,120 +390,54 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
 {
-    uint nNbrPersonals = 0;
-    for( int nRow = 0; nRow < personalsTable_->rowCount(); ++nRow )
-    {
-        if( personalsTable_->item( nRow, 0 )->checkState() == Qt::Checked )
-            ++ nNbrPersonals;
-    }
-    if( nNbrPersonals > 0 )
-    {
-        int index = 1;
-        for( int nRow = 0; nRow < personalsTable_->rowCount(); ++nRow )
-        {
-            if( personalsTable_->item( nRow, 0 )->checkState() != Qt::Checked )
-                continue;
-
-            ParameterList& personalList = list.AddList( CreateName( "Human", index ) );
-            personalList.AddIdentifier( "Rank", nRow );
-            personalList.AddQuantity( "Number", personalsTable_->item( nRow, 1 )->text().toInt() );
-        }
-    }
+    Fill( list, *personalsTable_, "Human", "Rank", "Number",
+          [&]( int nRow ){ return nRow; },
+          [&]( const QTableWidget& table, int nRow ){ return table.item( nRow, 0 )->checkState() == Qt::Checked; } );
 }
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillEquipments
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::ParameterList& list )
 {
-    if( equipmentsTable_->rowCount() > 1 )
-    {
-        int index = 1;
-        for( int nRow = 0; nRow < equipmentsTable_->rowCount() - 1; ++nRow )
-        {
-            ParameterList& personalList = list.AddList( CreateName( "Equipment", index ) );
-            personalList.AddIdentifier( "Equipment", equipments_[ equipmentsTable_->item( nRow, 0 )->text() ]->type_.GetId() );
-            personalList.AddQuantity( "Number", equipmentsTable_->item( nRow, 1 )->text().toInt() );
-        }
-    }
+    Fill( list, *equipmentsTable_, "Equipment", "Equipment", "Number",
+          [&]( int nRow ){ return equipments_[ equipmentsTable_->item( nRow, 0 )->text() ]->type_.GetId(); },
+          [&]( const QTableWidget&, int ){ return true; } );
 }
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillDotations
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::ParameterList& list )
 {
-    unsigned int nNbrDotations = 0;
-    for( int nRow = 0; nRow < dotationsTable_->rowCount(); ++nRow )
-    {
-        if( dotationsTable_->item( nRow, 0 )->checkState() == Qt::Checked )
-            ++ nNbrDotations;
-    }
-    if( nNbrDotations > 0 )
-    {
-        int index = 1;
-        for( int nRow = 0; nRow < dotationsTable_->rowCount(); ++nRow )
-        {
-            if( dotationsTable_->item( nRow, 0 )->checkState() != Qt::Checked )
-                continue;
+    Fill( list, *dotationsTable_, "Dotation", "Dotation", "Number",
+          [&]( int nRow ){ return ENT_Tr::ConvertToDotationType( catetoriesNames_[ nRow ].toStdString(), ENT_Tr::eToTr ); },
+          [&]( const QTableWidget& table, int nRow ){ return table.item( nRow, 0 )->checkState() == Qt::Checked; } );
 
-            ParameterList& personalList = list.AddList( CreateName( "Dotation", index ) );
-            personalList.AddIdentifier( "Dotation", ENT_Tr::ConvertToDotationType( catetoriesNames_[ nRow ].toStdString(), ENT_Tr::eToTr ) );
-            personalList.AddQuantity( "Number", dotationsTable_->item( nRow, 1 )->text().toInt() );
-        }
-    }
 }
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillAmmunitions
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::ParameterList& list )
 {
-    uint nNbrMunitions = 0;
-    for( int nRow = 0; nRow < munitionsFamilyTable_->rowCount(); ++nRow )
-    {
-         if( munitionsFamilyTable_->item( nRow, 0 )->checkState() == Qt::Checked )
-            ++ nNbrMunitions;
-    }
-    if( nNbrMunitions > 0 )
-    {
-        int index = 1;
-        for( int nRow = 0; nRow < munitionsFamilyTable_->rowCount(); ++nRow )
-        {
-            if( munitionsFamilyTable_->item( nRow, 0 )->checkState() != Qt::Checked )
-                continue;
-
-            ParameterList& ammoList = list.AddList( CreateName( "Ammo", index ) );
-            ammoList.AddIdentifier( "Ammo", nRow );
-            ammoList.AddQuantity( "Number", munitionsFamilyTable_->item( nRow, 1 )->text().toInt() );
-        }
-    }
+    Fill( list, *munitionsFamilyTable_, "Ammo", "Ammo", "Number",
+          [&]( int nRow ){ return nRow; },
+          [&]( const QTableWidget& table, int nRow ){ return table.item( nRow, 0 )->checkState() == Qt::Checked; } );
 }
+
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyRecompletionDialog::FillSupplies
+// Name: LogisticSupplyRecompletionDialog::FillStocks
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillSupplies( actions::parameters::ParameterList& list )
+void LogisticSupplyRecompletionDialog::FillStocks( actions::parameters::ParameterList& list )
 {
-    unsigned int nNbrResources = 0;
-    for( int nRow = 0; nRow < stockTable_->rowCount(); ++nRow )
-    {
-        if( stockTable_->item( nRow, 0 )->checkState() == Qt::Checked )
-            ++ nNbrResources;
-    }
-    if( nNbrResources > 0 )
-    {
-        int index = 1;
-        for( int nRow = 0; nRow < stockTable_->rowCount(); ++nRow )
-        {
-            if( stockTable_->item( nRow, 0 )->checkState() != Qt::Checked )
-                continue;
-
-            ParameterList& stockList = list.AddList( CreateName( "Stock", index ) );
-            stockList.AddIdentifier( "Stock", stocks_[ stockTable_->item( nRow, 0 )->text() ]->type_->GetId() );
-            stockList.AddQuantity( "Number", ( stockTable_->item( nRow, 1 )->text().toInt() ) );
-        }
-    }
+    Fill( list, *munitionsFamilyTable_, "Stock", "Stock", "Number",
+          [&]( int nRow ){ return stocks_[ stockTable_->item( nRow, 0 )->text() ]->type_->GetId(); },
+          [&]( const QTableWidget& table, int nRow ){ return table.item( nRow, 0 )->checkState() == Qt::Checked; } );
 }
 
 // -----------------------------------------------------------------------------
@@ -490,10 +452,10 @@ void LogisticSupplyRecompletionDialog::Validate()
     accept();
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "partial_recovery" );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& >( static_.types_ ).Get( "partial_recovery" );
     std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
 
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    auto it = actionType.CreateIterator();
     parameters::ParameterList* equipments = new parameters::ParameterList( it.NextElement() );
     parameters::ParameterList* humans = new parameters::ParameterList( it.NextElement() );
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
@@ -510,7 +472,7 @@ void LogisticSupplyRecompletionDialog::Validate()
     FillPersonal( *humans );
     FillDotations( *dotations );
     FillAmmunitions( *ammo );
-    FillSupplies( *stocks );
+    FillStocks( *stocks );
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( controllers_.controller_, selected_, false ) );
@@ -529,17 +491,23 @@ void LogisticSupplyRecompletionDialog::Reject()
     selected_ = 0;
 }
 
+namespace
+{
+    void OnChange( QTableWidget& table, int nRow, int nCol, bool isVisible )
+    {
+        if( nCol != 1 || !isVisible )
+            return;
+        table.item( nRow, 0 )->setCheckState( Qt::Checked );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::OnDotationChanged
 // Created: SBO 2005-07-28
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::OnDotationChanged( int nRow, int nCol )
 {
-    // do only if "quantity" field has been changed
-    if( nCol != 1 || !isVisible() )
-        return;
-    // check the checkbox on the same row, first cell
-    dotationsTable_->item( nRow, 0 )->setCheckState( Qt::Checked );
+    return OnChange( *dotationsTable_, nRow, nCol, isVisible() );
 }
 
 // -----------------------------------------------------------------------------
@@ -548,11 +516,7 @@ void LogisticSupplyRecompletionDialog::OnDotationChanged( int nRow, int nCol )
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::OnMunitionFamilyChanged( int nRow, int nCol )
 {
-    // do only if "quantity" field has been changed
-    if( nCol != 1 || !isVisible() )
-        return;
-    // check the checkbox on the same row, first cell
-    munitionsFamilyTable_->item( nRow, 0 )->setCheckState( Qt::Checked );
+    return OnChange( *munitionsFamilyTable_, nRow, nCol, isVisible() );
 }
 
 // -----------------------------------------------------------------------------
@@ -561,11 +525,7 @@ void LogisticSupplyRecompletionDialog::OnMunitionFamilyChanged( int nRow, int nC
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::OnPersonalChanged( int nRow, int nCol )
 {
-    // do only if "quantity" field has been changed
-    if( nCol != 1 || !isVisible() )
-        return;
-    // check the checkbox on the same row, first cell
-    personalsTable_->item( nRow, 0 )->setCheckState( Qt::Checked );
+    return OnChange( *personalsTable_, nRow, nCol, isVisible() );
 }
 
 // -----------------------------------------------------------------------------
@@ -596,7 +556,7 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
     if( nCol != 0 && nCol != 1 )
         return;
 
-    if( nCol == 1 && ( !equipmentsTable_->item( nRow, 0 ) ||  ( equipmentsTable_->item( nRow, 0 ) && equipmentsTable_->item( nRow, 0 )->text().isEmpty() ) ) )
+    if( nCol == 1 && ( !equipmentsTable_->item( nRow, 0 ) || ( equipmentsTable_->item( nRow, 0 ) && equipmentsTable_->item( nRow, 0 )->text().isEmpty() ) ) )
     {
         equipmentsTable_->item( nRow, 1 )->setText( "" );
         return;
@@ -637,11 +597,12 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::OnStockChanged( int nRow, int nCol )
 {
-    // do only if "quantity" field has been changed
     if( nCol != 1 || !isVisible() )
         return;
-    // check the checkbox on the same row, first cell
     stockTable_->item( nRow, 0 )->setCheckState( Qt::Checked );
+    const Dotation& dotation = *stocks_[ stockTable_->item( nRow, 0 )->text() ];
+    const float normalized = logistic_helpers::ComputeNormalizedQuantity( static_, *selected_, *dotation.type_, locale().toInt( stockTable_->item( nRow, 1 )->text() ) );
+    stockTable_->setItem( nRow, 2, new QTableWidgetItem( QString::number( normalized, 'f', 2 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -650,10 +611,9 @@ void LogisticSupplyRecompletionDialog::OnStockChanged( int nRow, int nCol )
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanDoMagic( agent ) )
-    {
-        selected_ = &agent;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
-        subMenu->insertItem( tr( "Partial recompletion" ), this, SLOT( Show() ) );
-    }
+    if( !profile_.CanDoMagic( agent ) )
+        return;
+    selected_ = &agent;
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
+    subMenu->insertItem( tr( "Partial recompletion" ), this, SLOT( Show() ) );
 }

@@ -1999,6 +1999,10 @@ Do you want to replace it?</source>
         <source>Partial recompletion</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Norm. quantities</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsHistoryTable</name>
