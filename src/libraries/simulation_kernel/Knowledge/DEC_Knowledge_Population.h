@@ -62,6 +62,13 @@ public:
     typedef std::map< unsigned int, DEC_Knowledge_PopulationFlow* > T_FlowMap;
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< unsigned int, DEC_Knowledge_PopulationConcentration* > T_ConcentrationMap;
+
+    typedef std::map< unsigned int, DEC_Knowledge_PopulationFlow* > T_FlowMap;
+    //@}
+
     //! @name Operations
     //@{
     void Prepare();

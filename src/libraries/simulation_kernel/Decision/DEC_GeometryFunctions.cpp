@@ -18,6 +18,7 @@
 #include "DEC_Objective.h"
 #include "Brain.h"
 #include "Decision/DEC_Gen_Object.h"
+#include "Decision/DEC_Gen_Object.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -2840,6 +2841,11 @@ namespace
                 return;
             }
             boost::shared_ptr< TER_Localisation > location;
+            if( element.ToPolygon( location ) )
+            {
+                AppendRatio( *location );
+                return;
+            }
             if( element.ToLocation( location ) )
             {
                 AppendRatio( *location );
@@ -2955,14 +2961,17 @@ namespace
         }
         void AppendPoint( const MT_Vector2D& point )
         {
+            double inside = 0;
             MIL_AgentServer::GetWorkspace().GetEntityManager().VisitUrbanObjects(
-            [&,this]( const MIL_UrbanObject_ABC& object )
+            [&]( const MIL_UrbanObject_ABC& object )
             {
                 if( 0 != object.GetParent() )
                     return;
                 auto blockLocation = object.GetLocalisation();
-                this->result_.push_back( blockLocation.IsInside( point ) ? 1 : 0 );
+                if( blockLocation.IsInside( point ) )
+                    inside = 1;
             });
+            result_.push_back( inside );
         }
         std::vector< double > result_;
     };
@@ -2982,8 +2991,8 @@ namespace
                     Accept( dianame, type, **it );
                 return;
             }
-            MIL_UrbanObject_ABC* block;
-            if( element.ToUrbanBlock( block ) )
+            MIL_UrbanObject_ABC* block = 0;
+            if( element.ToUrbanBlock( block ) && block )
                 ++result_;
         }
         int Result()
@@ -3003,9 +3012,10 @@ std::vector< double > DEC_GeometryFunctions::GetSurfaceParametersUrbanRatio( DEC
 {
     if( !entity )
         throw MASA_EXCEPTION( __FUNCTION__ ": invalid parameter." );
-    auto mission = entity->GetMission();
     SurfaceParameterVisitor visitor;
-    mission->Visit( visitor );
+    auto mission = entity->GetMission();
+    if( mission )
+        mission->Visit( visitor );
     return visitor.Result();
 }
 
@@ -3019,7 +3029,8 @@ std::vector< double > DEC_GeometryFunctions::GetPointParametersUrbanRatio( DEC_D
         throw MASA_EXCEPTION( __FUNCTION__ ": invalid parameter." );
     auto mission = entity->GetMission();
     PointParameterVisitor visitor;
-    mission->Visit( visitor );
+    if( mission )
+        mission->Visit( visitor );
     return visitor.Result();
 }
 
@@ -3033,6 +3044,7 @@ int DEC_GeometryFunctions::GetUrbanParametersNumber( DEC_Decision_ABC* entity )
         throw MASA_EXCEPTION( __FUNCTION__ ": invalid parameter." );
     auto mission = entity->GetMission();
     UrbanParameterVisitor visitor;
-    mission->Visit( visitor );
+    if( mission )
+        mission->Visit( visitor );
     return visitor.Result();
 }
