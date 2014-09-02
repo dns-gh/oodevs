@@ -14,6 +14,7 @@
 #include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 #include "MIL.h"
+#include <boost/optional.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ListParameter )
 
