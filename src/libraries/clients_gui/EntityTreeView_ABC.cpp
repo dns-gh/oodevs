@@ -12,6 +12,7 @@
 #include "ModelObserver_ABC.h"
 #include "moc_EntityTreeView_ABC.cpp"
 #include "LongNameHelper.h"
+#include "StandardModelVisitor_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -153,6 +154,41 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Profile_ABC& /*profile*/ )
     ApplyProfileFilter();
 }
 
+namespace
+{
+    class SelectedVisitor : public StandardModelVisitor_ABC
+                          , private boost::noncopyable
+    {
+    public:
+        SelectedVisitor( const kernel::ActionController& actions, const StandardModel& model )
+            : actions_( actions )
+            , model_( model)
+        {
+            //NOTHING
+        }
+
+        virtual void Visit( QStandardItem& item )
+        {
+            if( item.data( Roles::SafeRole ).isValid() && item.data( Roles::SafeRole ).toBool() )
+            {
+                const kernel::Entity_ABC* entity = model_.GetDataFromItem< kernel::Entity_ABC >( item );
+                if( entity && actions_.IsSelected( entity ) )
+                    selected_.push_back( entity );
+            }
+        }
+
+        const std::vector< const kernel::Entity_ABC* >& GetSelected() const
+        {
+            return selected_;
+        }
+
+    private:
+        const kernel::ActionController& actions_;
+        const StandardModel& model_;
+        std::vector< const kernel::Entity_ABC* > selected_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityTreeView_ABC::ApplyProfileFilter
 // Created: ABR 2012-08-16
@@ -160,6 +196,10 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Profile_ABC& /*profile*/ )
 void EntityTreeView_ABC::ApplyProfileFilter()
 {
     dataModel_.ApplyFilter( boost::bind( &EntityTreeView_ABC::ApplyProfileFilter, this, _1 ) );
+
+    SelectedVisitor visitor( controllers_.actions_, dataModel_ );
+    dataModel_.Accept( visitor );
+    NotifySelectionChanged( visitor.GetSelected() );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,14 +217,15 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
     {
         if( *it && !IsTypeRejected( **it ) )
             if( QStandardItem* item = dataModel_.FindDataItem( **it ) )
-            {
+                if( item->data( gui::Roles::FilterRole ).toString() == gui::StandardModel::showValue_ )
+                {
                     QModelIndex index = proxyModel_->mapFromSource( dataModel_.indexFromItem( item ) );
                     if( index.isValid() )
                     {
                         selectionModel()->select( index, QItemSelectionModel::Select | QItemSelectionModel::Rows );
                         QTimer::singleShot( 0, this, SLOT( OnScrollToSelected() ) );
                     }
-            }
+                }
     }
     blockSelect_ = false;
 }
