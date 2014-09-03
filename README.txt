@@ -1,4 +1,4 @@
-gosword library contains the following modules:
+go sword library contains the following modules:
 - masa/sword/cmd/csvclient: an application to export logistic data from a simulation under csv
   format
 - masa/sword/cmd/dumpreplay: utility to extract and print information from replay data
@@ -13,9 +13,9 @@ gosword library contains the following modules:
 - masa/sword/sword: auto generated protobuf library from sword .proto files
   to a running simulation and wait for connection termination. Use it to test
   the model behaviour against real world scenarii.
-- masa/sword/testproto: test goprotobuf behaviour with regard to .proto changes
-- masa/sword/timeline: Timeline server, playe rand utilities
-- masa/sword/timelineui: Timeline ui test.
+- masa/testproto: test goprotobuf behaviour with regard to .proto changes
+- masa/timeline: Timeline server, playe rand utilities
+- masa/timelineui: Timeline ui test.
 
 To run the tests from a cygwin shell, starting at project root:
 
@@ -24,6 +24,7 @@ To run the tests from a cygwin shell, starting at project root:
 
   # Test "masa/sword/simtests" module using the simulation fetched by build.xml
   $ go test masa/sword/simtests -gocheck.f Collision
+  # Alternately, go test ...simtests -gocheck.f Collision
 
   # Reference a custom simulation executable
   $ go test masa/sword/simtests \
