@@ -24,7 +24,6 @@
 #include "InfoPanels.h"
 #include "InhabitantPanel.h"
 #include "ItineraryEditionDockWidget.h"
-#include "InhabitantPanel.h"
 #include "LinkInterpreter.h"
 #include "NotesPanel.h"
 #include "OrbatDockWidget.h"

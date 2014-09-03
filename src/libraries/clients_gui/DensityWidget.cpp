@@ -51,7 +51,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: GradientWidget constructor
+// Name: DensityWidget constructor
 // Created: LGY 2011-06-01
 // -----------------------------------------------------------------------------
 DensityWidget::DensityWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const std::string& category )
