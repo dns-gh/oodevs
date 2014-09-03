@@ -82,7 +82,7 @@ public:
     virtual double GetHeight() const;
     virtual double GetAltitude() const;
     virtual const MT_Vector2D& GetPosition() const;
-    virtual boost::shared_ptr<MT_Vector2D> GetSharedPosition() const;
+    virtual boost::shared_ptr< MT_Vector2D > GetSharedPosition() const;
     virtual const MT_Vector2D& GetDirection() const;
     virtual MIL_Agent_ABC& GetAgent() const;
     virtual double GetCurrentSpeed() const;

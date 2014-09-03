@@ -169,15 +169,6 @@ void MIL_PionMission::Send( ActionManager& actions ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PionMission::AffectDirection
-// Created: SBO 2008-01-15
-// -----------------------------------------------------------------------------
-void MIL_PionMission::AffectDirection( const MT_Vector2D& direction )
-{
-    MIL_Mission_ABC::AffectDirection( direction );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PionMission::GetPion
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------

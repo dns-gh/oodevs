@@ -14,6 +14,7 @@
 #include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 #include "MIL.h"
+#include <boost/optional.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ListParameter )
 
@@ -32,8 +33,8 @@ MIL_ListParameter::MIL_ListParameter()
 // -----------------------------------------------------------------------------
 MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list )
 {
-    for( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it )
-        list_.push_back( MIL_MissionParameterFactory::Create( *it, resolver ) );
+    for( auto it = list.begin(); it != list.end(); ++it )
+        list_.push_back( MIL_MissionParameterFactory::Create( *it, resolver, boost::none ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver,
 // -----------------------------------------------------------------------------
 MIL_ListParameter::MIL_ListParameter( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& paramList )
 {
-    for( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator it = paramList.begin(); it != paramList.end(); ++it )
+    for( auto it = paramList.begin(); it != paramList.end(); ++it )
         list_.push_back( *it );
 }
 

@@ -68,7 +68,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2009-04-29
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& type, const sword::MissionParameter& message, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& type, const sword::MissionParameter& message,
+                                                                                 const DEC_KnowledgeResolver_ABC& resolver, const boost::optional< MT_Vector2D >& position )
 {
     if( message.null_value() )
     {
@@ -79,7 +80,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     }
     else if( !type.IsList()  && message.value_size() == 1 )
     {
-        return Create( message.value( 0 ), resolver );
+        return Create( message.value( 0 ), resolver, position );
     }
     else
     {
@@ -92,7 +93,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2010-09-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const sword::MissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr< MIL_MissionParameter_ABC > MIL_MissionParameterFactory::Create( const sword::MissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver,
+                                                                                   const boost::optional< MT_Vector2D >& position )
 {
     MIL_MissionParameter_ABC* ptr = 0;
     MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
@@ -174,7 +176,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     else if( message.has_limit() )
         throw MASA_BADPARAM_ORDER( "limit parameters are only allowed in mission context" );
     else if( message.has_pathfind() )
-        ptr = new MIL_ItineraryParameter( message.pathfind() );
+        ptr = new MIL_ItineraryParameter( message.pathfind(), position );
     else
         ptr = new MIL_ListParameter( resolver, message.list() );
 
@@ -389,12 +391,12 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateR
 // Name: MIL_MissionParameterFactory::Copy
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::Copy( const MIL_OrderType_ABC& orderType, const sword::MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
+void MIL_MissionParameterFactory::Copy( const MIL_OrderType_ABC& orderType, const sword::MissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
 {
     parameters.clear();
     int size = asn.elem_size();
     for( int i = 0; i < size; ++i )
-        parameters.push_back( Create( orderType.GetParameterType(i), asn.elem(i), resolver ) );
+        parameters.push_back( Create( orderType.GetParameterType(i), asn.elem(i), resolver, boost::none ) );
 }
 
 // -----------------------------------------------------------------------------

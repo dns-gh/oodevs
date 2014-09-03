@@ -13,7 +13,7 @@
 #include "MIL_OrderContext.h"
 #include "MIL.h"
 #include <boost/shared_ptr.hpp>
-#include <boost/optional/optional_fwd.hpp>
+#include <boost/optional/optional.hpp>
 
 class ActionManager;
 class DEC_Gen_Object;
@@ -125,6 +125,7 @@ private:
     const DEC_KnowledgeResolver_ABC& knowledgeResolver_;
     const uint32_t id_;
     const uint32_t parentId_;
+    boost::optional< MT_Vector2D > orientation_;
     MIL_OrderContext context_;
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
     //@}

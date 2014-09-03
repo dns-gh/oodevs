@@ -58,6 +58,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
     : type_             ( type )
     , id_               ( id )
     , parentId_         ( 0 )
+    , orientation_      ( orientation )
     , context_          ( orientation ? MIL_OrderContext( parameters, *orientation ) : MIL_OrderContext( false ) )
     , knowledgeResolver_( knowledgeResolver )
 {
@@ -105,9 +106,9 @@ const std::string& MIL_Mission_ABC::GetName() const
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParameters& parameters )
 {
-    const MIL_OrderType_ABC::T_MissionParameterVector& parameterTypes = type_.GetParameters();
+    const auto& parameterTypes = type_.GetParameters();
     int i = firstIndex;
-    for( MIL_OrderType_ABC::CIT_MissionParameterVector it = parameterTypes.begin(); it != parameterTypes.end(); ++it, ++i )
+    for( auto it = parameterTypes.begin(); it != parameterTypes.end(); ++it, ++i )
     {
         try
         {
@@ -124,7 +125,7 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParame
             else
             {
                 pParameter = MIL_MissionParameterFactory::Create( parameterType,
-                        parameters.elem( i ), knowledgeResolver_ );
+                        parameters.elem( i ), knowledgeResolver_, orientation_ );
             }
             if( !pParameter->IsOfType( parameterType.GetType().GetType() ) )
                 throw ORDER_BADPARAM( "parameter[" << i << "] must be a "
@@ -185,7 +186,7 @@ void MIL_Mission_ABC::ReleasedByDIA()
 void MIL_Mission_ABC::Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const
 {
     unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
-    for (unsigned int i = 0; i < parametersNumber; ++i )
+    for( unsigned int i = 0; i < parametersNumber; ++i )
     {
         const std::string& paramName = type_.GetParameterName( i );
         const MIL_OrderTypeParameter& paramType = type_.GetParameterType( i );
