@@ -136,9 +136,9 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
     SpinBox()->setSuffix( QString( " / %1" ).arg( maxTick ) );
     slider_->setRange( first, maxTick );
     slider_->setTickInterval( slider_->maxValue() / 20 );
-    slider_->blockSignals( true );
+    bool wasBlocked = slider_->blockSignals( true );
     slider_->setValue( simulation.GetCurrentTick() );
-    slider_->blockSignals( false );
+    slider_->blockSignals( wasBlocked );
     SpinBox()->setValue( simulation.GetCurrentTick() );
     DateTimeEdit()->setDateTime( simulation.GetDateTime() );
     SpinBox()->setEnabled( simulation.IsPaused() );

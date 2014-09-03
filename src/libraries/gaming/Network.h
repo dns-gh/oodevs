@@ -46,6 +46,7 @@ public:
     bool Connect( const std::string& strHostName, unsigned short nPort );
     bool Disconnect();
     bool IsConnected() const;
+    bool Reconnect();
 
     using tools::ClientNetworker::Update;
 
@@ -75,6 +76,7 @@ private:
     Simulation& simu_;
     kernel::Logger_ABC& logger_;
     std::string session_;
+    std::string host_;
     CommandHandler* commands_;
     AgentServerMsgMgr* manager_;
     //@}

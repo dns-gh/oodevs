@@ -213,14 +213,14 @@ void CheckComboBox::UpdateCheckedItems( bool checkAll /* = false */ )
     QStringList items = CheckedItems();
     if( !checkAllText_.isEmpty() )
     {
-        dataModel_->blockSignals( true );
+        bool wasBlocked = dataModel_->blockSignals( true );
         if( checkAll )
             SetItemsCheckState( ItemCheckState( 0 ) == Qt::Checked ? Qt::Checked : Qt::Unchecked );
         else
             SetItemCheckState( 0, ( items.size() == proxyModel_.rowCount() - 1 ) ? Qt::Checked :
                                   ( items.size() == 0 ) ? Qt::Unchecked :
                                   Qt::PartiallyChecked );
-        dataModel_->blockSignals( false );
+        dataModel_->blockSignals( wasBlocked );
     }
 
     if( items.isEmpty() || items.size() == count() )

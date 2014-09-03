@@ -69,9 +69,9 @@ void ADN_MissionGenObjectTypes_Table::dataChanged( const QModelIndex& topLeft, c
     ADN_Table::dataChanged( topLeft, bottomRight );
     if( !isAdding_ )
     {
-        all_->blockSignals( true );
+        bool wasBlocked = all_->blockSignals( true );
         all_->setChecked( IsChecked() );
-        all_->blockSignals( false );
+        all_->blockSignals( wasBlocked );
     }
 }
 

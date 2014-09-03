@@ -539,10 +539,10 @@ void ResourceLinksDialog_ABC::Show()
     resourceNodes_ = selected_.front()->Get< ResourceNetwork_ABC >().GetResourceNodes();
     if( RefreshListNeeded() )
     {
-        dotationList_->blockSignals( true );
+        bool wasBlocked = dotationList_->blockSignals( true );
         dotationList_->clear();
         selectedItem_ = 0;
-        dotationList_->blockSignals( false );
+        dotationList_->blockSignals( wasBlocked );
         for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
             if( it == resourceNodes_.begin() )
             {

@@ -147,21 +147,21 @@ void ScoreGaugeConfiguration::StartEdit( const indicators::Gauge& gauge )
     {
         if( min == std::numeric_limits< double >::max() )
             min = std::numeric_limits< double >::min();
-        min_->blockSignals( true );
+        bool wasBlocked = min_->blockSignals( true );
         min_->setText( ToString( min ) );
-        min_->blockSignals( false );
+        min_->blockSignals( wasBlocked );
     }
     {
         if( max == std::numeric_limits< double >::min() )
             max = std::numeric_limits< double >::max();
-        max_->blockSignals( true );
+        bool wasBlocked = max_->blockSignals( true );
         max_->setText( ToString( max ) );
-        max_->blockSignals( false );
+        max_->blockSignals( wasBlocked );
     }
     {
-        steps_->blockSignals( true );
+        bool wasBlocked = steps_->blockSignals( true );
         steps_->setValue( intervals_->rowCount() );
-        steps_->blockSignals( false );
+        steps_->blockSignals( wasBlocked );
     }
 }
 
@@ -328,9 +328,9 @@ void ScoreGaugeConfiguration::UpdateSymbol( int row, double value )
         if( const indicators::GaugeType* type = type_->GetValue() )
         {
             GaugeItemDisplayer displayer( intervals_->item( row, 2 ) );
-            intervals_->blockSignals( true );
+            bool wasBlocked = intervals_->blockSignals( true );
             type->Display( displayer, value );
-            intervals_->blockSignals( false );
+            intervals_->blockSignals( wasBlocked );
             SetValue( row, 2, value );
         }
 }
@@ -341,9 +341,9 @@ void ScoreGaugeConfiguration::UpdateSymbol( int row, double value )
 // -----------------------------------------------------------------------------
 void ScoreGaugeConfiguration::SetValue( int row, int col, double value )
 {
-    intervals_->blockSignals( true );
+    bool wasBlocked = intervals_->blockSignals( true );
     intervals_->item( row, col )->setText( ToString( value ) );
-    intervals_->blockSignals( false );
+    intervals_->blockSignals( wasBlocked );
 }
 
 // -----------------------------------------------------------------------------

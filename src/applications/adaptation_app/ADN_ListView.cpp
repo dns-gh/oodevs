@@ -270,10 +270,10 @@ bool ADN_ListView::SetCurrentItem( void* pData )
     if( pData == 0 )
         ADN_Tools::SetAutoClear( vItemConnectors_, false );
 
-    this->blockSignals( true );
+    bool wasBlocked = this->blockSignals( true );
     QStandardItem* pItem = this->FindItem( pData );
     selectionModel()->setCurrentIndex( proxyModel_->mapFromSource( dataModel_.indexFromItem( pItem ) ), QItemSelectionModel::ClearAndSelect );
-    this->blockSignals( false );
+    this->blockSignals( wasBlocked );
 
     emit ItemSelected( pData );
 
