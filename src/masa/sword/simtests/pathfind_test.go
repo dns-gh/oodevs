@@ -312,7 +312,7 @@ func (s *TestSuite) TestUnitOrderWithItineraryRevertedIfAgentCloserToDestination
 	c.Assert(err, IsNil)
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
 	c.Assert(err, IsNil)
-	for i := len(pathfind.Result) -1; i >= 0; i-- {
+	for i := len(pathfind.Result) - 1; i >= 0; i-- {
 		p := pathfind.Result[i]
 		if p.Waypoint < 0 {
 			continue
