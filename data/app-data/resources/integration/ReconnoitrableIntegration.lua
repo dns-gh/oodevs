@@ -340,7 +340,7 @@ end
 -- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, use the value defined in authoring tool
 -- @return true
 integration.startSearchArea = function( area, recceSpeed )
-    local areaSearchSpeed = recceSpeed or DEC_GetOpenRecoSpeed()
+    local areaSearchSpeed = recceSpeed or DEC_GetOpenSearchSpeed()
     area.actionSearch = 
         DEC_Perception_ActivateLocationProgressiveRecce( area.source, areaSearchSpeed )
     area.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), areaSearchSpeed )
