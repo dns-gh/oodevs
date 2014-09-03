@@ -49,6 +49,8 @@ public:
 
 private:
     void FillChoices();
+    void ReadObjectTypes( xml::xistream& input );
+    bool IsTypeCompatibleWithObjects() const;
 
 public:
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
