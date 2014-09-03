@@ -117,12 +117,14 @@ void ADN_AiEngine_GUI::Build()
     QVBoxLayout* pRightLayout = new QVBoxLayout( pContentLayout );
     pLeftLayout->addWidget( pDangerBox );
     pLeftLayout->addWidget( pOpStateBox );
-    pLeftLayout->addWidget( pCriticalIntelligenceBox );
     pLeftLayout->addWidget( pSpeedsBox );
+    pLeftLayout->addWidget( new QWidget(), 1 );
     pRightLayout->addWidget( pUrbanStateBox );
     pRightLayout->addWidget( pWoundEffectsBox );
     pRightLayout->addWidget( pForceRatioBox );
     pRightLayout->addWidget( pPerceptionBox );
+    pRightLayout->addWidget( pCriticalIntelligenceBox );
+    pRightLayout->addWidget( new QWidget(), 1 );
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }
