@@ -167,6 +167,21 @@ namespace
         }
     }
 
+    template< typename T >
+    void AddLimaObjectsParameter( xml::xosubstream xos, const std::string& type, const T& value )
+    {
+        xos << xml::start( "parameter" )
+            << xml::attribute( "type", type );
+        for( auto it = value.begin(); it != value.end(); ++it )
+        {
+            xos << xml::start( "parameter" )
+                << xml::attribute( "type", type );
+            WritePair( xos, "objectknowledge", *it );
+            xos << xml::end;
+        }
+        xos << xml::end;
+    }
+
     void WriteLima( xml::xostream& xos, const Writer_ABC& writer, const PhaseLineOrder& src )
     {
         std::vector< std::string > functions;
@@ -179,6 +194,7 @@ namespace
             AddLocation( xos, "location", writer, src.line().has_location() ? &src.line().location() : 0 );
         if( src.has_time() )
             AddParameter( xos, "datetime", src.time().data() );
+        AddLimaObjectsParameter( xos, "objectknowledge", src.objects() );
     }
 
     void WritePhaseLine( xml::xostream& xos, const Writer_ABC& writer, const Value& src )

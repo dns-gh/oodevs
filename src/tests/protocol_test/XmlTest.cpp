@@ -396,6 +396,7 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     "        </location>"
     "      </parameter>"
     "      <parameter type='datetime'/>"
+    "      <parameter type='objectknowledge'/>"
     "    </parameter>"
     "    <parameter type='phaseline' value='LC,LCA'>"
     "      <parameter type='location'>"
@@ -406,6 +407,10 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     "        </location>"
     "      </parameter>"
     "      <parameter type='datetime' value='20121113T085132'/>"
+    "      <parameter type='objectknowledge'>"
+    "        <parameter type='objectknowledge' value='240'/>"
+    "        <parameter type='objectknowledge' value='241'/>"
+    "      </parameter>"
     "    </parameter>"
     "  </parameter>"
     "</action>";
@@ -420,12 +425,16 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     BOOST_CHECK_EQUAL( lima_1.fonctions( 0 ), PhaseLineOrder::objective_line );
     CheckLocation( lima_1.line().location(), Location::line, 2 );
     BOOST_CHECK( lima_1.time().data().empty() );
+    BOOST_CHECK_EQUAL( lima_1.objects_size(), 0 );
     const auto& lima_2 = list.Get( 1 ).phaseline().elem( 0 );
     BOOST_CHECK_EQUAL( lima_2.fonctions_size(), 2 );
     BOOST_CHECK_EQUAL( lima_2.fonctions( 0 ), PhaseLineOrder::coordination_line );
     BOOST_CHECK_EQUAL( lima_2.fonctions( 1 ), PhaseLineOrder::attitude_change_line );
     CheckLocation( lima_2.line().location(), Location::line, 3 );
     BOOST_CHECK_EQUAL( lima_2.time().data(), "20121113T085132" );
+    BOOST_CHECK_EQUAL( lima_2.objects_size(), 2 );
+    BOOST_CHECK_EQUAL( lima_2.objects( 0 ), 240u );
+    BOOST_CHECK_EQUAL( lima_2.objects( 1 ), 241u );
     BOOST_CHECK_EQUAL( msg.ShortDebugString(),
         "elem { null_value: false value { phaseLine { "
                                         "elem { line { location { type: line coordinates { "
@@ -438,7 +447,8 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
                                                                             "elem { latitude: 0 longitude: 0 } "
                                                                             "elem { latitude: 0 longitude: 0 } } } } "
                                         "time { data: \"20121113T085132\" } "
-                                        "fonctions: coordination_line fonctions: attitude_change_line } } } }" );
+                                        "fonctions: coordination_line fonctions: attitude_change_line "
+                                        "objects: 240 objects: 241 } } } }" );
     CheckCycle( input, msg );
 }
 
