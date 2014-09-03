@@ -67,7 +67,7 @@ public:
 class T_MissionGenObjectTypes_Infos_Vector : public ADN_Type_VectorFixed_ABC< ADN_MissionGenObjectTypes_Infos >
 {
 public:
-    T_MissionGenObjectTypes_Infos_Vector();
+             T_MissionGenObjectTypes_Infos_Vector();
     virtual ~T_MissionGenObjectTypes_Infos_Vector();
 
     template< class U >

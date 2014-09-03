@@ -875,7 +875,7 @@ ADN_MainWindow& ADN_Workspace::GetMainWindow() const
 // -----------------------------------------------------------------------------
 void ADN_Workspace::SetMainWindowModified( bool isModified )
 {
-    if( mainWindow_.IsLoaded() && !isSwappingLanguage_ )
+    if( mainWindow_.IsLoaded() && !isSwappingLanguage_ && !mainWindow_.isWindowModified() )
         mainWindow_.setWindowModified( isModified );
 }
 
