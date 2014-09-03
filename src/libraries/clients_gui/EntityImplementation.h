@@ -39,7 +39,7 @@ public:
     //! @name Types
     //@{
     typedef std::function< void( const QString& ) > T_RenameObserver;
-    typedef std::function< bool( const I& ) > T_CanBeRenamedFunctor;
+    typedef std::function< bool( const I& ) >       T_CanBeRenamedFunctor;
     //@}
 
 public:
@@ -124,7 +124,7 @@ EntityImplementation< I >::EntityImplementation( kernel::Controller& controller,
 {
     Attach( *dictionary_ );
     dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Identifier" ), displayId_ );
-    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Name" ), name_, *this, &EntityImplementation::Rename, !CanBeRenamed() );
+    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Name" ), name_, *this, &EntityImplementation::Rename, [&](){ return !CanBeRenamed(); } );
 }
 
 // -----------------------------------------------------------------------------

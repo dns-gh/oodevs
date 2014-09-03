@@ -64,7 +64,7 @@ Diplomacies::~Diplomacies()
 // -----------------------------------------------------------------------------
 void Diplomacies::CreateDictionary( gui::PropertiesDictionary& dictionary )
 {
-    dictionary.Register( static_cast< const Entity_ABC& >( team_ ), tools::translate( "preparation::Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma );
+    dictionary.Register( static_cast< const Entity_ABC& >( team_ ), tools::translate( "preparation::Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma, false );
 }
 
 // -----------------------------------------------------------------------------

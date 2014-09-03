@@ -15,6 +15,7 @@
 
 #include "ValueEditor.h"
 #include "EditorFactory_ABC.h"
+#include <boost/optional.hpp>
 #pragma warning( push, 0 )
 #include <QtGui/qwidget.h>
 #pragma warning( pop )
@@ -42,6 +43,12 @@ namespace gui
 // =============================================================================
 class Property_ABC
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::function< bool() > T_ReadOnlyFunctor;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -72,8 +79,14 @@ template< typename T, typename Setter, typename SpecificOwner >
 class Property : public Property_ABC
 {
 public:
-    Property( kernel::Controller& controller, const kernel::Entity_ABC& owner, T& value, const Setter& setter,
-              const QString& name, bool readOnly, E_Category category, const SpecificOwner* pSpecificOwner = nullptr )
+    Property( kernel::Controller& controller,
+              const kernel::Entity_ABC& owner,
+              T& value,
+              const Setter& setter,
+              const QString& name,
+              bool readOnly,
+              E_Category category,
+              const SpecificOwner* pSpecificOwner = nullptr )
         : controller_( controller )
         , owner_     ( owner )
         , data_      ( &value )
@@ -81,6 +94,25 @@ public:
         , name_      ( name )
         , category_  ( category )
         , readOnly_  ( readOnly )
+        , specificOwner_( pSpecificOwner )
+    {
+        // NOTHING
+    }
+    Property( kernel::Controller& controller,
+              const kernel::Entity_ABC& owner,
+              T& value,
+              const Setter& setter,
+              const QString& name,
+              const T_ReadOnlyFunctor& readOnlyFunctor,
+              E_Category category,
+              const SpecificOwner* pSpecificOwner = nullptr )
+        : controller_( controller )
+        , owner_( owner )
+        , data_( &value )
+        , setter_( setter )
+        , name_( name )
+        , category_( category )
+        , readOnlyFunctor_( readOnlyFunctor )
         , specificOwner_( pSpecificOwner )
     {
         // NOTHING
@@ -97,7 +129,7 @@ public:
 
     virtual QWidget* CreateEditor( QWidget* parent, EditorFactory_ABC& factory )
     {
-        if( readOnly_ )
+        if( readOnly_ && *readOnly_ || readOnlyFunctor_ && readOnlyFunctor_() )
             return 0;
         return factory.CreateEditor( parent, data_ );
     }
@@ -141,7 +173,8 @@ private:
     const SpecificOwner* specificOwner_;
     T* data_;
     Setter setter_;
-    bool readOnly_;
+    boost::optional< bool > readOnly_;
+    T_ReadOnlyFunctor readOnlyFunctor_;
     const QString name_;
     E_Category category_;
 };
