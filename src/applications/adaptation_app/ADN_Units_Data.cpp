@@ -444,6 +444,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->tacticalFlyingHeight_ = tacticalFlyingHeight_.GetData();
     pCopy->eCrossingHeight_ = eCrossingHeight_.GetData();
     pCopy->bIsAutonomous_ = bIsAutonomous_.GetData();
+    pCopy->ptrNatureSymbol_ = ptrNatureSymbol_.GetData();
     pCopy->footprint_ = footprint_.GetData();
 
     for( auto itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
