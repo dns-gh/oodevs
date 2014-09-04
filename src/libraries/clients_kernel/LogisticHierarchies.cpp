@@ -12,7 +12,6 @@
 #include "Automat_ABC.h"
 #include "Formation_ABC.h"
 #include "clients_gui/LogisticHelpers.h"
-#include "protocol/MessageParameters.h"
 #include "protocol/Protocol.h"
 #include <boost/lexical_cast.hpp>
 
@@ -50,13 +49,15 @@ LogisticHierarchies::~LogisticHierarchies()
 void LogisticHierarchies::DoUpdate( const sword::ChangeLogisticLinks& message )
 {
     const auto requester = logistic_helpers::FindParentEntity( message.requester(), automatResolver_, formationResolver_ );
-    protocol::Check( requester, "requester must be a valid automat or formation" );
+    if( !requester )
+        throw MASA_EXCEPTION( "requester must be a valid automat or formation" );
     auto& requesterHierarchy = dynamic_cast< LogisticHierarchies& >( requester->Get< gui::LogisticHierarchiesBase >() );
     std::vector< kernel::Entity_ABC* > superiors;
     for( int i = 0; i < message.superior().size(); ++i )
     {
         const auto superior = logistic_helpers::FindParentEntity( message.superior( i ), automatResolver_, formationResolver_ );
-        protocol::Check( superior, "superior #" + boost::lexical_cast< std::string >( i ) + "must be a valid parent entity" );
+        if( !superior )
+            throw MASA_EXCEPTION( "superior #" + boost::lexical_cast< std::string >( i ) + "must be a valid parent entity" );
         superiors.push_back( superior );
     }
     requesterHierarchy.SetSuperior( 0 );
