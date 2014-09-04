@@ -1130,6 +1130,7 @@ var (
 		(*ModelData).handleObjectKnowledgeDestruction,
 		(*ModelData).handleObjectUpdate,
 		(*ModelData).handlePartyCreation,
+		(*ModelData).handlePartyUpdate,
 		(*ModelData).handlePathfindCreation,
 		(*ModelData).handlePathfindDestruction,
 		(*ModelData).handlePathfindUpdate,

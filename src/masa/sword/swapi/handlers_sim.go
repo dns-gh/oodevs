@@ -115,6 +115,22 @@ func (model *ModelData) handlePartyCreation(m *sword.SimToClient_Content) error 
 	return nil
 }
 
+func (model *ModelData) handlePartyUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetPartyUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	party, ok := model.Parties[mm.GetParty().GetId()]
+	if !ok {
+		return fmt.Errorf("cannot update party %d",
+			mm.GetParty().GetId())
+	}
+	if mm.Name != nil {
+		party.Name = *mm.Name
+	}
+	return nil
+}
+
 func (model *ModelData) handleLogSupplyState(m *sword.SimToClient_Content) error {
 	mm := m.GetLogSupplyState()
 	if mm == nil {
@@ -312,6 +328,9 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 	if mm.Installation != nil {
 		unit.Installation = *mm.Installation
 	}
+	if mm.Name != nil {
+		unit.Name = *mm.Name
+	}
 	return nil
 }
 
@@ -377,6 +396,9 @@ func (model *ModelData) handleAutomatAttributes(m *sword.SimToClient_Content) er
 	if mm.LogSupplyManual != nil {
 		automat.LogSupplyManual = *mm.LogSupplyManual
 	}
+	if mm.Name != nil {
+		automat.Name = *mm.Name
+	}
 	return nil
 }
 
@@ -438,6 +460,9 @@ func (model *ModelData) handleFormationUpdate(m *sword.SimToClient_Content) erro
 	}
 	if mm.LogSupplyManual != nil {
 		formation.LogSupplyManual = *mm.LogSupplyManual
+	}
+	if mm.Name != nil {
+		formation.Name = *mm.Name
 	}
 	return nil
 }
@@ -509,6 +534,9 @@ func (model *ModelData) handleCrowdUpdate(m *sword.SimToClient_Content) error {
 			entry := mm.Extension.Entries[i]
 			crowd.Extensions[entry.GetName()] = entry.GetValue()
 		}
+	}
+	if mm.Name != nil {
+		crowd.Name = *mm.Name
 	}
 	return nil
 }
@@ -650,6 +678,9 @@ func (model *ModelData) handlePopulationUpdate(m *sword.SimToClient_Content) err
 			population.Adhesions[value.GetParty().GetId()] = value.GetValue()
 		}
 	}
+	if mm.Name != nil {
+		population.Name = *mm.Name
+	}
 	return nil
 }
 
@@ -737,6 +768,9 @@ func (model *ModelData) handleKnowledgeGroupUpdate(m *sword.SimToClient_Content)
 	}
 	if mm.Type != nil {
 		group.Type = *mm.Type
+	}
+	if mm.Name != nil {
+		group.Name = *mm.Name
 	}
 	return nil
 }
@@ -1215,6 +1249,9 @@ func (model *ModelData) handleObjectUpdate(m *sword.SimToClient_Content) error {
 		if trafficability := attributes.GetTrafficability(); trafficability != nil {
 			object.Trafficability = trafficability.GetValue()
 		}
+	}
+	if mm.Name != nil {
+		object.Name = *mm.Name
 	}
 	return nil
 }

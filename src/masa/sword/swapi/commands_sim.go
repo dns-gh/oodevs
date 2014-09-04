@@ -2016,3 +2016,43 @@ func (c *Client) ChangeTime(value time.Time) error {
 	}
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) RenameTest(id uint32, parameters *sword.MissionParameters) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(id), parameters, sword.UnitMagicAction_rename)
+}
+
+func (c *Client) Rename(id uint32, name string) error {
+	return c.RenameTest(id, MakeParameters(MakeString(name)))
+}
+
+func (c *Client) RenameObjectTest(id uint32, parameters *sword.MissionParameters) error {
+	msg := CreateObjectMagicAction(id, parameters, sword.ObjectMagicAction_rename)
+
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetObjectUpdate(); reply != nil {
+			return ErrContinue
+		}
+		_, objectId, err := getObjectMagicActionAck(msg)
+		if err != nil {
+			return err
+		}
+		if id != objectId {
+			return mismatch("object id", id, objectId)
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) RenameObject(id uint32, name string) error {
+	return c.RenameObjectTest(id, MakeParameters(MakeString(name)))
+}
+
+func (c *Client) RenameKnowledgeTest(id uint32, parameters *sword.MissionParameters) error {
+	msg := CreateKnowledgeMagicActionMessage(parameters, id, sword.KnowledgeMagicAction_rename)
+	return <-c.postSimRequest(msg, defaultKnowledgeGroupMagicHandler)
+}
+
+func (c *Client) RenameKnowledge(id uint32, name string) error {
+	return c.RenameKnowledgeTest(id, MakeParameters(MakeString(name)))
+}
