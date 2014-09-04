@@ -115,7 +115,7 @@ namespace
                 {
                     const auto toWaypoint = std::find_if( to.begin(), to.end(), [&]( const T_Waypoints::value_type& value )
                     {
-                        return value.second == ( fromWaypoint.second + 1 );
+                        return std::abs( value.second - fromWaypoint.second ) == 1;
                     } );
                     if( toWaypoint != to.end() )
                         return std::make_pair( fromWaypoint.first, toWaypoint->first );
