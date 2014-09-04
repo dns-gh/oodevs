@@ -397,8 +397,8 @@ Action_ABC* ActionFactory::CreateAction( const sword::SetAutomatMode& message, b
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const sword::MagicAction& message, bool needRegistration ) const
 {
-    auto type = message.type();
-    auto& orderType = magicActions_.Get( ENT_Tr::ConvertFromMagicActionType( type, ENT_Tr::eToSim ) );
+    auto& orderType = magicActions_.Get( ENT_Tr::ConvertFromMagicActionType(
+        static_cast< sword::MagicAction_Type >( message.type() ), ENT_Tr::eToSim ) );
     std::unique_ptr< MagicAction > action( new MagicAction( orderType,
                                                             controller_,
                                                             needRegistration ) );
@@ -414,7 +414,8 @@ Action_ABC* ActionFactory::CreateAction( const sword::MagicAction& message, bool
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const sword::UnitMagicAction& message, bool needRegistration ) const
 {
-    auto& type = magicActions_.Get( ENT_Tr::ConvertFromUnitMagicActionType( message.type(), ENT_Tr::eToSim ) );
+    auto& type = magicActions_.Get( ENT_Tr::ConvertFromUnitMagicActionType(
+        static_cast< sword::UnitMagicAction_Type >( message.type() ), ENT_Tr::eToSim ) );
     std::unique_ptr< UnitMagicAction > action( new UnitMagicAction( type,
                                                                     controller_,
                                                                     needRegistration ) );
@@ -431,7 +432,8 @@ Action_ABC* ActionFactory::CreateAction( const sword::UnitMagicAction& message, 
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const sword::KnowledgeMagicAction& message, bool needRegistration ) const
 {
-    auto& type = magicActions_.Get( ENT_Tr::ConvertFromKnowledgeMagicActionType( message.type(), ENT_Tr::eToSim ) );
+    auto& type = magicActions_.Get( ENT_Tr::ConvertFromKnowledgeMagicActionType(
+        static_cast< sword::KnowledgeMagicAction_Type >( message.type() ), ENT_Tr::eToSim ) );
     std::unique_ptr< Action_ABC > action( new KnowledgeGroupMagicAction( type,
                                                                          controller_,
                                                                          needRegistration ) );
@@ -448,7 +450,8 @@ Action_ABC* ActionFactory::CreateAction( const sword::KnowledgeMagicAction& mess
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const sword::ObjectMagicAction& message, bool needRegistration ) const
 {
-    auto& type = magicActions_.Get( ENT_Tr::ConvertFromObjectMagicActionType( message.type(), ENT_Tr::eToSim ) );
+    auto& type = magicActions_.Get( ENT_Tr::ConvertFromObjectMagicActionType(
+        static_cast< sword::ObjectMagicAction_Type >( message.type() ), ENT_Tr::eToSim ) );
     std::unique_ptr< Action_ABC > action( new ObjectMagicAction( type,
                                                                  controller_,
                                                                  needRegistration ) );

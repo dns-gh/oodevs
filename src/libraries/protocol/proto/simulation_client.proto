@@ -197,12 +197,11 @@ message UnitMagicActionAck {
     //! The tasker @todo remove unit id and use one tasker only
     optional Tasker                  tasker     = 6;
     //! The magic action type
-    optional UnitMagicAction.Type    type       = 7;
+    optional int32                   type       = 7;
     //! optional name
     optional string                  name       = 8;
     //! Unique order identifier
     optional uint32                  id         = 9;
-
 }
 
 /** @struct MagicActionAck

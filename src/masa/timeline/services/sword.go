@@ -804,7 +804,7 @@ func (s *Sword) filterProfile(data *swapi.ModelData, profile *swapi.Profile, uni
 		tasker := m.UnitMagicAction.GetTasker()
 		actionType := m.UnitMagicAction.GetType()
 		isInProfile := isTaskerInProfile(tasker, data, profile, units, inhabitants)
-		if _, ok := clientMagicActions[actionType]; ok {
+		if _, ok := clientMagicActions[sword.UnitMagicAction_Type(actionType)]; ok {
 			return !isInProfile
 		}
 		return !profile.Supervisor || !isInProfile

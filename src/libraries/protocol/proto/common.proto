@@ -1676,7 +1676,7 @@ message MagicAction {
         //! Only the pathfind name can be changed.
         pathfind_update                    = 15;
     }
-    required Type              type       = 1;
+    required int32             type       = 1;
     required MissionParameters parameters = 2;
     //! The action name is mostly used as a label by third-party systems
     //! listening and displaying simulation events.
@@ -2150,7 +2150,7 @@ message UnitMagicAction {
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;
     //! The magic action typ
-    required Type              type       = 2;
+    required int32             type       = 2;
     //! The magic action parameters depending on the magic action type
     required MissionParameters parameters = 3;
     //! optional name
@@ -2229,7 +2229,7 @@ message ObjectMagicAction {
     //! The object identifier
     required Id                object     = 1;
     //! The type of magic action
-    required Type              type       = 2;
+    required int32             type       = 2;
     //! The parameters of the magic action : the first parameter must
     //! be the object type name and the second parameter must be the
     //! object location
@@ -2277,7 +2277,7 @@ message KnowledgeMagicAction {
         rename              = 5;
     }
     required Id                knowledge_group = 1;
-    required Type              type            = 2;
+    required int32             type            = 2;
     required MissionParameters parameters      = 3;
     optional string            name            = 4;
     //! The start date and time

@@ -371,7 +371,7 @@ func (t *TestSuite) TestServerSideDuplicateOrders(c *C) {
 			Id: proto.Uint32(17),
 			UnitMagicAction: &sword.UnitMagicAction{
 				Tasker:     swapi.MakeUnitTasker(17),
-				Type:       sword.UnitMagicAction_move_to.Enum(),
+				Type:       proto.Int32(int32(sword.UnitMagicAction_move_to)),
 				Parameters: swapi.MakeParameters(),
 			},
 		},

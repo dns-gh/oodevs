@@ -9,6 +9,7 @@
 package simtests
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	"fmt"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
@@ -35,7 +36,7 @@ func postInvalidTasker(client *swapi.Client, tasker *sword.Tasker) error {
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker:     tasker,
-					Type:       &actionType,
+					Type:       proto.Int32(int32(actionType)),
 					Parameters: swapi.MakeParameters(),
 				},
 			},
