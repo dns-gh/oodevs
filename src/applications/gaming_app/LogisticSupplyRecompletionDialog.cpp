@@ -343,6 +343,7 @@ void LogisticSupplyRecompletionDialog::Show()
 {
     if( !selected_ )
         return;
+    hide();
     InitializeEquipments ();
     InitializePersonal   ();
     InitializeDotations  ();
@@ -492,7 +493,7 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::OnDotationChanged( int nRow, int nCol )
 {
-    return OnChange( *dotationsTable_, nRow, nCol, isVisible() );
+    OnChange( *dotationsTable_, nRow, nCol, isVisible() );
 }
 
 // -----------------------------------------------------------------------------
@@ -501,7 +502,7 @@ void LogisticSupplyRecompletionDialog::OnDotationChanged( int nRow, int nCol )
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::OnMunitionFamilyChanged( int nRow, int nCol )
 {
-    return OnChange( *munitionsFamilyTable_, nRow, nCol, isVisible() );
+    OnChange( *munitionsFamilyTable_, nRow, nCol, isVisible() );
 }
 
 // -----------------------------------------------------------------------------
@@ -510,7 +511,7 @@ void LogisticSupplyRecompletionDialog::OnMunitionFamilyChanged( int nRow, int nC
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::OnPersonalChanged( int nRow, int nCol )
 {
-    return OnChange( *personalsTable_, nRow, nCol, isVisible() );
+    OnChange( *personalsTable_, nRow, nCol, isVisible() );
 }
 
 // -----------------------------------------------------------------------------
