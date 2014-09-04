@@ -358,23 +358,23 @@ namespace
         return QString( (str + " %L1" ).c_str() ).arg( index++ ).toStdString();
     }
 
-    bool MustFill( QTableWidget& table )
+    bool SkipFill( QTableWidget& table )
     {
         for( int nRow = 0; nRow < table.rowCount(); ++nRow )
             if( table.item( nRow, 0 )->checkState() == Qt::Checked )
-                return true;
-        return false;
+                return false;
+        return true;
     }
 
     void Fill( ParameterList& list, QTableWidget& table, const std::string& name, const std::string& identifier, const std::string& quantity,
-               const std::function< unsigned int( int ) >& idFunctor, const std::function< bool( const QTableWidget&, int ) >& checker )
+               bool checkState, const std::function< unsigned int( int ) >& idFunctor )
     {
-        if( !MustFill( table ) )
+        if( checkState && SkipFill( table ) )
             return;
         int index = 1;
         for( int nRow = 0; nRow < table.rowCount(); ++nRow )
         {
-            if( checker( table, nRow ) )
+            if( !checkState || ( checkState && table.item( nRow, 0 )->checkState() == Qt::Checked ) )
             {
                 ParameterList& personalList = list.AddList( CreateName( name, index ) );
                 personalList.AddIdentifier( identifier, idFunctor( nRow ) );
@@ -390,9 +390,8 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
 {
-    Fill( list, *personalsTable_, "Human", "Rank", "Number",
-          [&]( int nRow ){ return nRow; },
-          [&]( const QTableWidget& table, int nRow ){ return table.item( nRow, 0 )->checkState() == Qt::Checked; } );
+    Fill( list, *personalsTable_, "Human", "Rank", "Number", true,
+          [&]( int nRow ){ return nRow; } );
 }
 
 // -----------------------------------------------------------------------------
@@ -401,9 +400,8 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::ParameterList& list )
 {
-    Fill( list, *equipmentsTable_, "Equipment", "Equipment", "Number",
-          [&]( int nRow ){ return equipments_[ equipmentsTable_->item( nRow, 0 )->text() ]->type_.GetId(); },
-          [&]( const QTableWidget&, int ){ return true; } );
+    Fill( list, *equipmentsTable_, "Equipment", "Equipment", "Number", false,
+          [&]( int nRow ){ return equipments_[ equipmentsTable_->item( nRow, 0 )->text() ]->type_.GetId(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -412,9 +410,8 @@ void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::Para
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::ParameterList& list )
 {
-    Fill( list, *dotationsTable_, "Dotation", "Dotation", "Number",
-          [&]( int nRow ){ return ENT_Tr::ConvertToDotationType( catetoriesNames_[ nRow ].toStdString(), ENT_Tr::eToTr ); },
-          [&]( const QTableWidget& table, int nRow ){ return table.item( nRow, 0 )->checkState() == Qt::Checked; } );
+    Fill( list, *dotationsTable_, "Dotation", "Dotation", "Number", true,
+          [&]( int nRow ){ return ENT_Tr::ConvertToDotationType( catetoriesNames_[ nRow ].toStdString(), ENT_Tr::eToTr ); } );
 
 }
 
@@ -424,9 +421,8 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::ParameterList& list )
 {
-    Fill( list, *munitionsFamilyTable_, "Ammo", "Ammo", "Number",
-          [&]( int nRow ){ return nRow; },
-          [&]( const QTableWidget& table, int nRow ){ return table.item( nRow, 0 )->checkState() == Qt::Checked; } );
+    Fill( list, *munitionsFamilyTable_, "Ammo", "Ammo", "Number", true,
+          [&]( int nRow ){ return nRow; } );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,9 +431,8 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::Par
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillStocks( actions::parameters::ParameterList& list )
 {
-    Fill( list, *munitionsFamilyTable_, "Stock", "Stock", "Number",
-          [&]( int nRow ){ return stocks_[ stockTable_->item( nRow, 0 )->text() ]->type_->GetId(); },
-          [&]( const QTableWidget& table, int nRow ){ return table.item( nRow, 0 )->checkState() == Qt::Checked; } );
+    Fill( list, *munitionsFamilyTable_, "Stock", "Stock", "Number", true,
+          [&]( int nRow ){ return stocks_[ stockTable_->item( nRow, 0 )->text() ]->type_->GetId(); } );
 }
 
 // -----------------------------------------------------------------------------
