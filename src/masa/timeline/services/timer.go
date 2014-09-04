@@ -25,7 +25,7 @@ type Timer struct {
 	root   Observer
 	base   time.Time
 	offset time.Duration
-	quit   chan bool
+	quit   chan struct{}
 	ticker *time.Ticker
 }
 
@@ -34,7 +34,7 @@ func NewTimer(root Observer, base time.Time) *Timer {
 		root:   root,
 		base:   base,
 		offset: base.Sub(time.Now()),
-		quit:   make(chan bool),
+		quit:   make(chan struct{}),
 	}
 }
 
@@ -79,7 +79,7 @@ func (t *Timer) Stop() error {
 	if t.ticker == nil {
 		return nil
 	}
-	t.quit <- true
+	t.quit <- struct{}{}
 	t.ticker = nil
 	return nil
 }
