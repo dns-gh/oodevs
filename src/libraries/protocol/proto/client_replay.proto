@@ -97,15 +97,28 @@ message ClientToReplay {
     /** @property context
         @brief Identifies the request matching the response.
 
-        This field is used to fill the "context" fields in the response
-        messages. This context allows the client application to put an
-        unique identifier (based for instance on MAC address), thus
-        allowing to track response message matching a specific request
-        emitted by the client.
+        This field is filled using the "context" fields provided in the
+        request message.
+
+        This context allows the client application to differentiate
+        acknowledgements to similar messages.
+
+        @see ClientToAuthentication
     */
     optional int32   context   = 1;
     //! A field containing one of the messages to be sent
     required Content message   = 2;
+    /** @property client_id
+        @brief Identifies the request matching the response.
+
+        This field is filled using the "client_id" fields provided in the
+        request message.
+
+        client_id is set by the dispatcher after successful authentication
+        in order to identify which request was done by which client.
+
+        @see ClientToAuthentication
+    */
     optional int32   client_id = 3;
 }
 

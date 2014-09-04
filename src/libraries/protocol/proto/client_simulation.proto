@@ -278,18 +278,30 @@ message ClientToSim {
         optional SegmentRequest           segment_request                 = 29;
     }
     /** @property context
-        @brief Identifies the request matching the response
+        @brief Identifies the request matching the response.
 
-        This field is used to fill the "context" fields in the response
-        message (from SimToClient). This context allows the client
-        application to put an unique identifier (based for instance on
-        MAC address), thus allowing to track response message matching a
-        specific request emitted by the client.
+        This field is filled using the "context" fields provided in the
+        request message.
+
+        This context allows the client application to differentiate
+        acknowledgements to similar messages.
+
+        @see ClientToAuthentication
     */
     optional int32   context = 1;
     //! The content of the message
     required Content message = 2;
-    //! specific messages, mostly requests acknowledgements.
+    /** @property client_id
+        @brief Identifies the request matching the response.
+
+        This field is filled using the "client_id" fields provided in the
+        request message.
+
+        client_id is set by the dispatcher after successful authentication
+        in order to identify which request was done by which client.
+
+        @see ClientToAuthentication
+    */
     optional int32   client_id = 3;
 }
 
