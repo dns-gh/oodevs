@@ -28,6 +28,7 @@ ignoredleaves = set([
     "gui::ObjectPrototype_ABC",
     "gui::OptionMenuBase",
     "gui::Panels",
+    "gui::RenameInterface",
     "gui::RichView_ABC",
     "gui::SignalAdapter",
     "gui::SymbolIcons",
