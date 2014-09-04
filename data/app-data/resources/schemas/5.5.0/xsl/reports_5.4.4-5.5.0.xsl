@@ -19,4 +19,12 @@
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="report[@id='259' or @id='260']">
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <xsl:element name="parameter">
+        <xsl:attribute name="type">Stage</xsl:attribute>
+      </xsl:element>
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>
