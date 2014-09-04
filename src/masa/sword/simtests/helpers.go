@@ -171,3 +171,11 @@ func getResourceTypeFromName(c *C, phydb *phy.PhysicalFile, typeName string) uin
 	c.Assert(err, IsNil)
 	return id
 }
+
+func getSomeObject(c *C, data *swapi.ModelData) *swapi.Object {
+	for _, a := range data.Objects {
+		return a
+	}
+	c.Fatal("missing objects")
+	return nil
+}
