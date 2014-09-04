@@ -360,20 +360,29 @@ func isSwordEvent(event *sdk.Event) bool {
 	return len(action.GetPayload()) > 0
 }
 
+func (s *Sword) cacheEvent(event *sdk.Event) *swapi.SwordMessage {
+	id := event.GetUuid()
+	if msg, ok := s.events[id]; ok {
+		return &msg
+	}
+	if !isSwordEvent(event) {
+		return nil
+	}
+	msg := swapi.SwordMessage{}
+	payload := event.GetAction().GetPayload()
+	err := swapi.DecodeMessage(&msg, swapi.ClientToSimulationTag, payload)
+	if err != nil {
+		s.Log("unable to decode payload %v: %v", string(payload), err)
+		return nil
+	}
+	s.events[id] = msg
+	return &msg
+}
+
 func (s *Sword) Update(events ...*sdk.Event) {
 	for _, event := range events {
+		s.cacheEvent(event)
 		s.cacheMetadata(event)
-		if !isSwordEvent(event) {
-			continue
-		}
-		msg := swapi.SwordMessage{}
-		payload := event.GetAction().GetPayload()
-		err := swapi.DecodeMessage(&msg, swapi.ClientToSimulationTag, payload)
-		if err != nil {
-			s.Log("unable to decode payload %v: %v", string(payload), err)
-			continue
-		}
-		s.events[event.GetUuid()] = msg
 	}
 }
 
@@ -424,8 +433,8 @@ var (
 )
 
 func (s *Sword) filterProfile(data *swapi.ModelData, profile *swapi.Profile, units, inhabitants Ids, event *sdk.Event) bool {
-	decoded, ok := s.events[event.GetUuid()]
-	if !ok {
+	decoded := s.cacheEvent(event)
+	if decoded == nil {
 		return false
 	}
 	m := decoded.ClientToSimulation.GetMessage()
