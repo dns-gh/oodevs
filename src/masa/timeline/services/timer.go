@@ -84,6 +84,6 @@ func (t *Timer) Stop() error {
 	return nil
 }
 
-func (t *Timer) Apply(string, url.URL, []byte) {
-	t.root.Abort(ErrInvalidApply)
+func (t *Timer) Apply(string, url.URL, []byte) error {
+	return ErrInvalidApply
 }

@@ -15,30 +15,8 @@ import (
 	"masa/timeline/services"
 	"masa/timeline/util"
 	"net/http"
-	"sync"
 	"time"
 )
-
-type SessionObserver interface {
-	SdkObserver
-	services.EventListener
-	UpdateTick(time.Time)
-	Close()
-}
-
-type ObserverContext struct {
-	observer SessionObserver
-	// This WaitGroup is used to make sure all updates have been seen when
-	// someone call UnregisterObserver on this observer
-	group sync.WaitGroup
-}
-
-// This WaitGroup is used to make sure all updates have been seen when someone
-// detach the service which implement an EventListener
-type EventListeners map[services.EventListener]*sync.WaitGroup
-type EventFilterers map[services.EventFilterer]struct{}
-type Observers map[SdkObserver]*ObserverContext
-type Services map[string]services.Service
 
 var (
 	ErrServiceNameTaken = util.NewError(http.StatusConflict, "service name taken")
@@ -51,16 +29,17 @@ var (
 	ErrUnknownEvent     = util.NewError(http.StatusNotFound, "unknown event")
 )
 
-type SessionData struct {
-	status    sdk.Session_Status
-	tick      time.Time     // current tick time
-	locked    bool          // true if the clock is read-only
-	offset    time.Duration // initial time offset
-	services  Services
-	listeners EventListeners
-	observers Observers
-	events    EventSlice
+type SessionObserver interface {
+	SdkObserver
+	services.EventListener
+	UpdateTick(time.Time)
+	Close()
 }
+
+type EventListeners map[services.EventListener]struct{}
+type EventFilterers map[services.EventFilterer]struct{}
+type Observers map[SdkObserver]SessionObserver
+type Services map[string]services.Service
 
 // A Session groups services and manages their running states, while providing
 // a unified view over their events.
@@ -68,74 +47,47 @@ type Session struct {
 	log       util.Logger
 	uuid      string
 	name      string
-	autostart bool       // automatically start events
-	mutex     sync.Mutex // protects SessionData
-	d         SessionData
-	fmutex    sync.Mutex     // protects filterers
-	filterers EventFilterers // always modified sequentially
-	posts     chan func()    // serializes model updates
-	runner    sync.WaitGroup // wait for model updates
+	autostart bool // automatically start events
+	observer  services.Observer
+	// mutable data
+	status    sdk.Session_Status
+	tick      time.Time     // current tick time
+	locked    bool          // true if the clock is read-only
+	offset    time.Duration // initial time offset
+	services  Services
+	listeners EventListeners
+	observers Observers
+	filterers EventFilterers
+	events    EventSlice
 }
 
-func NewSession(log util.Logger, uuid, name string, autostart bool) *Session {
-	filterers := EventFilterers{
-		&ServiceFilter{}:         struct{}{},
-		&KeywordFilter{}:         struct{}{},
-		&ShowOnlyFilter{}:        struct{}{},
-		&HideHierarchiesFilter{}: struct{}{},
-	}
-	s := &Session{
+func NewSession(log util.Logger, observer services.Observer, uuid, name string, autostart bool) *Session {
+	return &Session{
 		log:       log,
 		uuid:      uuid,
 		name:      name,
 		autostart: autostart,
-		filterers: filterers,
-		posts:     make(chan func(), 16),
-		d: SessionData{
-			status:    sdk.Session_IDLE,
-			services:  Services{},
-			listeners: EventListeners{},
-			observers: Observers{},
+		status:    sdk.Session_IDLE,
+		services:  Services{},
+		listeners: EventListeners{},
+		observers: Observers{},
+		filterers: EventFilterers{
+			&ServiceFilter{}:         struct{}{},
+			&KeywordFilter{}:         struct{}{},
+			&ShowOnlyFilter{}:        struct{}{},
+			&HideHierarchiesFilter{}: struct{}{},
 		},
-	}
-	s.runner.Add(1)
-	go s.run()
-	return s
-}
-
-func (s *Session) run() {
-	defer s.runner.Done()
-	for post := range s.posts {
-		post()
-	}
-}
-
-func (s *Session) waitUpdates() {
-	s.mutex.Lock()
-	observers := []SdkObserver{}
-	for k := range s.d.observers {
-		observers = append(observers, k)
-	}
-	services := []string{}
-	for k := range s.d.services {
-		services = append(services, k)
-	}
-	s.mutex.Unlock()
-	for _, k := range observers {
-		s.UnregisterObserver(k)
-	}
-	for _, k := range services {
-		s.Detach(k)
 	}
 }
 
 func (s *Session) Close() {
 	s.Stop()
-	// This part synchronizes all observers & listeners events and make sure
-	// they're dispatched before we can effectively close the session
-	s.waitUpdates()
-	close(s.posts)
-	s.runner.Wait()
+	for _, k := range s.observers {
+		s.UnregisterObserver(k)
+	}
+	for k := range s.services {
+		s.Detach(k)
+	}
 }
 
 type Logger func(fmt string, args ...interface{})
@@ -146,39 +98,27 @@ func (s *Session) Log(format string, args ...interface{}) {
 }
 
 func (s *Session) Proto() *sdk.Session {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
 	session := &sdk.Session{
 		Uuid:        proto.String(s.uuid),
-		Status:      s.d.status.Enum(),
+		Status:      s.status.Enum(),
 		Name:        proto.String(s.name),
-		NumServices: proto.Int32(int32(len(s.d.services))),
-		NumEvents:   proto.Int32(int32(len(s.d.events))),
+		NumServices: proto.Int32(int32(len(s.services))),
+		NumEvents:   proto.Int32(int32(len(s.events))),
 	}
-	if !s.d.tick.IsZero() {
-		session.Time = proto.String(util.FormatTime(s.d.tick))
-		session.Locked = proto.Bool(s.d.locked)
+	if !s.tick.IsZero() {
+		session.Time = proto.String(util.FormatTime(s.tick))
+		session.Locked = proto.Bool(s.locked)
 	}
-	if s.d.offset != 0 {
-		session.Offset = proto.Int64(int64(s.d.offset))
+	if s.offset != 0 {
+		session.Offset = proto.Int64(int64(s.offset))
 	}
 	return session
 }
 
-type SessionList []*Session
-
-func (s SessionList) Proto() []*sdk.Session {
-	sessions := make([]*sdk.Session, len(s))
-	for i, value := range s {
-		sessions[i] = value.Proto()
-	}
-	return sessions
-}
-
 // Returns the number of attached services with clocks and true if any of them
 // is read-only.
-func (s *SessionData) numClocks() (int, bool) {
-	num := int(0)
+func (s *Session) numClocks() (int, bool) {
+	num := 0
 	locked := false
 	for _, service := range s.services {
 		if service.HasClock() {
@@ -190,77 +130,42 @@ func (s *SessionData) numClocks() (int, bool) {
 }
 
 func (s *Session) Attach(name string, service services.Service) error {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	_, ok := s.d.services[name]
+	_, ok := s.services[name]
 	if ok {
 		return ErrServiceNameTaken
 	}
 	if service.HasClock() {
-		if num, _ := s.d.numClocks(); num > 1 {
+		if num, _ := s.numClocks(); num > 1 {
 			return ErrTooManyClocks
 		}
 	}
-	s.d.services[name] = service
+	s.services[name] = service
 	if listener, ok := service.(services.EventListener); ok {
-		s.d.listeners[listener] = &sync.WaitGroup{}
+		s.listeners[listener] = struct{}{}
 	}
-	s.fmutex.Lock()
 	if filterer, ok := service.(services.EventFilterer); ok {
 		s.filterers[filterer] = struct{}{}
 	}
-	s.fmutex.Unlock()
 	return nil
-}
-
-func (s *Session) detach(name string) (services.Service, error) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	if s.d.status == sdk.Session_LIVE {
-		return nil, ErrInProgress
-	}
-	service, ok := s.d.services[name]
-	if !ok {
-		return nil, ErrServiceNotFound
-	}
-	delete(s.d.services, name)
-	var group *sync.WaitGroup
-	if listener, ok := service.(services.EventListener); ok {
-		group = s.d.listeners[listener]
-		delete(s.d.listeners, listener)
-	}
-	s.fmutex.Lock()
-	if filterer, ok := service.(services.EventFilterer); ok {
-		delete(s.filterers, filterer)
-	}
-	s.fmutex.Unlock()
-	if group != nil {
-		group.Wait()
-	}
-	return service, nil
 }
 
 func (s *Session) Detach(name string) error {
-	service, err := s.detach(name)
-	if err != nil {
-		return err
+	if s.status == sdk.Session_LIVE {
+		return ErrInProgress
+	}
+	service, ok := s.services[name]
+	if !ok {
+		return ErrServiceNotFound
+	}
+	delete(s.services, name)
+	if listener, ok := service.(services.EventListener); ok {
+		delete(s.listeners, listener)
+	}
+	if filterer, ok := service.(services.EventFilterer); ok {
+		delete(s.filterers, filterer)
 	}
 	service.Stop()
 	return nil
-}
-
-func (s *SessionData) getServices() Services {
-	services := Services{}
-	for k, v := range s.services {
-		services[k] = v
-	}
-	return services
-}
-
-func (s *SessionData) getEvents() EventSlice {
-	events := make(EventSlice, len(s.events))
-	copy(events, s.events)
-	return events
 }
 
 func (s *Session) Update(next *sdk.Session) error {
@@ -272,200 +177,117 @@ func (s *Session) Update(next *sdk.Session) error {
 	if err != nil {
 		return util.NewError(http.StatusBadRequest, "invalid time parameter", err.Error())
 	}
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	if s.d.locked {
+	if s.locked {
 		return util.NewError(http.StatusBadRequest, "unable to change locked time")
 	}
-	s.d.offset += begin.Sub(s.d.tick)
-	s.d.setTick(s.postObserver, begin)
+	s.offset += begin.Sub(s.tick)
+	s.setTick(begin)
 	return nil
-}
-
-func (s *Session) tryStart(offset time.Duration) (Services, error) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	num, locked := s.d.numClocks()
-	if num < 1 {
-		return nil, ErrMissingClock
-	}
-	switch s.d.status {
-	case sdk.Session_LIVE:
-		return nil, nil
-	case sdk.Session_STARTING, sdk.Session_STOPPING:
-		return nil, ErrInProgress
-	}
-	s.d.status = sdk.Session_STARTING
-	s.d.locked = locked
-	s.d.offset = offset
-	return s.d.getServices(), nil
 }
 
 func (s *Session) Start(offset time.Duration) error {
-	services, err := s.tryStart(offset)
-	if err != nil || services == nil {
-		return err
+	num, locked := s.numClocks()
+	if num < 1 {
+		return ErrMissingClock
 	}
-	return s.startServices(services)
+	switch s.status {
+	case sdk.Session_LIVE:
+		return nil
+	case sdk.Session_STARTING, sdk.Session_STOPPING:
+		return ErrInProgress
+	}
+	s.status = sdk.Session_STARTING
+	s.locked = locked
+	s.offset = offset
+	return s.startServices()
 }
 
 func (s *Session) applyServices(src Services, name string, operand func(service services.Service) error) error {
-	errors := make(chan error, len(src))
-	waiter := sync.WaitGroup{}
-	waiter.Add(len(src))
-	for _key, _service := range src {
-		go func(key string, service services.Service) {
-			defer waiter.Done()
-			err := operand(service)
-			if err != nil {
-				errors <- err
-				s.Log("unable to %v service '%v': %v", name, key, err)
-			}
-		}(_key, _service)
-	}
-	waiter.Wait()
-	close(errors) // close channel or next range won't ever quit
-	for err := range errors {
+	// add better error management when one service fails
+	var last error
+	for key, service := range src {
+		err := operand(service)
 		if err != nil {
-			return err
+			s.Log("unable to %v service '%v': %v", name, key, err)
+			last = err
 		}
 	}
+	return last
+}
+
+func (s *Session) startServices() error {
+	err := s.applyServices(s.services, "start", func(service services.Service) error {
+		return service.Start()
+	})
+	if err != nil {
+		return err
+	}
+	s.status = sdk.Session_LIVE
 	return nil
 }
 
-func (s *Session) startServices(src Services) error {
-	err := s.applyServices(src, "start", func(service services.Service) error {
-		return service.Start()
-	})
-	next := sdk.Session_LIVE
-	if err != nil {
-		next = sdk.Session_IDLE
-	}
-	s.mutex.Lock()
-	s.d.status = next
-	s.mutex.Unlock()
-	return err
-}
-
-func (s *Session) tryStop() (Services, error) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	switch s.d.status {
-	case sdk.Session_IDLE:
-		return nil, nil
-	case sdk.Session_STARTING, sdk.Session_STOPPING:
-		return nil, ErrInProgress
-	}
-	s.d.status = sdk.Session_STOPPING
-	return s.d.getServices(), nil
-}
-
 func (s *Session) Stop() error {
-	services, err := s.tryStop()
-	if err != nil || services == nil {
+	switch s.status {
+	case sdk.Session_IDLE:
 		return nil
+	case sdk.Session_STARTING, sdk.Session_STOPPING:
+		return ErrInProgress
 	}
-	return s.stopServices(services)
+	s.status = sdk.Session_STOPPING
+	return s.stopServices()
 }
 
-func (s *Session) stopServices(src Services) error {
-	err := s.applyServices(src, "stop", func(service services.Service) error {
+func (s *Session) stopServices() error {
+	err := s.applyServices(s.services, "stop", func(service services.Service) error {
 		return service.Stop()
 	})
-	next := sdk.Session_IDLE
 	if err != nil {
-		next = sdk.Session_LIVE
+		return err
 	}
-	s.mutex.Lock()
-	s.d.status = next
-	s.mutex.Unlock()
-	return err
+	s.status = sdk.Session_IDLE
+	return nil
 }
 
-func (s *Session) Abort(err error) {
-	s.Log("error: %v", err)
-	go s.Stop()
-}
-
-func post(posts chan<- func(), group *sync.WaitGroup, operand func()) {
-	group.Add(1)
-	posts <- func() {
-		defer group.Done()
-		operand()
+func (s EventListeners) Update(events ...*sdk.Event) {
+	for listener := range s {
+		listener.Update(events...)
 	}
 }
 
-func (s EventListeners) Update(posts chan<- func(), events ...*sdk.Event) {
-	for k, group := range s {
-		listener := k
-		post(posts, group, func() {
-			listener.Update(events...)
-		})
+func (s EventListeners) Delete(events ...string) {
+	for listener := range s {
+		listener.Delete(events...)
 	}
 }
 
-func (s EventListeners) Delete(posts chan<- func(), events ...string) {
-	for k, group := range s {
-		listener := k
-		post(posts, group, func() {
-			listener.Delete(events...)
-		})
-	}
-}
-
-func (s *Session) postObserver(ctx *ObserverContext, apply func(so SessionObserver)) {
-	post(s.posts, &ctx.group, func() {
-		apply(ctx.observer)
-	})
-}
-
-type Poster func(ctx *ObserverContext, apply func(so SessionObserver))
-
-func (s *SessionData) setTick(post Poster, tick time.Time) {
+func (s *Session) setTick(tick time.Time) {
 	modified := s.tick != tick
 	s.tick = tick
 	if !modified {
 		return
 	}
 	for _, observer := range s.observers {
-		post(observer, func(so SessionObserver) {
-			so.UpdateTick(tick)
-		})
+		observer.UpdateTick(tick)
 	}
 }
 
-func (s *Session) Tick(tick time.Time) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	if tick.IsZero() {
-		s.d.setTick(s.postObserver, tick)
-		return
-	}
-	last := s.d.tick
-	tick = tick.Add(s.d.offset)
-	s.d.setTick(s.postObserver, tick)
-	if last.IsZero() {
-		last = tick
-	}
-	if s.autostart {
-		s.d.runEvents(s.Log, s.d.events, last, tick)
-	}
-}
-
-func (s *SessionData) runEvent(log Logger, event *Event) {
+func (s *Session) runEvent(event *Event) {
 	if !event.action.apply {
 		return
 	}
 	service, ok := s.services[event.action.url.Host]
 	if !ok {
-		log("unable to find service '%s' for event '%s'", event.action.url.Host, event.uuid)
+		s.Log("unable to find service '%s' for event '%s'", event.action.url.Host, event.uuid)
 		return
 	}
-	go service.Apply(event.uuid, event.action.url, event.action.payload)
+	err := service.Apply(event.uuid, event.action.url, event.action.payload)
+	if err != nil {
+		s.Log("unable to apply event '%s': %v", event.uuid, err)
+	}
 }
 
-func (s *SessionData) runEvents(log Logger, events EventSlice, begin, end time.Time) {
-	for _, event := range events {
+func (s *Session) runEvents(begin, end time.Time) {
+	for _, event := range s.events {
 		if event.done {
 			continue
 		}
@@ -475,16 +297,13 @@ func (s *SessionData) runEvents(log Logger, events EventSlice, begin, end time.T
 		if event.begin.After(end) {
 			continue
 		}
-		s.runEvent(log, event)
+		s.runEvent(event)
 	}
 }
 
 func (s *Session) ReadServices() []*sdk.Service {
-	s.mutex.Lock()
-	services := s.d.getServices()
-	s.mutex.Unlock()
-	rpy := make([]*sdk.Service, 0, len(services))
-	for k, v := range services {
+	rpy := make([]*sdk.Service, 0, len(s.services))
+	for k, v := range s.services {
 		rpy = append(rpy, v.Proto(k))
 	}
 	return rpy
@@ -509,39 +328,13 @@ func filterEvents(filters []services.EventFilter, events []*sdk.Event) []*sdk.Ev
 	return events[:count]
 }
 
-func (s *Session) getFilterers() EventFilterers {
-	s.fmutex.Lock()
-	defer s.fmutex.Unlock()
-	filterers := EventFilterers{}
-	for k, v := range s.filterers {
-		filterers[k] = v
-	}
-	return filterers
-}
-
 func (s *Session) ReadEvents(config services.EventFilterConfig) []*sdk.Event {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
 	filters := []services.EventFilter{}
-	events := s.d.events.Proto()
-	for f := range s.getFilterers() {
+	events := s.events.Proto()
+	for f := range s.filterers {
 		filters = append(filters, f.GetFilters(config)...)
 	}
 	return filterEvents(filters, events)
-}
-
-func (s *Session) OnApply(uuid string, err error, lock bool) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	event := s.d.events.Find(uuid)
-	if event == nil {
-		return
-	}
-	modified := event.OnApply(err, lock)
-	if !modified {
-		return
-	}
-	s.d.listeners.Update(s.posts, event.Proto())
 }
 
 func appendParentUpdate(event *Event, updates *[]*sdk.Event) {
@@ -551,57 +344,50 @@ func appendParentUpdate(event *Event, updates *[]*sdk.Event) {
 }
 
 func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	event, err := NewEvent(msg, s.d.events)
+	event, err := NewEvent(msg, s.events)
 	if err != nil {
 		return nil, err
 	}
-	if event := s.d.events.Find(event.uuid); event != nil {
+	if event := s.events.Find(event.uuid); event != nil {
 		return nil, ErrEventUuidTaken
 	}
-	s.d.events.Append(event)
+	s.events.Append(event)
 	proto := event.Proto()
 	updates := []*sdk.Event{proto}
 	appendParentUpdate(event, &updates)
-	s.d.listeners.Update(s.posts, updates...)
+	s.listeners.Update(updates...)
 	return proto, nil
 }
 
 func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	s.mutex.Lock()
-	event := s.d.events.Find(uuid)
+	event := s.events.Find(uuid)
 	if event == nil {
-		s.mutex.Unlock()
 		return s.CreateEvent(uuid, msg)
 	}
-	modified, triggered, updateChildren, err := event.Update(msg, s.d.tick, s.d.events)
+	modified, triggered, updateChildren, err := event.Update(msg, s.tick, s.events)
 	if err != nil {
-		s.mutex.Unlock()
 		return nil, err
 	}
 	proto := event.Proto()
-	if modified {
-		updates := []*sdk.Event{proto}
-		appendParentUpdate(event, &updates)
-		if updateChildren {
-			for child := range event.children {
-				updates = append(updates, child.Proto())
-			}
-		}
-		s.d.listeners.Update(s.posts, updates...)
-		if triggered {
-			s.d.runEvent(s.Log, event)
+	if !modified {
+		return proto, nil
+	}
+	updates := []*sdk.Event{proto}
+	appendParentUpdate(event, &updates)
+	if updateChildren {
+		for child := range event.children {
+			updates = append(updates, child.Proto())
 		}
 	}
-	s.mutex.Unlock()
-	return proto, err
+	s.listeners.Update(updates...)
+	if triggered {
+		s.runEvent(event)
+	}
+	return proto, nil
 }
 
 func (s *Session) DeleteEvent(uuid string) error {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	event := s.d.events.Find(uuid)
+	event := s.events.Find(uuid)
 	updates := []*sdk.Event{}
 	parent := &Event{}
 	if event != nil {
@@ -611,16 +397,16 @@ func (s *Session) DeleteEvent(uuid string) error {
 			updates = append(updates, child.Proto())
 		}
 	}
-	if !s.d.events.Remove(uuid) {
+	if !s.events.Remove(uuid) {
 		return ErrUnknownEvent
 	}
 	if parent != nil {
 		delete(parent.children, event)
 	}
 	if len(updates) > 0 {
-		s.d.listeners.Update(s.posts, updates...)
+		s.listeners.Update(updates...)
 	}
-	s.d.listeners.Delete(s.posts, uuid)
+	s.listeners.Delete(uuid)
 	return nil
 }
 
@@ -632,7 +418,7 @@ type FilteredObserver struct {
 
 func (f *FilteredObserver) Update(events ...*sdk.Event) {
 	filters := []services.EventFilter{func(event *sdk.Event) bool {
-		for it := range f.session.getFilterers() {
+		for it := range f.session.filterers {
 			if it.Filter(event, f.config) {
 				return true
 			}
@@ -648,31 +434,53 @@ func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserve
 		config:          config,
 		session:         s,
 	}
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	ctx := &ObserverContext{observer: observer}
-	s.d.observers[observer] = ctx
-	s.d.listeners[observer] = &ctx.group
-	tick := s.d.tick
-	events := s.d.events.Proto()
-	// we cannot call Update and UpdateTick here directly
-	// * We are locked
-	// * We haven't returned the observer channel yet so nobody can pop events
-	// Instead we post it to the s.posts goroutine
-	s.postObserver(ctx, func(so SessionObserver) {
-		so.UpdateTick(tick)
-		so.Update(events...)
-	})
+	s.observers[observer] = observer
+	s.listeners[observer] = struct{}{}
+	// beware, as we haven't returned the output channel yet,
+	// nobody listens on output messages. Make sure the output
+	// channel contain at least 2 buffers or it will deadlock
+	// fix the api so it doesn't use channels later
+	observer.UpdateTick(s.tick)
+	observer.Update(s.events.Proto()...)
 	return observer
 }
 
 func (s *Session) UnregisterObserver(observer SdkObserver) {
-	s.mutex.Lock()
-	ctx := s.d.observers[observer]
-	delete(s.d.listeners, ctx.observer)
-	delete(s.d.observers, ctx.observer)
-	s.mutex.Unlock()
-	// Make sure our observer has received all its events before closing it
-	ctx.group.Wait()
-	ctx.observer.Close()
+	filtered := s.observers[observer]
+	delete(s.listeners, filtered)
+	delete(s.observers, filtered)
+	filtered.Close()
+}
+
+func (s *Session) Abort(err error) {
+	s.Log("error: %v", err)
+	s.Stop()
+}
+
+func (s *Session) Tick(tick time.Time) {
+	if tick.IsZero() {
+		s.setTick(tick)
+		return
+	}
+	last := s.tick
+	tick = tick.Add(s.offset)
+	s.setTick(tick)
+	if last.IsZero() {
+		last = tick
+	}
+	if s.autostart {
+		s.runEvents(last, tick)
+	}
+}
+
+func (s *Session) CloseEvent(uuid string, err error, lock bool) {
+	event := s.events.Find(uuid)
+	if event == nil {
+		return
+	}
+	modified := event.OnApply(err, lock)
+	if !modified {
+		return
+	}
+	s.listeners.Update(event.Proto())
 }

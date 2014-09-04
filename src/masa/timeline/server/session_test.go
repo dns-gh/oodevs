@@ -27,39 +27,66 @@ import (
 )
 
 type Fixture struct {
-	server  *swfake.SwordServer
-	sword   *services.Sword
-	session *Session
-	begin   time.Time
+	server     *swfake.SwordServer
+	sword      *services.Sword
+	controller *Controller
+	observer   ControllerObserver
+	session    string
+	begin      time.Time
 }
 
 func (f *Fixture) Close() {
-	f.session.Close()
+	f.controller.DeleteSession(f.session)
 	f.server.Close()
 }
 
 func (f *Fixture) Tick() {
 	f.begin = f.begin.Add(1 * time.Second)
-	f.session.Tick(f.begin)
+	f.observer.Tick(f.begin)
 }
 
 func (f *Fixture) Rewind() {
 	f.begin = f.begin.Add(-1 * time.Second)
-	f.session.Tick(f.begin)
+	f.observer.Tick(f.begin)
+}
+
+func (f *Fixture) WaitConnected() {
+	for {
+		detached := f.server.GetLinks()
+		done := len(detached) > 0
+		detached.Close()
+		if done {
+			return
+		}
+	}
+}
+
+type ModuleLogger struct {
+	log  util.Logger
+	name string
+}
+
+func (m *ModuleLogger) Printf(format string, args ...interface{}) {
+	m.log.Printf(m.name+": "+format, args...)
 }
 
 func (t *TestSuite) MakeFixture(c *C) *Fixture {
 	local := fmt.Sprintf("localhost:%v", 1+t.port)
 	log := swtest.MakeGocheckLogger(c)
-	server, err := swfake.NewSwordServer(log, local, false, false)
+	server, err := swfake.NewSwordServer(&ModuleLogger{log: log, name: "swfake"}, local, false, false)
 	c.Assert(err, IsNil)
-	session := NewSession(log, uuid.New(), "session_name", true)
-	sword := services.NewSword(log, session, true, "some_name", local)
-	err = session.Attach("some_name", sword)
+	controller := MakeController(log)
+	id := uuid.New()
+	_, err = controller.CreateSession(id, "some_name", true)
 	c.Assert(err, IsNil)
-	err = session.Start(0)
+	ctx := controller.sessions[id]
+	observer := ControllerObserver{id, controller}
+	_, err = controller.AttachSwordService(id, "some_name", true, local)
 	c.Assert(err, IsNil)
-	f := &Fixture{server, sword, session, time.Now()}
+	sword := ctx.session.services["some_name"].(*services.Sword)
+	_, err = controller.StartSession(id, 0)
+	c.Assert(err, IsNil)
+	f := &Fixture{server, sword, controller, observer, id, time.Now()}
 	f.Tick()
 	return f
 }
@@ -80,7 +107,7 @@ func (f *Fixture) createFullEvent(uuid, name, target, parent, metadata string, p
 	if !end.IsZero() {
 		msg.End = proto.String(util.FormatTime(end))
 	}
-	return f.session.CreateEvent(uuid, &msg)
+	return f.controller.CreateEvent(f.session, &msg)
 }
 
 func (f *Fixture) createEvent(uuid, name, target string, payload []byte) (*sdk.Event, error) {
@@ -226,7 +253,8 @@ func (f *Fixture) waitFor(c *C, operand func(e *sdk.Event) bool, uuids ...string
 	}
 	deadline := time.Now().Add(1 * time.Minute)
 	for time.Now().Before(deadline) {
-		events := f.session.ReadEvents(map[string]interface{}{})
+		events, err := f.controller.ReadEvents(f.session, services.EventFilterConfig{})
+		c.Assert(err, IsNil)
 		for _, evt := range events {
 			if operand(evt) {
 				delete(set, evt.GetUuid())
@@ -265,7 +293,9 @@ func checkDuplicateOrders(c *C, f *Fixture) int {
 	f.Tick()
 	f.waitAllDone(c, unit, automat, crowd, frag, magic, umagic, omagic, kmagic, amagic)
 	num := 9
-	c.Assert(f.session.ReadEvents(map[string]interface{}{}), HasLen, num)
+	events, err := f.controller.ReadEvents(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	c.Assert(events, HasLen, num)
 	return num
 }
 
@@ -278,6 +308,7 @@ func (t *TestSuite) TestDuplicateOrders(c *C) {
 func (t *TestSuite) TestMissingServerSideOrders(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
+	f.WaitConnected()
 	detached := f.server.GetLinks()
 	defer detached.Close()
 	for slink := range detached {
@@ -288,8 +319,6 @@ func (t *TestSuite) TestMissingServerSideOrders(c *C) {
 				Id:        proto.Uint32(13),
 			},
 		})
-	}
-	for slink := range detached {
 		order := &sword.UnitOrder{
 			Tasker: swapi.MakeId(17),
 			Type:   swapi.MakeId(23),
@@ -307,7 +336,8 @@ func (t *TestSuite) TestMissingServerSideOrders(c *C) {
 	}
 	deadline := time.Now().Add(1 * time.Minute)
 	for time.Now().Before(deadline) {
-		events := f.session.ReadEvents(map[string]interface{}{})
+		events, err := f.controller.ReadEvents(f.session, services.EventFilterConfig{})
+		c.Assert(err, IsNil)
 		if len(events) > 0 {
 			return
 		}
@@ -339,7 +369,9 @@ func (f *Fixture) addEventAndSync(c *C, n int) {
 	unit := f.addEvent(c, "unit", "some_name", f.getSomeUnitOrder(c, 77, 0))
 	f.Tick()
 	f.waitAllDone(c, unit)
-	c.Assert(f.session.ReadEvents(map[string]interface{}{}), HasLen, n)
+	events, err := f.controller.ReadEvents(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	c.Assert(events, HasLen, n)
 }
 
 func (f *Fixture) killLinks() {
@@ -377,6 +409,7 @@ func (t *TestSuite) TestServerSideDuplicateOrders(c *C) {
 			},
 		},
 	}
+	f.WaitConnected()
 	f.spamOrder(c, &order, &action)
 	// Two events are expected: order and the one pushed by addEventAndSync
 	f.addEventAndSync(c, 2)
@@ -410,11 +443,12 @@ func (t *TestSuite) TestTriggerEvent(c *C) {
 	c.Assert(err, IsNil)
 
 	event.Done = proto.Bool(true)
-	_, err = f.session.UpdateEvent(uuid, event)
+	_, err = f.controller.UpdateEvent(f.session, uuid, event)
 	c.Assert(err, IsNil)
 
 	f.waitAllDone(c, uuid)
-	data := f.session.ReadEvents(map[string]interface{}{})
+	data, err := f.controller.ReadEvents(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
 	c.Assert(data, HasLen, 1)
 	begin, err := util.ParseTime(data[0].GetBegin())
 	c.Assert(err, IsNil)
@@ -449,11 +483,11 @@ func (f *FakeService) Proto(name string) *sdk.Service {
 	}
 }
 
-func (f *FakeService) HasClock() bool                { return false }
-func (f *FakeService) IsLocked() bool                { return false }
-func (f *FakeService) Start() error                  { return nil }
-func (f *FakeService) Stop() error                   { return nil }
-func (f *FakeService) Apply(string, url.URL, []byte) {}
+func (f *FakeService) HasClock() bool                      { return false }
+func (f *FakeService) IsLocked() bool                      { return false }
+func (f *FakeService) Start() error                        { return nil }
+func (f *FakeService) Stop() error                         { return nil }
+func (f *FakeService) Apply(string, url.URL, []byte) error { return nil }
 
 func (f *FakeService) Update(events ...*sdk.Event) {
 	f.lock.Lock()
@@ -497,11 +531,14 @@ func (t *TestSuite) TestListeners(c *C) {
 	defer f.Close()
 
 	faker := FakeService{}
-	err := f.session.Attach("faker", &faker)
+	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
+		return nil, session.Attach("faker", &faker)
+	})
 	c.Assert(err, IsNil)
 
-	link := f.session.RegisterObserver(services.EventFilterConfig{})
-	defer f.session.UnregisterObserver(link)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
 	messages := make(chan interface{})
 	go func() {
 		for msg := range link.Listen() {
@@ -518,7 +555,7 @@ func (t *TestSuite) TestListeners(c *C) {
 	// test update event
 	event.Name = proto.String("new_name")
 	uuid := event.GetUuid()
-	updated, err := f.session.UpdateEvent(uuid, event)
+	updated, err := f.controller.UpdateEvent(f.session, uuid, event)
 	c.Assert(err, IsNil)
 	swtest.DeepEquals(c, updated, event)
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
@@ -528,7 +565,7 @@ func (t *TestSuite) TestListeners(c *C) {
 	swtest.DeepEquals(c, fakerEvents, []*sdk.Event{event})
 
 	// test delete event
-	err = f.session.DeleteEvent(uuid)
+	err = f.controller.DeleteEvent(f.session, uuid)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
 	_, fakerUuids := faker.GetAndClear()
@@ -537,9 +574,9 @@ func (t *TestSuite) TestListeners(c *C) {
 	swtest.DeepEquals(c, fakerUuids, []string{uuid})
 
 	// test detach
-	err = f.session.Stop()
+	_, err = f.controller.StopSession(f.session)
 	c.Assert(err, IsNil)
-	err = f.session.Detach("faker")
+	_, err = f.controller.DetachService(f.session, "faker")
 	c.Assert(err, IsNil)
 	f.checkBroadcastEvents(c, messages, "another_name")
 	_, fakerUuids = faker.GetAndClear()
@@ -586,24 +623,28 @@ func (t *TestSuite) TestFiltering(c *C) {
 
 	faker := FakeFilterer{FakeService: FakeService{}, filter: false}
 	_ = services.EventFilterer(&faker)
-	err := f.session.Attach("faker", &faker)
+	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
+		return nil, session.Attach("faker", &faker)
+	})
 	c.Assert(err, IsNil)
 
-	link := f.session.RegisterObserver(services.EventFilterConfig{})
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
 	faker.filter = true
 	sgroup := sync.WaitGroup{}
 	checkUpdateEvents(c, &sgroup, link, faker.filter)
 	f.createEvent(uuid.New(), "something", "some_name", f.getSomeUnitOrder(c, 1, 0))
-	f.session.UnregisterObserver(link)
+	f.controller.UnregisterObserver(f.session, link)
 	sgroup.Wait()
 	c.Assert(faker.count, Equals, 1)
 
 	faker.count = 0
 	faker.filter = false
-	link = f.session.RegisterObserver(services.EventFilterConfig{})
+	link, err = f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
 	checkUpdateEvents(c, &sgroup, link, faker.filter)
 	f.createEvent(uuid.New(), "something", "some_name", f.getSomeUnitOrder(c, 1, 0))
-	f.session.UnregisterObserver(link)
+	f.controller.UnregisterObserver(f.session, link)
 	sgroup.Wait()
 	c.Assert(faker.count, Equals, 2)
 }
@@ -694,13 +735,15 @@ func countEvents(counter chan<- int, link <-chan interface{}) {
 
 func (f *Fixture) applyFilters(c *C, cfg services.EventFilterConfig, count int) {
 	// test filters on ReadEvents
-	events := f.session.ReadEvents(cfg)
+	events, err := f.controller.ReadEvents(f.session, cfg)
+	c.Assert(err, IsNil)
 	c.Assert(events, HasLen, count)
 	// test filters on observers
-	link := f.session.RegisterObserver(cfg)
+	link, err := f.controller.RegisterObserver(f.session, cfg)
+	c.Assert(err, IsNil)
 	counter := make(chan int)
 	go countEvents(counter, link.Listen())
-	f.session.UnregisterObserver(link)
+	f.controller.UnregisterObserver(f.session, link)
 	sum := 0
 	for n := range counter {
 		sum += n
@@ -712,6 +755,7 @@ func (t *TestSuite) TestFilters(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
 
+	f.WaitConnected()
 	f.server.CreateProfile(&sword.Profile{
 		Login:             proto.String("automat_1_only"),
 		ReadOnlyAutomates: swapi.MakeIdList(1),
@@ -798,11 +842,12 @@ func (t *TestSuite) TestFilters(c *C) {
 	f.addEvent(c, "af1", "some_name", f.getSomeFragOrder(c, swapi.MakeAutomatTasker(1)))
 	f.addEvent(c, "cf1", "some_name", f.getSomeFragOrder(c, swapi.MakeCrowdTasker(1)))
 	id := uuid.New()
-	f.session.CreateEvent(id, &sdk.Event{
+	_, err := f.controller.CreateEvent(f.session, &sdk.Event{
 		Uuid:  proto.String(id),
 		Name:  proto.String("some_event"),
 		Begin: proto.String(util.FormatTime(f.begin)),
 	})
+	c.Assert(err, IsNil)
 	// ensure we do get all our events
 	f.applyFilters(c, services.EventFilterConfig{}, 23)
 
@@ -870,6 +915,7 @@ func (t *TestSuite) TestIncompleteMissionsAreVisibleByAnyProfile(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
 
+	f.WaitConnected()
 	f.server.CreateProfile(&sword.Profile{
 		Login:           proto.String("party_1_only"),
 		ReadOnlyParties: swapi.MakeIdList(1),
@@ -899,6 +945,7 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
 
+	f.WaitConnected()
 	f.server.CreateProfile(&sword.Profile{
 		Login:           proto.String("party_1_only"),
 		ReadOnlyParties: swapi.MakeIdList(1),
@@ -1024,6 +1071,7 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
 
+	f.WaitConnected()
 	f.server.CreateProfile(&sword.Profile{
 		Login:           proto.String("party_1_only"),
 		ReadOnlyParties: swapi.MakeIdList(1),
@@ -1105,7 +1153,8 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 }
 
 func (f *Fixture) findEvent(c *C, uuid string) *sdk.Event {
-	events := f.session.ReadEvents(map[string]interface{}{})
+	events, err := f.controller.ReadEvents(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
 	for _, event := range events {
 		if event.GetUuid() == uuid {
 			return event
@@ -1143,6 +1192,7 @@ func (f *Fixture) testAck(c *C, err *swfake.Error, order []byte) {
 func (t *TestSuite) TestOrderAckErrors(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
+	f.WaitConnected()
 	f.testAck(c, nil, f.getSomeUnitOrder(c, 91, 0))
 	err := swfake.Error{Code: int32(sword.OrderAck_error_invalid_unit), Text: "random junk"}
 	f.testAck(c, &err, f.getSomeUnitOrder(c, 92, 0))
@@ -1155,7 +1205,8 @@ func (t *TestSuite) TestOrderAckErrors(c *C) {
 }
 
 func (f *Fixture) resetEvents(c *C, valid bool) {
-	events := f.session.ReadEvents(map[string]interface{}{})
+	events, err := f.controller.ReadEvents(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
 	for _, evt := range events {
 		if valid {
 			evt.Done = proto.Bool(false)
@@ -1163,7 +1214,7 @@ func (f *Fixture) resetEvents(c *C, valid bool) {
 			evt.ErrorCode = nil
 			evt.ErrorText = nil
 		}
-		_, err := f.session.UpdateEvent(evt.GetUuid(), evt)
+		_, err := f.controller.UpdateEvent(f.session, evt.GetUuid(), evt)
 		c.Assert(err, IsNil)
 	}
 }
@@ -1207,7 +1258,9 @@ func (t *TestSuite) TestSwordReconnection(c *C) {
 		unit := f.addEvent(c, "unit", "some_name", f.getSomeUnitOrder(c, 95, 0))
 		f.Tick()
 		f.waitAllDone(c, unit)
-		c.Assert(f.session.ReadEvents(map[string]interface{}{}), HasLen, num+i+1)
+		events, err := f.controller.ReadEvents(f.session, services.EventFilterConfig{})
+		c.Assert(err, IsNil)
+		c.Assert(events, HasLen, num+i+1)
 	}
 }
 
@@ -1234,7 +1287,7 @@ func (t *TestSuite) flushPendingActions(c *C, afterClose, afterTick, preStop boo
 		}
 		// eventually we'll stop the session
 		defer wgroup.Done()
-		f.session.Stop()
+		f.controller.StopSession(f.session)
 	}()
 	// and eventually we'll have all events done or dead
 	f.waitAllDoneOrDead(c, unit)
@@ -1255,8 +1308,9 @@ func (t *TestSuite) TestSwordStopReconnectFlushPendingActions(c *C) {
 func (t *TestSuite) TestCreateEventUpdatesParent(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
-	link := f.session.RegisterObserver(services.EventFilterConfig{})
-	defer f.session.UnregisterObserver(link)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
 	messages := make(chan interface{})
 	go func() {
 		for msg := range link.Listen() {
@@ -1288,8 +1342,9 @@ func (t *TestSuite) TestCreateEventUpdatesParent(c *C) {
 func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
-	link := f.session.RegisterObserver(services.EventFilterConfig{})
-	defer f.session.UnregisterObserver(link)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
 	messages := make(chan interface{})
 	go func() {
 		for msg := range link.Listen() {
@@ -1306,7 +1361,7 @@ func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 
 	// test update child updates parent
 	child.Begin = proto.String(util.FormatTime(f.begin.Add(2 * time.Hour)))
-	newChild, err := f.session.UpdateEvent("child", child)
+	newChild, err := f.controller.UpdateEvent(f.session, "child", child)
 	c.Assert(err, IsNil)
 	swtest.DeepEquals(c, newChild, child)
 
@@ -1318,8 +1373,9 @@ func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
-	link := f.session.RegisterObserver(services.EventFilterConfig{})
-	defer f.session.UnregisterObserver(link)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
 	messages := make(chan interface{})
 	go func() {
 		for msg := range link.Listen() {
@@ -1339,7 +1395,7 @@ func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
 	// test update parent updates children
 	parent.Begin = proto.String(util.FormatTime(f.begin.Add(5 * time.Minute)))
 	parent.End = proto.String(util.FormatTime(f.begin.Add(1*time.Hour + 5*time.Minute)))
-	newParent, err := f.session.UpdateEvent("parent", parent)
+	newParent, err := f.controller.UpdateEvent(f.session, "parent", parent)
 	c.Assert(err, IsNil)
 	swtest.DeepEquals(c, newParent, parent)
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
@@ -1362,8 +1418,9 @@ func mapEvents(events ...*sdk.Event) map[string]*sdk.Event {
 func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
-	link := f.session.RegisterObserver(services.EventFilterConfig{})
-	defer f.session.UnregisterObserver(link)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
 	messages := make(chan interface{})
 	go func() {
 		for msg := range link.Listen() {
@@ -1381,7 +1438,7 @@ func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 	waitBroadcastTag(messages, sdk.MessageTag_update_events)
 
 	// test delete parent updates children
-	err := f.session.DeleteEvent("parent")
+	err = f.controller.DeleteEvent(f.session, "parent")
 	c.Assert(err, IsNil)
 
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)

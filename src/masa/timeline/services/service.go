@@ -19,10 +19,12 @@ type Observer interface {
 	Abort(err error)
 	// update current time with <tick>
 	Tick(tick time.Time)
-	// abort action <uuid> with error <err> and set as read-only if <lock>
-	OnApply(uuid string, err error, lock bool)
+	// close action <uuid> with error <err> and set as read-only if <lock>
+	CloseEvent(uuid string, err error, lock bool)
 	// update event <uuid> with <event> data
-	UpdateEvent(uuid string, event *sdk.Event) (*sdk.Event, error)
+	UpdateEvent(uuid string, event *sdk.Event)
+	// post command to observer loop
+	Post(operand func())
 }
 
 type Service interface {
@@ -31,7 +33,7 @@ type Service interface {
 	IsLocked() bool                 // whether service clock is immutable
 	Start() error
 	Stop() error
-	Apply(uuid string, url url.URL, payload []byte)
+	Apply(uuid string, url url.URL, payload []byte) error
 }
 
 type EventListener interface {
