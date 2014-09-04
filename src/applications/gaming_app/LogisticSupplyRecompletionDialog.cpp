@@ -358,19 +358,9 @@ namespace
         return QString( (str + " %L1" ).c_str() ).arg( index++ ).toStdString();
     }
 
-    bool SkipFill( QTableWidget& table )
-    {
-        for( int nRow = 0; nRow < table.rowCount(); ++nRow )
-            if( table.item( nRow, 0 )->checkState() == Qt::Checked )
-                return false;
-        return true;
-    }
-
     void Fill( ParameterList& list, QTableWidget& table, const std::string& name, const std::string& identifier, const std::string& quantity,
                bool checkState, const std::function< unsigned int( int ) >& idFunctor )
     {
-        if( checkState && SkipFill( table ) )
-            return;
         int index = 1;
         for( int nRow = 0; nRow < table.rowCount(); ++nRow )
         {
