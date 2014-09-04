@@ -465,3 +465,12 @@ double DEC_Knowledge_PopulationFlow::GetRelevance() const
 {
     return flowParts_.GetRelevance();
 }
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< MT_Vector2D > DEC_Knowledge_PopulationFlow::GetShape
+// Created: LDC 2014-09-02
+// -----------------------------------------------------------------------------
+std::vector< MT_Vector2D > DEC_Knowledge_PopulationFlow::GetShape() const
+{
+   return flowParts_.GetShape();
+}

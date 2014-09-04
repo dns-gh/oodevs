@@ -535,6 +535,19 @@ void MIL_ObjectManager::VisitUniversalObjects( const std::function< void( MIL_Ob
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::function< void
+// Created: LDC 2014-09-01
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::VisitUrbanObjects( const std::function< void( const MIL_UrbanObject_ABC& ) >& functor ) const
+{
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
+    {
+        if( MIL_UrbanObject_ABC* object = dynamic_cast< MIL_UrbanObject_ABC* >( it->second ) )
+            functor( *object );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name:MIL_ObjectManager::GetObjects
 // Created: SLI 2012-09-19
 // -----------------------------------------------------------------------------

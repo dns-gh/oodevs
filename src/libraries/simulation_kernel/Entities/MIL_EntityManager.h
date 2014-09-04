@@ -153,6 +153,7 @@ public:
     virtual MIL_Object_ABC*     FindObject       ( unsigned int nID ) const;
 
     void VisitUniversalObjects( const std::function< void( MIL_Object_ABC& ) >& visitor ) const;
+    void VisitUrbanObjects( const std::function< void( const MIL_UrbanObject_ABC& ) >& functor ) const;
 
     MIL_Population* FindPopulation( MIL_UrbanObject_ABC* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& GetArmies() const;

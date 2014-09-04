@@ -58,6 +58,7 @@ public:
     bool Clean();
     void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
     double GetRelevance() const;
+    std::vector< MT_Vector2D > GetShape() const;
     //@}
 
     //! @name Network operations

@@ -221,3 +221,12 @@ double DEC_Knowledge_PopulationFlowPart::GetRelevance() const
 {
     return rRelevance_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::GetShape
+// Created: LDC 2014-09-02
+// -----------------------------------------------------------------------------
+T_PointVector DEC_Knowledge_PopulationFlowPart::GetShape() const
+{
+    return shape_;
+}

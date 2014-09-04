@@ -17,6 +17,8 @@
 #include "DEC_Decision_ABC.h"
 #include "DEC_Objective.h"
 #include "Brain.h"
+#include "Decision/DEC_Gen_Object.h"
+#include "Decision/DEC_Gen_Object.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -34,10 +36,17 @@
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_LimaFunction.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
+#include "Entities/Orders/MIL_MissionParameter_ABC.h"
+#include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
+#include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include "Knowledge/DEC_Knowledge_PopulationConcentration.h"
+#include "Knowledge/DEC_Knowledge_PopulationFlow.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Tools/MIL_Tools.h"
@@ -2789,4 +2798,253 @@ double DEC_GeometryFunctions::GetUrbanSearchSpeed( const MIL_UrbanObject_ABC* pU
             return it->second.searchSpeed_;
     }
     return 0.25;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetUrbanRatio
+// Created: LDC 2014-09-01
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::GetUrbanRatio( const TER_Localisation* localisation )
+{
+    double area = localisation->GetArea();
+    if( !area )
+        return 0;
+    double urbanArea = 0;
+    MIL_AgentServer::GetWorkspace().GetEntityManager().VisitUrbanObjects(
+    [&]( const MIL_UrbanObject_ABC& object )
+    {
+        if( 0 != object.GetParent() )
+            return;
+        auto blockLocation = object.GetLocalisation();
+        const double objectArea = blockLocation.GetArea();
+        if( !objectArea )
+            return;
+        urbanArea += TER_Geometry::IntersectionArea( *localisation, blockLocation );
+    });
+    return urbanArea / area;
+}
+
+namespace
+{
+    class SurfaceParameterVisitor : public MIL_MissionParameterVisitor_ABC
+    {
+    public:
+        virtual void Accept( const std::string& dianame, const MIL_OrderTypeParameter& type, MIL_MissionParameter_ABC& element )
+        {
+            if( type.IsOptional() )
+                return;
+            std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+            if( element.ToList( params ) )
+            {
+                for( auto it = params.begin(); it != params.end(); ++it )
+                    Accept( dianame, type, **it );
+                return;
+            }
+            boost::shared_ptr< TER_Localisation > location;
+            if( element.ToPolygon( location ) )
+            {
+                AppendRatio( *location );
+                return;
+            }
+            if( element.ToLocation( location ) )
+            {
+                AppendRatio( *location );
+                return;
+            }
+            boost::shared_ptr< DEC_Knowledge_Object > object;
+            if( element.ToObjectKnowledge( object ) )
+            {
+                AppendRatio( object->GetLocalisation() );
+                return;
+            }
+            boost::shared_ptr< DEC_Gen_Object > genobject;
+            if( element.ToGenObject( genobject ) )
+                AppendRatio( genobject->GetLocalisation() );
+        }
+        std::vector< double > Result()
+        {
+            return result_;
+        }
+    private:
+        void AppendRatio( const TER_Localisation& location )
+        {
+            if( location.GetType() != TER_Localisation::eLine && location.GetType() != TER_Localisation::ePoint )
+                result_.push_back( DEC_GeometryFunctions::GetUrbanRatio( &location ) );
+        }
+        std::vector< double > result_;
+    };
+
+    class PointParameterVisitor : public MIL_MissionParameterVisitor_ABC
+    {
+    public:
+        virtual void Accept( const std::string& dianame, const MIL_OrderTypeParameter& type, MIL_MissionParameter_ABC& element )
+        {
+            if( type.IsOptional() )
+                return;
+            std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+            if( element.ToList( params ) )
+            {
+                for( auto it = params.begin(); it != params.end(); ++it )
+                    Accept( dianame, type, **it );
+                return;
+            }
+            boost::shared_ptr< MT_Vector2D > point;
+            if( element.ToPoint( point ) )
+            {
+                AppendPoint( *point );
+                return;
+            }
+            std::vector< boost::shared_ptr< MT_Vector2D > > path;
+            if( element.ToPath( path ) )
+            {
+                for( auto it = path.begin(); it != path.end(); ++it )
+                    AppendPoint( **it );
+                return;
+            }
+            DEC_Decision_ABC* automat;
+            if( element.ToAutomat( automat ) )
+            {
+                auto pions = automat->GetPionsWithPC();
+                for( auto it = pions.begin(); it != pions.end(); ++it )
+                    AppendPoint( *(*it)->GetPosition() );
+                return;
+            }
+            const DEC_Decision_ABC* agent;
+            if( element.ToAgent( agent ) )
+            {
+                AppendPoint( *agent->GetPosition() );
+                return;
+            }
+            boost::shared_ptr< DEC_Knowledge_Agent > knowledgeAgent;
+            if( element.ToAgentKnowledge( knowledgeAgent ) )
+            {
+                AppendPoint( knowledgeAgent->GetPosition() );
+                return;
+            }
+            boost::shared_ptr< DEC_Knowledge_Population > crowd;
+            if( element.ToPopulationKnowledge( crowd ) )
+            {
+                auto concentrations = crowd->GetConcentrationMap();
+                for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
+                    AppendPoint( it->second->GetPosition() );
+                auto flows = crowd->GetFlowMap();
+                for( auto it = flows.begin(); it != flows.end(); ++it )
+                {
+                    auto shape = it->second->GetShape();
+                    for( auto itShape = shape.begin(); itShape != shape.end(); ++itShape )
+                        AppendPoint( *itShape );
+                }
+                return;
+            }
+            boost::shared_ptr< DEC_Knowledge_Object > object;
+            if( element.ToObjectKnowledge( object ) )
+            {
+                AppendPoint( object->GetLocalisation() );
+                return;
+            }
+            boost::shared_ptr< DEC_Gen_Object > genobject;
+            if( element.ToGenObject( genobject ) )
+                AppendPoint( genobject->GetLocalisation() );
+        }
+        std::vector< double > Result()
+        {
+            return result_;
+        }
+    private:
+        void AppendPoint( const TER_Localisation& location )
+        {
+            if( location.GetType() != TER_Localisation::eLine && location.GetType() != TER_Localisation::ePoint )
+                return;
+            auto points = location.GetPoints();
+            for( auto it = points.begin(); it != points.end(); ++it )
+                AppendPoint( *it );
+        }
+        void AppendPoint( const MT_Vector2D& point )
+        {
+            double inside = 0;
+            MIL_AgentServer::GetWorkspace().GetEntityManager().VisitUrbanObjects(
+            [&]( const MIL_UrbanObject_ABC& object )
+            {
+                if( 0 != object.GetParent() )
+                    return;
+                auto blockLocation = object.GetLocalisation();
+                if( blockLocation.IsInside( point ) )
+                    inside = 1;
+            });
+            result_.push_back( inside );
+        }
+        std::vector< double > result_;
+    };
+
+    class UrbanParameterVisitor : public MIL_MissionParameterVisitor_ABC
+    {
+    public:
+        UrbanParameterVisitor() : result_( 0 ) {}
+        virtual void Accept( const std::string& dianame, const MIL_OrderTypeParameter& type, MIL_MissionParameter_ABC& element )
+        {
+            if( type.IsOptional() )
+                return;
+            std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+            if( element.ToList( params ) )
+            {
+                for( auto it = params.begin(); it != params.end(); ++it )
+                    Accept( dianame, type, **it );
+                return;
+            }
+            MIL_UrbanObject_ABC* block = 0;
+            if( element.ToUrbanBlock( block ) && block )
+                ++result_;
+        }
+        int Result()
+        {
+            return result_;
+        }
+    private:
+        int result_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< double > DEC_GeometryFunctions::GetSurfaceParametersUrbanRatio
+// Created: LDC 2014-09-02
+// -----------------------------------------------------------------------------
+std::vector< double > DEC_GeometryFunctions::GetSurfaceParametersUrbanRatio( DEC_Decision_ABC* entity )
+{
+    if( !entity )
+        throw MASA_EXCEPTION( __FUNCTION__ ": invalid parameter." );
+    SurfaceParameterVisitor visitor;
+    auto mission = entity->GetMission();
+    if( mission )
+        mission->Visit( visitor );
+    return visitor.Result();
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< double > DEC_GeometryFunctions::GetPointParametersUrbanRatio
+// Created: LDC 2014-09-02
+// -----------------------------------------------------------------------------
+std::vector< double > DEC_GeometryFunctions::GetPointParametersUrbanRatio( DEC_Decision_ABC* entity )
+{
+    if( !entity )
+        throw MASA_EXCEPTION( __FUNCTION__ ": invalid parameter." );
+    auto mission = entity->GetMission();
+    PointParameterVisitor visitor;
+    if( mission )
+        mission->Visit( visitor );
+    return visitor.Result();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetUrbanParametersNumber
+// Created: LDC 2014-09-02
+// -----------------------------------------------------------------------------
+int DEC_GeometryFunctions::GetUrbanParametersNumber( DEC_Decision_ABC* entity )
+{
+    if( !entity )
+        throw MASA_EXCEPTION( __FUNCTION__ ": invalid parameter." );
+    auto mission = entity->GetMission();
+    UrbanParameterVisitor visitor;
+    if( mission )
+        mission->Visit( visitor );
+    return visitor.Result();
 }

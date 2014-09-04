@@ -406,13 +406,44 @@ DEC_Geometrie_PositionAdvanceAlongFuseauAutomat = function( position )
 end
 
 --- Returns the corresponding area of the given AOR
--- @param AOR Sim AOR
--- @return Sim area
+-- @param AOR Simulation area of responsibility
+-- @return Simulation area
 integration.getAreaFromAOR = function ( AOR )
     return DEC_Geometrie_ConvertirFuseauEnLocalisation( AOR )
 end
 
+--- Deprecated
 integration.postionAdvanceAlongAOR = integration.positionAdvanceAlongAOR
 
 --- Deprecated
 integration.getPositionAlongDangerDirection = integration.advanceAlongDangerDirection
+
+--- Returns the ratio urban area/total area if an area
+-- @param area Simulation area
+-- @return number
+integration.getUrbanRatio = function( area )
+    return DEC_Geometrie_UrbanRatio( area )
+end        
+
+--- Returns the list of ratios urban area/total area for surfacic mandatory parameters of an entity's current mission.
+-- @param entity Simulation agent, automat or crowd, whose mission is tested.
+-- @return list of numbers
+integration.getSurfaceParametersUrbanRatio = function( entity )
+    return DEC_Geometrie_SurfaceParametersUrbanRatio( entity )
+end
+
+--- Returns whether or not each punctual mandatory parameter of an entity's mission is inside an urban area.
+--
+-- @param entity Simulation agent, automat or crowd, whose mission is tested.
+-- @return list of numbers: 1 if the parameter is inside an urban area, 0 otherwise.
+integration.getPointParametersUrbanRatio = function( entity )
+    return DEC_Geometrie_PointParametersUrbanRatio( entity )
+end
+
+--- Returns the number of urban blocks passed to mandatory parameters of an entity's mission.
+-- @param entity Simulation agent, automat or crowd, whose mission is tested.
+-- @return number
+integration.getUrbanParametersNumber = function( entity )
+    return DEC_Geometrie_UrbanParametersNumber( entity )
+end
+
