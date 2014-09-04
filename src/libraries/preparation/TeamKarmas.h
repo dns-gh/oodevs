@@ -23,7 +23,7 @@ namespace kernel
 */
 // Created: SBO 2006-10-27
 // =============================================================================
-class TeamKarmas : public tools::Resolver< kernel::Karma, QString >
+class TeamKarmas : public tools::Resolver< const kernel::Karma, QString >
 {
 public:
     //! @name Constructors/Destructor
@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    kernel::Karma& GetDefault() const;
+    const kernel::Karma& GetDefault() const;
     //@}
 
 private:
@@ -47,7 +47,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Karma& default_;
+    const kernel::Karma& default_;
     //@}
 };
 

@@ -20,8 +20,15 @@ using namespace kernel;
 namespace
 {
     typedef boost::bimap< char, Karma > T_Karmas;
-    const T_Karmas karmas_= boost::assign::list_of< T_Karmas::relation >
-        ( 'f', Karma::friend_ )( 'h', Karma::enemy_ )( 'n', Karma::neutral_ )( 'u', Karma::unknown_ );
+
+    // In a function because otherwise we face a static initialization fiasco
+    // with Karma::friend_, Karma::enemy_, etc..
+    const T_Karmas& GetKarmas()
+    {
+        static const T_Karmas karmas = boost::assign::list_of< T_Karmas::relation >
+            ( 'f', Karma::friend_ )( 'h', Karma::enemy_ )( 'n', Karma::neutral_ )( 'u', Karma::unknown_ );
+        return karmas;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -34,10 +41,10 @@ void App6Symbol::SetKarma( std::string& symbol, const kernel::Karma& karma )
     if( pos != std::string::npos )
     {
         if( symbol.size() > pos+2 )
-            symbol[pos + 2] = karmas_.right.at( karma );
+            symbol[pos + 2] = GetKarmas().right.at( karma );
     }
     else if( symbol.size() > 2 )
-        symbol[1] = karmas_.right.at( karma );
+        symbol[1] = GetKarmas().right.at( karma );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,8 +60,8 @@ std::string App6Symbol::GetBase( const std::string& symbol, Karma& karma )
         result = symbol.substr( pos + 1 );
     if( result.size() > 2 )
     {
-        auto it = karmas_.left.find( result[1] );
-        if( it != karmas_.left.end() )
+        auto it = GetKarmas().left.find( result[1] );
+        if( it != GetKarmas().left.end() )
             karma = it->second;
         result[1] = '*';
     }
