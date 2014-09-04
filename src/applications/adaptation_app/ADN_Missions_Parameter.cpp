@@ -74,8 +74,7 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
         assert( choices_[ i ]->name_ == newParam->choices_[ i ]->name_ );
         newParam->choices_[ i ]->isAllowed_ = choices_[ i ]->isAllowed_.GetData();
     }
-    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
-        type_.GetData() == eMissionParameterTypePhaseLine )
+    if( IsTypeCompatibleWithObjects() )
     {
         newParam->objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
         for( unsigned int i = 0; i < objects_.size(); ++i )
@@ -126,19 +125,25 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
             >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoiceVector, this, _1, boost::ref( choices_ ) ) )
           >> xml::end;
 
-    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
-        type_.GetData() == eMissionParameterTypePhaseLine )
-    {
-        objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-        bool all = false;
-        input >> xml::start( "objects" )
-                >> xml::optional >> xml::attribute( "all", all )
-                >> xml::list( "parameter", boost::bind( &ReadObjects, _1, boost::ref( objects_ ) ) )
-              >> xml::end;
-        if( all )
-            for( std::size_t i = 0; i < objects_.size(); ++i )
-                objects_[ i ]->isAllowed_ = true;
-    }
+    if( IsTypeCompatibleWithObjects() )
+        ReadObjectTypes( input );
+}
+        
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::ReadObjectTypes
+// Created: LDC 2014-09-03
+// -----------------------------------------------------------------------------
+void ADN_Missions_Parameter::ReadObjectTypes( xml::xistream& input )
+{
+    objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+    bool all = false;
+    input >> xml::start( "objects" )
+            >> xml::optional >> xml::attribute( "all", all )
+            >> xml::list( "parameter", boost::bind( &ReadObjects, _1, boost::ref( objects_ ) ) )
+            >> xml::end;
+    if( all )
+        for( std::size_t i = 0; i < objects_.size(); ++i )
+            objects_[ i ]->isAllowed_ = true;
 }
 
 void ADN_Missions_Parameter::FillChoices()
@@ -176,6 +181,8 @@ void ADN_Missions_Parameter::ReadChoiceVector( xml::xistream& input, T_Choice_Ve
             return;
         }
     }
+    if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
+        ReadObjectTypes( input ); // For compatibility...
 }
 
 // -----------------------------------------------------------------------------
@@ -184,8 +191,7 @@ void ADN_Missions_Parameter::ReadChoiceVector( xml::xistream& input, T_Choice_Ve
 // -----------------------------------------------------------------------------
 void ADN_Missions_Parameter::UpdateObjectsVectors()
 {
-    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
-        type_.GetData() == eMissionParameterTypePhaseLine )
+    if( IsTypeCompatibleWithObjects() )
     {
         if( objects_.empty() )
         {
@@ -196,6 +202,16 @@ void ADN_Missions_Parameter::UpdateObjectsVectors()
     }
     else
         objects_.ResetFixedVector();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::IsTypeCompatibleWithObjects
+// Created: LDC 2014-09-03
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Parameter::IsTypeCompatibleWithObjects() const
+{
+    return ( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
+             type_.GetData() == eMissionParameterTypePhaseLine || type_.GetData() == eMissionParameterTypeLocationComposite );
 }
 
 namespace
@@ -277,8 +293,7 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output ) const
         values_[i]->WriteArchive( output );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
 
-    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge ||
-        type_.GetData() == eMissionParameterTypePhaseLine )
+    if( IsTypeCompatibleWithObjects() )
         WriteObjects( output, objects_ );
     output << xml::end;
 }
@@ -304,6 +319,15 @@ void ADN_Missions_Parameter::CheckDatabaseValidity( ADN_ConsistencyChecker& chec
     if( ( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge )
         && CountObject( objects_ ) == 0 )
         checker.AddError( eMissingObjectParameter, strName_.GetData(), eMissions );
+    if( type_.GetData() == eMissionParameterTypeLocationComposite )
+    {
+        bool hasObject = false;
+        for( std::size_t i = 0; i < choices_.size() && !hasObject; ++i )
+            if( "ObjectKnowledge" == choices_[i]->name_ )
+                hasObject = choices_[i]->isAllowed_.GetData(); 
+        if( hasObject && CountObject( objects_ ) == 0 )
+            checker.AddError( eMissingObjectParameter, strName_.GetData(), eMissions );
+    }
     std::set< int > ids;
     for( auto it = values_.begin(); it != values_.end(); ++it )
     {

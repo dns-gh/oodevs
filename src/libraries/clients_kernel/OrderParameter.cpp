@@ -42,13 +42,13 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     , context_     ( xis.attribute( "is-context", false ) )
     , structure_   ( false )
     , union_       ( false )
+    , indirectFire_( false )
+    , ownedEquipments_( false )
+    , allObjects_  ( false )
     , minOccurs_   ( 1 )
     , maxOccurs_   ( GetMaxOccurs( xis ) )
     , minValue_    ( std::numeric_limits< double >::min() )
     , maxValue_    ( std::numeric_limits< double >::max() )
-    , indirectFire_( false )
-    , ownedEquipments_( false )
-    , allObjects_( false )
 {
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
         >> xml::optional >> xml::start( "choice" )
@@ -76,13 +76,13 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     , context_     ( false )
     , structure_   ( false )
     , union_       ( false )
+    , indirectFire_( false )
+    , ownedEquipments_( false )
+    , allObjects_  ( false )
     , minOccurs_   ( min )
     , maxOccurs_   ( max )
     , minValue_    ( std::numeric_limits< double >::min() )
     , maxValue_    ( std::numeric_limits< double >::max() )
-    , indirectFire_( false )
-    , ownedEquipments_( false )
-    , allObjects_( false )
 {
     // NOTHING
 }
@@ -99,16 +99,16 @@ OrderParameter::OrderParameter( const OrderParameter& other )
     , context_     ( other.context_ )
     , structure_   ( other.structure_ )
     , union_       ( other.union_ )
+    , indirectFire_( other.indirectFire_ )
+    , ownedEquipments_( other.ownedEquipments_ )
+    , allObjects_  ( other.allObjects_ )
     , minOccurs_   ( other.minOccurs_ )
     , maxOccurs_   ( other.maxOccurs_ )
     , minValue_    ( other.minValue_ )
     , maxValue_    ( other.maxValue_ )
-    , indirectFire_( other.indirectFire_ )
-    , ownedEquipments_( other.ownedEquipments_ )
     , values_      ( other.values_ )
     , aliases_     ( other.aliases_ )
     , objects_     ( other.objects_ )
-    , allObjects_  ( other.allObjects_ )
 {
     auto it = other.CreateIterator();
     while( it.HasMoreElements() )
@@ -418,4 +418,14 @@ void OrderParameter::SetUnion( bool isUnion )
 bool OrderParameter::IsList() const
 {
     return Count() == 1 && !IsStructure() && !IsUnion();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::CopyObjects
+// Created: LDC 2014-09-03
+// -----------------------------------------------------------------------------
+void OrderParameter::CopyObjects( const OrderParameter& other )
+{
+    allObjects_ = other.allObjects_;
+    objects_ = other.objects_;
 }

@@ -259,7 +259,10 @@ void ADN_MissionParameters_Table::Reconnect( const QModelIndex& index )
     {
         param->values_.Clear();
         if( current == eMissionParameterTypeLocationComposite )
+        {
             itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Connect( &param->choices_ );
+            itemConnectors_[ADN_Missions_GUI::eObjects]->Connect( &param->objects_ );
+        }
         else if( current == eMissionParameterTypeNumeric )
         {
             itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_ );

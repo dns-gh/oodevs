@@ -96,6 +96,7 @@ public:
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
     virtual void Accept( ChoicesVisitor_ABC& visitor ) const;
     void AddChoice( const std::string& choice );
+    void CopyObjects( const OrderParameter& other );
     //@}
 
 private:
@@ -121,16 +122,16 @@ private:
     bool context_;
     bool structure_;
     bool union_;
+    bool indirectFire_;
+    bool ownedEquipments_;
+    bool allObjects_;
     unsigned int minOccurs_;
     unsigned int maxOccurs_;
     double minValue_;
     double maxValue_;
-    bool indirectFire_;
-    bool ownedEquipments_;
     T_OrderParameterValues values_;
     T_Aliases aliases_;
     T_Aliases objects_;
-    bool allObjects_;
     //@}
 };
 

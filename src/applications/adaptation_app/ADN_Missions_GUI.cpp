@@ -174,7 +174,10 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pLimit, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ),
-        std::vector< E_MissionParameterType >( boost::assign::list_of( eMissionParameterTypeObjectKnowledge )( eMissionParameterTypeGenObject )( eMissionParameterTypePhaseLine ) ) );
+        std::vector< E_MissionParameterType >( boost::assign::list_of( eMissionParameterTypeObjectKnowledge )
+                                                                     ( eMissionParameterTypeGenObject )
+                                                                     ( eMissionParameterTypePhaseLine )
+                                                                     ( eMissionParameterTypeLocationComposite ) ) );
     {
         QCheckBox* all = new QCheckBox( pKnowledgeObject );
         all->setText( tr( "all" ) );
