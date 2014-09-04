@@ -55,6 +55,7 @@ private:
     //@{
     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
+    gui::LogisticHierarchiesBase* currentSuperior_;
     //@}
 };
 

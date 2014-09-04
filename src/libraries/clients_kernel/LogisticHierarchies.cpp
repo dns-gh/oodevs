@@ -12,8 +12,9 @@
 #include "Automat_ABC.h"
 #include "Formation_ABC.h"
 #include "clients_gui/LogisticHelpers.h"
+#include "protocol/MessageParameters.h"
 #include "protocol/Protocol.h"
-#include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace kernel;
 
@@ -27,6 +28,7 @@ LogisticHierarchies::LogisticHierarchies( kernel::Controller& controller, kernel
     : gui::EntityHierarchies< gui::LogisticHierarchiesBase >( controller, entity, 0 )
     , automatResolver_( automatResolver )
     , formationResolver_( formationResolver )
+    , currentSuperior_( 0 )
 {
     // NOTHING
 }
@@ -37,18 +39,8 @@ LogisticHierarchies::LogisticHierarchies( kernel::Controller& controller, kernel
 // -----------------------------------------------------------------------------
 LogisticHierarchies::~LogisticHierarchies()
 {
-    // NOTHING
-}
-
-namespace
-{
-    template< typename T >
-    void ClearSubordinate( const tools::Resolver_ABC< T >& resolver, const kernel::Entity_ABC& subordinate )
-    {
-        for( auto it = resolver.CreateIterator(); it.HasMoreElements(); )
-            if( auto* logisticHierarchy = const_cast< T& >( it.NextElement() ).Retrieve< gui::LogisticHierarchiesBase >() )
-                logisticHierarchy->UnregisterSubordinate( subordinate );
-    }
+    if( currentSuperior_ )
+        currentSuperior_->RemoveSubordinate( entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,17 +49,32 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticHierarchies::DoUpdate( const sword::ChangeLogisticLinks& message )
 {
-    auto& requester = *logistic_helpers::FindParentEntity( message.requester(), automatResolver_, formationResolver_ );
-    if( requester.GetId() != entity_.GetId() )
-        return;
-    ClearSubordinate( automatResolver_, requester );
-    ClearSubordinate( formationResolver_, requester );
-    BOOST_FOREACH( const auto& parentEntity, message.superior() )
+    const auto requester = logistic_helpers::FindParentEntity( message.requester(), automatResolver_, formationResolver_ );
+    protocol::Check( requester, "requester must be a valid automat or formation" );
+    auto& requesterHierarchy = dynamic_cast< LogisticHierarchies& >( requester->Get< gui::LogisticHierarchiesBase >() );
+    std::vector< kernel::Entity_ABC* > superiors;
+    for( int i = 0; i < message.superior().size(); ++i )
     {
-        const auto superior = logistic_helpers::FindParentEntity( parentEntity, automatResolver_, formationResolver_ );
-        if( auto* logisticHierarchy = superior->Retrieve< gui::LogisticHierarchiesBase >() )
-            logisticHierarchy->RegisterSubordinate( requester );
+        const auto superior = logistic_helpers::FindParentEntity( message.superior( i ), automatResolver_, formationResolver_ );
+        protocol::Check( superior, "superior #" + boost::lexical_cast< std::string >( i ) + "must be a valid parent entity" );
+        superiors.push_back( superior );
     }
+    requesterHierarchy.SetSuperior( 0 );
+    if( currentSuperior_ )
+    {
+        currentSuperior_->RemoveSubordinate( entity_ );
+        currentSuperior_ = 0;
+    }
+    if( superiors.empty() )
+        return;
+    // The nominal superior plays the role of the usual superior
+    requesterHierarchy.SetSuperior( superiors.front() );
+    if( superiors.size() < 2 )
+        return;
+    // the current superior has to be handled separately
+    auto& superiorHierarchy = superiors.back()->Get< gui::LogisticHierarchiesBase >();
+    requesterHierarchy.currentSuperior_ = &superiorHierarchy;
+    superiorHierarchy.AddSubordinate( *requester );
 }
 
 // -----------------------------------------------------------------------------
