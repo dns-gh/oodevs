@@ -133,12 +133,12 @@ integration.enlargeLocation = function( location, distance )
     return DEC_Geometrie_AgrandirLocalisation( location, distance )
 end
 
---- Returns the nearest point to the provided position on the border of the object
+--- Returns the nearest point to the provided position on the border of the area
 -- @param position Simulation position
--- @param object Simulation object
+-- @param area Simulation area
 -- @return Simulation position on the border of the object
-integration.computeNearestBorder = function( position, scaledObject )
-    return DEC_Geometrie_ComputeNearestBorder( position, scaledObject )
+integration.computeNearestBorder = function( position, area )
+    return DEC_Geometrie_ComputeNearestBorder( position, area )
 end
 
 --- Returns true if the positions are the same, false otherwise
