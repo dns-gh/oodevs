@@ -931,10 +931,10 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     end
     
     -- Save initial positions
-    myself.leadData.initialPositions = {}
+    myself.leadData.initialPositions = utilities.createTableWithSimIndexes()
     local subordinatesWithoutHQ = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
     for i=1, #subordinatesWithoutHQ do
-        myself.leadData.initialPositions[ subordinatesWithoutHQ[i].source ] = subordinatesWithoutHQ[i]:getPositionKnowledge()
+        myself.leadData.initialPositions[ subordinatesWithoutHQ[i].source ] = CreateKnowledge( integration.ontology.types.point, integration.getTeammatePosition( subordinatesWithoutHQ[i] ) )
     end
 end
 
