@@ -897,7 +897,7 @@
     </message>
     <message>
         <source>Rename knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer un groupe de connaissance</translation>
     </message>
 </context>
 <context>
@@ -1203,7 +1203,7 @@
     </message>
     <message>
         <source>Object Renaming</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer un object</translation>
     </message>
 </context>
 <context>
@@ -1414,7 +1414,7 @@
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer</translation>
     </message>
 </context>
 </TS>

@@ -927,15 +927,15 @@ const Action actions[] =
     // knowledge
     ACTION( knowledge_group_add_knowledge ),
     ACTION( knowledge_group_enable ),
+    ACTION( knowledge_group_rename ),
     ACTION( knowledge_group_update_side ),
     ACTION( knowledge_group_update_side_parent ),
     ACTION( knowledge_group_update_type ),
-    ACTION( knowledge_group_rename ),
     // object
     ACTION( create_object ),
-    ACTION( update_object ),
     ACTION_EMPTY( destroy_object ),
     ACTION( rename_object ),
+    ACTION( update_object ),
     // magic
     ACTION( change_diplomacy ),
     ACTION( change_resource_links ),

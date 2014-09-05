@@ -2142,8 +2142,9 @@ message UnitMagicAction {
         //!         list { quantity: 10  } }
         //! result[0+], Identifier: created requests identifier
         create_stock_supply_request       = 63;
-        //! Rename the targeted unit.
-        //! The tasker is set to target unit.
+        //! Rename the targeted tasker.
+        //! The tasker is set to target team, formation, automat,
+        //! unit, crowd or inhabitant.
         //! parameters[0], String: the new name
         rename                            = 64;
     }
@@ -2182,6 +2183,7 @@ message ObjectMagicAction {
         */
         destroy = 2;
         /** @brief A rename object magic action.
+            parameters[0], String: the new name
         */
         rename  = 3;
     }
@@ -2272,7 +2274,7 @@ message KnowledgeMagicAction {
         //!   UnitIdentification::Level as defined in simulation_client.proto
         //!   This parameter can also be an Quantity (deprecated)
         add_knowledge       = 4;
-        //! Rename the knowldge group.
+        //! Rename the knowledge group.
         //! parameters[0], String: the new name
         rename              = 5;
     }

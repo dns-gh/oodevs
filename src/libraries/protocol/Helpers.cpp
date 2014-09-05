@@ -88,10 +88,10 @@ static_assert( sword::UnitMagicAction::Type_ARRAYSIZE == mapping::MagicUnitActio
 const mapping::MagicKnowledgeAction mapping::MagicKnowledgeAction::data_[] = {
     { "knowledge_group_add_knowledge",      sword::KnowledgeMagicAction::add_knowledge },
     { "knowledge_group_enable",             sword::KnowledgeMagicAction::enable },
+    { "knowledge_group_rename",             sword::KnowledgeMagicAction::rename },
     { "knowledge_group_update_side",        sword::KnowledgeMagicAction::update_party },
     { "knowledge_group_update_side_parent", sword::KnowledgeMagicAction::update_party_parent },
     { "knowledge_group_update_type",        sword::KnowledgeMagicAction::update_type },
-    { "knowledge_group_rename",             sword::KnowledgeMagicAction::rename },
 };
 
 const size_t mapping::MagicKnowledgeAction::size_ = COUNT_OF( mapping::MagicKnowledgeAction::data_ );
@@ -100,8 +100,8 @@ static_assert( sword::KnowledgeMagicAction::Type_ARRAYSIZE == mapping::MagicKnow
 const mapping::MagicObjectAction mapping::MagicObjectAction::data_[] = {
     { "create_object",  sword::ObjectMagicAction::create },
     { "destroy_object", sword::ObjectMagicAction::destroy },
-    { "update_object",  sword::ObjectMagicAction::update },
     { "rename_object",  sword::ObjectMagicAction::rename },
+    { "update_object",  sword::ObjectMagicAction::update },
 };
 
 const size_t mapping::MagicObjectAction::size_ = COUNT_OF( mapping::MagicObjectAction::data_ );

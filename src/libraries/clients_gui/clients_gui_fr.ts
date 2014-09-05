@@ -1845,7 +1845,7 @@ Voulez-vous le supprimer?</translation>
     <name>gui::RenameInterface</name>
     <message>
         <source>Rename</source>
-        <translation type="unfinished">Renommer</translation>
+        <translation>Renommer</translation>
     </message>
 </context>
 <context>
