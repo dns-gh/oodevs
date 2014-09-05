@@ -89,9 +89,9 @@ float DecimalSpinBoxAndSlider::value() const
 void DecimalSpinBoxAndSlider::setSpinboxValue( int value )
 {
     value_ = value / precision_;
-    bool wasBlocked = spinbox_->blockSignals( true );
+    spinbox_->blockSignals( true );
     spinbox_->setValue( value_ );
-    spinbox_->blockSignals( wasBlocked );
+    spinbox_->blockSignals( false );
     emit valueChanged( value_ );
 }
 
@@ -102,9 +102,9 @@ void DecimalSpinBoxAndSlider::setSpinboxValue( int value )
 void DecimalSpinBoxAndSlider::setSliderValue( double value )
 {
     value_ = static_cast< float >( value );
-    bool wasBlocked = slider_->blockSignals( true );
+    slider_->blockSignals( true );
     slider_->setValue( static_cast< int >( value * precision_ ) );
-    slider_->blockSignals( wasBlocked );
+    slider_->blockSignals( false );
     emit valueChanged( value_ );
 }
 

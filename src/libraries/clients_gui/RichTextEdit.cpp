@@ -75,14 +75,14 @@ void RichTextEdit::SetText( const QString& text )
 // -----------------------------------------------------------------------------
 void RichTextEdit::SetBackgroundColor( const QColor& color )
 {
-    bool wasBlocked = blockSignals( true );
+    blockSignals( true );
     QString str = toHtml();
     if( str.contains( "bgcolor=" ) )
         str.replace( QRegExp( "bgcolor=\"#[a-fA-F0-9]{6}\"" ), QString( "bgcolor=\"%1\"" ).arg( color.name() ) );
     else
         str.replace( "<body", QString( "<body bgcolor=\"%1\"" ).arg( color.name() ) );
     setHtml( str );
-    blockSignals( wasBlocked );
+    blockSignals( false );
 }
 
 // -----------------------------------------------------------------------------

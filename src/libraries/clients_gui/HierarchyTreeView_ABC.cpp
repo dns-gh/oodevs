@@ -172,15 +172,15 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
                 QStandardItem* currentSuperiorItem = entityItem->parent();
                 if( currentSuperiorItem != newSuperiorItem )
                 {
-                    bool wasBlocked = blockSignals( true );
-                    bool wasDataBlocked = dataModel_.blockSignals( true );
+                    blockSignals( true );
+                    dataModel_.blockSignals( true );
                     QList< QStandardItem* > rowItems = currentSuperiorItem ? currentSuperiorItem->takeRow( entityItem->row() ) : dataModel_.invisibleRootItem()->takeRow( entityItem->row() );
                     newSuperiorItem->appendRow( rowItems );
-                    dataModel_.blockSignals( wasDataBlocked );
-                    blockSignals( wasBlocked );
+                    dataModel_.blockSignals( false );
+                    blockSignals( false );
                 }
-                    ApplyProfileFilter();
-                }
+                ApplyProfileFilter();
+            }
             else
                 throw MASA_EXCEPTION( "Error, superior not found." );
         }

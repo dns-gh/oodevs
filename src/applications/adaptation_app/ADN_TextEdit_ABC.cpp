@@ -63,14 +63,14 @@ void ADN_TextEdit_ABC::ChangeBackgroundColor( const QColor& color )
     // Save cursor
     int cursorPos = textCursor().position();
     // Change background color
-    bool wasBlocked = blockSignals( true );
+    blockSignals( true );
     QString str = toHtml();
     if( str.contains( "bgcolor=" ) )
         str.replace( QRegExp( "bgcolor=\"#[a-fA-F0-9]{6}\"" ), QString( "bgcolor=\"%1\"" ).arg( color.name() ) );
     else
         str.replace( "<body", QString( "<body bgcolor=\"%1\"" ).arg( color.name() ) );
     setHtml( str );
-    blockSignals( wasBlocked );
+    blockSignals( false );
     // Restore cursor
     QTextCursor cursor = textCursor();
     cursor.setPosition( cursorPos, QTextCursor::MoveAnchor );
