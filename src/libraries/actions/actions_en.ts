@@ -139,11 +139,11 @@
     </message>
     <message>
         <source>Phase Line Objects %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Phase Line Objects %1</translation>
     </message>
     <message>
         <source>Phase Line Objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Phase Line Objects</translation>
     </message>
 </context>
 <context>

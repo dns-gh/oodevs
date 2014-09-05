@@ -12,7 +12,6 @@
 
 #include "Param_ABC.h"
 #include "ListParameter.h"
-
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/Types.h"
 #include <tools/ElementObserver_ABC.h>

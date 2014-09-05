@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>Phase Line Objects %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Objets associés %1</translation>
     </message>
     <message>
         <source>Phase Line Objects</source>

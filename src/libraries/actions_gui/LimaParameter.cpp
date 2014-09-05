@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "actions_gui_pch.h"
-
 #include "LimaParameter.h"
 #include "moc_LimaParameter.cpp"
 #include "ListParameter.h"
@@ -37,15 +36,16 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 LimaParameter::LimaParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : Param_ABC( builder, parameter )
-    , controller_( builder.GetControllers().controller_ )
-    , converter_( builder.GetStaticModel().coordinateConverter_ )
-    , resolver_( builder.GetTacticalLineResolver() )
+    , controller_  ( builder.GetControllers().controller_ )
+    , converter_   ( builder.GetStaticModel().coordinateConverter_ )
+    , resolver_    ( builder.GetTacticalLineResolver() )
     , clickedLine_ ( 0 )
     , selectedLine_( 0 )
     , builder_     ( builder )
-    , functions_( new QListWidget() )
-    , schedule_( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).toStdString(), "datetime", true ), false ) ) )
-    , objects_( 0 )
+    , functions_   ( new QListWidget() )
+    , schedule_    ( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).toStdString(),
+                     "datetime", true ), false ) ) )
+    , objects_     ( 0 )
 {
     controller_.Register( *this );
 }
@@ -59,8 +59,7 @@ LimaParameter::~LimaParameter()
     controller_.Unregister( *this );
     delete functions_;
     delete schedule_;
-    if( objects_ )
-        delete objects_;
+    delete objects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +69,7 @@ LimaParameter::~LimaParameter()
 bool LimaParameter::InternalCheckValidity() const
 {
     return ( HasTacticalLine() || HasNewLima() ) && schedule_ && schedule_->CheckValidity()
-        && ( !objects_ || ( objects_ && objects_->CheckValidity() ) );
+        && ( !objects_ || objects_->CheckValidity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -374,5 +373,5 @@ void LimaParameter::SetEntity( const kernel::Entity_ABC* entity )
 
 bool LimaParameter::HasParameter( const Param_ABC& parameter ) const
 {
-    return Param_ABC::HasParameter( parameter ) || ( objects_ && objects_->HasParameter( parameter ) );
+    return Param_ABC::HasParameter( parameter ) || objects_ && objects_->HasParameter( parameter );
 }

@@ -275,7 +275,7 @@ namespace
     void ReadLimaObjects( PhaseLineOrder& dst, xml::xistream& xis )
     {
         xis >> xml::list( "parameter", [&]( xml::xistream& parameterXis ) {
-            const std::string value = parameterXis.attribute< std::string >( "value", "" );
+            const std::string value = parameterXis.attribute< std::string >( "value" );
             if( !value.empty() )
                 dst.add_objects( boost::lexical_cast< uint32_t >( value ) );
         } );

@@ -401,7 +401,7 @@ bool OrderParameter::HasObject() const
     return allObjects_ || !objects_.empty();
 }
 
-std::set< std::string > OrderParameter::GetObjects() const
+const std::set< std::string >& OrderParameter::GetObjects() const
 {
     return objects_;
 }

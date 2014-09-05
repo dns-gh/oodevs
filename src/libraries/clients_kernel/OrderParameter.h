@@ -75,7 +75,7 @@ public:
     bool HasObject( const std::string& type ) const;
     bool HasObject() const;
     bool HasAllObjects() const;
-    std::set< std::string > GetObjects() const;
+    const std::set< std::string >& GetObjects() const;
     unsigned int MinOccurs() const;
     unsigned int MaxOccurs() const;
     double MinValue() const;
