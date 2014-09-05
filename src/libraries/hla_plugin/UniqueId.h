@@ -14,6 +14,7 @@
 #include <vector>
 #include <algorithm>
 #include <boost/shared_ptr.hpp>
+#include <sstream>
 
 namespace plugins
 {
@@ -61,14 +62,13 @@ public:
     }
     std::string str() const
     {
-        std::string result;
+    	std::stringstream ss;
+    	ss << std::hex;
         for( unsigned int i = 0; i < Number; ++i )
         {
-            if( !identifier_[ i ] )
-                return result;
-            result.push_back( identifier_[ i ] );
+        	ss << (uint16_t)identifier_[ i ];
         }
-        return result;
+        return ss.str();
     }
     void Read( std::vector< char >& identifier ) const
     {
