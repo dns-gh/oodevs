@@ -194,6 +194,7 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments()
     equipmentsList_.clear();
     equipmentsList_.append( "" );
     equipmentsMax_.clear();
+    equipments_.clear();
     if( auto equipments = static_cast< const Equipments* >( selected_->Retrieve< Equipments_ABC >() ) )
     {
         auto it = equipments->CreateIterator();
@@ -312,7 +313,6 @@ void LogisticSupplyRecompletionDialog::InitializeStocks()
     const SupplyStates* supplies = selected_->Retrieve< SupplyStates >();
     if( supplies )
     {
-        stockTable_->setRowCount( 0 );
         auto it = supplies->CreateIterator();
         while( it.HasMoreElements() )
         {
@@ -391,8 +391,9 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::ParameterList& list )
 {
-    Fill( list, *equipmentsTable_, "Equipment", "Equipment", "Number", false,
-          [&]( int nRow ){ return equipments_[ equipmentsTable_->item( nRow, 0 )->text() ]->type_.GetId(); } );
+    if( equipmentsTable_->rowCount() > 1 )
+        Fill( list, *equipmentsTable_, "Equipment", "Equipment", "Number", false,
+              [&]( int nRow ){ return equipments_[ equipmentsTable_->item( nRow, 0 )->text() ]->type_.GetId(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -403,7 +404,6 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
 {
     Fill( list, *dotationsTable_, "Dotation", "Dotation", "Number", true,
           [&]( int nRow ){ return ENT_Tr::ConvertToDotationType( catetoriesNames_[ nRow ].toStdString(), ENT_Tr::eToTr ); } );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -422,7 +422,7 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::Par
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::FillStocks( actions::parameters::ParameterList& list )
 {
-    Fill( list, *munitionsFamilyTable_, "Stock", "Stock", "Number", true,
+    Fill( list, *stockTable_, "Stock", "Stock", "Number", true,
           [&]( int nRow ){ return stocks_[ stockTable_->item( nRow, 0 )->text() ]->type_->GetId(); } );
 }
 
