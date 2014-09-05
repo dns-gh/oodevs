@@ -159,12 +159,8 @@ message ReplayToClient {
     //! A field containing one of the messages to be sent
     required Content message = 2;
     /** @property client_id
-        @brief Identifies the request matching the response.
 
-        This field is filled using the "client_id" fields provided in the
-        request message.
-
-        client_id is set by the dispatcher after successful authentication
+        This field is filled using the "client_id" fields set by the dispatcher after successful authentication
         in order to identify which request was done by which client.
 
         @see ClientToAuthentication
