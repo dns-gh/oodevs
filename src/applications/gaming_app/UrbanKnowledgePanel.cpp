@@ -217,3 +217,9 @@ void UrbanKnowledgePanel::OnContextMenuRequested( const QPoint& pos )
     if( item && item->data( KnowledgeRole ).isValid() )
         item->data( KnowledgeRole ).value< const UrbanKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
 }
+
+void UrbanKnowledgePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), 0, *display_ );
+    ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), 0 );
+}

@@ -21,6 +21,7 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
     class Displayer_ABC;
+    class ModelUnLoaded;
     class UrbanKnowledge_ABC;
 }
 
@@ -43,6 +44,7 @@ class UrbanKnowledgePanel : public gui::InfoPanel_ABC
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< UrbanPerceptions >
                           , public tools::ElementObserver_ABC< UrbanKnowledges >
+                          , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                           , public kernel::TeamSelectionObserver
                           , public KnowledgeGroupSelectionObserver
 {
@@ -68,6 +70,7 @@ private:
     virtual void NotifyUpdated( const UrbanKnowledges& element );
     virtual void NotifyUpdated( const UrbanPerceptions& element );
     virtual void NotifyUpdated( const kernel::UrbanKnowledge_ABC& element );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void Select( const kernel::Team_ABC* );
     virtual void Select( const kernel::KnowledgeGroup_ABC* );
     //@}

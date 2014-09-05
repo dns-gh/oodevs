@@ -304,3 +304,9 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
         perceptionModel_.item( i, 1 )->setText( tools::ToString( perceptions.perceptions_[ i ].level_ ) );
     }
 }
+
+void AgentKnowledgePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), 0, *display_ );
+    ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), 0 );
+}

@@ -22,7 +22,7 @@ namespace kernel
     class Team_ABC;
     class Controllers;
     class Displayer_ABC;
-
+    class ModelUnLoaded;
     class ObjectKnowledge_ABC;
     class ConstructionAttribute_ABC;
     class ObstacleAttribute_ABC;
@@ -64,6 +64,7 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::ElementObserver_ABC< kernel::SupplyRouteAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::NBCAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::TimeLimitedAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                            , public kernel::TeamSelectionObserver
                            , public KnowledgeGroupSelectionObserver
 {
@@ -98,6 +99,8 @@ private:
     virtual void NotifyUpdated( const kernel::SupplyRouteAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::NBCAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::TimeLimitedAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
+
     template< typename T >
     void DisplayExtension( const T& extension );
     template< typename T >
