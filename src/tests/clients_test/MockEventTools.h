@@ -14,11 +14,8 @@
 #include "actions/ActionsModel.h"
 #include "actions/ActionParameterFactory.h"
 #include "actions/ActionPublisher.h"
-
 #include "clients_gui/EventFactory.h"
 #include "clients_gui/EventView_ABC.h"
-
-#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -26,11 +23,8 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Time_ABC.h"
-
 #include "ENT/ENT_Tr.h"
-
 #include "protocol/ServerPublisher_ABC.h"
-
 #include <boost/assign.hpp>
 #include <timeline/api.h>
 
@@ -76,16 +70,6 @@ MOCK_BASE_CLASS( MockEntityResolver, kernel::EntityResolver_ABC )
     MOCK_METHOD( FindEntity, 1 );
 };
 
-MOCK_BASE_CLASS( MockAgentKnowledgeConverter, kernel::AgentKnowledgeConverter_ABC )
-{
-    MOCK_METHOD( FindAgent, 2 );
-    MOCK_METHOD( FindPopulation, 2 );
-    MOCK_METHOD( Find, 2, const kernel::AgentKnowledge_ABC*( const kernel::AgentKnowledge_ABC&, const kernel::Entity_ABC& ), FindAgentKnowledgeFromKnowledge );
-    MOCK_METHOD( Find, 2, const kernel::AgentKnowledge_ABC*( const kernel::Agent_ABC&, const kernel::Entity_ABC& ), FindAgentKnowledgeFromAgent );
-    MOCK_METHOD( Find, 2, const kernel::PopulationKnowledge_ABC*( const kernel::PopulationKnowledge_ABC&, const kernel::Entity_ABC& ), FindPopulationKnowledgeFromKnowledge );
-    MOCK_METHOD( Find, 2, const kernel::PopulationKnowledge_ABC*( const kernel::Population_ABC&, const kernel::Entity_ABC& ), FindPopulationKnowledgeFromPopulation );
-};
-
 MOCK_BASE_CLASS( MockObjectKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC )
 {
     MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::KnowledgeGroup_ABC& ), FindObjectKnowledgeFromId );
@@ -122,7 +106,7 @@ struct PresenterBaseFixture : public ApplicationFixture
 {
 public:
     PresenterBaseFixture()
-        : parameterFactory( coordinateConverter, entityResolver, staticModel, agentKnowledgeConverter, objectKnowledgeConverter, controllers.controller_ )
+        : parameterFactory( coordinateConverter, entityResolver, staticModel, objectKnowledgeConverter, controllers.controller_ )
         , actionFactory( controllers.controller_, parameterFactory, entityResolver, staticModel, time )
         , actionPublisher( publisher, controllers, time )
         , actionsModel( actionFactory, publisher, controllers, time )
@@ -132,7 +116,6 @@ public:
     kernel::CoordinateConverter coordinateConverter;
     MockEntityResolver entityResolver;
     kernel::StaticModel staticModel;
-    MockAgentKnowledgeConverter agentKnowledgeConverter;
     MockObjectKnowledgeConverter objectKnowledgeConverter;
     kernel::Controllers controllers;
     actions::ActionParameterFactory parameterFactory;

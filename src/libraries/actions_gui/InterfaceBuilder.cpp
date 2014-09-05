@@ -66,7 +66,6 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
                                     const tools::ExerciseConfig& config,
                                     gui::ParametersLayer& layer,
                                     const kernel::StaticModel& staticModel,
-                                    kernel::AgentKnowledgeConverter_ABC* knowledgeConverter /* = 0*/,
                                     kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter /* = 0*/,
                                     const kernel::Time_ABC* simulation /* = 0*/,
                                     tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver /* = 0 */,
@@ -74,7 +73,6 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
     : controllers_             ( controllers )
     , config_                  ( config )
     , layer_                   ( layer )
-    , knowledgeConverter_      ( knowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
     , staticModel_             ( staticModel )
     , simulation_              ( simulation )
@@ -234,15 +232,6 @@ ParamInterface_ABC& InterfaceBuilder::GetParamInterface() const
 kernel::Controllers& InterfaceBuilder::GetControllers() const
 {
     return controllers_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InterfaceBuilder::GetAgentKnowledgeConverter
-// Created: ABR 2012-01-05
-// -----------------------------------------------------------------------------
-kernel::AgentKnowledgeConverter_ABC* InterfaceBuilder::GetAgentKnowledgeConverter() const
-{
-    return knowledgeConverter_;
 }
 
 // -----------------------------------------------------------------------------

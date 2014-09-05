@@ -10,7 +10,6 @@
 #include "actions_test_pch.h"
 #include "MockEntityResolver.h"
 #include "Tools.h"
-
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
 #include "clients_kernel/AgentTypes.h"
@@ -31,7 +30,6 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-
 #include <boost/assign.hpp>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -153,7 +151,6 @@ namespace
             : parameterFactory( coordinateConverter,
                                 entityResolver,
                                 staticModel,
-                                agentKnowledgeConverter,
                                 objectKnowledgeConverter,
                                 controller )
             , actionFactory( controller,
@@ -174,7 +171,6 @@ namespace
         MockEntityResolver entityResolver;
         kernel::Controller controller;
         kernel::StaticModel staticModel;
-        MockAgentKnowledgeConverter agentKnowledgeConverter;
         MockObjectKnowledgeConverter objectKnowledgeConverter;
         MockTime time;
         actions::ActionParameterFactory parameterFactory;

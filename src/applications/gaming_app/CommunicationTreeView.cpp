@@ -17,7 +17,6 @@
 #include "actions/Automat.h"
 #include "actions/Identifier.h"
 #include "actions/MagicAction.h"
-#include "actions/KnowledgeGroup.h"
 #include "actions/KnowledgeGroupMagicAction.h"
 #include "actions/String.h"
 #include "actions/UnitMagicAction.h"

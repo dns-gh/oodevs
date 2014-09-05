@@ -138,7 +138,6 @@ public:
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
     ObjectKnowledgeFactory& objectKnowledgeFactory_;
     UrbanKnowledgeFactory& urbanKnowledgeFactory_;
-    kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     TeamFactory_ABC& teamFactory_;
     KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;

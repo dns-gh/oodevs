@@ -18,7 +18,6 @@
 
 namespace kernel
 {
-    class AgentKnowledgeConverter_ABC;
     class Controllers;
     class CoordinateConverter_ABC;
     class Entity_ABC;
@@ -76,7 +75,6 @@ public:
     virtual ParamInterface_ABC& GetParamInterface() const = 0;
     virtual ::gui::ParametersLayer& GetParameterLayer() const = 0;
     virtual kernel::Controllers& GetControllers() const = 0;
-    virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const = 0;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const = 0;
     virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const = 0;
     virtual tools::Resolver< kernel::Pathfind_ABC >& GetPathfindResolver() const = 0;

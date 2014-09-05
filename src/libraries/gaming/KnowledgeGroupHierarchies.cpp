@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "KnowledgeGroupHierarchies.h"
-#include "KnowledgeGroup.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 
 // -----------------------------------------------------------------------------
