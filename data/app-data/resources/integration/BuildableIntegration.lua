@@ -878,12 +878,18 @@ end
 -- @param localization, Simulation area onto which the object must be built.
 -- @param objectType, String, the type of object as defined in authoring tool.
 -- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
-integration.startBuildObjectOnLocalization = function( localization, objectType, instantaneously )
+-- @param getAlreadingExistingObject Boolean, defines if the construction is done using an already existing object, with same localization and type.
+integration.startBuildObjectOnLocalization = function( localization, objectType, instantaneously, getAlreadingExistingObject )
     myself.builtObjects = myself.builtObjects or {}
     localization[ myself ] = localization[ myself ] or {}
     myself.buildActionsStates = myself.buildActionsStates or {}
-    local genObject = DEC_CreateDynamicGenObject( objectType, localization, true )
-    localization[ myself ].actionId = instantaneously and DEC_StartCreateObjectInstantaneously( genObject ) or DEC_StartCreateObject( genObject )
+    local existingObject = integration.obtenirObjetProcheDe( localization, objectType, 10 )
+    if getAlreadingExistingObject and existingObject then
+        localization[ myself ].actionId = DEC_StartReprendreTravauxObjet( existingObject, false )
+    else
+        local genObject = DEC_CreateDynamicGenObject( objectType, localization, true )
+        localization[ myself ].actionId = instantaneously and DEC_StartCreateObjectInstantaneously( genObject ) or DEC_StartCreateObject( genObject )
+    end
     actionCallbacks[ localization[ myself ].actionId ] = function( arg ) 
        myself.buildActionsStates[ localization[ myself ].actionId ] = arg
     end
@@ -896,6 +902,7 @@ integration.startBuildObjectOnLocalization = function( localization, objectType,
         reportFunction( eRC_DebutTravaux ) 
     end
 end
+
 
 --- Update the construction of an object upon issued Localization
 -- @see integration.startBuildObjectOnLocalization method
