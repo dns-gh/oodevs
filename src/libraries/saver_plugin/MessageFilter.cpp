@@ -54,7 +54,22 @@ bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
     || wrapper.message().has_control_checkpoint_save_now_ack()
     || wrapper.message().has_control_send_current_state_begin()
     || wrapper.message().has_control_send_current_state_end()
-    || wrapper.message().has_unit_pathfind())
+    || wrapper.message().has_unit_pathfind()
+    || wrapper.message().has_action_create_fire_order_ack()
+    || wrapper.message().has_burning_cell_request_ack()
+    || wrapper.message().has_compute_pathfind_ack()
+    || wrapper.message().has_control_checkpoint_delete_ack()
+    || wrapper.message().has_control_checkpoint_list_ack()
+    || wrapper.message().has_control_date_time_change_ack()
+    || wrapper.message().has_control_enable_vision_cones_ack()
+    || wrapper.message().has_knowledge_group_creation_ack()
+    || wrapper.message().has_knowledge_group_magic_action_ack()
+    || wrapper.message().has_knowledge_group_update_ack()
+    || wrapper.message().has_list_enabled_vision_cones_ack()
+    || wrapper.message().has_magic_action_ack()
+    || wrapper.message().has_segment_request_ack()
+    || wrapper.message().has_unit_change_superior_ack()
+    || wrapper.message().has_unit_creation_request_ack() )
         return false;
     if( wrapper.message().has_report() ||
         wrapper.message().has_invalidate_report() )
@@ -135,7 +150,9 @@ bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
         wrapper.message().has_crowd_concentration_knowledge_destruction() ||
         wrapper.message().has_crowd_flow_knowledge_creation() ||
         wrapper.message().has_crowd_flow_knowledge_destruction() ||
-        wrapper.message().has_automat_attributes() )
+        wrapper.message().has_automat_attributes() ||
+        wrapper.message().has_list_logistic_requests_ack() ||
+        wrapper.message().has_logistic_history_ack() )
         return true;
     if( wrapper.message().has_unit_attributes() )
         return IsRelevant( wrapper.message().unit_attributes() );

@@ -72,7 +72,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
 {
     publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
-            if( !message.message().has_compute_pathfind_ack() )
+            if( !message.message().has_compute_pathfind_ack() || !edited_ )
                 return;
             const auto& request = message.message().compute_pathfind_ack();
             if( request.error_code() == sword::ComputePathfindAck_ErrorCode_no_error )
@@ -81,7 +81,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
         } ) );
     publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
-            if( !message.message().has_segment_request_ack() )
+            if( !message.message().has_segment_request_ack() || !hovered_ )
                 return;
             const auto& request = message.message().segment_request_ack();
             if( request.error_code() == sword::SegmentRequestAck_ErrorCode_no_error )
