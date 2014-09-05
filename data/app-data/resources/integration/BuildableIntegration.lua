@@ -883,8 +883,11 @@ integration.startBuildObjectOnLocalization = function( localization, objectType,
     myself.builtObjects = myself.builtObjects or {}
     localization[ myself ] = localization[ myself ] or {}
     myself.buildActionsStates = myself.buildActionsStates or {}
-    local existingObject = integration.obtenirObjetProcheDe( localization, objectType, 10 )
-    if getAlreadingExistingObject and existingObject then
+    local existingObject
+    if getAlreadingExistingObject then
+        existingObject = integration.obtenirObjetProcheDe( localization, objectType, 10 )
+    end
+    if existingObject then -- getAlreadingExistingObject is 'false' or 'existingObject' has not been found
         localization[ myself ].actionId = DEC_StartReprendreTravauxObjet( existingObject, false )
     else
         local genObject = DEC_CreateDynamicGenObject( objectType, localization, true )
