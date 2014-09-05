@@ -1206,6 +1206,7 @@
         }
 
         this.applyPlacement(tp, placement)
+        this.hoverState = null
         this.$element.trigger('shown')
       }
     }
@@ -1290,6 +1291,7 @@
         removeWithAnimation() :
         $tip.detach()
 
+      this.hoverState = null
       this.$element.trigger('hidden')
 
       return this
