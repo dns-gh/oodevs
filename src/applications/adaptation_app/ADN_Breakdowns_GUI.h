@@ -33,7 +33,6 @@ public:
         eRepairTime,
         eRepairTimeVariance,
         eParts,
-        eRepairDurationInManHours,
         eNbrBreakdownGuiElements
     };
 
