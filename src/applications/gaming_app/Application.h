@@ -19,6 +19,7 @@ namespace gui
 
 namespace kernel
 {
+    class KnowledgeConverter_ABC;
     class Controllers;
     class Workers;
 }
@@ -70,6 +71,7 @@ private:
     //@{
     std::unique_ptr< GamingConfig >                      config_;
     std::unique_ptr< kernel::Controllers >               controllers_;
+    std::unique_ptr< kernel::KnowledgeConverter_ABC >    knowledgeConverter_;
     std::unique_ptr< RcEntityResolver_ABC >              rcResolver_;
     std::unique_ptr< StaticModel >                       staticModel_;
     std::unique_ptr< Model >                             model_;

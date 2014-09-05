@@ -42,10 +42,10 @@ using namespace kernel;
 // Name: ReportFactory constructor
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-ReportFactory::ReportFactory( const RcEntityResolver_ABC& rcResolver
-                            , const tools::Resolver_ABC< DotationType >&  dotationResolver
-                            , const tools::Resolver_ABC< EquipmentType >& equipmentResolver
-                            , const kernel::Time_ABC* time )
+ReportFactory::ReportFactory( const RcEntityResolver_ABC& rcResolver,
+                              const tools::Resolver_ABC< DotationType >& dotationResolver,
+                              const tools::Resolver_ABC< EquipmentType >& equipmentResolver,
+                              const kernel::Time_ABC* time )
     : rcResolver_       ( rcResolver )
     , dotationResolver_ ( dotationResolver )
     , equipmentResolver_( equipmentResolver )
@@ -120,7 +120,7 @@ QDateTime ReportFactory::GetTime( const sword::DateTime& d ) const
 // Name: ReportFactory::CreateReport
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Report > ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const sword::Report& message ) const
+boost::shared_ptr< Report > ReportFactory::CreateReport( const kernel::Entity_ABC& entity, const sword::Report& message ) const
 {
     ReportTemplate* report = Find( message.type().id() );
     if( !report )
@@ -132,30 +132,30 @@ boost::shared_ptr< Report > ReportFactory::CreateReport( const kernel::Entity_AB
         type = Report::eEvent;
     else if( message.category() == sword::Report::warning )
         type = Report::eWarning;
-    return boost::make_shared< Report >( agent, type, report->RenderMessage( message ), GetTime( message.time() ) );
+    return boost::make_shared< Report >( entity, type, report->RenderMessage( &entity, message ), GetTime( message.time() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::FormatReport
 // Created: LDC 2010-03-17
 // -----------------------------------------------------------------------------
-std::string ReportFactory::FormatReport( const sword::Report& message ) const
+std::string ReportFactory::FormatReport( const kernel::Entity_ABC* entity, const sword::Report& message ) const
 {
     ReportTemplate* report = Find( message.type().id() );
     if( report )
-        return report->RenderMessage( message ).toStdString();
-    return std::string();
+        return report->RenderMessage( entity, message ).toStdString();
+    return "";
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::CreateTrace
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const sword::Trace& message ) const
+Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message ) const
 {
     if( !time_ )
         throw MASA_EXCEPTION( "No time, can't generate trace" );
-    return new Trace( agent, *time_, message );
+    return new Trace( entity, *time_, message );
 }
 
 namespace
@@ -174,22 +174,22 @@ namespace
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& value ) const
+QString ReportFactory::RenderParameter( const kernel::Entity_ABC* entity, const sword::MissionParameter_Value& value ) const
 {
     if( value.has_areal() )
         return QString::number( value.areal() );
     if( value.has_intvalue() )
         return QString::number( value.intvalue() );
     if( value.has_agent() )
-        return rcResolver_.CreateLink( Agent_ABC::typeName_, value.agent().id() );
+        return rcResolver_.CreateLink( entity, Agent_ABC::typeName_, value.agent().id() );
     if( value.has_automat() )
-        return rcResolver_.CreateLink( Automat_ABC::typeName_, value.automat().id() );
+        return rcResolver_.CreateLink( entity, Automat_ABC::typeName_, value.automat().id() );
     if( value.has_agentknowledge() )
-        return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.agentknowledge().id() );
+        return rcResolver_.CreateLink( entity, AgentKnowledge_ABC::typeName_, value.agentknowledge().id() );
     if( value.has_objectknowledge() )
-        return rcResolver_.CreateLink( Object_ABC::typeName_, value.objectknowledge().id() );
+        return rcResolver_.CreateLink( entity, Object_ABC::typeName_, value.objectknowledge().id() );
     if( value.has_crowdknowledge() )
-        return rcResolver_.CreateLink( Population_ABC::typeName_, value.crowdknowledge().id() );
+        return rcResolver_.CreateLink( entity, Population_ABC::typeName_, value.crowdknowledge().id() );
     if( value.has_equipmenttype() )
         return equipmentResolver_.Get( value.equipmenttype().id() ).GetName().c_str();
     if( value.has_resourcetype() )

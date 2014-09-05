@@ -48,7 +48,7 @@ unsigned long ReportTemplate::GetId() const
 // Name: ReportTemplate::RenderMessage
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportTemplate::RenderMessage( const sword::Report& message ) const
+QString ReportTemplate::RenderMessage( const kernel::Entity_ABC* entity, const sword::Report& message ) const
 {
     QString messageStr = message_;
     unsigned int enums = 0;
@@ -64,7 +64,7 @@ QString ReportTemplate::RenderMessage( const sword::Report& message ) const
                 if( param.has_enumeration() )
                     messageStr = messageStr.arg( enumerations_[ enums++ ][ param.enumeration() ] );
                 else
-                    messageStr = messageStr.arg( factory_.RenderParameter( param ) );
+                    messageStr = messageStr.arg( factory_.RenderParameter( entity, param ) );
             }
         }
     }

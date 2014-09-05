@@ -44,22 +44,22 @@ RcEntityResolver::~RcEntityResolver()
 // Name: RcEntityResolver::CreateLink
 // Created: LDC 2010-03-18
 // -----------------------------------------------------------------------------
-QString RcEntityResolver::CreateLink( const std::string& type, unsigned long id ) const
+QString RcEntityResolver::CreateLink( const kernel::Entity_ABC* /*entity*/, const std::string& type, unsigned long id ) const
 {
-    Entity_ABC* entity = 0;
+    Entity_ABC* target = 0;
     if( type == Agent_ABC::typeName_ )
-        entity = model_.Agents().Find( id );
+        target = model_.Agents().Find( id );
     else if( type == ObjectKnowledge_ABC::typeName_ )
-        entity = model_.ObjectKnowledges().Find( id );
+        target = model_.ObjectKnowledges().Find( id );
     else if( type == AgentKnowledge_ABC::typeName_ )
-        entity = model_.AgentKnowledges().Find( id );
+        target = model_.AgentKnowledges().Find( id );
     else if( type == PopulationKnowledge_ABC::typeName_ )
-        entity = model_.PopulationKnowledges().Find( id );
+        target = model_.PopulationKnowledges().Find( id );
     else
         return QString::number( id );
-    if( !entity )
-        return "Unknown entity";
-    QString result = entity->GetName();
+    if( !target )
+        return "Unknown target";
+    QString result = target->GetName();
     result += " [";
     result += QString::number( id );
     result += "] ";

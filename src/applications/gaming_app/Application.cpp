@@ -13,6 +13,7 @@
 #include "MainWindow.h"
 #include "GamingConfig.h"
 #include "LoggerProxy.h"
+#include "KnowledgeConverter.h"
 #include "RcEntityResolver.h"
 #include "gaming/Network.h"
 #include "gaming/StaticModel.h"
@@ -56,7 +57,8 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     workers_.reset( new Workers() );
     network_.reset( new Network( *services_, *simulation_, *logger_, config_->GetNetworkTimeOut() ) );
     simulationController_.reset( new SimulationController( *simulation_, *controllers_, network_->GetMessageMgr() ) );
-    rcResolver_.reset( new RcEntityResolver( *controllers_ ) );
+    knowledgeConverter_.reset( new KnowledgeConverter( *controllers_ ) );
+    rcResolver_.reset( new RcEntityResolver( *controllers_, *knowledgeConverter_ ) );
     staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_, *simulation_ ) );
     const std::string& login = config_->GetLogin();
     const std::string& pwd = config_->GetPassword();

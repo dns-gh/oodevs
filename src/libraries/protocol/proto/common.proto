@@ -731,7 +731,7 @@ message MissionParameter {
         optional Id                       automat                  = 11;
         //! An agent identifier
         optional Id                       agent                    = 12;
-        //! An agent knowledge identifier
+        //! An agent identifier
         optional Id                       agentKnowledge           = 13;
         //! A crowd knowledge identifier
         optional Id                       crowdKnowledge           = 14;

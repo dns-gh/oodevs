@@ -21,8 +21,8 @@ using namespace kernel;
 // Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reports::Reports( const Entity_ABC& agent, Controller& controller, const ReportFactory& reportFactory )
-    : agent_( agent )
+Reports::Reports( const Entity_ABC& entity, Controller& controller, const ReportFactory& reportFactory )
+    : entity_( entity )
     , controller_( controller )
     , reportFactory_( reportFactory )
 {
@@ -51,7 +51,7 @@ void Reports::DoUpdate( const sword::Report& message )
     const unsigned int id =  message.report().id();
     if( reports_.find( id ) == reports_.end() )
     {
-        boost::shared_ptr< Report > report = reportFactory_.CreateReport( agent_, message );
+        boost::shared_ptr< Report > report = reportFactory_.CreateReport( entity_, message );
         if( report )
         {
             reports_[ id ] = report;
@@ -77,7 +77,7 @@ void Reports::DoUpdate( const sword::InvalidateReport& message )
 void Reports::DoUpdate( const sword::Trace& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de traces ?
-    Report* trace = reportFactory_.CreateTrace( agent_, message );
+    Report* trace = reportFactory_.CreateTrace( entity_, message );
     traces_.push_back( trace );
     controller_.Create( *trace );
 }
