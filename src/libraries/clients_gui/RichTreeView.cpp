@@ -122,13 +122,7 @@ void RichTreeView::CreateFilters( RichView_ABC& /* richView */ )
 // -----------------------------------------------------------------------------
 void RichTreeView::Purge()
 {
-    bool wasSelectBlocked = selectionModel()->blockSignals( true );
-    bool wasDataBlocked = dataModel_.blockSignals( true );
-    bool wasBlocked = blockSignals( true );
     dataModel_.Purge();
-    blockSignals( wasBlocked );
-    selectionModel()->blockSignals( wasSelectBlocked );
-    dataModel_.blockSignals( wasDataBlocked );
     //model_.removeRows( 0, dataModel_.rowCount() );
 }
 
