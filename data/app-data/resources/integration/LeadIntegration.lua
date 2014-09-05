@@ -929,6 +929,13 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     if giveDefaultTask then
         integration.issueMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_Reserve, nil, false, findBestsFunction, disengageTask )
     end
+    
+    -- Save initial positions
+    myself.leadData.initialPositions = {}
+    local subordinatesWithoutHQ = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
+    for i=1, #subordinatesWithoutHQ do
+        myself.leadData.initialPositions[ subordinatesWithoutHQ[i].source ] = subordinatesWithoutHQ[i]:getPositionKnowledge()
+    end
 end
 
 --- Generic activate for Lead skills
