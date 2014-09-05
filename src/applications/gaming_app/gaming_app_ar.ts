@@ -1712,6 +1712,21 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>LogisticRouteWidget</name>
+    <message>
+        <source>Itinerary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Itinerary to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Return trip</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticStatusWidget</name>
     <message>
         <source>Mode</source>
@@ -1817,22 +1832,6 @@ Do you want to replace it?</source>
     <message>
         <source>Ok</source>
         <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Move waypoint up</source>
-        <translation type="unfinished">نقل إحداثية أعلى</translation>
-    </message>
-    <message>
-        <source>Move waypoint down</source>
-        <translation type="unfinished">نقل إحداثية لأسفل</translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation type="unfinished">حذف إحداثية</translation>
-    </message>
-    <message>
-        <source>Add Waypoint</source>
-        <translation type="unfinished">إضافة إحداثية</translation>
     </message>
     <message>
         <source>Manual selection of transport carriers</source>

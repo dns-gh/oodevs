@@ -11,11 +11,13 @@
 #define __ActionParameterPushFlowParameters_h_
 
 #include "Parameter.h"
+#include <boost/optional.hpp>
+#include "protocol/Protocol.h"
 
 namespace sword
 {
-    class PointList;
     class PushFlowParameters;
+    class Pathfind;
 }
 
 namespace kernel
@@ -25,6 +27,7 @@ namespace kernel
     class EntityResolver_ABC;
     class EquipmentType;
     class CoordinateConverter_ABC;
+    class Pathfind_ABC;
 }
 
 namespace actions
@@ -57,10 +60,10 @@ public:
 
     //! @name Operations
     //@{
-    void AddResource   ( const kernel::DotationType& type, unsigned long quantity, const kernel::Automat_ABC& recipient );
+    void AddResource   ( const kernel::DotationType& type, unsigned long quantity, const kernel::Entity_ABC& recipient );
     void AddTransporter( const kernel::EquipmentType& type, unsigned long quantity );
-    void SetPath       ( const T_PointVector& path, const kernel::Automat_ABC& recipient );
-    void SetWayBackPath( const T_PointVector& path );
+    void SetPath       ( const kernel::Pathfind_ABC* pathfind, const kernel::Entity_ABC& recipient );
+    void SetWayBackPath( const kernel::Pathfind_ABC& pathfind );
 
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
@@ -74,9 +77,9 @@ private:
     struct Recipient
     {
         T_Resources resources_;
-        T_PointVector path_;
+        boost::optional< sword::Pathfind > path_;
     };
-    typedef std::map< const kernel::Automat_ABC*, Recipient > T_Recipients;
+    typedef std::map< const kernel::Entity_ABC*, Recipient > T_Recipients;
     typedef std::map< const kernel::EquipmentType*, unsigned long > T_Equipments;
     //@}
 
@@ -85,7 +88,6 @@ private:
     virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
     void Serialize( const T_PointVector& path, const std::string& tag, xml::xostream& xos ) const;
-    void CommitTo( const T_PointVector& path, sword::PointList& msgPath ) const;
     //@}
 
 private:
@@ -94,9 +96,9 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     bool isSupply_;
     T_Recipients recipients_;
-    std::vector< const kernel::Automat_ABC* > recipientsSequence_;
+    std::vector< const kernel::Entity_ABC* > recipientsSequence_;
     T_Equipments transporters_;
-    T_PointVector wayBackPath_;
+    boost::optional< sword::Pathfind > wayBackPath_;
     //@}
 };
 

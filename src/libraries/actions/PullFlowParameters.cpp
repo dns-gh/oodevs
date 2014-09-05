@@ -18,6 +18,8 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Pathfind_ABC.h"
+#include "clients_kernel/XmlAdapter.h"
 #include "protocol/Protocol.h"
 
 #include <boost/algorithm/string.hpp>
@@ -71,10 +73,10 @@ PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
         const EquipmentType& type = equipmentTypeResolver.Get( transporter.equipmenttype().id() );
         transporters_[ &type ] += transporter.quantity();
     }
-    if( parameters.has_waybackpath() )
-        FillFromPointList( wayBackPath_, parameters.waybackpath(), converter );
-    if( parameters.has_wayoutpath() )
-        FillFromPointList( wayOutPath_, parameters.wayoutpath(), converter );
+    if( parameters.has_waybackpathfind() )
+        wayBackPath_ = parameters.waybackpathfind();
+    if( parameters.has_wayoutpathfind() )
+        wayOutPath_ = parameters.wayoutpathfind();
 }
 
 // -----------------------------------------------------------------------------
@@ -128,18 +130,18 @@ void PullFlowParameters::AddTransporter( const kernel::EquipmentType& type, unsi
 // Name: PullFlowParameters::SetWayOutPath
 // Created: MMC 2011-09-26
 // -----------------------------------------------------------------------------
-void PullFlowParameters::SetWayOutPath( const T_PointVector& path )
+void PullFlowParameters::SetWayOutPath( const kernel::Pathfind_ABC& pathfind )
 {
-    wayOutPath_ = path;
+    wayOutPath_ = pathfind.GetCreationMessage();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PullFlowParameters::SetWayBackPath
 // Created: SBO 2011-09-26
 // -----------------------------------------------------------------------------
-void PullFlowParameters::SetWayBackPath( const T_PointVector& path )
+void PullFlowParameters::SetWayBackPath( const kernel::Pathfind_ABC& pathfind )
 {
-    wayBackPath_ = path;
+    wayBackPath_ = pathfind.GetCreationMessage();
 }
 
 // -----------------------------------------------------------------------------
@@ -176,24 +178,10 @@ void PullFlowParameters::CommitTo( sword::MissionParameter_Value& message ) cons
         msg->set_quantity( equipment.second );
     }
 
-    if( !wayOutPath_.empty() )
-        CommitTo( wayOutPath_, *msgPullFlow->mutable_wayoutpath() );
-    if( !wayBackPath_.empty() )
-        CommitTo( wayBackPath_, *msgPullFlow->mutable_waybackpath() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PullFlowParameters::CommitTo
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void PullFlowParameters::CommitTo( const T_PointVector& path, sword::PointList& msgPath ) const
-{
-    BOOST_FOREACH( const geometry::Point2f& point, path )
-    {
-        sword::Location& msgPoint = *msgPath.add_elem()->mutable_location();
-        msgPoint.set_type( sword::Location_Geometry_point );
-        converter_.ConvertToGeo( point, *msgPoint.mutable_coordinates()->add_elem() );
-    }
+    if( wayOutPath_ )
+        *msgPullFlow->mutable_wayoutpathfind() = *wayOutPath_;
+    if( wayBackPath_ )
+        *msgPullFlow->mutable_waybackpathfind() = *wayBackPath_;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,26 +205,10 @@ void PullFlowParameters::Serialize( xml::xostream& xos ) const
     if( !supplierAutomat_ && !supplierFormation_ )
         throw MASA_EXCEPTION( tools::translate( "PullFlowParameters", "Invalid supplier when saving pull flow parameters" ).toStdString() );
     Parameter< QString >::Serialize( xos );
-    xos << xml::start( "supplier" );
-        xos << xml::attribute( "id", supplierAutomat_ ? supplierAutomat_->GetId() : supplierFormation_->GetId() );
-    xos << xml::end;
-
-    BOOST_FOREACH( const T_Resources::value_type& resource, resources_ )
-    {
-        xos << xml::start( "resource" );
-        xos << xml::attribute( "id", resource.first->GetId() );
-        xos << xml::attribute( "quantity", resource.second );
-        xos << xml::end;
-    }
-    BOOST_FOREACH( const T_Equipments::value_type& equipment, transporters_ )
-    {
-        xos << xml::start( "transporter" )
-                << xml::attribute( "id", equipment.first->GetId() )
-                << xml::attribute( "quantity", equipment.second )
-            << xml::end;
-    }
-    Serialize( wayOutPath_, "wayoutpath", xos );
-    Serialize( wayBackPath_, "waybackpath", xos );
+    sword::MissionParameter message;
+    CommitTo( message );
+    const kernel::XmlWriterAdapter adapter( converter_ );
+    protocol::Write( xos, adapter, message );
 }
 
 // -----------------------------------------------------------------------------

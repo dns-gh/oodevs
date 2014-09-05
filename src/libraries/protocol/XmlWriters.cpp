@@ -482,90 +482,6 @@ namespace
         }
     }
 
-    void WriteSupplyFlowRecipient( xml::xosubstream xos, const Writer_ABC& writer, const SupplyFlowRecipient& src )
-    {
-        xos << xml::start( "recipient" )
-            << xml::attribute( "id", src.receiver().id() );
-        const auto& resources = src.resources();
-        for( auto it = resources.begin(); it != resources.end(); ++it )
-            xml::xosubstream( xos )
-                << xml::start( "resource" )
-                << xml::attribute( "id", it->resourcetype().id() )
-                << xml::attribute( "quantity", it->quantity() );
-        if( src.path().elem_size() )
-            WritePointList( xos, "path", writer, src.path().elem() );
-    }
-
-    void WriteSupplyFlowTransporter( xml::xosubstream xos, const SupplyFlowTransporter& src )
-    {
-        xos << xml::start( "transporter" )
-            << xml::attribute( "id", src.equipmenttype().id() )
-            << xml::attribute( "quantity", src.quantity() );
-    }
-
-    void WritePushFlowParameters( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
-    {
-        xos << xml::attribute( "type", "pushflowparameters" );
-        const auto& push = src.push_flow_parameters();
-        const auto& recipients = push.recipients();
-        for( auto it = recipients.begin(); it != recipients.end(); ++it )
-            WriteSupplyFlowRecipient( xos, writer, *it );
-        const auto& transporters = push.transporters();
-        for( auto it = transporters.begin(); it != transporters.end(); ++it )
-            WriteSupplyFlowTransporter( xos, *it );
-        WritePointList( xos, "waybackpath", writer, push.waybackpath().elem() );
-    }
-
-    uint32_t GetId( const ParentEntity& parent )
-    {
-        if( parent.has_automat() )
-            return parent.automat().id();
-        if( parent.has_formation() )
-            return parent.formation().id();
-        return 0;
-    }
-
-    void WritePullFlowParameters( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
-    {
-        xos << xml::attribute( "type", "pullflowparameters" );
-        const auto& pull = src.pull_flow_parameters();
-        xml::xosubstream( xos )
-            << xml::start( "supplier" )
-            << xml::attribute( "id", GetId( pull.supplier() ) );
-        const auto& resources = pull.resources();
-        for( auto it = resources.begin(); it != resources.end(); ++it )
-            xml::xosubstream( xos )
-                << xml::start( "resource" )
-                << xml::attribute( "id", it->resourcetype().id() )
-                << xml::attribute( "quantity", it->quantity() );
-        const auto& transporters = pull.transporters();
-        for( auto it = transporters.begin(); it != transporters.end(); ++it )
-            WriteSupplyFlowTransporter( xos, *it );
-        WritePointList( xos, "wayoutpath", writer, pull.wayoutpath().elem() );
-        WritePointList( xos, "waybackpath", writer, pull.waybackpath().elem() );
-    }
-
-    void WritePathfindRequest( xml::xosubstream xos, const Writer_ABC& writer, const PathfindRequest& request )
-    {
-        xos << xml::start( "request" );
-        xml::xosubstream( xos )
-            << xml::start( "unit" )
-            << xml::attribute( "id", request.unit().id() );
-        PointList positions;
-        const auto& list = request.positions();
-        for( auto it = list.begin(); it != list.end(); ++it )
-            *positions.add_elem()->mutable_location()->mutable_coordinates()->add_elem() = *it;
-        WritePointList( xos, "positions", writer, positions.elem() );
-        xml::xosubstream eqs = xml::xosubstream( xos ) << xml::start( "equipments" );
-        for( auto it = request.equipment_types().begin(); it != request.equipment_types().end(); ++it )
-            xml::xosubstream( eqs )
-                << xml::start( "type" )
-                << xml::attribute( "id", it->id() );
-        xml::xosubstream( xos )
-            << xml::start( "ignore_dynamic_objects" )
-            << xml::attribute( "value", request.ignore_dynamic_objects() );
-    }
-
     void WriteTerrainData( xml::xosubstream xos, const sword::TerrainData& data, const std::string& tag )
     {
         xos << xml::start( tag )
@@ -595,16 +511,123 @@ namespace
         }
     }
 
-    void WriteItinerary( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
+    void WritePathfindRequest( xml::xosubstream xos, const Writer_ABC& writer, const PathfindRequest& request )
     {
-        const auto& pathfind = src.pathfind();
-        xos << xml::attribute( "type", "itinerary" );
+        xos << xml::start( "request" );
+        xml::xosubstream( xos )
+            << xml::start( "unit" )
+            << xml::attribute( "id", request.unit().id() );
+        PointList positions;
+        const auto& list = request.positions();
+        for( auto it = list.begin(); it != list.end(); ++it )
+            *positions.add_elem()->mutable_location()->mutable_coordinates()->add_elem() = *it;
+        WritePointList( xos, "positions", writer, positions.elem() );
+        xml::xosubstream eqs = xml::xosubstream( xos ) << xml::start( "equipments" );
+        for( auto it = request.equipment_types().begin(); it != request.equipment_types().end(); ++it )
+            xml::xosubstream( eqs )
+            << xml::start( "type" )
+            << xml::attribute( "id", it->id() );
+        xml::xosubstream( xos )
+            << xml::start( "ignore_dynamic_objects" )
+            << xml::attribute( "value", request.ignore_dynamic_objects() );
+    }
+
+    void WriteItinerary( xml::xostream& xos, const Writer_ABC& writer, const sword::Pathfind& pathfind )
+    {
         xml::xosubstream( xos )
             << xml::start( "id" )
-                << xml::attribute( "value", pathfind.id() );
+            << xml::attribute( "value", pathfind.id() );
         WritePathfindRequest( xos, writer, pathfind.request() );
         if( pathfind.has_result() )
             WritePathResult( xos, writer, pathfind.result() );
+    }
+
+    void WriteSupplyFlowRecipient( xml::xosubstream xos, const Writer_ABC& writer, const SupplyFlowRecipient& src )
+    {
+        xos << xml::start( "recipient" )
+            << xml::attribute( "id", src.receiver().id() );
+        const auto& resources = src.resources();
+        for( auto it = resources.begin(); it != resources.end(); ++it )
+            xml::xosubstream( xos )
+                << xml::start( "resource" )
+                << xml::attribute( "id", it->resourcetype().id() )
+                << xml::attribute( "quantity", it->quantity() );
+
+        if( src.has_pathfind() )
+        {
+            xos << xml::start( "itinerary" );
+            WriteItinerary( xos, writer, src.pathfind() );
+        }
+    }
+
+    void WriteSupplyFlowTransporter( xml::xosubstream xos, const SupplyFlowTransporter& src )
+    {
+        xos << xml::start( "transporter" )
+            << xml::attribute( "id", src.equipmenttype().id() )
+            << xml::attribute( "quantity", src.quantity() );
+    }
+
+    void WriteItinerary( xml::xostream& xos, const Writer_ABC& writer, const sword::Pathfind& pathfind, const std::string& base )
+    {
+        xos << xml::start( base )
+                << xml::start( "itinerary" );
+        WriteItinerary( xos, writer, pathfind );
+        xos     << xml::end
+            << xml::end;
+    }
+
+    void WritePushFlowParameters( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
+    {
+        xos << xml::attribute( "type", "pushflowparameters" );
+        const auto& push = src.push_flow_parameters();
+        const auto& recipients = push.recipients();
+        for( auto it = recipients.begin(); it != recipients.end(); ++it )
+            WriteSupplyFlowRecipient( xos, writer, *it );
+        const auto& transporters = push.transporters();
+        for( auto it = transporters.begin(); it != transporters.end(); ++it )
+            WriteSupplyFlowTransporter( xos, *it );
+
+        if( push.has_waybackpathfind() )
+            WriteItinerary( xos, writer, push.waybackpathfind(), "waybackpath" );
+    }
+
+    uint32_t GetId( const ParentEntity& parent )
+    {
+        if( parent.has_automat() )
+            return parent.automat().id();
+        if( parent.has_formation() )
+            return parent.formation().id();
+        return 0;
+    }
+
+    void WritePullFlowParameters( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
+    {
+        xos << xml::attribute( "type", "pullflowparameters" );
+        const auto& pull = src.pull_flow_parameters();
+        xml::xosubstream( xos )
+            << xml::start( "supplier" )
+            << xml::attribute( "id", GetId( pull.supplier() ) );
+        const auto& resources = pull.resources();
+        for( auto it = resources.begin(); it != resources.end(); ++it )
+            xml::xosubstream( xos )
+                << xml::start( "resource" )
+                << xml::attribute( "id", it->resourcetype().id() )
+                << xml::attribute( "quantity", it->quantity() );
+        const auto& transporters = pull.transporters();
+        for( auto it = transporters.begin(); it != transporters.end(); ++it )
+            WriteSupplyFlowTransporter( xos, *it );
+
+        if( pull.has_waybackpathfind() )
+            WriteItinerary( xos, writer, pull.waybackpathfind(), "wayoutpath" );
+
+        if( pull.has_wayoutpathfind() )
+            WriteItinerary( xos, writer, pull.wayoutpathfind(), "waybackpath" );
+    }
+
+    void WriteItinerary( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
+    {
+        xos << xml::attribute( "type", "itinerary" );
+        WriteItinerary( xos, writer, src.pathfind() );
     }
 
     typedef bool( Value::* T_Has )() const;

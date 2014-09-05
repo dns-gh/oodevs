@@ -232,7 +232,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Misc
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, profile_, *selector_ );
-    new LogisticMagicInterface( this, controllers_, model_, staticModel_, simulation, profile_, *parameters_ );
+    new LogisticMagicInterface( this, controllers_, model_, staticModel_, simulation, profile_, *icons_ );
     displayExtractor_.reset( new gui::DisplayExtractor( this ) );
     connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 

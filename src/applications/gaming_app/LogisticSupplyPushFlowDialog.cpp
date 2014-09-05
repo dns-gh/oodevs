@@ -10,21 +10,17 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
+#include "LogisticRouteWidget.h"
 #include "LogisticSupplyAvailabilityTableWidget.h"
-#include "LogisticSupplyExclusiveListWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
+#include "LogisticSupplyExclusiveListWidget.h"
 
-#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
+#include "actions/ActionsModel.h"
 #include "actions/PushFlowParameters.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/EntityType.h"
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_gui/LocationCreator.h"
-#include "clients_gui/LogisticBase.h"
-#include "clients_gui/LogisticHelpers.h"
-#include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -32,8 +28,8 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/Dotations.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticHelpers.h"
@@ -49,10 +45,10 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent,
                                                             actions::ActionsModel& actionsModel,
                                                             const ::StaticModel& staticModel,
                                                             const kernel::Time_ABC& simulation,
-                                                            gui::ParametersLayer& layer,
                                                             const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                                            const kernel::Profile_ABC& profile )
-    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
+                                                            const kernel::Profile_ABC& profile,
+                                                            const gui::EntitySymbols& symbols )
+    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, automats, profile, symbols )
     , isPushFlow_( true )
     , lastContext_( 0 )
 {
@@ -119,8 +115,6 @@ void LogisticSupplyPushFlowDialog::Supply( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Show()
 {
-    controllers_.Update( *routeLocationCreator_ );
-    routeLocationCreator_->StartLine();
 
     logistic_helpers::VisitPartialBaseStocksDotations( *selected_,
                                                        [&]( const Dotation& dotation ){ AddAvailable( dotation ); },
@@ -128,9 +122,6 @@ void LogisticSupplyPushFlowDialog::Show()
 
     ComputeRecipients();
     tabs_->setCurrentPage( 0 );
-    delWaypointButton_->setEnabled( false );
-    moveUpButton_->setEnabled( false );
-    moveDownButton_->setEnabled( false );
 
     QStringList recipientsList;
     ComputeAvailableRecipients( recipientsList );
@@ -142,6 +133,7 @@ void LogisticSupplyPushFlowDialog::Show()
     carriersTable_->SetQuantities( carriersQty, carriersAvailable );
     carriersTable_->setEnabled( false );
 
+    route_->AddRequester( selected_ );
     show();
 }
 
@@ -201,24 +193,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     for( auto it = carriers.begin(); it != carriers.end(); ++it )
         pushFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
 
-    // Route
-    CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
-    QStringList waypoints = pModel->stringList();
-    T_PointVector currentPath;
-    const kernel::Automat_ABC* currentRecipient = 0;
-    for( auto it = waypoints.begin(); it != waypoints.end(); ++it )
-    {
-        const QString str = *it;
-        if( points_.find( str ) != points_.end() )
-            currentPath.push_back( points_[ str ] );
-        else
-        {
-            currentRecipient = recipientsNames_[ str ];
-            pushFlowParameters->SetPath( currentPath, *currentRecipient );
-            currentPath.clear();
-        }
-    }
-    pushFlowParameters->SetWayBackPath( currentPath );
+    route_->FillPushFlowParameters( *pushFlowParameters );
 
     action->AddParameter( *pushFlowParameters );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
@@ -250,10 +225,7 @@ void LogisticSupplyPushFlowDialog::AddRecipient( const QString& recipientName )
     if( std::find( recipients_.begin(), recipients_.end(), pRecipient ) ==  recipients_.end() )
         recipients_.push_back( pRecipient );
 
-    CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
-    QStringList waypoints = pModel->stringList();
-    waypoints.append( recipientName );
-    pModel->setStringList( waypoints );
+    route_->AddRecipient( *pRecipient );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,10 +235,6 @@ void LogisticSupplyPushFlowDialog::AddRecipient( const QString& recipientName )
 void LogisticSupplyPushFlowDialog::RemoveRecipient( const QString& recipient )
 {
     EraseRecipientData( recipient );
-    CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
-    QStringList waypoints = pModel->stringList();
-    waypoints.removeAll( recipient );
-    pModel->setStringList( waypoints );
     pRecipientSelected_ = 0;
     resourcesTable_->Clear();
 }
@@ -277,9 +245,6 @@ void LogisticSupplyPushFlowDialog::RemoveRecipient( const QString& recipient )
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Clear()
 {
-    layer_.Reset();
-    controllers_.Unregister( *waypointLocationCreator_ );
-    controllers_.Unregister( *routeLocationCreator_ );
     recipientsList_->Clear();
     pRecipientSelected_ = 0;
     ClearRecipientsData();
@@ -287,9 +252,8 @@ void LogisticSupplyPushFlowDialog::Clear()
     availableSupplies_.clear();
     carriersTable_->Clear();
     ClearCarriersData();
-    ClearRouteList();
-    ClearRouteData();
     selected_ = 0;
+    route_->Clear();
     EnableButtons( true );
 }
 
@@ -311,6 +275,8 @@ void LogisticSupplyPushFlowDialog::EraseRecipientData( const QString& recipient 
 {
     const kernel::Automat_ABC* pRecipient = recipientsNames_[ recipient ];
     recipients_.erase( std::remove( recipients_.begin(), recipients_.end(), pRecipient ), recipients_.end() );
+    if( pRecipient )
+        route_->RemoveRecipient( *pRecipient );
 
     for( auto itSupplies = recipientSupplies_.begin(); itSupplies != recipientSupplies_.end(); )
     {
@@ -437,7 +403,7 @@ void LogisticSupplyPushFlowDialog::ComputeRecipients()
             else
                 add = automat.Get< LogisticLinks >().GetCurrentSuperior() == selected_;
             if( add )
-                recipientsNames_[ automat.GetName() + QString( " [" ) + QString::number( automat.GetId() ) + QString( "]" ) ] = &automat;
+                recipientsNames_[ automat.GetName() ] = &automat;
         }
     }
 }
@@ -452,59 +418,4 @@ void LogisticSupplyPushFlowDialog::ComputeAvailableRecipients( QStringList& disp
     for( auto it = recipientsNames_.begin(); it != recipientsNames_.end(); ++it )
         if( std::find( recipients_.begin(), recipients_.end(), it.value() ) == recipients_.end() )
             displayRecipientsNames.append( it.key() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::ComputeRoute
-// Created: MMC 2011-09-21
-// -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::ComputeRoute( T_Route& route )
-{
-    route.clear();
-    CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
-    QStringList waypoints = pModel->stringList();
-
-    for( auto it = waypoints.begin(); it != waypoints.end(); ++it )
-    {
-        const QString str = *it;
-        if( points_.find( str ) != points_.end() )
-            route.push_back( Waypoint( points_[ str ] ) );
-        else if( recipientsNames_.find( str ) != recipientsNames_.end() )
-            route.push_back( Waypoint( recipientsNames_[ str ] ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::UpdateRouteDrawpoints
-// Created: MMC 2011-09-22
-// -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::UpdateRouteDrawpoints()
-{
-    if( !selected_ )
-        return;
-
-    routeDrawpoints_.clear();
-    T_Route route;
-    ComputeRoute( route );
-
-    geometry::Point2f startPos = logistic_helpers::GetLogisticPosition( *selected_, true );
-    if( startPos.IsZero() )
-        return;
-
-    routeDrawpoints_.push_back( startPos );
-
-    for( std::size_t i = 0; i < route.size(); ++i )
-        if( route[ i ].IsPoint() )
-            routeDrawpoints_.push_back( route[ i ].point_ );
-        else
-        {
-            if( route[ i ].pRecipient_ )
-            {
-                geometry::Point2f pos = logistic_helpers::GetLogisticPosition( *route[ i ].pRecipient_, true );
-                if( !pos.IsZero() )
-                    routeDrawpoints_.push_back( pos );
-            }
-        }
-
-    routeDrawpoints_.push_back( startPos );
 }

@@ -1713,6 +1713,21 @@ Do you want to replace it?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticRouteWidget</name>
+    <message>
+        <source>Itinerary</source>
+        <translation>Itinerary</translation>
+    </message>
+    <message>
+        <source>Itinerary to %1</source>
+        <translation>Itinerary to %1</translation>
+    </message>
+    <message>
+        <source>Return trip</source>
+        <translation>Return trip</translation>
+    </message>
+</context>
+<context>
     <name>LogisticStatusWidget</name>
     <message>
         <source>Mode</source>
@@ -1818,22 +1833,6 @@ Do you want to replace it?</translation>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Move waypoint up</source>
-        <translation type="unfinished">Move waypoint up</translation>
-    </message>
-    <message>
-        <source>Move waypoint down</source>
-        <translation type="unfinished">Move waypoint down</translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation type="unfinished">Delete Waypoint</translation>
-    </message>
-    <message>
-        <source>Add Waypoint</source>
-        <translation type="unfinished">Add Waypoint</translation>
     </message>
     <message>
         <source>Manual selection of transport carriers</source>
