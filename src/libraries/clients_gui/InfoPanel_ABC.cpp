@@ -77,7 +77,7 @@ void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, QItemSel
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoPanel_ABC::resizeModelOnContent
+// Name: InfoPanel_ABC::ResizeModelOnNewContent
 // Created: NPT 2012-10-23
 // -----------------------------------------------------------------------------
 void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, QItemSelectionModel* selectionModel, int wantedSize )
@@ -96,4 +96,3 @@ void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, QItemSel
         }
     selectionModel->blockSignals( false );
 }
-

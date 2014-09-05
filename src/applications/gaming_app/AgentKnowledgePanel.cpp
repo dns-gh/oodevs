@@ -126,9 +126,8 @@ void AgentKnowledgePanel::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 {
-    if( ! IsVisible() || selected_ != &knowledges )
+    if( !IsVisible() || selected_ != &knowledges )
         return;
-
     ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), knowledges.Count(), *display_ );
     int i = 0;
     tools::Iterator< const AgentKnowledge_ABC& > iterator = knowledges.CreateIterator();
@@ -182,7 +181,7 @@ void AgentKnowledgePanel::AfterSelection()
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 {
-    const AgentKnowledges* k     = element ? element->Retrieve< AgentKnowledges >() : 0;
+    const AgentKnowledges* k = element ? element->Retrieve< AgentKnowledges >() : 0;
     if( ! k || k != selected_ )
     {
         selected_ = k;
@@ -209,13 +208,12 @@ void AgentKnowledgePanel::OnSelectionChanged()
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
     if( item && item->data( KnowledgeRole ).isValid() )
         subSelected_ = item->data( KnowledgeRole ).value< const kernel::AgentKnowledge_ABC* >();
-
     if( subSelected_ )
     {
         NotifyUpdated( *subSelected_ );
         const PerceptionMap* perceptions = subSelected_->Retrieve< PerceptionMap >();
         if( perceptions )
-            NotifyUpdated( *perceptions  );
+            NotifyUpdated( *perceptions );
         else
             perceptionModel_.removeRows( 0, perceptionModel_.rowCount() );
     }
@@ -285,10 +283,8 @@ void AgentKnowledgePanel::OnKnowledgeRequestCenter()
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge_ABC& k )
 {
-    if( ! IsVisible() || subSelected_ != & k )
-        return;
-
-    k.Display( display_->Group( tools::translate( "AgentKnowledge", "Details" ) ) );
+    if( IsVisible() && subSelected_ == &k )
+        k.Display( display_->Group( tools::translate( "AgentKnowledge", "Details" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,9 +293,9 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge_ABC& k )
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
 {
-    if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
+    if( !IsVisible() || !subSelected_ || subSelected_->Retrieve< PerceptionMap >() != &perceptions )
         return;
-    int perceptionSize = static_cast< int >( perceptions.perceptions_.size() );
+    const int perceptionSize = static_cast< int >( perceptions.perceptions_.size() );
     ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), perceptionSize );
     for( int i = 0; i < perceptionSize; ++i )
     {

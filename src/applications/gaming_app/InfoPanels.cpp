@@ -29,7 +29,6 @@ InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::
     setWindowTitle( tools::translate( "InfoPanels", "Knowledge" ) );
     gui::Panels* panels = new gui::Panels( "InfoPanels", this );
     setWidget( panels );
-
     panels->setMinimumWidth( 200 );
     panels->AddPanel( new AgentKnowledgePanel     ( panels, *panels, controllers, factory ) );
     panels->AddPanel( new gui::PopulationPanel    ( panels, *panels, controllers, factory ) );
