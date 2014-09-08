@@ -57,7 +57,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const ReportFactory& reportFactory );
+             Reports( const kernel::Entity_ABC& entity, kernel::Controller& controller, const ReportFactory& reportFactory );
     virtual ~Reports();
     //@}
 
@@ -89,7 +89,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Entity_ABC& agent_;
+    const kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     const ReportFactory& reportFactory_;
     T_Reports traces_;

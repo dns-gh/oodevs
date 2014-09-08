@@ -10,47 +10,25 @@
 #include "clients_kernel_pch.h"
 #include "App6Symbol.h"
 #include "Karma.h"
+#include <boost/assign.hpp>
+#pragma warning( push, 0 )
+#include <boost/bimap.hpp>
+#pragma warning( pop )
 
 using namespace kernel;
 
-App6Symbol::T_KarmaChars App6Symbol::karmaChars_;
 namespace
 {
-    std::map< char, Karma* > charKarmas_;
-}
+    typedef boost::bimap< char, Karma > T_Karmas;
 
-// -----------------------------------------------------------------------------
-// Name: App6Symbol constructor
-// Created: SBO 2007-02-26
-// -----------------------------------------------------------------------------
-App6Symbol::App6Symbol()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: App6Symbol destructor
-// Created: SBO 2007-02-26
-// -----------------------------------------------------------------------------
-App6Symbol::~App6Symbol()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: App6Symbol::Initialize
-// Created: SBO 2007-02-26
-// -----------------------------------------------------------------------------
-void App6Symbol::Initialize()
-{
-    karmaChars_[Karma::friend_]  = 'f';
-    karmaChars_[Karma::enemy_]   = 'h';
-    karmaChars_[Karma::neutral_] = 'n';
-    karmaChars_[Karma::unknown_] = 'u';
-    charKarmas_['f'] = &Karma::friend_;
-    charKarmas_['h'] = &Karma::enemy_;
-    charKarmas_['n'] = &Karma::neutral_;
-    charKarmas_['u'] = &Karma::unknown_;
+    // In a function because otherwise we face a static initialization fiasco
+    // with Karma::friend_, Karma::enemy_, etc..
+    const T_Karmas& GetKarmas()
+    {
+        static const T_Karmas karmas = boost::assign::list_of< T_Karmas::relation >
+            ( 'f', Karma::friend_ )( 'h', Karma::enemy_ )( 'n', Karma::neutral_ )( 'u', Karma::unknown_ );
+        return karmas;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -59,52 +37,35 @@ void App6Symbol::Initialize()
 // -----------------------------------------------------------------------------
 void App6Symbol::SetKarma( std::string& symbol, const kernel::Karma& karma )
 {
-    if( karmaChars_.empty() ) // $$$$ SBO 2007-02-26:
-        Initialize();
-    std::string::size_type pos = symbol.find_last_of( '/' );
+    const auto pos = symbol.find_last_of( '/' );
     if( pos != std::string::npos )
     {
         if( symbol.size() > pos+2 )
-            symbol[pos + 2] = karmaChars_[karma];
+            symbol[pos + 2] = GetKarmas().right.at( karma );
     }
     else if( symbol.size() > 2 )
-        symbol[1] = karmaChars_[karma];
+        symbol[1] = GetKarmas().right.at( karma );
 }
 
 // -----------------------------------------------------------------------------
 // Name: App6Symbol::GetBase
 // Created: LDC 2013-04-22
 // -----------------------------------------------------------------------------
-std::string App6Symbol::GetBase( const std::string& symbol, Karma*& karma )
+std::string App6Symbol::GetBase( const std::string& symbol, Karma& karma )
 {
-    std::string result( symbol );
-    karma = &Karma::unknown_;
-    std::string::size_type pos = symbol.find_last_of( '/' );
+    std::string result = symbol;
+    karma = Karma::unknown_;
+    const auto pos = symbol.find_last_of( '/' );
     if( pos != std::string::npos )
         result = symbol.substr( pos + 1 );
     if( result.size() > 2 )
     {
-        auto it = charKarmas_.find( result[1] );
-        if( it != charKarmas_.end() )
+        auto it = GetKarmas().left.find( result[1] );
+        if( it != GetKarmas().left.end() )
             karma = it->second;
         result[1] = '*';
     }
     return result;
-}
-
-namespace
-{
-    unsigned int ElementsToKeep( E_PerceptionResult perception )
-    {
-        switch( perception )
-        {
-        default:
-        case eNotSeen:
-        case eDetection:      return 5;  // nothing                  sugpu
-        case eRecognition:    return 7;  // side + category + weapon shgpuca
-        case eIdentification: return 10; // all                      shgpucaaaw
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +74,23 @@ namespace
 // -----------------------------------------------------------------------------
 void App6Symbol::FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception )
 {
-    if( eIdentification != perception ) // keep all if identified
-        symbol = symbol.substr( 0, symbol.find_last_of( '/' ) + ElementsToKeep( perception ) + 1 );
+    if( perception == eIdentification ) // keep all if identified
+        return;
+    symbol = symbol.substr( 0, symbol.find_last_of( '/' ) + 1 +
+        ( perception == eRecognition
+            ? 7      // side + category + weapon shgpuca
+            : 5 ) ); // nothing                  sugpu
+}
+
+std::string App6Symbol::FilterNature( const std::string& nature, E_PerceptionResult perception )
+{
+    if( perception < eRecognition )
+        return "";
+    if( perception == eIdentification ) // keep all if identified
+        return nature;
+    QStringList list = QStringList::split( '/', nature.c_str() );
+    while( list.size() > 2 )
+        list.pop_back();
+    const QString result = list.join( "/" );
+    return result.isNull() ? "" : result.toStdString();
 }

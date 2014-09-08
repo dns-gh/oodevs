@@ -14,10 +14,10 @@
 
 using namespace kernel;
 
-Karma Karma::friend_ ( 1, "friend" );  // f
-Karma Karma::enemy_  ( 2, "enemy" );   // h
-Karma Karma::neutral_( 3, "neutral" ); // n
-Karma Karma::unknown_( 0, "unknown" ); // u
+const Karma Karma::friend_ ( 1, "friend" );  // f
+const Karma Karma::enemy_  ( 2, "enemy" );   // h
+const Karma Karma::neutral_( 3, "neutral" ); // n
+const Karma Karma::unknown_( 0, "unknown" ); // u
 
 // -----------------------------------------------------------------------------
 // Name: Karma constructor

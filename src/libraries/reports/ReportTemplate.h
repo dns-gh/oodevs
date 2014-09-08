@@ -20,6 +20,11 @@ namespace sword
     class Report;
 }
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -45,7 +50,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    QString RenderMessage( const sword::Report& asn ) const;
+    QString RenderMessage( const kernel::Entity_ABC* entity, const sword::Report& asn ) const;
     //@}
 
 private:

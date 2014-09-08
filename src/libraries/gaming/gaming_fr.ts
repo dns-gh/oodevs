@@ -97,12 +97,16 @@
         <translation>Direction:</translation>
     </message>
     <message>
-        <source>Unknown unit</source>
-        <translation>Unité inconnue</translation>
-    </message>
-    <message>
         <source>Critical intelligence:</source>
         <translation>Renseignement critique:</translation>
+    </message>
+    <message>
+        <source>unknown %1 %2</source>
+        <translation>inconnu %1 %2</translation>
+    </message>
+    <message>
+        <source>unknown %1</source>
+        <translation>inconnu %1</translation>
     </message>
 </context>
 <context>

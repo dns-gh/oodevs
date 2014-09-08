@@ -11,7 +11,6 @@
 #include "Model.h"
 #include "AfterActionModel.h"
 #include "AgentFactory.h"
-#include "AgentKnowledgeConverter.h"
 #include "AgentKnowledgeFactory.h"
 #include "AgentsModel.h"
 #include "DrawingFactory.h"
@@ -75,10 +74,9 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , controllers_             ( controllers )
     , static_                  ( staticModel )
     , config_                  ( config )
-    , agentsKnowledgeFactory_  ( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
+    , agentsKnowledgeFactory_  ( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_, profile ) )
     , objectKnowledgeFactory_  ( *new ObjectKnowledgeFactory( controllers, *this, staticModel, simulation ) )
     , urbanKnowledgeFactory_   ( *new UrbanKnowledgeFactory( controllers.controller_, *this ) )
-    , agentKnowledgeConverter_ ( *new AgentKnowledgeConverter( controllers ) )
     , objectKnowledgeConverter_( *new ObjectKnowledgeConverter( controllers ) )
     , knowledgeGroupFactory_   ( *new KnowledgeGroupFactory( controllers, *this ) )
     , teamFactory_             ( *new TeamFactory( controllers, *this, staticModel ) )
@@ -89,7 +87,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , tacticalLineFactory_     ( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher, profile ) )
     , fireResultsFactory_      ( *new FireResultFactory( *this, simulation, profile ) )
     , userProfileFactory_      ( *new UserProfileFactory( controllers_.controller_, publisher ) )
-    , actionParameterFactory_  ( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_, controllers_.controller_ ) )
+    , actionParameterFactory_  ( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, objectKnowledgeConverter_, controllers_.controller_ ) )
     , actionFactory_           ( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
     , drawingFactory_          ( *new DrawingFactory( controllers, staticModel.drawings_, publisher, staticModel.coordinateConverter_, *this ) )
     , agents_                  ( *new AgentsModel( agentFactory_ ) )
@@ -260,7 +258,6 @@ Model::~Model()
     delete &agentFactory_;
     delete &teamFactory_;
     delete &objectKnowledgeConverter_;
-    delete &agentKnowledgeConverter_;
     delete &objectKnowledgeFactory_;
     delete &agentsKnowledgeFactory_;
     delete &pathfinds_;

@@ -92,7 +92,6 @@ namespace
         MOCK_METHOD( GetParamInterface, 0 );
         MOCK_METHOD( GetParameterLayer, 0 );
         MOCK_METHOD( GetControllers, 0 );
-        MOCK_METHOD( GetAgentKnowledgeConverter, 0 );
         MOCK_METHOD( GetObjectKnowledgeConverter, 0 );
         MOCK_METHOD( GetTacticalLineResolver, 0 );
         MOCK_METHOD( GetPathfindResolver, 0 );

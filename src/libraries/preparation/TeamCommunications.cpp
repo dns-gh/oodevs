@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "TeamCommunications.h"
-#include "KnowledgeGroup.h"
 #include "KnowledgeGroupCommunications.h"
 #include <xeumeuleu/xml.hpp>
 

@@ -251,8 +251,7 @@ void ReportListView::NotifyCreated( const Report& report )
         return;
     if( toDisplay_.find( report.GetType() ) == toDisplay_.end() )
         return;
-    std::string text = report.GetMessage();
-    reportModel_.appendRow( GetItems( report)  );
+    reportModel_.appendRow( GetItems( report ) );
 }
 
 // -----------------------------------------------------------------------------

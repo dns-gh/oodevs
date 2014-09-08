@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class AgentKnowledgeConverter_ABC;
     class Controllers;
     class CoordinateConverter_ABC;
     class Entity_ABC;
@@ -61,7 +60,6 @@ public:
                                const tools::ExerciseConfig& config,
                                ::gui::ParametersLayer& layer,
                                const kernel::StaticModel& staticModel,
-                               kernel::AgentKnowledgeConverter_ABC* knowledgeConverter = 0,
                                kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter = 0,
                                const kernel::Time_ABC* simulation = 0,
                                tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver = 0,
@@ -81,7 +79,6 @@ public:
     virtual ParamInterface_ABC& GetParamInterface() const;
     virtual ::gui::ParametersLayer& GetParameterLayer() const;
     virtual kernel::Controllers& GetControllers() const;
-    virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const;
     virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const;
     virtual tools::Resolver< kernel::Pathfind_ABC >& GetPathfindResolver() const;
@@ -120,7 +117,6 @@ private:
     const tools::ExerciseConfig&           config_;
     ::gui::ParametersLayer&                layer_;
     const kernel::StaticModel&             staticModel_;
-    kernel::AgentKnowledgeConverter_ABC*   knowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC*  objectKnowledgeConverter_;
     const kernel::Time_ABC*                simulation_;
     tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver_;

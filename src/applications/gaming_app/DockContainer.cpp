@@ -91,7 +91,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     interfaceBuilder_.reset(
         new actions::gui::InterfaceBuilder(
             controllers, config, paramLayer, staticModel,
-            &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_,
+            &model.objectKnowledgeConverter_,
             &simulation, &model.limits_, &model.pathfinds_ ) );
     scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, model.actions_, network.GetMessageMgr(), simulationController, hasLegacyTimeline ) );
     plotFactory_.reset( new IndicatorPlotFactory( parent, controllers, network.GetMessageMgr(), indicatorExportDialog, simulation ) );

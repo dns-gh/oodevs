@@ -16,7 +16,6 @@
 #include "actions/Action_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/MissionType.h"
@@ -53,7 +52,7 @@ namespace
     {
     public:
         Fixture()
-            : parameterFactory( coordinateConverter, entityResolver, staticModel, agentKnowledgeConverter, objectKnowledgeConverter, controller )
+            : parameterFactory( coordinateConverter, entityResolver, staticModel, objectKnowledgeConverter, controller )
             , actionFactory( controller, parameterFactory, entityResolver, staticModel, time )
         {
             xml::xistringstream xis( "<mission cdt-dia-behavior='worldwide.commander.tasks.Attack' dia-type='worldwide.commander.tasks.Attack' id='44523' mrt-dia-behavior='worldwide.commander.tasks.Attack' name='COMBAT - Attack'>"
@@ -76,7 +75,6 @@ namespace
         MockEntityResolver entityResolver;
         kernel::Controller controller;
         kernel::StaticModel staticModel;
-        MockAgentKnowledgeConverter agentKnowledgeConverter;
         MockObjectKnowledgeConverter objectKnowledgeConverter;
         ActionParameterFactory parameterFactory;
         MockTime time;

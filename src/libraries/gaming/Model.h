@@ -22,7 +22,6 @@ namespace tools
 
 namespace kernel
 {
-    class AgentKnowledgeConverter_ABC;
     class Controllers;
     class ObjectKnowledgeConverter_ABC;
     class Profile_ABC;
@@ -56,6 +55,7 @@ class FireResultFactory;
 class FiresModel;
 class FloodProxy;
 class FolkModel;
+class HistoryLogisticsModel;
 class KnowledgeGroupFactory_ABC;
 class KnowledgeGroupsModel;
 class LimitsModel;
@@ -80,10 +80,9 @@ class UrbanBlockDetectionMap;
 class UrbanKnowledgeFactory;
 class ProfileFactory_ABC;
 class UserProfilesModel;
-class WeatherModel;
 class UrbanModel;
-class HistoryLogisticsModel;
 class VisionMeteoModel;
+class WeatherModel;
 
 // =============================================================================
 /** @class  Model
@@ -138,7 +137,6 @@ public:
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
     ObjectKnowledgeFactory& objectKnowledgeFactory_;
     UrbanKnowledgeFactory& urbanKnowledgeFactory_;
-    kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     TeamFactory_ABC& teamFactory_;
     KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;

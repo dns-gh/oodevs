@@ -36,7 +36,7 @@ TeamKarmas::~TeamKarmas()
 // Name: TeamKarmas::GetDefault
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-kernel::Karma& TeamKarmas::GetDefault() const
+const kernel::Karma& TeamKarmas::GetDefault() const
 {
     return default_;
 }

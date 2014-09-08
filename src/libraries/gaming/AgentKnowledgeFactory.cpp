@@ -28,10 +28,12 @@ using namespace kernel;
 // Name: AgentKnowledgeFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-AgentKnowledgeFactory::AgentKnowledgeFactory( Controllers& controllers, Model& model, const CoordinateConverter_ABC& converter )
+AgentKnowledgeFactory::AgentKnowledgeFactory( Controllers& controllers, Model& model,
+    const CoordinateConverter_ABC& converter, const kernel::Profile_ABC& profile )
     : controllers_( controllers )
     , model_( model )
     , converter_( converter )
+    , profile_( profile )
 {
     // NOTHING
 }
@@ -51,7 +53,7 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // -----------------------------------------------------------------------------
 AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGroup_ABC& group, const sword::UnitKnowledgeCreation& message )
 {
-    AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.GetAgentResolver(), model_.GetTeamResolver() );
+    AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.GetAgentResolver(), model_.GetTeamResolver(), profile_ );
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.GetAutomatResolver() ) );
     result->Attach< Positions >( *new AgentKnowledgePositions( converter_ ) );
     result->Attach< Lives_ABC >( *new Lives( *result, controllers_.controller_ ) );
@@ -66,7 +68,7 @@ AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const Knowledge
 // -----------------------------------------------------------------------------
 PopulationKnowledge_ABC* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup_ABC& group, const sword::CrowdKnowledgeCreation& message )
 {
-    PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, converter_, model_.GetPopulationResolver(), message );
+    PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, converter_, model_.GetPopulationResolver(), message ); // $$$$ MCO 2014-08-29: populations too ?
     result->Attach< Positions >( *new PopulationKnowledgePositions( *result ) );
     result->Polish();
     return result;

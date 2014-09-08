@@ -737,7 +737,7 @@ message MissionParameter {
         optional Id                       crowdKnowledge           = 14;
         //! An object knowledge identifier
         optional Id                       objectKnowledge          = 15;
-        //! A urban object knowledge identifier
+        //! A urban block knowledge identifier
         optional Id                       urbanKnowledge           = 16;
         //! A planned work
         optional PlannedWork              plannedWork              = 17;

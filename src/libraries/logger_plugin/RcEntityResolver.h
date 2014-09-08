@@ -48,16 +48,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    RcEntityResolver( const RcEntityResolver& );            //!< Copy constructor
-    RcEntityResolver& operator=( const RcEntityResolver& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual QString CreateLink( const std::string& type, unsigned long id ) const;
-    //@}
+    virtual QString CreateLink( const kernel::Entity_ABC* entity, const std::string& type, unsigned long id ) const;
 
 private:
     //! @name Member data

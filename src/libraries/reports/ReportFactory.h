@@ -29,8 +29,8 @@ namespace xml
 
 namespace kernel
 {
-    class Entity_ABC;
     class DotationType;
+    class Entity_ABC;
     class EquipmentType;
     class Time_ABC;
 }
@@ -60,10 +60,10 @@ class ReportFactory : public tools::Resolver< ReportTemplate >
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportFactory( const RcEntityResolver_ABC& rcResolver
-                          , const tools::Resolver_ABC< kernel::DotationType >& dotationResolver
-                          , const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver
-                          , const kernel::Time_ABC* time );
+             ReportFactory( const RcEntityResolver_ABC& rcResolver,
+                            const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                            const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
+                            const kernel::Time_ABC* time );
     virtual ~ReportFactory();
     //@}
 
@@ -72,9 +72,9 @@ public:
     void Load( const tools::ExerciseConfig& config );
     void Purge();
 
-    boost::shared_ptr< Report > CreateReport( const kernel::Entity_ABC& agent, const sword::Report& asnMsg ) const;
-    Report* CreateTrace ( const kernel::Entity_ABC& agent, const sword::Trace& asnMsg ) const;
-    std::string FormatReport( const sword::Report& asn ) const;
+    boost::shared_ptr< Report > CreateReport( const kernel::Entity_ABC& entity, const sword::Report& message ) const;
+    Report* CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message ) const;
+    std::string FormatReport( const kernel::Entity_ABC* entity, const sword::Report& message ) const;
     QDateTime GetTime( const sword::DateTime& d ) const;
     //@}
 
@@ -89,7 +89,7 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    QString RenderParameter( const sword::MissionParameter_Value& value ) const;
+    QString RenderParameter( const kernel::Entity_ABC* entity, const sword::MissionParameter_Value& value ) const;
     //@}
 
 private:

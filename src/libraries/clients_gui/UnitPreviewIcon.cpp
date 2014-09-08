@@ -24,7 +24,6 @@
 #include "clients_kernel/Karma.h"
 #include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "tools/App6Symbol.h"
 
 using namespace kernel;
 using namespace gui;

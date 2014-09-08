@@ -9,7 +9,6 @@
 
 #include "actions_pch.h"
 #include "ActionParameterFactory.h"
-
 #include "Agent.h"
 #include "Army.h"
 #include "AtlasNature.h"
@@ -46,7 +45,6 @@
 #include "ResourceNetworkType.h"
 #include "String.h"
 #include "UrbanBlock.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -54,7 +52,6 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/Protocol.h"
-
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
@@ -69,13 +66,11 @@ using namespace actions;
 ActionParameterFactory::ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter,
                                                 const kernel::EntityResolver_ABC& entities,
                                                 const kernel::StaticModel& staticModel,
-                                                kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter,
                                                 kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter,
                                                 kernel::Controller& controller )
     : converter_               ( converter )
     , entities_                ( entities )
     , staticModel_             ( staticModel )
-    , agentKnowledgeConverter_ ( agentKnowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
     , controller_              ( controller )
 {

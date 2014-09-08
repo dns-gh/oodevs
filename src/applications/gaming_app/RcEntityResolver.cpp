@@ -9,7 +9,10 @@
 
 #include "gaming_app_pch.h"
 #include "RcEntityResolver.h"
+#include "gaming/AgentKnowledges.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/KnowledgeConverter_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Population_ABC.h"
@@ -25,8 +28,9 @@ using namespace gui;
 // Name: RcEntityResolver constructor
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-RcEntityResolver::RcEntityResolver( Controllers& controllers )
+RcEntityResolver::RcEntityResolver( Controllers& controllers, const kernel::KnowledgeConverter_ABC& converter )
     : controllers_( controllers )
+    , converter_( converter )
 {
     controllers_.Register( *this );
 }
@@ -134,10 +138,17 @@ void RcEntityResolver::NotifyDeleted( const kernel::UrbanObject_ABC& element )
 // Name: RcEntityResolver::CreateLink
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-QString RcEntityResolver::CreateLink( const std::string& type, unsigned long id ) const
+QString RcEntityResolver::CreateLink( const kernel::Entity_ABC* entity, const std::string& type, unsigned long id ) const
 {
     if( type == Agent_ABC::typeName_ )
         return CreateLink< Agent_ABC >( id );
+    else if( type == AgentKnowledge_ABC::typeName_ )
+    {
+        if( entity )
+            if( const auto k = converter_.FindAgent( id, *entity ) )
+                return InternalLinks::CreateLink( *k, k->GetName() );
+        return CreateLink< Agent_ABC >( id );
+    }
     else if( type == Automat_ABC::typeName_ )
         return CreateLink< Automat_ABC >( id );
     else if( type == Object_ABC::typeName_ )

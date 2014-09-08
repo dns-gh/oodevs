@@ -21,7 +21,6 @@
 namespace kernel
 {
     class Controllers;
-    class AgentKnowledgeConverter_ABC;
     class CoordinateConverter_ABC;
     class OrderParameter;
     class Entity_ABC;

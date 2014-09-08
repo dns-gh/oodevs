@@ -332,14 +332,14 @@ namespace
 {
     std::string GetAssociatedSymbol( const std::string& symbol, const std::map< std::string, std::string >& symbolNatureMap, const SymbolFactory* factory, std::string( SymbolFactory::*func )( const std::string& ) const )
     {
-        Karma* karma = &Karma::unknown_;
+        Karma karma = Karma::unknown_;
         std::string base = App6Symbol::GetBase( symbol, karma );
         auto it = symbolNatureMap.find( base );
         if( it != symbolNatureMap.end() )
         {
             std::string category = it->second;
             std::string staticSymbol = (factory->*func)( category );
-            App6Symbol::SetKarma( staticSymbol, *karma );
+            App6Symbol::SetKarma( staticSymbol, karma );
             return staticSymbol;
         }
         return std::string();

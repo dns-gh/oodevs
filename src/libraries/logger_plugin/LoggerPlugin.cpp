@@ -140,7 +140,7 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
         else if( msg.report().source().has_crowd() )
             id = msg.report().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
-        FormatMessage( factory_.FormatReport( msg.report() ), "Report",
+        FormatMessage( factory_.FormatReport( entity, msg.report() ), "Report",
                        entity ? entity->GetName().toStdString() : "Unknown entity", id,
                        factory_.GetTime( msg.report().time() ).toString( "hh:mm:ss" ).toStdString() );
     }

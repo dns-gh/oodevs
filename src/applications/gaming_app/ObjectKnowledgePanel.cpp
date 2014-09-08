@@ -400,3 +400,9 @@ void ObjectKnowledgePanel::UpdateAllExtensions()
     UpdateExtension< TimeLimitedAttribute_ABC >( *subSelected_ );
     UpdateExtension< MineAttribute_ABC >( *subSelected_ );
 }
+
+void ObjectKnowledgePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), 0, *display_ );
+    ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), 0 );
+}

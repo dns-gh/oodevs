@@ -27,10 +27,10 @@ namespace kernel
 class Karma
 {
 public:
-    static Karma friend_;
-    static Karma enemy_;
-    static Karma neutral_;
-    static Karma unknown_;
+    static const Karma friend_;
+    static const Karma enemy_;
+    static const Karma neutral_;
+    static const Karma unknown_;
 
     //! @name Constructors/Destructor
     //@{

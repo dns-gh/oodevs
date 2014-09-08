@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class AgentKnowledgeConverter_ABC;
     class Controller;
     class CoordinateConverter_ABC;
     class EntityResolver_ABC;
@@ -44,7 +43,6 @@ public:
              ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter,
                                      const kernel::EntityResolver_ABC& entities,
                                      const kernel::StaticModel& staticModel,
-                                     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter,
                                      kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter,
                                      kernel::Controller& controller );
     virtual ~ActionParameterFactory();
@@ -67,7 +65,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::EntityResolver_ABC& entities_;
     const kernel::StaticModel& staticModel_;
-    kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     kernel::Controller& controller_;
     //@}

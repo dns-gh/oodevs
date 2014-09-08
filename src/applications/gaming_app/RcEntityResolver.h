@@ -11,15 +11,16 @@
 #define __RcEntityResolver_h_
 
 #include "reports/RcEntityResolver_ABC.h"
-#include <tools/Resolver.h>
 #include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver.h>
 
 namespace kernel
 {
-    class Entity_ABC;
     class Agent_ABC;
+    class KnowledgeConverter_ABC;
     class Automat_ABC;
     class Controllers;
+    class Entity_ABC;
     class Object_ABC;
     class Population_ABC;
     class UrbanObject_ABC;
@@ -47,20 +48,14 @@ class RcEntityResolver : public RcEntityResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RcEntityResolver( kernel::Controllers& controllers );
+             RcEntityResolver( kernel::Controllers& controllers, const kernel::KnowledgeConverter_ABC& converter );
     virtual ~RcEntityResolver();
     //@}
 
+private:
     //! @name Operations
     //@{
-    virtual QString CreateLink( const std::string& type, unsigned long id ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    RcEntityResolver( const RcEntityResolver& );            //!< Copy constructor
-    RcEntityResolver& operator=( const RcEntityResolver& ); //!< Assignment operator
+    virtual QString CreateLink( const kernel::Entity_ABC* entity, const std::string& type, unsigned long id ) const;
     //@}
 
     //! @name Helpers
@@ -84,6 +79,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const kernel::KnowledgeConverter_ABC& converter_;
     //@}
 };
 
