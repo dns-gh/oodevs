@@ -2794,7 +2794,7 @@ func (s *TestSuite) TestRename(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	data := client.Model.GetData()
-	new_name := "new_name"
+	newName := "new_name"
 	party := getSomeParty(c, data)
 	formation := getSomeFormation(c, data)
 	automat := getSomeAutomat(c, data)
@@ -2802,45 +2802,45 @@ func (s *TestSuite) TestRename(c *C) {
 	crowd := getSomeCrowd(c, data)
 	population := getSomePopulation(c, data)
 	// invalid id
-	err := client.Rename(0, new_name)
+	err := client.Rename(0, newName)
 	c.Assert(err, NotNil)
 	// invalid name
 	err = client.RenameTest(party.Id, swapi.MakeParameters())
 	c.Assert(err, NotNil)
 	// party
-	err = client.Rename(party.Id, new_name)
+	err = client.Rename(party.Id, newName)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Parties[party.Id].Name == new_name
+		return data.Parties[party.Id].Name == newName
 	})
 	// formation
-	err = client.Rename(formation.Id, new_name)
+	err = client.Rename(formation.Id, newName)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Formations[formation.Id].Name == new_name
+		return data.Formations[formation.Id].Name == newName
 	})
 	// automat
-	err = client.Rename(automat.Id, new_name)
+	err = client.Rename(automat.Id, newName)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Automats[automat.Id].Name == new_name
+		return data.Automats[automat.Id].Name == newName
 	})
 	// unit
-	err = client.Rename(unit.Id, new_name)
+	err = client.Rename(unit.Id, newName)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit.Id].Name == new_name
+		return data.Units[unit.Id].Name == newName
 	})
 	// crowd
-	err = client.Rename(crowd.Id, new_name)
+	err = client.Rename(crowd.Id, newName)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Crowds[crowd.Id].Name == new_name
+		return data.Crowds[crowd.Id].Name == newName
 	})
 	// population
-	err = client.Rename(population.Id, new_name)
+	err = client.Rename(population.Id, newName)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Populations[population.Id].Name == new_name
+		return data.Populations[population.Id].Name == newName
 	})
 }
