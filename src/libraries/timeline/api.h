@@ -159,6 +159,7 @@ signals:
     void KeyDown( int key );
     void KeyPress( int key );
     void KeyUp( int key );
+    void Done();
 };
 
 struct Configuration
