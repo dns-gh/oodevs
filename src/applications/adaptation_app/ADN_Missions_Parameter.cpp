@@ -191,17 +191,12 @@ void ADN_Missions_Parameter::ReadChoiceVector( xml::xistream& input, T_Choice_Ve
 // -----------------------------------------------------------------------------
 void ADN_Missions_Parameter::UpdateObjectsVectors()
 {
-    if( IsTypeCompatibleWithObjects() )
+    if( objects_.empty() && IsTypeCompatibleWithObjects() )
     {
-        if( objects_.empty() )
-        {
-            objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-            for( std::size_t i = 0; i < objects_.size(); ++i )
-                objects_[ i ]->isAllowed_ = type_.GetData() != eMissionParameterTypePhaseLine;
-        }
+        objects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+        for( std::size_t i = 0; i < objects_.size(); ++i )
+            objects_[ i ]->isAllowed_ = type_.GetData() != eMissionParameterTypePhaseLine;
     }
-    else
-        objects_.ResetFixedVector();
 }
 
 // -----------------------------------------------------------------------------
