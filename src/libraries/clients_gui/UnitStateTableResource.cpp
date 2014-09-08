@@ -97,7 +97,7 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
     AddItem( row, eLowThreshold, locale().toString( lowThreshold, 'f', 2 ), lowThreshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
     AddItem( row, eHighThreshold, locale().toString( highThreshold, 'f', 2 ), highThreshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
     const QString strNormalizedQuantity = consumption == 0 ?
-        tr( "N/A" ) : locale().toString( quantity / consumption );
+        tr( "N/A" ) : locale().toString( quantity / consumption, 'f', 2 );
     AddItem( row, eConsumption, strNormalizedQuantity, consumption );
 }
 

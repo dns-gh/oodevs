@@ -2002,6 +2002,10 @@ Voulez-vous le remplacer ?</translation>
         <source>Quantity %</source>
         <translation>Quantité %</translation>
     </message>
+    <message>
+        <source>Norm. quantities</source>
+        <translation>Quantités norm.</translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsHistoryTable</name>

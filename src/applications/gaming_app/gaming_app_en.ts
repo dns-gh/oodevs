@@ -2000,6 +2000,10 @@ Do you want to replace it?</translation>
         <source>Partial recompletion</source>
         <translation>Recover</translation>
     </message>
+    <message>
+        <source>Norm. quantities</source>
+        <translation>Norm. quantities</translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsHistoryTable</name>

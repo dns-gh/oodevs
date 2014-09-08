@@ -42,11 +42,13 @@ namespace logistic_helpers
 
     typedef std::map< const kernel::DotationType*, unsigned int > T_Requirements;
     void ComputeLogisticConsumptions( const kernel::StaticModel& staticModel, const kernel::Entity_ABC& logBase,
-                                   const kernel::LogisticSupplyClass& logType, T_Requirements& requirements, bool forceLogisticBase );
+                                      const kernel::LogisticSupplyClass& logType, T_Requirements& requirements, bool forceLogisticBase );
 
     kernel::Entity_ABC* FindParentEntity( const sword::ParentEntity& message,
                                           const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                                           const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver );
+
+    const kernel::Entity_ABC* GetLogisticBase( const kernel::Entity_ABC* entity );
 }
 
 #endif // __gui_LogisticHelpers_h_

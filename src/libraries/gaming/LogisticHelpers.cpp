@@ -9,10 +9,11 @@
 
 #include "gaming_pch.h"
 #include "LogisticHelpers.h"
-
+#include "Dotation.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/LogisticBase.h"
@@ -31,6 +32,7 @@ namespace logistic_helpers
     {
         VisitPartialBaseStocksDotations( entity, func, []( const kernel::Entity_ABC& ) { return true; } );
     }
+
     // -----------------------------------------------------------------------------
     void VisitPartialBaseStocksDotations( const kernel::Entity_ABC& entity,
                                           const std::function< void( const Dotation& ) >& func,
@@ -46,6 +48,7 @@ namespace logistic_helpers
             }
         } );
     }
+
     // -----------------------------------------------------------------------------
     void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const std::function< void( const kernel::Entity_ABC& ) >& func )
     {
@@ -55,6 +58,7 @@ namespace logistic_helpers
             return false;
         } );
     }
+
     // -----------------------------------------------------------------------------
     bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const std::function< bool( const kernel::Entity_ABC& ) >& func )
     {
@@ -73,14 +77,13 @@ namespace logistic_helpers
         }
         return false;
     }
+
     // -----------------------------------------------------------------------------
-    const kernel::Entity_ABC* GetLogisticBase( const kernel::Entity_ABC* entity )
+    float ComputeNormalizedQuantity( const kernel::StaticModel& staticModel, const kernel::Entity_ABC& logBase, const kernel::DotationType& dotationType, int quantity )
     {
-        if( !entity )
-            return 0;
-        if( auto base = entity->Retrieve< gui::LogisticBase >() )
-            if( base->IsBase() )
-                return entity;
-        return GetLogisticBase( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
+        logistic_helpers::T_Requirements requirements;
+        logistic_helpers::ComputeLogisticConsumptions( staticModel, logBase, dotationType.GetLogisticSupplyClass(), requirements, false );
+        const float requirement = static_cast< float >( requirements[ &dotationType ] );
+        return requirement > 0 ? quantity / requirement : 0;
     }
 }

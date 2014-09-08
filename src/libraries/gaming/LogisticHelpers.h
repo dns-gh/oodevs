@@ -14,8 +14,10 @@ namespace kernel
 {
     class Automat_ABC;
     class Availability;
+    class DotationType;
     class Entity_ABC;
     class Positions;
+    class StaticModel;
 }
 
 class Dotation;
@@ -28,8 +30,6 @@ class Dotation;
 // =============================================================================
 namespace logistic_helpers
 {
-    const kernel::Entity_ABC* GetLogisticBase( const kernel::Entity_ABC* entity );
-
     void VisitBaseStocksDotations( const kernel::Entity_ABC& entity,
                                    const std::function< void( const Dotation& ) >& func );
     void VisitPartialBaseStocksDotations( const kernel::Entity_ABC& entity,
@@ -49,6 +49,8 @@ namespace logistic_helpers
             return ptr && ( !pExtension || pExtension == ptr );
         } );
     }
+
+    float ComputeNormalizedQuantity( const kernel::StaticModel& staticModel, const kernel::Entity_ABC& logBase, const kernel::DotationType& dotation, int quantity );
 
 } // namespace logistic_helpers
 

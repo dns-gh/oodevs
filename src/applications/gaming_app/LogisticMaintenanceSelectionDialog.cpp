@@ -15,6 +15,7 @@
 #include "MaintenanceRepairersListView.h"
 #include "PartsView.h"
 #include "actions/ActionsModel.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/Roles.h"

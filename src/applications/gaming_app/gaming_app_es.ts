@@ -2001,6 +2001,10 @@ Do you want to replace it?</source>
         <source>Quantity %</source>
         <translation>Cantidad %</translation>
     </message>
+    <message>
+        <source>Norm. quantities</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsHistoryTable</name>
