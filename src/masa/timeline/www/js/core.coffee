@@ -244,8 +244,10 @@ class EventView extends BaseEvent
     on_check: (event) =>
         dom_stop_event event
         return if is_readonly_event @event
+        enable_popover @el, false
         data = done: !@event.get "done"
         @event.save data, wait: true
+        enable_popover @el, true
 
     on_contextmenu: (event) =>
         dom_stop_event event
