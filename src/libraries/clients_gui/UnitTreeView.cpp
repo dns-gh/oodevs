@@ -89,11 +89,11 @@ void UnitTreeView::NotifyUpdated( const kernel::ModelLoaded& )
 // -----------------------------------------------------------------------------
 void UnitTreeView::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
-    bool wasSelectBlocked = selectionModel()->blockSignals( true );
-    bool wasBlocked = blockSignals( true );
+    selectionModel()->blockSignals( true );
+    blockSignals( true );
     Purge();
-    blockSignals( wasBlocked );
-    selectionModel()->blockSignals( wasSelectBlocked );
+    blockSignals( false );
+    selectionModel()->blockSignals( false );
 }
 
 // -----------------------------------------------------------------------------

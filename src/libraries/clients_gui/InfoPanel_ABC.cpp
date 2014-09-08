@@ -82,7 +82,7 @@ void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, QItemSel
 // -----------------------------------------------------------------------------
 void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, QItemSelectionModel* selectionModel, int wantedSize )
 {
-    bool wasBlocked = selectionModel->blockSignals( true );
+    selectionModel->blockSignals( true );
     int modelSize = model->rowCount();
     if( modelSize > wantedSize )
         model->removeRows( wantedSize, modelSize - wantedSize );
@@ -94,5 +94,5 @@ void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, QItemSel
                 list.append( new QStandardItem() );
             model->appendRow( list );
         }
-    selectionModel->blockSignals( wasBlocked );
+    selectionModel->blockSignals( false );
 }

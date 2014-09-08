@@ -406,9 +406,9 @@ void TimelineView::NotifySelected( const actions::Action_ABC* action )
 // -----------------------------------------------------------------------------
 void TimelineView::setContentsPos( int x, int y )
 {
-    bool wasBlocked = blockSignals( true );
+    blockSignals( true );
     Q3CanvasView::setContentsPos( x, y );
-    blockSignals( wasBlocked );
+    blockSignals( false );
 }
 
 // -----------------------------------------------------------------------------

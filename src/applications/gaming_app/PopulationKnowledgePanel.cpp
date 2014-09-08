@@ -181,13 +181,13 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
         int populationSize = concentrations.Count() + flows.Count();
         int itemchildrenSize = knowledgeModel_.item( i )->rowCount();
 
-        bool wasBlocked = knowledgeList_->selectionModel()->blockSignals( true );
+        knowledgeList_->selectionModel()->blockSignals( true );
         if( itemchildrenSize > populationSize )
             knowledgeModel_.item( i )->removeRows( populationSize, itemchildrenSize - populationSize );
         else if( itemchildrenSize < populationSize )
             for( int size = 0; size < populationSize - itemchildrenSize; ++size )
                 knowledgeModel_.item( i )->appendRow( new QStandardItem() );
-        knowledgeList_->selectionModel()->blockSignals( wasBlocked );
+        knowledgeList_->selectionModel()->blockSignals( false );
 
         int j = 0;
         //concentration knowledge
