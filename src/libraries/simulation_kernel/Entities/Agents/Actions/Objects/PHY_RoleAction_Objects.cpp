@@ -238,7 +238,7 @@ int PHY_RoleAction_Objects::Destroy( MIL_Object_ABC& object, double finalState )
         rDeltaPercentage = std::min( rDeltaPercentage, construction->GetState() - finalState );
         nDotationRecovered = construction->GetDotationRecoveredWhenDestroying( rDeltaPercentage );
     }
-    if( structural )
+    else if( structural )
     {
         if( structural->GetStructuralState() <= finalState )
             return eFinished;
@@ -259,7 +259,7 @@ int PHY_RoleAction_Objects::Destroy( MIL_Object_ABC& object, double finalState )
     }
     if( construction && construction->GetState() <= finalState )
         return eFinished;
-    if( structural && structural->GetStructuralState() <= finalState )
+    if( !construction && structural && structural->GetStructuralState() <= finalState )
         return eFinished;
     return eRunning;
 }
