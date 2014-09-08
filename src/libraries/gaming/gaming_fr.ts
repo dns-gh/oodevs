@@ -101,12 +101,12 @@
         <translation>Renseignement critique:</translation>
     </message>
     <message>
-        <source>unknown %1 %2</source>
-        <translation>inconnu %1 %2</translation>
-    </message>
-    <message>
         <source>unknown %1</source>
         <translation>inconnu %1</translation>
+    </message>
+    <message>
+        <source>%1 %2</source>
+        <translation>%1 %2</translation>
     </message>
 </context>
 <context>

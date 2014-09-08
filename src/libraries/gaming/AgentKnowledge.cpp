@@ -180,9 +180,9 @@ QString AgentKnowledge::GetName() const
 {
     if( profile_.IsVisible( realAgent_ ) )
         return realAgent_.GetName();
-    return nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection
-        ? tools::translate( "AgentKnowledge", "unknown %1 %2" ).arg( currentNature_.c_str() ).arg( id_ )
-        : tools::translate( "AgentKnowledge", "unknown %1" ).arg( id_ );
+    return currentNature_.empty()
+        ? tools::translate( "AgentKnowledge", "unknown %1" ).arg( id_ )
+        : tools::translate( "AgentKnowledge", "%1 %2" ).arg( currentNature_.c_str() ).arg( id_ );
 }
 
 // -----------------------------------------------------------------------------
