@@ -930,11 +930,19 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
         integration.issueMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_Reserve, nil, false, findBestsFunction, disengageTask )
     end
     
-    -- Save initial positions
-    myself.leadData.initialPositions = utilities.createTableWithSimIndexes()
-    local subordinatesWithoutHQ = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
-    for i=1, #subordinatesWithoutHQ do
-        myself.leadData.initialPositions[ subordinatesWithoutHQ[i].source ] = CreateKnowledge( integration.ontology.types.point, integration.copyPoint ( integration.getTeammatePosition( subordinatesWithoutHQ[i] ) ) )
+    -- Save the subordinates' initial positions (if they have not been saved already in task knowledges)
+    if not myself.leadData.initialPositions then
+        myself.leadData.initialPositions = utilities.createTableWithSimIndexes()
+        for i=1, #self.parameters.commandingEntities do
+            myself.leadData.initialPositions[ self.parameters.commandingEntities[i].source ] = CreateKnowledge( integration.ontology.types.point, integration.copyPoint ( integration.getTeammatePosition( self.parameters.commandingEntities[i] ) ) )
+        end
+        
+        -- If self.params.withPC = false, then the HQ unit is missing from self.parameters.commandingEntities;
+        -- it is therefore added here in myself.leadData.initialPositions
+        if not self.params.withPC then
+            local HQunit = integration.getKnowledgeHQ()
+            myself.leadData.initialPositions[ HQunit.source ] = CreateKnowledge( integration.ontology.types.point, integration.copyPoint ( integration.getTeammatePosition( HQunit ) ) )
+        end
     end
 end
 
