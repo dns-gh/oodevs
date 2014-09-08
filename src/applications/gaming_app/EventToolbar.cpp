@@ -19,25 +19,19 @@
 #include "gaming/Simulation.h"
 #include "clients_gui/resources.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: EventToolbar constructor
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
-EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers, const kernel::Profile_ABC& profile )
+EventToolbar::EventToolbar( QMainWindow* pParent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
     : gui::RichToolBar( controllers, pParent, "event toolbar" )
     , controllers_( controllers )
     , profile_( profile )
 {
     setObjectName( "eventToolBar" );
     setWindowTitle( tr( "Notifications" ) );
-    gasButton_ = new QToolButton( MAKE_ICON( gas ), tr( "Out of gas" ), "", this, SLOT( GasClicked() ), this );
-    conflictButton_ = new QToolButton( MAKE_ICON( ammo ), tr( "Conflicts" ), "", this, SLOT( ConflictClicked() ), this );
     messageButton_ = new QToolButton( MAKE_ICON( msg ), "0", "", this, SLOT( MessageClicked() ), this );
 
-    addWidget( gasButton_ );
-    addWidget( conflictButton_ );
     addWidget( messageButton_ );
 
     messageButton_->setUsesTextLabel( true );
@@ -56,24 +50,6 @@ EventToolbar::~EventToolbar()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventToolbar::GasClicked
-// Created: SBO 2006-06-26
-// -----------------------------------------------------------------------------
-void EventToolbar::GasClicked()
-{
-    // $$$$ AGE 2006-10-26: TODO !
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventToolbar::ConflictClicked
-// Created: SBO 2006-06-26
-// -----------------------------------------------------------------------------
-void EventToolbar::ConflictClicked()
-{
-    // $$$$ AGE 2006-10-26: TODO !
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventToolbar::MessageClicked
 // Created: SBO 2006-06-26
 // -----------------------------------------------------------------------------
@@ -81,7 +57,7 @@ void EventToolbar::MessageClicked()
 {
     if( messageAgents_.empty() )
         return;
-    const Entity_ABC* entity = messageAgents_.front();
+    const kernel::Entity_ABC* entity = messageAgents_.front();
     entity->Select( controllers_.actions_ );
     entity->Activate( controllers_.actions_ );
     messageAgents_.pop_front();
@@ -94,10 +70,10 @@ void EventToolbar::MessageClicked()
 // -----------------------------------------------------------------------------
 void EventToolbar::NotifyCreated( const Report& report )
 {
-    const Entity_ABC& entity = report.GetOwner();
+    const kernel::Entity_ABC& entity = report.GetOwner();
     if( profile_.IsVisible( entity ) )
     {
-        const CIT_Agents it = std::find( messageAgents_.begin(), messageAgents_.end(), &entity );
+        auto it = std::find( messageAgents_.begin(), messageAgents_.end(), &entity );
         if( it == messageAgents_.end() )
         {
             messageAgents_.push_back( &entity );
@@ -110,7 +86,7 @@ void EventToolbar::NotifyCreated( const Report& report )
 // Name: EventToolbar::NotifyUpdated
 // Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
-void EventToolbar::NotifyUpdated( const Profile_ABC& )
+void EventToolbar::NotifyUpdated( const kernel::Profile_ABC& )
 {
     T_Agents filtered;
     for( auto it = messageAgents_.begin(); it != messageAgents_.end(); ++it )
@@ -136,7 +112,7 @@ void EventToolbar::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void EventToolbar::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    IT_Agents it = std::find( messageAgents_.begin(), messageAgents_.end(), &entity );
+    auto it = std::find( messageAgents_.begin(), messageAgents_.end(), &entity );
     if( it != messageAgents_.end() )
         messageAgents_.erase( it );
 }
