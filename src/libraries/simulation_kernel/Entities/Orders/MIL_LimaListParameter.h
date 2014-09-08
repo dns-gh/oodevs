@@ -31,7 +31,7 @@ class MIL_LimaListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_LimaListParameter( const sword::PhaseLinesOrder& messag, const DEC_KnowledgeResolver_ABC& resolvere );
+             MIL_LimaListParameter( const sword::PhaseLinesOrder& message, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_LimaListParameter();
     //@}
 
