@@ -101,11 +101,11 @@
         <translation type="unfinished">معلومات استخباراتية حساسة:</translation>
     </message>
     <message>
-        <source>unknown %1 %2</source>
+        <source>unknown %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>unknown %1</source>
+        <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

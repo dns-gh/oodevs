@@ -182,7 +182,7 @@ QString AgentKnowledge::GetName() const
         return realAgent_.GetName();
     return currentNature_.empty()
         ? tools::translate( "AgentKnowledge", "unknown %1" ).arg( id_ )
-        : tools::translate( "AgentKnowledge", "unknown %1 %2" ).arg( currentNature_.c_str() ).arg( id_ );
+        : tools::translate( "AgentKnowledge", "%1 %2" ).arg( currentNature_.c_str() ).arg( id_ );
 }
 
 // -----------------------------------------------------------------------------
