@@ -879,13 +879,14 @@ end
 -- @param objectType, String, the type of object as defined in authoring tool.
 -- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
 -- @param getAlreadingExistingObject Boolean, defines if the construction is done using an already existing object, with same localization and type.
+-- @param proximityDistance Double, the distance used to search for already existing object around the localization
 integration.startBuildObjectOnLocalization = function( localization, objectType, instantaneously, getAlreadingExistingObject )
     myself.builtObjects = myself.builtObjects or {}
     localization[ myself ] = localization[ myself ] or {}
     myself.buildActionsStates = myself.buildActionsStates or {}
     local existingObject
     if getAlreadingExistingObject then
-        existingObject = integration.obtenirObjetProcheDe( localization, objectType, 10 )
+        existingObject = integration.obtenirObjetProcheDe( localization, objectType, proximityDistance )
     end
     if existingObject then -- getAlreadingExistingObject is 'false' or 'existingObject' has not been found
         localization[ myself ].actionId = DEC_StartReprendreTravauxObjet( existingObject, false )
