@@ -874,18 +874,17 @@ integration.unitBuildSameObstacleAtSameTime = function( object, removeIt )
     return false
 end
 
---- To create an object upon issued localization
+--- To create an object upon issued localization. 
 -- @param localization, Simulation area onto which the object must be built.
 -- @param objectType, String, the type of object as defined in authoring tool.
 -- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
--- @param getAlreadingExistingObject Boolean, defines if the construction is done using an already existing object, with same localization and type.
 -- @param proximityDistance Double, the distance used to search for already existing object around the localization
 integration.startBuildObjectOnLocalization = function( localization, objectType, instantaneously, getAlreadingExistingObject )
     myself.builtObjects = myself.builtObjects or {}
     localization[ myself ] = localization[ myself ] or {}
     myself.buildActionsStates = myself.buildActionsStates or {}
     local existingObject
-    if getAlreadingExistingObject then
+    if proximityDistance and proximityDistance > 0 then -- proximityDistance can be nil.
         existingObject = integration.obtenirObjetProcheDe( localization, objectType, proximityDistance )
     end
     if existingObject then -- getAlreadingExistingObject is 'false' or 'existingObject' has not been found
