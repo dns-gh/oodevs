@@ -63,7 +63,7 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
     for( int i = 0; i < message.objects_size(); ++i )
     {
         OrderParameter parameter( tools::translate( "Parameter", "Phase Line Objects %1" ).arg( i + 1 ).toAscii().constData(), "objectknowledge", false );
-        ObjectKnowledge* next = new ObjectKnowledge( parameter, message.objects( i ), objectKnowledgeConverter, owner, controller, entities );
+        ObjectKnowledge* next = new ObjectKnowledge( parameter, message.objects( i ).id(), objectKnowledgeConverter, owner, controller, entities );
         objects->AddParameter( *next );
     }
     AddParameter( *objects );
@@ -150,7 +150,7 @@ void Lima::CommitTo( sword::PhaseLineOrder& message ) const
             {
                 const auto& object = static_cast< const ObjectKnowledge& >( limas.NextElement() );
                 if( object.IsSet() )
-                    message.add_objects( object.GetId() );
+                    message.add_objects()->set_id( object.GetId() );
             }
         }
     }

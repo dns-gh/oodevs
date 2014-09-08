@@ -64,7 +64,7 @@ MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn, const DEC_Knowle
     }
     for( int i = 0; i < asn.objects_size(); ++i )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge = resolver.ResolveKnowledgeObjectByObjectID( asn.objects( i ) );
+        boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge = resolver.ResolveKnowledgeObjectByObjectID( asn.objects( i ).id() );
         if( !objectKnowledge )
             throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_lima_function );
         objects_.push_back( objectKnowledge );
@@ -135,7 +135,7 @@ void MIL_LimaOrder::Serialize( sword::PhaseLineOrder& asn ) const
         asn.add_fonctions( (*it)->GetAsnID() );
     for( auto it = objects_.begin(); it != objects_.end(); ++it )
         if( MIL_Object_ABC* object = (*it)->GetObjectKnown() )
-            asn.add_objects( object->GetID() );
+            asn.add_objects()->set_id( object->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,8 +292,8 @@ void MIL_LimaOrder::ReplacePointsByNearestObjectPositions( T_PointVector& points
     }
     for( int i = 0; i < candidates.size(); ++i )
     {
-        MT_Vector2D point = candidates[i];
-        double distance = point.SquareDistance( points[i] );
+        const MT_Vector2D point = candidates[i];
+        const double distance = point.SquareDistance( points[i] );
         for( int j = 0; j < points.size(); ++j )
         {
             if( i == j )

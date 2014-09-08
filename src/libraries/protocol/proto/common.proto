@@ -554,7 +554,7 @@ message PhaseLineOrder {
     //! The functions
     repeated Function fonctions = 3;
     //! The list of objects associated to the phase line
-    repeated uint32 objects     = 4;
+    repeated Id objects         = 4;
 }
 
 /** @struct PhaseLinesOrder

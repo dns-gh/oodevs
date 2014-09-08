@@ -433,8 +433,8 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     CheckLocation( lima_2.line().location(), Location::line, 3 );
     BOOST_CHECK_EQUAL( lima_2.time().data(), "20121113T085132" );
     BOOST_CHECK_EQUAL( lima_2.objects_size(), 2 );
-    BOOST_CHECK_EQUAL( lima_2.objects( 0 ), 240u );
-    BOOST_CHECK_EQUAL( lima_2.objects( 1 ), 241u );
+    BOOST_CHECK_EQUAL( lima_2.objects( 0 ).id(), 240u );
+    BOOST_CHECK_EQUAL( lima_2.objects( 1 ).id(), 241u );
     BOOST_CHECK_EQUAL( msg.ShortDebugString(),
         "elem { null_value: false value { phaseLine { "
                                         "elem { line { location { type: line coordinates { "
@@ -448,7 +448,7 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
                                                                             "elem { latitude: 0 longitude: 0 } } } } "
                                         "time { data: \"20121113T085132\" } "
                                         "fonctions: coordination_line fonctions: attitude_change_line "
-                                        "objects: 240 objects: 241 } } } }" );
+                                        "objects { id: 240 } objects { id: 241 } } } } }" );
     CheckCycle( input, msg );
 }
 

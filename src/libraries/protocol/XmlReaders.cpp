@@ -272,11 +272,11 @@ namespace
             dst.mutable_time()->set_data( *opt );
     }
 
-    void ReadLimaObjects( PhaseLineOrder& dst, xml::xistream& xis )
+    void ReadObjectKnowledge( PhaseLineOrder& dst, xml::xistream& xis )
     {
         xis >> xml::list( "parameter", [&]( xml::xistream& parameterXis ) {
             if( auto value = TestAttribute< int32_t >( parameterXis, "value" ) )
-                dst.add_objects( *value );
+                dst.add_objects()->set_id( *value );
         } );
     }
 
@@ -290,7 +290,7 @@ namespace
         if( *type == "datetime" )
             return ReadDatetime( dst, xis );
         if( *type == "objectknowledge" )
-            return ReadLimaObjects( dst, xis );
+            return ReadObjectKnowledge( dst, xis );
     }
 
     void AddLima( const Reader_ABC& reader, PhaseLinesOrder& dst, xml::xistream& xis )

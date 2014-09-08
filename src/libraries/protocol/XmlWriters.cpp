@@ -176,7 +176,7 @@ namespace
         {
             xos << xml::start( "parameter" )
                 << xml::attribute( "type", type );
-            WritePair( xos, "objectknowledge", *it );
+            WritePair( xos, "objectknowledge", it->id() );
             xos << xml::end;
         }
         xos << xml::end;
