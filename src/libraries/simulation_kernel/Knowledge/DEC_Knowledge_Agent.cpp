@@ -168,35 +168,35 @@ DEC_Knowledge_Agent::~DEC_Knowledge_Agent()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> pArmyKnowing_;
-    file >> pAgentKnown_
-         >> nID_
-         >> groupId_
-         >> dataDetection_
-         >> dataRecognition_
-         >> dataIdentification_
-         >> nTimeLastUpdate_;
+    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file >> nID_;
+    file >> groupId_;
+    file >> pArmyKnowing_;
+    file >> pAgentKnown_;
+    file >> dataDetection_;
+    file >> dataRecognition_;
+    file >> dataIdentification_;
+    file >> nTimeLastUpdate_;
     idManager_.GetId( nID_, true );
-    file >> pCurrentPerceptionLevel_
-         >> pPreviousPerceptionLevel_
-         >> pMaxPerceptionLevel_
-         >> perceptionLevelPerAutomateMap_
-         >> previousPerceptionLevelPerAutomateMap_
-         >> rRelevance_
-         >> bCreatedOnNetwork_
-         >> bRelevanceUpdated_
-         >> bCurrentPerceptionLevelUpdated_
-         >> bMaxPerceptionLevelUpdated_
-         >> nTimeExtrapolationEnd_
-         >> criticalIntelligence_
-         >> locked_
-         >> bValid_
-         >> bCriticalIntelligenceUpdated_
-         >> bPerceptionDistanceHacked_
-         >> maxLifetime_
-         >> maxDistance_
-         >> extrapolationTime_;
+    file >> pCurrentPerceptionLevel_;
+    file >> pPreviousPerceptionLevel_;
+    file >> pMaxPerceptionLevel_;
+    file >> perceptionLevelPerAutomateMap_;
+    file >> previousPerceptionLevelPerAutomateMap_;
+    file >> rRelevance_;
+    file >> bCreatedOnNetwork_;
+    file >> bRelevanceUpdated_;
+    file >> bCurrentPerceptionLevelUpdated_;
+    file >> bMaxPerceptionLevelUpdated_;
+    file >> nTimeExtrapolationEnd_;
+    file >> criticalIntelligence_;
+    file >> locked_;
+    file >> bValid_;
+    file >> bCriticalIntelligenceUpdated_;
+    file >> bPerceptionDistanceHacked_;
+    file >> maxLifetime_;
+    file >> maxDistance_;
+    file >> extrapolationTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -205,34 +205,34 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << pArmyKnowing_
-         << pAgentKnown_
-         << nID_
-         << groupId_
-         << dataDetection_
-         << dataRecognition_
-         << dataIdentification_
-         << nTimeLastUpdate_
-         << pCurrentPerceptionLevel_
-         << pPreviousPerceptionLevel_
-         << pMaxPerceptionLevel_
-         << perceptionLevelPerAutomateMap_
-         << previousPerceptionLevelPerAutomateMap_
-         << rRelevance_
-         << bCreatedOnNetwork_
-         << bRelevanceUpdated_
-         << bCurrentPerceptionLevelUpdated_
-         << bMaxPerceptionLevelUpdated_
-         << nTimeExtrapolationEnd_
-         << criticalIntelligence_
-         << locked_
-         << bValid_
-         << bCriticalIntelligenceUpdated_
-         << bPerceptionDistanceHacked_
-         << maxLifetime_
-         << maxDistance_
-         << extrapolationTime_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file << nID_;
+    file << groupId_;
+    file << pArmyKnowing_;
+    file << pAgentKnown_;
+    file << dataDetection_;
+    file << dataRecognition_;
+    file << dataIdentification_;
+    file << nTimeLastUpdate_;
+    file << pCurrentPerceptionLevel_;
+    file << pPreviousPerceptionLevel_;
+    file << pMaxPerceptionLevel_;
+    file << perceptionLevelPerAutomateMap_;
+    file << previousPerceptionLevelPerAutomateMap_;
+    file << rRelevance_;
+    file << bCreatedOnNetwork_;
+    file << bRelevanceUpdated_;
+    file << bCurrentPerceptionLevelUpdated_;
+    file << bMaxPerceptionLevelUpdated_;
+    file << nTimeExtrapolationEnd_;
+    file << criticalIntelligence_;
+    file << locked_;
+    file << bValid_;
+    file << bCriticalIntelligenceUpdated_;
+    file << bPerceptionDistanceHacked_;
+    file << maxLifetime_;
+    file << maxDistance_;
+    file << extrapolationTime_;
 }
 
 // -----------------------------------------------------------------------------

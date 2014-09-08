@@ -114,20 +114,20 @@ DEC_KnowledgeBlackBoard_AgentPion::~DEC_KnowledgeBlackBoard_AgentPion()
 template< typename Archive >
 void DEC_KnowledgeBlackBoard_AgentPion::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
-            & pPion_
-            & pKnowledgeAgentPerceptionContainer_
-            & pKnowledgeObjectCollisionContainer_
-            & pKnowledgeObjectPerceptionContainer_
-            & pKnowledgePopulationPerceptionContainer_
-            & pKnowledgePopulationCollisionContainer_
-            & pKnowledgeUrbanPerceptionContainer_
-            & pKsObjectInteraction_
-            & pKsPopulationInteraction_
-            & pKsDirectFire_
-            & pKsIndirectFire_
-            & pKsPerception_
-            & pKnowledgeRapForLocal_;
+    archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this );
+    archive & pPion_;
+    archive & pKnowledgeAgentPerceptionContainer_;
+    archive & pKnowledgeObjectCollisionContainer_;
+    archive & pKnowledgeObjectPerceptionContainer_;
+    archive & pKnowledgePopulationPerceptionContainer_;
+    archive & pKnowledgePopulationCollisionContainer_;
+    archive & pKnowledgeUrbanPerceptionContainer_;
+    archive & pKsObjectInteraction_;
+    archive & pKsPopulationInteraction_;
+    archive & pKsDirectFire_;
+    archive & pKsIndirectFire_;
+    archive & pKsPerception_;
+    archive & pKnowledgeRapForLocal_;
 }
 
 // -----------------------------------------------------------------------------
