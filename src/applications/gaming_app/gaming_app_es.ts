@@ -744,14 +744,6 @@ Motivo: %3</translation>
 <context>
     <name>EventToolbar</name>
     <message>
-        <source>Out of gas</source>
-        <translation>Sin gas</translation>
-    </message>
-    <message>
-        <source>Conflicts</source>
-        <translation>Conflictos</translation>
-    </message>
-    <message>
         <source>%L1 pending messages</source>
         <translation>%L1 mensajes pendientes</translation>
     </message>

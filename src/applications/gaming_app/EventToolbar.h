@@ -12,7 +12,6 @@
 
 #include "clients_gui/RichToolBar.h"
 #include <tools/ElementObserver_ABC.h>
-#include <tools/Observer_ABC.h>
 
 #include <deque>
 
@@ -50,8 +49,6 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void GasClicked();
-    void ConflictClicked();
     void MessageClicked();
     //@}
 
@@ -59,8 +56,6 @@ private:
     //! @name Types
     //@{
     typedef std::deque< const kernel::Entity_ABC* > T_Agents;
-    typedef T_Agents::iterator                     IT_Agents;
-    typedef T_Agents::const_iterator              CIT_Agents;
     //@}
 
     //! @name Helpers
@@ -77,11 +72,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     T_Agents messageAgents_;
-
     const kernel::Profile_ABC& profile_;
-
-    QToolButton* gasButton_;
-    QToolButton* conflictButton_;
     QToolButton* messageButton_;
     //@}
 };

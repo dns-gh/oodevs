@@ -743,14 +743,6 @@ Reason: %3
 <context>
     <name>EventToolbar</name>
     <message>
-        <source>Out of gas</source>
-        <translation type="unfinished">الخروج من الغاز</translation>
-    </message>
-    <message>
-        <source>Conflicts</source>
-        <translation type="unfinished">الصراعات</translation>
-    </message>
-    <message>
         <source>%L1 pending messages</source>
         <translation type="unfinished">% L1 انتظار الرسائل</translation>
     </message>

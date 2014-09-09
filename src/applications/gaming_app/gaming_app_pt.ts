@@ -747,14 +747,6 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Out of gas</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Conflicts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%L1 pending messages</source>
         <translation type="unfinished"></translation>
     </message>

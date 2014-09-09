@@ -745,14 +745,6 @@ Raison: %3
 <context>
     <name>EventToolbar</name>
     <message>
-        <source>Out of gas</source>
-        <translation>Plus de carburant</translation>
-    </message>
-    <message>
-        <source>Conflicts</source>
-        <translation>Prises à partie</translation>
-    </message>
-    <message>
         <source>%L1 pending messages</source>
         <translation>%L1 message(s) en attente</translation>
     </message>
