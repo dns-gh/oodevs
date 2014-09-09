@@ -19,6 +19,7 @@
 namespace kernel
 {
     class Controllers;
+    class KnowledgeConverter_ABC;
     class Profile_ABC;
     class Workers;
 }
@@ -95,9 +96,10 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
-                         SimulationController& simulationController, Network& network, ProfileFilter& profile,
-                         GamingConfig& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel,
+                 Model& model, const Simulation& simulation, SimulationController& simulationController,
+                 Network& network, ProfileFilter& profile, GamingConfig& config, LoggerProxy& logger,
+                 const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers, const QString& license );
     virtual ~MainWindow();
     //@}
 

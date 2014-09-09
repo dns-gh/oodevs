@@ -23,7 +23,9 @@
 // Name: InfoPanels constructor
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::DisplayExtractor& extractor )
+InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers,
+    gui::ItemFactory_ABC& factory, gui::DisplayExtractor& extractor,
+    const kernel::KnowledgeConverter_ABC& converter )
     : gui::RichDockWidget( controllers, parent, "info-panels" )
 {
     setWindowTitle( tools::translate( "InfoPanels", "Knowledge" ) );
@@ -34,7 +36,7 @@ InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::
     panels->AddPanel( new gui::PopulationPanel    ( panels, *panels, controllers, factory ) );
     panels->AddPanel( new PopulationKnowledgePanel( panels, *panels, controllers, factory ) );
     panels->AddPanel( new ObjectPanel             ( panels, *panels, controllers, factory ) );
-    panels->AddPanel( new ObjectReportPanel       ( panels, *panels, controllers, extractor ) );
+    panels->AddPanel( new ObjectReportPanel       ( panels, *panels, controllers, extractor, converter ) );
     panels->AddPanel( new ObjectKnowledgePanel    ( panels, *panels, controllers, factory ) );
     panels->AddPanel( new UrbanKnowledgePanel     ( panels, *panels, controllers, factory ) );
 }

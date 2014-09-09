@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controllers;
+    class KnowledgeConverter_ABC;
 }
 
 namespace gui
@@ -34,7 +35,9 @@ class InfoPanels : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::DisplayExtractor& extractor );
+             InfoPanels( QWidget* parent, kernel::Controllers& controllers,
+                 gui::ItemFactory_ABC& factory, gui::DisplayExtractor& extractor,
+                 const kernel::KnowledgeConverter_ABC& converter );
     virtual ~InfoPanels();
     //@}
 };

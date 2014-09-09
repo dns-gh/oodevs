@@ -144,8 +144,10 @@ namespace
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, SimulationController& simulationController,
-                        Network& network, ProfileFilter& filter, GamingConfig& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license )
+MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model,
+    const Simulation& simulation, SimulationController& simulationController,
+    Network& network, ProfileFilter& filter, GamingConfig& config, LoggerProxy& logger,
+    const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers, const QString& license )
     : QMainWindow()
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
@@ -244,7 +246,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
                                              *parameters_, *profilerLayer, *automatsLayer, *formationLayer, *meteoLayer,
                                              *glProxy_, *factory, *strategy_, *symbols, *icons_, *indicatorExportDialog,
-                                             simulationController, *drawingsBuilder_, *displayExtractor_, *unitStateDialog_ ) );
+                                             simulationController, *drawingsBuilder_, *displayExtractor_, converter, *unitStateDialog_ ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 

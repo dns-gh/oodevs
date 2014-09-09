@@ -38,6 +38,7 @@ namespace gui
 namespace kernel
 {
     class Controllers;
+    class KnowledgeConverter_ABC;
 }
 
 class ActionsScheduler;
@@ -97,6 +98,7 @@ public:
                    SimulationController& simulationController,
                    DrawingsBuilder& drawingsBuilder,
                    gui::DisplayExtractor& extractor,
+                   const kernel::KnowledgeConverter_ABC& converter,
                    UnitStateDialog& unitStateDialog );
     virtual ~DockContainer();
     //@}

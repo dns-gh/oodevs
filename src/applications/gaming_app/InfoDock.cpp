@@ -23,6 +23,7 @@ InfoDock::InfoDock( QWidget* parent,
                     const gui::EntitySymbols& icons,
                     gui::ItemFactory_ABC& itemFactory,
                     gui::DisplayExtractor& extractor,
+                    const kernel::KnowledgeConverter_ABC& converter,
                     Model& model,
                     const Simulation& simulation,
                     SimulationController& simulationController,
@@ -30,7 +31,8 @@ InfoDock::InfoDock( QWidget* parent,
     : gui::RichDockWidget( controllers, parent, "info" )
 {
     setObjectName( "info" );
-    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor, model, simulation, simulationController, unitStateDialog ) );
+    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor,
+        converter, model, simulation, simulationController, unitStateDialog ) );
     setCaption( tools::translate( "InfoDock", "Info" ) );
     hide();
 }

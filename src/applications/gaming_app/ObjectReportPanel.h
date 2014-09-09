@@ -17,8 +17,9 @@
 
 namespace kernel
 {
-    class Object_ABC;
     class Controllers;
+    class KnowledgeConverter_ABC;
+    class Object_ABC;
 }
 
 namespace gui
@@ -39,7 +40,9 @@ class ObjectReportPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
+             ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel,
+                 kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+                 const kernel::KnowledgeConverter_ABC& converter );
     virtual ~ObjectReportPanel();
     //@}
 

@@ -84,6 +84,7 @@ DockContainer::DockContainer( QMainWindow* parent,
                               SimulationController& simulationController,
                               DrawingsBuilder& drawingsBuilder,
                               gui::DisplayExtractor& extractor,
+                              const kernel::KnowledgeConverter_ABC& converter,
                               UnitStateDialog& unitStateDialog )
     : timelineDockWidget_( 0 )
 {
@@ -197,7 +198,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Info panel
     {
-        InfoPanels* pInfoPanel = new InfoPanels( parent, controllers, factory, extractor );
+        InfoPanels* pInfoPanel = new InfoPanels( parent, controllers, factory, extractor, converter );
         pInfoPanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, pInfoPanel );
     }
@@ -259,7 +260,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Info
     {
-        gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, extractor,
+        gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, extractor, converter,
                                                      model, simulation, simulationController, unitStateDialog );
         infoWnd->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
