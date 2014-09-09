@@ -342,10 +342,10 @@ message AuthenticationToClient {
     required Content message = 2;
     /** @property client_id
 
-        This field is filled using the "client_id" fields set by the dispatcher after successful authentication
-        in order to identify which request was done by which client.
-
-        @see ClientToAuthentication
+        This field is filled by the dispatcher after a successful authentication.
+        The id is unique to represent this client and can later be compared to client_id
+        sent by the dispatcher to distinguish answers to requests made by this or another
+        client.
     */
     optional int32   client_id = 3;
 }
