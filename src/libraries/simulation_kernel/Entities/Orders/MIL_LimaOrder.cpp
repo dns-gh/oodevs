@@ -281,7 +281,7 @@ void MIL_LimaOrder::ReplacePointsByNearestObjectPositions( T_PointVector& points
         MT_Vector2D candidate;
         for( auto oit = objectPositions.begin(); oit != objectPositions.end(); ++oit )
         {
-            double distance = it->SquareDistance( *oit );
+            const double distance = it->SquareDistance( *oit );
             if( distanceMin > distance )
             {
                 distanceMin = distance;
