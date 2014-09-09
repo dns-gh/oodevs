@@ -83,6 +83,7 @@ private slots:
 private:
     //! @name tools::ElementObserver_ABC< kernel::Entity_ABC > implementation
     //@{
+    virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyDeleted( const kernel::Entity_ABC& );
     //@}
 
