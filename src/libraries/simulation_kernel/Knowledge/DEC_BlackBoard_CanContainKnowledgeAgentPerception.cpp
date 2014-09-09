@@ -33,8 +33,7 @@ DEC_BlackBoard_CanContainKnowledgeAgentPerception::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeAgentPerception::~DEC_BlackBoard_CanContainKnowledgeAgentPerception()
 {
-    while( !perceptions_.empty() )
-        DestroyKnowledgeAgentPerception( *perceptions_.begin()->second );
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -91,6 +90,16 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::CleanDeletedAgentKnowled
         else
             ++it;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeAgentPerception::Clear()
+{
+    while( !perceptions_.empty() )
+        DestroyKnowledgeAgentPerception( *perceptions_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------

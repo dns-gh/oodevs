@@ -138,6 +138,17 @@ void DEC_KS_PopulationInteraction::Clean()
     pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( method );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationInteraction::Clear
+// Created: LDC 2014-09-09
+// -----------------------------------------------------------------------------
+void DEC_KS_PopulationInteraction::Clear()
+{
+    flowCollisions_.clear();
+    concentrationCollisions_.clear();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationInteraction::CleanDeletedAgentKnowledges
 // Created: JSR 2013-02-21

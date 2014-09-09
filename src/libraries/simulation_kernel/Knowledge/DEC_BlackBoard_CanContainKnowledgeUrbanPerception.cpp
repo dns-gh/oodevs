@@ -32,8 +32,7 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeUrbanPerception::~DEC_BlackBoard_CanContainKnowledgeUrbanPerception()
 {
-    for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
-        delete it->second;
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -66,6 +65,16 @@ DEC_Knowledge_UrbanPerception* DEC_BlackBoard_CanContainKnowledgeUrbanPerception
     else
         knowledge = new DEC_Knowledge_UrbanPerception( agentPerceiving, objectPerceived.GetID() );
     return knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::Clear()
+{
+    for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------

@@ -33,8 +33,7 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision::DEC_BlackBoard_CanContain
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulationCollision::~DEC_BlackBoard_CanContainKnowledgePopulationCollision()
 {
-    while( !collisions_.empty() )
-        DestroyKnowledgePopulationCollision( *collisions_.begin()->second );
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +88,16 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::DestroyKnowledgePopu
     if( collisions_.erase( &knowledge.GetPopulation() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgePopulationCollision::Clear()
+{
+    while( !collisions_.empty() )
+        DestroyKnowledgePopulationCollision( *collisions_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------

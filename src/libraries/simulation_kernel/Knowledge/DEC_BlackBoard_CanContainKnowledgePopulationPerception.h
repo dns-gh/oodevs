@@ -43,7 +43,8 @@ public:
     //! @name Operations
     //@{
     DEC_Knowledge_PopulationPerception& CreateKnowledgePopulationPerception ( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived );
-    void                                DestroyKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge );
+    void DestroyKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge );
+    void Clear();
     //@}
 
     //! @name Queries

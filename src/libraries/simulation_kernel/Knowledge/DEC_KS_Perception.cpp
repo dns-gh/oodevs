@@ -166,6 +166,15 @@ void DEC_KS_Perception::CleanDeletedAgentKnowledges()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::Clear
+// Created: LDC 2014-09-09
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::Clear()
+{
+    externalPerceptions_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::NotifyExternalPerception
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------

@@ -33,8 +33,7 @@ DEC_BlackBoard_CanContainKnowledgePopulationPerception::DEC_BlackBoard_CanContai
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulationPerception::~DEC_BlackBoard_CanContainKnowledgePopulationPerception()
 {
-    while( !perceptions_.empty() )
-        DestroyKnowledgePopulationPerception( *perceptions_.begin()->second );
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +88,16 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::DestroyKnowledgePop
     if( perceptions_.erase( &knowledge.GetPopulationPerceived() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgePopulationPerception::Clear()
+{
+    while( !perceptions_.empty() )
+        DestroyKnowledgePopulationPerception( *perceptions_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------

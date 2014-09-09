@@ -33,8 +33,7 @@ DEC_BlackBoard_CanContainKnowledgeObjectPerception::DEC_BlackBoard_CanContainKno
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObjectPerception::~DEC_BlackBoard_CanContainKnowledgeObjectPerception()
 {
-    while( !knowledgeObjectPerceptionMap_.empty() )
-        DestroyKnowledgeObjectPerception( *knowledgeObjectPerceptionMap_.begin()->second );
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +88,16 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::DestroyKnowledgeObjectP
     if( knowledgeObjectPerceptionMap_.erase( &knowledge.GetObjectPerceived() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObjectPerception::Clear()
+{
+    while( !knowledgeObjectPerceptionMap_.empty() )
+        DestroyKnowledgeObjectPerception( *knowledgeObjectPerceptionMap_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------

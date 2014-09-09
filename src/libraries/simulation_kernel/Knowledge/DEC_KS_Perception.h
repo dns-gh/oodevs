@@ -74,6 +74,7 @@ public:
     virtual void Talk( int currentTimeStep );
     virtual void Clean();
     virtual void CleanDeletedAgentKnowledges();
+    void Clear();
     void MakePerceptionsAvailable();
     void MakePerceptionsAvailableTimed();
     //@}

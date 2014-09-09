@@ -114,6 +114,15 @@ void DEC_Knowledge_RapForLocal::Update()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapForLocal::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_RapForLocal::Clear()
+{
+    dangerousEnemies_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapForLocal::GetDangerousEnemies
 // Created: NLD 2006-01-24
 // -----------------------------------------------------------------------------

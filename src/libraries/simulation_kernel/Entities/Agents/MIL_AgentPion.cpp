@@ -267,14 +267,14 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     const MIL_Color* const pColor = pColor_.get();
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file << pAutomate_
-        << pKnowledgeBlackBoard_
-        << pAffinities
-        << pExtensions
-        << pColor
-        << criticalIntelligence_
-        << app6Symbol_
-        << level_;
+    file << pAutomate_;
+    file << pKnowledgeBlackBoard_;
+    file << pAffinities;
+    file << pExtensions;
+    file << pColor;
+    file << criticalIntelligence_;
+    file << app6Symbol_;
+    file << level_;
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement >( *this, file );
     SaveRole< PHY_RolePion_Posture >( *this, file );
@@ -895,6 +895,7 @@ void MIL_AgentPion::DeleteUnit( unsigned int nCtx, unsigned int clientId )
 
     markedForDestruction_ = true;
 
+    pKnowledgeBlackBoard_->Clear();
     const auto& workspace = MIL_AgentServer::GetWorkspace();
     workspace.GetEntityManager().CleanDeletedAgentKnowledges();
     workspace.GetPathfindComputer().DeletePathfindsFromUnit( GetID() );

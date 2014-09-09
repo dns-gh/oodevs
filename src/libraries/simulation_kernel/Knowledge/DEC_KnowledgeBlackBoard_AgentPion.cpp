@@ -808,3 +808,24 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_UrbanObject_ABC&
         return pKnowledge->IsPerceived();
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_AgentPion::Clear()
+{
+    DEC_KnowledgeBlackBoard_ABC::Clear();
+    pKnowledgeAgentPerceptionContainer_->Clear();
+    pKnowledgeObjectCollisionContainer_->Clear();
+    pKnowledgeObjectPerceptionContainer_->Clear();
+    pKnowledgePopulationPerceptionContainer_->Clear();
+    pKnowledgePopulationCollisionContainer_->Clear();
+    pKnowledgeUrbanPerceptionContainer_->Clear();
+    pKnowledgeRapForLocal_->Clear();
+    pKsObjectInteraction_->Clear();
+    pKsPopulationInteraction_->Clear();
+    pKsDirectFire_->Clear();
+    pKsIndirectFire_->Clear();
+    pKsPerception_->Clear();
+}

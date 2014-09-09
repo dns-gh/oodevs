@@ -88,6 +88,16 @@ void DEC_KS_DirectFire::CleanDeletedAgentKnowledges()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_DirectFire::Clear
+// Created: LDC 2014-09-09
+// -----------------------------------------------------------------------------
+void DEC_KS_DirectFire::Clear()
+{
+    pionsAttacking_.clear();
+    populationsAttacking_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_DirectFire::Talk
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------

@@ -43,6 +43,7 @@ public:
     //@{
     virtual void Update( int currentTimeStep );
     void Clean();
+    void Clear();
     virtual void CleanDeletedAgentKnowledges();
     //@}
 

@@ -44,6 +44,7 @@ public:
     virtual void Talk(int currentTimeStep );
     virtual void Clean();
     virtual void CleanDeletedAgentKnowledges();
+    void Clear();
     //@}
 
     //! @name Events

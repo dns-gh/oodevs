@@ -180,6 +180,16 @@ void DEC_KS_ObjectInteraction::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectInteraction::Clear
+// Created: LDC 2014-09-09
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectInteraction::Clear()
+{
+    objectInteractions_.clear();
+    objectCollisions_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::CleanDeletedAgentKnowledges
 // Created: JSR 2013-02-21
 // -----------------------------------------------------------------------------

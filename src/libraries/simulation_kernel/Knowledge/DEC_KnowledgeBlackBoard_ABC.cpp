@@ -89,3 +89,12 @@ void DEC_KnowledgeBlackBoard_ABC::RemoveFromScheduler( DEC_KnowledgeSource_ABC& 
 {
     talkingKnowledgeSources_.remove( &ks );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_ABC::Clear
+// Created: LDC 2014-09-09
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_ABC::Clear()
+{
+    talkingKnowledgeSources_.clear();
+}

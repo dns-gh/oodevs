@@ -42,6 +42,7 @@ public:
     //! @name Operations
     //@{
     DEC_Knowledge_UrbanPerception* CreateKnowledgeUrbanPerception ( const MIL_Agent_ABC& agentPerceiving, const MIL_UrbanObject_ABC& objectPerceived );
+    void Clear();
     //@}
 
     //! @name Queries

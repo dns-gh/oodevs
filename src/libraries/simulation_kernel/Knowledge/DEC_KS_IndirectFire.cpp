@@ -69,6 +69,15 @@ void DEC_KS_IndirectFire::Talk( int /*currentTimeStep*/ )
     pionsAttacking_.clear();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_IndirectFire::Clear
+// Created: LDC 2014-09-09
+// -----------------------------------------------------------------------------
+void DEC_KS_IndirectFire::Clear()
+{
+    pionsAttacking_.clear();
+}
+
 void DEC_KS_IndirectFire::NotifyAttackedBy( const MIL_Agent_ABC& attacker )
 {
     pionsAttacking_.insert( &attacker );
