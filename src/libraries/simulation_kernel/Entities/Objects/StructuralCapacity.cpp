@@ -90,9 +90,9 @@ void StructuralCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& objec
 template< typename Archive >
 void StructuralCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
-         & structuralState_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    file & structuralState_;
 }
 
 // -----------------------------------------------------------------------------

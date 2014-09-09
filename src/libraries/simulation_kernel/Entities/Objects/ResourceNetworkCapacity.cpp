@@ -98,8 +98,8 @@ boost::shared_ptr< resource::NodeProperties> ResourceNetworkCapacity::GetNodePro
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         >> nodeProperties_;
+    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file >> nodeProperties_;
     nodeProperties_->SetTools( MIL_AgentServer::GetWorkspace().GetResourceTools() );
 }
 
@@ -109,8 +109,8 @@ void ResourceNetworkCapacity::load( MIL_CheckPointInArchive& file, const unsigne
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         << nodeProperties_;
+    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file << nodeProperties_;
 }
 
 // -----------------------------------------------------------------------------

@@ -50,28 +50,28 @@ class MIL_BurningCell : private boost::noncopyable
 public:
     void serialize( MIL_CheckPointOutArchive& ar, unsigned int )
     {
-        ar << origin_.X()
-           << origin_.Y()
-           << phase_
-           << ignitionThreshold_
-           << maxCombustionEnergy_
-           << ignitionEnergy_
-           << currentHeat_
-           << currentCombustionEnergy_
-           << lastUpdateTime_;
+        ar << origin_.X();
+        ar << origin_.Y();
+        ar << phase_;
+        ar << ignitionThreshold_;
+        ar << maxCombustionEnergy_;
+        ar << ignitionEnergy_;
+        ar << currentHeat_;
+        ar << currentCombustionEnergy_;
+        ar << lastUpdateTime_;
     }
     void serialize( MIL_CheckPointInArchive& ar, unsigned int )
     {
         int x, y;
-        ar >> x
-           >> y
-           >> phase_
-           >> ignitionThreshold_
-           >> maxCombustionEnergy_
-           >> ignitionEnergy_
-           >> currentHeat_
-           >> currentCombustionEnergy_
-           >> lastUpdateTime_;
+        ar >> x;
+        ar >> y;
+        ar >> phase_;
+        ar >> ignitionThreshold_;
+        ar >> maxCombustionEnergy_;
+        ar >> ignitionEnergy_;
+        ar >> currentHeat_;
+        ar >> currentCombustionEnergy_;
+        ar >> lastUpdateTime_;
 
         origin_.Set( x, y );
         double radius = MIL_FireClass::GetCellSize() / 2.;

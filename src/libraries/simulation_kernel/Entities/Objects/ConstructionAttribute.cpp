@@ -176,11 +176,11 @@ bool ConstructionAttribute::Update( const ConstructionAttribute& rhs )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-       >> dotation_
-       >> nFullNbrDotation_
-       >> nCurrentNbrDotation_
-       >> density_;
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    ar >> dotation_;
+    ar >> nFullNbrDotation_;
+    ar >> nCurrentNbrDotation_;
+    ar >> density_;
     double tmp;
     ar >> tmp;
     constructionPercentage_.Set( tmp );
@@ -195,10 +195,10 @@ void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned i
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << dotation_;
     double constructionPercentage = constructionPercentage_.Get();
-    ar << nFullNbrDotation_
-       << nCurrentNbrDotation_
-       << density_
-       << constructionPercentage;
+    ar << nFullNbrDotation_;
+    ar << nCurrentNbrDotation_;
+    ar << density_;
+    ar << constructionPercentage;
 }
 
 // -----------------------------------------------------------------------------

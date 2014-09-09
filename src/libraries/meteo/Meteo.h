@@ -158,20 +158,20 @@ void weather::Meteo::load( Archive& file, const unsigned int )
 {
     unsigned int lighting = 0;
     unsigned int precipitation = 0;
-    file >> id_
-         >> name_
-         >> wind_.eAngle_
-         >> wind_.rSpeed_
-         >> wind_.vDirection_
-         >> cloud_.nCeiling_
-         >> cloud_.nDensityPercentage_
-         >> cloud_.nFloor_
-         >> cloud_.rDensity_
-         >> temperature_
-         >> lighting
-         >> precipitation
-         >> conversionFactor_
-         >> modified_;
+    file >> id_;
+    file >> name_;
+    file >> wind_.eAngle_;
+    file >> wind_.rSpeed_;
+    file >> wind_.vDirection_;
+    file >> cloud_.nCeiling_;
+    file >> cloud_.nDensityPercentage_;
+    file >> cloud_.nFloor_;
+    file >> cloud_.rDensity_;
+    file >> temperature_;
+    file >> lighting;
+    file >> precipitation;
+    file >> conversionFactor_;
+    file >> modified_;
     pLighting_ = PHY_Lighting::FindLighting( protocol::FromProto(
                 static_cast< sword::WeatherAttributes::EnumLightingType >( lighting) ));
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( protocol::FromProto(
@@ -187,20 +187,20 @@ void weather::Meteo::save( Archive& file, const unsigned int ) const
 {
     unsigned int lighting = protocol::ToProto( pLighting_->GetID() );
     unsigned int precipitation = protocol::ToProto( pPrecipitation_->GetID() );
-    file <<  id_
-         << name_
-         << wind_.eAngle_
-         << wind_.rSpeed_
-         << wind_.vDirection_
-         << cloud_.nCeiling_
-         << cloud_.nDensityPercentage_
-         << cloud_.nFloor_
-         << cloud_.rDensity_
-         << temperature_
-         << lighting
-         << precipitation
-         << conversionFactor_
-         << modified_;
+    file <<  id_;
+    file << name_;
+    file << wind_.eAngle_;
+    file << wind_.rSpeed_;
+    file << wind_.vDirection_;
+    file << cloud_.nCeiling_;
+    file << cloud_.nDensityPercentage_;
+    file << cloud_.nFloor_;
+    file << cloud_.rDensity_;
+    file << temperature_;
+    file << lighting;
+    file << precipitation;
+    file << conversionFactor_;
+    file << modified_;
 }
 
 BOOST_CLASS_EXPORT_KEY( weather::Meteo )

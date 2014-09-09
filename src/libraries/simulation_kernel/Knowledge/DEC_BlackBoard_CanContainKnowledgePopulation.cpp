@@ -57,8 +57,8 @@ DEC_BlackBoard_CanContainKnowledgePopulation::~DEC_BlackBoard_CanContainKnowledg
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
-         >> knowledgePopulationMap_;
+    file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ );
+    file >> knowledgePopulationMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +67,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pKnowledgeGroup_
-         << knowledgePopulationMap_;
+    file << pKnowledgeGroup_;
+    file << knowledgePopulationMap_;
 }
 
 // -----------------------------------------------------------------------------

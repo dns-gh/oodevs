@@ -52,8 +52,8 @@ void save_construct_data( Archive& archive, const MIL_Army* army, const unsigned
 {
     const ArmyFactory_ABC* const armyFactory = &army->armyFactory_;
     const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >* const diplomacyConverter = &army->diplomacyConverter_;
-    archive << armyFactory
-            << diplomacyConverter;
+    archive << armyFactory;
+    archive << diplomacyConverter;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,8 +65,8 @@ void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /
 {
     ArmyFactory_ABC* armyFactory = 0;
     MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >* diplomacyConverter = 0;
-    archive >> armyFactory
-            >> diplomacyConverter;
+    archive >> armyFactory;
+    archive >> diplomacyConverter;
     ::new( army )MIL_Army( *armyFactory, *diplomacyConverter );
 }
 

@@ -68,11 +68,11 @@ DEC_Knowledge_PopulationCollision::~DEC_Knowledge_PopulationCollision()
 template< typename Archive >
 void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         & const_cast< MIL_Agent_ABC*& >( pAgentColliding_ )
-         & pPopulation_
-         & flows_
-         & concentrations_;
+    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file & const_cast< MIL_Agent_ABC*& >( pAgentColliding_ );
+    file & pPopulation_;
+    file & flows_;
+    file & concentrations_;
 }
 
 // -----------------------------------------------------------------------------

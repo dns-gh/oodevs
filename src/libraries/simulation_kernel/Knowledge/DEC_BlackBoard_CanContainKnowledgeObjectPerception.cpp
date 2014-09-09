@@ -62,8 +62,8 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOut
     file << size;
     for( auto it = knowledgeObjectPerceptionMap_.begin(); it != knowledgeObjectPerceptionMap_.end(); ++it )
     {
-        file << it->first
-             << it->second;
+        file << it->first;
+        file << it->second;
     }
 }
 

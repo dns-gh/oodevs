@@ -23,11 +23,11 @@ void save_construct_data( Archive& archive, const AutomateFactory* factory, cons
 {
     const MIL_IDManager* const idManager = &factory->idManager_;
     const MissionController_ABC* const controller = &factory->controller_;
-    archive << idManager
-            << controller
-            << factory->gcPause_
-            << factory->gcMult_
-            << factory->logger_;
+    archive << idManager;
+    archive << controller;
+    archive << factory->gcPause_;
+    archive << factory->gcMult_;
+    archive << factory->logger_;
 }
 
 template< typename Archive >
@@ -38,11 +38,11 @@ void load_construct_data( Archive& archive, AutomateFactory* factory, const unsi
     unsigned int gcPause;
     unsigned int gcMult;
     std::unique_ptr< sword::DEC_Logger > logger;
-    archive >> idManager
-            >> controller
-            >> gcPause
-            >> gcMult
-            >> logger;
+    archive >> idManager;
+    archive >> controller;
+    archive >> gcPause;
+    archive >> gcMult;
+    archive >> logger;
     ::new( factory )AutomateFactory( *idManager, *controller, gcPause, gcMult, std::move( logger ) );
 }
 

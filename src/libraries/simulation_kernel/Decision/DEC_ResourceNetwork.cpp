@@ -99,6 +99,6 @@ const std::string& DEC_ResourceNetwork::GetTypeName() const
 template< typename Archive >
 void DEC_ResourceNetwork::serialize( Archive& file, const unsigned int )
 {
-    file & objectId_
-         & resource_;
+    file & objectId_;
+    file & resource_;
 }

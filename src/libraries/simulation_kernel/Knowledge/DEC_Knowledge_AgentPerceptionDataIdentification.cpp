@@ -45,8 +45,8 @@ DEC_Knowledge_AgentPerceptionDataIdentification::~DEC_Knowledge_AgentPerceptionD
 void DEC_Knowledge_AgentPerceptionDataIdentification::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-    file >> nTimeLastUpdate_
-         >> nID;
+    file >> nTimeLastUpdate_;
+    file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
 }
 
@@ -57,8 +57,8 @@ void DEC_Knowledge_AgentPerceptionDataIdentification::load( MIL_CheckPointInArch
 void DEC_Knowledge_AgentPerceptionDataIdentification::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (unsigned int)-1 );
-    file << nTimeLastUpdate_
-         << agentType;
+    file << nTimeLastUpdate_;
+    file << agentType;
 }
 
 // -----------------------------------------------------------------------------

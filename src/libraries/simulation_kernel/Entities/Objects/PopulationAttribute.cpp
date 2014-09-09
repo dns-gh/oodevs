@@ -59,8 +59,8 @@ PopulationAttribute::~PopulationAttribute()
 template< typename Archive >
 void PopulationAttribute::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & density_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file & density_;
 }
 
 // -----------------------------------------------------------------------------

@@ -379,21 +379,21 @@ void MIL_AgentServer::SendStateToNewClient() const
 void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 {
     const std::string localTime = boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() );
-    file << nTimeFactor_
-         << nCurrentTimeStep_
-         << nSimTime_
-         << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
-         << pEntityManager_
+    file << nTimeFactor_;
+    file << nCurrentTimeStep_;
+    file << nSimTime_;
+    file << pMeteoDataManager_;    // données statiques + météo locales gérées par MOS
+    file << pEntityManager_;
 //         << pWorkspaceDIA_        // uniquement données statiques
 //         << timerManager_         // pas de données ( MIL_AgentServer::Initialize )
 //         << pPathFindManager_     // pas stockés
-         << pCheckPointManager_
+    file << pCheckPointManager_;
 //         << pAgentServer_         // moi-même ( static )
-         << nInitialRealTime_
-         << nRealTime_
-         << localTime
-         << actions_
-         << pathfinds_;
+    file << nInitialRealTime_;
+    file << nRealTime_;
+    file << localTime;
+    file << actions_;
+    file << pathfinds_;
     pBurningCells_->save( file );
 }
 
@@ -403,21 +403,21 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 {
-    file >> nTimeFactor_
-         >> nCurrentTimeStep_
-         >> nSimTime_
-         >> pMeteoDataManager_
-         >> pEntityManager_
+    file >> nTimeFactor_;
+    file >> nCurrentTimeStep_;
+    file >> nSimTime_;
+    file >> pMeteoDataManager_;
+    file >> pEntityManager_;
 //         >> pWorkspaceDIA_
 //         >> timerManager_
 //         >> pPathFindManager_
-         >> pCheckPointManager_
+    file >> pCheckPointManager_;
 //         >> pAgentServer_
-         >> nInitialRealTime_
-         >> nRealTime_
-         >> localTime_
-         >> actions_
-         >> pathfinds_;
+    file >> nInitialRealTime_;
+    file >> nRealTime_;
+    file >> localTime_;
+    file >> actions_;
+    file >> pathfinds_;
     if( pEntityManager_ )
         pEntityManager_->FinalizeObjects();
     pBurningCells_->load( file );

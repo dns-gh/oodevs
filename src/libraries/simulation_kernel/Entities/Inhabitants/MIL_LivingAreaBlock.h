@@ -115,13 +115,13 @@ BOOST_CLASS_EXPORT_KEY( MIL_LivingAreaBlock )
 template< typename Archive >
 void MIL_LivingAreaBlock::serialize( Archive& file, const unsigned int )
 {
-    file & urbanObject_
-         & persons_
-         & angriness_
-         & alerted_
-         & confined_
-         & evacuated_
-         & outsideAngry_;
+    file & urbanObject_;
+    file & persons_;
+    file & angriness_;
+    file & alerted_;
+    file & confined_;
+    file & evacuated_;
+    file & outsideAngry_;
 }
 
 #endif // __MIL_LivingAreaBlock_h_

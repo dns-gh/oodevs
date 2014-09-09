@@ -75,7 +75,7 @@ void TerrainHeuristicCapacity::ReadTerrain( xml::xistream& xis )
 template< typename Archive > void TerrainHeuristicCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-         & environmentScores_;
+//    file & environmentScores_; // FIXME
 }
 
 // -----------------------------------------------------------------------------

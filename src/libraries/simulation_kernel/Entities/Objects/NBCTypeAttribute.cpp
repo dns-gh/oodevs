@@ -121,8 +121,8 @@ void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     std::string agentName;
 
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar >> agentName
-       >> concentration_;
+    ar >> agentName;
+    ar >> concentration_;
 
     pAgent_ = MIL_NBCType::Find( agentName );
     if( !pAgent_ )
@@ -136,8 +136,8 @@ void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void NBCTypeAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar << pAgent_->GetName()
-       << concentration_;
+    ar << pAgent_->GetName();
+    ar << concentration_;
 }
 
 // -----------------------------------------------------------------------------

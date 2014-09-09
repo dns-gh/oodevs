@@ -115,24 +115,24 @@ PHY_ComposantePion::~PHY_ComposantePion()
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< PHY_Composante_ABC >( *this )
-         >> pRole_;
+    file >> boost::serialization::base_object< PHY_Composante_ABC >( *this );
+    file >> pRole_;
     unsigned int nID;
     file >> nID;
     pState_ = &PHY_ComposanteState::Find( nID );
     file >> pType_;
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
-    file >> const_cast< bool& >( bMajor_ )
-         >> const_cast< bool& >( bLoadable_ )
-         >> const_cast< bool& >( bCanBePartOfConvoy_ )
-         >> bUsedForLogistic_
-         >> pHumans_
-         >> nAutoRepairTimeStep_
-         >> pBreakdown_
-         >> pMaintenanceState_
-         >> bRepairEvacuationNoMeansChecked_
-         >> nRandomBreakdownNextTimeStep_;
+    file >> const_cast< bool& >( bMajor_ );
+    file >> const_cast< bool& >( bLoadable_ );
+    file >> const_cast< bool& >( bCanBePartOfConvoy_ );
+    file >> bUsedForLogistic_;
+    file >> pHumans_;
+    file >> nAutoRepairTimeStep_;
+    file >> pBreakdown_;
+    file >> pMaintenanceState_;
+    file >> bRepairEvacuationNoMeansChecked_;
+    file >> nRandomBreakdownNextTimeStep_;
     if( nRandomBreakdownNextTimeStep_ )
     {
         file >> nID;
@@ -149,20 +149,20 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
 void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned int state = pState_->GetID();
-    file << boost::serialization::base_object< PHY_Composante_ABC >( *this )
-         << pRole_
-         << state
-         << pType_
-         << bMajor_
-         << bLoadable_
-         << bCanBePartOfConvoy_
-         << bUsedForLogistic_
-         << pHumans_
-         << nAutoRepairTimeStep_
-         << pBreakdown_
-         << pMaintenanceState_
-         << bRepairEvacuationNoMeansChecked_
-         << nRandomBreakdownNextTimeStep_;
+    file << boost::serialization::base_object< PHY_Composante_ABC >( *this );
+    file << pRole_;
+    file << state;
+    file << pType_;
+    file << bMajor_;
+    file << bLoadable_;
+    file << bCanBePartOfConvoy_;
+    file << bUsedForLogistic_;
+    file << pHumans_;
+    file << nAutoRepairTimeStep_;
+    file << pBreakdown_;
+    file << pMaintenanceState_;
+    file << bRepairEvacuationNoMeansChecked_;
+    file << nRandomBreakdownNextTimeStep_;
     if( nRandomBreakdownNextTimeStep_ )
     {
         assert( pRandomBreakdownState_ );

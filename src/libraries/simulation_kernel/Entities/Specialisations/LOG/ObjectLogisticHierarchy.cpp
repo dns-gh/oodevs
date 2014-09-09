@@ -201,7 +201,7 @@ void ObjectLogisticHierarchy::WriteODB( xml::xostream& ) const
 template < typename Archive >
 void ObjectLogisticHierarchy::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< LogisticHierarchy_ABC >( *this )
-         & superiorLink_;
+    file & boost::serialization::base_object< LogisticHierarchy_ABC >( *this );
+    file & superiorLink_;
 }
 

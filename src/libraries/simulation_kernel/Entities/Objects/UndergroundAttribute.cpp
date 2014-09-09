@@ -102,9 +102,9 @@ UndergroundAttribute::~UndergroundAttribute()
 template< typename Archive >
 void UndergroundAttribute::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & network_
-         & activated_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file & network_;
+    file & activated_;
 }
 
 // -----------------------------------------------------------------------------

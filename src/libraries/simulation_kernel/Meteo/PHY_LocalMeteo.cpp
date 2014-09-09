@@ -93,11 +93,11 @@ void PHY_LocalMeteo::serialize( Archive& file, const unsigned int )
 {
     if( !world_ )
         world_ = file.GetWorld();
-    file & boost::serialization::base_object< weather::Meteo >( *this )
-         & startTime_
-         & endTime_
-         & upLeft_
-         & downRight_;
+    file & boost::serialization::base_object< weather::Meteo >( *this );
+    file & startTime_;
+    file & endTime_;
+    file & upLeft_;
+    file & downRight_;
 }
 
 // -----------------------------------------------------------------------------

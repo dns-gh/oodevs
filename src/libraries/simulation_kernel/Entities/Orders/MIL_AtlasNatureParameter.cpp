@@ -87,8 +87,8 @@ bool MIL_AtlasNatureParameter::ToElement( sword::MissionParameter_Value& elem ) 
 // -----------------------------------------------------------------------------
 void  MIL_AtlasNatureParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> nature_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> nature_;
 }
 
 // -----------------------------------------------------------------------------
@@ -97,6 +97,6 @@ void  MIL_AtlasNatureParameter::load( MIL_CheckPointInArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void  MIL_AtlasNatureParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << nature_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << nature_;
 }

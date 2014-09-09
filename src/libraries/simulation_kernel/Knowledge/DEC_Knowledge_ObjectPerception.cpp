@@ -69,10 +69,10 @@ DEC_Knowledge_ObjectPerception::~DEC_Knowledge_ObjectPerception()
 void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-    file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ )
-         >> pObjectPerceived_
-         >> pCurrentPerceptionLevel_
-         >> pPreviousPerceptionLevel_;
+    file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ );
+    file >> pObjectPerceived_;
+    file >> pCurrentPerceptionLevel_;
+    file >> pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,11 +81,11 @@ void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << pAgentPerceiving_
-         << pObjectPerceived_
-         << pCurrentPerceptionLevel_
-         << pPreviousPerceptionLevel_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file << pAgentPerceiving_;
+    file << pObjectPerceived_;
+    file << pCurrentPerceptionLevel_;
+    file << pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

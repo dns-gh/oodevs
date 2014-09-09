@@ -1290,8 +1290,8 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
         {
             double x;
             double y;
-             file >> x
-                  >> y;
+            file >> x;
+            file >> y;
             pLeftLimit.push_back( MT_Vector2D( x, y ) );
         }
     }
@@ -1302,13 +1302,13 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
         {
             double x;
             double y;
-            file >> x
-                 >> y;
+            file >> x;
+            file >> y;
             pRightLimit.push_back( MT_Vector2D( x, y ) );
         }
     }
-    file >> vStartGlobalDirection_
-         >> vEndGlobalDirection_;
+    file >> vStartGlobalDirection_;
+    file >> vEndGlobalDirection_;
     globalDirectionLine_ = MT_Line( vStartGlobalDirection_, vEndGlobalDirection_ );
     if( !pLeftLimit.empty() && !pRightLimit.empty() )
     {
@@ -1336,18 +1336,18 @@ void MIL_Fuseau::save( MIL_CheckPointOutArchive& file, const unsigned int ) cons
     file << size;
     for( IT_PointVector it = pLeftLimit.begin(); it != pLeftLimit.end(); ++it )
     {
-        file << it->rX_
-             << it->rY_;
+        file << it->rX_;
+        file << it->rY_;
     }
 
     std::size_t size2 = pRightLimit.size();
     file << size2;
     for( IT_PointVector it = pRightLimit.begin(); it != pRightLimit.end(); ++it )
     {
-        file << it->rX_
-             << it->rY_;
+        file << it->rX_;
+        file << it->rY_;
     }
 
-    file << vStartGlobalDirection_
-         << vEndGlobalDirection_;
+    file << vStartGlobalDirection_;
+    file << vEndGlobalDirection_;
 }

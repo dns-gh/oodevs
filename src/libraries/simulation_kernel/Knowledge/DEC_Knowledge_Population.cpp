@@ -111,17 +111,17 @@ DEC_Knowledge_Population::~DEC_Knowledge_Population()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> pPopulationKnown_
-         >> nID_
-         >> groupId_;
-    file >> concentrations_
-         >> flows_
-         >> bIsRecon_
-         >> bReconAttributesValid_
-         >> rDominationState_
-         >> maxLifetime_
-         >> criticalIntelligence_;
+    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file >> pPopulationKnown_;
+    file >> nID_;
+    file >> groupId_;
+    file >> concentrations_;
+    file >> flows_;
+    file >> bIsRecon_;
+    file >> bReconAttributesValid_;
+    file >> rDominationState_;
+    file >> maxLifetime_;
+    file >> criticalIntelligence_;
     idManager_.GetId( nID_, true );
     assert( pPopulationKnown_ );
 }
@@ -132,17 +132,17 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsign
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << pPopulationKnown_
-         << nID_
-         << groupId_
-         << concentrations_
-         << flows_
-         << bIsRecon_
-         << bReconAttributesValid_
-         << rDominationState_
-         << maxLifetime_
-         << criticalIntelligence_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file << pPopulationKnown_;
+    file << nID_;
+    file << groupId_;
+    file << concentrations_;
+    file << flows_;
+    file << bIsRecon_;
+    file << bReconAttributesValid_;
+    file << rDominationState_;
+    file << maxLifetime_;
+    file << criticalIntelligence_;
 }
 
 namespace

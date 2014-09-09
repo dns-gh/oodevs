@@ -71,10 +71,10 @@ CrowdCapacity::~CrowdCapacity()
 void CrowdCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     std::string popuName;
-    ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-       >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
-       >> popuName
-       >> densityFactor_;
+    ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    ar >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    ar >> popuName;
+    ar >> densityFactor_;
     type_ = MIL_PopulationType::Find( popuName );
     if( !type_ )
         throw MASA_EXCEPTION( "Unknown dotation category - " + popuName + " - " );
@@ -86,10 +86,10 @@ void CrowdCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 // -----------------------------------------------------------------------------
 void CrowdCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
-    ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-       << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
-       << type_->GetName()
-       << densityFactor_;
+    ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    ar << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    ar << type_->GetName();
+    ar << densityFactor_;
 }
 
 // -----------------------------------------------------------------------------

@@ -142,11 +142,11 @@ DetectionCapacity::~DetectionCapacity()
 template< typename Archive >
 void DetectionCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
-         & rDetectionTime_ // LTO
-         & rRecognitionTime_ // LTO
-         & rIdentificationTime_; // LTO
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    file & rDetectionTime_;
+    file & rRecognitionTime_;
+    file & rIdentificationTime_;
 }
 
 // -----------------------------------------------------------------------------

@@ -67,7 +67,7 @@ template< typename Archive >
 void AttitudeModifierCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-         & attitude_;
+//    file & attitude_; // FIXME
 }
 
 // -----------------------------------------------------------------------------

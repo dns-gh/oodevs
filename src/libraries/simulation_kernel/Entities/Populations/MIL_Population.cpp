@@ -63,8 +63,8 @@ void save_construct_data( Archive& archive, const MIL_Population* population, co
 {
     unsigned int nTypeID = population->GetType().GetID();
     const MissionController_ABC* const controller = &population->orderManager_->GetController();
-    archive << nTypeID
-            << controller;
+    archive << nTypeID;
+    archive << controller;
 }
 
 template< typename Archive >
@@ -72,8 +72,8 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 {
     unsigned int nTypeID;
     MissionController_ABC* controller = 0;
-    archive >> nTypeID
-            >> controller;
+    archive >> nTypeID;
+    archive >> controller;
     const MIL_PopulationType* pType = MIL_PopulationType::Find( nTypeID );
     assert( pType );
     ::new( population ) MIL_Population( *pType, *controller );
@@ -270,26 +270,26 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
     DEC_PopulationDecision* pRole;
     MIL_Color* pColor;
     assert( pDefaultAttitude_ );
-    file >> rArmedIndividuals_
-         >> rNewArmedIndividuals_
-         >> rMale_
-         >> rFemale_
-         >> rChildren_
-         >> criticalIntelligence_
-         >> concentrations_
-         >> flows_
-         >> trashedConcentrations_
-         >> trashedFlows_
-         >> bPionMaxSpeedOverloaded_
-         >> rOverloadedPionMaxSpeed_
-         >> pKnowledge_
-         >> pKnowledgeGroup_
-         >> bHasDoneMagicMove_
-         >> pAffinities_
-         >> pExtensions_
-         >> vBarycenter_
-         >> pColor
-         >> pRole;
+    file >> rArmedIndividuals_;
+    file >> rNewArmedIndividuals_;
+    file >> rMale_;
+    file >> rFemale_;
+    file >> rChildren_;
+    file >> criticalIntelligence_;
+    file >> concentrations_;
+    file >> flows_;
+    file >> trashedConcentrations_;
+    file >> trashedFlows_;
+    file >> bPionMaxSpeedOverloaded_;
+    file >> rOverloadedPionMaxSpeed_;
+    file >> pKnowledge_;
+    file >> pKnowledgeGroup_;
+    file >> bHasDoneMagicMove_;
+    file >> pAffinities_;
+    file >> pExtensions_;
+    file >> vBarycenter_;
+    file >> pColor;
+    file >> pRole;
     RegisterRole( *pRole );
     RegisterRole( *new DEC_Representations() );
     pColor_.reset( pColor );
@@ -304,27 +304,27 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     unsigned attitude = pDefaultAttitude_->GetID();
     const MIL_Color* const pColor = pColor_.get();
-    file << pArmy_
-         << attitude
-         << rArmedIndividuals_
-         << rNewArmedIndividuals_
-         << rMale_
-         << rFemale_
-         << rChildren_
-         << criticalIntelligence_
-         << concentrations_
-         << flows_
-         << trashedConcentrations_
-         << trashedFlows_
-         << bPionMaxSpeedOverloaded_
-         << rOverloadedPionMaxSpeed_
-         << pKnowledge_
-         << pKnowledgeGroup_
-         << bHasDoneMagicMove_
-         << pAffinities_
-         << pExtensions_
-         << vBarycenter_
-         << pColor;
+    file << pArmy_;
+    file << attitude;
+    file << rArmedIndividuals_;
+    file << rNewArmedIndividuals_;
+    file << rMale_;
+    file << rFemale_;
+    file << rChildren_;
+    file << criticalIntelligence_;
+    file << concentrations_;
+    file << flows_;
+    file << trashedConcentrations_;
+    file << trashedFlows_;
+    file << bPionMaxSpeedOverloaded_;
+    file << rOverloadedPionMaxSpeed_;
+    file << pKnowledge_;
+    file << pKnowledgeGroup_;
+    file << bHasDoneMagicMove_;
+    file << pAffinities_;
+    file << pExtensions_;
+    file << vBarycenter_;
+    file << pColor;
     SaveRole< DEC_PopulationDecision >( *this, file );
 }
 

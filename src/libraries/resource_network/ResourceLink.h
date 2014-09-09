@@ -106,9 +106,9 @@ private:
 template< typename Archive >
 void ResourceLink::load( Archive& file, const unsigned int )
 {
-    file >> target_
-         >> kind_
-         >> capacity_;
+    file >> target_;
+    file >> kind_;
+    file >> capacity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -118,9 +118,9 @@ void ResourceLink::load( Archive& file, const unsigned int )
 template< typename Archive >
 void ResourceLink::save( Archive& file, const unsigned int ) const
 {
-    file << target_
-         << kind_
-         << capacity_;
+    file << target_;
+    file << kind_;
+    file << capacity_;
 }
 
 }

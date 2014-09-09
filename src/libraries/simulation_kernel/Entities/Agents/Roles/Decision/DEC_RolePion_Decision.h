@@ -270,10 +270,10 @@ void save_construct_data( Archive& archive, const DEC_RolePion_Decision* role, c
     const unsigned int gcPause = role->gcPause_;
     const unsigned int gcMult = role->gcMult_;
     sword::DEC_Logger* logger = role->logger_;
-    archive << pion
-            << gcPause
-            << gcMult
-            << logger;
+    archive << pion;
+    archive << gcPause;
+    archive << gcMult;
+    archive << logger;
 }
 
 template< typename Archive >
@@ -283,10 +283,10 @@ void load_construct_data( Archive& archive, DEC_RolePion_Decision* role, const u
     unsigned int gcPause;
     unsigned int gcMult;
     sword::DEC_Logger* logger;
-    archive >> pion
-            >> gcPause
-            >> gcMult
-            >> logger;
+    archive >> pion;
+    archive >> gcPause;
+    archive >> gcMult;
+    archive >> logger;
     ::new( role )DEC_RolePion_Decision( *pion, gcPause, gcMult, logger );
 }
 

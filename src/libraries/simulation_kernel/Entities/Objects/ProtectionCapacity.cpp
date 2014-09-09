@@ -64,10 +64,10 @@ ProtectionCapacity::~ProtectionCapacity()
 template< typename Archive >
 void ProtectionCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & maxSize_
-         & agents_
-         & bGeniePrepared_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & maxSize_;
+    file & agents_;
+    file & bGeniePrepared_;
 }
 
 // -----------------------------------------------------------------------------

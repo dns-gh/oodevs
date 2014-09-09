@@ -62,8 +62,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPoint
     file << size;
     for( auto it = collisions_.begin(); it != collisions_.end(); ++it )
     {
-        file << it->first
-             << it->second;
+        file << it->first;
+        file << it->second;
     }
 }
 

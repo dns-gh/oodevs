@@ -86,17 +86,17 @@ PHY_Dotation::~PHY_Dotation()
 template< typename Archive >
 void PHY_Dotation::serialize( Archive& ar, const unsigned int )
 {
-    ar & pCategory_
-       & pGroup_
-       & rValue_
-       & rCapacity_
-       & rConsumptionReservation_
-       & rFireReservation_
-       & rLowThreshold_
-       & rHighThreshold_
-       & bNotified_
-       & bDotationBlocked_
-       & bInfiniteDotations_;
+    ar & pCategory_;
+    ar & pGroup_;
+    ar & rValue_;
+    ar & rCapacity_;
+    ar & rConsumptionReservation_;
+    ar & rFireReservation_;
+    ar & rLowThreshold_;
+    ar & rHighThreshold_;
+    ar & bNotified_;
+    ar & bDotationBlocked_;
+    ar & bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------

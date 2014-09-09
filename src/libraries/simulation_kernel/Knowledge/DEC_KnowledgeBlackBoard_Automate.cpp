@@ -58,8 +58,8 @@ DEC_KnowledgeBlackBoard_Automate::~DEC_KnowledgeBlackBoard_Automate()
 template< typename Archive >
 void DEC_KnowledgeBlackBoard_Automate::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
-            & pAutomate_;
+    archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this );
+    archive & pAutomate_;
 }
 
 // -----------------------------------------------------------------------------

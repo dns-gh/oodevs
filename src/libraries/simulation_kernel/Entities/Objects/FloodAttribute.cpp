@@ -102,11 +102,11 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
 // -----------------------------------------------------------------------------
 void FloodAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         >> depth_
-         >> refDist_
-         >> floodCenter_
-         >> location_;
+    file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file >> depth_;
+    file >> refDist_;
+    file >> floodCenter_;
+    file >> location_;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,11 +115,11 @@ void FloodAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void FloodAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         << depth_
-         << refDist_
-         << floodCenter_
-         << location_;
+    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file << depth_;
+    file << refDist_;
+    file << floodCenter_;
+    file << location_;
 }
 
 // -----------------------------------------------------------------------------

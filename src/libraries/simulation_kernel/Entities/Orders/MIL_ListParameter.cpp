@@ -352,8 +352,8 @@ void MIL_ListParameter::Append( boost::shared_ptr< MIL_MissionParameter_ABC > pa
 // -----------------------------------------------------------------------------
 void MIL_ListParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> list_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> list_;
 }
 
 // -----------------------------------------------------------------------------
@@ -362,6 +362,6 @@ void MIL_ListParameter::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void MIL_ListParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << list_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << list_;
 }

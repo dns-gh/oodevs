@@ -116,8 +116,8 @@ bool MIL_LocationParameter::ToElement( sword::MissionParameter_Value& elem ) con
 // -----------------------------------------------------------------------------
 void MIL_LocationParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> pLocalisation_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> pLocalisation_;
 }
 
 // -----------------------------------------------------------------------------
@@ -126,6 +126,6 @@ void MIL_LocationParameter::load( MIL_CheckPointInArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void MIL_LocationParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pLocalisation_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << pLocalisation_;
 }

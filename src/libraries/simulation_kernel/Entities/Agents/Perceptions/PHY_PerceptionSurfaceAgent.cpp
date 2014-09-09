@@ -54,10 +54,10 @@ PHY_PerceptionSurfaceAgent::~PHY_PerceptionSurfaceAgent()
 // -----------------------------------------------------------------------------
 void PHY_PerceptionSurfaceAgent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> pSensorType_
-         >> vOrigin_
-         >> rHeight_
-         >> sectors_;
+    file >> pSensorType_;
+    file >> vOrigin_;
+    file >> rHeight_;
+    file >> sectors_;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,10 +66,10 @@ void PHY_PerceptionSurfaceAgent::load( MIL_CheckPointInArchive& file, const unsi
 // -----------------------------------------------------------------------------
 void PHY_PerceptionSurfaceAgent::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pSensorType_
-         << vOrigin_
-         << rHeight_
-         << sectors_;
+    file << pSensorType_;
+    file << vOrigin_;
+    file << rHeight_;
+    file << sectors_;
 }
 
 // -----------------------------------------------------------------------------

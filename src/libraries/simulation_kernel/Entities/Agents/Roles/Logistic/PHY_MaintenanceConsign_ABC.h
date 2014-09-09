@@ -116,11 +116,11 @@ protected:
 template< typename Archive >
 void PHY_MaintenanceConsign_ABC::serialize( Archive& file, const unsigned int )
 {
-    file & pAgent_
-         & pComposanteState_
-         & nState_
-         & nTimer_
-         & currentStateEndTimeStep_;
+    file & pAgent_;
+    file & pComposanteState_;
+    file & nState_;
+    file & nTimer_;
+    file & currentStateEndTimeStep_;
 }
 
 #endif // __PHY_MaintenanceConsign_ABC_h_

@@ -92,8 +92,8 @@ bool MIL_DotationTypeParameter::ToElement( sword::MissionParameter_Value& elem )
 // -----------------------------------------------------------------------------
 void MIL_DotationTypeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> pCategory_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> pCategory_;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +102,6 @@ void MIL_DotationTypeParameter::load( MIL_CheckPointInArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void MIL_DotationTypeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pCategory_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << pCategory_;
 }

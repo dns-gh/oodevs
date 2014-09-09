@@ -63,8 +63,8 @@ PerceptionCapacity::~PerceptionCapacity()
 template< typename Archive >
 void PerceptionCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & modifier_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & modifier_;
 }
 
 // -----------------------------------------------------------------------------

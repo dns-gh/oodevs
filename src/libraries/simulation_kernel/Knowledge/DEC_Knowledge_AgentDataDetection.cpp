@@ -69,17 +69,17 @@ DEC_Knowledge_AgentDataDetection::~DEC_Knowledge_AgentDataDetection()
 void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MT_Vector2D positionTmp;
-    file >> nTimeLastUpdate_
-         >> positionTmp
-         >> vDirection_
-         >> rSpeed_
-         >> rAltitude_
-         >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
-         >> bPrisoner_
-         >> bRefugeeManaged_
-         >> bDead_
-         >> bWounded_
-         >> rPopulationDensity_;
+    file >> nTimeLastUpdate_;
+    file >> positionTmp;
+    file >> vDirection_;
+    file >> rSpeed_;
+    file >> rAltitude_;
+    file >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
+    file >> bPrisoner_;
+    file >> bRefugeeManaged_;
+    file >> bDead_;
+    file >> bWounded_;
+    file >> rPopulationDensity_;
     vPosition_.reset( new MT_Vector2D( positionTmp ) );
     std::size_t nNbr;
     unsigned int nID;
@@ -95,14 +95,14 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
     pLastPosture_ = PHY_Posture::FindPosture( nID );
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
-    file >> rPostureCompletionPercentage_
-         >> bDirectionUpdated_
-         >> bSpeedUpdated_
-         >> bPositionUpdated_
-         >> bPrisonerUpdated_
-         >> bSurrenderedUpdated_
-         >> bRefugeeManagedUpdated_
-         >> bDeadUpdated_;
+    file >> rPostureCompletionPercentage_;
+    file >> bDirectionUpdated_;
+    file >> bSpeedUpdated_;
+    file >> bPositionUpdated_;
+    file >> bPrisonerUpdated_;
+    file >> bSurrenderedUpdated_;
+    file >> bRefugeeManagedUpdated_;
+    file >> bDeadUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,17 +111,17 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << nTimeLastUpdate_
-         << ( *vPosition_ )
-         << vDirection_
-         << rSpeed_
-         << rAltitude_
-         << pArmySurrenderedTo_
-         << bPrisoner_
-         << bRefugeeManaged_
-         << bDead_
-         << bWounded_
-         << rPopulationDensity_;
+    file << nTimeLastUpdate_;
+    file << ( *vPosition_ );
+    file << vDirection_;
+    file << rSpeed_;
+    file << rAltitude_;
+    file << pArmySurrenderedTo_;
+    file << bPrisoner_;
+    file << bRefugeeManaged_;
+    file << bDead_;
+    file << bWounded_;
+    file << rPopulationDensity_;
     std::size_t size = visionVolumes_.size();
     for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
         if( !(*it) )
@@ -137,16 +137,16 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
     }
     unsigned int last = ( pLastPosture_ ? pLastPosture_->GetID() : static_cast< unsigned int >( -1 ) );
     unsigned int current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : static_cast< unsigned int >( -1 ) );
-    file << last
-         << current
-         << rPostureCompletionPercentage_
-         << bDirectionUpdated_
-         << bSpeedUpdated_
-         << bPositionUpdated_
-         << bPrisonerUpdated_
-         << bSurrenderedUpdated_
-         << bRefugeeManagedUpdated_
-         << bDeadUpdated_;
+    file << last;
+    file << current;
+    file << rPostureCompletionPercentage_;
+    file << bDirectionUpdated_;
+    file << bSpeedUpdated_;
+    file << bPositionUpdated_;
+    file << bPrisonerUpdated_;
+    file << bSurrenderedUpdated_;
+    file << bRefugeeManagedUpdated_;
+    file << bDeadUpdated_;
 }
 
 // -----------------------------------------------------------------------------

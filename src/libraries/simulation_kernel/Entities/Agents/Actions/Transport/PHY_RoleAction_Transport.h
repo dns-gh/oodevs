@@ -64,11 +64,11 @@ private:
         template< class Archive >
         void serialize( Archive & ar, unsigned int /*version*/ )
         {
-            ar & bTransportOnlyLoadable_
-               & bMagicLoad_
-               & rTotalWeight_
-               & rRemainingWeight_
-               & rTransportedWeight_;
+            ar & bTransportOnlyLoadable_;
+            ar & bMagicLoad_;
+            ar & rTotalWeight_;
+            ar & rRemainingWeight_;
+            ar & rTransportedWeight_;
         }
     };
 

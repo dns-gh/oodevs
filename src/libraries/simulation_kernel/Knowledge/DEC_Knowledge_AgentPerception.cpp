@@ -74,20 +74,20 @@ DEC_Knowledge_AgentPerception::~DEC_Knowledge_AgentPerception()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << nCreationTimeStep_
-         << dataDetection_
-         << dataRecognition_
-         << dataIdentification_
-         << pAgentPerceiving_
-         << pAgentPerceived_
-         << bRecordModeEnabled_
-         << bPreviousRecordModeEnabled_
-         << nRecordModeDisablingDelay_
-         << bAttacker_
-         << pCurrentPerceptionLevel_
-         << pPreviousPerceptionLevel_
-         << pMaxPerceptionLevel_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file << nCreationTimeStep_;
+    file << dataDetection_;
+    file << dataRecognition_;
+    file << dataIdentification_;
+    file << pAgentPerceiving_;
+    file << pAgentPerceived_;
+    file << bRecordModeEnabled_;
+    file << bPreviousRecordModeEnabled_;
+    file << nRecordModeDisablingDelay_;
+    file << bAttacker_;
+    file << pCurrentPerceptionLevel_;
+    file << pPreviousPerceptionLevel_;
+    file << pMaxPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,17 +96,17 @@ void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> nCreationTimeStep_
-         >> dataDetection_
-         >> dataRecognition_
-         >> dataIdentification_
-         >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ )
-         >> pAgentPerceived_
-         >> bRecordModeEnabled_
-         >> bPreviousRecordModeEnabled_
-         >> nRecordModeDisablingDelay_
-         >> bAttacker_;
+    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file >> nCreationTimeStep_;
+    file >> dataDetection_;
+    file >> dataRecognition_;
+    file >> dataIdentification_;
+    file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ );
+    file >> pAgentPerceived_;
+    file >> bRecordModeEnabled_;
+    file >> bPreviousRecordModeEnabled_;
+    file >> nRecordModeDisablingDelay_;
+    file >> bAttacker_;
     file >> pCurrentPerceptionLevel_;
     file >> pPreviousPerceptionLevel_;
     file >> pMaxPerceptionLevel_;

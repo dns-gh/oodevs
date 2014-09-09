@@ -136,7 +136,8 @@ public:
     template< class Archive >
     void serialize( Archive& archive, const unsigned int /*version*/ )
     {
-        archive & parent_ & content_;
+        archive & parent_;
+        archive & content_;
     }
     //@}
 

@@ -62,8 +62,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPoin
     file << size;
     for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
     {
-        file << it->first
-             << it->second;
+        file << it->first;
+        file << it->second;
     }
 }
 

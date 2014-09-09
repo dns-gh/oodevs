@@ -56,9 +56,9 @@ PHY_RolePion_Deployment::~PHY_RolePion_Deployment()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Deployment::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Deployment >( *this )
-         >> eDeploymentState_
-         >> rDeploymentValue_;
+    file >> boost::serialization::base_object< PHY_RoleInterface_Deployment >( *this );
+    file >> eDeploymentState_;
+    file >> rDeploymentValue_;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,9 +67,9 @@ void PHY_RolePion_Deployment::load( MIL_CheckPointInArchive& file, const unsigne
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Deployment::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< PHY_RoleInterface_Deployment >( *this )
-         << eDeploymentState_
-         << rDeploymentValue_;
+    file << boost::serialization::base_object< PHY_RoleInterface_Deployment >( *this );
+    file << eDeploymentState_;
+    file << rDeploymentValue_;
 }
 
 // -----------------------------------------------------------------------------

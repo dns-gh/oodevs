@@ -89,8 +89,8 @@ bool MIL_LogMedicalPrioritiesParameter::ToElement( sword::MissionParameter_Value
 // -----------------------------------------------------------------------------
 void MIL_LogMedicalPrioritiesParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> priorities_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> priorities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,6 +99,6 @@ void MIL_LogMedicalPrioritiesParameter::load( MIL_CheckPointInArchive& file, con
 // -----------------------------------------------------------------------------
 void MIL_LogMedicalPrioritiesParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << priorities_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << priorities_;
 }

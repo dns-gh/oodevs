@@ -90,8 +90,8 @@ void MIL_AffinitiesMap::load( MIL_CheckPointInArchive& file, const unsigned int 
         float second;
         for( unsigned int i = 0; i < size; ++i )
         {
-            file >> first
-                 >> second;
+            file >> first;
+            file >> second;
             affinities_[ first ] = second;
         }
     }
@@ -106,8 +106,10 @@ void MIL_AffinitiesMap::save( MIL_CheckPointOutArchive& file, const unsigned int
     std::size_t size = affinities_.size();
     file << size;
     for( auto it = affinities_.begin(); it != affinities_.end(); ++it )
-        file << it->first
-             << it->second;
+    {
+        file << it->first;
+        file << it->second;
+    }
 }
 
 // -----------------------------------------------------------------------------

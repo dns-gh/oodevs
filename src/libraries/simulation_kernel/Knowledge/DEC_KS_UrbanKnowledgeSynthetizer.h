@@ -83,8 +83,8 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_UrbanKnowledgeSynthetizer )
 template< typename Archive >
 void DEC_KS_UrbanKnowledgeSynthetizer::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-            & pBlackBoard_;
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this );
+    archive & pBlackBoard_;
 }
 
 #endif // __DEC_KS_UrbanKnowledgeSynthetizer_h_

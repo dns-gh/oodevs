@@ -92,9 +92,9 @@ bool MIL_PolygonParameter::IsValid() const
 // -----------------------------------------------------------------------------
 void MIL_PolygonParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> pPolygon_
-         >> valid_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> pPolygon_;
+    file >> valid_;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ void MIL_PolygonParameter::load( MIL_CheckPointInArchive& file, const unsigned i
 // -----------------------------------------------------------------------------
 void MIL_PolygonParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pPolygon_
-         << valid_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << pPolygon_;
+    file << valid_;
 }

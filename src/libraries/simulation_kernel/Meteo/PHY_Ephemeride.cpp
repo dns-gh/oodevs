@@ -106,11 +106,11 @@ void PHY_Ephemeride::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int dayId;
     unsigned int nightId;
-    file >> bIsNight_
-         >> sunriseTime_
-         >> sunsetTime_
-         >> dayId
-         >> nightId;
+    file >> bIsNight_;
+    file >> sunriseTime_;
+    file >> sunsetTime_;
+    file >> dayId;
+    file >> nightId;
     pDayBase_ = weather::PHY_Lighting::FindLighting( static_cast< E_LightingType >( dayId ) );
     pNightBase_ = weather::PHY_Lighting::FindLighting( static_cast< E_LightingType >( nightId ));
 }
@@ -123,11 +123,11 @@ void PHY_Ephemeride::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
 {
     unsigned int dayId = pDayBase_->GetID();
     unsigned int nightId = pNightBase_->GetID();
-    file << bIsNight_
-         << sunriseTime_
-         << sunsetTime_
-         << dayId
-         << nightId;
+    file << bIsNight_;
+    file << sunriseTime_;
+    file << sunsetTime_;
+    file << dayId;
+    file << nightId;
 }
 
 // -----------------------------------------------------------------------------

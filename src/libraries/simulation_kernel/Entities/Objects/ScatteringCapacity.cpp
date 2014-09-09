@@ -62,8 +62,8 @@ ScatteringCapacity::~ScatteringCapacity()
 template< typename Archive >
 void ScatteringCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & humanByTimeStep_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & humanByTimeStep_;
 }
 
 // -----------------------------------------------------------------------------

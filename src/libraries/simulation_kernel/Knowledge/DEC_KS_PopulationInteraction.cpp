@@ -56,10 +56,10 @@ DEC_KS_PopulationInteraction::~DEC_KS_PopulationInteraction()
 template< typename Archive >
 void DEC_KS_PopulationInteraction::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-            & pBlackBoard_
-            & concentrationCollisions_
-            & flowCollisions_;
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this );
+    archive & pBlackBoard_;
+    archive & concentrationCollisions_;
+    archive & flowCollisions_;
 }
 
 // -----------------------------------------------------------------------------

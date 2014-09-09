@@ -49,14 +49,14 @@ MIL_ObjectInteraction::~MIL_ObjectInteraction()
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> agentsInside_
-         >> agentsEntering_
-         >> agentsExiting_
-         >> agentsMovingInside_
-         >> agentsDelayedEntering_
-         >> populationsInside_
-         >> populationsMovingInside_
-         >> height_;
+    file >> agentsInside_;
+    file >> agentsEntering_;
+    file >> agentsExiting_;
+    file >> agentsMovingInside_;
+    file >> agentsDelayedEntering_;
+    file >> populationsInside_;
+    file >> populationsMovingInside_;
+    file >> height_;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,14 +65,14 @@ void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << agentsInside_
-         << agentsEntering_
-         << agentsExiting_
-         << agentsMovingInside_
-         << agentsDelayedEntering_
-         << populationsInside_
-         << populationsMovingInside_
-         << height_;
+    file << agentsInside_;
+    file << agentsEntering_;
+    file << agentsExiting_;
+    file << agentsMovingInside_;
+    file << agentsDelayedEntering_;
+    file << populationsInside_;
+    file << populationsMovingInside_;
+    file << height_;
 }
 
 namespace

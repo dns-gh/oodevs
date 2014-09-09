@@ -102,8 +102,8 @@ void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const unsig
     file >> nID;
     pStress_ = PHY_Stress::Find( nID );
     assert( pStress_ );
-    file >> tirednessValue_
-         >> stressValue_;
+    file >> tirednessValue_;
+    file >> stressValue_;
 }
 
 // -----------------------------------------------------------------------------

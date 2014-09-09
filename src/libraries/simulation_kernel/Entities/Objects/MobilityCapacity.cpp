@@ -104,9 +104,9 @@ template< typename Archive >
 void MobilityCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    file & nSpeedPolicy_
-         & rDefaultSpeed_
-         & rSpeedPolicyMaxSpeedAgentFactor_;
+    file & nSpeedPolicy_;
+    file & rDefaultSpeed_;
+    file & rSpeedPolicyMaxSpeedAgentFactor_;
 }
 
 // -----------------------------------------------------------------------------

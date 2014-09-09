@@ -81,11 +81,11 @@ SuppliableCapacity::~SuppliableCapacity()
 void SuppliableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar >> default_
-       >> dotation_
-       >> nFullNbrDotation_
-       >> unitType_
-       >> finalised_;
+    ar >> default_;
+    ar >> dotation_;
+    ar >> nFullNbrDotation_;
+    ar >> unitType_;
+    ar >> finalised_;
 }
 
 // -----------------------------------------------------------------------------
@@ -95,11 +95,11 @@ void SuppliableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void SuppliableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar << default_
-       << dotation_
-       << nFullNbrDotation_
-       << unitType_
-       << finalised_;
+    ar << default_;
+    ar << dotation_;
+    ar << nFullNbrDotation_;
+    ar << unitType_;
+    ar << finalised_;
 }
 
 // -----------------------------------------------------------------------------

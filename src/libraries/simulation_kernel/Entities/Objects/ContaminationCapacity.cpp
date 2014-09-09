@@ -70,9 +70,9 @@ ContaminationCapacity::~ContaminationCapacity()
 template< typename Archive >
 void ContaminationCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & maxToxic_
-         & decontaminatedZones_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & maxToxic_;
+    file & decontaminatedZones_;
 }
 
 // -----------------------------------------------------------------------------

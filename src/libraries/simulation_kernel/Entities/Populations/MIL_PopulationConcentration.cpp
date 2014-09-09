@@ -367,10 +367,10 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uns
 {
     file >> boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file >> boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
-    file >> position_
-         >> pPullingFlow_
-         >> pushingFlows_
-         >> const_cast< MIL_Object_ABC*& >( pSplittingObject_ );
+    file >> position_;
+    file >> pPullingFlow_;
+    file >> pushingFlows_;
+    file >> const_cast< MIL_Object_ABC*& >( pSplittingObject_ );
     idManager_.GetId( MIL_PopulationElement_ABC::GetID(), true );
     UpdateLocation();
 }
@@ -383,10 +383,10 @@ void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const un
 {
     file << boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file << boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
-    file << position_
-         << pPullingFlow_
-         << pushingFlows_
-         << pSplittingObject_;
+    file << position_;
+    file << pPullingFlow_;
+    file << pushingFlows_;
+    file << pSplittingObject_;
 }
 
 // -----------------------------------------------------------------------------

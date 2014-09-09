@@ -114,14 +114,15 @@ StockAttribute& StockAttribute::operator=( const StockAttribute& rhs )
 void StockAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     std::size_t size;
-    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-       >> size;
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    ar >> size;
     while( size-- )
     {
         const PHY_DotationCategory* dotation;
         ar >> dotation;
         StockDotation& stockDotation = stockDotations_[ dotation ];
-        ar >> stockDotation.stock_ >> stockDotation.maxStock_;
+        ar >> stockDotation.stock_;
+        ar >> stockDotation.maxStock_;
     }
 }
 
@@ -136,8 +137,9 @@ void StockAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) co
     ar << size;
     for( auto it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {
-        ar << it->first
-           << it->second.stock_ << it->second.maxStock_;
+        ar << it->first;
+        ar << it->second.stock_;
+        ar << it->second.maxStock_;
     }
 }
 

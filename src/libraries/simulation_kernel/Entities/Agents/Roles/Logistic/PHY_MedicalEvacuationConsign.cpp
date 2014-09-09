@@ -72,9 +72,9 @@ PHY_MedicalEvacuationConsign::~PHY_MedicalEvacuationConsign()
 template< typename Archive >
 void PHY_MedicalEvacuationConsign::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_MedicalConsign_ABC >( *this )
-         & pDoctor_
-         & pEvacuationAmbulance_;
+    file & boost::serialization::base_object< PHY_MedicalConsign_ABC >( *this );
+    file & pDoctor_;
+    file & pEvacuationAmbulance_;
 }
 
 // -----------------------------------------------------------------------------

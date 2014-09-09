@@ -98,12 +98,12 @@ void PHY_Human::load( MIL_CheckPointInArchive& file, const unsigned int )
     unsigned int nID;
     file >> nID;
     pRank_ = PHY_HumanRank::Find( nID );
-    file >> pWound_
-         >> bMentalDiseased_
-         >> bContamined_
-         >> nLocation_
-         >> pMedicalState_
-         >> nDeathTimeStep_;
+    file >> pWound_;
+    file >> bMentalDiseased_;
+    file >> bContamined_;
+    file >> nLocation_;
+    file >> pMedicalState_;
+    file >> nDeathTimeStep_;
 }
 
 // -----------------------------------------------------------------------------
@@ -116,14 +116,14 @@ void PHY_Human::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
     assert( pWound_ );
     unsigned int rank  = pRank_->GetID();
     file << boost::serialization::base_object< Human_ABC >( *this );
-    file << pComposante_
-         << rank
-         << pWound_
-         << bMentalDiseased_
-         << bContamined_
-         << nLocation_
-         << pMedicalState_
-         << nDeathTimeStep_;
+    file << pComposante_;
+    file << rank;
+    file << pWound_;
+    file << bMentalDiseased_;
+    file << bContamined_;
+    file << nLocation_;
+    file << pMedicalState_;
+    file << nDeathTimeStep_;
 }
 
 // -----------------------------------------------------------------------------

@@ -71,11 +71,11 @@ DEC_KS_Perception::~DEC_KS_Perception()
 template< typename Archive >
 void DEC_KS_Perception::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-            & pBlackBoard_
-            & externalPerceptions_
-            & bMakePerceptionsAvailable_
-            & bMakePerceptionsAvailableTimed_;
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this );
+    archive & pBlackBoard_;
+    archive & externalPerceptions_;
+    archive & bMakePerceptionsAvailable_;
+    archive & bMakePerceptionsAvailableTimed_;
 }
 
 // -----------------------------------------------------------------------------

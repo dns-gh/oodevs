@@ -61,8 +61,8 @@ ActivableCapacity::~ActivableCapacity()
 // -----------------------------------------------------------------------------
 template< typename Archive > void ActivableCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & timeOfCreation_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & timeOfCreation_;
 }
 
 // -----------------------------------------------------------------------------

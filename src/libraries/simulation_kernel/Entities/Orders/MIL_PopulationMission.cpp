@@ -148,9 +148,9 @@ void save_construct_data( Archive& archive, const MIL_PopulationMission* mission
     const MIL_Population* const population = &mission->population_;
     unsigned int idType = mission->type_.GetID();
     uint32_t id = mission->GetId();
-    archive << population
-            << idType
-            << id;
+    archive << population;
+    archive << idType;
+    archive << id;
 }
 
 template< typename Archive >
@@ -161,9 +161,9 @@ void load_construct_data( Archive& archive, MIL_PopulationMission* mission, cons
         MIL_Population* population = 0;
         unsigned int idType = 0;
         uint32_t id = 0;
-        archive >> population
-                >> idType
-                >> id;
+        archive >> population;
+        archive >> idType;
+        archive >> id;
         const MIL_MissionType_ABC* type = MIL_PopulationMissionType::Find( idType );
         if( !type )
             throw MASA_EXCEPTION( "unknown crowd mission type: "

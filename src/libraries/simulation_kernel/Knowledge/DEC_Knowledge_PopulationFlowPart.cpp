@@ -61,11 +61,11 @@ DEC_Knowledge_PopulationFlowPart::~DEC_Knowledge_PopulationFlowPart()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPart::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> shape_
-         >> rRelevance_
-         >> rLastRelevanceSent_
-         >> nTimeLastUpdate_
-         >> bPerceived_;
+    file >> shape_;
+    file >> rRelevance_;
+    file >> rLastRelevanceSent_;
+    file >> nTimeLastUpdate_;
+    file >> bPerceived_;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,11 +74,11 @@ void DEC_Knowledge_PopulationFlowPart::load( MIL_CheckPointInArchive& file, cons
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPart::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << shape_
-         << rRelevance_
-         << rLastRelevanceSent_
-         << nTimeLastUpdate_
-         << bPerceived_;
+    file << shape_;
+    file << rRelevance_;
+    file << rLastRelevanceSent_;
+    file << nTimeLastUpdate_;
+    file << bPerceived_;
 }
 
 // -----------------------------------------------------------------------------

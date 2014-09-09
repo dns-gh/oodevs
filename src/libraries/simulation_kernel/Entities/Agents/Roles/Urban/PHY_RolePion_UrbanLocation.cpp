@@ -59,10 +59,10 @@ PHY_RolePion_UrbanLocation::~PHY_RolePion_UrbanLocation()
 void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_UrbanObject_ABC* wrapper;
-    file >> wrapper
-         >> isInCity_
-         >> isFlying_
-         >> collisions_;
+    file >> wrapper;
+    file >> isInCity_;
+    file >> isFlying_;
+    file >> collisions_;
 
     urbanObject_ = wrapper;
     if( urbanObject_ )
@@ -76,9 +76,9 @@ void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& file, const unsi
 void PHY_RolePion_UrbanLocation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << urbanObject_;
-    file << isInCity_
-         << isFlying_
-         << collisions_;
+    file << isInCity_;
+    file << isFlying_;
+    file << collisions_;
 }
 
 // -----------------------------------------------------------------------------

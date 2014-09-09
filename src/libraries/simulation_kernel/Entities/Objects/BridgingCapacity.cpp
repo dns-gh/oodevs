@@ -62,10 +62,10 @@ BridgingCapacity::~BridgingCapacity()
 void BridgingCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     bool isPathData = true;
-    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         >> type_
-         >> bridge_
-         >> isPathData;
+    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file >> type_;
+    file >> bridge_;
+    file >> isPathData;
     if( isPathData )
         CreatePathData();
 }
@@ -77,10 +77,10 @@ void BridgingCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 void BridgingCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     bool isPathData = IsPathData();
-    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         << type_
-         << bridge_
-         << isPathData;
+    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file << type_;
+    file << bridge_;
+    file << isPathData;
 }
 
 // -----------------------------------------------------------------------------

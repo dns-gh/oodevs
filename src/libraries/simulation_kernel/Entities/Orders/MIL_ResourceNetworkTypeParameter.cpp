@@ -93,8 +93,8 @@ bool MIL_ResourceNetworkTypeParameter::ToElement( sword::MissionParameter_Value&
 void MIL_ResourceNetworkTypeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     std::string name;
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> name;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> name;
     pNetworkType_ = PHY_ResourceNetworkType::Find( name );
 }
 
@@ -105,9 +105,13 @@ void MIL_ResourceNetworkTypeParameter::load( MIL_CheckPointInArchive& file, cons
 void MIL_ResourceNetworkTypeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     if( !pNetworkType_ )
-        file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-             << "";
+    {
+        file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+        file << "";
+    }
     else
-        file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-             << pNetworkType_->GetName();
+    {
+        file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+        file << pNetworkType_->GetName();
+    }
 }

@@ -72,9 +72,9 @@ void save_construct_data( Archive& archive, const MIL_Automate* automat, const u
     unsigned int type = automat->pType_->GetID();
     unsigned int id = automat->GetID();
     const MissionController_ABC* const controller = &automat->pOrderManager_->GetController();
-    archive << type
-            << id
-            << controller;
+    archive << type;
+    archive << id;
+    archive << controller;
 }
 
 template< typename Archive >
@@ -83,9 +83,9 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
     unsigned int type;
     unsigned int nID;
     MissionController_ABC* controller = 0;
-    archive >> type
-            >> nID
-            >> controller;
+    archive >> type;
+    archive >> nID;
+    archive >> controller;
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( type );
     assert( pType );
     ::new( automat ) MIL_Automate( *pType, nID, *controller );

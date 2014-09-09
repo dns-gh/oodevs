@@ -78,8 +78,8 @@ bool MIL_DateTimeParameter::ToElement( sword::MissionParameter_Value& elem ) con
 // -----------------------------------------------------------------------------
 void MIL_DateTimeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> dateTime_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> dateTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +88,6 @@ void MIL_DateTimeParameter::load( MIL_CheckPointInArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void MIL_DateTimeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << dateTime_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << dateTime_;
 }

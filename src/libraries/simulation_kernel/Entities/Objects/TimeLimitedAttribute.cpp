@@ -103,9 +103,9 @@ TimeLimitedAttribute::~TimeLimitedAttribute()
 template< typename Archive >
 void TimeLimitedAttribute::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & nLifeTime_
-         & nDeathTimeStep_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file & nLifeTime_;
+    file & nDeathTimeStep_;
 }
 
 // -----------------------------------------------------------------------------

@@ -50,8 +50,8 @@ BypassableCapacity::~BypassableCapacity()
 template< typename Archive >
 void BypassableCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & bypassSpeed_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & bypassSpeed_;
 }
 
 // -----------------------------------------------------------------------------

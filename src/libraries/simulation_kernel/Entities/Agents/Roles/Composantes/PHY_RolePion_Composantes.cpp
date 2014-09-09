@@ -95,8 +95,8 @@ bool PHY_RolePion_Composantes::T_ComposanteTypeProperties::HasUsableComposantes(
 template< typename Archive >
 void PHY_RolePion_Composantes::T_ComposanteTypeProperties::serialize( Archive& file, const unsigned int )
 {
-    file & nbrsPerState_
-         & bHasChanged_;
+    file & nbrsPerState_;
+    file & bHasChanged_;
 }
 
 
@@ -169,23 +169,23 @@ PHY_RolePion_Composantes::~PHY_RolePion_Composantes()
 template< typename Archive >
 void PHY_RolePion_Composantes::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Composantes >( *this )
-         & owner_
-         & composantes_
-         & lentComposantes_
-         & borrowedComposantes_
-         & composanteTypes_
-         & nNbrComposanteChanged_
-         & nNbrUsableComposantes_
-         & rOperationalState_
-         & rMajorOperationalState_
-         & pMajorComposante_
-         & nNeutralizationEndTimeStep_
-         & maintenanceComposanteStates_
-         & nTickRcMaintenanceQuerySent_
-         & bIsLoaded_
-         & bUnderIndirectFire_
-         & bNeutralized_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Composantes >( *this );
+    file & owner_;
+    file & composantes_;
+    file & lentComposantes_;
+    file & borrowedComposantes_;
+    file & composanteTypes_;
+    file & nNbrComposanteChanged_;
+    file & nNbrUsableComposantes_;
+    file & rOperationalState_;
+    file & rMajorOperationalState_;
+    file & pMajorComposante_;
+    file & nNeutralizationEndTimeStep_;
+    file & maintenanceComposanteStates_;
+    file & nTickRcMaintenanceQuerySent_;
+    file & bIsLoaded_;
+    file & bUnderIndirectFire_;
+    file & bNeutralized_;
 }
 
 //-----------------------------------------------------------------------------

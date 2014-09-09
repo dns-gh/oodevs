@@ -181,15 +181,15 @@ const std::map< std::string, float >& UrbanPhysicalCapacity::GetMotivations() co
 template< typename Archive >
 void UrbanPhysicalCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & height_
-         & floorNumber_
-         & occupation_
-         & trafficability_
-         & parkingFloors_
-         & roofShape_
-         & material_
-         & motivations_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & height_;
+    file & floorNumber_;
+    file & occupation_;
+    file & trafficability_;
+    file & parkingFloors_;
+    file & roofShape_;
+    file & material_;
+    file & motivations_;
 }
 
 // -----------------------------------------------------------------------------

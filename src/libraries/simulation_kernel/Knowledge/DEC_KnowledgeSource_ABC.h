@@ -64,8 +64,8 @@ private:
 template< typename Archive >
 void DEC_KnowledgeSource_ABC::serialize( Archive& archive, const unsigned int )
 {
-    archive & nPriority_
-            & pBlackBoard_;
+    archive & nPriority_;
+    archive & pBlackBoard_;
 }
 
 #endif // __DEC_KnowledgeSource_ABC_h_

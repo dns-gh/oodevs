@@ -60,8 +60,8 @@ BorderCapacity::BorderCapacity( const BorderCapacity& )
 template< typename Archive >
 void BorderCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
     // $$$ RC LDC 2012-03-07 Quid populationsInside_ populationsNotified_;
 }
 

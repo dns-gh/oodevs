@@ -164,17 +164,17 @@ void MIL_Object_ABC::Initialize( const DEC_Gen_Object& genObject )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< TER_Object_ABC >( *this )
-         >> id_;
+    file >> boost::serialization::base_object< TER_Object_ABC >( *this );
+    file >> id_;
     idManager_.GetId( id_, true );
     std::string type;
     file >> type;
     pType_ = &file.GetObjectTypeResolver().FindType( type );
-    file >> pArmy_
-         >> bMarkedForDestruction_
-         >> bReadyForDeletion_
-         >> bNeedDestructionOnNextUpdate_
-         >> interaction_;
+    file >> pArmy_;
+    file >> bMarkedForDestruction_;
+    file >> bReadyForDeletion_;
+    file >> bNeedDestructionOnNextUpdate_;
+    file >> interaction_;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,14 +183,14 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< TER_Object_ABC >( *this )
-         << id_;
+    file << boost::serialization::base_object< TER_Object_ABC >( *this );
+    file << id_;
     file << pType_->GetName();
-    file << pArmy_
-         << bMarkedForDestruction_
-         << bReadyForDeletion_
-         << bNeedDestructionOnNextUpdate_
-         << interaction_;
+    file << pArmy_;
+    file << bMarkedForDestruction_;
+    file << bReadyForDeletion_;
+    file << bNeedDestructionOnNextUpdate_;
+    file << interaction_;
 }
 
 // -----------------------------------------------------------------------------

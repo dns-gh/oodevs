@@ -71,11 +71,11 @@ DEC_Knowledge_ObjectCollision::~DEC_Knowledge_ObjectCollision()
 template< typename Archive >
 void DEC_Knowledge_ObjectCollision::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         & const_cast< MIL_Agent_ABC*& >( pAgentColliding_ )
-         & pObject_
-         & vPosition_
-         & bIsValid_;
+    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file & const_cast< MIL_Agent_ABC*& >( pAgentColliding_ );
+    file & pObject_;
+    file & vPosition_;
+    file & bIsValid_;
 }
 
 // -----------------------------------------------------------------------------

@@ -80,8 +80,8 @@ void FireAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     std::string className;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar >> className
-       >> maxCombustionEnergy_;
+    ar >> className;
+    ar >> maxCombustionEnergy_;
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
         throw MASA_EXCEPTION( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
@@ -94,8 +94,8 @@ void FireAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void FireAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar << pClass_->GetName()
-       << maxCombustionEnergy_;
+    ar << pClass_->GetName();
+    ar << maxCombustionEnergy_;
 }
 
 // -----------------------------------------------------------------------------

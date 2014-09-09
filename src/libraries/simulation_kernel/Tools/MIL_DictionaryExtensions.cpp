@@ -107,8 +107,8 @@ void MIL_DictionaryExtensions::load( MIL_CheckPointInArchive& file, const unsign
         std::string second;
         for( std::size_t i = 0; i < size; ++i )
         {
-            file >> first
-                 >> second;
+            file >> first;
+            file >> second;
             extensions_[ first ] = second;
         }
     }
@@ -123,8 +123,10 @@ void MIL_DictionaryExtensions::save( MIL_CheckPointOutArchive& file, const unsig
     std::size_t size = extensions_.size();
     file << size;
     for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
-        file << it->first
-             << it->second;
+    {
+        file << it->first;
+        file << it->second;
+    }
 }
 
 // -----------------------------------------------------------------------------

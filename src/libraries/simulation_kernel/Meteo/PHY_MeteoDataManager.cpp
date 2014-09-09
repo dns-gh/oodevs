@@ -225,11 +225,11 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, swo
 void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     std::size_t size = 0;
-    file >> localCounter_
-         >> pGlobalMeteo_
-         >> pEphemeride_
-         >> const_cast< uint32_t& >( tickDuration_ )
-         >> size;
+    file >> localCounter_;
+    file >> pGlobalMeteo_;
+    file >> pEphemeride_;
+    file >> const_cast< uint32_t& >( tickDuration_ );
+    file >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile() );
     PHY_LocalMeteo* meteo = 0;
@@ -247,11 +247,11 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
 void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     std::size_t size = meteos_.size();
-    file << localCounter_
-         << pGlobalMeteo_
-         << pEphemeride_
-         << tickDuration_
-         << size;
+    file << localCounter_;
+    file << pGlobalMeteo_;
+    file << pEphemeride_;
+    file << tickDuration_;
+    file << size;
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         auto local = it->second.get();

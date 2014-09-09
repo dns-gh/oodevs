@@ -69,8 +69,8 @@ AltitudeModifierAttribute::~AltitudeModifierAttribute()
 template< typename Archive >
 void AltitudeModifierAttribute::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & height_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file & height_;
 }
 
 // -----------------------------------------------------------------------------

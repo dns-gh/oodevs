@@ -24,8 +24,8 @@ void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerception*
 {
     const MIL_Agent_ABC* const perceiver = &perception->perceiver_;
     unsigned long id = perception->nUrbanObjectId_;
-    archive << perceiver
-            << id;
+    archive << perceiver;
+    archive << id;
 }
 
 // -----------------------------------------------------------------------------
@@ -37,8 +37,8 @@ void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception* perce
 {
     MIL_Agent_ABC* perceiver;
     unsigned long id;
-    archive >> perceiver
-            >> id;
+    archive >> perceiver;
+    archive >> id;
     ::new( perception )DEC_Knowledge_UrbanPerception( *perceiver, id );
 }
 
@@ -73,10 +73,10 @@ DEC_Knowledge_UrbanPerception::~DEC_Knowledge_UrbanPerception()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_UrbanPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> const_cast< unsigned int& >( nID_ )
-         >> pCurrentPerceptionLevel_
-         >> pPreviousPerceptionLevel_;
+    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file >> const_cast< unsigned int& >( nID_ );
+    file >> pCurrentPerceptionLevel_;
+    file >> pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,10 +85,10 @@ void DEC_Knowledge_UrbanPerception::load( MIL_CheckPointInArchive& file, const u
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_UrbanPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << nID_
-         << pCurrentPerceptionLevel_
-         << pPreviousPerceptionLevel_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file << nID_;
+    file << pCurrentPerceptionLevel_;
+    file << pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

@@ -58,7 +58,9 @@ ActionManager::~ActionManager()
 template< typename Archive >
 void ActionManager::serialize( Archive& ar, const unsigned int )
 {
-    ar & ids_ & actions_ & orders_;
+    ar & ids_;
+    ar & actions_;
+    ar & orders_;
 }
 
 namespace

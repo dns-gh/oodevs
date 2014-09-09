@@ -85,15 +85,15 @@ PHY_RolePionLOG_Maintenance::~PHY_RolePionLOG_Maintenance()
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
-         >> bSystemEnabled_
-         >> priorities_
-         >> tacticalPriorities_;
+    file >> boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this );
+    file >> bSystemEnabled_;
+    file >> priorities_;
+    file >> tacticalPriorities_;
     sword::EnumLogMaintenanceWorkRate nID;
     file >> nID;
     pWorkRate_ = PHY_MaintenanceWorkRate::Find( nID );
-    file >> nWorkRateWarningRCTick_
-         >> consigns_;
+    file >> nWorkRateWarningRCTick_;
+    file >> consigns_;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,13 +103,13 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
 void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     sword::EnumLogMaintenanceWorkRate workRate = pWorkRate_->GetAsnID();
-    file << boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
-         << bSystemEnabled_
-         << priorities_
-         << tacticalPriorities_
-         << workRate
-         << nWorkRateWarningRCTick_
-         << consigns_;
+    file << boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this );
+    file << bSystemEnabled_;
+    file << priorities_;
+    file << tacticalPriorities_;
+    file << workRate;
+    file << nWorkRateWarningRCTick_;
+    file << consigns_;
 }
 
 // -----------------------------------------------------------------------------

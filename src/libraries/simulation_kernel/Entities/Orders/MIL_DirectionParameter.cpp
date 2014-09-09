@@ -92,8 +92,8 @@ bool MIL_DirectionParameter::ToElement( sword::MissionParameter_Value& elem ) co
 // -----------------------------------------------------------------------------
 void MIL_DirectionParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> heading_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> heading_;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +102,6 @@ void MIL_DirectionParameter::load( MIL_CheckPointInArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 void MIL_DirectionParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << heading_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << heading_;
 }

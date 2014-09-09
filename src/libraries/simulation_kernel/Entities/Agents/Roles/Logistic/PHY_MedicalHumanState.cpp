@@ -84,17 +84,17 @@ PHY_MedicalHumanState::~PHY_MedicalHumanState()
 // -----------------------------------------------------------------------------
 void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< unsigned int& >( nID_ )
-         >> const_cast< unsigned int& >( nCreationTick_ )
-         >> pPion_
-         >> pHuman_
-         >> pConsign_
-         >> vHumanPosition_
-         >> bDiagnosed_
-         >> bSorted_
-         >> bShouldGoBackToWar_
-         >> bHandledByMedical_
-         >> bEvacuatedByThirdParty_;
+    file >> const_cast< unsigned int& >( nID_ );
+    file >> const_cast< unsigned int& >( nCreationTick_ );
+    file >> pPion_;
+    file >> pHuman_;
+    file >> pConsign_;
+    file >> vHumanPosition_;
+    file >> bDiagnosed_;
+    file >> bSorted_;
+    file >> bShouldGoBackToWar_;
+    file >> bHandledByMedical_;
+    file >> bEvacuatedByThirdParty_;
     logistic::RegisterConsignId( nID_ );
 }
 
@@ -104,17 +104,17 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void PHY_MedicalHumanState::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << nID_
-         << nCreationTick_
-         << pPion_
-         << pHuman_
-         << pConsign_
-         << vHumanPosition_
-         << bDiagnosed_
-         << bSorted_
-         << bShouldGoBackToWar_
-         << bHandledByMedical_
-         << bEvacuatedByThirdParty_;
+    file << nID_;
+    file << nCreationTick_;
+    file << pPion_;
+    file << pHuman_;
+    file << pConsign_;
+    file << vHumanPosition_;
+    file << bDiagnosed_;
+    file << bSorted_;
+    file << bShouldGoBackToWar_;
+    file << bHandledByMedical_;
+    file << bEvacuatedByThirdParty_;
 }
 
 // -----------------------------------------------------------------------------

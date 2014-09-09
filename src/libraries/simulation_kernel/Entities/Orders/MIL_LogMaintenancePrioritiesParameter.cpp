@@ -90,8 +90,8 @@ bool MIL_LogMaintenancePrioritiesParameter::ToElement( sword::MissionParameter_V
 // -----------------------------------------------------------------------------
 void MIL_LogMaintenancePrioritiesParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> priorities_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> priorities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -100,6 +100,6 @@ void MIL_LogMaintenancePrioritiesParameter::load( MIL_CheckPointInArchive& file,
 // -----------------------------------------------------------------------------
 void MIL_LogMaintenancePrioritiesParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << priorities_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << priorities_;
 }

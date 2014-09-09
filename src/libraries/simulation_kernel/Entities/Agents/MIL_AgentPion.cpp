@@ -181,8 +181,8 @@ void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const uns
 {
     unsigned int nTypeID = pion->GetType().GetID();
     const MissionController_ABC* const controller = &pion->GetController();
-    archive << nTypeID
-            << controller;
+    archive << nTypeID;
+    archive << controller;
 }
 
 template< typename Archive >
@@ -190,8 +190,8 @@ void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned 
 {
     unsigned int nTypeID;
     MissionController_ABC* controller = 0;
-    archive >> nTypeID
-            >> controller;
+    archive >> nTypeID;
+    archive >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
     ::new( pion ) MIL_AgentPion( *pType, *controller );
@@ -207,14 +207,14 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     MIL_DictionaryExtensions* pExtensions;
     MIL_Color* pColor;
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file >> pAutomate_
-         >> pKnowledgeBlackBoard_
-         >> pAffinities
-         >> pExtensions
-         >> pColor
-         >> criticalIntelligence_
-         >> app6Symbol_
-         >> level_;
+    file >> pAutomate_;
+    file >> pKnowledgeBlackBoard_;
+    file >> pAffinities;
+    file >> pExtensions;
+    file >> pColor;
+    file >> criticalIntelligence_;
+    file >> app6Symbol_;
+    file >> level_;
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );

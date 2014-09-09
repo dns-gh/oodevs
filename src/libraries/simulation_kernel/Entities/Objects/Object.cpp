@@ -108,9 +108,9 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_Color* pColor;
     file >> boost::serialization::base_object< MIL_Object >( *this );
-    file >> name_
-         >> externalIdentifier_
-         >> pColor;
+    file >> name_;
+    file >> externalIdentifier_;
+    file >> pColor;
     pColor_.reset( pColor );
 }
 
@@ -122,9 +122,9 @@ void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const MIL_Color* const pColor = pColor_.get();
     file << boost::serialization::base_object< MIL_Object >( *this );
-    file << name_
-         << externalIdentifier_
-         << pColor;
+    file << name_;
+    file << externalIdentifier_;
+    file << pColor;
 }
 
 // -----------------------------------------------------------------------------

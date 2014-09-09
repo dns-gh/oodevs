@@ -57,18 +57,18 @@ DEC_Knowledge_AgentDataRecognition::~DEC_Knowledge_AgentDataRecognition()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> nTimeLastUpdate_
-         >> rOperationalState_
-         >> rMajorOperationalState_
-         >> maxSquareRange_
-         >> composantes_
-         >> const_cast< MIL_Army_ABC*& >( pArmy_ )
-         >> bIsPC_;
+    file >> nTimeLastUpdate_;
+    file >> rOperationalState_;
+    file >> rMajorOperationalState_;
+    file >> maxSquareRange_;
+    file >> composantes_;
+    file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
+    file >> bIsPC_;
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
-    file >> bOperationalStateChanged_
-         >> bAgentTypeUpdated_;
+    file >> bOperationalStateChanged_;
+    file >> bAgentTypeUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,16 +78,16 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
 void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (unsigned int)-1 );
-    file << nTimeLastUpdate_
-         << rOperationalState_
-         << rMajorOperationalState_
-         << maxSquareRange_
-         << composantes_
-         << pArmy_
-         << bIsPC_
-         << agentType
-         << bOperationalStateChanged_
-         << bAgentTypeUpdated_;
+    file << nTimeLastUpdate_;
+    file << rOperationalState_;
+    file << rMajorOperationalState_;
+    file << maxSquareRange_;
+    file << composantes_;
+    file << pArmy_;
+    file << bIsPC_;
+    file << agentType;
+    file << bOperationalStateChanged_;
+    file << bAgentTypeUpdated_;
 }
 
 // -----------------------------------------------------------------------------

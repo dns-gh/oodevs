@@ -48,9 +48,9 @@ MissionController::~MissionController()
 template< typename T >
 void MissionController::load( T& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MissionController_ABC >( *this )
-         >> missions_
-         >> counter_;
+    file >> boost::serialization::base_object< MissionController_ABC >( *this );
+    file >> missions_;
+    file >> counter_;
     loaded_ = true;
 }
 
@@ -61,9 +61,9 @@ void MissionController::load( T& file, const unsigned int )
 template< typename T >
 void MissionController::save( T& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MissionController_ABC >( *this )
-         << missions_
-         << counter_;
+    file << boost::serialization::base_object< MissionController_ABC >( *this );
+    file << missions_;
+    file << counter_;
 }
 
 template< typename Archive >

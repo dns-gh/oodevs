@@ -50,9 +50,9 @@ PHY_PerceptionSurfaceObject::~PHY_PerceptionSurfaceObject()
 // -----------------------------------------------------------------------------
 void PHY_PerceptionSurfaceObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> pSensorType_
-         >> vOrigin_
-         >> rHeight_;
+    file >> pSensorType_;
+    file >> vOrigin_;
+    file >> rHeight_;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,9 +61,9 @@ void PHY_PerceptionSurfaceObject::load( MIL_CheckPointInArchive& file, const uns
 // -----------------------------------------------------------------------------
 void PHY_PerceptionSurfaceObject::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pSensorType_
-         << vOrigin_
-         << rHeight_;
+    file << pSensorType_;
+    file << vOrigin_;
+    file << rHeight_;
 }
 
 // -----------------------------------------------------------------------------

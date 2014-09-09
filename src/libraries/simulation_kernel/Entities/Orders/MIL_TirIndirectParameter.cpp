@@ -78,8 +78,8 @@ bool MIL_TirIndirectParameter::ToElement( sword::MissionParameter_Value& elem ) 
 // -----------------------------------------------------------------------------
 void MIL_TirIndirectParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> data_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> data_;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +88,6 @@ void MIL_TirIndirectParameter::load( MIL_CheckPointInArchive& file, const unsign
 // -----------------------------------------------------------------------------
 void MIL_TirIndirectParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << data_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << data_;
 }

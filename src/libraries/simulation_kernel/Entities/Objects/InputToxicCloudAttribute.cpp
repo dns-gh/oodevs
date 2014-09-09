@@ -102,10 +102,10 @@ InputToxicCloudAttribute::~InputToxicCloudAttribute()
 void InputToxicCloudAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar >> filename_
-       >> field_
-       >> dataField_
-       >> bExport_;
+    ar >> filename_;
+    ar >> field_;
+    ar >> dataField_;
+    ar >> bExport_;
     LoadConfig();
 }
 
@@ -116,10 +116,10 @@ void InputToxicCloudAttribute::load( MIL_CheckPointInArchive& ar, const unsigned
 void InputToxicCloudAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar << filename_
-       << field_
-       << dataField_
-       << bExport_;
+    ar << filename_;
+    ar << field_;
+    ar << dataField_;
+    ar << bExport_;
 }
 
 // -----------------------------------------------------------------------------

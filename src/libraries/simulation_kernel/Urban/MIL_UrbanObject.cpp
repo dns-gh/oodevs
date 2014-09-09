@@ -366,15 +366,15 @@ void MIL_UrbanObject::WritePointVector( xml::xostream& xos , const T_PointVector
 void MIL_UrbanObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_UrbanObject_ABC >( *this );
-    file >> nUrbanId_
-         >> name_
-         >> parent_
-         >> color_.red_
-         >> color_.green_
-         >> color_.blue_
-         >> color_.alpha_
-         >> inhabitants_
-         >> livingAreas_;
+    file >> nUrbanId_;
+    file >> name_;
+    file >> parent_;
+    file >> color_.red_;
+    file >> color_.green_;
+    file >> color_.blue_;
+    file >> color_.alpha_;
+    file >> inhabitants_;
+    file >> livingAreas_;
     if( parent_ )
         static_cast< tools::Resolver< MIL_UrbanObject_ABC >* >( parent_ )->Register( nUrbanId_, *this );
 }
@@ -386,15 +386,15 @@ void MIL_UrbanObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_UrbanObject::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_UrbanObject_ABC >( *this );
-    file << nUrbanId_
-         << name_
-         << parent_
-         << color_.red_
-         << color_.green_
-         << color_.blue_
-         << color_.alpha_
-         << inhabitants_
-         << livingAreas_;
+    file << nUrbanId_;
+    file << name_;
+    file << parent_;
+    file << color_.red_;
+    file << color_.green_;
+    file << color_.blue_;
+    file << color_.alpha_;
+    file << inhabitants_;
+    file << livingAreas_;
 }
 
 // -----------------------------------------------------------------------------
