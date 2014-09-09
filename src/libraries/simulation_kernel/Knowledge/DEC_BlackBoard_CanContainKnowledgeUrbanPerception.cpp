@@ -75,6 +75,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::Clear()
 {
     for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
         delete it->second;
+    perceptions_.clear();
 }
 
 // -----------------------------------------------------------------------------
