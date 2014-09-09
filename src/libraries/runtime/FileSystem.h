@@ -51,7 +51,7 @@ public:
     virtual void        Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const;
     virtual T_Unpacker  Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const;
     virtual T_Packer    Pack( io::Writer_ABC& dst, ArchiveFormat fmt ) const;
-    virtual T_Writer    MakeGzipFilter( io::Writer_ABC& writer ) const;
+    virtual T_Writer    MakeDeflateFilter( io::Writer_ABC& writer ) const;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const;
     virtual Path        MakeAnyPath( const Path& root ) const;
     virtual std::time_t GetLastWrite( const Path& file ) const;

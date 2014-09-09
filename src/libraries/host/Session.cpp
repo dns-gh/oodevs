@@ -1278,7 +1278,7 @@ bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& file, int l
         input = GetOutput() / file;
     if( !deps_.fs.Exists( input ) )
         return false;
-    deps_.fs.LimitedReadFile( deflate ? *deps_.fs.MakeGzipFilter( sink ) : sink, input, limit );
+    deps_.fs.LimitedReadFile( deflate ? *deps_.fs.MakeDeflateFilter( sink ) : sink, input, limit );
     return true;
 }
 
