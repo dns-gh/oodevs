@@ -255,7 +255,7 @@ unsigned int RightsPlugin::AcquireClientId()
     for(;;)
     {
         // reserve and set top bit for replayer clients
-        const int32_t mask = 1 << 31;
+        static const int32_t mask = 1 << 31;
         const auto id = replayer_ ? countID_ | mask : countID_ & ~mask;
         if( id && !ids_.count( id ) )
             return id;
