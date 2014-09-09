@@ -282,7 +282,7 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
         controllers_.controller_.Update( gui::DictionaryUpdated( *static_cast< Entity_ABC* >( this ), tools::translate( "Crowd", content.c_str() ) ) );
 
     if( message.has_name() )
-        name_ = QString::fromStdString( message.name() );
+        SetName( QString::fromStdString( message.name() ) );
     Touch();
 }
 

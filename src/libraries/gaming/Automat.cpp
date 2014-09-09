@@ -78,6 +78,6 @@ const kernel::AutomatType& Automat::GetType() const
 void Automat::DoUpdate( const sword::AutomatAttributes& message )
 {
     if( message.has_name() )
-        name_ = QString::fromStdString( message.name() );
+        SetName( QString::fromStdString( message.name() ) );
     Touch();
 }

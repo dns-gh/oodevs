@@ -64,7 +64,7 @@ const kernel::ObjectType& Object::GetType() const
 void Object::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.has_name() )
-        name_ = QString::fromStdString( message.name() );
+        SetName( QString::fromStdString( message.name() ) );
     Touch();
 }
 

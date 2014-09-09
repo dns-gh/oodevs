@@ -91,12 +91,6 @@ protected:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void UpdateName( const std::string& name );
-    //@}
-
-private:
     //! @name Copy/Assignment
     //@{
     TacticalLine_ABC( const TacticalLine_ABC& );

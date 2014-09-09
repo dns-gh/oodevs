@@ -141,8 +141,7 @@ void Drawing::DoUpdate( const sword::ShapeUpdate& message )
     if(shape.has_points() )
         SetLocation( shape.points() );
     if( shape.has_name() )
-        name_ = shape.name().c_str();
-
+        SetName( QString::fromStdString( shape.name() ) );
     SetText( shape );
     controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
     gui::DrawerShape::Update();

@@ -73,6 +73,6 @@ const kernel::Karma& Team::GetKarma() const
 void Team::DoUpdate( const sword::PartyUpdate& message )
 {
     if( message.has_name() )
-        name_ = QString::fromStdString( message.name() );
+        SetName( QString::fromStdString( message.name() ) );
     Touch();
 }

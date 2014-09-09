@@ -201,9 +201,7 @@ void Pathfind::DoUpdate( const sword::Pathfind& msg )
     if( msg.request().has_name() )
     {
         pathfind_ = msg;
-        name_ = pathfind_.request().name().c_str();
-        controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
-        Touch();
+        Rename( QString::fromStdString( pathfind_.request().name() ) );
     }
 }
 

@@ -164,7 +164,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         motivation_ = msg.motivation();
     UpdateUrbanObjectsDictionnary();
     if( msg.has_name() )
-        name_ = QString::fromStdString( msg.name() );
+        SetName( QString::fromStdString( msg.name() ) );
     Touch();
 }
 

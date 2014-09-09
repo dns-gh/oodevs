@@ -124,20 +124,14 @@ void TacticalLine_ABC::WriteDiffusion( sword::Diffusion& diffusion ) const
     static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ).WriteTo( diffusion );
 }
 
-void TacticalLine_ABC::UpdateName( const std::string& name )
-{
-    name_ = name.c_str();
-    controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
-    Touch();
-}
-
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::DoUpdate
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::DoUpdate( const sword::PhaseLineUpdate& message )
 {
-    UpdateName( message.tactical_line().name() );
+    SetName( QString::fromStdString( message.tactical_line().name() ) );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,5 +140,6 @@ void TacticalLine_ABC::DoUpdate( const sword::PhaseLineUpdate& message )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::DoUpdate( const sword::LimitUpdate& message )
 {
-    UpdateName( message.tactical_line().name() );
+    SetName( QString::fromStdString( message.tactical_line().name() ) );
+    Touch();
 }

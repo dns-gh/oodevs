@@ -81,6 +81,6 @@ void Formation::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& v
 void Formation::DoUpdate( const sword::FormationUpdate& message )
 {
     if( message.has_name() )
-        name_ = QString::fromStdString( message.name() );
+        SetName( QString::fromStdString( message.name() ) );
     Touch();
 }

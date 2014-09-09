@@ -57,6 +57,7 @@ public:
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual void Rename( const QString& name );
+    virtual void SetName( const QString& name );
     virtual bool CanBeRenamed() const;
     void SetRenameObserver( const T_RenameObserver& renameObserver );
 
@@ -128,15 +129,29 @@ EntityImplementation< I >::EntityImplementation( kernel::Controller& controller,
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityImplementation::SetName
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::SetName( const QString& name )
+{
+    if( name == name_ )
+        return;
+    const QString property = tools::translate( "EntityImplementation", "Info/Name" );
+    name_ = name;
+    controller_.Update( gui::DictionaryUpdated( *this, property ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityImplementation::Rename
 // Created: LGY 2012-08-24
 // -----------------------------------------------------------------------------
 template< typename I >
 void EntityImplementation< I >::Rename( const QString& name )
 {
-    const QString property = tools::translate( "EntityImplementation", "Info/Name" );
-    name_ = name;
-    controller_.Update( gui::DictionaryUpdated( This(), property ) );
+    if( name == name_ )
+        return;
+    SetName( name );
     Touch();
     if( renameObserver_ )
         renameObserver_( name );

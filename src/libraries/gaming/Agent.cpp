@@ -206,6 +206,6 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_sensors_direction() )
         sensorsDirection_ = message.sensors_direction().heading();
     if( message.has_name() )
-        name_ = QString::fromStdString( message.name() );
+        SetName( QString::fromStdString( message.name() ) );
     Touch();
 }
