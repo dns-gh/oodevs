@@ -19,7 +19,7 @@
 // Created: JSR 2013-01-18
 // -----------------------------------------------------------------------------
 PopulationTreeView::PopulationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : gui::PopulationTreeView( objectName, controllers, profile, modelObserver, parent )
+    : gui::PopulationTreeView( objectName, controllers, profile, modelObserver, true, parent )
     , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).ToUTF8().c_str() )
 {
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &PopulationTreeView::GetEntityPixmap, this, _1 ), this, 20 ) );
@@ -55,13 +55,4 @@ std::vector< const QPixmap* > PopulationTreeView::GetEntityPixmap( const kernel:
                         break;
                     }
     return ret;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationTreeView::ItemSpecificFlags
-// Created: ABR 2014-09-02
-// -----------------------------------------------------------------------------
-Qt::ItemFlags PopulationTreeView::ItemSpecificFlags( const kernel::Entity_ABC& ) const
-{
-    return Qt::ItemIsEditable;
 }

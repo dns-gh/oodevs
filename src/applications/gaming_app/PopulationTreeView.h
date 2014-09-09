@@ -31,7 +31,6 @@ public:
     //! @name Operations
     //@{
     virtual std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
-    virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

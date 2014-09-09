@@ -12,8 +12,14 @@
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
 template< typename Entity >
-EntityTreeView< Entity >::EntityTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
+EntityTreeView< Entity >::EntityTreeView( const QString& objectName,
+                                          kernel::Controllers& controllers,
+                                          const kernel::Profile_ABC& profile,
+                                          ModelObserver_ABC& modelObserver,
+                                          bool editable,
+                                          QWidget* parent /*= 0*/ )
     : EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
+    , editable_( editable )
 {
     dataModel_.setColumnCount( 1 );
     controllers_.Update( *this );
@@ -78,4 +84,16 @@ inline
 bool EntityTreeView< Entity >::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 {
     return entity.GetTypeName() != Entity::typeName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView::ItemSpecificFlags
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+template< typename Entity >
+inline
+Qt::ItemFlags EntityTreeView< Entity >::ItemSpecificFlags( const kernel::Entity_ABC& entity ) const
+{
+    const Qt::ItemFlags parentFlags = EntityTreeView_ABC::ItemSpecificFlags( entity );
+    return editable_ ? Qt::ItemIsEditable | parentFlags: parentFlags;
 }

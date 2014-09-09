@@ -17,7 +17,7 @@
 // Created: JSR 2012-09-24
 // -----------------------------------------------------------------------------
 InhabitantTreeView::InhabitantTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : gui::InhabitantTreeView( objectName, controllers, profile, modelObserver, parent )
+    : gui::InhabitantTreeView( objectName, controllers, profile, modelObserver, true, parent )
 {
     // NOTHING
 }

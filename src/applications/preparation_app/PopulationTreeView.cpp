@@ -21,7 +21,7 @@
 // Created: JSR 2012-09-21
 // -----------------------------------------------------------------------------
 PopulationTreeView::PopulationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : gui::PopulationTreeView( objectName, controllers, profile, modelObserver, parent )
+    : gui::PopulationTreeView( objectName, controllers, profile, modelObserver, true, parent )
 {
     EnableDragAndDrop( true );
 }
@@ -68,9 +68,9 @@ void PopulationTreeView::dragMoveEvent( QDragMoveEvent* pEvent )
 // Name: PopulationTreeView::ItemSpecificFlags
 // Created: JSR 2012-09-21
 // -----------------------------------------------------------------------------
-Qt::ItemFlags PopulationTreeView::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
+Qt::ItemFlags PopulationTreeView::ItemSpecificFlags( const kernel::Entity_ABC& entity ) const
 {
-    return Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+    return gui::PopulationTreeView::ItemSpecificFlags( entity ) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 // -----------------------------------------------------------------------------

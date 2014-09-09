@@ -18,7 +18,7 @@ using namespace gui;
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
 UserProfilePopulationRights::UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name, const kernel::Profile_ABC& profile )
-    : PopulationTreeView(objectName, controllers, profile, observer_, pParent )
+    : PopulationTreeView(objectName, controllers, profile, observer_, false, pParent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
     connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );

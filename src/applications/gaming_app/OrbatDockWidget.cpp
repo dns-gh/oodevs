@@ -147,13 +147,15 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                         filter,
                                                         *observer_ ) );
     // Populations
+    const bool editable = true; // RichView contructor takes reference
     Configure( views_, mainTab, toolbar, tools::translate( "OrbatDockWidget", "Populations" ), *renameInterface_,
                new gui::RichView< gui::InhabitantTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
                                                              "InhabitantTreeView",
                                                              mainTab,
                                                              controllers,
                                                              filter,
-                                                             *observer_ ) );
+                                                             *observer_,
+                                                             editable ) );
     // Populations
     Configure( views_, mainTab, toolbar, tools::translate( "OrbatDockWidget", "Drawings" ), *renameInterface_,
                new gui::RichView< gui::DrawingsTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
