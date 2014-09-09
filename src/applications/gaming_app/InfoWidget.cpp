@@ -32,6 +32,7 @@ InfoWidget::InfoWidget( QWidget* parent,
                         const gui::EntitySymbols& icons,
                         gui::ItemFactory_ABC& itemFactory,
                         gui::DisplayExtractor& extractor,
+                        const kernel::KnowledgeConverter_ABC& converter,
                         Model& model,
                         const Simulation& simulation,
                         SimulationController& simulationController,
@@ -54,7 +55,7 @@ InfoWidget::InfoWidget( QWidget* parent,
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );
     tabs->addTab( new InfoReportsTab( tabs, controllers, extractor ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
-    tabs->addTab( new InfoConflictsTab( tabs, controllers, extractor ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
+    tabs->addTab( new InfoConflictsTab( tabs, controllers, extractor, converter ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
     tabs->addTab( new InfoMissionsTab( tabs, controllers, extractor ), MAKE_PIXMAP( mission ), tr( "Missions" ) );
     tabs->setCurrentPage( 0 );
 }

@@ -20,12 +20,14 @@
 // Name: ObjectReportPanel constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ObjectReportPanel::ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
+ObjectReportPanel::ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel,
+    kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+    const kernel::KnowledgeConverter_ABC& converter )
     : InfoPanel_ABC( parent, panel, tools::translate( "ObjectReportPanel", "Reports" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {
-    setWidget( new FireResultListView( this, controllers, extractor ) );
+    setWidget( new FireResultListView( this, controllers, extractor, converter ) );
     controllers_.Register( *this );
 }
 

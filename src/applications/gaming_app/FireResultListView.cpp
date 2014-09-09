@@ -11,9 +11,12 @@
 #include "FireResultListView.h"
 #include "moc_FireResultListView.cpp"
 #include "clients_gui/DisplayExtractor.h"
+#include "clients_gui/InternalLinks.h"
 #include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/KnowledgeConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -29,10 +32,12 @@
 // Name: FireResultListView constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
+FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& controllers,
+    gui::DisplayExtractor& extractor, const kernel::KnowledgeConverter_ABC& converter )
     : QTreeView( parent )
     , controllers_( controllers )
     , extractor_( extractor )
+    , converter_( converter )
     , selected_( controllers )
 {
     model_.setHorizontalHeaderLabels( QStringList() << tr( "Date" )
@@ -82,18 +87,26 @@ void FireResultListView::OnLinkClicked( const QString& url, const QModelIndex& i
 // Name: FireResultListView::GetFirerName
 // Created: ABR 2014-08-25
 // -----------------------------------------------------------------------------
-QString FireResultListView::GetFirerName( const kernel::Entity_ABC* firer )
+QString FireResultListView::GetFirerName( const kernel::Entity_ABC* firer ) const
 {
     if( !firer )
         return "";
     const std::string& typeName = firer->GetTypeName();
     if( typeName == kernel::Agent_ABC::typeName_ )
-        return extractor_.GetDisplayName( *static_cast< const kernel::Agent_ABC* >( firer ) );
+        return GetDisplayName( *static_cast< const kernel::Agent_ABC* >( firer ) );
     else if( typeName == kernel::Population_ABC::typeName_ )
         return extractor_.GetDisplayName( *static_cast< const kernel::Population_ABC* >( firer ) );
     else if( typeName == kernel::Object_ABC::typeName_ )
         return extractor_.GetDisplayName( *static_cast< const kernel::Object_ABC* >( firer ) );
     return "";
+}
+
+QString FireResultListView::GetDisplayName( const kernel::Agent_ABC& agent ) const
+{
+    if( selected_ )
+        if( auto k = converter_.FindAgent( agent.GetId(), *selected_ ) )
+            return gui::InternalLinks::CreateLink( *k, k->GetName() );
+    return extractor_.GetDisplayName( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +154,7 @@ void FireResultListView::Display( const AgentFireResult& result )
     auto root = AddRoot( row, 0, extractor_.GetDisplayName( result.time_ ) );
     root->setData( result.time_, gui::Roles::SortRole );
     AddRoot( row, 1, GetFirerName( result.firer_ ) );
-    AddRoot( row, 2, extractor_.GetDisplayName( result.target_ ) );
+    AddRoot( row, 2, GetDisplayName( result.target_ ) );
 
     if( result.IsMiss() )
     {

@@ -17,6 +17,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class KnowledgeConverter_ABC;
     class Profile_ABC;
 }
 
@@ -54,6 +55,7 @@ public:
                        const gui::EntitySymbols& icons,
                        gui::ItemFactory_ABC& itemFactory,
                        gui::DisplayExtractor& extractor,
+                       const kernel::KnowledgeConverter_ABC& converter,
                        Model& model,
                        const Simulation& simulation,
                        SimulationController& simulationController,

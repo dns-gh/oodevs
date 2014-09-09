@@ -16,6 +16,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class KnowledgeConverter_ABC;
 }
 
 namespace gui
@@ -36,7 +37,8 @@ class InfoConflictsTab : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoConflictsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
+             InfoConflictsTab( QTabWidget* parent, kernel::Controllers& controllers,
+                 gui::DisplayExtractor& extractor, const kernel::KnowledgeConverter_ABC& converter );
     virtual ~InfoConflictsTab();
     //@}
 
