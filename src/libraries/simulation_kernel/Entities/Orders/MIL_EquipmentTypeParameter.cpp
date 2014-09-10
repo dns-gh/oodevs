@@ -90,8 +90,8 @@ bool MIL_EquipmentTypeParameter::ToElement( sword::MissionParameter_Value& elem 
 void MIL_EquipmentTypeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     std::string name;
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> name;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> name;
     pType_ = PHY_ComposanteTypePion::Find( name );
 }
 
@@ -101,6 +101,6 @@ void MIL_EquipmentTypeParameter::load( MIL_CheckPointInArchive& file, const unsi
 // -----------------------------------------------------------------------------
 void MIL_EquipmentTypeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pType_->GetName();
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << pType_->GetName();
 }

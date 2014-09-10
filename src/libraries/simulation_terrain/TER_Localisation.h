@@ -216,11 +216,11 @@ std::ostream& operator<<( std::ostream& os, const TER_Localisation& loc );
 template<class Archive>
 void TER_Localisation::load( Archive& ar, const unsigned int )
 {
-    ar >> nType_
-       >> pointVector_
-       >> bWasCircle_
-       >> vCircleCenter_
-       >> rCircleRadius_;
+    ar >> nType_;
+    ar >> pointVector_;
+    ar >> bWasCircle_;
+    ar >> vCircleCenter_;
+    ar >> rCircleRadius_;
     Initialize();
 }
 
@@ -231,11 +231,11 @@ void TER_Localisation::load( Archive& ar, const unsigned int )
 template<class Archive>
 void TER_Localisation::save( Archive& ar, const unsigned int ) const
 {
-    ar << nType_
-       << pointVector_
-       << bWasCircle_
-       << vCircleCenter_
-       << rCircleRadius_;
+    ar << nType_;
+    ar << pointVector_;
+    ar << bWasCircle_;
+    ar << vCircleCenter_;
+    ar << rCircleRadius_;
 }
 
 #endif // __TER_Localisation_h_

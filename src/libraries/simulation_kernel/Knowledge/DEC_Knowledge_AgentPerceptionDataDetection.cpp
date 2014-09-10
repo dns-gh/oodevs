@@ -63,18 +63,18 @@ DEC_Knowledge_AgentPerceptionDataDetection::~DEC_Knowledge_AgentPerceptionDataDe
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> nTimeLastUpdate_
-         >> vPosition_
-         >> vDirection_
-         >> rAltitude_
-         >> rSpeed_
-         >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
-         >> bPrisoner_
-         >> bRefugeeManaged_
-         >> bDead_
-         >> bWounded_
-         >> rPostureCompletionPercentage_
-         >> rPopulationDensity_;
+    file >> nTimeLastUpdate_;
+    file >> vPosition_;
+    file >> vDirection_;
+    file >> rAltitude_;
+    file >> rSpeed_;
+    file >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
+    file >> bPrisoner_;
+    file >> bRefugeeManaged_;
+    file >> bDead_;
+    file >> bWounded_;
+    file >> rPostureCompletionPercentage_;
+    file >> rPopulationDensity_;
     // Desérialisation des volumes par nom ( données "statiques" )
     std::size_t nNbr;
     unsigned int nID;
@@ -99,18 +99,18 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << nTimeLastUpdate_
-         << vPosition_
-         << vDirection_
-         << rAltitude_
-         << rSpeed_
-         << pArmySurrenderedTo_
-         << bPrisoner_
-         << bRefugeeManaged_
-         << bDead_
-         << bWounded_
-         << rPostureCompletionPercentage_
-         << rPopulationDensity_;
+    file << nTimeLastUpdate_;
+    file << vPosition_;
+    file << vDirection_;
+    file << rAltitude_;
+    file << rSpeed_;
+    file << pArmySurrenderedTo_;
+    file << bPrisoner_;
+    file << bRefugeeManaged_;
+    file << bDead_;
+    file << bWounded_;
+    file << rPostureCompletionPercentage_;
+    file << rPopulationDensity_;
     // Serialisation des volumes par nom ( données "statiques" )
     std::size_t size = visionVolumes_.size();
     for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )

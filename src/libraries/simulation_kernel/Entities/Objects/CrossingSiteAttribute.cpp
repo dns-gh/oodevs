@@ -85,10 +85,10 @@ template < typename Archive >
 void CrossingSiteAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    file & rWidth_
-         & rDepth_
-         & rCurrentSpeed_
-         & bBanksToFitOut_;
+    file & rWidth_;
+    file & rDepth_;
+    file & rCurrentSpeed_;
+    file & bBanksToFitOut_;
 }
 
 // -----------------------------------------------------------------------------

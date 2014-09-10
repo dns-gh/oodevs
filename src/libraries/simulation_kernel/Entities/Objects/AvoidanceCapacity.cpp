@@ -63,8 +63,8 @@ AvoidanceCapacity::AvoidanceCapacity( const AvoidanceCapacity& from )
 void AvoidanceCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    file >> avoid_
-         >> distance_;
+    file >> avoid_;
+    file >> distance_;
     const T_PointVector& points = avoid_.GetPoints();
     if( points.size() > 3 )
         data_ = CreateAndRegisterDynamicData( points, "" );
@@ -77,8 +77,8 @@ void AvoidanceCapacity::load( MIL_CheckPointInArchive& file, const unsigned int 
 void AvoidanceCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    file << avoid_
-         << distance_;
+    file << avoid_;
+    file << distance_;
 }
 
 // -----------------------------------------------------------------------------

@@ -62,7 +62,8 @@ private:
     template< typename Archive >
     void serialize( Archive& archive, const unsigned int )
     {
-        archive & data_ & boost::serialization::base_object< UserData_ABC >( *this );
+        archive & data_;
+        archive & boost::serialization::base_object< UserData_ABC >( *this );
     }
     //@}
 
@@ -112,7 +113,8 @@ private:
     template< typename Archive >
     void serialize( Archive& archive, const unsigned int )
     {
-        archive & data_ & boost::serialization::base_object< UserData_ABC >( *this );
+        archive & data_ ;
+        archive & boost::serialization::base_object< UserData_ABC >( *this );
     }
     //@}
 
@@ -156,7 +158,8 @@ private:
     template< typename Archive >
     void serialize( Archive& archive, const unsigned int )
     {
-        archive & data_ & boost::serialization::base_object< UserData_ABC >( *this );
+        archive & data_;
+        archive & boost::serialization::base_object< UserData_ABC >( *this );
     }
     //@}
 

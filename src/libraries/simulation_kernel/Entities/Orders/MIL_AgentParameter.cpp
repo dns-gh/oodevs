@@ -100,8 +100,8 @@ bool MIL_AgentParameter::ToElement( sword::MissionParameter_Value& elem ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> pDecision_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> pDecision_;
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +110,6 @@ void MIL_AgentParameter::load( MIL_CheckPointInArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MIL_AgentParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pDecision_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << pDecision_;
 }

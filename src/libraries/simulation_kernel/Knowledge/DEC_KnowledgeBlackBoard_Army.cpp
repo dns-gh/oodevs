@@ -66,10 +66,10 @@ DEC_KnowledgeBlackBoard_Army::~DEC_KnowledgeBlackBoard_Army()
 template< typename Archive >
 void DEC_KnowledgeBlackBoard_Army::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
-            & pArmy_
-            & pKnowledgeUrbanContainer_
-            & pKsUrbanKnowledgeSynthetizer_;
+    archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this );
+    archive & pArmy_;
+    archive & pKnowledgeUrbanContainer_;
+    archive & pKsUrbanKnowledgeSynthetizer_;
 }
 
 // -----------------------------------------------------------------------------

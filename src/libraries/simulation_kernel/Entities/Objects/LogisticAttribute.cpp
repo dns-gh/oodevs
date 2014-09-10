@@ -102,9 +102,9 @@ void LogisticAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 template < typename Archive > void LogisticAttribute::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & pLogisticHierarchy_
-         & idFromXML_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file & pLogisticHierarchy_;
+    file & idFromXML_;
 }
 
 // -----------------------------------------------------------------------------

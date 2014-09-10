@@ -63,9 +63,9 @@ TrafficabilityCapacity::~TrafficabilityCapacity()
 template< typename Archive >
 void TrafficabilityCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & default_
-         & maxWeight_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & default_;
+    file & maxWeight_;
 }
 
 // -----------------------------------------------------------------------------

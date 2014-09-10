@@ -117,10 +117,10 @@ BOOST_CLASS_EXPORT_KEY( DEC_PopulationDecision )
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ )
 {
-    archive << role->pEntity_
-            << role->gcPause_
-            << role->gcMult_
-            << role->logger_;
+    archive << role->pEntity_;
+    archive << role->gcPause_;
+    archive << role->gcMult_;
+    archive << role->logger_;
 }
 
 template< typename Archive >
@@ -130,10 +130,10 @@ void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const 
     unsigned int gcPause;
     unsigned int gcMult;
     sword::DEC_Logger* logger;
-    archive >> population
-            >> gcPause
-            >> gcMult
-            >> logger;
+    archive >> population;
+    archive >> gcPause;
+    archive >> gcMult;
+    archive >> logger;
     ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult, logger );
 }
 

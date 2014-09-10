@@ -33,8 +33,7 @@ DEC_BlackBoard_CanContainKnowledgeObjectCollision::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObjectCollision::~DEC_BlackBoard_CanContainKnowledgeObjectCollision()
 {
-    while( !collisions_.empty() )
-        DestroyKnowledgeObjectCollision( *collisions_.begin()->second );
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,6 +75,16 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::DestroyKnowledgeObjectCo
     if( collisions_.erase( &knowledge.GetObject() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObjectCollision::Clear()
+{
+    while( !collisions_.empty() )
+        DestroyKnowledgeObjectCollision( *collisions_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------

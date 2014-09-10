@@ -403,9 +403,9 @@ template< typename Archive >
 void PHY_HumansComposante::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< HumansComposante_ABC >( *this );
-    file & pComposante_
-         & humans_
-         & nNbrUsableHumans_;
+    file & pComposante_;
+    file & humans_;
+    file & nNbrUsableHumans_;
     assert( pComposante_ );
 }
 

@@ -36,12 +36,12 @@ void save_construct_data( Archive& archive, const ArmyFactory* factory, const un
     const PopulationFactory_ABC* const populationFactory = &factory->populationFactory_;
     const InhabitantFactory_ABC* const inhabitantFactory = &factory->inhabitantFactory_;
     const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = &factory->knowledgeGroupFactory_; // LTO
-    archive << automateFactory
-            << formationFactory
-            << objectFactory
-            << populationFactory
-            << inhabitantFactory
-            << knowledgeGroupFactory; // LTO
+    archive << automateFactory;
+    archive << formationFactory;
+    archive << objectFactory;
+    archive << populationFactory;
+    archive << inhabitantFactory;
+    archive << knowledgeGroupFactory;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,12 +57,12 @@ void load_construct_data( Archive& archive, ArmyFactory* factory, const unsigned
     PopulationFactory_ABC* populationFactory;
     InhabitantFactory_ABC* inhabitantFactory;
     KnowledgeGroupFactory_ABC* knowledgeGroupFactory; // LTO
-    archive >> automateFactory
-            >> formationFactory
-            >> objectFactory
-            >> populationFactory
-            >> inhabitantFactory
-            >> knowledgeGroupFactory; // LTO
+    archive >> automateFactory;
+    archive >> formationFactory;
+    archive >> objectFactory;
+    archive >> populationFactory;
+    archive >> inhabitantFactory;
+    archive >> knowledgeGroupFactory;
     ::new( factory )ArmyFactory( *automateFactory, *formationFactory, *objectFactory, *populationFactory, *inhabitantFactory, *knowledgeGroupFactory ); // LTO
 }
 
@@ -158,7 +158,7 @@ void ArmyFactory::InitializeDiplomacies()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::load
+// Name: ArmyFactory::load
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
 void ArmyFactory::load( MIL_CheckPointInArchive& file, const unsigned int )

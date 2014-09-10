@@ -217,28 +217,28 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     std::string name;
     file >> name;
     pObjectType_ = &file.GetObjectTypeResolver().FindType( name );
-    file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
-         >> pObjectKnown_
-         >> const_cast< unsigned int& >( objectId_ )
-         >> const_cast< unsigned int& >( nID_ )
-         >> groupId_
-         >> name_
-         >> nAttributesUpdated_
-         >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
-         >> localisation_
-         >> avoidanceLocalisation_;
+    file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ );
+    file >> pObjectKnown_;
+    file >> const_cast< unsigned int& >( objectId_ );
+    file >> const_cast< unsigned int& >( nID_ );
+    file >> groupId_;
+    file >> name_;
+    file >> nAttributesUpdated_;
+    file >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ );
+    file >> localisation_;
+    file >> avoidanceLocalisation_;
     idManager_.GetId( nID_, true );
-    file >> pCurrentPerceptionLevel_
-         >> pPreviousPerceptionLevel_
-         >> pMaxPerceptionLevel_
-         >> perceptionPerAutomateSet_
-         >> previousPerceptionPerAutomateSet_
-         >> nTimeLastUpdate_
-         >> rRelevance_
-         >> bValid_
-         >> bPerceptionDistanceHacked_
-         >> bSkipPreparation_
-         >> locationType_;
+    file >> pCurrentPerceptionLevel_;
+    file >> pPreviousPerceptionLevel_;
+    file >> pMaxPerceptionLevel_;
+    file >> perceptionPerAutomateSet_;
+    file >> previousPerceptionPerAutomateSet_;
+    file >> nTimeLastUpdate_;
+    file >> rRelevance_;
+    file >> bValid_;
+    file >> bPerceptionDistanceHacked_;
+    file >> bSkipPreparation_;
+    file >> locationType_;
 
     // récupération des noms des types
     std::size_t nSize;
@@ -265,29 +265,29 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
 {
     assert( pObjectType_ );
     std::string name = pObjectType_->GetName();
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << name
-         << pArmyKnowing_
-         << pObjectKnown_
-         << objectId_
-         << nID_
-         << groupId_
-         << name_
-         << nAttributesUpdated_
-         << pOwnerArmy_
-         << localisation_
-         << avoidanceLocalisation_
-         << pCurrentPerceptionLevel_
-         << pPreviousPerceptionLevel_
-         << pMaxPerceptionLevel_
-         << perceptionPerAutomateSet_
-         << previousPerceptionPerAutomateSet_
-         << nTimeLastUpdate_
-         << rRelevance_
-         << bValid_
-         << bPerceptionDistanceHacked_
-         << bSkipPreparation_
-         << locationType_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file << name;
+    file << pArmyKnowing_;
+    file << pObjectKnown_;
+    file << objectId_;
+    file << nID_;
+    file << groupId_;
+    file << name_;
+    file << nAttributesUpdated_;
+    file << pOwnerArmy_;
+    file << localisation_;
+    file << avoidanceLocalisation_;
+    file << pCurrentPerceptionLevel_;
+    file << pPreviousPerceptionLevel_;
+    file << pMaxPerceptionLevel_;
+    file << perceptionPerAutomateSet_;
+    file << previousPerceptionPerAutomateSet_;
+    file << nTimeLastUpdate_;
+    file << rRelevance_;
+    file << bValid_;
+    file << bPerceptionDistanceHacked_;
+    file << bSkipPreparation_;
+    file << locationType_;
 
     // On stocke les types selon leur nom
     std::size_t size = reconByAgentTypes_.size();

@@ -114,10 +114,10 @@ void DisasterAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void DisasterAttribute::load( MIL_CheckPointInArchive& archive, const unsigned int )
 {
-    archive >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-            >> model_
-            >> date_
-            >> files_;
+    archive >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    archive >> model_;
+    archive >> date_;
+    archive >> files_;
     pManager_->Initialize( model_, date_ );
 }
 
@@ -127,10 +127,10 @@ void DisasterAttribute::load( MIL_CheckPointInArchive& archive, const unsigned i
 // -----------------------------------------------------------------------------
 void DisasterAttribute::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
 {
-    archive << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-            << model_
-            << date_
-            << files_;
+    archive << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    archive << model_;
+    archive << date_;
+    archive << files_;
 }
 
 namespace

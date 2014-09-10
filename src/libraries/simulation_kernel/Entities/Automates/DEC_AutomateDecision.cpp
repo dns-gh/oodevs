@@ -84,12 +84,12 @@ DEC_AutomateDecision::~DEC_AutomateDecision()
 void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nRoePopulationID;
-    file >> boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
-         >> pEntity_
-         >> nRulesOfEngagementState_
-         >> nCloseCombatState_
-         >> nOperationalState_
-         >> nRoePopulationID;
+    file >> boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this );
+    file >> pEntity_;
+    file >> nRulesOfEngagementState_;
+    file >> nCloseCombatState_;
+    file >> nOperationalState_;
+    file >> nRoePopulationID;
     pRoePopulation_ = PHY_RoePopulation::Find( nRoePopulationID );
 
     unsigned int nID;
@@ -105,13 +105,13 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const unsigned 
     assert( pEntity_ );
     unsigned int nRoePopulationID = pRoePopulation_->GetID();
     unsigned id = pEntity_->GetType().GetID();
-    file << boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
-         << pEntity_
-         << nRulesOfEngagementState_
-         << nCloseCombatState_
-         << nOperationalState_
-         << nRoePopulationID
-         << id;
+    file << boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this );
+    file << pEntity_;
+    file << nRulesOfEngagementState_;
+    file << nCloseCombatState_;
+    file << nOperationalState_;
+    file << nRoePopulationID;
+    file << id;
 }
 
 // -----------------------------------------------------------------------------

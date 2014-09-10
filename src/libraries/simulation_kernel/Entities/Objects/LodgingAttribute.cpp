@@ -82,8 +82,8 @@ void LodgingAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void LodgingAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-       >> capacity_;
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    ar >> capacity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -92,8 +92,8 @@ void LodgingAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 // -----------------------------------------------------------------------------
 void LodgingAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
-    ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-       << capacity_;
+    ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    ar << capacity_;
 }
 
 // -----------------------------------------------------------------------------

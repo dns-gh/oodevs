@@ -141,15 +141,15 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
     idManager_.GetId( GetID(), true );
-    file >> text_
-         >> nNbrHealthyHumans_
-         >> nNbrDeadHumans_
-         >> nNbrWoundedHumans_
-         >> pSatisfactions
-         >> pLivingArea
-         >> pAffinities
-         >> pExtensions
-         >> movingObjectId_;
+    file >> text_;
+    file >> nNbrHealthyHumans_;
+    file >> nNbrDeadHumans_;
+    file >> nNbrWoundedHumans_;
+    file >> pSatisfactions;
+    file >> pLivingArea;
+    file >> pAffinities;
+    file >> pExtensions;
+    file >> movingObjectId_;
     pLivingArea_.reset( pLivingArea );
     pSatisfactions_.reset( pSatisfactions );
     pAffinities_.reset( pAffinities );
@@ -171,16 +171,16 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file << pArmy_
-         << text_
-         << nNbrHealthyHumans_
-         << nNbrDeadHumans_
-         << nNbrWoundedHumans_
-         << pSatisfactions
-         << pLivingArea
-         << pAffinities
-         << pExtensions
-         << movingObjectId_;
+    file << pArmy_;
+    file << text_;
+    file << nNbrHealthyHumans_;
+    file << nNbrDeadHumans_;
+    file << nNbrWoundedHumans_;
+    file << pSatisfactions;
+    file << pLivingArea;
+    file << pAffinities;
+    file << pExtensions;
+    file << movingObjectId_;
 }
 
 // -----------------------------------------------------------------------------

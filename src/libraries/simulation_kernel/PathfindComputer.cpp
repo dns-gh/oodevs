@@ -183,8 +183,8 @@ void PathfindComputer::SendStateToNewClient()
 template< typename Archive >
 void PathfindComputer::load( Archive& ar, const unsigned int /*version*/ )
 {
-    ar  >> ids_
-        >> results_;
+    ar >> ids_;
+    ar >> results_;
 }
 
 template< typename Archive >
@@ -194,8 +194,8 @@ void PathfindComputer::save( Archive& ar, const unsigned int /*version*/ ) const
     for( auto it = results_.begin(); it != results_.end(); ++it )
         if( it->second->IsPublished() )
             entities.insert( *it );
-    ar  << ids_
-        << entities;
+    ar << ids_;
+    ar << entities;
 }
 
 template< typename Archive >

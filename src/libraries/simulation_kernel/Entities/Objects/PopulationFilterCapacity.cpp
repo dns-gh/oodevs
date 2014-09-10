@@ -50,8 +50,8 @@ PopulationFilterCapacity::~PopulationFilterCapacity()
 template< typename Archive >
 void PopulationFilterCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & density_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & density_;
 }
 
 // -----------------------------------------------------------------------------

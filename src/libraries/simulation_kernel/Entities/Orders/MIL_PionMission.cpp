@@ -192,9 +192,9 @@ void save_construct_data( Archive& archive, const MIL_PionMission* mission, cons
     const MIL_AgentPion* const pion = &mission->pion_;
     unsigned int idType = mission->type_.GetID();
     uint32_t id = mission->GetId();
-    archive << pion
-            << idType
-            << id;
+    archive << pion;
+    archive << idType;
+    archive << id;
 }
 
 template< typename Archive >
@@ -205,9 +205,9 @@ void load_construct_data( Archive& archive, MIL_PionMission* mission, const unsi
         MIL_AgentPion* pion = 0;
         unsigned int idType = 0;
         uint32_t id = 0;
-        archive >> pion
-                >> idType
-                >> id;
+        archive >> pion;
+        archive >> idType;
+        archive >> id;
         const MIL_MissionType_ABC* type = MIL_PionMissionType::Find( idType );
         if( !type )
             throw MASA_EXCEPTION( "unknown unit mission type: "

@@ -83,9 +83,9 @@ PHY_RolePionLOG_Supply::~PHY_RolePionLOG_Supply()
 template< typename Archive >
 void PHY_RolePionLOG_Supply::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this )
-         & bSystemEnabled_
-         & pStocks_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this );
+    file & bSystemEnabled_;
+    file & pStocks_;
 }
 
 // -----------------------------------------------------------------------------

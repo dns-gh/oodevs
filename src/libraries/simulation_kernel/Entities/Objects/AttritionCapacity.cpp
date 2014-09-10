@@ -76,11 +76,11 @@ AttritionCapacity::~AttritionCapacity()
 // -----------------------------------------------------------------------------
 void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-       >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    ar >> dotation_
-       >> population_.surface_
-       >> population_.ph_;
+    ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    ar >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    ar >> dotation_;
+    ar >> population_.surface_;
+    ar >> population_.ph_;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,11 +89,11 @@ void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 // -----------------------------------------------------------------------------
 void AttritionCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
-    ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-       << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    ar << dotation_
-       << population_.surface_
-       << population_.ph_;
+    ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    ar << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    ar << dotation_;
+    ar << population_.surface_;
+    ar << population_.ph_;
 }
 
 // -----------------------------------------------------------------------------

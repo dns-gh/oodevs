@@ -84,13 +84,13 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::~DEC_KnowledgeBlackBoard_KnowledgeGroup(
 template< typename Archive >
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
-            & pKnowledgeAgentContainer_
-            & pKnowledgePopulationContainer_
-            & pKnowledgeObjectContainer_
-            & pKsKnowledgeSynthetizer_
-            & pKsObjectKnowledgeSynthetizer_
-            & pKsSharing_;
+    archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this );
+    archive & pKnowledgeAgentContainer_;
+    archive & pKnowledgePopulationContainer_;
+    archive & pKnowledgeObjectContainer_;
+    archive & pKsKnowledgeSynthetizer_;
+    archive & pKsObjectKnowledgeSynthetizer_;
+    archive & pKsSharing_;
 }
 
 // -----------------------------------------------------------------------------

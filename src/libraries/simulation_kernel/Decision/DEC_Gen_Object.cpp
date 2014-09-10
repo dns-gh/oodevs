@@ -251,21 +251,21 @@ bool DEC_Gen_Object::HasCapacity( const std::string& capacity ) const
 // -----------------------------------------------------------------------------
 void DEC_Gen_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> type_
-         >> identifier_
-         >> localisation_
-         >> activated_
-         >> rDensity_
-         >> nMinesActivityTime_
-         >> nActivationTime_
-         >> name_
-         >> const_cast< MIL_Automate*& >( pTC2_ )
-         >> altitudeModifier_
-         >> timeLimit_
-         >> mining_
-         >> lodging_
-         >> fireClass_
-         >> maxCombustion_;
+    file >> type_;
+    file >> identifier_;
+    file >> localisation_;
+    file >> activated_;
+    file >> rDensity_;
+    file >> nMinesActivityTime_;
+    file >> nActivationTime_;
+    file >> name_;
+    file >> const_cast< MIL_Automate*& >( pTC2_ );
+    file >> altitudeModifier_;
+    file >> timeLimit_;
+    file >> mining_;
+    file >> lodging_;
+    file >> fireClass_;
+    file >> maxCombustion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -274,21 +274,21 @@ void DEC_Gen_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void DEC_Gen_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << type_
-         << identifier_
-         << localisation_
-         << activated_
-         << rDensity_
-         << nMinesActivityTime_
-         << nActivationTime_
-         << name_
-         << const_cast< MIL_Automate*& >( pTC2_ )
-         << altitudeModifier_
-         << timeLimit_
-         << mining_
-         << lodging_
-         << fireClass_
-         << maxCombustion_;
+    file << type_;
+    file << identifier_;
+    file << localisation_;
+    file << activated_;
+    file << rDensity_;
+    file << nMinesActivityTime_;
+    file << nActivationTime_;
+    file << name_;
+    file << const_cast< MIL_Automate*& >( pTC2_ );
+    file << altitudeModifier_;
+    file << timeLimit_;
+    file << mining_;
+    file << lodging_;
+    file << fireClass_;
+    file << maxCombustion_;
 }
 
 // -----------------------------------------------------------------------------

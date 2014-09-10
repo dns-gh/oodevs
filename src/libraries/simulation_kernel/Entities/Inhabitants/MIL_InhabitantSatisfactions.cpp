@@ -68,11 +68,11 @@ MIL_InhabitantSatisfactions::~MIL_InhabitantSatisfactions()
 // -----------------------------------------------------------------------------
 void MIL_InhabitantSatisfactions::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> healthNeed_
-         >> health_
-         >> safety_
-         >> lodging_
-         >> motivations_;
+    file >> healthNeed_;
+    file >> health_;
+    file >> safety_;
+    file >> lodging_;
+    file >> motivations_;
     std::size_t size;
     file >> size;
     for( std::size_t i = 0; i < size; ++i )
@@ -91,11 +91,11 @@ void MIL_InhabitantSatisfactions::load( MIL_CheckPointInArchive& file, const uns
 // -----------------------------------------------------------------------------
 void MIL_InhabitantSatisfactions::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << healthNeed_
-         << health_
-         << safety_
-         << lodging_
-         << motivations_;
+    file << healthNeed_;
+    file << health_;
+    file << safety_;
+    file << lodging_;
+    file << motivations_;
     std::size_t size = resources_.size();
     file << size;
     for( auto it = resources_.begin(); it != resources_.end(); ++it )

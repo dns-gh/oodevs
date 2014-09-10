@@ -77,9 +77,9 @@ private:
 template < typename Archive >
 void DEC_Knowledge_RapFor_ABC::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         & nLastCacheUpdateTick_
-         & rRapForValue_;
+    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file & nLastCacheUpdateTick_;
+    file & rRapForValue_;
 }
 
 #endif // __DEC_Knowledge_RapFor_ABC_h_

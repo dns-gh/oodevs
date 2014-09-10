@@ -62,10 +62,10 @@ DEC_PopulationKnowledge::~DEC_PopulationKnowledge()
 template< typename Archive >
 void DEC_PopulationKnowledge::serialize( Archive& file, const unsigned int )
 {
-    file & attackers_
-         & newAttackers_
-         & securers_
-         & newSecurers_;
+    file & attackers_;
+    file & newAttackers_;
+    file & securers_;
+    file & newSecurers_;
          //& channelingLocations_
          //& newChannelingLocations_;
 }

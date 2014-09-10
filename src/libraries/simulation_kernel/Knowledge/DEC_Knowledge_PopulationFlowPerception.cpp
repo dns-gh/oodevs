@@ -63,12 +63,12 @@ DEC_Knowledge_PopulationFlowPerception::~DEC_Knowledge_PopulationFlowPerception(
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
-         >> pPopulationFlowPerceived_
-         >> shape_
-         >> previousShape_
-         >> pCurrentPerceptionLevel_
-         >> pPreviousPerceptionLevel_;
+    file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ );
+    file >> pPopulationFlowPerceived_;
+    file >> shape_;
+    file >> previousShape_;
+    file >> pCurrentPerceptionLevel_;
+    file >> pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,12 +77,12 @@ void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pPopulationKnowledge_
-         << pPopulationFlowPerceived_
-         << shape_
-         << previousShape_
-         << pCurrentPerceptionLevel_
-         << pPreviousPerceptionLevel_;
+    file << pPopulationKnowledge_;
+    file << pPopulationFlowPerceived_;
+    file << shape_;
+    file << previousShape_;
+    file << pCurrentPerceptionLevel_;
+    file << pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

@@ -60,12 +60,12 @@ DEC_Knowledge_PopulationPerception::~DEC_Knowledge_PopulationPerception()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> pAgentPerceiving_
-         >> pPopulationPerceived_
-         >> concentrations_
-         >> flows_
-         >> bAttacker_;
+    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file >> pAgentPerceiving_;
+    file >> pPopulationPerceived_;
+    file >> concentrations_;
+    file >> flows_;
+    file >> bAttacker_;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,12 +74,12 @@ void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, co
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << pAgentPerceiving_
-         << pPopulationPerceived_
-         << concentrations_
-         << flows_
-         << bAttacker_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+    file << pAgentPerceiving_;
+    file << pPopulationPerceived_;
+    file << concentrations_;
+    file << flows_;
+    file << bAttacker_;
 }
 
 // -----------------------------------------------------------------------------

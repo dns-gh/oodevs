@@ -39,10 +39,10 @@ namespace legacy
         unsigned int gcPause = role->gcPause_;
         unsigned int gcMult = role->gcMult_;
         sword::DEC_Logger* logger = role->logger_;
-        archive << pion
-                << gcPause
-                << gcMult
-                << logger;
+        archive << pion;
+        archive << gcPause;
+        archive << gcMult;
+        archive << logger;
     }
 
     template< typename Archive >
@@ -52,10 +52,10 @@ namespace legacy
         unsigned int gcPause;
         unsigned int gcMult;
         sword::DEC_Logger* logger;
-        archive >> pion
-                >> gcPause
-                >> gcMult
-                >> logger;
+        archive >> pion;
+        archive >> gcPause;
+        archive >> gcMult;
+        archive >> logger;
         ::new( role )sword::legacy::RolePion_Decision( *pion, gcPause, gcMult, logger );
     }
 }

@@ -46,7 +46,8 @@ public:
     //! @name Operations
     //@{
     DEC_Knowledge_PopulationCollision& CreateKnowledgePopulationCollision ( const MIL_Agent_ABC& agentColliding, MIL_Population& population );
-    void                               DestroyKnowledgePopulationCollision( DEC_Knowledge_PopulationCollision& knowledge );
+    void DestroyKnowledgePopulationCollision( DEC_Knowledge_PopulationCollision& knowledge );
+    void Clear();
     //@}
 
     //! @name Queries

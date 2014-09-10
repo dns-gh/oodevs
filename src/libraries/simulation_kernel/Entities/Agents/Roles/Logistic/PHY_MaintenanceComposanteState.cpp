@@ -72,13 +72,13 @@ PHY_MaintenanceComposanteState::~PHY_MaintenanceComposanteState()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< unsigned int& >( nID_ )
-         >> const_cast< unsigned int& >( nCreationTick_ )
-         >> pPion_
-         >> pComposante_
-         >> pConsign_
-         >> vComposantePosition_
-         >> bDiagnosed_;
+    file >> const_cast< unsigned int& >( nID_ );
+    file >> const_cast< unsigned int& >( nCreationTick_ );
+    file >> pPion_;
+    file >> pComposante_;
+    file >> pConsign_;
+    file >> vComposantePosition_;
+    file >> bDiagnosed_;
     logistic::RegisterConsignId( nID_ );
 }
 
@@ -88,13 +88,13 @@ void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const 
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceComposanteState::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << nID_
-         << nCreationTick_
-         << pPion_
-         << pComposante_
-         << pConsign_
-         << vComposantePosition_
-         << bDiagnosed_;
+    file << nID_;
+    file << nCreationTick_;
+    file << pPion_;
+    file << pComposante_;
+    file << pConsign_;
+    file << vComposantePosition_;
+    file << bDiagnosed_;
 }
 
 // -----------------------------------------------------------------------------

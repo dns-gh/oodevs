@@ -27,8 +27,8 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOG_ABC* pion, co
 {
     unsigned int nTypeID = pion->GetType().GetID();
     const MissionController_ABC* const controller = &pion->GetController();
-    archive << nTypeID
-            << controller;
+    archive << nTypeID;
+    archive << controller;
 }
 
 template< typename Archive >
@@ -36,8 +36,8 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOG_ABC* pion, const un
 {
     unsigned int nTypeID;
     MissionController_ABC* controller = 0;
-    archive >> nTypeID
-            >> controller;
+    archive >> nTypeID;
+    archive >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
     ::new( pion ) MIL_AgentPionLOG_ABC( *pType, *controller );

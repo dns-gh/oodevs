@@ -108,9 +108,9 @@ bool MIL_PlannedWorkParameter::ToElement( sword::MissionParameter_Value& elem ) 
 // -----------------------------------------------------------------------------
 void MIL_PlannedWorkParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> pGenObject_
-         >> identifier_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> pGenObject_;
+    file >> identifier_;
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ void MIL_PlannedWorkParameter::load( MIL_CheckPointInArchive& file, const unsign
 // -----------------------------------------------------------------------------
 void MIL_PlannedWorkParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pGenObject_
-         << identifier_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << pGenObject_;
+    file << identifier_;
 }

@@ -68,8 +68,8 @@ BurnAttribute& BurnAttribute::operator=( const BurnAttribute& other )
 void BurnAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar >> currentHeat_
-       >> combustionEnergy_;
+    ar >> currentHeat_;
+    ar >> combustionEnergy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,8 +79,8 @@ void BurnAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void BurnAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar << currentHeat_
-       << combustionEnergy_;
+    ar << currentHeat_;
+    ar << combustionEnergy_;
 }
 
 // -----------------------------------------------------------------------------

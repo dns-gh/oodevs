@@ -323,14 +323,14 @@ boost::shared_ptr< MT_Vector2D > MIL_PopulationElement_ABC::GetSecuringPoint( co
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< unsigned int& >( nID_ )
-         >> pPopulation_
-         >> humans_
-         >> rDensity_
-         >> collidingAgents_
-         >> collidingObjects_
-         >> collidingPopulationConcentrations_
-         >> collidingPopulationFlows_;
+    file >> const_cast< unsigned int& >( nID_ );
+    file >> pPopulation_;
+    file >> humans_;
+    file >> rDensity_;
+    file >> collidingAgents_;
+    file >> collidingObjects_;
+    file >> collidingPopulationConcentrations_;
+    file >> collidingPopulationFlows_;
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
@@ -347,17 +347,17 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
 void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned attitude = pAttitude_->GetID();
-    file << nID_
-         << pPopulation_
-         << humans_
-         << rDensity_
-         << collidingAgents_
-         << collidingObjects_
-         << collidingPopulationConcentrations_
-         << collidingPopulationFlows_
-         << attitude
-         << intoxicationEffects_
-         << contaminationEffects_;
+    file << nID_;
+    file << pPopulation_;
+    file << humans_;
+    file << rDensity_;
+    file << collidingAgents_;
+    file << collidingObjects_;
+    file << collidingPopulationConcentrations_;
+    file << collidingPopulationFlows_;
+    file << attitude;
+    file << intoxicationEffects_;
+    file << contaminationEffects_;
 }
 
 // -----------------------------------------------------------------------------

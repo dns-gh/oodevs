@@ -83,14 +83,14 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_Object >( *this )
-         >> nTimeLastUpdate_
-         >> objectId_
-         >> armyId_
-         >> rProgressPercent_
-         >> rMaxProgressPercent_
-         >> bCurrentProgressUpdated_
-         >> bMaxProgressUpdated_;
+    file >> boost::serialization::base_object< DEC_Knowledge_Object >( *this );
+    file >> nTimeLastUpdate_;
+    file >> objectId_;
+    file >> armyId_;
+    file >> rProgressPercent_;
+    file >> rMaxProgressPercent_;
+    file >> bCurrentProgressUpdated_;
+    file >> bMaxProgressUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,14 +99,14 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned in
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< DEC_Knowledge_Object >( *this )
-         << nTimeLastUpdate_
-         << objectId_
-         << armyId_
-         << rProgressPercent_
-         << rMaxProgressPercent_
-         << bCurrentProgressUpdated_
-         << bMaxProgressUpdated_;
+    file << boost::serialization::base_object< DEC_Knowledge_Object >( *this );
+    file << nTimeLastUpdate_;
+    file << objectId_;
+    file << armyId_;
+    file << rProgressPercent_;
+    file << rMaxProgressPercent_;
+    file << bCurrentProgressUpdated_;
+    file << bMaxProgressUpdated_;
 }
 
 // -----------------------------------------------------------------------------

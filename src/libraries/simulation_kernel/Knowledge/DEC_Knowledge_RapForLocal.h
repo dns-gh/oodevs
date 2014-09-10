@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual void Update();
+    void Clear();
     //@}
 
     //! @name Accessors

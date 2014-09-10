@@ -54,7 +54,8 @@ public:
     //! @name Operations
     //@{
     DEC_Knowledge_ObjectPerception& CreateKnowledgeObjectPerception ( const MIL_Agent_ABC& agentPerceiving, MIL_Object_ABC& objectPerceived );
-    void                            DestroyKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge );
+    void DestroyKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge );
+    void Clear();
     //@}
 
     //! @name Queries

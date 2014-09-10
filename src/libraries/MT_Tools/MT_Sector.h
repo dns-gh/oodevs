@@ -69,15 +69,15 @@ private:
 template< typename Archive >
 void MT_Sector::serialize( Archive& file, const unsigned int )
 {
-    file & vOrigin_
-         & vDirection_
-         & rSemiAngle_
-         & rA1_
-         & rB1_
-         & rC1_
-         & rA2_
-         & rB2_
-         & rC2_;
+    file & vOrigin_;
+    file & vDirection_;
+    file & rSemiAngle_;
+    file & rA1_;
+    file & rB1_;
+    file & rC1_;
+    file & rA2_;
+    file & rB2_;
+    file & rC2_;
 }
 
 #endif // __MT_Sector_h_

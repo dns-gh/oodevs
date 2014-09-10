@@ -101,7 +101,8 @@ namespace serialization
     template< typename Archive >
     void serialize( Archive& file, MT_Vector2D& vect, const unsigned int )
     {
-        file & vect.rX_ & vect.rY_;
+        file & vect.rX_;
+        file & vect.rY_;
     }
 }
 }

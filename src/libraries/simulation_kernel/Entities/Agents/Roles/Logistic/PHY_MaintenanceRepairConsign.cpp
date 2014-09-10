@@ -64,8 +64,8 @@ PHY_MaintenanceRepairConsign::~PHY_MaintenanceRepairConsign()
 template< typename Archive >
 void PHY_MaintenanceRepairConsign::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_MaintenanceConsign_ABC >( *this )
-         & pRepairer_;
+    file & boost::serialization::base_object< PHY_MaintenanceConsign_ABC >( *this );
+    file & pRepairer_;
 }
 
 // -----------------------------------------------------------------------------

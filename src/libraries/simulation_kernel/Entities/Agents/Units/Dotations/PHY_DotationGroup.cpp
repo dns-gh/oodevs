@@ -62,9 +62,9 @@ PHY_DotationGroup::~PHY_DotationGroup()
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> pType_
-         >> pGroupContainer_
-         >> dotations_;
+    file >> pType_;
+    file >> pGroupContainer_;
+    file >> dotations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,9 +73,9 @@ void PHY_DotationGroup::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pType_
-         << pGroupContainer_
-         << dotations_;
+    file << pType_;
+    file << pGroupContainer_;
+    file << dotations_;
 }
 
 // -----------------------------------------------------------------------------

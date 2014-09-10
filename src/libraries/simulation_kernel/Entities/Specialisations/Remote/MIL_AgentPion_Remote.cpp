@@ -31,8 +31,8 @@ void save_construct_data( Archive& archive, const MIL_AgentPion_Remote* pion, co
 {
     unsigned int nTypeID = pion->GetType().GetID();
     const MissionController_ABC* const controller= &pion->GetController();
-    archive << nTypeID
-            << controller;
+    archive << nTypeID;
+    archive << controller;
 }
 
 template< typename Archive >
@@ -41,8 +41,8 @@ void load_construct_data( Archive& archive, MIL_AgentPion_Remote* pion, const un
     unsigned int nTypeID;
     MissionController_ABC* controller = 0;
     std::string name;
-    archive >> nTypeID
-            >> controller;
+    archive >> nTypeID;
+    archive >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
     ::new( pion ) MIL_AgentPion_Remote( *pType, *controller );
@@ -119,13 +119,13 @@ void MIL_AgentPion_Remote::load( MIL_CheckPointInArchive& file, const unsigned i
     std::string level;
     std::string symbol;
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file >> pAutomate
-         >> blackboard
-         >> pAffinities
-         >> pExtensions
-         >> pColor
-         >> symbol
-         >> level;
+    file >> pAutomate;
+    file >> blackboard;
+    file >> pAffinities;
+    file >> pExtensions;
+    file >> pColor;
+    file >> symbol;
+    file >> level;
     SetAutomate( pAutomate );
     SetKnowledge( blackboard );
     SetAffinities( std::unique_ptr< MIL_AffinitiesMap >( pAffinities ) );
@@ -148,13 +148,13 @@ void MIL_AgentPion_Remote::save( MIL_CheckPointOutArchive& file, const unsigned 
     const DEC_KnowledgeBlackBoard_AgentPion* const pKnowledge = &GetKnowledge();
     const MIL_Color* const pColor = GetColor();
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file << pAutomate
-        << pKnowledge
-        << pAffinities
-        << pExtensions
-        << pColor
-        << GetSymbol()
-        << GetLevel();
+    file << pAutomate;
+    file << pKnowledge;
+    file << pAffinities;
+    file << pExtensions;
+    file << pColor;
+    file << GetSymbol();
+    file << GetLevel();
     SaveRole< NET_RoleInterface_Dotations >( *this, file );
     SaveRole< PHY_RoleInterface_Location >( *this, file );
     SaveRole< PHY_RoleInterface_UrbanLocation >( *this, file );

@@ -99,8 +99,8 @@ bool MIL_ObjectKnowledgeParameter::ToElement( sword::MissionParameter_Value& ele
 // -----------------------------------------------------------------------------
 void MIL_ObjectKnowledgeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> pKnowledgeObject_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> pKnowledgeObject_;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,6 +109,6 @@ void MIL_ObjectKnowledgeParameter::load( MIL_CheckPointInArchive& file, const un
 // -----------------------------------------------------------------------------
 void MIL_ObjectKnowledgeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pKnowledgeObject_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << pKnowledgeObject_;
 }

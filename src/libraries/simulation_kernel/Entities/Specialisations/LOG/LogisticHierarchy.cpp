@@ -28,8 +28,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( LogisticHierarchy )
 template< typename Archive >
 void logistic::save_construct_data( Archive& archive, const logistic::LogisticHierarchy* logisticHierarchy, const unsigned int )
 {
-    archive << logisticHierarchy->owner_
-            << logisticHierarchy->useQuotas_;
+    archive << logisticHierarchy->owner_;
+    archive << logisticHierarchy->useQuotas_;
 }
 
 template< typename Archive >
@@ -367,7 +367,7 @@ void LogisticHierarchy::SendLinks( unsigned int context ) const
 template < typename Archive >
 void LogisticHierarchy::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< LogisticHierarchy_ABC >( *this )
-         & superiorLinks_;
-         & backupSuperiorLinks_;
+    file & boost::serialization::base_object< LogisticHierarchy_ABC >( *this );
+    file & superiorLinks_;
+//    file & backupSuperiorLinks_; // FIXME
 }

@@ -123,14 +123,14 @@ DEC_Knowledge_PopulationConcentration::~DEC_Knowledge_PopulationConcentration()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< DEC_Knowledge_Population*& >( pPopulationKnowledge_ )
-         >> const_cast< MIL_PopulationConcentration*& >( pConcentrationKnown_  )
-         >> const_cast< unsigned int& >( nID_ )
-         >> nTimeLastUpdate_
-         >> position_
-         >> nNbrAliveHumans_
-         >> nNbrDeadHumans_
-         >> bReconAttributesValid_;
+    file >> const_cast< DEC_Knowledge_Population*& >( pPopulationKnowledge_ );
+    file >> const_cast< MIL_PopulationConcentration*& >( pConcentrationKnown_  );
+    file >> const_cast< unsigned int& >( nID_ );
+    file >> nTimeLastUpdate_;
+    file >> position_;
+    file >> nNbrAliveHumans_;
+    file >> nNbrDeadHumans_;
+    file >> bReconAttributesValid_;
     idManager_.GetId( nID_, true );
     unsigned int nTmpID;
     bool bAttitudeValid;
@@ -154,24 +154,24 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
 void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     bool attitude = ( pAttitude_ != 0 );
-    file << pPopulationKnowledge_
-         << pConcentrationKnown_
-         << nID_
-         << nTimeLastUpdate_
-         << position_
-         << nNbrAliveHumans_
-         << nNbrDeadHumans_
-         << bReconAttributesValid_
-         << attitude;
+    file << pPopulationKnowledge_;
+    file << pConcentrationKnown_;
+    file << nID_;
+    file << nTimeLastUpdate_;
+    file << position_;
+    file << nNbrAliveHumans_;
+    file << nNbrDeadHumans_;
+    file << bReconAttributesValid_;
+    file << attitude;
     if( pAttitude_ )
     {
         unsigned int attitude = pAttitude_->GetID();
         file << attitude;
     }
-    file << rRelevance_
-         << pCurrentPerceptionLevel_
-         << pPreviousPerceptionLevel_
-         << pHackedPerceptionLevel_;
+    file << rRelevance_;
+    file << pCurrentPerceptionLevel_;
+    file << pPreviousPerceptionLevel_;
+    file << pHackedPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

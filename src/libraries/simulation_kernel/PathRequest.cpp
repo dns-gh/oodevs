@@ -159,11 +159,11 @@ void PathRequest::save( Archive& ar, const unsigned int /*version*/ ) const
 template< typename Archive >
 void save_construct_data( Archive& ar, const PathRequest* ptr, const unsigned int /*version*/ )
 {
-    ar << ptr->ctx_
-       << ptr->clientId_
-       << ptr->id_
-       << ptr->request_
-       << ptr->magic_;
+    ar << ptr->ctx_;
+    ar << ptr->clientId_;
+    ar << ptr->id_;
+    ar << ptr->request_;
+    ar << ptr->magic_;
 }
 
 template< typename Archive >
@@ -174,11 +174,11 @@ void load_construct_data( Archive& ar, PathRequest* ptr, const unsigned int /*ve
     uint32_t id;
     sword::PathfindRequest request;
     boost::optional< uint32_t > magic;
-    ar >> ctx
-       >> clientId
-       >> id
-       >> request
-       >> magic;
+    ar >> ctx;
+    ar >> clientId;
+    ar >> id;
+    ar >> request;
+    ar >> magic;
     // we don't care anymore about the computer, our path is computed and ready to use
     ::new( ptr ) PathRequest( boost::shared_ptr< DEC_PathComputer >(), ctx, clientId, id, request, magic );
 }

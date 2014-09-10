@@ -61,8 +61,8 @@ DelayAttribute::~DelayAttribute()
 template< typename Archive >
 void DelayAttribute::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & nDelay_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file & nDelay_;
 }
 
 // -----------------------------------------------------------------------------

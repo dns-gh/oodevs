@@ -61,10 +61,10 @@ DEC_Knowledge_PopulationConcentrationPerception::~DEC_Knowledge_PopulationConcen
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
-         >> pPopulationConcentrationPerceived_;
-    file >> pCurrentPerceptionLevel_
-         >> pPreviousPerceptionLevel_;
+    file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ );
+    file >> pPopulationConcentrationPerceived_;
+    file >> pCurrentPerceptionLevel_;
+    file >> pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +73,10 @@ void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArch
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pPopulationKnowledge_
-         << pPopulationConcentrationPerceived_
-         << pCurrentPerceptionLevel_
-         << pPreviousPerceptionLevel_;
+    file << pPopulationKnowledge_;
+    file << pPopulationConcentrationPerceived_;
+    file << pCurrentPerceptionLevel_;
+    file << pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

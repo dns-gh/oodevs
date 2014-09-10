@@ -68,8 +68,8 @@ bool MIL_LimaFunctionParameter::ToElement( sword::MissionParameter_Value& elem )
 // -----------------------------------------------------------------------------
 void MIL_LimaFunctionParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-        >> id_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,6 +78,6 @@ void MIL_LimaFunctionParameter::load( MIL_CheckPointInArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void MIL_LimaFunctionParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-        << id_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << id_;
 }

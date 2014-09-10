@@ -234,14 +234,14 @@ const MIL_LimaOrder::T_LimaFunctions& MIL_LimaOrder::GetFunctions() const
 // -----------------------------------------------------------------------------
 void MIL_LimaOrder::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> nID_
-         >> localisation_
-         >> functions_
-         >> bFlag_
-         >> bScheduleFlag_
-         >> nSchedule_
-         >> nNextID_
-         >> objects_;
+    file >> nID_;
+    file >> localisation_;
+    file >> functions_;
+    file >> bFlag_;
+    file >> bScheduleFlag_;
+    file >> nSchedule_;
+    file >> nNextID_;
+    file >> objects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -250,14 +250,14 @@ void MIL_LimaOrder::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_LimaOrder::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << nID_
-         << localisation_
-         << functions_
-         << bFlag_
-         << bScheduleFlag_
-         << nSchedule_
-         << nNextID_
-         << objects_;
+    file << nID_;
+    file << localisation_;
+    file << functions_;
+    file << bFlag_;
+    file << bScheduleFlag_;
+    file << nSchedule_;
+    file << nNextID_;
+    file << objects_;
 }
 
 // -----------------------------------------------------------------------------

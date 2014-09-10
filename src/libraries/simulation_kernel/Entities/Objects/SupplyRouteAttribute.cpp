@@ -104,11 +104,11 @@ template < typename Archive >
 void SupplyRouteAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    file & bEquipped_
-         & rWeightSupported_
-         & rWidth_
-         & rLength_
-         & rFlow_;
+    file & bEquipped_;
+    file & rWeightSupported_;
+    file & rWidth_;
+    file & rLength_;
+    file & rFlow_;
 }
 
 // -----------------------------------------------------------------------------

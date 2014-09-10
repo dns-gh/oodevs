@@ -66,8 +66,8 @@ DisasterCapacity::~DisasterCapacity()
 // -----------------------------------------------------------------------------
 void DisasterCapacity::load( MIL_CheckPointInArchive& archive, const unsigned int )
 {
-    archive >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-            >> type_;
+    archive >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    archive >> type_;
     disasterType_ = MIL_DisasterType::Find( type_ );
 }
 
@@ -77,8 +77,8 @@ void DisasterCapacity::load( MIL_CheckPointInArchive& archive, const unsigned in
 // -----------------------------------------------------------------------------
 void DisasterCapacity::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
 {
-    archive << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-            << type_;
+    archive << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    archive << type_;
 }
 
 // -----------------------------------------------------------------------------

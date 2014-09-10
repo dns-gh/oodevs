@@ -86,11 +86,11 @@ ObstacleAttribute::~ObstacleAttribute()
 template < typename Archive > void ObstacleAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    file & bActivated_
-         & activatedAfterConstruction_
-         & activationTime_
-         & activityTime_
-         & creationTime_;
+    file & bActivated_;
+    file & activatedAfterConstruction_;
+    file & activationTime_;
+    file & activityTime_;
+    file & creationTime_;
 }
 
 // -----------------------------------------------------------------------------

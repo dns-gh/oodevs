@@ -89,11 +89,11 @@ InfrastructureCapacity::~InfrastructureCapacity()
 template< typename Archive >
 void InfrastructureCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & functionalState_
-         & role_
-         & enabled_
-         & threshold_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & functionalState_;
+    file & role_;
+    file & enabled_;
+    file & threshold_;
 }
 
 // -----------------------------------------------------------------------------

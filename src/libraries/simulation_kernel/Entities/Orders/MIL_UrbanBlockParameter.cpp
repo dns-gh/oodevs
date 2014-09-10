@@ -95,8 +95,8 @@ bool MIL_UrbanBlockParameter::ToElement( sword::MissionParameter_Value& elem ) c
 // -----------------------------------------------------------------------------
 void MIL_UrbanBlockParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> pUrbanBlock_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> pUrbanBlock_;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +105,6 @@ void MIL_UrbanBlockParameter::load( MIL_CheckPointInArchive& file, const unsigne
 // -----------------------------------------------------------------------------
 void MIL_UrbanBlockParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pUrbanBlock_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << pUrbanBlock_;
 }

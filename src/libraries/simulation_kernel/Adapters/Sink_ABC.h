@@ -58,6 +58,4 @@ public:
 };
 }
 
-BOOST_CLASS_EXPORT_KEY( sword::Sink_ABC )
-
 #endif // SWORD_SINK_ABC_H

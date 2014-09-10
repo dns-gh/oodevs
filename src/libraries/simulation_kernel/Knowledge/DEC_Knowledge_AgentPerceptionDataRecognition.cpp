@@ -50,12 +50,12 @@ DEC_Knowledge_AgentPerceptionDataRecognition::~DEC_Knowledge_AgentPerceptionData
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> nTimeLastUpdate_
-         >> rOperationalState_
-         >> rMajorOperationalState_
-         >> const_cast< MIL_Army*& >( pArmy_ )
-         >> bIsPC_
-         >> composantes_;
+    file >> nTimeLastUpdate_;
+    file >> rOperationalState_;
+    file >> rMajorOperationalState_;
+    file >> const_cast< MIL_Army*& >( pArmy_ );
+    file >> bIsPC_;
+    file >> composantes_;
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
@@ -68,13 +68,13 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive
 void DEC_Knowledge_AgentPerceptionDataRecognition::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (unsigned int)-1 );
-    file << nTimeLastUpdate_
-         << rOperationalState_
-         << rMajorOperationalState_
-         << pArmy_
-         << bIsPC_
-         << composantes_
-         << agentType;
+    file << nTimeLastUpdate_;
+    file << rOperationalState_;
+    file << rMajorOperationalState_;
+    file << pArmy_;
+    file << bIsPC_;
+    file << composantes_;
+    file << agentType;
 }
 
 // -----------------------------------------------------------------------------

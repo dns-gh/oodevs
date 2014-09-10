@@ -70,9 +70,9 @@ DEC_PopulationDecision::~DEC_PopulationDecision()
 void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Decision< MIL_Population  > >( *this );
-    file >> pEntity_
-         >> rDominationState_
-         >> rLastDominationState_;
+    file >> pEntity_;
+    file >> rDominationState_;
+    file >> rLastDominationState_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,10 +82,10 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned
 void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pEntity_ );
-    file << boost::serialization::base_object< DEC_Decision< MIL_Population  > >( *this )
-         << pEntity_
-         << rDominationState_
-         << rLastDominationState_;
+    file << boost::serialization::base_object< DEC_Decision< MIL_Population  > >( *this );
+    file << pEntity_;
+    file << rDominationState_;
+    file << rLastDominationState_;
 }
 
 void DEC_PopulationDecision::SetModel( const DEC_Model_ABC& model )

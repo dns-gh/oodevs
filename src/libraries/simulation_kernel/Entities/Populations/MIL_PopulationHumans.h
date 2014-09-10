@@ -92,10 +92,10 @@ private:
 template< typename Archive >
 void MIL_PopulationHumans::serialize( Archive& ar, const unsigned int )
 {
-    ar & healthy_
-       & wounded_
-       & contaminated_
-       & dead_;
+    ar & healthy_;
+    ar & wounded_;
+    ar & contaminated_;
+    ar & dead_;
 }
 
 #endif // __MIL_PopulationHumans_h_

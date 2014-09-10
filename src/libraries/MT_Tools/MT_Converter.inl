@@ -96,8 +96,10 @@ void MT_Converter< KEY, VALUE, CMP >::save( Archive& archive, const unsigned int
     std::size_t size = map_.size();
     archive << size;
     for( auto it = map_.begin(); it != map_.end(); ++it )
-        archive << it->first
-                << it->second;
+    {
+        archive << it->first;
+        archive << it->second;
+    }
 }
 
 // -----------------------------------------------------------------------------

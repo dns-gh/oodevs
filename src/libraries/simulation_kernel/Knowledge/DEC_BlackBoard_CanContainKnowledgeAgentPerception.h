@@ -47,6 +47,7 @@ public:
     DEC_Knowledge_AgentPerception& CreateKnowledgeAgentPerception ( const MIL_Agent_ABC& agentPerceiving, const MIL_Agent_ABC& agentPerceived );
     void DestroyKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge );
     void CleanDeletedAgentKnowledges();
+    void Clear();
     //@}
 
     //! @name Queries

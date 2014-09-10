@@ -284,9 +284,9 @@ namespace boost
             file << size;
             for( auto it = map.begin(); it != map.end(); ++it )
             {
-                file << it->first
-                     << it->second.quota_
-                     << it->second.quotaThreshold_;
+                file << it->first;
+                file << it->second.quota_;
+                file << it->second.quotaThreshold_;
             }
         }
 
@@ -300,8 +300,8 @@ namespace boost
                 const PHY_DotationCategory* pCategory;
                 file >> pCategory;
                 LogisticLink::sDotationQuota quota;
-                file >> quota.quota_
-                     >> quota.quotaThreshold_;
+                file >> quota.quota_;
+                file >> quota.quotaThreshold_;
 
                 map.insert( std::make_pair( pCategory, quota ) );
             }

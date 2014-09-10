@@ -70,9 +70,9 @@ FloodCapacity::~FloodCapacity()
 // -----------------------------------------------------------------------------
 void FloodCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
-         >> injuries_;
+    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    file >> injuries_;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,9 +81,9 @@ void FloodCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void FloodCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
-         << injuries_;
+    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    file << injuries_;
 }
 
 // -----------------------------------------------------------------------------

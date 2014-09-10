@@ -73,9 +73,9 @@ void MIL_Entity_ABC::WriteODB( xml::xostream& xos ) const
 template< typename Archive >
 void MIL_Entity_ABC::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< tools::RoleContainer >( *this )
-        & const_cast< std::string& >( strName_ )
-        & const_cast< unsigned int& >( id_ );
+    archive & boost::serialization::base_object< tools::RoleContainer >( *this );
+    archive & const_cast< std::string& >( strName_ );
+    archive & const_cast< unsigned int& >( id_ );
 }
 
 template void MIL_Entity_ABC::serialize( MIL_CheckPointInArchive&, const unsigned int );

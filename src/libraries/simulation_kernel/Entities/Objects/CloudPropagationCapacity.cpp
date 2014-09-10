@@ -174,9 +174,9 @@ bool CloudPropagationCapacity::UpdateLocalisation( double angle, TER_Localisatio
 template< typename Archive >
 void CloudPropagationCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & origin_
-         & rCurrentCircleRadius_
-         & rCurrentPropagationLength_
-         & time_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & origin_;
+    file & rCurrentCircleRadius_;
+    file & rCurrentPropagationLength_;
+    file & time_;
 }

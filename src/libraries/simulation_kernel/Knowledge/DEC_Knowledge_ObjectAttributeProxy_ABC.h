@@ -45,8 +45,8 @@ public:
     template< typename Archive >
     void serialize( Archive& ar, const unsigned int )
     {
-        ar & boost::serialization::base_object< DEC_Knowledge_IObjectAttributeProxy >( *this )
-           & pAttribute_;
+        ar & boost::serialization::base_object< DEC_Knowledge_IObjectAttributeProxy >( *this );
+        ar & pAttribute_;
 
     }
     virtual void Register( DEC_Knowledge_Object& knowledge );

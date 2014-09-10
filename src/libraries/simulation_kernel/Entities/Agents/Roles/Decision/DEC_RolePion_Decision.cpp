@@ -104,13 +104,13 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Decision< MIL_AgentPion > >( *this )
-        >> pEntity_
-        >> nForceRatioState_
-        >> nRulesOfEngagementState_
-        >> nCloseCombatState_
-        >> nOperationalState_
-        >> nIndirectFireAvailability_;
+    file >> boost::serialization::base_object< DEC_Decision< MIL_AgentPion > >( *this );
+    file >> pEntity_;
+    file >> nForceRatioState_;
+    file >> nRulesOfEngagementState_;
+    file >> nCloseCombatState_;
+    file >> nOperationalState_;
+    file >> nIndirectFireAvailability_;
     assert( pEntity_ );
 
     unsigned int nRoePopulationID;
@@ -130,15 +130,15 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const unsigned
 {
     unsigned roe  = pRoePopulation_->GetID(),
         type = pEntity_->GetType().GetID();
-    file << boost::serialization::base_object< DEC_Decision< MIL_AgentPion > >( *this )
-        << pEntity_
-        << nForceRatioState_
-        << nRulesOfEngagementState_
-        << nCloseCombatState_
-        << nOperationalState_
-        << nIndirectFireAvailability_
-        << roe
-        << type;
+    file << boost::serialization::base_object< DEC_Decision< MIL_AgentPion > >( *this );
+    file << pEntity_;
+    file << nForceRatioState_;
+    file << nRulesOfEngagementState_;
+    file << nCloseCombatState_;
+    file << nOperationalState_;
+    file << nIndirectFireAvailability_;
+    file << roe;
+    file << type;
 }
 
 // =============================================================================

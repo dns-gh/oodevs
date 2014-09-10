@@ -62,10 +62,10 @@ DEC_KS_ObjectInteraction::~DEC_KS_ObjectInteraction()
 template< typename Archive >
 void DEC_KS_ObjectInteraction::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-            & pBlackBoard_
-            & objectInteractions_
-            & objectCollisions_;
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this );
+    archive & pBlackBoard_;
+    archive & objectInteractions_;
+    archive & objectCollisions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +111,22 @@ DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectColli
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectInteraction::Talk( int /*currentTimeStep*/ )
 {
+    for( auto it = objectCollisions_.begin(); it != objectCollisions_.end(); )
+    {
+        MIL_Object_ABC& object = *it->first;
+        if( object.IsMarkedForDestruction() )
+            it = objectCollisions_.erase( it );
+        else
+            ++it;
+    }
+    for( auto it = objectInteractions_.begin(); it != objectInteractions_.end(); )
+    {
+        MIL_Object_ABC& object = **it;
+        if( object.IsMarkedForDestruction() )
+            it = objectInteractions_.erase( it );
+        else
+            ++it;
+    }
     if( !pBlackBoard_->GetPion().RetrieveRole< PHY_RoleInterface_Perceiver >() )
         return;
     pBlackBoard_->GetPion().GetRole< PHY_RoleInterface_Perceiver >().ExecuteCollisions();
@@ -161,6 +177,16 @@ void DEC_KS_ObjectInteraction::Clean()
     assert( pBlackBoard_ );
     auto method = boost::bind( &DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, this, _1 );
     pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( method );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectInteraction::Clear
+// Created: LDC 2014-09-09
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectInteraction::Clear()
+{
+    objectInteractions_.clear();
+    objectCollisions_.clear();
 }
 
 // -----------------------------------------------------------------------------

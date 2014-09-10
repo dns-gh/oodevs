@@ -69,9 +69,9 @@ IntoxicationCapacity::~IntoxicationCapacity()
 template< typename Archive >
 void IntoxicationCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & maxToxic_
-         & desintoxicatedZones_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & maxToxic_;
+    file & desintoxicatedZones_;
 }
 
 // -----------------------------------------------------------------------------

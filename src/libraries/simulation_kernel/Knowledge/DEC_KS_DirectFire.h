@@ -42,6 +42,7 @@ public:
     virtual void Clean();
     virtual void CleanDeletedAgentKnowledges();
     virtual void Talk( int currentTimeStep );
+    void Clear();
 
     bool IsAttacked() const;
     //@}
@@ -72,8 +73,8 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_DirectFire )
 template< typename Archive >
 void DEC_KS_DirectFire::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-            & pBlackBoard_;
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this );
+    archive & pBlackBoard_;
 }
 
 #endif // __DEC_KS_Fire_h_

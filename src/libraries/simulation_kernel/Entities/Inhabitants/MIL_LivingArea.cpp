@@ -103,9 +103,9 @@ template< typename Archive >
 void MIL_LivingArea::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
-    file & population_
-         & pInhabitant_
-         & blocks_;
+    file & population_;
+    file & pInhabitant_;
+    file & blocks_;
 }
 
 // -----------------------------------------------------------------------------

@@ -400,8 +400,8 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency(
 void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     const_cast< boost::shared_ptr< TER_World >& >( world_ ) = file.GetWorld();
-    file >> nCheckPointsFrequency_
-         >> nMaxCheckPointNbr_;
+    file >> nCheckPointsFrequency_;
+    file >> nMaxCheckPointNbr_;
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
     nLastCheckPointTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
@@ -414,8 +414,8 @@ void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << nCheckPointsFrequency_
-         << nMaxCheckPointNbr_;
+    file << nCheckPointsFrequency_;
+    file << nMaxCheckPointNbr_;
 }
 
 // -----------------------------------------------------------------------------

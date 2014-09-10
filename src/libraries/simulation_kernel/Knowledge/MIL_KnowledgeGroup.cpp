@@ -289,18 +289,18 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
     unsigned int typeId;
     file >> typeId;
     type_ = MIL_KnowledgeGroupType::FindType( typeId );
-    file >> id_
-         >> name_
-         >> army_
-         >> parent_ // LTO
-         >> knowledgeBlackBoard_
-         >> automates_
-         >> knowledgeGroups_ // LTO
-         >> timeToDiffuse_ // LTO
-         >> isActivated_ // LTO
-         >> isJammed_
-         >> hasSavedCurrentKnowledge_
-         >> crowd_;
+    file >> id_;
+    file >> name_;
+    file >> army_;
+    file >> parent_;
+    file >> knowledgeBlackBoard_;
+    file >> automates_;
+    file >> knowledgeGroups_;
+    file >> timeToDiffuse_;
+    file >> isActivated_;
+    file >> isJammed_;
+    file >> hasSavedCurrentKnowledge_;
+    file >> crowd_;
     idManager_.GetId( id_, true );
     hasBeenUpdated_ = true;
     knowledgeBlackBoard_->SetKnowledgeGroup( this );
@@ -315,19 +315,19 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned in
     if( ! type_ )
         throw MASA_EXCEPTION( MT_FormatString( "imposible to save knowledge group with undefined type. Knowledge group Id : '%d' ", id_ ) );
     unsigned int type = type_->GetID();
-    file << type
-         << id_
-         << name_
-         << army_
-         << parent_ // LTO
-         << knowledgeBlackBoard_
-         << automates_
-         << knowledgeGroups_ // LTO
-         << timeToDiffuse_ // LTO
-         << isActivated_ // LTO
-         << isJammed_
-         << hasSavedCurrentKnowledge_
-         << crowd_;
+    file << type;
+    file << id_;
+    file << name_;
+    file << army_;
+    file << parent_;
+    file << knowledgeBlackBoard_;
+    file << automates_;
+    file << knowledgeGroups_;
+    file << timeToDiffuse_;
+    file << isActivated_;
+    file << isJammed_;
+    file << hasSavedCurrentKnowledge_;
+    file << crowd_;
 }
 
 // -----------------------------------------------------------------------------

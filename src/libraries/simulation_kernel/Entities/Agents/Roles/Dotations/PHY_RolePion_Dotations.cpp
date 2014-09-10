@@ -83,11 +83,11 @@ PHY_RolePion_Dotations::~PHY_RolePion_Dotations()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-         >> owner_
-         >> pDotations_
-         >> pCurrentConsumptionMode_
-         >> pPreviousConsumptionMode_;
+    file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this );
+    file >> owner_;
+    file >> pDotations_;
+    file >> pCurrentConsumptionMode_;
+    file >> pPreviousConsumptionMode_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,11 +96,11 @@ void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-         << owner_
-         << pDotations_
-         << pCurrentConsumptionMode_
-         << pPreviousConsumptionMode_;
+    file << ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this );
+    file << owner_;
+    file << pDotations_;
+    file << pCurrentConsumptionMode_;
+    file << pPreviousConsumptionMode_;
 }
 
 // -----------------------------------------------------------------------------

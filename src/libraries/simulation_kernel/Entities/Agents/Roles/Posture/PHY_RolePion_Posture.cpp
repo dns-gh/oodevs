@@ -75,14 +75,14 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
-    file >> rPostureCompletionPercentage_
-         >> bDiscreteModeEnabled_
-         >> rTimingFactor_
-         >> rStealthFactor_
-         >> bIsStealth_
-         >> rLastPostureCompletionPercentageSent_
-         >> bIsParkedOnEngineerArea_
-         >> bAmbianceSafety_;
+    file >> rPostureCompletionPercentage_;
+    file >> bDiscreteModeEnabled_;
+    file >> rTimingFactor_;
+    file >> rStealthFactor_;
+    file >> bIsStealth_;
+    file >> rLastPostureCompletionPercentageSent_;
+    file >> bIsParkedOnEngineerArea_;
+    file >> bAmbianceSafety_;
 }
 
 // -----------------------------------------------------------------------------
@@ -92,18 +92,18 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
 void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
-    const unsigned current = pCurrentPosture_->GetID(),
-             last    = pLastPosture_->GetID();
-    file << current
-         << last
-         << rPostureCompletionPercentage_
-         << bDiscreteModeEnabled_
-         << rTimingFactor_
-         << rStealthFactor_
-         << bIsStealth_
-         << rLastPostureCompletionPercentageSent_
-         << bIsParkedOnEngineerArea_
-         << bAmbianceSafety_;
+    const unsigned int current = pCurrentPosture_->GetID();
+    const unsigned int last    = pLastPosture_->GetID();
+    file << current;
+    file << last;
+    file << rPostureCompletionPercentage_;
+    file << bDiscreteModeEnabled_;
+    file << rTimingFactor_;
+    file << rStealthFactor_;
+    file << bIsStealth_;
+    file << rLastPostureCompletionPercentageSent_;
+    file << bIsParkedOnEngineerArea_;
+    file << bAmbianceSafety_;
 }
 
 // -----------------------------------------------------------------------------

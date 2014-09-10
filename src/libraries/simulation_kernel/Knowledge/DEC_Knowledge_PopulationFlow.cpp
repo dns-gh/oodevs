@@ -132,24 +132,24 @@ DEC_Knowledge_PopulationFlow::~DEC_Knowledge_PopulationFlow()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< DEC_Knowledge_Population*& >( pPopulationKnowledge_ )
-         >> const_cast< MIL_PopulationFlow*& >( pFlowKnown_ )
-         >> const_cast< MIL_Population*& >( pPopulation_ )
-         >> const_cast< unsigned int& >( nID_ )
-         >> direction_
-         >> rSpeed_
-         >> flowParts_
-         >> nNbrAliveHumans_
-         >> nNbrDeadHumans_
-         >> bReconAttributesValid_;
+    file >> const_cast< DEC_Knowledge_Population*& >( pPopulationKnowledge_ );
+    file >> const_cast< MIL_PopulationFlow*& >( pFlowKnown_ );
+    file >> const_cast< MIL_Population*& >( pPopulation_ );
+    file >> const_cast< unsigned int& >( nID_ );
+    file >> direction_;
+    file >> rSpeed_;
+    file >> flowParts_;
+    file >> nNbrAliveHumans_;
+    file >> nNbrDeadHumans_;
+    file >> bReconAttributesValid_;
     idManager_.GetId( nID_, true );
     unsigned int nTmpID;
     file >> nTmpID;
     pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
     //assert( pAttitude_ ); // $$$$ SBO 2006-02-24: if popu not recognized, attitude is null (should be default "calme" ?)
-    file >> pPreviousPerceptionLevel_
-         >> pCurrentPerceptionLevel_
-         >> pHackedPerceptionLevel_;
+    file >> pPreviousPerceptionLevel_;
+    file >> pCurrentPerceptionLevel_;
+    file >> pHackedPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,20 +159,20 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const un
 void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned attitudeId = ( pAttitude_ ? pAttitude_->GetID() : 0 );
-    file << pPopulationKnowledge_
-         << pFlowKnown_
-         << pPopulation_
-         << nID_
-         << direction_
-         << rSpeed_
-         << flowParts_
-         << nNbrAliveHumans_
-         << nNbrDeadHumans_
-         << bReconAttributesValid_
-         << attitudeId
-         << pPreviousPerceptionLevel_
-         << pCurrentPerceptionLevel_
-         << pHackedPerceptionLevel_;
+    file << pPopulationKnowledge_;
+    file << pFlowKnown_;
+    file << pPopulation_;
+    file << nID_;
+    file << direction_;
+    file << rSpeed_;
+    file << flowParts_;
+    file << nNbrAliveHumans_;
+    file << nNbrDeadHumans_;
+    file << bReconAttributesValid_;
+    file << attitudeId;
+    file << pPreviousPerceptionLevel_;
+    file << pCurrentPerceptionLevel_;
+    file << pHackedPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

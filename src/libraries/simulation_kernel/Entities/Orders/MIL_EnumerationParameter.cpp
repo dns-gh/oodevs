@@ -78,8 +78,8 @@ bool MIL_EnumerationParameter::ToElement( sword::MissionParameter_Value& elem ) 
 // -----------------------------------------------------------------------------
 void MIL_EnumerationParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> value_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file >> value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +88,6 @@ void MIL_EnumerationParameter::load( MIL_CheckPointInArchive& file, const unsign
 // -----------------------------------------------------------------------------
 void MIL_EnumerationParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << value_;
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
+    file << value_;
 }

@@ -144,16 +144,16 @@ template< typename Archive >
 void NodeElement::load( Archive& file, const unsigned int )
 {
     std::size_t linksSize;
-    file >> resourceId_
-         >> resourceName_
-         >> isActivated_
-         >> productionCapacity_
-         >> stockCapacity_
-         >> stockMaxCapacity_
-         >> consumptionAmount_
-         >> consumptionCritical_
-         >> modifier_
-         >> linksSize;
+    file >> resourceId_;
+    file >> resourceName_;
+    file >> isActivated_;
+    file >> productionCapacity_;
+    file >> stockCapacity_;
+    file >> stockMaxCapacity_;
+    file >> consumptionAmount_;
+    file >> consumptionCritical_;
+    file >> modifier_;
+    file >> linksSize;
     for( std::size_t i = 0; i < linksSize; ++i )
     {
         ResourceLink* link = 0;
@@ -170,16 +170,16 @@ template< typename Archive >
 void NodeElement::save( Archive& file, const unsigned int ) const
 {
     std::size_t linksSize = links_.size();
-    file << resourceId_
-         << resourceName_
-         << isActivated_
-         << productionCapacity_
-         << stockCapacity_
-         << stockMaxCapacity_
-         << consumptionAmount_
-         << consumptionCritical_
-         << modifier_
-         << linksSize;
+    file << resourceId_;
+    file << resourceName_;
+    file << isActivated_;
+    file << productionCapacity_;
+    file << stockCapacity_;
+    file << stockMaxCapacity_;
+    file << consumptionAmount_;
+    file << consumptionCritical_;
+    file << modifier_;
+    file << linksSize;
     for( std::size_t i = 0; i < linksSize; ++i )
         file << links_[ i ];
 }

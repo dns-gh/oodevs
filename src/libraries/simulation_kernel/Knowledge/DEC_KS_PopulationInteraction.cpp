@@ -56,10 +56,10 @@ DEC_KS_PopulationInteraction::~DEC_KS_PopulationInteraction()
 template< typename Archive >
 void DEC_KS_PopulationInteraction::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-            & pBlackBoard_
-            & concentrationCollisions_
-            & flowCollisions_;
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this );
+    archive & pBlackBoard_;
+    archive & concentrationCollisions_;
+    archive & flowCollisions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,6 +136,17 @@ void DEC_KS_PopulationInteraction::Clean()
     assert( pBlackBoard_ );
     auto method = boost::bind( &DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, this, _1 );
     pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( method );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationInteraction::Clear
+// Created: LDC 2014-09-09
+// -----------------------------------------------------------------------------
+void DEC_KS_PopulationInteraction::Clear()
+{
+    flowCollisions_.clear();
+    concentrationCollisions_.clear();
 }
 
 // -----------------------------------------------------------------------------

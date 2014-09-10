@@ -305,8 +305,8 @@ MIL_LimaOrder* MIL_OrderContext::FindNextScheduledLima()
 template< typename Archive >
 void MIL_OrderContext::serialize( Archive& file, const unsigned int )
 {
-    file & hasContext_
-         & limas_
-         & fuseau_
-         & dirDanger_;
+    file & hasContext_;
+    file & limas_;
+    file & fuseau_;
+    file & dirDanger_;
 }

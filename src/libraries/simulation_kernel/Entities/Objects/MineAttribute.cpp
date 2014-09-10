@@ -145,11 +145,11 @@ void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     double percentage = 0.;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar >> dotation_
-       >> nFullNbrDotation_
-       >> nCurrentNbrDotation_
-       >> percentage
-       >> bMustBeMined_;
+    ar >> dotation_;
+    ar >> nFullNbrDotation_;
+    ar >> nCurrentNbrDotation_;
+    ar >> percentage;
+    ar >> bMustBeMined_;
     miningPercentage_.Set( percentage );
 }
 
@@ -160,11 +160,11 @@ void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar << dotation_
-       << nFullNbrDotation_
-       << nCurrentNbrDotation_
-       << (double)miningPercentage_.Get()
-       << bMustBeMined_;
+    ar << dotation_;
+    ar << nFullNbrDotation_;
+    ar << nCurrentNbrDotation_;
+    ar << (double)miningPercentage_.Get();
+    ar << bMustBeMined_;
 }
 
 // -----------------------------------------------------------------------------

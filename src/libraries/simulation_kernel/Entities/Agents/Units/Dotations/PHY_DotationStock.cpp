@@ -79,13 +79,13 @@ PHY_DotationStock::~PHY_DotationStock()
 template< typename Archive >
 void PHY_DotationStock::serialize( Archive& ar, const unsigned int )
 {
-    ar & pStockContainer_
-       & pCategory_
-       & rValue_
-       & rCapacity_
-       & rLowThreshold_
-       & bNotified_
-       & bInfiniteDotations_;
+    ar & pStockContainer_;
+    ar & pCategory_;
+    ar & rValue_;
+    ar & rCapacity_;
+    ar & rLowThreshold_;
+    ar & bNotified_;
+    ar & bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------

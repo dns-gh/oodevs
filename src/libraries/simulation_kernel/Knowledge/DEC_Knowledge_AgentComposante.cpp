@@ -59,11 +59,11 @@ DEC_Knowledge_AgentComposante::~DEC_Knowledge_AgentComposante()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> pType_
-         >> bCanFire_
-         >> bMajor_
-         >> nMajorScore_
-         >> maxRange_;
+    file >> pType_;
+    file >> bCanFire_;
+    file >> bMajor_;
+    file >> nMajorScore_;
+    file >> maxRange_;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,11 +72,11 @@ void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const u
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pType_
-         << bCanFire_
-         << bMajor_
-         << nMajorScore_
-         << maxRange_;
+    file << pType_;
+    file << bCanFire_;
+    file << bMajor_;
+    file << nMajorScore_;
+    file << maxRange_;
 }
 
 // -----------------------------------------------------------------------------

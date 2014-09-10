@@ -80,6 +80,7 @@ public:
     //! @name Operations
     //@{
     virtual void CleanDeletedAgentKnowledges();
+    void Clear();
     //@}
 
     //! @name tools::Resolver

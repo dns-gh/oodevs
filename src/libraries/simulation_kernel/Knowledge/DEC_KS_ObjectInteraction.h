@@ -42,6 +42,7 @@ public:
     virtual void Prepare();
     virtual void Talk( int currentTimeStep );
     virtual void Clean();
+    void Clear();
     virtual void CleanDeletedAgentKnowledges();
     //@}
 

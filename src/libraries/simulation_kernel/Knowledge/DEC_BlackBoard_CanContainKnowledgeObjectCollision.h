@@ -46,7 +46,8 @@ public:
     //! @name Operations
     //@{
     DEC_Knowledge_ObjectCollision& CreateKnowledgeObjectCollision ( const MIL_Agent_ABC& agentColliding, MIL_Object_ABC& objectCollision );
-    void                           DestroyKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge );
+    void DestroyKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge );
+    void Clear();
     //@}
 
     //! @name Queries

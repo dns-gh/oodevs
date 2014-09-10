@@ -77,10 +77,10 @@ SpawnCapacity::~SpawnCapacity()
 template< typename Archive >
 void SpawnCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-        & rActionRange_
-        & childType_
-        & nbc_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & rActionRange_;
+    file & childType_;
+    file & nbc_;
 }
 
 // -----------------------------------------------------------------------------

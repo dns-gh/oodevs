@@ -57,8 +57,8 @@ DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 template< typename Archive >
 void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const unsigned int )
 {
-    archive & boost::serialization::base_object< DEC_Knowledge_RapFor_ABC >( *this )
-            & const_cast< MIL_Agent_ABC*& >( pPion_ );
+    archive & boost::serialization::base_object< DEC_Knowledge_RapFor_ABC >( *this );
+    archive & const_cast< MIL_Agent_ABC*& >( pPion_ );
     assert( pPion_ );
 }
 
@@ -111,6 +111,15 @@ void DEC_Knowledge_RapForLocal::Update()
 
     ApplyValue( rTotalFightScoreFriend, rTotalFightScoreEnemy,
         ComputeRapForIncreasePerTimeStepValue( pPion_->GetType().GetFeedbackTime() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapForLocal::Clear
+// Created: LDC 2014-09-08
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_RapForLocal::Clear()
+{
+    dangerousEnemies_.clear();
 }
 
 // -----------------------------------------------------------------------------

@@ -1026,11 +1026,11 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> boost::serialization::base_object< PHY_MovingEntity_ABC      >( *this );
     file >> boost::serialization::base_object< TER_PopulationFlow_ABC    >( *this );
     file >> boost::serialization::base_object< MIL_PopulationElement_ABC >( *this );
-    file >> pSourceConcentration_
-         >> pDestConcentration_
-         >> flowShape_
-         >> direction_
-         >> rSpeed_;
+    file >> pSourceConcentration_;
+    file >> pDestConcentration_;
+    file >> flowShape_;
+    file >> direction_;
+    file >> rSpeed_;
     canCollideWithFlow_ = GetPopulation().GetType().CanCollideWithFlow();
     idManager_.GetId( MIL_PopulationElement_ABC::GetID(), true );
     UpdateLocation();
@@ -1045,11 +1045,11 @@ void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const unsigned in
     file << boost::serialization::base_object< PHY_MovingEntity_ABC      >( *this );
     file << boost::serialization::base_object< TER_PopulationFlow_ABC    >( *this );
     file << boost::serialization::base_object< MIL_PopulationElement_ABC >( *this );
-    file << pSourceConcentration_
-         << pDestConcentration_
-         << flowShape_
-         << direction_
-         << rSpeed_;
+    file << pSourceConcentration_;
+    file << pDestConcentration_;
+    file << flowShape_;
+    file << direction_;
+    file << rSpeed_;
 }
 
 // -----------------------------------------------------------------------------

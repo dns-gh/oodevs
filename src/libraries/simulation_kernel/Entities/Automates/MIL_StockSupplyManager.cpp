@@ -88,9 +88,9 @@ void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_SupplyManager >( *this )
-         << pAutomate_
-         << bSupplyNeeded_;
+    file << boost::serialization::base_object< MIL_SupplyManager >( *this );
+    file << pAutomate_;
+    file << bSupplyNeeded_;
 }
 
 // -----------------------------------------------------------------------------

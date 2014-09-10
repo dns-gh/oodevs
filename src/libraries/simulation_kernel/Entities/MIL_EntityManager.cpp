@@ -2544,26 +2544,26 @@ bool MIL_EntityManager::IsInhabitantsEvacuated( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         >> knowledgeGroupFactory_;
-    file >> armyFactory_
-         >> formationFactory_//@TODO MGD serialize
-         >> automateFactory_
-         >> populationFactory_
-         >> inhabitantFactory_
-         >> pObjectManager_
-         >> missionController_
-         >> sink_
-         >> rKnowledgesTime_
-         >> rAutomatesDecisionTime_
-         >> rPionsDecisionTime_
-         >> rPopulationsDecisionTime_
-         >> rActionsTime_
-         >> rEffectsTime_
-         >> rStatesTime_
-         >> nRandomBreakdownsNextTimeStep_
-         >> cities_
-         >> MIL_Report::nextMessageId_;
+    //file >> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
+    file >> knowledgeGroupFactory_;
+    file >> armyFactory_;
+    file >> formationFactory_;//@TODO MGD serialize
+    file >> automateFactory_;
+    file >> populationFactory_;
+    file >> inhabitantFactory_;
+    file >> pObjectManager_;
+    file >> missionController_;
+    file >> sink_;
+    file >> rKnowledgesTime_;
+    file >> rAutomatesDecisionTime_;
+    file >> rPionsDecisionTime_;
+    file >> rPopulationsDecisionTime_;
+    file >> rActionsTime_;
+    file >> rEffectsTime_;
+    file >> rStatesTime_;
+    file >> nRandomBreakdownsNextTimeStep_;
+    file >> cities_;
+    file >> MIL_Report::nextMessageId_;
     auto& wk = MIL_AgentServer::GetWorkspace();
     wk.GetUrbanCache().CreateQuadTree(
         cities_,
@@ -2588,24 +2588,24 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 {
          //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
     file << knowledgeGroupFactory_; // LTO
-    file << armyFactory_
-         << formationFactory_
-         << automateFactory_
-         << populationFactory_
-         << inhabitantFactory_
-         << pObjectManager_
-         << missionController_
-         << sink_
-         << rKnowledgesTime_
-         << rAutomatesDecisionTime_
-         << rPionsDecisionTime_
-         << rPopulationsDecisionTime_
-         << rActionsTime_
-         << rEffectsTime_
-         << rStatesTime_
-         << nRandomBreakdownsNextTimeStep_
-         << cities_
-         << MIL_Report::nextMessageId_;
+    file << armyFactory_;
+    file << formationFactory_;
+    file << automateFactory_;
+    file << populationFactory_;
+    file << inhabitantFactory_;
+    file << pObjectManager_;
+    file << missionController_;
+    file << sink_;
+    file << rKnowledgesTime_;
+    file << rAutomatesDecisionTime_;
+    file << rPionsDecisionTime_;
+    file << rPopulationsDecisionTime_;
+    file << rActionsTime_;
+    file << rEffectsTime_;
+    file << rStatesTime_;
+    file << nRandomBreakdownsNextTimeStep_;
+    file << cities_;
+    file << MIL_Report::nextMessageId_;
 }
 
 // -----------------------------------------------------------------------------

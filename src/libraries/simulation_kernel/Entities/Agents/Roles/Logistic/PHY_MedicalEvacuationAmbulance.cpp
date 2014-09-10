@@ -64,24 +64,24 @@ PHY_MedicalEvacuationAmbulance::~PHY_MedicalEvacuationAmbulance()
 
 void PHY_MedicalEvacuationAmbulance::load( MIL_CheckPointInArchive& a, const unsigned int )
 {
-    a & pMedical_
-      & pCompAmbulance_
-      & consigns_
-      & nState_
-      & nTimer_
-      & rNbrHumanHandled_
-      & rInfoTimer_;
+    a & pMedical_;
+    a & pCompAmbulance_;
+    a & consigns_;
+    a & nState_;
+    a & nTimer_;
+    a & rNbrHumanHandled_;
+    a & rInfoTimer_;
 }
 
 void PHY_MedicalEvacuationAmbulance::save( MIL_CheckPointOutArchive& a, const unsigned int ) const
 {
-    a & pMedical_
-      & pCompAmbulance_
-      & consigns_
-      & nState_
-      & nTimer_
-      & rNbrHumanHandled_
-      & rInfoTimer_;
+    a & pMedical_;
+    a & pCompAmbulance_;
+    a & consigns_;
+    a & nState_;
+    a & nTimer_;
+    a & rNbrHumanHandled_;
+    a & rInfoTimer_;
 }
 
 // -----------------------------------------------------------------------------

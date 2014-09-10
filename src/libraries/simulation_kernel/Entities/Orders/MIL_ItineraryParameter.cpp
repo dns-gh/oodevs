@@ -131,8 +131,8 @@ void MIL_ItineraryParameter::save( Archive& file, const unsigned int ) const
 template< typename Archive >
 void save_construct_data( Archive& ar, const MIL_ItineraryParameter* ptr, const unsigned int  )
 {
-    ar << ptr->message_
-       << ptr->position_;
+    ar << ptr->message_;
+    ar << ptr->position_;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ void load_construct_data( Archive& ar, MIL_ItineraryParameter* ptr, const unsign
 {
     sword::Pathfind message;
     boost::optional< MT_Vector2D > position;
-    ar >> message
-       >> position;
+    ar >> message;
+    ar >> position;
     ::new( ptr ) MIL_ItineraryParameter( message, position );
 }

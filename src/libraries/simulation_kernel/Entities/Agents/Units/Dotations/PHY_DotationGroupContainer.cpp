@@ -57,7 +57,9 @@ PHY_DotationGroupContainer::~PHY_DotationGroupContainer()
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::serialize( MIL_CheckPointOutArchive& ar, unsigned int )
 {
-    ar << pRoleDotation_ << dotationGroups_ << dotationsChanged_;
+    ar << pRoleDotation_;
+    ar << dotationGroups_;
+    ar << dotationsChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +68,9 @@ void PHY_DotationGroupContainer::serialize( MIL_CheckPointOutArchive& ar, unsign
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::serialize( MIL_CheckPointInArchive& ar, unsigned int )
 {
-    ar >> pRoleDotation_ >> dotationGroups_ >> dotationsChanged_;
+    ar >> pRoleDotation_;
+    ar >> dotationGroups_;
+    ar >> dotationsChanged_;
 }
 
 // -----------------------------------------------------------------------------

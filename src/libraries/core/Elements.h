@@ -43,7 +43,8 @@ public:
     template< class Archive >
     void serialize( Archive& archive, const unsigned int /*version*/ )
     {
-        archive & size_ & elements_;
+        archive & size_;
+        archive & elements_;
     }
     //@}
 

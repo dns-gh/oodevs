@@ -60,8 +60,8 @@ MaterialAttribute& MaterialAttribute::operator=( const MaterialAttribute& rhs )
 void MaterialAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     std::string name;
-    file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         >> name;
+    file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file >> name;
     material_ = PHY_MaterialCompositionType::Find( name );
 }
 
@@ -71,8 +71,8 @@ void MaterialAttribute::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void MaterialAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         << material_->GetName();
+    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file << material_->GetName();
 }
 
 // -----------------------------------------------------------------------------

@@ -66,11 +66,11 @@ PHY_DotationStockContainer::~PHY_DotationStockContainer()
 template< typename Archive >
 void PHY_DotationStockContainer::serialize( Archive& file, const unsigned int )
 {
-    file & pRoleSupply_
-         & stocks_
-         & stocksChanged_
-         & bCheckStockCapacities_
-         & bInfiniteDotations_;
+    file & pRoleSupply_;
+    file & stocks_;
+    file & stocksChanged_;
+    file & bCheckStockCapacities_;
+    file & bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------

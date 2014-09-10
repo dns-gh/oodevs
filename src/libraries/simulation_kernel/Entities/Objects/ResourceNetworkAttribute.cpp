@@ -124,8 +124,8 @@ bool ResourceNetworkAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 template< typename Archive >
 void ResourceNetworkAttribute::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & nodeProperties_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file & nodeProperties_;
 }
 
 // -----------------------------------------------------------------------------

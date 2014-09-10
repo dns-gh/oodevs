@@ -71,28 +71,28 @@ PHY_MedicalCollectionAmbulance::~PHY_MedicalCollectionAmbulance()
 
 void PHY_MedicalCollectionAmbulance::load( MIL_CheckPointInArchive& a, const unsigned int )
 {
-    a & pMedical_
-      & pCompAmbulance_
-      & consigns_
-      & nState_
-      & nTimer_
-      & bEmergencyAmbulance_
-      & rNbrHumanHandled_
-      & pDestinationArea_
-      & bSort_;
+    a & pMedical_;
+    a & pCompAmbulance_;
+    a & consigns_;
+    a & nState_;
+    a & nTimer_;
+    a & bEmergencyAmbulance_;
+    a & rNbrHumanHandled_;
+    a & pDestinationArea_;
+    a & bSort_;
 }
 
 void PHY_MedicalCollectionAmbulance::save( MIL_CheckPointOutArchive& a, const unsigned int ) const
 {
-    a & pMedical_
-      & pCompAmbulance_
-      & consigns_
-      & nState_
-      & nTimer_
-      & bEmergencyAmbulance_
-      & rNbrHumanHandled_
-      & pDestinationArea_
-      & bSort_;
+    a & pMedical_;
+    a & pCompAmbulance_;
+    a & consigns_;
+    a & nState_;
+    a & nTimer_;
+    a & bEmergencyAmbulance_;
+    a & rNbrHumanHandled_;
+    a & pDestinationArea_;
+    a & bSort_;
 }
 
 // =============================================================================

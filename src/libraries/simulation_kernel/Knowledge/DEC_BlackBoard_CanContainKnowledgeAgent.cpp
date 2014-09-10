@@ -75,8 +75,8 @@ DEC_BlackBoard_CanContainKnowledgeAgent::~DEC_BlackBoard_CanContainKnowledgeAgen
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
-         >> nLastCacheUpdateTick_;
+    file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ );
+    file >> nLastCacheUpdateTick_;
     file >> realAgentMap_;
     file >> previousAgentMap_;
     for( auto it = realAgentMap_.begin(); it != realAgentMap_.end(); ++it )
@@ -89,8 +89,8 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pKnowledgeGroup_
-         << nLastCacheUpdateTick_;
+    file << pKnowledgeGroup_;
+    file << nLastCacheUpdateTick_;
     file << realAgentMap_;
     file << previousAgentMap_;
 }
