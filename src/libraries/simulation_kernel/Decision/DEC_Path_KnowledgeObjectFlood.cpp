@@ -26,29 +26,13 @@ DEC_Path_KnowledgeObjectFlood::DEC_Path_KnowledgeObjectFlood( E_CrossingHeight c
     if( attribute )
     {
         localisation_ = attribute->GetLocalisation();
-
-        // conversion to MT instead of geometry, more efficient. To optimize.
-        const auto& deepAreas = attribute->GetDeepAreas();
-        const auto& lowAreas = attribute->GetLowAreas();
-        T_PointVector vector;
-        for( auto it = deepAreas.begin(); it != deepAreas.end(); ++it )
-        {
-            vector.clear();
-            const auto& vertices = it->Vertices();
-            for( auto vertexIt = vertices.begin(); vertexIt != vertices.end(); ++vertexIt )
-                vector.push_back( MT_Vector2D( vertexIt->X(), vertexIt->Y() ) );
-            deepAreas_.push_back( TER_Polygon() );
-            deepAreas_.back().Reset( vector );
-        }
-        for( auto it = lowAreas.begin(); it != lowAreas.end(); ++it )
-        {
-            vector.clear();
-            const auto& vertices = it->Vertices();
-            for( auto vertexIt = vertices.begin(); vertexIt != vertices.end(); ++vertexIt )
-                vector.push_back( MT_Vector2D( vertexIt->X(), vertexIt->Y() ) );
-            lowAreas_.push_back( TER_Polygon() );
-            lowAreas_.back().Reset( vector );
-        }
+        attribute->Apply( [&]( const TER_Polygon& polygon, bool deep ) 
+            {
+                if( deep )
+                    deepAreas_.push_back( polygon );
+                else
+                    lowAreas_.push_back( polygon );
+            });
     }
 }
 
@@ -69,16 +53,15 @@ double DEC_Path_KnowledgeObjectFlood::ComputeCost( const MT_Vector2D& from, cons
 {
     const MT_Line line( from, to );
     if( crossingHeight_ != eCrossingHeightAlways )
-        if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
+        if( localisation_.IsInside( to ) || localisation_.Intersect2D( line ) )
         {
             if( ( maxTrafficability_ != 0. ) && ( weight > maxTrafficability_ ) )
                 return -1.f;
-            std::vector< TER_Polygon >::const_iterator it;
-            for( it = deepAreas_.begin(); it != deepAreas_.end(); ++it )
+            for( auto it = deepAreas_.begin(); it != deepAreas_.end(); ++it )
                 if( it->Intersect2D( line, 0 ) )
                     return -1;
             if( crossingHeight_ == eCrossingHeightNever )
-                for( it = lowAreas_.begin(); it != lowAreas_.end(); ++it )
+                for( auto it = lowAreas_.begin(); it != lowAreas_.end(); ++it )
                     if( it->Intersect2D( line, 0 ) )
                         return -1;
         }
