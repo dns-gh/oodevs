@@ -116,7 +116,7 @@ void PopulationKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
     if( item && item->data( KnowledgeRole ).isValid() )
         if( item->data( KnowledgeRole ).canConvert< const PopulationKnowledge_ABC* >() )
-            item->data( KnowledgeRole ).value< const PopulationKnowledge_ABC* >()->ContextMenu( controllers_.actions_, knowledgeList_->viewport()->mapToGlobal( pos ) );
+            item->data( KnowledgeRole ).value< const PopulationKnowledge_ABC* >()->ContextMenu( controllers_.actions_, knowledgeList_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------

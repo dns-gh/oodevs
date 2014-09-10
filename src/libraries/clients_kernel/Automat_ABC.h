@@ -47,7 +47,7 @@ public:
     virtual const std::string& GetTypeName() const;
     virtual void Select( ActionController& controller ) const;
     virtual void MultipleSelect( ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const;
     virtual void Activate( ActionController& controller ) const;
     //@}
 };

@@ -47,9 +47,9 @@ void Pathfind_ABC::MultipleSelect( ActionController& controller, const std::vect
     controller.MultipleSelect( first, second );
 }
 
-void Pathfind_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void Pathfind_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *static_cast< const Entity_ABC* >( this ), where );
+    controller.ContextMenu( emitter, *this, *static_cast< const Entity_ABC* >( this ), where );
 }
 
 void Pathfind_ABC::Activate( ActionController& controller ) const

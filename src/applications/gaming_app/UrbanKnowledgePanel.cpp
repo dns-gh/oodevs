@@ -215,7 +215,7 @@ void UrbanKnowledgePanel::OnContextMenuRequested( const QPoint& pos )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
     if( item && item->data( KnowledgeRole ).isValid() )
-        item->data( KnowledgeRole ).value< const UrbanKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
+        item->data( KnowledgeRole ).value< const UrbanKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 void UrbanKnowledgePanel::NotifyUpdated( const kernel::ModelUnLoaded& )

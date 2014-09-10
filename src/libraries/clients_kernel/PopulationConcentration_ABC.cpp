@@ -71,9 +71,9 @@ void PopulationConcentration_ABC::MultipleSelect( ActionController& controller, 
 // Name: PopulationConcentration_ABC::ContextMenu
 // Created: AGE 2006-08-29
 // -----------------------------------------------------------------------------
-void PopulationConcentration_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void PopulationConcentration_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *static_cast< const Entity_ABC* >( this ), where );
+    controller.ContextMenu( emitter, *this, *static_cast< const Entity_ABC* >( this ), where );
 }
 
 // -----------------------------------------------------------------------------

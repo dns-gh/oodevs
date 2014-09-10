@@ -124,7 +124,7 @@ void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 void UrbanLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f& geoPoint, const QPoint& point )
 {
     const kernel::UrbanObject_ABC& urbanObject = static_cast< const kernel::UrbanObject_ABC& >( selectable );
-    controllers_.actions_.ContextMenu( urbanObject, kernel::Nothing(), geoPoint, point );
+    controllers_.actions_.ContextMenu( this, urbanObject, kernel::Nothing(), geoPoint, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ void UrbanLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, con
 void UrbanLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
 {
     const kernel::UrbanObject_ABC& urbanObject = static_cast< const kernel::UrbanObject_ABC& >( selectable );
-    controllers_.actions_.ContextMenu( urbanObject, kernel::Nothing(), menu );
+    controllers_.actions_.ContextMenu( this, urbanObject, kernel::Nothing(), menu );
 }
 
 // -----------------------------------------------------------------------------

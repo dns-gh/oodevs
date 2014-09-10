@@ -47,9 +47,9 @@ void TacticalLine_ABC::Select( ActionController& actions ) const
     actions.Select( *this, *(const kernel::Entity_ABC*)this );
 }
 
-void TacticalLine_ABC::ContextMenu( ActionController& actions, const QPoint& point ) const
+void TacticalLine_ABC::ContextMenu( ActionController& actions, const QPoint& point, QObject* emitter ) const
 {
-    actions.ContextMenu( *this, *(const kernel::Entity_ABC*)this, point );
+    actions.ContextMenu( emitter, *this, *(const kernel::Entity_ABC*)this, point );
 }
 
 void TacticalLine_ABC::Activate( ActionController& actions ) const

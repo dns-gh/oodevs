@@ -72,9 +72,9 @@ void Object_ABC::MultipleSelect( ActionController& controller, const std::vector
 // Name: Object_ABC::ContextMenu
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-void Object_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void Object_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------

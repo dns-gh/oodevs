@@ -109,7 +109,7 @@ void EntityLayer< ConcreteEntity >::SelectColor( const kernel::Entity_ABC& entit
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f& geoPoint, const QPoint& point )
 {
-    controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( selectable ), geoPoint, point );
+    controllers_.actions_.ContextMenu( this, static_cast< const ConcreteEntity& >( selectable ), geoPoint, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::GraphicalEntity_A
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
 {
-    controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( selectable ), menu );
+    controllers_.actions_.ContextMenu( this, static_cast< const ConcreteEntity& >( selectable ), menu );
 }
 
 // -----------------------------------------------------------------------------

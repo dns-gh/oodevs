@@ -381,7 +381,7 @@ void ObjectKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
     if( item && item->data( KnowledgeRole ).isValid() )
-        item->data( KnowledgeRole ).value< const ObjectKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
+        item->data( KnowledgeRole ).value< const ObjectKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------

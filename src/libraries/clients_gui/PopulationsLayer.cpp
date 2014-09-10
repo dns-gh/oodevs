@@ -41,7 +41,7 @@ void PopulationsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Population_ABC& popu = static_cast< const Population_ABC& >( entity );
-    controllers_.actions_.ContextMenu( popu, entity, point, where );
+    controllers_.actions_.ContextMenu( this, popu, entity, point, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,5 +52,5 @@ void PopulationsLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selec
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Population_ABC& popu = static_cast< const Population_ABC& >( entity );
-    controllers_.actions_.ContextMenu( popu, entity, menu );
+    controllers_.actions_.ContextMenu( this, popu, entity, menu );
 }

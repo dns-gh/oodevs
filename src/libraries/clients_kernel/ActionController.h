@@ -176,41 +176,53 @@ public:
     // -----------------------------------------------------------------------------
     // ContextMenu
     // -----------------------------------------------------------------------------
+    QObject* GetEmitter() const { return emitter_; }
+
     template< typename T >
-    void ContextMenu( const T& element, const QPoint& where )
+    void ContextMenu( QObject* emitter, const T& element, const QPoint& where )
     {
+        emitter_ = emitter;
         menu_.Clear();
         Apply( & ContextMenuObserver_ABC< T >::NotifyContextMenu, element, menu_ );
         ShowMenu( where );
+        emitter_ = 0;
     }
     template< typename T1, typename T2 >
-    void ContextMenu( const T1& firstElement, const T2& secondElement, const QPoint& where )
+    void ContextMenu( QObject* emitter, const T1& firstElement, const T2& secondElement, const QPoint& where )
     {
+        emitter_ = emitter;
         menu_.Clear();
         Apply( & ContextMenuObserver_ABC< T1 >::NotifyContextMenu, firstElement, menu_ );
         Apply( & ContextMenuObserver_ABC< T2 >::NotifyContextMenu, secondElement, menu_ );
         ShowMenu( where );
+        emitter_ = 0;
     }
     template< typename T1, typename T2, typename T3 >
-    void ContextMenu( const T1& firstElement, const T2& secondElement, const T3& thirdElement, const QPoint& where )
+    void ContextMenu( QObject* emitter, const T1& firstElement, const T2& secondElement, const T3& thirdElement, const QPoint& where )
     {
+        emitter_ = emitter;
         menu_.Clear();
         Apply( & ContextMenuObserver_ABC< T1 >::NotifyContextMenu, firstElement, menu_ );
         Apply( & ContextMenuObserver_ABC< T2 >::NotifyContextMenu, secondElement, menu_ );
         Apply( & ContextMenuObserver_ABC< T3 >::NotifyContextMenu, thirdElement, menu_ );
         ShowMenu( where );
+        emitter_ = 0;
     }
 
     template< typename T1, typename T2 >
-    void ContextMenu( const T1& firstElement, const T2& secondElement, kernel::ContextMenu& menu )
+    void ContextMenu( QObject* emitter, const T1& firstElement, const T2& secondElement, kernel::ContextMenu& menu )
     {
+        emitter_ = emitter;
         Apply( & ContextMenuObserver_ABC< T1 >::NotifyContextMenu, firstElement, menu );
         Apply( & ContextMenuObserver_ABC< T2 >::NotifyContextMenu, secondElement, menu );
+        emitter_ = 0;
     }
     template< typename T >
-    void ContextMenu( const T& element, kernel::ContextMenu& menu )
+    void ContextMenu( QObject* emitter, const T& element, kernel::ContextMenu& menu )
     {
+        emitter_ = emitter;
         Apply( & ContextMenuObserver_ABC< T >::NotifyContextMenu, element, menu );
+        emitter_ = 0;
     }
 
     // -----------------------------------------------------------------------------
@@ -283,6 +295,7 @@ private:
     T_Selectionners selectionners_;
     T_MultipleMode multipleModes_;
     T_SelectedMap selectedMap_;
+    QObject* emitter_;
     //@}
 };
 

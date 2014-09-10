@@ -59,7 +59,7 @@ bool DefaultLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
             controllers_.actions_.Select( point_ );
         }
         else if( mouse->button() == Qt::RightButton )
-            controllers_.actions_.ContextMenu( point_, kernel::Nothing(), mouse->globalPos() );
+            controllers_.actions_.ContextMenu( this, point_, kernel::Nothing(), mouse->globalPos() );
     }
     return false;
 }
@@ -73,7 +73,7 @@ void DefaultLayer::FillContextMenu( QMouseEvent* mouse, kernel::ContextMenu& men
     if( mouse && mouse->button() == Qt::RightButton )
     {
         point_ = point;
-        controllers_.actions_.ContextMenu( point_, kernel::Nothing(), menu );
+        controllers_.actions_.ContextMenu( this, point_, kernel::Nothing(), menu );
     }
 }
 

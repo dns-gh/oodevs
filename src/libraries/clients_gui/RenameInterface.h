@@ -56,7 +56,6 @@ class RenameInterface : public QObject
                       , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                       , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
                       , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
-
 {
     Q_OBJECT
 
@@ -106,6 +105,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > contextMenuEntity_;
     std::vector< gui::EntityTreeView_ABC* > views_;
+    gui::EntityTreeView_ABC* contextMenuView_;
     //@}
 };
 

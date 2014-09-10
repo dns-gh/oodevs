@@ -62,9 +62,9 @@ void Drawing_ABC::MultipleSelect( kernel::ActionController& controller, const st
 // Name: Drawing_ABC::ContextMenu
 // Created: SBO 2008-05-29
 // -----------------------------------------------------------------------------
-void Drawing_ABC::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
+void Drawing_ABC::ContextMenu( kernel::ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *(const kernel::Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *(const kernel::Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------

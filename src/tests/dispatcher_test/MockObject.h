@@ -27,7 +27,7 @@ MOCK_BASE_CLASS( MockObject, dispatcher::Object_ABC )
     MOCK_METHOD( GetId, 0 );
     MOCK_METHOD( GetTypeName, 0 );
     MOCK_METHOD( Select, 1 );
-    MOCK_METHOD( ContextMenu, 2 );
+    MOCK_METHOD( ContextMenu, 3 );
     MOCK_METHOD( Activate, 1 );
 
     // kernel::Object_ABC

@@ -245,9 +245,9 @@ void Action_ABC::MultipleSelect( kernel::ActionController& controller, const std
 // Name: Action_ABC::ContextMenu
 // Created: AGE 2008-06-19
 // -----------------------------------------------------------------------------
-void Action_ABC::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
+void Action_ABC::ContextMenu( kernel::ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, where );
+    controller.ContextMenu( emitter, *this, where );
 }
 
 // -----------------------------------------------------------------------------

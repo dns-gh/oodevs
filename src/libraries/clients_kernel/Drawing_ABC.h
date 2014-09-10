@@ -42,7 +42,7 @@ public:
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void MultipleSelect( ActionController& controller, const std::vector< const GraphicalEntity_ABC* >& elements ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const;
 
     virtual const std::string& GetTypeName() const;
     virtual QColor GetColor() const = 0;

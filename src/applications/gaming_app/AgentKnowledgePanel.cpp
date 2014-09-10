@@ -232,7 +232,7 @@ void AgentKnowledgePanel::OnPerceptionContextMenuEvent( const QPoint & pos )
         return;
     QStandardItem* item = perceptionModel_.itemFromIndex( index );
     if( item && item->data( EntityRole ).isValid() )
-        item->data( EntityRole ).value< const Automat_ABC* >()->ContextMenu( controllers_.actions_, pPerceptionListView_->viewport()->mapToGlobal( pos ) );
+        item->data( EntityRole ).value< const Automat_ABC* >()->ContextMenu( controllers_.actions_, pPerceptionListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ void AgentKnowledgePanel::OnKnowledgeContextMenuEvent( const QPoint & pos )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
     if( item && item->data( KnowledgeRole ).isValid() )
-        item->data( KnowledgeRole ).value< const AgentKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
+        item->data( KnowledgeRole ).value< const AgentKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------
