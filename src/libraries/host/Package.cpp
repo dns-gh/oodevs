@@ -1203,10 +1203,11 @@ namespace
 {
 bool Unlink( Async& async, const FileSystem_ABC& fs, const Tree& src, const std::string& key, const Package_ABC& pkg )
 {
-    const boost::optional< std::string > name = src.get_optional< std::string >( key + ".name" );
-    if( name == boost::none )
+    const auto name = src.get_optional< std::string >( key + ".name" );
+    const auto checksum = src.get_optional< std::string >( key + ".checksum" );
+    if( !name || !checksum )
         return false;
-    Package_ABC::T_Item item = pkg.Find( Dependency( key, *name ), false );
+    auto item = pkg.Find( key, *name, *checksum );
     if( !item )
         return false;
     return item->Unlink( async, fs );
