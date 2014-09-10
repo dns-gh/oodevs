@@ -114,7 +114,7 @@ bool ObjectTreeView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 // Name: ObjectTreeView::ItemSpecificFlags
 // Created: ABR 2014-08-28
 // -----------------------------------------------------------------------------
-Qt::ItemFlags ObjectTreeView::ItemSpecificFlags( const kernel::Entity_ABC& /* entity */ ) const
+Qt::ItemFlags ObjectTreeView::ItemSpecificFlags( const kernel::Entity_ABC& entity ) const
 {
-    return Qt::ItemIsEditable;
+    return IsTypeRejected( entity ) ? 0 : Qt::ItemIsEditable;
 }

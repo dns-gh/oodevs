@@ -91,5 +91,5 @@ template< typename Entity >
 Qt::ItemFlags EntityTreeView< Entity >::ItemSpecificFlags( const kernel::Entity_ABC& entity ) const
 {
     const Qt::ItemFlags parentFlags = EntityTreeView_ABC::ItemSpecificFlags( entity );
-    return editable_ ? Qt::ItemIsEditable | parentFlags: parentFlags;
+    return editable_ && !IsTypeRejected( entity ) ? Qt::ItemIsEditable | parentFlags: parentFlags;
 }

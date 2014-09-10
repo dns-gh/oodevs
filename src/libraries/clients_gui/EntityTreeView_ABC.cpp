@@ -288,20 +288,16 @@ void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
 {
-    if( !IsReadOnly() && event )
-    {
-        QModelIndex index = indexAt( event->pos() );
-        if( index.isValid() )
+    if( IsReadOnly() || !event )
+        return;
+    QModelIndex index = indexAt( event->pos() );
+    if( proxyModel_->flags( index ) & Qt::ItemIsEditable )
+        if( const auto* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( dataModel_.GetMainModelIndex( index ) ) )
         {
-            const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( dataModel_.GetMainModelIndex( indexAt( event->pos() ) ) );
-            if( entity )
-            {
-                entity->ContextMenu( controllers_.actions_, event->globalPos() );
-                return;
-            }
+            entity->ContextMenu( controllers_.actions_, event->globalPos() );
+            return;
         }
-        ContextMenuRequested( event->globalPos() );
-    }
+    ContextMenuRequested( event->globalPos() );
 }
 
 // -----------------------------------------------------------------------------
