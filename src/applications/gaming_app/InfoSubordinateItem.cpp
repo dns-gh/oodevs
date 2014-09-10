@@ -82,3 +82,13 @@ const kernel::Entity_ABC& InfoSubordinateItem::GetEntity() const
 {
     return *data( Qt::UserRole + 1 ).value< const kernel::Entity_ABC* >();
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoSubordinateItem::NotifyUpdated
+// Created: ABR 2014-09-10
+// -----------------------------------------------------------------------------
+void InfoSubordinateItem::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    if( &entity == &GetEntity() )
+        setText( entity.GetName() );
+}

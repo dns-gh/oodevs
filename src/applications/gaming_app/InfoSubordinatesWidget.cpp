@@ -148,3 +148,18 @@ void InfoSubordinatesWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
             return;
         }
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoSubordinatesWidget::NotifyUpdated
+// Created: ABR 2014-09-10
+// -----------------------------------------------------------------------------
+void InfoSubordinatesWidget::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    for( int row = 0; row < count(); ++row )
+        if( &static_cast< InfoSubordinateItem* >( item( row ) )->GetEntity() == &entity )
+        {
+            auto selected = selected_;
+            selected_ = 0;
+            NotifySelected( selected );
+        }
+}
