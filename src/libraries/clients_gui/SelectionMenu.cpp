@@ -344,7 +344,8 @@ void SelectionMenu::GenerateMenu()
     menu->setStyle( new StandardIconProxyStyle() );
 
     // merge with default menu
-    controllers_.actions_.ContextMenu( point_, kernel::Nothing(), *menu );
+    if( mouseEvent_->button() == Qt::RightButton )
+        controllers_.actions_.ContextMenu( point_, kernel::Nothing(), *menu );
     menu->FillMenu();
 
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
