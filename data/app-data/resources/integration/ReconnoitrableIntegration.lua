@@ -75,9 +75,8 @@ end
 integration.startedSearchUrbanBlock = function( urbanBlock, doNotCaptureTerrorists )
     if  urbanBlock.recoFinished then
         DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )     
-        local terroristsInUB = integration.getTerroristsInObjective( urbanBlock )     
         if not doNotCaptureTerrorists then
-            integration.capture(terroristsInUB, eRC_TerroristCaptured ) 
+            integration.capture( integration.getTerroristsInObjective( urbanBlock ), eRC_TerroristCaptured ) 
         end
         urbanBlock.bActionSearchFinished = true
     end
@@ -87,9 +86,13 @@ end
 --- Stop searching an urban block
 -- @param urbanBlock Urban block knowledge
 -- @param noReport Boolean - if set to 'true', no report will be displayed.
+-- @param captureTerrorists Boolean, true if terrorists should be captured, false otherwise.
 -- @return true
-integration.stopSearchUrbanBlock = function( urbanBlock, noReport )
+integration.stopSearchUrbanBlock = function( urbanBlock, noReport, captureTerrorists )
     perceptionReconnaissanceCallbacks[ urbanBlock.actionSearch ] = nil
+    if captureTerrorists then
+        integration.capture( integration.getTerroristsInObjective( urbanBlock ), eRC_TerroristCaptured ) 
+    end
     DEC_Perception_DesactiverReconnaissanceLocalisation( urbanBlock.actionSearch )
     DEC_Perception_DesactiverDetectionObjetLocalisation( urbanBlock.recceObj )
     if not noReport then
