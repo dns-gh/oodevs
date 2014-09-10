@@ -12,9 +12,15 @@
 
 #include "KnowledgeGroupFactory_ABC.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 class Model;
@@ -30,7 +36,10 @@ class KnowledgeGroupFactory : public KnowledgeGroupFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupFactory( kernel::Controllers& controllers, Model& model );
+             KnowledgeGroupFactory( kernel::Controllers& controllers,
+                                    Model& model,
+                                    const kernel::Profile_ABC& profile,
+                                    actions::ActionsModel& actionsModel );
     virtual ~KnowledgeGroupFactory();
     //@}
 
@@ -51,6 +60,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
+    const kernel::Profile_ABC& profile_;
+    actions::ActionsModel& actionsModel_;
     //@}
 };
 

@@ -23,8 +23,11 @@ using namespace gui;
 // Name: Team::Team
 // Created: LDC 2012-05-07
 // -----------------------------------------------------------------------------
-Team::Team( Controllers& controllers, unsigned long id, const QString& name )
-    : EntityImplementation< Team_ABC >( controllers.controller_, id, name )
+Team::Team( Controllers& controllers,
+            unsigned long id,
+            const QString& name,
+            const T_CanBeRenamedFunctor& canBeRenamedFunctor /* = T_CanBeRenamedFunctor() */ )
+    : EntityImplementation< Team_ABC >( controllers.controller_, id, name, canBeRenamedFunctor )
     , controllers_( controllers )
 {
     // NOTHING

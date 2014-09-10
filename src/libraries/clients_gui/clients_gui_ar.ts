@@ -916,13 +916,6 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::DrawingsTreeView</name>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::EditorFactory</name>
     <message>
         <source>True</source>
@@ -1844,6 +1837,13 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>Select refresh rate (in ms):</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::RenameInterface</name>
+    <message>
+        <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

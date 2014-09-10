@@ -54,7 +54,7 @@ public:
                        kernel::Entity_ABC& entity,
                        const sword::Pathfind& msg,
                        bool edition,
-                       bool canBeOrdered );
+                       const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Pathfind();
     //@}
 
@@ -62,7 +62,6 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    virtual void Rename( const QString& name );
     virtual void NotifyDestruction() const;
     //@}
 

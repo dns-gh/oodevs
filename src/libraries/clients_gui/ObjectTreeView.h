@@ -41,6 +41,7 @@ protected:
     //@{
     virtual void NotifyCreated( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     //@}
 
 protected:

@@ -166,6 +166,18 @@ void TaskerWidget::OnClearClicked()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TaskerWidget::NotifyUpdated
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void TaskerWidget::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    if( tasker_ != &entity )
+        return;
+    tasker_ = 0;
+    SetTasker( &entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TaskerWidget::OnClearClicked
 // Created: ABR 2013-12-17
 // -----------------------------------------------------------------------------

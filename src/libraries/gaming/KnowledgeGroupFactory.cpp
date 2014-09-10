@@ -19,7 +19,9 @@
 #include "PopulationKnowledges.h"
 #include "StaticModel.h"
 #include "TeamsModel.h"
+#include "actions/ActionsModel.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/SimulationSenders.h"
 
@@ -29,9 +31,14 @@ using namespace kernel;
 // Name: KnowledgeGroupFactory constructor
 // Created: HBD 2010-06-23
 // -----------------------------------------------------------------------------
-KnowledgeGroupFactory::KnowledgeGroupFactory( kernel::Controllers& controllers, Model& model )
+KnowledgeGroupFactory::KnowledgeGroupFactory( kernel::Controllers& controllers,
+                                              Model& model,
+                                              const kernel::Profile_ABC& profile,
+                                              actions::ActionsModel& actionsModel )
     : controllers_( controllers )
     , model_( model )
+    , profile_( profile )
+    , actionsModel_( actionsModel )
 {
     // NOTHING
 }
@@ -56,8 +63,10 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const s
         static_cast< Entity_ABC* >( &model_.GetKnowledgeGroupResolver().Get( message.parent().id() ) ) :
         static_cast< Entity_ABC* >( &model_.GetTeamResolver().Get( message.party().id() ) );
     // LTO end
-
-    KnowledgeGroup* result = new KnowledgeGroup( message.knowledge_group().id(), message.name(), message.has_crowd() && message.crowd(), controllers_.controller_, message.type(), model_.static_.types_ );
+    KnowledgeGroup* result = new KnowledgeGroup( message.knowledge_group().id(), message.name(), message.has_crowd() && message.crowd(),
+                                                 controllers_.controller_, message.type(), model_.static_.types_,
+                                                 [=]( const kernel::KnowledgeGroup_ABC& group ){ return profile_.CanDoMagic( group ); } );
+    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     bool jam = message.has_jam() && message.jam();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );

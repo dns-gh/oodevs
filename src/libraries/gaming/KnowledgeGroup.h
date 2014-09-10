@@ -38,7 +38,13 @@ class KnowledgeGroup : public gui::EntityImplementation< kernel::KnowledgeGroup_
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long nId, const std::string& name, bool crowd, kernel::Controller& controller, const std::string& sType, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( unsigned long nId,
+                             const std::string& name,
+                             bool crowd,
+                             kernel::Controller& controller,
+                             const std::string& sType,
+                             const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types,
+                             const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~KnowledgeGroup();
     //@}
 

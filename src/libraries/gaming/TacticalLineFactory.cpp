@@ -29,7 +29,10 @@ using namespace sword;
 // Name: TacticalLineFactory constructor
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-TacticalLineFactory::TacticalLineFactory( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, Model& model, Publisher_ABC& publisher,
+TacticalLineFactory::TacticalLineFactory( kernel::Controllers& controllers,
+                                          const kernel::CoordinateConverter_ABC& converter,
+                                          Model& model,
+                                          Publisher_ABC& publisher,
                                           const kernel::Profile_ABC& profile )
     : controllers_ ( controllers )
     , converter_   ( converter )
@@ -51,15 +54,9 @@ TacticalLineFactory::~TacticalLineFactory()
 
 namespace
 {
-    bool CanBeOrdered( const sword::Diffusion& message, Model& model, const kernel::Profile_ABC& profile )
+    bool CanBeOrdered( const kernel::Entity_ABC& entity, const kernel::Profile_ABC& profile )
     {
-        const kernel::Entity_ABC* superior = 0;
-        if( message.has_unit() )
-            superior = model.GetAgentResolver().Find( message.unit().id() );
-        else if( message.has_automat() )
-            superior = model.GetAutomatResolver().Find( message.automat().id() );
-        else if( message.has_formation() )
-            superior = model.GetFormationResolver().Find( message.formation().id() );
+        const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
         return superior && profile.CanBeOrdered( *superior );
     }
 }
@@ -70,8 +67,8 @@ namespace
 // -----------------------------------------------------------------------------
 ::TacticalLine_ABC* TacticalLineFactory::Create( const sword::PhaseLineCreation& message )
 {
-    const auto& diffusion = message.tactical_line().diffusion();
-    ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, message, !CanBeOrdered( diffusion, model_, profile_ ) );
+    ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, message,
+                                         [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, message.tactical_line().geometry(), converter_, *line ) );
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.GetAutomatResolver(), model_.GetFormationResolver(), model_.GetAgentResolver() ) );
     line->Polish();
@@ -84,8 +81,8 @@ namespace
 // -----------------------------------------------------------------------------
 ::TacticalLine_ABC* TacticalLineFactory::Create( const sword::LimitCreation& message )
 {
-    const auto& diffusion = message.tactical_line().diffusion();
-    ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, message, !CanBeOrdered( diffusion, model_, profile_ ) );
+    ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, message,
+                                          [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, message.tactical_line().geometry(), converter_, *line ) );
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.GetAutomatResolver(), model_.GetFormationResolver(), model_.GetAgentResolver() ) );
     line->Polish();
@@ -98,7 +95,8 @@ namespace
 // -----------------------------------------------------------------------------
 void TacticalLineFactory::CreateLimit( const T_PointVector& points, const kernel::Entity_ABC& superior )
 {
-    Limit line( controllers_.controller_, publisher_, converter_, !profile_.CanBeOrdered( superior ) );
+    Limit line( controllers_.controller_, publisher_, converter_,
+                [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
     line.Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, points, converter_, line ) );
     line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, superior, model_.GetAutomatResolver(), model_.GetFormationResolver(), model_.GetAgentResolver() ) );
     line.Polish();
@@ -111,7 +109,8 @@ void TacticalLineFactory::CreateLimit( const T_PointVector& points, const kernel
 // -----------------------------------------------------------------------------
 void TacticalLineFactory::CreateLima( const T_PointVector& points, const kernel::Entity_ABC& superior )
 {
-    Lima line( controllers_.controller_, publisher_, converter_, !profile_.CanBeOrdered( superior ) );
+    Lima line( controllers_.controller_, publisher_, converter_,
+               [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
     line.Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, points, converter_, line ) );
     line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, superior, model_.GetAutomatResolver(), model_.GetFormationResolver(), model_.GetAgentResolver() ) );
     line.Polish();

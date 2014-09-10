@@ -23,6 +23,7 @@ namespace kernel
 namespace gui
 {
     class ParametersLayer;
+
 // =============================================================================
 /** @class  DrawingsTreeView
     @brief  DrawingsTreeView
@@ -33,9 +34,6 @@ class DrawingsTreeView : public EntityTreeView_ABC
                        , public tools::ElementObserver_ABC< kernel::Drawing_ABC >
                        , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
                        , public tools::ElementObserver_ABC< kernel::Pathfind_ABC >
-                       , public kernel::ContextMenuObserver_ABC< kernel::Drawing_ABC >
-                       , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
-                       , public kernel::ContextMenuObserver_ABC< kernel::Pathfind_ABC >
 {
     Q_OBJECT
 
@@ -57,16 +55,7 @@ protected:
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyCreated( const kernel::Pathfind_ABC& pathfind );
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
-    virtual void NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& line, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Pathfind_ABC& pathfind, kernel::ContextMenu& menu );
     virtual void keyPressEvent( QKeyEvent* event );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnRename();
     //@}
 
 private:

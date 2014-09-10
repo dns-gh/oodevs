@@ -496,6 +496,21 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
                 }
             }
         }
+        else if( msg.type() == sword::ObjectMagicAction::rename )
+        {
+            MIL_Object_ABC* pObject = Find( msg.object().id() );
+            protocol::Check( pObject, "invalid object identifier" );
+            const sword::MissionParameters& params = msg.parameters();
+            protocol::CheckCount( params, 1 );
+            const auto& name = protocol::GetString( params, 0 );
+            pObject->SetName( name );
+            client::ObjectUpdate asn;
+            id = pObject->GetID();
+            asn().mutable_object()->set_id( id );
+            asn().set_name( name.c_str() );
+            asn().mutable_attributes();
+            asn.Send( NET_Publisher_ABC::Publisher() );
+        }
     }
     catch( const NET_AsnBadParam< sword::ObjectMagicActionAck::ErrorCode >& e )
     {

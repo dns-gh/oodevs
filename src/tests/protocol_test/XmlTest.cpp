@@ -1204,7 +1204,7 @@ BOOST_FIXTURE_TEST_CASE( read_magic_action, Fixture )
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     BOOST_CHECK_EQUAL( msg.ShortDebugString(),
-        "type: change_resource_network_properties parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+        "type: 5 parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 
@@ -1222,7 +1222,7 @@ BOOST_FIXTURE_TEST_CASE( read_unit_magic_action, Fixture )
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     BOOST_CHECK_EQUAL( msg.ShortDebugString(),
-        "tasker { party { id: 27 } } type: change_formation_superior parameters { } "
+        "tasker { party { id: 27 } } type: 23 parameters { } "
                  "start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
@@ -1240,7 +1240,7 @@ BOOST_FIXTURE_TEST_CASE( read_object_magic_action, Fixture )
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     BOOST_CHECK_EQUAL( msg.ShortDebugString(),
-        "object { id: 27 } type: create parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+        "object { id: 27 } type: 0 parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 
@@ -1252,7 +1252,7 @@ BOOST_FIXTURE_TEST_CASE( read_knowledge_magic_action, Fixture )
         << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< KnowledgeMagicAction >();
     BOOST_CHECK_EQUAL( msg.ShortDebugString(),
-        "knowledge_group { id: 27 } type: add_knowledge parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
+        "knowledge_group { id: 27 } type: 4 parameters { } start_time { data: \"2011-04-08T10:01:36\" }" );
     CheckCycle( msg );
 }
 

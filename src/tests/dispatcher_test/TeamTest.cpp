@@ -75,6 +75,15 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             result.reset( new dispatcher::Side( model, message ) );
             sides.Register( result->GetId(), *result );
         }
+        // Party update
+        sword::SimToClient expectedPartyUpdate;
+        {
+            expectedPartyUpdate.set_context( 0 );
+            sword::PartyUpdate& message = *expectedPartyUpdate.mutable_message()->mutable_party_update();
+            message.mutable_party()->set_id( 1 );
+            message.set_name( "test" );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+        }
         {
             // Change diplomacies
             sword::SimToClient expected;
@@ -88,6 +97,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedPartyUpdate );
             MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendFullUpdate( publisher );
             mock::verify( publisher );
@@ -115,6 +125,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedPartyUpdate );
             MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendFullUpdate( publisher );
             mock::verify( publisher );

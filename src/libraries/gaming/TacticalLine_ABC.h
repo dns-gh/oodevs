@@ -43,16 +43,18 @@ class TacticalLine_ABC : public gui::EntityImplementation< kernel::TacticalLine_
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, unsigned long id,
-                               Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-                               bool readOnly );
+             TacticalLine_ABC( kernel::Controller& controller,
+                               const QString& baseName,
+                               unsigned long id,
+                               Publisher_ABC& publisher,
+                               const kernel::CoordinateConverter_ABC& converter,
+                               const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~TacticalLine_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual void NotifyDestruction();
-    virtual void Rename( const QString& name );
     void Create();
     //@}
 
@@ -86,12 +88,6 @@ protected:
 
     virtual void DoUpdate( const sword::PhaseLineUpdate& message );
     virtual void DoUpdate( const sword::LimitUpdate&  message );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void UpdateName( const std::string& name );
     //@}
 
 private:

@@ -22,9 +22,11 @@ using namespace sword;
 // Name: Limit constructor
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-              bool readOnly )
-    : TacticalLine_ABC( controller, tools::translate( "Limit", "Limit" ), 0, publisher, converter, readOnly )
+Limit::Limit( kernel::Controller& controller,
+              Publisher_ABC& publisher,
+              const kernel::CoordinateConverter_ABC& converter,
+              const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : TacticalLine_ABC( controller, tools::translate( "Limit", "Limit" ), 0, publisher, converter, canBeRenamedFunctor )
     , controller_( controller )
 {
     // NOTHING
@@ -34,9 +36,12 @@ Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ke
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-              const sword::LimitCreation& message, bool readOnly )
-    : TacticalLine_ABC( controller, QString( message.tactical_line().name().c_str() ), message.id().id(), publisher, converter, readOnly )
+Limit::Limit( kernel::Controller& controller,
+              Publisher_ABC& publisher,
+              const kernel::CoordinateConverter_ABC& converter,
+              const sword::LimitCreation& message,
+              const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : TacticalLine_ABC( controller, QString( message.tactical_line().name().c_str() ), message.id().id(), publisher, converter, canBeRenamedFunctor )
     , controller_( controller )
 {
     // NOTHING

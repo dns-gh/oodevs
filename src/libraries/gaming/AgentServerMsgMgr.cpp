@@ -754,6 +754,16 @@ void AgentServerMsgMgr::OnReceiveMsgPartyCreation( const sword::SimToClient& msg
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPartyUpdate
+// Created: ABR 2014-08-28
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPartyUpdate( const sword::SimToClient& msg )
+{
+    const auto& message = msg.message().party_update();
+    GetModel().teams_.GetTeam( message.party().id() ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveFormationCreation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
@@ -1994,6 +2004,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_object_update,                               &AgentServerMsgMgr::OnReceiveObjectUpdate },
         { &sword::SimToClient_Content::has_order_ack,                                   &AgentServerMsgMgr::OnReceiveOrderAck },
         { &sword::SimToClient_Content::has_party_creation,                              &AgentServerMsgMgr::OnReceiveMsgPartyCreation },
+        { &sword::SimToClient_Content::has_party_update,                                &AgentServerMsgMgr::OnReceiveMsgPartyUpdate },
         { &sword::SimToClient_Content::has_pathfind_creation,                           &AgentServerMsgMgr::OnReceivePathfindCreation },
         { &sword::SimToClient_Content::has_pathfind_update  ,                           &AgentServerMsgMgr::OnReceivePathfindUpdate },
         { &sword::SimToClient_Content::has_pathfind_destruction,                        &AgentServerMsgMgr::OnReceivePathfindDestruction },

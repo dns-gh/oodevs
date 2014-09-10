@@ -134,10 +134,13 @@ public:
     kernel::Controllers& controllers_;
     const StaticModel& static_;
     const tools::ExerciseConfig& config_;
+    kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
+    actions::ParameterFactory_ABC& actionParameterFactory_;
+    actions::ActionFactory_ABC& actionFactory_;
+    actions::ActionsModel& actions_;
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
     ObjectKnowledgeFactory& objectKnowledgeFactory_;
     UrbanKnowledgeFactory& urbanKnowledgeFactory_;
-    kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     TeamFactory_ABC& teamFactory_;
     KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
     AgentFactory_ABC& agentFactory_;
@@ -147,8 +150,6 @@ public:
     TacticalLineFactory& tacticalLineFactory_;
     FireResultFactory& fireResultsFactory_;
     kernel::ProfileFactory_ABC& userProfileFactory_;
-    actions::ParameterFactory_ABC& actionParameterFactory_;
-    actions::ActionFactory_ABC& actionFactory_;
     DrawingFactory& drawingFactory_;
     AgentsModel& agents_;
     ObjectsModel& objects_;
@@ -160,7 +161,6 @@ public:
     FiresModel& fires_;
     WeatherModel& weather_;
     UserProfilesModel& profiles_;
-    actions::ActionsModel& actions_;
     FolkModel& folk_;
     AfterActionModel& aar_;
     DrawingsModel& drawings_;

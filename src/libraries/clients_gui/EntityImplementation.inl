@@ -90,17 +90,6 @@ I& EntityImplementation< I >::This()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityImplementation::Rename
-// Created: LGY 2012-08-24
-// -----------------------------------------------------------------------------
-template< typename I >
-void EntityImplementation< I >::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityImplementation::SerializeAttributes
 // Created: LGY 2012-08-24
 // -----------------------------------------------------------------------------
@@ -121,6 +110,26 @@ void EntityImplementation< I >::ForceNewId( unsigned long id )
     id_ = id;
     displayId_ = GetDisplayId();
     Touch();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::CanBeRenamed
+// Created: ABR 2014-09-03
+// -----------------------------------------------------------------------------
+template< typename I >
+bool EntityImplementation< I >::CanBeRenamed() const
+{
+    return canBeRenamedFunctor_ ? canBeRenamedFunctor_( *this ) : true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::SetRenameObserver
+// Created: ABR 2014-09-03
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::SetRenameObserver( const T_RenameObserver& renameObserver )
+{
+    renameObserver_ = renameObserver;
 }
 
 }

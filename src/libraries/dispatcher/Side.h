@@ -21,6 +21,7 @@ namespace sword
     class ChangeDiplomacy;
     class ChangeDiplomacyAck;
     class PartyCreation;
+    class PartyUpdate;
     class RgbColor;
 }
 
@@ -38,6 +39,7 @@ class Side : public dispatcher::Team_ABC
            , public kernel::Extension_ABC
            , public kernel::Updatable_ABC< sword::ChangeDiplomacy >
            , public kernel::Updatable_ABC< sword::ChangeDiplomacyAck >
+           , public kernel::Updatable_ABC< sword::PartyUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -50,6 +52,7 @@ public:
     //@{
     virtual void DoUpdate( const sword::ChangeDiplomacy& asnMsg );
     virtual void DoUpdate( const sword::ChangeDiplomacyAck& asnMsg );
+    virtual void DoUpdate( const sword::PartyUpdate& msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

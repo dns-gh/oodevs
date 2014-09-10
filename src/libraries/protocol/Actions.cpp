@@ -839,6 +839,22 @@ const ActionParam pathfind_update_params[] =
 {
     { "Itinerary", "itinerary", 0, 0, 0, 0 },
 };
+
+const ActionParam rename_params[] =
+{
+    { "Name", "string", 0, 0, 0, 0 },
+};
+
+const ActionParam knowledge_group_rename_params[] =
+{
+    { "Name", "string", 0, 0, 0, 0 },
+};
+
+const ActionParam rename_object_params[] =
+{
+    { "Name", "string", 0, 0, 0, 0 },
+};
+
 }  // namespace
 
 const Action actions[] =
@@ -876,6 +892,7 @@ const Action actions[] =
     ACTION( log_supply_set_manual ),
     ACTION( partial_recovery ),
     ACTION( reload_brain ),
+    ACTION( rename ),
     ACTION( surrender ),
     ACTION( teleport ),
     ACTION( transfer_equipment ),
@@ -910,13 +927,15 @@ const Action actions[] =
     // knowledge
     ACTION( knowledge_group_add_knowledge ),
     ACTION( knowledge_group_enable ),
+    ACTION( knowledge_group_rename ),
     ACTION( knowledge_group_update_side ),
     ACTION( knowledge_group_update_side_parent ),
     ACTION( knowledge_group_update_type ),
     // object
     ACTION( create_object ),
-    ACTION( update_object ),
     ACTION_EMPTY( destroy_object ),
+    ACTION( rename_object ),
+    ACTION( update_object ),
     // magic
     ACTION( change_diplomacy ),
     ACTION( change_resource_links ),

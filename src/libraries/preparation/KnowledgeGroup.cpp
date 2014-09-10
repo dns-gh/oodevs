@@ -82,7 +82,7 @@ void KnowledgeGroup::CreateDictionary()
 {
     gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary>();
     const Entity_ABC& constSelf = static_cast< const Entity_ABC& >( *this );
-    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
+    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType, false );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Delay" ), communicationDelay_, true ); // LTO
 }
 

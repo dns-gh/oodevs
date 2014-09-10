@@ -35,6 +35,7 @@ class Attributes;
 class InfoSubordinateItem : public QListWidgetItem
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< Attributes >
+                          , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                           , private boost::noncopyable
 {
 public:
@@ -54,6 +55,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Attributes& attributes );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     //@}
 
 private:

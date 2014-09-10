@@ -566,6 +566,7 @@ T_ConverterUnitMagicActionType UnitMagicActionTypeConverter_[] =
     T_ConverterUnitMagicActionType( "recover_troops",                   QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Recover - Troops" ), sword::UnitMagicAction::recover_troops ),
     T_ConverterUnitMagicActionType( "recover_troops_except_log",        QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Recover - Troops" ), sword::UnitMagicAction::recover_troops_except_log ),
     T_ConverterUnitMagicActionType( "reload_brain",                     QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Reload brain" ), sword::UnitMagicAction::reload_brain ),
+    T_ConverterUnitMagicActionType( "rename",                           QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Rename" ), sword::UnitMagicAction::rename ),
     T_ConverterUnitMagicActionType( "surrender",                        QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Surrender" ), sword::UnitMagicAction::surrender_to ),
     T_ConverterUnitMagicActionType( "teleport",                         QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Teleport" ), sword::UnitMagicAction::move_to ),
     T_ConverterUnitMagicActionType( "transfer_equipment",               QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Equipment transfer" ), sword::UnitMagicAction::transfer_equipment ),
@@ -583,6 +584,7 @@ T_ConverterKnowledgeMagicActionType KnowledgeMagicActionTypeConverter_[] =
     T_ConverterKnowledgeMagicActionType( "knowledge_group_update_side",        QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Change superior" ), sword::KnowledgeMagicAction::update_party ),
     T_ConverterKnowledgeMagicActionType( "knowledge_group_update_side_parent", QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Change superior" ), sword::KnowledgeMagicAction::update_party_parent ),
     T_ConverterKnowledgeMagicActionType( "knowledge_group_update_type",        QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Knowledge Group Change Type" ), sword::KnowledgeMagicAction::update_type ),
+    T_ConverterKnowledgeMagicActionType( "knowledge_group_rename",             QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Rename knowledge group" ), sword::KnowledgeMagicAction::rename ),
     T_ConverterKnowledgeMagicActionType( "", "", sword::KnowledgeMagicAction::Type_MAX )
 };
 
@@ -591,6 +593,7 @@ T_ConverterObjectMagicActionType ObjectMagicActionTypeConverter_[] =
     T_ConverterObjectMagicActionType( "create_object",  QT_TRANSLATE_NOOP( "sword::ObjectMagicAction::Type", "Object Creation" ),    sword::ObjectMagicAction::create ),
     T_ConverterObjectMagicActionType( "destroy_object", QT_TRANSLATE_NOOP( "sword::ObjectMagicAction::Type", "Object Destruction" ), sword::ObjectMagicAction::destroy ),
     T_ConverterObjectMagicActionType( "update_object",  QT_TRANSLATE_NOOP( "sword::ObjectMagicAction::Type", "Object Update" ),      sword::ObjectMagicAction::update ),
+    T_ConverterObjectMagicActionType( "rename_object",  QT_TRANSLATE_NOOP( "sword::ObjectMagicAction::Type", "Object Renaming" ),      sword::ObjectMagicAction::rename ),
     T_ConverterObjectMagicActionType( "", "", sword::ObjectMagicAction::Type_MAX )
 };
 

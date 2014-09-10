@@ -63,7 +63,7 @@ bool GhostCommandPostAttributes::IsCommandPost() const
 // -----------------------------------------------------------------------------
 void GhostCommandPostAttributes::CreateDictionary( gui::PropertiesDictionary& dictionary )
 {
-    dictionary.Register( entity_, tools::translate( "Agent", "Info/Command post" ), isPc_, *this, &GhostCommandPostAttributes::Update );
+    dictionary.Register( entity_, tools::translate( "Agent", "Info/Command post" ), isPc_, *this, &GhostCommandPostAttributes::Update, false );
 }
 
 // -----------------------------------------------------------------------------

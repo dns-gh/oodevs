@@ -59,7 +59,7 @@ public:
     virtual QString GetName() const;
     virtual QString GetBasicName() const;
     virtual E_NatureLevel GetLevel() const;
-    void Rename( const QString& name );
+    virtual void Rename( const QString& name );
     void SetLevel( E_NatureLevel level );
     //@}
 

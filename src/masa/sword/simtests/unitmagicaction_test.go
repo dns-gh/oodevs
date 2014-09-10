@@ -9,6 +9,7 @@
 package simtests
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	"fmt"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
@@ -35,7 +36,7 @@ func postInvalidTasker(client *swapi.Client, tasker *sword.Tasker) error {
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker:     tasker,
-					Type:       &actionType,
+					Type:       proto.Int32(int32(actionType)),
 					Parameters: swapi.MakeParameters(),
 				},
 			},
@@ -2787,4 +2788,59 @@ func (s *TestSuite) TestRecoverAll(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 	err = client.RecoverUnit(unit.Id, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
+
+func (s *TestSuite) TestRename(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+	newName := "new_name"
+	party := getSomeParty(c, data)
+	formation := getSomeFormation(c, data)
+	automat := getSomeAutomat(c, data)
+	unit := getSomeUnit(c, data)
+	crowd := getSomeCrowd(c, data)
+	population := getSomePopulation(c, data)
+	// invalid id
+	err := client.Rename(0, newName)
+	c.Assert(err, NotNil)
+	// invalid name
+	err = client.RenameTest(party.Id, swapi.MakeParameters())
+	c.Assert(err, NotNil)
+	// party
+	err = client.Rename(party.Id, newName)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Parties[party.Id].Name == newName
+	})
+	// formation
+	err = client.Rename(formation.Id, newName)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Formations[formation.Id].Name == newName
+	})
+	// automat
+	err = client.Rename(automat.Id, newName)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Automats[automat.Id].Name == newName
+	})
+	// unit
+	err = client.Rename(unit.Id, newName)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit.Id].Name == newName
+	})
+	// crowd
+	err = client.Rename(crowd.Id, newName)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Crowds[crowd.Id].Name == newName
+	})
+	// population
+	err = client.Rename(population.Id, newName)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Populations[population.Id].Name == newName
+	})
 }

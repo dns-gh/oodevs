@@ -91,7 +91,6 @@ private:
     Model_ABC& model_;
     const kernel::InhabitantType& type_;
     const unsigned long nType_;
-    const std::string strName_;
     const std::string text_;
     std::string motivation_;
     Team_ABC& side_;

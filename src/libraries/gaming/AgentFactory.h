@@ -12,10 +12,16 @@
 
 #include "AgentFactory_ABC.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class Profile_ABC;
     class Workers;
 }
 
@@ -34,8 +40,13 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                           Publisher_ABC& publisher, kernel::Workers& workers );
+             AgentFactory( kernel::Controllers& controllers,
+                           Model& model,
+                           const StaticModel& staticModel,
+                           Publisher_ABC& publisher,
+                           kernel::Workers& workers,
+                           const kernel::Profile_ABC& profile,
+                           actions::ActionsModel& actionsModel );
     virtual ~AgentFactory();
     //@}
 
@@ -61,6 +72,8 @@ private:
     const StaticModel& static_;
     Publisher_ABC& publisher_;
     kernel::Workers& workers_;
+    const kernel::Profile_ABC& profile_;
+    actions::ActionsModel& actionsModel_;
     //@}
 };
 

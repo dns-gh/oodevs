@@ -54,6 +54,10 @@ public:
     {
         return name_;
     }
+    virtual void SetName( const QString& name )
+    {
+        name_ = name;
+    }
     virtual unsigned long GetId() const
     {
         return id_;
@@ -88,7 +92,7 @@ private:
     //! @name Member data
     //@{
     unsigned long id_;
-    const QString name_;
+    QString name_;
     //@}
 };
 

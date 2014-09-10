@@ -86,6 +86,8 @@ public:
     //! @name Accessors
     //@{
     virtual const std::string& GetTypeName() const;
+    virtual bool CanBeRenamed() const;
+    virtual void Rename( const QString& name );
     //@}
 
     //! @name GraphicalEntity_ABC implementation

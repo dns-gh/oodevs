@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     void ActivateSelection( bool activate );
-    bool IsActivated() const;
+    virtual bool IsActivated() const;
     //@}
 
 protected:

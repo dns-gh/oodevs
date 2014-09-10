@@ -78,7 +78,6 @@ private:
     bool enabled_; // LTO
     bool jammed_; // LTO
     bool crowd_;
-    std::string name_; // LTO
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< dispatcher::Automat_ABC > automats_;
     //@}

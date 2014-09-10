@@ -32,7 +32,7 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
                                   const tools::Resolver_ABC< Object_ABC >& objectResolver,
                                   const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver,
                                   const kernel::ObjectType& type )
-    : gui::EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "", true )
+    : gui::EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "", []( const ObjectKnowledge_ABC& ){ return false; } )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
     , type_          ( &type )

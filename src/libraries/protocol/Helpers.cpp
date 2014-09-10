@@ -73,6 +73,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "recover_troops",                     sword::UnitMagicAction::recover_troops },
     { "recover_troops_except_log",          sword::UnitMagicAction::recover_troops_except_log },
     { "reload_brain",                       sword::UnitMagicAction::reload_brain },
+    { "rename",                             sword::UnitMagicAction::rename },
     { "surrender",                          sword::UnitMagicAction::surrender_to },
     { "teleport",                           sword::UnitMagicAction::move_to },
     { "transfer_equipment",                 sword::UnitMagicAction::transfer_equipment },
@@ -87,6 +88,7 @@ static_assert( sword::UnitMagicAction::Type_ARRAYSIZE == mapping::MagicUnitActio
 const mapping::MagicKnowledgeAction mapping::MagicKnowledgeAction::data_[] = {
     { "knowledge_group_add_knowledge",      sword::KnowledgeMagicAction::add_knowledge },
     { "knowledge_group_enable",             sword::KnowledgeMagicAction::enable },
+    { "knowledge_group_rename",             sword::KnowledgeMagicAction::rename },
     { "knowledge_group_update_side",        sword::KnowledgeMagicAction::update_party },
     { "knowledge_group_update_side_parent", sword::KnowledgeMagicAction::update_party_parent },
     { "knowledge_group_update_type",        sword::KnowledgeMagicAction::update_type },
@@ -98,6 +100,7 @@ static_assert( sword::KnowledgeMagicAction::Type_ARRAYSIZE == mapping::MagicKnow
 const mapping::MagicObjectAction mapping::MagicObjectAction::data_[] = {
     { "create_object",  sword::ObjectMagicAction::create },
     { "destroy_object", sword::ObjectMagicAction::destroy },
+    { "rename_object",  sword::ObjectMagicAction::rename },
     { "update_object",  sword::ObjectMagicAction::update },
 };
 

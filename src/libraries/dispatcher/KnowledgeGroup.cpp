@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const sword::KnowledgeGroupCreation& msg )
-    : KnowledgeGroup_ABC( msg.knowledge_group().id() )
+    : KnowledgeGroup_ABC( msg.knowledge_group().id(), QString::fromStdString( msg.name() ) )
     , model_( model )
     , team_( model_.Sides().Get( msg.party().id() ) )
     , parent_( msg.has_parent() ? &model_.KnowledgeGroups().Get( msg.parent().id() ) : 0 )
@@ -32,7 +32,6 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const sword::KnowledgeGroupCre
     , enabled_( true ) // LTO
     , jammed_( msg.has_jam() && msg.jam() )
     , crowd_( msg.has_crowd() && msg.crowd() )
-    , name_( msg.name() )
 {
     // LTO begin
     if( parent_ )
@@ -81,6 +80,8 @@ void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
     if( message.has_parent() )
         ChangeSuperior( message.parent().id() ? &model_.KnowledgeGroups().Get( message.parent().id() ) : 0 );
     // LTO end
+    if( message.has_name() )
+        SetName( QString::fromStdString( message.name() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +139,7 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
         message().mutable_parent()->set_id( parent_->GetId() );
     if( jammed_ )
         message().set_jam( true );
-    message().set_name( name_ );
+    message().set_name( GetName().toStdString() );
     // LTO end
     message.Send( publisher );
 }
@@ -157,6 +158,7 @@ void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         message().mutable_party()->set_id( team_.GetId() );
     message().set_type( type_ );
     message().set_enabled( enabled_ );
+    message().set_name( GetName().toStdString() );
     message.Send( publisher );
 }
 

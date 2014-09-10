@@ -26,6 +26,7 @@ namespace kernel
 namespace sword
 {
     class AutomatCreation;
+    class AutomatAttributes;
 }
 
 // =============================================================================
@@ -37,21 +38,22 @@ namespace sword
 class Automat : public gui::EntityImplementation< kernel::Automat_ABC >
               , public kernel::Extension_ABC
               , public gui::Drawable_ABC
+              , public kernel::Updatable_ABC< sword::AutomatAttributes >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const sword::AutomatCreation& message, kernel::Controller& controller, const kernel::AutomatType& type );
+             Automat( const sword::AutomatCreation& message,
+                      kernel::Controller& controller,
+                      const kernel::AutomatType& type,
+                      const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Automat();
     //@}
 
     //! @name Operations
     //@{
     virtual const kernel::AutomatType& GetType() const;
-    //@}
-
-    //! @name Extensions
-    //@{
+    virtual void DoUpdate( const sword::AutomatAttributes& message );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     //@}

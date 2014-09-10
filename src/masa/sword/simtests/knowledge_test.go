@@ -328,3 +328,24 @@ func (s *TestSuite) TestKnowledgePropagationAmongGroups(c *C) {
 	found := <-done
 	c.Assert(found, Equals, int32(61))
 }
+
+func (s *TestSuite) TestRenameKnowledge(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+	new_name := "new_name"
+	party := getSomeParty(c, data)
+	knowledge := getSomeKnowledgeGroup(c, data, party.Id)
+	// invalid id
+	err := client.RenameKnowledge(0, new_name)
+	c.Assert(err, NotNil)
+	// invalid name
+	err = client.RenameKnowledgeTest(party.Id, swapi.MakeParameters())
+	c.Assert(err, NotNil)
+	// knowledge
+	err = client.RenameKnowledge(knowledge.Id, new_name)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.KnowledgeGroups[knowledge.Id].Name == new_name
+	})
+}

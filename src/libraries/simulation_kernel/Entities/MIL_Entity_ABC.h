@@ -46,6 +46,7 @@ public:
     //@{
     unsigned int GetID() const;
     const std::string& GetName() const;
+    void SetName( const std::string& name );
     virtual MIL_Army_ABC& GetArmy() const = 0;
     virtual bool CanEmitReports() const = 0;
     //@}
@@ -64,7 +65,7 @@ public:
 private:
     //! @name data Members
     //@{
-    const std::string strName_;
+    std::string strName_;
     const unsigned int id_;
     //@}
 };

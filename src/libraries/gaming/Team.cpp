@@ -37,10 +37,13 @@ namespace
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( const sword::PartyCreation& message, kernel::Controllers& controllers )
-    : gui::Team( controllers, message.party().id(), QString( message.name().c_str() ) )
-    , karma_      ( MakeKarma( message.type() ) )
+Team::Team( const sword::PartyCreation& message,
+            kernel::Controllers& controllers,
+            const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : gui::Team( controllers, message.party().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+    , karma_( MakeKarma( message.type() ) )
 {
+    AddExtension( *this );
     controllers_.Register( *this );
 }
 
@@ -61,4 +64,15 @@ Team::~Team()
 const kernel::Karma& Team::GetKarma() const
 {
     return karma_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::DoUpdate
+// Created: ABR 2014-08-28
+// -----------------------------------------------------------------------------
+void Team::DoUpdate( const sword::PartyUpdate& message )
+{
+    if( message.has_name() )
+        SetName( QString::fromStdString( message.name() ) );
+    Touch();
 }

@@ -1296,10 +1296,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unable to delete the knowledge group. At least one knowledge group must exists for each side.</source>
         <translation>Impossible de supprimer le groupe de la connaissance. Au moins un groupe de connaissances doit exister pour chaque camp.</translation>
     </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>
@@ -2737,13 +2733,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Road width (m):</source>
         <translation>Largeur de route (m):</translation>
-    </message>
-</context>
-<context>
-    <name>TreeViewsPanel</name>
-    <message>
-        <source>Rename</source>
-        <translation>Renommer</translation>
     </message>
 </context>
 <context>

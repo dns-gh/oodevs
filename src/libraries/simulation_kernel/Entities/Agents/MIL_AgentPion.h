@@ -217,6 +217,7 @@ private:
     void OnChangeBrainDebug( const sword::MissionParameters& msg );
     void OnChangePosture( const sword::MissionParameters& msg );
     void OnReceiveFinishLogisticHandlings();
+    void OnReceiveRename( const sword::MissionParameters& parameters );
     //@}
 
     //! @name Serialization

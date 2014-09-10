@@ -56,10 +56,15 @@ public:
                               ModelBuilder& modelBuilder,
                               Model& model,
                               StaticModel& staticModel,
-                              std::vector< gui::RichView_ABC* >& treeViews,
                               gui::SymbolIcons& symbols,
                               gui::ParametersLayer& paramLayer );
     virtual ~OrbatDockWidget();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Purge();
+    void Load();
     //@}
 
 private slots:
@@ -71,15 +76,20 @@ private slots:
     //@}
 
 private:
-    //! @name Operations
+    //! @name Helpers
+    //@{
+    void Expand( bool value );
+    //@}
+
+    //! @name Observers implementations
     //@{
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
-    void Expand( bool value );
     //@}
 
 private:
     //! @name Member data
     //@{
+    std::vector< gui::RichView_ABC* > views_;
     gui::RichWidget< QToolButton >* expandButton_;
     TreeViewsPanel* pTreeViewPanel_;
     QIcon expandIcon_;

@@ -116,6 +116,8 @@ public:
     virtual Action_ABC* CreateKnowledgeGroupUpdateParty( const kernel::KnowledgeGroup_ABC& entity, const kernel::Team_ABC& superior ) const;
     virtual Action_ABC* CreateKnowledgeGroupUpdatePartyParent( const kernel::KnowledgeGroup_ABC& entity, const kernel::KnowledgeGroup_ABC& superior ) const;
 
+    virtual Action_ABC* CreateRename( const kernel::Entity_ABC& entity, const QString& name );
+
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}
 

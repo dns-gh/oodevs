@@ -331,6 +331,9 @@ void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
     case sword::UnitMagicAction::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
+    case sword::UnitMagicAction::rename:
+        OnReceiveRename( msg.parameters() );
+        break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
             sword::UnitActionAck::error_invalid_unit );
@@ -536,4 +539,19 @@ float MIL_Inhabitant::GetAffinity( unsigned long teamID ) const
 bool MIL_Inhabitant::CanEmitReports() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::OnReceiveRename
+// Created: ABR 2014-08-27
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::OnReceiveRename( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    const auto& name = protocol::GetString( parameters, 0 );
+    SetName( name );
+    client::PopulationUpdate asn;
+    asn().mutable_id()->set_id( GetID() );
+    asn().set_name( name.c_str() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }

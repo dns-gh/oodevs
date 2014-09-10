@@ -12,9 +12,15 @@
 
 #include "TeamFactory_ABC.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 class Model;
@@ -31,7 +37,11 @@ class TeamFactory : public TeamFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticM );
+             TeamFactory( kernel::Controllers& controllers,
+                          Model& model,
+                          const StaticModel& staticModel,
+                          const kernel::Profile_ABC& profile,
+                          actions::ActionsModel& actionsModel );
     virtual ~TeamFactory();
     //@}
 
@@ -48,6 +58,8 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
+    const kernel::Profile_ABC& profile_;
+    actions::ActionsModel& actionsModel_;
     //@}
 };
 

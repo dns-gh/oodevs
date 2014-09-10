@@ -23,11 +23,10 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg,
                         const tools::Resolver_ABC< kernel::InhabitantType >& types )
-    : Inhabitant_ABC( msg.id().id(), QString( msg.name().c_str() ) )
+    : Inhabitant_ABC( msg.id().id(), QString::fromStdString( msg.name() ) )
     , model_              ( model )
     , type_               ( types.Get( msg.type().id() ))
     , nType_              ( msg.type().id() )
-    , strName_            ( msg.name() )
     , text_               ( msg.text() )
     , side_               ( model.Sides().Get( msg.party().id() ) )
     , nNbrHealthyHumans_  ( 0 )
@@ -108,6 +107,8 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.has_motivation() )
         motivation_ = msg.motivation();
+    if( msg.has_name() )
+        SetName( QString::fromStdString( msg.name() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +122,7 @@ void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
     msg().mutable_party()->set_id( side_.GetId() );
     msg().mutable_type()->set_id( nType_ );
     msg().set_text( text_ );
-    msg().set_name( strName_ );
+    msg().set_name( GetName().toStdString() );
     for( auto it = urbanObjectId_.cbegin(); it != urbanObjectId_.cend(); ++it )
     {
         msg().add_objects()->set_id( *it );
@@ -144,6 +145,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
     msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
     msg().mutable_satisfaction()->set_lodging( lodgingSatisfaction_ );
+    msg().set_name( GetName().toStdString() );
     for( auto it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
     {
         sword::PopulationUpdate_MotivationSatisfaction* motivation = msg().mutable_satisfaction()->add_motivations();

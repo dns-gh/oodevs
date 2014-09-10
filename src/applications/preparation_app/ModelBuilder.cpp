@@ -81,7 +81,6 @@ ModelBuilder::ModelBuilder( kernel::Controllers& controllers, Model& model )
     , selectedUrbanObject_( controllers )
     , toDelete_( controllers )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
-    , property_( tr( "Info/Name" ) )
 {
     controllers_.Register( *this );
 }
@@ -493,40 +492,6 @@ void ModelBuilder::Select( const kernel::Object_ABC& element )
 {
     ClearSelection();
     selectedObject_ = &element;
-}
-
-namespace
-{
-    template< typename Concrete >
-    void Rename( const kernel::SafePointer< kernel::Entity_ABC >& entity, const QString& text, kernel::Controllers& controllers, const QString& property )
-    {
-        if( auto* concrete = dynamic_cast< Concrete* >( entity.ConstCast() ) )
-        {
-            concrete->Rename( text );
-            controllers.controller_.Update( gui::DictionaryUpdated( *concrete, property ) );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelBuilder::OnRename
-// Created: JSR 2012-08-31
-// -----------------------------------------------------------------------------
-void ModelBuilder::OnRename( const kernel::SafePointer< kernel::Entity_ABC >& entity, const QString& newName )
-{
-    if( !entity )
-        return;
-    Rename< Team >( entity, newName, controllers_, property_ );
-    Rename< Agent >( entity, newName, controllers_, property_ );
-    Rename< Automat >( entity, newName, controllers_, property_ );
-    Rename< Formation >( entity, newName, controllers_, property_ );
-    Rename< KnowledgeGroup >( entity, newName, controllers_, property_ );
-    Rename< Ghost >( entity, newName, controllers_, property_ );
-    Rename< Object >( entity, newName, controllers_, property_ );
-    Rename< gui::UrbanObject >( entity, newName, controllers_, property_ );
-    Rename< Population >( entity, newName, controllers_, property_ );
-    Rename< gui::Drawing >( entity, newName, controllers_, property_ );
-    Rename< TacticalLine_ABC >( entity, newName, controllers_, property_ );
 }
 
 // -----------------------------------------------------------------------------

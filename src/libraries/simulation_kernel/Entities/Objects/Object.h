@@ -76,6 +76,7 @@ public:
     //! @name
     //@{
     const std::string& GetName() const;
+    virtual void SetName( const std::string& name );
     //@}
 
 private:

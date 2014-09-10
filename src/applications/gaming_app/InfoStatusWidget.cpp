@@ -538,3 +538,15 @@ void InfoStatusWidget::OptionChanged( const std::string& name, const kernel::Opt
         && ( name == "Color/Healthy" || name == "Color/Wounded" || name == "Color/Contaminated" || name == "Color/Dead" ) )
         SetIcon();
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoStatusWidget::NotifyUpdated
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void InfoStatusWidget::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    if( selected_ != &entity )
+        return;
+    selected_ = 0;
+    NotifySelected( &entity );
+}

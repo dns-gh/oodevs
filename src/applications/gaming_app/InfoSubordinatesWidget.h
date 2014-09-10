@@ -56,6 +56,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     void AddSubordinate( const kernel::Entity_ABC& entity );
     //@}

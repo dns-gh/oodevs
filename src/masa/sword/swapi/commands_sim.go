@@ -681,18 +681,14 @@ func defaultKnowledgeGroupMagicHandler(msg *sword.SimToClient_Content) error {
 	return err
 }
 
-type UnitMagicEnumerator interface {
-	Enum() *sword.UnitMagicAction_Type
-}
-
 func CreateUnitMagicAction(tasker *sword.Tasker, params *sword.MissionParameters,
-	enumerator UnitMagicEnumerator) SwordMessage {
+	typeValue sword.UnitMagicAction_Type) SwordMessage {
 	return SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker:     tasker,
-					Type:       enumerator.Enum(),
+					Type:       proto.Int32(int32(typeValue)),
 					Parameters: params,
 				},
 			},
@@ -701,23 +697,19 @@ func CreateUnitMagicAction(tasker *sword.Tasker, params *sword.MissionParameters
 }
 
 func (c *Client) sendUnitMagicAction(tasker *sword.Tasker,
-	params *sword.MissionParameters, enumerator UnitMagicEnumerator) error {
-	msg := CreateUnitMagicAction(tasker, params, enumerator)
+	params *sword.MissionParameters, typeValue sword.UnitMagicAction_Type) error {
+	msg := CreateUnitMagicAction(tasker, params, typeValue)
 	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
 }
 
-type KnowledgeMagicEnumerator interface {
-	Enum() *sword.KnowledgeMagicAction_Type
-}
-
 func CreateKnowledgeMagicActionMessage(params *sword.MissionParameters, knowledgeGroupId uint32,
-	enumerator KnowledgeMagicEnumerator) SwordMessage {
+	typeValue sword.KnowledgeMagicAction_Type) SwordMessage {
 	return SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				KnowledgeMagicAction: &sword.KnowledgeMagicAction{
 					KnowledgeGroup: MakeId(knowledgeGroupId),
-					Type:           enumerator.Enum(),
+					Type:           proto.Int32(int32(typeValue)),
 					Parameters:     params,
 				},
 			},
@@ -731,17 +723,13 @@ func (c *Client) Teleport(tasker *sword.Tasker, location Point) error {
 		sword.UnitMagicAction_move_to)
 }
 
-type MagicEnumerator interface {
-	Enum() *sword.MagicAction_Type
-}
-
 func CreateMagicAction(params *sword.MissionParameters,
-	enumerator MagicEnumerator) SwordMessage {
+	typeValue sword.MagicAction_Type) SwordMessage {
 	return SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				MagicAction: &sword.MagicAction{
-					Type:       enumerator.Enum(),
+					Type:       proto.Int32(int32(typeValue)),
 					Parameters: params,
 				},
 			},
@@ -909,7 +897,7 @@ func (c *Client) ChangeHealthState(crowdId uint32, healthy, wounded, contaminate
 		sword.UnitMagicAction_crowd_change_health_state)
 }
 
-func (c *Client) changeAdhesions(tasker *sword.Tasker, action UnitMagicEnumerator,
+func (c *Client) changeAdhesions(tasker *sword.Tasker, action sword.UnitMagicAction_Type,
 	adhesions map[uint32]float32) error {
 	params := MakeParameters()
 	if len(adhesions) != 0 {
@@ -1115,7 +1103,7 @@ func (c *Client) ChangeFormationSuperior(formationId, parentId uint32, isParty b
 }
 
 func (c *Client) KnowledgeGroupMagicActionTest(actionType sword.KnowledgeMagicAction_Type, params *sword.MissionParameters, knowledgeGroupId uint32) error {
-	msg := CreateKnowledgeMagicActionMessage(params, knowledgeGroupId, &actionType)
+	msg := CreateKnowledgeMagicActionMessage(params, knowledgeGroupId, actionType)
 	return <-c.postSimRequest(msg, defaultKnowledgeGroupMagicHandler)
 }
 
@@ -1613,18 +1601,14 @@ func (c *Client) Echo(s string) (string, error) {
 	return echo, err
 }
 
-type ObjectMagicEnumerator interface {
-	Enum() *sword.ObjectMagicAction_Type
-}
-
 func CreateObjectMagicAction(objectId uint32, params *sword.MissionParameters,
-	enumerator ObjectMagicEnumerator) SwordMessage {
+	typeValue sword.ObjectMagicAction_Type) SwordMessage {
 	return SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				ObjectMagicAction: &sword.ObjectMagicAction{
 					Object:     MakeId(objectId),
-					Type:       enumerator.Enum(),
+					Type:       proto.Int32(int32(typeValue)),
 					Parameters: params,
 				},
 			},
@@ -2031,4 +2015,44 @@ func (c *Client) ChangeTime(value time.Time) error {
 		return getControlAckError(reply)
 	}
 	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) RenameTest(id uint32, parameters *sword.MissionParameters) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(id), parameters, sword.UnitMagicAction_rename)
+}
+
+func (c *Client) Rename(id uint32, name string) error {
+	return c.RenameTest(id, MakeParameters(MakeString(name)))
+}
+
+func (c *Client) RenameObjectTest(id uint32, parameters *sword.MissionParameters) error {
+	msg := CreateObjectMagicAction(id, parameters, sword.ObjectMagicAction_rename)
+
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetObjectUpdate(); reply != nil {
+			return ErrContinue
+		}
+		_, objectId, err := getObjectMagicActionAck(msg)
+		if err != nil {
+			return err
+		}
+		if id != objectId {
+			return mismatch("object id", id, objectId)
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) RenameObject(id uint32, name string) error {
+	return c.RenameObjectTest(id, MakeParameters(MakeString(name)))
+}
+
+func (c *Client) RenameKnowledgeTest(id uint32, parameters *sword.MissionParameters) error {
+	msg := CreateKnowledgeMagicActionMessage(parameters, id, sword.KnowledgeMagicAction_rename)
+	return <-c.postSimRequest(msg, defaultKnowledgeGroupMagicHandler)
+}
+
+func (c *Client) RenameKnowledge(id uint32, name string) error {
+	return c.RenameKnowledgeTest(id, MakeParameters(MakeString(name)))
 }

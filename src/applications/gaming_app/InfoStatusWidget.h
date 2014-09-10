@@ -43,6 +43,7 @@ class Reinforcements;
 class InfoStatusWidget : public Q3VBox
                        , public tools::Observer_ABC
                        , public tools::SelectionObserver< kernel::Entity_ABC >
+                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< Attributes >
                        , public tools::ElementObserver_ABC< kernel::HumanFactors_ABC >
                        , public tools::ElementObserver_ABC< kernel::Population_ABC >
@@ -69,6 +70,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const Attributes& element );
     virtual void NotifyUpdated( const kernel::HumanFactors_ABC& element );
     virtual void NotifyUpdated( const kernel::Population_ABC& element );

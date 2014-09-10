@@ -895,6 +895,10 @@
         <source>Knowledge Group Change Type</source>
         <translation>Changement de type de groupe de connaissance</translation>
     </message>
+    <message>
+        <source>Rename knowledge group</source>
+        <translation>Renommer un groupe de connaissance</translation>
+    </message>
 </context>
 <context>
     <name>sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus</name>
@@ -1197,6 +1201,10 @@
         <source>Object Update</source>
         <translation>Mise à jour d&apos;objet</translation>
     </message>
+    <message>
+        <source>Object Renaming</source>
+        <translation>Renommer un object</translation>
+    </message>
 </context>
 <context>
     <name>sword::UnitMagicAction::Type</name>
@@ -1403,6 +1411,10 @@
     <message>
         <source>Create stock supply request</source>
         <translation>Créer une requête ravitaillement de stock</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
     </message>
 </context>
 </TS>

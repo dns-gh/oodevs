@@ -137,8 +137,7 @@ void Formation::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& v
 void Formation::Rename( const QString& name )
 {
     const QString prefix = QString( "%1 - ").arg( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() );
-    name_ = name.startsWith( prefix ) ? name.right( name.length() - prefix.length() ) : name;
-    Touch();
+    gui::EntityImplementation< kernel::Formation_ABC >::Rename( name.startsWith( prefix ) ? name.right( name.length() - prefix.length() ) : name );
 }
 
 // -----------------------------------------------------------------------------

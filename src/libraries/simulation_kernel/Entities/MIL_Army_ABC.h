@@ -33,6 +33,7 @@ class KnowledgeGroupFactory_ABC;
 namespace sword
 {
     class MissionParameters;
+    class UnitMagicAction;
 }
 
 namespace xml
@@ -89,6 +90,7 @@ public:
 
     //! @name Network
     //@{
+    virtual void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg ) = 0;
     virtual void SendCreation () const = 0;
     virtual void SendFullState() const = 0;
     virtual void SendKnowledge() const = 0;

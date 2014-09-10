@@ -20,16 +20,20 @@
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, unsigned long id,
-                                    Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-                                    bool readOnly )
-    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, readOnly )
+TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller,
+                                    const QString& baseName,
+                                    unsigned long id,
+                                    Publisher_ABC& publisher,
+                                    const kernel::CoordinateConverter_ABC& converter,
+                                    const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, canBeRenamedFunctor )
     , controller_( controller )
     , converter_ ( converter )
     , publisher_ ( publisher )
     , id_        ( id )
 {
     AddExtension( *this );
+    SetRenameObserver( [&]( const QString& ){ UpdateToSim( eStateModified ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,20 +124,14 @@ void TacticalLine_ABC::WriteDiffusion( sword::Diffusion& diffusion ) const
     static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ).WriteTo( diffusion );
 }
 
-void TacticalLine_ABC::UpdateName( const std::string& name )
-{
-    name_ = name.c_str();
-    controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
-    Touch();
-}
-
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::DoUpdate
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::DoUpdate( const sword::PhaseLineUpdate& message )
 {
-    UpdateName( message.tactical_line().name() );
+    SetName( QString::fromStdString( message.tactical_line().name() ) );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -142,16 +140,6 @@ void TacticalLine_ABC::DoUpdate( const sword::PhaseLineUpdate& message )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::DoUpdate( const sword::LimitUpdate& message )
 {
-    UpdateName( message.tactical_line().name() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Rename
-// Created: LGY 2014-05-19
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::Rename( const QString& name )
-{
-    name_ = name;
-    UpdateToSim( eStateModified );
-
+    SetName( QString::fromStdString( message.tactical_line().name() ) );
+    Touch();
 }

@@ -234,7 +234,7 @@ void InfrastructureAttribute::UpdateDictionnary()
     {
         dictionary_.Register( object_, typeProperty_, type_, true );
         dictionary_.Register( object_, enableProperty_, enabled_ );
-        dictionary_.Register( object_, thresholdProperty_, threshold_, ThresholdSetter() );
+        dictionary_.Register( object_, thresholdProperty_, threshold_, ThresholdSetter(), false );
     }
     else
     {

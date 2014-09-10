@@ -101,8 +101,10 @@ bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
         wrapper.message().has_log_supply_pull_flow_ack() ||
         wrapper.message().has_log_supply_change_quotas_ack() ||
         wrapper.message().has_formation_creation() ||
+        wrapper.message().has_formation_update() ||
         wrapper.message().has_knowledge_group_creation() ||
         wrapper.message().has_party_creation() ||
+        wrapper.message().has_party_update() ||
         wrapper.message().has_automat_creation() ||
         wrapper.message().has_unit_creation() ||
         wrapper.message().has_unit_destruction() ||
@@ -234,6 +236,7 @@ bool MessageFilter::IsRelevant( const sword::UnitAttributes& message )
         || message.has_stress()
         || message.has_transported_crowd()
         || message.has_headquarters()
+        || message.has_name()
     ;
 }
 

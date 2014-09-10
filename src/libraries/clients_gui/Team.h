@@ -35,20 +35,16 @@ class Team : public gui::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controllers& controller, unsigned long id, const QString& name );
+             Team( kernel::Controllers& controller,
+                   unsigned long id,
+                   const QString& name,
+                   const T_CanBeRenamedFunctor& canBeRenamedFunctor = T_CanBeRenamedFunctor() );
     virtual ~Team();
     //@}
 
     //! @name Operations
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Team( const Team& );            //!< Copy constructor
-    Team& operator=( const Team& ); //!< Assignment operator
     //@}
 
 protected:

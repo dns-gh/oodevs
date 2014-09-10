@@ -18,9 +18,9 @@
 namespace kernel
 {
     class AgentKnowledge_ABC;
+    class Automat_ABC;
     class Controllers;
     class Displayer_ABC;
-    class Entity_ABC;
     class KnowledgeGroup_ABC;
     class ModelUnLoaded;
 }
@@ -45,6 +45,7 @@ class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< AgentKnowledges >
                           , public tools::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
+                          , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                           , public tools::ElementObserver_ABC< PerceptionMap >
                           , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                           , public tools::SelectionObserver_Base< kernel::AgentKnowledge_ABC >
@@ -63,6 +64,7 @@ private:
     //@{
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
     virtual void NotifyUpdated( const kernel::AgentKnowledge_ABC& knowledge );
+    virtual void NotifyUpdated( const kernel::Automat_ABC& automat );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void Select( const kernel::AgentKnowledge_ABC& k );

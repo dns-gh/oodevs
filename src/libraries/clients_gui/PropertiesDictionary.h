@@ -60,7 +60,13 @@ public:
     const T_Properties& GetProperties() const;
 
     template< typename T, typename Setter, typename OwnerExtension >
-    void RegisterExtension( const kernel::Entity_ABC& owner, const OwnerExtension* ownerExtension, const QString& name, T& value, const Setter& setter, bool readOnly = false, E_Category category = eNothing )
+    void RegisterExtension( const kernel::Entity_ABC& owner,
+                            const OwnerExtension* ownerExtension,
+                            const QString& name,
+                            T& value,
+                            const Setter& setter,
+                            bool readOnly = false,
+                            E_Category category = eNothing )
     {
         if( HasKey( name ) )
             controller_.Delete( DictionaryUpdated( owner, name ) );
@@ -70,38 +76,105 @@ public:
         controller_.Create( DictionaryUpdated( owner, name ) );
     }
 
+    template< typename T, typename Setter, typename OwnerExtension >
+    void RegisterExtension( const kernel::Entity_ABC& owner,
+                            const OwnerExtension* ownerExtension,
+                            const QString& name,
+                            T& value,
+                            const Setter& setter,
+                            const Property_ABC::T_ReadOnlyFunctor& readOnlyFunctor = Property_ABC::T_ReadOnlyFunctor(),
+                            E_Category category = eNothing )
+    {
+        if( HasKey( name ) )
+            controller_.Delete( DictionaryUpdated( owner, name ) );
+        Property_ABC*& property = properties_[ name ];
+        delete property;
+        property = new Property< T, Setter, OwnerExtension >( controller_, owner, value, setter, name, readOnlyFunctor, category, ownerExtension );
+        controller_.Create( DictionaryUpdated( owner, name ) );
+    }
+
     template< typename T > struct setter;
     template< typename T, typename OwnerExtension >
-    void RegisterExtension( const kernel::Entity_ABC& owner, const OwnerExtension* ownerExtension, const QString& name, T& value, bool readOnly = false, E_Category category = eNothing )
+    void RegisterExtension( const kernel::Entity_ABC& owner,
+                            const OwnerExtension* ownerExtension,
+                            const QString& name,
+                            T& value,
+                            bool readOnly = false,
+                            E_Category category = eNothing )
     {
         RegisterExtension( owner, ownerExtension, name, value, setter< T >(), readOnly, category );
     }
 
     template< typename O, typename T > struct caller;
     template< typename T, typename ConcreteOwner, typename OwnerExtension >
-    void RegisterExtension( const kernel::Entity_ABC& owner, const OwnerExtension* ownerExtension, const QString& name, T& value, ConcreteOwner& c, void (ConcreteOwner::*set)( const T& ), bool readOnly = false, E_Category category = eNothing )
+    void RegisterExtension( const kernel::Entity_ABC& owner,
+                            const OwnerExtension* ownerExtension,
+                            const QString& name,
+                            T& value,
+                            ConcreteOwner& c,
+                            void (ConcreteOwner::*set)( const T& ),
+                            bool readOnly = false,
+                            E_Category category = eNothing )
     {
         RegisterExtension( owner, ownerExtension, name, value, caller< ConcreteOwner, T >( c, set ), readOnly, category );
     }
 
     template< typename T, typename Setter >
-    void Register( const kernel::Entity_ABC& owner, const QString& name, T& value, const Setter& setter, bool readOnly = false, E_Category category = eNothing )
+    void Register( const kernel::Entity_ABC& owner,
+                   const QString& name,
+                   T& value,
+                   const Setter& setter,
+                   bool readOnly = false,
+                   E_Category category = eNothing )
     {
         RegisterExtension( owner, static_cast< const Extension_ABC* >( nullptr ), name, value, setter, readOnly, category );
     }
 
+    template< typename T, typename Setter >
+    void Register( const kernel::Entity_ABC& owner,
+                   const QString& name, T& value,
+                   const Setter& setter,
+                   const Property_ABC::T_ReadOnlyFunctor& readOnlyFunctor = Property_ABC::T_ReadOnlyFunctor(),
+                   E_Category category = eNothing )
+    {
+        RegisterExtension( owner, static_cast< const Extension_ABC* >( nullptr ), name, value, setter, readOnlyFunctor, category );
+    }
+
     template< typename T > struct setter;
     template< typename T >
-    void Register( const kernel::Entity_ABC& owner, const QString& name, T& value, bool readOnly = false, E_Category category = eNothing )
+    void Register( const kernel::Entity_ABC& owner,
+                   const QString& name,
+                   T& value,
+                   bool readOnly = false,
+                   E_Category category = eNothing )
     {
         Register( owner, name, value, setter< T >(), readOnly, category );
     }
 
     template< typename O, typename T > struct caller;
     template< typename T, typename ConcreteOwner >
-    void Register( const kernel::Entity_ABC& owner, const QString& name, T& value, ConcreteOwner& c, void (ConcreteOwner::*set)( const T& ), bool readOnly = false, E_Category category = eNothing )
+    void Register( const kernel::Entity_ABC& owner,
+                   const QString& name,
+                   T& value,
+                   ConcreteOwner& c,
+                   void (ConcreteOwner::*set)( const T& ),
+                   bool readOnly = false,
+                   E_Category category = eNothing )
     {
         Register( owner, name, value, caller< ConcreteOwner, T >( c, set ), readOnly, category );
+    }
+
+    template< typename O, typename T > struct caller;
+    template< typename T, typename ConcreteOwner >
+    void Register( const kernel::Entity_ABC& owner,
+                   const QString& name,
+                   T& value,
+                   ConcreteOwner& c,
+                   void (ConcreteOwner::*set)( const T& ),
+                   const Property_ABC::T_ReadOnlyFunctor& readOnlyFunctor = Property_ABC::T_ReadOnlyFunctor(),
+                   E_Category category = eNothing )
+    {
+        Register( owner, name, value, caller< ConcreteOwner, T >( c, set ), readOnlyFunctor, category );
     }
     //@}
 

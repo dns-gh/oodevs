@@ -22,6 +22,7 @@ namespace kernel
 namespace sword
 {
     class PartyCreation;
+    class PartyUpdate;
 }
 
 // =============================================================================
@@ -31,25 +32,23 @@ namespace sword
 // Created: AGN 2003-12-22
 // =============================================================================
 class Team : public gui::Team
+           , public kernel::Extension_ABC
            , public tools::Observer_ABC
+           , public kernel::Updatable_ABC< sword::PartyUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( const sword::PartyCreation& message, kernel::Controllers& controllers );
+             Team( const sword::PartyCreation& message,
+                   kernel::Controllers& controllers,
+                   const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Team();
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
     virtual const kernel::Karma& GetKarma() const;
-    //@}
-
-private:
-    //! @name Copy / Assignment
-    //@{
-    Team( const Team& );
-    Team& operator=( const Team& );
+    void DoUpdate( const sword::PartyUpdate& message );
     //@}
 
 private:

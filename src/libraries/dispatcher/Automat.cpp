@@ -31,7 +31,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const tools::Resolver_ABC< kernel::AutomatType >& types )
-    : Automat_ABC( msg.automat().id(), QString( msg.name().c_str() ) )
+    : Automat_ABC( msg.automat().id(), QString::fromStdString( msg.name() ) )
     , model_               ( model )
     , decisionalInfos_     ( model )
     , type_                ( types.Get( msg.type().id() ) )
@@ -253,6 +253,8 @@ void Automat::DoUpdate( const sword::AutomatAttributes& msg )
         logMaintenanceManual_ = msg.log_maintenance_manual();
     if( msg.has_log_supply_manual() )
         logSupplyManual_ = msg.log_supply_manual();
+    if( msg.has_name() )
+        SetName( QString::fromStdString( msg.name().c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,6 +336,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         msg().set_brain_debug( brainDebug_ );
         msg().set_log_maintenance_manual( logMaintenanceManual_ );
         msg().set_log_supply_manual( logSupplyManual_ );
+        msg().set_name( GetName().toStdString() );
         msg.Send( publisher );
     }
     if( order_.get() )

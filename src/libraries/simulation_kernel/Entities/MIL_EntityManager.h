@@ -151,6 +151,7 @@ public:
     virtual MIL_Formation*      FindFormation    ( unsigned int nID ) const;
     virtual MIL_AgentPion*      FindAgentPion    ( unsigned int nID ) const;
     virtual MIL_Object_ABC*     FindObject       ( unsigned int nID ) const;
+    virtual MIL_Army_ABC*       FindArmy         ( unsigned int nID ) const;
 
     void VisitUniversalObjects( const std::function< void( MIL_Object_ABC& ) >& visitor ) const;
     void VisitUrbanObjects( const std::function< void( const MIL_UrbanObject_ABC& ) >& functor ) const;

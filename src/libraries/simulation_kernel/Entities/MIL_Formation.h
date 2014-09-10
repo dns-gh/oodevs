@@ -120,6 +120,7 @@ private:
     //@{
     void InitializeFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
+    void OnReceiveRename( const sword::MissionParameters& parameters );
     //@}
 
     //! @name Serialization

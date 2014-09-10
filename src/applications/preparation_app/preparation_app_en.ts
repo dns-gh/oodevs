@@ -1299,10 +1299,6 @@ This data can&apos;t be projected.</translation>
         <source>Delete &apos;%1&apos;?</source>
         <translation>Delete &apos;%1&apos;?</translation>
     </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Name</translation>
-    </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>
@@ -2739,13 +2735,6 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Road width (m):</source>
         <translation>Road width (m):</translation>
-    </message>
-</context>
-<context>
-    <name>TreeViewsPanel</name>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished">Rename</translation>
     </message>
 </context>
 <context>

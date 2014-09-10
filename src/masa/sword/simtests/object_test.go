@@ -538,3 +538,23 @@ func (s *TestSuite) TestTrafficabilityAttribute(c *C) {
 		return data.Objects[object.Id].Trafficability == trafficability
 	})
 }
+
+func (s *TestSuite) TestRenameObject(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+	new_name := "new_name"
+	object := getSomeObject(c, data)
+	// invalid id
+	err := client.RenameObject(0, new_name)
+	c.Assert(err, NotNil)
+	// invalid name
+	err = client.RenameObjectTest(object.Id, swapi.MakeParameters())
+	c.Assert(err, NotNil)
+	// object
+	err = client.RenameObject(object.Id, new_name)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Objects[object.Id].Name == new_name
+	})
+}

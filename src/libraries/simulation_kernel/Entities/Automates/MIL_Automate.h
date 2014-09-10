@@ -260,6 +260,7 @@ private:
     //@{
     void ReadAutomatSubordinate( xml::xistream& xis );
     void ReadUnitSubordinate( xml::xistream& xis );
+    void OnReceiveRename( const sword::MissionParameters& parameters );
     //@}
 
 private:

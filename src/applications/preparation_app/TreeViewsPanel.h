@@ -11,19 +11,10 @@
 #define __TreeViewsPanel_h__
 
 #include "clients_gui/RichWidget.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
-#include <tools/Observer_ABC.h>
 
 namespace kernel
 {
-    class Agent_ABC;
-    class Automat_ABC;
     class Controllers;
-    class Entity_ABC;
-    class Formation_ABC;
-    class Ghost_ABC;
-    class Team_ABC;
 }
 
 namespace gui
@@ -31,8 +22,10 @@ namespace gui
     class AggregateToolbar;
     class ChangeSuperiorDialog;
     class EntitySymbols;
+    class EntityTreeView_ABC;
     class HierarchyTreeView_ABC;
     class ParametersLayer;
+    class RenameInterface;
     class RichView_ABC;
     class SymbolIcons;
 }
@@ -48,12 +41,6 @@ class StaticModel;
 // Created: LGY 2012-06-26
 // =============================================================================
 class TreeViewsPanel : public gui::RichWidget< QTabWidget >
-                     , public tools::Observer_ABC
-                     , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                     , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
-                     , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
-                     , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
-                     , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
     Q_OBJECT
 
@@ -79,34 +66,19 @@ public:
     //@}
 
 public slots:
+    //! @name Slots
+    //@{
     void FocusIn( gui::HierarchyTreeView_ABC* );
-    void OnRename();
-
-private:
-    //! @name Helpers
-    //@{
-    void AddContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    //@}
-
-    //! @name ContextMenuObserver implementations
-    //@{
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Formation_ABC& automat, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Ghost_ABC& automat, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Team_ABC& automat, kernel::ContextMenu& menu );
     //@}
 
 private:
     //! @name Member Data
     //@{
-    kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > contextMenuEntity_;
-    ModelBuilder& modelBuilder_;
     gui::RichWidget< QTabWidget >* pSecondAgentsTabWidget_;
     std::vector< gui::HierarchyTreeView_ABC* > firstUnitViews_;
     std::vector< gui::HierarchyTreeView_ABC* > secondUnitViews_;
     std::unique_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
+    std::unique_ptr< gui::RenameInterface > renameInterface_;
     //@}
 };
 

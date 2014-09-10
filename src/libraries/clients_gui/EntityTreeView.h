@@ -46,7 +46,12 @@ class EntityTreeView : public EntityTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
+             EntityTreeView( const QString& objectName,
+                             kernel::Controllers& controllers,
+                             const kernel::Profile_ABC& profile,
+                             ModelObserver_ABC& modelObserver,
+                             bool editable,
+                             QWidget* parent = 0 );
     virtual ~EntityTreeView();
     //@}
 
@@ -55,6 +60,7 @@ public:
     virtual void NotifyCreated( const Entity& entity );
     virtual void NotifyDeleted( const Entity& entity );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
+    virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -66,6 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
+    bool editable_;
     //@}
 };
 
