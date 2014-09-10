@@ -40,7 +40,6 @@ EntityTreeView< Entity >::~EntityTreeView()
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------
 template< typename Entity >
-inline
 void EntityTreeView< Entity >::NotifyCreated( const Entity& entity )
 {
     // $$$$ ABR 2012-08-14: TODO
@@ -69,7 +68,6 @@ void EntityTreeView< Entity >::NotifyCreated( const Entity& entity )
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------
 template< typename Entity >
-inline
 void EntityTreeView< Entity >::NotifyDeleted( const Entity& /* entity */ )
 {
     dataModel_.PurgeObsoleteSafeItem< Entity >();
@@ -80,7 +78,6 @@ void EntityTreeView< Entity >::NotifyDeleted( const Entity& /* entity */ )
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------
 template< typename Entity >
-inline
 bool EntityTreeView< Entity >::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 {
     return entity.GetTypeName() != Entity::typeName_;
@@ -91,7 +88,6 @@ bool EntityTreeView< Entity >::IsTypeRejected( const kernel::Entity_ABC& entity 
 // Created: ABR 2014-09-09
 // -----------------------------------------------------------------------------
 template< typename Entity >
-inline
 Qt::ItemFlags EntityTreeView< Entity >::ItemSpecificFlags( const kernel::Entity_ABC& entity ) const
 {
     const Qt::ItemFlags parentFlags = EntityTreeView_ABC::ItemSpecificFlags( entity );

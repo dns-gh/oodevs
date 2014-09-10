@@ -316,6 +316,6 @@ void AgentKnowledgePanel::NotifyUpdated( const kernel::Automat_ABC& automat )
     for( int i = 0; i < perceptionModel_.rowCount(); ++i )
         if( auto item = perceptionModel_.item( i, 0 ) )
             if( auto entity = item->data( EntityRole ).value< const Automat_ABC* >() )
-                if( entity == &automat && item->text() != automat.GetName() )
+                if( entity == &automat )
                     item->setText( automat.GetName() );
 }
