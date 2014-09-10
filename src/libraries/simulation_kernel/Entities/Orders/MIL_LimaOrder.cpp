@@ -290,11 +290,11 @@ void MIL_LimaOrder::ReplacePointsByNearestObjectPositions( T_PointVector& points
         }
         candidates.push_back( candidate );
     }
-    for( auto i = 0; i < candidates.size(); ++i )
+    for( size_t i = 0; i < candidates.size(); ++i )
     {
         const MT_Vector2D point = candidates[i];
         const double distance = point.SquareDistance( points[i] );
-        for( auto j = 0; j < points.size(); ++j )
+        for( size_t j = 0; j < points.size(); ++j )
         {
             if( i == j )
                 continue;
