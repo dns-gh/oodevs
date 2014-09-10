@@ -403,6 +403,10 @@
         <source>Configure alarms</source>
         <translation>Configure alarms</translation>
     </message>
+    <message>
+        <source>Real time: %1 - %2</source>
+        <translation>Real time: %1 - %2</translation>
+    </message>
 </context>
 <context>
     <name>CommunicationTreeView</name>

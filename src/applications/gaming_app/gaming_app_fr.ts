@@ -403,6 +403,10 @@
         <source>Change date and time</source>
         <translation>Editer la date et l&apos;heure</translation>
     </message>
+    <message>
+        <source>Real time: %1 - %2</source>
+        <translation>Heure réelle: %1 - %2</translation>
+    </message>
 </context>
 <context>
     <name>CommunicationTreeView</name>

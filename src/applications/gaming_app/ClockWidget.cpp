@@ -48,28 +48,26 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
     time_->setPaletteForegroundColor( foregroundColor );
     time_->setText( "00:00:00" );
     time_->setAlignment( Qt::AlignCenter );
-    realDateTime_ = new QLabel();
-    font = realDateTime_->font();
-    font.setPixelSize( 10 );
-    realDateTime_->setFont( font );
-    realDateTime_->setPaletteForegroundColor( foregroundColor );
-    realDateTime_->setAlignment( Qt::AlignCenter );
-
     day_ = new QLabel();
     day_->setFixedHeight( 25 );
     day_->setPaletteForegroundColor( foregroundColor );
     day_->setText( tools::translate( "ClockWidget", "Day 1" ) );
     day_->setAlignment( Qt::AlignCenter );
 
+    realDateTime_ = new QLabel();
+    realDateTime_->setFixedHeight( 25 );
+    realDateTime_->setPaletteForegroundColor( foregroundColor );
+    realDateTime_->setAlignment( Qt::AlignCenter );
+
     QVBoxLayout* timeLayout = new QVBoxLayout();
     timeLayout->setSpacing( 0 );
     timeLayout->addWidget( time_ );
-    timeLayout->addWidget( realDateTime_ );
+    timeLayout->addWidget( day_ );
 
     vLayout->addStretch();
     vLayout->addLayout( timeLayout );
     vLayout->addStretch();
-    vLayout->addWidget( day_ );
+    vLayout->addWidget( realDateTime_ );
 
     mainLayout->addLayout( vLayout );
     mainLayout->addStretch();
@@ -126,7 +124,7 @@ void ClockWidget::NotifyUpdated( const Simulation& simulation )
     day_ ->setText( simulation.GetDateAsString() );
     time_->setText( simulation.GetTimeAsString() );
     if( GetCurrentMode() == eModes_Replay )
-        realDateTime_->setText( QString( "%1 - %2" ).arg( simulation.GetRealDateAsString() ).arg( simulation.GetRealTimeAsString() ) );
+        realDateTime_->setText( tools::translate( "ClockWidget", "Real time: %1 - %2" ).arg( simulation.GetRealDateAsString() ).arg( simulation.GetRealTimeAsString() ) );
 }
 
 // -----------------------------------------------------------------------------
