@@ -152,8 +152,7 @@ void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
     const MT_Rect& box = urbanObject_->GetLocalisation().GetBoundingBox();
     const double radius = box.GetPointDownLeft().Distance( box.GetPointUpRight() ) * 0.5;
     double currentRadius = rProgressPercent_ * radius;
-    const double ratio = urbanObject_->GetFloorNumber() * urbanObject_->GetOccupation();
-    currentRadius += DEC_GeometryFunctions::GetUrbanSearchSpeed( urbanObject_ ) / ( ratio ? ratio : 1.f );
+    currentRadius += DEC_GeometryFunctions::GetUrbanRecoSpeed( urbanObject_ );
     rProgressPercent_ = std::min( maxRecce, radius == 0 ? 1.f : static_cast< float >( currentRadius / radius ) );
     rMaxProgressPercent_ = std::max( rMaxProgressPercent_, rProgressPercent_ );
 }

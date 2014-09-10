@@ -2778,7 +2778,10 @@ double DEC_GeometryFunctions::GetUrbanRecoSpeed( const MIL_UrbanObject_ABC* pUrb
     {
         auto it = urbanRecoAndSearchSpeeds_.find( materialAttribute->GetMaterial().GetName() );
         if( it != urbanRecoAndSearchSpeeds_.end() )
-            return it->second.recoSpeed_;
+        {
+            double ratio = pUrbanObject->GetFloorNumber() * pUrbanObject->GetOccupation();
+            return it->second.recoSpeed_ / ( ratio ? ratio : 1.f );
+        }
     }
     return 0.5;
 }
@@ -2795,7 +2798,10 @@ double DEC_GeometryFunctions::GetUrbanSearchSpeed( const MIL_UrbanObject_ABC* pU
     {
         auto it = urbanRecoAndSearchSpeeds_.find( materialAttribute->GetMaterial().GetName() );
         if( it != urbanRecoAndSearchSpeeds_.end() )
-            return it->second.searchSpeed_;
+        {
+            double ratio = pUrbanObject->GetFloorNumber() * pUrbanObject->GetOccupation();
+            return it->second.searchSpeed_  / ( ratio ? ratio : 1.f );
+        }
     }
     return 0.25;
 }

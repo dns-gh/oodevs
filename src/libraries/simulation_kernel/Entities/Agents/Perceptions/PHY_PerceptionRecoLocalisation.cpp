@@ -12,17 +12,14 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoLocalisation.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "Decision/DEC_GeometryFunctions.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_kernel/DetectionComputer.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisationReco constructor
@@ -37,16 +34,6 @@ PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TE
 {
     const MT_Rect& boundingBox = localisation_.GetBoundingBox();
     rRadius_ = static_cast< float >( boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() ) );
-    if( bShouldUseRadius_ )
-    {
-        auto urbanBlock = callerAgent.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-        if( urbanBlock && rGrowthSpeed == DEC_GeometryFunctions::GetUrbanSearchSpeed( urbanBlock ) )
-        {
-            const float ratio = static_cast< float >( urbanBlock->GetFloorNumber() * urbanBlock->GetOccupation() );
-            if( ratio )
-                rGrowthSpeed_ /= ratio;
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
