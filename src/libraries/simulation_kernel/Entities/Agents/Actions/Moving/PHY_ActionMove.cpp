@@ -56,7 +56,6 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , executionSuspended_( false )
     , isBlockedByObject_( false )
     , blockedByDisaster_( false )
-    , waitingOnObject_( false )
     , blockedTickCounter_( 0 )
     , oldDisasterImpact_( 1 )
 {
@@ -175,16 +174,16 @@ bool PHY_ActionMove::AvoidObstacles()
             return false;
     }
     blockedTickCounter_ = 0;
-    if( const auto pObjectColliding = ComputeCollision() )
+    const auto collision = UpdateCollision();
+    if( avoid && collision )
     {
-        if( avoid )
-            role_.SendRC( report::eRC_DifficultMovementProgression, pObjectColliding->GetType().GetRealName() );
-        return pObjectColliding->GetObjectKnown() != 0;
+        role_.SendRC( report::eRC_DifficultMovementProgression, collision->GetType().GetRealName() );
+        return true;
     }
     return false;
 }
 
-boost::shared_ptr< DEC_Knowledge_Object > PHY_ActionMove::ComputeCollision()
+boost::shared_ptr< DEC_Knowledge_Object > PHY_ActionMove::UpdateCollision()
 {
     for( auto it = objectsToAvoid_.begin(); it != objectsToAvoid_.end(); ++it )
     {
@@ -193,18 +192,20 @@ boost::shared_ptr< DEC_Knowledge_Object > PHY_ActionMove::ComputeCollision()
             return *it;
     }
     double distance = 0;
-    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-    role_.ComputeFutureObjectCollision( objectsToAvoid_, distance, pObjectColliding, pion_, isBlockedByObject_, true );
+    boost::shared_ptr< DEC_Knowledge_Object > collision;
+    role_.ComputeFutureObjectCollision( objectsToAvoid_, distance, collision, pion_, isBlockedByObject_, true );
+    // For some reason when the object is destroyed the knowledge remains
+    if( collision && !collision->GetObjectKnown() )
+        collision.reset();
     static const double threshold = TER_World::GetWorld().GetWeldValue();
-    const bool waitOnObject =
-        !pMainPath_->GetPathClass().AvoidObjects() &&
-        pObjectColliding &&
-        pObjectColliding->GetObjectKnown() &&
-        distance <= threshold;
-    if( waitOnObject && !waitingOnObject_ )
-        MIL_Report::PostEvent( pion_, report::eRC_BlockedByObject, pObjectColliding );
-    waitingOnObject_ = waitOnObject;
-    return waitingOnObject_ ? nullptr : pObjectColliding;
+    if( !pMainPath_->GetPathClass().AvoidObjects() &&
+        ( distance <= threshold || isBlockedByObject_ ) )
+    {
+        if( collision && collision != blocking_.lock() )
+            MIL_Report::PostEvent( pion_, report::eRC_BlockedByObject, collision );
+        blocking_ = collision;
+    }
+    return collision;
 }
 
 // -----------------------------------------------------------------------------
@@ -234,9 +235,9 @@ void PHY_ActionMove::Execute()
 {
     if( pion_.HasBeenTeleported() )
     {
-        if( waitingOnObject_ )
+        if( blocking_.lock() )
             CreateNewPath();
-        waitingOnObject_ = false;
+        blocking_.reset();
         Callback< int >( DEC_PathWalker::eTeleported );
         return;
     }
@@ -256,9 +257,9 @@ void PHY_ActionMove::Execute()
         // Recompute Pathfind in order to avoid obstacle or to get back previous path after suspension.
         CreateNewPath();
     }
-    if( waitingOnObject_ )
+    if( blocking_.lock() )
     {
-        Callback< int >( DEC_PathWalker::eBlockedByObject );
+        Callback< int >( DEC_PathWalker::eRunning );
         return;
     }
     executionSuspended_ = false;

@@ -16,6 +16,7 @@
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 class DisasterAttribute;
 class MIL_AgentPion;
@@ -63,7 +64,7 @@ private:
     bool IsDisasterToAvoid( const DisasterAttribute& disaster );
     double ComputeImpact( const DisasterAttribute& disaster ) const;
     void CreateNewPath();
-    boost::shared_ptr< DEC_Knowledge_Object > ComputeCollision();
+    boost::shared_ptr< DEC_Knowledge_Object > UpdateCollision();
     //@}
 
 private:
@@ -74,10 +75,10 @@ private:
     std::vector< TER_Localisation > geometrySignatures_;
     bool executionSuspended_;
     bool isBlockedByObject_;
-    bool waitingOnObject_;
     bool blockedByDisaster_;
     unsigned int blockedTickCounter_;
     double oldDisasterImpact_;
+    boost::weak_ptr< DEC_Knowledge_Object > blocking_;
 };
 
 #endif // __PHY_ActionMove_h_
