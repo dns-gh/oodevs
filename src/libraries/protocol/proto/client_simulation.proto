@@ -293,8 +293,9 @@ message ClientToSim {
     required Content message = 2;
     /** @property client_id
 
-        This field is filled using the "client_id" field set by the dispatcher after a successful authentication
-        in order to identify which request was done by which client.
+        This field is filled using the "client_id" field set by the
+        dispatcher after a successful authentication in order to
+        identify which request was done by which client.
 
         @see AuthenticationToClient
     */
