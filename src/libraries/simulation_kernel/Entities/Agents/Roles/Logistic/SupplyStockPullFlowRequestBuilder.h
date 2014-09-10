@@ -47,6 +47,7 @@ public:
 private:
     const sword::PullFlowParameters pullFlowParameters_;
     MIL_Automate* recipient_;
+    SupplySupplier_ABC* supplier_;
 };
 
 } // end namespace logistic

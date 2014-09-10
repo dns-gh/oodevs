@@ -217,16 +217,25 @@ SupplySupplier_ABC& SupplyConvoyReal::GetTransportersProvider() const
 // Name: SupplyConvoyReal::GetCurrentAction
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------
-const T_PointVector* SupplyConvoyReal::GetPathToNextDestination() const
+std::vector< boost::shared_ptr< MT_Vector2D > > SupplyConvoyReal::GetPathToNextDestination() const
 {
     switch( currentAction_ )
     {
-        case eMoveToSupplier: return &parameters_->GetPathToSupplier();
-        case eMoveToTransportersProvider: return &parameters_->GetPathToTransportersProvider();
-        case eMoveToSupplyRecipient: assert( currentSupplyRecipient_ ); return &parameters_->GetPathToRecipient( *currentSupplyRecipient_ );
-        default:
-            return 0;
+        case eMoveToSupplier: return parameters_->GetPathToSupplier();
+        case eMoveToTransportersProvider: return parameters_->GetPathToTransportersProvider();
+        case eMoveToSupplyRecipient: assert( currentSupplyRecipient_ ); return parameters_->GetPathToRecipient( *currentSupplyRecipient_ );
     }
+    return std::vector< boost::shared_ptr< MT_Vector2D > >();
+}
+
+void SupplyConvoyReal::ToItinerary( sword::Pathfind& pathfind ) const
+{
+    if( currentAction_ == eMoveToSupplier )
+        parameters_->ToSupplierItinerary( pathfind );
+    else if( currentAction_ == eMoveToSupplyRecipient )
+        parameters_->ToRecipientItinerary( *currentSupplyRecipient_, pathfind );
+    else if( currentAction_ == eMoveToTransportersProvider )
+        parameters_->ToTransportersItinerary( pathfind );
 }
 
 // -----------------------------------------------------------------------------
