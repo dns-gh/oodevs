@@ -64,12 +64,13 @@ func (t *TestSuite) MakeFixture(c *C) *Fixture {
 	return f
 }
 
-func (f *Fixture) createFullEvent(uuid, name, target, parent string, payload []byte, begin, end time.Time) (*sdk.Event, error) {
+func (f *Fixture) createFullEvent(uuid, name, target, parent, metadata string, payload []byte, begin, end time.Time) (*sdk.Event, error) {
 	msg := sdk.Event{
-		Uuid:   proto.String(uuid),
-		Name:   proto.String(name),
-		Begin:  proto.String(util.FormatTime(begin)),
-		Parent: proto.String(parent),
+		Uuid:     proto.String(uuid),
+		Name:     proto.String(name),
+		Begin:    proto.String(util.FormatTime(begin)),
+		Parent:   proto.String(parent),
+		Metadata: proto.String(metadata),
 		Action: &sdk.Action{
 			Target:  proto.String("sword://" + target),
 			Apply:   proto.Bool(true),
@@ -83,7 +84,7 @@ func (f *Fixture) createFullEvent(uuid, name, target, parent string, payload []b
 }
 
 func (f *Fixture) createEvent(uuid, name, target string, payload []byte) (*sdk.Event, error) {
-	return f.createFullEvent(uuid, name, target, "", payload, f.begin, time.Time{})
+	return f.createFullEvent(uuid, name, target, "", "", payload, f.begin, time.Time{})
 }
 
 func (f *Fixture) addEvent(c *C, name, target string, payload []byte) string {
@@ -93,15 +94,15 @@ func (f *Fixture) addEvent(c *C, name, target string, payload []byte) string {
 	return uuid
 }
 
-func (f *Fixture) addTaskEvent(c *C, uuid string, begin, end time.Time) *sdk.Event {
-	msg, err := f.createFullEvent(uuid, uuid, "", "", []byte{}, begin, end)
+func (f *Fixture) addTaskEvent(c *C, uuid string, begin, end time.Time, metadata string) *sdk.Event {
+	msg, err := f.createFullEvent(uuid, uuid, "", "", metadata, []byte{}, begin, end)
 	c.Assert(err, IsNil)
 	c.Assert(msg, NotNil)
 	return msg
 }
 
 func (f *Fixture) addChildEvent(c *C, uuid, parent string, begin time.Time) *sdk.Event {
-	msg, err := f.createFullEvent(uuid, uuid, "", parent, []byte{}, begin, time.Time{})
+	msg, err := f.createFullEvent(uuid, uuid, "", parent, "", []byte{}, begin, time.Time{})
 	c.Assert(err, IsNil)
 	c.Assert(msg, NotNil)
 	return msg
@@ -977,14 +978,14 @@ func (t *TestSuite) TestFiltersHierarchy(c *C) {
 	f := t.MakeFixture(c)
 	defer f.Close()
 
-	f.addTaskEvent(c, "parent1", f.begin, f.begin.Add(1*time.Hour))
+	f.addTaskEvent(c, "parent1", f.begin, f.begin.Add(1*time.Hour), "")
 	f.addChildEvent(c, "child1", "parent1", f.begin.Add(1*time.Minute))
 
-	f.addTaskEvent(c, "parent2", f.begin, f.begin.Add(1*time.Hour))
+	f.addTaskEvent(c, "parent2", f.begin, f.begin.Add(1*time.Hour), "")
 	f.addChildEvent(c, "child2", "parent2", f.begin.Add(1*time.Minute))
 	f.addChildEvent(c, "child3", "parent2", f.begin.Add(2*time.Minute))
 
-	f.addTaskEvent(c, "parent3", f.begin, f.begin.Add(1*time.Hour))
+	f.addTaskEvent(c, "parent3", f.begin, f.begin.Add(1*time.Hour), "")
 	f.addChildEvent(c, "child4", "parent3", f.begin.Add(1*time.Minute))
 	f.addChildEvent(c, "child5", "parent3", f.begin.Add(2*time.Minute))
 	f.addChildEvent(c, "child6", "parent3", f.begin.Add(2*time.Minute))
@@ -1017,6 +1018,90 @@ func (t *TestSuite) TestFiltersHierarchy(c *C) {
 		"filter_hide_hierarchies", "parent1,parent2"), 9-1-2)
 	f.applyFilters(c, parseFilters(c,
 		"filter_hide_hierarchies", "parent1,parent2,parent3"), 9-1-2-3)
+}
+
+func (t *TestSuite) TestFiltersMetadata(c *C) {
+	f := t.MakeFixture(c)
+	defer f.Close()
+
+	f.server.CreateProfile(&sword.Profile{
+		Login:           proto.String("party_1_only"),
+		ReadOnlyParties: swapi.MakeIdList(1),
+		Supervisor:      proto.Bool(false),
+	})
+	f.server.CreateProfile(&sword.Profile{
+		Login:              proto.String("formation_2_only"),
+		ReadOnlyFormations: swapi.MakeIdList(2),
+		Supervisor:         proto.Bool(false),
+	})
+	f.server.CreateProfile(&sword.Profile{
+		Login:              proto.String("formation_3_only"),
+		ReadOnlyFormations: swapi.MakeIdList(3),
+		Supervisor:         proto.Bool(false),
+	})
+	f.server.CreateProfile(&sword.Profile{
+		Login:             proto.String("automat_4_only"),
+		ReadOnlyAutomates: swapi.MakeIdList(4),
+		Supervisor:        proto.Bool(false),
+	})
+	f.server.CreateProfile(&sword.Profile{
+		Login:          proto.String("crowd_6_only"),
+		ReadOnlyCrowds: swapi.MakeIdList(6),
+		Supervisor:     proto.Bool(false),
+	})
+	f.sword.WaitFor(func(d *swapi.ModelData) bool {
+		return len(d.Profiles) == 5
+	})
+
+	// abuse wait command to create hierarchy
+	//     p1
+	//  /  |  \
+	// f2  c6  i7
+	// |
+	// f3
+	// |
+	// a4
+	// |
+	// u5
+	f.sword.WaitFor(func(d *swapi.ModelData) bool {
+		addParty(c, d, 1)
+		addFormation(c, d, 2, 1, 0)
+		addFormation(c, d, 3, 0, 2)
+		addAutomat(c, d, 4, 3)
+		addUnit(c, d, 5, 4)
+		addCrowd(c, d, 6, 1)
+		addPopulation(c, d, 7, 1)
+		return true
+	})
+
+	f.addTaskEvent(c, "task_alone", f.begin, f.begin.Add(1*time.Hour), "")
+	f.addTaskEvent(c, "task_invalid_tasker", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":0}")
+	f.addTaskEvent(c, "task_p1", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":1}")
+	f.addTaskEvent(c, "task_f2", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":2}")
+	f.addTaskEvent(c, "task_f3", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":3}")
+	f.addTaskEvent(c, "task_a4", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":4}")
+	f.addTaskEvent(c, "task_u5", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":5}")
+	f.addTaskEvent(c, "task_c6", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":6}")
+	f.addTaskEvent(c, "task_i7", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":7}")
+
+	// ensure we do get all our events
+	f.applyFilters(c, services.EventFilterConfig{}, 9)
+	// test sword_profile
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile": "party_1_only",
+	}, 9)
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile": "formation_2_only",
+	}, 6)
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile": "formation_3_only",
+	}, 5)
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile": "automat_4_only",
+	}, 4)
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile": "crowd_6_only",
+	}, 3)
 }
 
 func (f *Fixture) findEvent(c *C, uuid string) *sdk.Event {
@@ -1181,7 +1266,7 @@ func (t *TestSuite) TestCreateEventUpdatesParent(c *C) {
 	checkEmptyUpdate(c, messages)
 
 	// test create parent
-	parent := f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour))
+	parent := f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour), "")
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	swtest.DeepEquals(c, msg.Events, []*sdk.Event{parent})
@@ -1214,7 +1299,7 @@ func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 	checkEmptyUpdate(c, messages)
 
 	// create 1 parent and 1 child
-	parent := f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour))
+	parent := f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour), "")
 	waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	child := f.addChildEvent(c, "child", "parent", f.begin.Add(1*time.Minute))
 	waitBroadcastTag(messages, sdk.MessageTag_update_events)
@@ -1244,7 +1329,7 @@ func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
 	checkEmptyUpdate(c, messages)
 
 	// create 1 parent and 2 children
-	parent := f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour))
+	parent := f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour), "")
 	waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	child1 := f.addChildEvent(c, "child1", "parent", f.begin.Add(1*time.Minute))
 	waitBroadcastTag(messages, sdk.MessageTag_update_events)
@@ -1288,7 +1373,7 @@ func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 	checkEmptyUpdate(c, messages)
 
 	// create 1 parent and 2 children
-	f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour))
+	f.addTaskEvent(c, "parent", f.begin, f.begin.Add(1*time.Hour), "")
 	waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	child1 := f.addChildEvent(c, "child1", "parent", f.begin.Add(1*time.Minute))
 	waitBroadcastTag(messages, sdk.MessageTag_update_events)
