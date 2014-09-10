@@ -332,18 +332,21 @@ message AuthenticationToClient {
         This field is filled using the "context" fields provided in the
         request message.
 
-        This context allows the client application to set a unique
-        identifier (based for instance on MAC address), thus allowing to
-        track response message matching a specific request emitted by
-        the client.
+        This context allows the client application to differentiate
+        acknowledgements to similar messages.
 
         @see ClientToAuthentication
     */
     optional int32   context = 1;
     //! A field containing one of the messages to be sent
     required Content message = 2;
-    //! client identifier, non-nul after a successful authentication, for
-    //! specific messages, mostly requests acknowledgements.
+    /** @property client_id
+
+        This field is filled by the dispatcher after a successful authentication.
+        The id is unique to represent this client and can later be compared to client_id
+        sent by the dispatcher to distinguish answers to requests made by this or another
+        client.
+    */
     optional int32   client_id = 3;
 }
 

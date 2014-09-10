@@ -154,9 +154,8 @@ message ClientToAuthentication {
 
         This field is used to fill the "context" fields in the response
         messages. This context allows the client application to put an
-        unique identifier (based for instance on MAC address), thus
-        allowing to track response message matching a specific request
-        emitted by the client.
+        unique identifier to distinguish answers to different requests
+        of the same type by the same client.
     */
     optional int32   context = 1;
     //! A field containing one of the messages to be sent
