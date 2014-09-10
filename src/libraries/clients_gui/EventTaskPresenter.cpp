@@ -13,17 +13,33 @@
 #include "Event.h"
 #include "EventTaskViewState.h"
 #include "EventView_ABC.h"
-
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
+#include <boost/property_tree/ptree.hpp>
 #include <timeline/api.h>
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4100 4512 )
+#endif
+#include <boost/property_tree/json_parser.hpp>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
+
 using namespace gui;
+namespace bpt = boost::property_tree;
 
 // -----------------------------------------------------------------------------
 // Name: EventTaskPresenter constructor
 // Created: ABR 2013-12-09
 // -----------------------------------------------------------------------------
-EventTaskPresenter::EventTaskPresenter( EventView_ABC< EventTaskViewState >& view )
+EventTaskPresenter::EventTaskPresenter( EventView_ABC< EventTaskViewState >& view,
+                                        kernel::Controllers& controllers,
+                                        const kernel::EntityResolver_ABC& model )
     : EventSubPresenter_ABC< EventTaskViewState >( eEventTypes_Task, view )
+    , entity_( controllers )
+    , model_( model )
 {
     // NOTHING
 }
@@ -107,6 +123,42 @@ void EventTaskPresenter::Clear()
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventTaskPresenter::Purge
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskPresenter::Purge()
+{
+    EventSubPresenter_ABC< EventTaskViewState >::Purge();
+    entity_ = 0;
+}
+
+namespace
+{
+    std::string EntityToMetadata( const kernel::Entity_ABC* entity )
+    {
+        return QString( "{ \"tasker\": %1 }" ).arg( entity ? entity->GetId() : 0 ).toStdString();
+    }
+    const kernel::Entity_ABC* MetadataToEntity( const std::string& metadata,
+                                                const kernel::EntityResolver_ABC& model )
+    {
+        if( metadata.empty() )
+            return nullptr;
+        bpt::ptree rpy;
+        try
+        {
+            std::istringstream input( metadata );
+            bpt::read_json( input, rpy );
+            if( auto tasker = rpy.get_optional< uint32_t >( "tasker" ) )
+                return model.FindEntity( *tasker );
+        }
+        catch( ... )
+        {
+        }
+        return nullptr;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventTaskPresenter::FillFrom
 // Created: ABR 2013-12-17
 // -----------------------------------------------------------------------------
@@ -122,6 +174,7 @@ void EventTaskPresenter::FillFrom( const gui::Event& event )
     state_->payload_ = data.toStdString();
     state_->isUrlValid_ = !state_->url_.empty();
     state_->isPayloadVisible_ = false;
+    SetTasker( MetadataToEntity( timelineEvent.metadata, model_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,4 +192,25 @@ void EventTaskPresenter::CommitTo( timeline::Event& event ) const
         QByteArray data( state_->payload_.c_str() );
         event.action.payload = data.toBase64().data();
     }
+    event.metadata = EntityToMetadata( entity_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskPresenter::OnTargetChanged
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskPresenter::OnTargetChanged( const kernel::Entity_ABC* entity )
+{
+    SetTasker( entity );
+    BuildView();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskPresenter::SetTasker
+// Created: ABR 2014-09-10
+// -----------------------------------------------------------------------------
+void EventTaskPresenter::SetTasker( const kernel::Entity_ABC* entity )
+{
+    entity_ = entity;
+    state_->target_ = entity_ ? entity_->GetId() : 0;
 }

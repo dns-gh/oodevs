@@ -131,7 +131,6 @@ private slots:
     void OnOrderClicked();
     void OnOrderAutomatClicked();
     void OnReplaceTargetClicked();
-    void OnClearTaskerClicked();
     //@}
 
 private:

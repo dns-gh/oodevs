@@ -41,13 +41,16 @@ EventDetailWidget::EventDetailWidget( gui::EventPresenter& presenter )
     target_->setReadOnly( true );
     apply_ = new QCheckBox();
     apply_->setEnabled( false );
+    metadata_ = new QTextEdit();
+    metadata_->setReadOnly( true );
+    metadata_->setFixedHeight( 30 );
     payloadBase64_ = new QTextEdit();
     payloadBase64_->setReadOnly( true );
     payloadBase64_->setFixedHeight( 50 );
     payloadString_ = new QTextEdit();
     payloadString_->setReadOnly( true );
 
-    QGridLayout* gridLayout = new QGridLayout( 11, 2 );
+    QGridLayout* gridLayout = new QGridLayout( 12, 2 );
     mainLayout_->addLayout( gridLayout );
     gridLayout->setMargin( 10 );
     gridLayout->setSpacing( 10 );
@@ -63,17 +66,19 @@ EventDetailWidget::EventDetailWidget( gui::EventPresenter& presenter )
     gridLayout->addWidget( end_, 4, 1 );
     gridLayout->addWidget( new QLabel( "Parent" ), 5, 0 );
     gridLayout->addWidget( parent_, 5, 1 );
-    gridLayout->addWidget( new QLabel( "Done" ), 6, 0 );
-    gridLayout->addWidget( done_, 6, 1 );
-    gridLayout->addWidget( new QLabel( "Action" ), 7, 0, 1, 2 );
-    gridLayout->addWidget( new QLabel( "Target" ), 8, 0 );
-    gridLayout->addWidget( target_, 8, 1 );
-    gridLayout->addWidget( new QLabel( "Apply" ), 9, 0 );
-    gridLayout->addWidget( apply_, 9, 1 );
-    gridLayout->addWidget( new QLabel( "Base64 Payload" ), 10, 0 );
-    gridLayout->addWidget( payloadBase64_, 10, 1 );
-    gridLayout->addWidget( new QLabel( "String Payload" ), 11, 0 );
-    gridLayout->addWidget( payloadString_, 11, 1 );
+    gridLayout->addWidget( new QLabel( "Metadata" ), 6, 0 );
+    gridLayout->addWidget( metadata_, 6, 1 );
+    gridLayout->addWidget( new QLabel( "Done" ), 7, 0 );
+    gridLayout->addWidget( done_, 7, 1 );
+    gridLayout->addWidget( new QLabel( "Action" ), 8, 0, 1, 2 );
+    gridLayout->addWidget( new QLabel( "Target" ), 9, 0 );
+    gridLayout->addWidget( target_, 9, 1 );
+    gridLayout->addWidget( new QLabel( "Apply" ), 10, 0 );
+    gridLayout->addWidget( apply_, 10, 1 );
+    gridLayout->addWidget( new QLabel( "Base64 Payload" ), 11, 0 );
+    gridLayout->addWidget( payloadBase64_, 11, 1 );
+    gridLayout->addWidget( new QLabel( "String Payload" ), 12, 0 );
+    gridLayout->addWidget( payloadString_, 12, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +103,7 @@ void EventDetailWidget::Purge()
     end_->clear();
     parent_->clear();
     done_->setCheckState( Qt::Unchecked );
+    metadata_->clear();
     target_->clear();
     apply_->setCheckState( Qt::Unchecked );
     payloadBase64_->clear();
@@ -119,6 +125,7 @@ void EventDetailWidget::Build( const gui::EventViewState& state )
     begin_->setText( QString::fromStdString( timelineEvent.begin ) );
     end_->setText( QString::fromStdString( timelineEvent.end ) );
     parent_->setText( QString::fromStdString( timelineEvent.parent ) );
+    metadata_->setText( QString::fromStdString( timelineEvent.metadata ) );
     done_->setCheckState( timelineEvent.done ? Qt::Checked : Qt::Unchecked );
     target_->setText( QString::fromStdString( timelineEvent.action.target ) );
     apply_->setCheckState( timelineEvent.action.apply ? Qt::Checked : Qt::Unchecked );

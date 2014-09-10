@@ -11,7 +11,15 @@
 #define __EventTaskPresenter_h_
 
 #include "EventSubPresenter_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include <boost/scoped_ptr.hpp>
+
+namespace kernel
+{
+    class Controllers;
+    class Entity_ABC;
+    class EntityResolver_ABC;
+}
 
 namespace gui
 {
@@ -32,13 +40,16 @@ class EventTaskPresenter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             EventTaskPresenter( EventView_ABC< EventTaskViewState >& view );
+             EventTaskPresenter( EventView_ABC< EventTaskViewState >& view,
+                                 kernel::Controllers& controllers,
+                                 const kernel::EntityResolver_ABC& model );
     virtual ~EventTaskPresenter();
     //@}
 
     //! @name Operations
     //@{
     virtual void FillFrom( const Event& event );
+    void OnTargetChanged( const kernel::Entity_ABC* entity );
     //@}
 
 public slots:
@@ -57,6 +68,19 @@ private:
     virtual void Trigger( const gui::Event& event );
     virtual void CommitTo( timeline::Event& event ) const;
     virtual void Clear();
+    virtual void Purge();
+    //@}
+
+    //! @name Helpers
+    //@{
+    void SetTasker( const kernel::Entity_ABC* entity );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::EntityResolver_ABC& model_;
+    kernel::SafePointer< kernel::Entity_ABC > entity_;
     //@}
 };
 

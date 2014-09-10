@@ -12,14 +12,12 @@
 #include "moc_EventMagicWidget.cpp"
 
 #include "actions/ActionsModel.h"
-
 #include "clients_gui/EventMagicPresenter.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventMagicViewState.h"
+#include "clients_gui/SignalAdapter.h"
 #include "clients_gui/TaskerWidget.h"
-
 #include "clients_kernel/AgentTypes.h"
-
 #include "gaming/Model.h"
 
 #include <boost/make_shared.hpp>
@@ -54,7 +52,7 @@ EventMagicWidget::EventMagicWidget( gui::EventPresenter& presenter,
     mainLayout_->addStretch( 1 );
 
     // Connections
-    connect( taskerWidget_, SIGNAL( ClearClicked() ), this, SLOT( OnClearTaskerClicked() ) );
+    gui::connect( taskerWidget_, SIGNAL( ClearClicked() ), [&](){ OnTargetChanged( 0 ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,22 +126,4 @@ void EventMagicWidget::OnTargetChanged( const kernel::Entity_ABC* entity )
 {
     magicPresenter_->OnTargetChanged( entity );
     presenter_.OnEventContentChanged();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventMagicWidget::OnReplaceTargetClicked
-// Created: ABR 2013-12-20
-// -----------------------------------------------------------------------------
-void EventMagicWidget::OnReplaceTargetClicked()
-{
-    OnTargetChanged( selectedEntity_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventMagicWidget::OnClearTaskerClicked
-// Created: ABR 2013-12-20
-// -----------------------------------------------------------------------------
-void EventMagicWidget::OnClearTaskerClicked()
-{
-    OnTargetChanged( 0 );
 }

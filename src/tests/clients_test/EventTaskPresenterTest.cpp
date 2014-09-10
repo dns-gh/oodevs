@@ -46,8 +46,8 @@ namespace
     struct TaskPresenterFixture : public PresenterBaseFixture
     {
         TaskPresenterFixture()
-            : taskPresenter( taskView )
-            , state( "label", "description", "url", "payload", true, false, 7 )
+            : taskPresenter( taskView, controllers, entityResolver )
+            , state( 0, "label", "description", "url", "payload", true, false, 7 )
         {
             taskEvent.reset( eventFactory.Create( eEventTypes_Task ) ) ;
             taskEvent->GetEvent().name = "label";

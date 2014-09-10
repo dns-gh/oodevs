@@ -26,20 +26,23 @@ struct EventTaskViewState
     //! @name Constructors
     //@{
     EventTaskViewState()
-        : bytes_( 0 )
+        : target_( 0 )
+        , bytes_( 0 )
         , isUrlValid_( false )
         , isPayloadVisible_( false )
     {
         // NOTHING
     }
-    EventTaskViewState( std::string label,
+    EventTaskViewState( unsigned long target,
+                        std::string label,
                         std::string description,
                         std::string url,
                         std::string payload,
                         bool isUrlValid,
                         bool isPayloadVisible,
                         int bytes )
-        : label_( label )
+        : target_( target )
+        , label_( label )
         , description_( description )
         , url_( url )
         , payload_( payload )
@@ -61,6 +64,7 @@ struct EventTaskViewState
 
     //! @name Member data
     //@{
+    unsigned long target_;
     std::string label_;
     std::string description_;
     std::string url_;

@@ -744,6 +744,18 @@ Motivo: %3</translation>
         <source>Base64 Payload</source>
         <translation>Carga útil Base64</translation>
     </message>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished">Receptor</translation>
+    </message>
+    <message>
+        <source>New task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace task recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventToolbar</name>
