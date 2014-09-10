@@ -76,6 +76,10 @@ FloodAttribute& FloodAttribute::operator=( const FloodAttribute& from )
     refDist_ = from.refDist_;
     floodCenter_ = from.floodCenter_;
     location_.Reset( from.location_ );
+    deepAreas_ = from.deepAreas_;
+    lowAreas_ = from.lowAreas_;
+    deepAreasLocalisation_ = from.deepAreasLocalisation_;
+    lowAreasLocalisation_ = from.lowAreasLocalisation_;
     return *this;
 }
 
@@ -92,6 +96,10 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
         refDist_ = rhs.refDist_;
         floodCenter_ = rhs.floodCenter_;
         location_.Reset( rhs.location_ );
+        deepAreas_ = rhs.deepAreas_;
+        lowAreas_ = rhs.lowAreas_;
+        deepAreasLocalisation_ = rhs.deepAreasLocalisation_;
+        lowAreasLocalisation_ = rhs.lowAreasLocalisation_;
     }
     return NeedUpdate( eOnUpdate );
 }
