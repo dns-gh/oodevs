@@ -18,6 +18,8 @@ namespace sword
     class PhaseLineOrder;
 }
 
+class DEC_KnowledgeResolver_ABC;
+class DEC_Knowledge_Object;
 class MT_Line;
 class MIL_LimaFunction;
 class TER_Localisation;
@@ -43,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_LimaOrder();
-    explicit MIL_LimaOrder( const sword::PhaseLineOrder& asn );
+             MIL_LimaOrder( const sword::PhaseLineOrder& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_LimaOrder();
     //@}
 
@@ -69,6 +71,7 @@ public:
     //@{
     bool Intersect2D( const MT_Line& line, MT_Vector2D& vPos ) const;
     bool Intersect2D( const T_PointVector& polyline, T_PointSet& intersectionSet ) const; //$$$ devrait gicler
+    void ReplacePointsByNearestObjectPositions( T_PointVector& points ) const;
     //@}
 
     //! @name Network
@@ -90,6 +93,7 @@ private:
     bool bFlag_;
     bool bScheduleFlag_;
     unsigned int nSchedule_;
+    std::vector< boost::shared_ptr< DEC_Knowledge_Object > > objects_;
 
 private:
     static unsigned int nNextID_;

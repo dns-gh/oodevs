@@ -33,11 +33,13 @@ LimaList::LimaList( const OrderParameter& parameter )
 // Name: LimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::PhaseLinesOrder& message )
+LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::PhaseLinesOrder& message,
+                    const kernel::Entity_ABC* owner, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter,
+                    kernel::Controller& controller, const kernel::EntityResolver_ABC& entities )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Lima( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).toStdString(), "phaseline", true ), converter, message.elem(i) ) );
+        AddParameter( *new Lima( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).toAscii().constData(), "phaseline", true ), converter, message.elem( i ), owner, objectKnowledgeConverter, controller, entities ) );
 }
 
 // -----------------------------------------------------------------------------

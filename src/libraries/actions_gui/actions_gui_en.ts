@@ -33,6 +33,10 @@
         <source>New lima</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Phase Line Objects %1</source>
+        <translation>Phase Line Objects %1</translation>
+    </message>
 </context>
 <context>
     <name>LimitParameter</name>

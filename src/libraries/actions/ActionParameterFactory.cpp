@@ -159,9 +159,9 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_phaseline() )
     {
         if( message.phaseline().elem_size() > 1 )
-            return ( nullValue ) ? new parameters::LimaList( parameter )                    : new parameters::LimaList( parameter, converter_, message.phaseline() );
+            return ( nullValue ) ? new parameters::LimaList( parameter )                    : new parameters::LimaList( parameter, converter_, message.phaseline(), entity, objectKnowledgeConverter_, controller_, entities_ );
         else if( message.phaseline().elem_size() == 1 )
-            return ( nullValue ) ? new parameters::Lima( parameter )                        : new parameters::Lima( parameter, converter_, message.phaseline().elem(0) );
+            return ( nullValue ) ? new parameters::Lima( parameter )                        : new parameters::Lima( parameter, converter_, message.phaseline().elem(0), entity, objectKnowledgeConverter_, controller_, entities_ );
     }
     if( message.has_datetime() )
         return ( nullValue ) ? new parameters::DateTime( parameter )                        : new parameters::DateTime( parameter, message.datetime() );

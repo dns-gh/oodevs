@@ -13,6 +13,7 @@
 #include "ListParameter.h"
 #include "LocationComparator.h"
 #include "ParamDateTime.h"
+#include "ParamObjectKnowledge.h"
 #include "ParamInterface_ABC.h"
 #include "actions/DateTime.h"
 #include "actions/Lima.h"
@@ -35,13 +36,16 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 LimaParameter::LimaParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : Param_ABC( builder, parameter )
-    , controller_( builder.GetControllers().controller_ )
-    , converter_( builder.GetStaticModel().coordinateConverter_ )
-    , resolver_( builder.GetTacticalLineResolver() )
+    , controller_  ( builder.GetControllers().controller_ )
+    , converter_   ( builder.GetStaticModel().coordinateConverter_ )
+    , resolver_    ( builder.GetTacticalLineResolver() )
     , clickedLine_ ( 0 )
     , selectedLine_( 0 )
+    , builder_     ( builder )
     , functions_   ( new QListWidget() )
-    , schedule_    ( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).toStdString(), "datetime", true ), false ) ) )
+    , schedule_    ( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).toStdString(),
+                     "datetime", true ), false ) ) )
+    , objects_     ( 0 )
 {
     controller_.Register( *this );
 }
@@ -55,6 +59,7 @@ LimaParameter::~LimaParameter()
     controller_.Unregister( *this );
     delete functions_;
     delete schedule_;
+    delete objects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +68,8 @@ LimaParameter::~LimaParameter()
 // -----------------------------------------------------------------------------
 bool LimaParameter::InternalCheckValidity() const
 {
-    return ( HasTacticalLine() || HasNewLima() ) && schedule_ && schedule_->CheckValidity();
+    return ( HasTacticalLine() || HasNewLima() ) && schedule_ && schedule_->CheckValidity()
+        && ( !objects_ || objects_->CheckValidity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +95,13 @@ QWidget* LimaParameter::BuildInterface( const QString& objectName, QWidget* pare
     layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Functions" ), parent ), 1, 0 );
     layout->addWidget( functions_, 1, 1 );
     layout->addWidget( scheduleBox, 2, 0, 1, 2 );
-
+    if( parameter_.HasObject() )
+    {
+        kernel::OrderParameter param( tools::translate( "LimaParameter", "Phase Line Objects %1" ).arg( GetName() ).toAscii().constData(),
+            "objectknowledge", true, parameter_.GetObjects(), parameter_.HasAllObjects(), 1, std::numeric_limits< unsigned int >::max() );
+        objects_ = static_cast< ListParameter< ParamObjectKnowledge >* >( &builder_.BuildOne( param, false ) );
+        layout->addWidget( objects_->BuildInterface( objectName, parent ), 3, 0, 1, 2 );
+    }
     return group_;
 }
 
@@ -119,6 +131,8 @@ void LimaParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_
         if( ! functions.isEmpty() )
             tools.Print( functions.join( ", " ).toStdString(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
         schedule_->Draw( position + lineFeed * 2.f, viewport, tools );
+        if( objects_ )
+            objects_->Draw( point, viewport, tools );
     glPopAttrib();
 }
 
@@ -260,6 +274,8 @@ void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
             if( functions_->isItemSelected( functions_->item( i ) ) )
                 param->AddFunction( i );
         schedule_->CommitTo( *param );
+        if( objects_ )
+            objects_->CommitTo( *param );
         parameter.AddParameter( *param.release() );
     }
     else
@@ -324,6 +340,13 @@ void LimaParameter::Visit( const actions::parameters::DateTime& param )
     schedule_->Visit( param );
 }
 
+void LimaParameter::Visit( const actions::Parameter_ABC& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( objects_ )
+        objects_->Visit( param );
+}
+
 // -----------------------------------------------------------------------------
 // Name: LimaParameter::HasTacticalLine
 // Created: ABR 2013-11-28
@@ -340,4 +363,15 @@ bool LimaParameter::HasTacticalLine() const
 bool LimaParameter::HasNewLima() const
 {
     return newPoints_.size() > 1;
+}
+
+void LimaParameter::SetEntity( const kernel::Entity_ABC* entity )
+{
+    if( objects_ )
+        objects_->SetEntity( entity );
+}
+
+bool LimaParameter::HasParameter( const Param_ABC& parameter ) const
+{
+    return Param_ABC::HasParameter( parameter ) || objects_ && objects_->HasParameter( parameter );
 }

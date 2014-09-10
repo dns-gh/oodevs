@@ -165,7 +165,7 @@ boost::shared_ptr< MIL_MissionParameter_ABC > MIL_MissionParameterFactory::Creat
     else if( message.has_missionobjective() )              // $$$$ LDC : This type doesn't seem to ever be converted to/from. Only lists of objectives exist.
         ptr = new MIL_NullParameter();
     else if( message.has_phaseline() )
-        ptr = new MIL_LimaListParameter( message.phaseline() ); // group LimaList and Lima type  before updating protobuff
+        ptr = new MIL_LimaListParameter( message.phaseline(), resolver ); // group LimaList and Lima type  before updating protobuff
 //        else if( message.has_value_line() ||
 //            message.has_value_intelligenceList() )
         // $$$$ LDC : These types are exclusively managed by the OrderContext.

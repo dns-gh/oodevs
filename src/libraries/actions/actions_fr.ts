@@ -137,6 +137,14 @@
         <source>Resource</source>
         <translation>Ressource</translation>
     </message>
+    <message>
+        <source>Phase Line Objects %1</source>
+        <translation>Objets associés %1</translation>
+    </message>
+    <message>
+        <source>Phase Line Objects</source>
+        <translation>Objets associés</translation>
+    </message>
 </context>
 <context>
     <name>ParameterList</name>

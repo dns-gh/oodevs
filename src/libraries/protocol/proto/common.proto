@@ -553,6 +553,8 @@ message PhaseLineOrder {
     required DateTime time      = 2;
     //! The functions
     repeated Function fonctions = 3;
+    //! The list of objects associated to the phase line
+    repeated Id objects         = 4;
 }
 
 /** @struct PhaseLinesOrder
