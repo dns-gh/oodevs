@@ -38,7 +38,7 @@ MineAttribute::MineAttribute()
 // Name: MineAttribute constructor
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int nDefaultMaxNbrDotation )
+MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int nDefaultMaxNbrDotation, double )
     : dotation_           ( &dotation )
     , nFullNbrDotation_   ( nDefaultMaxNbrDotation )
     , nCurrentNbrDotation_( nDefaultMaxNbrDotation )
@@ -122,6 +122,12 @@ void MineAttribute::SetMustBeMined( bool val )
 {
     bMustBeMined_ = val;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MineAttribute::SetDensity
+// Created: LDC 2014-09-10
+// -----------------------------------------------------------------------------
+void MineAttribute::SetDensity( double  ) {}
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::operator=
