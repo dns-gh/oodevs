@@ -76,6 +76,10 @@ FloodAttribute& FloodAttribute::operator=( const FloodAttribute& from )
     refDist_ = from.refDist_;
     floodCenter_ = from.floodCenter_;
     location_.Reset( from.location_ );
+    deepAreas_ = from.deepAreas_;
+    lowAreas_ = from.lowAreas_;
+    deepAreasLocalisation_ = from.deepAreasLocalisation_;
+    lowAreasLocalisation_ = from.lowAreasLocalisation_;
     return *this;
 }
 
@@ -92,6 +96,10 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
         refDist_ = rhs.refDist_;
         floodCenter_ = rhs.floodCenter_;
         location_.Reset( rhs.location_ );
+        deepAreas_ = rhs.deepAreas_;
+        lowAreas_ = rhs.lowAreas_;
+        deepAreasLocalisation_ = rhs.deepAreasLocalisation_;
+        lowAreasLocalisation_ = rhs.lowAreasLocalisation_;
     }
     return NeedUpdate( eOnUpdate );
 }
@@ -177,6 +185,24 @@ bool FloodAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
     return false;
 }
 
+namespace
+{
+    void ConvertToLocalisations( const std::vector< geometry::Polygon2f >& polygons, std::vector< TER_Polygon >& localisations )
+    {
+        localisations.clear();
+        T_PointVector vector;
+        for( auto it = polygons.begin(); it != polygons.end(); ++it )
+        {
+            const auto& vertices = it->Vertices();
+            vector.resize( vertices.size() );
+            for( std::size_t n = 0; n < vertices.size(); ++n )
+                vector[ n ] = MT_Vector2D( vertices[ n ].X(), vertices[ n ].Y() );
+            localisations.push_back( TER_Polygon() );
+            localisations.back().Reset( vector );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: FloodAttribute::GenerateFlood
 // Created: JSR 2011-05-20
@@ -184,6 +210,8 @@ bool FloodAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 void FloodAttribute::GenerateFlood( const propagation::FloodModel_ABC& model )
 {
     model.GenerateFlood( geometry::Point2d( floodCenter_.rX_, floodCenter_.rY_ ), deepAreas_, lowAreas_, depth_, refDist_ );
+    ConvertToLocalisations( deepAreas_, deepAreasLocalisation_ );
+    ConvertToLocalisations( lowAreas_, lowAreasLocalisation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +222,18 @@ const TER_Localisation& FloodAttribute::GetLocalisation() const
 {
     // TODO : ne doit être que le polygone englobant l'inondation? (ou des bounding box éventuellement)
     return location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::Apply
+// Created: JSR 2014-09-09
+// -----------------------------------------------------------------------------
+void FloodAttribute::Apply( const std::function< void( const TER_Polygon&, bool ) >& func ) const
+{
+    for( auto it = deepAreasLocalisation_.begin(); it != deepAreasLocalisation_.end(); ++it )
+        func( *it, true );
+    for( auto it = lowAreasLocalisation_.begin(); it != lowAreasLocalisation_.end(); ++it )
+        func( *it, false );
 }
 
 // -----------------------------------------------------------------------------

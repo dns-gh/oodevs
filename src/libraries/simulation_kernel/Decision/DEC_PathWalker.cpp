@@ -13,10 +13,12 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_ObjectVisitor_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 
@@ -261,6 +263,35 @@ void DEC_PathWalker::SetCurrentPathPoint( DEC_PathResult& path )
         path.NotifyPointReached( itCurrentPathPoint_ );
 }
 
+namespace
+{
+    class FloodVisitor : public TER_ObjectVisitor_ABC
+    {
+    public:
+        FloodVisitor( const MT_Line& line, TER_Object_ABC::T_ObjectVector& objects )
+            : line_( line )
+            , objects_( objects )
+        {
+            // NOTHING
+        }
+
+        virtual void Visit( TER_Object_ABC& object )
+        {
+            const MIL_Object_ABC& obj = static_cast< MIL_Object_ABC& >( object );
+            if( const FloodAttribute* flood = obj.RetrieveAttribute< FloodAttribute > () )
+            {
+                const TER_Localisation& loc = flood->GetLocalisation();
+                if( loc.IsInside( line_.GetPosEnd() ) || loc.Intersect2D( line_ ) )
+                    objects_.push_back( &object );
+            }
+        }
+
+    private:
+        const MT_Line& line_;
+        TER_Object_ABC::T_ObjectVector& objects_;
+    };
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_PathWalker::ComputeObjectsCollision
 // Created: NLD 2002-12-17
@@ -270,7 +301,12 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
     TER_Object_ABC::T_ObjectVector objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vStart, ( vEnd - vStart ).Magnitude(), objects );
+
     MT_Line lineTmp( vStart, vEnd );
+
+    FloodVisitor visitor( lineTmp, objects );
+    TER_World::GetWorld().GetObjectManager().Accept( visitor );
+
     moveStepSet.insert( T_MoveStep( vStart ) );
     moveStepSet.insert( T_MoveStep( vEnd   ) );
     TER_DistanceLess colCmp( vStart );
@@ -278,8 +314,20 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     for( auto itObject = objects.begin(); itObject != objects.end(); ++itObject )
     {
         const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
+        if( const FloodAttribute* flood = object.RetrieveAttribute< FloodAttribute > () )
+        {
+            T_PointSet collisionsTmp( colCmp );
+            flood->Apply( [&]( const TER_Polygon& polygon, bool )
+                {
+                    if( polygon.Intersect2D( lineTmp, collisionsTmp, 0 ) )
+                        collisions.insert( collisionsTmp.begin(), collisionsTmp.end() );
+                });
+        }
+        else
+            object.Intersect2D( lineTmp, collisions );
+
         // Ajout des points de collision dans moveStepSet
-        if( object.Intersect2D( lineTmp, collisions ) )
+        if( collisions.size() > 0 )
         {
             for( auto itPoint = collisions.begin(); itPoint != collisions.end(); ++itPoint )
             {

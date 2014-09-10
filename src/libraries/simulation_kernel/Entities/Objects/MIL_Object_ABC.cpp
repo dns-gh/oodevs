@@ -354,7 +354,17 @@ void MIL_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation
 bool MIL_Object_ABC::IsInside( const MT_Vector2D& vPos ) const
 {
     if( const FloodAttribute* flood = RetrieveAttribute< FloodAttribute >() )
-        return flood->GetLocalisation().IsInside( vPos );
+    {
+        bool ret = false;
+        if( flood->GetLocalisation().IsInside( vPos ) )
+        {
+            flood->Apply( [&]( const TER_Polygon& polygon, bool )
+            {
+                ret = ret || polygon.IsInside( vPos );
+            });
+        }
+        return ret;
+    }
     return TER_Object_ABC::IsInside( vPos );
 }
 

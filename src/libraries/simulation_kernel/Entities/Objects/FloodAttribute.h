@@ -81,8 +81,9 @@ public:
     //@{
     virtual void GenerateFlood( const propagation::FloodModel_ABC& model );
     virtual const TER_Localisation& GetLocalisation() const;
-    virtual const std::vector< geometry::Polygon2f >& GetDeepAreas() const;
-    virtual const std::vector< geometry::Polygon2f >& GetLowAreas() const;
+    void Apply( const std::function< void( const TER_Polygon&, bool ) >& func ) const;
+    const std::vector< geometry::Polygon2f >& GetDeepAreas() const;
+    const std::vector< geometry::Polygon2f >& GetLowAreas() const;
     //@}
 
 private:
@@ -100,6 +101,8 @@ private:
     TER_Localisation location_;
     std::vector< geometry::Polygon2f > deepAreas_;
     std::vector< geometry::Polygon2f > lowAreas_;
+    std::vector< TER_Polygon > deepAreasLocalisation_;
+    std::vector< TER_Polygon > lowAreasLocalisation_;
     //@}
 };
 
