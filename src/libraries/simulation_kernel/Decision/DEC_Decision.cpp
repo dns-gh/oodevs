@@ -649,6 +649,7 @@ void RegisterSpecificPointsFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_GetTypeLimaPoint", &DEC_PathFunctions::GetTypeLimaPoint );
     brain.RegisterFunction( "DEC_GetLimaPoint", &DEC_PathFunctions::GetLimaPoint );
     brain.RegisterFunction( "DEC_GetNextRemovableObjectOnPath", &DEC_PathFunctions::GetNextRemovableObjectOnPath );
+    brain.RegisterFunction( "DEC_GetClosestPath", &DEC_PathFunctions::GetClosestPath );
 }
 
 // -----------------------------------------------------------------------------

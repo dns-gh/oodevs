@@ -27,6 +27,7 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameter_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
+#include "Entities/Orders/MIL_ItineraryParameter.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -60,22 +61,22 @@ namespace
     class Visitor : public MIL_MissionParameterVisitor_ABC
     {
     public:
-        explicit Visitor( sword::Pathfind& pathfind )
-            : pathfind_( pathfind )
+        explicit Visitor( const std::function< void( MIL_MissionParameter_ABC& ) >& functor )
+            : functor_( functor )
         {}
         void Accept( const std::string& /*p*/, const MIL_OrderTypeParameter& /*type*/, MIL_MissionParameter_ABC& element )
         {
-            element.ToItinerary( pathfind_ );
+            functor_( element );
         }
-        sword::Pathfind& pathfind_;
+        const std::function< void( MIL_MissionParameter_ABC& ) >& functor_;
     };
 
-    void FindItinerary( DEC_Decision_ABC& decision, sword::Pathfind& pathfind )
+    void FindItinerary( DEC_Decision_ABC& decision, const std::function< void( MIL_MissionParameter_ABC& ) >& functor )
     {
         const auto mission = decision.GetMission();
         if( !mission )
             return;
-        Visitor visitor( pathfind );
+        Visitor visitor( functor );
         mission->Visit( visitor );
     }
 
@@ -89,7 +90,7 @@ namespace
         else
         {
             sword::Pathfind pathfind;
-            FindItinerary( agent.GetRole< DEC_Decision_ABC >(), pathfind );
+            FindItinerary( agent.GetRole< DEC_Decision_ABC >(), [&]( MIL_MissionParameter_ABC& element ){ element.ToItinerary( pathfind ); } );
             MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer, pathfind );
         }
         return path;
@@ -349,12 +350,19 @@ unsigned int DEC_PathFunctions::GetLimaPoint( boost::shared_ptr< DEC_PathPoint >
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFunctions::GetDistancePath
-// Created: LMT 2010-05-04
+// Name: DEC_PathFunctions::GetClosestPath
+// Created: SLI 2014-09-05
 // -----------------------------------------------------------------------------
-double DEC_PathFunctions::GetDistancePath( const boost::shared_ptr< DEC_Path_ABC > pPath )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_PathFunctions::GetClosestPath( DEC_Decision_ABC* callerAgent,
+                                                                                   const boost::shared_ptr< MT_Vector2D >& begin,
+                                                                                   const boost::shared_ptr< MT_Vector2D >& end )
 {
-    if( !pPath )
-        throw MASA_EXCEPTION( "invalid parameter." );
-   return pPath->GetLength();
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    FindItinerary( *callerAgent,
+        [&]( MIL_MissionParameter_ABC& element )
+    { 
+        if( auto itinerary = dynamic_cast< MIL_ItineraryParameter* >( &element ) )
+            result = itinerary->AddClosestWaypoints( begin, end );
+    } );
+    return result;
 }

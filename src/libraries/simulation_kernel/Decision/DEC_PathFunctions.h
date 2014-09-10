@@ -48,7 +48,9 @@ public:
     static boost::shared_ptr< DEC_PathPoint > GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint );
     static int  GetTypeLimaPoint      ( boost::shared_ptr< DEC_PathPoint > pPoint );
     static unsigned int GetLimaPoint  ( boost::shared_ptr< DEC_PathPoint > pPoint );
-    static double GetDistancePath     ( const boost::shared_ptr< DEC_Path_ABC > pPath );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > GetClosestPath( DEC_Decision_ABC* callerAgent,
+                                                                           const boost::shared_ptr< MT_Vector2D >& begin,
+                                                                           const boost::shared_ptr< MT_Vector2D >& end );
      //@}
 };
 

@@ -707,3 +707,52 @@ func (s *TestSuite) TestDecGetMaxRangeToFireOn(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(maxRange, Equals, 500.0)
 }
+
+func (s *TestSuite) TestDecGetClosestPath(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+
+	automat := createAutomat(c, client)
+	positions := []swapi.Point{
+		{X: -15.9170, Y: 28.2645},
+		{X: -15.9200, Y: 28.2645},
+		{X: -15.9230, Y: 28.2645},
+		{X: -15.9260, Y: 28.2645},
+	}
+	startPosition := swapi.Point{X: -15.9200, Y: 28.2650}
+	unit, err := client.CreateUnit(automat.Id, UnitType, startPosition)
+	c.Assert(err, IsNil)
+
+	// Create pathfind
+	pathfind, err := client.CreatePathfind(unit.Id, positions...)
+	c.Assert(err, IsNil)
+
+	// Send pathfind to unit
+	heading := swapi.MakeHeading(0)
+	params := swapi.MakeParameters(heading, nil, nil, nil, swapi.MakePathfind(pathfind))
+	// Should work with disengaged unit
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
+	// wait for first move
+	waitCondition(c, client.Model, func(m *swapi.ModelData) bool {
+		return !isNearby(startPosition, m.Units[unit.Id].Position)
+	})
+	script := `function TestFunction()
+        local beginPoint = DEC_Geometrie_CreerPointLatLong(28.2645,-15.9200)
+        local endPoint = DEC_Geometrie_CreerPointLatLong(28.2645,-15.9230)
+        local path = DEC_GetClosestPath(myself, beginPoint, endPoint)
+        if DEC_Geometrie_DistanceBetweenPoints( path[1], beginPoint ) > 10 or
+           DEC_Geometrie_DistanceBetweenPoints( path[#path], endPoint ) > 10
+        then
+        	return "false"
+    	end
+       	return "true"
+	end`
+	output, err := client.ExecTemplate(unit.Id, "TestFunction", script,
+		map[string]interface{}{})
+	c.Assert(err, IsNil)
+	result, err := strconv.ParseBool(output)
+	c.Assert(err, IsNil)
+	c.Assert(result, Equals, true)
+}
