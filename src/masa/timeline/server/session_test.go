@@ -1051,8 +1051,9 @@ func (t *TestSuite) TestFiltersHierarchy(c *C) {
 		"filter_show_only", "parent2"), 3)
 	f.applyFilters(c, parseFilters(c,
 		"filter_show_only", "parent3"), 4)
+	// parent1 is hidden so child1 is too
 	f.applyFilters(c, parseFilters(c,
-		"filter_show_only", "child1"), 1)
+		"filter_show_only", "child1"), 0)
 
 	// test filter_hide_hierarchies
 	f.applyFilters(c, parseFilters(c,

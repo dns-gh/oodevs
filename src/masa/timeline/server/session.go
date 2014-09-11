@@ -322,21 +322,58 @@ func (s *Session) ReadServices() []*sdk.Service {
 	return rpy
 }
 
-func filterEvents(events EventSlice, encoded []*sdk.Event,
-	filters []services.EventFilter) []*sdk.Event {
+type Filters []services.EventFilter
+
+func (f Filters) Filter(event *sdk.Event) bool {
+	for _, filter := range f {
+		if filter(event) {
+			return true
+		}
+	}
+	return false
+}
+
+func filterEvent(filters Filters, event *Event, encoded *sdk.Event,
+	cache map[*Event]bool) bool {
+	filtered, ok := cache[event]
+	if ok {
+		return filtered
+	}
+	// check if parent is filtered
+	if event.parent != nil {
+		filtered, ok = cache[event.parent]
+		if !ok {
+			filtered = filters.Filter(event.parent.Proto())
+			cache[event.parent] = filtered
+		}
+		if filtered {
+			return true
+		}
+	}
+	filtered = filters.Filter(encoded)
+	cache[event] = filtered
+	return filtered
+}
+
+func filterEvents(events EventSlice, encoded []*sdk.Event, filters Filters) []*sdk.Event {
 	if len(filters) == 0 {
 		return encoded
 	}
-	// more complex than needed, but avoid copies
+	// keep a cache of filtered events
+	cache := map[*Event]bool{}
+	// it's more complex than needed, but avoid copies
+	// while we swap encoded, we cannot modify events!
+	// instead we keep a tracking index
 	count := len(events)
+	idx := 0
 	for i := 0; i < count; i++ {
-		for _, filter := range filters {
-			if filter(encoded[i]) {
-				encoded[i] = encoded[count-1]
-				i--
-				count--
-				break
-			}
+		event := events[idx]
+		idx = i + 1
+		if filterEvent(filters, event, encoded[i], cache) {
+			encoded[i] = encoded[count-1]
+			idx = count - 1
+			i--
+			count--
 		}
 	}
 	return encoded[:count]
