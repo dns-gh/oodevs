@@ -180,13 +180,13 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
     , pStockSupplyManager_   ( new MIL_StockSupplyManager( *this ) )
     , pExtensions_           ( new MIL_DictionaryExtensions( extensions ) )
 {
+    RegisterRole( *new DEC_AutomateDecision( *this, gcPause, gcMult, logger ) );
+    RegisterRole( *new DEC_Representations() );
+
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( knowledgeGroup );
     if( !pKnowledgeGroup_ )
         throw MASA_EXCEPTION( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
-
-    RegisterRole( *new DEC_AutomateDecision( *this, gcPause, gcMult, logger ) ) ;
-    RegisterRole( *new DEC_Representations() );
 
     if( pParentFormation_ )
     {
