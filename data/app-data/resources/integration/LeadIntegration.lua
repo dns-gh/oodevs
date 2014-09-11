@@ -132,6 +132,7 @@ findBests = function( entities, tasks, companyTask , params, nbrFront, context, 
     local bestTask = nil
     local bestTaskName = nil
     local bestParams = nil
+    local parametersUrbanRatio = integration.computeParametersUrbanRatioForCompany( meKnowledge )
     for _, entity in pairs( entities ) do
         local efficiencyFind = false
         local bestEfficiency = -1
@@ -141,7 +142,7 @@ findBests = function( entities, tasks, companyTask , params, nbrFront, context, 
             local taskName = tasks[i]
             local task = integration.RetrievePionTask( entity, taskName ) -- Save the task object if  the entity can do it
             if task then
-                efficiency = entity:computePhysicalEfficiencyForEffect( task:getPionEfficiency() ) -- Efficiency for this entity to do this task
+                efficiency = entity:computePhysicalEfficiencyForEffect( task:getPionEfficiency(), parametersUrbanRatio ) -- Efficiency for this entity to do this task
                 if efficiency > bestEfficiency then
                     efficiencyFind = true
                     bestEfficiency = efficiency
@@ -237,6 +238,7 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
     local myself = myself
     myself.leadData.nbUnitsByObstacle ={}
     myself.leadData.platoonHasTask = {}
+    local parametersUrbanRatio = integration.computeParametersUrbanRatioForCompany( meKnowledge )
     for _, entity in pairs( entities ) do
         local efficiencyFind = false
         local bestEfficiency = -1
@@ -245,7 +247,7 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
             local task = integration.RetrievePionTask( entity, taskName ) -- Save the task object if  the entity can do it
             if task then
                 noEntityHaveMainTask = false
-                efficiency = entity:computePhysicalEfficiencyForEffect( task:getPionEfficiency() ) -- Efficiency for this entity to do this task
+                efficiency = entity:computePhysicalEfficiencyForEffect( task:getPionEfficiency(), parametersUrbanRatio ) -- Efficiency for this entity to do this task
                 if efficiency > bestEfficiency then
                     efficiencyFind = true
                     bestEfficiency = efficiency

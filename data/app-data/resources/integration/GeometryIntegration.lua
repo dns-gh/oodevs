@@ -447,3 +447,28 @@ integration.getUrbanParametersNumber = function( entity )
     return DEC_Geometrie_UrbanParametersNumber( entity )
 end
 
+--- Returns the urban ratio for mandatory parameters of an entity's current mission.
+-- @param entity Simulation agent, automat or crowd, whose mission is tested.
+-- @return number, the urban ratio of the parameters mission
+integration.computeParametersUrbanRatioForCompany = function( entity )
+    local surfaceParametersUrbanRatio = integration.getSurfaceParametersUrbanRatio( entity.source ) -- Returns the list of ratios (1 if the area is totally in urban area, 0 if it's totally out)
+    local pointParametersUrbanRatio = integration.getPointParametersUrbanRatio( entity.source ) -- Returns the list of ratios (1 if the point is in urban area, 0 otherwise)
+    local urbanParametersNumber = integration.getUrbanParametersNumber( entity.source ) -- returns the number of urban bloc
+    local surfaceParametersUrbanRatioAverage = 0
+    local pointParametersUrbanRatioAverage = 0
+    
+    for i=1, #surfaceParametersUrbanRatio do
+        surfaceParametersUrbanRatioAverage = surfaceParametersUrbanRatioAverage + surfaceParametersUrbanRatio[i]
+    end
+    for i=1, #pointParametersUrbanRatio do
+        pointParametersUrbanRatioAverage = pointParametersUrbanRatioAverage + pointParametersUrbanRatio[i]
+    end
+    
+    local totalParameters = #pointParametersUrbanRatio + #surfaceParametersUrbanRatio + urbanParametersNumber 
+    
+    if totalParameters > 0 then
+        return ( pointParametersUrbanRatioAverage + surfaceParametersUrbanRatioAverage + urbanParametersNumber ) / totalParameters
+    end
+    local areaFuseau = integration.getAreaFromAOR( integration.getAOR( myself ) )
+    return integration.getUrbanRatio( areaFuseau ) -- returns the ratio of urban area in the AOR
+end
