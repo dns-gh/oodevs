@@ -120,6 +120,7 @@ namespace
         dst.parent     = ToString( *ui.parent );
         dst.error_code = ToInteger( *ui.error_code );
         dst.error_text = ToString( *ui.error_text );
+        dst.metadata   = ToString( *ui.metadata );
         dst.read_only  = ToBool( *ui.read_only );
         dst.done       = ToBool( *ui.done );
         const std::string target = ToString( *ui.target );
@@ -407,9 +408,10 @@ namespace
             ",parent:%6"
             ",error_code:%7"
             ",error_text:%8"
-            ",read_only:%9"
-            ",done:%10"
-            ",action:%11"
+            ",metadata:%9"
+            ",read_only:%10"
+            ",done:%11"
+            ",action:%12"
             "}" )
             .arg( QString::fromStdString( event.uuid ) )
             .arg( QString::fromStdString( event.name ) )
@@ -419,6 +421,7 @@ namespace
             .arg( QString::fromStdString( event.parent ) )
             .arg( event.error_code )
             .arg( QString::fromStdString( event.error_text ) )
+            .arg( QString::fromStdString( event.metadata ) )
             .arg( event.read_only )
             .arg( event.done )
             .arg( Dump( event.action ) );

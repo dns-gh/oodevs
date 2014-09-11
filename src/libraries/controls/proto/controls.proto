@@ -75,6 +75,7 @@ message Event
     optional int32  error_code = 9;
     optional string error_text = 10;
     optional string parent     = 11;
+    optional string metadata   = 12;
 }
 
 message Error

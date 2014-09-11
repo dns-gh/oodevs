@@ -84,6 +84,7 @@ struct Event
     std::string end;
     std::string parent;
     std::string error_text;
+    std::string metadata;
     int         error_code;
     bool        read_only;
     bool        done;

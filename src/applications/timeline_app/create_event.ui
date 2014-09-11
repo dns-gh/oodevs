@@ -106,20 +106,30 @@
         <widget class="QLineEdit" name="error_text"/>
     </item>
     <item row="8" column="0">
+        <widget class="QLabel" name="metadata_label">
+            <property name="text">
+                <string>Metadata</string>
+            </property>
+        </widget>
+    </item>
+    <item row="8" column="1">
+        <widget class="QLineEdit" name="metadata"/>
+    </item>
+      <item row="9" column="0">
         <widget class="QCheckBox" name="read_only">
             <property name="text">
                 <string>Read only</string>
             </property>
         </widget>
     </item>
-    <item row="9" column="0">
+    <item row="10" column="0">
     <widget class="QCheckBox" name="done">
      <property name="text">
       <string>Done</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="0" colspan="2">
+   <item row="11" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Action</string>
@@ -155,7 +165,7 @@
      </layout>
     </widget>
    </item>
-   <item row="11" column="1">
+   <item row="12" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -168,7 +178,7 @@
      </property>
     </spacer>
    </item>
-   <item row="12" column="0" colspan="2">
+   <item row="13" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>

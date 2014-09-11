@@ -146,6 +146,7 @@ namespace
         dst.set_read_only( event.read_only );
         dst.set_error_code( event.error_code );
         dst.set_error_text( event.error_text );
+        dst.set_metadata( event.metadata );
     }
 
     Action GetAction( const sdk::Action& src )
@@ -172,6 +173,7 @@ namespace
         dst.read_only = src.read_only();
         dst.error_code = src.error_code();
         dst.error_text = src.error_text();
+        dst.metadata = src.metadata();
         return dst;
     }
 

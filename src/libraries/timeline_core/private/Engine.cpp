@@ -237,6 +237,7 @@ namespace
         SetValue( data, "parent", event.parent );
         SetValue( data, "error_text", event.error_text );
         SetValue( data, "error_code", event.error_code );
+        SetValue( data, "metadata", event.metadata );
         SetValue( data, "read_only", event.read_only );
         SetValue( data, "done", event.done );
         if( event.action.target.empty() )
@@ -258,6 +259,7 @@ namespace
         dst.parent = GetString( src, "parent" );
         dst.error_text = GetString( src, "error_text" );
         dst.error_code = GetInteger( src, "error_code" );
+        dst.metadata = GetString( src, "metadata" );
         dst.read_only  = GetBool( src, "read_only" );
         dst.done       = GetBool( src, "done" );
         auto action = src->GetValue( "action" );
