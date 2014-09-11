@@ -475,9 +475,9 @@ end
 
 --- Returns a list of waypoints from itinerary parameter, clipped between start and end positions, using distance as the crow flies
 -- @param agent Directia agent
--- @param start position used to truncate the beginning of the itinerary
--- @param end position used to truncate the end of the itinerary
+-- @param from position used to truncate the beginning of the itinerary
+-- @param to position used to truncate the end of the itinerary
 -- @return list of positions
-integration.getClosestPath = function( agent, start, end )
-    return DEC_GetClosestPath( agent, start, end )
+integration.getClosestPath = function( agent, from, to )
+    return DEC_GetClosestPath( agent, from, to )
 end
