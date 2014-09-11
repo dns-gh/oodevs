@@ -822,6 +822,10 @@
         <source>Itineraries</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>WeaponRanges</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

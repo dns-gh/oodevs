@@ -93,16 +93,13 @@ void EntityLayerBase::Paint( Viewport_ABC& viewport )
         infoTooltip_->Draw();
 }
 
-namespace
+geometry::Point2f EntityLayerBase::GetPosition( const Entity_ABC& entity ) const
 {
-    geometry::Point2f GetPosition( const Entity_ABC& entity )
-    {
-        if( auto pos = entity.Retrieve< kernel::UrbanPositions_ABC >() )
-            return pos->Barycenter();
-        if( auto pos = entity.Retrieve< kernel::Positions >() )
-            return pos->GetPosition();
-        return geometry::Point2f();
-    }
+    if( auto pos = entity.Retrieve< kernel::UrbanPositions_ABC >() )
+        return pos->Barycenter();
+    if( auto pos = entity.Retrieve< kernel::Positions >() )
+        return pos->GetPosition();
+    return geometry::Point2f();
 }
 
 // -----------------------------------------------------------------------------

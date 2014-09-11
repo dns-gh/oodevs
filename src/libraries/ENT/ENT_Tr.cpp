@@ -444,6 +444,7 @@ T_ConverterLayerTypes LayerTypesConverter_[] =
     T_ConverterLayerTypes( "inhabitants",       QT_TRANSLATE_NOOP( "ENT_Tr", "Inhabitants" ),       eLayerTypes_Inhabitants ),
     T_ConverterLayerTypes( "resource_networks", QT_TRANSLATE_NOOP( "ENT_Tr", "Resource networks" ), eLayerTypes_ResourceNetworks ),
     T_ConverterLayerTypes( "pathfinds",         QT_TRANSLATE_NOOP( "ENT_Tr", "Itineraries" ),       eLayerTypes_Pathfinds ),
+    T_ConverterLayerTypes( "weapon_ranges",     QT_TRANSLATE_NOOP( "ENT_Tr", "WeaponRanges" ),      eLayerTypes_WeaponRanges ),
     T_ConverterLayerTypes( "", "", (E_LayerTypes)-1 )
 };
 
