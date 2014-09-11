@@ -29,6 +29,19 @@ var (
 	ErrUnknownEvent     = util.NewError(http.StatusNotFound, "unknown event")
 )
 
+type EventListener interface {
+	Update(events EventSlice, encoded []*sdk.Event)
+	Delete(events ...string)
+}
+
+type DefaultEventListener struct {
+	services.EventListener
+}
+
+func (d DefaultEventListener) Update(events EventSlice, encoded []*sdk.Event) {
+	d.EventListener.Update(encoded...)
+}
+
 type SessionObserver interface {
 	SdkObserver
 	services.EventListener
@@ -36,9 +49,9 @@ type SessionObserver interface {
 	Close()
 }
 
-type EventListeners map[services.EventListener]struct{}
+type EventListeners map[interface{}]EventListener
 type EventFilterers map[services.EventFilterer]struct{}
-type Observers map[SdkObserver]SessionObserver
+type Observers map[interface{}]SessionObserver
 type Services map[string]services.Service
 
 // A Session groups services and manages their running states, while providing
@@ -141,7 +154,7 @@ func (s *Session) Attach(name string, service services.Service) error {
 	}
 	s.services[name] = service
 	if listener, ok := service.(services.EventListener); ok {
-		s.listeners[listener] = struct{}{}
+		s.listeners[listener] = DefaultEventListener{listener}
 	}
 	if filterer, ok := service.(services.EventFilterer); ok {
 		s.filterers[filterer] = struct{}{}
@@ -248,14 +261,14 @@ func (s *Session) stopServices() error {
 	return nil
 }
 
-func (s EventListeners) Update(events ...*sdk.Event) {
-	for listener := range s {
-		listener.Update(events...)
+func (s EventListeners) Update(events EventSlice, encoded []*sdk.Event) {
+	for _, listener := range s {
+		listener.Update(events, encoded)
 	}
 }
 
 func (s EventListeners) Delete(events ...string) {
-	for listener := range s {
+	for _, listener := range s {
 		listener.Delete(events...)
 	}
 }
@@ -309,38 +322,42 @@ func (s *Session) ReadServices() []*sdk.Service {
 	return rpy
 }
 
-func filterEvents(filters []services.EventFilter, events []*sdk.Event) []*sdk.Event {
+func filterEvents(events EventSlice, encoded []*sdk.Event,
+	filters []services.EventFilter) []*sdk.Event {
 	if len(filters) == 0 {
-		return events
+		return encoded
 	}
 	// more complex than needed, but avoid copies
 	count := len(events)
 	for i := 0; i < count; i++ {
 		for _, filter := range filters {
-			if filter(events[i]) {
-				events[i] = events[count-1]
+			if filter(encoded[i]) {
+				encoded[i] = encoded[count-1]
 				i--
 				count--
 				break
 			}
 		}
 	}
-	return events[:count]
+	return encoded[:count]
 }
 
 func (s *Session) ReadEvents(config services.EventFilterConfig) []*sdk.Event {
 	filters := []services.EventFilter{}
-	events := s.events.Proto()
 	for f := range s.filterers {
 		filters = append(filters, f.GetFilters(config)...)
 	}
-	return filterEvents(filters, events)
+	return filterEvents(s.events, s.events.Proto(), filters)
 }
 
-func appendParentUpdate(event *Event, updates *[]*sdk.Event) {
+func makeUpdate(event *Event) (EventSlice, []*sdk.Event) {
+	updates := EventSlice{event}
+	encoded := []*sdk.Event{event.Proto()}
 	if event.parent != nil && event.parent.SetChild(event) {
-		*updates = append(*updates, event.parent.Proto())
+		updates = append(updates, event.parent)
+		encoded = append(encoded, event.parent.Proto())
 	}
+	return updates, encoded
 }
 
 func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
@@ -352,11 +369,9 @@ func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 		return nil, ErrEventUuidTaken
 	}
 	s.events.Append(event)
-	proto := event.Proto()
-	updates := []*sdk.Event{proto}
-	appendParentUpdate(event, &updates)
-	s.listeners.Update(updates...)
-	return proto, nil
+	updates, encoded := makeUpdate(event)
+	s.listeners.Update(updates, encoded)
+	return encoded[0], nil
 }
 
 func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
@@ -364,37 +379,37 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	if event == nil {
 		return s.CreateEvent(uuid, msg)
 	}
-	modified, triggered, updateChildren, err := event.Update(msg, s.tick, s.events)
+	modified, triggered, children, err := event.Update(msg, s.tick, s.events)
 	if err != nil {
 		return nil, err
 	}
-	proto := event.Proto()
 	if !modified {
-		return proto, nil
+		return event.Proto(), nil
 	}
-	updates := []*sdk.Event{proto}
-	appendParentUpdate(event, &updates)
-	if updateChildren {
+	updates, encoded := makeUpdate(event)
+	if children {
 		for child := range event.children {
-			updates = append(updates, child.Proto())
+			updates = append(updates, child)
+			encoded = append(encoded, child.Proto())
 		}
 	}
-	s.listeners.Update(updates...)
+	s.listeners.Update(updates, encoded)
 	if triggered {
 		s.runEvent(event)
 	}
-	return proto, nil
+	return encoded[0], nil
 }
 
 func (s *Session) DeleteEvent(uuid string) error {
 	event := s.events.Find(uuid)
-	updates := []*sdk.Event{}
+	updates, encoded := EventSlice{}, []*sdk.Event{}
 	parent := &Event{}
 	if event != nil {
 		parent = event.parent
 		for child := range event.children {
 			child.parent = nil
-			updates = append(updates, child.Proto())
+			updates = append(updates, child)
+			encoded = append(encoded, child.Proto())
 		}
 	}
 	if !s.events.Remove(uuid) {
@@ -404,19 +419,20 @@ func (s *Session) DeleteEvent(uuid string) error {
 		delete(parent.children, event)
 	}
 	if len(updates) > 0 {
-		s.listeners.Update(updates...)
+		s.listeners.Update(updates, encoded)
 	}
 	s.listeners.Delete(uuid)
 	return nil
 }
 
 type FilteredObserver struct {
-	SessionObserver
-	config  services.EventFilterConfig
-	session *Session
+	SdkObserver
+	listener services.EventListener
+	config   services.EventFilterConfig
+	session  *Session
 }
 
-func (f *FilteredObserver) Update(events ...*sdk.Event) {
+func (f *FilteredObserver) Update(events EventSlice, encoded []*sdk.Event) {
 	filters := []services.EventFilter{func(event *sdk.Event) bool {
 		for it := range f.session.filterers {
 			if it.Filter(event, f.config) {
@@ -425,31 +441,44 @@ func (f *FilteredObserver) Update(events ...*sdk.Event) {
 		}
 		return false
 	}}
-	f.SessionObserver.Update(filterEvents(filters, events)...)
+	// filterEvents modify encoded in-place
+	// we cannot change encoded here so we clone it before
+	if len(filters) > 0 {
+		clone := make([]*sdk.Event, len(encoded))
+		copy(clone, encoded)
+		encoded = clone
+	}
+	f.listener.Update(filterEvents(events, encoded, filters)...)
+}
+
+func (f *FilteredObserver) Delete(events ...string) {
+	f.listener.Delete(events...)
 }
 
 func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserver {
-	observer := &FilteredObserver{
-		SessionObserver: NewObserver(),
-		config:          config,
-		session:         s,
+	observer := NewObserver()
+	filtered := &FilteredObserver{
+		SdkObserver: observer,
+		listener:    observer,
+		config:      config,
+		session:     s,
 	}
-	s.observers[observer] = observer
-	s.listeners[observer] = struct{}{}
+	s.observers[filtered] = observer
+	s.listeners[filtered] = filtered
 	// beware, as we haven't returned the output channel yet,
 	// nobody listens on output messages. Make sure the output
 	// channel contain at least 2 buffers or it will deadlock
 	// fix the api so it doesn't use channels later
 	observer.UpdateTick(s.tick)
-	observer.Update(s.events.Proto()...)
-	return observer
+	filtered.Update(s.events, s.events.Proto())
+	return filtered
 }
 
-func (s *Session) UnregisterObserver(observer SdkObserver) {
-	filtered := s.observers[observer]
+func (s *Session) UnregisterObserver(filtered SdkObserver) {
+	observer := s.observers[filtered]
 	delete(s.listeners, filtered)
 	delete(s.observers, filtered)
-	filtered.Close()
+	observer.Close()
 }
 
 func (s *Session) Abort(err error) {
@@ -482,5 +511,5 @@ func (s *Session) CloseEvent(uuid string, err error, lock bool) {
 	if !modified {
 		return
 	}
-	s.listeners.Update(event.Proto())
+	s.listeners.Update(EventSlice{event}, []*sdk.Event{event.Proto()})
 }

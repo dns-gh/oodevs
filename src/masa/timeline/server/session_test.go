@@ -523,7 +523,7 @@ func (f *Fixture) checkBroadcastEvents(c *C, messages <-chan interface{}, name s
 func checkEmptyUpdate(c *C, messages <-chan interface{}) {
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	c.Assert(msg.Events, IsNil)
+	swtest.DeepEquals(c, msg.Events, []*sdk.Event{})
 }
 
 func (t *TestSuite) TestListeners(c *C) {
