@@ -1231,7 +1231,6 @@ func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 }
 
 func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
-	c.Skip("unreliable: http://jira.masagroup.net/browse/SWBUG-12670")
 	f := t.MakeFixture(c)
 	defer f.Close()
 	link := f.session.RegisterObserver(services.EventFilterConfig{})
@@ -1261,6 +1260,9 @@ func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	child1.Begin = proto.String(util.FormatTime(f.begin.Add(1*time.Minute + 5*time.Minute)))
 	child2.Begin = proto.String(util.FormatTime(f.begin.Add(2*time.Minute + 5*time.Minute)))
+	if len(msg.Events) == 3 && msg.Events[1].GetUuid() != child1.GetUuid() {
+		child1, child2 = child2, child1
+	}
 	swtest.DeepEquals(c, msg.Events, []*sdk.Event{parent, child1, child2})
 }
 
