@@ -35,6 +35,18 @@ namespace timeline
 
 namespace timeline
 {
+class SignalWaiter : public QObject
+{
+    Q_OBJECT
+public:
+    SignalWaiter() : signaled_( false ) {}
+    bool IsSignaled() const { return signaled_; }
+public slots:
+    void Signal() { signaled_ = true; }
+private:
+    bool signaled_;
+};
+
 class Server : public Server_ABC
              , public controls::ServerHandler_ABC
 {

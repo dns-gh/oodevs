@@ -96,8 +96,14 @@ Server::Server( const Configuration& cfg )
 Server::~Server()
 {
     embedded_.reset();
+    SignalWaiter waiter;
+    connect( this, SIGNAL( Done() ), &waiter, SLOT( Signal() ) );
     thread_->interrupt();
     thread_->join();
+    // wait for all queued signals to be processed from current Qt event-loop
+    // we do that by using a last signal from our thread
+    while( !waiter.IsSignaled() )
+        QCoreApplication::processEvents( QEventLoop::WaitForMoreEvents );
 }
 
 void Server::Start()
@@ -240,6 +246,7 @@ void Server::Run()
     {
         qDebug() << "unexpected exception";
     }
+    emit Done();
 }
 
 void Server::OnReadyServer()
