@@ -324,6 +324,7 @@ func (s *TestSuite) TestUnitOrderWithItineraryRevertedIfAgentCloserToDestination
 }
 
 func (s *TestSuite) TestUnitOrderWithItineraryFollowsItOnlyPartially(c *C) {
+	 c.Skip("missing move along itinerary mission")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 
@@ -350,7 +351,7 @@ func (s *TestSuite) TestUnitOrderWithItineraryFollowsItOnlyPartially(c *C) {
 	// uncomment as soon as models implements a real Move Along Itinerary mission
 
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
-	/*	for i := 1; i < len(pathfind.Result); i++ {
+	for i := 1; i < len(pathfind.Result); i++ {
 		p := pathfind.Result[i]
 		if p.Waypoint < 0 {
 			continue
@@ -359,7 +360,7 @@ func (s *TestSuite) TestUnitOrderWithItineraryFollowsItOnlyPartially(c *C) {
 			c.Check(m.Units[unit.Id].Position, Not(IsNearby), positions[0]) // do not go to first position
 			return isNearby(p.Point, m.Units[unit.Id].Position)
 		})
-	}*/
+	}
 }
 
 func (s *TestSuite) TestPathfindName(c *C) {

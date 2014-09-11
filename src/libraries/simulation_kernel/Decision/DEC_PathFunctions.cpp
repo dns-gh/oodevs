@@ -71,7 +71,8 @@ namespace
         const std::function< void( MIL_MissionParameter_ABC& ) >& functor_;
     };
 
-    void FindItinerary( DEC_Decision_ABC& decision, const std::function< void( MIL_MissionParameter_ABC& ) >& functor )
+    template< typename Functor >
+    void FindItinerary( DEC_Decision_ABC& decision, const Functor& functor )
     {
         const auto mission = decision.GetMission();
         if( !mission )
@@ -358,8 +359,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_PathFunctions::GetClosestPat
                                                                                    const boost::shared_ptr< MT_Vector2D >& end )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
-    FindItinerary( *callerAgent,
-        [&]( MIL_MissionParameter_ABC& element )
+    FindItinerary( *callerAgent, [&]( MIL_MissionParameter_ABC& element )
     { 
         if( auto itinerary = dynamic_cast< MIL_ItineraryParameter* >( &element ) )
             result = itinerary->AddClosestWaypoints( begin, end );

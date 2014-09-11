@@ -27,8 +27,8 @@ namespace
         return result;
     }
 
-    template< typename Points >
-    std::vector< boost::shared_ptr< MT_Vector2D > > ConvertPointsToWaypoints( const typename Points::const_iterator& begin, const typename Points::const_iterator& end )
+    template< typename PointsIterator >
+    std::vector< boost::shared_ptr< MT_Vector2D > > ConvertPointsToWaypoints( PointsIterator begin, PointsIterator end )
     {
         std::vector< boost::shared_ptr< MT_Vector2D > > result;
         for( auto it = begin; it != end; ++it )
@@ -40,9 +40,9 @@ namespace
         return result;
     }
 
-    boost::optional< MT_Vector2D > ToOptional( const boost::shared_ptr< MT_Vector2D > point )
+    boost::optional< MT_Vector2D > ToOptional( const boost::shared_ptr< MT_Vector2D >& point )
     {
-        return point.get() ? boost::optional< MT_Vector2D >( *point ) : boost::none;
+        return point ? boost::make_optional( *point ) : boost::none;
     }
 
     template< typename Points >
@@ -106,7 +106,7 @@ bool MIL_ItineraryParameter::ToPath( std::vector< boost::shared_ptr< MT_Vector2D
 {
     if( !message_.has_result() )
         return false;
-    value = ConvertPointsToWaypoints< ::google::protobuf::RepeatedPtrField< ::sword::PathPoint > >( message_.result().points().begin(), message_.result().points().end() );
+    value = ConvertPointsToWaypoints( message_.result().points().begin(), message_.result().points().end() );
     return true;
 }
 
@@ -145,7 +145,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > MIL_ItineraryParameter::AddClose
     auto itEnd = points.end();
     if( end )
         itEnd = AddClosestWaypoint( points, *end );
-    return ConvertPointsToWaypoints< ::google::protobuf::RepeatedPtrField< ::sword::PathPoint > >( itBegin, itEnd );
+    return ConvertPointsToWaypoints( itBegin, itEnd );
 }
 
 namespace
@@ -163,14 +163,13 @@ namespace
 // Name: MIL_ItineraryParameter::Orientate
 // Created: SLI 2014-09-09
 // -----------------------------------------------------------------------------
-void MIL_ItineraryParameter::Orientate( boost::optional< MT_Vector2D > begin, boost::optional< MT_Vector2D > end )
+void MIL_ItineraryParameter::Orientate( const boost::optional< MT_Vector2D >& begin, const boost::optional< MT_Vector2D >& end )
 {
     if( !message_.has_result() || message_.result().points().size() < 2 )
         return;
     const auto& points = message_.result().points();
-    MT_Vector2D front, back;
-    MIL_Tools::ConvertCoordMosToSim( points.Get( 0 ).coordinate(), front );
-    MIL_Tools::ConvertCoordMosToSim( points.Get( points.size() - 1 ).coordinate(), back );
+    const MT_Vector2D front = ToVector( points.Get( 0 ) );
+    const MT_Vector2D back = ToVector( points.Get( points.size() - 1 ) );
     if( begin && begin->Distance( front ) > begin->Distance( back ) )
         Reverse( message_ );
     else if( end && end->Distance( front ) < end->Distance( back ) )

@@ -57,7 +57,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void Orientate( boost::optional< MT_Vector2D > begin, boost::optional< MT_Vector2D > end );
+    void Orientate( const boost::optional< MT_Vector2D >& begin, const boost::optional< MT_Vector2D >& end );
     //@}
 
 private:
