@@ -58,17 +58,18 @@ namespace
                analysis.CanMoveOnKnowledgeObject( points );
     }
 
+    template< typename Functor >
     class Visitor : public MIL_MissionParameterVisitor_ABC
     {
     public:
-        explicit Visitor( const std::function< void( MIL_MissionParameter_ABC& ) >& functor )
+        explicit Visitor( const Functor& functor )
             : functor_( functor )
         {}
         void Accept( const std::string& /*p*/, const MIL_OrderTypeParameter& /*type*/, MIL_MissionParameter_ABC& element )
         {
             functor_( element );
         }
-        const std::function< void( MIL_MissionParameter_ABC& ) >& functor_;
+        Functor functor_;
     };
 
     template< typename Functor >
@@ -77,7 +78,7 @@ namespace
         const auto mission = decision.GetMission();
         if( !mission )
             return;
-        Visitor visitor( functor );
+        Visitor< Functor > visitor( functor );
         mission->Visit( visitor );
     }
 
