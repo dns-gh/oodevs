@@ -158,7 +158,7 @@ func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
 	phydb := loadPhysical(c, "test")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
-	from := swapi.Point{X: -15.924495, Y: 28.231229}
+	from := swapi.Point{X: -15.7895, Y: 28.398}
 	to := swapi.Point{X: -15.757619, Y: 28.398163}
 	// a rectangle minefield around 'to'
 	party := client.Model.GetData().FindPartyByName("party2")
