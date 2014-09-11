@@ -641,19 +641,22 @@ struct Packer : public Packer_ABC
 
 const size_t buffer_size = 1<<18;
 
-struct GzipWriter : public io::Writer_ABC
+struct DeflateWriter : public io::Writer_ABC
 {
-    GzipWriter( io::Writer_ABC& writer )
+    DeflateWriter( io::Writer_ABC& writer )
         : writer_( writer )
         , output_( buffer_size )
     {
         defstream.zalloc = Z_NULL;
         defstream.zfree = Z_NULL;
         defstream.opaque = Z_NULL;
-        deflateInit( &defstream, Z_DEFAULT_COMPRESSION );
+        const int windowBits = -MAX_WBITS; // raw deflate data without zlib header/trailer
+        const int memLevel = 8; // DEF_MEM_LEVEL
+        deflateInit2( &defstream, Z_DEFAULT_COMPRESSION, Z_DEFLATED,
+            windowBits, memLevel, Z_DEFAULT_STRATEGY );
     }
 
-    ~GzipWriter()
+    ~DeflateWriter()
     {
         Write( 0, 0, Z_FINISH );
         deflateEnd( &defstream );
@@ -709,9 +712,9 @@ FileSystem_ABC::T_Packer FileSystem::Pack( io::Writer_ABC& dst, ArchiveFormat fm
 // Name: FileSystem::MakeGzipFilter
 // Created: LGY 2013-08-01
 // -----------------------------------------------------------------------------
-FileSystem_ABC::T_Writer FileSystem::MakeGzipFilter( io::Writer_ABC& dst ) const
+FileSystem_ABC::T_Writer FileSystem::MakeDeflateFilter( io::Writer_ABC& dst ) const
 {
-    return boost::shared_ptr< GzipWriter >( new GzipWriter( boost::ref( dst ) ) );
+    return boost::make_shared< DeflateWriter >( dst );
 }
 
 // -----------------------------------------------------------------------------

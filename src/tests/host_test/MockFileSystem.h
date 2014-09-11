@@ -37,7 +37,7 @@ namespace mocks
         MOCK_METHOD( GetDirectorySize, 1 );
         MOCK_METHOD( ReadAll, 1 );
         MOCK_METHOD( LimitedReadFile, 3 );
-        MOCK_METHOD( MakeGzipFilter, 1 );
+        MOCK_METHOD( MakeDeflateFilter, 1 );
 
         bool Apply( const T_Predicate& operand, const std::vector< boost::filesystem::path >& list )
         {
