@@ -86,7 +86,8 @@ add_popover = (el, placement, event) ->
         content:   ->
             info = event.get "info"
             if info?.length
-                return info
+                info = _.escape info
+                return info.replace /\n/g, "<br/>"
             return render_event event, false, false
 
 enable_popover = (el, enabled) ->
