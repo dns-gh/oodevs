@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MineAttribute();
-             MineAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
+             MineAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation, double density );
     explicit MineAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~MineAttribute();
     //@}
@@ -83,6 +83,7 @@ public:
     void SetMaxDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
     bool MustBeMined() const;
     void SetMustBeMined( bool val );
+    void SetDensity( double density );
     //@}
 
     //! @name Copy

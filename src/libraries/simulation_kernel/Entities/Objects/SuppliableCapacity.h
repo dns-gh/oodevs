@@ -60,6 +60,7 @@ public:
     const PHY_DotationCategory* GetDotationCategory() const;
     unsigned int GetMaxDotation() const;
     ConstructionCapacity::E_UnitType GetUnit() const;
+    double GetDensity( const TER_Localisation& location ) const;
     //@}
 
 protected:
@@ -97,8 +98,10 @@ void SuppliableCapacity::FinalizeAttribute( MIL_Object_ABC& object )
     if( dotation_ )
     {
         TER_Localisation localisation = object.GetLocalisation();
+        T& attribute = object.GetAttribute< T >();
+        attribute.SetDensity( GetDensity( localisation ) );
         nFullNbrDotation_ = GetDotationNumber( localisation );
-        object.GetAttribute< T >().SetMaxDotations( *dotation_, nFullNbrDotation_ );
+        attribute.SetMaxDotations( *dotation_, nFullNbrDotation_ );
     }
     finalised_ = true; // $$$$ LDC FIXME the nFullNbrDotation_ should be in the object or attribute not the capacity
 }

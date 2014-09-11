@@ -40,7 +40,7 @@ ConstructionAttribute::ConstructionAttribute()
 // Name: ConstructionAttribute constructor
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation, float density /* = 1.0f */ )
+ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation, double density /* = 1.0f */ )
     : nFullNbrDotation_       ( nFullNbrDotation )
     , nCurrentNbrDotation_    ( nFullNbrDotation )
     , constructionPercentage_ ( 1., 0.05, 0., 1.)
@@ -231,7 +231,7 @@ void ConstructionAttribute::SendFullState( sword::ObjectAttributes& asn ) const
         asn.mutable_construction()->set_dotation( nCurrentNbrDotation_ );
     }
     asn.mutable_construction()->set_percentage( unsigned int( constructionPercentage_.Send() * 100. ) );
-    asn.mutable_construction()->set_density( density_ );
+    asn.mutable_construction()->set_density( static_cast< float >( density_ ) );
 }
 
 // -----------------------------------------------------------------------------

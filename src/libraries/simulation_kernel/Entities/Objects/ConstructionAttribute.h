@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ConstructionAttribute();
-             ConstructionAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation, float density = 1.0f );
+             ConstructionAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation, double density );
              ConstructionAttribute( const PHY_DotationCategory& dotation, const sword::ObjectAttributes& asn );
     virtual ~ConstructionAttribute();
     //@}
@@ -114,7 +114,7 @@ private:
     unsigned int nCurrentNbrDotation_;
     mutable NetworkBufferedPercentageValue< double > constructionPercentage_;
     bool bBuildByGen_;
-    float density_;
+    double density_;
     //@}
 };
 

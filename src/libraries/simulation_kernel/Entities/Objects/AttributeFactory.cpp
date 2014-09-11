@@ -58,7 +58,7 @@ namespace
             return;
         Capacity* capacity = object.Retrieve< Capacity >();
         if( capacity )
-            object.GetAttribute< Attribute >() = Attribute( *capacity->GetDotationCategory(), capacity->GetMaxDotation() );
+            object.GetAttribute< Attribute >() = Attribute( *capacity->GetDotationCategory(), capacity->GetMaxDotation(), capacity->GetDensity( object.GetLocalisation() ) );
     }
 
     template<>

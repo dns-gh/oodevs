@@ -127,17 +127,35 @@ unsigned int SuppliableCapacity::GetDotationNumber( const TER_Localisation& loca
     return nFullNbrDotation_;
 }
 
+namespace
+{
+    double GetDensityFactor( const TER_Localisation& location )
+    {
+        // $$$$ JSR nFullNbrDotation_ is in number per 1km (linear) or 1km² (surfacic)
+        // density is in number per 100m (linear) or 100m² (surfacic)
+        // We multiply density by 10 if linear (100m->1km), or by 10000 if surfacic(100m²->1km²).
+        return location.GetType() == TER_Localisation::eLine ? 10. : 10000.;
+        // $$$$ LDC Density of 0.1 = 1 mine per 100 square meter (from TTA 702 \\file1\Masa\simulation\service\projets\scipio\doc\V1.STAB\DOC MODELISATION\DOCTRINE et memento\GEN\Doctrine page 131)
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SuppliableCapacity::SetDensity
 // Created: LDC 2012-06-25
 // -----------------------------------------------------------------------------
 void SuppliableCapacity::SetDensity( double density, const TER_Localisation& location )
 {
-    // $$$$ JSR nFullNbrDotation_ is in number per 1km (linear) or 1km² (surfacic)
-    // density is in number per 100m (linear) or 100m² (surfacic)
-    // We multiply density by 10 if linear (100m->1km), or by 10000 if surfacic(100m²->1km²).
-    const int factor = location.GetType() == TER_Localisation::eLine ? 10 : 10000;
-    nFullNbrDotation_ = static_cast< unsigned int >( density * factor ); // $$$$ LDC Density of 0.1 = 1 mine per 100 square meter (from TTA 702 \\install\Masa\simulation\projects\scipio\doc\V1.STAB\DOC MODELISATION\DOCTRINE et memento\GEN\Doctrine page 131)
+    const double factor = GetDensityFactor( location );
+    nFullNbrDotation_ = static_cast< unsigned int >( density * factor ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: SuppliableCapacity::GetDensity
+// Created: LDC 2014-09-10
+// -----------------------------------------------------------------------------
+double SuppliableCapacity::GetDensity( const TER_Localisation& location ) const
+{
+    return nFullNbrDotation_ / GetDensityFactor( location );
 }
 
 // -----------------------------------------------------------------------------
