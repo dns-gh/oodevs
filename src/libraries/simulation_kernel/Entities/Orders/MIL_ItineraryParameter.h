@@ -39,6 +39,12 @@ public:
     virtual bool ToItinerary( sword::Pathfind& ) const;
     //@}
 
+    //! @name Operations
+    //@{
+    std::vector< boost::shared_ptr< MT_Vector2D > > AddClosestWaypoints( const boost::shared_ptr< MT_Vector2D >& begin,
+                                                                         const boost::shared_ptr< MT_Vector2D >& end );
+    //@}
+
     //! @name Serialization
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -47,6 +53,12 @@ public:
     template< typename Archive > friend void save_construct_data( Archive&, const MIL_ItineraryParameter*, const unsigned int /*version*/ );
     template< typename Archive > friend void load_construct_data( Archive&, MIL_ItineraryParameter*, const unsigned int /*version*/ );
     //@
+
+private:
+    //! @name Helpers
+    //@{
+    void Orientate( const boost::optional< MT_Vector2D >& begin, const boost::optional< MT_Vector2D >& end );
+    //@}
 
 private:
     //! @name Member data

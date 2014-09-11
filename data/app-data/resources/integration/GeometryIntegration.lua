@@ -472,3 +472,12 @@ integration.computeParametersUrbanRatioForCompany = function( entity )
     local areaFuseau = integration.getAreaFromAOR( integration.getAOR( myself ) )
     return integration.getUrbanRatio( areaFuseau ) -- returns the ratio of urban area in the AOR
 end
+
+--- Returns a list of waypoints from itinerary parameter, clipped between start and end positions, using distance as the crow flies
+-- @param agent Directia agent
+-- @param from position used to truncate the beginning of the itinerary
+-- @param to position used to truncate the end of the itinerary
+-- @return list of positions
+integration.getClosestPath = function( agent, from, to )
+    return DEC_GetClosestPath( agent, from, to )
+end

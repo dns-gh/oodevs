@@ -323,6 +323,46 @@ func (s *TestSuite) TestUnitOrderWithItineraryRevertedIfAgentCloserToDestination
 	}
 }
 
+func (s *TestSuite) TestUnitOrderWithItineraryFollowsItOnlyPartially(c *C) {
+	c.Skip("missing move along itinerary mission")
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+
+	automat := createAutomat(c, client)
+	positions := []swapi.Point{
+		{X: -15.9170, Y: 28.2645},
+		{X: -15.9200, Y: 28.2645},
+		{X: -15.9250, Y: 28.2645},
+	}
+
+	unit, err := client.CreateUnit(automat.Id, UnitType, swapi.Point{X: -15.9200, Y: 28.2650})
+	c.Assert(err, IsNil)
+
+	// Create pathfind
+	pathfind, err := client.CreatePathfind(unit.Id, positions...)
+	c.Assert(err, IsNil)
+
+	// Send pathfind to unit
+	heading := swapi.MakeHeading(0)
+	params := swapi.MakeParameters(heading, nil, nil, nil, swapi.MakePathfind(pathfind))
+	// Should work with disengaged unit
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
+	for i := 1; i < len(pathfind.Result); i++ {
+		p := pathfind.Result[i]
+		if p.Waypoint < 0 {
+			continue
+		}
+		waitCondition(c, client.Model, func(m *swapi.ModelData) bool {
+			// do not go to first position
+			c.Check(m.Units[unit.Id].Position, Not(IsNearby), positions[0])
+			return isNearby(p.Point, m.Units[unit.Id].Position)
+		})
+	}
+}
+
 func (s *TestSuite) TestPathfindName(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
