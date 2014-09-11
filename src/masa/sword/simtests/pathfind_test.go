@@ -324,7 +324,7 @@ func (s *TestSuite) TestUnitOrderWithItineraryRevertedIfAgentCloserToDestination
 }
 
 func (s *TestSuite) TestUnitOrderWithItineraryFollowsItOnlyPartially(c *C) {
-	 c.Skip("missing move along itinerary mission")
+	c.Skip("missing move along itinerary mission")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 
