@@ -348,7 +348,6 @@ func (s *TestSuite) TestUnitOrderWithItineraryFollowsItOnlyPartially(c *C) {
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	// uncomment as soon as models implements a real Move Along Itinerary mission
 
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
 	for i := 1; i < len(pathfind.Result); i++ {
@@ -357,7 +356,8 @@ func (s *TestSuite) TestUnitOrderWithItineraryFollowsItOnlyPartially(c *C) {
 			continue
 		}
 		waitCondition(c, client.Model, func(m *swapi.ModelData) bool {
-			c.Check(m.Units[unit.Id].Position, Not(IsNearby), positions[0]) // do not go to first position
+			// do not go to first position
+			c.Check(m.Units[unit.Id].Position, Not(IsNearby), positions[0])
 			return isNearby(p.Point, m.Units[unit.Id].Position)
 		})
 	}
