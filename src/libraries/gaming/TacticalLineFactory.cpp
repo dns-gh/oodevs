@@ -54,6 +54,29 @@ TacticalLineFactory::~TacticalLineFactory()
 
 namespace
 {
+    void CheckTacticalLineParentExists( const Model& model, const sword::Diffusion& message )
+    {
+        if( message.has_automat() )
+        {
+            if( !model.GetAutomatResolver().Find( message.automat().id() ) )
+            {
+                std::stringstream str;
+                str << "Impossible to create limit because parent automat " << message.automat().id() << "does not exist";
+                throw std::runtime_error( str.str() );
+            }
+        }
+        else
+            if( !model.GetFormationResolver().Find( message.formation().id() ) )
+            {
+                std::stringstream str;
+                str << "Impossible to create limit because parent formation " << message.formation().id() << "does not exist";
+                throw std::runtime_error( str.str() );
+            }
+    }
+}
+
+namespace
+{
     bool CanBeOrdered( const kernel::Entity_ABC& entity, const kernel::Profile_ABC& profile )
     {
         const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
@@ -67,6 +90,7 @@ namespace
 // -----------------------------------------------------------------------------
 ::TacticalLine_ABC* TacticalLineFactory::Create( const sword::PhaseLineCreation& message )
 {
+    CheckTacticalLineParentExists( model_, message.tactical_line().diffusion() );
     ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, message,
                                          [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, message.tactical_line().geometry(), converter_, *line ) );
@@ -81,6 +105,7 @@ namespace
 // -----------------------------------------------------------------------------
 ::TacticalLine_ABC* TacticalLineFactory::Create( const sword::LimitCreation& message )
 {
+    CheckTacticalLineParentExists( model_, message.tactical_line().diffusion() );
     ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, message,
                                           [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, message.tactical_line().geometry(), converter_, *line ) );
