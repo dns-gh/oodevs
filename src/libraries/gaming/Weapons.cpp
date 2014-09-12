@@ -28,7 +28,6 @@ Weapons::Weapons( kernel::Controllers& controllers, const tools::Resolver_ABC< k
     , minRange_( 0 )
     , maxRange_( 0 )
     , efficientRange_( 0 )
-    , useColor_( false )
 {
     controllers_.Register( *this );
 }
@@ -42,69 +41,26 @@ Weapons::~Weapons()
     controllers_.Unregister( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Weapons::Draw
-// Created: SBO 2008-08-06
-// -----------------------------------------------------------------------------
-void Weapons::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Weapons::DrawEfficientRange( const geometry::Point2f& where, gui::GlTools_ABC& tools ) const
 {
-    if( tools.ShouldDisplay( "WeaponRanges" ) && viewport.IsVisible( where ) &&
-        ( minRange_ > 0 || maxRange_ > 0 || efficientRange_ > 0 ) )
-    {
-        glPushAttrib( GL_ENABLE_BIT | GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
-            // draw the min range disc to the stencil buffer
-            glEnable( GL_STENCIL_TEST );
-            glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );
-            glDepthMask( GL_FALSE );
-            glStencilFunc( GL_NEVER, 1, 0xFF );
-            glStencilOp( GL_REPLACE, GL_KEEP, GL_KEEP );
-            glStencilMask( 0xFF );
-            glClear( GL_STENCIL_BUFFER_BIT );
-            tools.DrawDisc( where, float( minRange_ ) );
-            // draw the max range disc using the stencil buffer to keep the
-            // min range disc clear
-            glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
-            glDepthMask( GL_TRUE );
-            glStencilMask( 0x00 );
-            glStencilFunc( GL_EQUAL, 0, 0xFF );
-            glPushAttrib( GL_CURRENT_BIT );
-                static const float alpha = 0.5f;
-                if( useColor_ )
-                    glColor4f( color_.red() / 255.f, color_.green() / 255.f, color_.blue() / 255.f, alpha );
-                else
-                {
-                    GLfloat color[ 4 ];
-                    glGetFloatv( GL_CURRENT_COLOR, color );
-                    color[ 3 ] = alpha;
-                    glColor4fv( color );
-                }
-                tools.DrawDisc( where, float( maxRange_ ) );
-            glPopAttrib();
-            glDisable( GL_STENCIL_TEST );
-            glEnable( GL_LINE_STIPPLE );
-            glLineStipple( 1, 0x0F0F );
-            glLineWidth( 2 );
-            tools.DrawCircle( where, float( efficientRange_ ) );
-            glDisable( GL_LINE_STIPPLE );
-        glPopAttrib();
-    }
+    glEnable( GL_LINE_STIPPLE );
+    glLineStipple( 1, 0x0F0F );
+    glLineWidth( 2 );
+    tools.DrawCircle( where, float( efficientRange_ ) );
+    glDisable( GL_LINE_STIPPLE );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Weapons::OptionChanged
 // Created: JSR 2010-06-07
 // -----------------------------------------------------------------------------
-void Weapons::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+void Weapons::OptionChanged( const std::string& name, const kernel::OptionVariant& /*value*/ )
 {
     if( name == "EfficientRangeVolume"
         || name == "EfficientRangePh"
         || name == "EfficientRangeFilterIndirectWeapon"
         || name == "EfficientRangeIndirectWeapon" )
         UpdateRange();
-    else if( name == "EfficientRangeUseCustomColor" )
-        useColor_ = value.To< bool >();
-    else if( name == "EfficientRangeCustomColor" )
-        color_.setNamedColor( value.To< QString >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,4 +127,14 @@ void Weapons::AddEquipmentRange( const kernel::EquipmentType& type, const kernel
         const int volume = controllers_.options_.GetOption( "EfficientRangeVolume", 0 ).To< int >();
         efficientRange_ = std::max( efficientRange_, weapon.GetEfficientRange( volume, 0.01 * ph ) );
     }
+}
+
+unsigned int Weapons::GetMinRange() const
+{
+    return minRange_;
+}
+
+unsigned int Weapons::GetMaxRange() const
+{
+    return maxRange_;
 }

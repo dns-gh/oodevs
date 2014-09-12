@@ -824,7 +824,7 @@
     </message>
     <message>
         <source>WeaponRanges</source>
-        <translation>Portées d'armes</translation>
+        <translation>Portées d&apos;armes</translation>
     </message>
 </context>
 <context>

@@ -52,8 +52,11 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    void DrawEfficientRange( const geometry::Point2f& where, gui::GlTools_ABC& tools ) const;
     //@}
+
+    unsigned int GetMinRange() const;
+    unsigned int GetMaxRange() const;
 
 private:
     //! @name Copy/Assignment
@@ -80,8 +83,6 @@ private:
     unsigned int minRange_;
     unsigned int maxRange_;
     unsigned int efficientRange_;
-    bool useColor_;
-    QColor color_;
     //@}
 };
 
