@@ -101,13 +101,12 @@ void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const unsig
 void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter )
 {
     if( pTransporter_ != &transporter )
-        return ;//false;
-    if( !pTransporter_ || !pTransporter_->GetKnowledge().GetKsDirectFire().IsAttacked() || pTransporter_->GetRole< PHY_RoleAction_Transport >().RemainingWeight( *owner_ ) > 0 )
+        return;
+    if( !pTransporter_ || !pTransporter_->GetKnowledge().GetKsDirectFire().IsAttacked() && pTransporter_->GetRole< PHY_RoleAction_Transport >().RemainingWeight( *owner_ ) > 0 )
         owner_->Apply( &location::LocationActionNotificationHandler_ABC::Show, vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();
-    return ;//true;
 }
 
 // -----------------------------------------------------------------------------
