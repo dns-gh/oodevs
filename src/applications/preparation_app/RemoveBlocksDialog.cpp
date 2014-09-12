@@ -70,10 +70,10 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
 
     // Label layout
     QLabel* selectAllLabel = new QLabel();
-    selectAllLabel->setText( "<a href='selectall'>" + tr( "All" ) + "</a>" );
+    selectAllLabel->setText( "<a href='selectall'>" + Qt::escape( tr( "All" ) ) + "</a>" );
     connect( selectAllLabel, SIGNAL( linkActivated( const QString& ) ), SLOT( OnLinkActivated( const QString& ) ) );
     QLabel* selectNoneLabel = new QLabel();
-    selectNoneLabel->setText( "<a href='selectnone'>" + tr( "None" ) + "</a>" );
+    selectNoneLabel->setText( "<a href='selectnone'>" + Qt::escape( tr( "None" ) ) + "</a>" );
     connect( selectNoneLabel, SIGNAL( linkActivated( const QString& ) ), SLOT( OnLinkActivated( const QString& ) ) );
 
     QHBoxLayout* labelLayout = new QHBoxLayout();

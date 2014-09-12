@@ -43,18 +43,18 @@ LinkInterpreter_ABC::~LinkInterpreter_ABC()
 // -----------------------------------------------------------------------------
 bool LinkInterpreter_ABC::Interprete( const QString& link )
 {
-    return Interprete( Q3Url( link ) );
+    return Interprete( QUrl( link ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter_ABC::Interprete
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter_ABC::Interprete( const Q3Url& url )
+bool LinkInterpreter_ABC::Interprete( const QUrl& url )
 {
     const QString protocol = url.protocol();
     if( protocol == "cmd" )
-        return ExecuteCommand( url.path( true ) );
+        return ExecuteCommand( url.path() );
     if( protocol == "http" || protocol == "file" )
         return ExecuteCommand( url );
     if( protocol == "id" )
@@ -66,13 +66,13 @@ bool LinkInterpreter_ABC::Interprete( const Q3Url& url )
 // Name: LinkInterpreter_ABC::ExecuteCommand
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter_ABC::ExecuteCommand( const Q3Url& url )
+bool LinkInterpreter_ABC::ExecuteCommand( const QUrl& url )
 {
     Q3Process openPage(0);
     openPage.addArgument( "cmd" );
     openPage.addArgument( "/c" );
     openPage.addArgument( "start" );
-    openPage.addArgument( url.toString( true, true ) ); // $$$$ ABR 2013-04-22: Bugged, use ShellExecuteW instead LinkInterpreter if it's a file:// url
+    openPage.addArgument( url.toString() ); // $$$$ ABR 2013-04-22: Bugged, use ShellExecuteW instead LinkInterpreter if it's a file:// url
     return openPage.start();
 }
 
@@ -80,7 +80,7 @@ bool LinkInterpreter_ABC::ExecuteCommand( const Q3Url& url )
 // Name: LinkInterpreter_ABC::InterpreteId
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter_ABC::InterpreteId( const Q3Url& url )
+bool LinkInterpreter_ABC::InterpreteId( const QUrl& url )
 {
     const QString classId = url.host();
     const QString strId = url.fileName();
