@@ -908,6 +908,9 @@ bool MIL_Fuseau::ComputePointsBeforeLima( const MIL_LimaOrder& lima, double rDis
 
     for( double rCurrentDist = rDist * 0.5; nNbPoints--; rCurrentDist += rDist )
         results.push_back( supportLine.GetPointAt( rCurrentDist ) );
+
+    lima.ReplacePointsByNearestObjectPositions( results );
+
     return true;
 }
 
