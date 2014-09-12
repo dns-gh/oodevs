@@ -69,8 +69,8 @@ namespace
         {
             // NOTHING
         }
-        return isValid && config.GetTerrainDir( terrain ).Exists() &&
-             config.GetPhysicalsDir( dataSet, physical ).Exists();
+        return isValid && config.GetTerrainDir( terrain ).IsDirectory() &&
+             config.GetPhysicalsDir( dataSet, physical ).IsDirectory();
     }
 
     struct ResourcesLoadingWrapper
