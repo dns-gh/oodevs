@@ -247,6 +247,7 @@ func (s *TestSuite) TestCreateDestroyPathfind(c *C) {
 }
 
 func (s *TestSuite) TestUnitOrderWithItineraryParameter(c *C) {
+	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-13061")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 
@@ -285,6 +286,7 @@ func (s *TestSuite) TestUnitOrderWithItineraryParameter(c *C) {
 }
 
 func (s *TestSuite) TestUnitOrderWithItineraryRevertedIfAgentCloserToDestination(c *C) {
+	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-13061")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 
