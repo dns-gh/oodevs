@@ -243,14 +243,6 @@ reportOnceFunction = function( ... )
     reportOnceAction( myself, ... )
 end
 
---- Unregister brain from communication group before deletion
--- @param groupName The name of the leader
--- @author MGD
--- @release 2010-01-22
-function CleanBrainBeforeDeletion( groupName )
-    masalife.brain.communication.protocol.leaveGroup( groupName )
-end
-
 ---\ Callback management /---
 
 actionCallbacks = {}
