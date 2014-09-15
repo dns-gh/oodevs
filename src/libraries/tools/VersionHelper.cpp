@@ -34,7 +34,7 @@ namespace
         return boost::algorithm::join( slice, "." );
     }
 
-    const std::string version = ::tools::GetAppVersion( "5.5.0.0" );
+    const std::string version = ::tools::GetAppVersion( "5.6.0.0" );
     const std::string model   = "4.8.2";
     const T_Tokens    tokens  = Split( version );
     const std::string project = Splice( tokens, 2 );

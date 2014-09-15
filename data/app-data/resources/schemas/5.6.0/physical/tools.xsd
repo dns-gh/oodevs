@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="../exercise/common.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Types de base</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>Enumérés</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="T_UnitType">
+		<xs:annotation>
+			<xs:documentation>Type d'une unité</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Pion ABC"/>
+			<xs:enumeration value="Pion ALAT"/>
+			<xs:enumeration value="Pion ASA"/>
+			<xs:enumeration value="Pion ASS"/>
+			<xs:enumeration value="Pion ASY"/>
+			<xs:enumeration value="Pion CIRCULATION"/>
+			<xs:enumeration value="Pion GEN"/>
+			<xs:enumeration value="Pion INF"/>
+			<xs:enumeration value="Pion JOINT"/>
+			<xs:enumeration value="Pion NBC"/>
+			<xs:enumeration value="Pion RENS"/>
+			<xs:enumeration value="Pion REFUGIE"/>
+			<xs:enumeration value="Pion MILICE"/>
+			<xs:enumeration value="Pion TRANS"/>
+			<xs:enumeration value="Pion LOG Convoi"/>
+			<xs:enumeration value="Pion PIA"/>
+			<xs:enumeration value="Pion LOG TC2"/>
+			<xs:enumeration value="Pion LOG BLD Maintenance"/>
+			<xs:enumeration value="Pion LOG BLD Ravitaillement"/>
+			<xs:enumeration value="Pion LOG BLD Sante"/>
+			<xs:enumeration value="Pion LOG BLT Maintenance"/>
+			<xs:enumeration value="Pion LOG BLT Ravitaillement"/>
+			<xs:enumeration value="Pion LOG BLT Sante"/>
+            <xs:enumeration value="Pion Emergency"/>
+            <xs:enumeration value="Pion Organization"/>
+            <xs:enumeration value="Pion Notable"/>
+            <xs:enumeration value="Pion Journalist"/>
+            <xs:enumeration value="Pion Civilian"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_AutomatType">
+		<xs:annotation>
+			<xs:documentation>Permet de definir le type de l'automate</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Automate ABC"/>
+			<xs:enumeration value="Automate ALAT"/>
+			<xs:enumeration value="Automate ASA"/>
+			<xs:enumeration value="Automate ASS"/>
+			<xs:enumeration value="Automate ASY"/>
+			<xs:enumeration value="Automate CIRCULATION"/>
+			<xs:enumeration value="Automate GEN"/>
+			<xs:enumeration value="Automate INF"/>
+			<xs:enumeration value="Automate JOINT"/>
+			<xs:enumeration value="Automate LOG TC2"/>
+			<xs:enumeration value="Automate LOG Maintenance"/>
+			<xs:enumeration value="Automate LOG Ravitaillement"/>
+			<xs:enumeration value="Automate LOG Sante"/>
+			<xs:enumeration value="Automate LOG BLT Maintenance"/>
+			<xs:enumeration value="Automate LOG BLT Ravitaillement"/>
+			<xs:enumeration value="Automate LOG BLT Sante"/>
+			<xs:enumeration value="Automate LOG BLD Maintenance"/>
+			<xs:enumeration value="Automate LOG BLD Ravitaillement"/>
+			<xs:enumeration value="Automate LOG BLD Sante"/>
+			<xs:enumeration value="Automate MILICE"/>
+			<xs:enumeration value="Automate NBC"/>
+			<xs:enumeration value="Automate REFUGIE"/>
+			<xs:enumeration value="Automate RENS"/>
+			<xs:enumeration value="Automate TRANS"/>
+			<xs:enumeration value="Automate SGTIA"/>
+            <xs:enumeration value="Automate Emergency"/>
+			<xs:enumeration value="Automate Organization"/>
+			<xs:enumeration value="Automate Notable"/>
+			<xs:enumeration value="Automate Journalist"/>
+			<xs:enumeration value="Automate Civilian"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_BreakdownsType">
+		<xs:annotation>
+			<xs:documentation>Type de panne</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EA"/>
+			<xs:enumeration value="M"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_CrewRank">
+		<xs:annotation>
+			<xs:documentation>Rang possible pour le personnel.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MilitaireDuRang">
+				<xs:annotation>
+					<xs:documentation>militaire du rang.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Officier"/>
+			<xs:enumeration value="SousOfficier"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_MissionParameterType">
+		<xs:annotation>
+			<xs:documentation>Types de paramètre de mission.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Boolean"/>
+			<xs:enumeration value="Integer"/>
+			<xs:enumeration value="String"/>
+			<xs:enumeration value="Heading"/>
+			<xs:enumeration value="Enumeration"/>
+			<xs:enumeration value="DateTime"/>
+			<xs:enumeration value="Point"/>
+			<xs:enumeration value="Polygon"/>
+			<xs:enumeration value="Location"/>
+			<xs:enumeration value="Path"/>
+			<xs:enumeration value="Itinerary"/>
+			<xs:enumeration value="Limit"/>
+			<xs:enumeration value="PhaseLine"/>
+			<xs:enumeration value="Automat"/>
+			<xs:enumeration value="Agent"/>
+			<xs:enumeration value="AgentKnowledge"/>
+			<xs:enumeration value="CrowdKnowledge"/>
+			<xs:enumeration value="ObjectKnowledge"/>
+			<xs:enumeration value="UrbanKnowledge"/>
+			<xs:enumeration value="PlannedWork"/>
+			<xs:enumeration value="ResourceType"/>
+			<xs:enumeration value="EquipmentType"/>
+			<xs:enumeration value="NatureAtlas"/>
+			<xs:enumeration value="MaintenancePriorities"/>
+			<xs:enumeration value="MedicalPriorities"/>
+			<xs:enumeration value="LocationComposite"/>
+			<xs:enumeration value="ResourceNetworkNode"/>
+			<xs:enumeration value="ResourceNetworkType"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_OtherParameterType">
+		<xs:annotation>
+			<xs:documentation>Types additionnels de paramètres (pour les comptes-rendus)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="String"/>
+			<xs:enumeration value="Stage"/>
+			<xs:enumeration value="IndirectFire"/>
+			<xs:enumeration value="EquipmentType"/>
+			<xs:enumeration value="LimaFunction"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ReportParameterType">
+		<xs:annotation>
+			<xs:documentation>Types additionnels de paramètres de comptes-rendus</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="T_MissionParameterType T_OtherParameterType"/>
+	</xs:simpleType>
+	<xs:simpleType name="T_NatureLevel">
+		<xs:annotation>
+			<xs:documentation>Niveau hierarchique.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none_naturelevel">
+				<xs:annotation>
+					<xs:documentation>niveau indéfini</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="b"/>
+			<xs:enumeration value="o"/>
+			<xs:enumeration value="c"/>
+			<xs:enumeration value="oo"/>
+			<xs:enumeration value="ooo"/>
+			<xs:enumeration value="i"/>
+			<xs:enumeration value="ii"/>
+			<xs:enumeration value="iii"/>
+			<xs:enumeration value="x"/>
+			<xs:enumeration value="xx"/>
+			<xs:enumeration value="xxx"/>
+			<xs:enumeration value="xxxx"/>
+			<xs:enumeration value="xxxxx"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_NbcSuit">
+		<xs:annotation>
+			<xs:documentation>Protection nbc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="level1"/>
+			<xs:enumeration value="level2"/>
+			<xs:enumeration value="level3"/>
+			<xs:enumeration value="level4"/>
+			<xs:enumeration value="level5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_UnitNature">
+		<xs:annotation>
+			<xs:documentation>Chaine permettant de reconstituer le symbole associé à l'unité. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="T_LogisticSupplyClass">
+		<xs:annotation>
+			<xs:documentation>Classe logistique d'une ressource. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="T_ResourceCategory">
+		<xs:annotation>
+			<xs:documentation>catégorie de la ressources</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="barbele"/>
+			<xs:enumeration value="carburant"/>
+			<xs:enumeration value="explosif"/>
+			<xs:enumeration value="mine"/>
+			<xs:enumeration value="munition"/>
+			<xs:enumeration value="piece"/>
+			<xs:enumeration value="ration"/>
+			<xs:enumeration value="agent extincteur"/>
+            <xs:enumeration value="energie"/>
+			<xs:enumeration value="funeraire"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ResourceType">
+		<xs:annotation>
+			<xs:documentation> </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MissileAir"/>
+			<xs:enumeration value="MissileSol"/>
+			<xs:enumeration value="Mitraille"/>
+			<xs:enumeration value="Obus"/>
+			<xs:enumeration value="ALR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_NRBCeffectType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="liquid"/>
+			<xs:enumeration value="solid"/>
+			<xs:enumeration value="gaseous"/>
+			<xs:enumeration value="radiation"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_NRBCcategory">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="nuclear"/>
+			<xs:enumeration value="radiological"/>
+			<xs:enumeration value="biological"/>
+			<xs:enumeration value="chemical"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_WoundType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="healthy"/>
+			<xs:enumeration value="u1"/>
+			<xs:enumeration value="u2"/>
+			<xs:enumeration value="u3"/>
+			<xs:enumeration value="ue"/>
+			<xs:enumeration value="contaminated"/>
+			<xs:enumeration value="mental"/>
+			<xs:enumeration value="dead"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ReportClientFunctionTrigger">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FirstFireStarted">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant le passage d'une demande de tir à l'état premier coup parti (CR n°168)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ExecutedFire">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant le passage d'une demande de tir à l'état  executé (CR n°169)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OutOfRangeFire">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant le passage d'une demande de tir à l'état refusé avec comme cause un tir hors de portée (CR n°170)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NoAmoLeftFire">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant le passage d'une demande de tir à l'état refusé avec comme cause plus de munitions (CR n°171)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CanceledFire">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant le passage d'une demande de tir à l'état refusé avec comme cause Tir annulé unité de tir indisponible (CR n°171)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IndirectFireObservation">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant la création d'une demande de tir depuis la position observée du tireur (CR n°177)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MissionEndAlert">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant l'affichage d'un indicateur visuel CR suite à un CR fin de mission (CR n°12)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FiredAlert">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant l'affichage d'un indicateur visuel ATTACKED suite à un CR pris a partie par tir direct (CR n°36) ou pris sous tir artillerie (CR n°37) ou prise a partie par population (CR n°226) ou agression par population (CR n°250)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NBCAlert">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant l'affichage d'un indicateur visuel NBC suite à un CR contamine nbc (CR n°148) ou alerte nbc niveau4 (CR n°152)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CrowAlert">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant l'affichage d'un indicateur visuel POPULATION suite à un CR population detectee (CR n°225) ou agression de population (CR n°249)" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<!--- Gestion des tirs -->
+			<!--- Gestion des indicateurs visuels -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ReportCategory">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="information"/>
+			<xs:enumeration value="operational"/>
+			<xs:enumeration value="exceptional"/>
+			<xs:enumeration value="warning"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LabelKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="short"/>
+			<xs:enumeration value="long"/>
+		</xs:restriction>
+	</xs:simpleType>
+    <xs:complexType name="T_Repartition">
+        <xs:attribute name="male" type="T_ZeroToOneDouble" use="required"/>
+        <xs:attribute name="female" type="T_ZeroToOneDouble" use="required"/>
+        <xs:attribute name="children" type="T_ZeroToOneDouble" use="required"/>
+    </xs:complexType>
+</xs:schema>

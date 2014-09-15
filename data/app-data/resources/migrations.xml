@@ -214,4 +214,6 @@
     <upgrade schema="schemas/5.4.4/physical/Missions.xsd" apply="schemas/5.5.0/xsl/missions_5.4.4-5.5.0.xsl"/>
     <upgrade schema="schemas/5.4.4/physical/Reports.xsd" apply="schemas/5.5.0/xsl/reports_5.4.4-5.5.0.xsl"/>
   </migration>
+  <migration from="5.5.0" to="5.5.1"/>
+  <migration from="5.5.1" to="5.6.0"/>
 </migrations>

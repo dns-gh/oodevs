@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.3">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="equipments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="equipment" type="T_Equipment" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="T_Equipment">
+		<xs:all>
+			<xs:element name="speeds" type="T_Speed"/>
+			<xs:element name="composition">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="category" type="T_Composition" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="weapon-systems" type="T_Weapon"/>
+			<xs:element name="transports" type="T_Transports"/>
+			<xs:element name="sensors" type="T_Sensors"/>
+			<xs:element name="radars" type="T_Radars"/>
+			<xs:element name="consumptions" type="T_Consumptions"/>
+			<xs:element name="aviation-quotas" type="T_AviationQuotas" minOccurs="0"/>
+			<xs:element name="objects" type="T_Objects"/>
+			<xs:element name="active-protections" type="T_ActiveProtection" minOccurs="0"/>
+			<xs:element name="logistic-functions" type="T_Logistics" minOccurs="0"/>
+			<xs:element name="breakdowns" type="T_Breakdowns" minOccurs="0"/>
+			<xs:element name="equipment-category" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="fr">Catégorie de l'équipement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="power-indicators" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="direct-fire" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="indirect-fire" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="close-combat" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="engineering" type="xs:nonNegativeInteger" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="operational-information" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="native-country" type="xs:string"/>
+					<xs:attribute name="starting-country" type="xs:string"/>
+					<xs:attribute name="starting-date" type="xs:date"/>
+					<xs:attribute name="information-origin" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="disaster-impacts" type="T_DisasterImpacts" minOccurs="0"/>
+		</xs:all>
+		<xs:attribute name="comment" type="xs:string" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+		<xs:attribute name="codeEMAT6" type="xs:string" use="required"/>
+		<xs:attribute name="codeEMAT8" type="xs:string" use="required"/>
+		<xs:attribute name="codeLFRIL" type="xs:string" use="required"/>
+		<xs:attribute name="codeNNO" type="xs:string" use="required"/>
+		<xs:attribute name="protection" type="xs:string" use="required"/>
+		<xs:attribute name="size" type="xs:string" use="required"/>
+		<xs:attribute name="weight" type="T_NonNegativeDouble" use="required"/>
+		<xs:attribute name="max-slope" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="slope-deceleration" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="length" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="width" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="front-separation-distance" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="safety-distance" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="speed-safety-distance" type="T_NonNegativeDouble" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="T_Speed">
+		<xs:sequence>
+			<xs:element name="speed" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="terrain" type="xs:string" use="required"/>
+					<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+					<xs:attribute name="construction-speed" type="xs:nonNegativeInteger"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="max" type="xs:nonNegativeInteger"/>
+	</xs:complexType>
+	<xs:complexType name="T_Composition">
+		<xs:sequence>
+			<xs:element name="resource" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="normalized-consumption" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="capacity" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="name" type="xs:string" use="required"/>
+					<xs:attribute name="low-threshold" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="high-threshold" type="xs:nonNegativeInteger" use="required"/>
+                </xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="T_Weapon">
+		<xs:sequence>
+			<xs:element name="weapon-system" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="launcher" type="xs:string" use="required"/>
+					<xs:attribute name="munition" type="xs:string" use="required"/>
+					<xs:attribute name="major" type="xs:boolean" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Transports">
+		<xs:sequence>
+			<xs:element name="crew" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="man-boarding-time" type="T_Time" use="required"/>
+					<xs:attribute name="man-unloading-time" type="T_Time" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="unit" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="capacity" type="T_NonNegativeDouble" use="required"/>
+					<xs:attribute name="ton-loading-time" type="T_Time" use="required"/>
+					<xs:attribute name="ton-unloading-time" type="T_Time" use="required"/>
+					<xs:attribute name="can-transport-destroyed" type="xs:boolean" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="crowd" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="capacity" type="T_NonNegativeInteger" use="required"/>
+					<xs:attribute name="man-boarding-time" type="T_Time" use="required"/>
+					<xs:attribute name="man-unloading-time" type="T_Time" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Sensors">
+		<xs:sequence>
+			<xs:element name="sensor" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="height" type="T_NonNegativeDouble" use="required"/>
+					<xs:attribute name="type" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Radars">
+		<xs:sequence>
+			<xs:element name="radar" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="height" type="T_NonNegativeDouble" use="required"/>
+					<xs:attribute name="type" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Consumptions">
+		<xs:sequence>
+			<xs:element name="consumption" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="resource" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="category" type="xs:string" use="required"/>
+								<xs:attribute name="name" type="xs:string" use="required"/>
+								<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="status" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_AviationQuotas">
+		<xs:sequence>
+			<xs:element name="aviation-quota" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="quota">
+							<xs:complexType>
+								<xs:attribute name="category" type="xs:string" use="required"/>
+								<xs:attribute name="value" type="xs:nonNegativeInteger" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="range" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Objects">
+		<xs:sequence>
+			<xs:element name="object" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="type" type="xs:string" use="required"/>
+					<xs:attribute name="initial-construction-time" type="T_Time" use="optional"/>
+					<xs:attribute name="initial-destruction-time" type="T_Time" use="optional"/>
+					<xs:attribute name="construction-time-factor" type="T_Time" use="optional"/>
+					<xs:attribute name="destruction-time-factor" type="T_Time" use="optional"/>
+					<xs:attribute name="valorization-time" type="T_Time" use="optional"/>
+					<xs:attribute name="devalorization-time" type="T_Time" use="optional"/>
+					<xs:attribute name="extinguishing-time" type="T_Time" use="optional"/>
+					<xs:attribute name="bypass-gain-factor" type="xs:double" use="optional"/>
+					<xs:attribute name="bypassed-speed" type="xs:integer" use="optional"/>
+					<xs:attribute name="non-bypassed-speed" type="xs:integer" use="optional"/>
+					<xs:attribute name="consumption-mode" type="xs:string" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_DisasterImpacts">
+		<xs:sequence>
+			<xs:element name="disaster-impact" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="threshold" type="xs:double" use="required"/>
+					<xs:attribute name="modifier" type="xs:double" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_ActiveProtection">
+		<xs:sequence>
+			<xs:element name="protection" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Logistics">
+		<xs:sequence>
+			<xs:element name="maintenance-functions" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="towing" minOccurs="0">
+							<xs:complexType>
+								<xs:attribute name="capacity" type="xs:nonNegativeInteger" use="required"/>
+								<xs:attribute name="loading-time" type="T_Time" use="required"/>
+								<xs:attribute name="unloading-time" type="T_Time" use="required"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="repairing" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="category" type="xs:string" use="required"/>
+								<xs:attribute name="type" type="xs:string" use="required"/>
+								<xs:attribute name="max-reparation-time" type="T_Time" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="health-functions" minOccurs="0">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="relieving" minOccurs="0">
+							<xs:complexType>
+								<xs:attribute name="capacity" type="xs:nonNegativeInteger" use="required"/>
+								<xs:attribute name="man-loading-time" type="T_Time" use="required"/>
+								<xs:attribute name="man-unloading-time" type="T_Time" use="required"/>
+								<xs:attribute name="nbc-transport" type="xs:boolean" use="optional"/>
+								<xs:attribute name="reac-mental-transport" type="xs:boolean" use="optional"/>
+								<xs:attribute name="wounded-transport" type="xs:string" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="collecting" minOccurs="0">
+							<xs:complexType>
+								<xs:attribute name="capacity" type="xs:nonNegativeInteger" use="required"/>
+								<xs:attribute name="man-loading-time" type="T_Time" use="required"/>
+								<xs:attribute name="man-unloading-time" type="T_Time" use="required"/>
+								<xs:attribute name="nbc-transport" type="xs:boolean" use="optional"/>
+								<xs:attribute name="reac-mental-transport" type="xs:boolean" use="optional"/>
+								<xs:attribute name="wounded-transport" type="xs:string" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="caring" minOccurs="0">
+							<xs:complexType>
+								<xs:attribute name="sorting" type="xs:boolean" use="optional"/>
+								<xs:attribute name="psychiatry" type="xs:boolean" use="optional"/>
+								<xs:attribute name="caring" type="xs:string" use="optional"/>
+								<xs:attribute name="nbc" type="xs:boolean" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="supply-functions" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="carrying">
+							<xs:complexType>
+								<xs:attribute name="min-mass" type="T_NonNegativeDouble" use="required"/>
+								<xs:attribute name="max-mass" type="T_NonNegativeDouble" use="required"/>
+								<xs:attribute name="min-volume" type="T_NonNegativeDouble" use="required"/>
+								<xs:attribute name="max-volume" type="T_NonNegativeDouble" use="required"/>
+								<xs:attribute name="nature" type="xs:string" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Breakdowns">
+		<xs:sequence>
+			<xs:element name="breakdown" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="origin" type="xs:string" use="required"/>
+					<xs:attribute name="type" type="xs:string" use="required"/>
+					<xs:attribute name="percentage" type="xs:nonNegativeInteger" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
