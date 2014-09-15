@@ -136,7 +136,7 @@ namespace
 {
     std::string EntityToMetadata( const kernel::Entity_ABC* entity )
     {
-        return QString( "{ \"tasker\": %1 }" ).arg( entity ? entity->GetId() : 0 ).toStdString();
+        return QString( "{ \"sword_entity\": %1 }" ).arg( entity ? entity->GetId() : 0 ).toStdString();
     }
     const kernel::Entity_ABC* MetadataToEntity( const std::string& metadata,
                                                 const kernel::EntityResolver_ABC& model )
@@ -148,7 +148,7 @@ namespace
         {
             std::istringstream input( metadata );
             bpt::read_json( input, rpy );
-            if( auto tasker = rpy.get_optional< uint32_t >( "tasker" ) )
+            if( auto tasker = rpy.get_optional< uint32_t >( "sword_entity" ) )
                 return model.FindEntity( *tasker );
         }
         catch( ... )

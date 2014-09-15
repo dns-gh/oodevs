@@ -856,20 +856,14 @@ func (s *Sword) cacheMetadata(event *sdk.Event) *sdk.Metadata {
 	return &metadata
 }
 
-func (s *Sword) filterMetadata(data *swapi.ModelData, profile *swapi.Profile, units, inhabitants Ids, event *sdk.Event) bool {
+func (s *Sword) filterMetadata(data *swapi.ModelData, profile *swapi.Profile, event *sdk.Event) bool {
 	metadata := s.cacheMetadata(event)
 	if metadata == nil {
 		return false
 	}
-	id := metadata.GetTasker()
+	id := metadata.GetSwordEntity()
 	if id == 0 {
 		return false
-	}
-	if _, ok := units[id]; ok {
-		return true
-	}
-	if _, ok := inhabitants[id]; ok {
-		return true
 	}
 	return !data.IsUnitInProfile(id, profile) &&
 		!data.IsAutomatInProfile(id, profile) &&
@@ -922,7 +916,7 @@ func (s *Sword) addProfileFilter(dst *[]EventFilter, data *swapi.ModelData, conf
 	}
 	*dst = append(*dst, func(event *sdk.Event) bool {
 		return s.filterProfile(data, profile, Ids{}, Ids{}, event) ||
-			s.filterMetadata(data, profile, Ids{}, Ids{}, event)
+			s.filterMetadata(data, profile, event)
 	})
 }
 

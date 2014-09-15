@@ -1075,14 +1075,14 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 	})
 
 	f.addTaskEvent(c, "task_alone", f.begin, f.begin.Add(1*time.Hour), "")
-	f.addTaskEvent(c, "task_invalid_tasker", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":0}")
-	f.addTaskEvent(c, "task_p1", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":1}")
-	f.addTaskEvent(c, "task_f2", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":2}")
-	f.addTaskEvent(c, "task_f3", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":3}")
-	f.addTaskEvent(c, "task_a4", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":4}")
-	f.addTaskEvent(c, "task_u5", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":5}")
-	f.addTaskEvent(c, "task_c6", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":6}")
-	f.addTaskEvent(c, "task_i7", f.begin, f.begin.Add(1*time.Hour), "{\"tasker\":7}")
+	f.addTaskEvent(c, "task_invalid_unit", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":0}")
+	f.addTaskEvent(c, "task_p1", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":1}")
+	f.addTaskEvent(c, "task_f2", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":2}")
+	f.addTaskEvent(c, "task_f3", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":3}")
+	f.addTaskEvent(c, "task_a4", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":4}")
+	f.addTaskEvent(c, "task_u5", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":5}")
+	f.addTaskEvent(c, "task_c6", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":6}")
+	f.addTaskEvent(c, "task_i7", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":7}")
 
 	// ensure we do get all our events
 	f.applyFilters(c, services.EventFilterConfig{}, 9)

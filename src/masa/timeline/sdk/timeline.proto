@@ -92,5 +92,5 @@ message Message
 
 message Metadata
 {
-    optional uint32 tasker = 1;
+    optional uint32 sword_entity = 1;
 }
