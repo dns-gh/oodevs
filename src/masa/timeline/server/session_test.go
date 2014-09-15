@@ -70,11 +70,12 @@ func (m *ModuleLogger) Printf(format string, args ...interface{}) {
 	m.log.Printf(m.name+": "+format, args...)
 }
 
-func (t *TestSuite) MakeFixture(c *C) *Fixture {
+func (t *TestSuite) MakeFixture(c *C, logins bool) *Fixture {
 	local := fmt.Sprintf("localhost:%v", 1+t.port)
 	log := swtest.MakeGocheckLogger(c)
 	server, err := swfake.NewSwordServer(&ModuleLogger{log: log, name: "swfake"}, local, false, false)
 	c.Assert(err, IsNil)
+	server.EnableLogins(logins)
 	controller := MakeController(log)
 	id := uuid.New()
 	_, err = controller.CreateSession(id, "some_name", true)
@@ -136,7 +137,7 @@ func (f *Fixture) addChildEvent(c *C, uuid, parent string, begin time.Time) *sdk
 }
 
 func (t *TestSuite) TestDeadlockOnActionTargetMismatch(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	f.addEvent(c, "some_name", "mismatch", []byte{})
 	// after last tick, session will try to run our event
@@ -300,13 +301,13 @@ func checkDuplicateOrders(c *C, f *Fixture) int {
 }
 
 func (t *TestSuite) TestDuplicateOrders(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	checkDuplicateOrders(c, f)
 }
 
 func (t *TestSuite) TestMissingServerSideOrders(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	f.WaitConnected()
 	detached := f.server.GetLinks()
@@ -383,7 +384,7 @@ func (f *Fixture) killLinks() {
 }
 
 func (t *TestSuite) TestServerSideDuplicateOrders(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	order := sword.SimToClient_Content{
 		UnitOrder: &sword.UnitOrder{
@@ -434,7 +435,7 @@ func compareTime(a, b time.Time) bool {
 }
 
 func (t *TestSuite) TestTriggerEvent(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 
 	uuid := uuid.New()
@@ -527,7 +528,7 @@ func checkEmptyUpdate(c *C, messages <-chan interface{}) {
 }
 
 func (t *TestSuite) TestListeners(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 
 	faker := FakeService{}
@@ -618,7 +619,7 @@ func checkUpdateEvents(c *C, sgroup *sync.WaitGroup, link SdkObserver, filter bo
 }
 
 func (t *TestSuite) TestFiltering(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 
 	faker := FakeFilterer{FakeService: FakeService{}, filter: false}
@@ -752,7 +753,7 @@ func (f *Fixture) applyFilters(c *C, cfg services.EventFilterConfig, count int) 
 }
 
 func (t *TestSuite) TestFilters(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 
 	f.WaitConnected()
@@ -912,7 +913,7 @@ func (t *TestSuite) TestFilters(c *C) {
 }
 
 func (t *TestSuite) TestIncompleteMissionsAreVisibleByAnyProfile(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 
 	f.WaitConnected()
@@ -942,7 +943,7 @@ func (t *TestSuite) TestIncompleteMissionsAreVisibleByAnyProfile(c *C) {
 }
 
 func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 
 	f.WaitConnected()
@@ -1022,7 +1023,7 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 }
 
 func (t *TestSuite) TestFiltersHierarchy(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 
 	f.addTaskEvent(c, "parent1", f.begin, f.begin.Add(1*time.Hour), "")
@@ -1069,7 +1070,7 @@ func (t *TestSuite) TestFiltersHierarchy(c *C) {
 }
 
 func (t *TestSuite) TestFiltersMetadata(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 
 	f.WaitConnected()
@@ -1191,7 +1192,7 @@ func (f *Fixture) testAck(c *C, err *swfake.Error, order []byte) {
 }
 
 func (t *TestSuite) TestOrderAckErrors(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	f.WaitConnected()
 	f.testAck(c, nil, f.getSomeUnitOrder(c, 91, 0))
@@ -1221,7 +1222,7 @@ func (f *Fixture) resetEvents(c *C, valid bool) {
 }
 
 func (t *TestSuite) TestBrokenOrdersAreSentForever(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	errors := []sword.OrderAck_ErrorCode{
 		sword.OrderAck_error_invalid_unit,
@@ -1239,7 +1240,7 @@ func (t *TestSuite) TestBrokenOrdersAreSentForever(c *C) {
 }
 
 func (t *TestSuite) TestUncheckedOrdersAreResent(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	id := f.addEvent(c, "order", "some_name", f.getSomeUnitOrder(c, 94, 0))
 	for i := 0; i < 4; i++ {
@@ -1250,7 +1251,7 @@ func (t *TestSuite) TestUncheckedOrdersAreResent(c *C) {
 }
 
 func (t *TestSuite) TestSwordReconnection(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	num := checkDuplicateOrders(c, f)
 	for i := 0; i < 10; i++ {
@@ -1266,7 +1267,7 @@ func (t *TestSuite) TestSwordReconnection(c *C) {
 }
 
 func (t *TestSuite) flushPendingActions(c *C, afterClose, afterTick, preStop bool) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	checkDuplicateOrders(c, f)
 	// close the server permanently
@@ -1307,7 +1308,7 @@ func (t *TestSuite) TestSwordStopReconnectFlushPendingActions(c *C) {
 }
 
 func (t *TestSuite) TestCreateEventUpdatesParent(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
 	c.Assert(err, IsNil)
@@ -1341,7 +1342,7 @@ func (t *TestSuite) TestCreateEventUpdatesParent(c *C) {
 }
 
 func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
 	c.Assert(err, IsNil)
@@ -1372,7 +1373,7 @@ func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 }
 
 func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
 	c.Assert(err, IsNil)
@@ -1417,7 +1418,7 @@ func mapEvents(events ...*sdk.Event) map[string]*sdk.Event {
 }
 
 func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
-	f := t.MakeFixture(c)
+	f := t.MakeFixture(c, true)
 	defer f.Close()
 	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
 	c.Assert(err, IsNil)
@@ -1451,4 +1452,12 @@ func (t *TestSuite) TestDeleteEventUpdatesChildren(c *C) {
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
 	c.Assert(msg, NotNil)
 	swtest.DeepEquals(c, msg.Uuids, []string{"parent"})
+}
+
+func (t *TestSuite) TestFirstConnectionFailureReconnects(c *C) {
+	f := t.MakeFixture(c, false)
+	defer f.Close()
+	f.sword.WaitForRetry(2)
+	f.server.EnableLogins(true)
+	f.sword.WaitForStatus(services.SwordStatusConnected)
 }

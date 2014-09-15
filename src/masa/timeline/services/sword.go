@@ -188,10 +188,13 @@ func (s *Sword) setStatus(status SwordStatus, restart bool) {
 
 func (s *Sword) getRetryTimeout() time.Duration {
 	s.retry++
-	if s.retry == 1 {
+	// 1 -> first try, no timeout
+	// 2 -> first reconnect, no timeout
+	// 3 -> begin at 1 second and double each time
+	if s.retry <= 2 {
 		return 0 * time.Second
 	}
-	sleep := 1 << (s.retry - 1) * time.Second
+	sleep := 1 << (s.retry - 3) * time.Second
 	if sleep > time.Minute {
 		s.retry-- // prevent cycles
 		sleep = time.Minute
@@ -238,14 +241,20 @@ func asyncConnect(handler SwordHandler, address, name string, clock bool) {
 	link, err := NewSwordLink(handler, address, name, clock)
 	if err != nil {
 		logConnect(handler, err)
-		return
+		link = nil
 	}
 	handler.PostAttach(link)
 }
 
 func (s *Sword) attach(link *SwordLink) {
 	if s.status != SwordStatusConnecting {
-		link.Kill()
+		if link != nil {
+			link.Kill()
+		}
+		return
+	}
+	if link == nil {
+		s.setStatus(SwordStatusDisconnected, true)
 		return
 	}
 	if s.link != nil {
@@ -623,25 +632,39 @@ func (s *Sword) Filter(event *sdk.Event, config EventFilterConfig) bool {
 }
 
 // Custom test functions
-func (s *Sword) WaitFor(operand func(d *swapi.ModelData) bool) {
-	// a bit convoluted because we want to block, but only this
-	// function and not gosword model, and we must run inside
-	// the observer event loop to use session data
+func (s *Sword) waitFor(operand func() bool) {
 	reply := make(chan bool, 1)
 	for {
 		s.observer.Post(func() {
-			if s.link == nil {
-				reply <- false
-				return
-			}
-			s.link.client.Model.Query(func(d *swapi.ModelData) bool {
-				reply <- operand(d)
-				return false
-			})
+			reply <- operand()
 		})
 		if <-reply {
 			return
 		}
 		time.Sleep(100 * time.Millisecond)
 	}
+}
+
+func (s *Sword) WaitFor(operand func(d *swapi.ModelData) bool) {
+	// a bit convoluted because we want to block, but only this
+	// function and not gosword model, and we must run inside
+	// the observer event loop to use session data
+	s.waitFor(func() bool {
+		if s.link == nil {
+			return false
+		}
+		return s.link.client.Model.Query(operand)
+	})
+}
+
+func (s *Sword) WaitForRetry(retry uint) {
+	s.waitFor(func() bool {
+		return s.retry >= retry
+	})
+}
+
+func (s *Sword) WaitForStatus(status SwordStatus) {
+	s.waitFor(func() bool {
+		return s.status == status
+	})
 }
