@@ -82,7 +82,7 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
         return;
 
     const Qt::ItemFlags contextFlag = ( pMissionParameter->isContext_ && ( missionType_ == eEntityType_Pawn || missionType_ == eEntityType_Automat ) )
-        ? ( pMissionParameter->type_.GetData() == eMissionParameterTypePhaseLine ? Qt::ItemIsEnabled | Qt::ItemIsSelectable : Qt::ItemIsSelectable )
+        ? Qt::ItemIsSelectable
         : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
     const QBrush brush = pMissionParameter->isContext_ ? QBrush( Qt::lightGray ) : QBrush( Qt::transparent );
 
