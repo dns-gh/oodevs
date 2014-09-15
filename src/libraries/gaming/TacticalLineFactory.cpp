@@ -65,13 +65,24 @@ namespace
                 throw std::runtime_error( str.str() );
             }
         }
-        else
+        else if( message.has_formation() )
+        {
             if( !model.GetFormationResolver().Find( message.formation().id() ) )
             {
                 std::stringstream str;
                 str << "Impossible to create limit because parent formation " << message.formation().id() << "does not exist";
                 throw std::runtime_error( str.str() );
             }
+        }
+        else if( message.has_unit() )
+        {
+            if( !model.GetAgentResolver().Find( message.unit().id() ) )
+            {
+                std::stringstream str;
+                str << "Impossible to create limit because parent agent " << message.unit().id() << "does not exist";
+                throw std::runtime_error( str.str() );
+            }
+        }
     }
 }
 
