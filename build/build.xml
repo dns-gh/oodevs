@@ -925,7 +925,7 @@
         </compare-proto>
         <compare-proto olddir="${proto.dir}/5.4.1" newdir="${proto.dir}/5.4.2"/>
         <compare-proto olddir="${proto.dir}/5.4.2" newdir="${proto.dir}/5.4.3"/>
-        <compare-proto olddir="${proto.dir}/5.4.3" newdir="${src.dir}/libraries/protocol/proto/">
+        <compare-proto olddir="${proto.dir}/5.4.3" newdir="${proto.dir}/5.5.1">
             <!-- New magic actions are fine -->
             <arg value="--exclude=*.MagicAction.Type"/>
             <arg value="--exclude=*.UnitMagicAction.Type"/>
@@ -940,6 +940,7 @@
             <arg value="--exclude=SimToClient.Content.UnitCreationRequestAck.UnitActionAck.ErrorCode"/>
             <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitActionAck.ErrorCode"/>
         </compare-proto>
+        <compare-proto olddir="${proto.dir}/5.5.1" newdir="${src.dir}/libraries/protocol/proto/"/>
     </target>
 
     <target name="checkmigrations" description="check migrations.xml consistency">
