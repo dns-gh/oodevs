@@ -39,6 +39,12 @@ namespace
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
         return tools::Path( myDocuments ) / tools::Path::FromUnicode( appName.toStdWString() );
     }
+
+    bool ReadMapnikConfig()
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        return settings.value( "/Common/Mapnik", false ).toBool();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +53,7 @@ namespace
 // -----------------------------------------------------------------------------
 Config::Config()
     : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ) ) )
+    , mapnik_( ReadMapnikConfig() )
 {
     po::options_description desc( "Frontend options" );
     desc.add_options()
@@ -81,4 +88,14 @@ const tools::Path& Config::GetPackageFile() const
 bool Config::IsTestMode() const
 {
     return IsSet( "test" );
+}
+
+bool Config::HasMapnik() const
+{
+    return mapnik_;
+}
+
+void Config::SetMapnik( bool activated )
+{
+    mapnik_ = activated;
 }

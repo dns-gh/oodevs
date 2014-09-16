@@ -2195,10 +2195,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Réseaux de ressource</translation>
     </message>
     <message>
-        <source>Mapnik</source>
-        <translation>Mapnik</translation>
-    </message>
-    <message>
         <source>Weather</source>
         <translation>Météo</translation>
     </message>
@@ -2213,6 +2209,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Weapon Ranges</source>
         <translation>Portées Utiles de Combat</translation>
+    </message>
+    <message>
+        <source>Terrain (new rendering)</source>
+        <translation>Terrain (nouveau rendu)</translation>
     </message>
 </context>
 <context>

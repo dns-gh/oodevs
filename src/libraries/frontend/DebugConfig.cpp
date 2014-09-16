@@ -17,7 +17,6 @@ DebugConfig frontend::LoadDebugConfig()
 {
     DebugConfig config;
 
-    config.gaming.hasMapnik = registry::ReadBool( "HasMapnikLayer" );
     config.gaming.mapnikThreads = registry::ReadInt( "MapnikThreads" );
 
     config.sim.decProfiling = registry::ReadBool( "DebugDecProfiling" );
@@ -38,7 +37,6 @@ DebugConfig frontend::LoadDebugConfig()
 
 void frontend::SaveDebugConfig( const DebugConfig& config )
 {
-    registry::WriteBool( "HasMapnikLayer", config.gaming.hasMapnik );
     registry::WriteInt( "MapnikThreads", config.gaming.mapnikThreads );
 
     registry::WriteBool( "DebugDecProfiling", config.sim.decProfiling );

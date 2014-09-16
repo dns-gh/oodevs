@@ -2194,10 +2194,6 @@ Los datos no pueden ser proyectados.</translation>
         <translation>Redes de recursos</translation>
     </message>
     <message>
-        <source>Mapnik</source>
-        <translation>Mapnik</translation>
-    </message>
-    <message>
         <source>Weather</source>
         <translation>Clima</translation>
     </message>
@@ -2211,6 +2207,10 @@ Los datos no pueden ser proyectados.</translation>
     </message>
     <message>
         <source>Weapon Ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain (new rendering)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

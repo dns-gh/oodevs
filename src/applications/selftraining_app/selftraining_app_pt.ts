@@ -165,10 +165,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activate layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -456,6 +452,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Can&apos;t create directory &apos;%1&apos;, error &apos;%2&apos; happen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate new terrain rendering (EXPERIMENTAL)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
