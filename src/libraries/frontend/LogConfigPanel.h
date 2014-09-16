@@ -21,7 +21,6 @@ class QComboBox;
 class QCheckBox;
 class QSpinBox;
 class QLabel;
-class QPushButton;
 
 namespace frontend
 {
@@ -59,7 +58,7 @@ private:
 
 private slots:
     void OnKeepToggled( bool checked );
-    void OnDefaultClicked();
+    void OnWriteSettings();
     //@}
 
 private:
@@ -75,7 +74,6 @@ private:
     QLabel* keepLabel_;
     QLabel* levelLabel_;
     QComboBox* levelComboBox_;
-    QPushButton* defaultButton_;
     //@}
 };
 }

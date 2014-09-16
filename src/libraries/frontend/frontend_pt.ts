@@ -75,10 +75,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set as default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logs Rotation</source>
         <translation type="unfinished"></translation>
     </message>

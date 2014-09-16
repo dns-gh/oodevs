@@ -16,7 +16,6 @@
 #include <QtGui/qcheckbox.h>
 #include <QtGui/qcombobox.h>
 #include <QtGui/qlabel.h>
-#include <QtGui/qpushbutton.h>
 #include <QtCore/qsettings.h>
 #include <QtGui/qspinbox.h>
 #pragma warning( pop )
@@ -48,7 +47,7 @@ namespace
     int ReadMaxFileSize()
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( "/sword/LogsMaxFileSize", 10 ).toInt();
+        return settings.value( "/sword/LogsMaxFileSize", 100 ).toInt();
     }
 
     int ReadFileSizeType()
@@ -60,7 +59,7 @@ namespace
     bool ReadKeepLogs()
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( "/sword/LogsKeep", true ).toBool();
+        return settings.value( "/sword/LogsKeep", false ).toBool();
     }
 
     int ReadKeepLogsNumber()
@@ -96,7 +95,6 @@ LogConfigPanel::LogConfigPanel( QWidget* parent, const tools::GeneralConfig& con
     keepLabel_ = new QLabel();
     levelLabel_ = new QLabel();
     levelComboBox_ = new QComboBox();
-    defaultButton_ = new QPushButton();
 
     QGridLayout* groupLayout = new QGridLayout( rotateLogsGroup_ );
     groupLayout->addWidget( fileSizeLabel_, 0, 0 );
@@ -115,7 +113,6 @@ LogConfigPanel::LogConfigPanel( QWidget* parent, const tools::GeneralConfig& con
     mainLayout->addWidget( rotateLogsGroup_ );
     mainLayout->addLayout( layout );
     mainLayout->addStretch();
-    mainLayout->addWidget( defaultButton_ );
     mainLayout->setMargin( 5 );
 
     QStringList items;
@@ -132,7 +129,13 @@ LogConfigPanel::LogConfigPanel( QWidget* parent, const tools::GeneralConfig& con
     levelComboBox_->setCurrentIndex( ReadLevel() );
 
     connect( keepCheckBox_, SIGNAL( toggled( bool ) ), SLOT( OnKeepToggled( bool ) ) );
-    connect( defaultButton_, SIGNAL( clicked() ), SLOT( OnDefaultClicked() ) );
+
+    connect( rotateLogsGroup_,  SIGNAL( toggled( bool ) ),     SLOT( OnWriteSettings() ) );
+    connect( fileSizeSpinBox_,  SIGNAL( valueChanged( int ) ), SLOT( OnWriteSettings() ) );
+    connect( sizeTypeComboBox_, SIGNAL( activated( int ) ),    SLOT( OnWriteSettings() ) );
+    connect( keepCheckBox_,     SIGNAL( toggled( bool ) ),     SLOT( OnWriteSettings() ) );
+    connect( keepSpinBox_,      SIGNAL( valueChanged( int ) ), SLOT( OnWriteSettings() ) );
+    connect( levelComboBox_,    SIGNAL( activated( int ) ),    SLOT( OnWriteSettings() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,8 +173,6 @@ void LogConfigPanel::OnLanguageChanged()
     levelComboBox_->addItem( tools::translate( "LogConfigPanel", "Info" ), eInfo );
     levelComboBox_->addItem( tools::translate( "LogConfigPanel", "All" ), eAll );
     levelComboBox_->setCurrentIndex( currentIndex );
-
-    defaultButton_->setText( tools::translate( "LogConfigPanel", "Set as default" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,8 +211,7 @@ void LogConfigPanel::Commit( frontend::CreateSession& action, const std::string&
     action.SetOption( path + "@loglevel", levelComboBox_->currentIndex() );
     if( rotateLogsGroup_->isChecked() )
     {
-        if( keepCheckBox_->isChecked() )
-            action.SetOption( path + "@logfiles", keepSpinBox_->value() );
+        action.SetOption( path + "@logfiles", keepCheckBox_->isChecked() ? keepSpinBox_->value() : std::numeric_limits< int >::max() );
         action.SetOption( path + "@logsize", fileSizeSpinBox_->value() );
         action.SetOption( path + "@sizeunit", GetSizeUnit( sizeTypeComboBox_->currentIndex() ) );
     }
@@ -241,10 +241,10 @@ void LogConfigPanel::OnKeepToggled( bool checked )
 }
 
 // -----------------------------------------------------------------------------
-// Name: RandomPluginConfigPanel::OnDefaultClicked
+// Name: RandomPluginConfigPanel::OnWriteSettings
 // Created: JSR 2014-09-11
 // -----------------------------------------------------------------------------
-void LogConfigPanel::OnDefaultClicked()
+void LogConfigPanel::OnWriteSettings()
 {
     QSettings settings( "MASA Group", "SWORD" );
     settings.setValue( "/sword/LogsRotation", rotateLogsGroup_->isChecked() );

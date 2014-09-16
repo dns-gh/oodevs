@@ -75,10 +75,6 @@
         <translation>Logs</translation>
     </message>
     <message>
-        <source>Set as default</source>
-        <translation>Définir par défaut</translation>
-    </message>
-    <message>
         <source>Logs Rotation</source>
         <translation>Rotation des Logs</translation>
     </message>
