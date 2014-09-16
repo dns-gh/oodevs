@@ -163,7 +163,9 @@ std::string WeaponRangeLayer::MakeFragment() const
     }
     shader <<
         "void main()"
-        "{";
+        "{"
+        "  vec3 color = vec3( 0, 0, 0 );"
+        "  int count = 0;";
     team = 0;
     for( auto it = ranges_.begin(); it != ranges_.end(); ++it )
     {
@@ -175,12 +177,17 @@ std::string WeaponRangeLayer::MakeFragment() const
             "  float d = distance(position.xy, pos_" << team << "[team]);"
             "  if( min_" << team << "[team] <= d && max_" << team << "[team] >= d )"
             "  {"
-            "    gl_FragColor.rgb = color_" << team << ";"
-            "    gl_FragColor.a = alpha;"
+            "    color += color_" << team << ";"
+            "    ++count;"
             "  }"
             "}";
     }
     shader <<
+        "  if( count )"
+        "  {"
+        "    gl_FragColor.rgb = color / count;"
+        "    gl_FragColor.a = alpha;"
+        "  }"
         "}";
     return shader.str();
 }
