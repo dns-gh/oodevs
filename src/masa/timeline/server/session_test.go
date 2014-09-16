@@ -1461,3 +1461,33 @@ func (t *TestSuite) TestFirstConnectionFailureReconnects(c *C) {
 	f.server.EnableLogins(true)
 	f.sword.WaitForStatus(services.SwordStatusConnected)
 }
+
+func (t *TestSuite) TestKnownEventsAreDeletedWhenBeingFiltered(c *C) {
+	f := t.MakeFixture(c, true)
+	defer f.Close()
+	event := f.addTaskEvent(c, "event", f.begin, f.begin.Add(1*time.Hour), "")
+	faker := FakeFilterer{FakeService: FakeService{}, filter: false}
+	_ = services.EventFilterer(&faker)
+	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
+		return nil, session.Attach("faker", &faker)
+	})
+	c.Assert(err, IsNil)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
+	input := link.Listen()
+	msg := (<-input).(*sdk.Message)
+	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_tick)
+	swtest.DeepEquals(c, <-input, &sdk.Message{
+		Tag:    sdk.MessageTag_update_events.Enum(),
+		Events: []*sdk.Event{event},
+	})
+	faker.filter = true
+	event.Name = proto.String("another_name")
+	_, err = f.controller.UpdateEvent(f.session, event.GetUuid(), event)
+	c.Assert(err, IsNil)
+	swtest.DeepEquals(c, <-input, &sdk.Message{
+		Tag:   sdk.MessageTag_delete_events.Enum(),
+		Uuids: []string{event.GetUuid()},
+	})
+}

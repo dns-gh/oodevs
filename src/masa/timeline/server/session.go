@@ -461,15 +461,23 @@ type FilteredObserver struct {
 	listener services.EventListener
 	config   services.EventFilterConfig
 	session  *Session
+	known    map[string]struct{}
 }
 
 func (f *FilteredObserver) Update(events EventSlice, encoded []*sdk.Event) {
+	// maintain a set of known events so we can send
+	// delete notifications on events that become filtered
+	// but were known previously
+	deleted := []string{}
 	filters := []services.EventFilter{func(event *sdk.Event) bool {
+		id := event.GetUuid()
 		for it := range f.session.filterers {
 			if it.Filter(event, f.config) {
+				deleted = append(deleted, id)
 				return true
 			}
 		}
+		f.known[id] = struct{}{}
 		return false
 	}}
 	// filterEvents modify encoded in-place
@@ -479,11 +487,23 @@ func (f *FilteredObserver) Update(events EventSlice, encoded []*sdk.Event) {
 		copy(clone, encoded)
 		encoded = clone
 	}
-	f.listener.Update(filterEvents(events, encoded, filters)...)
+	updated := filterEvents(events, encoded, filters)
+	f.Delete(deleted...)
+	f.listener.Update(updated...)
 }
 
 func (f *FilteredObserver) Delete(events ...string) {
-	f.listener.Delete(events...)
+	deleted := []string{}
+	for _, event := range events {
+		prev := len(f.known)
+		delete(f.known, event)
+		if prev != len(f.known) {
+			deleted = append(deleted, event)
+		}
+	}
+	if len(deleted) > 0 {
+		f.listener.Delete(deleted...)
+	}
 }
 
 func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserver {
@@ -493,6 +513,7 @@ func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserve
 		listener:    observer,
 		config:      config,
 		session:     s,
+		known:       map[string]struct{}{},
 	}
 	s.observers[filtered] = observer
 	s.listeners[filtered] = filtered
