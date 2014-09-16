@@ -193,13 +193,16 @@ void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC
         strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
         const geometry::Point2f position = GetPosition( entity );
         if( tools_.ShouldDisplay( "WeaponRanges" ) )
-            if( const Weapons* ranges = entity.Retrieve< Weapons >() )
-                if( ranges->GetMaxRange() > 0 )
+            if( const Weapons* weapons = entity.Retrieve< Weapons >() )
+            {
+                weapons->DrawEfficientRange( position, tools_ );
+                if( weapons->GetMaxRange() > 0 )
                 {
                     const auto color = useColor_ ? color_ : strategy_.FindColor( entity );
-                    ranges_[ color.name() ].push_back( std::make_pair( ranges->GetMinRange(), ranges->GetMaxRange() ) );
+                    ranges_[ color.name() ].push_back( std::make_pair( weapons->GetMinRange(), weapons->GetMaxRange() ) );
                     positions_[ color.name() ].push_back( position );
                 }
+            }
     }
 }
 

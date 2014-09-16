@@ -43,11 +43,13 @@ Weapons::~Weapons()
 
 void Weapons::DrawEfficientRange( const geometry::Point2f& where, gui::GlTools_ABC& tools ) const
 {
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_STIPPLE );
     glLineStipple( 1, 0x0F0F );
     glLineWidth( 2 );
+    glColor4f( COLOR_WHITE );
     tools.DrawCircle( where, float( efficientRange_ ) );
-    glDisable( GL_LINE_STIPPLE );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
