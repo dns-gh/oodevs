@@ -77,8 +77,8 @@ public:
 
     static bool IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight );
     static boost::shared_ptr< MT_Vector2D > ComputeCoverPosition( const std::vector< DEC_Decision_ABC* >& pions, MT_Vector2D* pDirection, float distance );
-    static boost::shared_ptr< MT_Vector2D > ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius );
-    static boost::shared_ptr< MT_Vector2D > ComputeRandomPointInCircle( MT_Vector2D* pCenter, float radius );
+    static boost::shared_ptr< MT_Vector2D > ComputeRandomPointOnCircle( const DEC_Decision_ABC* decision, MT_Vector2D* pCenter, float radius );
+    static boost::shared_ptr< MT_Vector2D > ComputeRandomPointInCircle( const DEC_Decision_ABC* decision, MT_Vector2D* pCenter, float radius );
     static boost::shared_ptr< MT_Vector2D > ComputeRandomPointInZone( const TER_Localisation* location );
     static std::vector< DEC_Decision_ABC* > ListUncoordinatedPawns( DEC_Decision_ABC* pion, const std::vector< DEC_Decision_ABC* >& unCoordinatedPions, float minDist );
     static std::vector< boost::shared_ptr< MT_Vector2D > >  SplitListPoints( const std::vector< MT_Vector2D* >& listPoints, unsigned int nNbrParts );
