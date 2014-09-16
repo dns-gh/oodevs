@@ -47,9 +47,7 @@ void WeaponRangeLayer::NotifyDeleted( const kernel::Agent_ABC& entity )
 
 void WeaponRangeLayer::Paint( const geometry::Rectangle2f& extent )
 {
-    if( ignoreShader_ )
-        return;
-    if( !ShouldDrawPass() )
+    if( ignoreShader_ || !ShouldDrawPass() )
         return;
     auto ranges = ranges_;
     auto positions = positions_;

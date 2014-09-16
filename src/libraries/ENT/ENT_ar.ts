@@ -823,7 +823,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>WeaponRanges</source>
+        <source>Weapon ranges</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

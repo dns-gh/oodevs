@@ -823,8 +823,8 @@
         <translation>Itineraries</translation>
     </message>
     <message>
-        <source>WeaponRanges</source>
-        <translation>WeaponRanges</translation>
+        <source>Weapon ranges</source>
+        <translation>Weapon ranges</translation>
     </message>
 </context>
 <context>

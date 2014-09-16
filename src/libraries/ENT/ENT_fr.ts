@@ -823,7 +823,7 @@
         <translation>Itinéraires</translation>
     </message>
     <message>
-        <source>WeaponRanges</source>
+        <source>Weapon ranges</source>
         <translation>Portées d&apos;armes</translation>
     </message>
 </context>

@@ -33,7 +33,7 @@ class WeaponRangeLayer : public gui::EntityLayerBase
 {
 public:
              WeaponRangeLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                       gui::View_ABC& view, const kernel::Profile_ABC& profile );
+                               gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~WeaponRangeLayer();
 
 private:
