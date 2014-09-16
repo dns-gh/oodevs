@@ -28,6 +28,8 @@
 #include "gaming/Casualties.h"
 #include "gaming/Explosions.h"
 
+Q_DECLARE_METATYPE( const kernel::Entity_ABC* );
+
 // -----------------------------------------------------------------------------
 // Name: FireResultListView constructor
 // Created: AGE 2006-03-10
@@ -115,10 +117,16 @@ QString FireResultListView::GetDisplayName( const kernel::Agent_ABC& agent ) con
 // -----------------------------------------------------------------------------
 QStandardItem* FireResultListView::AddRoot( int row,
                                             int col,
-                                            const QString& text )
+                                            const QString& text,
+                                            const kernel::Entity_ABC* entity /* = 0 */ )
 {
     if( auto root = model_.invisibleRootItem() )
-        return AddChild( *root, row, col, text );
+    {
+        auto item = AddChild( *root, row, col, text );
+        if( entity )
+            item->setData( QVariant::fromValue( entity ), Qt::UserRole );
+        return item;
+    }
     return 0;
 }
 
@@ -153,8 +161,8 @@ void FireResultListView::Display( const AgentFireResult& result )
     int row = model_.rowCount();
     auto root = AddRoot( row, 0, extractor_.GetDisplayName( result.time_ ) );
     root->setData( result.time_, gui::Roles::SortRole );
-    AddRoot( row, 1, GetFirerName( result.firer_ ) );
-    AddRoot( row, 2, GetDisplayName( result.target_ ) );
+    AddRoot( row, 1, GetFirerName( result.firer_ ), result.firer_ );
+    AddRoot( row, 2, GetDisplayName( result.target_ ), &result.target_ );
 
     if( result.IsMiss() )
     {
@@ -188,8 +196,8 @@ void FireResultListView::Display( const PopulationFireResult& result )
     int row = model_.rowCount();
     auto root = AddRoot( row, 0, extractor_.GetDisplayName( result.time_ ) );
     root->setData( result.time_, gui::Roles::SortRole );
-    AddRoot( row, 1, GetFirerName( result.firer_ ) );
-    AddRoot( row, 2, extractor_.GetDisplayName( result.target_ ) );
+    AddRoot( row, 1, GetFirerName( result.firer_ ), result.firer_ );
+    AddRoot( row, 2, extractor_.GetDisplayName( result.target_ ), &result.target_ );
     int subRow = 0;
     if( result.deadPeople_ != 0 )
     {
@@ -316,4 +324,23 @@ void FireResultListView::NotifyDeleted( const kernel::Entity_ABC& entity )
     if( selected_ == &entity ||
         selected_ && hierarchy && hierarchy->IsSubordinateOf( *selected_ ) )
         DisplaySelection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void FireResultListView::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    for( int i = 0; i < model_.rowCount(); ++i )
+    {
+        if( auto* firerItem = model_.item( i, 1 ) )
+            if( const auto* firer = firerItem->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
+                if( firer == &entity )
+                    firerItem->setData( GetFirerName( &entity ), Qt::DisplayRole );
+        if( auto* targetItem = model_.item( i, 2 ) )
+            if( const auto* target = targetItem->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
+                if( target == &entity )
+                    targetItem->setData( extractor_.GetDisplayName( entity ), Qt::DisplayRole );
+    }
 }

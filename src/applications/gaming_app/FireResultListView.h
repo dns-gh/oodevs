@@ -67,7 +67,8 @@ private:
     //@{
     QStandardItem* AddRoot( int row,
                             int col,
-                            const QString& text );
+                            const QString& text,
+                            const kernel::Entity_ABC* entity = 0 );
     QStandardItem* AddChild( QStandardItem& root,
                              int row,
                              int col,
@@ -76,6 +77,7 @@ private:
 
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Explosions& results );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     void UpdateDisplay();
     void DisplaySelection();
