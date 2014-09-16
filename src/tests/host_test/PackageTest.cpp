@@ -95,7 +95,6 @@ struct Fixture
 {
     Fixture()
         : idx    ( 0 )
-        , gaming ( gaming )
         , install( pool, fs, GetFileIndex(), true,  replace )
         , cache  ( pool, fs, GetFileIndex(), false, replace )
     {
@@ -106,7 +105,6 @@ struct Fixture
     }
 
     size_t idx;
-    const bool gaming;
     MockPool pool;
     MockFileSystem fs;
     Package install;
