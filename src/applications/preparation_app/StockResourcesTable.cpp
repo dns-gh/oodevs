@@ -33,7 +33,7 @@ namespace
                              << tools::translate( "StockResourcesTable", "Nature" )
                              << tools::translate( "StockResourcesTable", "Weight (T)" )
                              << tools::translate( "StockResourcesTable", "Volume (m3)" )
-                             << tools::translate( "StockResourcesTable", "Normalized quantity" )
+                             << tools::translate( "StockResourcesTable", "Norm. quantity" )
                              << tools::translate( "StockResourcesTable", "Quantity" );
     }
 
@@ -61,7 +61,7 @@ StockResourcesTable::StockResourcesTable( const QString& objectName, QWidget* pa
     , staticModel_( staticModel )
     , entity_( controllers )
 {
-    // NOTHING
+    delegate_->AddDoubleSpinBoxOnColumn( 4, 0, std::numeric_limits< double >::max(), 0.5 );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,13 +80,13 @@ StockResourcesTable::~StockResourcesTable()
 void StockResourcesTable::UpdateLine( int row, int value )
 {
     const kernel::DotationType& dotation = *GetDotation( row );
-    SetData( row, 2, QString::number( value * dotation.GetUnitWeight(), 'f', 2 ), Qt::DisplayRole, true );
-    SetData( row, 3, QString::number( value * dotation.GetUnitVolume(), 'f', 2 ), Qt::DisplayRole, true );
+    SetData( row, 2, locale().toString( value * dotation.GetUnitWeight(), 'f', 2 ), Qt::DisplayRole, true );
+    SetData( row, 3, locale().toString( value * dotation.GetUnitVolume(), 'f', 2 ), Qt::DisplayRole, true );
     auto item = dataModel_->item( row, 4 );
     int consumption = item ? item->data( Qt::UserRole + 1 ).toInt() : 0;
     if( !item )
         SetData( row, 4, consumption, Qt::UserRole + 1, true, Qt::AlignRight | Qt::AlignVCenter );
-    SetData( row, 4, QString::number( ComputeNormalizedConsumption( value, consumption ), 'f', 2 ) );
+    SetData( row, 4, locale().toString( ComputeNormalizedConsumption( value, consumption ), 'f', 2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,10 +164,10 @@ void StockResourcesTable::ComputeStockWeightVolumeLeft( const kernel::Agent_ABC&
     const kernel::Resolver2< kernel::EquipmentType >& equipments = staticModel_.objectTypes_;
     double maxWeight = 0;
     double maxVolume = 0;
-    tools::Iterator< const kernel::AgentComposition& > itComposition = agent.GetType().CreateIterator();
-    while( itComposition.HasMoreElements() )
+    auto it = agent.GetType().CreateIterator();
+    while( it.HasMoreElements() )
     {
-        const kernel::AgentComposition& agentComposition = itComposition.NextElement();
+        const kernel::AgentComposition& agentComposition = it.NextElement();
         const kernel::EquipmentType& equipmentType = equipments.Get( agentComposition.GetType().GetId() );
         auto carrying = equipmentType.GetLogSupplyFunctionCarrying();
         if( carrying && carrying->stockNature_ == nature )
@@ -276,11 +276,11 @@ void StockResourcesTable::AddResource( const kernel::DotationType& resource, int
     const double volume = value * resource.GetUnitVolume();
     const int consumption = ComputeConsumption( staticModel_, entity_, resource );
     SetData( rowIndex, 1, QString::fromStdString( resource.GetNature() ), Qt::DisplayRole, true );
-    SetData( rowIndex, 2, QString::number( weight, 'f', 2 ) );
+    SetData( rowIndex, 2, locale().toString( weight, 'f', 2 ) );
     SetData( rowIndex, 2, weight, Qt::UserRole + 1, true, Qt::AlignRight | Qt::AlignVCenter );
-    SetData( rowIndex, 3, QString::number( volume, 'f', 2 ) );
+    SetData( rowIndex, 3, locale().toString( volume, 'f', 2 ) );
     SetData( rowIndex, 3, volume, Qt::UserRole + 1, true, Qt::AlignRight | Qt::AlignVCenter );
-    SetData( rowIndex, 4, QString::number( ComputeNormalizedConsumption( value, consumption ), 'f', 2 ) );
+    SetData( rowIndex, 4, locale().toString( ComputeNormalizedConsumption( value, consumption ), 'f', 2 ) );
     SetData( rowIndex, 4, consumption, Qt::UserRole + 1, true, Qt::AlignRight | Qt::AlignVCenter );
     if( allowedNatures_.find( resource.GetNature() ) == allowedNatures_.end() )
         for( int col = 0; col < model()->columnCount(); ++col )
@@ -293,12 +293,11 @@ void StockResourcesTable::AddResource( const kernel::DotationType& resource, int
 // -----------------------------------------------------------------------------
 void StockResourcesTable::CustomizeMenuAction( QAction* action, const kernel::DotationType& actionDotation ) const
 {
-    if( allowedNatures_.find( actionDotation.GetNature() ) == allowedNatures_.end() )
-    {
-        QFont font = action->font();
-        font.setItalic( true );
-        action->setFont( font );
-    }
+    if( allowedNatures_.find( actionDotation.GetNature() ) != allowedNatures_.end() )
+        return;
+    QFont font = action->font();
+    font.setItalic( true );
+    action->setFont( font );
 }
 
 // -----------------------------------------------------------------------------
@@ -308,4 +307,23 @@ void StockResourcesTable::CustomizeMenuAction( QAction* action, const kernel::Do
 void StockResourcesTable::SetAllowedNatures( const std::set< std::string >& allowedNatures )
 {
     allowedNatures_ = allowedNatures;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StockResourcesTable::OnDataChanged
+// Created: SLI 2014-09-15
+// -----------------------------------------------------------------------------
+void StockResourcesTable::OnDataChanged( const QModelIndex& index, const QModelIndex& index2 )
+{
+    ResourcesEditorTable_ABC::OnDataChanged( index, index2 );
+    if( index.column() != 4 )
+        return;
+    Disconnect();
+    auto item = dataModel_->item( index.row(), 4 );
+    const int consumption = item ? item->data( Qt::UserRole + 1 ).toInt() : 0;
+    const double newNormalized = item ? item->data( Qt::DisplayRole ).toDouble() : 0;
+    const int newQuantity = static_cast< int >( consumption * newNormalized );
+    SetData( index.row(), 5, locale().toString( newQuantity ) );
+    emit ResourceValueChanged();
+    Connect();
 }

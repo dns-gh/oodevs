@@ -2407,8 +2407,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Quantité</translation>
     </message>
     <message>
-        <source>Normalized quantity</source>
-        <translation>Quantité normalisée</translation>
+        <source>Norm. quantity</source>
+        <translation>Norm. quantity</translation>
     </message>
 </context>
 <context>

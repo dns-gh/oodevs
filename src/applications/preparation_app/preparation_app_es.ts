@@ -2408,7 +2408,7 @@ Este dato no puede ser proyectado.</translation>
         <translation type="unfinished">Cantidad</translation>
     </message>
     <message>
-        <source>Normalized quantity</source>
+        <source>Norm. quantity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
