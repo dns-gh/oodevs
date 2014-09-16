@@ -69,6 +69,57 @@
     </message>
 </context>
 <context>
+    <name>LogConfigPanel</name>
+    <message>
+        <source>Logs</source>
+        <translation>Logs</translation>
+    </message>
+    <message>
+        <source>Logs Rotation</source>
+        <translation>Rotation des Logs</translation>
+    </message>
+    <message>
+        <source>Max File Size</source>
+        <translation>Taille max par fichier</translation>
+    </message>
+    <message>
+        <source>Keep</source>
+        <translation>Garder</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation>Niveau</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translation>MB</translation>
+    </message>
+    <message>
+        <source>kB</source>
+        <translation>kB</translation>
+    </message>
+    <message>
+        <source>Lines</source>
+        <translation>Lignes</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Tout</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Warning</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Fichiers</translation>
+    </message>
+</context>
+<context>
     <name>PluginConfig</name>
     <message>
         <source>Enable %1 plugin v%2 </source>
