@@ -51,6 +51,7 @@ namespace gui
 class DrawerPanel : public InfoPanel_ABC
                   , public tools::Observer_ABC
                   , public tools::SelectionObserver_ABC
+                  , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                   , public tools::ElementObserver_ABC< DrawingCategory >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                   , public tools::SelectionObserver_Base< kernel::Drawing_ABC >
@@ -94,6 +95,7 @@ private:
     virtual void NotifyCreated( const DrawingCategory& category );
     virtual void NotifyDeleted( const DrawingCategory& category );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void Select( const kernel::Drawing_ABC& element );
