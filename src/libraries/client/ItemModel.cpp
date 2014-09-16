@@ -202,8 +202,13 @@ bool Item::SetData( int col, const QVariant& value, int role )
     switch( role )
     {
         case Qt::CheckStateRole:
-            check_state_ = static_cast< Qt::CheckState >( value.toInt() );
-            return true;
+            switch( col )
+            {
+                case ITEM_COL_TYPE:
+                    check_state_ = static_cast< Qt::CheckState >( value.toInt() );
+                    return true;
+            }
+            break;
 
         case Qt::UserRole:
             switch( col )
@@ -332,7 +337,6 @@ ItemModel::~ItemModel()
 void ItemModel::Setup( QAbstractItemView* view )
 {
     proxy_.setSourceModel( this );
-    proxy_.setDynamicSortFilter( true );
     proxy_.setFilterKeyColumn( -1 );
     proxy_.setFilterCaseSensitivity( Qt::CaseInsensitive );
     proxy_.setSortCaseSensitivity( Qt::CaseInsensitive );
