@@ -124,7 +124,7 @@ end
 -- @return true
 integration.killOfficers = function( unit )
     DEC_ConnaissanceAgent_TuerOfficiers( unit.source )
-    integration.SendMessage( "killOfficers", integration.getAgentFromKnowledge( unit ), emptyTable, { type = "dynamic" } )
+    integration.SendMessage( "killOfficers", integration.getAgentFromKnowledge( unit ), emptyTable )
     reportFunction(eRC_ExecutionAttentat )
     return true
 end
@@ -187,7 +187,7 @@ integration.capture = function( units, message )
             reportFunction(message, unit.source )
             myself.CRCaptureSomeone[ unit ] = true
             unit.capture = true
-            integration.SendMessage( "capture", integration.getAgentFromKnowledge( unit ), { element = myself }, { type = "dynamic" } )
+            integration.SendMessage( "capture", integration.getAgentFromKnowledge( unit ), { element = myself } )
             DEC_ChangerSuperieurLogistiqueConnaissance( myself, unit.source )
             integration.addToLoadedUnits( unit )
             integration.addToCapturedUnits( unit )
@@ -208,7 +208,7 @@ integration.captureEnd = function( units, message )
             DEC_UnitDecisionalState( unit.source, "hostage", "false" )
             myself.CRCaptureSomeone[ unit ] = false
             unit.capture = false
-            integration.SendMessage( "captureEnd", integration.getAgentFromKnowledge( unit ), { element = myself }, { type = "dynamic" } )
+            integration.SendMessage( "captureEnd", integration.getAgentFromKnowledge( unit ), { element = myself } )
     end
     return true
 end

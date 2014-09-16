@@ -200,7 +200,7 @@ end
 integration.notifyTaskEnded = function( )
     local automat = integration.GetSuperiorKnowledge( meKnowledge )
     if automat then
-        integration.SendMessage( "TaskDone", automat, { element = myself }, { type = "dynamic" } )
+        integration.SendMessage( "TaskDone", automat, { element = myself } )
     end
 end
 
