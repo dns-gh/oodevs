@@ -74,7 +74,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
 
     // Fill errors text
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission %1 has no type defined for a localisation composite parameter." );
-    errorDescriptions_[ eMissingSymbols ]         = tr( "The symbols %1 are defined in symbols.xml but not found in Symbols directory." );
+    errorDescriptions_[ eMissingSymbolForUnit ]   = tr( "Symbol '%2' is missing for unit %1." );
     errorDescriptions_[ eMissionAttachmentInvalid ] = tr( "The file %2 included in the mission %1 is invalid or not present in the attachment list." );
     errorDescriptions_[ eMissingRepairType ]      = tr( "Maintenance system definition is incorrect for equipment '%1'. At least one breakdown type must be defined for each severity." );
     errorDescriptions_[ eInvalidTowCapacity ]     = tr( "Tow capacity must be a positive number for equipment '%1'." );

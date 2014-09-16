@@ -717,10 +717,6 @@ Parked engine running</translation>
         <translation>Duplicate type for objects %1</translation>
     </message>
     <message>
-        <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
-        <translation>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</translation>
-    </message>
-    <message>
         <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -831,6 +827,10 @@ Parked engine running</translation>
     <message>
         <source>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
         <translation>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
+        <translation>Symbol &apos;%2&apos; is missing for unit %1.</translation>
     </message>
 </context>
 <context>
@@ -4777,13 +4777,6 @@ PNG (*.png)
     <message>
         <source>Max combustion energy</source>
         <translation>Max combustion energy</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Symbols_Data</name>
-    <message>
-        <source> and &apos;</source>
-        <translation> and &apos;</translation>
     </message>
 </context>
 <context>

@@ -717,10 +717,6 @@ Arrêt moteur allumé</translation>
         <translation>Les objets %1 possèdent le même type</translation>
     </message>
     <message>
-        <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
-        <translation>Les symboles %1 sont définis dans symbols.xml mais n&apos;existent pas dans le répertoire Symbols.</translation>
-    </message>
-    <message>
         <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
         <translation>Le fichier %2 dans la mission %1 est invalid ou non présent dans la liste des piècess jointes.</translation>
     </message>
@@ -831,6 +827,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
         <translation>La capacité de transport de pions doit être un nombre positif pour l&apos;équipement &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
+        <translation>Le symbole &apos;%2&apos; est manquant pour l'unité %1.</translation>
     </message>
 </context>
 <context>
@@ -4786,13 +4786,6 @@ PNG (*.png)
     <message>
         <source>Max combustion energy</source>
         <translation>Energie de combustion max</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Symbols_Data</name>
-    <message>
-        <source> and &apos;</source>
-        <translation> et &apos;</translation>
     </message>
 </context>
 <context>
