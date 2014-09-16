@@ -391,16 +391,13 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     forward_->Register( elevation3d );
     forward_->Register( weather );
 
-    if( tools::HasFeature( "pathfind" ) )
-    {
-        gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.publisher_, staticModel_.coordinateConverter_,
-                                                        model_.agents_, model_.agents_, *drawingsBuilder_, model_.actions_ );
-        connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), &pathfindLayer, SLOT( OnAcceptEdit() ) );
-        connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( OnRejectEdit() ) );
-        AddLayer( pathfindLayer, "main" );
-        forward_->Register( pathfindLayer );
-        pathfindLayer.SetReadOnlyModes( 0 );
-    }
+    gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.publisher_, staticModel_.coordinateConverter_,
+                                                    model_.agents_, model_.agents_, *drawingsBuilder_, model_.actions_ );
+    connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), &pathfindLayer, SLOT( OnAcceptEdit() ) );
+    connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( OnRejectEdit() ) );
+    AddLayer( pathfindLayer, "main" );
+    forward_->Register( pathfindLayer );
+    pathfindLayer.SetReadOnlyModes( 0 );
 
     forward_->SetDefault( defaultLayer );
 }
