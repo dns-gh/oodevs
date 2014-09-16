@@ -46,11 +46,11 @@ private:
     //! @name Helpers
     //@{
     virtual void PurgeDetail();
-    virtual void DisplayRequest( const LogisticsConsign_ABC& consign );
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );
     QString GetRecipientsLinks( const LogSupplyConsign& consign, bool link );
     virtual void DisplayHistory( const LogSupplyConsign::History& history );
     void FillSupplyTable( const LogSupplyConsign& consign );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     //@}
 
 protected:

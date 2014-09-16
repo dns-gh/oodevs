@@ -33,6 +33,7 @@ class SupplyQuotasWidget : public Q3VBox
                          , public tools::Observer_ABC
                          , public tools::ElementObserver_ABC< LogisticLinks >
                          , public tools::SelectionObserver< kernel::Entity_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
@@ -47,6 +48,7 @@ public:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const LogisticLinks& links );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifySelected( const kernel::Entity_ABC* pEntity );
     //@}
 

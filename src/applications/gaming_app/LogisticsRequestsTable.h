@@ -40,8 +40,17 @@ class LogisticsConsign_ABC;
 // Created: MMC 2013-09-11
 // =============================================================================
 class LogisticsRequestsTable : public gui::RichTableView
+                             , public tools::Observer_ABC
+                             , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
+
+public:
+    //! @name Types
+    //@{
+    typedef std::function< bool( const LogisticsConsign_ABC&, const kernel::Entity_ABC& ) > T_IsEntityInConsignFunctor;
+    typedef std::function< QString( const LogisticsConsign_ABC& ) >                         T_RequesterNameExtractor;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -57,13 +66,14 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void AddRequest( const LogisticsConsign_ABC& consign, unsigned int id,
-                             const QString& requester, const QString& handler, const QString& state );
+    virtual void AddRequest( const LogisticsConsign_ABC& consign );
     virtual void SelectRequest( unsigned int id );
     virtual const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
     const LogisticsConsign_ABC* GetCurrentRequest() const;
     void FindRequestsIds( std::set< unsigned int >& requests );
     void SetData( int col, QString text, const LogisticsConsign_ABC& consign );
+    void SetIsEntityInConsignFunctor( const T_IsEntityInConsignFunctor& functor );
+    void SetRequesterNameExtractor( const T_RequesterNameExtractor& extractor );
     //@}
 
 protected:
@@ -72,6 +82,7 @@ protected:
      int GetRequestRow( const LogisticsConsign_ABC& consign );
      void SetData( int row, int col, QString displayText,
                    QVariant sortText, const LogisticsConsign_ABC& consign );
+     virtual void NotifyUpdated( const kernel::Entity_ABC& element );
     //@}
 
 signals:
@@ -92,6 +103,8 @@ protected:
     gui::LinkItemDelegate*     linkItemDelegate_;
     const kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
+    T_IsEntityInConsignFunctor isEntityInConsignFunctor_;
+    T_RequesterNameExtractor requesterNameExtractor_;
     //@}
 };
 

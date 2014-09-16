@@ -155,3 +155,12 @@ void SupplyQuotasWidget::NotifySelected( const Entity_ABC* pEntity )
     if( pLinks_ )
         NotifyUpdated( *pLinks_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SupplyQuotasWidget::NotifyUpdated
+// Created: ABR 2014-09-16
+// -----------------------------------------------------------------------------
+void SupplyQuotasWidget::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    superior_->ChangeItem( entity.GetName(), &entity );
+}
