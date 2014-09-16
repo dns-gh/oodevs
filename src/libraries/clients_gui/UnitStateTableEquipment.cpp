@@ -18,6 +18,8 @@
 
 using namespace gui;
 
+Q_DECLARE_METATYPE( const kernel::Entity_ABC* );
+
 // -----------------------------------------------------------------------------
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-02-24
@@ -105,7 +107,7 @@ void UnitStateTableEquipment::AddLines( const QString& name, const kernel::Entit
     {
         const unsigned int row = dataModel_.rowCount();
         AddItem( row, eName, name, name );
-        AddItem( row, eUnit, GetDisplayName( entity ), entity.GetName() );
+        AddItem( row, eUnit, GetDisplayName( entity ), &entity );
 
         const unsigned int currentType = i < static_cast< int >( currentBreakdowns.size() ) ? currentBreakdowns[ i ] : 0;
         if( currentType < static_cast< unsigned int >( breakdownTypes.size() ) )
@@ -130,4 +132,37 @@ QString UnitStateTableEquipment::GetDisplayName( const kernel::Entity_ABC& entit
     if( const kernel::Formation_ABC* pFormation = dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
         return extractor_.GetDisplayName( *pFormation );
     return extractor_.GetDisplayName( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableEquipment::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void UnitStateTableEquipment::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    for( int i = 0; i < dataModel_.rowCount(); ++i )
+        if( auto* item = dataModel_.item( i, eUnit ) )
+            if( const auto* itemEntity = item->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
+                if( itemEntity == &entity )
+                    item->setData( QVariant( entity.GetName() ), Qt::DisplayRole );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableEquipment::NotifyDeleted
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void UnitStateTableEquipment::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    for( int i = 0; i < dataModel_.rowCount(); )
+    {
+        if( const auto* item = dataModel_.item( i, eUnit ) )
+            if( const auto* itemEntity = item->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
+                if( itemEntity == &entity )
+                {
+                    auto items = dataModel_.takeRow( i );
+                    std::for_each( items.begin(), items.end(), []( QStandardItem* rowItem ){ delete rowItem; } );
+                    continue;
+                }
+        ++i;
+    }
 }

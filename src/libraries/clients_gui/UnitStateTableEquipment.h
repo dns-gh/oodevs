@@ -11,6 +11,7 @@
 #define __gui_UnitStateTableEquipment_h_
 
 #include "UnitStateTable_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
@@ -28,6 +29,8 @@ namespace gui
 // Created: ABR 2011-07-05
 // =============================================================================
 class UnitStateTableEquipment : public UnitStateTable_ABC
+                              , public tools::Observer_ABC
+                              , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
@@ -54,6 +57,8 @@ protected:
     void AddLines( const QString& name, const kernel::Entity_ABC& entity, int size, E_EquipmentState state, const QStringList& breakdowns,
                    const std::vector< unsigned int > currentBreakdowns = std::vector< unsigned int >() );
     QString GetDisplayName( const kernel::Entity_ABC& entity ) const;
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     //@}
 
 protected:

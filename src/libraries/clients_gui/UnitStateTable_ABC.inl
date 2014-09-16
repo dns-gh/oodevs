@@ -16,7 +16,7 @@ void UnitStateTable_ABC::AddItem( int row, int col, QString text, T value, Qt::I
 {
     QStandardItem* item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
-    item->setData( QVariant( value ), Qt::UserRole );
+    item->setData( QVariant::fromValue( value ), Qt::UserRole );
     item->setData( QVariant( text ), Qt::DisplayRole );
     item->setData( QVariant( StandardModel::showValue_ ), Roles::FilterRole );
     dataModel_.setItem( row, col, item );

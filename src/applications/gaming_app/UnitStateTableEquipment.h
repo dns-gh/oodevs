@@ -42,7 +42,6 @@ class StaticModel;
 // Created: ABR 2011-07-07
 // =============================================================================
 class UnitStateTableEquipment : public gui::UnitStateTableEquipment
-                              , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< kernel::Equipments_ABC >
 {
 public:
