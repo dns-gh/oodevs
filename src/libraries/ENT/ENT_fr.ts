@@ -822,6 +822,10 @@
         <source>Itineraries</source>
         <translation>Itinéraires</translation>
     </message>
+    <message>
+        <source>Weapon ranges</source>
+        <translation>Portées d&apos;armes</translation>
+    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

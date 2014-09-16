@@ -13,7 +13,6 @@
 #include "clients_kernel/DisasterType.h"
 #include "propagation/Extractor_ABC.h"
 #include "propagation/PropagationManager.h"
-#include <graphics/Visitor2d.h>
 #include <graphics/TextureVisitor_ABC.h>
 
 // -----------------------------------------------------------------------------

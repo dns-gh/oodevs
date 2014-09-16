@@ -27,6 +27,7 @@ enum E_LayerTypes
     eLayerTypes_Knowledges,
     eLayerTypes_Inhabitants,
     eLayerTypes_Pathfinds,
+    eLayerTypes_WeaponRanges,
     eNbrLayerTypes
 };
 
