@@ -447,8 +447,8 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
             continue;
         const auto filename = tr( "WeaponSystem_%1.htm" ).arg( n );
         tools::Path strFileName = tools::Path::FromUnicode( filename.toStdWString() );
-        const auto weaponame = Qt::escape( QString::fromStdString( weapon.strName_.GetData() ) );
-        QString strLink = QString( "<a href=\"" ) + Qt::escape( filename ) + "\">" + weaponame + "</a>";
+        const auto weaponName = Qt::escape( QString::fromStdString( weapon.strName_.GetData() ) );
+        QString strLink = QString( "<a href=\"" ) + Qt::escape( filename ) + "\">" + weaponName + "</a>";
         indexBuilder.ListItem( strLink );
 
         ADN_HtmlBuilder builder;
