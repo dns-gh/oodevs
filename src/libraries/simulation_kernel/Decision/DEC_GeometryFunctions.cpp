@@ -1536,7 +1536,7 @@ namespace
             nb = 1;
         vector.reserve( nb );
         const double increment = max / nb;
-        for( int i = 0; i < nb; ++i )
+        for( std::size_t i = 0; i < nb; ++i )
             vector.push_back( i * increment );
         MIL_Random::random_shuffle( vector );
     }
