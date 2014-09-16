@@ -115,12 +115,10 @@ void WeaponRangeLayer::Update() const
 {
     int position = 0;
     for( auto it = positions_.begin(); it != positions_.end(); ++it )
-    {
         program_->SetUniformValue(
-            "pos_" + boost::lexical_cast< std::string>( position ),
+            "pos_" + boost::lexical_cast< std::string>( ++position ),
             static_cast< int >( it->second.size() ),
             &it->second.front().X() );
-    }
 }
 
 std::string WeaponRangeLayer::MakeFragment() const
@@ -143,7 +141,7 @@ std::string WeaponRangeLayer::MakeFragment() const
         shader <<
             "const vec3 color_" << team
                 << " = vec3(" << c.redF() << "," << c.greenF() << "," << c.blueF() << ");"
-            "const uint min_" << team << "[" << size << "] = uint[" << size << "](";
+            "const float min_" << team << "[" << size << "] = float[" << size << "](";
         for( auto it2 = range.begin(); it2 != range.end(); ++it2 )
         {
             shader << it2->first;
@@ -152,7 +150,7 @@ std::string WeaponRangeLayer::MakeFragment() const
         }
         shader <<
             ");"
-            "const uint max_" << team << "[" << size << "] = uint[" << size << "](";
+            "const float max_" << team << "[" << size << "] = float[" << size << "](";
         for( auto it2 = range.begin(); it2 != range.end(); ++it2 )
         {
             shader << it2->second;
@@ -167,7 +165,7 @@ std::string WeaponRangeLayer::MakeFragment() const
         "void main()"
         "{"
         "  vec3 color = vec3( 0, 0, 0 );"
-        "  int count = 0;";
+        "  float count = 0;";
     team = 0;
     for( auto it = ranges_.begin(); it != ranges_.end(); ++it )
     {
@@ -181,6 +179,7 @@ std::string WeaponRangeLayer::MakeFragment() const
             "  {"
             "    color += color_" << team << ";"
             "    ++count;"
+            "    break;"
             "  }"
             "}";
     }
