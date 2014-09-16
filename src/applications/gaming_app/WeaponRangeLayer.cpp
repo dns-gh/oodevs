@@ -18,6 +18,7 @@
 #include <graphics/VertexShader.h>
 #include <graphics/FragmentShader.h>
 #include <graphics/ShaderProgram.h>
+#include <boost/lexical_cast.hpp>
 
 WeaponRangeLayer::WeaponRangeLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                     gui::View_ABC& view, const kernel::Profile_ABC& profile )
@@ -54,6 +55,7 @@ void WeaponRangeLayer::Paint( const geometry::Rectangle2f& extent )
     ranges_.clear();
     positions_.clear();
     gui::Viewport2d viewport( extent );
+    // will call Draw with each entity
     EntityLayerBase::Paint( viewport );
     if( ranges != ranges_ )
         Reset();
@@ -109,11 +111,8 @@ void WeaponRangeLayer::Update() const
     int position = 0;
     for( auto it = positions_.begin(); it != positions_.end(); ++it )
     {
-        ++position;
-        std::stringstream s;
-        s << "pos_" << position;
         program_->SetUniformValue(
-            s.str(),
+            "pos_" + boost::lexical_cast< std::string>( position ),
             static_cast< int >( it->second.size() ),
             &it->second.front().X() );
     }
@@ -192,22 +191,21 @@ std::string WeaponRangeLayer::MakeFragment() const
 
 void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& /*viewport*/, bool /*pickingMode*/ )
 {
-    if( ShouldDisplay( entity ) && tools_.ShouldDisplay( type_ ) )
+    if( !ShouldDisplay( entity ) || !tools_.ShouldDisplay( type_ ) )
+        return;
+    // SelectColor actually controls the result of ShouldDisplay
+    strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
+    if( !tools_.ShouldDisplay( "WeaponRanges" ) )
+        return;
+    if( const Weapons* weapons = entity.Retrieve< Weapons >() )
     {
-        // SelectColor actually controls the result of ShouldDisplay
-        strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
         const geometry::Point2f position = GetPosition( entity );
-        if( tools_.ShouldDisplay( "WeaponRanges" ) )
-            if( const Weapons* weapons = entity.Retrieve< Weapons >() )
-            {
-                weapons->DrawEfficientRange( position, tools_ );
-                if( weapons->GetMaxRange() > 0 )
-                {
-                    const auto color = useColor_ ? color_ : strategy_.FindColor( entity );
-                    ranges_[ color.name() ].push_back( std::make_pair( weapons->GetMinRange(), weapons->GetMaxRange() ) );
-                    positions_[ color.name() ].push_back( position );
-                }
-            }
+        weapons->DrawEfficientRange( position, tools_ );
+        if( weapons->GetMaxRange() <= 0 )
+            return;
+        const auto color = useColor_ ? color_ : strategy_.FindColor( entity );
+        ranges_[ color.name() ].push_back( std::make_pair( weapons->GetMinRange(), weapons->GetMaxRange() ) );
+        positions_[ color.name() ].push_back( position );
     }
 }
 
