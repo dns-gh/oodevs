@@ -17,6 +17,7 @@ import (
 	"math/rand"
 )
 
+// Mask used to check whether replayer client ids have highest bit set
 const mask int32 = -1 << 31
 
 func replayAndWaitModel(c *C, simOpts *simu.SimOpts, clientOpts *ClientOpts) (
