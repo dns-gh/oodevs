@@ -18,7 +18,7 @@ enum E_ConsistencyCheck
 
     eMissingPart,
     eMissingChoiceComposite,
-    eMissingSymbols,
+    eMissingSymbolForUnit,
     eMissionAttachmentInvalid,
     eMissingRepairType,
     eInvalidTowCapacity,
