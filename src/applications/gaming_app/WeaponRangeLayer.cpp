@@ -95,15 +95,20 @@ void WeaponRangeLayer::Reset()
         program_->AddShader( *vertex_ );
         program_->AddShader( *fragment_ );
         program_->Link();
+        return;
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_WARNING_MSG( "unable to create shader in " << __FUNCTION__ << std::endl << e.what() );
     }
     catch( ... )
     {
         MT_LOG_WARNING_MSG( "unable to create shader in " << __FUNCTION__ );
-        ignoreShader_ = true;
-        fragment_.reset();
-        vertex_.reset();
-        program_.reset();
     }
+    ignoreShader_ = true;
+    fragment_.reset();
+    vertex_.reset();
+    program_.reset();
 }
 
 void WeaponRangeLayer::Update() const
