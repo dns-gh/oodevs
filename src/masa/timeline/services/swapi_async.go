@@ -9,7 +9,6 @@
 package services
 
 import (
-	"container/list"
 	"masa/sword/swapi"
 	"sync"
 )
@@ -17,7 +16,7 @@ import (
 // Allows reacting on swapi events without
 // running our code under swapi locks
 type SwapiAsync struct {
-	events *list.List
+	events []SwapiEvent
 	mutex  sync.Mutex
 	cond   *sync.Cond
 	quit   bool
@@ -31,9 +30,7 @@ type SwapiEvent struct {
 }
 
 func NewSwapiAsync() *SwapiAsync {
-	a := &SwapiAsync{
-		events: list.New(),
-	}
+	a := &SwapiAsync{}
 	a.cond = sync.NewCond(&a.mutex)
 	return a
 }
@@ -42,7 +39,7 @@ func (a *SwapiAsync) Write(msg *swapi.SwordMessage, clientId, ctx int32, err err
 	a.mutex.Lock()
 	quit := a.quit
 	if !quit {
-		a.events.PushBack(SwapiEvent{msg, clientId, ctx, err})
+		a.events = append(a.events, SwapiEvent{msg, clientId, ctx, err})
 	}
 	a.mutex.Unlock()
 	a.cond.Signal()
@@ -52,13 +49,15 @@ func (a *SwapiAsync) Write(msg *swapi.SwordMessage, clientId, ctx int32, err err
 func (a *SwapiAsync) pop() (SwapiEvent, bool) {
 	a.mutex.Lock()
 	defer a.mutex.Unlock()
-	for !a.quit && a.events.Len() == 0 {
+	for !a.quit && len(a.events) == 0 {
 		a.cond.Wait()
 	}
 	if a.quit {
 		return SwapiEvent{}, false
 	}
-	return a.events.Remove(a.events.Front()).(SwapiEvent), true
+	event := a.events[0]
+	a.events = a.events[1:]
+	return event, true
 }
 
 type SwapiOperand func(msg *swapi.SwordMessage, clientId, ctx int32, err error) bool

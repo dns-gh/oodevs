@@ -9,13 +9,12 @@
 package util
 
 import (
-	"container/list"
 	"sync"
 )
 
 // Implements an unbounded event loop
 type EventLoop struct {
-	posts *list.List
+	posts []func()
 	quit  bool
 	mutex sync.Mutex
 	cond  *sync.Cond
@@ -23,7 +22,7 @@ type EventLoop struct {
 }
 
 func NewEventLoop() *EventLoop {
-	e := &EventLoop{posts: list.New()}
+	e := &EventLoop{}
 	e.cond = sync.NewCond(&e.mutex)
 	return e
 }
@@ -31,19 +30,20 @@ func NewEventLoop() *EventLoop {
 func (e *EventLoop) run() {
 	for {
 		e.mutex.Lock()
-		for !e.quit && e.posts.Len() == 0 {
+		for !e.quit && len(e.posts) == 0 {
 			e.cond.Wait()
 		}
 		if e.quit {
 			e.mutex.Unlock()
 			break
 		}
-		post := e.posts.Remove(e.posts.Front()).(func())
+		post := e.posts[0]
+		e.posts = e.posts[1:]
 		e.mutex.Unlock()
 		post()
 	}
-	for e := e.posts.Front(); e != nil; e = e.Next() {
-		e.Value.(func())()
+	for _, post := range e.posts {
+		post()
 	}
 	e.group.Done()
 }
@@ -63,7 +63,7 @@ func (e *EventLoop) Close() {
 
 func (e *EventLoop) Post(post func()) {
 	e.mutex.Lock()
-	e.posts.PushBack(post)
+	e.posts = append(e.posts, post)
 	e.mutex.Unlock()
 	e.cond.Signal()
 }
