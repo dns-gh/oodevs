@@ -46,6 +46,7 @@ class PopulationKnowledgePanel : public gui::InfoPanel_ABC
                                , public tools::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
                                , public tools::ElementObserver_ABC< PopulationFlowKnowledge >
                                , public tools::ElementObserver_ABC< PopulationConcentrationKnowledge >
+                               , public tools::ElementObserver_ABC< kernel::Population_ABC >
 {
     Q_OBJECT
 public:
@@ -63,13 +64,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationKnowledgePanel( const PopulationKnowledgePanel& );
-    PopulationKnowledgePanel& operator=( const PopulationKnowledgePanel& );
-    //@}
-
-private:
     //! @name Helpers
     //@{
     void showEvent( QShowEvent* );
@@ -77,6 +71,7 @@ private:
     virtual void NotifyUpdated( const kernel::PopulationKnowledge_ABC& element );
     virtual void NotifyUpdated( const PopulationFlowKnowledge& element );
     virtual void NotifyUpdated( const PopulationConcentrationKnowledge& element );
+    virtual void NotifyUpdated( const kernel::Population_ABC& population );
     virtual void Select( const kernel::KnowledgeGroup_ABC* element );
     //@}
 

@@ -12,6 +12,7 @@
 #include "moc_ObjectKnowledgePanel.cpp"
 
 #include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -23,8 +24,10 @@
 #include "gaming/ObjectKnowledges.h"
 #include "gaming/ObjectPerceptions.h"
 
+Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
 Q_DECLARE_METATYPE( const kernel::ObjectKnowledge_ABC* )
-#define KnowledgeRole ( Qt::UserRole + 1 )
+
+#define EntityRole ( Qt::UserRole )
 
 using namespace kernel;
 using namespace gui;
@@ -154,7 +157,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
         const kernel::ObjectKnowledge_ABC& knowledge = iterator.NextElement();
         QStandardItem* item = knowledgeModel_.item( i );
         item->setText( knowledge.GetName() );
-        item->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        item->setData( QVariant::fromValue( &knowledge ), EntityRole );
         ++i;
         if( subSelected_ == &knowledge )
             toSelect = item;
@@ -193,7 +196,10 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectPerceptions& element )
     int knowledgeSize = static_cast< int >( element.detectingAutomats_.size() );
     ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), knowledgeSize );
     for( int i = 0; i < knowledgeSize; ++i )
+    {
         perceptionModel_.item( i )->setText( element.detectingAutomats_[ i ]->GetName() );
+        perceptionModel_.item( i )->setData( QVariant::fromValue( element.detectingAutomats_[ i ] ), EntityRole );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -354,9 +360,9 @@ void ObjectKnowledgePanel::OnSelectionChanged()
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( KnowledgeRole ).isValid() )
+    if( item && item->data( EntityRole ).isValid() )
     {
-        subSelected_ = item->data( KnowledgeRole ).value< const ObjectKnowledge_ABC* >();
+        subSelected_ = item->data( EntityRole ).value< const ObjectKnowledge_ABC* >();
         if( subSelected_ )
         {
             subSelected_->Activate( controllers_.actions_ );
@@ -380,8 +386,8 @@ void ObjectKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( KnowledgeRole ).isValid() )
-        item->data( KnowledgeRole ).value< const ObjectKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
+    if( item && item->data( EntityRole ).isValid() )
+        item->data( EntityRole ).value< const ObjectKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -405,4 +411,28 @@ void ObjectKnowledgePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), 0, *display_ );
     ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::NotifyUpdated( const kernel::Automat_ABC& automat )
+{
+    if( !isVisible() )
+        return;
+    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, EntityRole );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::NotifyUpdated( const kernel::Object_ABC& object )
+{
+    if( !isVisible() )
+        return;
+    if( subSelected_ && subSelected_->GetEntity() == &object )
+        subSelected_->Display( *display_ );
+    tools::UpdateEntityNameInKnowledgeModel< ObjectKnowledge_ABC >( knowledgeModel_, object, EntityRole );
 }

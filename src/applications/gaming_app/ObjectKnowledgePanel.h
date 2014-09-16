@@ -33,6 +33,7 @@ namespace kernel
     class CrossingSiteAttribute_ABC;
     class SupplyRouteAttribute_ABC;
     class TimeLimitedAttribute_ABC;
+    class Object_ABC;
 }
 
 namespace gui
@@ -54,7 +55,6 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< ObjectKnowledges >
                            , public tools::ElementObserver_ABC< ObjectPerceptions >
-                           , public tools::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
                            , public tools::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::MineAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::ObstacleAttribute_ABC >
@@ -65,6 +65,9 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::ElementObserver_ABC< kernel::NBCAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::TimeLimitedAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
+                           , public tools::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
+                           , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                           , public tools::ElementObserver_ABC< kernel::Object_ABC >
                            , public kernel::TeamSelectionObserver
                            , public KnowledgeGroupSelectionObserver
 {
@@ -100,6 +103,8 @@ private:
     virtual void NotifyUpdated( const kernel::NBCAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::TimeLimitedAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
+    virtual void NotifyUpdated( const kernel::Automat_ABC& automat );
+    virtual void NotifyUpdated( const kernel::Object_ABC& object );
 
     template< typename T >
     void DisplayExtension( const T& extension );

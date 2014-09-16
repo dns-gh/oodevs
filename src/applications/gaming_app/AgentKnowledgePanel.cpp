@@ -19,11 +19,12 @@
 #include "gaming/PerceptionMap.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/InternalLinks.h"
+#include "clients_gui/Tools.h"
 
 Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
 Q_DECLARE_METATYPE( const kernel::AgentKnowledge_ABC* )
-#define EntityRole ( Qt::UserRole + 1 )
-#define KnowledgeRole ( Qt::UserRole + 2 )
+
+#define EntityRole ( Qt::UserRole )
 
 using namespace kernel;
 using namespace gui;
@@ -135,7 +136,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     {
         const AgentKnowledge_ABC& knowledge = iterator.NextElement();
         knowledgeModel_.item( i )->setText( knowledge.GetName() );
-        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), EntityRole );
         ++i;
     }
 }
@@ -166,11 +167,7 @@ void AgentKnowledgePanel::Select( const AgentKnowledge_ABC& k )
 void AgentKnowledgePanel::AfterSelection()
 {
     if( selectionCandidate_ )
-    {
-        const Entity_ABC* owner = & selectionCandidate_->GetOwner();
-        const KnowledgeGroup_ABC* kg = static_cast< const KnowledgeGroup_ABC* >( owner );
-        Select( kg );
-    }
+        Select( static_cast< const KnowledgeGroup_ABC* >( &selectionCandidate_->GetOwner() ) );
     else
         KnowledgeGroupSelectionObserver::AfterSelection();
 }
@@ -206,8 +203,8 @@ void AgentKnowledgePanel::OnSelectionChanged()
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( KnowledgeRole ).isValid() )
-        subSelected_ = item->data( KnowledgeRole ).value< const kernel::AgentKnowledge_ABC* >();
+    if( item && item->data( EntityRole ).isValid() )
+        subSelected_ = item->data( EntityRole ).value< const kernel::AgentKnowledge_ABC* >();
     if( subSelected_ )
     {
         NotifyUpdated( *subSelected_ );
@@ -245,8 +242,8 @@ void AgentKnowledgePanel::OnKnowledgeContextMenuEvent( const QPoint & pos )
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( KnowledgeRole ).isValid() )
-        item->data( KnowledgeRole ).value< const AgentKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
+    if( item && item->data( EntityRole ).isValid() )
+        item->data( EntityRole ).value< const AgentKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,8 +270,8 @@ void AgentKnowledgePanel::OnKnowledgeRequestCenter()
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( KnowledgeRole ).isValid() )
-        item->data( KnowledgeRole ).value< const AgentKnowledge_ABC* >()->Activate( controllers_.actions_ );
+    if( item && item->data( EntityRole ).isValid() )
+        item->data( EntityRole ).value< const AgentKnowledge_ABC* >()->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,11 +308,25 @@ void AgentKnowledgePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
     ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), 0 );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::NotifyUpdated( const kernel::Agent_ABC& agent )
+{
+    if( !isVisible() )
+        return;
+    if( subSelected_ && subSelected_->GetEntity() == &agent )
+        subSelected_->Display( display_->Group( tools::translate( "AgentKnowledge", "Details" ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
 void AgentKnowledgePanel::NotifyUpdated( const kernel::Automat_ABC& automat )
 {
-    for( int i = 0; i < perceptionModel_.rowCount(); ++i )
-        if( auto item = perceptionModel_.item( i, 0 ) )
-            if( auto entity = item->data( EntityRole ).value< const Automat_ABC* >() )
-                if( entity == &automat )
-                    item->setText( automat.GetName() );
+    if( !isVisible() )
+        return;
+    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, EntityRole );
 }
