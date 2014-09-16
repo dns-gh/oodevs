@@ -339,14 +339,8 @@ func filterEvent(filters Filters, event *Event, encoded *sdk.Event,
 	if ok {
 		return filtered
 	}
-	// check if parent is filtered
 	if event.parent != nil {
-		filtered, ok = cache[event.parent]
-		if !ok {
-			filtered = filters.Filter(event.parent.Proto())
-			cache[event.parent] = filtered
-		}
-		if filtered {
+		if filterEvent(filters, event.parent, event.parent.Proto(), cache) {
 			return true
 		}
 	}
