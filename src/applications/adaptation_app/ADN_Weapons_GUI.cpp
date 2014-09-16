@@ -445,8 +445,10 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
         ADN_Weapons_Data_WeaponInfos& weapon = **it;
         if( !weapon.ptrLauncher_.GetData() || !weapon.ptrAmmunition_.GetData() )
             continue;
-        tools::Path strFileName = tools::Path::FromUnicode( tr( "WeaponSystem_%1.htm" ).arg( n ).toStdWString() );
-        QString strLink = QString( "<a href=\"" ) + strFileName.ToUTF8().c_str() + "\">" + weapon.strName_.GetData().c_str() + "</a>";
+        const auto filename = tr( "WeaponSystem_%1.htm" ).arg( n );
+        tools::Path strFileName = tools::Path::FromUnicode( filename.toStdWString() );
+        const auto weaponame = Qt::escape( QString::fromStdString( weapon.strName_.GetData() ) );
+        QString strLink = QString( "<a href=\"" ) + Qt::escape( filename ) + "\">" + weaponame + "</a>";
         indexBuilder.ListItem( strLink );
 
         ADN_HtmlBuilder builder;
@@ -516,7 +518,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
     indexBuilder.EndHtml();
     indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
-    QString strText = "<a href=\"" + tr( "WeaponSystems/" ) + "index.htm\">" + tr( "Weapon Systems" ) + "</a>";
+    QString strText = "<a href=\"" + Qt::escape( tr( "WeaponSystems/" ) ) + "index.htm\">" + Qt::escape( tr( "Weapon Systems" ) ) + "</a>";
     mainIndexBuilder.ListItem( strText );
 }
 

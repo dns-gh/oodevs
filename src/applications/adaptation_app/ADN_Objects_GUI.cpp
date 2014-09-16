@@ -475,7 +475,7 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
     indexBuilder.EndTable();
     indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
-    QString strText = "<a href=\"" + tr( "Objects/" ) + "index.htm\">" + tr( "Objects" ) + "</a>";
+    QString strText = "<a href=\"" + Qt::escape( tr( "Objects/" ) ) + "index.htm\">" + Qt::escape( tr( "Objects" ) ) + "</a>";
     mainIndexBuilder.ListItem( strText );
 }
 

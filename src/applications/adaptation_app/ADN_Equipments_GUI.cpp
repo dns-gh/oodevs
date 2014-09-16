@@ -640,8 +640,10 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
 
         builder.EndHtml();
 
-        tools::Path strFileName = tools::Path::FromUnicode( tools::translate( "ADN_Equipments_GUI", "Equipment_%1.htm" ).arg( n ).toStdWString() );
-        QString strLink = QString( "<a href=\"" ) + strFileName.ToUTF8().c_str() + "\">" + composante.strName_.GetData().c_str() + "</a>";
+        const auto filename = tools::translate( "ADN_Equipments_GUI", "Equipment_%1.htm" ).arg( n );
+        tools::Path strFileName = tools::Path::FromUnicode( filename.toStdWString() );
+        const auto componame = Qt::escape( QString::fromStdString( composante.strName_.GetData() ) );
+        const QString strLink = QString( "<a href=\"" ) + Qt::escape( filename ) + "\">" + componame + "</a>";
         indexBuilder.ListItem( strLink );
         builder.WriteToFile( strLocalPath / strFileName );
     }
@@ -649,7 +651,7 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
     indexBuilder.EndHtml();
     indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
-    QString strText = "<a href=\"" + tools::translate( "ADN_Equipments_GUI", "Equipments/" ) + "index.htm\">" + tools::translate( "ADN_Equipments_GUI", "Equipments" ) + "</a>";
+    QString strText = "<a href=\"" + Qt::escape( tr( "Equipments/" ) ) + "index.htm\">" + Qt::escape( tr( "Equipments" ) ) + "</a>";
     mainIndexBuilder.ListItem( strText );
 }
 

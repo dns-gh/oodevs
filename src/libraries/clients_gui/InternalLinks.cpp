@@ -38,5 +38,5 @@ QString InternalLinks::CreateLink( const QString& type, unsigned long id, const 
 // -----------------------------------------------------------------------------
 QString InternalLinks::Embed( const QString& message, const QString& classId, unsigned long id )
 {
-    return QString( "<a href=\"id://%1/%2\">%3</a>" ).arg( classId ).arg( id ).arg( message );
+    return QString( "<a href=\"id://%1/%2\">%3</a>" ).arg( Qt::escape( classId ) ).arg( id ).arg( Qt::escape( message ) );
 }
