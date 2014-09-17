@@ -288,3 +288,8 @@ void RawDataHazardContourGroup::PropagationChanged( const ObjectPropagationEvent
     }
     attributes_->Update( "Contours", Wrapper< std::vector< RawDataHazardContour > >( contours_ ) );
 }
+
+Agent_ABC* const RawDataHazardContourGroup::GetAgent() const
+{
+	return 0;
+}

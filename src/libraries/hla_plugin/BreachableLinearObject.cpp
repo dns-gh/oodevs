@@ -247,3 +247,8 @@ void BreachableLinearObject::ResourcesChanged( const ObjectLocationEventListener
 {
     // NOTHING
 }
+
+Agent_ABC* const BreachableLinearObject::GetAgent() const
+{
+	return 0;
+}

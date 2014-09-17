@@ -241,3 +241,8 @@ void Aircraft::StateChanged( rpr::DamageState32 state )
 {
     attributesUpdater_->Update( "DamageState", Wrapper< uint32_t >( static_cast< uint32_t >( state ) ) );
 }
+
+Agent_ABC* const Aircraft::GetAgent() const
+{
+	return agent_;
+}

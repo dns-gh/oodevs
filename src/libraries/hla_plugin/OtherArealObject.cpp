@@ -211,3 +211,8 @@ void OtherArealObject::ResourcesChanged( const ObjectLocationEventListener_ABC::
 {
     // NOTHING
 }
+
+Agent_ABC* const OtherArealObject::GetAgent() const
+{
+	return 0;
+}

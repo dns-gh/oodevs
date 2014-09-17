@@ -139,3 +139,8 @@ void NetnAircraft::ResetAttributes()
 {
     attributesUpdater_->Update( "EmbeddedUnitList", Wrapper< std::vector< UniqueId > >( std::vector< UniqueId >() ) );
 }
+
+Agent_ABC* const NetnAircraft::GetAgent() const
+{
+	return aggregate_->GetAgent();
+}

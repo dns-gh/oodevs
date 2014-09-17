@@ -136,3 +136,8 @@ void NetnSurfaceVessel::ResetAttributes()
 {
     attributesUpdater_->Update( "EmbeddedUnitList", Wrapper< std::vector< UniqueId > >( std::vector< UniqueId >() ) );
 }
+
+Agent_ABC* const NetnSurfaceVessel::GetAgent() const
+{
+	return aggregate_->GetAgent();
+}

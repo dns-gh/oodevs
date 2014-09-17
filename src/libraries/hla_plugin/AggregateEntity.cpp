@@ -314,3 +314,8 @@ void AggregateEntity::StateChanged( rpr::DamageState32 /*state*/ )
 {
     // NOTHING
 }
+
+Agent_ABC* const AggregateEntity::GetAgent() const
+{
+	return agent_;
+}

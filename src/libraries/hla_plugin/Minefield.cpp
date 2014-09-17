@@ -246,3 +246,8 @@ void Minefield::ResourcesChanged( const ObjectLocationEventListener_ABC::T_Resou
     mineTypes_ = res;
     attributes_->Update( "MineTypes",  Wrapper< std::vector< rpr::EntityType > >( mineTypes_ )  );
 }
+
+Agent_ABC* const Minefield::GetAgent() const
+{
+	return 0;
+}

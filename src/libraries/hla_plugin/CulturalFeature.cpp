@@ -198,3 +198,8 @@ void CulturalFeature::ResourcesChanged( const ObjectLocationEventListener_ABC::T
 {
     // NOTHING
 }
+
+Agent_ABC* const CulturalFeature::GetAgent() const
+{
+	return 0;
+}

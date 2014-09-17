@@ -110,3 +110,8 @@ void NetnGroundVehicle::ResetAttributes()
 {
     // NOTHING
 }
+
+Agent_ABC* const NetnGroundVehicle::GetAgent() const
+{
+	return 0;
+}
