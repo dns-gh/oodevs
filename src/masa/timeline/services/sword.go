@@ -383,8 +383,9 @@ func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage
 	payload := event.GetAction().GetPayload()
 	err := swapi.DecodeMessage(&msg, swapi.ClientToSimulationTag, payload)
 	if err != nil {
-		s.Log("unable to decode payload %v: %v", string(payload), err)
-		return nil
+		s.Log("unable to decode payload on event %v: payload:%v error:%v",
+			id, string(payload), err)
+		msg = swapi.SwordMessage{ClientToSimulation: &sword.ClientToSim{}}
 	}
 	s.events[id] = msg
 	return &msg
@@ -515,7 +516,9 @@ func (s *Sword) cacheMetadata(event *sdk.Event, overwrite bool) *sdk.Metadata {
 	if len(src) != 0 {
 		err := json.NewDecoder(bytes.NewBufferString(src)).Decode(&metadata)
 		if err != nil {
-			return nil
+			s.Log("unable to decode metadata on event %v: metadata:%v error:%v\n",
+				id, src, err)
+			metadata = sdk.Metadata{}
 		}
 	}
 	s.metadata[id] = &metadata
