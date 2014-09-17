@@ -17,10 +17,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Tools.h"
+#include <boost/range/algorithm_ext/erase.hpp>
 
 LogisticRouteWidget::LogisticRouteWidget( kernel::Controllers& controllers, const gui::EntitySymbols& symbols )
-    : QWidget()
-    , vLayout_                   ( new QGridLayout() )
+    : layout_                    ( new QGridLayout() )
     , controllers_               ( controllers )
     , selectedPathfind_          ( controllers )
     , symbols_                   ( symbols )
@@ -33,7 +33,7 @@ LogisticRouteWidget::LogisticRouteWidget( kernel::Controllers& controllers, cons
 {
     QVBoxLayout* main = new QVBoxLayout();
     main->setSizeConstraint( QLayout::SetMinimumSize );
-    main->addLayout( vLayout_ );
+    main->addLayout( layout_ );
     main->addStretch( 1 );
     setLayout( main );
     connect( upSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnUp( int ) ) );
@@ -74,7 +74,7 @@ void LogisticRouteWidget::Clear()
 void LogisticRouteWidget::RemoveRecipient( const kernel::Entity_ABC& recipient )
 {
     routes_.erase( recipient.GetId() );
-    recipients_.erase( std::find( recipients_.begin(), recipients_.end(), &recipient ) );
+    boost::remove_erase( recipients_, &recipient );
     Build();
 }
 
@@ -122,7 +122,7 @@ namespace
 
 void LogisticRouteWidget::OnUp( int index )
 {
-    if( index != 0 && recipients_.size() > index )
+    if( index > 0 && recipients_.size() > index )
     {
         std::swap( recipients_[ index ], recipients_[ index - 1 ] );
         Build();
@@ -131,8 +131,7 @@ void LogisticRouteWidget::OnUp( int index )
 
 void LogisticRouteWidget::OnDown( int index )
 {
-    const auto count = recipients_.size() - 1;
-    if( index != count && count > index )
+    if( index > 0 )
     {
         std::swap( recipients_[ index ], recipients_[ index + 1 ] );
         Build();
@@ -141,18 +140,18 @@ void LogisticRouteWidget::OnDown( int index )
 
 void LogisticRouteWidget::Build()
 {
-    ClearLayout( vLayout_ );
+    ClearLayout( layout_ );
     // No recipients
-    if( recipients_.size() <= 1 )
+    const auto size = recipients_.size();
+    if( size <= 1 )
         return;
 
     int row = 0;
-    const auto size = recipients_.size();
     // Build recipient
     for( int i = 0; i < size; ++i )
     {
-        const auto* recipient = recipients_.at( i );
-        const auto isRequester = i == recipients_.size() - 1;
+        const auto* recipient = recipients_[ i ];
+        const bool isRequester = i == recipients_.size() - 1;
         // Tasker widget
         if( !isRequester )
         {
@@ -160,14 +159,14 @@ void LogisticRouteWidget::Build()
             tasker->SetTasker( recipient );
             tasker->SetButtonsSize( QSize( 20, 20 ) );
             tasker->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-            vLayout_->addWidget( tasker, row, 0 );
+            layout_->addWidget( tasker, row, 0 );
         }
         else
-            vLayout_->addWidget( new QLabel( tools::translate( "LogisticRouteWidget", "Return trip" ) ), row, 0, Qt::AlignCenter );
+            layout_->addWidget( new QLabel( tools::translate( "LogisticRouteWidget", "Return trip" ) ), row, 0, Qt::AlignCenter );
 
         // Itinerary widget
         const auto it = routes_.find( recipient->GetId() );
-        vLayout_->addWidget( CreateItineraryWidget( routeActivatedSignalMapper_, recipient->GetId(),
+        layout_->addWidget( CreateItineraryWidget( routeActivatedSignalMapper_, recipient->GetId(),
             it != routes_.end() && it->second.first,
             it != routes_.end() && it->second.second ? it->second.second->GetName().toStdString() : "---" ),
             row, 1, Qt::AlignVCenter );
@@ -175,8 +174,8 @@ void LogisticRouteWidget::Build()
         // Buttons widget
         if( size > 2 && !isRequester )
         {
-            vLayout_->addWidget( CreateButton( upIcon_, i != 0, i, upSignalMapper_ ), row, 2 );
-            vLayout_->addWidget( CreateButton( downIcon_, i != recipients_.size() - 2, i, downSignalMapper_ ), row, 3 );
+            layout_->addWidget( CreateButton( upIcon_, i != 0, i, upSignalMapper_ ), row, 2 );
+            layout_->addWidget( CreateButton( downIcon_, i != recipients_.size() - 2, i, downSignalMapper_ ), row, 3 );
         }
         ++row;
 
@@ -185,7 +184,7 @@ void LogisticRouteWidget::Build()
         {
             QFrame* hline = new QFrame( this );
             hline->setFrameStyle( QFrame::HLine | QFrame::Sunken );
-            vLayout_->addWidget( hline, row, 0, 1, 4 );
+            layout_->addWidget( hline, row, 0, 1, 4 );
             ++row;
         }
     }
@@ -216,7 +215,7 @@ void LogisticRouteWidget::SelectRoute( int id )
     }
 }
 
-void LogisticRouteWidget::ActivateRoute( int id )
+void LogisticRouteWidget::ToggleRouteActivation( int id )
 {
     auto it = routes_.find( id );
     if( it == routes_.end() )

@@ -871,8 +871,8 @@ namespace
         dst.set_null_value( false );
         auto& push = *dst.add_value()->mutable_push_flow_parameters();
         xis >> xml::list( "recipient", boost::bind( &AddSupplyFlowRecipient, boost::cref( reader ), boost::ref( push ), _1 ) );
-        const auto add_transporter = &AddSupplyFlowTransporter< PushFlowParameters >;
-        xis >> xml::list( "transporter", boost::bind( add_transporter, boost::ref( push ), _1 ) );
+
+        xis >> xml::list( "transporter", boost::bind( &AddSupplyFlowTransporter< PushFlowParameters >, boost::ref( push ), _1 ) );
         ReadLogisticItinerary( reader, *push.mutable_waybackpathfind(), xis, "waybackpath" );
     }
 

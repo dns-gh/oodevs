@@ -83,9 +83,9 @@ protected slots:
 protected:
     //! @name Types
     //@{
-    typedef std::map< QString, Dotation >                      T_Supplies;
-    typedef std::map< QString, Dotation >                      T_AvailableDotations;
-    typedef QMap< QString, int >                               T_QuantitiesMap;
+    typedef std::map< QString, Dotation > T_Supplies;
+    typedef std::map< QString, Dotation > T_AvailableDotations;
+    typedef QMap< QString, int > T_QuantitiesMap;
     typedef std::map< QString , const kernel::EquipmentType* > T_CarriersName;
     //@}
 

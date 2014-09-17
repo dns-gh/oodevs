@@ -36,9 +36,8 @@ TaskerWidget::TaskerWidget( const QString& objectName,
                             bool showActivate /* = true */,
                             bool showClear /* = true */,
                             bool flat /*= false */,
-                            Qt::AlignmentFlag alignmentSymbol /*= Qt::AlignCenter*/ )
-    : QWidget()
-    , controllers_( controllers )
+                            Qt::AlignmentFlag symbolAlignment /*= Qt::AlignCenter*/ )
+    : controllers_( controllers )
     , symbols_( symbols )
     , tasker_( 0 )
     , activateButton_( 0 )
@@ -61,7 +60,7 @@ TaskerWidget::TaskerWidget( const QString& objectName,
 
     QHBoxLayout* layout = new QHBoxLayout( groupBox_ );
     layout->setContentsMargins( 5, 0, 5, 5 );
-    layout->addWidget( symbolWidget, 10, alignmentSymbol );
+    layout->addWidget( symbolWidget, 10, symbolAlignment );
 
     activateButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
     activateButton_->setToolTip( tr( "Select" ) );

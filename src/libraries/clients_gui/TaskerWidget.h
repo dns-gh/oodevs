@@ -47,7 +47,7 @@ public:
                            bool showActivate = true,
                            bool showClear = true,
                            bool flat = false,
-                           Qt::AlignmentFlag alignSymbol = Qt::AlignCenter );
+                           Qt::AlignmentFlag symbolAlignment = Qt::AlignCenter );
     virtual ~TaskerWidget();
     //@}
 

@@ -285,7 +285,8 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableCarriers( QMap< QString, int 
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::OnSupplierValueChanged()
 {
-    const kernel::Entity_ABC* lastSupplier = supplier_;
+    if( supplier_ )
+        route_->RemoveRecipient( *supplier_ );
 
     ClearSuppliersData();
     QString selection = supplierCombo_->text( supplierCombo_->currentIndex() );
@@ -298,8 +299,6 @@ void LogisticSupplyPullFlowDialog::OnSupplierValueChanged()
     carriersTable_->setEnabled( false );
     OnSupplierSelectionChanged();
 
-    if( lastSupplier )
-        route_->RemoveRecipient( *lastSupplier );
     if( supplier_ )
         route_->AddRecipient( *supplier_ );
 }

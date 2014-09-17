@@ -73,7 +73,7 @@ private slots:
     void OnUp( int index );
     void OnDown( int index );
     void SelectRoute( int id );
-    void ActivateRoute( int id );
+    void ToggleRouteActivation( int id );
     //@}
 
 private:
@@ -92,7 +92,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QGridLayout* vLayout_;
+    QGridLayout* layout_;
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Pathfind_ABC > selectedPathfind_;
     const gui::EntitySymbols& symbols_;

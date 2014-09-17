@@ -1722,7 +1722,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Itinerary to %1</source>
-        <translation>Itinéraire pour %1</translation>
+        <translation>Itinéraire vers %1</translation>
     </message>
     <message>
         <source>Return trip</source>
