@@ -180,7 +180,6 @@ void AggregateEntity::SpatialChanged( double latitude, double longitude, float a
 {
     spatial_.Refresh( false, latitude, longitude, altitude, speed, direction );
     attributesUpdater_->Update( "Spatial", spatial_ );
-    listeners_->Moved( identifier_, latitude, longitude );
 }
 
 // -----------------------------------------------------------------------------
