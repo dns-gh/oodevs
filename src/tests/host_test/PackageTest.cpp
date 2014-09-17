@@ -59,14 +59,47 @@ bool EndWith( Path suffix, Path path )
 
 typedef std::vector< Path > T_Paths;
 
+std::string MakeExerciseData( const std::string& model, const std::string& terrain )
+{
+    return "<exercise><model dataset=\"" + model + "\"/><terrain name=\"" + terrain + "\"/></exercise>";
+}
+
+std::string MakeMetadata( const std::string& checksum )
+{
+    return
+"{"
+"    \"package\": \"some_package\","
+"    \"version\": \"trunk\","
+"    \"checksum\": \"" + checksum + "\""
+"}";
+}
+
+size_t CountItemType( const Tree& src, const std::string& type )
+{
+    size_t count = 0;
+    const auto& sub = src.find( "items" )->second;
+    for( auto it = sub.begin(); it != sub.end(); ++it )
+        count += it->second.get< std::string >( "type" ) == type;
+    return count;
+}
+
+void CheckCounts( const Tree& data, size_t models, size_t terrains, size_t exercises )
+{
+    BOOST_CHECK_EQUAL( CountItemType( data, "model" ), models );
+    BOOST_CHECK_EQUAL( CountItemType( data, "terrain" ), terrains );
+    BOOST_CHECK_EQUAL( CountItemType( data, "exercise" ), exercises );
+}
+
+template< bool replace = true, bool gaming = false >
 struct Fixture
 {
     Fixture()
         : idx    ( 0 )
-        , install( pool, fs, GetFileIndex(), true )
-        , cache  ( pool, fs, GetFileIndex(), false )
+        , install( pool, fs, GetFileIndex(), true,  replace )
+        , cache  ( pool, fs, GetFileIndex(), false, replace )
     {
-        MOCK_EXPECT( fs.IsFile ).with( boost::bind( &EndWith, "gaming_app.exe", _1 ) ).returns( false );
+        if( !gaming )
+            MOCK_EXPECT( fs.IsFile ).with( boost::bind( &EndWith, "gaming_app.exe", _1 ) ).returns( false );
         MOCK_EXPECT( fs.Exists ).with( boost::bind( &EndWith, "orbat.xml", _1 ) ).returns( false );
         MOCK_EXPECT( fs.Exists ).with( boost::bind( &EndWith, "profiles.xml", _1 ) ).returns( false );
     }
@@ -82,16 +115,12 @@ struct Fixture
         return boost::lexical_cast< std::string >( idx++ );
     }
 
-    std::string MakeExerciseData( const std::string& model, const std::string& terrain ) const
-    {
-        return "<exercise><model dataset=\"" + model + "\"/><terrain name=\"" + terrain + "\"/></exercise>";
-    }
 
     void AddItem( T_Paths& dst, bool ref, const Path& root, const Path& prefix, const Path& name, const Path& suffix,
                   const std::string& checksum, const std::string& contents, bool glob )
     {
-        const Path data = root / prefix;
-        const Path file = data / name / suffix;
+        const Path data = prefix.empty() ? root : root / prefix;
+        const Path file = name.empty() ? data / suffix : data / name / suffix;
         if( glob )
         {
             MOCK_EXPECT( fs.Walk ).once().with( data, mock::any, boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( file ) ) );
@@ -100,32 +129,48 @@ struct Fixture
         }
         else
         {
-            MOCK_EXPECT( fs.Walk ).once().with( data, false, boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( data / name ) ) );
+            if( !name.empty() )
+                MOCK_EXPECT( fs.Walk ).once().with( data, false, boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( data / name ) ) );
             MOCK_EXPECT( fs.IsFile ).once().with( file ).returns( true );
             if( ref )
                 MOCK_EXPECT( fs.Walk ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
         }
         MOCK_EXPECT( fs.GetLastWrite ).with( file ).returns( std::time_t() );
         MOCK_EXPECT( fs.ReadFile ).with( file ).returns( contents );
-        MOCK_EXPECT( fs.ReadFile ).with( root / "metadata.tag" ).returns( "" );
-        MOCK_EXPECT( fs.WriteFile ).with( root / "metadata.tag", mock::any ).returns( true );
-        MOCK_EXPECT( fs.Checksum ).with( data / name, mock::any, mock::any ).returns( checksum );
+        if( !checksum.empty() )
+        {
+            MOCK_EXPECT( fs.ReadFile ).with( root / "metadata.tag" ).returns( "" );
+            MOCK_EXPECT( fs.WriteFile ).with( root / "metadata.tag", mock::any ).returns( true );
+            MOCK_EXPECT( fs.Checksum ).with( data / name, mock::any, mock::any ).returns( checksum );
+        }
         dst.push_back( file );
     }
 
     void AddModel( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum )
     {
         AddItem( dst, ref, root, "data/models", name, "decisional/decisional.xml", checksum, "", false );
+        if( gaming )
+            MOCK_EXPECT( fs.IsFile ).with( root / "gaming_app.exe" ).returns( false );
     }
 
     void AddTerrain( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum )
     {
         AddItem( dst, ref, root, "data/terrains", name, "Terrain.xml", checksum, "", true );
+        if( gaming )
+            MOCK_EXPECT( fs.IsFile ).with( root / "gaming_app.exe" ).returns( false );
     }
 
     void AddExercise( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum, const std::string& model, const std::string& terrain )
     {
         AddItem( dst, ref, root, "exercises", name, "exercise.xml", checksum, MakeExerciseData( model, terrain ), true );
+        if( gaming )
+            MOCK_EXPECT( fs.IsFile ).with( root / "gaming_app.exe" ).returns( false );
+    }
+
+    void AddClient( T_Paths& dst, bool ref, const Path& root, const std::string& checksum )
+    {
+        AddItem( dst, ref, root, "", "", "gaming_app.exe", checksum, "", false );
+        MOCK_EXPECT( fs.Walk ).once().with( root / "exercises", mock::any, mock::any );
     }
 
     Path Decompose( const Path& path, size_t offset )
@@ -182,15 +227,6 @@ struct Fixture
         MOCK_EXPECT( fs.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
     }
 
-    size_t CountItemType( const Tree& src, const std::string& type )
-    {
-        size_t count = 0;
-        const Tree& sub = src.find( "items" )->second;
-        for( Tree::const_iterator it = sub.begin(); it != sub.end(); ++it )
-            count += it->second.get< std::string >( "type" ) == type;
-        return count;
-    }
-
     const Tree& GetItem( const Tree& src, const std::string& type, const std::string& name )
     {
         const Tree& sub = src.find( "items" )->second;
@@ -199,13 +235,6 @@ struct Fixture
                 if( it->second.get< std::string >( "name" ) == name )
                     return it->second;
         throw std::runtime_error( "unknown item" );
-    }
-
-    void CheckCounts( const Tree& data, size_t models, size_t terrains, size_t exercises )
-    {
-        BOOST_CHECK_EQUAL( CountItemType( data, "model" ), models );
-        BOOST_CHECK_EQUAL( CountItemType( data, "terrain" ), terrains );
-        BOOST_CHECK_EQUAL( CountItemType( data, "exercise" ), exercises );
     }
 
     Tree CheckItem( const Tree& data, const std::string& type, const std::string& name, const std::string& checksum )
@@ -308,22 +337,22 @@ struct Fixture
 };
 }
 
-BOOST_FIXTURE_TEST_CASE( install_parses, Fixture )
+BOOST_FIXTURE_TEST_CASE( install_parses, Fixture<> )
 {
     AddCheckPackages( install, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( cache_parses, Fixture )
+BOOST_FIXTURE_TEST_CASE( cache_parses, Fixture<> )
 {
     AddCheckPackages( cache, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( package_installs, Fixture )
+BOOST_FIXTURE_TEST_CASE( package_installs, Fixture<> )
 {
     InstallSomePackage();
 }
 
-BOOST_FIXTURE_TEST_CASE( package_uninstalls, Fixture )
+BOOST_FIXTURE_TEST_CASE( package_uninstalls, Fixture<> )
 {
     InstallSomePackage();
 
@@ -345,7 +374,7 @@ BOOST_FIXTURE_TEST_CASE( package_uninstalls, Fixture )
     BOOST_CHECK( !shore.get< std::string >( "error" ).empty() );
 }
 
-BOOST_FIXTURE_TEST_CASE( package_links, Fixture )
+BOOST_FIXTURE_TEST_CASE( package_links, Fixture<> )
 {
     InstallSomePackage();
 
@@ -366,7 +395,7 @@ BOOST_FIXTURE_TEST_CASE( package_links, Fixture )
     install.UnlinkItem( async, link );
 }
 
-BOOST_FIXTURE_TEST_CASE( package_reinstall_silently, Fixture )
+BOOST_FIXTURE_TEST_CASE( package_reinstall_silently, Fixture<> )
 {
     InstallSomePackage();
     install.LinkExercise( "shore" );
@@ -378,7 +407,7 @@ BOOST_FIXTURE_TEST_CASE( package_reinstall_silently, Fixture )
     install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 2 ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( installing_an_unknown_package_throws, Fixture )
+BOOST_FIXTURE_TEST_CASE( installing_an_unknown_package_throws, Fixture<> )
 {
     InstallSomePackage();
 
@@ -388,7 +417,7 @@ BOOST_FIXTURE_TEST_CASE( installing_an_unknown_package_throws, Fixture )
     BOOST_CHECK_THROW( install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 1 )( 51 ) ), web::HttpException );
 }
 
-BOOST_FIXTURE_TEST_CASE( installing_a_package_missing_a_dependency_throws, Fixture )
+BOOST_FIXTURE_TEST_CASE( installing_a_package_missing_a_dependency_throws, Fixture<> )
 {
     AddCheckPackages( cache, false );
 
@@ -415,7 +444,7 @@ BOOST_AUTO_TEST_CASE( package_checksum_skip_unwanted_data )
     MockLog log;
     runtime::FileSystem fs( log );
     const Path root = testOptions.GetDataPath( "packages" ).ToBoost();
-    Package pkg( pool, fs, root, true );
+    Package pkg( pool, fs, root, true, true );
     pkg.Parse();
 
     BOOST_CHECK_EQUAL( pkg.CountExercises(), size_t( 1 ) );
@@ -471,7 +500,7 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
     MockLog log;
     runtime::FileSystem fs( log );
     const Path root = testOptions.GetDataPath( "packages" ).ToBoost();
-    Package pkg( pool, fs, root, true );
+    Package pkg( pool, fs, root, true, true );
     pkg.Parse();
 
     // compress package to virtual device
@@ -491,8 +520,8 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
     auto unpacker = fs.Unpack( pkgdir, buffer, 0 );
     unpacker->Unpack();
     BOOST_CHECK( fs.IsFile( pkgdir / "signature" ) );
-    fs.Remove( pkgdir / "metadata.tag" ); // erase target package checksum
-    Package dst( pool, fs, output, true );
+    BOOST_CHECK( !fs.IsFile( pkgdir / "metadata.tag" ) );
+    Package dst( pool, fs, output, true, true );
     dst.Parse();
     BOOST_CHECK_EQUAL( dst.GetSize(), pkg.GetSize() );
     auto target = dst.Find( 0, false );
@@ -500,7 +529,7 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
     BOOST_CHECK_EQUAL( ToJson( pkg.GetPropertiesFrom( *item ) ), ToJson( dst.GetPropertiesFrom( *target ) ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( package_check_versioning_basics, Fixture )
+BOOST_FIXTURE_TEST_CASE( package_check_versioning_basics, Fixture<> )
 {
     Async async( pool );
 
@@ -555,4 +584,65 @@ BOOST_FIXTURE_TEST_CASE( package_check_versioning_basics, Fixture )
     BOOST_REQUIRE( !install.Find( "exercise", "exo", std::string( "CCCCCCCC" ) ) );
     BOOST_REQUIRE( !install.Find( "exercise", "exo", std::string( "DDDDDDDD" ) ) );
     CheckCounts( install.GetProperties(), 1, 1, 0 );
+}
+
+BOOST_FIXTURE_TEST_CASE( package_allows_not_replacing_packages, Fixture< false > )
+{
+    // install exercise CCCCCCCC
+    T_Paths dst;
+    const auto iroot = install.GetPath();
+    AddModel   ( dst, true, GetItemRoot( iroot, true ), "ada", "AAAAAAAA" );
+    AddTerrain ( dst, true, GetItemRoot( iroot, true ), "ter", "BBBBBBBB" );
+    AddExercise( dst, true, GetItemRoot( iroot, true ), "exo", "CCCCCCCC", "ada", "ter" );
+    MOCK_EXPECT( fs.Walk ).once().with( iroot, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
+    install.Parse();
+    CheckCounts( install.GetProperties(), 1, 1, 1 );
+    mock::verify();
+
+    // install exercise DDDDDDDD
+    dst.clear();
+    const auto croot = cache.GetPath();
+    AddPackageDescriptor( croot, "some_name", "some_description", "some_version" );
+    // useless model & terrain, but too annoying to skip them
+    AddModel   ( dst, false, GetItemRoot( croot, false ), "ada", "12345678" );
+    AddTerrain ( dst, false, GetItemRoot( croot, false ), "ter", "23456789" );
+    AddExercise( dst, false, GetItemRoot( croot, false ), "exo", "DDDDDDDD", "ada", "ter" );
+    cache.Parse();
+    const auto tomb = InstallPackage( "exercise", "exo", "DDDDDDDD", "ada", "ter" );
+    CheckCounts( install.GetProperties(), 1, 1, 2 );
+    mock::verify();
+}
+
+BOOST_FIXTURE_TEST_CASE( package_reloads_metadata, Fixture< true BOOST_PP_COMMA() true > )
+{
+    // default methods provide empty metadata without checksum and use fs.Checksum
+    T_Paths dst;
+    const auto root = install.GetPath();
+    AddModel   ( dst, true, GetItemRoot( root, true ), "ada", "AAAAAAAA" );
+    AddTerrain ( dst, true, GetItemRoot( root, true ), "ter", "BBBBBBBB" );
+    AddExercise( dst, true, GetItemRoot( root, true ), "exo", "CCCCCCCC", "ada", "ter" );
+    AddClient  ( dst, true, GetItemRoot( root, true ), "DDDDDDDD" );
+    MOCK_EXPECT( fs.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
+    // first time, metadata is not found, and checksums are computed by default
+    install.Parse();
+    mock::verify();
+
+    // don't give checksums and expect them to be read from metadata tag
+    dst.clear();
+    const auto odo = GetItemRoot( root, true );
+    AddModel( dst, true, odo, "odo", "" );
+    const auto tur = GetItemRoot( root, true );
+    AddTerrain ( dst, true, tur, "tur", "" );
+    const auto fox = GetItemRoot( root, true );
+    AddExercise( dst, true, fox, "fox", "", "odo", "tur" );
+    const auto gam = GetItemRoot( root, true );
+    AddClient( dst, true, gam, "" );
+    MOCK_EXPECT( fs.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
+    // activate metadata caching and check no checksums are done
+    MOCK_EXPECT( fs.ReadFile ).once().with( odo / "metadata.tag" ).returns( MakeMetadata( "AAAAAAAA" ) );
+    MOCK_EXPECT( fs.ReadFile ).once().with( tur / "metadata.tag" ).returns( MakeMetadata( "BBBBBBBB" ) );
+    MOCK_EXPECT( fs.ReadFile ).once().with( fox / "metadata.tag" ).returns( MakeMetadata( "CCCCCCCC" ) );
+    MOCK_EXPECT( fs.ReadFile ).once().with( gam / "metadata.tag" ).returns( MakeMetadata( "DDDDDDDD" ) );
+    install.Parse();
+    mock::verify();
 }

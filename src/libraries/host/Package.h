@@ -35,7 +35,8 @@ class Package : public Package_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Package( runtime::Pool_ABC& pool, const runtime::FileSystem_ABC& fs, const Path& path, bool reference );
+             Package( runtime::Pool_ABC& pool, const runtime::FileSystem_ABC& fs,
+                      const Path& path, bool reference, bool replace );
     virtual ~Package();
     //@}
 
@@ -80,6 +81,7 @@ private:
     const runtime::FileSystem_ABC& fs_;
     const Path path_;
     const bool reference_;
+    const bool replace_;
     std::string name_;
     std::string description_;
     std::string version_;
