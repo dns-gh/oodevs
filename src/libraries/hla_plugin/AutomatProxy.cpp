@@ -52,7 +52,7 @@ AutomatProxy::~AutomatProxy()
 // -----------------------------------------------------------------------------
 void AutomatProxy::Register( EventListener_ABC& listener )
 {
-    listeners_.push_back( &listener );
+    listeners_.Register( listener );
     std::string parentId( localAgentResolver_.Resolve( agent_.GetFormation() != 0 ? agent_.GetFormation()->GetId() : agent_.GetParentAutomat()->GetId() ) );
     if( parentId.size() > 0 )
         listener.ParentChanged( parentId );
@@ -64,7 +64,7 @@ void AutomatProxy::Register( EventListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void AutomatProxy::Unregister( EventListener_ABC& listener )
 {
-    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
+	listeners_.Unregister( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,10 +110,7 @@ void AutomatProxy::NotifyChildren()
             if( rtiId.size() > 0 )
                 children.insert( rtiId );
         });
-    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* l)
-        {
-            l->ChildrenChanged( children );
-        });
+    listeners_.ChildrenChanged( children );
 }
 
 namespace
@@ -134,10 +131,7 @@ void AutomatProxy::UpdateLocationCallback( const ChildListener& )
 {
     ChildListener::LocationStruct loc = std::accumulate( childrenListeners_.begin(), childrenListeners_.end(), ChildListener::LocationStruct() , &addLocation );
     loc = loc / static_cast< double >( childrenListeners_.size() );
-    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* l)
-        {
-            l->SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
-        });
+    listeners_.SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
 }
 
 // -----------------------------------------------------------------------------
