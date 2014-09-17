@@ -277,15 +277,19 @@ void LayersPanel::UpdateLeastAndMostVisible()
 {
     QStandardItem* root = layersModel_->invisibleRootItem();
     int count = root->rowCount();
-    if( count > 1 )
+    if( count <= 1 )
+        return;
+
+    for( int row = 0; row < count; ++row )
     {
-        for( int row = 0; row < count; ++row )
-            for( T_Names::const_iterator it = names_.begin(); it != names_.end(); ++it )
-                 if( QStandardItem* childItem = root->child( row ) )
-                     if( childItem->text().contains( *it ) )
-                         childItem->setText( "  " + *it );
-        root->child( 0 )->setText( root->child( 0 )->text() + tr( " (foreground)" ) );
-        root->child( count - 1 )->setText( root->child( count - 1 )->text() + tr( " (background)" ) );
+        const auto foreground = tr( " (foreground)" );
+        const auto background = tr( " (background)" );
+        auto text = root->child( row )->text().remove( foreground ).remove( background );
+        if( row == 0 )
+            text += foreground;
+        if( row == count - 1 )
+            text += background;
+        root->child( row )->setText( text );
     }
 }
 

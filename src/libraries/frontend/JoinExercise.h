@@ -16,6 +16,7 @@ namespace frontend
 {
 
 struct DebugConfig;
+class Config;
 
 // =============================================================================
 /** @class  JoinExercise
@@ -30,7 +31,7 @@ public:
     //@{
              // Pass a null profile to propose login dialog at gaming startup, an
              // empty string to log anonymously.
-             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
+             JoinExercise( const Config& config, const tools::Path& exercise,
                  const tools::Path& session, const QString* profile,
                  const tools::Path& sessionDir, const frontend::DebugConfig& debug );
     virtual ~JoinExercise();

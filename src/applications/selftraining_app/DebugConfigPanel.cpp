@@ -38,7 +38,6 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
     , dataDirectory_( 0 )
     , dataButton_( 0 )
     , mapnikBox_( 0 )
-    , mapnikLayerBox_( 0 )
     , mapnikThreads_( 0 )
 {
     debug_ = frontend::LoadDebugConfig();
@@ -167,17 +166,13 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
     mapnikBox_ = new QGroupBox();
     QGridLayout* mapnik = new QGridLayout( mapnikBox_, 2, 1 );
     mapnik->setMargin( 10 );
-    mapnikLayerBox_ = new QCheckBox();
-    mapnikLayerBox_->setChecked( debug_.gaming.hasMapnik );
-    connect( mapnikLayerBox_, SIGNAL( clicked( bool ) ), SLOT( OnMapnikLayerChecked( bool ) ) );
     mapnikThreads_ = new QSpinBox();
     mapnikThreads_->setRange( 0, 128 );
     mapnikThreads_->setValue( debug_.gaming.mapnikThreads );
     connect( mapnikThreads_, SIGNAL( valueChanged( int ) ), SLOT( OnMapnikThreadsChanged( int ) ) );
     mapnikThreadsLabel_ = new QLabel();
-    mapnik->addWidget( mapnikLayerBox_, 0, 0 );
-    mapnik->addWidget( mapnikThreadsLabel_, 1, 0 );
-    mapnik->addWidget( mapnikThreads_, 1, 1 );
+    mapnik->addWidget( mapnikThreadsLabel_, 0, 0 );
+    mapnik->addWidget( mapnikThreads_, 0, 1 );
 
     // development features
     const auto& availableFeatures = tools::GetAvailableFeatures();
@@ -272,7 +267,6 @@ void DebugConfigPanel::OnLanguageChanged()
     filterLabel_->setText( tr( "Filter :" ) );
     dumpLabel_->setText( tr( "Dump pathfinds directory :" ) );
     mapnikBox_->setTitle( tr( "Mapnik settings" ) );
-    mapnikLayerBox_->setText( tr( "Activate layer" ) );
     mapnikThreadsLabel_->setText( tr( "Rendering threads" ) );
     dataButton_->setText( "..." );
 }
@@ -347,12 +341,6 @@ void DebugConfigPanel::OnTimelineDebugChanged( const QString& path )
 void DebugConfigPanel::OnCefLogChanged( const QString& path )
 {
     debug_.timeline.cefLog = tools::Path::FromUnicode( path.trimmed().toStdWString() );
-    frontend::SaveDebugConfig( debug_ );
-}
-
-void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
-{
-    debug_.gaming.hasMapnik = checked;
     frontend::SaveDebugConfig( debug_ );
 }
 

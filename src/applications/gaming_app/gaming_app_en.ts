@@ -2204,10 +2204,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">Resource networks</translation>
     </message>
     <message>
-        <source>Mapnik</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Weather</source>
         <translation type="unfinished">Weather</translation>
     </message>
@@ -2222,6 +2218,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Weapon Ranges</source>
         <translation>Weapon Ranges</translation>
+    </message>
+    <message>
+        <source>Terrain (new rendering)</source>
+        <translation>Terrain (new rendering)</translation>
     </message>
 </context>
 <context>

@@ -165,10 +165,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activate layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -457,6 +453,10 @@ Do you want to replace it?</source>
     <message>
         <source>Models</source>
         <translation type="unfinished">نماذج</translation>
+    </message>
+    <message>
+        <source>Activate new terrain rendering (EXPERIMENTAL)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

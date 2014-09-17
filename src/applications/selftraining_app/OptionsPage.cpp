@@ -127,6 +127,10 @@ void OptionsPage::SetSettingsLayout()
     dataLabel_ = new QLabel();
     dataLabel_->setFixedHeight( 25 );
 
+    // Mapnik
+    mapnik_ = new QCheckBox();
+    connect( mapnik_, SIGNAL( stateChanged( int ) ), SLOT( OnStateChanged( int ) ) );
+
     dataDirectory_ = new QLineEdit();
     dataButton_ = new QPushButton();
     connect( dataButton_, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
@@ -136,7 +140,6 @@ void OptionsPage::SetSettingsLayout()
     QVBoxLayout* titleLayout = new QVBoxLayout();
     titleLayout->addWidget( languageLabel_ );
     titleLayout->addWidget( dataLabel_ );
-    titleLayout->addStretch();
 
     //box layout
     QHBoxLayout* directoryLayout = new QHBoxLayout();
@@ -146,13 +149,16 @@ void OptionsPage::SetSettingsLayout()
     QVBoxLayout* boxLayout = new QVBoxLayout();
     boxLayout->addWidget( languageCombo_ );
     boxLayout->addLayout( directoryLayout );
-    boxLayout->addStretch();
 
     // main layout
     QWidget* mainBox = new QWidget();
-    QHBoxLayout* mainLayout = new QHBoxLayout( mainBox );
-    mainLayout->addLayout( titleLayout );
-    mainLayout->addLayout( boxLayout );
+    QVBoxLayout* mainLayout = new QVBoxLayout( mainBox );
+    QHBoxLayout* dataLayout = new QHBoxLayout();
+    dataLayout->addLayout( titleLayout );
+    dataLayout->addLayout( boxLayout );
+    mainLayout->addLayout( dataLayout );
+    mainLayout->addWidget( mapnik_ );
+    mainLayout->addStretch();
 
     tabs_->addTab( mainBox, "" );
 }
@@ -209,6 +215,7 @@ void OptionsPage::OnLanguageChanged()
     languageLabel_->setText( tools::translate( "OptionsPage", "Language: " ) );
     dataLabel_->setText( tools::translate( "OptionsPage", "Data directory: " ) );
     dataButton_->setText( tools::translate( "OptionsPage", "..." ) );
+    mapnik_->setText( tools::translate( "OptionsPage", "Activate new terrain rendering (EXPERIMENTAL)" ) );
 
     // Parent
     ContentPage::OnLanguageChanged();
@@ -440,11 +447,14 @@ void OptionsPage::ApplyAction()
 // -----------------------------------------------------------------------------
 void OptionsPage::Commit()
 {
+    const auto mapnik = mapnik_->isChecked();
     QSettings settings( "MASA Group", "SWORD" );
     settings.setValue( "/Common/Language", selectedLanguage_.c_str() );
     settings.setValue( "/Common/DataDirectory", selectedDataDir_.ToUTF8().c_str() );
+    settings.setValue( "/Common/Mapnik", mapnik );
 
     config_.SetRootDir( selectedDataDir_ );
+    config_.SetMapnik( mapnik );
 }
 
 // -----------------------------------------------------------------------------
@@ -459,6 +469,7 @@ void OptionsPage::Reset()
     selectedDataDir_ = config_.GetRootDir();
     languageCombo_->setCurrentIndex( languageCombo_->findText( config_.GetLanguages().Get( selectedLanguage_ ).GetName().c_str() ) );
     dataDirectory_->setText( selectedDataDir_.ToUTF8().c_str() );
+    mapnik_->setChecked( config_.HasMapnik() );
 
     hasChanged_ = false;
     UpdateButton();
@@ -473,4 +484,11 @@ void OptionsPage::ShowPackageInstallation( const tools::Path& package )
     import_->SelectPackage( package );
     tabs_->setCurrentIndex( tabs_->indexOf( import_ ) );
     QTimer::singleShot( 1, this, SLOT( show() ) );
+}
+
+
+void OptionsPage::OnStateChanged( int /*state*/ )
+{
+    hasChanged_ = true;
+    UpdateButton();
 }

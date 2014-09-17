@@ -46,11 +46,9 @@ struct DebugTimeline
 struct DebugGaming
 {
     DebugGaming()
-        : hasMapnik( false )
-        , mapnikThreads( 0 )
+        : mapnikThreads( 0 )
     {}
 
-    bool hasMapnik;
     int mapnikThreads;
 };
 
