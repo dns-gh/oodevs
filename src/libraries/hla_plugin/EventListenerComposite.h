@@ -10,6 +10,7 @@
 #define plugins_hla_EventListenerComposite_h
 
 #include "EventListener_ABC.h"
+#include <set>
 
 namespace plugins
 {
@@ -41,7 +42,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< EventListener_ABC* > T_Listeners;
+    typedef std::set< EventListener_ABC* > T_Listeners;
     //@}
 
 private:
