@@ -30,7 +30,7 @@ MOCK_BASE_CLASS( MockHlaObject, HlaObject_ABC )
     MOCK_METHOD( Register, 1 )
     MOCK_METHOD( Unregister, 1 )
     MOCK_METHOD( Attach, 2 )
-    MOCK_METHOD( GetAgent, 0 )
+    MOCK_METHOD( GetAgent, 0, Agent_ABC* const(), GetAgent )
     MOCK_METHOD( GetIdentifier, 0 )
     MOCK_METHOD( ResetAttributes, 0 )
 };

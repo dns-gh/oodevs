@@ -13,8 +13,10 @@
 #include "HLAClass_ABC.h"
 #include "HLAObject_ABC.h"
 #include "ObjectListener_ABC.h"
+#include "EventListener_ABC.h"
 #include "OwnershipController_ABC.h"
 #include "TransferSender_ABC.h"
+#include "Agent_ABC.h"
 #include "protocol/Protocol.h"
 #include <hla/VariableLengthData.h>
 #include <boost/bind.hpp>
@@ -40,7 +42,7 @@ namespace
 // =============================================================================
 struct LocationOwnershipPolicy::OwnershipState
     : private ObjectListener_ABC
-    , private boost::noncopyable
+    , private EventListener_ABC
 {
 public:
     typedef std::function< bool(double,double) > LocationCheckFunctor;
@@ -84,6 +86,16 @@ private:
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
     virtual void PropagationChanged( const std::string& rtiIdentifier, const std::vector< ObjectListener_ABC::PropagationData >& data,
                 int col, int lig, double xll, double yll, double dx, double dy );
+    virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
+	virtual void FormationChanged( bool isOnRoad );
+	virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
+			unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages );
+	virtual void EmbarkmentChanged( bool mounted );
+	virtual void PlatformAdded( const std::string& name, unsigned int id );
+	virtual void ChildrenChanged( const T_ChildrenIds& children );
+	virtual void ParentChanged( const std::string& parentId );
+	virtual void StateChanged( rpr::DamageState32 state );
+
     void DoCheck();
     //@}
 
@@ -117,6 +129,9 @@ LocationOwnershipPolicy::OwnershipState::OwnershipState( const LocationCheckFunc
     , localObject_( isLocal )
 {
     object_.Register( *this );
+    Agent_ABC* const agent  =  object_.GetAgent();
+    if( agent )
+    	agent->Register(*this);
 }
 
 // -----------------------------------------------------------------------------
@@ -125,6 +140,9 @@ LocationOwnershipPolicy::OwnershipState::OwnershipState( const LocationCheckFunc
 // -----------------------------------------------------------------------------
 LocationOwnershipPolicy::OwnershipState::~OwnershipState()
 {
+    Agent_ABC* const agent  =  object_.GetAgent();
+    if( agent )
+    	agent->Register(*this);
     object_.Unregister( *this );
 }
 
@@ -233,6 +251,9 @@ void LocationOwnershipPolicy::OwnershipState::TransferCallback( bool accept )
 // -----------------------------------------------------------------------------
 void LocationOwnershipPolicy::OwnershipState::Divested()
 {
+    Agent_ABC* const agent  =  object_.GetAgent();
+    if( agent )
+    	agent->Unregister(*this);
     state_ = S_Remote;
 }
 
@@ -242,6 +263,9 @@ void LocationOwnershipPolicy::OwnershipState::Divested()
 // -----------------------------------------------------------------------------
 void LocationOwnershipPolicy::OwnershipState::Acquired()
 {
+    Agent_ABC* const agent  =  object_.GetAgent();
+    if( agent )
+    	agent->Register(*this);
     state_ = S_Local;
 }
 
@@ -354,6 +378,50 @@ void LocationOwnershipPolicy::OwnershipState::PropagationChanged( const std::str
 {
     // NOTHING
 }
+
+void LocationOwnershipPolicy::OwnershipState::SpatialChanged( double latitude, double longitude, float /*altitude*/, float /*speed*/, float /*direction*/ )
+{
+    latitude_ = latitude;
+    longitude_ = longitude;
+    DoCheck();
+}
+
+void LocationOwnershipPolicy::OwnershipState::FormationChanged( bool /*isOnRoad*/ )
+{
+    // NOTHING
+}
+
+void LocationOwnershipPolicy::OwnershipState::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/,
+			unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
+{
+    // NOTHING
+}
+
+void LocationOwnershipPolicy::OwnershipState::EmbarkmentChanged( bool /*mounted*/ )
+{
+    // NOTHING
+}
+
+void LocationOwnershipPolicy::OwnershipState::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
+{
+    // NOTHING
+}
+
+void LocationOwnershipPolicy::OwnershipState::ChildrenChanged( const T_ChildrenIds& /*children*/ )
+{
+    // NOTHING
+}
+
+void LocationOwnershipPolicy::OwnershipState::ParentChanged( const std::string& /*parentId*/ )
+{
+    // NOTHING
+}
+
+void LocationOwnershipPolicy::OwnershipState::StateChanged( rpr::DamageState32 /*state*/ )
+{
+    // NOTHING
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: LocationOwnershipPolicy constructor
