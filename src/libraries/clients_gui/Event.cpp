@@ -112,18 +112,9 @@ QString Event::GetTooltip() const
 // Name: Event::Select
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void Event::Select( kernel::ActionController& eventController, kernel::ActionController& /*actionController*/ ) const
+void Event::Select( kernel::ActionController& controller ) const
 {
-    eventController.Select( static_cast< const Event& >( *this ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Event::Select
-// Created: ABR 2013-07-02
-// -----------------------------------------------------------------------------
-void Event::Select( kernel::ActionController& /*controller*/ ) const
-{
-    // NOTHING
+    controller.SetSelected( *this, false );
 }
 
 // -----------------------------------------------------------------------------
