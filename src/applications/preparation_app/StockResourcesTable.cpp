@@ -321,9 +321,10 @@ void StockResourcesTable::OnDataChanged( const QModelIndex& index, const QModelI
     Disconnect();
     auto item = dataModel_->item( index.row(), 4 );
     const int consumption = item ? item->data( Qt::UserRole + 1 ).toInt() : 0;
-    const double newNormalized = item ? item->data( Qt::DisplayRole ).toDouble() : 0;
-    const int newQuantity = static_cast< int >( consumption * newNormalized );
-    SetData( index.row(), 5, locale().toString( newQuantity ) );
-    emit ResourceValueChanged();
+    const double normalized = item ? item->data( Qt::DisplayRole ).toDouble() : 0;
+    const int quantity = static_cast< int >( consumption * normalized );
+    SetData( index.row(), 5, locale().toString( quantity ) );
+    SetData( index.row(), 5, quantity, Qt::UserRole );
     Connect();
+    emit ResourceValueChanged();
 }
