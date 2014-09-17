@@ -160,3 +160,11 @@ double DEC_Path_KnowledgeObject::GetAgentMaxSpeedMultiplier() const
     return 1.;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObject::AgentMaxSpeedMultiplierAppliesOnLocalSpeed
+// Created: JSR 2014-09-17
+// -----------------------------------------------------------------------------
+bool DEC_Path_KnowledgeObject::AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const
+{
+    return false;
+}

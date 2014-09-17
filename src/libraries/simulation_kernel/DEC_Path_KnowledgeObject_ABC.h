@@ -35,6 +35,7 @@ public:
     virtual double GetMaxTrafficability() const = 0;
     virtual double GetAgentMaxSpeedMultiplier() const = 0;
     virtual bool HasAgentMaxSpeedMultiplier() const = 0;
+    virtual bool AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const = 0;
     //@}
 };
 

@@ -13,6 +13,8 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Objects/DisasterAttribute.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MobilityCapacity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "propagation/Extractor_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -50,6 +52,7 @@ namespace
 DEC_Path_KnowledgeObjectDisaster::DEC_Path_KnowledgeObjectDisaster( const MIL_Agent_ABC& agent, const DEC_Knowledge_Object& knowledge )
     : localisation_( new TER_Localisation( knowledge.GetLocalisation() ) )
     , maxTrafficability_( knowledge.GetMaxTrafficability() )
+    , objectType_( knowledge.GetType() )
     , maxSpeedModifier_( 1 )
 {
     ComposanteTypesComputer computer( composantes_ );
@@ -111,7 +114,11 @@ double DEC_Path_KnowledgeObjectDisaster::GetMaxTrafficability() const
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObjectDisaster::GetAgentMaxSpeedMultiplier() const
 {
-    return std::max( 0.1, maxSpeedModifier_ );
+    double modifier = maxSpeedModifier_;
+    const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >();
+    if( mobility && mobility->IsMaxSpeed() )
+        modifier *= mobility->ApplySpeedPolicy( 1., 1., 1., 1. );
+    return std::max( 0.1, modifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,6 +128,16 @@ double DEC_Path_KnowledgeObjectDisaster::GetAgentMaxSpeedMultiplier() const
 bool DEC_Path_KnowledgeObjectDisaster::HasAgentMaxSpeedMultiplier() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObjectDisaster::AgentMaxSpeedMultiplierAppliesOnLocalSpeed
+// Created: JSR 2014-09-17
+// -----------------------------------------------------------------------------
+bool DEC_Path_KnowledgeObjectDisaster::AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const
+{
+    const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >();
+    return !mobility || !mobility->IsMaxSpeed();
 }
 
 // -----------------------------------------------------------------------------

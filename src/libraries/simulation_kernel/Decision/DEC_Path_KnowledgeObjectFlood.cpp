@@ -103,3 +103,12 @@ bool DEC_Path_KnowledgeObjectFlood::HasAgentMaxSpeedMultiplier() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObjectFlood::AgentMaxSpeedMultiplierAppliesOnLocalSpeed
+// Created: JSR 2014-09-17
+// -----------------------------------------------------------------------------
+bool DEC_Path_KnowledgeObjectFlood::AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const
+{
+    return false;
+}

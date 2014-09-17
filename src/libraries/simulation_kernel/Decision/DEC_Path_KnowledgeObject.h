@@ -40,6 +40,7 @@ public:
     virtual double GetMaxTrafficability() const;
     virtual double GetAgentMaxSpeedMultiplier() const;
     virtual bool HasAgentMaxSpeedMultiplier() const;
+    virtual bool AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const;
     //@}
 
 private:

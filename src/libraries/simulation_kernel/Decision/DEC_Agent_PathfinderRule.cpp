@@ -175,7 +175,10 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
                     return rCurrentObjectCost;
                 rObjectCost += rCurrentObjectCost;
                 if( ( *itKnowledge )->HasAgentMaxSpeedMultiplier() )
-                    rSpeed = context_->GetUnitSpeeds().GetMaxSpeed() * ( *itKnowledge )->GetAgentMaxSpeedMultiplier();
+                    if( ( *itKnowledge )->AgentMaxSpeedMultiplierAppliesOnLocalSpeed() )
+                        rSpeed *= ( *itKnowledge )->GetAgentMaxSpeedMultiplier();
+                    else
+                        rSpeed = context_->GetUnitSpeeds().GetMaxSpeed() * ( *itKnowledge )->GetAgentMaxSpeedMultiplier();
             }
         }
     }

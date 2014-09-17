@@ -78,3 +78,12 @@ bool DEC_Path_KnowledgeObjectBurnSurface::HasAgentMaxSpeedMultiplier() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObjectBurnSurface::AgentMaxSpeedMultiplierAppliesOnLocalSpeed
+// Created: JSR 2014-09-17
+// -----------------------------------------------------------------------------
+bool DEC_Path_KnowledgeObjectBurnSurface::AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const
+{
+    return false;
+}
