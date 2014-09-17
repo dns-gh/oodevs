@@ -261,11 +261,17 @@ integration.randomPositionInCircle = function( center, radius )
 end
 
 --- Returns a random position on the circle defined by the given center and radius.
+-- The returned position will be in the current area of responsibility, if there is one.
+-- If there is no such position, this method will return the center of the circle (the "center" parameter).
 -- @param center Point knowledge (center of the circle), defining a "getPosition" method returning a simulation point.
 -- @param radius Float, the radius of the circle
 -- @return Point knowledge
 integration.randomPositionOnCircle = function( center, radius )
-    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireSurCercle( myself, center:getPosition(), radius ) )
+    local position = DEC_Geometrie_PositionAleatoireSurCercle( myself, center:getPosition(), radius )
+    if not position then
+        return center
+    end
+    return CreateKnowledge( integration.ontology.types.point, position )
 end
 
 --- Splits the given area into the provided number of parts,
