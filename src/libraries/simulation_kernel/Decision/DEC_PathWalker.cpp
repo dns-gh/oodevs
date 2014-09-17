@@ -63,11 +63,13 @@ DEC_PathWalker::~DEC_PathWalker()
 // Name: DEC_PathWalker::ComputeFutureObjectCollision
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
+bool DEC_PathWalker::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest,
+    double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
+    const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
 {
     if( !pCurrentPath_ )
         return false;
-    return pCurrentPath_->ComputeFutureObjectCollision( objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
+    return pCurrentPath_->ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
 }
 
 // -----------------------------------------------------------------------------

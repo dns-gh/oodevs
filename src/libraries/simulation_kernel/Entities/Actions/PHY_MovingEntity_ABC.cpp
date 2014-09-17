@@ -109,7 +109,7 @@ bool PHY_MovingEntity_ABC::IsMovingOn( const DEC_Path_ABC& path ) const
 // -----------------------------------------------------------------------------
 bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
 {
-    return pathWalker_->ComputeFutureObjectCollision( objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
+    return pathWalker_->ComputeFutureObjectCollision( GetPosition(), objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
 }
 
 // -----------------------------------------------------------------------------

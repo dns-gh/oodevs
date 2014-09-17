@@ -55,7 +55,9 @@ public:
     bool IsOnPath( const MT_Vector2D& vPos ) const;
     T_PathPoints::const_iterator GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
-    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
+    bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest,
+        double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
+        const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
     virtual void Finalize() = 0;
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
     virtual const MT_Vector2D& GetLastWaypoint() const = 0;
@@ -72,8 +74,9 @@ private:
     MT_Vector2D InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     std::pair< TER_Polygon, std::size_t > ComputePathHull( const T_PathPoints::const_iterator& itCurrentPathPoint ) const;
     bool HullIntersects( const TER_Polygon& hull, const TER_Localisation& location ) const;
-    void ComputeFutureObjectCollision( double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
-        const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, const T_PathPoints::const_iterator& itCurrentPathPoint, const TER_Localisation& location ) const;
+    void ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, double& rDistance,
+        boost::shared_ptr< DEC_Knowledge_Object >& pObject, const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge,
+        const T_PathPoints::const_iterator& itCurrentPathPoint, const TER_Localisation& location ) const;
     //@}
 
 protected:

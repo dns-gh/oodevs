@@ -170,12 +170,13 @@ bool DEC_PathResult::HullIntersects( const TER_Polygon& hull, const TER_Localisa
         || localisationHull.Contains( location, epsilon );
 }
 
-void DEC_PathResult::ComputeFutureObjectCollision( double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
-    const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, const T_PathPoints::const_iterator& itCurrentPathPoint,
+void DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, double& rDistance,
+    boost::shared_ptr< DEC_Knowledge_Object >& pObject, const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge,
+    const T_PathPoints::const_iterator& itCurrentPathPoint,
     const TER_Localisation& location ) const
 {
     double rDistanceSum = 0;
-    const MT_Vector2D* pPrevPos = &(*itCurrentPathPoint)->GetPos();
+    const MT_Vector2D* pPrevPos = &vStartPos;
     for( auto itPathPoint = std::next( itCurrentPathPoint ); itPathPoint != resultList_.end(); ++itPathPoint )
     {
         const MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
@@ -202,8 +203,9 @@ void DEC_PathResult::ComputeFutureObjectCollision( double& rDistance, boost::sha
 // Name: DEC_PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objects, double& rDistance,
-    boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
+bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objects,
+    double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
+    const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
 {
     rDistance = std::numeric_limits< double >::max();
     pObject.reset();
@@ -243,7 +245,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
             continue;
         if( hullIntersectionIsFaster && !HullIntersects( hull.first, location ) )
             continue;
-        ComputeFutureObjectCollision( rDistance, pObject, pKnowledge, itCurrentPathPoint, location );
+        ComputeFutureObjectCollision( vStartPos, rDistance, pObject, pKnowledge, itCurrentPathPoint, location );
     }
     return pObject != 0;
 }
