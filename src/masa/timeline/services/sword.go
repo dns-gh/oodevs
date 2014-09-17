@@ -369,10 +369,12 @@ func isSwordEvent(event *sdk.Event) bool {
 	return len(action.GetPayload()) > 0
 }
 
-func (s *Sword) cacheEvent(event *sdk.Event) *swapi.SwordMessage {
+func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage {
 	id := event.GetUuid()
-	if msg, ok := s.events[id]; ok {
-		return &msg
+	if !overwrite {
+		if msg, ok := s.events[id]; ok {
+			return &msg
+		}
 	}
 	if !isSwordEvent(event) {
 		return nil
@@ -390,8 +392,8 @@ func (s *Sword) cacheEvent(event *sdk.Event) *swapi.SwordMessage {
 
 func (s *Sword) Update(events ...*sdk.Event) {
 	for _, event := range events {
-		s.cacheEvent(event)
-		s.cacheMetadata(event)
+		s.cacheEvent(event, true)
+		s.cacheMetadata(event, true)
 	}
 }
 
@@ -442,7 +444,7 @@ var (
 )
 
 func (s *Sword) filterProfile(data *swapi.ModelData, profile *swapi.Profile, units, inhabitants Ids, event *sdk.Event) bool {
-	decoded := s.cacheEvent(event)
+	decoded := s.cacheEvent(event, false)
 	if decoded == nil {
 		return false
 	}
@@ -493,34 +495,35 @@ func (s *Sword) filterProfile(data *swapi.ModelData, profile *swapi.Profile, uni
 }
 
 func (s *Sword) filterEngaged(event *sdk.Event) bool {
-	decoded, ok := s.events[event.GetUuid()]
-	if !ok {
+	decoded := s.cacheEvent(event, false)
+	if decoded == nil {
 		return false
 	}
 	m := decoded.ClientToSimulation.GetMessage()
 	return m != nil && m.UnitOrder != nil && m.UnitOrder.GetParent() != 0
 }
 
-func (s *Sword) cacheMetadata(event *sdk.Event) *sdk.Metadata {
+func (s *Sword) cacheMetadata(event *sdk.Event, overwrite bool) *sdk.Metadata {
 	id := event.GetUuid()
-	if metadata, ok := s.metadata[id]; ok {
-		return metadata
+	if !overwrite {
+		if metadata, ok := s.metadata[id]; ok {
+			return metadata
+		}
 	}
 	metadata := sdk.Metadata{}
 	src := event.GetMetadata()
-	if len(src) == 0 {
-		return nil
-	}
-	err := json.NewDecoder(bytes.NewBufferString(src)).Decode(&metadata)
-	if err != nil {
-		return nil
+	if len(src) != 0 {
+		err := json.NewDecoder(bytes.NewBufferString(src)).Decode(&metadata)
+		if err != nil {
+			return nil
+		}
 	}
 	s.metadata[id] = &metadata
 	return &metadata
 }
 
 func (s *Sword) filterMetadata(data *swapi.ModelData, profile *swapi.Profile, event *sdk.Event) bool {
-	metadata := s.cacheMetadata(event)
+	metadata := s.cacheMetadata(event, false)
 	if metadata == nil {
 		return false
 	}

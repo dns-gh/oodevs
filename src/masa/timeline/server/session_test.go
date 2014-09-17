@@ -1132,26 +1132,34 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 	f.addTaskEvent(c, "task_a4", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":4}")
 	f.addTaskEvent(c, "task_u5", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":5}")
 	f.addTaskEvent(c, "task_c6", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":6}")
-	f.addTaskEvent(c, "task_i7", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":7}")
+	event := f.addTaskEvent(c, "task_i7", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":7}")
 
 	// ensure we do get all our events
 	f.applyFilters(c, services.EventFilterConfig{}, 9)
 	// test sword_profile
 	f.applyFilters(c, services.EventFilterConfig{
 		"sword_profile": "party_1_only",
-	}, 9)
+	}, 7+2)
 	f.applyFilters(c, services.EventFilterConfig{
 		"sword_profile": "formation_2_only",
-	}, 6)
+	}, 4+2)
 	f.applyFilters(c, services.EventFilterConfig{
 		"sword_profile": "formation_3_only",
-	}, 5)
+	}, 3+2)
 	f.applyFilters(c, services.EventFilterConfig{
 		"sword_profile": "automat_4_only",
-	}, 4)
+	}, 2+2)
 	f.applyFilters(c, services.EventFilterConfig{
 		"sword_profile": "crowd_6_only",
-	}, 3)
+	}, 1+2)
+
+	// remove event metadata and try again
+	event.Metadata = nil
+	_, err := f.controller.UpdateEvent(f.session, event.GetUuid(), event)
+	c.Assert(err, IsNil)
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile": "automat_4_only",
+	}, 2+3)
 }
 
 func (f *Fixture) findEvent(c *C, uuid string) *sdk.Event {
