@@ -60,7 +60,7 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual void        CheckDependencies( const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
     virtual void        Install( Async& async, const FileSystem_ABC& fs, const Path& tomb,
                                  const Path& output, const Package_ABC& dst,
-                                 const PathOperand& operand, bool move ) const = 0;
+                                 const PathOperand& operand, bool move, bool replace ) const = 0;
     virtual void        Uninstall( Async& async, const FileSystem_ABC& fs, const Path& dst ) = 0;
     virtual void        Reinstall( const FileSystem_ABC& fs ) = 0;
     virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
@@ -139,6 +139,11 @@ namespace
             return Get< std::string >( tree, key, "Unversioned" );
         }
 
+        void SetVersion( const std::string& version )
+        {
+            version_ = version;
+        }
+
         static Metadata Reload( const FileSystem_ABC& fs, const Path& root )
         {
             return Metadata( FromJson( fs.ReadFile( root / GetFilename() ) ) );
@@ -212,7 +217,7 @@ namespace
 
         const bool discard_;
         const std::string package_;
-        const std::string version_;
+        std::string version_;
         std::string checksum_;
         Path tomb_;
         size_t links_;
@@ -234,7 +239,7 @@ namespace
     template< typename T, typename U >
     bool HasItem( const T& list, const U& item )
     {
-        return FindItem( list, item, true ) != list.end();
+        return FindItem( list, item, false ) != list.end();
     }
 
     int GetTypeOrder( const std::string& type )
@@ -268,6 +273,16 @@ namespace
             if( b == path.end() )
                 return false;
             else if( *a != *b )
+                return false;
+        return true;
+    }
+
+    bool EndWith( Path suffix, Path path )
+    {
+        for( ; !suffix.empty(); suffix.remove_filename(), path.remove_filename() )
+            if( path.empty() )
+                return false;
+            else if( suffix.filename() != path.filename() )
                 return false;
         return true;
     }
@@ -331,6 +346,11 @@ namespace
             return meta_.GetChecksum();
         }
 
+        virtual void SetVersion( const std::string& version )
+        {
+            meta_.SetVersion( version );
+        }
+
         virtual bool Compare( size_t id ) const
         {
             return id == id_;
@@ -372,7 +392,11 @@ namespace
 
         virtual FileSystem_ABC::T_Predicate IsItemFile( const Path& /*root*/ ) const
         {
-            return FileSystem_ABC::T_Predicate();
+            const auto meta = Metadata::GetFilename();
+            return [=]( const Path& path )
+            {
+                return !EndWith( meta, path );
+            };
         }
 
         void MakeChecksum( const FileSystem_ABC& fs )
@@ -400,7 +424,7 @@ namespace
         }
 
         void Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& root, const Package_ABC& dst,
-                      const PathOperand& operand, bool move ) const
+                      const PathOperand& operand, bool move, bool replace ) const
         {
             Package_ABC::T_Item old = dst.Find( *this, false );
             const std::string checksum = GetChecksum();
@@ -420,7 +444,7 @@ namespace
                 fs.CopyDirectory( root_ / GetSuffix(), sub );
             }
             meta_.Save( fs, output, true );
-            if( old )
+            if( old && replace )
                 old->Uninstall( async, fs, tomb );
             operand( output );
         }
@@ -528,10 +552,9 @@ namespace
     }
 
     template< typename T >
-    bool AttachSimple( Async& async, const Path& path, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
+    void AttachSimple( Async& async, const Path& path, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
         AttachItem( async, fs, items, boost::make_shared< T >( fs, root, path, items.size(), meta ) );
-        return true;
     }
 
     template< typename T >
@@ -729,7 +752,11 @@ namespace
 
         FileSystem_ABC::T_Predicate IsItemFile( const Path& root ) const
         {
-            return !boost::bind( &BeginWith, root / "sessions", _1 );
+            const auto predicate = Item::IsItemFile( root );
+            return [=]( const Path& path )
+            {
+                return predicate( path ) && !BeginWith( root / "sessions", path );
+            };
         }
 
         static bool Operand( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta,
@@ -774,11 +801,6 @@ namespace
         return version.empty() ? "Unversioned" : version;
     }
 
-    bool IsMetadataFile( const Path& path, const Path& root )
-    {
-        return ( root / Metadata::GetFilename() ) == path;
-    }
-
     std::string GetClient( const Path& root )
     {
         const auto app = root / "gaming_app.exe";
@@ -788,8 +810,8 @@ namespace
 
     struct Client : public Item
     {
-        Client( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
-            : Item( fs, root, id, "gaming", Format( fs.GetLastWrite( file ) ), meta )
+        Client( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id )
+            : Item( fs, root, id, "gaming", Format( fs.GetLastWrite( file ) ), nullptr )
             , type_( GetClient( root ) )
         {
             // NOTHING
@@ -805,18 +827,14 @@ namespace
             return Path();
         }
 
-        virtual FileSystem_ABC::T_Predicate IsItemFile( const Path& root ) const
-        {
-            return !boost::bind( &IsMetadataFile, _1, boost::cref( root ) );
-        }
-
         static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items )
         {
             const Path file = root / "gaming_app.exe";
             if( fs.IsFile( file ) )
             {
-                Metadata meta( false, "gaming", GetVersion( Splice( Split( tools::GetAppVersion( file.wstring(), "Unversioned" ) ), 3 ) ) );
-                AttachSimple< Client >( async, file, fs, root, items, &meta );
+                const auto item = boost::make_shared< Client >( fs, root, file, items.size() );
+                item->SetVersion( GetVersion( Splice( Split( tools::GetAppVersion( file.wstring(), "Unversioned" ) ), 3 ) ) );
+                AttachItem( async, fs, items, item );
             }
         }
 
@@ -828,11 +846,13 @@ namespace
 // Name: Package::Package
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Package::Package( Pool_ABC& pool, const FileSystem_ABC& fs, const Path& path, bool reference )
+Package::Package( Pool_ABC& pool, const FileSystem_ABC& fs, const Path& path,
+                  bool reference, bool replace )
     : pool_     ( pool )
     , fs_       ( fs )
     , path_     ( path )
     , reference_( reference )
+    , replace_  ( replace )
 {
     // NOTHING
 }
@@ -1039,7 +1059,7 @@ void Package::InstallWith( Async& io, const Path& tomb, const T_Items& install, 
     PathOperand op = boost::bind( &AddItemPath, boost::ref( access ), boost::ref( paths ), _1 );
     BOOST_FOREACH( const T_Items::value_type& item, install )
         async.Post( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( fs_ ),
-                  tomb, path_, boost::cref( *this ), op, move ) );
+                  tomb, path_, boost::cref( *this ), op, move, replace_ ) );
     async.Join();
 
     BOOST_FOREACH( const Path& path, paths )

@@ -242,7 +242,7 @@ void Context::ParseRoot()
 {
     {
         QWriteLocker lock( &access_ );
-        install_ = boost::make_shared< Package >( pool_, fs_, root_ / install_dir, true );
+        install_ = boost::make_shared< Package >( pool_, fs_, root_ / install_dir, true, false );
         install_->Parse();
         items_.Fill( install_->GetProperties() );
     }
@@ -501,7 +501,7 @@ void Context::OnCloseDownload( size_t id, bool valid )
 // -----------------------------------------------------------------------------
 void Context::ParsePackages()
 {
-    T_Package next = boost::make_shared< Package >( pool_, fs_, root_ / tmp_dir, true );
+    T_Package next = boost::make_shared< Package >( pool_, fs_, root_ / tmp_dir, true, false );
     const bool valid = next->Parse();
     if( !valid )
     {

@@ -262,7 +262,7 @@ struct PackageFactory : public PackageFactory_ABC
 
     boost::shared_ptr< Package_ABC > Make( const Path& path, bool reference ) const
     {
-        return boost::make_shared< Package >( boost::ref( pool ), fs, path, reference );
+        return boost::make_shared< Package >( boost::ref( pool ), fs, path, reference, true );
     }
 
     Pool_ABC& pool;

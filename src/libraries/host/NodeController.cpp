@@ -81,7 +81,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     {
         if( !fs_.IsDirectory( client ) )
             throw std::runtime_error( "'" + runtime::Utf8( client ) + "' is not a directory" );
-        client_ = boost::make_shared< Package >( pool, fs, client, true );
+        client_ = boost::make_shared< Package >( pool, fs, client, true, true );
         client_->Parse();
     }
     if( !fs_.IsDirectory( licensesDir_ ) )
