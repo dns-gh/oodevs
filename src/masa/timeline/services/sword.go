@@ -9,6 +9,7 @@
 package services
 
 import (
+	"bytes"
 	gouuid "code.google.com/p/go-uuid/uuid"
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/json"
@@ -50,15 +51,16 @@ func NewAction(url url.URL, payload []byte, lock bool) PendingAction {
 
 // mutable sword data
 type SwordData struct {
-	input   *swapi.Client                  // input message link
-	handler int32                          // registered input handler
-	group   *sync.WaitGroup                // input wait group
-	orders  map[uint32]None                // known orders
-	actions map[uint32]None                // known actions
-	events  map[string]*swapi.SwordMessage // decoded messages
-	pending map[string]PendingAction       // pending actions
-	retry   uint                           // retry count
-	stopped bool                           // set when sword is manually stopped, to skip restarts
+	input    *swapi.Client                  // input message link
+	handler  int32                          // registered input handler
+	group    *sync.WaitGroup                // input wait group
+	orders   map[uint32]None                // known orders
+	actions  map[uint32]None                // known actions
+	events   map[string]*swapi.SwordMessage // decoded messages
+	metadata map[string]*sdk.Metadata       // decoded metadata
+	pending  map[string]PendingAction       // pending actions
+	retry    uint                           // retry count
+	stopped  bool                           // set when sword is manually stopped, to skip restarts
 }
 
 type Sword struct {
@@ -79,10 +81,11 @@ func NewSword(log util.Logger, root Observer, clock bool, name, address string) 
 		address: address,
 		clock:   clock,
 		d: SwordData{
-			orders:  map[uint32]None{},
-			actions: map[uint32]None{},
-			events:  map[string]*swapi.SwordMessage{},
-			pending: map[string]PendingAction{},
+			orders:   map[uint32]None{},
+			actions:  map[uint32]None{},
+			events:   map[string]*swapi.SwordMessage{},
+			metadata: map[string]*sdk.Metadata{},
+			pending:  map[string]PendingAction{},
 		},
 	}
 }
@@ -698,6 +701,7 @@ func isSwordEvent(event *sdk.Event) bool {
 
 func (s *Sword) Update(events ...*sdk.Event) {
 	for _, event := range events {
+		s.cacheMetadata(event)
 		if !isSwordEvent(event) {
 			continue
 		}
@@ -718,6 +722,7 @@ func (s *Sword) Delete(events ...string) {
 	s.mutex.Lock()
 	for _, uuid := range events {
 		delete(s.d.events, uuid)
+		delete(s.d.metadata, uuid)
 	}
 	s.mutex.Unlock()
 }
@@ -831,6 +836,43 @@ func (s *Sword) filterEngaged(event *sdk.Event) bool {
 	return m != nil && m.UnitOrder != nil && m.UnitOrder.GetParent() != 0
 }
 
+func (s *Sword) cacheMetadata(event *sdk.Event) *sdk.Metadata {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+	id := event.GetUuid()
+	if metadata, ok := s.d.metadata[id]; ok {
+		return metadata
+	}
+	metadata := sdk.Metadata{}
+	src := event.GetMetadata()
+	if len(src) == 0 {
+		return nil
+	}
+	err := json.NewDecoder(bytes.NewBufferString(src)).Decode(&metadata)
+	if err != nil {
+		return nil
+	}
+	s.d.metadata[id] = &metadata
+	return &metadata
+}
+
+func (s *Sword) filterMetadata(data *swapi.ModelData, profile *swapi.Profile, event *sdk.Event) bool {
+	metadata := s.cacheMetadata(event)
+	if metadata == nil {
+		return false
+	}
+	id := metadata.GetSwordEntity()
+	if id == 0 {
+		return false
+	}
+	return !data.IsUnitInProfile(id, profile) &&
+		!data.IsAutomatInProfile(id, profile) &&
+		!data.IsFormationInProfile(id, profile) &&
+		!data.IsPartyInProfile(id, profile) &&
+		!data.IsCrowdInProfile(id, profile) &&
+		!data.IsPopulationInProfile(id, profile)
+}
+
 func getEngaged(config EventFilterConfig) bool {
 	engaged, ok := config["sword_filter_engaged"].(bool)
 	if !ok {
@@ -873,7 +915,8 @@ func (s *Sword) addProfileFilter(dst *[]EventFilter, data *swapi.ModelData, conf
 		return
 	}
 	*dst = append(*dst, func(event *sdk.Event) bool {
-		return s.filterProfile(data, profile, Ids{}, Ids{}, event)
+		return s.filterProfile(data, profile, Ids{}, Ids{}, event) ||
+			s.filterMetadata(data, profile, event)
 	})
 }
 

@@ -31,7 +31,6 @@ message Service
     required bool   clock = 2; ///< true to use service's clock
     optional Timer  timer = 3;
     optional Sword  sword = 4;
-
 }
 
 message Session
@@ -73,6 +72,7 @@ message Event
     optional string error_text = 9;
     optional bool   read_only  = 10;
     optional string parent     = 11;
+    optional string metadata   = 12;
 }
 
 enum MessageTag
@@ -88,4 +88,9 @@ message Message
     optional string     tick   = 2;
     repeated Event      events = 3;
     repeated string     uuids  = 4;
+}
+
+message Metadata
+{
+    optional uint32 sword_entity = 1;
 }

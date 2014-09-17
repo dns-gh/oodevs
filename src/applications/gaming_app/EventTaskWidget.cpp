@@ -17,18 +17,42 @@
 #include "clients_gui/EventViewState.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/RichTextEdit.h"
+#include "clients_gui/SignalAdapter.h"
+#include "clients_gui/TaskerWidget.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Time_ABC.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: EventTaskWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
+EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter,
+                                  kernel::Controllers& controllers,
+                                  const gui::EntitySymbols& symbols,
+                                  const kernel::Profile_ABC& profile,
+                                  const kernel::EntityResolver_ABC& model,
+                                  const kernel::Time_ABC& simulation )
     : EventTaskWidget_ABC( presenter )
+    , controllers_( controllers )
+    , profile_( profile )
+    , model_( model )
+    , simulation_( simulation )
+    , selectedEntity_( controllers )
 {
     // Presenter
-    taskPresenter_ = boost::make_shared< gui::EventTaskPresenter >( *this );
+    taskPresenter_ = boost::make_shared< gui::EventTaskPresenter >( *this, controllers, model );
     presenter_.AddSubPresenter( taskPresenter_ );
+
+    // Tasker
+    taskerWidget_ = new gui::TaskerWidget( "task-tasker", controllers, symbols, tr( "Recipient" ) );
 
     // Editors
     label_ = new gui::RichLineEdit( "task-label" );
@@ -63,10 +87,12 @@ EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
 
     actionLayout->addWidget( payload_ );
 
-    mainLayout_->addLayout( gridLayout );
+    mainLayout_->addWidget( taskerWidget_ );
+    mainLayout_->addLayout( gridLayout, 1 );
     mainLayout_->addWidget( actionBox );
 
     // Connections
+    gui::connect( taskerWidget_, SIGNAL( ClearClicked() ), [&](){ OnTargetChanged( 0 ); } );
     connect( label_,       SIGNAL( textChanged( const QString& ) ), taskPresenter_.get(), SLOT( OnLabelChanged( const QString& ) ) );
     connect( url_,         SIGNAL( textChanged( const QString& ) ), taskPresenter_.get(), SLOT( OnUrlChanged( const QString& ) ) );
     connect( showButton_,  SIGNAL( clicked() ),                     taskPresenter_.get(), SLOT( OnShowClicked() ) );
@@ -77,6 +103,8 @@ EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
     connect( url_,         SIGNAL( textChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
     connect( description_, SIGNAL( TextChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
     connect( payload_,     SIGNAL( TextChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
+
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +113,16 @@ EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
 // -----------------------------------------------------------------------------
 EventTaskWidget::~EventTaskWidget()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::Purge
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::Purge()
+{
+    taskerWidget_->SetTasker( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +144,8 @@ void EventTaskWidget::BlockSignals( bool blocked )
 // -----------------------------------------------------------------------------
 void EventTaskWidget::Build( const gui::EventTaskViewState& state )
 {
+    taskerWidget_->SetTasker( model_.FindEntity( state.target_ ) );
+    lastTaskerId_ = state.target_;
     label_->SetText( QString::fromStdString( state.label_ ) );
     description_->SetText( QString::fromStdString( state.description_ ) );
     url_->SetText( QString::fromStdString( state.url_ ) );
@@ -119,4 +158,118 @@ void EventTaskWidget::Build( const gui::EventTaskViewState& state )
     bytes_->setVisible( state.isUrlValid_ );
     payloadLabel_->setVisible( state.isUrlValid_ );
     payload_->setVisible( state.isUrlValid_ && state.isPayloadVisible_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::NotifyContextMenu
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
+{
+    AddContextMenu( automat, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::NotifyContextMenu
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
+{
+    AddContextMenu( agent, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::NotifyContextMenu
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
+{
+    AddContextMenu( formation, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::NotifyContextMenu
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::NotifyContextMenu( const kernel::Inhabitant_ABC& inhabitant, kernel::ContextMenu& menu )
+{
+    AddContextMenu( inhabitant, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::NotifyContextMenu
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::NotifyContextMenu( const kernel::Population_ABC& population, kernel::ContextMenu& menu )
+{
+    AddContextMenu( population, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::NotifyContextMenu
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
+{
+    AddContextMenu( team, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::AddContextMenu
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::AddContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    selectedEntity_ = &entity;
+    if( profile_.CanBeOrdered( entity ) )
+    {
+        menu.InsertItem( "Order", tr( "New task" ), this, SLOT( OnNewTaskClicked() ), false, 5 );
+        if( isVisible() )
+        {
+            auto* tasker = taskerWidget_->GetTasker();
+            if( !tasker || tasker->GetId() != selectedEntity_->GetId() )
+                menu.InsertItem( "Order", tr( "Replace task recipient" ), this, SLOT( OnReplaceTaskerClicked() ), false, 7 );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::NotifyDeleted
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    if( lastTaskerId_ == entity.GetId() )
+        OnTargetChanged( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::OnTargetChanged
+// Created: ABR 2014-09-09
+// -----------------------------------------------------------------------------
+void EventTaskWidget::OnTargetChanged( const kernel::Entity_ABC* entity )
+{
+    taskPresenter_->OnTargetChanged( entity );
+    presenter_.OnEventContentChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::OnNewTaskClicked
+// Created: ABR 2014-09-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::OnNewTaskClicked()
+{
+    presenter_.StartCreation( eEventTypes_Task, simulation_.GetDateTime() );
+    OnTargetChanged( selectedEntity_ );
+    selectedEntity_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::OnReplaceTaskerClicked
+// Created: ABR 2014-09-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::OnReplaceTaskerClicked()
+{
+    OnTargetChanged( selectedEntity_ );
+    selectedEntity_ = 0;
 }

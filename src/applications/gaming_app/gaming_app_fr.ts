@@ -745,6 +745,18 @@ Raison: %3
         <source>Base64 Payload</source>
         <translation>Données Base64</translation>
     </message>
+    <message>
+        <source>Recipient</source>
+        <translation>Destinataire</translation>
+    </message>
+    <message>
+        <source>New task</source>
+        <translation>Nouvelle tâche</translation>
+    </message>
+    <message>
+        <source>Replace task recipient</source>
+        <translation>Remplacer le destinataire de la tâche</translation>
+    </message>
 </context>
 <context>
     <name>EventToolbar</name>
