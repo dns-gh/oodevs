@@ -99,30 +99,6 @@ void WatershedLayer::OptionChanged( const std::string& name, const kernel::Optio
     }
 }
 
-namespace
-{
-    struct MyVisitor : public Visitor2d
-    {
-        MyVisitor( ElevationShader& shader )
-            : shader_( &shader )
-            , previousWidth_( 0 )
-            , previousHeight_( 0 ){}
-        virtual void Visit( const geometry::Rectangle2f& extent, unsigned width, unsigned height )
-        {
-            if( previousHeight_ != height || previousWidth_ != width )
-            {
-                previousWidth_  = width;
-                previousHeight_ = height;
-                shader_->SetTextureSize( unsigned short( width ), unsigned short( height ) );
-                shader_->UpdateParameters();
-            }
-            Visitor2d::Visit( extent, width, height );
-        }
-        ElevationShader* shader_;
-        unsigned previousWidth_, previousHeight_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: WatershedLayer::Paint
 // Created: AGE 2006-03-29

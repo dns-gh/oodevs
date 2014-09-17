@@ -10,6 +10,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Symbols_Data.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Units_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_gui/DrawingTemplate.h"
 #include "clients_gui/GLSymbols.h"
 #include "clients_gui/SvglRenderer.h"
@@ -358,9 +360,13 @@ void ADN_Symbols_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
     const std::vector< std::string >& missingSymbols = glSymbols_->GetNotFoundSymbol();
     if( !missingSymbols.empty() )
     {
-        std::string errorMsg;
-        for( auto it = missingSymbols.begin(); it != missingSymbols.end(); ++it )
-            errorMsg += ( ( errorMsg.empty() ) ? "'" : ( it + 1 == missingSymbols.end() ) ? tools::translate( "ADN_Symbols_Data", " and '" ) : ", '" ) + ( *it ) + "'";
-        checker.AddError( eMissingSymbols, errorMsg, eNbrWorkspaceElements );
+        const auto& unitsInfos = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
+        for( auto it = unitsInfos.begin(); it != unitsInfos.end(); ++it )
+        {
+            const std::string& unitSymbol = ( *it )->ptrNatureSymbol_.GetData()->GetSymbol();
+            const std::string symbol = unitSymbol.substr( 8, unitSymbol.size() - 8 );
+            if( std::find( missingSymbols.begin(), missingSymbols.end(), symbol ) != missingSymbols.end() )
+                checker.AddError( eMissingSymbolForUnit, ( *it )->strName_.GetData(), eUnits, -1, symbol );
+        }
     }
 }

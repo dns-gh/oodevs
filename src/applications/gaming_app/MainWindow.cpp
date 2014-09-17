@@ -53,6 +53,7 @@
 #include "WeatherLayer.h"
 #include "PathfindLayer.h"
 #include "UnitStateDialog.h"
+#include "WeaponRangeLayer.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController.h"
@@ -333,6 +334,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, profile_, *drawingsBuilder_ );
     gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& weaponRangeLayer     = *new WeaponRangeLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
 
     // ordre de dessin
     AddLayer( defaultLayer );
@@ -359,6 +361,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( inhabitants, "main,miniviews", tr( "Populations" ) );
     AddLayer( agents, "main,miniviews", tr( "Units" ) );
     AddLayer( automats, "main,miniviews", tr( "Automats" ) );
+    AddLayer( weaponRangeLayer, "main,miniviews" );
     AddLayer( actionsLayer, "main" );
     AddLayer( creationsLayer, "main" );
     AddLayer( eventLayer, "main,miniviews" );
@@ -391,16 +394,13 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     forward_->Register( elevation3d );
     forward_->Register( weather );
 
-    if( tools::HasFeature( "pathfind" ) )
-    {
-        gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.publisher_, staticModel_.coordinateConverter_,
-                                                        model_.agents_, model_.agents_, *drawingsBuilder_, model_.actions_ );
-        connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), &pathfindLayer, SLOT( OnAcceptEdit() ) );
-        connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( OnRejectEdit() ) );
-        AddLayer( pathfindLayer, "main" );
-        forward_->Register( pathfindLayer );
-        pathfindLayer.SetReadOnlyModes( 0 );
-    }
+    gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.publisher_, staticModel_.coordinateConverter_,
+                                                    model_.agents_, model_.agents_, *drawingsBuilder_, model_.actions_ );
+    connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), &pathfindLayer, SLOT( OnAcceptEdit() ) );
+    connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( OnRejectEdit() ) );
+    AddLayer( pathfindLayer, "main" );
+    forward_->Register( pathfindLayer );
+    pathfindLayer.SetReadOnlyModes( 0 );
 
     forward_->SetDefault( defaultLayer );
 }

@@ -181,16 +181,20 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
 
     // development features
     const auto& availableFeatures = tools::GetAvailableFeatures();
-    featuresBox_ = new QGroupBox();
-    featuresBox_->setTitle( "Features" );
-    QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
-    for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
+    featuresBox_ = nullptr;
+    if( !availableFeatures.empty() )
     {
-        QCheckBox* checkbox = new QCheckBox( QString::fromStdString( *it ) );
-        checkbox->setChecked( debug_.features.count( *it ) != 0 );
-        featuresLayout->addWidget( checkbox );
-        features_.push_back( checkbox );
-        connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged() ));
+        featuresBox_ = new QGroupBox();
+        featuresBox_->setTitle( "Features" );
+        QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
+        for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
+        {
+            QCheckBox* checkbox = new QCheckBox( QString::fromStdString( *it ) );
+            checkbox->setChecked( debug_.features.count( *it ) != 0 );
+            featuresLayout->addWidget( checkbox );
+            features_.push_back( checkbox );
+            connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged() ));
+        }
     }
 
     //general Layout
@@ -201,7 +205,8 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
     layout->addWidget( profilingBox_ );
     layout->addWidget( pathfindsBox_ );
     layout->addWidget( mapnikBox_ );
-    layout->addWidget( featuresBox_ );
+    if( featuresBox_ )
+        layout->addWidget( featuresBox_ );
     layout->setAlignment( Qt::AlignTop );
     QScrollArea* scroll = new QScrollArea();
     scroll->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );

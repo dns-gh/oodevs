@@ -1524,18 +1524,70 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
     return result;
 }
 
+namespace
+{
+    const std::size_t maxNumber( 1000 );
+
+    void ComputeIntermediateValues( double refValue, double max, std::vector< double >& vector )
+    {
+        // we find a maximum of maxNumber points, with 10 meters max between each
+        std::size_t nb = std::min( maxNumber, static_cast< std::size_t >( refValue / 10 ) );
+        if( nb == 0 )
+            nb = 1;
+        vector.reserve( nb );
+        const double increment = max / nb;
+        for( std::size_t i = 0; i < nb; ++i )
+            vector.push_back( i * increment );
+        MIL_Random::random_shuffle( vector );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeRandomPointOnCircle
 // Created: JVT 2005-02-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle( const DEC_Decision_ABC* decision, MT_Vector2D* pCenter, float radiusMeters )
 {
     if( !pCenter )
         throw MASA_EXCEPTION( "Invalid center" );
-    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( 0., 1. );
-    pResult->Rotate( MIL_Random::rand_io( 0., 2. * MT_PI ) );
-    *pResult *= ( MIL_Tools::ConvertMeterToSim( radius ) );
-    *pResult += *pCenter;
+    if( !decision )
+        throw MASA_EXCEPTION( "Invalid decision" );
+    const MIL_Fuseau& fuseau = decision->GetOrderManager().GetFuseau();
+    const double radius = MIL_Tools::ConvertMeterToSim( radiusMeters );
+    boost::shared_ptr< MT_Vector2D > pResult;
+    if( !fuseau.IsNull() )
+    {
+        const TER_Localisation fuseauLoc( fuseau );
+        const bool isInside = fuseau.IsInside( *pCenter );
+        MT_Vector2D result;
+        fuseauLoc.ComputeNearestOutsidePoint( *pCenter, result );
+        const double distance = result.Distance( *pCenter );
+        if( !isInside && distance > radius ) // circle is outside fuseau
+            return pResult;
+        if( !isInside || distance < radius ) // circle is partially inside fuseau
+        {
+            std::vector< double > angleVector;
+            ComputeIntermediateValues( 2 * MT_PI * radiusMeters, 2 * MT_PI, angleVector );
+            for( auto itAngle = angleVector.begin(); itAngle != angleVector.end() && !pResult; ++itAngle )
+            {
+                MT_Vector2D v( 0, 1. );
+                v.Rotate( *itAngle );
+                v *= radius;
+                v += *pCenter;
+                if( fuseauLoc.IsInside( v ) )
+                    pResult = boost::make_shared< MT_Vector2D >( v );
+            }
+            if( !pResult )
+                return pResult;
+        }
+    }
+    if( !pResult ) // no fuseau, or circle is inside fuseau
+    {
+        pResult = boost::make_shared< MT_Vector2D >( 0., 1. );
+        pResult->Rotate( MIL_Random::rand_io( 0., 2. * MT_PI ) );
+        *pResult *= ( radius );
+        *pResult += *pCenter;
+    }
     TER_World::GetWorld().ClipPointInsideWorld( *pResult );
     return pResult;
 }
@@ -1544,25 +1596,60 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCirc
 // Name: DEC_GeometryFunctions::ComputeRandomPointInCircle
 // Created: NLD 2004-04-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCircle( MT_Vector2D* pCenter, float radius )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCircle( const DEC_Decision_ABC* decision, MT_Vector2D* pCenter, float radiusMeters )
 {
-    const double rRadius_ = MIL_Tools::ConvertMeterToSim( radius );
     if( !pCenter )
         throw MASA_EXCEPTION( "Invalid center" );
+    if( !decision )
+        throw MASA_EXCEPTION( "Invalid decision" );
+    const MIL_Fuseau& fuseau = decision->GetOrderManager().GetFuseau();
+    const double radius = MIL_Tools::ConvertMeterToSim( radiusMeters );
+    boost::shared_ptr< MT_Vector2D > pResult;
+    if( !fuseau.IsNull() )
+    {
+        const TER_Localisation fuseauLoc( fuseau );
+        const bool isInside = fuseau.IsInside( *pCenter );
+        MT_Vector2D result;
+        fuseauLoc.ComputeNearestOutsidePoint( *pCenter, result );
+        const double distance = result.Distance( *pCenter );
+        if( !isInside && distance > radius ) // circle is outside fuseau
+            return pResult;
+        if( !isInside || distance < radius ) // circle is partially inside fuseau
+        {
+            std::vector< double > angleVector;
+            ComputeIntermediateValues( 2 * MT_PI * radiusMeters, 2 * MT_PI, angleVector );
 
-    // retrieve a random position in the circle (vCenter_,rRadius_)
-    const double rAlpha = MIL_Random::rand_ii( -MT_PI, MT_PI );
-    const double rMod   = MIL_Random::rand_oi();
+            std::vector< double > radiusVector;
+            ComputeIntermediateValues( radiusMeters, radius, radiusVector );
 
-    boost::shared_ptr< MT_Vector2D > pRandomPosition = boost::make_shared< MT_Vector2D >( *pCenter );
-    (*pRandomPosition) += MT_Vector2D( rMod * rRadius_ * cos( rAlpha ), rMod * rRadius_ * sin( rAlpha ) );
-
-    TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition );
-    return pRandomPosition;
+            for( auto itAngle = angleVector.begin(); itAngle != angleVector.end() && !pResult; ++itAngle )
+                for( auto itRadius = radiusVector.begin(); itRadius != radiusVector.end() && !pResult; ++itRadius )
+                {
+                    MT_Vector2D v( 0, 1. );
+                    v.Rotate( *itAngle );
+                    v *= *itRadius;
+                    v += *pCenter;
+                    if( fuseauLoc.IsInside( v ) )
+                        pResult = boost::make_shared< MT_Vector2D >( v );
+                }
+            if( !pResult )
+                return pResult;
+        }
+    }
+    if( !pResult ) // no fuseau, or circle is inside fuseau
+    {
+        // retrieve a random position in the circle (pCenter,radius)
+        const double rAlpha = MIL_Random::rand_ii( -MT_PI, MT_PI );
+        const double rMod   = MIL_Random::rand_oi();
+        pResult = boost::make_shared< MT_Vector2D >( *pCenter );
+        (*pResult) += MT_Vector2D( rMod * radius * cos( rAlpha ), rMod * radius * sin( rAlpha ) );
+    }
+    TER_World::GetWorld().ClipPointInsideWorld( *pResult );
+    return pResult;
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInZone
+// Name: DEC_GeometryFunctions::ComputeRandomPointInZone
 // Created: LDC 2011-06-21
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInZone( const TER_Localisation* location )
@@ -2188,9 +2275,9 @@ double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
 
 bool DEC_GeometryFunctions::IsNull( const MIL_Fuseau* pFuseau )
 {
-	if( !pFuseau )
+    if( !pFuseau )
         throw MASA_EXCEPTION( "Invalid fuseau" );
-	return pFuseau->IsNull();
+    return pFuseau->IsNull();
 }
 
 // -----------------------------------------------------------------------------

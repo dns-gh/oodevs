@@ -34,7 +34,7 @@ std::unordered_set< std::string > tools::SplitFeatures( const std::string& s )
         auto f = *it;
         boost::algorithm::trim( f );
         if( !f.empty() )
-            featuresSet.insert( f ); 
+            featuresSet.insert( f );
     }
     return featuresSet;
 }
@@ -56,8 +56,7 @@ std::string tools::JoinFeatures( const std::unordered_set< std::string >& featur
 const std::vector< std::string >& tools::GetAvailableFeatures()
 {
     // Fill this with experimental feature switches
-    static const std::vector< std::string > features =
-        boost::assign::list_of< std::string >( "pathfind" );
+    static const std::vector< std::string > features;
     return features;
 }
 

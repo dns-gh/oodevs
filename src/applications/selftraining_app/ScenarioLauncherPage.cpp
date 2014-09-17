@@ -24,6 +24,7 @@
 #include "frontend/EditExercise.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinExercise.h"
+#include "frontend/LogConfigPanel.h"
 #include "frontend/PluginConfigBuilder.h"
 #include "frontend/ProcessWrapper.h"
 #include "frontend/RandomPluginConfigPanel.h"
@@ -69,8 +70,8 @@ namespace
         {
             // NOTHING
         }
-        return isValid && config.GetTerrainDir( terrain ).Exists() &&
-             config.GetPhysicalsDir( dataSet, physical ).Exists();
+        return isValid && config.GetTerrainDir( terrain ).IsDirectory() &&
+             config.GetPhysicalsDir( dataSet, physical ).IsDirectory();
     }
 
     struct ResourcesLoadingWrapper
@@ -155,16 +156,18 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     //random config panel
     AddPlugin( new frontend::RandomPluginConfigPanel( configTabs_, config_ ) );
 
+    //orbat config panel
+    OrbatConfigPanel* pOrbatConfigPanel = AddPlugin( new OrbatConfigPanel( configTabs_, config_ ) );
+    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), pOrbatConfigPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
+    connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
+
+    AddPlugin( new frontend::LogConfigPanel( configTabs_, config_ ) );
+
     //advanced config panel
     frontend::AdvancedConfigPanel* advancedPanel = AddPlugin( new frontend::AdvancedConfigPanel( configTabs_, config_,
         hasClient_, autostartEvents_ ) );
     connect( advancedPanel, SIGNAL( OnClientEnabled( bool ) ), SLOT( OnClientEnabled( bool ) ) );
     connect( advancedPanel, SIGNAL( OnAutostartEvents( bool ) ), SLOT( OnAutostartEvents( bool ) ) );
-
-    //orbat config panel
-    OrbatConfigPanel* pOrbatConfigPanel = AddPlugin( new OrbatConfigPanel( configTabs_, config_ ) );
-    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), pOrbatConfigPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
-    connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
 
     //general settings tab
     QWidget* configBox = new QWidget();

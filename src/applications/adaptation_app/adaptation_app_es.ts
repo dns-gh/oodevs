@@ -718,10 +718,6 @@ Estacionado y motor encendido</translation>
         <translation>Tipo duplicado para objetos %1</translation>
     </message>
     <message>
-        <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
-        <translation>Los símbolos %1 están definidos en symbols.xml pero no se encontraron en el directorio.</translation>
-    </message>
-    <message>
         <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
         <translation>El archivo %2 incluído en la misión %1 no es válido o no está en la lista de adjuntos.</translation>
     </message>
@@ -831,6 +827,10 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <source>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4786,13 +4786,6 @@ PNG (*.png)</translation>
     <message>
         <source>Max combustion energy</source>
         <translation>Energía máxima de combustión</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Symbols_Data</name>
-    <message>
-        <source> and &apos;</source>
-        <translation>y &apos;</translation>
     </message>
 </context>
 <context>

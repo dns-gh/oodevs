@@ -119,7 +119,7 @@ void TaskerWidget::SetTasker( const kernel::Entity_ABC* entity )
         return;
     tasker_ = entity;
     bool hasTasker = tasker_ != 0;
-    nameLabel_->setText( hasTasker ? tasker_->GetName() : "---" );
+    nameLabel_->setText( hasTasker ? Qt::escape( tasker_->GetName() ) : "---" );
     activateButton_->setEnabled( hasTasker );
     clearButton_->setEnabled( hasTasker );
     QPixmap pixmap;

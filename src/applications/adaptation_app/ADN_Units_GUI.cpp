@@ -450,6 +450,6 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::
     indexBuilder.EndTable();
     indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
-    QString strText = "<a href=\"" + tr( "Units/" ) + "index.htm\">" + tr( "Units" ) + "</a>";
+    QString strText = "<a href=\"" + Qt::escape( tr( "Units/" ) ) + "index.htm\">" + Qt::escape( tr( "Units" ) ) + "</a>";
     mainIndexBuilder.ListItem( strText );
 }

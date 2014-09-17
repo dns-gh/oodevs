@@ -705,10 +705,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -818,6 +814,10 @@ Parked engine running</source>
     </message>
     <message>
         <source>Cargo transport capacity must be a positive number for equipment &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4764,13 +4764,6 @@ PNG (*.png)
     <message>
         <source>Max combustion energy</source>
         <translation type="unfinished">ماكس احتراق الطاقة</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Symbols_Data</name>
-    <message>
-        <source> and &apos;</source>
-        <translation type="unfinished">و &apos;</translation>
     </message>
 </context>
 <context>

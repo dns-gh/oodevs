@@ -18,31 +18,40 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "tools/Codec.h"
 
+namespace
+{
+    void ReadTimeAttribute( xml::xistream& xis, const std::string& name, double& value )
+    {
+        if( !tools::ReadTimeAttribute( xis, name, value ) )
+            value = std::numeric_limits< double >::max();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypeObjectData constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
-    : rTimeBaseConstruction_      ( std::numeric_limits< double >::max() )
-    , rTimeBaseDestruction_       ( std::numeric_limits< double >::max() )
+    : rTimeBaseConstruction_      ( 0 )
+    , rTimeBaseDestruction_       ( 0 )
     , rTimeConstructionCoef_      ( 1 )
     , rTimeDestructionCoef_       ( 1 )
-    , rTimeMining_                ( std::numeric_limits< double >::max() )
-    , rTimeDemining_              ( std::numeric_limits< double >::max() )
-    , rTimeExtinguishing_         ( std::numeric_limits< double >::max() )
+    , rTimeMining_                ( 0 )
+    , rTimeDemining_              ( 0 )
+    , rTimeExtinguishing_         ( 0 )
     , rCoefTimeBypass_            ( 1. )
-    , rSpeedWithinWhenNotBypassed_( std::numeric_limits< double >::max() )
-    , rSpeedWithinWhenBypassed_   ( std::numeric_limits< double >::max() )
+    , rSpeedWithinWhenNotBypassed_( 0 )
+    , rSpeedWithinWhenBypassed_   ( 0 )
     , pConsumptionMode_           ( 0 )
 {
     std::string strConsumptionMode = "";
-    tools::ReadTimeAttribute( xis, "initial-construction-time", rTimeBaseConstruction_);
-    tools::ReadTimeAttribute( xis, "initial-destruction-time" , rTimeBaseDestruction_ );
-    tools::ReadTimeAttribute( xis, "valorization-time"        , rTimeMining_          );
-    tools::ReadTimeAttribute( xis, "devalorization-time"      , rTimeDemining_        );
-    tools::ReadTimeAttribute( xis, "extinguishing-time"          , rTimeExtinguishing_        );
-    tools::ReadTimeAttribute( xis, "construction-time-factor" , rTimeConstructionCoef_);
-    tools::ReadTimeAttribute( xis, "destruction-time-factor"  , rTimeDestructionCoef_ );
+    ReadTimeAttribute( xis, "initial-construction-time", rTimeBaseConstruction_);
+    ReadTimeAttribute( xis, "initial-destruction-time" , rTimeBaseDestruction_ );
+    ReadTimeAttribute( xis, "valorization-time"        , rTimeMining_          );
+    ReadTimeAttribute( xis, "devalorization-time"      , rTimeDemining_        );
+    ReadTimeAttribute( xis, "extinguishing-time"       , rTimeExtinguishing_   );
+    ReadTimeAttribute( xis, "construction-time-factor" , rTimeConstructionCoef_);
+    ReadTimeAttribute( xis, "destruction-time-factor"  , rTimeDestructionCoef_ );
 
     xis >> xml::optional >> xml::attribute( "bypass-gain-factor", rCoefTimeBypass_             );
     xis >> xml::optional >> xml::attribute( "non-bypassed-speed", rSpeedWithinWhenNotBypassed_ );

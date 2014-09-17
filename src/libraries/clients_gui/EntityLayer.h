@@ -108,6 +108,8 @@ protected:
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection );
     //@}
 
+    geometry::Point2f GetPosition( const kernel::Entity_ABC& entity ) const;
+
 protected:
     //! @name Types
     //@{

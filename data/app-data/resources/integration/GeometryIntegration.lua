@@ -257,7 +257,7 @@ end
 -- @param radius Float, the radius of the disc
 -- @return Point knowledge
 integration.randomPositionInCircle = function( center, radius )
-    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireDansCercle( center:getPosition(), radius ) )
+    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireDansCercle( myself, center:getPosition(), radius ) )
 end
 
 --- Returns a random position on the circle defined by the given center and radius.
@@ -265,7 +265,7 @@ end
 -- @param radius Float, the radius of the circle
 -- @return Point knowledge
 integration.randomPositionOnCircle = function( center, radius )
-    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireSurCercle( center:getPosition(), radius ) )
+    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireSurCercle( myself, center:getPosition(), radius ) )
 end
 
 --- Splits the given area into the provided number of parts,

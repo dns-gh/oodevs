@@ -38,7 +38,6 @@ class Equipment;
 // =============================================================================
 class Weapons : public kernel::Extension_ABC
               , public kernel::Updatable_ABC< sword::UnitAttributes >
-              , public gui::Drawable_ABC
               , public tools::Resolver< Equipment >
               , public tools::Observer_ABC
               , public kernel::OptionsObserver_ABC
@@ -53,9 +52,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    void DrawEfficientRange( const geometry::Point2f& where, gui::GlTools_ABC& tools ) const;
     //@}
+
+    unsigned int GetMinRange() const;
+    unsigned int GetMaxRange() const;
 
 private:
     //! @name Copy/Assignment
@@ -63,6 +64,8 @@ private:
     Weapons( const Weapons& );            //!< Copy constructor
     Weapons& operator=( const Weapons& ); //!< Assignment operator
     //@}
+
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     //! @name Helpers
     //@{
@@ -80,8 +83,6 @@ private:
     unsigned int minRange_;
     unsigned int maxRange_;
     unsigned int efficientRange_;
-    bool useColor_;
-    QColor color_;
     //@}
 };
 
