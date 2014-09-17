@@ -45,6 +45,7 @@ private:
     QLineEdit* end_;
     QLineEdit* parent_;
     QCheckBox* done_;
+    QTextEdit* metadata_;
     QLineEdit* target_;
     QCheckBox* apply_;
     QTextEdit* payloadBase64_;

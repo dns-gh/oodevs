@@ -100,7 +100,8 @@ EventDockWidget::EventDockWidget( QWidget* parent,
                                                                    tools, simulation, entitySymbols ) );
     stack_->insertWidget( eEventTypes_Magic , new EventMagicWidget( *presenter_, controllers,
                                                                     model, entitySymbols ) );
-    stack_->insertWidget( eEventTypes_Task , new EventTaskWidget( *presenter_ ) );
+    stack_->insertWidget( eEventTypes_Task , new EventTaskWidget( *presenter_, controllers, entitySymbols,
+                                                                  profile, model, simulation ) );
     AddDefaultView( views_, *stack_, eEventTypes_Report     , new EventReportWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eEventTypes_Multimedia , new EventMultimediaWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eNbrEventTypes         , new EventDetailWidget( *presenter_ ) );

@@ -46,6 +46,7 @@ type Event struct {
 	readOnly bool
 	parent   *Event
 	children map[*Event]struct{}
+	metadata string
 }
 
 func (e *Event) Proto() *sdk.Event {
@@ -61,6 +62,7 @@ func (e *Event) Proto() *sdk.Event {
 		ErrorCode: proto.Int32(code),
 		ErrorText: proto.String(text),
 		Parent:    proto.String(""),
+		Metadata:  proto.String(e.metadata),
 	}
 	if !e.end.IsZero() {
 		event.End = proto.String(util.FormatTime(e.end))
@@ -95,6 +97,7 @@ func NewEvent(msg *sdk.Event, events EventSlice) (*Event, error) {
 		done:     msg.GetDone(),
 		readOnly: msg.GetReadOnly(),
 		children: map[*Event]struct{}{},
+		metadata: msg.GetMetadata(),
 	}
 	code, text := msg.GetErrorCode(), msg.GetErrorText()
 	if code != 0 || len(text) > 0 {

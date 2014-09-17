@@ -743,6 +743,18 @@ Reason: %3
         <source>Base64 Payload</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace task recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventToolbar</name>

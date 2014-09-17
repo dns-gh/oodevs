@@ -73,13 +73,6 @@ private:
     void OnTargetChanged( const kernel::Entity_ABC* entity );
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    void OnReplaceTargetClicked();
-    void OnClearTaskerClicked();
-    //@}
-
 private:
     //! @name Member data
     //@{

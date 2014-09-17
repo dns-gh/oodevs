@@ -15,9 +15,7 @@
 #include "actions/Action_ABC.h"
 #include "actions/ActionError.h"
 #include "actions/ActionsModel.h"
-
 #include "actions_gui/MissionInterface.h"
-
 #include "clients_gui/Decisions_ABC.h"
 #include "clients_gui/GLToolColors.h"
 #include "clients_gui/EntitySymbols.h"
@@ -26,11 +24,11 @@
 #include "clients_gui/EventOrderPresenter.h"
 #include "clients_gui/EventOrderViewState.h"
 #include "clients_gui/EventViewState.h"
+#include "clients_gui/SignalAdapter.h"
 #include "clients_gui/TaskerWidget.h"
 #include "clients_gui/TimelinePublisher.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/RichWarnWidget.h"
-
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -38,15 +36,13 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Time_ABC.h"
-
 #include "ENT/ENT_Tr.h"
-
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
 #include "gaming/LogTools.h"
-
 #include "protocol/MessageParameters.h"
+
 #include <timeline/api.h>
 #include <boost/make_shared.hpp>
 #include <boost/optional.hpp>
@@ -118,7 +114,7 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
     mainLayout_->addWidget( static_cast< actions::gui::MissionInterface* >( missionInterface_.get() ), 1 );
 
     // Connections
-    connect( taskerWidget_, SIGNAL( ClearClicked() ), this, SLOT( OnClearTaskerClicked() ) );
+    gui::connect( taskerWidget_, SIGNAL( ClearClicked() ), [&](){ OnTargetChanged( 0 ); } );
     connect( missionTypeCombo_, SIGNAL( currentIndexChanged( const QString& ) ),
              this, SLOT( OnMissionTypeChanged( const QString& ) ) );
     connect( missionCombo_, SIGNAL( currentIndexChanged( const QString& ) ),
@@ -241,7 +237,7 @@ void EventOrderWidget::AddReplaceTargetToMenu( kernel::ContextMenu& menu )
         ( !taskerWidget_->GetTasker() ||
           taskerWidget_->GetTasker()->GetTypeName() == selectedEntity_->GetTypeName() &&
           taskerWidget_->GetTasker()->GetId() != selectedEntity_->GetId() ) )
-        menu.InsertItem( "Order", tr( "Replace order recipient" ), this, SLOT( OnReplaceTargetClicked() ), false, 5 );
+        menu.InsertItem( "Order", tr( "Replace order recipient" ), this, SLOT( OnReplaceTargetClicked() ), false, 6 );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,7 +299,7 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& populati
     selectedEngagedAutomat_ = 0;
     if( profile_.CanBeOrdered( population ) )
     {
-        menu.InsertItem( "Mission", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 3 );
+        menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 3 );
         AddReplaceTargetToMenu( menu );
     }
 }
@@ -383,15 +379,6 @@ void EventOrderWidget::OnTargetChanged( const kernel::Entity_ABC* entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::OnClearTaskerClicked
-// Created: ABR 2013-12-17
-// -----------------------------------------------------------------------------
-void EventOrderWidget::OnClearTaskerClicked()
-{
-    OnTargetChanged( 0 );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventOrderWidget::OnOrderClicked
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
@@ -432,6 +419,8 @@ void EventOrderWidget::OnOrderAutomatClicked()
 void EventOrderWidget::OnReplaceTargetClicked()
 {
     OnTargetChanged( selectedEntity_ );
+    selectedEntity_ = 0;
+    selectedEngagedAutomat_ = 0;
 }
 
 // -----------------------------------------------------------------------------
