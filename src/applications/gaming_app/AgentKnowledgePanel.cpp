@@ -318,6 +318,7 @@ void AgentKnowledgePanel::NotifyUpdated( const kernel::Agent_ABC& agent )
         return;
     if( subSelected_ && subSelected_->GetEntity() == &agent )
         subSelected_->Display( display_->Group( tools::translate( "AgentKnowledge", "Details" ) ) );
+    tools::UpdateEntityNameInKnowledgeModel< AgentKnowledge_ABC >( knowledgeModel_, agent, EntityRole );
 }
 
 // -----------------------------------------------------------------------------

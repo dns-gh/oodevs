@@ -279,4 +279,5 @@ void PopulationKnowledgePanel::NotifyUpdated( const kernel::Population_ABC& popu
         return;
     if( subSelected_ && subSelected_->GetEntity() == &population )
         subSelected_->Display( *display_ );
+    tools::UpdateEntityNameInKnowledgeModel< PopulationKnowledge_ABC >( knowledgeModel_, population, EntityRole );
 }
