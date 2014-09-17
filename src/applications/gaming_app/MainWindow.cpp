@@ -168,6 +168,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );
     controllers_.modes_.AddRegistryEntry( eModes_Replay, "Replayer" );
+    controllers_.actions_.AddSelectionner( new Selectionner< actions::Action_ABC >() );
+    controllers_.eventActions_.AddSelectionner( new Selectionner< gui::Event >() );
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );

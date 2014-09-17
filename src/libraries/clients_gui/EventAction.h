@@ -52,12 +52,11 @@ public:
     virtual void Update( const timeline::Event& event );
     virtual const actions::Action_ABC* GetAction() const;
     void SetAction( const actions::Action_ABC* action );
-    virtual void Select( kernel::ActionController& eventController,
-                         kernel::ActionController& actionController ) const;
     //@}
 
     //! @name GraphicalEntity_ABC implementation
     //@{
+    virtual void Select( kernel::ActionController& controller ) const;
     virtual QString GetName() const;
     virtual QString GetTooltip() const;
     //@}

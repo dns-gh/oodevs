@@ -277,7 +277,7 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
     if( selected_ )
     {
         gui::Event& gamingEvent = GetOrCreateEvent( *selected_ );
-        gamingEvent.Select( controllers_.eventActions_, controllers_.actions_ );
+        controllers_.eventActions_.SetSelected( gamingEvent, false );
     }
     else if( hadSelection )
     {
