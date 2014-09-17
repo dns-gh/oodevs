@@ -59,10 +59,11 @@ protected:
     //! @name Helpers
     //@{
     virtual void AddResource( const kernel::DotationType& resource, int value = 0 );
-    void Connect();
-    void Disconnect();
+    virtual void Connect();
+    virtual void Disconnect();
     void SetData( int row, int col, const QVariant& value, int role = Qt::DisplayRole, bool isSortType = false, Qt::Alignment aligment = 0 );
     const kernel::DotationType* GetDotation( int row ) const;
+    int GetValue( int row ) const;
     //@}
 
 signals:
@@ -71,11 +72,16 @@ signals:
     void ResourceValueChanged();
     //@}
 
+protected slots:
+    //! @name Slots
+    //@{
+    virtual void OnDataChanged( const QModelIndex& index, const QModelIndex& );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
     void RemoveResource( int row );
-    void OnDataChanged( const QModelIndex& index, const QModelIndex& );
     //@}
 
 private:
@@ -85,13 +91,13 @@ private:
     virtual void CustomizeMenuAction( QAction* action, const kernel::DotationType& actionDotation ) const;
     virtual void UpdateLine( int row, int value );
     void InitHeader();
-    int GetValue( int row ) const;
     //@}
 
 protected:
     //! @name Member data
     //@{
     QStandardItemModel* dataModel_;
+    gui::CommonDelegate* delegate_;
     //@}
 
 private:

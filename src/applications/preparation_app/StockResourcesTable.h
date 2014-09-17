@@ -50,6 +50,12 @@ public:
     void SetAllowedNatures( const std::set< std::string >& allowedNatures );
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    virtual void OnDataChanged( const QModelIndex& index, const QModelIndex& );
+    //@}
+
 private:
     //! @name Helpers
     //@{
