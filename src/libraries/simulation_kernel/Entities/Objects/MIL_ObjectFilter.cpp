@@ -99,5 +99,8 @@ bool MIL_DangerousObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
 // -----------------------------------------------------------------------------
 bool MIL_PathObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
 {
-    return type.GetCapacity< MobilityCapacity >() || type.GetCapacity< TrafficabilityCapacity >() || type.GetCapacity< DisasterCapacity >() || MIL_DangerousObjectFilter::Test( type );
+    return type.GetCapacity< MobilityCapacity >()
+        || type.GetCapacity< TrafficabilityCapacity >()
+        || type.GetCapacity< DisasterCapacity >()
+        || MIL_DangerousObjectFilter::Test( type );
 }
