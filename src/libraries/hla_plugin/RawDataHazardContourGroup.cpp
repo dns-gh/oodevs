@@ -291,5 +291,5 @@ void RawDataHazardContourGroup::PropagationChanged( const ObjectPropagationEvent
 
 Agent_ABC* const RawDataHazardContourGroup::GetAgent() const
 {
-	return 0;
+    return 0;
 }

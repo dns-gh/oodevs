@@ -196,5 +196,5 @@ void Human::StateChanged( rpr::DamageState32 state )
 
 Agent_ABC* const Human::GetAgent() const
 {
-	return 0;
+    return 0;
 }

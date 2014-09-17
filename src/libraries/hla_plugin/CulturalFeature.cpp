@@ -201,5 +201,5 @@ void CulturalFeature::ResourcesChanged( const ObjectLocationEventListener_ABC::T
 
 Agent_ABC* const CulturalFeature::GetAgent() const
 {
-	return 0;
+    return 0;
 }

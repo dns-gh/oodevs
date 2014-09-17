@@ -249,5 +249,5 @@ void Minefield::ResourcesChanged( const ObjectLocationEventListener_ABC::T_Resou
 
 Agent_ABC* const Minefield::GetAgent() const
 {
-	return 0;
+    return 0;
 }

@@ -243,5 +243,5 @@ void SurfaceVessel::StateChanged( rpr::DamageState32 state )
 
 Agent_ABC* const SurfaceVessel::GetAgent() const
 {
-	return agent_;
+    return agent_;
 }

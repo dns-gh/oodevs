@@ -64,7 +64,7 @@ void AutomatProxy::Register( EventListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void AutomatProxy::Unregister( EventListener_ABC& listener )
 {
-	listeners_.Unregister( listener );
+    listeners_.Unregister( listener );
 }
 
 // -----------------------------------------------------------------------------

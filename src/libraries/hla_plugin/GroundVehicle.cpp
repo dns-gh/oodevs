@@ -196,5 +196,5 @@ void GroundVehicle::StateChanged( rpr::DamageState32 state )
 
 Agent_ABC* const GroundVehicle::GetAgent() const
 {
-	return 0;
+    return 0;
 }

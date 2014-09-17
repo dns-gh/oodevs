@@ -69,7 +69,7 @@ void FormationProxy::Register( EventListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void FormationProxy::Unregister( EventListener_ABC& listener )
 {
-	listeners_.Unregister( listener );
+    listeners_.Unregister( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,6 +152,6 @@ bool FormationProxy::HasSubordinate( unsigned int id ) const
 void FormationProxy::PublishParent()
 {
     std::string parentId( localAgentResolver_.Resolve( agent_.GetParent()->GetId() ) );
-   if( parentId.size() > 0 )
-	   listeners_.ParentChanged( parentId );
+    if( parentId.size() > 0 )
+       listeners_.ParentChanged( parentId );
 }

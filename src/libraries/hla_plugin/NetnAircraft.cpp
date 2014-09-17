@@ -142,5 +142,5 @@ void NetnAircraft::ResetAttributes()
 
 Agent_ABC* const NetnAircraft::GetAgent() const
 {
-	return aggregate_->GetAgent();
+    return aggregate_->GetAgent();
 }

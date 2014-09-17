@@ -244,5 +244,5 @@ void Aircraft::StateChanged( rpr::DamageState32 state )
 
 Agent_ABC* const Aircraft::GetAgent() const
 {
-	return agent_;
+    return agent_;
 }

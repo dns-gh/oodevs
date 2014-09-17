@@ -111,5 +111,5 @@ void NetnHuman::ResetAttributes()
 
 Agent_ABC* const NetnHuman::GetAgent() const
 {
-	return 0;
+    return 0;
 }

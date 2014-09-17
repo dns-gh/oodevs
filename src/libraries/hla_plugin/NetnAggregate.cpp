@@ -231,5 +231,5 @@ void NetnAggregate::StateChanged( rpr::DamageState32 /*state*/ )
 
 Agent_ABC* const NetnAggregate::GetAgent() const
 {
-	return aggregate_->GetAgent();
+    return aggregate_->GetAgent();
 }

@@ -198,5 +198,5 @@ void ATP45HazardArea::PropagationChanged( const ObjectPropagationEventListener_A
 
 Agent_ABC* const ATP45HazardArea::GetAgent() const
 {
-	return 0;
+    return 0;
 }

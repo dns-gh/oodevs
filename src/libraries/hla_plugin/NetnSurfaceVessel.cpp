@@ -139,5 +139,5 @@ void NetnSurfaceVessel::ResetAttributes()
 
 Agent_ABC* const NetnSurfaceVessel::GetAgent() const
 {
-	return aggregate_->GetAgent();
+    return aggregate_->GetAgent();
 }
