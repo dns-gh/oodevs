@@ -12,7 +12,6 @@
 #include "moc_LinkInterpreter_ABC.cpp"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
-#include <Qt3Support/q3url.h>
 
 using namespace kernel;
 using namespace gui;
