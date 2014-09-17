@@ -142,7 +142,7 @@ LocationOwnershipPolicy::OwnershipState::~OwnershipState()
 {
     Agent_ABC* const agent  =  object_.GetAgent();
     if( agent )
-        agent->Register(*this);
+        agent->Unregister(*this);
     object_.Unregister( *this );
 }
 
