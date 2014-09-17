@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ItineraryParameter.h"
+#include "protocol/Protocol.h"
 #include "protocol/Serialization.h"
 #include "Tools/MIL_Tools.h"
 #include <boost/make_shared.hpp>
@@ -45,18 +46,19 @@ namespace
         return point ? boost::make_optional( *point ) : boost::none;
     }
 
-    template< typename Points >
-    typename Points::iterator AddClosestWaypoint( Points& points, const MT_Vector2D& point )
+    template< typename PointsIterator >
+    PointsIterator AddClosestWaypoint( PointsIterator begin, PointsIterator end, const MT_Vector2D& point )
     {
         double minDistance = std::numeric_limits< double >::max();
-        auto minElement = points.begin();
+        auto minElement = begin;
         int currentWaypoint = 0;
         int lastWaypoint = 0;
-        for( auto it = points.begin(); it != points.end(); ++it )
+        for( auto it = begin; it != end; ++it )
         {
             if( it->has_waypoint() && it->waypoint() >= 0 )
                 currentWaypoint = it->waypoint();
-            const double distance = ToVector( *it ).SquareDistance( point );
+            double distance = ToVector( *it ).SquareDistance( point );
+            distance = distance < 1 ? 0 : distance;
             if( distance < minDistance )
             {
                 minDistance = distance;
@@ -64,10 +66,14 @@ namespace
                 minElement = it;
             }
         }
-        minElement->set_waypoint( lastWaypoint );
-        for( auto it = minElement; it != points.end(); ++it )
-            if( it->has_waypoint() )
-                it->set_waypoint( it->waypoint() + 1 );
+        if( !minElement->has_waypoint() || minElement->waypoint() < 0 )
+        {
+            minElement->set_waypoint( lastWaypoint );
+            minElement->set_reached( true );
+            for( auto it = minElement; it != end; ++it )
+                if( it->has_waypoint() && it->waypoint() >= 0 )
+                    it->set_waypoint( it->waypoint() + 1 );
+        }
         return minElement;
     }
 }
@@ -140,11 +146,15 @@ std::vector< boost::shared_ptr< MT_Vector2D > > MIL_ItineraryParameter::AddClose
     Orientate( ToOptional( begin ), ToOptional( end ) );
     auto& points = *message_.mutable_result()->mutable_points();
     auto itBegin = points.begin();
-    if( begin )
-        itBegin = AddClosestWaypoint( points, *begin );
     auto itEnd = points.end();
+    if( begin )
+        itBegin = AddClosestWaypoint( points.begin(), points.end(), *begin );
     if( end )
-        itEnd = AddClosestWaypoint( points, *end );
+    {
+        itEnd = AddClosestWaypoint( itBegin, points.end(), *end );
+        if( itEnd != points.end() )
+            ++itEnd;
+    }
     return ConvertPointsToWaypoints( itBegin, itEnd );
 }
 
@@ -152,10 +162,14 @@ namespace
 {
     void Reverse( sword::Pathfind& message )
     {
+        google::protobuf::RepeatedPtrField< sword::PathPoint >& points = *message.mutable_result()->mutable_points();
+        google::protobuf::RepeatedPtrField< sword::PathPoint > copy;
+        for( int i = 0; i < points.size(); ++i )
+            *copy.Add() = points.Get( i );
+        for( int i = 1; i < points.size(); ++i )
+            *points.Mutable( i )->mutable_next() = copy.Get( i - 1 ).next();
         std::reverse( message.mutable_request()->mutable_positions()->begin(), message.mutable_request()->mutable_positions()->end() );
         std::reverse( message.mutable_result()->mutable_points()->begin(), message.mutable_result()->mutable_points()->end() );
-        BOOST_FOREACH( auto point, *message.mutable_result()->mutable_points() )
-            std::swap( *point.mutable_current(), *point.mutable_next() );
     }
 }
 

@@ -38,7 +38,7 @@ bool SlopeSpeedModifier::ComputeLocalSlope( const PHY_RawVisionData& data, const
 {
     const double delta = data.GetAltitude( to ) - data.GetAltitude( from );
     const double distance = from.Distance( to );
-    const double slope = distance == 0 ? 0 : delta / distance;
+    const double slope = distance < 1 ? 0 : delta / distance;
     if( std::abs( slope - currentSlope_ ) > 0.01 )
     {
         currentSlope_ = slope;
