@@ -830,7 +830,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
-        <translation>Le symbole &apos;%2&apos; est manquant pour l'unité %1.</translation>
+        <translation>Le symbole &apos;%2&apos; est manquant pour l&apos;unité %1.</translation>
     </message>
 </context>
 <context>

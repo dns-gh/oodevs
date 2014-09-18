@@ -620,7 +620,7 @@ std::size_t ExerciseConfig::GetDispatcherProtobufLogSize() const
 // -----------------------------------------------------------------------------
 int ExerciseConfig::GetDispatcherLogLevel() const
 {
-    return MT_Logger_ABC::ConvertConfigLevel( dispatcherProtobufLogSettings_.GetLogLevel() );
+    return MT_Logger_ABC::ConvertConfigLevel( dispatcherLogSettings_.GetLogLevel() );
 }
 
 // -----------------------------------------------------------------------------
