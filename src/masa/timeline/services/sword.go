@@ -9,8 +9,6 @@
 package services
 
 import (
-	"bytes"
-	gouuid "code.google.com/p/go-uuid/uuid"
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/json"
 	"errors"
@@ -20,73 +18,76 @@ import (
 	"masa/timeline/sdk"
 	"masa/timeline/util"
 	"net/url"
-	"sync"
 	"time"
+)
+
+type SwordStatus int
+
+const (
+	SwordStatusDisconnected = iota
+	SwordStatusConnecting
+	SwordStatusConnected
 )
 
 var (
 	SwordTimeLayout = "20060102T150405"
-	ErrAborted      = errors.New("aborted")
+	ErrDisconnected = errors.New("disconnected")
+	ErrInProgress   = errors.New("in progress")
 	ErrSkipped      = errors.New("skipped")
-	ErrMissingLink  = errors.New("missing link")
-	ErrTooManyLinks = errors.New("too many links")
-	ErrRetry        = errors.New("retry")
+	ErrUnknown      = errors.New("unknown")
 )
 
-type None struct{}
-
-type PendingAction struct {
+type Action struct {
+	id      string
 	url     url.URL
 	payload []byte
+	msg     swapi.SwordMessage
 	lock    bool
 }
 
-func NewAction(url url.URL, payload []byte, lock bool) PendingAction {
-	return PendingAction{
+func NewAction(id string, url url.URL, payload []byte,
+	msg swapi.SwordMessage, lock bool) *Action {
+	return &Action{
+		id:      id,
 		url:     url,
 		payload: payload,
+		msg:     msg,
 		lock:    lock,
 	}
 }
 
-// mutable sword data
-type SwordData struct {
-	input    *swapi.Client                  // input message link
-	handler  int32                          // registered input handler
-	group    *sync.WaitGroup                // input wait group
-	orders   map[uint32]None                // known orders
-	actions  map[uint32]None                // known actions
-	events   map[string]*swapi.SwordMessage // decoded messages
-	metadata map[string]*sdk.Metadata       // decoded metadata
-	pending  map[string]PendingAction       // pending actions
-	retry    uint                           // retry count
-	stopped  bool                           // set when sword is manually stopped, to skip restarts
-}
+type Ids map[uint32]struct{}
 
 type Sword struct {
-	log     util.Logger
-	root    Observer   // attached observer
-	name    string     // service name
-	address string     // sword address
-	clock   bool       // whether we use sword clock
-	mutex   sync.Mutex // protects SwordData
-	d       SwordData
+	log      util.Logger
+	observer Observer // attached observer
+	name     string   // service name
+	address  string   // sword address
+	clock    bool     // whether we use sword clock
+	// mutable
+	events    map[string]swapi.SwordMessage // decoded messages
+	pending   map[string]*Action            // pending actions
+	metadata  map[string]*sdk.Metadata      // decoded metadata
+	autostart bool                          // auto connect when disconnected
+	retry     uint                          // retry count
+	link      *SwordLink                    // current sword link
+	status    SwordStatus                   // current status
+	orders    Ids                           // known order ids
+	actions   Ids                           // known action ids
 }
 
-func NewSword(log util.Logger, root Observer, clock bool, name, address string) *Sword {
+func NewSword(log util.Logger, observer Observer, clock bool, name, address string) *Sword {
 	return &Sword{
-		log:     log,
-		root:    root,
-		name:    name,
-		address: address,
-		clock:   clock,
-		d: SwordData{
-			orders:   map[uint32]None{},
-			actions:  map[uint32]None{},
-			events:   map[string]*swapi.SwordMessage{},
-			metadata: map[string]*sdk.Metadata{},
-			pending:  map[string]PendingAction{},
-		},
+		log:      log,
+		observer: observer,
+		name:     name,
+		address:  address,
+		clock:    clock,
+		events:   map[string]swapi.SwordMessage{},
+		metadata: map[string]*sdk.Metadata{},
+		pending:  map[string]*Action{},
+		orders:   Ids{},
+		actions:  Ids{},
 	}
 }
 
@@ -113,474 +114,194 @@ func (s *Sword) Log(format string, args ...interface{}) {
 	s.log.Printf("sword[%v] %v\n", s.address, msg)
 }
 
-func (s *Sword) tick(last time.Time, value string) time.Time {
-	tick, err := time.Parse(SwordTimeLayout, value)
-	if err != nil {
-		s.Log("invalid time layout: %v", value)
-		return last
-	}
-	s.root.Tick(tick)
-	return tick
+// Sword is managed as a state machine with three states as in SwordStatus
+// There are four possible transitions, Start, Stop, Attach
+
+type SwordHandler interface {
+	PostAttach(link *SwordLink)
+	PostLog(link *SwordLink, format string, args ...interface{})
+	PostRestart(link *SwordLink, err error)
+	PostCloseAction(link *SwordLink, action string, err error)
+	PostCloseWriter(link *SwordLink, writer *SwordWriter)
 }
 
-func tryParseDate(value *sword.DateTime, tick time.Time) time.Time {
-	reply, err := time.Parse(SwordTimeLayout, value.GetData())
-	if err != nil {
-		return tick
-	}
-	return reply
-}
-
-func encode(msg *sword.ClientToSim) []byte {
-	data, err := proto.Marshal(msg)
-	if err != nil {
-		// fixme log error
-		return []byte{}
-	}
-	return data
-}
-
-func getTaskerId(t *sword.Tasker) uint32 {
-	if t.Automat != nil {
-		return t.GetAutomat().GetId()
-	} else if t.Formation != nil {
-		return t.GetFormation().GetId()
-	} else if t.Crowd != nil {
-		return t.GetCrowd().GetId()
-	} else if t.Unit != nil {
-		return t.GetUnit().GetId()
-	} else if t.Party != nil {
-		return t.GetParty().GetId()
-	} else if t.Population != nil {
-		return t.GetPopulation().GetId()
-	}
-	return 0
-}
-
-func packOrder(name, target string, tick time.Time, start *sword.DateTime,
-	pkt *sword.ClientToSim_Content, done, readOnly bool) *sdk.Event {
-	return &sdk.Event{
-		Uuid:     proto.String(gouuid.New()),
-		Name:     proto.String(name),
-		Begin:    proto.String(util.FormatTime(tryParseDate(start, tick))),
-		Done:     proto.Bool(done),
-		ReadOnly: proto.Bool(readOnly),
-		Action: &sdk.Action{
-			Target:  proto.String("sword://" + target),
-			Apply:   proto.Bool(true),
-			Payload: encode(&sword.ClientToSim{Message: pkt}),
-		},
-	}
-}
-
-func readReport(tick time.Time, report *sword.Report) *sdk.Event {
-	return &sdk.Event{
-		Uuid: proto.String(gouuid.New()),
-		Name: proto.String(fmt.Sprintf("Report %d %s",
-			getTaskerId(report.GetSource()),
-			report.GetCategory().String(),
-		)),
-		Begin: proto.String(util.FormatTime(tryParseDate(report.GetTime(), tick))),
-		Done:  proto.Bool(true),
-	}
-}
-
-func (s *Sword) readAction(target string, tick time.Time, order *sword.Action) *sdk.Event {
-	name := ""
-	content := sword.ClientToSim_Content{}
-	code := order.GetErrorCode()
-	codemsg := ""
-	magic := true
-	predicate := func() bool { return s.isUnknownAction(order) }
-	if sub := order.MagicAction; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{MagicAction: sub}
-		codemsg = sword.MagicActionAck_ErrorCode(code).String()
-	} else if sub := order.UnitMagicAction; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{UnitMagicAction: sub}
-		codemsg = sword.UnitActionAck_ErrorCode(code).String()
-	} else if sub := order.ObjectMagicAction; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{ObjectMagicAction: sub}
-		codemsg = sword.ObjectMagicActionAck_ErrorCode(code).String()
-	} else if sub := order.KnowledgeMagicAction; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{KnowledgeMagicAction: sub}
-		codemsg = sword.KnowledgeGroupAck_ErrorCode(code).String()
-	} else if sub := order.SetAutomatMode; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{SetAutomatMode: sub}
-		codemsg = sword.SetAutomatModeAck_ErrorCode(code).String()
-	} else if sub := order.AutomatOrder; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{AutomatOrder: sub}
-		magic = false
-		predicate = func() bool { return s.isUnknownOrder(sub) }
-	} else if sub := order.CrowdOrder; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{CrowdOrder: sub}
-		magic = false
-		predicate = func() bool { return s.isUnknownOrder(sub) }
-	} else if sub := order.FragOrder; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{FragOrder: sub}
-		magic = false
-		predicate = func() bool { return s.isUnknownOrder(sub) }
-	} else if sub := order.UnitOrder; sub != nil {
-		name = sub.GetName()
-		content = sword.ClientToSim_Content{UnitOrder: sub}
-		magic = false
-		predicate = func() bool { return s.isUnknownOrder(sub) }
-	} else {
-		return nil
-	}
-	if !predicate() {
-		return nil
-	}
-	start := &sword.DateTime{Data: proto.String(order.GetStartTime())}
-	event := packOrder(name, target, tick, start, &content, true, !magic)
-	event.ErrorCode = &code
-	errmsg := order.GetErrorMsg()
-	event.ErrorText = &errmsg
-	if code != 0 && len(errmsg) == 0 {
-		// if we don't have any error message,
-		// stringify the error code enumeration
-		event.ErrorText = &codemsg
-	}
-	return event
-}
-
-func (s *Sword) event(event *sdk.Event) {
-	s.root.UpdateEvent(event.GetUuid(), event)
-}
-
-type IdGetter interface {
-	GetId() uint32
-}
-
-func (s *Sword) isUnknown(data map[uint32]None, id IdGetter) bool {
-	value := id.GetId()
-	if value == 0 {
-		return true
-	}
-	s.mutex.Lock()
-	prev := len(data)
-	data[value] = None{}
-	next := len(data)
-	s.mutex.Unlock()
-	return prev != next
-}
-
-func (s *Sword) isUnknownOrder(id IdGetter) bool {
-	return s.isUnknown(s.d.orders, id)
-}
-
-func (s *Sword) isUnknownAction(id IdGetter) bool {
-	return s.isUnknown(s.d.actions, id)
-}
-
-func (s *Sword) saveAction(data map[uint32]None, msg *swapi.SwordMessage, clientId int32, id IdGetter) {
-	msgClientId := msg.SimulationToClient.GetClientId()
-	if msgClientId == 0 || msgClientId != clientId {
-		return
-	}
-	value := id.GetId()
-	if value == 0 {
-		return
-	}
-	s.mutex.Lock()
-	data[value] = None{}
-	s.mutex.Unlock()
-}
-
-func (s *Sword) saveOrder(msg *swapi.SwordMessage, clientId int32, id IdGetter) {
-	s.saveAction(s.d.orders, msg, clientId, id)
-}
-
-func (s *Sword) saveMagic(msg *swapi.SwordMessage, clientId int32, id IdGetter) {
-	s.saveAction(s.d.actions, msg, clientId, id)
-}
-
-func (s *Sword) readMessage(msg *swapi.SwordMessage, clientId int32, err error, last time.Time) time.Time {
-	if err != nil {
-		return last
-	}
-	if msg.SimulationToClient == nil {
-		return last
-	}
-	content := msg.SimulationToClient.GetMessage()
-	if info := content.ControlInformation; info != nil {
-		last = s.tick(last, info.GetDateTime().GetData())
-	} else if tick := content.ControlBeginTick; tick != nil {
-		last = s.tick(last, tick.GetDateTime().GetData())
-	} else if order := content.Action; order != nil {
-		event := s.readAction(s.name, last, order)
-		if event != nil {
-			go s.event(event)
+func (s *Sword) PostRestart(link *SwordLink, err error) {
+	s.observer.Post(func() {
+		if err != nil {
+			s.Log("network error: %v", err)
 		}
-	} else if ack := content.OrderAck; ack != nil {
-		s.saveOrder(msg, clientId, ack)
-	} else if ack := content.FragOrderAck; ack != nil {
-		s.saveOrder(msg, clientId, ack)
-	} else if ack := content.MagicActionAck; ack != nil {
-		s.saveMagic(msg, clientId, ack)
-	} else if ack := content.UnitMagicActionAck; ack != nil {
-		s.saveMagic(msg, clientId, ack)
-	} else if ack := content.ObjectMagicActionAck; ack != nil {
-		s.saveMagic(msg, clientId, ack)
-	} else if ack := content.KnowledgeGroupMagicActionAck; ack != nil {
-		s.saveMagic(msg, clientId, ack)
-	} else if ack := content.SetAutomatModeAck; ack != nil {
-		s.saveMagic(msg, clientId, ack)
-	} else if report := content.Report; report != nil {
-		if false {
-			event := readReport(last, report)
-			go s.event(event)
+		s.restart(link)
+	})
+}
+
+func (s *Sword) PostAttach(link *SwordLink) {
+	s.observer.Post(func() {
+		s.attach(link)
+	})
+}
+
+func (s *Sword) PostLog(link *SwordLink, format string, args ...interface{}) {
+	s.observer.Post(func() {
+		if link == s.link {
+			s.Log(format, args...)
+		}
+	})
+}
+
+func (s *Sword) PostCloseAction(link *SwordLink, action string, err error) {
+	s.observer.Post(func() {
+		s.closeAction(link, action, err)
+	})
+}
+
+func (s *Sword) PostCloseWriter(link *SwordLink, writer *SwordWriter) {
+	s.observer.Post(func() {
+		link.CloseWriter(writer)
+	})
+}
+
+func (s *Sword) Start() error {
+	s.autostart = true
+	return s.start()
+}
+
+func (s *Sword) setStatus(status SwordStatus, restart bool) {
+	s.status = status
+	if status == SwordStatusDisconnected {
+		if !restart {
+			// abort all pending actions
+			for _, action := range s.pending {
+				s.observer.CloseEvent(action.id, ErrDisconnected, action.lock)
+			}
+			s.pending = map[string]*Action{}
+		}
+		if s.autostart {
+			s.start()
+		}
+	} else if status == SwordStatusConnected {
+		for _, action := range s.pending {
+			s.link.PostAction(action)
 		}
 	}
-	return last
 }
 
 func (s *Sword) getRetryTimeout() time.Duration {
-	s.mutex.Lock()
-	retry := s.d.retry
-	s.d.retry++
-	s.mutex.Unlock()
-	if retry == 0 {
+	s.retry++
+	// 1 -> first try, no timeout
+	// 2 -> first reconnect, no timeout
+	// 3 -> begin at 1 second and double each time
+	if s.retry <= 2 {
 		return 0 * time.Second
 	}
-	sleep := 1 << (retry - 1) * time.Second
+	sleep := 1 << (s.retry - 3) * time.Second
 	if sleep > time.Minute {
+		s.retry-- // prevent cycles
 		sleep = time.Minute
 	}
 	return sleep
 }
 
-func (s *Sword) tryRestart() {
+func (s *Sword) start() error {
+	if s.status == SwordStatusConnecting {
+		return ErrInProgress
+	} else if s.status == SwordStatusConnected {
+		return ErrSkipped
+	}
+	if !s.autostart {
+		return ErrSkipped
+	}
 	timeout := s.getRetryTimeout()
+	prefix := ""
+	if s.link != nil {
+		prefix = "re"
+	}
+	suffix := ""
+	if d := timeout.Seconds(); d > 0 {
+		suffix = fmt.Sprintf(" in %vs", d)
+	}
+	s.Log("%sconnecting%s", prefix, suffix)
+	s.setStatus(SwordStatusConnecting, false)
 	go func() {
 		time.Sleep(timeout)
-		s.restart()
+		asyncConnect(s, s.address, s.name, s.clock)
 	}()
-}
-
-func (s *Sword) runClient(client *swapi.Client) {
-	err := client.Run()
-	if err == nil {
-		return
-	}
-	skip := s.stop(client)
-	if skip {
-		return
-	}
-	s.Log("network error: %v", err)
-	s.tryRestart()
-}
-
-func (s *Sword) setupClient(client *swapi.Client) (int32, error) {
-	client.EnableModel = true
-	client.Model.SetErrorHandler(func(d *swapi.ModelData, m *swapi.SwordMessage, err error) error {
-		if err != nil {
-			s.Log("model error: %v", err)
-		}
-		return nil
-	})
-	go s.runClient(client)
-	var handler int32
-	if s.clock {
-		last := time.Time{}
-		handler = client.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
-			last = s.readMessage(msg, id, err, last)
-			return false
-		})
-	}
-	key, err := client.GetAuthenticationKey()
-	if err != nil {
-		s.Log("invalid key request: %v", err)
-		return handler, err
-	}
-	err = client.LoginWithAuthenticationKey("", "", key)
-	if err != nil {
-		s.Log("invalid login: %v", err)
-		return handler, err
-	}
-	return handler, nil
-}
-
-func (s *Sword) start(restart bool) error {
-	// quick check so we don't make a new client for nothing
-	s.mutex.Lock()
-	skip := s.d.input != nil || s.d.stopped
-	s.mutex.Unlock()
-	if restart && skip {
-		return ErrSkipped
-	}
-	client, err := swapi.NewClient(s.address)
-	if err != nil {
-		// if we fail here, nobody will call
-		// tryRestart unless we do, runClient
-		// will only do it after setupClient
-		if restart {
-			s.tryRestart()
-		}
-		return err
-	}
-	handler, err := s.setupClient(client)
-	// make sure we close dangling clients
-	defer func() {
-		if client == nil {
-			return
-		}
-		client.Unregister(handler)
-		client.Close()
-	}()
-	if err != nil {
-		return err
-	}
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	// we need to validate state again
-	// since we were previously unlocked
-	if s.d.input != nil {
-		return ErrTooManyLinks
-	}
-	if restart && s.d.stopped {
-		return ErrSkipped
-	}
-	s.d.input = client
-	s.d.handler = handler
-	s.d.group = &sync.WaitGroup{}
-	s.d.retry = 0
-	for uuid, it := range s.d.pending {
-		s.Log("retrying %s", uuid)
-		go s.Apply(uuid, it.url, it.payload)
-	}
-	if !restart {
-		s.d.stopped = false
-	}
-	client = nil // skip deferred close
 	return nil
 }
 
-func (s *Sword) logAndStart(restart bool) error {
-	prefix := ""
-	if restart {
-		prefix = "re"
-	}
-	s.Log("%sconnecting to %s", prefix, s.address)
-	err := s.start(restart)
-	if err == ErrSkipped {
-		s.Log("skipping reconnection to %s", s.address)
-	} else if err != nil {
-		s.Log("error %sconnecting to %s: %s", prefix, s.address, err)
+func logConnect(handler SwordHandler, err error) {
+	if err != nil {
+		handler.PostLog(nil, "connection failed: %s", err)
 	} else {
-		s.Log("%sconnected to %s", prefix, s.address)
+		handler.PostLog(nil, "connected")
 	}
-	return err
 }
 
-func (s *Sword) Start() error {
-	return s.logAndStart(false)
-}
-
-func (s *Sword) restart() error {
-	return s.logAndStart(true)
-}
-
-func (s *Sword) stop(previous *swapi.Client) bool {
-	s.mutex.Lock()
-	// when restarting, skip stop when saved client is
-	// different from the one we're trying to close
-	if previous != nil && previous != s.d.input {
-		s.mutex.Unlock()
-		return true
+func asyncConnect(handler SwordHandler, address, name string, clock bool) {
+	link, err := NewSwordLink(handler, address, name, clock)
+	if err != nil {
+		logConnect(handler, err)
+		link = nil
 	}
-	// no previous client mean we want to stop
-	// and abort any in-flight restarts
-	if previous == nil {
-		s.d.stopped = true
-		for uuid, it := range s.d.pending {
-			s.Log("aborting action %v", uuid)
-			go s.root.OnApply(uuid, ErrAborted, it.lock)
+	handler.PostAttach(link)
+}
+
+func (s *Sword) attach(link *SwordLink) {
+	if s.status != SwordStatusConnecting {
+		if link != nil {
+			link.Kill()
 		}
-		s.d.orders = map[uint32]None{}
-		s.d.actions = map[uint32]None{}
-		s.d.pending = map[string]PendingAction{}
+		return
 	}
-	client := s.d.input
-	handler := s.d.handler
-	group := s.d.group
-	s.d.input = nil
-	s.d.handler = 0
-	s.d.group = nil
-	s.mutex.Unlock()
-	if client != nil {
-		suffix := "ing"
-		if previous != nil {
-			suffix = "ed"
-		}
-		s.Log("disconnect%v from %s", suffix, s.address)
-		client.Unregister(handler)
-		go func() {
-			group.Wait()
-			client.Close()
-		}()
+	if link == nil {
+		s.setStatus(SwordStatusDisconnected, true)
+		return
 	}
-	return false
+	if s.link != nil {
+		// now that we have something new
+		// we can kill the old model
+		s.link.Kill()
+	}
+	s.link = link
+	// Known orders & actions are preserved across connections
+	link.Attach(s.observer, s.orders, s.actions)
+	s.retry = 0
+	s.Log("connected")
+	s.setStatus(SwordStatusConnected, false)
 }
 
 func (s *Sword) Stop() error {
-	s.stop(nil)
+	s.autostart = false
+	if s.status == SwordStatusDisconnected {
+		return ErrSkipped
+	}
+	// SwordStatusConnecting:
+	// s.link == nil from start
+	// s.link == xxx from restart
+	// SwordStatusConnected:
+	// s.link = xxx
+	if s.link == nil {
+		s.setStatus(SwordStatusDisconnected, false)
+		return nil
+	}
+	link := s.link
+	s.link = nil
+	link.Detach()
+	s.Log("disconnected")
+	s.setStatus(SwordStatusDisconnected, false)
 	return nil
 }
 
-func processAck(code int32, msg, def string) error {
-	if code == 0 {
-		return nil
+func (s *Sword) restart(link *SwordLink) {
+	if s.status != SwordStatusConnected &&
+		s.link != link {
+		// ignore any restart in flowing state
+		return
 	}
-	if len(msg) == 0 {
-		return util.NewError(int32(code), def)
-	}
-	return util.NewError(int32(code), msg)
-}
-
-func (s *Sword) waitAck(errors chan<- error, msg *swapi.SwordMessage, client, context int32, err error) bool {
-	if err != nil {
-		errors <- err
-		return true
-	}
-	if msg.SimulationToClient == nil {
-		return false
-	}
-	if msg.ClientId != client || msg.Context != context {
-		return false
-	}
-	m := msg.SimulationToClient.GetMessage()
-	if ack := m.OrderAck; ack != nil {
-		code := ack.GetErrorCode()
-		err = processAck(int32(code), ack.GetErrorMsg(), code.String())
-	} else if ack := m.FragOrderAck; ack != nil {
-		code := ack.GetErrorCode()
-		err = processAck(int32(code), ack.GetErrorMsg(), code.String())
-	} else if ack := m.MagicActionAck; ack != nil {
-		code := ack.GetErrorCode()
-		err = processAck(int32(code), ack.GetErrorMsg(), code.String())
-	} else if ack := m.UnitMagicActionAck; ack != nil {
-		code := ack.GetErrorCode()
-		err = processAck(code, ack.GetErrorMsg(), proto.EnumName(sword.UnitActionAck_ErrorCode_name, code))
-	} else if ack := m.ObjectMagicActionAck; ack != nil {
-		code := ack.GetErrorCode()
-		err = processAck(int32(code), ack.GetErrorMsg(), code.String())
-	} else if ack := m.KnowledgeGroupMagicActionAck; ack != nil {
-		code := ack.GetErrorCode()
-		err = processAck(int32(code), ack.GetErrorMsg(), code.String())
-	} else if ack := m.SetAutomatModeAck; ack != nil {
-		code := ack.GetErrorCode()
-		err = processAck(int32(code), code.String(), code.String())
-	}
-	errors <- err
-	return true
+	// lie and tell we are disconnected
+	// do not touch the current link, as
+	// we need to keep the model alive
+	// until we have a new one
+	s.setStatus(SwordStatusDisconnected, true)
 }
 
 func isOrder(msg *sword.ClientToSim) bool {
@@ -598,93 +319,41 @@ func isOrder(msg *sword.ClientToSim) bool {
 	return false
 }
 
-func (d *SwordData) tryRemove(uuid string) (bool, string) {
-	previous := len(d.pending)
-	delete(d.pending, uuid)
-	removed := previous != len(d.pending)
-	if removed {
-		return true, ""
+func (s *Sword) Apply(uuid string, url url.URL, payload []byte) error {
+	msg, ok := s.events[uuid]
+	if !ok {
+		return ErrUnknown
 	}
-	return false, " (obsolete)"
-}
-
-func (s *Sword) Apply(uuid string, url url.URL, payload []byte) {
-	msg := swapi.SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{},
+	if _, ok := s.pending[uuid]; ok {
+		return ErrInProgress
 	}
-	err := proto.Unmarshal(payload, msg.ClientToSimulation)
+	data, err := json.Marshal(msg.ClientToSimulation.GetMessage())
 	if err != nil {
-		s.Log("invalid payload: %v", err)
-		go s.root.OnApply(uuid, err, false)
-		return
+		data = []byte(err.Error())
 	}
-	data, _ := json.Marshal(msg.ClientToSimulation.GetMessage())
-	action := NewAction(url, payload, isOrder(msg.ClientToSimulation))
-	s.mutex.Lock()
-	s.d.pending[uuid] = action
-	s.mutex.Unlock()
-	// must have at least 1 buffer because we can abort it AND receive
-	// an error from swapi handler
-	errors := make(chan error, 1)
 	s.Log("-> action %v %s", uuid, data)
-	go s.postAction(errors, msg)
-	err = <-errors
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	// ignore updates unless our action has been removed
-	// it means it has been applied by someone else already
-	if err == nil {
-		removed, suffix := s.d.tryRemove(uuid)
-		s.Log("<- action %v%v", uuid, suffix)
-		if removed {
-			go s.root.OnApply(uuid, err, action.lock)
-		}
-		return
+	action := NewAction(uuid, url, payload, msg, isOrder(msg.ClientToSimulation))
+	s.pending[uuid] = action
+	if s.status == SwordStatusConnected {
+		s.link.PostAction(action)
 	}
-	// ignore any error which does not
-	// come from the server directly
-	retry := swapi.IsConnectionError(err) ||
-		err == swapi.ErrConnectionClosed ||
-		err == ErrRetry ||
-		err == ErrMissingLink
-	retry = retry && !s.d.stopped
-	suffix := ""
-	removed := false
-	if retry {
-		suffix = " (will retry)"
-	} else {
-		removed, suffix = s.d.tryRemove(uuid)
-	}
-	s.Log("<- action %v error: %v%v", uuid, err, suffix)
-	if !retry && removed {
-		go s.root.OnApply(uuid, err, action.lock)
-		return
-	}
+	return nil
 }
 
-func (s *Sword) getClient(retry bool) (*swapi.Client, *sync.WaitGroup, error) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	if retry && s.d.retry > 0 {
-		return nil, nil, ErrRetry
-	}
-	if s.d.input == nil {
-		return nil, nil, ErrMissingLink
-	}
-	s.d.group.Add(1)
-	return s.d.input, s.d.group, nil
-}
-
-func (s *Sword) postAction(errors chan<- error, msg swapi.SwordMessage) {
-	client, group, err := s.getClient(true)
-	if err != nil {
-		errors <- err
+func (s *Sword) closeAction(link *SwordLink, id string, err error) {
+	// Discard actions when we're not in connected state
+	// It should not happen and would not fix potential errors
+	// when our order has been applied by the server but the ack
+	// has not been received
+	if s.status != SwordStatusConnected || s.link != link {
 		return
 	}
-	defer group.Done()
-	client.PostWithTimeout(msg, func(msg *swapi.SwordMessage, id, context int32, err error) bool {
-		return s.waitAck(errors, msg, id, context, err)
-	}, 5*time.Minute)
+	action, ok := s.pending[id]
+	if !ok {
+		return
+	}
+	delete(s.pending, id)
+	s.observer.CloseEvent(id, err, action.lock)
 }
 
 func isSwordEvent(event *sdk.Event) bool {
@@ -699,284 +368,76 @@ func isSwordEvent(event *sdk.Event) bool {
 	return len(action.GetPayload()) > 0
 }
 
+func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage {
+	id := event.GetUuid()
+	if !overwrite {
+		if msg, ok := s.events[id]; ok {
+			return &msg
+		}
+	}
+	if !isSwordEvent(event) {
+		return nil
+	}
+	msg := swapi.SwordMessage{}
+	payload := event.GetAction().GetPayload()
+	err := swapi.DecodeMessage(&msg, swapi.ClientToSimulationTag, payload)
+	if err != nil {
+		s.Log("unable to decode payload on event %v: payload:%v error:%v",
+			id, string(payload), err)
+		msg = swapi.SwordMessage{ClientToSimulation: &sword.ClientToSim{}}
+	}
+	s.events[id] = msg
+	return &msg
+}
+
 func (s *Sword) Update(events ...*sdk.Event) {
 	for _, event := range events {
-		s.cacheMetadata(event)
-		if !isSwordEvent(event) {
-			continue
-		}
-		msg := swapi.SwordMessage{}
-		payload := event.GetAction().GetPayload()
-		err := swapi.DecodeMessage(&msg, swapi.ClientToSimulationTag, payload)
-		if err != nil {
-			s.Log("unable to decode payload %v: %v", string(payload), err)
-			continue
-		}
-		s.mutex.Lock()
-		s.d.events[event.GetUuid()] = &msg
-		s.mutex.Unlock()
+		s.cacheEvent(event, true)
+		s.cacheMetadata(event, true)
 	}
 }
 
 func (s *Sword) Delete(events ...string) {
-	s.mutex.Lock()
 	for _, uuid := range events {
-		delete(s.d.events, uuid)
-		delete(s.d.metadata, uuid)
+		delete(s.events, uuid)
+		delete(s.metadata, uuid)
 	}
-	s.mutex.Unlock()
 }
 
-type Ids map[uint32]struct{}
-
-func isEmptyTasker(tasker *sword.Tasker) bool {
-	return tasker.GetUnit().GetId() == 0 &&
-		tasker.GetAutomat().GetId() == 0 &&
-		tasker.GetFormation().GetId() == 0 &&
-		tasker.GetParty().GetId() == 0 &&
-		tasker.GetCrowd().GetId() == 0 &&
-		tasker.GetPopulation().GetId() == 0
-}
-
-func isTaskerInProfile(tasker *sword.Tasker, data *swapi.ModelData, profile *swapi.Profile, units, inhabitants Ids) bool {
-	if isEmptyTasker(tasker) {
-		return true
-	}
-	if tasker.Population != nil {
-		if _, ok := inhabitants[tasker.Population.GetId()]; ok {
-			return true
-		}
-	} else if tasker.Unit != nil {
-		if _, ok := units[tasker.Unit.GetId()]; ok {
-			return true
-		}
-	}
-	return data.IsTaskerInProfile(tasker, profile)
-}
-
-var (
-	clientMagicActions = map[sword.UnitMagicAction_Type]struct{}{
-		sword.UnitMagicAction_log_finish_handlings:      {},
-		sword.UnitMagicAction_log_supply_change_quotas:  {},
-		sword.UnitMagicAction_log_supply_pull_flow:      {},
-		sword.UnitMagicAction_log_supply_push_flow:      {},
-		sword.UnitMagicAction_unit_change_superior:      {},
-		sword.UnitMagicAction_change_knowledge_group:    {},
-		sword.UnitMagicAction_change_logistic_links:     {},
-		sword.UnitMagicAction_change_formation_superior: {},
-		sword.UnitMagicAction_change_automat_superior:   {},
-	}
-)
-
-func (s *Sword) getEvent(uuid string) *swapi.SwordMessage {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	// works because we never write/update current events
-	// only add or overwrite with a new pointer
-	return s.d.events[uuid]
-}
-
-func (s *Sword) filterProfile(data *swapi.ModelData, profile *swapi.Profile, units, inhabitants Ids, event *sdk.Event) bool {
-	decoded := s.getEvent(event.GetUuid())
-	if decoded == nil {
-		return false
-	}
-	m := decoded.ClientToSimulation.GetMessage()
-	switch {
-	case m == nil:
-		return false
-	case m.UnitOrder != nil:
-		id := m.UnitOrder.Tasker.GetId()
-		if id == 0 {
-			return false
-		}
-		if _, ok := units[id]; ok {
-			return false
-		}
-		return !data.IsUnitInProfile(id, profile)
-	case m.AutomatOrder != nil:
-		id := m.AutomatOrder.Tasker.GetId()
-		return id != 0 && !data.IsAutomatInProfile(id, profile)
-	case m.CrowdOrder != nil:
-		id := m.CrowdOrder.Tasker.GetId()
-		return id != 0 && !data.IsCrowdInProfile(id, profile)
-	case m.FragOrder != nil:
-		tasker := m.FragOrder.GetTasker()
-		return !isTaskerInProfile(tasker, data, profile, units, inhabitants)
-	case m.MagicAction != nil:
-		return !profile.Supervisor
-	case m.UnitMagicAction != nil:
-		tasker := m.UnitMagicAction.GetTasker()
-		actionType := m.UnitMagicAction.GetType()
-		isInProfile := isTaskerInProfile(tasker, data, profile, units, inhabitants)
-		if _, ok := clientMagicActions[sword.UnitMagicAction_Type(actionType)]; ok {
-			return !isInProfile
-		}
-		return !profile.Supervisor || !isInProfile
-	case m.ObjectMagicAction != nil:
-		id := m.ObjectMagicAction.GetObject().GetId()
-		return !profile.Supervisor || id != 0 && !data.IsObjectInProfile(id, profile)
-	case m.KnowledgeMagicAction != nil:
-		id := m.KnowledgeMagicAction.GetKnowledgeGroup().GetId()
-		return !profile.Supervisor || id != 0 && !data.IsKnowledgeGroupInProfile(id, profile)
-	case m.SetAutomatMode != nil:
-		id := m.SetAutomatMode.GetAutomate().GetId()
-		return id != 0 && !data.IsAutomatInProfile(id, profile)
-	}
-	// report is not supported yet
-	return true
-}
-
-func (s *Sword) filterEngaged(event *sdk.Event) bool {
-	decoded := s.getEvent(event.GetUuid())
-	if decoded == nil {
-		return false
-	}
-	m := decoded.ClientToSimulation.GetMessage()
-	return m != nil && m.UnitOrder != nil && m.UnitOrder.GetParent() != 0
-}
-
-func (s *Sword) cacheMetadata(event *sdk.Event) *sdk.Metadata {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	id := event.GetUuid()
-	if metadata, ok := s.d.metadata[id]; ok {
-		return metadata
-	}
-	metadata := sdk.Metadata{}
-	src := event.GetMetadata()
-	if len(src) == 0 {
-		return nil
-	}
-	err := json.NewDecoder(bytes.NewBufferString(src)).Decode(&metadata)
-	if err != nil {
-		return nil
-	}
-	s.d.metadata[id] = &metadata
-	return &metadata
-}
-
-func (s *Sword) filterMetadata(data *swapi.ModelData, profile *swapi.Profile, event *sdk.Event) bool {
-	metadata := s.cacheMetadata(event)
-	if metadata == nil {
-		return false
-	}
-	id := metadata.GetSwordEntity()
-	if id == 0 {
-		return false
-	}
-	return !data.IsUnitInProfile(id, profile) &&
-		!data.IsAutomatInProfile(id, profile) &&
-		!data.IsFormationInProfile(id, profile) &&
-		!data.IsPartyInProfile(id, profile) &&
-		!data.IsCrowdInProfile(id, profile) &&
-		!data.IsPopulationInProfile(id, profile)
-}
-
-func getEngaged(config EventFilterConfig) bool {
-	engaged, ok := config["sword_filter_engaged"].(bool)
-	if !ok {
-		return false
-	}
-	return engaged
-}
-
-func getProfile(config EventFilterConfig) string {
-	name, _ := config["sword_profile"].(string)
-	return name
-}
-
-func getCustomProfile(config EventFilterConfig) (*swapi.Profile, Ids, Ids) {
-	filters, ok := config["sword_filter"].(map[string]map[uint32]struct{})
-	if !ok {
-		return nil, nil, nil
-	}
-	return &swapi.Profile{
-		Login:               "custom",
-		Supervisor:          false,
-		ReadOnlyFormations:  map[uint32]struct{}{},
-		ReadWriteFormations: filters["formations"],
-		ReadOnlyAutomats:    map[uint32]struct{}{},
-		ReadWriteAutomats:   filters["automats"],
-		ReadOnlyParties:     map[uint32]struct{}{},
-		ReadWriteParties:    filters["parties"],
-		ReadOnlyCrowds:      map[uint32]struct{}{},
-		ReadWriteCrowds:     filters["crowds"],
-	}, filters["units"], filters["inhabitants"]
-}
-
-func (s *Sword) addProfileFilter(dst *[]EventFilter, data *swapi.ModelData, config EventFilterConfig) {
-	name := getProfile(config)
-	if len(name) == 0 {
-		return
-	}
-	profile, ok := data.Profiles[name]
-	if !ok {
-		return
-	}
-	*dst = append(*dst, func(event *sdk.Event) bool {
-		return s.filterProfile(data, profile, Ids{}, Ids{}, event) ||
-			s.filterMetadata(data, profile, event)
-	})
-}
-
-func (s *Sword) addCustomFilter(dst *[]EventFilter, data *swapi.ModelData, config EventFilterConfig) {
-	profile, units, inhabitants := getCustomProfile(config)
-	if profile == nil {
-		return
-	}
-	*dst = append(*dst, func(event *sdk.Event) bool {
-		return s.filterProfile(data, profile, units, inhabitants, event)
-	})
-}
-
-func (s *Sword) addEngagedFilter(dst *[]EventFilter, config EventFilterConfig) {
-	if getEngaged(config) {
-		*dst = append(*dst, func(event *sdk.Event) bool {
-			return s.filterEngaged(event)
+// Custom test functions
+func (s *Sword) waitFor(operand func() bool) {
+	reply := make(chan bool, 1)
+	for {
+		s.observer.Post(func() {
+			reply <- operand()
 		})
-	}
-}
-
-func (s *Sword) addFilters(data *swapi.ModelData, config EventFilterConfig) []EventFilter {
-	filters := []EventFilter{}
-	s.addProfileFilter(&filters, data, config)
-	s.addCustomFilter(&filters, data, config)
-	s.addEngagedFilter(&filters, config)
-	return filters
-}
-
-func (s *Sword) GetFilters(config EventFilterConfig) []EventFilter {
-	s.mutex.Lock()
-	if s.d.input == nil {
-		s.mutex.Unlock()
-		return []EventFilter{}
-	}
-	d := s.d.input.Model.GetData()
-	s.mutex.Unlock()
-	return s.addFilters(d, config)
-}
-
-func (s *Sword) Filter(event *sdk.Event, config EventFilterConfig) bool {
-	client, group, err := s.getClient(false)
-	if err != nil {
-		return false
-	}
-	defer group.Done()
-	return client.Model.Query(func(data *swapi.ModelData) bool {
-		for _, filter := range s.addFilters(data, config) {
-			if filter(event) {
-				return true
-			}
+		if <-reply {
+			return
 		}
-		return false
-	})
+		time.Sleep(100 * time.Millisecond)
+	}
 }
 
 func (s *Sword) WaitFor(operand func(d *swapi.ModelData) bool) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-	if s.d.input != nil {
-		s.d.input.Model.WaitCondition(operand)
-	}
+	// a bit convoluted because we want to block, but only this
+	// function and not gosword model, and we must run inside
+	// the observer event loop to use session data
+	s.waitFor(func() bool {
+		if s.link == nil {
+			return false
+		}
+		return s.link.client.Model.Query(operand)
+	})
+}
+
+func (s *Sword) WaitForRetry(retry uint) {
+	s.waitFor(func() bool {
+		return s.retry >= retry
+	})
+}
+
+func (s *Sword) WaitForStatus(status SwordStatus) {
+	s.waitFor(func() bool {
+		return s.status == status
+	})
 }

@@ -71,7 +71,8 @@ private:
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands,
-                            Plugin_ABC& container, const LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables, int maxConnections )
+                            Plugin_ABC& container, const LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables, int maxConnections,
+                            bool replayer )
     : clients_           ( clients )
     , config_            ( config )
     , profiles_          ( new ProfileManager( model, clients, config ) )
@@ -80,6 +81,7 @@ RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Co
     , maxConnections_    ( maxConnections )
     , currentConnections_( 0 )
     , countID_           ( 1 ) // non-nul client identifier
+    , replayer_          ( replayer )
 {
     clientCommands.RegisterMessage( *this, &RightsPlugin::OnReceive );
     registrables.Add( new dispatcher::RegistrableProxy( *profiles_ ) );
@@ -248,6 +250,19 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
     }
 }
 
+unsigned int RightsPlugin::AcquireClientId()
+{
+    for(;;)
+    {
+        // reserve and set top bit for replayer clients
+        static const uint32_t mask = 1u << 31;
+        const auto id = replayer_ ? countID_ | mask : countID_ & ~mask;
+        if( id && !ids_.count( id ) )
+            return id;
+        countID_++;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::OnReceiveMsgAuthenticationRequest
 // Created: AGE 2007-08-24
@@ -304,20 +319,18 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         ack->set_terrain_name( config_.GetTerrainName().ToUTF8() );
         ack->set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack );
-        reply.set_client_id( countID_ );
+        const auto clientId = AcquireClientId();
+        reply.set_client_id( clientId );
         sender.Send( reply );
         authenticated_[ link ] = profile;
-        clientsID_[ link ] = countID_;
-        ids_[ countID_ ] = link;
+        clientsID_[ link ] = clientId;
+        ids_[ clientId ] = link;
         if( keyAuthenticated )
             silentClients_.insert( link );
         else
             ++currentConnections_;
         SendProfiles( sender );
-        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, countID_, keyAuthenticated );
-        ++countID_;
-        if( !countID_ )
-            ++countID_;
+        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, clientId, keyAuthenticated );
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }

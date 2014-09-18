@@ -76,7 +76,7 @@ Replayer::Replayer( const Config& config )
     , started_         ( false )
     , rights_          ( boost::make_shared< plugins::rights::RightsPlugin >(
         *model_, *clientsNetworker_, config, *clientsNetworker_,
-        handler_, *clientsNetworker_, registrables_, 0 ))
+        handler_, *clientsNetworker_, registrables_, 0, true ))
     , stopped_( false )
 {
     clientsNetworker_->RegisterMessage( *this, &Replayer::ReceiveClientToReplay );
