@@ -58,6 +58,7 @@ type Model struct {
 	errorHandler ModelErrorHandler
 	handlerId    int32
 	handlers     map[int32]ModelHandler
+	listeners    *ModelListeners
 	timeouts     map[int32]time.Time
 	closed       bool
 
@@ -72,13 +73,15 @@ type Model struct {
 }
 
 func NewModel() *Model {
+	listeners := NewModelListeners()
 	model := Model{
 		WaitTimeout: 60 * time.Second,
 		handlers:    map[int32]ModelHandler{},
 		timeouts:    map[int32]time.Time{},
+		listeners:   listeners,
 		requests:    make(chan *ModelRequest, 128),
 		conds:       []*modelCond{},
-		data:        NewModelData(),
+		data:        NewModelData(listeners),
 	}
 	model.setErrorHandler(nil)
 
@@ -247,6 +250,20 @@ func (model *Model) UnregisterHandler(id int32) {
 			handler(model.data, nil, ErrConnectionClosed)
 			model.remove(id)
 		}
+	})
+}
+
+func (model *Model) RegisterListener(listener ModelListener) int32 {
+	id := int32(0)
+	model.waitCommand(func(model *Model) {
+		id = model.listeners.Register(listener)
+	})
+	return id
+}
+
+func (model *Model) UnregisterListener(listener int32) {
+	model.waitCommand(func(model *Model) {
+		model.listeners.Unregister(listener)
 	})
 }
 

@@ -110,8 +110,12 @@ func (model *ModelData) handlePartyCreation(m *sword.SimToClient_Content) error 
 	}
 	party := NewParty(
 		mm.GetParty().GetId(),
-		mm.GetName())
-	model.Parties[party.Id] = party
+		mm.GetName(),
+	)
+	if !model.addParty(party) {
+		//ignore errors for now
+		//return fmt.Errorf("cannot insert party %d", party.Id)
+	}
 	return nil
 }
 
