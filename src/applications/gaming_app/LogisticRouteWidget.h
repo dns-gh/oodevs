@@ -16,8 +16,10 @@
 
 namespace kernel
 {
+    class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class Formation_ABC;
     class Pathfind_ABC;
 }
 
@@ -44,6 +46,9 @@ namespace gui
 class LogisticRouteWidget : public QWidget
                           , public tools::Observer_ABC
                           , public kernel::ContextMenuObserver_ABC< kernel::Pathfind_ABC >
+                          , public tools::ElementObserver_ABC< kernel::Pathfind_ABC >
+                          , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                          , public tools::ElementObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT;
 
@@ -62,6 +67,9 @@ public:
     void Clear();
 
     virtual void NotifyContextMenu( const kernel::Pathfind_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyDeleted( const kernel::Pathfind_ABC& entity );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& entity );
+    virtual void NotifyDeleted( const kernel::Formation_ABC& entity );
 
     void FillPushFlowParameters( actions::parameters::PushFlowParameters& parameters );
     void FillPullFlowParameters( actions::parameters::PullFlowParameters& parameters );
@@ -80,6 +88,7 @@ private:
     //! @name Helpers
     //@{
     void Build();
+    void Remove( const kernel::Entity_ABC& recipient );
     const kernel::Pathfind_ABC* GetPathfind( unsigned int id ) const;
     //@}
 

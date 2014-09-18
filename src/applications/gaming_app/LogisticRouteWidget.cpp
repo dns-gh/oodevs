@@ -14,7 +14,9 @@
 #include "actions/PushFlowParameters.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/TaskerWidget.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Tools.h"
 #include <boost/range/algorithm_ext/erase.hpp>
@@ -71,10 +73,15 @@ void LogisticRouteWidget::Clear()
     routes_.clear();
 }
 
-void LogisticRouteWidget::RemoveRecipient( const kernel::Entity_ABC& recipient )
+void LogisticRouteWidget::Remove( const kernel::Entity_ABC& recipient )
 {
     routes_.erase( recipient.GetId() );
     boost::remove_erase( recipients_, &recipient );
+}
+
+void LogisticRouteWidget::RemoveRecipient( const kernel::Entity_ABC& recipient )
+{
+    Remove( recipient );
     Build();
 }
 
@@ -131,7 +138,7 @@ void LogisticRouteWidget::OnUp( int index )
 
 void LogisticRouteWidget::OnDown( int index )
 {
-    if( index > 0 )
+    if( index >= 0 && index < recipients_.size() - 1 )
     {
         std::swap( recipients_[ index ], recipients_[ index + 1 ] );
         Build();
@@ -261,4 +268,31 @@ void LogisticRouteWidget::FillPullFlowParameters( actions::parameters::PullFlowP
     const auto* wayout = recipients_.at( 1 );
     if( const kernel::Pathfind_ABC* pathfind = GetPathfind( wayout->GetId() ) )
         parameters.SetWayBackPath( *pathfind );
+}
+
+void LogisticRouteWidget::NotifyDeleted( const kernel::Pathfind_ABC& entity )
+{
+    bool deleted = false;
+    for( auto it = routes_.begin(); it != routes_.end(); ++it )
+    {
+        if( const kernel::Pathfind_ABC* pathfind = it->second.second )
+            if( pathfind->GetId() == entity.GetId() )
+            {
+                it->second = std::make_pair( false, nullptr );
+                deleted = true;
+            }
+    }
+    if( deleted )
+        Build();
+}
+
+void LogisticRouteWidget::NotifyDeleted( const kernel::Automat_ABC& entity )
+{
+    Remove( entity );
+
+}
+
+void LogisticRouteWidget::NotifyDeleted( const kernel::Formation_ABC& entity )
+{
+    Remove( entity );
 }

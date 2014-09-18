@@ -21,6 +21,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class EquipmentType;
+    class ModelUnLoaded;
     class Profile_ABC;
     class Time_ABC;
 }
@@ -53,6 +54,8 @@ class StaticModel;
 // Created: MMC 2012-10-18
 // =============================================================================
 class LogisticSupplyFlowDialog_ABC : public QDialog
+                                   , public tools::Observer_ABC
+                                   , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT;
 
@@ -96,6 +99,7 @@ protected:
 
     virtual void AddAvailable( const Dotation& dotation );
     virtual void AddCarryingEquipment( const kernel::Entity_ABC& entity );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& model );
     //@}
 
 protected:

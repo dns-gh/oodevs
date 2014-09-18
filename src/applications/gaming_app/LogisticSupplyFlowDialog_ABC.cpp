@@ -111,6 +111,7 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     QVBoxLayout* carriersLayout = new QVBoxLayout( carriersTab );
     carriersLayout->addWidget( carriersUseCheck_ );
     carriersLayout->addWidget( carriersTable_ );
+    controllers_.Register( *this );
     hide();
 }
 
@@ -120,7 +121,7 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
 // -----------------------------------------------------------------------------
 LogisticSupplyFlowDialog_ABC::~LogisticSupplyFlowDialog_ABC()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,4 +231,9 @@ void LogisticSupplyFlowDialog_ABC::EnableButtons( bool enabled )
 {
     ok_->setEnabled( enabled );
     cancel_->setEnabled( enabled );
+}
+
+void LogisticSupplyFlowDialog_ABC::NotifyUpdated( const kernel::ModelUnLoaded& /*model*/ )
+{
+    Reject();
 }
