@@ -1,6 +1,12 @@
 integration = {}
 utilities = {}
 
+-- Load pre-requisite Lua modules
+require "debug"
+require "math"
+require "string"
+require "table"
+
 include "integration/Reports.lua"
 include "integration/SimulationIntegration.lua"
 include "integration/KnowledgeManager.lua"
