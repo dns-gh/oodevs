@@ -261,15 +261,10 @@ std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
         CreateData( config.BuildCheckpointChildFile( "data", name ), world_ );
         CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ), userName );
     }
-    catch( const tools::Exception& e )
-    {
-        err = tools::GetExceptionMsg( e );
-        MT_LOG_ERROR_MSG( "cannot save checkpoint: " << e.CreateLoggerMsg() );
-    }
     catch( const std::exception& e )
     {
         err = tools::GetExceptionMsg( e );
-        MT_LOG_ERROR_MSG( "cannot save checkpoint: " << err );
+        MT_LOG_ERROR_MSG( "cannot save checkpoint: " << tools::GetStackTraceAndMessage( e ) );
     }
     return err;
 }
