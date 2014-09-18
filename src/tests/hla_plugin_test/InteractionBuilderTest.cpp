@@ -33,7 +33,7 @@ namespace
             , builder( logger, federate, netnBuilder )
         {}
         template< typename Interaction >
-        void CheckBuild( const std::string& name, const std::vector< std::string >& parameters )
+        void CheckBuild( const std::string& name, const std::vector< std::string >& parameters, const Interaction& message = Interaction() )
         {
             ::hla::MockInteractionNotification< Interaction > notification;
             ::hla::Interaction< Interaction > interaction( notification );
@@ -46,7 +46,6 @@ namespace
             BOOST_FOREACH( const std::string& parameter, parameters )
                 MOCK_EXPECT( handler->Visit ).once().in( s ).with( parameter, mock::any );
             MOCK_EXPECT( handler->End ).once().in( s );
-            Interaction message;
             interaction.Send( message );
         }
         template< typename Interaction >
@@ -382,7 +381,9 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
                                                                         ( "ServiceType" )
                                                                         ( "EmbarkedObjects" )
                                                                         ( "TransportUnitIdentifier" );
-    CheckBuild< interactions::NetnConvoyEmbarkmentStatus >( name, parameters );
+    interactions::NetnConvoyEmbarkmentStatus data;
+    data.transportUnitIdentifier = UnicodeString("D019EF26-9A59-47C4-8775-4DE8D4AF9FE3");
+    CheckBuild< interactions::NetnConvoyEmbarkmentStatus >( name, parameters, data );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_disembarkment_status_v2, FixtureV2 )
@@ -394,7 +395,9 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
                                                                         ( "ServiceType" )
                                                                         ( "DisembarkedObjects" )
                                                                         ( "TransportUnitIdentifier" );
-    CheckBuild< interactions::NetnConvoyDisembarkmentStatus >( name, parameters );
+    interactions::NetnConvoyDisembarkmentStatus data;
+    data.transportUnitIdentifier = UnicodeString("D019EF26-9A59-47C4-8775-4DE8D4AF9FE3");
+    CheckBuild< interactions::NetnConvoyDisembarkmentStatus >( name, parameters, data );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_destroyed_entities_v2, FixtureV2 )

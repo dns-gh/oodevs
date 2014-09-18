@@ -42,5 +42,5 @@ BOOST_FIXTURE_TEST_CASE( unique_id_deserializes, SerializationFixture )
     ::hla::Deserializer deserializer = Serialize( serializedId, 11 * sizeof( int8_t ) );
     UniqueId deserializedId;
     deserializedId.Deserialize( deserializer );
-    BOOST_CHECK_EQUAL( identifier, deserializedId.str() );
+    BOOST_CHECK_EQUAL( serializedId.str(), deserializedId.str() );
 }
