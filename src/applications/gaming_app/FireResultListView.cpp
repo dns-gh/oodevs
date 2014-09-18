@@ -341,6 +341,9 @@ void FireResultListView::NotifyUpdated( const kernel::Entity_ABC& entity )
         if( auto* targetItem = model_.item( i, 2 ) )
             if( const auto* target = targetItem->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
                 if( target == &entity )
-                    targetItem->setData( extractor_.GetDisplayName( entity ), Qt::DisplayRole );
+                    if( target->GetTypeName() == kernel::Agent_ABC::typeName_ )
+                        targetItem->setData( GetDisplayName( static_cast< const kernel::Agent_ABC& >( entity ) ), Qt::DisplayRole );
+                    else if( target->GetTypeName() == kernel::Population_ABC::typeName_ )
+                        targetItem->setData( extractor_.GetDisplayName( static_cast< const kernel::Population_ABC& >( entity ) ), Qt::DisplayRole );
     }
 }
