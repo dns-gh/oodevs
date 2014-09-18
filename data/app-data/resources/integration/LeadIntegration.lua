@@ -865,7 +865,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     if self.params.forbidFlyingAgentsFromLanding == true then
         self.entitiesToAllowToLand = {}
         for i = 1, #self.parameters.commandingEntities do
-            integration.SendMessage( "DeactivateBehaviour", self.parameters.commandingEntities[i], { behaviour = "landWhenStationary" }, { type = "dynamic" } )
+            integration.SendMessage( "DeactivateBehaviour", self.parameters.commandingEntities[i], { behaviour = "landWhenStationary" } )
             self.entitiesToAllowToLand[i] = self.parameters.commandingEntities[i]
         end
     end
@@ -1235,7 +1235,7 @@ integration.leadDestroy = function ( self, setEchelonNone )
     
     if self.params.forbidFlyingAgentsFromLanding == true and self.entitiesToAllowToLand then
         for i = 1, #self.entitiesToAllowToLand do
-            integration.SendMessage( "ReactivateBehaviour", self.entitiesToAllowToLand[i], { behaviour = "landWhenStationary" }, { type = "dynamic" } )
+            integration.SendMessage( "ReactivateBehaviour", self.entitiesToAllowToLand[i], { behaviour = "landWhenStationary" } )
         end
     end
 end
