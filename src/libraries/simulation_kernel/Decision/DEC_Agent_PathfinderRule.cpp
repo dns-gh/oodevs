@@ -174,8 +174,7 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
                 if( rCurrentObjectCost < 0. ) // Impossible move (for example destroyed bridge)
                     return rCurrentObjectCost;
                 rObjectCost += rCurrentObjectCost;
-                if( ( *itKnowledge )->HasAgentMaxSpeedMultiplier() )
-                    rSpeed = context_->GetUnitSpeeds().GetMaxSpeed() * ( *itKnowledge )->GetAgentMaxSpeedMultiplier();
+                rSpeed = ( *itKnowledge )->ComputeAgentMaxSpeed( rSpeed, context_->GetUnitSpeeds().GetMaxSpeed() );
             }
         }
     }

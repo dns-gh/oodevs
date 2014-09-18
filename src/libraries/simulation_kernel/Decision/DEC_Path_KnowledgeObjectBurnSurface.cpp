@@ -62,19 +62,10 @@ double DEC_Path_KnowledgeObjectBurnSurface::GetMaxTrafficability() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectBurnSurface::GetAgentMaxSpeedMultiplier
-// Created: LDC 2013-01-02
+// Name: DEC_Path_KnowledgeObjectBurnSurface::ComputeAgentMaxSpeed
+// Created: JSR 2014-09-18
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeObjectBurnSurface::GetAgentMaxSpeedMultiplier() const
+double DEC_Path_KnowledgeObjectBurnSurface::ComputeAgentMaxSpeed( double speed, double /*maxSpeed*/ ) const
 {
-    return 1.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectBurnSurface::HasAgentMaxSpeedMultiplier
-// Created: LDC 2013-01-02
-// -----------------------------------------------------------------------------
-bool DEC_Path_KnowledgeObjectBurnSurface::HasAgentMaxSpeedMultiplier() const
-{
-    return false;
+    return speed;
 }

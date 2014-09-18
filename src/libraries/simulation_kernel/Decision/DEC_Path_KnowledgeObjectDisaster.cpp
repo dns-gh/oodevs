@@ -13,6 +13,8 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Objects/DisasterAttribute.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MobilityCapacity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "propagation/Extractor_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -50,6 +52,7 @@ namespace
 DEC_Path_KnowledgeObjectDisaster::DEC_Path_KnowledgeObjectDisaster( const MIL_Agent_ABC& agent, const DEC_Knowledge_Object& knowledge )
     : localisation_( new TER_Localisation( knowledge.GetLocalisation() ) )
     , maxTrafficability_( knowledge.GetMaxTrafficability() )
+    , objectType_( knowledge.GetType() )
     , maxSpeedModifier_( 1 )
 {
     ComposanteTypesComputer computer( composantes_ );
@@ -106,21 +109,15 @@ double DEC_Path_KnowledgeObjectDisaster::GetMaxTrafficability() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectDisaster::GetAgentMaxSpeedMultiplier
-// Created: JSR 2014-04-23
+// Name: DEC_Path_KnowledgeObjectDisaster::ComputeAgentMaxSpeed
+// Created: JSR 2014-09-18
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeObjectDisaster::GetAgentMaxSpeedMultiplier() const
+double DEC_Path_KnowledgeObjectDisaster::ComputeAgentMaxSpeed( double speed, double maxSpeed ) const
 {
-    return std::max( 0.1, maxSpeedModifier_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectDisaster::HasAgentMaxSpeedMultiplier
-// Created: JSR 2014-04-23
-// -----------------------------------------------------------------------------
-bool DEC_Path_KnowledgeObjectDisaster::HasAgentMaxSpeedMultiplier() const
-{
-    return true;
+    const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >();
+    if( mobility && mobility->IsMaxSpeed() )
+        return maxSpeed * std::max( 0.1, maxSpeedModifier_ * mobility->ApplySpeedPolicy( 1., 1., 1., 1. ) );
+    return speed * std::max( 0.1, maxSpeedModifier_ );
 }
 
 // -----------------------------------------------------------------------------

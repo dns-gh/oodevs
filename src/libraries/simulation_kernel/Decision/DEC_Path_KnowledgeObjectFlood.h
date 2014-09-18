@@ -36,8 +36,7 @@ public:
     virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& toTerrainType, const TerrainData& linkTerrainType, double weight ) const;
     virtual double GetCostOut() const;
     virtual double GetMaxTrafficability() const;
-    virtual double GetAgentMaxSpeedMultiplier() const;
-    virtual bool HasAgentMaxSpeedMultiplier() const;
+    virtual double ComputeAgentMaxSpeed( double speed, double maxSpeed ) const;
     //@}
 
 private:

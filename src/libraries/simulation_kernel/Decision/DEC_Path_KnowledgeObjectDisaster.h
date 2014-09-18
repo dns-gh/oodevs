@@ -15,6 +15,7 @@
 class DEC_Knowledge_Object;
 class Extractor_ABC;
 class MIL_Agent_ABC;
+class MIL_ObjectType_ABC;
 class PHY_ComposanteTypePion;
 class TER_Localisation;
 
@@ -38,8 +39,7 @@ public:
     virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& toTerrainType, const TerrainData& linkTerrainType, double weight ) const;
     virtual double GetCostOut() const;
     virtual double GetMaxTrafficability() const;
-    virtual double GetAgentMaxSpeedMultiplier() const;
-    virtual bool HasAgentMaxSpeedMultiplier() const;
+    virtual double ComputeAgentMaxSpeed( double speed, double maxSpeed ) const;
     //@}
 
 private:
@@ -54,6 +54,7 @@ private:
     std::unique_ptr< TER_Localisation > localisation_;
     std::set< const PHY_ComposanteTypePion* > composantes_;
     double maxTrafficability_;
+    const MIL_ObjectType_ABC& objectType_;
     mutable double maxSpeedModifier_;
     std::vector< boost::shared_ptr< Extractor_ABC > > extractors_;
     //@}
