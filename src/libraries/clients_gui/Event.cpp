@@ -114,7 +114,7 @@ QString Event::GetTooltip() const
 // -----------------------------------------------------------------------------
 void Event::Select( kernel::ActionController& controller ) const
 {
-    controller.SetSelected( *this, false );
+    controller.Select( *this );
 }
 
 // -----------------------------------------------------------------------------
