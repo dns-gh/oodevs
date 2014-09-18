@@ -117,7 +117,7 @@ void FormationLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const g
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Formation_ABC& formation = static_cast< const Formation_ABC& >( entity );
     if( !formation.IsAggregated() && HasAggregatedSubordinate( formation ) )
-        controllers_.actions_.ContextMenu( formation, entity, point, where );
+        controllers_.actions_.ContextMenu( this, formation, entity, point, where );
 }
 
 // ----------------------------------------------------------------------------

@@ -130,6 +130,17 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitStateDialog::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void UnitStateDialog::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    if( selected_ != &entity )
+        return;
+    selectedEntityLabel_->setText( entity.GetName() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitStateDialog::Show
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------

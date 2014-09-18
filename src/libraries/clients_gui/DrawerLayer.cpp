@@ -50,7 +50,7 @@ void DrawerLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, co
 {
     const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
     const kernel::Drawing_ABC& drawing = static_cast< const kernel::Drawing_ABC& >( entity );
-    controllers_.actions_.ContextMenu( entity, drawing, point, where );
+    controllers_.actions_.ContextMenu( this, entity, drawing, point, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void DrawerLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable
 {
     const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
     const kernel::Drawing_ABC& drawing = static_cast< const kernel::Drawing_ABC& >( entity );
-    controllers_.actions_.ContextMenu( entity, drawing, menu );
+    controllers_.actions_.ContextMenu( this, entity, drawing, menu );
 }
 
 // -----------------------------------------------------------------------------

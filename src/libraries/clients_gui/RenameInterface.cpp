@@ -13,6 +13,7 @@
 
 #include "EntityTreeView_ABC.h"
 #include "LongNameHelper.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Drawing_ABC.h"
@@ -66,13 +67,12 @@ void RenameInterface::OnRename()
 {
     if( !contextMenuEntity_ )
         return;
-    for( auto it = views_.begin(); it != views_.end(); ++it )
-        if( (*it)->isVisible() && (*it)->IsActivated() && (*it)->Exist( *contextMenuEntity_ ) )
-        {
-            (*it)->Rename( *contextMenuEntity_.ConstCast() );
-            return;
-        }
-    gui::longname::ShowRenameDialog( qApp->activeWindow(), contextMenuEntity_ );
+    if( contextMenuView_ && contextMenuView_->IsActivated() && contextMenuView_->Exist( *contextMenuEntity_ ) )
+        contextMenuView_->Rename( *contextMenuEntity_.ConstCast() );
+    else
+        gui::longname::ShowRenameDialog( qApp->activeWindow(), contextMenuEntity_ );
+    contextMenuEntity_ = 0;
+    contextMenuView_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,9 +81,15 @@ void RenameInterface::OnRename()
 // -----------------------------------------------------------------------------
 void RenameInterface::AddCommonMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
+    contextMenuView_ = 0;
     contextMenuEntity_ = &entity;
     if( entity.CanBeRenamed() )
+    {
+        auto it = std::find( views_.begin(), views_.end(), controllers_.actions_.GetEmitter() );
+        if( it != views_.end() )
+            contextMenuView_ = *it;
         menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -73,9 +73,9 @@ void AgentKnowledge_ABC::MultipleSelect( ActionController& controller, const std
 // Name: AgentKnowledge_ABC::ContextMenu
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-void AgentKnowledge_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void AgentKnowledge_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *( const Knowledge_ABC*)this, *( const Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *( const Knowledge_ABC*)this, *( const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------

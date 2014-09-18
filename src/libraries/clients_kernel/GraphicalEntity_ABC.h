@@ -12,6 +12,7 @@
 
 #include <vector>
 
+class QObject;
 class QPoint;
 class QString;
 class QPixmap;
@@ -46,7 +47,7 @@ public:
     //@{
     virtual void Select( ActionController& controller ) const = 0;
     virtual void MultipleSelect( ActionController& controller, const std::vector< const GraphicalEntity_ABC* >& elements ) const = 0;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
     virtual void OverFly( ActionController& controller ) const = 0;
     //@}

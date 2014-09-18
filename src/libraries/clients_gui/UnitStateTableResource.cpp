@@ -91,7 +91,7 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
     int row = dataModel_.rowCount();
     AddItem( row, eName, name, name );
     AddItem( row, eCategory, category, category );
-    AddItem( row, ePercentage, "", "", Qt::ItemIsEditable );
+    AddItem( row, ePercentage, QString(), QString(), Qt::ItemIsEditable );
     AddItem( row, eMaximum, locale().toString( maximum ), maximum );
     AddItem( row, eQuantity, locale().toString( quantity ), quantity, Qt::ItemIsEditable );
     AddItem( row, eLowThreshold, locale().toString( lowThreshold, 'f', 2 ), lowThreshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );

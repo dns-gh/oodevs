@@ -71,9 +71,9 @@ void Ghost_ABC::MultipleSelect( ActionController& controller, const std::vector<
 // Name: Ghost_ABC::ContextMenu
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
-void Ghost_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void Ghost_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------

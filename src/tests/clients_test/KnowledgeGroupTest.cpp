@@ -37,7 +37,7 @@ namespace
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetTypeName, 0 );
         MOCK_METHOD( Select, 1 );
-        MOCK_METHOD( ContextMenu, 2 );
+        MOCK_METHOD( ContextMenu, 3 );
         MOCK_METHOD( Activate, 1 );
         MOCK_METHOD( IsActivated, 0 );
         MOCK_METHOD( IsCrowd, 0 );

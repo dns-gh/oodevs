@@ -80,9 +80,9 @@ void Formation_ABC::MultipleSelect( ActionController& controller, const std::vec
 // Name: Formation_ABC::ContextMenu
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void Formation_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void Formation_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------

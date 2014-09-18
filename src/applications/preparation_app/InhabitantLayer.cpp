@@ -56,7 +56,7 @@ bool InhabitantLayer::HandleMousePress( QMouseEvent* event, const geometry::Poin
         if( event->button() == Qt::LeftButton )
             editor_.Select( point );
         if( event->button() == Qt::RightButton )
-            controllers_.actions_.ContextMenu( point, kernel::Nothing(), event->globalPos() );
+            controllers_.actions_.ContextMenu( this, point, kernel::Nothing(), event->globalPos() );
     }
     return true;
 }

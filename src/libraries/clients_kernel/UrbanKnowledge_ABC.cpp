@@ -73,9 +73,9 @@ void UrbanKnowledge_ABC::MultipleSelect( ActionController& controller, const std
 // Name: UrbanKnowledge_ABC::ContextMenu
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanKnowledge_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void UrbanKnowledge_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *(const Knowledge_ABC*)this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *(const Knowledge_ABC*)this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------

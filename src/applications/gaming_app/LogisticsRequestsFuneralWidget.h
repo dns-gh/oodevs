@@ -25,7 +25,7 @@ class Model;
 // Created: MMC 2013-09-16
 // =============================================================================
 class LogisticsRequestsFuneralWidget : public LogisticConsignsWidget< LogFuneralConsigns, LogFuneralConsign >
-                                    , private boost::noncopyable
+                                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

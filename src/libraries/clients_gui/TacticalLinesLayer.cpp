@@ -88,7 +88,7 @@ void TacticalLinesLayer::ContextMenu( const GraphicalEntity_ABC& selectable, con
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const TacticalLine_ABC& line = static_cast< const TacticalLine_ABC& >( entity );
-    controllers_.actions_.ContextMenu( entity, line, point, where );
+    controllers_.actions_.ContextMenu( this, entity, line, point, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void TacticalLinesLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& sel
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const TacticalLine_ABC& line = static_cast< const TacticalLine_ABC& >( entity );
-    controllers_.actions_.ContextMenu( entity, line, menu );
+    controllers_.actions_.ContextMenu( this, entity, line, menu );
 }
 
 // -----------------------------------------------------------------------------

@@ -151,18 +151,6 @@ void LogisticConsignsWidget_ABC::OnLinkClicked( const QString& url, const QModel
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticConsignsWidget::DisplayRequest
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
-void LogisticConsignsWidget_ABC::DisplayRequest( const LogisticsConsign_ABC& consign
-                                               , const QString& requester, const QString& handler, const QString& state )
-{
-    requestsTable_->AddRequest( consign, consign.GetId(), requester, handler, state );
-    if( requestSelected_ && requestSelected_->GetId() == consign.GetId() )
-        requestsTable_->SelectRequest( consign.GetId() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticConsignsWidget::DisplayHistory
 // Created: MMC 2013-09-26
 // -----------------------------------------------------------------------------
@@ -241,10 +229,9 @@ QString LogisticConsignsWidget_ABC::SupervisionFilter( const QString& value ) co
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::DisplayRequest( const LogisticsConsign_ABC& consign )
 {
-    kernel::Agent_ABC* consumer = consign.GetConsumer();
-    kernel::Entity_ABC* handler = consign.GetHandler();
-    LogisticConsignsWidget_ABC::DisplayRequest( consign, consumer ? consumer->GetName() : "",
-        handler ? handler->GetName() : "" , consign.GetStatusDisplay() );
+    requestsTable_->AddRequest( consign );
+    if( requestSelected_ && requestSelected_->GetId() == consign.GetId() )
+        requestsTable_->SelectRequest( consign.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,9 +260,9 @@ void LogisticConsignsWidget_ABC::DisplayRequestHistory( const LogisticsConsign_A
             {
                 empty = false;
                 historyTable_->AddRequest( consign.GetStatusDisplay( it->nStatus_ ),
-                    requestSelected_->ConvertTickToTimeString( it->startedTick_ ),
-                    requestSelected_->ConvertTickToTimeString( it->endedTick_ ),
-                    GetDisplayName( it->handler_ ) );
+                                           requestSelected_->ConvertTickToTimeString( it->startedTick_ ),
+                                           requestSelected_->ConvertTickToTimeString( it->endedTick_ ),
+                                           GetDisplayName( it->handler_ ), it->handler_ );
             }
         if( !empty )
             historyTable_->resizeColumnsToContents();
@@ -312,4 +299,29 @@ void LogisticConsignsWidget_ABC::OnSelectionDialogRequested( const LogisticsCons
 {
     if( selectionDialog_ )
         selectionDialog_->Show( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget_ABC::UpdateEntityDetails
+// Created: ABR 2014-09-16
+// -----------------------------------------------------------------------------
+void LogisticConsignsWidget_ABC::UpdateEntityDetails( const kernel::Entity_ABC& entity,
+                                                      const kernel::Entity_ABC* detailEntity,
+                                                      const QString& key )
+{
+    if( detailEntity == &entity )
+        detailsTable_->Set( key, GetDisplayName( detailEntity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget_ABC::NotifyUpdated
+// Created: ABR 2014-09-16
+// -----------------------------------------------------------------------------
+void LogisticConsignsWidget_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    historyTable_->UpdateHandler( entity, GetDisplayName( &entity ) );
+    if( !requestSelected_ )
+        return;
+    UpdateEntityDetails( entity, requestSelected_->GetConsumer(), tools::translate( "Logistic", "Requester:") );
+    UpdateEntityDetails( entity, requestSelected_->GetHandler(), tools::translate( "Logistic", "Handler:") );
 }

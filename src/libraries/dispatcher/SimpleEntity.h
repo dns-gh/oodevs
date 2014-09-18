@@ -71,7 +71,7 @@ public:
     {
         // NOTHING
     }
-    virtual void ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/ ) const
+    virtual void ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/, QObject* /*emitter*/ ) const
     {
         // NOTHING
     }

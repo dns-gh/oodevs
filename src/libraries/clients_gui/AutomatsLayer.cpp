@@ -131,7 +131,7 @@ void AutomatsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const ge
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Automat_ABC& automat = static_cast< const Automat_ABC& >( selectable );
     if( !entity.IsAggregated() && HasSubordinate( entity, &IsAggregated ) )
-        controllers_.actions_.ContextMenu( automat, entity, point, where );
+        controllers_.actions_.ContextMenu( this, automat, entity, point, where );
 }
 
 

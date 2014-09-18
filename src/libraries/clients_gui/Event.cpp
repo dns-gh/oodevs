@@ -130,9 +130,9 @@ void Event::MultipleSelect( kernel::ActionController& controller, const std::vec
 // Name: Event::ContextMenu
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void Event::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
+void Event::ContextMenu( kernel::ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, where );
+    controller.ContextMenu( emitter, *this, where );
 }
 
 // -----------------------------------------------------------------------------

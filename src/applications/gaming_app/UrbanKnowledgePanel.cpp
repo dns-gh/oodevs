@@ -17,13 +17,17 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/Tools.h"
 #include "gaming/UrbanKnowledges.h"
 #include "gaming/UrbanPerceptions.h"
 
+Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
 Q_DECLARE_METATYPE( const kernel::UrbanKnowledge_ABC* )
-#define KnowledgeRole ( Qt::UserRole + 1 )
+
+#define EntityRole ( Qt::UserRole )
 
 using namespace kernel;
 using namespace gui;
@@ -109,7 +113,7 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanKnowledges& element )
     {
         const kernel::UrbanKnowledge_ABC& knowledge = iterator.NextElement();
         knowledgeModel_.item( i )->setText( knowledge.GetEntity()->GetName() );
-        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), EntityRole );
         ++i;
     }
 }
@@ -126,7 +130,10 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanPerceptions& element )
      int knowledgeSize = static_cast< int >( element.detectingAutomats_.size() );
      ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), knowledgeSize );
      for( int i = 0; i < knowledgeSize; ++i )
+     {
          perceptionModel_.item( i )->setText( element.detectingAutomats_[ i ]->GetName() );
+         perceptionModel_.item( i, 0 )->setData( QVariant::fromValue( element.detectingAutomats_[ i ] ), EntityRole );
+     }
 }
 
 // -----------------------------------------------------------------------------
@@ -185,9 +192,9 @@ void UrbanKnowledgePanel::OnSelectionChanged()
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( KnowledgeRole ).isValid() )
+    if( item && item->data( EntityRole ).isValid() )
     {
-        subSelected_ = item->data( KnowledgeRole ).value< const UrbanKnowledge_ABC* >();
+        subSelected_ = item->data( EntityRole ).value< const UrbanKnowledge_ABC* >();
         subSelected_->GetEntity()->Activate( controllers_.actions_ );
     }
     else
@@ -214,12 +221,23 @@ void UrbanKnowledgePanel::OnContextMenuRequested( const QPoint& pos )
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( KnowledgeRole ).isValid() )
-        item->data( KnowledgeRole ).value< const UrbanKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
+    if( item && item->data( EntityRole ).isValid() )
+        item->data( EntityRole ).value< const UrbanKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 void UrbanKnowledgePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), 0, *display_ );
     ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanKnowledgePanel::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void UrbanKnowledgePanel::NotifyUpdated( const kernel::Automat_ABC& automat )
+{
+    if( !isVisible() )
+        return;
+    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, EntityRole );
 }

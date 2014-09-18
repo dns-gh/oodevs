@@ -28,6 +28,7 @@ namespace gui
 }
 
 class QVBoxLayout;
+class QStandardItemModel;
 
 namespace tools
 {
@@ -52,6 +53,29 @@ namespace tools
                                       const QString& name,
                                       const std::string& optionName,
                                       const QColor& defaultColor );
+
+    template< typename T >
+    void UpdateEntityNameInModel( QStandardItemModel& model,
+                                  const kernel::Entity_ABC& entity,
+                                  int role )
+    {
+        for( int i = 0; i < model.rowCount(); ++i )
+            if( auto item = model.item( i, 0 ) )
+                if( auto itemEntity = item->data( role ).value< const T* >() )
+                    if( itemEntity == &entity )
+                        item->setText( itemEntity->GetName() );
+    }
+    template< typename T >
+    void UpdateEntityNameInKnowledgeModel( QStandardItemModel& model,
+                                           const kernel::Entity_ABC& entity,
+                                           int role )
+    {
+        for( int i = 0; i < model.rowCount(); ++i )
+            if( auto item = model.item( i, 0 ) )
+                if( auto itemEntity = item->data( role ).value< const T* >() )
+                    if( itemEntity->GetEntity() == &entity )
+                        item->setText( itemEntity->GetName() );
+    }
 }  //! namespace tools
 
 #endif  // CLIENTS_GUI_TOOLS_H

@@ -45,9 +45,10 @@ class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< AgentKnowledges >
                           , public tools::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
-                          , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                           , public tools::ElementObserver_ABC< PerceptionMap >
                           , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
+                          , public tools::ElementObserver_ABC< kernel::Agent_ABC >
+                          , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                           , public tools::SelectionObserver_Base< kernel::AgentKnowledge_ABC >
                           , public KnowledgeGroupSelectionObserver
 {
@@ -64,9 +65,10 @@ private:
     //@{
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
     virtual void NotifyUpdated( const kernel::AgentKnowledge_ABC& knowledge );
-    virtual void NotifyUpdated( const kernel::Automat_ABC& automat );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
+    virtual void NotifyUpdated( const kernel::Agent_ABC& agent );
+    virtual void NotifyUpdated( const kernel::Automat_ABC& automat );
     virtual void Select( const kernel::AgentKnowledge_ABC& k );
     virtual void BeforeSelection();
     virtual void AfterSelection();

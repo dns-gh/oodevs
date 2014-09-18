@@ -71,9 +71,9 @@ void PopulationFlow_ABC::MultipleSelect( ActionController& controller, const std
 // Name: PopulationFlow_ABC::ContextMenu
 // Created: AGE 2006-08-29
 // -----------------------------------------------------------------------------
-void PopulationFlow_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void PopulationFlow_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *static_cast< const Entity_ABC* >( this ), where );
+    controller.ContextMenu( emitter, *this, *static_cast< const Entity_ABC* >( this ), where );
 }
 
 // -----------------------------------------------------------------------------

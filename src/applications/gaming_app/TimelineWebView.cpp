@@ -306,10 +306,10 @@ void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > e
     if( event )
     {
         gui::Event& gamingEvent = GetOrCreateEvent( *event );
-        gamingEvent.ContextMenu( controllers_.eventActions_, QCursor::pos() );
+        gamingEvent.ContextMenu( controllers_.eventActions_, QCursor::pos(), this );
     }
     else
-        controllers_.actions_.ContextMenu( selectedDateTime_, QCursor::pos() );
+        controllers_.actions_.ContextMenu( this, selectedDateTime_, QCursor::pos() );
 }
 
 namespace
