@@ -166,10 +166,6 @@
         <translation>Configuración de Mapnik</translation>
     </message>
     <message>
-        <source>Activate layer</source>
-        <translation>Capa activa</translation>
-    </message>
-    <message>
         <source>Timeline</source>
         <translation>Linea de tiempo</translation>
     </message>
@@ -461,6 +457,10 @@ Do you want to replace it?</source>
     <message>
         <source>Models</source>
         <translation>Modelos</translation>
+    </message>
+    <message>
+        <source>Activate new terrain rendering (EXPERIMENTAL)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

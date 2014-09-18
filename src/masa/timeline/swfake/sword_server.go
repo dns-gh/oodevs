@@ -55,6 +55,7 @@ type SwordServer struct {
 	lastOrderId uint32
 	links       map[*SwordLink]struct{}
 	lastError   *Error
+	logins      bool
 }
 
 func NewSwordServer(log util.Logger, host string, ticks, verbose bool) (*SwordServer, error) {
@@ -67,6 +68,7 @@ func NewSwordServer(log util.Logger, host string, ticks, verbose bool) (*SwordSe
 		host:     host,
 		verbose:  verbose,
 		listener: listener,
+		logins:   true,
 		quit:     make(chan bool),
 		links:    map[*SwordLink]struct{}{},
 	}
@@ -141,7 +143,10 @@ func (s *SwordServer) replyAuthenticationRequest(slink *SwordLink, ctx int32, au
 	password := auth.GetPassword()
 	key := auth.GetAuthenticationKey()
 	code := sword.AuthenticationResponse_success
-	if len(key) == 0 || username != "" || password != "" {
+	s.mutex.Lock()
+	logins := s.logins
+	s.mutex.Unlock()
+	if len(key) == 0 || username != "" || password != "" || !logins {
 		code = sword.AuthenticationResponse_invalid_login
 	}
 	s.writeContent(slink, ctx, &sword.AuthenticationToClient_Content{
@@ -584,5 +589,11 @@ func (s *SwordServer) WriteToClient(slink *SwordLink, ctx, client int32, msg *sw
 func (s *SwordServer) SetLastError(err *Error) {
 	s.mutex.Lock()
 	s.lastError = err
+	s.mutex.Unlock()
+}
+
+func (s *SwordServer) EnableLogins(logins bool) {
+	s.mutex.Lock()
+	s.logins = logins
 	s.mutex.Unlock()
 }

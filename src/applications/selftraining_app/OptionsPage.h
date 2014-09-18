@@ -77,6 +77,7 @@ private slots:
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
     void OnEditDataDirectory( const QString& text );
+    void OnStateChanged( int state );
     virtual void OnBack();
     //@}
 
@@ -130,6 +131,7 @@ private:
     QLineEdit*   dataDirectory_;
     bool         hasChanged_;
     bool         languageHasChanged_;
+    QCheckBox*   mapnik_;
     //@}
 
     //! @name Other tabs

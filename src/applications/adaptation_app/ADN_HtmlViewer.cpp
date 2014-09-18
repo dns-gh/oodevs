@@ -51,7 +51,7 @@ void ADN_HtmlViewer::setText( const QString& text )
     setHtml( "<html/>" );
     tools::Path val = tools::Path::FromUnicode( text.toStdWString() );
     if( val.Exists() )
-        load( QUrl( val.Normalize().ToUTF8().c_str() ) );
+        load( QUrl::fromLocalFile( QString::fromStdWString( val.Normalize().ToUnicode() ) ) );
 }
 
 // -----------------------------------------------------------------------------

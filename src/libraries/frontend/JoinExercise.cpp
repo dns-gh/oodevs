@@ -10,8 +10,8 @@
 #include "frontend_pch.h"
 #include "JoinExercise.h"
 #include "DebugConfig.h"
+#include "Config.h"
 #include "clients_kernel/Tools.h"
-#include "tools/GeneralConfig.h"
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
@@ -40,7 +40,7 @@ tools::Path GetTimelineLog( const tools::Path& sessionDir, const tools::Path& lo
 // Name: JoinExercise constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
+JoinExercise::JoinExercise( const Config& config, const tools::Path& exercise,
         const tools::Path& session, const QString* profile, const tools::Path& sessionDir,
         const frontend::DebugConfig& debug )
     : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
@@ -65,7 +65,7 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
     if( debug.timeline.debugPort )
         AddArgument( "timeline-debug-port",
                 boost::lexical_cast< std::string >( debug.timeline.debugPort ) );
-    if( debug.gaming.hasMapnik )
+    if( config.HasMapnik() )
         AddArgument( "--mapnik" );
     if( debug.gaming.mapnikThreads )
         AddArgument( "mapnik-threads",

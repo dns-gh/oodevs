@@ -110,7 +110,6 @@ void SurfaceVessel::SpatialChanged( double latitude, double longitude, float alt
 {
     spatial_.Refresh( false, latitude, longitude, altitude, speed, direction );
     attributesUpdater_->Update( "Spatial", spatial_ );
-    listeners_->Moved( identifier_, latitude, longitude );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,4 +239,9 @@ void SurfaceVessel::ParentChanged( const std::string& parentId )
 void SurfaceVessel::StateChanged( rpr::DamageState32 state )
 {
     attributesUpdater_->Update( "DamageState", Wrapper< uint32_t >( static_cast< uint32_t >( state ) ) );
+}
+
+Agent_ABC* const SurfaceVessel::GetAgent() const
+{
+    return agent_;
 }

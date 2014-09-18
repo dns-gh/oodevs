@@ -58,7 +58,6 @@ public:
     void Update();
     virtual const actions::Action_ABC* GetAction() const;
     virtual void Update( const timeline::Event& event );
-    virtual void Select( kernel::ActionController& eventController, kernel::ActionController& actionController ) const;
     //@}
 
     //! @name GraphicalEntity_ABC implementation

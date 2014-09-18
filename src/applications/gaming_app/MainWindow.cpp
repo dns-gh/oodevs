@@ -168,6 +168,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );
     controllers_.modes_.AddRegistryEntry( eModes_Replay, "Replayer" );
+    controllers_.actions_.AddSelectionner( new Selectionner< actions::Action_ABC >() );
+    controllers_.eventActions_.AddSelectionner( new Selectionner< gui::Event >() );
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );
@@ -341,7 +343,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
     AddLayer( raster, "main,composition,miniviews", tr( "Raster" ) );
     if( mapnik )
-        AddLayer( *mapnik, "main,composition,miniviews", tr( "Mapnik" ) );
+        AddLayer( *mapnik, "main,composition,miniviews", tr( "Terrain (new rendering)" ) );
     AddLayer( terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
     AddLayer( contour, "main,composition,miniviews", tr( "Contour Lines" ) );
     AddLayer( urbanLayer, "main,miniviews", tr( "Urban blocks" ) );

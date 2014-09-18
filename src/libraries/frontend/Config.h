@@ -33,12 +33,15 @@ public:
     //@{
     const tools::Path& GetPackageFile() const;
     bool IsTestMode() const;
+    bool HasMapnik() const;
+    void SetMapnik( bool activated );
     //@}
 
 private:
     //! @name Member data
     //@{
     tools::Path package_;
+    bool mapnik_;
     //@}
 };
 }

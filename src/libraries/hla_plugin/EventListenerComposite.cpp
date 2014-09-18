@@ -37,7 +37,7 @@ EventListenerComposite::~EventListenerComposite()
 // -----------------------------------------------------------------------------
 void EventListenerComposite::Register( EventListener_ABC& listener )
 {
-    listeners_.push_back( &listener );
+    listeners_.insert( &listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ void EventListenerComposite::Register( EventListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void EventListenerComposite::Unregister( EventListener_ABC& listener )
 {
-    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
+    listeners_.erase( &listener );
 }
 
 // -----------------------------------------------------------------------------

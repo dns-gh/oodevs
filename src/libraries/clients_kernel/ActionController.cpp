@@ -79,6 +79,15 @@ void ActionController::InitializeSelectionners()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionController::AddSelectionner
+// Created: ABR 2014-09-17
+// -----------------------------------------------------------------------------
+void ActionController::AddSelectionner( const Selectionner_ABC* selectionner )
+{
+    selectionners_.push_back( selectionner );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionController::ChangeMode
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------

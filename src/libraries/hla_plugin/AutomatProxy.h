@@ -12,6 +12,7 @@
 
 #include "Agent_ABC.h"
 #include "dispatcher/Observer.h"
+#include "EventListenerComposite.h"
 #include "protocol/Protocol.h"
 #include <boost/shared_ptr.hpp>
 #include <vector>
@@ -66,7 +67,6 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< EventListener_ABC* > T_Listeners;
     typedef std::map< unsigned int, Agent_ABC* > T_Subordinates;
     typedef std::map< unsigned int, boost::shared_ptr< ChildListener > > T_ChildrenListeners;
     //@}
@@ -76,7 +76,7 @@ private:
     //@{
     const dispatcher::Automat_ABC& agent_;
     const LocalAgentResolver_ABC& localAgentResolver_;
-    T_Listeners listeners_;
+    EventListenerComposite listeners_;
     T_Subordinates subordinates_;
     T_ChildrenListeners childrenListeners_;
     //@}

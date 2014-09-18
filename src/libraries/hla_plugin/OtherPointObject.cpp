@@ -206,3 +206,8 @@ void OtherPointObject::ResourcesChanged( const ObjectLocationEventListener_ABC::
 {
     // NOTHING
 }
+
+Agent_ABC* const OtherPointObject::GetAgent() const
+{
+    return 0;
+}

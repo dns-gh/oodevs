@@ -1027,7 +1027,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mapnik</source>
+        <source>Terrain (new rendering)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2405,7 +2405,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Normalized quantity</source>
+        <source>Norm. quantity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

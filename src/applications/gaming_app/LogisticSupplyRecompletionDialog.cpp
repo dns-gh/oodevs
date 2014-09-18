@@ -31,6 +31,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "ENT/ENT_Tr.h"
 #include "protocol/Simulation.h"
 
@@ -241,7 +242,7 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
     item->setCheckState( Qt::Unchecked );
     personalsTable_->setItem( nPos, 0, item );
     personalDelegate_->AddSpinBox( nPos, nPos, 1, 1, 0, nMax );
-    personalsTable_->setItem( nPos, 1, new QTableWidgetItem( QString::number( 0 ) ) );
+    personalsTable_->setItem( nPos, 1, new QTableWidgetItem( locale().toString( 0 ) ) );
     personalsTable_->setItem( nPos, 2, new QTableWidgetItem( locale().toString( nMax ) ) );
 }
 
@@ -267,7 +268,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
         item->setCheckState( Qt::Unchecked );
         dotationsTable_->setItem( nPos, 0, item );
         dotationDelegate_->AddSpinBoxOnColumn( 1 );
-        dotationsTable_->setItem( nPos, 1, new QTableWidgetItem( QString::number( 0 ) ) );
+        dotationsTable_->setItem( nPos, 1, new QTableWidgetItem( locale().toString( 0 ) ) );
         catetoriesNames_.push_back( type.GetCategoryName().c_str() );
     }
     dotationsTable_->setMinimumHeight( std::max< int >( dotationsTable_->rowHeight( 0 ) * 4, 20 ) );
@@ -299,7 +300,7 @@ void LogisticSupplyRecompletionDialog::AddAmmunition( unsigned nPos, const QStri
     item->setCheckState( Qt::Unchecked );
     munitionsFamilyTable_->setItem( nPos, 0, item );
     munitionsFamilyDelegate_->AddSpinBoxOnColumn( 1 );
-    munitionsFamilyTable_->setItem( nPos, 1, new QTableWidgetItem( QString::number( 0 ) ) );
+    munitionsFamilyTable_->setItem( nPos, 1, new QTableWidgetItem( locale().toString( 0 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -317,17 +318,18 @@ void LogisticSupplyRecompletionDialog::InitializeStocks()
         while( it.HasMoreElements() )
         {
             const Dotation& stock = it.NextElement();
+            stocks_[ stock.type_->GetName().c_str() ] = &stock;
+            const float normalized = logistic_helpers::ComputeNormalizedQuantity( static_, *selected_, *stock.type_, stock.quantity_ );
             const unsigned int nPos = stockTable_->rowCount();
             stockTable_->insertRow( nPos );
             QTableWidgetItem* item = new QTableWidgetItem( stock.type_->GetName().c_str() );
             item->setCheckState( Qt::Unchecked );
             stockTable_->setItem( nPos, 0, item );
-            stockDelegate_->AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
-            stockTable_->setItem( nPos, 1, new QTableWidgetItem( QString::number( stock.quantity_ ) ) );
-            stocks_[ stock.type_->GetName().c_str() ] = &stock;
-            const float normalized = logistic_helpers::ComputeNormalizedQuantity( static_, *selected_, *stock.type_, stock.quantity_ );
-            stockTable_->setItem( nPos, 2, new QTableWidgetItem( QString::number( normalized, 'f', 2 ) ) );
+            stockTable_->setItem( nPos, 1, new QTableWidgetItem( locale().toString( stock.quantity_ ) ) );
+            stockTable_->setItem( nPos, 2, new QTableWidgetItem( locale().toString( normalized, 'f', 2 ) ) );
         }
+        stockDelegate_->AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
+        stockDelegate_->AddDoubleSpinBoxOnColumn( 2, 0, std::numeric_limits< int >::max(), 0.5 );
         stockTable_->setMinimumHeight( std::max< int >( stockTable_->rowHeight( 0 ) * 4, 20 ) );
         stockGroupBox_->setVisible( true );
     }
@@ -566,7 +568,7 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
         if( nCol == 0 )
         {
             equipmentDelegate_->AddSpinBox( nRow , nRow, 1, 1, 0, nMax );
-            equipmentsTable_->setItem( nRow, 1, new QTableWidgetItem( QString::number( 0 ) ) );
+            equipmentsTable_->setItem( nRow, 1, new QTableWidgetItem( locale().toString( 0 ) ) );
         }
         if( nRow == equipmentsTable_->rowCount() - 1 )
             equipmentsTable_->insertRow( equipmentsTable_->rowCount() );
@@ -583,12 +585,27 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::OnStockChanged( int nRow, int nCol )
 {
-    if( nCol != 1 || !isVisible() )
+    if( nCol == 0 || !isVisible() )
         return;
+    stockTable_->blockSignals( true );
     stockTable_->item( nRow, 0 )->setCheckState( Qt::Checked );
     const Dotation& dotation = *stocks_[ stockTable_->item( nRow, 0 )->text() ];
-    const float normalized = logistic_helpers::ComputeNormalizedQuantity( static_, *selected_, *dotation.type_, locale().toInt( stockTable_->item( nRow, 1 )->text() ) );
-    stockTable_->setItem( nRow, 2, new QTableWidgetItem( QString::number( normalized, 'f', 2 ) ) );
+    logistic_helpers::T_Requirements requirements;
+    logistic_helpers::ComputeLogisticConsumptions( static_, *selected_, dotation.type_->GetLogisticSupplyClass(), requirements, false );
+    const int consumption = requirements[ dotation.type_ ];
+    if( nCol == 1 )
+    {
+        const double quantity = locale().toDouble( stockTable_->item( nRow, 1 )->text() );
+        const double normalized = consumption > 0 ? quantity / consumption : 0;
+        stockTable_->setItem( nRow, 2, new QTableWidgetItem( locale().toString( normalized, 'f', 2 ) ) );
+    }
+    else
+    {
+        const double normalized = locale().toDouble( stockTable_->item( nRow, 2 )->text() );
+        const int quantity = static_cast< int >( consumption * normalized );
+        stockTable_->setItem( nRow, 1, new QTableWidgetItem( locale().toString( quantity ) ) );
+    }
+    stockTable_->blockSignals( false );
 }
 
 // -----------------------------------------------------------------------------

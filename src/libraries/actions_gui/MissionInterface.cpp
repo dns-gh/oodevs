@@ -177,7 +177,7 @@ void MissionInterface::Build( InterfaceBuilder_ABC& builder, const kernel::Order
             helpTab_->layout()->addWidget( missionSheetText );
             missionSheetText->setZoomFactor( 0.75 );
             missionSheetText->setContextMenuPolicy( Qt::NoContextMenu );
-            missionSheetText->load( QUrl( fileName.Normalize().ToUTF8().c_str() ) );
+            missionSheetText->load( QUrl::fromLocalFile( QString::fromStdWString( fileName.Normalize().ToUnicode() ) ) );
             widgetToDelete_.push_back( missionSheetText );
         }
         else

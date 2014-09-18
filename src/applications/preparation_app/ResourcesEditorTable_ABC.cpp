@@ -28,6 +28,7 @@ Q_DECLARE_METATYPE( const kernel::DotationType* )
 // -----------------------------------------------------------------------------
 ResourcesEditorTable_ABC::ResourcesEditorTable_ABC( const QStringList& headers, const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType )
     : gui::RichWidget< QTableView >( objectName, parent )
+    , delegate_( new gui::CommonDelegate( this ) )
     , headers_( headers )
     , dotations_( dotationsType )
 {
@@ -35,10 +36,9 @@ ResourcesEditorTable_ABC::ResourcesEditorTable_ABC( const QStringList& headers, 
     QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel( this );
     proxyModel->setSourceModel( dataModel_ );
     proxyModel->setSortRole( Qt::UserRole + 1 );
-    gui::CommonDelegate* delegate = new gui::CommonDelegate( this );
 
     setModel( proxyModel );
-    setItemDelegate( delegate );
+    setItemDelegate( delegate_ );
     setAlternatingRowColors( true );
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectRows );
@@ -48,7 +48,7 @@ ResourcesEditorTable_ABC::ResourcesEditorTable_ABC( const QStringList& headers, 
     Connect();
 
     InitHeader();
-    delegate->AddSpinBoxOnColumn( dataModel_->columnCount() - 1, 0, std::numeric_limits< int >::max() );
+    delegate_->AddSpinBoxOnColumn( dataModel_->columnCount() - 1, 0, std::numeric_limits< int >::max() );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,11 +153,12 @@ void ResourcesEditorTable_ABC::OnClearItems()
 // -----------------------------------------------------------------------------
 void ResourcesEditorTable_ABC::OnDataChanged( const QModelIndex& index, const QModelIndex& )
 {
-    if( index.column() == dataModel_->columnCount() - 1 )
-    {
-        UpdateLine( index.row(), GetValue( index.row() ) );
-        emit ResourceValueChanged();
-    }
+    if( index.column() != dataModel_->columnCount() - 1 )
+        return;
+    Disconnect();
+    UpdateLine( index.row(), GetValue( index.row() ) );
+    Connect();
+    emit ResourceValueChanged();
 }
 
 // -----------------------------------------------------------------------------

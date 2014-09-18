@@ -10,6 +10,7 @@
 #define plugins_hla_EventListenerComposite_h
 
 #include "EventListener_ABC.h"
+#include <set>
 
 namespace plugins
 {
@@ -32,7 +33,7 @@ public:
     virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
             unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages );
     virtual void EmbarkmentChanged( bool mounted );
-	virtual void PlatformAdded( const std::string& name, unsigned int id );
+    virtual void PlatformAdded( const std::string& name, unsigned int id );
     virtual void ChildrenChanged( const T_ChildrenIds& children );
     virtual void ParentChanged( const std::string& parentId );
     virtual void StateChanged( rpr::DamageState32 state );
@@ -41,7 +42,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< EventListener_ABC* > T_Listeners;
+    typedef std::set< EventListener_ABC* > T_Listeners;
     //@}
 
 private:

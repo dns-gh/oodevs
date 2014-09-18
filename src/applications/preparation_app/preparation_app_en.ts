@@ -1031,8 +1031,8 @@ This data can&apos;t be projected.</translation>
         <translation type="unfinished">Resource networks</translation>
     </message>
     <message>
-        <source>Mapnik</source>
-        <translation>Mapnik</translation>
+        <source>Terrain (new rendering)</source>
+        <translation>Terrain (new rendering)</translation>
     </message>
 </context>
 <context>
@@ -2409,8 +2409,8 @@ This data can&apos;t be projected.</translation>
         <translation>Quantity</translation>
     </message>
     <message>
-        <source>Normalized quantity</source>
-        <translation>Normalized quantity</translation>
+        <source>Norm. quantity</source>
+        <translation>Norm. quantity</translation>
     </message>
 </context>
 <context>

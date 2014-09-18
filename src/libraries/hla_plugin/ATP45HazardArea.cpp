@@ -195,3 +195,8 @@ void ATP45HazardArea::ResourcesChanged( const ObjectLocationEventListener_ABC::T
 void ATP45HazardArea::PropagationChanged( const ObjectPropagationEventListener_ABC::T_DataVector& /*pos*/ )
 {
 }
+
+Agent_ABC* const ATP45HazardArea::GetAgent() const
+{
+    return 0;
+}

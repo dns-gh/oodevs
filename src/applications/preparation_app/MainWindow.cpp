@@ -332,7 +332,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     AddLayer( *glProxy_, preferences, elevation2d,              "main",                         tools::translate( "MainWindow", "Elevation" ) );
     AddLayer( *glProxy_, preferences, raster,                   "main",                         tools::translate( "MainWindow", "Raster" ) );
     if( mapnik )
-        AddLayer( *glProxy_, preferences, *mapnik,              "main,composition,miniviews",   tools::translate( "MainWindow", "Mapnik" ) );
+        AddLayer( *glProxy_, preferences, *mapnik,              "main,composition,miniviews",   tools::translate( "MainWindow", "Terrain (new rendering)" ) );
     AddLayer( *glProxy_, preferences, terrain,                  "main",                         tools::translate( "MainWindow", "Terrain" ) );
     AddLayer( *glProxy_, preferences, contour,                  "main,composition,miniviews",   tools::translate( "MainWindow", "Contour Lines" ) );
     AddLayer( *glProxy_, preferences, urbanLayer,               "main",                         tools::translate( "MainWindow", "Urban blocks" ) );

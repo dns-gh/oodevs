@@ -17,6 +17,7 @@ import (
 	"masa/sword/swtest"
 	"masa/timeline/sdk"
 	"masa/timeline/swfake"
+	"masa/timeline/util"
 	"net/url"
 	"os"
 	"strconv"
@@ -44,29 +45,42 @@ var (
 	_ = Suite(&TestSuite{GetTestPort()})
 )
 
+func WaitConnected(server *swfake.SwordServer) {
+	for {
+		detached := server.GetLinks()
+		done := len(detached) > 0
+		detached.Close()
+		if done {
+			return
+		}
+	}
+}
+
 type Fixture struct {
 	server *swfake.SwordServer
 	client *Sword
 	tick   func(tick time.Time)
+	eloop  *util.EventLoop
 }
 
-func (Fixture) Abort(err error) {}
+func (Fixture) Abort(err error)                              {}
+func (Fixture) CloseEvent(uuid string, err error, lock bool) {}
+func (Fixture) UpdateEvent(uuid string, event *sdk.Event)    {}
 
 func (f *Fixture) Tick(tick time.Time) {
 	if f.tick != nil {
-		f.tick(tick)
+		f.Post(func() { f.tick(tick) })
 	}
 }
 
-func (Fixture) OnApply(uuid string, err error, lock bool) {}
-
-func (Fixture) UpdateEvent(uuid string, event *sdk.Event) (*sdk.Event, error) {
-	return event, nil
+func (f *Fixture) Post(operand func()) {
+	f.eloop.Post(operand)
 }
 
 func (f *Fixture) Close() {
-	f.client.Stop()
+	f.eloop.Post(func() { f.client.Stop() })
 	f.server.Close()
+	f.eloop.Close()
 }
 
 func (t *TestSuite) makeFixtureWith(c *C, f *Fixture) {
@@ -75,6 +89,8 @@ func (t *TestSuite) makeFixtureWith(c *C, f *Fixture) {
 	server, err := swfake.NewSwordServer(log, local, true, false)
 	c.Assert(err, IsNil)
 	f.server = server
+	f.eloop = util.NewEventLoop()
+	f.eloop.Start()
 	f.client = NewSword(log, f, true, "sim", local)
 }
 
@@ -98,11 +114,15 @@ func waitConnectedCount(c *C, server *swfake.SwordServer, expected int) {
 func (t *TestSuite) TestSwordStartStop(c *C) {
 	f := t.makeFixture(c)
 	defer f.Close()
-	err := f.client.Start()
-	c.Assert(err, IsNil)
-	c.Assert(f.server.ConnectedCount(), Equals, 1)
-	err = f.client.Stop()
-	c.Assert(err, IsNil)
+	f.eloop.Post(func() {
+		err := f.client.Start()
+		c.Check(err, IsNil)
+	})
+	WaitConnected(f.server)
+	f.eloop.Post(func() {
+		err := f.client.Stop()
+		c.Check(err, IsNil)
+	})
 	waitConnectedCount(c, f.server, 0)
 }
 
@@ -123,12 +143,14 @@ func getSomePayload(c *C) []byte {
 func (t *TestSuite) TestTwoConsecutiveOrders(c *C) {
 	f := t.makeFixture(c)
 	defer f.Close()
-	err := f.client.Start()
-	c.Assert(err, IsNil)
-	url, err := url.Parse("sword://sim")
-	c.Assert(err, IsNil)
-	f.client.Apply("1", *url, getSomePayload(c))
-	f.client.Apply("2", *url, getSomePayload(c))
+	f.eloop.Post(func() {
+		err := f.client.Start()
+		c.Check(err, IsNil)
+		url, err := url.Parse("sword://sim")
+		c.Check(err, IsNil)
+		f.client.Apply("1", *url, getSomePayload(c))
+		f.client.Apply("2", *url, getSomePayload(c))
+	})
 	waitConnectedCount(c, f.server, 1)
 }
 
@@ -146,8 +168,10 @@ func (t *TestSuite) TestSwordTimestamps(c *C) {
 	}
 	t.makeFixtureWith(c, &f)
 	defer f.Close()
-	err := f.client.Start()
-	c.Assert(err, IsNil)
+	f.eloop.Post(func() {
+		err := f.client.Start()
+		c.Check(err, IsNil)
+	})
 	select {
 	case <-quit: // we've seen one valid tick
 	case <-time.After(2 * time.Second):

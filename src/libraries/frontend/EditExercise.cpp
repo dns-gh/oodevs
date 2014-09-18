@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "EditExercise.h"
 #include "DebugConfig.h"
+#include "Config.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace frontend;
@@ -18,12 +19,12 @@ using namespace frontend;
 // Name: EditExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-EditExercise::EditExercise( const tools::GeneralConfig& config, const tools::Path& name, const DebugConfig& debug )
+EditExercise::EditExercise( const Config& config, const tools::Path& name, const DebugConfig& debug )
     : SpawnCommand( config, MakeBinaryName( "preparation_app" ), "preparation" )
 {
     AddRootArgument();
     AddExerciseArgument( name );
-    if( debug.gaming.hasMapnik )
+    if( config.HasMapnik() )
         AddArgument( "--mapnik" );
     if( debug.gaming.mapnikThreads )
         AddArgument( "mapnik-threads",

@@ -55,7 +55,7 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
     , rootHandler_ ( handler )
     , registrables_( registrables )
     , rights_      ( new plugins::rights::RightsPlugin( *model_, *clients_,
-        config_, *clients_, rootHandler_, *clients_, registrables, maxConnections ) )
+        config_, *clients_, rootHandler_, *clients_, registrables, maxConnections, false ) )
     , checkpointFilter_( new CheckpointFilterPlugin( *rights_ ) )
     , pOrder_      ( new plugins::order::OrderPlugin( config_, *model_, simulation_ ) )
     , services_    ( services )
@@ -224,7 +224,7 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
                 createFunction( *model_, staticModel_, simulation_, *clients_, config_, *logger, xis ),
                 // Note the lambda holds a reference to the logger
                 [logger, destroyFunction]( dispatcher::Plugin_ABC* p )
-                { 
+                {
                     destroyFunction( p, *logger );
                 });
         if( !plugin.get() )
