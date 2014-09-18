@@ -136,13 +136,19 @@ func (s *Sword) cacheMetadata(event *sdk.Event, overwrite bool) *sdk.Metadata {
 	return &metadata
 }
 
-func (s *Sword) filterMetadata(data *swapi.ModelData, profile *swapi.Profile, event *sdk.Event) bool {
+func (s *Sword) filterMetadata(data *swapi.ModelData, profile *swapi.Profile, units, inhabitants Ids, event *sdk.Event) bool {
 	metadata := s.cacheMetadata(event, false)
 	if metadata == nil {
 		return false
 	}
 	id := metadata.GetSwordEntity()
 	if id == 0 {
+		return false
+	}
+	if _, ok := units[id]; ok {
+		return false
+	}
+	if _, ok := inhabitants[id]; ok {
 		return false
 	}
 	return !data.IsUnitInProfile(id, profile) &&
@@ -196,7 +202,7 @@ func (s *Sword) addProfileFilter(dst *[]EventFilter, data *swapi.ModelData, conf
 	}
 	*dst = append(*dst, func(event *sdk.Event) bool {
 		return s.filterProfile(data, profile, Ids{}, Ids{}, event) ||
-			s.filterMetadata(data, profile, event)
+			s.filterMetadata(data, profile, Ids{}, Ids{}, event)
 	})
 }
 
@@ -206,7 +212,8 @@ func (s *Sword) addCustomFilter(dst *[]EventFilter, data *swapi.ModelData, confi
 		return
 	}
 	*dst = append(*dst, func(event *sdk.Event) bool {
-		return s.filterProfile(data, profile, units, inhabitants, event)
+		return s.filterProfile(data, profile, units, inhabitants, event) ||
+			s.filterMetadata(data, profile, units, inhabitants, event)
 	})
 }
 
