@@ -180,7 +180,6 @@ void AggregateEntity::SpatialChanged( double latitude, double longitude, float a
 {
     spatial_.Refresh( false, latitude, longitude, altitude, speed, direction );
     attributesUpdater_->Update( "Spatial", spatial_ );
-    listeners_->Moved( identifier_, latitude, longitude );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,4 +313,9 @@ void AggregateEntity::ParentChanged( const std::string& )
 void AggregateEntity::StateChanged( rpr::DamageState32 /*state*/ )
 {
     // NOTHING
+}
+
+Agent_ABC* const AggregateEntity::GetAgent() const
+{
+    return agent_;
 }

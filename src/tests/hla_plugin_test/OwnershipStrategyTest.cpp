@@ -50,6 +50,7 @@ namespace
             BOOST_REQUIRE( shapeCreationListener );
             BOOST_REQUIRE( shapeDestructionListener );
             BOOST_REQUIRE( classListener );
+            MOCK_EXPECT( object.GetAgent ).returns< const Agent_ABC* >( 0 );
             MOCK_EXPECT( object.Register ).once().with( mock::retrieve( objectListener ) );
             classListener->LocalCreated( "identifier", hlaClass, object );
         }

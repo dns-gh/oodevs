@@ -207,3 +207,8 @@ void BreachablePointObject::ResourcesChanged( const ObjectLocationEventListener_
 {
     // NOTHING
 }
+
+Agent_ABC* const BreachablePointObject::GetAgent() const
+{
+    return 0;
+}

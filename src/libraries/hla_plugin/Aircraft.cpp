@@ -111,7 +111,6 @@ void Aircraft::SpatialChanged( double latitude, double longitude, float altitude
 {
     spatial_.Refresh( false, latitude, longitude, altitude, speed, direction );
     attributesUpdater_->Update( "Spatial", spatial_ );
-    listeners_->Moved( identifier_, latitude, longitude );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,4 +240,9 @@ void Aircraft::ParentChanged( const std::string& parentId )
 void Aircraft::StateChanged( rpr::DamageState32 state )
 {
     attributesUpdater_->Update( "DamageState", Wrapper< uint32_t >( static_cast< uint32_t >( state ) ) );
+}
+
+Agent_ABC* const Aircraft::GetAgent() const
+{
+    return agent_;
 }

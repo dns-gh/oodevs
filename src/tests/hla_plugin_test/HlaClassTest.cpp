@@ -83,6 +83,7 @@ namespace
         virtual void Unregister( ObjectListener_ABC&  ) {}
         virtual void Attach( Agent_ABC* , unsigned long  ) {}
         virtual void SetIdentifier( const std::string&  ) {}
+        virtual Agent_ABC* const GetAgent() const { return 0; }
         virtual const std::string& GetIdentifier() const { static std::string DEFVAL("DEFINT"); return DEFVAL; }
         virtual void ResetAttributes() {}
     };

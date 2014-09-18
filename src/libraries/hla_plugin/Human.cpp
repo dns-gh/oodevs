@@ -193,3 +193,8 @@ void Human::StateChanged( rpr::DamageState32 state )
     attributes_->Update( "DamageState", Wrapper< uint32_t >( static_cast< uint32_t >( state ) ) );
 
 }
+
+Agent_ABC* const Human::GetAgent() const
+{
+    return 0;
+}

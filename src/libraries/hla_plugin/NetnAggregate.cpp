@@ -228,3 +228,8 @@ void NetnAggregate::StateChanged( rpr::DamageState32 /*state*/ )
 {
     // NOTHING
 }
+
+Agent_ABC* const NetnAggregate::GetAgent() const
+{
+    return aggregate_->GetAgent();
+}

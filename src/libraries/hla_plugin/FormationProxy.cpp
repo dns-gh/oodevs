@@ -54,7 +54,7 @@ FormationProxy::~FormationProxy()
 // -----------------------------------------------------------------------------
 void FormationProxy::Register( EventListener_ABC& listener )
 {
-    listeners_.push_back( &listener );
+    listeners_.Register( listener );
     if( agent_.GetParent() != 0 )
     {
         std::string parentId( localAgentResolver_.Resolve( agent_.GetParent()->GetId() ) );
@@ -69,7 +69,7 @@ void FormationProxy::Register( EventListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void FormationProxy::Unregister( EventListener_ABC& listener )
 {
-    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
+    listeners_.Unregister( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,10 +115,7 @@ void FormationProxy::NotifyChildren()
             if( rtiId.size() > 0 )
                 children.insert( rtiId );
         });
-    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* l)
-        {
-            l->ChildrenChanged( children );
-        });
+    listeners_.ChildrenChanged( children );
 }
 
 namespace
@@ -140,10 +137,7 @@ void FormationProxy::UpdateLocationCallback()
 {
     ChildListener::LocationStruct loc = std::accumulate( childrenListeners_.begin(), childrenListeners_.end(), ChildListener::LocationStruct() , &addLocation );
     loc = loc / static_cast< double >(  childrenListeners_.size() );
-    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* l)
-        {
-            l->SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
-        });
+    listeners_.SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,9 +152,6 @@ bool FormationProxy::HasSubordinate( unsigned int id ) const
 void FormationProxy::PublishParent()
 {
     std::string parentId( localAgentResolver_.Resolve( agent_.GetParent()->GetId() ) );
-   if( parentId.size() > 0 )
-       std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* l)
-           {
-              l->ParentChanged( parentId );
-           });
+    if( parentId.size() > 0 )
+       listeners_.ParentChanged( parentId );
 }
