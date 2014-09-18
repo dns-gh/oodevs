@@ -28,21 +28,36 @@ class TER_World;
 */
 // Created: RDS 2008-04-02
 // =============================================================================
-class  MIL_CheckPointOutArchive : public boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>
+class  MIL_CheckPointOutArchive :
+    public boost::archive::binary_oarchive_impl< MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type >
 {
-public:
+private:
+    typedef boost::archive::binary_oarchive_impl< MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type > T_Archive;
 
-             MIL_CheckPointOutArchive( std::ostream & os,
-                     const boost::shared_ptr< TER_World >& world,
-                     unsigned int flags = 0 )
-                 : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(os, flags)
-                 , world_( world )
-             {}
-    virtual ~MIL_CheckPointOutArchive(){}
+public:
+             MIL_CheckPointOutArchive( std::ostream & os, const boost::shared_ptr< TER_World >& world, unsigned int flags = 0 );
+    virtual ~MIL_CheckPointOutArchive();
 
     // This accessor is probably useless when writing the archive, but it let's
     // us write template code handling load and save at the same time.
     const boost::shared_ptr< TER_World >& GetWorld() const;
+
+    template< typename T >
+    void save_override( T& t, int i )
+    {
+        try
+        {
+            T_Archive::save_override( t, i );
+        }
+        catch( tools::Exception& )
+        {
+            throw;
+        }
+        catch( std::exception& e )
+        {
+            throw MASA_EXCEPTION( e.what() );
+        }
+    }
 
 private:
     const boost::shared_ptr< TER_World > world_;
