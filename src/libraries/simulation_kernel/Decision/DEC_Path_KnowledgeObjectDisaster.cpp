@@ -109,35 +109,15 @@ double DEC_Path_KnowledgeObjectDisaster::GetMaxTrafficability() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectDisaster::GetAgentMaxSpeedMultiplier
-// Created: JSR 2014-04-23
+// Name: DEC_Path_KnowledgeObjectDisaster::ComputeAgentMaxSpeed
+// Created: JSR 2014-09-18
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeObjectDisaster::GetAgentMaxSpeedMultiplier() const
+double DEC_Path_KnowledgeObjectDisaster::ComputeAgentMaxSpeed( double speed, double maxSpeed ) const
 {
-    double modifier = maxSpeedModifier_;
     const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >();
     if( mobility && mobility->IsMaxSpeed() )
-        modifier *= mobility->ApplySpeedPolicy( 1., 1., 1., 1. );
-    return std::max( 0.1, modifier );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectDisaster::HasAgentMaxSpeedMultiplier
-// Created: JSR 2014-04-23
-// -----------------------------------------------------------------------------
-bool DEC_Path_KnowledgeObjectDisaster::HasAgentMaxSpeedMultiplier() const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectDisaster::AgentMaxSpeedMultiplierAppliesOnLocalSpeed
-// Created: JSR 2014-09-17
-// -----------------------------------------------------------------------------
-bool DEC_Path_KnowledgeObjectDisaster::AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const
-{
-    const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >();
-    return !mobility || !mobility->IsMaxSpeed();
+        return maxSpeed * std::max( 0.1, maxSpeedModifier_ * mobility->ApplySpeedPolicy( 1., 1., 1., 1. ) );
+    return speed * std::max( 0.1, maxSpeedModifier_ );
 }
 
 // -----------------------------------------------------------------------------

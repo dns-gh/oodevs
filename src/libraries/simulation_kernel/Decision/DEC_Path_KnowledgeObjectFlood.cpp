@@ -87,28 +87,10 @@ double DEC_Path_KnowledgeObjectFlood::GetMaxTrafficability() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectFlood::GetAgentMaxSpeedMultiplier
-// Created: JSR 2013-01-02
+// Name: DEC_Path_KnowledgeObjectFlood::ComputeAgentMaxSpeed
+// Created: JSR 2014-09-18
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeObjectFlood::GetAgentMaxSpeedMultiplier() const
+double DEC_Path_KnowledgeObjectFlood::ComputeAgentMaxSpeed( double speed, double /*maxSpeed*/ ) const
 {
-    return 1.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectFlood::HasAgentMaxSpeedMultiplier
-// Created: JSR 2013-01-02
-// -----------------------------------------------------------------------------
-bool DEC_Path_KnowledgeObjectFlood::HasAgentMaxSpeedMultiplier() const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObjectFlood::AgentMaxSpeedMultiplierAppliesOnLocalSpeed
-// Created: JSR 2014-09-17
-// -----------------------------------------------------------------------------
-bool DEC_Path_KnowledgeObjectFlood::AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const
-{
-    return false;
+    return speed;
 }

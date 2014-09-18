@@ -140,31 +140,13 @@ double DEC_Path_KnowledgeObject::GetMaxTrafficability() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject::HasAgentMaxSpeedMultiplier
-// Created: LDC 2013-01-02
+// Name: DEC_Path_KnowledgeObject::ComputeAgentMaxSpeed
+// Created: JSR 2014-09-18
 // -----------------------------------------------------------------------------
-bool DEC_Path_KnowledgeObject::HasAgentMaxSpeedMultiplier() const
+double DEC_Path_KnowledgeObject::ComputeAgentMaxSpeed( double speed, double maxSpeed ) const
 {
     const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >();
-    return mobility && mobility->IsMaxSpeed();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject::GetAgentMaxSpeedMultiplier
-// Created: LDC 2013-01-02
-// -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeObject::GetAgentMaxSpeedMultiplier() const
-{
-    if( const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >() )
-        return mobility->ApplySpeedPolicy( 1., 1., 1., 1. );
-    return 1.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject::AgentMaxSpeedMultiplierAppliesOnLocalSpeed
-// Created: JSR 2014-09-17
-// -----------------------------------------------------------------------------
-bool DEC_Path_KnowledgeObject::AgentMaxSpeedMultiplierAppliesOnLocalSpeed() const
-{
-    return false;
+    if( mobility && mobility->IsMaxSpeed() )
+        return maxSpeed * mobility->ApplySpeedPolicy( 1., 1., 1., 1. );
+    return speed;
 }
