@@ -41,7 +41,7 @@ LogisticRouteWidget::LogisticRouteWidget( kernel::Controllers& controllers, cons
     connect( upSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnUp( int ) ) );
     connect( downSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnDown( int ) ) );
     connect( routeSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( SelectRoute( int ) ) );
-    connect( routeActivatedSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( ActivateRoute( int ) ) );
+    connect( routeActivatedSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( ToggleRouteActivation( int ) ) );
     controllers_.Register( *this );
 }
 
@@ -110,16 +110,17 @@ namespace
         while( ( child = layout->takeAt( 0 ) ) != 0 )
             delete ClearLayoutItem( child );
     }
-    gui::RichGroupBox* CreateItineraryWidget( QSignalMapper* mapper, int id, bool checked, const std::string& label )
+    gui::RichGroupBox* CreateItineraryWidget( QSignalMapper* mapper, int id, bool checked, const kernel::Pathfind_ABC* pathfind )
     {
         gui::RichGroupBox* groupBox = new gui::RichGroupBox( "route-box", tools::translate( "LogisticRouteWidget", "Itinerary" ) );
         groupBox->setCheckable( true );
-        groupBox->setChecked( checked );
+        groupBox->setChecked( pathfind ? checked : false );
+        groupBox->setEnabled( pathfind ? true : false );
         QObject::connect( groupBox, SIGNAL( clicked() ), mapper, SLOT( map() ) );
         mapper->setMapping( groupBox, id );
 
         QVBoxLayout* bLayout = new QVBoxLayout( groupBox );
-        QLabel* entityLabel = new QLabel( label.c_str() );
+        QLabel* entityLabel = new QLabel( pathfind ? pathfind->GetName() : "---" );
         entityLabel->setMinimumWidth( 100 );
         entityLabel->setAlignment( Qt::AlignCenter );
         bLayout->addWidget( entityLabel );
@@ -175,7 +176,7 @@ void LogisticRouteWidget::Build()
         const auto it = routes_.find( recipient->GetId() );
         layout_->addWidget( CreateItineraryWidget( routeActivatedSignalMapper_, recipient->GetId(),
             it != routes_.end() && it->second.first,
-            it != routes_.end() && it->second.second ? it->second.second->GetName().toStdString() : "---" ),
+            it != routes_.end() && it->second.second ? it->second.second : 0 ),
             row, 1, Qt::AlignVCenter );
 
         // Buttons widget
@@ -289,7 +290,6 @@ void LogisticRouteWidget::NotifyDeleted( const kernel::Pathfind_ABC& entity )
 void LogisticRouteWidget::NotifyDeleted( const kernel::Automat_ABC& entity )
 {
     Remove( entity );
-
 }
 
 void LogisticRouteWidget::NotifyDeleted( const kernel::Formation_ABC& entity )
