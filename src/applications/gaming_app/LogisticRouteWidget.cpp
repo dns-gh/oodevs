@@ -130,7 +130,7 @@ namespace
 
 void LogisticRouteWidget::OnUp( int index )
 {
-    if( index > 0 && recipients_.size() > index )
+    if( index > 0 && static_cast< int >( recipients_.size() ) > index )
     {
         std::swap( recipients_[ index ], recipients_[ index - 1 ] );
         Build();
@@ -139,7 +139,7 @@ void LogisticRouteWidget::OnUp( int index )
 
 void LogisticRouteWidget::OnDown( int index )
 {
-    if( index >= 0 && index < recipients_.size() - 1 )
+    if( index >= 0 && index < static_cast< int >( recipients_.size() ) - 1 )
     {
         std::swap( recipients_[ index ], recipients_[ index + 1 ] );
         Build();
@@ -150,7 +150,7 @@ void LogisticRouteWidget::Build()
 {
     ClearLayout( layout_ );
     // No recipients
-    const auto size = recipients_.size();
+    const int size = recipients_.size();
     if( size <= 1 )
         return;
 
@@ -159,7 +159,7 @@ void LogisticRouteWidget::Build()
     for( int i = 0; i < size; ++i )
     {
         const auto* recipient = recipients_[ i ];
-        const bool isRequester = i == recipients_.size() - 1;
+        const bool isRequester = i == static_cast< int >( recipients_.size() ) - 1;
         // Tasker widget
         if( !isRequester )
         {
@@ -183,7 +183,7 @@ void LogisticRouteWidget::Build()
         if( size > 2 && !isRequester )
         {
             layout_->addWidget( CreateButton( upIcon_, i != 0, i, upSignalMapper_ ), row, 2 );
-            layout_->addWidget( CreateButton( downIcon_, i != recipients_.size() - 2, i, downSignalMapper_ ), row, 3 );
+            layout_->addWidget( CreateButton( downIcon_, i != static_cast< int >( recipients_.size() ) - 2, i, downSignalMapper_ ), row, 3 );
         }
         ++row;
 
