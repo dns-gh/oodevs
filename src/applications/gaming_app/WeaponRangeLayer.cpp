@@ -73,6 +73,42 @@ void WeaponRangeLayer::Paint( const geometry::Rectangle2f& extent )
     program_->Unuse();
 }
 
+namespace
+{
+
+std::string AddLineNumbers( const std::string& program )
+{
+    std::stringstream input( program );
+    std::stringstream output;
+    std::string line;
+    for( int i = 1; std::getline( input, line ); ++i )
+        output << i << ": " << line << "\n";
+    return output.str();
+}
+
+template< typename Shader >
+Shader* NewShader( const std::string& program )
+{
+    try
+    {
+        return new Shader( program );
+    }
+    catch( const std::exception& e )
+    {
+        MT_LOG_WARNING_MSG( "unable to create shader:\n"
+            << AddLineNumbers( program ) << std::endl
+            << e.what() );
+    }
+    catch( ... )
+    {
+        MT_LOG_WARNING_MSG( "unable to create shader:\n"
+            << AddLineNumbers( program ) );
+    }
+    throw MASA_EXCEPTION( "unable to create shader" );
+}
+
+}  // namespace
+
 void WeaponRangeLayer::Reset()
 {
     vertex_.reset();
@@ -83,14 +119,14 @@ void WeaponRangeLayer::Reset()
     gl::Initialize();
     try
     {
-        vertex_.reset( new gl::VertexShader(
+        vertex_.reset( NewShader< gl::VertexShader >(
             "varying vec4 position;"
             "void main()"
             "{"
             "  position = gl_ModelViewMatrix * gl_Vertex;"
             "  gl_Position = ftransform();"
             "}" ) );
-        fragment_.reset( new gl::FragmentShader( MakeFragment() ) );
+        fragment_.reset( NewShader< gl::FragmentShader >( MakeFragment() ) );
         program_.reset( new gl::ShaderProgram() );
         program_->AddShader( *vertex_ );
         program_->AddShader( *fragment_ );
