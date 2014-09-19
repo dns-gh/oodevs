@@ -95,13 +95,11 @@ Shader* NewShader( const std::string& program )
     }
     catch( const std::exception& e )
     {
-        throw MASA_EXCEPTION( "unable to create shader:\n"
-            + AddLineNumbers( program ) + "\n" + e.what() );
+        throw MASA_EXCEPTION( AddLineNumbers( program ) + "\n" + e.what() );
     }
     catch( ... )
     {
-        throw MASA_EXCEPTION( "unable to create shader:\n"
-            + AddLineNumbers( program ) );
+        throw MASA_EXCEPTION( AddLineNumbers( program ) );
     }
 }
 
