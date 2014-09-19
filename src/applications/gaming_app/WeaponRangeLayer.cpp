@@ -162,7 +162,7 @@ std::string WeaponRangeLayer::MakeFragment() const
     std::stringstream shader;
     shader <<
         "varying vec4 position;\n"
-        "const float alpha = 0.5;\n";
+        "float alpha = 0.5;\n";
     // for each team 'team' define a constant for its color,
     // a constant array for the minimum weapon ranges and
     // another one for the maximum weapon ranges and
@@ -175,9 +175,9 @@ std::string WeaponRangeLayer::MakeFragment() const
         const auto& range = it->second;
         const std::size_t size = range.size();
         shader <<
-            "const vec3 color_" << team
+            "vec3 color_" << team
                 << " = vec3(" << c.redF() << "," << c.greenF() << "," << c.blueF() << ");\n"
-            "const float min_" << team << "[" << size << "] = float[" << size << "](";
+            "float min_" << team << "[" << size << "] = float[" << size << "](";
         for( auto it2 = range.begin(); it2 != range.end(); ++it2 )
         {
             shader << it2->first;
@@ -186,7 +186,7 @@ std::string WeaponRangeLayer::MakeFragment() const
         }
         shader <<
             ");\n"
-            "const float max_" << team << "[" << size << "] = float[" << size << "](";
+            "float max_" << team << "[" << size << "] = float[" << size << "](";
         for( auto it2 = range.begin(); it2 != range.end(); ++it2 )
         {
             shader << it2->second;
@@ -220,7 +220,7 @@ std::string WeaponRangeLayer::MakeFragment() const
             "}\n";
     }
     shader <<
-        "  if( count )\n"
+        "  if( count != 0 )\n"
         "  {\n"
         "    gl_FragColor.rgb = color / count;\n"
         "    gl_FragColor.a = alpha;\n"
