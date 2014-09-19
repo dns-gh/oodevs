@@ -21,6 +21,7 @@ namespace xml
 
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
+class PHY_MaterialCompositionType;
 class PHY_Protection;
 class PHY_Volume;
 class MIL_CheckPointInArchive;
@@ -46,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual double GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, double rDistBtwSourceAndTarget, bool bUseAmmo ) const = 0;
+    virtual double GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, double rDistBtwSourceAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const = 0;
     virtual double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation, bool useAmmo ) const = 0;
     virtual double GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const = 0;
     //@}

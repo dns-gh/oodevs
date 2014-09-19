@@ -48,6 +48,7 @@ class MIL_EntityManager;
 class MIL_HumanRepartition;
 class PHY_Dotation;
 class PHY_DotationStock;
+class PHY_MaterialCompositionType;
 
 // =============================================================================
 /** @class  MIL_AgentPion
@@ -149,7 +150,7 @@ public:
 
     //! @name Operation on Knowledge
     //@{
-    double GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position, bool bUseAmmo ) const;
+    double GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
     //@}
 
     //! @name Network

@@ -90,9 +90,9 @@ int PHY_Weapon::GetNumberOfDotationPerBurst( const PHY_DotationCategory& dotatio
 // Name: PHY_Weapon::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_Weapon::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo ) const
+double PHY_Weapon::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const
 {
-    return type_.GetDangerosity( firer, compTarget, rDistBtwFirerAndTarget, bUseAmmo );
+    return type_.GetDangerosity( firer, compTarget, rDistBtwFirerAndTarget, bUseAmmo, material );
 }
 
 // -----------------------------------------------------------------------------

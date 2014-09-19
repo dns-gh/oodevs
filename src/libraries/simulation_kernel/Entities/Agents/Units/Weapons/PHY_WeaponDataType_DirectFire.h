@@ -30,6 +30,7 @@ class PHY_AmmoDotationClass;
 class PHY_Composante_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_FireResults_ABC;
+class PHY_MaterialCompositionType;
 class MIL_PopulationElement_ABC;
 
 // =============================================================================
@@ -45,7 +46,7 @@ public:
     //! @name Operations
     //@{
     double GetDangerosity                ( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const;
-    double GetDangerosity                ( const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget ) const;
+    double GetDangerosity                ( const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget, const PHY_MaterialCompositionType* material ) const;
     double GetMaxRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
     double GetMinRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
     double GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, double rWantedPH ) const;

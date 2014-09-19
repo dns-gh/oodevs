@@ -16,6 +16,7 @@
 
 class PHY_ComposantePion;
 class PHY_ComposanteType_ABC;
+class PHY_MaterialCompositionType;
 class MIL_Agent_ABC;
 
 // =============================================================================
@@ -54,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    double GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwSourceAndTarget, bool bUseAmmo ) const;
+    double GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwSourceAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
     double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposantePion& compTarget, double rWantedPH ) const;
     //@}
 

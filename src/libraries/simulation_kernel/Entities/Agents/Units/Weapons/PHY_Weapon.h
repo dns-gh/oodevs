@@ -21,6 +21,7 @@ class MIL_Effect_IndirectFire;
 class PHY_FireResults_ABC;
 class PHY_DotationCategory;
 class PHY_ComposanteType_ABC;
+class PHY_MaterialCompositionType;
 class MIL_Time_ABC;
 class MT_Vector2D;
 
@@ -58,7 +59,7 @@ public:
     bool DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, PHY_FireResults_ABC& fireResult );
     double ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, PHY_FireResults_ABC& fireResult );
     double GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH, bool bUseAmmo ) const;
-    double GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo ) const;
+    double GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
     double GetMaxRangeToIndirectFire() const;
     double GetMinRangeToIndirectFire() const;
     int GetNumberOfDotationPerBurst( const PHY_DotationCategory& ) const;

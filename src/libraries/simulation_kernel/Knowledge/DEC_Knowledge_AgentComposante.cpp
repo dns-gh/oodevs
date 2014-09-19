@@ -101,14 +101,14 @@ void DEC_Knowledge_AgentComposante::WriteKnowledges( xml::xostream& xos, unsigne
 // Name: DEC_Knowledge_AgentComposante::GetDangerosity
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwSourceAndTarget, bool bUseAmmo ) const
+double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwSourceAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const
 {
     assert( pType_ );
     if( !bCanFire_ )
         return 0.;
     if( maxRange_ < rDistBtwSourceAndTarget )
         return 0;
-    return pType_->GetDangerosity( firer, compTarget, rDistBtwSourceAndTarget, bUseAmmo );
+    return pType_->GetDangerosity( firer, compTarget, rDistBtwSourceAndTarget, bUseAmmo, material );
 }
 
 // -----------------------------------------------------------------------------

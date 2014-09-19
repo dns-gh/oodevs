@@ -37,6 +37,7 @@ class PHY_PerceptionLevel;
 class PHY_Posture;
 class PHY_SensorTypeAgent;
 class DEC_Knowledge_AgentPerception;
+class PHY_MaterialCompositionType;
 class PHY_NatureAtlas;
 class PHY_ComposanteType_ABC;
 class MIL_UrbanObject_ABC;
@@ -151,8 +152,8 @@ public:
     //! @name Decisional operations
     //@{
     void SetCriticalIntelligenceFromAgentKnown();
-    double GetDangerosity( const DEC_Knowledge_Agent& target, bool bUseAmmo ) const;
-    double GetDangerosity( const MIL_Agent_ABC& target, bool bUseAmmo ) const;
+    double GetDangerosity( const DEC_Knowledge_Agent& target, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
+    double GetDangerosity( const MIL_Agent_ABC& target, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
     double GetMaxRangeToFireOn( const MIL_Agent_ABC& target, double rWantedPH ) const;
     double GetMaterialComposantesAttritionLevel( MIL_UrbanObject_ABC* pUrbanBlock ) const;
     void Lock();
@@ -186,7 +187,7 @@ private:
 
     //! @name Tools
     //@{
-    double ComputeDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo ) const;
+    double ComputeDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
     void ChangeRelevance( double rNewRelevance );
     //@}
 

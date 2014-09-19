@@ -678,7 +678,7 @@ void DEC_Knowledge_Agent::DegradeDangerosity( double& rDangerosity ) const
 // Name: DEC_Knowledge_Agent::GetDangerosity
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target, bool bUseAmmo ) const
+double DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const
 {
     if( *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_
         ||  IsAFriend( target.GetArmy() ) == eTristate_True
@@ -694,14 +694,14 @@ double DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target, bool bU
         return 0.;
     const MT_Vector3D vTargetPosition( position2d.rX_, position2d.rY_, targetLocation.GetAltitude() );
     const PHY_ComposanteType_ABC& targetType = pTargetMajorComposante->GetType();
-    return ComputeDangerosity( vTargetPosition, targetType, bUseAmmo );
+    return ComputeDangerosity( vTargetPosition, targetType, bUseAmmo, material );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetDangerosity
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target, bool bUseAmmo ) const
+double DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const
 {
     if( *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_ )
         return 0.;
@@ -715,14 +715,14 @@ double DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target, b
     // Fight score
     const MT_Vector3D vTargetPosition( position2d.rX_, position2d.rY_, target.GetAltitude() );
     const PHY_ComposanteType_ABC& targetType = pTargetMajorComposante->GetType();
-    return ComputeDangerosity( vTargetPosition, targetType, bUseAmmo );
+    return ComputeDangerosity( vTargetPosition, targetType, bUseAmmo, material );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetDangerosity
 // Created: JSR 2011-09-09
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::ComputeDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo ) const
+double DEC_Knowledge_Agent::ComputeDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const
 {
     double rDangerosity = 0.;
     // Fight score
@@ -734,7 +734,7 @@ double DEC_Knowledge_Agent::ComputeDangerosity( const MT_Vector3D& vTargetPositi
         return 0.;
     for( auto itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
         if( itComposante->IsMajor() )
-            rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, targetMajorComposante, rDistBtwSourceAndTarget, bUseAmmo ) );
+            rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, targetMajorComposante, rDistBtwSourceAndTarget, bUseAmmo, material ) );
     DegradeDangerosity( rDangerosity );
     return rDangerosity;
 }

@@ -19,6 +19,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
@@ -161,6 +162,10 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
     double rTotalFightScoreEnemy  = 0;
     double rTotalFightScoreFriend = 0;
 
+    const PHY_MaterialCompositionType* material = 0;
+    if( const MaterialAttribute* materialAttribute = pUrbanObject ? pUrbanObject->RetrieveAttribute< MaterialAttribute >() : 0 )
+        material = &materialAttribute->GetMaterial();
+
     const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
     for( auto it = enemies.begin(); it != enemies.end(); it++ )
     {
@@ -168,7 +173,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
             continue;
         if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
         {
-            rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false ) );
+            rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false, material ) );
             dangerousEnemies_.push_back( *it );
         }
     }
@@ -184,7 +189,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
             {
                 double rTotalDangerosity = 0.;
                 for( auto itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                    rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true ) * ( *it )->GetOperationalState() );
+                    rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true, material ) * ( *it )->GetOperationalState() );
                 rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
             }
         }
