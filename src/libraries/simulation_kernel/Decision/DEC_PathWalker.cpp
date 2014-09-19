@@ -478,21 +478,12 @@ bool DEC_PathWalker::TryToMoveToNextStep( const MT_Vector2D& startPosition, CIT_
 
     if( rMaxSpeedForStep != std::numeric_limits< double >::max() )
         rCurrentSpeed_ = rMaxSpeedForStep;
-    const double rDistToWalk = rTimeRemaining * rCurrentSpeed_;
-    const MT_Vector2D vNewPosTmp( vNewPos_ + ( vNewDir_ * rDistToWalk ) );
-
-    if( vNewPos_.SquareDistance( vNewPosTmp ) >= vNewPos_.SquareDistance( itNextMoveStep->vPos_ )  )
-    {
-        rTimeRemaining -= ( itNextMoveStep->vPos_ - vNewPos_ ).Magnitude() / rCurrentSpeed_;
-        vNewPos_ = itNextMoveStep->vPos_;
-        return true;
-    }
-    else
-    {
-        rTimeRemaining -= ( vNewPosTmp - vNewPos_ ).Magnitude() / rCurrentSpeed_;
-        vNewPos_ = vNewPosTmp;
-        return false;
-    }
+    const MT_Vector2D vNewPosTmp = vNewPos_ + vNewDir_ * rTimeRemaining * rCurrentSpeed_;
+    const bool success = vNewPos_.SquareDistance( vNewPosTmp ) >= vNewPos_.SquareDistance( itNextMoveStep->vPos_ );
+    const auto pos = success ? itNextMoveStep->vPos_ : vNewPosTmp;
+    rTimeRemaining -= ( pos - vNewPos_ ).Magnitude() / rCurrentSpeed_;
+    vNewPos_ = pos;
+    return success;
 }
 
 //-----------------------------------------------------------------------------
