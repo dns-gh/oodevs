@@ -15,6 +15,18 @@
 #include "Decision/DEC_Tools.h"
 #include "protocol/Protocol.h"
 
+namespace
+{
+    unsigned int GetMaxOccurs( xml::xistream& xis )
+    {
+        if( !xis.has_attribute( "max-occurs" ) )
+            return 1;
+        if( xis.attribute< std::string >( "max-occurs" ) == "unbounded" )
+            return std::numeric_limits< unsigned int >::max();
+        return xis.attribute< unsigned int >( "max-occurs" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderTypeParameter constructor
 // Created: SBO 2008-03-03
@@ -23,7 +35,8 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
     : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
     , strName_      ( xis.attribute< std::string >( "name" ) )
     , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
-    , bIsList_      ( "1" != xis.attribute< std::string >( "max-occurs", "1" ) )
+    , minOccurs_    ( xis.attribute< unsigned int >( "min-occurs", 1 ) )
+    , maxOccurs_    ( ::GetMaxOccurs( xis ) )
     , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
@@ -49,7 +62,7 @@ bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, sword::
     if( !from.IsOfType( pParameter_->GetType() ) )
         return false;
 
-    if( bIsList_ )
+    if( IsList() )
         to.set_null_value( !from.ToList( *to.mutable_value() ) );
     else
         to.set_null_value( !from.ToElement( *to.add_value() ) );
@@ -91,5 +104,15 @@ const MIL_ParameterType_ABC& MIL_OrderTypeParameter::GetType() const
 // -----------------------------------------------------------------------------
 bool MIL_OrderTypeParameter::IsList() const
 {
-    return bIsList_;
+    return maxOccurs_ > 1;
+}
+
+unsigned int MIL_OrderTypeParameter::GetMinOccurs() const
+{
+    return minOccurs_;
+}
+
+unsigned int  MIL_OrderTypeParameter::GetMaxOccurs() const
+{
+    return maxOccurs_;
 }
