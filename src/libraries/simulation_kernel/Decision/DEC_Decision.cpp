@@ -1893,7 +1893,6 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
             + PLUGIN( "masalife_brain" )
-            + PLUGIN( "knowledge" )
             + PLUGIN( "communication" )
             + PLUGIN46( "errorhandler" )
             + PLUGIN46( "devtools" )

@@ -27,22 +27,6 @@ end
 
 masalife.brain.communication.protocol.setDynamicCommFunID( knowledgeIdFunction )
 
---- Create a knowledge
--- @param strKnowledgeType The concret knowledge type to instanciate
--- @param knowledgeSource  The cpp source object
--- @author MGD
--- @release 2010-01-22
-function CreateKnowledge( knowledgeType, knowledgeSource, params )
-    return CreateKnowledgeWithoutKB( knowledgeType, knowledgeSource, params )
-    --return CreateKnowledgeInKB( knowledgeType, knowledgeSource, params )
-end
-
-function CreateKnowledgeInKB( knowledgeType, knowledgeSource, params )
-    local result =  masalife.brain.knowledge.create( knowledgeType, knowledgeSource, params )
-    result.source = knowledgeSource
-    return result
-end
-
 --[[
 -- Knowledge objects must remain the same from one tick to the next in order for DirectIA to work properly.
 -- However, all knowledge objects should not remain in memory during a 7 day exercise, as most of them are only of transient use.
@@ -68,9 +52,12 @@ localStorageVar = masalife.brain.integration.createBrainLocalStorage(
 )
 -- The index stuff is needed for shared pointer objects management
 
-local totalNumberOfKnowledgesAcrossTheWorld = 0
-
-function CreateKnowledgeWithoutKB( knowledgeType, knowledgeSource, params )
+--- Create a knowledge
+-- @param strKnowledgeType The concret knowledge type to instanciate
+-- @param knowledgeSource  The cpp source object
+-- @author MGD
+-- @release 2010-01-22
+function CreateKnowledge( knowledgeType, knowledgeSource, params )
     local result = localStorageVar.knowledgeCache[ knowledgeSource ]
     if result then return result end
     masalife.brain.knowledge.getSource = function( body )
