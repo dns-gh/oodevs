@@ -22,8 +22,9 @@ namespace
 {
     void ReadTimeAttribute( xml::xistream& xis, const std::string& name, double& value )
     {
+        double oldValue = value;
         if( !tools::ReadTimeAttribute( xis, name, value ) )
-            value = std::numeric_limits< double >::max();
+            value = oldValue;
     }
 }
 
@@ -32,16 +33,16 @@ namespace
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
-    : rTimeBaseConstruction_      ( 0 )
-    , rTimeBaseDestruction_       ( 0 )
+    : rTimeBaseConstruction_      ( std::numeric_limits< double >::max() )
+    , rTimeBaseDestruction_       ( std::numeric_limits< double >::max() )
     , rTimeConstructionCoef_      ( 1 )
     , rTimeDestructionCoef_       ( 1 )
-    , rTimeMining_                ( 0 )
-    , rTimeDemining_              ( 0 )
-    , rTimeExtinguishing_         ( 0 )
+    , rTimeMining_                ( std::numeric_limits< double >::max() )
+    , rTimeDemining_              ( std::numeric_limits< double >::max() )
+    , rTimeExtinguishing_         ( std::numeric_limits< double >::max() )
     , rCoefTimeBypass_            ( 1. )
-    , rSpeedWithinWhenNotBypassed_( 0 )
-    , rSpeedWithinWhenBypassed_   ( 0 )
+    , rSpeedWithinWhenNotBypassed_( std::numeric_limits< double >::max() )
+    , rSpeedWithinWhenBypassed_   ( std::numeric_limits< double >::max() )
     , pConsumptionMode_           ( 0 )
 {
     std::string strConsumptionMode = "";
