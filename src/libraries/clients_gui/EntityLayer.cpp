@@ -170,7 +170,7 @@ void EntityLayerBase::Select( const kernel::GraphicalEntity_ABC& selectable, boo
 // -----------------------------------------------------------------------------
 void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f&, const QPoint& where )
 {
-    selectable.ContextMenu( controllers_.actions_, where );
+    selectable.ContextMenu( controllers_.actions_, where, this );
 }
 
 // -----------------------------------------------------------------------------

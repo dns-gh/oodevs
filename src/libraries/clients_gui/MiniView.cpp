@@ -77,7 +77,7 @@ geometry::Rectangle2f MiniView::GetViewport() const
 // -----------------------------------------------------------------------------
 void MiniView::contextMenuEvent( QContextMenuEvent * e )
 {
-    agent_.ContextMenu( actions_, e->globalPos() );
+    agent_.ContextMenu( actions_, e->globalPos(), this );
 }
 
 // -----------------------------------------------------------------------------

@@ -48,9 +48,9 @@ void ObjectsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geo
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Object_ABC& object = static_cast< const Object_ABC& >( entity );
     if( object.GetType().IsUrban() )
-        controllers_.actions_.ContextMenu( object, point, Nothing(), where );
+        controllers_.actions_.ContextMenu( this, object, point, Nothing(), where );
     else
-        controllers_.actions_.ContextMenu( object, entity, point, where );
+        controllers_.actions_.ContextMenu( this, object, entity, point, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,9 +62,9 @@ void ObjectsLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectabl
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Object_ABC& object = static_cast< const Object_ABC& >( entity );
     if( object.GetType().IsUrban() )
-        controllers_.actions_.ContextMenu( object, menu );
+        controllers_.actions_.ContextMenu( this, object, menu );
     else
-        controllers_.actions_.ContextMenu( object, entity, menu );
+        controllers_.actions_.ContextMenu( this, object, entity, menu );
 }
 
 namespace

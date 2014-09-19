@@ -93,6 +93,7 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
                 symbol_ = type_->GetSymbol( locationType );
             }
         }
+        objectName_ = pRealObject->GetName();
     }
     if( message.has_relevance() )
         nRelevance_ = message.relevance();
@@ -156,6 +157,8 @@ void ObjectKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QString ObjectKnowledge::GetName() const
 {
+    if( auto object = GetEntity() )
+        return object->GetName();
     return objectName_;
 }
 

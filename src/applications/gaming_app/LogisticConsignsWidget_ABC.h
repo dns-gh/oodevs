@@ -45,6 +45,7 @@ class LogisticsModel;
 class LogisticConsignsWidget_ABC : public QWidget
                                  , public tools::Observer_ABC
                                  , public tools::SelectionObserver< kernel::Entity_ABC >
+                                 , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
@@ -80,7 +81,7 @@ protected:
     virtual void PurgeDetail();
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign ) = 0;
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void DisplayRequest( const LogisticsConsign_ABC& consign, const QString& requester, const QString& handler, const QString& state );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void DisplayHistory( const LogisticsConsign_ABC::History& history );
     virtual void DisplayRequest( const LogisticsConsign_ABC& consign );
     virtual bool IsHistoryChecked() const;
@@ -94,6 +95,7 @@ protected:
     virtual void DisplayRequestHistory( const LogisticsConsign_ABC& consign );
     void SendHistoryRequest( const LogisticsConsign_ABC& consign );
     QString GetDisplayName( const kernel::Entity_ABC* pEntity ) const;
+    void UpdateEntityDetails( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* detailEntity, const QString& key );
     QString SupervisionFilter( const QString& value ) const;
     void SendHistoryRequests();
     //@}

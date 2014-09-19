@@ -15,7 +15,9 @@
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/Roles.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/LogisticsConsign_ABC.h"
 
@@ -34,6 +36,14 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
     , controllers_( controllers )
     , profile_( profile )
 {
+    requesterNameExtractor_ = []( const LogisticsConsign_ABC& consign ) -> QString {
+        auto consumer = consign.GetConsumer();
+        return consumer ? consumer->GetName() : "";
+    };
+    isEntityInConsignFunctor_ = []( const LogisticsConsign_ABC& consign, const kernel::Entity_ABC& entity ) {
+        return consign.GetConsumer() == &entity || consign.GetHandler() == &entity;
+    };
+
     dataModel_.setHorizontalHeaderLabels( !horizontalHeaders.isEmpty() 
         ? horizontalHeaders
         : QStringList() << tr( "Id" )
@@ -54,6 +64,7 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +73,7 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
 // -----------------------------------------------------------------------------
 LogisticsRequestsTable::~LogisticsRequestsTable()
 {
-    // NOTHING
+    controllers_.controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,14 +139,20 @@ void LogisticsRequestsTable::OnLinkClicked( const QString&, const QModelIndex& i
 // Name: LogisticsRequestsTable::AddRequest
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, unsigned int id,
-                                         const QString& requester, const QString& handler, const QString& state )
+void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign )
 {
-    auto base = logistic_helpers::GetLogisticBase( consign.GetHandler() );
+    if( !requesterNameExtractor_ )
+        return;
+    auto handler = consign.GetHandler();
+    auto handlerName = handler ? handler->GetName() : "";
+    auto requesterName = requesterNameExtractor_( consign );
+    auto state = consign.GetStatusDisplay();
+    auto base = logistic_helpers::GetLogisticBase( handler );
     int rowIndex = GetRequestRow( consign );
+    auto id = consign.GetId();
     SetData( rowIndex, 0, QString::number( id ), id, consign );
-    SetData( rowIndex, 1, requester, requester, consign );
-    SetData( rowIndex, 2, handler, handler, consign );
+    SetData( rowIndex, 1, requesterName, requesterName, consign );
+    SetData( rowIndex, 2, handlerName, handlerName, consign );
     SetData( rowIndex, 3, 
         consign.NeedResolution()
         && base
@@ -209,4 +226,36 @@ void LogisticsRequestsTable::FindRequestsIds( std::set< unsigned int >& requests
     for( int i = 0; i < model()->rowCount(); ++i )
         if( const LogisticsConsign_ABC* pRequest = GetRequest( model()->index( i, 0 ) ) )
             requests.insert( pRequest->GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsTable::NotifyUpdated
+// Created: ABR 2014-09-16
+// -----------------------------------------------------------------------------
+void LogisticsRequestsTable::NotifyUpdated( const kernel::Entity_ABC& element )
+{
+    if( !isEntityInConsignFunctor_ )
+        return;
+    for( int i = 0; i < model()->rowCount(); ++i )
+        if( const LogisticsConsign_ABC* pRequest = GetRequest( model()->index( i, 0 ) ) )
+            if( isEntityInConsignFunctor_( *pRequest, element ) )
+                AddRequest( *pRequest );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsTable::SetIsEntityInConsignFunctor
+// Created: ABR 2014-09-16
+// -----------------------------------------------------------------------------
+void LogisticsRequestsTable::SetIsEntityInConsignFunctor( const T_IsEntityInConsignFunctor& functor )
+{
+    isEntityInConsignFunctor_ = functor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsTable::SetRequesterNameExtractor
+// Created: ABR 2014-09-16
+// -----------------------------------------------------------------------------
+void LogisticsRequestsTable::SetRequesterNameExtractor( const T_RequesterNameExtractor& extractor )
+{
+    requesterNameExtractor_ = extractor;
 }

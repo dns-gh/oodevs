@@ -74,9 +74,9 @@ void Inhabitant_ABC::MultipleSelect( ActionController& controller, const std::ve
 // Name: Inhabitant_ABC::ContextMenu
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-void Inhabitant_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void Inhabitant_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------

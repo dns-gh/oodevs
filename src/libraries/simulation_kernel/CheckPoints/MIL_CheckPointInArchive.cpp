@@ -15,21 +15,31 @@
 #include <boost/archive/impl/basic_binary_iarchive.ipp>
 #include <boost/archive/impl/archive_serializer_map.ipp>
 
-namespace boost {
-namespace archive {
+namespace boost
+{
+namespace archive
+{
+    template class basic_binary_iprimitive< MIL_CheckPointInArchive, char, std::char_traits< char > >;
+    template class basic_binary_iarchive< MIL_CheckPointInArchive >;
+    template class binary_iarchive_impl< MIL_CheckPointInArchive, char, std::char_traits< char > >;
+    template class detail::archive_serializer_map< MIL_CheckPointInArchive >;
+}
+}
 
-template class basic_binary_iprimitive<MIL_CheckPointInArchive, char, std::char_traits<char> >;
-template class basic_binary_iarchive<MIL_CheckPointInArchive>;
-template class binary_iarchive_impl<MIL_CheckPointInArchive, char, std::char_traits<char> >;
-template class detail::archive_serializer_map<MIL_CheckPointInArchive>;
+MIL_CheckPointInArchive::MIL_CheckPointInArchive( std::istream& is, const ObjectTypeResolver_ABC& resolver,
+    const boost::shared_ptr< TER_World >& world, unsigned int flags )
+    : T_Archive( is, flags )
+    , resolver_( resolver )
+    , world_( world )
+{
+    // NOTHING
+}
 
-} // namespace archive
-} // namespace boost
+MIL_CheckPointInArchive::~MIL_CheckPointInArchive()
+{
+    // NOTHING
+}
 
-// -----------------------------------------------------------------------------
-// Name: MIL_CheckPointInArchive::GetObjectTypeResolver
-// Created: LGY 2012-09-17
-// -----------------------------------------------------------------------------
 const ObjectTypeResolver_ABC& MIL_CheckPointInArchive::GetObjectTypeResolver() const
 {
     return resolver_;

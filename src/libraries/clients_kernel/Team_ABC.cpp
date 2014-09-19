@@ -71,9 +71,9 @@ void Team_ABC::MultipleSelect( ActionController& controller, const std::vector< 
 // Name: Team_ABC::ContextMenu
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-void Team_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void Team_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------

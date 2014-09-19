@@ -36,6 +36,18 @@ namespace
                 << tools::translate( "LogisticsRequestsSupplyWidget", "State" );
         return header;
     }
+    bool IsEntityRecipient( const LogSupplyConsign& consign, const kernel::Entity_ABC& entity )
+    {
+        auto& logConsign = static_cast< const LogSupplyConsign& >( consign );
+        tools::Iterator< const SupplyRecipientResourcesRequest& > itRecipient = logConsign.CreateIterator();
+        while( itRecipient.HasMoreElements() )
+        {
+            const SupplyRecipientResourcesRequest& curRecipient= itRecipient.NextElement();
+            if( &curRecipient.recipient_ == &entity )
+                return true;
+        }
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +58,15 @@ LogisticsRequestsSupplyWidget::LogisticsRequestsSupplyWidget( QWidget* parent, k
                                                               const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model )
     : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, eSupply, GetRequestsHeader() )
 {
+    requestsTable_->SetIsEntityInConsignFunctor( []( const LogisticsConsign_ABC& consign, const kernel::Entity_ABC& entity ) -> bool {
+        if( consign.GetHandler() == &entity )
+            return true;
+        return IsEntityRecipient( static_cast< const LogSupplyConsign& >( consign ), entity );
+    } );
+    requestsTable_->SetRequesterNameExtractor( [&]( const LogisticsConsign_ABC& consign ) {
+        return GetRecipientsLinks( static_cast< const LogSupplyConsign& >( consign ), false );
+    } );
+
     supplyTable_ = new LogisticsRequestsSupplyTable( "Logistics requests supply details", this );
     connect( supplyTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                                                 , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
@@ -100,31 +121,20 @@ QString LogisticsRequestsSupplyWidget::GetRecipientsLinks( const LogSupplyConsig
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget::DisplayRequest
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
-void LogisticsRequestsSupplyWidget::DisplayRequest( const LogisticsConsign_ABC& consign )
-{
-    const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( consign );
-    kernel::Entity_ABC* handler = c.GetHandler();
-    LogisticConsignsWidget_ABC::DisplayRequest( c, GetRecipientsLinks( c, false ), handler ? handler->GetName() : "", c.GetStatusDisplay() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticsRequestsSupplyWidget::OnRequestSelected
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_ABC& consign )
 {
     const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( consign );
-    detailsTable_->Add( tools::translate( "Logistic", "Recipient(s):" ),        GetRecipientsLinks( c, true ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Transport provider:"),   GetDisplayName( c.GetProviding() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Conveyor:" ),            GetDisplayName( c.GetConvoy() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Created:" ), c.GetCreationTime() );
-    detailsTable_->Add( tools::translate( "Logistic", "Supplier:" ),            GetDisplayName( c.GetHandler() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "State:"),                c.GetStatusDisplay() );
-    detailsTable_->Add( tools::translate( "Logistic", "Started:" ),             c.GetCurrentStartedTime() );
-    detailsTable_->Add( tools::translate( "Logistic", "Ending:" ),              SupervisionFilter( c.GetCurrentEndTime() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Recipient(s):" ),      GetRecipientsLinks( c, true ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Transport provider:"), GetDisplayName( c.GetProviding() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Conveyor:" ),          GetDisplayName( c.GetConvoy() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Created:" ),           c.GetCreationTime() );
+    detailsTable_->Add( tools::translate( "Logistic", "Supplier:" ),          GetDisplayName( c.GetHandler() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "State:"),              c.GetStatusDisplay() );
+    detailsTable_->Add( tools::translate( "Logistic", "Started:" ),           c.GetCurrentStartedTime() );
+    detailsTable_->Add( tools::translate( "Logistic", "Ending:" ),            SupervisionFilter( c.GetCurrentEndTime() ) );
     FillSupplyTable( c );
 }
 
@@ -169,4 +179,21 @@ void LogisticsRequestsSupplyWidget::FillSupplyTable( const LogSupplyConsign& con
         }
     }
     supplyTable_->resizeColumnsToContents();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsSupplyWidget::NotifyUpdated
+// Created: ABR 2014-09-16
+// -----------------------------------------------------------------------------
+void LogisticsRequestsSupplyWidget::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    historyTable_->UpdateHandler( entity, GetDisplayName( &entity ) );
+    if( !requestSelected_ )
+        return;
+    auto& logConsign = static_cast< const LogSupplyConsign& >( *requestSelected_ );
+    if( IsEntityRecipient( logConsign, entity ) )
+        detailsTable_->Set( tools::translate( "Logistic", "Recipient(s):" ), GetRecipientsLinks( logConsign, true ) );
+    UpdateEntityDetails( entity, logConsign.GetProviding(), tools::translate( "Logistic", "Transport provider:") );
+    UpdateEntityDetails( entity, logConsign.GetConvoy(), tools::translate( "Logistic", "Conveyor:") );
+    UpdateEntityDetails( entity, logConsign.GetHandler(), tools::translate( "Logistic", "Supplier:") );
 }

@@ -12,6 +12,7 @@
 
 #include "clients_kernel/SafePointer.h"
 #include <boost/shared_ptr.hpp>
+#include <tools/ElementObserver_ABC.h>
 #include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
@@ -34,6 +35,7 @@ namespace gui
 class UnitStateDialog : public QDialog
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
+                      , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
@@ -60,6 +62,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     bool IsReadOnly() const;
     template< typename View >
     void AddView( const QString& name, View* view )

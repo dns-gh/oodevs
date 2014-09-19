@@ -45,7 +45,7 @@ public:
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void MultipleSelect( ActionController& controller, const std::vector< const GraphicalEntity_ABC* >& elements ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const;
     typedef UrbanTemplateType* UrbanTemplateTypePtr;
     virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate ) = 0;
     virtual void UpdateTemplate( const kernel::ObjectTypes& objectTypes ) = 0;

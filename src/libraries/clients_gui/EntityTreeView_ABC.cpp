@@ -278,6 +278,7 @@ void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity )
     {
         const auto index = proxyModel_->mapFromSource( item->index() );
         expand( index.parent() );
+        scrollTo( index );
         edit( index );
     }
 }
@@ -294,7 +295,7 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
     if( proxyModel_->flags( index ) & Qt::ItemIsEditable )
         if( const auto* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( dataModel_.GetMainModelIndex( index ) ) )
         {
-            entity->ContextMenu( controllers_.actions_, event->globalPos() );
+            entity->ContextMenu( controllers_.actions_, event->globalPos(), this );
             return;
         }
     ContextMenuRequested( event->globalPos() );

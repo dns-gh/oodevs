@@ -29,34 +29,41 @@ class TER_World;
 */
 // Created: RDS 2008-04-02
 // =============================================================================
-class  MIL_CheckPointInArchive : public boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>
-                               , public boost::archive::detail::shared_ptr_helper
+class MIL_CheckPointInArchive :
+    public boost::archive::binary_iarchive_impl< MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type >,
+    public boost::archive::detail::shared_ptr_helper
 {
-public:
-
-             MIL_CheckPointInArchive( std::istream & is,
-                     const ObjectTypeResolver_ABC& resolver,
-                     const boost::shared_ptr< TER_World >& world,
-                     unsigned int flags = 0 )
-                 : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>( is, flags )
-                 , resolver_( resolver )
-                 , world_( world )
-             {}
-    virtual ~MIL_CheckPointInArchive(){}
+private:
+    typedef boost::archive::binary_iarchive_impl< MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type > T_Archive;
 
 public:
-    //! @name Operations
-    //@{
+             MIL_CheckPointInArchive( std::istream& is, const ObjectTypeResolver_ABC& resolver,
+                 const boost::shared_ptr< TER_World >& world, unsigned int flags = 0 );
+    virtual ~MIL_CheckPointInArchive();
+
     const ObjectTypeResolver_ABC& GetObjectTypeResolver() const;
     const boost::shared_ptr< TER_World >& GetWorld() const;
-    //@}
+
+    template< typename T >
+    void load_override( T& t, int i )
+    {
+        try
+        {
+            T_Archive::load_override( t, i );
+        }
+        catch( tools::Exception& )
+        {
+            throw;
+        }
+        catch( std::exception& e )
+        {
+            throw MASA_EXCEPTION( e.what() );
+        }
+    }
 
 private:
-    //! @name Member Data
-    //@{
     const ObjectTypeResolver_ABC& resolver_;
     const boost::shared_ptr< TER_World > world_;
-    //@}
 };
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE( MIL_CheckPointInArchive );

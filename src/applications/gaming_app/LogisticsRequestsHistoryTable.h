@@ -12,6 +12,11 @@
 
 #include "clients_gui/RichTableView.h"
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 namespace gui
 {
     class LinkItemDelegate;
@@ -37,7 +42,12 @@ public:
 public:
     //! @name Operations
     //@{
-    void AddRequest( const QString& state, const QString& started, const QString& ended, const QString& handler );
+    void AddRequest( const QString& state,
+                     const QString& started,
+                     const QString& ended,
+                     const QString& handlerName,
+                     const kernel::Entity_ABC* handler );
+    void UpdateHandler( const kernel::Entity_ABC& entity, const QString& name );
     //@}
 
     //! @name Accessors
@@ -47,7 +57,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void AddItem( int row, int col, const QString& text );
+    QStandardItem* AddItem( int row, int col, const QString& text );
     bool ItemHasText( int row, int col, const QString& text ) const;
     //@}
 

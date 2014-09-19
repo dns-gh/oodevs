@@ -80,7 +80,7 @@ void UrbanObject_ABC::Activate( ActionController& controller ) const
 // Name: UrbanObject_ABC::ContextMenu
 // Created: JSR 2012-06-01
 // -----------------------------------------------------------------------------
-void UrbanObject_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+void UrbanObject_ABC::ContextMenu( ActionController& controller, const QPoint& where, QObject* emitter ) const
 {
-    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( emitter, *this, *(const Entity_ABC*)this, where );
 }

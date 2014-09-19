@@ -409,3 +409,13 @@ void DrawerPanel::Draw( const kernel::Location_ABC& location, const geometry::Re
     gui::SimpleLocationDrawer drawer( tools, color_->GetColor() );
     location.Accept( drawer );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::NotifyUpdated
+// Created: ABR 2014-09-11
+// -----------------------------------------------------------------------------
+void DrawerPanel::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    if( selectedEntity_ == &entity || selectedDrawing_ && selectedDrawing_->GetDiffusionEntity() == &entity )
+        parentLabel_->setText( entity.GetName() );
+}

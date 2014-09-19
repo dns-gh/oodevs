@@ -40,6 +40,7 @@ class ResourcesListView_ABC : public QTreeView
                             , public tools::Observer_ABC
                             , public tools::ElementObserver_ABC< Extension >
                             , public tools::SelectionObserver< kernel::Entity_ABC >
+                            , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,6 +58,7 @@ protected:
     //! @name Operations
     //@{
     bool ShouldUpdate( const Extension& a ) const;
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void SelectEntity( const kernel::Entity_ABC* entity );
     void ResizeModelOnNewContent( int wantedSize );
@@ -309,6 +311,20 @@ template< typename Extension >
 void ResourcesListView_ABC< Extension >::SetFilter( const std::function< bool( const kernel::Availability&, const Extension& extension ) >& filter )
 {
     filter_ = filter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC::NotifyUpdated
+// Created: ABR 2014-09-16
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void ResourcesListView_ABC< Extension >::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    for( int row = 0; row < model_.rowCount(); ++row )
+        if( auto* item = model_.item( row, 1 ) )
+            if( auto* availability = item->data( Qt::UserRole ).value< const kernel::Availability* >() )
+                if( availability->entity_ == &entity )
+                    item->setText( entity.GetName() );
 }
 
 #endif // __ResourcesListView_ABC_h_

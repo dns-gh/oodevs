@@ -59,6 +59,7 @@ public:
 public:
     //! @name Operations
     //@{
+
     virtual void FillCurrentModel( const kernel::Entity_ABC& entity )
     {
         if( !IsHistoryChecked() )
