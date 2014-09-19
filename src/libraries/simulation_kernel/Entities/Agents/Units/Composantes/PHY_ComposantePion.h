@@ -33,6 +33,7 @@ class PHY_Breakdown;
 class PHY_FireDamages_Agent;
 class PHY_HumanRank;
 class PHY_MaintenanceComposanteState;
+class PHY_MaterialCompositionType;
 class PHY_RoleInterface_Composantes;
 class PHY_Sensor;
 class PHY_Weapon;
@@ -163,7 +164,7 @@ public:
 
     unsigned int GetNeutralizationTime() const;
     void ApplyHumansWounds( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
-    double GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo ) const;
+    double GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
     double GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const;
     double GetMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH, const PHY_DotationCategory* dotation, bool useAmmo ) const;
     double GetMinRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const;

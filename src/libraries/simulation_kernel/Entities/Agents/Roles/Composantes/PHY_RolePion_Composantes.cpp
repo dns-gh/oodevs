@@ -1162,12 +1162,12 @@ void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) c
 // Name: PHY_RolePion_Composantes::GetDangerosity
 // Created: MGD 2010-02-04
 // -----------------------------------------------------------------------------
-double PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo ) const
+double PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const
 {
     double rDangerosity = 0.f;
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
         if( ( *it )->IsMajor() )
-        rDangerosity = std::max( rDangerosity, ( *it )->GetDangerosity( compTarget, rDistBtwSourceAndTarget, bUseAmmo ) );
+        rDangerosity = std::max( rDangerosity, ( *it )->GetDangerosity( compTarget, rDistBtwSourceAndTarget, bUseAmmo, material ) );
     return rDangerosity;
 }
 

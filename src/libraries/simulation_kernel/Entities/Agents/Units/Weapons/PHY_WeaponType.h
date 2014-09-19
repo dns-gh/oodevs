@@ -20,6 +20,7 @@ namespace xml
 
 class PHY_LauncherType;
 class PHY_DotationCategory;
+class PHY_MaterialCompositionType;
 class PHY_WeaponDataType_IndirectFire;
 class PHY_WeaponDataType_DirectFire;
 class PHY_Weapon;
@@ -78,7 +79,7 @@ public:
     double   GetSmokeDuration() const;
 
     double GetDangerosity     ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& compTarget, bool bUsePH, bool bUseAmmo ) const;
-    double GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget, bool bUseAmmo ) const;
+    double GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
 
     double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation, bool useAmmo ) const;
     double GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;

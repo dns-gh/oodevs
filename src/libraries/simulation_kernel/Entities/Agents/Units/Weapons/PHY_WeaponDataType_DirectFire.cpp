@@ -292,13 +292,15 @@ double PHY_WeaponDataType_DirectFire::GetDangerosity( const MIL_Agent_ABC& firer
 // Name: PHY_WeaponDataType_DirectFire::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_WeaponDataType_DirectFire::GetDangerosity( const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget ) const
+double PHY_WeaponDataType_DirectFire::GetDangerosity( const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget, const PHY_MaterialCompositionType* material ) const
 {
     const PHY_Volume&     targetVolume      = targetComposanteType.GetVolume    ();
     const PHY_Protection& targetProtection  = targetComposanteType.GetProtection();
 
     double rDangerosity  = GetPH( targetVolume, rDistBtwFirerAndTarget );
-           rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
+    rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
+    if( material )
+        rDangerosity *= weaponType_.GetDotationCategory().GetUrbanAttritionScore( *material );
     return rDangerosity;
 }
 

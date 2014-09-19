@@ -28,6 +28,7 @@ class PHY_DotationCategory;
 class PHY_FireDamages_Agent;
 class PHY_FireResults_ABC;
 class PHY_MaintenanceComposanteState;
+class PHY_MaterialCompositionType;
 class PHY_RadarType;
 class PHY_SensorTypeAgent;
 class PHY_Volume;
@@ -123,7 +124,7 @@ public:
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult ) = 0;
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& object ) = 0;
-    virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo ) const = 0;
+    virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const = 0;
     virtual double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH, const PHY_DotationCategory* dotation, bool useAmmo ) const = 0;
     virtual double GetMinRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;

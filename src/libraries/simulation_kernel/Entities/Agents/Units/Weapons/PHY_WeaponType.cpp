@@ -295,7 +295,7 @@ double PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_Age
 // Name: PHY_WeaponType::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget, bool bUseAmmo ) const
+double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const
 {
     if( !pDirectFireData_ )
         return 0.;
@@ -310,7 +310,7 @@ double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_Com
         if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
             return 0.;
     }
-    return pDirectFireData_->GetDangerosity( targetComposanteType, rDistBtwFirerAndTarget );
+    return pDirectFireData_->GetDangerosity( targetComposanteType, rDistBtwFirerAndTarget, material );
 }
 
 // -----------------------------------------------------------------------------

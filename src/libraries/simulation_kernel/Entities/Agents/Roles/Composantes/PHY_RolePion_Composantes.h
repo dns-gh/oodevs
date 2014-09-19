@@ -189,7 +189,7 @@ public:
     virtual void ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
     virtual void ApplyEffect                      ( const WoundEffects_ABC& effect );
 
-    virtual double GetDangerosity                  ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo ) const;
+    virtual double GetDangerosity                  ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo, const PHY_MaterialCompositionType* material ) const;
     virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, double rWantedPH ) const;
     virtual double GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, double rWantedPH, const PHY_DotationCategory* dotation, bool useAmmo ) const;
     virtual double GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, double rWantedPH ) const;
