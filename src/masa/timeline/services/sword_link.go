@@ -18,15 +18,17 @@ type SwordLinkObserver interface {
 	PostLog(link *SwordLink, format string, args ...interface{})
 	PostCloseAction(link *SwordLink, action string, err error)
 	PostCloseWriter(link *SwordLink, writer *SwordWriter)
+	PostInvalidateFilters(link *SwordLink)
 }
 
 type SwordLink struct {
-	poster  SwordLinkObserver
-	client  *swapi.Client             // gosword client
-	reader  *SwordReader              // message reader
-	pending sync.WaitGroup            // pending callbacks
-	mutex   sync.Mutex                // protect writers
-	writers map[*SwordWriter]struct{} // pending actions
+	poster   SwordLinkObserver
+	client   *swapi.Client             // gosword client
+	listener int32                     // model listener id
+	reader   *SwordReader              // message reader
+	pending  sync.WaitGroup            // pending callbacks
+	mutex    sync.Mutex                // protect writers
+	writers  map[*SwordWriter]struct{} // pending actions
 }
 
 func NewSwordLink(poster SwordLinkObserver, address, name string, clock bool) (*SwordLink, error) {
@@ -81,6 +83,9 @@ func (s *SwordReaderHandler) Log(format string, args ...interface{}) {
 
 func (s *SwordLink) Attach(observer Observer, orders Ids, actions Ids) {
 	s.reader.Attach(&SwordReaderHandler{s.poster, observer, s}, orders, actions)
+	s.listener = s.client.Model.RegisterListener(func(event swapi.ModelEvent) {
+		s.poster.PostInvalidateFilters(s)
+	})
 }
 
 func (s *SwordLink) Detach() {
@@ -88,6 +93,10 @@ func (s *SwordLink) Detach() {
 		s.reader.Close()
 	}
 	s.reader = nil
+	if s.listener != 0 {
+		s.client.Model.UnregisterListener(s.listener)
+	}
+	s.listener = 0
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	for writer := range s.writers {

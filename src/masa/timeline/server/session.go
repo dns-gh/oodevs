@@ -42,16 +42,9 @@ func (d DefaultEventListener) Update(events EventSlice, encoded []*sdk.Event) {
 	d.EventListener.Update(encoded...)
 }
 
-type SessionObserver interface {
-	SdkObserver
-	services.EventListener
-	UpdateTick(time.Time)
-	Close()
-}
-
 type EventListeners map[interface{}]EventListener
 type EventFilterers map[services.EventFilterer]struct{}
-type Observers map[interface{}]SessionObserver
+type Observers map[interface{}]*FilteredObserver
 type Services map[string]services.Service
 
 // A Session groups services and manages their running states, while providing
@@ -458,17 +451,18 @@ func (s *Session) DeleteEvent(uuid string) error {
 
 type FilteredObserver struct {
 	SdkObserver
-	listener services.EventListener
+	observer *Observer
 	config   services.EventFilterConfig
 	session  *Session
 	known    map[string]struct{}
 }
 
-func (f *FilteredObserver) Update(events EventSlice, encoded []*sdk.Event) {
+func (f *FilteredObserver) update(events EventSlice, encoded []*sdk.Event, reset bool) {
 	// maintain a set of known events so we can send
 	// delete notifications on events that become filtered
 	// but were known previously
-	deleted := []string{}
+	deleted := make([]string, 0, len(encoded))
+	added := make([]*sdk.Event, 0, len(encoded))
 	filters := []services.EventFilter{func(event *sdk.Event) bool {
 		id := event.GetUuid()
 		for it := range f.session.filterers {
@@ -477,7 +471,11 @@ func (f *FilteredObserver) Update(events EventSlice, encoded []*sdk.Event) {
 				return true
 			}
 		}
+		prev := len(f.known)
 		f.known[id] = struct{}{}
+		if prev != len(f.known) {
+			added = append(added, event)
+		}
 		return false
 	}}
 	// filterEvents modify encoded in-place
@@ -489,7 +487,25 @@ func (f *FilteredObserver) Update(events EventSlice, encoded []*sdk.Event) {
 	}
 	updated := filterEvents(events, encoded, filters)
 	f.Delete(deleted...)
-	f.listener.Update(updated...)
+	if reset {
+		updated = added
+	}
+	f.observer.Update(updated...)
+}
+
+func (f *FilteredObserver) Update(events EventSlice, encoded []*sdk.Event) {
+	f.update(events, encoded, false)
+}
+
+func (f *FilteredObserver) UpdateTick(tick time.Time) {
+	f.observer.UpdateTick(tick)
+}
+
+func (s *Session) InvalidateFilters() {
+	encoded := s.events.Proto()
+	for _, observer := range s.observers {
+		observer.update(s.events, encoded, true)
+	}
 }
 
 func (f *FilteredObserver) Delete(events ...string) {
@@ -502,7 +518,7 @@ func (f *FilteredObserver) Delete(events ...string) {
 		}
 	}
 	if len(deleted) > 0 {
-		f.listener.Delete(deleted...)
+		f.observer.Delete(deleted...)
 	}
 }
 
@@ -510,12 +526,12 @@ func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserve
 	observer := NewObserver()
 	filtered := &FilteredObserver{
 		SdkObserver: observer,
-		listener:    observer,
+		observer:    observer,
 		config:      config,
 		session:     s,
 		known:       map[string]struct{}{},
 	}
-	s.observers[filtered] = observer
+	s.observers[filtered] = filtered
 	s.listeners[filtered] = filtered
 	// beware, as we haven't returned the output channel yet,
 	// nobody listens on output messages. Make sure the output
@@ -527,10 +543,12 @@ func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserve
 }
 
 func (s *Session) UnregisterObserver(filtered SdkObserver) {
-	observer := s.observers[filtered]
 	delete(s.listeners, filtered)
+	prev := len(s.observers)
 	delete(s.observers, filtered)
-	observer.Close()
+	if prev != len(s.observers) {
+		filtered.(*FilteredObserver).observer.Close()
+	}
 }
 
 func (s *Session) Abort(err error) {
