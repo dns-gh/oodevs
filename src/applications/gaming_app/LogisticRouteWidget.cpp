@@ -87,13 +87,13 @@ void LogisticRouteWidget::RemoveRecipient( const kernel::Entity_ABC& recipient )
 
 namespace
 {
-    QPushButton* CreateButton( const QIcon& icon, bool enabled, int index, QSignalMapper* mapper )
+    QPushButton* CreateButton( const QIcon& icon, bool enabled, std::size_t index, QSignalMapper* mapper )
     {
         QPushButton* button = new QPushButton( icon, "" );
         button->setIconSize( QSize( 20, 20 ) );
         button->setEnabled( enabled );
         QObject::connect( button, SIGNAL( clicked() ), mapper, SLOT( map() ) );
-        mapper->setMapping( button, index );
+        mapper->setMapping( button, static_cast< int >( index ) );
         return button;
     }
     QLayoutItem* ClearLayoutItem( QLayoutItem* item )
@@ -150,16 +150,16 @@ void LogisticRouteWidget::Build()
 {
     ClearLayout( layout_ );
     // No recipients
-    const int size = recipients_.size();
+    const auto size = recipients_.size();
     if( size <= 1 )
         return;
 
     int row = 0;
     // Build recipient
-    for( int i = 0; i < size; ++i )
+    for( size_t i = 0; i < size; ++i )
     {
         const auto* recipient = recipients_[ i ];
-        const bool isRequester = i == static_cast< int >( recipients_.size() ) - 1;
+        const bool isRequester = i == recipients_.size() - 1;
         // Tasker widget
         if( !isRequester )
         {
@@ -183,7 +183,7 @@ void LogisticRouteWidget::Build()
         if( size > 2 && !isRequester )
         {
             layout_->addWidget( CreateButton( upIcon_, i != 0, i, upSignalMapper_ ), row, 2 );
-            layout_->addWidget( CreateButton( downIcon_, i != static_cast< int >( recipients_.size() ) - 2, i, downSignalMapper_ ), row, 3 );
+            layout_->addWidget( CreateButton( downIcon_, i != recipients_.size() - 2, i, downSignalMapper_ ), row, 3 );
         }
         ++row;
 
