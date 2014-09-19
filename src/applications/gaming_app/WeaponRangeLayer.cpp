@@ -95,16 +95,14 @@ Shader* NewShader( const std::string& program )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_WARNING_MSG( "unable to create shader:\n"
-            << AddLineNumbers( program ) << std::endl
-            << e.what() );
+        throw MASA_EXCEPTION( "unable to create shader:\n"
+            + AddLineNumbers( program ) + "\n" + e.what() );
     }
     catch( ... )
     {
-        MT_LOG_WARNING_MSG( "unable to create shader:\n"
-            << AddLineNumbers( program ) );
+        throw MASA_EXCEPTION( "unable to create shader:\n"
+            + AddLineNumbers( program ) );
     }
-    throw MASA_EXCEPTION( "unable to create shader" );
 }
 
 }  // namespace
