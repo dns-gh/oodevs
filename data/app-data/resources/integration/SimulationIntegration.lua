@@ -21,12 +21,6 @@ rawset( getfenv(), "StopEvents", function( ... )
   integration.stopTasks() --Stop all tasks, main task and fragOrder
 end )
 
-function knowledgeIdFunction( knowledge )
-    return tostring( knowledge.source )
-end
-
-masalife.brain.communication.protocol.setDynamicCommFunID( knowledgeIdFunction )
-
 --[[
 -- Knowledge objects must remain the same from one tick to the next in order for DirectIA to work properly.
 -- However, all knowledge objects should not remain in memory during a 7 day exercise, as most of them are only of transient use.
@@ -60,9 +54,6 @@ localStorageVar = masalife.brain.integration.createBrainLocalStorage(
 function CreateKnowledge( knowledgeType, knowledgeSource, params )
     local result = localStorageVar.knowledgeCache[ knowledgeSource ]
     if result then return result end
-    masalife.brain.knowledge.getSource = function( body )
-        return knowledgeSource
-    end
     result = knowledgeType:new()
     result.source = knowledgeSource
     if params then
