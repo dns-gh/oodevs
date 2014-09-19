@@ -88,7 +88,7 @@ public:
 private:
      //! @name Types
     //@{
-    typedef tools::Set< const MIL_Object_ABC* > T_ObjectSet;
+    typedef tools::Set< MIL_Object_ABC* > T_ObjectSet;
 
     // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
     struct T_MoveStep

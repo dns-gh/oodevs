@@ -318,7 +318,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     T_PointSet collisions( colCmp );
     for( auto itObject = objects.begin(); itObject != objects.end(); ++itObject )
     {
-        const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
+        MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
         if( const FloodAttribute* flood = object.RetrieveAttribute< FloodAttribute > () )
         {
             T_PointSet collisionsTmp( colCmp );
@@ -455,26 +455,16 @@ bool DEC_PathWalker::TryToMoveToNextStep( const MT_Vector2D& startPosition, CIT_
 {
     double rMaxSpeedForStep = std::numeric_limits< double >::max();
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
-    for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
-    {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, true ) )
+    for( auto it = itCurMoveStep->ponctualObjectsOnSet_.begin(); it != itCurMoveStep->ponctualObjectsOnSet_.end(); ++it )
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, **it, rMaxSpeedForStep, true ) )
             return false;
-    }
-    for( auto itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
-    {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, false ) )
+    for( auto it = itCurMoveStep->objectsToNextPointSet_.begin(); it != itCurMoveStep->objectsToNextPointSet_.end(); ++it )
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, **it, rMaxSpeedForStep, false ) )
             return false;
-    }
-
     // itCurMoveStep a pu être dépassé => notification des objets dont on sort
-    for( auto itObject = itNextMoveStep->objectsOutSet_.begin(); itObject != itNextMoveStep->objectsOutSet_.end(); ++itObject )
-    {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( movingEntity_.CanObjectInteractWith( object ) )
-            movingEntity_.NotifyMovingOutsideObject( object );
-    }
+    for( auto it = itNextMoveStep->objectsOutSet_.begin(); it != itNextMoveStep->objectsOutSet_.end(); ++it )
+        if( movingEntity_.CanObjectInteractWith( **it ) )
+            movingEntity_.NotifyMovingOutsideObject( **it );
 
     if( rMaxSpeedForStep != std::numeric_limits< double >::max() )
         rCurrentSpeed_ = rMaxSpeedForStep;
