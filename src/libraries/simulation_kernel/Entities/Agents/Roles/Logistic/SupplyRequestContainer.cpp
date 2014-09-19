@@ -22,7 +22,9 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Orders/MIL_ItineraryParameter.h"
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace logistic;
 
@@ -136,8 +138,8 @@ void SupplyRequestContainer::Prepare()
     requests_.clear();
     transporters_.clear();
     recipientPaths_.clear();
-    transportersProviderPath_.clear();
-    supplierPath_.clear();
+    supplierPath_ = boost::none;
+    transportersProviderPath_ = boost::none;
 }
 
 // -----------------------------------------------------------------------------
@@ -245,62 +247,94 @@ const SupplyRequestContainer::T_Transporters& SupplyRequestContainer::GetTranspo
     return transporters_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SupplyRequestContainer::SetPathToRecipient
-// Created: NLD 2011-07-25
-// -----------------------------------------------------------------------------
-void SupplyRequestContainer::SetPathToRecipient( SupplyRecipient_ABC& recipient, const T_PointVector& wayPoints )
+void SupplyRequestContainer::SetPathToRecipient( SupplyRecipient_ABC& recipient, const sword::Pathfind& pathfind,
+                                                 const MT_Vector2D& start, const MT_Vector2D& end )
 {
-    recipientPaths_[ &recipient ] = wayPoints;
+    recipientPaths_[ &recipient ] = Itinerary( boost::make_shared< MT_Vector2D >( start ),
+         boost::make_shared< MT_Vector2D >( end ),
+         boost::make_shared< MIL_ItineraryParameter >( pathfind, start ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::GetPath
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-const T_PointVector& SupplyRequestContainer::GetPathToRecipient( SupplyRecipient_ABC& recipient ) const
+std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToRecipient( SupplyRecipient_ABC& recipient ) const
 {
-    static const T_PointVector default;
     auto it = recipientPaths_.find( &recipient );
-    if( it == recipientPaths_.end() )
-        return default;
-    return it->second;
+    if( it != recipientPaths_.end() )
+        return it->second.parameter_->AddClosestWaypoints( it->second.start_, it->second.end_ );
+    return std::vector< boost::shared_ptr< MT_Vector2D > >();
+}
+
+void SupplyRequestContainer::ToRecipientItinerary( SupplyRecipient_ABC& recipient, sword::Pathfind& pathfind ) const
+{
+    auto it = recipientPaths_.find( &recipient );
+    if( it != recipientPaths_.end() )
+       it->second.parameter_->ToItinerary( pathfind );
+}
+
+void SupplyRequestContainer::ToTransportersItinerary( sword::Pathfind& pathfind ) const
+{
+    if( transportersProviderPath_ )
+        transportersProviderPath_->parameter_->ToItinerary( pathfind );
+}
+
+void SupplyRequestContainer::ToSupplierItinerary( sword::Pathfind& pathfind ) const
+{
+    if( supplierPath_ )
+        supplierPath_->parameter_->ToItinerary( pathfind );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::SetPathToTransportersProvider
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::SetPathToTransportersProvider( const T_PointVector& wayPoints )
+void SupplyRequestContainer::SetPathToTransportersProvider( const sword::Pathfind& pathfind, const MT_Vector2D& start, const MT_Vector2D& end )
 {
-    transportersProviderPath_ = wayPoints;
+    transportersProviderPath_ = Itinerary( boost::make_shared< MT_Vector2D >( start ),
+        boost::make_shared< MT_Vector2D >( end ),
+        boost::make_shared< MIL_ItineraryParameter >( pathfind, start ) );
+}
+
+namespace
+{
+    template< typename T >
+    std::vector< boost::shared_ptr< MT_Vector2D > > GetClosestWaypoints( const boost::optional< T >& itinerary )
+    {
+        if( itinerary )
+            return itinerary->parameter_->AddClosestWaypoints( itinerary->start_, itinerary->end_ );
+        return std::vector< boost::shared_ptr< MT_Vector2D > >();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::GetPathToTransportersProvider
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-const T_PointVector& SupplyRequestContainer::GetPathToTransportersProvider() const
+std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToTransportersProvider() const
 {
-    return transportersProviderPath_;
+    return GetClosestWaypoints( transportersProviderPath_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::SetPathToSupplier
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::SetPathToSupplier( const T_PointVector& wayPoints )
+void SupplyRequestContainer::SetPathToSupplier( const sword::Pathfind& pathfind, const MT_Vector2D& start, const MT_Vector2D& end )
 {
-    supplierPath_ = wayPoints;
+    supplierPath_ = Itinerary( boost::make_shared< MT_Vector2D >( start ),
+        boost::make_shared< MT_Vector2D >( end ),
+        boost::make_shared< MIL_ItineraryParameter >( pathfind, start ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::GetPathToSupplier
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-const T_PointVector& SupplyRequestContainer::GetPathToSupplier() const
+std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToSupplier() const
 {
-    return supplierPath_;
+    return GetClosestWaypoints( supplierPath_ );
 }
 
 // -----------------------------------------------------------------------------

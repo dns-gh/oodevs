@@ -12,6 +12,11 @@
 
 #include "LogisticSupplyFlowDialog_ABC.h"
 
+namespace kernel
+{
+    class Formation_ABC;
+}
+
 // =============================================================================
 /** @class  LogisticSupplyPullFlowDialog
     @brief  LogisticSupplyPullFlowDialog
@@ -30,10 +35,10 @@ public:
                                            actions::ActionsModel& actionsModel,
                                            const ::StaticModel& staticModel,
                                            const kernel::Time_ABC& simulation,
-                                           gui::ParametersLayer& layer,
                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
                                            const tools::Resolver_ABC< kernel::Formation_ABC >& formations,
-                                           const kernel::Profile_ABC& profile );
+                                           const kernel::Profile_ABC& profile,
+                                           const gui::EntitySymbols& symbols );
     virtual ~LogisticSupplyPullFlowDialog();
     //@}
 
@@ -66,12 +71,6 @@ private:
     //! @name Types
     //@{
      typedef QMap< QString, const kernel::Entity_ABC* > T_SuppliersNames;
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void ComputeRoute( T_Route& route );
-    virtual void UpdateRouteDrawpoints();
     //@}
 
 private:

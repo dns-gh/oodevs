@@ -22,6 +22,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
@@ -92,7 +93,11 @@ namespace
         else
         {
             sword::Pathfind pathfind;
-            FindItinerary( agent.GetRole< DEC_Decision_ABC >(), [&]( MIL_MissionParameter_ABC& element ){ element.ToItinerary( pathfind ); } );
+            const PHY_RoleInterface_Supply* role = agent.RetrieveRole< PHY_RoleInterface_Supply >();
+            if( role && role->IsConvoy() )
+                role->ToItinerary( pathfind );
+            else
+                FindItinerary( agent.GetRole< DEC_Decision_ABC >(), [&]( MIL_MissionParameter_ABC& element ){ element.ToItinerary( pathfind ); } );
             MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer, pathfind );
         }
         return path;

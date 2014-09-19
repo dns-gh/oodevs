@@ -53,13 +53,14 @@ public:
 
     //! @name Accessors
     //@{
-    virtual int                  GetCurrentAction         () const = 0;
-    virtual SupplyRecipient_ABC* GetCurrentSupplyRecipient() const = 0;
-    virtual SupplySupplier_ABC&  GetSupplier              () const = 0;
-    virtual SupplySupplier_ABC&  GetTransportersProvider  () const = 0;
-    virtual const T_PointVector* GetPathToNextDestination () const = 0;
-    virtual const MIL_Agent_ABC* GetProvider              () const = 0;
-    virtual bool                 IsPushedFlow             () const = 0;
+    virtual int                                             GetCurrentAction         () const = 0;
+    virtual SupplyRecipient_ABC*                            GetCurrentSupplyRecipient() const = 0;
+    virtual SupplySupplier_ABC&                             GetSupplier              () const = 0;
+    virtual SupplySupplier_ABC&                             GetTransportersProvider  () const = 0;
+    virtual std::vector< boost::shared_ptr< MT_Vector2D > > GetPathToNextDestination () const = 0;
+    virtual const MIL_Agent_ABC*                            GetProvider              () const = 0;
+    virtual bool                                            IsPushedFlow             () const = 0;
+    virtual void                                            ToItinerary( sword::Pathfind& pathfind ) const = 0;
     //@}
     
     template< typename Archive > void serialize( Archive&, const unsigned int ) {}

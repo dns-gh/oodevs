@@ -36,7 +36,7 @@ LogisticMagicInterface::LogisticMagicInterface( QWidget* parent,
                                                 const StaticModel& staticModel,
                                                 const kernel::Time_ABC& simulation,
                                                 const kernel::Profile_ABC& profile,
-                                                gui::ParametersLayer& layer )
+                                                const gui::EntitySymbols& symbols )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( model.actions_ )
@@ -53,18 +53,18 @@ LogisticMagicInterface::LogisticMagicInterface( QWidget* parent,
                                                          model.actions_,
                                                          staticModel,
                                                          simulation,
-                                                         layer,
                                                          model.agents_,
-                                                         profile ) )
+                                                         profile,
+                                                         symbols ) )
     , pullFlowDialog_( new LogisticSupplyPullFlowDialog( parent,
                                                          controllers,
                                                          model.actions_,
                                                          staticModel,
                                                          simulation,
-                                                         layer,
                                                          model.agents_,
                                                          model.teams_,
-                                                         profile ) )
+                                                         profile,
+                                                         symbols ) )
 {
     controllers_.Register( *this );
 }

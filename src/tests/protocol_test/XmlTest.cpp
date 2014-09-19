@@ -866,6 +866,57 @@ BOOST_FIXTURE_TEST_CASE( read_extension_list, Fixture )
     CheckCycle( input, msg );
 }
 
+namespace
+{
+    const std::string itinerary =
+        "<itinerary>"
+        "  <id value='42'/>"
+        "  <request>"
+        "     <unit id='13'/>"
+        "     <positions>"
+        "       <point coordinates='dummy'/>"
+        "       <point coordinates='dummy'/>"
+        "     </positions>"
+        "     <equipments>"
+        "       <type id='7'/>"
+        "       <type id='17'/>"
+        "     </equipments>"
+        "     <ignore_dynamic_objects value='true'/>"
+        "  </request>"
+        "  <result>"
+        "     <point coordinates='dummy' waypoint='4' reached='false'>"
+        "         <current area='1' left='2' linear='3' right='4'/>"
+        "         <next area='11' left='12' linear='13' right='14'/>"
+        "     </point>"
+        "     <point coordinates='dummy'>"
+        "         <current area='21' left='22' linear='23' right='24'/>"
+        "         <next area='31' left='32' linear='33' right='34'/>"
+        "     </point>"
+        "  </result>"
+        "</itinerary>";
+
+    const std::string itineraryProto =
+        "id: 42 "
+        "request { "
+            "unit { id: 13 } "
+            "positions { latitude: 0 longitude: 0 } "
+            "positions { latitude: 0 longitude: 0 } "
+            "equipment_types { id: 7 } "
+            "equipment_types { id: 17 } "
+            "ignore_dynamic_objects: true } "
+        "result { "
+            "points { "
+                "coordinate { latitude: 0 longitude: 0 } "
+                "waypoint: 4 "
+                "reached: false "
+                "current { linear: 3 area: 1 left: 2 right: 4 } "
+                "next { linear: 13 area: 11 left: 12 right: 14 } } "
+            "points { "
+            "coordinate { latitude: 0 longitude: 0 } "
+            "current { linear: 23 area: 21 left: 22 right: 24 } "
+            "next { linear: 33 area: 31 left: 32 right: 34 } } ";
+}
+
 BOOST_FIXTURE_TEST_CASE( read_push_flow_parameters, Fixture )
 {
     const std::string input =
@@ -874,21 +925,17 @@ BOOST_FIXTURE_TEST_CASE( read_push_flow_parameters, Fixture )
     "    <recipient id='1'>"
     "      <resource id='2' quantity='3'/>"
     "      <resource id='4' quantity='5'/>"
-    "      <path>"
-    "        <point coordinates='dummy'/>"
-    "        <point coordinates='dummy'/>"
-    "      </path>"
+    + itinerary +
     "    </recipient>"
     "    <recipient id='6'/>"
     "    <transporter id='7' quantity='8'/>"
     "    <transporter id='9' quantity='10'/>"
     "    <waybackpath>"
-    "      <point coordinates='dummy'/>"
-    "      <point coordinates='dummy'/>"
+    + itinerary +
     "    </waybackpath>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( reader.Convert ).exactly( 4 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 8 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).null_value(), false );
@@ -901,29 +948,29 @@ BOOST_FIXTURE_TEST_CASE( read_push_flow_parameters, Fixture )
     BOOST_CHECK_EQUAL( recipient.resources( 0 ).quantity(), 3u );
     BOOST_CHECK_EQUAL( recipient.resources( 1 ).resourcetype().id(), 4u );
     BOOST_CHECK_EQUAL( recipient.resources( 1 ).quantity(), 5u );
-    BOOST_CHECK_EQUAL( recipient.path().elem_size(), 2 );
-    CheckLocation( recipient.path().elem( 0 ).location(), Location::point, 1 );
-    CheckLocation( recipient.path().elem( 1 ).location(), Location::point, 1 );
+    BOOST_CHECK( recipient.has_pathfind() );
+    auto& pathfind = recipient.pathfind();
+    BOOST_CHECK_EQUAL( pathfind.id(), 42u );
+    BOOST_CHECK_EQUAL( pathfind.request().unit().id(), 13u );
     BOOST_CHECK_EQUAL( push.recipients( 1 ).receiver().id(), 6u );
     BOOST_CHECK_EQUAL( push.transporters_size(), 2 );
     BOOST_CHECK_EQUAL( push.transporters( 0 ).equipmenttype().id(), 7u );
     BOOST_CHECK_EQUAL( push.transporters( 0 ).quantity(), 8u );
     BOOST_CHECK_EQUAL( push.transporters( 1 ).equipmenttype().id(), 9u );
     BOOST_CHECK_EQUAL( push.transporters( 1 ).quantity(), 10u );
-    BOOST_CHECK_EQUAL( push.waybackpath().elem_size(), 2 );
-    CheckLocation( push.waybackpath().elem( 0 ).location(), Location::point, 1 );
-    CheckLocation( push.waybackpath().elem( 1 ).location(), Location::point, 1 );
+    BOOST_CHECK( push.has_waybackpathfind() );
+    auto& wayback = push.waybackpathfind();
+    BOOST_CHECK_EQUAL( wayback.id(), 42u );
+    BOOST_CHECK_EQUAL( wayback.request().unit().id(), 13u );
     BOOST_CHECK_EQUAL( msg.ShortDebugString(),
         "elem { null_value: false "
             "value { push_flow_parameters { recipients { receiver { id: 1 } "
                 "resources { resourceType { id: 2 } quantity: 3 } "
                 "resources { resourceType { id: 4 } quantity: 5 } "
-                "path { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } "
-                       "elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } "
-                "recipients { receiver { id: 6 } path { } } "
+                "pathfind { " + itineraryProto + "} } } "
+                "recipients { receiver { id: 6 } } "
                 "transporters { equipmentType { id: 7 } quantity: 8 } transporters { equipmentType { id: 9 } quantity: 10 } "
-                "wayBackPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } "
-                              "elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } } }" );
+                "wayBackPathfind { " + itineraryProto + "} } } } }" );
     CheckCycle( input, msg );
 }
 
@@ -938,16 +985,14 @@ BOOST_FIXTURE_TEST_CASE( read_pull_flow_parameters, Fixture )
     "    <transporter id='6' quantity='7'/>"
     "    <transporter id='8' quantity='9'/>"
     "    <wayoutpath>"
-    "      <point coordinates='dummy'/>"
-    "      <point coordinates='dummy'/>"
+    + itinerary +
     "    </wayoutpath>"
     "    <waybackpath>"
-    "      <point coordinates='dummy'/>"
-    "      <point coordinates='dummy'/>"
+    + itinerary +
     "    </waybackpath>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( reader.Convert ).exactly( 4 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 8 ).returns( dummy );
     MOCK_EXPECT( reader.Resolve ).once().with( 1u ).returns( Reader_ABC::FORMATION );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
@@ -964,21 +1009,15 @@ BOOST_FIXTURE_TEST_CASE( read_pull_flow_parameters, Fixture )
     BOOST_CHECK_EQUAL( pull.transporters( 0 ).quantity(), 7u );
     BOOST_CHECK_EQUAL( pull.transporters( 1 ).equipmenttype().id(), 8u );
     BOOST_CHECK_EQUAL( pull.transporters( 1 ).quantity(), 9u );
-    BOOST_CHECK_EQUAL( pull.wayoutpath().elem_size(), 2 );
-    CheckLocation( pull.wayoutpath().elem( 0 ).location(), Location::point, 1 );
-    CheckLocation( pull.wayoutpath().elem( 1 ).location(), Location::point, 1 );
-    BOOST_CHECK_EQUAL( pull.waybackpath().elem_size(), 2 );
-    CheckLocation( pull.waybackpath().elem( 0 ).location(), Location::point, 1 );
-    CheckLocation( pull.waybackpath().elem( 1 ).location(), Location::point, 1 );
+    BOOST_CHECK( pull.has_wayoutpathfind() );
+    BOOST_CHECK( pull.has_waybackpathfind() );
     BOOST_CHECK_EQUAL( msg.ShortDebugString(),
         "elem { null_value: false value { pull_flow_parameters { "
             "supplier { formation { id: 1 } } "
             "resources { resourceType { id: 2 } quantity: 3 } resources { resourceType { id: 4 } quantity: 5 } "
             "transporters { equipmentType { id: 6 } quantity: 7 } transporters { equipmentType { id: 8 } quantity: 9 } "
-            "wayOutPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } "
-                         "elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } "
-            "wayBackPath { elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } "
-                          "elem { location { type: point coordinates { elem { latitude: 0 longitude: 0 } } } } } } } }" );
+            "wayOutPathfind { " + itineraryProto + "} } "
+            "wayBackPathfind { " + itineraryProto + "} } } } }" );
     CheckCycle( input, msg );
 }
 

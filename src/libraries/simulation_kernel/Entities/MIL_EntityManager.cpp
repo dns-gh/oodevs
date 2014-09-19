@@ -2019,7 +2019,10 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     tools::Map< const PHY_DotationCategory*, double > supplies;
     protocol::Check( parameters.recipients().size() > 0, "at least one recipient expected" );
     for( auto it = parameters.recipients().begin(); it != parameters.recipients().end(); ++it )
+    {
+        protocol::Check( !it->has_path(), "path parameter is deprecated" );
         ReadResources( it->resources(), supplies );
+    }
     auto states = ack.mutable_result()->add_elem()->add_value();
     const auto& transporters = parameters.transporters();
     if( transporters.size() )
@@ -2028,6 +2031,7 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
         CheckTransportersLoad( transporters, supplies, *states );
     }
     CheckSuppliersAreDeployed( *supplier, supplies );
+    protocol::Check( !parameters.has_waybackpath(), "waybackpath parameter is deprecated" );
     if( !supplier->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
             sword::UnitActionAck::error_supply_denied, STR( "supply denied" ) );
@@ -2115,6 +2119,8 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     const auto& parameters = value.pull_flow_parameters();
     MIL_AutomateLOG* supplier = FindBrainLogistic( parameters.supplier() );
     protocol::Check( supplier, "invalid supplier" );
+    protocol::Check( !parameters.has_wayoutpath(), "wayoutPath parameter is deprecated" );
+    protocol::Check( !parameters.has_waybackpath(), "waybackPath parameter is deprecated" );
     tools::Map< const PHY_DotationCategory*, double > supplies;
     ReadResources( parameters.resources(), supplies );
     auto states = ack.mutable_result()->add_elem()->add_value();

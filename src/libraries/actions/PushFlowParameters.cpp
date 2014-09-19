@@ -12,10 +12,12 @@
 #include "Helpers.h"
 
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/DotationType.h"
-#include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Pathfind_ABC.h"
+#include "clients_kernel/XmlAdapter.h"
 #include "protocol/Protocol.h"
 
 #include <boost/algorithm/string.hpp>
@@ -68,8 +70,8 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
             const kernel::DotationType& dotationType = dotationTypeResolver.Get( resource.resourcetype().id() );
             recipient.resources_[ &dotationType ] += resource.quantity();
         }
-        if( protoRecipient.has_path() )
-            FillFromPointList( recipient.path_, protoRecipient.path(), converter );
+        if( protoRecipient.has_pathfind() )
+            recipient.path_ = protoRecipient.pathfind();
     }
     for( int i = 0; i < parameters.transporters_size(); ++i )
     {
@@ -77,8 +79,8 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
         const kernel::EquipmentType& type = equipmentTypeResolver.Get( transporter.equipmenttype().id() );
         transporters_[ &type ] += transporter.quantity();
     }
-    if( parameters.has_waybackpath() )
-        FillFromPointList( wayBackPath_, parameters.waybackpath(), converter );
+    if( parameters.has_waybackpathfind() )
+        wayBackPath_ = parameters.waybackpathfind();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +96,7 @@ PushFlowParameters::~PushFlowParameters()
 // Name: PushFlowParameters::AddResource
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void PushFlowParameters::AddResource( const kernel::DotationType& type, unsigned long quantity, const kernel::Automat_ABC& recipient )
+void PushFlowParameters::AddResource( const kernel::DotationType& type, unsigned long quantity, const kernel::Entity_ABC& recipient )
 {
     recipients_[ &recipient ].resources_[ &type ] += quantity;
 }
@@ -112,9 +114,10 @@ void PushFlowParameters::AddTransporter( const kernel::EquipmentType& type, unsi
 // Name: PushFlowParameters::SetPath
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void PushFlowParameters::SetPath( const T_PointVector& path, const kernel::Automat_ABC& recipient )
+void PushFlowParameters::SetPath( const kernel::Pathfind_ABC* pathfind, const kernel::Entity_ABC& recipient )
 {
-    recipients_[ &recipient ].path_ = path;
+    if( pathfind )
+        recipients_[ &recipient ].path_ = pathfind->GetCreationMessage();
     recipientsSequence_.push_back( &recipient );
 }
 
@@ -122,9 +125,9 @@ void PushFlowParameters::SetPath( const T_PointVector& path, const kernel::Autom
 // Name: PushFlowParameters::SetWayBackPath
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void PushFlowParameters::SetWayBackPath( const T_PointVector& path )
+void PushFlowParameters::SetWayBackPath( const kernel::Pathfind_ABC& pathfind )
 {
-    wayBackPath_ = path;
+    wayBackPath_ = pathfind.GetCreationMessage();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +149,7 @@ void PushFlowParameters::CommitTo( sword::MissionParameter_Value& message ) cons
     sword::PushFlowParameters* msgPushFlow = message.mutable_push_flow_parameters();
     for( auto it = recipientsSequence_.begin(); it != recipientsSequence_.end() ; ++it )
     {
-        const kernel::Automat_ABC* pAutomat = *it;
+        const kernel::Entity_ABC* pAutomat = *it;
         auto itRecipient = recipients_.find( pAutomat );
         if( !pAutomat || itRecipient == recipients_.end() )
             continue;
@@ -159,11 +162,8 @@ void PushFlowParameters::CommitTo( sword::MissionParameter_Value& message ) cons
             msgResource->mutable_resourcetype()->set_id( resource.first->GetId() );
             msgResource->set_quantity( resource.second );
         }
-
-        //$$$ Un rien trop compliqué ...
-        const T_PointVector& path = recipient.path_;
-        if( !path.empty() )
-            CommitTo( path, *msgRecipient->mutable_path() );
+        if( recipient.path_ )
+             *msgRecipient->mutable_pathfind() = *recipient.path_;
     }
     BOOST_FOREACH( const T_Equipments::value_type& equipment, transporters_ )
     {
@@ -172,24 +172,11 @@ void PushFlowParameters::CommitTo( sword::MissionParameter_Value& message ) cons
         msg->set_quantity( equipment.second );
     }
 
-    if( !wayBackPath_.empty() )
-        CommitTo( wayBackPath_, *msgPushFlow->mutable_waybackpath() );
+    if( wayBackPath_ )
+        *msgPushFlow->mutable_waybackpathfind() = *wayBackPath_;
+
     if( isSupply_ )
         msgPushFlow->set_supply( true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PushFlowParameters::CommitTo
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void PushFlowParameters::CommitTo( const T_PointVector& path, sword::PointList& msgPath ) const
-{
-    BOOST_FOREACH( const geometry::Point2f& point, path )
-    {
-        sword::Location& msgPoint = *msgPath.add_elem()->mutable_location();
-        msgPoint.set_type( sword::Location_Geometry_point );
-        converter_.ConvertToGeo( point, *msgPoint.mutable_coordinates()->add_elem() );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -211,37 +198,10 @@ void PushFlowParameters::Serialize( const T_PointVector& path, const std::string
 void PushFlowParameters::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    for( auto it = recipientsSequence_.begin(); it != recipientsSequence_.end() ; ++it )
-    {
-        const kernel::Automat_ABC* pAutomat = *it;
-        auto itRecipient = recipients_.find( pAutomat );
-        if( !pAutomat || itRecipient == recipients_.end() )
-            continue;
-        const Recipient& recipient = itRecipient->second;
-        xos << xml::start( "recipient" )
-                << xml::attribute( "id", pAutomat->GetId() );
-        BOOST_FOREACH( const T_Resources::value_type& resource, recipient.resources_ )
-        {
-            xos << xml::start( "resource" )
-                    << xml::attribute( "id", resource.first->GetId() )
-                    << xml::attribute( "quantity", resource.second )
-                << xml::end;
-        }
-        Serialize( recipient.path_, "path", xos );
-        xos << xml::end;
-    }
-    BOOST_FOREACH( const T_Equipments::value_type& equipment, transporters_ )
-    {
-        xos << xml::start( "transporter" )
-                << xml::attribute( "id", equipment.first->GetId() )
-                << xml::attribute( "quantity", equipment.second )
-            << xml::end;
-    }
-    Serialize( wayBackPath_, "waybackpath", xos );
-    if( isSupply_ )
-        xos << xml::start( "type" )
-            << xml::attribute( "supply", isSupply_ )
-            << xml::end;
+    sword::MissionParameter message;
+    CommitTo( message );
+    const kernel::XmlWriterAdapter adapter( converter_ );
+    protocol::Write( xos, adapter, message );
 }
 
 // -----------------------------------------------------------------------------

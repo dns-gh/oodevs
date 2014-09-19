@@ -49,11 +49,13 @@ public:
     //@{
     virtual void SetTransportersProvider      ( SupplySupplier_ABC* provider ) = 0;
     virtual void SetTransporters              ( const T_Transporters& transporters ) = 0;
-    virtual void SetPathToRecipient           ( SupplyRecipient_ABC& recipient, const T_PointVector& wayPoints ) = 0;
-    virtual void SetPathToTransportersProvider( const T_PointVector& wayPoints ) = 0;
-    virtual void SetPathToSupplier            ( const T_PointVector& wayPoints ) = 0;
+    virtual void SetPathToRecipient           ( SupplyRecipient_ABC& recipient, const sword::Pathfind& pathfind,
+                                                const MT_Vector2D& start, const MT_Vector2D& end ) = 0;
+    virtual void SetPathToTransportersProvider( const sword::Pathfind& pathfind, const MT_Vector2D& start, const MT_Vector2D& end ) = 0;
+    virtual void SetPathToSupplier            ( const sword::Pathfind& pathfind, const MT_Vector2D& start, const MT_Vector2D& end ) = 0;
     virtual void SetConvoyFactory             ( const SupplyConvoyFactory_ABC& convoyFactory ) = 0;
-    virtual void AddResource                  ( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion, const boost::shared_ptr< SupplyResource_ABC >& resource, double quantity ) = 0;
+    virtual void AddResource                  ( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion,
+                                                const boost::shared_ptr< SupplyResource_ABC >& resource, double quantity ) = 0;
     //@}
 };
 

@@ -665,18 +665,10 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplier( const MIL_Agent_ABC&
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGetPathToNextDestination( const MIL_Agent_ABC& callerAgent )
 {
-    std::vector< boost::shared_ptr< MT_Vector2D > > result;
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
-    {
-        const T_PointVector* wayPoints = role->ConvoyGetPathToNextDestination();
-        if( wayPoints )
-        {
-            BOOST_FOREACH( const MT_Vector2D& wayPoint, *wayPoints )
-                result.push_back( boost::make_shared< MT_Vector2D >( wayPoint ) );
-        }
-    }
-    return result;
+        return role->ConvoyGetPathToNextDestination();
+    return std::vector< boost::shared_ptr< MT_Vector2D > >();
 }
 
 // -----------------------------------------------------------------------------

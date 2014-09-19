@@ -770,61 +770,6 @@ namespace
         }
     }
 
-    void AddSupplyFlowRecipient( const Reader_ABC& reader, PushFlowParameters& dst, xml::xistream& xis )
-    {
-        const auto id = TestAttribute< uint32_t >( xis, "id" );
-        if( !id )
-            return;
-        auto& next = *dst.add_recipients();
-        next.mutable_receiver()->set_id( *id );
-        xis >> xml::list( "resource", boost::bind( &AddSupplyFlowResource< SupplyFlowRecipient >, boost::ref( next ), _1 ) );
-        AddPointList( reader, *next.mutable_path(), "path", xis );
-    }
-
-    template< typename T >
-    void AddSupplyFlowTransporter( T& dst, xml::xistream& xis )
-    {
-        const auto pair = ReadPair< uint32_t, uint32_t >( xis, "id", "quantity" );
-        if( !pair )
-            return;
-        auto& res = *dst.add_transporters();
-        res.mutable_equipmenttype()->set_id( pair->first );
-        res.set_quantity( pair->second );
-    }
-
-    void ReadPushFlowParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        dst.set_null_value( false );
-        auto& push = *dst.add_value()->mutable_push_flow_parameters();
-        xis >> xml::list( "recipient", boost::bind( &AddSupplyFlowRecipient, boost::cref( reader ), boost::ref( push ), _1 ) );
-        const auto add_transporter = &AddSupplyFlowTransporter< PushFlowParameters >;
-        xis >> xml::list( "transporter", boost::bind( add_transporter, boost::ref( push ), _1 ) );
-        AddPointList( reader, *push.mutable_waybackpath(), "waybackpath", xis );
-    }
-
-    void ReadPullFlowParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        xml::xisubstream sub( xis );
-        sub >> xml::start( "supplier" );
-        const auto supplier = TestAttribute< uint32_t >( sub, "id" );
-        if( !supplier )
-            return;
-        const auto type = reader.Resolve( *supplier );
-        if( type != Reader_ABC::AUTOMAT && type != Reader_ABC::FORMATION )
-            return;
-        dst.set_null_value( false );
-        auto& pull = *dst.add_value()->mutable_pull_flow_parameters();
-        auto& next = *pull.mutable_supplier();
-        if( type == Reader_ABC::AUTOMAT )
-            next.mutable_automat()->set_id( *supplier );
-        else
-            next.mutable_formation()->set_id( *supplier );
-        xis >> xml::list( "resource", boost::bind( &AddSupplyFlowResource< PullFlowParameters >, boost::ref( pull ), _1 ) );
-        xis >> xml::list( "transporter", boost::bind( &AddSupplyFlowTransporter< PullFlowParameters >, boost::ref( pull ), _1 ) );
-        AddPointList( reader, *pull.mutable_wayoutpath(), "wayoutpath", xis );
-        AddPointList( reader, *pull.mutable_waybackpath(), "waybackpath", xis );
-    }
-
     void ReadPathfindRequest( const Reader_ABC& reader, sword::PathfindRequest& request, xml::xisubstream xis )
     {
         xis >> xml::start( "request" )
@@ -877,15 +822,87 @@ namespace
         } );
     }
 
-    void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    void ReadItinerary( const Reader_ABC& reader, sword::Pathfind& pathfind, xml::xistream& xis )
     {
-        dst.set_null_value( false );
-        auto& pathfind = *dst.add_value()->mutable_pathfind();
         if( auto id = TestAttribute< uint32_t >( xml::xisubstream( xis ) >> xml::start( "id" ), "value" ) )
             pathfind.set_id( *id );
         ReadPathfindRequest( reader, *pathfind.mutable_request(), xis );
         if( xis.has_child( "result" ) )
             ReadPathResult( reader, *pathfind.mutable_result(), xis );
+    }
+
+    void ReadLogisticItinerary( const Reader_ABC& reader, sword::Pathfind& pathfind, xml::xistream& xis, const std::string& parent )
+    {
+        if( xis.has_child( parent ) )
+        {
+            xis >> xml::start( parent )
+                    >> xml::start( "itinerary" );
+            ReadItinerary( reader, pathfind, xis );
+            xis     >> xml::end
+                >> xml::end;
+        }
+    }
+
+    void AddSupplyFlowRecipient( const Reader_ABC& reader, PushFlowParameters& dst, xml::xistream& xis )
+    {
+        const auto id = TestAttribute< uint32_t >( xis, "id" );
+        if( !id )
+            return;
+        auto& next = *dst.add_recipients();
+        next.mutable_receiver()->set_id( *id );
+        xis >> xml::list( "resource", boost::bind( &AddSupplyFlowResource< SupplyFlowRecipient >, boost::ref( next ), _1 ) );
+        if( xis.has_child( "itinerary" ) )
+            ReadItinerary( reader, *next.mutable_pathfind(), xis >> xml::start( "itinerary" ) );
+    }
+
+    template< typename T >
+    void AddSupplyFlowTransporter( T& dst, xml::xistream& xis )
+    {
+        const auto pair = ReadPair< uint32_t, uint32_t >( xis, "id", "quantity" );
+        if( !pair )
+            return;
+        auto& res = *dst.add_transporters();
+        res.mutable_equipmenttype()->set_id( pair->first );
+        res.set_quantity( pair->second );
+    }
+
+    void ReadPushFlowParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        dst.set_null_value( false );
+        auto& push = *dst.add_value()->mutable_push_flow_parameters();
+        xis >> xml::list( "recipient", boost::bind( &AddSupplyFlowRecipient, boost::cref( reader ), boost::ref( push ), _1 ) );
+
+        xis >> xml::list( "transporter", boost::bind( &AddSupplyFlowTransporter< PushFlowParameters >, boost::ref( push ), _1 ) );
+        ReadLogisticItinerary( reader, *push.mutable_waybackpathfind(), xis, "waybackpath" );
+    }
+
+    void ReadPullFlowParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        xml::xisubstream sub( xis );
+        sub >> xml::start( "supplier" );
+        const auto supplier = TestAttribute< uint32_t >( sub, "id" );
+        if( !supplier )
+            return;
+        const auto type = reader.Resolve( *supplier );
+        if( type != Reader_ABC::AUTOMAT && type != Reader_ABC::FORMATION )
+            return;
+        dst.set_null_value( false );
+        auto& pull = *dst.add_value()->mutable_pull_flow_parameters();
+        auto& next = *pull.mutable_supplier();
+        if( type == Reader_ABC::AUTOMAT )
+            next.mutable_automat()->set_id( *supplier );
+        else
+            next.mutable_formation()->set_id( *supplier );
+        xis >> xml::list( "resource", boost::bind( &AddSupplyFlowResource< PullFlowParameters >, boost::ref( pull ), _1 ) );
+        xis >> xml::list( "transporter", boost::bind( &AddSupplyFlowTransporter< PullFlowParameters >, boost::ref( pull ), _1 ) );
+        ReadLogisticItinerary( reader, *pull.mutable_wayoutpathfind(), xis, "wayoutpath" );
+        ReadLogisticItinerary( reader, *pull.mutable_waybackpathfind(), xis, "waybackpath" );
+    }
+
+    void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        dst.set_null_value( false );
+        ReadItinerary( reader, *dst.add_value()->mutable_pathfind(), xis );
     }
 
     void AddListParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )

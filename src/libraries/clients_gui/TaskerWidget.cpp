@@ -35,9 +35,9 @@ TaskerWidget::TaskerWidget( const QString& objectName,
                             const QString& title,
                             bool showActivate /* = true */,
                             bool showClear /* = true */,
-                            QWidget* parent /* = 0 */ )
-    : QWidget( parent )
-    , controllers_( controllers )
+                            bool flat /*= false */,
+                            Qt::AlignmentFlag symbolAlignment /*= Qt::AlignCenter*/ )
+    : controllers_( controllers )
     , symbols_( symbols )
     , tasker_( 0 )
     , activateButton_( 0 )
@@ -49,6 +49,7 @@ TaskerWidget::TaskerWidget( const QString& objectName,
     nameLabel_ = new gui::RichLabel( "event-target-label", "---" );
     symbolLabel_ = new gui::RichLabel( "event-target-symbol-label" );
     groupBox_ = new gui::RichGroupBox( "event-target-groupbox", title );
+    groupBox_->setFlat( flat );
     connect( groupBox_, SIGNAL( clicked( bool ) ), SIGNAL( Clicked( bool ) ) );
 
     QWidget* symbolWidget = new QWidget();
@@ -59,7 +60,7 @@ TaskerWidget::TaskerWidget( const QString& objectName,
 
     QHBoxLayout* layout = new QHBoxLayout( groupBox_ );
     layout->setContentsMargins( 5, 0, 5, 5 );
-    layout->addWidget( symbolWidget, 10, Qt::AlignCenter );
+    layout->addWidget( symbolWidget, 10, symbolAlignment );
 
     activateButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
     activateButton_->setToolTip( tr( "Select" ) );
@@ -221,4 +222,10 @@ void TaskerWidget::setChecked( bool checked )
 bool TaskerWidget::isChecked() const
 {
     return groupBox_->isChecked();
+}
+
+void TaskerWidget::SetButtonsSize( const QSize& size )
+{
+    activateButton_->setIconSize( size );
+    clearButton_->setIconSize( size );
 }

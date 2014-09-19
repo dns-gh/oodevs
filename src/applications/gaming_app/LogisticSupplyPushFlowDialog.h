@@ -32,9 +32,9 @@ public:
                                            actions::ActionsModel& actionsModel,
                                            const ::StaticModel& staticModel,
                                            const kernel::Time_ABC& simulation,
-                                           gui::ParametersLayer& layer,
                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                           const kernel::Profile_ABC& profile );
+                                           const kernel::Profile_ABC& profile,
+                                           const gui::EntitySymbols& symbols );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -71,15 +71,9 @@ private:
 
     //! @name Types
     //@{
-     typedef std::vector< const kernel::Automat_ABC* > T_Recipients;
-     typedef QMap< QString, const kernel::Automat_ABC* > T_RecipientsNames;
+     typedef std::vector< const kernel::Automat_ABC* >               T_Recipients;
+     typedef QMap< QString, const kernel::Automat_ABC* >             T_RecipientsNames;
      typedef std::map< const kernel::Automat_ABC*, T_QuantitiesMap > T_RecipientSupplies;
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void ComputeRoute( T_Route& route );
-    virtual void UpdateRouteDrawpoints();
     //@}
 
 private:
