@@ -708,21 +708,25 @@ func addKnowledgeGroup(c *C, d *swapi.ModelData, id, party uint32) {
 }
 
 type FakeSwordFilter struct {
-	key   string
-	value string
+	data map[string]string
 }
 
-func (f *FakeSwordFilter) FormValue(value string) string {
-	if value == f.key {
-		return f.value
-	}
-	return ""
+func (f *FakeSwordFilter) FormValue(key string) string {
+	return f.data[key]
+}
+
+func parseFiltersWith(c *C, filter *FakeSwordFilter) services.EventFilterConfig {
+	cfg, err := ParseEventFilterConfig(filter)
+	c.Assert(err, IsNil)
+	return cfg
 }
 
 func parseFilters(c *C, key, value string) services.EventFilterConfig {
-	cfg, err := ParseEventFilterConfig(&FakeSwordFilter{key, value})
-	c.Assert(err, IsNil)
-	return cfg
+	return parseFiltersWith(c, &FakeSwordFilter{
+		data: map[string]string{
+			key: value,
+		},
+	})
 }
 
 func countEvents(counter chan<- int, link <-chan interface{}) {
@@ -1021,6 +1025,19 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 	f.applyFilters(c, services.EventFilterConfig{
 		"sword_profile": "supervisor",
 	}, 10+1)
+	// combine both profile & custom profile
+	f.applyFilters(c, parseFiltersWith(c, &FakeSwordFilter{
+		data: map[string]string{
+			"sword_profile": "party_1_supervisor",
+			"sword_filter":  "i:1",
+		},
+	}), 1+2) // ima1 + ma1 + i0
+	f.applyFilters(c, parseFiltersWith(c, &FakeSwordFilter{
+		data: map[string]string{
+			"sword_profile": "party_1_only",
+			"sword_filter":  "i:1",
+		},
+	}), 0+1) // i0
 }
 
 func (t *TestSuite) TestFiltersHierarchy(c *C) {

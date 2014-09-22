@@ -172,14 +172,23 @@ func getProfile(config EventFilterConfig) string {
 	return name
 }
 
-func getCustomProfile(config EventFilterConfig) (*swapi.Profile, Ids, Ids) {
+func isCurrentProfileSupervisor(data *swapi.ModelData, config EventFilterConfig) bool {
+	name := getProfile(config)
+	if len(name) == 0 {
+		return false
+	}
+	profile, ok := data.Profiles[name]
+	return ok && profile.Supervisor
+}
+
+func getCustomProfile(data *swapi.ModelData, config EventFilterConfig) (*swapi.Profile, Ids, Ids) {
 	filters, ok := config["sword_filter"].(map[string]map[uint32]struct{})
 	if !ok {
 		return nil, nil, nil
 	}
 	return &swapi.Profile{
 		Login:               "custom",
-		Supervisor:          false,
+		Supervisor:          isCurrentProfileSupervisor(data, config),
 		ReadOnlyFormations:  map[uint32]struct{}{},
 		ReadWriteFormations: filters["formations"],
 		ReadOnlyAutomats:    map[uint32]struct{}{},
@@ -207,7 +216,7 @@ func (s *Sword) addProfileFilter(dst *[]EventFilter, data *swapi.ModelData, conf
 }
 
 func (s *Sword) addCustomFilter(dst *[]EventFilter, data *swapi.ModelData, config EventFilterConfig) {
-	profile, units, inhabitants := getCustomProfile(config)
+	profile, units, inhabitants := getCustomProfile(data, config)
 	if profile == nil {
 		return
 	}
