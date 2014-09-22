@@ -20,14 +20,10 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
 
-//#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
-//#pragma warning( pop )
 
 Q_DECLARE_METATYPE( const kernel::EquipmentType* )
-
-#define EquipmentRole ( Qt::UserRole + 1 )
 
 using namespace actions::gui;
 
@@ -72,7 +68,7 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
     {
         const kernel::EquipmentType& type = it.NextElement();
         QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
-        item->setData( EquipmentRole, QVariant::fromValue( &type ) );
+        item->setData( Qt::UserRole, QVariant::fromValue( &type ) );
         baseList_->addItem( item );
     }
     layout->addWidget( baseList_ );
@@ -124,7 +120,7 @@ void ParamEquipmentList::CommitTo( actions::ParameterContainer_ABC& action ) con
     std::unique_ptr< actions::parameters::MaintenancePriorities > param( new actions::parameters::MaintenancePriorities( parameter_ ) );
     if( IsChecked() )
         for( int row = 0; row <  list_->count(); ++row )
-            param->AddPriority( *list_->item( row )->data( EquipmentRole ).value< const kernel::EquipmentType* >() );
+            param->AddPriority( *list_->item( row )->data( Qt::UserRole ).value< const kernel::EquipmentType* >() );
     action.AddParameter( *param.release() );
 }
 
@@ -223,7 +219,7 @@ void ParamEquipmentList::SetEntity( const kernel::Entity_ABC* entity )
         if( !maintenance || !maintenance->HasPriority( &type ) )
         {
             QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
-            item->setData( EquipmentRole, QVariant::fromValue( &type ) );
+            item->setData( Qt::UserRole, QVariant::fromValue( &type ) );
             baseList_->addItem( item );
         }
     }
@@ -234,7 +230,7 @@ void ParamEquipmentList::SetEntity( const kernel::Entity_ABC* entity )
         for( auto it = priorities.rbegin(); it != priorities.rend(); ++it )
         {
             QListWidgetItem* item = new QListWidgetItem( (*it)->GetName().c_str() );
-            item->setData( EquipmentRole, QVariant::fromValue( *it ) );
+            item->setData( Qt::UserRole, QVariant::fromValue( *it ) );
             list_->addItem( item );
         }
     }
@@ -261,7 +257,7 @@ void ParamEquipmentList::Visit( const actions::parameters::MaintenancePriorities
         if( std::find( priorities.begin(), priorities.end(), boost::lexical_cast< std::string >( type.GetId() ) ) == priorities.end() )
         {
             QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
-            item->setData( EquipmentRole, QVariant::fromValue( &type ) );
+            item->setData( Qt::UserRole, QVariant::fromValue( &type ) );
             baseList_->addItem( item );
         }
     }
@@ -270,7 +266,7 @@ void ParamEquipmentList::Visit( const actions::parameters::MaintenancePriorities
         if( const kernel::EquipmentType* type = resolver_.Find( boost::lexical_cast< unsigned long >( *it ) ) )
         {
             QListWidgetItem* item = new QListWidgetItem( type->GetName().c_str() );
-            item->setData( EquipmentRole, QVariant::fromValue( type ) );
+            item->setData( Qt::UserRole, QVariant::fromValue( type ) );
             list_->addItem( item );
         }
 }

@@ -24,8 +24,6 @@
 Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
 Q_DECLARE_METATYPE( const kernel::AgentKnowledge_ABC* )
 
-#define EntityRole ( Qt::UserRole )
-
 using namespace kernel;
 using namespace gui;
 
@@ -136,7 +134,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     {
         const AgentKnowledge_ABC& knowledge = iterator.NextElement();
         knowledgeModel_.item( i )->setText( knowledge.GetName() );
-        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), EntityRole );
+        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), Qt::UserRole );
         ++i;
     }
 }
@@ -203,8 +201,8 @@ void AgentKnowledgePanel::OnSelectionChanged()
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
-        subSelected_ = item->data( EntityRole ).value< const kernel::AgentKnowledge_ABC* >();
+    if( item && item->data( Qt::UserRole ).isValid() )
+        subSelected_ = item->data( Qt::UserRole ).value< const kernel::AgentKnowledge_ABC* >();
     if( subSelected_ )
     {
         NotifyUpdated( *subSelected_ );
@@ -228,8 +226,8 @@ void AgentKnowledgePanel::OnPerceptionContextMenuEvent( const QPoint & pos )
     if( !index.isValid() )
         return;
     QStandardItem* item = perceptionModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
-        item->data( EntityRole ).value< const Automat_ABC* >()->ContextMenu( controllers_.actions_, pPerceptionListView_->viewport()->mapToGlobal( pos ), this );
+    if( item && item->data( Qt::UserRole ).isValid() )
+        item->data( Qt::UserRole ).value< const Automat_ABC* >()->ContextMenu( controllers_.actions_, pPerceptionListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,8 +240,8 @@ void AgentKnowledgePanel::OnKnowledgeContextMenuEvent( const QPoint & pos )
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
-        item->data( EntityRole ).value< const AgentKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
+    if( item && item->data( Qt::UserRole ).isValid() )
+        item->data( Qt::UserRole ).value< const AgentKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,8 +254,8 @@ void AgentKnowledgePanel::OnPerceptionRequestCenter()
     if( !index.isValid() )
         return;
     QStandardItem* item = perceptionModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
-        item->data( EntityRole ).value< const Automat_ABC* >()->Activate( controllers_.actions_ );
+    if( item && item->data( Qt::UserRole ).isValid() )
+        item->data( Qt::UserRole ).value< const Automat_ABC* >()->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,8 +268,8 @@ void AgentKnowledgePanel::OnKnowledgeRequestCenter()
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
-        item->data( EntityRole ).value< const AgentKnowledge_ABC* >()->Activate( controllers_.actions_ );
+    if( item && item->data( Qt::UserRole ).isValid() )
+        item->data( Qt::UserRole ).value< const AgentKnowledge_ABC* >()->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +295,7 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
     for( int i = 0; i < perceptionSize; ++i )
     {
         perceptionModel_.item( i, 0 )->setText( perceptions.perceptions_[ i ].detected_->GetName() );
-        perceptionModel_.item( i, 0 )->setData( QVariant::fromValue( perceptions.perceptions_[ i ].detected_ ), EntityRole );
+        perceptionModel_.item( i, 0 )->setData( QVariant::fromValue( perceptions.perceptions_[ i ].detected_ ), Qt::UserRole );
         perceptionModel_.item( i, 1 )->setText( tools::ToString( perceptions.perceptions_[ i ].level_ ) );
     }
 }
@@ -318,7 +316,7 @@ void AgentKnowledgePanel::NotifyUpdated( const kernel::Agent_ABC& agent )
         return;
     if( subSelected_ && subSelected_->GetEntity() == &agent )
         subSelected_->Display( display_->Group( tools::translate( "AgentKnowledge", "Details" ) ) );
-    tools::UpdateEntityNameInKnowledgeModel< AgentKnowledge_ABC >( knowledgeModel_, agent, EntityRole );
+    tools::UpdateEntityNameInKnowledgeModel< AgentKnowledge_ABC >( knowledgeModel_, agent, Qt::UserRole );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,5 +327,5 @@ void AgentKnowledgePanel::NotifyUpdated( const kernel::Automat_ABC& automat )
 {
     if( !isVisible() )
         return;
-    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, EntityRole );
+    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, Qt::UserRole );
 }

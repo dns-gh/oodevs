@@ -16,8 +16,6 @@
 
 Q_DECLARE_METATYPE( const kernel::Entity_ABC* )
 
-#define EntityRole ( Qt::UserRole )
-
 // -----------------------------------------------------------------------------
 // Name: LogisticsRequestsSupplyTable constructor
 // Created: MMC 2013-09-11
@@ -76,7 +74,7 @@ void LogisticsRequestsSupplyTable::AddRecipientResource( const kernel::Entity_AB
 {
     int rowIndex = dataModel_.rowCount();
     auto item = SetData( rowIndex, 0, recipient );
-    item->setData( QVariant::fromValue( &entity ), EntityRole );
+    item->setData( QVariant::fromValue( &entity ), Qt::UserRole );
     SetData( rowIndex, 1, resource );
     SetData( rowIndex, 2, requested );
     SetData( rowIndex, 3, granted );
@@ -114,7 +112,7 @@ void LogisticsRequestsSupplyTable::UpdateRecipient( const kernel::Entity_ABC& en
 {
     for( int i = 0; i < dataModel_.rowCount(); ++i )
         if( auto item = dataModel_.item( i, 0 ) )
-            if( auto itemEntity = item->data( EntityRole ).value< const kernel::Entity_ABC* >() )
+            if( auto itemEntity = item->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
                 if( itemEntity == &entity )
                     item->setText( name );
 }

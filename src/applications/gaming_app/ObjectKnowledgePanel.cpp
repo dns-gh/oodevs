@@ -27,8 +27,6 @@
 Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
 Q_DECLARE_METATYPE( const kernel::ObjectKnowledge_ABC* )
 
-#define EntityRole ( Qt::UserRole )
-
 using namespace kernel;
 using namespace gui;
 
@@ -157,7 +155,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
         const kernel::ObjectKnowledge_ABC& knowledge = iterator.NextElement();
         QStandardItem* item = knowledgeModel_.item( i );
         item->setText( knowledge.GetName() );
-        item->setData( QVariant::fromValue( &knowledge ), EntityRole );
+        item->setData( QVariant::fromValue( &knowledge ), Qt::UserRole );
         ++i;
         if( subSelected_ == &knowledge )
             toSelect = item;
@@ -198,7 +196,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectPerceptions& element )
     for( int i = 0; i < knowledgeSize; ++i )
     {
         perceptionModel_.item( i )->setText( element.detectingAutomats_[ i ]->GetName() );
-        perceptionModel_.item( i )->setData( QVariant::fromValue( element.detectingAutomats_[ i ] ), EntityRole );
+        perceptionModel_.item( i )->setData( QVariant::fromValue( element.detectingAutomats_[ i ] ), Qt::UserRole );
     }
 }
 
@@ -360,9 +358,9 @@ void ObjectKnowledgePanel::OnSelectionChanged()
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
+    if( item && item->data( Qt::UserRole ).isValid() )
     {
-        subSelected_ = item->data( EntityRole ).value< const ObjectKnowledge_ABC* >();
+        subSelected_ = item->data( Qt::UserRole ).value< const ObjectKnowledge_ABC* >();
         if( subSelected_ )
         {
             subSelected_->Activate( controllers_.actions_ );
@@ -386,8 +384,8 @@ void ObjectKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
-        item->data( EntityRole ).value< const ObjectKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
+    if( item && item->data( Qt::UserRole ).isValid() )
+        item->data( Qt::UserRole ).value< const ObjectKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -421,7 +419,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const kernel::Automat_ABC& automat )
 {
     if( !isVisible() )
         return;
-    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, EntityRole );
+    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, Qt::UserRole );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,5 +432,5 @@ void ObjectKnowledgePanel::NotifyUpdated( const kernel::Object_ABC& object )
         return;
     if( subSelected_ && subSelected_->GetEntity() == &object )
         subSelected_->Display( *display_ );
-    tools::UpdateEntityNameInKnowledgeModel< ObjectKnowledge_ABC >( knowledgeModel_, object, EntityRole );
+    tools::UpdateEntityNameInKnowledgeModel< ObjectKnowledge_ABC >( knowledgeModel_, object, Qt::UserRole );
 }

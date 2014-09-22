@@ -15,8 +15,6 @@
 
 Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
 
-#define EntityRole ( Qt::UserRole )
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyExclusiveListWidget constructor
 // Created: MMC 2012-10-11
@@ -118,7 +116,7 @@ void LogisticSupplyExclusiveListWidget::OnTriggeredAction( QAction* action )
         auto item = takeItem( currentIndex().row() );
         if( !item )
             return;
-        auto automat = item->data( EntityRole ).value< const kernel::Automat_ABC* >();
+        auto automat = item->data( Qt::UserRole ).value< const kernel::Automat_ABC* >();
         if( !automat )
             return;
         choice_.push_back( automat );
@@ -138,7 +136,7 @@ void LogisticSupplyExclusiveListWidget::OnTriggeredAction( QAction* action )
             return;
 
         QListWidgetItem* item = new QListWidgetItem( action->text() );
-        item->setData( EntityRole, QVariant::fromValue( *it ) );
+        item->setData( Qt::UserRole, QVariant::fromValue( *it ) );
         addItem( item );
 
         choosen_.push_back( *it );
@@ -156,7 +154,7 @@ void LogisticSupplyExclusiveListWidget::NotifyUpdated( const kernel::Automat_ABC
 {
     for( int i = 0; i < count(); ++i )
         if( auto item = this->item( i ) )
-            if( auto itemEntity = item->data( EntityRole ).value< const kernel::Automat_ABC* >() )
+            if( auto itemEntity = item->data( Qt::UserRole ).value< const kernel::Automat_ABC* >() )
                 if( itemEntity == &automat )
                     item->setText( itemEntity->GetName() );
 }
