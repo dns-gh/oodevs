@@ -148,5 +148,4 @@ namespace report
     MAKE_REPORT( eRC_IEDHeard )
     MAKE_REPORT( eRC_InFireObject )
     MAKE_REPORT( eRC_IndirectFireObserved )
-    MAKE_REPORT( eRC_BlockedByObject )
 }
