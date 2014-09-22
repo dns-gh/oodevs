@@ -171,6 +171,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
     pPath->Finalize();
+    collision_.reset();
     movingEntity_.NotifyCurrentPathChanged();
     bForcePathCheck_ = false;
     if( pPath->GetResult().empty() )
@@ -404,7 +405,10 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
         if( auto k = movingEntity_.GetKnowledgeObject( object ) )
             if( k->GetLocalisation().IsInside( endPosition ) )
             {
-                if( IsOutside( vNewPos_, object ) )
+                 if( k != collision_.lock() )
+                    movingEntity_.SendRC( report::eRC_BlockedByObject, k );
+                collision_ = k;
+               if( IsOutside( vNewPos_, object ) )
                     vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
                 rCurrentSpeed_ = 0;
                 pathSet_ = eBlockedByObject;
@@ -598,6 +602,7 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
             return pathSet_;
         }
+        collision_.reset();
 
         rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
 

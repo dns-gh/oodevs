@@ -152,6 +152,7 @@ private:
     virtual bool HasResources();
     virtual void SendRC( const MIL_DecisionalReport& reportId ) const;
     virtual void SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const;
+    virtual void SendRC( const MIL_DecisionalReport& reportId, const boost::shared_ptr< DEC_Knowledge_Object >& object ) const;
     bool ManageObjectSplit();
     unsigned int ComputeMovingHumans( double speed ) const;
     bool ManageSplit();

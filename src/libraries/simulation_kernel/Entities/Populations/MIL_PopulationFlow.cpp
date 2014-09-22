@@ -913,6 +913,11 @@ void MIL_PopulationFlow::SendRC( const MIL_DecisionalReport& reportId, const std
     MIL_Report::PostEvent( GetPopulation(), reportId, name );
 }
 
+void MIL_PopulationFlow::SendRC( const MIL_DecisionalReport& reportId, const boost::shared_ptr< DEC_Knowledge_Object >& object ) const
+{
+    MIL_Report::PostEvent( GetPopulation(), reportId, object );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::GetSafetyPosition
 // Created: SBO 2005-12-16

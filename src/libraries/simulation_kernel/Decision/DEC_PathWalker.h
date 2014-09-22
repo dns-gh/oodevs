@@ -16,6 +16,7 @@
 #include <spatialcontainer/TerrainData.h>
 #include <tools/Set.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <string>
 #include <set>
 
@@ -161,6 +162,7 @@ private:
     bool bFuelReportSent_;
     bool bImpossibleReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
+    boost::weak_ptr< DEC_Knowledge_Object > collision_;
     E_ReturnCode pathSet_;
     //@}
 };

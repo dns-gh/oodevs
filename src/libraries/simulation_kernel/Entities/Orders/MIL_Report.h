@@ -87,6 +87,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_Effect_IndirectFire& flyingShell );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_LimaFunction& limaFunction, const std::string& nParam );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
+    template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, int nParam2 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const boost::shared_ptr< DEC_Knowledge_Agent >& agentKnowledge, const std::string& nParam2, int nParam3, int nParam4, int nParam5 );
@@ -324,6 +325,15 @@ void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nRepo
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
     boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::CreateAgentKnowledge( agentKnowledge ) );
+    parameters.push_back( pParameter );
+    PostEvent( receiver, nReport, parameters );
+}
+
+template< typename T >
+void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+{
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
+    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::CreateObjectKnowledge( objectKnowledge ) );
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }

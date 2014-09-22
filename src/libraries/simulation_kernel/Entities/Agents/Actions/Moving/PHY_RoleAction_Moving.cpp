@@ -447,6 +447,11 @@ void PHY_RoleAction_Moving::SendRC( const MIL_DecisionalReport& reportId, const 
     MIL_Report::PostEvent( *owner_, reportId, name );
 }
 
+void PHY_RoleAction_Moving::SendRC( const MIL_DecisionalReport& reportId, const boost::shared_ptr< DEC_Knowledge_Object >& object ) const
+{
+    MIL_Report::PostEvent( *owner_, reportId, object );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::Update
 // Created: NLD 2004-09-22
