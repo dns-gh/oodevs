@@ -154,8 +154,6 @@ func checkUnitWaitsOnObject(c *C, phydb *phy.PhysicalFile,
 }
 
 func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
-	c.Skip("temporarily deactivated until conflict with models resolved")
-
 	phydb := loadPhysical(c, "test")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
