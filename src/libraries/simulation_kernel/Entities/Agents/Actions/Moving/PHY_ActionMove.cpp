@@ -199,8 +199,7 @@ boost::shared_ptr< DEC_Knowledge_Object > PHY_ActionMove::UpdateCollision()
         collision.reset();
     static const double threshold = TER_World::GetWorld().GetWeldValue();
     if( !pMainPath_->GetPathClass().AvoidObjects() &&
-        ( isBlockedByObject_ ||
-            distance <= role_.GetMaxSpeed() + threshold ) )
+        ( distance <= threshold || isBlockedByObject_ ) )
     {
         if( collision && collision != blocking_.lock() )
             MIL_Report::PostEvent( pion_, report::eRC_BlockedByObject, collision );

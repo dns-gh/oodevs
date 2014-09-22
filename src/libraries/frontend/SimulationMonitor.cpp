@@ -36,13 +36,7 @@ struct SimulationMonitor::TimeOut : private boost::noncopyable
 // -----------------------------------------------------------------------------
 SimulationMonitor::SimulationMonitor( const std::string& host )
     : tools::ClientNetworker( host, true )
-    , timeOut_  ( new TimeOut(
-#ifdef _DEBUG
-                    600000 // 10mn
-#else
-                    60000 // 1mn
-#endif
-                ) )
+    , timeOut_  ( new TimeOut( 60000 ) )
     , connected_( false )
 {
     RegisterMessage( *this, &SimulationMonitor::HandleAarToClient );
