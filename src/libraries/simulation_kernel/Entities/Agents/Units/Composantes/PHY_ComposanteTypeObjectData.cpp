@@ -199,7 +199,7 @@ double PHY_ComposanteTypeObjectData::GetBypassTime( double rSizeCoef, bool bObje
     if( rTime == std::numeric_limits< double >::max() )
         return std::numeric_limits< double >::max();
     if( !bObjectIsMined )
-        return rTime;
+        return rTime * rCoefTimeBypass_;
 
     if( GetDeminingTime() == std::numeric_limits< double >::max() )
         return std::numeric_limits< double >::max();
