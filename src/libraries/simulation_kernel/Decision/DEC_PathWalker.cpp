@@ -13,6 +13,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -153,7 +154,7 @@ namespace
         return object.IsInside( lastWaypoint )
             && movingEntity.GetSpeed( environment, object ) == 0
             && movingEntity.CanObjectInteractWith( object )
-            && movingEntity.HasKnowledgeObject( object );
+            && movingEntity.GetKnowledgeObject( object );
     }
 }
 
@@ -170,6 +171,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
     pPath->Finalize();
+    collision_.reset();
     movingEntity_.NotifyCurrentPathChanged();
     bForcePathCheck_ = false;
     if( pPath->GetResult().empty() )
@@ -372,27 +374,61 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_PathWalker::SetBlockedByObject
-// Created: LDC 2013-06-19
-// -----------------------------------------------------------------------------
-void DEC_PathWalker::SetBlockedByObject( const MT_Vector2D& startPosition, MIL_Object_ABC& object, CIT_MoveStepSet itCurMoveStep )
+MT_Vector2D DEC_PathWalker::ComputePositionBeforeObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition, const MIL_Object_ABC& object ) const
 {
-    static const double rDistanceBeforeBlockingObject = TER_World::GetWorld().GetWeldValue();
-
-    rCurrentSpeed_ = 0;
-    MT_Vector2D oldPosition = vNewPos_;
-    vNewPos_ = itCurMoveStep->vPos_;
+    auto result = endPosition;
     do
     {
-        vNewPos_ -= vNewDir_ * rDistanceBeforeBlockingObject;
+        static const double step = TER_World::GetWorld().GetWeldValue();
+        result -= vNewDir_ * step;
     }
-    while( object.IsInside( vNewPos_ ) || object.IsOnBorder( vNewPos_ ) );
-    if( itCurMoveStep->vPos_.Distance( startPosition ) < itCurMoveStep->vPos_.Distance( vNewPos_ ) )
-        vNewPos_ = startPosition;
+    while( object.IsInside( result ) || object.IsOnBorder( result ) );
+    if( endPosition.Distance( startPosition ) < endPosition.Distance( result ) )
+        result = startPosition;
+    return result;
+}
 
-    movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
-    pathSet_ = eBlockedByObject;
+namespace
+{
+    bool IsOutside( const MT_Vector2D& position, const MIL_Object_ABC& object )
+    {
+        return !object.IsInside( position ) || object.IsOnBorder( position );
+    }
+}
+
+bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition,
+    MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual )
+{
+    if( !movingEntity_.CanObjectInteractWith( object ) )
+        return false;
+    if( object.GetType().GetCapacity< AttritionCapacity >() )
+        if( auto k = movingEntity_.GetKnowledgeObject( object ) )
+            if( k->GetLocalisation().IsInside( endPosition ) )
+            {
+                if( k != collision_.lock() )
+                    movingEntity_.SendRC( report::eRC_BlockedByObject, k );
+                collision_ = k;
+                if( IsOutside( vNewPos_, object ) )
+                    vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
+                rCurrentSpeed_ = 0;
+                pathSet_ = eBlockedByObject;
+                return true;
+            }
+    movingEntity_.NotifyMovingInsideObject( object );
+    const double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
+    if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) )
+    {
+        vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
+        rCurrentSpeed_ = 0;
+        pathSet_ = eBlockedByObject;
+        movingEntity_.NotifyMovingOutsideObject( object );
+        return true;
+    }
+    if( ponctual )
+        movingEntity_.NotifyMovingOutsideObject( object );
+    else if( rSpeedWithinObject )
+        rMaxSpeedForStep = std::min( rMaxSpeedForStep, rSpeedWithinObject );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -401,45 +437,19 @@ void DEC_PathWalker::SetBlockedByObject( const MT_Vector2D& startPosition, MIL_O
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::TryToMoveToNextStep( const MT_Vector2D& startPosition, CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining )
 {
+    double rMaxSpeedForStep = std::numeric_limits< double >::max();
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
     for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
-        if( movingEntity_.CanObjectInteractWith( object ) )
-        {
-            movingEntity_.NotifyMovingInsideObject( object );
-            if( rSpeedWithinObject == 0. )
-            {
-                if( object.IsOnBorder( vNewPos_ ) || !object.IsInside( vNewPos_ ) )
-                {
-                    SetBlockedByObject( startPosition, object, itCurMoveStep );
-                    return false;
-                }
-            }
-            movingEntity_.NotifyMovingOutsideObject( object );
-        }
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, true ) )
+            return false;
     }
-
-    double rMaxSpeedForStep = std::numeric_limits< double >::max();
     for( auto itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( movingEntity_.CanObjectInteractWith( object ) )
-        {
-            movingEntity_.NotifyMovingInsideObject( object );
-            double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
-            if( rSpeedWithinObject == 0. )
-            {
-                if( object.IsOnBorder( vNewPos_ ) || !object.IsInside( vNewPos_ ) )
-                {
-                    SetBlockedByObject( startPosition, object, itCurMoveStep );
-                    return false;
-                }
-            }
-            else
-                rMaxSpeedForStep = std::min( rMaxSpeedForStep, rSpeedWithinObject );
-        }
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, false ) )
+            return false;
     }
 
     // itCurMoveStep a pu être dépassé => notification des objets dont on sort
@@ -592,6 +602,7 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
             return pathSet_;
         }
+        collision_.reset();
 
         rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
 

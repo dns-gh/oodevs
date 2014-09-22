@@ -201,8 +201,11 @@ bool PHY_ActionMove::AvoidObstacles()
     obstacleId_ = pObjectColliding->GetObjectKnown() ? pObjectColliding->GetObjectKnown()->GetID() : 0;
 
     if( pMainPath_->GetPathClass().AvoidObjects() )
+    {
         role_.SendRC( report::eRC_DifficultMovementProgression, pObjectColliding->GetType().GetRealName() );
-    return true;
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

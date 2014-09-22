@@ -352,6 +352,8 @@ func CreateUnitInParty(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
 	automatType := getAutomatTypeFromName(c, phydb, automatName)
 	automat, err := client.CreateAutomat(formation.Id, automatType, kg.Id)
 	c.Assert(err, IsNil)
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
 	unitType := getUnitTypeFromName(c, phydb, unitName)
 	target, err := client.CreateUnit(automat.Id, unitType, pos)
 	c.Assert(err, IsNil)

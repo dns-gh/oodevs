@@ -173,6 +173,7 @@ namespace report
     extern const MIL_DecisionalReport eRC_IEDHeard;
     extern const MIL_DecisionalReport eRC_InFireObject;
     extern const MIL_DecisionalReport eRC_IndirectFireObserved;
+    extern const MIL_DecisionalReport eRC_BlockedByObject;
 }
 
 #endif // MIL_DecisionalReport
