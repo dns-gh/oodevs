@@ -525,7 +525,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( const boost::shared_ptr< PHY_Ma
 boost::shared_ptr< PHY_MaintenanceComposanteState > PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
 {
     assert( composante.GetBreakdown() );
-    if( !bSystemEnabled_ || composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) )
+    if( !bSystemEnabled_ )
         return boost::shared_ptr< PHY_MaintenanceComposanteState >();
     const auto state = boost::make_shared< PHY_MaintenanceComposanteState >( pion, composante );
     InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( owner_, state ) );
@@ -548,14 +548,12 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( const boost::sha
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type ) const
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) const
 {
     if( !bSystemEnabled_ )
         return std::numeric_limits< int >::min();
     if( !composante.GetBreakdown()->AffectMobility() )
         return 0;
-    if( !HasUsableHauler( composante.GetType() ) || !GetAvailableHauler( composante.GetType(), type ) ) 
-        return std::numeric_limits< int >::min();
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul1, &PHY_ComposanteTypePion::CanHaul1, composante.GetType() );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );

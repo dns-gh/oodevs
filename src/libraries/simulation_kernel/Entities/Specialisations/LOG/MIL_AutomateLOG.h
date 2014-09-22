@@ -115,7 +115,7 @@ public:
     void                            OnReceiveLogSupplySetManual               ( const sword::MissionParameters& parameters );
 
     //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
-    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type = 0 );
+    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
     PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeDiagnosisHandler( const PHY_ComposanteTypePion* type = 0 );
     PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeRepairHandler   ( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type = 0 );
     //@}

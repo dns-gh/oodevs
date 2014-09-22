@@ -65,7 +65,7 @@ public:
 
     virtual boost::shared_ptr< PHY_MaintenanceComposanteState > HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante ) = 0;
     virtual bool HandleComposanteForTransport( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state ) = 0;
-    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type = 0 ) const = 0;
+    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) const = 0;
 
     virtual bool HandleComposanteForDiagnosis( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state ) = 0;
     virtual int GetAvailabilityScoreForDiagnosis( const PHY_ComposanteTypePion* type = 0 ) const = 0;

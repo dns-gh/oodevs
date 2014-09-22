@@ -94,7 +94,7 @@ bool PHY_MaintenanceTransportConsign::FindAlternativeTransportUnit( const PHY_Co
     if( MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager() )
     {
         const auto state = GetComposanteState();
-        PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeTransportHandler( state, type );
+        PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeTransportHandler( state );
         if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForTransport( state ) )
         {
             if( type )

@@ -259,9 +259,9 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( const boost::shared_
 // Name: MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type /*= 0*/ )
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
 {
-    MaintenanceTransportVisitor visitor( state->GetComposante(), type );
+    MaintenanceTransportVisitor visitor( state->GetComposante() );
     Visit( visitor );
     return visitor.selected_;
 }

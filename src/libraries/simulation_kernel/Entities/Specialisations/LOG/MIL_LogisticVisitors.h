@@ -81,17 +81,16 @@ class MaintenanceTransportVisitor : public MIL_LogisticEntitiesVisitor
                                   , private boost::noncopyable
 {
     public:
-        MaintenanceTransportVisitor( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type = 0 )
+        MaintenanceTransportVisitor( const PHY_ComposantePion& composante )
             : score_     ( std::numeric_limits< int >::min() )
             , selected_  ( 0 )
             , composante_( composante )
-            , type_      ( type )
         {}
 
         virtual void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
-            const int score = candidate != 0 ? candidate->GetAvailabilityScoreForTransport( composante_, type_ ) : std::numeric_limits< int >::min();
+            const int score = candidate != 0 ? candidate->GetAvailabilityScoreForTransport( composante_ ) : std::numeric_limits< int >::min();
             if( score > score_ )
             {
                 score_    = score;
@@ -103,7 +102,6 @@ class MaintenanceTransportVisitor : public MIL_LogisticEntitiesVisitor
                 int                            score_;
                 PHY_RoleInterface_Maintenance* selected_;
         const PHY_ComposantePion&              composante_;
-        const PHY_ComposanteTypePion*          type_;
 };
 
 class MaintenanceDiagnosisVisitor : public MIL_LogisticEntitiesVisitor
