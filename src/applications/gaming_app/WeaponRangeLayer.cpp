@@ -63,7 +63,7 @@ GeosGeomPtr MergeDonuts( const GeosContextPtr& h,
     for( size_t i = 0; i < centers.size(); ++i )
     {
         const auto range = ranges.at( i );
-        const auto center = geometry::Point2d( centers[i].X(), centers[i].Y() );
+        const geometry::Point2d center( centers[i].X(), centers[i].Y() );
         const auto donut = MakeDonut( h, center, range.first, range.second );
         donuts.push_back( donut );
     }
@@ -143,7 +143,7 @@ void WeaponRangeLayer::Paint( const geometry::Rectangle2f& extent )
         Reset();
     for( auto it = tesselated_.begin(); it != tesselated_.end(); ++it )
     {
-        const auto color = QColor( it->first );
+        const QColor color( it->first );
         glPushAttrib( GL_CURRENT_BIT );
         glColor4d( color.redF(), color.greenF(), color.blueF(), 0.5 );
         for( auto is = it->second.begin(); is != it->second.end(); ++is )
