@@ -373,12 +373,12 @@ bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::CanBeBlock
+// Name: MIL_PopulationFlow::GetKnowledgeObject
 // Created: LGY 2013-01-21
 // -----------------------------------------------------------------------------
-bool MIL_PopulationFlow::HasKnowledgeObject( const MIL_Object_ABC& /*object*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > MIL_PopulationFlow::GetKnowledgeObject( const MIL_Object_ABC& /*object*/ ) const
 {
-    return true;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

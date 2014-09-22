@@ -13,6 +13,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -372,43 +373,52 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_PathWalker::SetBlockedByObject
-// Created: LDC 2013-06-19
-// -----------------------------------------------------------------------------
-void DEC_PathWalker::SetBlockedByObject( const MT_Vector2D& startPosition, MIL_Object_ABC& object, CIT_MoveStepSet itCurMoveStep )
+MT_Vector2D DEC_PathWalker::ComputePositionBeforeObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition, const MIL_Object_ABC& object ) const
 {
-    static const double rDistanceBeforeBlockingObject = TER_World::GetWorld().GetWeldValue();
-
-    rCurrentSpeed_ = 0;
-    MT_Vector2D oldPosition = vNewPos_;
-    vNewPos_ = itCurMoveStep->vPos_;
+    auto result = endPosition;
     do
     {
-        vNewPos_ -= vNewDir_ * rDistanceBeforeBlockingObject;
+        static const double step = TER_World::GetWorld().GetWeldValue();
+        result -= vNewDir_ * step;
     }
-    while( object.IsInside( vNewPos_ ) || object.IsOnBorder( vNewPos_ ) );
-    if( itCurMoveStep->vPos_.Distance( startPosition ) < itCurMoveStep->vPos_.Distance( vNewPos_ ) )
-        vNewPos_ = startPosition;
-
-    movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
-    pathSet_ = eBlockedByObject;
+    while( object.IsInside( result ) || object.IsOnBorder( result ) );
+    if( endPosition.Distance( startPosition ) < endPosition.Distance( result ) )
+        result = startPosition;
+    return result;
 }
 
-bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, CIT_MoveStepSet itCurMoveStep,
+namespace
+{
+    bool IsOutside( const MT_Vector2D& position, const MIL_Object_ABC& object )
+    {
+        return !object.IsInside( position ) || object.IsOnBorder( position );
+    }
+}
+
+bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition,
     MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual )
 {
     if( !movingEntity_.CanObjectInteractWith( object ) )
         return false;
+    if( object.GetType().GetCapacity< AttritionCapacity >() )
+        if( auto k = movingEntity_.GetKnowledgeObject( object ) )
+            if( k->GetLocalisation().IsInside( endPosition ) )
+            {
+                if( IsOutside( vNewPos_, object ) )
+                    vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
+                rCurrentSpeed_ = 0;
+                pathSet_ = eBlockedByObject;
+                return true;
+            }
     movingEntity_.NotifyMovingInsideObject( object );
     const double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
-    if( rSpeedWithinObject == 0 )
+    if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) )
     {
-        if( object.IsOnBorder( vNewPos_ ) || !object.IsInside( vNewPos_ ) )
-        {
-            SetBlockedByObject( startPosition, object, itCurMoveStep );
-            return true;
-        }
+        vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
+        rCurrentSpeed_ = 0;
+        pathSet_ = eBlockedByObject;
+        movingEntity_.NotifyMovingOutsideObject( object );
+        return true;
     }
     if( ponctual )
         movingEntity_.NotifyMovingOutsideObject( object );
@@ -428,13 +438,13 @@ bool DEC_PathWalker::TryToMoveToNextStep( const MT_Vector2D& startPosition, CIT_
     for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( HandleObject( startPosition, itCurMoveStep, object, rMaxSpeedForStep, true ) )
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, true ) )
             return false;
     }
     for( auto itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( HandleObject( startPosition, itCurMoveStep, object, rMaxSpeedForStep, false ) )
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, false ) )
             return false;
     }
 

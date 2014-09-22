@@ -392,14 +392,14 @@ bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::CanBeBlock
+// Name: PHY_RoleAction_Moving::GetKnowledgeObject
 // Created: LGY 2013-01-21
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Moving::HasKnowledgeObject( const MIL_Object_ABC& object ) const
+boost::shared_ptr< DEC_Knowledge_Object > PHY_RoleAction_Moving::GetKnowledgeObject( const MIL_Object_ABC& object ) const
 {
     if( DEC_BlackBoard_CanContainKnowledgeObject* container = owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
-        return container->HasKnowledgeObject( object );
-    return false;
+        return container->GetKnowledgeObject( object );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
