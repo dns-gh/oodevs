@@ -11,19 +11,21 @@
 #define __ActionParameterPullFlowParameters_h_
 
 #include "Parameter.h"
+#include <boost/optional.hpp>
+#include "protocol/Protocol.h"
 
 namespace sword {
     class PullFlowParameters;
-    class PointList;
 }
 
 namespace kernel {
-    class DotationType;
     class Automat_ABC;
-    class Formation_ABC;
-    class EquipmentType;
-    class EntityResolver_ABC;
     class CoordinateConverter_ABC;
+    class DotationType;
+    class EntityResolver_ABC;
+    class EquipmentType;
+    class Formation_ABC;
+    class Pathfind_ABC;
 }
 
 namespace actions {
@@ -57,8 +59,8 @@ public:
     void SetSupplier( const kernel::Formation_ABC& supplierFormation );
     void AddResource( const kernel::DotationType& type, unsigned long quantity );
     void AddTransporter( const kernel::EquipmentType& type, unsigned long quantity );
-    void SetWayOutPath( const T_PointVector& path );
-    void SetWayBackPath( const T_PointVector& path );
+    void SetWayOutPath( const kernel::Pathfind_ABC& pathfind );
+    void SetWayBackPath( const kernel::Pathfind_ABC& pathfind );
 
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
@@ -83,7 +85,6 @@ private:
     virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
     void Serialize( const T_PointVector& path, const std::string& tag, xml::xostream& xos ) const;
-    void CommitTo( const T_PointVector& path, sword::PointList& msgPath ) const;
     //@}
 
 private:
@@ -94,8 +95,8 @@ private:
     T_Equipments transporters_;
     const kernel::Automat_ABC* supplierAutomat_;
     const kernel::Formation_ABC* supplierFormation_;
-    T_PointVector wayOutPath_;
-    T_PointVector wayBackPath_;
+    boost::optional< sword::Pathfind > wayOutPath_;
+    boost::optional< sword::Pathfind > wayBackPath_;
     //@}
 };
 

@@ -1715,6 +1715,21 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticRouteWidget</name>
+    <message>
+        <source>Itinerary</source>
+        <translation>Itinéraire</translation>
+    </message>
+    <message>
+        <source>Itinerary to %1</source>
+        <translation>Itinéraire vers %1</translation>
+    </message>
+    <message>
+        <source>Return trip</source>
+        <translation>Itinéraire de retour</translation>
+    </message>
+</context>
+<context>
     <name>LogisticStatusWidget</name>
     <message>
         <source>Mode</source>
@@ -1820,22 +1835,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Move waypoint up</source>
-        <translation>Monter le point de passage</translation>
-    </message>
-    <message>
-        <source>Move waypoint down</source>
-        <translation>Descendre le point de passage</translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation>Supprimer le point de passage</translation>
-    </message>
-    <message>
-        <source>Add Waypoint</source>
-        <translation>Ajouter le point de passage</translation>
     </message>
     <message>
         <source>Manual selection of transport carriers</source>

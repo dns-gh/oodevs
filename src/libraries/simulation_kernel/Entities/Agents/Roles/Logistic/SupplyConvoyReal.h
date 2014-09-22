@@ -55,14 +55,15 @@ public:
 
     //! @name Accessors
     //@{
-    virtual int                  GetCurrentAction         () const;
-    virtual SupplyRecipient_ABC* GetCurrentSupplyRecipient() const;
-    virtual SupplySupplier_ABC&  GetSupplier              () const;
-    virtual SupplySupplier_ABC&  GetTransportersProvider  () const;
-    virtual const T_PointVector* GetPathToNextDestination () const;
-    virtual bool                 IsPushedFlow             () const;
-    virtual const MIL_Agent_ABC* GetProvider              () const;
-    virtual const MIL_Agent_ABC* GetReporter() const;
+    virtual int                                             GetCurrentAction         () const;
+    virtual SupplyRecipient_ABC*                            GetCurrentSupplyRecipient() const;
+    virtual SupplySupplier_ABC&                             GetSupplier              () const;
+    virtual SupplySupplier_ABC&                             GetTransportersProvider  () const;
+    virtual std::vector< boost::shared_ptr< MT_Vector2D > > GetPathToNextDestination () const;
+    virtual bool                                            IsPushedFlow             () const;
+    virtual const MIL_Agent_ABC*                            GetProvider              () const;
+    virtual const MIL_Agent_ABC*                            GetReporter() const;
+    virtual void                                            ToItinerary( sword::Pathfind& pathfind ) const;
     //@}
 
     //! @name Algorithms

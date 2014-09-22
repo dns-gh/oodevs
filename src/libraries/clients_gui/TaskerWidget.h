@@ -46,13 +46,15 @@ public:
                            const QString& title,
                            bool showActivate = true,
                            bool showClear = true,
-                           QWidget* parent = 0 );
+                           bool flat = false,
+                           Qt::AlignmentFlag symbolAlignment = Qt::AlignCenter );
     virtual ~TaskerWidget();
     //@}
 
     //! @name Operations
     //@{
     void SetTasker( const kernel::Entity_ABC* entity );
+    void SetButtonsSize( const QSize& size );
     const kernel::Entity_ABC* GetTasker() const;
 
     void BlockSignals( bool blocked );

@@ -65,6 +65,7 @@ SupplyDotationManualRequestBuilder::~SupplyDotationManualRequestBuilder()
 // -----------------------------------------------------------------------------
 void SupplyDotationManualRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
+    MT_Vector2D position = supplier_->GetPosition();
     BOOST_FOREACH( const sword::SupplyFlowRecipient& data, pushFlowParameters_.recipients() )
     {
         MIL_Automate* recipient = recipientResolver_->Find( data.receiver().id() );
@@ -73,20 +74,16 @@ void SupplyDotationManualRequestBuilder::Process( SupplyRequestContainer_ABC& co
             BOOST_FOREACH( const sword::SupplyFlowResource& resource, data.resources() )
                 CreateRequest( *recipient, resource, container );
 
-            if( data.has_path() )
-            {
-                T_PointVector wayPoints;
-                if( NET_ASN_Tools::ReadPointList( data.path(), wayPoints ) )
-                    container.SetPathToRecipient( recipient->GetDotationSupplyManager(), wayPoints );
-            }
+            if( data.has_pathfind() )
+                container.SetPathToRecipient( recipient->GetDotationSupplyManager(), data.pathfind(), position, recipient->GetPosition() );
+
+            position = recipient->GetPosition();
         }
     }
-    if( pushFlowParameters_.has_waybackpath() )
-    {
-        T_PointVector wayPoints;
-        if( NET_ASN_Tools::ReadPointList( pushFlowParameters_.waybackpath(), wayPoints ) )
-            container.SetPathToTransportersProvider( wayPoints );
-    }
+
+    if( pushFlowParameters_.has_waybackpathfind() )
+        container.SetPathToTransportersProvider( pushFlowParameters_.waybackpathfind(), position, supplier_->GetPosition() );
+
     container.SetTransportersProvider( supplier_ );
     SetTransporters( pushFlowParameters_.transporters(), container );
     container.SetConvoyFactory( SupplyConvoyConfig::GetDotationSupplyConvoyFactory() );

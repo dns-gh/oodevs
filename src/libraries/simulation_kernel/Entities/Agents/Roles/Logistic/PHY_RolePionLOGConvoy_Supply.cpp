@@ -191,9 +191,15 @@ logistic::SupplyRecipient_ABC* PHY_RolePionLOGConvoy_Supply::ConvoyGetCurrentSup
 // Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetPathToNextDestination
 // Created: NLD 2011-08-02
 // -----------------------------------------------------------------------------
-const T_PointVector* PHY_RolePionLOGConvoy_Supply::ConvoyGetPathToNextDestination() const
+std::vector< boost::shared_ptr< MT_Vector2D > > PHY_RolePionLOGConvoy_Supply::ConvoyGetPathToNextDestination() const
 {
-    return convoy_ ? convoy_->GetPathToNextDestination() : 0;
+    return convoy_ ? convoy_->GetPathToNextDestination() : std::vector< boost::shared_ptr< MT_Vector2D > >();
+}
+
+void PHY_RolePionLOGConvoy_Supply::ToItinerary( sword::Pathfind& pathfind ) const
+{
+    if( convoy_ )
+        convoy_->ToItinerary( pathfind );
 }
 
 // -----------------------------------------------------------------------------

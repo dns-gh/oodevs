@@ -32,7 +32,7 @@ namespace kernel
 
 namespace gui
 {
-    class ParametersLayer;
+    class EntitySymbols;
 }
 
 class LogisticSupplyChangeQuotasDialog;
@@ -63,7 +63,7 @@ public:
                             const StaticModel& staticModel,
                             const kernel::Time_ABC& simulation,
                             const kernel::Profile_ABC& profile,
-                            gui::ParametersLayer& layer );
+                            const gui::EntitySymbols& symbols );
     virtual ~LogisticMagicInterface();
     //@}
 

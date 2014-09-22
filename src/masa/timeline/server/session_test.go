@@ -1153,6 +1153,24 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 		"sword_profile": "crowd_6_only",
 	}, 1+2)
 
+	// test sword_filter
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "p:1"), 7+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "f:2"), 4+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "f:3"), 3+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "a:4"), 2+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "u:5"), 1+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "c:6"), 1+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "i:7"), 1+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "u:5,i:7,c:6"), 3+2)
+
 	// remove event metadata and try again
 	event.Metadata = nil
 	_, err := f.controller.UpdateEvent(f.session, event.GetUuid(), event)
@@ -1160,6 +1178,8 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 	f.applyFilters(c, services.EventFilterConfig{
 		"sword_profile": "automat_4_only",
 	}, 2+3)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "a:4"), 2+3)
 }
 
 func (f *Fixture) findEvent(c *C, uuid string) *sdk.Event {

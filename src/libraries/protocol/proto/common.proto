@@ -657,8 +657,10 @@ message SupplyFlowRecipient {
     required Id                 receiver  = 1;
     //! The resources conveyed  - must contain at least one element
     repeated SupplyFlowResource resources = 2;
-    //! The optional way points the convey has to take to go to the receiver
+    //! DEPRECATED 
     optional PointList          path      = 3;
+    //! The optional pathfind the convey has to take to go to the receiver
+    optional Pathfind           pathfind  = 4;
 }
 
 /** @struct PushFlowParameters
@@ -668,16 +670,18 @@ message SupplyFlowRecipient {
 message PushFlowParameters {
     //! The recipients (and the associated path/resources) of the
     //! supply - must contain at least one element
-    repeated SupplyFlowRecipient   recipients   = 1;
+    repeated SupplyFlowRecipient   recipients       = 1;
     //! The optional explicit transporter to use for the supply
     //! operation - If no transporters are specified, they are chosen
     //! automatically
-    repeated SupplyFlowTransporter transporters = 2;
-    //! The optional way points the convey has to take when going back
-    //! to its logistic base
-    optional PointList             wayBackPath  = 3;
+    repeated SupplyFlowTransporter transporters     = 2;
+    //! DEPRECATED 
+    optional PointList             wayBackPath      = 3;
     //! Message is used to supply if set to true, push flow otherwise
-    optional bool                  supply       = 4;
+    optional bool                  supply           = 4;
+    //! The optional pathfind the convey has to take when going back
+    //! to its logistic base
+    optional Pathfind              wayBackPathfind  = 5;
 }
 
 /** @struct PullFlowParameters
@@ -686,19 +690,23 @@ message PushFlowParameters {
 */
 message PullFlowParameters {
     //! The logistic base which will provide the resources
-    required ParentEntity          supplier     = 1;
+    required ParentEntity          supplier        = 1;
     //! The resources to supply - must contain at least one element
-    repeated SupplyFlowResource    resources    = 2;
+    repeated SupplyFlowResource    resources       = 2;
     //! The optional explicit transporter to use for the supply
     //! operation - If no transporters are specified, they are chosen
     //! automatically
-    repeated SupplyFlowTransporter transporters = 3;
-    //! The optional way points the convey has to take to go to the
+    repeated SupplyFlowTransporter transporters    = 3;
+    //! DEPRECATED 
+    optional PointList             wayOutPath      = 4;
+    //! DEPRECATED 
+    optional PointList             wayBackPath     = 5;
+    //! The optional pathfind the convey has to take to go to the
     //! logistic base
-    optional PointList             wayOutPath   = 4;
-    //! The optional way points the convey has to take to go back to
+    optional Pathfind              wayOutPathfind  = 6;
+    //! The optional pathfind the convey has to take to go back to
     //! the 'requester'
-    optional PointList             wayBackPath  = 5;
+    optional Pathfind              wayBackPathfind = 7;
 }
 
 /** @struct MissionParameter

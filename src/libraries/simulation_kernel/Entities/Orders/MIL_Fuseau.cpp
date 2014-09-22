@@ -283,10 +283,9 @@ void MIL_Fuseau::SplitLimit( const MIL_LimaOrder* pBeginMissionLima, const MIL_L
 // -----------------------------------------------------------------------------
 bool MIL_Fuseau::IsPointInsidePolygon( T_PointVector& leftPoints, T_PointVector& rightPoints, const MT_Vector2D& vPoint )
 {
-    T_PointVector pointsVector( leftPoints.size() + rightPoints.size() + 1 );
-    std::copy( leftPoints.begin(), leftPoints.end(), pointsVector.end() );
-    std::copy( rightPoints.rbegin(), rightPoints.rend(), pointsVector.end() );
-    pointsVector.back() = leftPoints.front();
+    T_PointVector pointsVector( leftPoints.begin(), leftPoints.end() );
+    pointsVector.insert( pointsVector.end(), rightPoints.rbegin(), rightPoints.rend() );
+    pointsVector.push_back( leftPoints.front() );
 
     TER_Polygon polygon;
     polygon.Reset( pointsVector );
@@ -419,9 +418,6 @@ void MIL_Fuseau::Reset( const MT_Vector2D* vOrientationRefPos, const T_PointVect
         throw MASA_EXCEPTION( "Error MILFuseau::Reset" );
 
     MIL_Fuseau::Reset();
-
-    if( !pBeginMissionLima || !pEndMissionLima )
-        pBeginMissionLima = pEndMissionLima = 0;
 
     T_PointVector leftLimitTmp  = leftLimit;
     T_PointVector rightLimitTmp = rightLimit;

@@ -10,35 +10,24 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPullFlowDialog.h"
 #include "moc_LogisticSupplyPullFlowDialog.cpp"
+#include "LogisticRouteWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
 
-#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
-#include "actions/Automat.h"
-#include "actions/Formation.h"
-#include "actions/ParameterList.h"
-#include "actions/UnitMagicAction.h"
+#include "actions/ActionsModel.h"
 #include "actions/PullFlowParameters.h"
+#include "actions/UnitMagicAction.h"
 #include "clients_gui/LogisticBase.h"
-#include "clients_gui/LogisticHelpers.h"
-#include "clients_gui/LocationCreator.h"
-#include "clients_gui/ParametersLayer.h"
-#include "clients_gui/resources.h"
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Availability.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/Positions.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
@@ -65,11 +54,11 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent,
                                                             ActionsModel& actionsModel,
                                                             const ::StaticModel& staticModel,
                                                             const Time_ABC& simulation,
-                                                            ParametersLayer& layer,
                                                             const tools::Resolver_ABC< Automat_ABC >& automats,
                                                             const tools::Resolver_ABC< Formation_ABC >& formations,
-                                                            const kernel::Profile_ABC& profile )
-    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
+                                                            const kernel::Profile_ABC& profile,
+                                                            const gui::EntitySymbols& symbols )
+    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, automats, profile, symbols )
     , formations_( formations )
     , supplier_( 0 )
     , lastContext_( 0 )
@@ -114,22 +103,15 @@ void LogisticSupplyPullFlowDialog::Show( const kernel::Entity_ABC& entity )
 {
     selected_ = &entity;
 
-    controllers_.Update( *routeLocationCreator_ );
-    routeLocationCreator_->StartLine();
-
     tabs_->setCurrentPage( 0 );
-    delWaypointButton_->setEnabled( false );
-    moveUpButton_->setEnabled( false );
-    moveDownButton_->setEnabled( false );
-
     ComputeAvailableSuppliers();
-
     supplierCombo_->clear();
     supplierCombo_->AddItem( QString(), 0 );
     for( auto it = suppliersNames_.begin(); it != suppliersNames_.end(); ++it )
         supplierCombo_->AddItem( it.key(), it.value() );
 
     OnSupplierValueChanged();
+    route_->AddRequester( selected_ );
     show();
 }
 
@@ -152,18 +134,14 @@ void LogisticSupplyPullFlowDialog::SetSuppliesToTable()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::Clear()
 {
-    layer_.Reset();
-    controllers_.Unregister( *waypointLocationCreator_ );
-    controllers_.Unregister( *routeLocationCreator_ );
     ClearSuppliersTable();
     ClearSuppliersData();
     resourcesTable_->Clear();
     availableSupplies_.clear();
     carriersTable_->Clear();
     ClearCarriersData();
-    ClearRouteList();
-    ClearRouteData();
     selected_ = 0;
+    route_->Clear();
     EnableButtons( true );
 }
 
@@ -229,26 +207,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     for( auto it = carriers.begin(); it != carriers.end(); ++it )
         pullFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
 
-    // Route
-    CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
-    QStringList waypoints = pModel->stringList();
-    T_PointVector outPath, backPath;
-    bool isOutPath = true;
-    for( auto it = waypoints.begin(); it != waypoints.end(); ++it )
-    {
-        QString str = *it;
-        if( points_.find( str ) != points_.end() )
-        {
-            if( isOutPath )
-                outPath.push_back( points_[ str ] );
-            else
-                backPath.push_back( points_[ str ] );
-        }
-        else
-            isOutPath = false;
-    }
-    pullFlowParameters->SetWayOutPath( outPath );
-    pullFlowParameters->SetWayBackPath( backPath );
+    route_->FillPullFlowParameters( *pullFlowParameters );
 
     action->AddParameter( *pullFlowParameters );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
@@ -326,25 +285,22 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableCarriers( QMap< QString, int 
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::OnSupplierValueChanged()
 {
-    CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
-    QStringList waypoints = pModel->stringList();
     if( supplier_ )
-        waypoints.removeAll( supplier_->GetName() );
-    ClearSuppliersData();
+        route_->RemoveRecipient( *supplier_ );
 
+    ClearSuppliersData();
     QString selection = supplierCombo_->text( supplierCombo_->currentIndex() );
     supplier_ = suppliersNames_[ selection ];
-    if( supplier_ )
-        waypoints.append( supplier_->GetName() );
 
     QMap< QString, int > carriersQty, carriersAvailable;
     carriersUseCheck_->setCheckState( Qt::Unchecked );
     ComputeAvailableCarriers( carriersAvailable );
     carriersTable_->SetQuantities( carriersQty, carriersAvailable );
     carriersTable_->setEnabled( false );
-
-    pModel->setStringList( waypoints );
     OnSupplierSelectionChanged();
+
+    if( supplier_ )
+        route_->AddRecipient( *supplier_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,59 +346,4 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableSuppliers()
     suppliersNames_.clear();
     FillSuppliers( automats_, suppliersNames_, selected_ );
     FillSuppliers( formations_, suppliersNames_, selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPullFlowDialog::ComputeRoute
-// Created: MMC 2011-09-21
-// -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::ComputeRoute( T_Route& route )
-{
-    route.clear();
-    CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
-    QStringList waypoints = pModel->stringList();
-
-    for( auto it = waypoints.begin(); it != waypoints.end(); ++it )
-    {
-        QString str = *it;
-        if( points_.find( str ) != points_.end() )
-            route.push_back( Waypoint( points_[ str ] ) );
-        else if( supplier_ )
-            route.push_back( Waypoint( supplier_ ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints
-// Created: MMC 2011-09-22
-// -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
-{
-    routeDrawpoints_.clear();
-    T_Route route;
-    ComputeRoute( route );
-
-    if( !supplier_ )
-        return;
-
-    geometry::Point2f startPos;
-    if( selected_ )
-        startPos = logistic_helpers::GetLogisticPosition( *selected_, true );
-    if( !startPos.IsZero() )
-        routeDrawpoints_.push_back( startPos );
-
-    for( std::size_t i=0; i < route.size(); ++i )
-    {
-        if( route[i].IsPoint() )
-            routeDrawpoints_.push_back( route[i].point_ );
-        else
-        {
-            geometry::Point2f pos;
-            if( supplier_ )
-                pos = logistic_helpers::GetLogisticPosition( *supplier_, true );
-            if( !pos.IsZero() )
-                routeDrawpoints_.push_back( pos );
-        }
-    }
-    routeDrawpoints_.push_back( startPos );
 }

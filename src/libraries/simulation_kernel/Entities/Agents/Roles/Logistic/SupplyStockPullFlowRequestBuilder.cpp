@@ -26,9 +26,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyStockPullFlowRequestBuilder )
 // Name: SupplyStockPullFlowRequestBuilder::SupplyDotationRequestBuilder
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-SupplyStockPullFlowRequestBuilder::SupplyStockPullFlowRequestBuilder( const sword::PullFlowParameters& parameters, MIL_Automate& recipient, SupplySupplier_ABC& )
+SupplyStockPullFlowRequestBuilder::SupplyStockPullFlowRequestBuilder( const sword::PullFlowParameters& parameters, MIL_Automate& recipient,
+                                                                      SupplySupplier_ABC& supplier )
     : pullFlowParameters_( parameters )
     , recipient_         ( &recipient )
+    , supplier_          ( &supplier )
 {
 }
 
@@ -37,7 +39,8 @@ SupplyStockPullFlowRequestBuilder::SupplyStockPullFlowRequestBuilder( const swor
 // Created: LDC 2013-01-17
 // -----------------------------------------------------------------------------
 SupplyStockPullFlowRequestBuilder::SupplyStockPullFlowRequestBuilder()
-    : recipient_         ( 0 )
+    : recipient_( 0 )
+    , supplier_ ( 0 )
 {
 }
 
@@ -62,19 +65,12 @@ void SupplyStockPullFlowRequestBuilder::Process( SupplyRequestContainer_ABC& con
     BOOST_FOREACH( const sword::SupplyFlowResource& resource, pullFlowParameters_.resources() )
         CreateRequest( *recipient_, resource, container );
 
-    if( pullFlowParameters_.has_wayoutpath() )
-    {
-        T_PointVector wayPoints;
-        if( NET_ASN_Tools::ReadPointList( pullFlowParameters_.wayoutpath(), wayPoints ) )
-            container.SetPathToSupplier( wayPoints );
-    }
+     if( pullFlowParameters_.has_wayoutpathfind() )
+         container.SetPathToSupplier( pullFlowParameters_.wayoutpathfind(), recipient_->GetPosition(), supplier_->GetPosition() );
 
-    if( pullFlowParameters_.has_waybackpath() )
-    {
-        T_PointVector wayPoints;
-        if( NET_ASN_Tools::ReadPointList( pullFlowParameters_.waybackpath(), wayPoints ) )
-            container.SetPathToRecipient( recipient_->GetStockSupplyManager(), wayPoints );
-    }
+     if( pullFlowParameters_.has_waybackpathfind() )
+         container.SetPathToRecipient( recipient_->GetStockSupplyManager(), pullFlowParameters_.waybackpathfind(), supplier_->GetPosition(), recipient_->GetPosition() );
+
     container.SetTransportersProvider( recipient_->FindLogisticManager() );
     SetTransporters( pullFlowParameters_.transporters(), container );
     container.SetConvoyFactory( SupplyConvoyConfig::GetStockSupplyConvoyFactory() );
@@ -90,6 +86,7 @@ void SupplyStockPullFlowRequestBuilder::serialize( MIL_CheckPointInArchive& arch
     std::string pullFlow;
     archive >> pullFlow;
     const_cast< sword::PullFlowParameters& >( pullFlowParameters_ ).ParseFromString( pullFlow );
+    archive >> supplier_;
     archive >> recipient_;
 }
 
@@ -102,5 +99,6 @@ void SupplyStockPullFlowRequestBuilder::serialize( MIL_CheckPointOutArchive& arc
     archive << boost::serialization::base_object< SupplyStockManualRequestBuilder_ABC >( *this );
     std::string pullFlow = pullFlowParameters_.SerializeAsString();
     archive << pullFlow;
+    archive << supplier_;
     archive << recipient_;
 }
