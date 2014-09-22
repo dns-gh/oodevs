@@ -123,6 +123,7 @@ type SwordHandler interface {
 	PostRestart(link *SwordLink, err error)
 	PostCloseAction(link *SwordLink, action string, err error)
 	PostCloseWriter(link *SwordLink, writer *SwordWriter)
+	PostInvalidateFilters(link *SwordLink)
 }
 
 func (s *Sword) PostRestart(link *SwordLink, err error) {
@@ -157,6 +158,12 @@ func (s *Sword) PostCloseAction(link *SwordLink, action string, err error) {
 func (s *Sword) PostCloseWriter(link *SwordLink, writer *SwordWriter) {
 	s.observer.Post(func() {
 		link.CloseWriter(writer)
+	})
+}
+
+func (s *Sword) PostInvalidateFilters(link *SwordLink) {
+	s.observer.Post(func() {
+		s.invalidateFilters(link)
 	})
 }
 
@@ -401,6 +408,12 @@ func (s *Sword) Delete(events ...string) {
 	for _, uuid := range events {
 		delete(s.events, uuid)
 		delete(s.metadata, uuid)
+	}
+}
+
+func (s *Sword) invalidateFilters(link *SwordLink) {
+	if link == s.link {
+		s.observer.InvalidateFilters()
 	}
 }
 

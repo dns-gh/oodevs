@@ -1436,7 +1436,7 @@ func (c *Client) CreateCheckpoint(name string, sendState bool) (string, *ModelDa
 			}
 			m := msg.SimulationToClient.GetMessage()
 			if m.GetControlSendCurrentStateBegin() != nil {
-				snapshot = NewModelData()
+				snapshot = NewModelData(nil)
 				return false
 			}
 			if snapshot != nil {

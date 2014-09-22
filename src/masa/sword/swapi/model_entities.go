@@ -625,9 +625,11 @@ type ModelData struct {
 	Replay       *ReplayInfo
 	// True once the initial state has been received
 	Ready bool
+	// private model event listeners
+	listeners *ModelListeners
 }
 
-func NewModelData() *ModelData {
+func NewModelData(listeners *ModelListeners) *ModelData {
 	return &ModelData{
 		Actions:              map[uint32]*Action{},
 		Automats:             map[uint32]*Automat{},
@@ -655,11 +657,12 @@ func NewModelData() *ModelData {
 		TacticalLines:        map[uint32]*TacticalLine{},
 		UnitKnowledges:       map[uint32]*UnitKnowledge{},
 		Units:                map[uint32]*Unit{},
+		listeners:            listeners,
 	}
 }
 
 func (model *ModelData) Reset() {
-	newModel := NewModelData()
+	newModel := NewModelData(model.listeners)
 	// Following fields are not sent as part of simulation state
 	newModel.Profiles = model.Profiles
 	newModel.KnownScores = model.KnownScores
@@ -679,6 +682,13 @@ func (model *ModelData) FindPartyByName(name string) *Party {
 	return nil
 }
 
+func (model *ModelData) notifyCreate(created bool, tag, update ModelEventTag, id uint32) {
+	if !created {
+		tag = update
+	}
+	model.listeners.NotifyId(tag, id)
+}
+
 func (model *ModelData) addFormation(f *Formation) bool {
 	if _, ok := model.Formations[f.ParentId]; !ok {
 		if _, ok = model.Parties[f.PartyId]; !ok {
@@ -687,7 +697,9 @@ func (model *ModelData) addFormation(f *Formation) bool {
 	}
 	size := len(model.Formations)
 	model.Formations[f.Id] = f
-	return size != len(model.Formations)
+	created := size != len(model.Formations)
+	model.notifyCreate(created, FormationCreate, FormationUpdate, f.Id)
+	return created
 }
 
 func (model *ModelData) removeFormation(formationId uint32) bool {
@@ -703,7 +715,11 @@ func (model *ModelData) removeFormation(formationId uint32) bool {
 	}
 	size := len(model.Formations)
 	delete(model.Formations, formationId)
-	return size != len(model.Formations)
+	deleted := size != len(model.Formations)
+	if deleted {
+		model.listeners.NotifyId(FormationDelete, formationId)
+	}
+	return deleted
 }
 
 func (model *ModelData) addAutomat(a *Automat) bool {
@@ -712,7 +728,9 @@ func (model *ModelData) addAutomat(a *Automat) bool {
 	}
 	size := len(model.Automats)
 	model.Automats[a.Id] = a
-	return size != len(model.Automats)
+	created := size != len(model.Automats)
+	model.notifyCreate(created, AutomatCreate, AutomatUpdate, a.Id)
+	return created
 }
 
 func (model *ModelData) removeAutomat(automatId uint32) bool {
@@ -723,7 +741,11 @@ func (model *ModelData) removeAutomat(automatId uint32) bool {
 	}
 	size := len(model.Automats)
 	delete(model.Automats, automatId)
-	return size != len(model.Automats)
+	deleted := size != len(model.Automats)
+	if deleted {
+		model.listeners.NotifyId(AutomatDelete, automatId)
+	}
+	return deleted
 }
 
 func (model *ModelData) addCrowdElement(crowdId, elementId uint32, position Point) bool {
@@ -746,19 +768,33 @@ func (model *ModelData) removeCrowdElement(crowdId, elementId uint32) bool {
 	return size != len(crowd.CrowdElements)
 }
 
+func (model *ModelData) addParty(party *Party) bool {
+	size := len(model.Parties)
+	model.Parties[party.Id] = party
+	created := size != len(model.Parties)
+	model.notifyCreate(created, PartyCreate, PartyUpdate, party.Id)
+	return created
+}
+
 func (model *ModelData) addUnit(unit *Unit) bool {
 	if _, ok := model.Automats[unit.AutomatId]; !ok {
 		return false
 	}
 	size := len(model.Units)
 	model.Units[unit.Id] = unit
-	return size != len(model.Units)
+	created := size != len(model.Units)
+	model.notifyCreate(created, UnitCreate, UnitUpdate, unit.Id)
+	return created
 }
 
 func (model *ModelData) removeUnit(unitId uint32) bool {
 	size := len(model.Units)
 	delete(model.Units, unitId)
-	return size != len(model.Units)
+	deleted := size != len(model.Units)
+	if deleted {
+		model.listeners.NotifyId(UnitDelete, unitId)
+	}
+	return deleted
 }
 
 func (model *ModelData) changeUnitAutomat(unitId, automatId uint32) error {
@@ -770,6 +806,7 @@ func (model *ModelData) changeUnitAutomat(unitId, automatId uint32) error {
 		return fmt.Errorf("invalid automat identifier: %v", automatId)
 	}
 	unit.AutomatId = automatId
+	model.listeners.NotifyId(UnitReparent, unitId)
 	return nil
 }
 
@@ -782,6 +819,7 @@ func (model *ModelData) changeAutomatFormation(automatId, formationId uint32) er
 		return fmt.Errorf("invalid formation identifier: %v", formationId)
 	}
 	automat.FormationId = formationId
+	model.listeners.NotifyId(AutomatReparent, automatId)
 	return nil
 }
 
@@ -805,6 +843,7 @@ func (model *ModelData) changeFormationSuperior(formationId, partyId, parentId u
 	}
 	formation.ParentId = parentId
 	formation.PartyId = partyId
+	model.listeners.NotifyId(FormationReparent, formationId)
 	return nil
 }
 
@@ -814,13 +853,19 @@ func (model *ModelData) addCrowd(crowd *Crowd) bool {
 	}
 	size := len(model.Crowds)
 	model.Crowds[crowd.Id] = crowd
-	return size != len(model.Crowds)
+	created := size != len(model.Crowds)
+	model.notifyCreate(created, CrowdCreate, CrowdUpdate, crowd.Id)
+	return created
 }
 
 func (model *ModelData) removeCrowd(id uint32) bool {
 	size := len(model.Crowds)
 	delete(model.Crowds, id)
-	return size != len(model.Crowds)
+	deleted := size != len(model.Crowds)
+	if deleted {
+		model.listeners.NotifyId(CrowdDelete, id)
+	}
+	return deleted
 }
 
 func (model *ModelData) addPopulation(population *Population) bool {
@@ -829,25 +874,43 @@ func (model *ModelData) addPopulation(population *Population) bool {
 	}
 	size := len(model.Populations)
 	model.Populations[population.Id] = population
-	return size != len(model.Populations)
+	created := size != len(model.Populations)
+	model.notifyCreate(created, PopulationCreate, PopulationUpdate, population.Id)
+	return created
 }
 
 func (model *ModelData) addProfile(profile *Profile) bool {
 	size := len(model.Profiles)
 	model.Profiles[profile.Login] = profile
-	return size != len(model.Profiles)
+	created := size != len(model.Profiles)
+	tag := ProfileCreate
+	if !created {
+		tag = ProfileUpdate
+	}
+	model.listeners.NotifyName(tag, profile.Login)
+	return created
 }
 
 func (model *ModelData) updateProfile(login string, profile *Profile) bool {
 	size := len(model.Profiles)
 	model.Profiles[login] = profile
-	return size == len(model.Profiles)
+	tag := ProfileUpdate
+	updated := size == len(model.Profiles)
+	if !updated {
+		tag = ProfileCreate
+	}
+	model.listeners.NotifyName(tag, profile.Login)
+	return updated
 }
 
 func (model *ModelData) removeProfile(login string) bool {
 	size := len(model.Profiles)
 	delete(model.Profiles, login)
-	return size != len(model.Profiles)
+	deleted := size != len(model.Profiles)
+	if deleted {
+		model.listeners.NotifyName(ProfileDelete, login)
+	}
+	return deleted
 }
 
 func (model *ModelData) addTacticalLine(line *TacticalLine) bool {

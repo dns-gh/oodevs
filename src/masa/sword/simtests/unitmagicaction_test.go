@@ -175,8 +175,12 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	}
 	c.Assert(kg, NotNil)
 
+	listener := ModelListener{}
+	listenerId := client.Model.RegisterListener(listener.Notify)
+
 	automat, err := client.CreateAutomat(formation.Id, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.AutomatCreate, Id: automat.Id})
 
 	pos := swapi.Point{X: -15.9219, Y: 28.3456}
 
@@ -201,6 +205,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	c.Assert(u, NotNil)
 	c.Assert(u.AutomatId, Equals, automat.Id)
 	c.Assert(u.Pc, Equals, true)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.UnitCreate, Id: u.Id})
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -214,6 +219,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(u, NotNil)
 	c.Assert(u.Pc, Equals, false)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.UnitCreate, Id: u.Id})
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -222,6 +228,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	automat, err = client.CreateAutomat(formation.Id, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.AutomatCreate, Id: automat.Id})
 
 	// Add unit with name, becomes a PC even if PC is false (wut?)
 	name := "some unit"
@@ -230,6 +237,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	c.Assert(u1, NotNil)
 	c.Assert(u1.Name, Equals, name)
 	c.Assert(u1.Pc, Equals, true)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.UnitCreate, Id: u1.Id})
 
 	// Try to create another, it creates a not Pc unit and upgrades it to Pc.
 	u2, err := client.CreateUnitWithName(automat.Id, unitType, pos, name, true)
@@ -244,6 +252,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 		return !data.Units[u1.Id].Pc
 	})
 	c.Assert(ok, Equals, true)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.UnitCreate, Id: u2.Id})
 
 	// Delete the PC, the other unit becomes the Pc eventually
 	err = client.DeleteUnit(u2.Id)
@@ -252,6 +261,8 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 		return data.Units[u1.Id].Pc
 	})
 	c.Assert(ok, Equals, true)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.UnitDelete, Id: u2.Id})
+	client.Model.UnregisterListener(listenerId)
 
 	// Read-only user can create unit (wut?)
 	client.Close()

@@ -310,3 +310,9 @@ func (c *ControllerObserver) Post(operand func()) {
 		operand()
 	})
 }
+
+func (c *ControllerObserver) InvalidateFilters() {
+	c.controller.post(c.session, func(session *Session) {
+		session.InvalidateFilters()
+	})
+}
