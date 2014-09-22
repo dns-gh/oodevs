@@ -155,7 +155,6 @@ func checkUnitWaitsOnObject(c *C, phydb *phy.PhysicalFile,
 }
 
 func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
-	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-13062")
 	phydb := loadPhysical(c, "test")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
