@@ -15,8 +15,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InteractionHeightAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: InteractionHeightAttribute constructor
@@ -84,7 +83,8 @@ void InteractionHeightAttribute::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void InteractionHeightAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< InteractionHeightAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< InteractionHeightAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -74,9 +74,6 @@ public:
     //@}
 
 private:
-
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > T_KnowledgeProxyType;
-
     //! @name Member data
     //@{
     MIL_BurningCells& burningCells_;

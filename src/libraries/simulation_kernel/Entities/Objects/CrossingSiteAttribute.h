@@ -35,9 +35,6 @@ class CrossingSiteAttribute : public ObjectAttribute_ABC
                             , public UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyRecon< CrossingSiteAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              CrossingSiteAttribute();

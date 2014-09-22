@@ -21,8 +21,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BurnSurfaceAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: BurnSurfaceAttribute constructor
@@ -97,7 +96,8 @@ void BurnSurfaceAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned in
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BurnSurfaceAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BurnSurfaceAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

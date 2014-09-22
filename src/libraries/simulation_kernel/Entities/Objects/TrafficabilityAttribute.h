@@ -30,11 +30,6 @@ class TrafficabilityAttribute : public ObjectAttribute_ABC
                               , public UpdatableAttribute_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< TrafficabilityAttribute > T_KnowledgeProxyType;
-    //@}
-
     //! @name Constructors/Destructor
     //@{
              TrafficabilityAttribute();

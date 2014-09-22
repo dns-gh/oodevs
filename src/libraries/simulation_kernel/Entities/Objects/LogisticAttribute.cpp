@@ -25,8 +25,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< LogisticAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< LogisticAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< LogisticAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute constructor
@@ -113,7 +112,8 @@ template < typename Archive > void LogisticAttribute::serialize( Archive& file, 
 // -----------------------------------------------------------------------------
 void LogisticAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< LogisticAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< LogisticAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< LogisticAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

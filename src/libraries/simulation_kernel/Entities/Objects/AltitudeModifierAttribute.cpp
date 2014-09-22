@@ -18,8 +18,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AltitudeModifierAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< AltitudeModifierAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< AltitudeModifierAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< AltitudeModifierAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: AltitudeModifierAttribute constructor
@@ -88,7 +87,8 @@ void AltitudeModifierAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< AltitudeModifierAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< AltitudeModifierAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< AltitudeModifierAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

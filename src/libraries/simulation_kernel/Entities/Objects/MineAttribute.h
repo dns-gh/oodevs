@@ -34,9 +34,6 @@ class MineAttribute : public ObjectAttribute_ABC
                     , private UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< MineAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              MineAttribute();

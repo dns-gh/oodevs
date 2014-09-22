@@ -20,8 +20,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor

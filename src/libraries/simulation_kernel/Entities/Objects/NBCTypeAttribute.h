@@ -28,9 +28,6 @@ class NBCTypeAttribute : public ObjectAttribute_ABC
                        , public UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              NBCTypeAttribute();

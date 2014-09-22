@@ -18,8 +18,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ConstructionAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< ConstructionAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ConstructionAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ConstructionAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute constructor
@@ -103,7 +102,8 @@ void ConstructionAttribute::Load( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< ConstructionAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< ConstructionAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< ConstructionAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

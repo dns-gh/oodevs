@@ -36,9 +36,6 @@ class FloodAttribute : public ObjectAttribute_ABC
                      , private UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              FloodAttribute();

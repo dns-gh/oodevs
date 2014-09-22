@@ -30,9 +30,6 @@ class SupplyRouteAttribute : public ObjectAttribute_ABC
                            , public UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              SupplyRouteAttribute();
