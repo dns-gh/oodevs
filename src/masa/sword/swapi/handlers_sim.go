@@ -1197,8 +1197,8 @@ func (model *ModelData) handleUnitVisionCones(m *sword.SimToClient_Content) erro
 		unit.VisionCones.Cones = append(unit.VisionCones.Cones,
 			&VisionCone{
 				Origin: Point{
-					X: cone.GetOrigin().GetLatitude(),
-					Y: cone.GetOrigin().GetLongitude(),
+					X: cone.GetOrigin().GetLongitude(),
+					Y: cone.GetOrigin().GetLatitude(),
 				},
 				Height:   cone.GetHeight(),
 				Sensor:   cone.GetSensor(),
