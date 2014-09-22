@@ -12,6 +12,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/sword"
+	"sync/atomic"
 )
 
 func (s *TestSuite) TestUnitVisionCones(c *C) {
@@ -21,7 +22,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if msg != nil && msg.SimulationToClient != nil {
 			// should not receive vision cones updates on another client
-			c.Assert(msg.SimulationToClient.GetMessage().GetUnitVisionCones(), IsNil)
+			c.Check(msg.SimulationToClient.GetMessage().GetUnitVisionCones(), IsNil)
 		}
 		return false
 	})
@@ -35,26 +36,21 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	err = client.SetAutomatMode(automatId, false)
 	c.Assert(err, IsNil)
 
-	receive := func() bool {
-		received := make(chan int, 1)
-		handler := func(msg *swapi.SwordMessage, id, context int32, err error) bool {
-			if msg != nil && msg.SimulationToClient != nil {
-				m := msg.SimulationToClient.GetMessage().GetUnitVisionCones()
-				if m != nil && m.GetUnit().GetId() == 11 {
-					received <- 1
-					return true
-				}
+	cones := int32(0)
+	client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
+		if msg != nil && msg.SimulationToClient != nil {
+			m := msg.SimulationToClient.GetMessage().GetUnitVisionCones()
+			if m != nil && m.GetUnit().GetId() == 11 {
+				atomic.AddInt32(&cones, 1)
 			}
-			return false
 		}
-		client.Register(handler)
+		return false
+	})
+
+	receive := func() bool {
 		client.Model.WaitTicks(2)
-		select {
-		case <-received:
-			return true
-		default:
-			return false
-		}
+		old := atomic.SwapInt32(&cones, 0)
+		return old > 0
 	}
 
 	// no vision cones received by default
@@ -73,9 +69,10 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	// registering allows to receive vision cones
 	check(client.EnableVisionCones(true, 11))
 	// vision cones sent after posture changes
-	check(client.ChangePosture(11, sword.UnitAttributes_parked))
-	err = client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area)
+	err = client.ChangePosture(11, sword.UnitAttributes_parked)
 	c.Assert(err, IsNil)
+	// second posture change eventually stop vision cones
+	check(client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area))
 	// vision cones sent after position changes
 	check(client.Teleport(swapi.MakeUnitTasker(11), swapi.Point{X: -15.8219, Y: 28.2456}))
 	// vision cones sent after direction changes
