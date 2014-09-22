@@ -757,7 +757,6 @@ void SupplyConsign::load( MIL_CheckPointInArchive& archive, const unsigned int )
     archive >> resources_;
     archive >> requestsQueued_;
     archive >> currentRecipient_;
-    archive >> needNetworkUpdate_;
     archive >> requestsNeedNetworkUpdate_;
     RegisterConsignId( id_ );
 }
@@ -780,6 +779,5 @@ void SupplyConsign::save( MIL_CheckPointOutArchive& archive, const unsigned int 
     archive << resources_;
     archive << requestsQueued_;
     archive << currentRecipient_;
-    archive << needNetworkUpdate_;
     archive << requestsNeedNetworkUpdate_;
 }
