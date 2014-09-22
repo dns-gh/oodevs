@@ -21,6 +21,7 @@ import (
 	"masa/timeline/services"
 	"masa/timeline/swfake"
 	"masa/timeline/util"
+	"math/rand"
 	"net/url"
 	"sync"
 	"time"
@@ -1575,4 +1576,21 @@ func (t *TestSuite) TestSwordModelNotifiesFilteredObservers(c *C) {
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	swtest.DeepEquals(c, mapEvents(msg.Events...), mapEvents(p2))
+}
+
+func generateRandomData(size int) []byte {
+	src := make([]byte, size)
+	for i := range src {
+		src[i] = byte(rand.Intn(0xFF))
+	}
+	return src[:]
+}
+
+func (t *TestSuite) TestGarbageOrdersDoesNotAbort(c *C) {
+	f := t.MakeFixture(c, true)
+	defer f.Close()
+	id := f.addEvent(c, "garbage", "some_name", generateRandomData(64))
+	f.Tick()
+	f.controller.StopSession(f.session)
+	f.waitAllDoneOrDead(c, id)
 }

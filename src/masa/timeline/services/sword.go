@@ -314,6 +314,8 @@ func (s *Sword) restart(link *SwordLink) {
 func isOrder(msg *sword.ClientToSim) bool {
 	m := msg.GetMessage()
 	switch {
+	case m == nil:
+		return false
 	case m.UnitOrder != nil:
 		return true
 	case m.AutomatOrder != nil:
