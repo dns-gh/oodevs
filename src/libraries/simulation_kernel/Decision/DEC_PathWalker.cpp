@@ -405,10 +405,10 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
         if( auto k = movingEntity_.GetKnowledgeObject( object ) )
             if( k->GetLocalisation().IsInside( endPosition ) )
             {
-                 if( k != collision_.lock() )
+                if( k != collision_.lock() )
                     movingEntity_.SendRC( report::eRC_BlockedByObject, k );
                 collision_ = k;
-               if( IsOutside( vNewPos_, object ) )
+                if( IsOutside( vNewPos_, object ) )
                     vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
                 rCurrentSpeed_ = 0;
                 pathSet_ = eBlockedByObject;
