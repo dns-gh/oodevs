@@ -347,3 +347,12 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableSuppliers()
     FillSuppliers( automats_, suppliersNames_, selected_ );
     FillSuppliers( formations_, suppliersNames_, selected_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPullFlowDialog::NotifyUpdated
+// Created: ABR 2014-09-22
+// -----------------------------------------------------------------------------
+void LogisticSupplyPullFlowDialog::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    supplierCombo_->ChangeItem( entity.GetName(), &entity );
+}

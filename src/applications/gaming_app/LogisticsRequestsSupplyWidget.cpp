@@ -173,9 +173,13 @@ void LogisticsRequestsSupplyWidget::FillSupplyTable( const LogSupplyConsign& con
         while( itRequest.HasMoreElements() )
         {
             const SupplyResourceRequest& curRequest = itRequest.NextElement();
-            supplyTable_->AddRecipientResource( GetDisplayName( &curRecipient.recipient_ ), curRequest.GetTypeName(),
-                                            curRequest.GetRequested(), curRequest.GetGranted(),
-                                            curRequest.GetConvoyed(), curRequest.IsDelivered() );
+            supplyTable_->AddRecipientResource( curRecipient.recipient_,
+                                                GetDisplayName( &curRecipient.recipient_ ),
+                                                curRequest.GetTypeName(),
+                                                curRequest.GetRequested(),
+                                                curRequest.GetGranted(),
+                                                curRequest.GetConvoyed(),
+                                                curRequest.IsDelivered() );
         }
     }
     supplyTable_->resizeColumnsToContents();
@@ -192,7 +196,10 @@ void LogisticsRequestsSupplyWidget::NotifyUpdated( const kernel::Entity_ABC& ent
         return;
     auto& logConsign = static_cast< const LogSupplyConsign& >( *requestSelected_ );
     if( IsEntityRecipient( logConsign, entity ) )
+    {
         detailsTable_->Set( tools::translate( "Logistic", "Recipient(s):" ), GetRecipientsLinks( logConsign, true ) );
+        supplyTable_->UpdateRecipient( entity, GetDisplayName( &entity ) );
+    }
     UpdateEntityDetails( entity, logConsign.GetProviding(), tools::translate( "Logistic", "Transport provider:") );
     UpdateEntityDetails( entity, logConsign.GetConvoy(), tools::translate( "Logistic", "Conveyor:") );
     UpdateEntityDetails( entity, logConsign.GetHandler(), tools::translate( "Logistic", "Supplier:") );

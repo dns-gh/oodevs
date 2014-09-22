@@ -46,20 +46,25 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void AddRecipientResource( const QString& recipient, const QString& resource,
-                                       unsigned int requested, unsigned int granted,
-                                       unsigned int conveyed, bool delivered );
+    virtual void AddRecipientResource( const kernel::Entity_ABC& entity,
+                                       const QString& recipient,
+                                       const QString& resource,
+                                       unsigned int requested,
+                                       unsigned int granted,
+                                       unsigned int conveyed,
+                                       bool delivered );
     //@}
 
     //! @name Accessors
     //@{
     const gui::LinkItemDelegate* GetLinkItemDelegate() const;
+    void UpdateRecipient( const kernel::Entity_ABC& entity, const QString& name );
     //@}
 
 private:
     //! @name Operations
     //@{
-    void SetData( int row, int col, QVariant text, bool checkable = false, bool checked = false );
+    QStandardItem* SetData( int row, int col, QVariant text, bool checkable = false, bool checked = false );
     //@}
 
 private:

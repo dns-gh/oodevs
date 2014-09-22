@@ -10,13 +10,23 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyExclusiveListWidget.h"
 #include "moc_LogisticSupplyExclusiveListWidget.cpp"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controllers.h"
+
+Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
+
+#define EntityRole ( Qt::UserRole )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyExclusiveListWidget constructor
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
-LogisticSupplyExclusiveListWidget::LogisticSupplyExclusiveListWidget( QWidget* parent, const QString& addLabel, const QString& removeLabel )
+LogisticSupplyExclusiveListWidget::LogisticSupplyExclusiveListWidget( kernel::Controllers& controllers,
+                                                                      QWidget* parent,
+                                                                      const QString& addLabel,
+                                                                      const QString& removeLabel )
     : QListWidget( parent )
+    , controllers_( controllers )
     , removeAction_( 0 )
     , addLabel_( addLabel )
     , removeLabel_( removeLabel )
@@ -24,6 +34,7 @@ LogisticSupplyExclusiveListWidget::LogisticSupplyExclusiveListWidget( QWidget* p
     setSelectionMode( QAbstractItemView::SingleSelection );
     connect( this, SIGNAL( currentItemChanged( QListWidgetItem*, QListWidgetItem* ) ),
         this, SLOT( OnSelectionChanged( QListWidgetItem*, QListWidgetItem* )  ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,27 +43,16 @@ LogisticSupplyExclusiveListWidget::LogisticSupplyExclusiveListWidget( QWidget* p
 // -----------------------------------------------------------------------------
 LogisticSupplyExclusiveListWidget::~LogisticSupplyExclusiveListWidget()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyExclusiveListWidget::contextMenuEvent
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
-void LogisticSupplyExclusiveListWidget::SetChoice( const QStringList& choice )
+void LogisticSupplyExclusiveListWidget::AddChoice( const kernel::Automat_ABC& automat )
 {
-    Clear();
-    choice_ = choice;
-    choice_.sort();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyExclusiveListWidget::contextMenuEvent
-// Created: MMC 2012-10-11
-// -----------------------------------------------------------------------------
-void LogisticSupplyExclusiveListWidget::GetItems( QStringList& items )
-{
-    items = choosen_;
+    choice_.push_back( &automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,14 +78,15 @@ void LogisticSupplyExclusiveListWidget::contextMenuEvent( QContextMenuEvent* eve
     connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     if( !choice_.empty() )
     {
+        std::sort( choice_.begin(), choice_.end(), []( const kernel::Automat_ABC* lhs, const kernel::Automat_ABC* rhs ) {
+            return lhs && rhs && lhs->GetName().localeAwareCompare( rhs->GetName() ) < 0;
+        } );
         QMenu* subMenu = new QMenu( menu );
         menu->insertItem( addLabel_, subMenu );
-        for( int i = 0; i < choice_.size(); ++i )
-            subMenu->addAction( choice_[i] );
+        for( auto it = choice_.begin(); it != choice_.end(); ++it )
+            subMenu->addAction( ( *it )->GetName() );
     }
-    removeAction_ = 0;
-    if( currentItem() )
-        removeAction_ = menu->addAction( removeLabel_ );
+    removeAction_ = currentItem() ? menu->addAction( removeLabel_ ) : 0;
     menu->popup( event->globalPos() );
     connect( menu, SIGNAL( triggered( QAction* ) ), this, SLOT( OnTriggeredAction( QAction* ) ) );
 }
@@ -114,21 +115,48 @@ void LogisticSupplyExclusiveListWidget::OnTriggeredAction( QAction* action )
         return;
     if( removeAction_ == action && currentItem() )
     {
-        QString current = currentItem()->text();
-        takeItem( currentIndex().row() );
-        choosen_.remove( current );
-        choice_.append( current );
-        choice_.sort();
-        emit ItemRemoved( current );
+        auto item = takeItem( currentIndex().row() );
+        if( !item )
+            return;
+        auto automat = item->data( EntityRole ).value< const kernel::Automat_ABC* >();
+        if( !automat )
+            return;
+        choice_.push_back( automat );
+        auto it = std::find( choosen_.begin(), choosen_.end(), automat );
+        if( it == choosen_.end() )
+            return;
+        choosen_.erase( it );
+        emit ItemRemoved( automat->GetName() );
     }
     else
     {
         QString selected = action->text();
-        addItem( selected );
-        choice_.remove( selected );
-        choosen_.append( selected );
-        choosen_.sort();
+        auto it = std::find_if( choice_.begin(), choice_.end(), [&selected]( const kernel::Automat_ABC* automat ){ 
+            return automat && automat->GetName() == selected;
+        } );
+        if( it == choice_.end() )
+            return;
+
+        QListWidgetItem* item = new QListWidgetItem( action->text() );
+        item->setData( EntityRole, QVariant::fromValue( *it ) );
+        addItem( item );
+
+        choosen_.push_back( *it );
+        choice_.erase( it );
         emit ItemAdded( selected );
         setCurrentRow( count() - 1 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyExclusiveListWidget::NotifyUpdated
+// Created: ABR 2014-09-22
+// -----------------------------------------------------------------------------
+void LogisticSupplyExclusiveListWidget::NotifyUpdated( const kernel::Automat_ABC& automat )
+{
+    for( int i = 0; i < count(); ++i )
+        if( auto item = this->item( i ) )
+            if( auto itemEntity = item->data( EntityRole ).value< const kernel::Automat_ABC* >() )
+                if( itemEntity == &automat )
+                    item->setText( itemEntity->GetName() );
 }

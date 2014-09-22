@@ -138,10 +138,8 @@ QStandardItem* LogisticsRequestsHistoryTable::AddItem( int row, int col, const Q
 void LogisticsRequestsHistoryTable::UpdateHandler( const kernel::Entity_ABC& entity, const QString& name )
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
-    {
-        auto item = dataModel_.item( row, eColumnHandler );
-        auto itemEntity = item->data( EntityRole ).value< const kernel::Entity_ABC* >();
-        if( itemEntity == &entity )
-            item->setText( name );
-    }
+        if( auto item = dataModel_.item( row, eColumnHandler ) )
+            if( auto itemEntity = item->data( EntityRole ).value< const kernel::Entity_ABC* >() )
+                if( itemEntity == &entity )
+                    item->setText( name );
 }
