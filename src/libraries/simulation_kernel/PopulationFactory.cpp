@@ -16,6 +16,31 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ )
+{
+    auto missionController = &factory->missionController_;
+    const bool logEnabled = factory->logger_;
+    archive << missionController;
+    archive << factory->gcPause_;
+    archive << factory->gcMult_;
+    archive << logEnabled;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ )
+{
+    MissionController_ABC* missionController;
+    unsigned int gcPause;
+    unsigned int gcMult;
+    bool logEnabled;
+    archive >> missionController;
+    archive >> gcPause;
+    archive >> gcMult;
+    archive >> logEnabled;
+    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult, logEnabled );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PopulationFactory constructor
 // Created: MGD 2009-10-24
@@ -28,20 +53,6 @@ PopulationFactory::PopulationFactory( MissionController_ABC& missionController, 
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: PopulationFactory constructor
-// Created: SLI 2013-02-22
-// -----------------------------------------------------------------------------
-PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, std::unique_ptr< sword::DEC_Logger > logger )
-    : gcPause_          ( gcPause )
-    , gcMult_           ( gcMult )
-    , missionController_( missionController )
-    , logger_           ( std::move( logger ) )
-{
-    // NOTHING
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFactory destructor

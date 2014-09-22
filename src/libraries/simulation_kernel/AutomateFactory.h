@@ -50,9 +50,8 @@ public:
 private:
     //! @name CheckPoint
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ );
-    AutomateFactory( MIL_IDManager& idManager, MissionController_ABC& controller, unsigned int gcPause, unsigned int gcMult, std::unique_ptr< sword::DEC_Logger > logger );
+    template< typename Archive > friend void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int version );
+    template< typename Archive > friend void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int version );
     //@}
 
 private:

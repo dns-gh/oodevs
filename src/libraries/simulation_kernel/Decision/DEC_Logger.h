@@ -12,7 +12,6 @@
 
 #include <string>
 #include <boost/noncopyable.hpp>
-#include <boost/serialization/export.hpp>
 
 namespace sword
 {
@@ -54,7 +53,5 @@ private:
 };
 
 }
-
-BOOST_CLASS_EXPORT_KEY( sword::DEC_Logger )
 
 #endif // DEC_Logger_h

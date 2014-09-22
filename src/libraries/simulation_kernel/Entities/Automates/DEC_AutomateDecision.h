@@ -44,8 +44,6 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int /*version*/ );
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -146,6 +144,9 @@ private:
     virtual void RegisterSpecific( sword::Brain& brain, bool isMasalife, const std::string& groupName );
     //@}
 
+    template< typename Archive > friend void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int version );
+    template< typename Archive > friend void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int version );
+
 private:
     // Etat décisionnel
     std::map< MT_Vector2D, DEC_Decision_ABC* > listReconnoitringPoint_;
@@ -173,28 +174,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_AutomateDecision )
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ )
-{
-    archive << role->pEntity_;
-    archive << role->gcPause_;
-    archive << role->gcMult_;
-    archive << role->logger_;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int /*version*/ )
-{
-    MIL_Automate* automate;
-    unsigned int gcPause;
-    unsigned int gcMult;
-    sword::DEC_Logger* logger;
-    archive >> automate;
-    archive >> gcPause;
-    archive >> gcMult;
-    archive >> logger;
-    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult, logger );
-}
 
 #endif // __DEC_AutomateDecision_h_

@@ -35,14 +35,10 @@ namespace legacy
     template< typename Archive >
     void save_construct_data( Archive& archive, const sword::legacy::RolePion_Decision* role, const unsigned int /*version*/ )
     {
-        MIL_AgentPion* pion = role->pEntity_;
-        unsigned int gcPause = role->gcPause_;
-        unsigned int gcMult = role->gcMult_;
-        sword::DEC_Logger* logger = role->logger_;
-        archive << pion;
-        archive << gcPause;
-        archive << gcMult;
-        archive << logger;
+        archive << role->pEntity_;
+        archive << role->gcPause_;
+        archive << role->gcMult_;
+        archive << role->logger_;
     }
 
     template< typename Archive >

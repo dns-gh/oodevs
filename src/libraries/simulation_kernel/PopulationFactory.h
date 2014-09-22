@@ -46,9 +46,8 @@ public:
 private:
     //! @name CheckPoint
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ );
-    PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, std::unique_ptr< sword::DEC_Logger > logger );
+    template< typename Archive > friend void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ );
     //@}
 
 private:
@@ -62,28 +61,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PopulationFactory )
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ )
-{
-    const MissionController_ABC* const missionController = &factory->missionController_;
-    archive << missionController;
-    archive << factory->gcPause_;
-    archive << factory->gcMult_;
-    archive << factory->logger_;
-}
-template< typename Archive >
-void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ )
-{
-    MissionController_ABC* missionController;
-    unsigned int gcPause;
-    unsigned int gcMult;
-    std::unique_ptr< sword::DEC_Logger > logger;
-    archive >> missionController;
-    archive >> gcPause;
-    archive >> gcMult;
-    archive >> logger;
-    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult, std::move( logger ) );
-}
 
 #endif // __PopulationFactory_h_

@@ -11,8 +11,6 @@
 #include "DEC_Logger.h"
 #include "MT_Tools/MT_Logger.h"
 
-BOOST_CLASS_EXPORT_IMPLEMENT( sword::DEC_Logger )
-
 using namespace sword;
 
 // -----------------------------------------------------------------------------
@@ -42,6 +40,7 @@ DEC_Logger::~DEC_Logger()
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Logger::Log
 // Created: SLI 2013-02-22
