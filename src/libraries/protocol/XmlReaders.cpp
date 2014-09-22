@@ -831,18 +831,6 @@ namespace
             ReadPathResult( reader, *pathfind.mutable_result(), xis );
     }
 
-    void ReadLogisticItinerary( const Reader_ABC& reader, sword::Pathfind& pathfind, xml::xistream& xis, const std::string& parent )
-    {
-        if( xis.has_child( parent ) )
-        {
-            xis >> xml::start( parent )
-                    >> xml::start( "itinerary" );
-            ReadItinerary( reader, pathfind, xis );
-            xis     >> xml::end
-                >> xml::end;
-        }
-    }
-
     void AddSupplyFlowRecipient( const Reader_ABC& reader, PushFlowParameters& dst, xml::xistream& xis )
     {
         const auto id = TestAttribute< uint32_t >( xis, "id" );
@@ -871,9 +859,11 @@ namespace
         dst.set_null_value( false );
         auto& push = *dst.add_value()->mutable_push_flow_parameters();
         xis >> xml::list( "recipient", boost::bind( &AddSupplyFlowRecipient, boost::cref( reader ), boost::ref( push ), _1 ) );
-
         xis >> xml::list( "transporter", boost::bind( &AddSupplyFlowTransporter< PushFlowParameters >, boost::ref( push ), _1 ) );
-        ReadLogisticItinerary( reader, *push.mutable_waybackpathfind(), xis, "waybackpath" );
+        xis >> xml::optional
+            >> xml::start( "waybackpath" )
+            >> xml::list( "itinerary", [&]( xml::xistream& xis ){ ReadItinerary( reader, *push.mutable_waybackpathfind(), xis ); } )
+            >> xml::end;
     }
 
     void ReadPullFlowParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
@@ -895,8 +885,14 @@ namespace
             next.mutable_formation()->set_id( *supplier );
         xis >> xml::list( "resource", boost::bind( &AddSupplyFlowResource< PullFlowParameters >, boost::ref( pull ), _1 ) );
         xis >> xml::list( "transporter", boost::bind( &AddSupplyFlowTransporter< PullFlowParameters >, boost::ref( pull ), _1 ) );
-        ReadLogisticItinerary( reader, *pull.mutable_wayoutpathfind(), xis, "wayoutpath" );
-        ReadLogisticItinerary( reader, *pull.mutable_waybackpathfind(), xis, "waybackpath" );
+        xis >> xml::optional
+            >> xml::start( "wayoutpath" )
+            >> xml::list( "itinerary", [&]( xml::xistream& xis ){ ReadItinerary( reader, *pull.mutable_wayoutpathfind(), xis ); } )
+            >> xml::end;
+        xis >> xml::optional
+            >> xml::start( "waybackpath" )
+            >> xml::list( "itinerary", [&]( xml::xistream& xis ){ ReadItinerary( reader, *pull.mutable_waybackpathfind(), xis ); } )
+            >> xml::end;
     }
 
     void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
