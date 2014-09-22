@@ -14,7 +14,6 @@
 #include "MIL_AgentServer.h"
 #include "StructuralCapacity.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Decision/DEC_ResourceNetwork.h"
 #include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"

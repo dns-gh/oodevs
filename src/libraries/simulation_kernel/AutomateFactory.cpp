@@ -16,7 +16,6 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/map.hpp>
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ )

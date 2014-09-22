@@ -47,6 +47,4 @@ inline void serialize(
     } // end namespace serialization
 } // end namespace boost
 
-#include <boost/serialization/shared_ptr.hpp>
-
 #endif // __SerializationTools_h_

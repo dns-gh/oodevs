@@ -19,7 +19,6 @@
 #include "InhabitantFactory_ABC.h"
 #include "Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 #include "MT_Tools/MT_Logger.h"
-#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ArmyFactory )
 

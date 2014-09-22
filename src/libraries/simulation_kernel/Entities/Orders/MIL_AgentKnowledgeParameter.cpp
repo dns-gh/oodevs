@@ -15,7 +15,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
-#include "CheckPoints/SerializationTools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentKnowledgeParameter )
 

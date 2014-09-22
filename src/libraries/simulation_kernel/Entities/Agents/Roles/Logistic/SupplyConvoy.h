@@ -111,7 +111,7 @@ protected:
     MIL_Agent_ABC* provider_;
     bool autoAllocateNewTransporters_;
     bool finished_;
-	bool impossible_;
+    bool impossible_;
 };
 } // end namespace logistic
 

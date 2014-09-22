@@ -11,7 +11,6 @@
 #include "MIL_ResourceNetworkNodeParameter.h"
 #include "Decision/DEC_ResourceNetwork.h"
 #include "protocol/protocol.h"
-#include "CheckPoints/SerializationTools.h"
 #include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ResourceNetworkNodeParameter )

@@ -33,7 +33,6 @@
 #include "simulation_kernel/DefaultComponentLendedFunctorComputer.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include <boost/serialization/shared_ptr.hpp>
 #include <boost/ptr_container/serialize_ptr_list.hpp>
 #include <boost/ptr_container/serialize_ptr_map.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>

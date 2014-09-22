@@ -23,7 +23,6 @@
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
 #include "HumansActionsNotificationHandler_ABC.h"
-#include <boost/serialization/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )

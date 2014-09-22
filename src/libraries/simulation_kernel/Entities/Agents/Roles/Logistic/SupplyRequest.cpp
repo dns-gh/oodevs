@@ -12,7 +12,6 @@
 #include "ConsignHelper.h"
 #include "SupplyResource_ABC.h"
 #include "SupplyRecipient_ABC.h"
-#include "Checkpoints/SerializationTools.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"

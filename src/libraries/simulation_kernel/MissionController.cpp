@@ -9,13 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "MissionController.h"
-
 #include "ActionManager.h"
 #include "PopulationFactory_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "CheckPoints/SerializationTools.h"
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MissionController )

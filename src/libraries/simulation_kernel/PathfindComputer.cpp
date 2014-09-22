@@ -33,7 +33,6 @@
 
 #include <boost/assign.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PathfindComputer )
 

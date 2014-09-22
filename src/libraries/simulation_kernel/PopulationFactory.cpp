@@ -13,7 +13,6 @@
 #include "MissionController_ABC.h"
 #include "Decision/DEC_Logger.h"
 #include "Entities/Populations/MIL_PopulationType.h"
-#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 

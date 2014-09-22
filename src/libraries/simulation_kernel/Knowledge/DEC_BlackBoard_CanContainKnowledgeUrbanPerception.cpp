@@ -11,7 +11,6 @@
 #include "DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_UrbanPerception.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 

@@ -12,7 +12,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL.h"
-#include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 #include <boost/make_shared.hpp>
 

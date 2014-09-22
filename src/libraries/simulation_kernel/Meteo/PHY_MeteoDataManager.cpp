@@ -34,7 +34,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 
 namespace bpt = boost::posix_time;
 
