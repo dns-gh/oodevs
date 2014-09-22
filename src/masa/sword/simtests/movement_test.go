@@ -11,8 +11,6 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
-	"masa/sword/swapi/phy"
-	"masa/sword/sword"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -124,98 +122,4 @@ func (s *TestSuite) TestTerrainSpeedModulation(c *C) {
 	lngUrbain, latUrbain := -15.732, 28.3568
 	checkSpeed(c, client, swapi.Point{X: lngUrbain, Y: latUrbain},
 		swapi.Point{X: lngUrbain - 0.05, Y: latUrbain}, 90)
-}
-
-const (
-	MissionClearRouteId = uint32(44594859)
-)
-
-func SendClearRoute(client *swapi.Client, unitId uint32, from, to swapi.Point) error {
-	// "clear route" uses a 'minesweep' pathfind which does not stop for objects
-	_, err := client.SendUnitOrder(unitId, MissionClearRouteId,
-		swapi.MakeParameters(
-			swapi.MakeHeading(0), nil, nil, nil,
-			swapi.MakeLinePathParam(from, to)))
-	return err
-}
-
-func checkUnitWaitsOnObject(c *C, phydb *phy.PhysicalFile,
-	client *swapi.Client, unitId uint32, from, to swapi.Point) {
-
-	reporter, _ := newReporter(c, unitId, phydb, "^Blocked by object")
-	reporter.Start(client.Model)
-	ok := reporter.WaitCount(1)
-	c.Assert(ok, Equals, true)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unitId].Posture.New == sword.UnitAttributes_parked_on_self_prepared_area
-	})
-	c.Assert(client.Model.GetUnit(unitId).Position, Not(IsNearby), from)
-	c.Assert(client.Model.GetUnit(unitId).Position, Not(IsNearby), to)
-}
-
-func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
-	phydb := loadPhysical(c, "test")
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
-	defer stopSimAndClient(c, sim, client)
-	from := swapi.Point{X: -15.924495, Y: 28.231229}
-	to := swapi.Point{X: -15.757619, Y: 28.398163}
-	// a rectangle minefield around 'to'
-	party := client.Model.GetData().FindPartyByName("party2")
-	c.Assert(party, NotNil)
-	object, err := client.CreateObject("mines", party.Id,
-		swapi.MakePolygonLocation(
-			swapi.Point{X: -15.785794, Y: 28.371330},
-			swapi.Point{X: -15.785794, Y: 28.430141},
-			swapi.Point{X: -15.713773, Y: 28.430141},
-			swapi.Point{X: -15.713773, Y: 28.371330}),
-		createObstacleAttributeParameter(true, 0, 0))
-	c.Assert(err, IsNil)
-	c.Assert(object, NotNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Objects[object.Id].Activated
-	})
-	unit := CreateUnitInParty(c, client, phydb, "party1", "VW Combi Rally",
-		"VW Combi", from)
-	err = SendClearRoute(client, unit.Id, from, to)
-	c.Assert(err, IsNil)
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
-	// unit waits if teleported inside object
-	inside := swapi.Point{X: -15.721507, Y: 28.372396}
-	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), inside)
-	c.Assert(err, IsNil)
-	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, inside)
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
-	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, inside)
-	// unit moves back to object if teleported outside object
-	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), from)
-	c.Assert(err, IsNil)
-	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, from)
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
-	// unit moves when object is deactivated
-	err = client.UpdateObject(object.Id,
-		swapi.MakeList(
-			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_obstacle)),
-			swapi.MakeBoolean(false)))
-	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return isNearby(data.Units[unit.Id].Position, to)
-	})
-	// reset unit and object
-	err = client.UpdateObject(object.Id,
-		swapi.MakeList(
-			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_obstacle)),
-			swapi.MakeBoolean(true)))
-	c.Assert(err, IsNil)
-	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), from)
-	c.Assert(err, IsNil)
-	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, from)
-	err = SendClearRoute(client, unit.Id, from, to)
-	c.Assert(err, IsNil)
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
-	// unit moves when object is destroyed
-	err = client.DeleteObject(object.Id)
-	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return isNearby(data.Units[unit.Id].Position, to)
-	})
 }

@@ -96,8 +96,9 @@ void DEC_AgentContext::InitializeObjectKnowledges( const MIL_Agent_ABC& agent, c
     if( !class_.AvoidObjects() )
         return;
     T_KnowledgeObjectVector knowledgesObject;
+    MIL_PathObjectFilter filter;
     if( DEC_BlackBoard_CanContainKnowledgeObject* container = agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
-        container->GetObjectsAtInteractionHeight( knowledgesObject, agent, MIL_PathObjectFilter() );
+        container->GetObjectsAtInteractionHeight( knowledgesObject, agent, filter );
     T_PointVector firstPointVector;
     if( !points.empty() )
         firstPointVector.push_back( *points.begin() );

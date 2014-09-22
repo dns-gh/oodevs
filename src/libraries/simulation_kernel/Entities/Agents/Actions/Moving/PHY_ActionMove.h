@@ -58,12 +58,8 @@ private:
     //@{
     bool AvoidObstacles();
     bool UpdateObjectsToAvoid();
-    void ComputeNewKnowledges( T_KnowledgeObjectVector& newKnowledges );
-    bool ComputeNewKnowledge( const boost::shared_ptr< DEC_Knowledge_Object >& object, T_KnowledgeObjectVector& newKnowledges );
     bool IsDisasterToAvoid( const DisasterAttribute& disaster );
-    double ComputeImpact( const DisasterAttribute& disaster ) const;
     void CreateNewPath();
-    boost::shared_ptr< DEC_Knowledge_Object > ComputeCollision();
     //@}
 
 private:
@@ -74,9 +70,9 @@ private:
     std::vector< TER_Localisation > geometrySignatures_;
     bool executionSuspended_;
     bool isBlockedByObject_;
-    bool waitingOnObject_;
-    bool blockedByDisaster_;
     unsigned int blockedTickCounter_;
+    int obstacleId_;
+    bool blockedByDisaster_;
     double oldDisasterImpact_;
 };
 
