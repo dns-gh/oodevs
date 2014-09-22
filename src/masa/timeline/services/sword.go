@@ -10,6 +10,7 @@ package services
 
 import (
 	"code.google.com/p/goprotobuf/proto"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -314,6 +315,8 @@ func (s *Sword) restart(link *SwordLink) {
 func isOrder(msg *sword.ClientToSim) bool {
 	m := msg.GetMessage()
 	switch {
+	case m == nil:
+		return false
 	case m.UnitOrder != nil:
 		return true
 	case m.AutomatOrder != nil:
@@ -390,7 +393,7 @@ func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage
 	err := swapi.DecodeMessage(&msg, swapi.ClientToSimulationTag, payload)
 	if err != nil {
 		s.Log("unable to decode payload on event %v: payload:%v error:%v",
-			id, string(payload), err)
+			id, base64.StdEncoding.EncodeToString(payload), err)
 		msg = swapi.SwordMessage{ClientToSimulation: &sword.ClientToSim{}}
 	}
 	s.events[id] = msg
