@@ -14,18 +14,100 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Options.h"
 #include "MT_Tools/MT_Logger.h"
-#include <graphics/extensions.h>
-#include <graphics/VertexShader.h>
-#include <graphics/FragmentShader.h>
-#include <graphics/ShaderProgram.h>
+#include <terrain/GeosUtil.h>
+#include <terrain/GraphicData.h>
+#include <terrain/ShapeTesselator.h>
+#include <terrain/TesselatedShape.h>
 #include <boost/lexical_cast.hpp>
+
+using namespace terrain;
+
+namespace
+{
+
+terrain::T_PointVector MakeCircle( geometry::Point2d center, uint32_t radius )
+{
+    terrain::T_PointVector points;
+    const double step = std::acos( -1.f ) / 20.f + 1e-7f;
+    const double twoPi = 2*std::acos( -1.f );
+    for( double angle = 0; angle < twoPi; angle += step )
+        points.push_back( geometry::Point2d(
+            center.X() + radius*std::cos( angle ),
+            center.Y() + radius*std::sin( angle ) ) );
+    points.push_back( geometry::Point2d(
+        center.X() + radius*std::cos( twoPi ),
+        center.Y() + radius*std::sin( twoPi ) ) );
+    return points;
+}
+
+// Returns a donut of maxRange outer radius and minRange inner radius. If
+// minRange is zero, returns a disk.
+GeosGeomPtr MakeDonut( const GeosContextPtr& h, geometry::Point2d center,
+        uint32_t minRange, uint32_t maxRange )
+{
+    const auto outer = MakeCircle( center, maxRange );
+    T_Rings inner;
+    if( minRange > 0 )
+        inner.push_back( MakeCircle( center, minRange ) );
+    return CreateMultiPolygon( h, outer, inner );
+}
+
+// Returns the union of all donuts where the i-th donut is defined by
+// centers[i] and ranges[i] minRange and maxRange.
+GeosGeomPtr MergeDonuts( const GeosContextPtr& h,
+        const std::vector< geometry::Point2f >& centers,
+        const std::vector< std::pair< uint32_t, uint32_t > >& ranges )
+{
+    std::vector< GeosGeomPtr > donuts;
+    donuts.reserve( centers.size() );
+    for( size_t i = 0; i < centers.size(); ++i )
+    {
+        const auto range = ranges.at( i );
+        const auto center = geometry::Point2d( centers[i].X(), centers[i].Y() );
+        const auto donut = MakeDonut( h, center, range.first, range.second );
+        donuts.push_back( donut );
+    }
+    return UnaryUnion( h, donuts );
+}
+
+typedef std::vector< TesselatedShapePtr > T_TesselatedShapes;
+
+TesselatedShapePtr TesselateOne( const T_Polygon& polygon )
+{
+    ShapeTesselator tesselator;
+    tesselator.BeginArea( *new GraphicData(), "" );
+    tesselator.AddContour( polygon.first );
+    for( auto it = polygon.second.begin(); it != polygon.second.end(); ++it )
+        tesselator.AddContour( *it );
+    return tesselator.EndTesselation().GetShape();
+}
+
+// Turns a collection of generic geometries into a collection of tessellated
+// ones suitable for OpenGL rendering (no holes, possibly triangulated).
+T_TesselatedShapes Tesselate( const GeosContextPtr& h, const GeosGeomPtr& geometries )
+{
+    T_TesselatedShapes tesselated;
+    T_MultiPolygon collection;
+    if( !ExtractMultiPolygon( h, geometries, collection ) )
+        return tesselated;
+    for( auto it = collection.begin(); it != collection.end(); ++it )
+    {
+        // We could bypass tesselation for polygons without holes but it is
+        // just simpler to process all elements the same way.
+        const auto result = TesselateOne( *it );
+        if( result )
+            tesselated.push_back( result );
+    }
+    return tesselated;
+}
+
+}  // namespace
 
 WeaponRangeLayer::WeaponRangeLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                     gui::View_ABC& view, const kernel::Profile_ABC& profile )
     : gui::EntityLayerBase( controllers, tools, strategy, view, profile, eLayerTypes_WeaponRanges )
     , controllers_( controllers )
     , strategy_( strategy )
-    , ignoreShader_( false )
     , useColor_( false )
 {
     controllers_.Register( *this );
@@ -48,181 +130,41 @@ void WeaponRangeLayer::NotifyDeleted( const kernel::Agent_ABC& entity )
 
 void WeaponRangeLayer::Paint( const geometry::Rectangle2f& extent )
 {
-    if( ignoreShader_ || !ShouldDrawPass() )
+    if( !ShouldDrawPass() )
         return;
     auto ranges = ranges_;
     auto positions = positions_;
     ranges_.clear();
     positions_.clear();
     gui::Viewport2d viewport( extent );
-    // will call Draw with each entity
+    // Will call Draw with each entity and refill ranges_ and positions_.
     EntityLayerBase::Paint( viewport );
-    if( ranges != ranges_ )
+    if( ranges != ranges_ || positions_ != positions )
         Reset();
-    if( !program_ )
-        return;
-    program_->Use();
-    if( positions != positions_ )
-        Update();
-    glBegin( GL_QUADS );
-    glVertex2f( extent.Left(), extent.Bottom() );
-    glVertex2f( extent.Left(), extent.Top() );
-    glVertex2f( extent.Right(), extent.Top() );
-    glVertex2f( extent.Right(), extent.Bottom() );
-    glEnd();
-    program_->Unuse();
-}
-
-namespace
-{
-
-std::string AddLineNumbers( const std::string& program )
-{
-    std::stringstream input( program );
-    std::stringstream output;
-    std::string line;
-    for( int i = 1; std::getline( input, line ); ++i )
-        output << i << ": " << line << "\n";
-    return output.str();
-}
-
-template< typename Shader >
-Shader* NewShader( const std::string& program )
-{
-    try
+    for( auto it = tesselated_.begin(); it != tesselated_.end(); ++it )
     {
-        return new Shader( program );
-    }
-    catch( const std::exception& e )
-    {
-        throw MASA_EXCEPTION( AddLineNumbers( program ) + "\n" + e.what() );
-    }
-    catch( ... )
-    {
-        throw MASA_EXCEPTION( AddLineNumbers( program ) );
+        const auto color = QColor( it->first );
+        glPushAttrib( GL_CURRENT_BIT );
+        glColor4d( color.redF(), color.greenF(), color.blueF(), 0.5 );
+        for( auto is = it->second.begin(); is != it->second.end(); ++is )
+            (*is)->Draw( extent );
+        glPopAttrib();
     }
 }
-
-}  // namespace
 
 void WeaponRangeLayer::Reset()
 {
-    vertex_.reset();
-    fragment_.reset();
-    program_.reset();
-    if( ranges_.empty() )
-        return;
-    gl::Initialize();
-    try
-    {
-        vertex_.reset( NewShader< gl::VertexShader >(
-            "varying vec4 position;\n"
-            "void main()\n"
-            "{\n"
-            "  position = gl_ModelViewMatrix * gl_Vertex;\n"
-            "  gl_Position = ftransform();\n"
-            "}\n" ) );
-        fragment_.reset( NewShader< gl::FragmentShader >( MakeFragment() ) );
-        program_.reset( new gl::ShaderProgram() );
-        program_->AddShader( *vertex_ );
-        program_->AddShader( *fragment_ );
-        program_->Link();
-        return;
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_WARNING_MSG( "unable to create shader in " << __FUNCTION__ << std::endl << e.what() );
-    }
-    catch( ... )
-    {
-        MT_LOG_WARNING_MSG( "unable to create shader in " << __FUNCTION__ );
-    }
-    ignoreShader_ = true;
-    fragment_.reset();
-    vertex_.reset();
-    program_.reset();
-}
-
-void WeaponRangeLayer::Update() const
-{
-    int position = 0;
-    for( auto it = positions_.begin(); it != positions_.end(); ++it )
-        program_->SetUniformValue(
-            "pos_" + boost::lexical_cast< std::string>( ++position ),
-            static_cast< int >( it->second.size() ),
-            &it->second.front().X() );
-}
-
-std::string WeaponRangeLayer::MakeFragment() const
-{
-    std::stringstream shader;
-    shader <<
-        "varying vec4 position;\n"
-        "float alpha = 0.5;\n";
-    // for each team 'team' define a constant for its color,
-    // a constant array for the minimum weapon ranges and
-    // another one for the maximum weapon ranges and
-    // finally a uniform for the positions
-    std::size_t team = 0;
+    tesselated_.clear();
+    const auto h = InitGeos( false );
     for( auto it = ranges_.begin(); it != ranges_.end(); ++it )
     {
-        ++team;
-        const QColor c( it->first );
-        const auto& range = it->second;
-        const std::size_t size = range.size();
-        shader <<
-            "vec3 color_" << team
-                << " = vec3(" << c.redF() << "," << c.greenF() << "," << c.blueF() << ");\n"
-            "float min_" << team << "[" << size << "] = float[" << size << "](";
-        for( auto it2 = range.begin(); it2 != range.end(); ++it2 )
-        {
-            shader << it2->first;
-            if( std::next( it2 ) != range.end() )
-                shader << ",";
-        }
-        shader <<
-            ");\n"
-            "float max_" << team << "[" << size << "] = float[" << size << "](";
-        for( auto it2 = range.begin(); it2 != range.end(); ++it2 )
-        {
-            shader << it2->second;
-            if( std::next( it2 ) != range.end() )
-                shader << ",";
-        }
-        shader <<
-            ");\n"
-            "uniform vec2 pos_" << team << "[" << range.size() << "];\n";
+        const auto positions = positions_.find( it->first );
+        if( positions == positions_.end()
+                || positions->second.size() != it->second.size() )
+            continue;
+        const auto donuts = MergeDonuts( h, positions->second, it->second );
+        tesselated_[ it->first ] = Tesselate( h, donuts );
     }
-    shader <<
-        "void main()\n"
-        "{\n"
-        "  vec3 color = vec3( 0, 0, 0 );\n"
-        "  float count = 0;\n";
-    team = 0;
-    for( auto it = ranges_.begin(); it != ranges_.end(); ++it )
-    {
-        ++team;
-        const QColor c( it->first );
-        shader <<
-            "for( int team = 0; team < " << it->second.size() << "; ++team )\n"
-            "{\n"
-            "  float d = distance(position.xy, pos_" << team << "[team]);\n"
-            "  if( min_" << team << "[team] <= d && max_" << team << "[team] >= d )\n"
-            "  {\n"
-            "    color += color_" << team << ";\n"
-            "    ++count;\n"
-            "    break;\n"
-            "  }\n"
-            "}\n";
-    }
-    shader <<
-        "  if( count != 0 )\n"
-        "  {\n"
-        "    gl_FragColor.rgb = color / count;\n"
-        "    gl_FragColor.a = alpha;\n"
-        "  }\n"
-        "}\n";
-    return shader.str();
 }
 
 void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& /*viewport*/, bool /*pickingMode*/ )
@@ -240,7 +182,8 @@ void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC
         if( weapons->GetMaxRange() <= 0 )
             return;
         const auto color = useColor_ ? color_ : strategy_.FindColor( entity );
-        ranges_[ color.name() ].push_back( std::make_pair( weapons->GetMinRange(), weapons->GetMaxRange() ) );
+        ranges_[ color.name() ].push_back(
+                std::make_pair( weapons->GetMinRange(), weapons->GetMaxRange() ) );
         positions_[ color.name() ].push_back( position );
     }
 }
