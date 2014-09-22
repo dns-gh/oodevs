@@ -82,7 +82,8 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( "buildRiverBanks", tools::findTranslation( "Object", "Build river banks:" ) );
 
     display_->AddGroup( tools::findTranslation( "Object", "Camp" ) )
-                .AddLabel( "superior", tools::findTranslation( "Object", "Logistic superior:" ) );
+                .AddLabel( "superior", tools::findTranslation( "Object", "Logistic superior:" ) )
+                .AddLabel( "capacity", tools::findTranslation( "Object", "Lodging capacity:" ) );
 
     display_->AddGroup( tools::findTranslation( "NBC", "NBC" ) )
                 .AddLabel( "danger", tools::findTranslation( "NBC", "Danger:" ) )
@@ -236,6 +237,15 @@ void ObjectKnowledgePanel::NotifyUpdated( const BypassAttribute_ABC& element )
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::NotifyUpdated( const ObstacleAttribute_ABC& element )
+{
+    DisplayExtension( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::NotifyUpdated
+// Created: JSR 2014-09-22
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::NotifyUpdated( const LodgingAttribute_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -399,6 +409,7 @@ void ObjectKnowledgePanel::UpdateAllExtensions()
     UpdateExtension< ConstructionAttribute_ABC >( *subSelected_ );
     UpdateExtension< BypassAttribute_ABC >( *subSelected_ );
     UpdateExtension< ObstacleAttribute_ABC >( *subSelected_ );
+    UpdateExtension< LodgingAttribute_ABC >( *subSelected_ );
     UpdateExtension< LogisticAttribute_ABC >( *subSelected_ );
     UpdateExtension< CrossingSiteAttribute_ABC >( *subSelected_ );
     UpdateExtension< SupplyRouteAttribute_ABC >( *subSelected_ );

@@ -1038,7 +1038,7 @@
     </message>
     <message>
         <source>Logistic superior:</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur logistique:</translation>
     </message>
     <message>
         <source>Cell ignition:  %L1/%L2</source>
@@ -1070,7 +1070,7 @@
     </message>
     <message>
         <source>Lodging capacity:</source>
-        <translation>Capacité d&apos;hébergement</translation>
+        <translation>Capacité d&apos;hébergement:</translation>
     </message>
     <message>
         <source>Altitude modifier:</source>

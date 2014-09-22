@@ -111,6 +111,17 @@ MIL_Object_ABC* PHY_RoleAction_Objects::GetObject( const boost::shared_ptr< DEC_
     return 0;
 }
 
+namespace
+{
+    void GetKnowledgeAndRecon( const MIL_Agent_ABC& pion, const MIL_Object_ABC& object, boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+    {
+        if( DEC_BlackBoard_CanContainKnowledgeObject* container = pion.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+            pKnowledge = container->GetKnowledgeObject( object );
+        if( pKnowledge )
+            pKnowledge->Recon( pion );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::Construct
 // Created: NLD 2005-01-19
@@ -153,6 +164,8 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
 
     owner_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     object().Construct( rDeltaPercentage );
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
+    GetKnowledgeAndRecon( *owner_, object, pKnowledge );
     double rDotationNeeded = nDotationNeeded;
     if( pDotationCategory )
         dataComputer.ConsumeDotations( *pDotationCategory, rDotationNeeded );
@@ -173,8 +186,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
         pKnowledge.reset();
         return eImpossible;
     }
-    if( DEC_BlackBoard_CanContainKnowledgeObject* container = owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
-        pKnowledge = container->GetKnowledgeObject( *pObject );
+    GetKnowledgeAndRecon( *owner_, *pObject, pKnowledge );
     if( instantaneous )
         return pKnowledge.get() ? eFinished : eRunning;
     else
