@@ -24,6 +24,7 @@ namespace kernel
 // Created : AHC 2010-10-14
 // =============================================================================
 class LogisticSupplyPullFlowDialog : public LogisticSupplyFlowDialog_ABC
+                                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
@@ -66,6 +67,7 @@ private:
     void SetSuppliesToTable();
     void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers );
     void Clear();
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     //@}
 
     //! @name Types

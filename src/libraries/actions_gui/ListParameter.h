@@ -39,6 +39,15 @@ namespace actions
 // =============================================================================
 class ListParameterBase : public Param_ABC
 {
+public:
+    //! @name Types
+    //@{
+    enum E_Role {
+        ParamRole = Qt::UserRole,
+        IdRole    = Qt::UserRole + 1
+    };
+    //@}
+
     Q_OBJECT
 
 public:

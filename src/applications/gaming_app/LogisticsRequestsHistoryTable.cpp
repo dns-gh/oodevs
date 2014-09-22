@@ -17,8 +17,6 @@
 
 Q_DECLARE_METATYPE( const kernel::Entity_ABC* )
 
-#define EntityRole ( Qt::UserRole )
-
 namespace
 {
     enum EColumns
@@ -112,7 +110,7 @@ void LogisticsRequestsHistoryTable::AddRequest( const QString& state,
     AddItem( rowIndex, eColumnStarted, started );
     AddItem( rowIndex, eColumnEnded, ended );
     auto handlerItem = AddItem( rowIndex, eColumnHandler, handlerName );
-    handlerItem->setData( QVariant::fromValue( handler ), EntityRole );
+    handlerItem->setData( QVariant::fromValue( handler ), Qt::UserRole );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,10 +136,8 @@ QStandardItem* LogisticsRequestsHistoryTable::AddItem( int row, int col, const Q
 void LogisticsRequestsHistoryTable::UpdateHandler( const kernel::Entity_ABC& entity, const QString& name )
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
-    {
-        auto item = dataModel_.item( row, eColumnHandler );
-        auto itemEntity = item->data( EntityRole ).value< const kernel::Entity_ABC* >();
-        if( itemEntity == &entity )
-            item->setText( name );
-    }
+        if( auto item = dataModel_.item( row, eColumnHandler ) )
+            if( auto itemEntity = item->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
+                if( itemEntity == &entity )
+                    item->setText( name );
 }
