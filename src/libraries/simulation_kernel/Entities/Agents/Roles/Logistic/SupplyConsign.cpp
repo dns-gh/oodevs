@@ -25,7 +25,6 @@
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
 #include <boost/serialization/deque.hpp>
-#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConsign )
 

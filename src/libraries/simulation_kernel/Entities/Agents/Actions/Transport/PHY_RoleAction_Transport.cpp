@@ -23,7 +23,6 @@
 #include "Decision/DEC_Decision.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Transport )
 
