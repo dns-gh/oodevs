@@ -253,11 +253,17 @@ integration.getConvexHull = function( locationList )
 end
 
 --- Returns a random position inside the disc defined by the given center and radius.
+-- The returned position will be in the current area of responsibility, if there is one.
+-- If there is no such position, this method will return the center of the disc (the "center" parameter).
 -- @param center Point knowledge (center of the disc), defining a "getPosition" method returning a simulation point.
 -- @param radius Float, the radius of the disc
 -- @return Point knowledge
 integration.randomPositionInCircle = function( center, radius )
-    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireDansCercle( myself, center:getPosition(), radius ) )
+    local position = DEC_Geometrie_PositionAleatoireDansCercle( myself, center:getPosition(), radius )
+    if not position then
+        return center
+    end
+    return CreateKnowledge( integration.ontology.types.point, position )
 end
 
 --- Returns a random position on the circle defined by the given center and radius.
