@@ -18,9 +18,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
 #include "protocol/MessageParameters.h"
-#pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
 
 namespace bpt = boost::posix_time;
 

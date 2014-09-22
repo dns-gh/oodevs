@@ -22,9 +22,7 @@
 #include "MT_Tools/MT_Ellipse.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/Protocol.h"
-#pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
 
 using namespace sword;
 namespace bpt = boost::posix_time;
