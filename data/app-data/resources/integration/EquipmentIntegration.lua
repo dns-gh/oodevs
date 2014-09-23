@@ -804,14 +804,14 @@ integration.deactivateRecording = function()
     DEC_Perception_DesactiverModeEnregistrement()
 end
 
---- Activates this entity's sensors (but not its special sensors).
+--- Activates this entity's sensors (but not its special sensors and sensors set as 'activated on request').
 -- @see integration.deactivateSensors
 -- This method can only be called by an agent.
 integration.activateSensors = function()
     DEC_Perception_ActiverSenseurs()
 end
 
---- Deactivates this entity's sensors (but not its special sensors).
+--- Deactivates this entity's sensors (but not its special sensors and sensors set as 'activated on request').
 -- @see integration.activateSensors
 -- This method can only be called by an agent.
 integration.deactivateSensors = function()
@@ -1085,17 +1085,17 @@ integration.deactivateSpecialSensors = function( area, eType )
     end
 end
 
---- Enables this entity's special sensors to detect CBRN toxic plume.
+--- Enables this entity's sensors set as 'activated on request' (see authoring tool).
 -- This method can only be called by an agent.
--- @see integration.deactivateSpecialSensorForCBRN
-integration.activateSpecialSensorForCBRN = function ()
+-- @see integration.deactivateSensorsUponRequest
+integration.activateSensorsUponRequest = function ()
     DEC_Perception_ActiverSenseursSurDecision()
 end
 
---- Disables this entity's special sensors to detect CBRN toxic plume.
+--- Disables this entity's sensors set as 'activated on request' (see authoring tool).
 -- This method can only be called by an agent.
--- @see integration.activateSpecialSensorForCBRN
-integration.deactivateSpecialSensorForCBRN = function ()
+-- @see integration.activateSensorsUponRequest
+integration.deactivateSensorsUponRequest = function ()
     DEC_Perception_DesactiverSenseursSurDecision()
 end
 
@@ -1300,3 +1300,14 @@ end
 integration.agentIsAutonomous = function( agent )
     return DEC_Agent_EstAutonome( agent )
 end
+
+--- Enables this entity's special sensors to detect CBRN toxic plume.
+-- This method can only be called by an agent.
+-- @see integration.deactivateSpecialSensorForCBRN
+integration.activateSpecialSensorForCBRN = integration.activateSensorsUponRequest
+
+
+--- Disables this entity's special sensors to detect CBRN toxic plume.
+-- This method can only be called by an agent.
+-- @see integration.activateSpecialSensorForCBRN
+integration.deactivateSpecialSensorForCBRN = integration.deactivateSensorsUponRequest
