@@ -92,17 +92,7 @@ OrbatToolbar::~OrbatToolbar()
 void OrbatToolbar::OnSetFilter()
 {
     if( entity_ )
-    {
-        const kernel::CommunicationHierarchies* pCommunicationHierarchies = entity_->Retrieve< kernel::CommunicationHierarchies >();
-        if( !pCommunicationHierarchies )
-        {
-            const kernel::TacticalHierarchies* pTacticalHierarchies = entity_->Retrieve< kernel::TacticalHierarchies >();
-            if( pTacticalHierarchies )
-                Filter( pTacticalHierarchies->GetTop() );
-        }
-        else
-            Filter( *entity_ );
-    }
+        Filter( *entity_ );
 }
 
 // -----------------------------------------------------------------------------
