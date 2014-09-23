@@ -14,6 +14,7 @@
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Objects/AttritionCapacity.h"
+#include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -393,7 +394,12 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PathWalker::FindBlockingObject( co
     if( !object.GetType().GetCapacity< AttritionCapacity >() )
         return 0;
     auto k = movingEntity_.GetKnowledgeObject( object );
-    if( k && k->GetLocalisation().IsInside( endPosition ) )
+    if( !k )
+        return k;
+    if( auto bypass = k->RetrieveAttribute< BypassAttribute >() )
+        if( bypass->IsBypassed() )
+            return 0;
+    if( k->GetLocalisation().IsInside( endPosition ) )
         return k;
     return 0;
 }
