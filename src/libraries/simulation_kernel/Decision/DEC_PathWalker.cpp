@@ -388,6 +388,16 @@ MT_Vector2D DEC_PathWalker::ComputePositionBeforeObject( const MT_Vector2D& star
     return result;
 }
 
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PathWalker::FindBlockingObject( const MT_Vector2D& endPosition, const MIL_Object_ABC& object ) const
+{
+    if( !object.GetType().GetCapacity< AttritionCapacity >() )
+        return 0;
+    auto k = movingEntity_.GetKnowledgeObject( object );
+    if( k && k->GetLocalisation().IsInside( endPosition ) )
+        return k;
+    return 0;
+}
+
 namespace
 {
     bool IsOutside( const MT_Vector2D& position, const MIL_Object_ABC& object )
@@ -401,19 +411,17 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
 {
     if( !movingEntity_.CanObjectInteractWith( object ) )
         return false;
-    if( object.GetType().GetCapacity< AttritionCapacity >() )
-        if( auto k = movingEntity_.GetKnowledgeObject( object ) )
-            if( k->GetLocalisation().IsInside( endPosition ) )
-            {
-                if( k != collision_.lock() )
-                    movingEntity_.SendRC( report::eRC_BlockedByObject, k );
-                collision_ = k;
-                if( IsOutside( vNewPos_, object ) )
-                    vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
-                rCurrentSpeed_ = 0;
-                pathSet_ = eBlockedByObject;
-                return true;
-            }
+    if( auto k = FindBlockingObject( endPosition, object ) )
+    {
+        if( k != collision_.lock() )
+            movingEntity_.SendRC( report::eRC_BlockedByObject, k );
+        collision_ = k;
+        if( IsOutside( vNewPos_, object ) )
+            vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
+        rCurrentSpeed_ = 0;
+        pathSet_ = eBlockedByObject;
+        return true;
+    }
     movingEntity_.NotifyMovingInsideObject( object );
     const double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
     if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) )
