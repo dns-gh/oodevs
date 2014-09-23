@@ -289,7 +289,7 @@ end
 -- Any additional parameter will be used as parameters of the message.
 -- @return Boolean, the error code
 integration.SendMessage = function( ... )
-    local status, err = pcall( masalife.brain.communication.protocol.send, ... )
+    local status, err = pcall( masalife.brain.communication.send, ... )
     if not status then
         DEC_Trace( "Sending message failed: "..tostring( err ).." from "..debug.traceback() )
     end
