@@ -16,6 +16,7 @@
 #include <spatialcontainer/TerrainData.h>
 #include <tools/Set.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <string>
 #include <set>
 
@@ -138,7 +139,8 @@ private:
     E_ReturnCode SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
     void SetCurrentPathPoint( DEC_PathResult& path );
     void CheckPathNotification();
-    void SetBlockedByObject( const MT_Vector2D& startPosition, MIL_Object_ABC& object, CIT_MoveStepSet itCurMoveStep );
+    bool HandleObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition, MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual );
+    MT_Vector2D ComputePositionBeforeObject( const MT_Vector2D& startPosition, const MT_Vector2D& currentStepPos, const MIL_Object_ABC& object ) const;
      //@}
 
 private:
@@ -160,6 +162,7 @@ private:
     bool bFuelReportSent_;
     bool bImpossibleReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
+    boost::weak_ptr< DEC_Knowledge_Object > collision_;
     E_ReturnCode pathSet_;
     //@}
 };

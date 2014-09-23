@@ -11,15 +11,11 @@
 #define __WeaponRangeLayer_h_
 
 #include "clients_gui/EntityLayer.h"
-
-namespace gl
-{
-    class VertexShader;
-    class FragmentShader;
-    class ShaderProgram;
-}
+#include <boost/shared_ptr.hpp>
 
 class Weapons;
+class TesselatedShape;
+typedef boost::shared_ptr< TesselatedShape > TesselatedShapePtr;
 
 // =============================================================================
 /** @class  WeaponRangeLayer
@@ -45,23 +41,18 @@ private:
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     void Reset();
-    void Update() const;
-
-    std::string MakeFragment() const;
 
 private:
     typedef std::vector< geometry::Point2f > T_Positions;
     typedef std::vector< std::pair< unsigned int, unsigned int > > T_Ranges;
+    typedef std::vector< TesselatedShapePtr > T_TesselatedShapes;
 
 private:
     kernel::Controllers& controllers_;
     gui::ColorStrategy_ABC& strategy_;
-    std::unique_ptr< gl::VertexShader > vertex_;
-    std::unique_ptr< gl::FragmentShader > fragment_;
-    std::unique_ptr< gl::ShaderProgram > program_;
     std::map< QString, T_Positions > positions_;
     std::map< QString, T_Ranges > ranges_;
-    bool ignoreShader_;
+    std::map< QString, T_TesselatedShapes > tesselated_;
     bool useColor_;
     QColor color_;
 };

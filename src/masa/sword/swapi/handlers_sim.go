@@ -110,8 +110,12 @@ func (model *ModelData) handlePartyCreation(m *sword.SimToClient_Content) error 
 	}
 	party := NewParty(
 		mm.GetParty().GetId(),
-		mm.GetName())
-	model.Parties[party.Id] = party
+		mm.GetName(),
+	)
+	if !model.addParty(party) {
+		//ignore errors for now
+		//return fmt.Errorf("cannot insert party %d", party.Id)
+	}
 	return nil
 }
 
@@ -1197,8 +1201,8 @@ func (model *ModelData) handleUnitVisionCones(m *sword.SimToClient_Content) erro
 		unit.VisionCones.Cones = append(unit.VisionCones.Cones,
 			&VisionCone{
 				Origin: Point{
-					X: cone.GetOrigin().GetLatitude(),
-					Y: cone.GetOrigin().GetLongitude(),
+					X: cone.GetOrigin().GetLongitude(),
+					Y: cone.GetOrigin().GetLatitude(),
 				},
 				Height:   cone.GetHeight(),
 				Sensor:   cone.GetSensor(),

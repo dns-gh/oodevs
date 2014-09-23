@@ -21,6 +21,7 @@ import (
 	"masa/timeline/services"
 	"masa/timeline/swfake"
 	"masa/timeline/util"
+	"math/rand"
 	"net/url"
 	"sync"
 	"time"
@@ -1518,4 +1519,78 @@ func (t *TestSuite) TestKnownEventsAreDeletedWhenBeingFiltered(c *C) {
 		Tag:   sdk.MessageTag_delete_events.Enum(),
 		Uuids: []string{event.GetUuid()},
 	})
+}
+
+func toStringSet(values ...string) map[string]struct{} {
+	set := map[string]struct{}{}
+	for _, value := range values {
+		set[value] = struct{}{}
+	}
+	return set
+}
+
+func (t *TestSuite) TestSwordModelNotifiesFilteredObservers(c *C) {
+	f := t.MakeFixture(c, true)
+	defer f.Close()
+	f.WaitConnected()
+	profile := &sword.Profile{
+		Login:           proto.String("party_1_only"),
+		ReadOnlyParties: swapi.MakeIdList(1),
+		Supervisor:      proto.Bool(false),
+	}
+	f.server.CreateProfile(profile)
+	f.sword.WaitFor(func(d *swapi.ModelData) bool {
+		return len(d.Profiles) == 1
+	})
+	f.sword.WaitFor(func(d *swapi.ModelData) bool {
+		addParty(c, d, 1)
+		addParty(c, d, 2)
+		return true
+	})
+	t0 := f.addTaskEvent(c, "task_alone", f.begin, f.begin.Add(1*time.Second), "")
+	t1 := f.addTaskEvent(c, "task_p1", f.begin, f.begin.Add(1*time.Second), "{\"sword_entity\":1}")
+	f.addTaskEvent(c, "invalid", f.begin, f.begin.Add(1*time.Second), "{\"sword_entity\":9999}")
+	p1, err := f.createEvent("p1", "p1", "some_name", f.getSomeFragOrder(c, swapi.MakePartyTasker(1)))
+	c.Assert(err, IsNil)
+	p2, err := f.createEvent("p2", "p2", "some_name", f.getSomeFragOrder(c, swapi.MakePartyTasker(2)))
+	c.Assert(err, IsNil)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{
+		"sword_profile": "party_1_only",
+	})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
+	messages := make(chan interface{})
+	go func() {
+		for msg := range link.Listen() {
+			messages <- msg
+		}
+	}()
+	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	swtest.DeepEquals(c, mapEvents(msg.Events...), mapEvents(t0, t1, p1))
+	profile.ReadOnlyParties = swapi.MakeIdList(2)
+	f.server.CreateProfile(profile)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
+	c.Assert(msg, NotNil)
+	swtest.DeepEquals(c, toStringSet(msg.Uuids...), toStringSet(t1.GetUuid(), p1.GetUuid()))
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	swtest.DeepEquals(c, mapEvents(msg.Events...), mapEvents(p2))
+}
+
+func generateRandomData(size int) []byte {
+	src := make([]byte, size)
+	for i := range src {
+		src[i] = byte(rand.Intn(0xFF))
+	}
+	return src[:]
+}
+
+func (t *TestSuite) TestGarbageOrdersDoesNotAbort(c *C) {
+	f := t.MakeFixture(c, true)
+	defer f.Close()
+	id := f.addEvent(c, "garbage", "some_name", generateRandomData(64))
+	f.Tick()
+	f.controller.StopSession(f.session)
+	f.waitAllDoneOrDead(c, id)
 }

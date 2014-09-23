@@ -81,11 +81,12 @@ public:
     virtual bool CanMove              () const = 0;
     virtual bool IsReady              () const = 0;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const = 0;
-    virtual bool HasKnowledgeObject   ( const MIL_Object_ABC& object ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& object ) const = 0;
     virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType, const DEC_PathType& pathType ) const = 0;
     virtual bool HasResources         () = 0;
     virtual void SendRC               ( const MIL_DecisionalReport& reportId ) const = 0;
     virtual void SendRC               ( const MIL_DecisionalReport& reportId, const std::string& name ) const = 0;
+    virtual void SendRC               ( const MIL_DecisionalReport& reportId, const boost::shared_ptr< DEC_Knowledge_Object >& object ) const = 0;
     virtual bool IsUnderground() const = 0;
     //@}
 

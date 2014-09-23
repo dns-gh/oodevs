@@ -27,7 +27,6 @@ MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
 {
     SubObjectName subObject( "MinePrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
-    layout->setMargin( 5 );
     densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Value:" ) );
     layout->addWidget( densityLabel_ );
     density_ = new LoadableSpinBox( "density", 0, 100, 1, 0 );

@@ -148,19 +148,18 @@ func checkUnitWaitsOnObject(c *C, phydb *phy.PhysicalFile,
 	ok := reporter.WaitCount(1)
 	c.Assert(ok, Equals, true)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unitId].Posture.New == sword.UnitAttributes_parked_on_self_prepared_area
+		return data.Units[unitId].Speed == 0
 	})
 	c.Assert(client.Model.GetUnit(unitId).Position, Not(IsNearby), from)
 	c.Assert(client.Model.GetUnit(unitId).Position, Not(IsNearby), to)
 }
 
 func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
-	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-13062")
 	phydb := loadPhysical(c, "test")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
 	from := swapi.Point{X: -15.7895, Y: 28.398}
-	to := swapi.Point{X: -15.757619, Y: 28.398163}
+	to := swapi.Point{X: -15.774632, Y: 28.394680}
 	// a rectangle minefield around 'to'
 	party := client.Model.GetData().FindPartyByName("party2")
 	c.Assert(party, NotNil)
@@ -187,7 +186,7 @@ func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, inside)
 	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
-	// unit moves back to object if teleported outside object
+	// unit waits back on object if teleported outside object
 	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), from)
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, from)
@@ -215,6 +214,36 @@ func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
 	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
 	// unit moves when object is destroyed
 	err = client.DeleteObject(object.Id)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return isNearby(data.Units[unit.Id].Position, to)
+	})
+}
+
+func (s *TestSuite) TestUnitDoesNotWaitOnHarmlessObject(c *C) {
+	phydb := loadPhysical(c, "test")
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
+	defer stopSimAndClient(c, sim, client)
+	from := swapi.Point{X: -15.7895, Y: 28.398}
+	to := swapi.Point{X: -15.774632, Y: 28.394680}
+	// a rectangle trafficable object around 'to'
+	party := client.Model.GetData().FindPartyByName("party2")
+	c.Assert(party, NotNil)
+	object, err := client.CreateObject("trafficable object", party.Id,
+		swapi.MakePolygonLocation(
+			swapi.Point{X: -15.785794, Y: 28.371330},
+			swapi.Point{X: -15.785794, Y: 28.430141},
+			swapi.Point{X: -15.713773, Y: 28.430141},
+			swapi.Point{X: -15.713773, Y: 28.371330}),
+		createObstacleAttributeParameter(true, 0, 0))
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Objects[object.Id].Activated
+	})
+	unit := CreateUnitInParty(c, client, phydb, "party1", "Movers",
+		"Mover", from)
+	err = SendMoveAndTakePosition(client, unit.Id, from, to)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return isNearby(data.Units[unit.Id].Position, to)

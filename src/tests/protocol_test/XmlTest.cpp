@@ -974,6 +974,49 @@ BOOST_FIXTURE_TEST_CASE( read_push_flow_parameters, Fixture )
     CheckCycle( input, msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_push_flow_parameters_compatibility, Fixture )
+{
+    const std::string input =
+        "<action>"
+        "  <parameter type='pushflowparameters'>"
+        "    <recipient id='1'>"
+        "      <resource id='2' quantity='3'/>"
+        "      <resource id='4' quantity='5'/>"
+        "      <path/>"
+        "    </recipient>"
+        "    <recipient id='6'/>"
+        "    <transporter id='7' quantity='8'/>"
+        "    <transporter id='9' quantity='10'/>"
+        "    <waybackpath/>"
+        "  </parameter>"
+        "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).null_value(), false );
+    auto& push = msg.elem( 0 ).value( 0 ).push_flow_parameters();
+    BOOST_CHECK_EQUAL( push.recipients_size(), 2 );
+    auto& recipient = push.recipients( 0 );
+    BOOST_CHECK_EQUAL( recipient.receiver().id(), 1u );
+    BOOST_CHECK_EQUAL( recipient.resources_size(), 2 );
+    BOOST_CHECK_EQUAL( recipient.resources( 0 ).resourcetype().id(), 2u );
+    BOOST_CHECK_EQUAL( recipient.resources( 0 ).quantity(), 3u );
+    BOOST_CHECK_EQUAL( recipient.resources( 1 ).resourcetype().id(), 4u );
+    BOOST_CHECK_EQUAL( recipient.resources( 1 ).quantity(), 5u );
+    BOOST_CHECK_EQUAL( push.recipients( 1 ).receiver().id(), 6u );
+    BOOST_CHECK_EQUAL( push.transporters_size(), 2 );
+    BOOST_CHECK_EQUAL( push.transporters( 0 ).equipmenttype().id(), 7u );
+    BOOST_CHECK_EQUAL( push.transporters( 0 ).quantity(), 8u );
+    BOOST_CHECK_EQUAL( push.transporters( 1 ).equipmenttype().id(), 9u );
+    BOOST_CHECK_EQUAL( push.transporters( 1 ).quantity(), 10u );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false "
+        "value { push_flow_parameters { recipients { receiver { id: 1 } "
+        "resources { resourceType { id: 2 } quantity: 3 } "
+        "resources { resourceType { id: 4 } quantity: 5 } } "
+        "recipients { receiver { id: 6 } } "
+        "transporters { equipmentType { id: 7 } quantity: 8 } transporters { equipmentType { id: 9 } quantity: 10 } } } }" );
+}
+
 BOOST_FIXTURE_TEST_CASE( read_pull_flow_parameters, Fixture )
 {
     const std::string input =
@@ -1019,6 +1062,43 @@ BOOST_FIXTURE_TEST_CASE( read_pull_flow_parameters, Fixture )
             "wayOutPathfind { " + itineraryProto + "} } "
             "wayBackPathfind { " + itineraryProto + "} } } } }" );
     CheckCycle( input, msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( read_pull_flow_parameters_compatibility, Fixture )
+{
+    const std::string input =
+        "<action>"
+        "  <parameter type='pullflowparameters'>"
+        "    <supplier id='1'/>"
+        "    <resource id='2' quantity='3'/>"
+        "    <resource id='4' quantity='5'/>"
+        "    <transporter id='6' quantity='7'/>"
+        "    <transporter id='8' quantity='9'/>"
+        "    <wayoutpath/>"
+        "    <waybackpath/>"
+        "  </parameter>"
+        "</action>";
+    MOCK_EXPECT( reader.Resolve ).once().with( 1u ).returns( Reader_ABC::FORMATION );
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).null_value(), false );
+    auto& pull = msg.elem( 0 ).value( 0 ).pull_flow_parameters();
+    BOOST_CHECK_EQUAL( pull.supplier().formation().id(), 1u );
+    BOOST_CHECK_EQUAL( pull.resources_size(), 2 );
+    BOOST_CHECK_EQUAL( pull.resources( 0 ).resourcetype().id(), 2u );
+    BOOST_CHECK_EQUAL( pull.resources( 0 ).quantity(), 3u );
+    BOOST_CHECK_EQUAL( pull.resources( 1 ).resourcetype().id(), 4u );
+    BOOST_CHECK_EQUAL( pull.resources( 1 ).quantity(), 5u );
+    BOOST_CHECK_EQUAL( pull.transporters_size(), 2 );
+    BOOST_CHECK_EQUAL( pull.transporters( 0 ).equipmenttype().id(), 6u );
+    BOOST_CHECK_EQUAL( pull.transporters( 0 ).quantity(), 7u );
+    BOOST_CHECK_EQUAL( pull.transporters( 1 ).equipmenttype().id(), 8u );
+    BOOST_CHECK_EQUAL( pull.transporters( 1 ).quantity(), 9u );
+    BOOST_CHECK_EQUAL( msg.ShortDebugString(),
+        "elem { null_value: false value { pull_flow_parameters { "
+        "supplier { formation { id: 1 } } "
+        "resources { resourceType { id: 2 } quantity: 3 } resources { resourceType { id: 4 } quantity: 5 } "
+        "transporters { equipmentType { id: 6 } quantity: 7 } transporters { equipmentType { id: 8 } quantity: 9 } } } }" );
 }
 
 BOOST_FIXTURE_TEST_CASE( break_location_reader, Fixture )

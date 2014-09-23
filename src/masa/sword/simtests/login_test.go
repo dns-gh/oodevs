@@ -13,6 +13,7 @@ import (
 	"masa/sword/swapi"
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"time"
 )
 
@@ -249,6 +250,19 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 	checkProfile(profiles[1], "user1", false)
 }
 
+type ModelListener struct {
+	events []swapi.ModelEvent
+}
+
+func (m *ModelListener) Notify(event swapi.ModelEvent) {
+	m.events = append(m.events, event)
+}
+
+func (m *ModelListener) Check(c *C, events ...swapi.ModelEvent) {
+	swtest.DeepEquals(c, m.events, events)
+	m.events = nil
+}
+
 func (s *TestSuite) TestProfileEditing(c *C) {
 	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer stopSim(c, sim, nil)
@@ -269,9 +283,11 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 		Password:   "adminpassword",
 		Supervisor: false,
 	}
+	listener := ModelListener{}
 
 	// A regular user cannot do anything
 	user := connectAndWait(c, sim, "user1", "user1")
+	user.Model.RegisterListener(listener.Notify)
 	_, err := user.CreateProfile(userProfile)
 	c.Assert(err, IsSwordError, "forbidden")
 
@@ -280,20 +296,24 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 
 	err = user.DeleteProfile("user2")
 	c.Assert(err, IsSwordError, "forbidden")
+	listener.Check(c)
 	user.Close()
 
 	// An admin can create regular users
 	admin := connectAndWait(c, sim, "admin", "")
+	admin.Model.RegisterListener(listener.Notify)
 	profile, err := admin.CreateProfile(userProfile)
 	c.Assert(err, IsNil)
 	c.Assert(profile, NotNil)
 	c.Assert(profile.Login, Equals, userProfile.Login)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.ProfileCreate, Name: userProfile.Login})
 
 	// And supervisor as well
 	profile, err = admin.CreateProfile(adminProfile)
 	c.Assert(err, IsNil)
 	c.Assert(profile, NotNil)
 	c.Assert(profile.Login, Equals, adminProfile.Login)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.ProfileCreate, Name: adminProfile.Login})
 
 	// Test empty login
 	profile, err = admin.CreateProfile(emptyLoginProfile)
@@ -302,6 +322,7 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	// Test duplicate login
 	profile, err = admin.CreateProfile(adminProfile)
 	c.Assert(err, IsSwordError, "duplicate_login")
+	listener.Check(c)
 
 	// Regular profile update
 	userProfile.Password = "userpassword"
@@ -309,6 +330,7 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(profile, NotNil)
 	c.Assert(profile.Password, Equals, userProfile.Password)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.ProfileUpdate, Name: userProfile.Login})
 
 	// Supervisor without time control cannot add time control to itself
 	supervisor := connectAndWait(c, sim, "adminprofile", "adminpassword")
@@ -321,6 +343,7 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(profile, NotNil)
 	c.Assert(profile.TimeControl, Equals, adminProfile.TimeControl)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.ProfileUpdate, Name: adminProfile.Login})
 
 	// Duplicating through update
 	profile, err = admin.UpdateProfile("user1", userProfile)
@@ -341,6 +364,7 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	// Delete valid profile
 	err = admin.DeleteProfile("user2")
 	c.Assert(err, IsNil)
+	listener.Check(c, swapi.ModelEvent{Tag: swapi.ProfileDelete, Name: "user2"})
 	user2 := connectClient(c, sim, nil)
 	err = user2.Login("user2", "user2")
 	c.Assert(err, IsSwordError, "invalid_login")

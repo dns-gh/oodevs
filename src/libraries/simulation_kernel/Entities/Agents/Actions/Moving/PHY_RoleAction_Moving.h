@@ -69,6 +69,7 @@ public:
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     virtual void SendRC( const MIL_DecisionalReport& reportId ) const;
     virtual void SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const;
+    virtual void SendRC( const MIL_DecisionalReport& reportId, const boost::shared_ptr< DEC_Knowledge_Object >& object ) const;
     virtual int Move( boost::shared_ptr< DEC_PathResult > pPath );
 
     virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
@@ -119,7 +120,7 @@ public:
     //! @name
     //@{
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
-    virtual bool HasKnowledgeObject   ( const MIL_Object_ABC& object ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& object ) const;
     virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType, const DEC_PathType& pathType ) const;
     //@}
 

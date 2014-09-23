@@ -10,6 +10,7 @@ package services
 
 import (
 	"code.google.com/p/goprotobuf/proto"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -123,6 +124,7 @@ type SwordHandler interface {
 	PostRestart(link *SwordLink, err error)
 	PostCloseAction(link *SwordLink, action string, err error)
 	PostCloseWriter(link *SwordLink, writer *SwordWriter)
+	PostInvalidateFilters(link *SwordLink)
 }
 
 func (s *Sword) PostRestart(link *SwordLink, err error) {
@@ -157,6 +159,12 @@ func (s *Sword) PostCloseAction(link *SwordLink, action string, err error) {
 func (s *Sword) PostCloseWriter(link *SwordLink, writer *SwordWriter) {
 	s.observer.Post(func() {
 		link.CloseWriter(writer)
+	})
+}
+
+func (s *Sword) PostInvalidateFilters(link *SwordLink) {
+	s.observer.Post(func() {
+		s.invalidateFilters(link)
 	})
 }
 
@@ -307,6 +315,8 @@ func (s *Sword) restart(link *SwordLink) {
 func isOrder(msg *sword.ClientToSim) bool {
 	m := msg.GetMessage()
 	switch {
+	case m == nil:
+		return false
 	case m.UnitOrder != nil:
 		return true
 	case m.AutomatOrder != nil:
@@ -383,7 +393,7 @@ func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage
 	err := swapi.DecodeMessage(&msg, swapi.ClientToSimulationTag, payload)
 	if err != nil {
 		s.Log("unable to decode payload on event %v: payload:%v error:%v",
-			id, string(payload), err)
+			id, base64.StdEncoding.EncodeToString(payload), err)
 		msg = swapi.SwordMessage{ClientToSimulation: &sword.ClientToSim{}}
 	}
 	s.events[id] = msg
@@ -401,6 +411,12 @@ func (s *Sword) Delete(events ...string) {
 	for _, uuid := range events {
 		delete(s.events, uuid)
 		delete(s.metadata, uuid)
+	}
+}
+
+func (s *Sword) invalidateFilters(link *SwordLink) {
+	if link == s.link {
+		s.observer.InvalidateFilters()
 	}
 }
 
