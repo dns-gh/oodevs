@@ -249,3 +249,41 @@ func (s *TestSuite) TestUnitDoesNotWaitOnHarmlessObject(c *C) {
 		return isNearby(data.Units[unit.Id].Position, to)
 	})
 }
+
+func (s *TestSuite) TestUnitDoesNotWaitOnBypassedObject(c *C) {
+	phydb := loadPhysical(c, "test")
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
+	defer stopSimAndClient(c, sim, client)
+	from := swapi.Point{X: -15.7895, Y: 28.398}
+	to := swapi.Point{X: -15.774632, Y: 28.394680}
+	// a rectangle trafficable object around 'to'
+	party := client.Model.GetData().FindPartyByName("party2")
+	c.Assert(party, NotNil)
+	object, err := client.CreateObject("mines", party.Id,
+		swapi.MakePolygonLocation(
+			swapi.Point{X: -15.785794, Y: 28.371330},
+			swapi.Point{X: -15.785794, Y: 28.430141},
+			swapi.Point{X: -15.713773, Y: 28.430141},
+			swapi.Point{X: -15.713773, Y: 28.371330}),
+		createObstacleAttributeParameter(true, 0, 0))
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Objects[object.Id].Activated
+	})
+	err = client.UpdateObject(object.Id,
+		swapi.MakeList(
+			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_bypass)),
+			swapi.MakeQuantity(100),
+		))
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Objects[object.Id].Bypass == 100
+	})
+	unit := CreateUnitInParty(c, client, phydb, "party1", "Movers",
+		"Mover", from)
+	err = SendMoveAndTakePosition(client, unit.Id, from, to)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return isNearby(data.Units[unit.Id].Position, to)
+	})
+}
