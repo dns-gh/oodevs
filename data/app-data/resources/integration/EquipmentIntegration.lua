@@ -804,14 +804,14 @@ integration.deactivateRecording = function()
     DEC_Perception_DesactiverModeEnregistrement()
 end
 
---- Activates this entity's sensors (but not its special sensors and sensors set as 'activated on request').
+--- Activates this entity's sensors (but not its special sensors neither sensors set as 'activated on request').
 -- @see integration.deactivateSensors
 -- This method can only be called by an agent.
 integration.activateSensors = function()
     DEC_Perception_ActiverSenseurs()
 end
 
---- Deactivates this entity's sensors (but not its special sensors and sensors set as 'activated on request').
+--- Deactivates this entity's sensors (but not its special sensors neither sensors set as 'activated on request').
 -- @see integration.activateSensors
 -- This method can only be called by an agent.
 integration.deactivateSensors = function()
