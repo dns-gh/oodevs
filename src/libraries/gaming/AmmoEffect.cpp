@@ -134,4 +134,5 @@ void AmmoEffect::SetPerceivers( const ::google::protobuf::RepeatedPtrField< ::sw
     perceivers_.clear();
     for( auto it = perceivers.begin(); it != perceivers.end(); ++it )
         perceivers_.push_back( it->id() );
+    PlaySoundEffect();
 }
