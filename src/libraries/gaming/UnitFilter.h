@@ -82,6 +82,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Profile_ABC& forward_;
+    kernel::SafePointer< kernel::Entity_ABC > filtered_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::TacticalHierarchies* tHierarchies_;
     const kernel::CommunicationHierarchies* cHierarchies_;
