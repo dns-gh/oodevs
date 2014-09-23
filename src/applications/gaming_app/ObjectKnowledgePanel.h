@@ -29,6 +29,7 @@ namespace kernel
     class BypassAttribute_ABC;
     class MineAttribute_ABC;
     class NBCAttribute_ABC;
+    class LodgingAttribute_ABC;
     class LogisticAttribute_ABC;
     class CrossingSiteAttribute_ABC;
     class SupplyRouteAttribute_ABC;
@@ -59,6 +60,7 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::ElementObserver_ABC< kernel::MineAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::ObstacleAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::BypassAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::LodgingAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::LogisticAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::CrossingSiteAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::SupplyRouteAttribute_ABC >
@@ -97,6 +99,7 @@ private:
     virtual void NotifyUpdated( const kernel::BypassAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::ObstacleAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::MineAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::LodgingAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::LogisticAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::CrossingSiteAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::SupplyRouteAttribute_ABC& element );
