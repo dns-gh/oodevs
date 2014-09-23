@@ -395,7 +395,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PathWalker::FindBlockingObject( co
         return 0;
     auto k = movingEntity_.GetKnowledgeObject( object );
     if( !k )
-        return k;
+        return 0;
     if( auto bypass = k->RetrieveAttribute< BypassAttribute >() )
         if( bypass->IsBypassed() )
             return 0;
