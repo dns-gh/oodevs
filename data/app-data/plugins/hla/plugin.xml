@@ -140,10 +140,10 @@
                         <description lang="fr" name="Utiliser l'empreinte terrain"><![CDATA[Utiliser l'empreinte terrain pour éviter la création des unités en dehors]]></description>
                     </descriptions>
                 </setting>
-                <setting attribute="@transfer-sender" type="enumeration" default="rpr;null">
+                <setting attribute="@ownership-policy" type="enumeration" default="internal;external">
                     <descriptions>
-                        <description lang="en" name="Transfer sender"><![CDATA[Select how ownership transfer is initiated]]></description>
-                        <description lang="fr" name="Requete transfert"><![CDATA[Détermine comment démarre le transfert de controle]]></description>
+                        <description lang="en" name="Ownership policy"><![CDATA[Select how ownership transfer is initiated]]></description>
+                        <description lang="fr" name="Requete transfert"><![CDATA[Détermine comment est déclenché le transfert de controle]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@accept-external-transfer" type="enumeration" default="negotiated;always;never">
