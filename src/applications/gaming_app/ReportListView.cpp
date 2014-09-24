@@ -354,7 +354,7 @@ void ReportListView::OnRequestCenter()
         return;
     QStandardItem* item = reportModel_.itemFromIndex( proxyFilter_->mapToSource( index ) );
     if( item && item->data( ReportRole ).isValid() )
-        item->data().value< const Report* >()->GetOwner().Activate( controllers_.actions_ );
+        item->data( ReportRole ).value< const Report* >()->GetOwner().Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
