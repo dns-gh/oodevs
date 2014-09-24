@@ -54,9 +54,9 @@ public:
 
     //! @name Operations
     //@{
-    void SetDefault( Layer_ABC& layer );
-    void Register  ( Layer_ABC& layer );
-    void Remove    ( Layer_ABC& layer );
+    void SetDefault( const std::shared_ptr< Layer_ABC >& layer );
+    void Register  ( const std::shared_ptr< Layer_ABC >& layer );
+    void Remove    ( const std::shared_ptr< Layer_ABC >& layer );
 
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
@@ -97,7 +97,7 @@ private:
     //! @name Member data
     //@{
     Layer_ABC::T_Layers layers_;
-    Layer_ABC* default_;
+    std::shared_ptr< Layer_ABC > default_;
     bool exclusive_;
     Layer_ABC::T_Layers::const_reverse_iterator rlast_;
     std::unique_ptr< SelectionMenu > menu_;

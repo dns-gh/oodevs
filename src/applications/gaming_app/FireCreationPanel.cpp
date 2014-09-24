@@ -43,7 +43,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent,
                                       actions::ActionsModel& actionsModel,
                                       const kernel::Time_ABC& simulation,
                                       const StaticModel& staticModel,
-                                      ::gui::ParametersLayer& paramLayer,
+                                      const std::shared_ptr< ::gui::ParametersLayer >& paramLayer,
                                       const gui::GlTools_ABC& tools )
     : ::gui::InfoPanel_ABC( parent, panel, tools::translate( "FireCreationPanel", "Strike" ), "FireCreationPanel" )
     , staticModel_( staticModel )
@@ -62,7 +62,6 @@ FireCreationPanel::FireCreationPanel( QWidget* parent,
     , location_( 0 )
     , isLocationRegistered_ ( false )
 {
-  //this->layout()->setAlignment( this, Qt::AlignTop );
     Q3VBox* box = new Q3VBox( this );
     Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "FireCreationPanel", "Strike order description" ), box );
     {

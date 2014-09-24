@@ -26,8 +26,12 @@ using namespace gui;
 // Name: DrawingsTreeView constructor
 // Created: LGY 2014-05-07
 // -----------------------------------------------------------------------------
-DrawingsTreeView::DrawingsTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                                    ModelObserver_ABC& modelObserver, ParametersLayer& paramLayer, QWidget* parent /*= 0*/ )
+DrawingsTreeView::DrawingsTreeView( const QString& objectName,
+                                    kernel::Controllers& controllers,
+                                    const kernel::Profile_ABC& profile,
+                                    ModelObserver_ABC& modelObserver,
+                                    const std::shared_ptr< ParametersLayer >& paramLayer,
+                                    QWidget* parent /*= 0*/ )
     : EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
     , paramLayer_( paramLayer )
     , entity_( controllers )
@@ -151,7 +155,7 @@ void DrawingsTreeView::keyPressEvent( QKeyEvent* event )
                 modelObserver_.DeleteEntity( *entity );
         }
         else if( event->key() == Qt::Key_Escape )
-            paramLayer_.Reset();
+            paramLayer_->Reset();
     }
     EntityTreeView_ABC::keyPressEvent( event );
 }

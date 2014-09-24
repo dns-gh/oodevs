@@ -40,8 +40,12 @@ class DrawingsTreeView : public EntityTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawingsTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                               ModelObserver_ABC& modelObserver, ParametersLayer& paramLayer, QWidget* parent = 0 );
+             DrawingsTreeView( const QString& objectName,
+                               kernel::Controllers& controllers,
+                               const kernel::Profile_ABC& profile,
+                               ModelObserver_ABC& modelObserver,
+                               const std::shared_ptr< ParametersLayer >& paramLayer,
+                               QWidget* parent = 0 );
     virtual ~DrawingsTreeView();
     //@}
 
@@ -67,7 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ParametersLayer& paramLayer_;
+    std::shared_ptr< ParametersLayer > paramLayer_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     QStandardItem* drawingsItem_;
     QStandardItem* limitsItem_;

@@ -37,7 +37,7 @@ using namespace gui;
 Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, float width, float height,
                         DetectionMap& elevation, EventStrategy_ABC& strategy )
     : SetGlOptions   ()
-    , Widget3D       ( context_, pParent )
+    , Widget3D       ( context_, pParent, 0 )
     , GlToolsBase    ( controllers )
     , width_         ( width )
     , height_        ( height )
@@ -58,26 +58,25 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, float width,
 // -----------------------------------------------------------------------------
 Gl3dWidget::~Gl3dWidget()
 {
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::Register
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Register( Layer& layer )
+void Gl3dWidget::Register( const std::shared_ptr< Layer_ABC >& layer )
 {
-    layers_.push_back( & layer );
+    layers_.push_back( layer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::Unregister
 // Created: ABR 2012-06-12
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Unregister( Layer& layer )
+void Gl3dWidget::Unregister( const std::shared_ptr< Layer_ABC >& layer )
 {
-    auto it = std::find( layers_.begin(), layers_.end(), &layer );
+    auto it = std::find( layers_.begin(), layers_.end(), layer );
     if( it != layers_.end() )
         layers_.erase( it );
 }

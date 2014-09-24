@@ -76,7 +76,12 @@ QPixmap MakePixmap( const std::string& name )
 // Name: TerrainToolBar constructor
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controllers, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog )
+TerrainToolBar::TerrainToolBar( QWidget* parent,
+                                kernel::Controllers& controllers,
+                                gui::ExclusiveEventStrategy& eventStrategy,
+                                const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                                UrbanModel& urbanModel,
+                                RemoveBlocksDialog& removeBlocksDialog )
     : gui::RichToolBar( controllers, parent, "terrainToolBar", tools::translate( "TerrainToolBar", "Terrain" ) )
     , eventStrategy_( eventStrategy )
     , paramLayer_   ( paramLayer )
@@ -252,7 +257,7 @@ void TerrainToolBar::OnBlockCreation()
     isAuto_ = false;
     changingGeom_ = false;
     eventStrategy_.TakeExclusiveFocus( paramLayer_ );
-    paramLayer_.StartPolygon( *this );
+    paramLayer_->StartPolygon( *this );
     eventStrategy_.ReleaseExclusiveFocus();
     UncheckBlockCreationButtons();
 }
@@ -268,7 +273,7 @@ void TerrainToolBar::OnBlockCreationAuto()
         isAuto_ = true;
         changingGeom_ = false;
         eventStrategy_.TakeExclusiveFocus( paramLayer_ );
-        paramLayer_.StartPolygon( *this );
+        paramLayer_->StartPolygon( *this );
         eventStrategy_.ReleaseExclusiveFocus();
         UncheckBlockCreationButtons();
     }
@@ -288,7 +293,7 @@ void TerrainToolBar::OnChangeShape()
 {
     changingGeom_ = true;
     eventStrategy_.TakeExclusiveFocus( paramLayer_ );
-    paramLayer_.StartPolygon( *this );
+    paramLayer_->StartPolygon( *this );
     eventStrategy_.ReleaseExclusiveFocus();
 }
 

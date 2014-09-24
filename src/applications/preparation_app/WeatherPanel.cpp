@@ -29,7 +29,11 @@ using namespace kernel;
 // Name: WeatherPanel constructor
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
-WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controllers& controllers, const CoordinateConverter_ABC& converter, gui::WeatherLayer& layer )
+WeatherPanel::WeatherPanel( QWidget* parent,
+                            gui::PanelStack_ABC& panel,
+                            Controllers& controllers,
+                            const CoordinateConverter_ABC& converter,
+                            const std::shared_ptr< gui::WeatherLayer >& layer )
     : gui::WeatherPanel( parent, panel, layer )
     , controllers_ ( controllers )
     , currentModel_( 0 )
@@ -149,7 +153,7 @@ void WeatherPanel::Commit()
 // -----------------------------------------------------------------------------
 void WeatherPanel::Reset()
 {
-    layer_.Clear();
+    layer_->Clear();
     selectedLocal_ = 0;
     if( currentModel_ )
         NotifyUpdated( *currentModel_ );

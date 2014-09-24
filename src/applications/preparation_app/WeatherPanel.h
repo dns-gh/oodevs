@@ -52,7 +52,11 @@ class WeatherPanel : public gui::WeatherPanel
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, gui::WeatherLayer& layer );
+             WeatherPanel( QWidget* parent,
+                           gui::PanelStack_ABC& panel,
+                           kernel::Controllers& controllers,
+                           const kernel::CoordinateConverter_ABC& converter,
+                           const std::shared_ptr< gui::WeatherLayer >& layer );
     virtual ~WeatherPanel();
     //@}
 

@@ -56,22 +56,11 @@ public:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void Paint( Viewport_ABC& viewport );
 
-    virtual void RegisterIn( Gl3dWidget& widget, kernel::Logger_ABC& logger );
-    virtual void RegisterIn( GlWidget& widget, kernel::Logger_ABC& logger );
-
-    virtual void UnregisterIn( Gl3dWidget& widget );
-    virtual void UnregisterIn( GlWidget& widget );
-
-    virtual void Reset2d();
-    virtual void Reset3d();
-
     virtual void SetAlpha( float alpha );
-    float GetAlpha() const;
+    virtual float GetAlpha() const;
 
-    bool IsEnabled() const;
-
-    void MoveAbove( Layer& layer );
-    void MoveBelow( Layer& layer );
+    virtual bool IsEnabled() const;
+    virtual void Reset();
 
     void SetPasses( const std::string& passes );
     std::string GetCurrentPass() const;
@@ -131,11 +120,6 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const ViewFrustum& ) {}
-    virtual void RegisterIn( Gl3dWidget& )   {}
-    virtual void UnregisterIn( Gl3dWidget& ) {}
-
-    virtual void Reset2d();
-    virtual void Reset();
     //@}
 };
 
@@ -157,11 +141,6 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& ) {}
-    virtual void RegisterIn( GlWidget& )               {}
-    virtual void UnregisterIn( GlWidget& )             {}
-
-    virtual void Reset3d();
-    virtual void Reset();
     //@}
 };
 

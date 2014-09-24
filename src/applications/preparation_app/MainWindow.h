@@ -113,9 +113,15 @@ private:
     //@{
     bool DoLoad();
     void LoadExercise();
-    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
-                       const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
-                       gui::Elevation2dLayer& elevation2d );
+    void CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
+                       const std::shared_ptr< gui::Layer >& locations,
+                       const std::shared_ptr< gui::Layer >& weather,
+                       const std::shared_ptr< gui::Layer >& profilerLayer,
+                       const std::shared_ptr< gui::AutomatsLayer >& automats,
+                       const std::shared_ptr< gui::FormationLayer >& formation,
+                       const std::shared_ptr< gui::Elevation2dLayer >& elevation2d,
+                       const kernel::Profile_ABC& profile,
+                       gui::TerrainPicker& picker );
     void closeEvent( QCloseEvent* pEvent );
     void DoClose();
     void DoLoad( const tools::Path& filename );

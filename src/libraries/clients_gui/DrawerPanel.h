@@ -64,8 +64,13 @@ class DrawerPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers,
-                          DrawerModel& model, DrawingTypes& types, const tools::ExerciseConfig& config );
+             DrawerPanel( QWidget* parent,
+                          PanelStack_ABC& panel,
+                          const std::shared_ptr< ParametersLayer >& layer,
+                          kernel::Controllers& controllers,
+                          DrawerModel& model,
+                          DrawingTypes& types,
+                          const tools::ExerciseConfig& config );
     virtual ~DrawerPanel();
     //@}
 
@@ -84,12 +89,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DrawerPanel( const DrawerPanel& );            //!< Copy constructor
-    DrawerPanel& operator=( const DrawerPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const DrawingCategory& category );
@@ -115,7 +114,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ParametersLayer& layer_;
+    std::shared_ptr< ParametersLayer > layer_;
     DrawerModel& model_;
     DrawingTypes& types_;
     const tools::ExerciseConfig& config_;

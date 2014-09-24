@@ -53,8 +53,13 @@ class WeatherPanel : public gui::WeatherPanel
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
-                           const StaticModel& model, const kernel::Time_ABC& simulation, WeatherLayer& layer );
+             WeatherPanel( QWidget* parent,
+                           gui::PanelStack_ABC& panel,
+                           kernel::Controllers& controllers,
+                           actions::ActionsModel& actionsModel,
+                           const StaticModel& model,
+                           const kernel::Time_ABC& simulation,
+                           const std::shared_ptr< WeatherLayer >& layer );
     virtual ~WeatherPanel();
     //@}
 

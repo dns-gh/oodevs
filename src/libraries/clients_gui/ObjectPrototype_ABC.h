@@ -65,10 +65,14 @@ class ObjectPrototype_ABC : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype_ABC( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+             ObjectPrototype_ABC( const QString& objectName,
+                                  QWidget* parent,
+                                  kernel::Controllers& controllers,
                                   const kernel::CoordinateConverter_ABC& coordinateConverter,
-                                  const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::Team_ABC& noSideTeam,
-                                  ParametersLayer& layer, std::unique_ptr< ObjectAttributePrototypeFactory_ABC > factory );
+                                  const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver,
+                                  const kernel::Team_ABC& noSideTeam,
+                                  const std::shared_ptr< ParametersLayer >& layer,
+                                  std::unique_ptr< ObjectAttributePrototypeFactory_ABC > factory );
     virtual ~ObjectPrototype_ABC();
     //@}
 

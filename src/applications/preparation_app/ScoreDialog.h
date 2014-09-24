@@ -61,8 +61,13 @@ class ScoreDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDialog( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
-                          gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config,
+             ScoreDialog( const QString& objectName,
+                          QWidget* parent,
+                          kernel::Controllers& controllers,
+                          ScoresModel& model,
+                          const std::shared_ptr< gui::ParametersLayer >& layer,
+                          const StaticModel& staticModel,
+                          const tools::ExerciseConfig& config,
                           gui::GlTools_ABC& tools );
     virtual ~ScoreDialog();
     //@}

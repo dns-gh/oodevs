@@ -44,17 +44,20 @@ public:
 
     //! @name Operations
     //@{
-    void RegisterTo( Gl3dWidget* newWidget );
-    void RegisterTo( GlWidget* newWidget );
-    void ChangeTo( Gl3dWidget* newWidget );
-    void ChangeTo( GlWidget* newWidget );
+    void Purge();
 
-    void Reset2d();
-    void Reset3d();
+    void SetWidget3D( const std::shared_ptr< Gl3dWidget >& newWidget );
+    void SetWidget2D( const std::shared_ptr< GlWidget >& newWidget );
 
-    void Register( Layer& layer );
-    void Register( TooltipsLayer_ABC& layer );
-    void Unregister( Layer& layer );
+    void ChangeTo( const std::shared_ptr< GlWidget >& newWidget );
+    void ChangeTo( const std::shared_ptr< Gl3dWidget >& newWidget );
+
+    void Register( const std::shared_ptr< TooltipsLayer_ABC >& layer );
+    virtual void Register( const std::shared_ptr< Layer_ABC >& layer );
+    virtual void Unregister( const std::shared_ptr< Layer_ABC >& layer );
+
+    virtual bool MoveBelow( const std::shared_ptr< Layer_ABC >& lhs,
+                            const std::shared_ptr< Layer_ABC >& rhs );
 
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );
@@ -119,17 +122,19 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< Layer* > T_Layers;
+    typedef std::vector< std::shared_ptr< Layer_ABC > > T_Layers;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Logger_ABC& logger_;
-    View_ABC* view_;
-    GlTools_ABC* tools_;
     T_Layers layers_;
-    TooltipsLayer_ABC* tooltipLayer_;
+    std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
+    std::shared_ptr< View_ABC > view_;
+    std::shared_ptr< GlTools_ABC > tools_;
+    std::shared_ptr< GlWidget > widget2d_;
+    std::shared_ptr< Gl3dWidget > widget3d_;
     //@}
 };
 

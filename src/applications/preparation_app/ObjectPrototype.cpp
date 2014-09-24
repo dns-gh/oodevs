@@ -245,10 +245,16 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( const QString& objectName, QWidget* parent, Controllers& controllers,
-                                  const ::StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel,
-                                  const WeatherModel& weather, const Team_ABC& noSideTeam,
-                                  ParametersLayer& layer, const tools::GeneralConfig& config )
+ObjectPrototype::ObjectPrototype( const QString& objectName,
+                                  QWidget* parent,
+                                  Controllers& controllers,
+                                  const ::StaticModel& model,
+                                  ObjectsModel& objectsModel,
+                                  const UrbanModel& urbanModel,
+                                  const WeatherModel& weather,
+                                  const Team_ABC& noSideTeam,
+                                  const std::shared_ptr< ParametersLayer >& layer,
+                                  const tools::GeneralConfig& config )
         : ObjectPrototype_ABC( objectName, parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,
                            FactoryBuilder( controllers, model.objectTypes_, model.detection_, objectsModel, urbanModel, weather, config, creation_ ) )
     , model_   ( objectsModel )

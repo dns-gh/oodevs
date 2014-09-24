@@ -22,8 +22,8 @@ namespace kernel
 namespace gui
 {
     class CheckBox;
-    class GlSelector;
-    class Layer;
+    class GlProxy;
+    class Layer_ABC;
 
 // =============================================================================
 /** @class  LayersPanel
@@ -40,13 +40,13 @@ class LayersPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlSelector& selector );
+             LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlProxy& proxy );
     virtual ~LayersPanel();
     //@}
 
     //! @name Operations
     //@{
-    void AddLayer( const QString& name, Layer& layer, bool dynamic = false );
+    void AddLayer( const QString& name, const std::shared_ptr< Layer_ABC >& layer, bool dynamic = false );
     void Update();
     virtual void Commit();
     virtual void Reset();
@@ -72,14 +72,14 @@ private:
     void UpdateLeastAndMostVisible();
     void ResetLayers();
     void RemoveDynamicLayer( QStandardItem& item );
-    void MoveItem( int row, Layer* layer, int newPlace, int oldPlace, int step );
-    Layer* GetCurrentLayer() const;
-    int GetCurrentRow( Layer* layer ) const;
+    void MoveItem( int row, const std::shared_ptr< Layer_ABC >& layer, int newPlace, int oldPlace, int step );
+    std::shared_ptr< Layer_ABC > GetCurrentLayer() const;
+    int GetCurrentRow( const std::shared_ptr< Layer_ABC >& layer ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< Layer* >     T_Layers;
+    typedef std::vector< std::shared_ptr< Layer_ABC > > T_Layers;
     typedef std::vector< float >          T_Alphas;
     typedef std::vector< QString >        T_Names;
     //@}
@@ -89,7 +89,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::OptionsController& options_;
-    GlSelector& selector_;
+    GlProxy& proxy_;
     T_Layers layers_;
     T_Layers dynamicLayers_;
     T_Alphas current_;

@@ -25,10 +25,10 @@ namespace kernel
 namespace gui
 {
     class Elevation2dLayer;
-    class GlSelector;
+    class GlProxy;
     class GraphicPreferences;
     class GraphicsPanel;
-    class Layer;
+    class Layer_ABC;
     class LayersPanel;
     class LightingProxy;
     class PreferencesList;
@@ -56,8 +56,8 @@ public:
                                 LightingProxy& lighting,
                                 kernel::CoordinateConverter_ABC& coordConverter,
                                 const Painter_ABC& painter,
-                                GlSelector& selector,
-                                Elevation2dLayer& elevation2dLayer,
+                                GlProxy& proxy,
+                                const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
                                 GraphicPreferences& preferences );
     virtual ~PreferencesDialog();
     //@}
@@ -69,7 +69,7 @@ public:
     virtual void reject();
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
-    void AddLayer( const QString& name, gui::Layer& layer, bool dynamic = false );
+    void AddLayer( const QString& name, const std::shared_ptr< gui::Layer_ABC >& layer, bool dynamic = false );
 
     void PurgeDialog();
     //@}
@@ -111,7 +111,7 @@ private:
     GraphicsPanel* pGraphicPrefPanel_;
     CoordinateSystemsPanel* pCoordinateSystemsPanel_;
     LightingProxy& lighting_;
-    Elevation2dLayer& elevation2dLayer_;
+    std::shared_ptr< Elevation2dLayer > elevation2dLayer_;
     //@}
 };
 

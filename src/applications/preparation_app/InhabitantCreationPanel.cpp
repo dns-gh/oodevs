@@ -33,7 +33,13 @@ using namespace kernel;
 // Name: InhabitantCreationPanel constructor
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const AgentTypes& types, AgentsModel& agentsModel, gui::ParametersLayer& layer, const gui::GlTools_ABC& tools )
+InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent,
+                                                  gui::PanelStack_ABC& panel,
+                                                  kernel::Controllers& controllers,
+                                                  const AgentTypes& types,
+                                                  AgentsModel& agentsModel,
+                                                  const std::shared_ptr< gui::ParametersLayer >& layer,
+                                                  const gui::GlTools_ABC& tools )
     : InfoPanel_ABC( parent, panel, tr( "Populations" ), "InhabitantCreationPanel" )
     , controllers_( controllers )
     , tools_      ( tools )

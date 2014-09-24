@@ -45,6 +45,7 @@ namespace gui
     class ModelObserver_ABC;
 }
 
+class Model;
 class Publisher_ABC;
 
 // =============================================================================
@@ -66,7 +67,6 @@ class PathfindLayer : public gui::EntityLayer< kernel::Pathfind_ABC >
                     , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                     , public kernel::ContextMenuObserver_ABC< kernel::Pathfind_ABC >
                     , public kernel::OptionsObserver_ABC
-                    , private kernel::ModesObserver_ABC
 {
     Q_OBJECT;
 
@@ -78,12 +78,8 @@ public:
                             gui::ColorStrategy_ABC& strategy,
                             gui::View_ABC& view,
                             const kernel::Profile_ABC& profile,
-                            Publisher_ABC& publisher,
-                            const kernel::CoordinateConverter_ABC& converter,
-                            const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
-                            const tools::Resolver_ABC< kernel::Population_ABC >& populations,
-                            gui::ModelObserver_ABC& model,
-                            actions::ActionsModel& actions );
+                            Model& model,
+                            gui::ModelObserver_ABC& modelObserver );
     virtual ~PathfindLayer();
     //@}
 
@@ -150,7 +146,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::GlTools_ABC& tools_;
-    gui::ModelObserver_ABC& model_;
+    gui::ModelObserver_ABC& modelObserver_;
     gui::View_ABC& view_;
     Publisher_ABC& publisher_;
     actions::ActionsModel& actions_;

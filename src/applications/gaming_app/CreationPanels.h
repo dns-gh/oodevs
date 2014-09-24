@@ -61,9 +61,17 @@ class CreationPanels : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-    CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model,
-                    const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, gui::GlTools_ABC& tools, gui::SymbolIcons& icons,
-                    gui::ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config );
+    CreationPanels( QWidget* parent,
+                    kernel::Controllers& controllers,
+                    const StaticModel& staticModel,
+                    const Model& model,
+                    const kernel::Time_ABC& simulation,
+                    const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                    const std::shared_ptr< ::WeatherLayer >& weatherLayer,
+                    gui::GlTools_ABC& tools,
+                    gui::SymbolIcons& icons,
+                    gui::ColorStrategy_ABC& colorStrategy,
+                    const tools::ExerciseConfig& config );
     virtual ~CreationPanels();
     //@}
 

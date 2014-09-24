@@ -40,7 +40,9 @@ class WeatherPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer& layer );
+             WeatherPanel( QWidget* parent,
+                           PanelStack_ABC& panel,
+                           const std::shared_ptr< WeatherLayer >& layer );
     virtual ~WeatherPanel();
     //@}
 
@@ -86,7 +88,7 @@ private slots:
 protected:
     //! @name Member data
     //@{
-    WeatherLayer&           layer_;
+    std::shared_ptr< WeatherLayer > layer_;
     E_WeatherType           currentType_;
 
     QVBoxLayout*            headerLayout_;

@@ -55,7 +55,7 @@ public:
                              gui::SymbolIcons& symbols,
                              StaticModel& staticModel,
                              const gui::AggregateToolbar& aggregateToolbar,
-                             gui::ParametersLayer& paramLayer );
+                             const std::shared_ptr< gui::ParametersLayer >& paramLayer );
     virtual ~TreeViewsPanel();
     //@}
 

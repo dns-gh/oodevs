@@ -32,7 +32,6 @@ namespace gui
     class CircularEventStrategy;
     class ColorStrategy;
     class DisplayExtractor;
-    class Elevation2dLayer;
     class EntitySymbols;
     class ExclusiveEventStrategy;
     class FormationLayer;
@@ -40,7 +39,7 @@ namespace gui
     class GlSelector;
     class GraphicPreferences;
     class HelpSystem;
-    class Layer;
+    class Layer_ABC;
     class LightingProxy;
     class Painter_ABC;
     class ParametersLayer;
@@ -139,11 +138,14 @@ private:
 
     static std::string BuildRemotePath( std::string server, std::string path );
 
-    void CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,
-                       gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker,
-                       gui::Elevation2dLayer& elevation2dLayer );
-    void AddLayer( gui::Layer& layer, const std::string& passes = "", const QString& text = "" );
-    void AddTooltipLayer( gui::TooltipsLayer_ABC& layer );
+    void CreateLayers( const std::shared_ptr< gui::Layer_ABC >& locationsLayer,
+                       const std::shared_ptr< gui::Layer_ABC >& weather,
+                       const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
+                       const std::shared_ptr< gui::Layer_ABC >& automats,
+                       const std::shared_ptr< gui::Layer_ABC >& formationLayer,
+                       const std::shared_ptr< gui::Layer_ABC >& elevation2dLayer,
+                       const Simulation& simulation,
+                       gui::TerrainPicker& picker );
 
 private:
     //! @name Member data
@@ -178,7 +180,7 @@ private:
     std::unique_ptr< UnitStateDialog > unitStateDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
     std::unique_ptr< gui::TextEditor > textEditor_;
-    gui::ParametersLayer* parameters_; // $$$$ ABR 2013-02-14: Can't make an unique_ptr of this one, because every layers are destroyed into GlProxy destructor.
+    std::shared_ptr< gui::ParametersLayer > parameters_;
     QByteArray states_;
     bool connected_;
     bool onPlanif_;

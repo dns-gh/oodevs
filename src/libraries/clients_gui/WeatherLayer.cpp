@@ -131,7 +131,7 @@ void WeatherLayer::StartEdition( weather::MeteoLocal& weather )
     displaying_ = true;
     topLeft_ = geometry::Point2f();
     bottomRight_ = geometry::Point2f();
-    eventStrategy_.TakeExclusiveFocus( *this );
+    eventStrategy_.TakeExclusiveFocus( shared_from_this() );
     isEditing_ = true;
     firstPointSet_ = false;
 }

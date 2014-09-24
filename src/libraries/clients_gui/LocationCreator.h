@@ -43,8 +43,13 @@ class LocationCreator : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationCreator( QObject* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler );
-             LocationCreator( QObject* parent, ParametersLayer& layer, ShapeHandler_ABC& handler );
+             LocationCreator( QObject* parent,
+                              const QString& menu,
+                              const std::shared_ptr< ParametersLayer >& layer,
+                              ShapeHandler_ABC& handler );
+             LocationCreator( QObject* parent,
+                              const std::shared_ptr< ParametersLayer >& layer,
+                              ShapeHandler_ABC& handler );
     virtual ~LocationCreator();
     //@}
 
@@ -77,7 +82,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ParametersLayer& layer_;
+    std::shared_ptr< ParametersLayer > layer_;
     ShapeHandler_ABC& handler_;
 
     QString menu_;

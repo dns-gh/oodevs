@@ -37,45 +37,97 @@ GlProxy::GlProxy( kernel::Logger_ABC& logger )
 // -----------------------------------------------------------------------------
 GlProxy::~GlProxy()
 {
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        delete *it;
+    layers_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::Register
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::Register( Layer& layer )
+void GlProxy::Register( const std::shared_ptr< Layer_ABC >&  layer )
 {
-    layers_.push_back( & layer );
+    layers_.push_back( layer );
+    if( widget2d_ )
+        widget2d_->Register( layer );
+    if( widget3d_ )
+        widget3d_->Register( layer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::Register
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-void GlProxy::Register( TooltipsLayer_ABC& layer )
+void GlProxy::Register( const std::shared_ptr< TooltipsLayer_ABC >& layer )
 {
-    layers_.push_back( & layer );
-    tooltipLayer_ = &layer;
+    layers_.push_back( layer );
+    tooltipLayer_ = layer;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::Unregister
 // Created: ABR 2012-06-12
 // -----------------------------------------------------------------------------
-void GlProxy::Unregister( Layer& layer )
+void GlProxy::Unregister( const std::shared_ptr< Layer_ABC >& layer )
 {
-    auto it = std::find( layers_.begin(), layers_.end(), &layer );
+    auto it = std::find( layers_.begin(), layers_.end(), layer );
     if( it != layers_.end() )
         layers_.erase( it );
+    if( widget2d_ )
+        widget2d_->Unregister( layer );
+    if( widget3d_ )
+        widget3d_->Unregister( layer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::MoveBelow
+// Created: ABR 2014-09-24
+// -----------------------------------------------------------------------------
+bool GlProxy::MoveBelow( const std::shared_ptr< Layer_ABC >& lhs, const std::shared_ptr< Layer_ABC >& rhs )
+{
+    auto itLhs = std::find( layers_.begin(), layers_.end(), lhs );
+    auto itRhs = std::find( layers_.begin(), layers_.end(), rhs );
+    if( itLhs == layers_.end() || itRhs == layers_.end() )
+        throw std::exception( "Unable to find layers to move below" );
+    if( itLhs < itRhs )
+        return false;
+    layers_.erase( itLhs );
+    layers_.insert( itRhs, lhs );
+    if( widget2d_ )
+        widget2d_->MoveBelow( lhs, rhs );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::SetWidget3D
+// Created: ABR 2014-09-24
+// -----------------------------------------------------------------------------
+void GlProxy::SetWidget3D( const std::shared_ptr< Gl3dWidget >& newWidget )
+{
+    widget3d_ = newWidget;
+    if( widget3d_ )
+        std::for_each( layers_.begin(), layers_.end(), [&]( const std::shared_ptr< Layer_ABC >& layer ){ 
+            widget3d_->Register( layer );
+        } );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::SetWidget2D
+// Created: ABR 2014-09-24
+// -----------------------------------------------------------------------------
+void GlProxy::SetWidget2D( const std::shared_ptr< GlWidget >& newWidget )
+{
+    widget2d_ = newWidget;
+    if( widget2d_ )
+        std::for_each( layers_.begin(), layers_.end(), [&]( const std::shared_ptr< Layer_ABC >& layer ){ 
+            widget2d_->Register( layer );
+        } );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::ChangeTo
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::ChangeTo( Gl3dWidget* newWidget )
+void GlProxy::ChangeTo( const std::shared_ptr< Gl3dWidget >& newWidget )
 {
     view_  = newWidget;
     tools_ = newWidget;
@@ -85,30 +137,10 @@ void GlProxy::ChangeTo( Gl3dWidget* newWidget )
 // Name: GlProxy::ChangeTo
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::ChangeTo( GlWidget* newWidget )
+void GlProxy::ChangeTo( const std::shared_ptr< GlWidget >& newWidget )
 {
     view_  = newWidget;
     tools_ = newWidget;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::RegisterTo
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void GlProxy::RegisterTo( Gl3dWidget* newWidget )
-{
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        (*it)->RegisterIn( *newWidget, logger_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::RegisterTo
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void GlProxy::RegisterTo( GlWidget* newWidget )
-{
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        (*it)->RegisterIn( *newWidget, logger_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -521,26 +553,6 @@ void GlProxy::DrawTacticalGraphics( const std::string& symbol, const kernel::Loc
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::Reset2d
-// Created: AGE 2007-01-19
-// -----------------------------------------------------------------------------
-void GlProxy::Reset2d()
-{
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        (*it)->Reset2d();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::Reset3d
-// Created: AGE 2007-01-19
-// -----------------------------------------------------------------------------
-void GlProxy::Reset3d()
-{
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        (*it)->Reset3d();
-}
-
-// -----------------------------------------------------------------------------
 // Name: GlProxy::CreateTooltip
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
@@ -646,4 +658,18 @@ bool GlProxy::HasFocus()
 void GlProxy::DrawShapeText( const QImage& image, const geometry::Point2f& where ) const
 {
     tools_->DrawShapeText( image, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::Purge
+// Created: ABR 2014-09-25
+// -----------------------------------------------------------------------------
+void GlProxy::Purge()
+{
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
+        ( *it )->Reset();
+    view_.reset();
+    tools_.reset();
+    widget2d_.reset();
+    widget3d_.reset();
 }

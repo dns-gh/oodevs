@@ -138,7 +138,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                 gui::SymbolIcons& symbols,
                                 StaticModel& staticModel,
                                 const gui::AggregateToolbar& aggregateToolbar,
-                                gui::ParametersLayer& paramLayer )
+                                const std::shared_ptr< gui::ParametersLayer >& paramLayer )
     : gui::RichWidget< QTabWidget >( "TreeViewsPanel" )
     , changeSuperiorDialog_( new gui::ChangeSuperiorDialog( controllers, icons, this ) )
     , renameInterface_( new gui::RenameInterface( controllers, this ) )

@@ -66,8 +66,11 @@ class OrbatToolbar : public QFrame
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
-                           gui::AutomatsLayer& automats, gui::FormationLayer& formations );
+             OrbatToolbar( QWidget* parent,
+                           kernel::Controllers& controllers,
+                           ProfileFilter& filter,
+                           const std::shared_ptr< gui::AutomatsLayer >& automats,
+                           const std::shared_ptr< gui::FormationLayer >& formations );
     virtual ~OrbatToolbar();
     //@}
 

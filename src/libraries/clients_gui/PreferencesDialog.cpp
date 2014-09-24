@@ -41,8 +41,8 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
                                       LightingProxy& lighting,
                                       kernel::CoordinateConverter_ABC& coordConverter,
                                       const Painter_ABC& painter,
-                                      GlSelector& selector,
-                                      Elevation2dLayer& elevation2dLayer,
+                                      GlProxy& proxy,
+                                      const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
                                       GraphicPreferences& preferences )
     : ModalDialog( parent, "PreferencesDialog", false )
     , controllers_      ( controllers )
@@ -84,7 +84,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     grid->addWidget( box, 1, 0 );
 
     pGraphicPrefPanel_       = new GraphicsPanel( this, preferences );
-    layersPanel_             = new LayersPanel( this, controllers, selector );
+    layersPanel_             = new LayersPanel( this, controllers, proxy );
     pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordConverter );
 
     box = new Q3HBox( this );
@@ -178,7 +178,7 @@ void PreferencesDialog::OnCancel()
 // Name: PreferencesDialog::AddLayer
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-void PreferencesDialog::AddLayer( const QString& name, gui::Layer& layer, bool dynamic /* = false */ )
+void PreferencesDialog::AddLayer( const QString& name, const std::shared_ptr< gui::Layer_ABC >& layer, bool dynamic /* = false */ )
 {
     layersPanel_->AddLayer( name, layer, dynamic );
 }

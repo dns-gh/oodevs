@@ -25,7 +25,9 @@ using namespace gui;
 // Name: ElevationPanel constructor
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
-ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers,
+ElevationPanel::ElevationPanel( QWidget* parent,
+                                const std::shared_ptr< Elevation2dLayer >& layer,
+                                kernel::Controllers& controllers,
                                 const Painter_ABC& painter )
     : PreferencePanel_ABC( parent, "ElevationPanel" )
     , layer_              ( layer )
@@ -113,7 +115,7 @@ ElevationPanel::~ElevationPanel()
 // -----------------------------------------------------------------------------
 void ElevationPanel::OnGradientChanged( Gradient& gradient )
 {
-    layer_.SetGradient( gradient );
+    layer_->SetGradient( gradient );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +154,7 @@ void ElevationPanel::Reset()
 // -----------------------------------------------------------------------------
 void ElevationPanel::OnEnableVariableGradient( bool bState )
 {
-    layer_.EnableVariableGradient( bState );
+    layer_->EnableVariableGradient( bState );
     options_.Change( "Elevation/FitToViewPort", bState );
 }
 
@@ -163,7 +165,7 @@ void ElevationPanel::OnEnableVariableGradient( bool bState )
 void ElevationPanel::OnEnableHillshade( bool bState )
 {
     enableHs_ = bState;
-    layer_.SetHillShadeStrength( enableHs_ ? strengthHs_ : 0.f );
+    layer_->SetHillShadeStrength( enableHs_ ? strengthHs_ : 0.f );
     options_.Change( "HillShade/Enabled", bState );
 }
 
@@ -173,7 +175,7 @@ void ElevationPanel::OnEnableHillshade( bool bState )
 // -----------------------------------------------------------------------------
 void ElevationPanel::OnHillShadeDirection( int value )
 {
-    layer_.SetHillShadeDirection( directionHs_ = value );
+    layer_->SetHillShadeDirection( directionHs_ = value );
     options_.Change( "HillShade/Direction", value );
 }
 

@@ -73,64 +73,6 @@ void Layer::Paint( Viewport_ABC& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer::RegisterIn
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void Layer::RegisterIn( Gl3dWidget& widget, kernel::Logger_ABC& logger )
-{
-    currentProxy_ = new MapLayerProxy( *this, logger );
-    widget.Register( *currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::RegisterIn
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void Layer::RegisterIn( GlWidget& widget, kernel::Logger_ABC& logger )
-{
-    currentWidget_ = &widget;
-    currentProxy_ = new MapLayerProxy( *this, logger );
-    widget.Register( *currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::UnregisterIn
-// Created: ABR 2012-06-11
-// -----------------------------------------------------------------------------
-void Layer::UnregisterIn( Gl3dWidget& widget )
-{
-    widget.Unregister( *currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::UnregisterIn
-// Created: ABR 2012-06-11
-// -----------------------------------------------------------------------------
-void Layer::UnregisterIn( GlWidget& widget )
-{
-    widget.Unregister( *currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::Reset2d
-// Created: AGE 2007-01-19
-// -----------------------------------------------------------------------------
-void Layer::Reset2d()
-{
-    currentWidget_ = 0;
-    currentProxy_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::Reset3d
-// Created: AGE 2007-01-19
-// -----------------------------------------------------------------------------
-void Layer::Reset3d()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Layer::SetAlpha
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
@@ -146,63 +88,6 @@ void Layer::SetAlpha( float alpha )
 float Layer::GetAlpha() const
 {
     return alpha_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::MoveAbove
-// Created: AGE 2007-04-27
-// -----------------------------------------------------------------------------
-void Layer::MoveAbove( Layer& layer )
-{
-    if( currentWidget_ && currentProxy_ && layer.currentProxy_ )
-        currentWidget_->MoveAbove( *currentProxy_, *layer.currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::MoveBelow
-// Created: AGE 2007-04-27
-// -----------------------------------------------------------------------------
-void Layer::MoveBelow( Layer& layer )
-{
-    if( currentWidget_ && currentProxy_ && layer.currentProxy_ )
-        currentWidget_->MoveBelow( *currentProxy_, *layer.currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer2D::Reset2d
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Layer2D::Reset2d()
-{
-    Layer::Reset2d();
-    Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer2D::Reset
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Layer2D::Reset()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer3D::Reset3d
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Layer3D::Reset3d()
-{
-    Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer3D::Reset
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Layer3D::Reset()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -367,6 +252,15 @@ bool Layer::ShowTooltip( const T_ObjectPicking& /*selection*/ )
 // Created: LGY 2013-03-08
 // -----------------------------------------------------------------------------
 void Layer::HideTooltip()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::Reset
+// Created: ABR 2014-09-24
+// -----------------------------------------------------------------------------
+void Layer::Reset()
 {
     // NOTHING
 }

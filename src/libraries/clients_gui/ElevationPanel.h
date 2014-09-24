@@ -47,7 +47,9 @@ class ElevationPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers,
+             ElevationPanel( QWidget* parent,
+                             const std::shared_ptr< Elevation2dLayer >& layer,
+                             kernel::Controllers& controllers,
                              const Painter_ABC& painter );
     virtual ~ElevationPanel();
     //@}
@@ -79,7 +81,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::OptionsController& options_;
-    Elevation2dLayer& layer_;
+    std::shared_ptr< Elevation2dLayer > layer_;
     GradientPreferences& preferences_;
     RichGroupBox* hsBox_;
     CheckBox* fitColorGradienttoViewPort_;

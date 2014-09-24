@@ -58,8 +58,13 @@ class InhabitantCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& types,
-                                      AgentsModel& agentsModel, gui::ParametersLayer& layer, const gui::GlTools_ABC& tools );
+             InhabitantCreationPanel( QWidget* parent,
+                                      gui::PanelStack_ABC& panel,
+                                      kernel::Controllers& controllers,
+                                      const kernel::AgentTypes& types,
+                                      AgentsModel& agentsModel,
+                                      const std::shared_ptr< gui::ParametersLayer >& layer,
+                                      const gui::GlTools_ABC& tools );
     virtual ~InhabitantCreationPanel();
     //@}
 
@@ -82,12 +87,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InhabitantCreationPanel( const InhabitantCreationPanel& );            //!< Copy constructor
-    InhabitantCreationPanel& operator=( const InhabitantCreationPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& team );

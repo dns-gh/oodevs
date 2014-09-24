@@ -27,7 +27,7 @@ using namespace gui;
 // Name: LocationCreator constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-LocationCreator::LocationCreator( QObject* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
+LocationCreator::LocationCreator( QObject* parent, const QString& menu, const std::shared_ptr< ParametersLayer >& layer, ShapeHandler_ABC& handler  )
     : QObject           ( parent )
     , layer_            ( layer )
     , handler_          ( handler )
@@ -46,7 +46,7 @@ LocationCreator::LocationCreator( QObject* parent, const QString& menu, Paramete
 // Name: LocationCreator constructor
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
-LocationCreator::LocationCreator( QObject* parent, ParametersLayer& layer, ShapeHandler_ABC& handler )
+LocationCreator::LocationCreator( QObject* parent, const std::shared_ptr< ParametersLayer >& layer, ShapeHandler_ABC& handler )
     : QObject           ( parent )
     , layer_            ( layer )
     , handler_          ( handler )
@@ -132,7 +132,7 @@ bool LocationCreator::Allows( const Location_ABC& location ) const
 // -----------------------------------------------------------------------------
 void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle, bool rectangle )
 {
-    layer_.Reset();
+    layer_->Reset();
     pointAllowed_ = point;
     lineAllowed_ = line;
     polygonAllowed_ = polygon;
@@ -203,14 +203,14 @@ void LocationCreator::NotifyDeleted( const Drawing_ABC& drawing )
 // -----------------------------------------------------------------------------
 void LocationCreator::StartPoint()
 {
-    if( layer_.IsInsideWorld( popupPoint_ ) && ( pointAllowed_ || lineAllowed_ || polygonAllowed_ || circleAllowed_ || rectangleAllowed_ ) )
+    if( layer_->IsInsideWorld( popupPoint_ ) && ( pointAllowed_ || lineAllowed_ || polygonAllowed_ || circleAllowed_ || rectangleAllowed_ ) )
     {
         Location_ABC* location = new Point();
         location->AddPoint( popupPoint_ );
         handler_.Handle( *location );
     }
     else
-        layer_.StartPoint( handler_ );
+        layer_->StartPoint( handler_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,7 +219,7 @@ void LocationCreator::StartPoint()
 // -----------------------------------------------------------------------------
 void LocationCreator::StartLine()
 {
-    layer_.StartLine( handler_ );
+    layer_->StartLine( handler_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +228,7 @@ void LocationCreator::StartLine()
 // -----------------------------------------------------------------------------
 void LocationCreator::StartRectangle()
 {
-    layer_.StartRectangle( handler_ );
+    layer_->StartRectangle( handler_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ void LocationCreator::StartRectangle()
 // -----------------------------------------------------------------------------
 void LocationCreator::StartPolygon()
 {
-    layer_.StartPolygon( handler_ );
+    layer_->StartPolygon( handler_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ void LocationCreator::StartPolygon()
 // -----------------------------------------------------------------------------
 void LocationCreator::StartCircle()
 {
-    layer_.StartCircle( handler_ );
+    layer_->StartCircle( handler_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +257,7 @@ void LocationCreator::AddDrawing()
 {
     if( drawing_ )
     {
-        layer_.Reset();
+        layer_->Reset();
         handler_.Handle( drawing_->GetLocation().Clone() );
     }
 }

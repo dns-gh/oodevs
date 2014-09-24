@@ -29,7 +29,9 @@ using namespace gui;
 // Name: WeatherPanel constructor
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
-WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer& layer )
+WeatherPanel::WeatherPanel( QWidget* parent,
+                            PanelStack_ABC& panel,
+                            const std::shared_ptr< WeatherLayer >& layer )
     : InfoPanel_ABC( parent, panel, tr( "Weathers" ), "WeatherPanel" )
     , layer_        ( layer )
     , selectedLocal_( 0 )
@@ -201,10 +203,10 @@ void WeatherPanel::LocalSelectionChanged()
         localWeatherWidget_->Update( *selected );
         startTime_->setDateTime( tools::BoostTimeToQTime( selected->GetStartTime() ) );
         endTime_->setDateTime( tools::BoostTimeToQTime( selected->GetEndTime() ) );
-        layer_.SetPosition( *selected );
+        layer_->SetPosition( *selected );
     }
     else
-        layer_.Clear();
+        layer_->Clear();
     EnableLocalParameters( selected != 0, selected != 0 && selected->IsCreated() );
     selectedLocal_ = selected;
 }
@@ -216,7 +218,7 @@ void WeatherPanel::LocalSelectionChanged()
 void WeatherPanel::SetPatchPosition()
 {
     if( localWeathers_ && localWeathers_->SelectedItem() )
-        layer_.StartEdition( *static_cast< weather::MeteoLocal* >( localWeathers_->SelectedItem() ) );
+        layer_->StartEdition( *static_cast< weather::MeteoLocal* >( localWeathers_->SelectedItem() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +228,7 @@ void WeatherPanel::SetPatchPosition()
 void WeatherPanel::hide()
 {
     QWidget::hide();
-    layer_.Clear();
+    layer_->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -235,6 +237,6 @@ void WeatherPanel::hide()
 // -----------------------------------------------------------------------------
 void WeatherPanel::Purge()
 {
-    layer_.Clear();
+    layer_->Clear();
     EnableLocalParameters( false, false );
 }

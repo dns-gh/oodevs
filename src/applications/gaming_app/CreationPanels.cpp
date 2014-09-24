@@ -34,9 +34,17 @@ using namespace actions;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, const Model& model,
-                                const Time_ABC& simulation, ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, GlTools_ABC& tools, SymbolIcons& icons,
-                                ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config )
+CreationPanels::CreationPanels( QWidget* parent,
+                                Controllers& controllers,
+                                const ::StaticModel& staticModel,
+                                const Model& model,
+                                const Time_ABC& simulation,
+                                const std::shared_ptr< ParametersLayer >& paramLayer,
+                                const std::shared_ptr< ::WeatherLayer >& weatherLayer,
+                                GlTools_ABC& tools,
+                                SymbolIcons& icons,
+                                ColorStrategy_ABC& colorStrategy,
+                                const tools::ExerciseConfig& config )
     : gui::RichDockWidget( controllers, parent, "creation-panel" )
 {
     gui::SubObjectName subObject( "CreationPanels" );

@@ -36,8 +36,11 @@ class LocationEditorToolbar : public gui::LocationEditorToolbar
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
-                                    gui::View_ABC& view, gui::LocationsLayer& layer );
+             LocationEditorToolbar( QMainWindow* parent,
+                                    kernel::Controllers& controllers,
+                                    const kernel::CoordinateConverter_ABC& converter,
+                                    gui::View_ABC& view,
+                                    const std::shared_ptr< gui::LocationsLayer >& layer );
     virtual ~LocationEditorToolbar();
     //@}
 

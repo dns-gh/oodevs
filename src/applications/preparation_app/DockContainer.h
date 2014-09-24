@@ -60,11 +60,22 @@ class DockContainer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             DockContainer( QMainWindow* parent, kernel::Controllers& controllers, gui::AutomatsLayer& automats,
-                            gui::FormationLayer& formation, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
-                            Model& model, StaticModel& staticModel, const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
-                            gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
-                            gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfilerLayer,
+             DockContainer( QMainWindow* parent,
+                            kernel::Controllers& controllers,
+                            const std::shared_ptr< gui::AutomatsLayer >& automats,
+                            const std::shared_ptr< gui::FormationLayer >& formation,
+                            const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                            const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
+                            const std::shared_ptr< gui::TerrainProfilerLayer >& terrainProfilerLayer,
+                            gui::EntitySymbols& icons,
+                            ModelBuilder& modelBuilder,
+                            Model& model,
+                            StaticModel& staticModel,
+                            const tools::ExerciseConfig& config,
+                            gui::SymbolIcons& symbols,
+                            gui::ColorStrategy_ABC& colorStrategy,
+                            gui::GlProxy& glProxy,
+                            ColorController& colorController,
                             const kernel::Profile_ABC& profile );
     virtual ~DockContainer();
     //@}

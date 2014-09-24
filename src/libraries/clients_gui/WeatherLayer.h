@@ -34,6 +34,7 @@ namespace gui
 // Created: ABR 2011-06-07
 // =============================================================================
 class WeatherLayer : public Layer
+                   , public std::enable_shared_from_this< WeatherLayer >
 {
 
 public:

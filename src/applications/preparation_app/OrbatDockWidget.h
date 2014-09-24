@@ -50,14 +50,14 @@ public:
                               QWidget* parent,
                               const QString& objectName,
                               const QString& windowTitle,
-                              gui::AutomatsLayer& automats,
-                              gui::FormationLayer& formation,
+                              const std::shared_ptr< gui::AutomatsLayer >& automats,
+                              const std::shared_ptr< gui::FormationLayer >& formation,
+                              const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               gui::EntitySymbols& icons,
                               ModelBuilder& modelBuilder,
                               Model& model,
                               StaticModel& staticModel,
-                              gui::SymbolIcons& symbols,
-                              gui::ParametersLayer& paramLayer );
+                              gui::SymbolIcons& symbols );
     virtual ~OrbatDockWidget();
     //@}
 

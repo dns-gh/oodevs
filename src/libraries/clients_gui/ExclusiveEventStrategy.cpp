@@ -37,9 +37,9 @@ ExclusiveEventStrategy::~ExclusiveEventStrategy()
 // Name: ExclusiveEventStrategy::TakeExclusiveFocus
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::TakeExclusiveFocus( Layer_ABC& layer )
+void ExclusiveEventStrategy::TakeExclusiveFocus( const std::shared_ptr< Layer_ABC >& layer )
 {
-    layer_ = &layer;
+    layer_ = layer;
 }
 
 // -----------------------------------------------------------------------------
@@ -178,22 +178,4 @@ void ExclusiveEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
         layer_->HandleLeaveDragEvent( event );
     else
         forward_.HandleLeaveDragEvent( event );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExclusiveEventStrategy::Register
-// Created: AGE 2007-01-15
-// -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::Register( Layer_ABC& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExclusiveEventStrategy::Remove
-// Created: AGE 2007-01-15
-// -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::Remove( Layer_ABC& )
-{
-    // NOTHING
 }

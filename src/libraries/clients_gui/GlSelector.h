@@ -24,6 +24,7 @@ namespace kernel
     class Logger_ABC;
 }
 
+class QGLWidget;
 class MapLayer_ABC;
 class EventStrategy_ABC;
 class QStackedWidget;
@@ -52,6 +53,17 @@ class GlSelector : public QStackedWidget
     Q_OBJECT
 
 public:
+    //! @name Types
+    //@{
+    enum E_Widget
+    {
+        eWidget_Empty,
+        eWidget_2D,
+        eWidget_3D
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              GlSelector( QWidget* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy, kernel::Logger_ABC& logger );
@@ -63,10 +75,9 @@ public:
     void Load();
     void Close();
 
-    void AddIcon( const char** xpm, int x, int y );
-    void AddLayer( Layer& layer );
-    void RemoveLayer( Layer& layer );
+    void ChangeTo( E_Widget type );
 
+    void AddIcon( const char** xpm, int x, int y );
     void SetFocus();
     //@}
 
@@ -79,9 +90,6 @@ signals:
     void MouseMove( const geometry::Point3f& );
     void UpdateGL();
     //@}
-
-private slots:
-    void OnUpdateGL();
 
 protected:
     //! @name Operations
@@ -105,18 +113,11 @@ private:
     kernel::DetectionMap& map_;
     EventStrategy_ABC& strategy_;
     kernel::Logger_ABC& logger_;
-
     std::unique_ptr< IconLayout > iconLayout_;
-    std::unique_ptr< MapLayer_ABC > moveLayer_;
 
     QTimer* displayTimer_;
-
-    GlWidget* widget2d_;
-    Gl3dWidget*               widget3d_;
-    GlPlaceHolder*            glPlaceHolder_;
-
-    bool b3d_;
-    int refreshRate_;
+    std::shared_ptr< GlWidget > widget2d_;
+    std::shared_ptr< Gl3dWidget > widget3d_;
     //@}
 };
 

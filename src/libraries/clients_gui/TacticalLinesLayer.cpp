@@ -25,8 +25,12 @@ using namespace kernel;
 // Name: TacticalLinesLayer constructor
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
-TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                        ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile,
+TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers,
+                                        GlTools_ABC& tools,
+                                        ColorStrategy_ABC& strategy,
+                                        const std::shared_ptr< ParametersLayer >& parameters,
+                                        View_ABC& view,
+                                        const kernel::Profile_ABC& profile,
                                         ModelObserver_ABC& model )
     : EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_TacticalLines )
     , controllers_ ( controllers )
@@ -120,7 +124,7 @@ void TacticalLinesLayer::NotifySelectionChanged( const std::vector< const kernel
     const kernel::TacticalLine_ABC* newSelected = elements.size() == 1 ? elements.front() : 0;
     if( isEditing_ && ( !newSelected || newSelected->GetId() != selected_->GetId() ) )
     {
-        parameters_.Reset();
+        parameters_->Reset();
         isEditing_ = false;
     }
     selected_ = newSelected;
@@ -158,7 +162,7 @@ void TacticalLinesLayer::OnCreateLimit()
 {
     isLimit_ = true;
     isEditing_ = true;
-    parameters_.StartLine( *this );
+    parameters_->StartLine( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,5 +173,5 @@ void TacticalLinesLayer::OnCreateLima()
 {
     isLimit_ = false;
     isEditing_ = true;
-    parameters_.StartLine( *this );
+    parameters_->StartLine( *this );
 }

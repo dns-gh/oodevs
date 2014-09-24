@@ -66,14 +66,14 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   QWidget* parent,
                                   const QString& objectName,
                                   ProfileFilter& filter,
-                                  gui::AutomatsLayer& automats,
-                                  gui::FormationLayer& formations,
+                                  const std::shared_ptr< gui::AutomatsLayer >& automats,
+                                  const std::shared_ptr< gui::FormationLayer >& formations,
+                                  const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                   actions::ActionsModel& actionsModel,
                                   const StaticModel& staticModel,
                                   const kernel::Time_ABC& simulation,
                                   const gui::EntitySymbols& icons,
-                                  DrawingsBuilder& drawingsBuilder,
-                                  gui::ParametersLayer& paramLayer )
+                                  DrawingsBuilder& drawingsBuilder )
     : gui::RichDockWidget( controllers, parent, objectName )
     , changeSuperiorDialog_( new gui::ChangeSuperiorDialog( controllers, icons, this ) )
     , observer_( new gui::DummyModelObserver() )

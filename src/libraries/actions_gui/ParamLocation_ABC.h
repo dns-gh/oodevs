@@ -92,7 +92,7 @@ protected:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC&  converter_;
-    ::gui::ParametersLayer&                 layer_;
+    std::shared_ptr< ::gui::ParametersLayer > layer_;
     QLabel*                                 pPosLabel_;
     std::unique_ptr< kernel::Location_ABC > location_;
     std::unique_ptr< geometry::Point2f >    popupPosition_;

@@ -46,7 +46,10 @@ class TerrainProfiler : public RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainProfiler( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer );
+             TerrainProfiler( QMainWindow* parent,
+                              kernel::Controllers& controllers,
+                              const kernel::DetectionMap& detection,
+                              const std::shared_ptr< TerrainProfilerLayer >& layer );
     virtual ~TerrainProfiler();
     //@}
 
@@ -81,7 +84,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
-    TerrainProfilerLayer& layer_;
+    std::shared_ptr< TerrainProfilerLayer > layer_;
     TerrainProfile* profile_;
     QColor forestColor_;
     QColor suburbColor_;

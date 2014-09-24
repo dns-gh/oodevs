@@ -54,8 +54,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( Layer& layer );
-    void Unregister( Layer& layer );
+    void Register( const std::shared_ptr< Layer_ABC >& layer );
+    void Unregister( const std::shared_ptr< Layer_ABC >& layer );
 
     virtual unsigned short  StipplePattern( int factor = 1 ) const;
     virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
@@ -141,7 +141,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer* > T_Layers;
+    typedef std::vector< std::shared_ptr< Layer_ABC > > T_Layers;
     //@}
 
 private:

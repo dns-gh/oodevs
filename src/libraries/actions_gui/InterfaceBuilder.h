@@ -58,7 +58,7 @@ public:
     //@{
              InterfaceBuilder( kernel::Controllers& controllers,
                                const tools::ExerciseConfig& config,
-                               ::gui::ParametersLayer& layer,
+                               const std::shared_ptr< ::gui::ParametersLayer >& layer,
                                const kernel::StaticModel& staticModel,
                                kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter = 0,
                                const kernel::Time_ABC* simulation = 0,
@@ -77,7 +77,7 @@ public:
     //@{
     virtual QObject* GetParentObject() const;
     virtual ParamInterface_ABC& GetParamInterface() const;
-    virtual ::gui::ParametersLayer& GetParameterLayer() const;
+    virtual std::shared_ptr< ::gui::ParametersLayer > GetParameterLayer() const;
     virtual kernel::Controllers& GetControllers() const;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const;
     virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const;
@@ -115,7 +115,7 @@ private:
     //@{
     kernel::Controllers&                   controllers_;
     const tools::ExerciseConfig&           config_;
-    ::gui::ParametersLayer&                layer_;
+    std::shared_ptr< ::gui::ParametersLayer > layer_;
     const kernel::StaticModel&             staticModel_;
     kernel::ObjectKnowledgeConverter_ABC*  objectKnowledgeConverter_;
     const kernel::Time_ABC*                simulation_;

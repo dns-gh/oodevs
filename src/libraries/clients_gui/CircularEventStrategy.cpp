@@ -59,9 +59,9 @@ void CircularEventStrategy::SetExclusive( bool b )
 // Name: CircularEventStrategy::SetDefault
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::SetDefault( Layer_ABC& layer )
+void CircularEventStrategy::SetDefault( const std::shared_ptr< Layer_ABC >& layer )
 {
-    default_ = &layer;
+    default_ = layer;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,9 +77,9 @@ const SelectionMenu* CircularEventStrategy::GetSelectionMenu() const
 // Name: CircularEventStrategy::Register
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::Register( Layer_ABC& layer )
+void CircularEventStrategy::Register( const std::shared_ptr< Layer_ABC >& layer )
 {
-    layers_.push_back( &layer );
+    layers_.push_back( layer );
     rlast_ = layers_.rbegin();
 }
 
@@ -87,9 +87,9 @@ void CircularEventStrategy::Register( Layer_ABC& layer )
 // Name: CircularEventStrategy::Remove
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::Remove( Layer_ABC& layer )
+void CircularEventStrategy::Remove( const std::shared_ptr< Layer_ABC >& layer )
 {
-    auto it = std::find( layers_.begin(), layers_.end(), &layer );
+    auto it = std::find( layers_.begin(), layers_.end(), layer );
     if( it != layers_.end() )
         layers_.erase( it );
     rlast_ = layers_.rbegin();

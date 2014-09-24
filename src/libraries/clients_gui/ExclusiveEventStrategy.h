@@ -33,15 +33,12 @@ public:
 
     //! @name Operations
     //@{
-    void TakeExclusiveFocus( Layer_ABC& layer );
+    void TakeExclusiveFocus( const std::shared_ptr< Layer_ABC >& layer );
     void ReleaseExclusiveFocus();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Register( Layer_ABC& layer );
-    virtual void Remove  ( Layer_ABC& layer );
-
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
     virtual void HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
@@ -66,7 +63,7 @@ private:
     //! @name Member data
     //@{
     EventStrategy_ABC& forward_;
-    Layer_ABC* layer_;
+    std::shared_ptr< Layer_ABC > layer_;
     //@}
 };
 

@@ -32,8 +32,11 @@
 // Name: OrbatToolbar constructor
 // Created: SBO 2007-03-05
 // -----------------------------------------------------------------------------
-OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
-                            gui::AutomatsLayer& automats, gui::FormationLayer& formations )
+OrbatToolbar::OrbatToolbar( QWidget* parent,
+                            kernel::Controllers& controllers,
+                            ProfileFilter& filter,
+                            const std::shared_ptr< gui::AutomatsLayer >& automats,
+                            const std::shared_ptr< gui::FormationLayer >& formations )
     : QFrame( parent )
     , controllers_( controllers )
     , filter_     ( filter )
