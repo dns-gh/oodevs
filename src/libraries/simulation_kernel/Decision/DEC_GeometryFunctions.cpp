@@ -1543,22 +1543,38 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeRandomPointOnCircle
+// Name: boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle
+// Created: LDC 2014-09-23
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius )
+{
+    return DEC_GeometryFunctions::ComputeRandomPointOnCircleInFuseau( 0, pCenter, radius );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCircle
+// Created: LDC 2014-09-23
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCircle( MT_Vector2D* pCenter, float radius )
+{
+    return DEC_GeometryFunctions::ComputeRandomPointInCircleInFuseau( 0, pCenter, radius );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeRandomPointOnCircleInFuseau
 // Created: JVT 2005-02-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle( const DEC_Decision_ABC* decision, MT_Vector2D* pCenter, float radiusMeters )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircleInFuseau( const DEC_Decision_ABC* decision, MT_Vector2D* pCenter, float radiusMeters )
 {
     if( !pCenter )
         throw MASA_EXCEPTION( "Invalid center" );
-    if( !decision )
-        throw MASA_EXCEPTION( "Invalid decision" );
-    const MIL_Fuseau& fuseau = decision->GetOrderManager().GetFuseau();
+    const MIL_Fuseau* fuseau = decision ? &decision->GetOrderManager().GetFuseau() : nullptr;
     const double radius = MIL_Tools::ConvertMeterToSim( radiusMeters );
     boost::shared_ptr< MT_Vector2D > pResult;
-    if( !fuseau.IsNull() )
+    if( fuseau && !fuseau->IsNull() )
     {
-        const TER_Localisation fuseauLoc( fuseau );
-        const bool isInside = fuseau.IsInside( *pCenter );
+        const TER_Localisation fuseauLoc( *fuseau );
+        const bool isInside = fuseau->IsInside( *pCenter );
         MT_Vector2D result;
         fuseauLoc.ComputeNearestOutsidePoint( *pCenter, result );
         const double distance = result.Distance( *pCenter );
@@ -1593,22 +1609,20 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCirc
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeRandomPointInCircle
+// Name: DEC_GeometryFunctions::ComputeRandomPointInCircleInFuseau
 // Created: NLD 2004-04-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCircle( const DEC_Decision_ABC* decision, MT_Vector2D* pCenter, float radiusMeters )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCircleInFuseau( const DEC_Decision_ABC* decision, MT_Vector2D* pCenter, float radiusMeters )
 {
     if( !pCenter )
         throw MASA_EXCEPTION( "Invalid center" );
-    if( !decision )
-        throw MASA_EXCEPTION( "Invalid decision" );
-    const MIL_Fuseau& fuseau = decision->GetOrderManager().GetFuseau();
+    const MIL_Fuseau* fuseau = decision ? &decision->GetOrderManager().GetFuseau() : nullptr;
     const double radius = MIL_Tools::ConvertMeterToSim( radiusMeters );
     boost::shared_ptr< MT_Vector2D > pResult;
-    if( !fuseau.IsNull() )
+    if( fuseau && !fuseau->IsNull() )
     {
-        const TER_Localisation fuseauLoc( fuseau );
-        const bool isInside = fuseau.IsInside( *pCenter );
+        const TER_Localisation fuseauLoc( *fuseau );
+        const bool isInside = fuseau->IsInside( *pCenter );
         MT_Vector2D result;
         fuseauLoc.ComputeNearestOutsidePoint( *pCenter, result );
         const double distance = result.Distance( *pCenter );

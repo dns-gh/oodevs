@@ -259,7 +259,7 @@ end
 -- @param radius Float, the radius of the disc
 -- @return Point knowledge
 integration.randomPositionInCircle = function( center, radius )
-    local position = DEC_Geometrie_PositionAleatoireDansCercle( myself, center:getPosition(), radius )
+    local position = DEC_Geometrie_PositionAleatoireDansFuseauDansCercle( myself, center:getPosition(), radius )
     if not position then
         return center
     end
@@ -273,7 +273,7 @@ end
 -- @param radius Float, the radius of the circle
 -- @return Point knowledge
 integration.randomPositionOnCircle = function( center, radius )
-    local position = DEC_Geometrie_PositionAleatoireSurCercle( myself, center:getPosition(), radius )
+    local position = DEC_Geometrie_PositionAleatoireDansFuseauSurCercle( myself, center:getPosition(), radius )
     if not position then
         return center
     end

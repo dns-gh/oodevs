@@ -14,7 +14,7 @@
 #include "clients_gui/LinkItemDelegate.h"
 #include "gaming/LogisticsConsign_ABC.h"
 
-Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
+Q_DECLARE_METATYPE( const kernel::Entity_ABC* )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticsRequestsSupplyTable constructor
@@ -64,12 +64,17 @@ const gui::LinkItemDelegate* LogisticsRequestsSupplyTable::GetLinkItemDelegate()
 // Name: LogisticsRequestsSupplyTable::AddRecipientResource
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsSupplyTable::AddRecipientResource( const QString& recipient, const QString& resource,
-                                                         unsigned int requested, unsigned int granted,
-                                                         unsigned int conveyed, bool delivered )
+void LogisticsRequestsSupplyTable::AddRecipientResource( const kernel::Entity_ABC& entity,
+                                                         const QString& recipient,
+                                                         const QString& resource,
+                                                         unsigned int requested,
+                                                         unsigned int granted,
+                                                         unsigned int conveyed,
+                                                         bool delivered )
 {
     int rowIndex = dataModel_.rowCount();
-    SetData( rowIndex, 0, recipient );
+    auto item = SetData( rowIndex, 0, recipient );
+    item->setData( QVariant::fromValue( &entity ), Qt::UserRole );
     SetData( rowIndex, 1, resource );
     SetData( rowIndex, 2, requested );
     SetData( rowIndex, 3, granted );
@@ -81,7 +86,7 @@ void LogisticsRequestsSupplyTable::AddRecipientResource( const QString& recipien
 // Name: LogisticsRequestsTable::SetData
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsSupplyTable::SetData( int row, int col, QVariant text, bool checkable, bool checked )
+QStandardItem* LogisticsRequestsSupplyTable::SetData( int row, int col, QVariant text, bool checkable, bool checked )
 {
     QStandardItem* item = dataModel_.item( row, col );
     if( !item )
@@ -96,4 +101,18 @@ void LogisticsRequestsSupplyTable::SetData( int row, int col, QVariant text, boo
     else
         item->setCheckState( checked ? Qt::Checked : Qt::Unchecked );
     dataModel_.setItem( row, col, item );
+    return item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsSupplyTable::UpdateRecipient
+// Created: ABR 2014-09-22
+// -----------------------------------------------------------------------------
+void LogisticsRequestsSupplyTable::UpdateRecipient( const kernel::Entity_ABC& entity, const QString& name )
+{
+    for( int i = 0; i < dataModel_.rowCount(); ++i )
+        if( auto item = dataModel_.item( i, 0 ) )
+            if( auto itemEntity = item->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
+                if( itemEntity == &entity )
+                    item->setText( name );
 }

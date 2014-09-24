@@ -52,7 +52,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent,
     , isPushFlow_( true )
     , lastContext_( 0 )
 {
-    recipientsList_ = new LogisticSupplyExclusiveListWidget( this, tr( "Add recipient" ), tr( "Remove recipient" ) );
+    recipientsList_ = new LogisticSupplyExclusiveListWidget( controllers, this, tr( "Add recipient" ), tr( "Remove recipient" ) );
     connect( recipientsList_, SIGNAL( ItemAdded( const QString& ) ), SLOT( AddRecipient( const QString& ) ) );
     connect( recipientsList_, SIGNAL( ItemRemoved( const QString& ) ), SLOT( RemoveRecipient( const QString& ) ) );
     connect( recipientsList_, SIGNAL( SelectionChanged( const QString&, const QString& ) ),
@@ -123,9 +123,10 @@ void LogisticSupplyPushFlowDialog::Show()
     ComputeRecipients();
     tabs_->setCurrentPage( 0 );
 
-    QStringList recipientsList;
-    ComputeAvailableRecipients( recipientsList );
-    recipientsList_->SetChoice( recipientsList );
+    recipientsList_->Clear();
+    for( auto it = recipientsNames_.begin(); it != recipientsNames_.end(); ++it )
+        if( std::find( recipients_.begin(), recipients_.end(), it.value() ) == recipients_.end() )
+            recipientsList_->AddChoice( *it.value() );
 
     QMap< QString, int > carriersQty, carriersAvailable;
     carriersUseCheck_->setCheckState( Qt::Unchecked );
@@ -406,16 +407,4 @@ void LogisticSupplyPushFlowDialog::ComputeRecipients()
                 recipientsNames_[ automat.GetName() ] = &automat;
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::computeAvailableRecipients
-// Created: MMC 2011-09-19
-// -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::ComputeAvailableRecipients( QStringList& displayRecipientsNames )
-{
-    displayRecipientsNames.clear();
-    for( auto it = recipientsNames_.begin(); it != recipientsNames_.end(); ++it )
-        if( std::find( recipients_.begin(), recipients_.end(), it.value() ) == recipients_.end() )
-            displayRecipientsNames.append( it.key() );
 }

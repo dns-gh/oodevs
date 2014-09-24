@@ -19,8 +19,14 @@
 
 Q_DECLARE_METATYPE( const frontend::Exercise_ABC* )
 
-#define FullpathRole ( Qt::UserRole + 1 )
-#define ExerciseRole ( Qt::UserRole + 2 )
+namespace
+{
+    enum E_Roles
+    {
+        FullpathRole = Qt::UserRole,
+        ExerciseRole = Qt::UserRole + 1
+    };
+}
 
 namespace
 {

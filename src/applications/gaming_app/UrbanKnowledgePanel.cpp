@@ -27,8 +27,6 @@
 Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
 Q_DECLARE_METATYPE( const kernel::UrbanKnowledge_ABC* )
 
-#define EntityRole ( Qt::UserRole )
-
 using namespace kernel;
 using namespace gui;
 
@@ -113,7 +111,7 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanKnowledges& element )
     {
         const kernel::UrbanKnowledge_ABC& knowledge = iterator.NextElement();
         knowledgeModel_.item( i )->setText( knowledge.GetEntity()->GetName() );
-        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), EntityRole );
+        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), Qt::UserRole );
         ++i;
     }
 }
@@ -132,7 +130,7 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanPerceptions& element )
      for( int i = 0; i < knowledgeSize; ++i )
      {
          perceptionModel_.item( i )->setText( element.detectingAutomats_[ i ]->GetName() );
-         perceptionModel_.item( i, 0 )->setData( QVariant::fromValue( element.detectingAutomats_[ i ] ), EntityRole );
+         perceptionModel_.item( i, 0 )->setData( QVariant::fromValue( element.detectingAutomats_[ i ] ), Qt::UserRole );
      }
 }
 
@@ -192,9 +190,9 @@ void UrbanKnowledgePanel::OnSelectionChanged()
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
+    if( item && item->data( Qt::UserRole ).isValid() )
     {
-        subSelected_ = item->data( EntityRole ).value< const UrbanKnowledge_ABC* >();
+        subSelected_ = item->data( Qt::UserRole ).value< const UrbanKnowledge_ABC* >();
         subSelected_->GetEntity()->Activate( controllers_.actions_ );
     }
     else
@@ -221,8 +219,8 @@ void UrbanKnowledgePanel::OnContextMenuRequested( const QPoint& pos )
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
-        item->data( EntityRole ).value< const UrbanKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
+    if( item && item->data( Qt::UserRole ).isValid() )
+        item->data( Qt::UserRole ).value< const UrbanKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ), this );
 }
 
 void UrbanKnowledgePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
@@ -239,5 +237,5 @@ void UrbanKnowledgePanel::NotifyUpdated( const kernel::Automat_ABC& automat )
 {
     if( !isVisible() )
         return;
-    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, EntityRole );
+    tools::UpdateEntityNameInModel< Automat_ABC >( perceptionModel_, automat, Qt::UserRole );
 }

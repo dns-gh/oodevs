@@ -348,6 +348,8 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_ListePointsLocalisation", &DEC_GeometryFunctions::ListLocalisationPoints );
     brain.RegisterFunction( "DEC_Geometrie_OffsetItinerary", &DEC_GeometryFunctions::ListLocalisationPoints );
     brain.RegisterFunction( "DEC_Geometrie_DirectionMoyenne", &DEC_GeometryFunctions::ComputeMeanDirection );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansFuseauSurCercle", &DEC_GeometryFunctions::ComputeRandomPointOnCircleInFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansFuseauDansCercle", &DEC_GeometryFunctions::ComputeRandomPointInCircleInFuseau );
     brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireSurCercle", &DEC_GeometryFunctions::ComputeRandomPointOnCircle );
     brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansCercle", &DEC_GeometryFunctions::ComputeRandomPointInCircle );
     brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansZone", &DEC_GeometryFunctions::ComputeRandomPointInZone );

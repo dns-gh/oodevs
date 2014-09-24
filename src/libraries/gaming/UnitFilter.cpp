@@ -28,6 +28,7 @@ using namespace kernel;
 UnitFilter::UnitFilter( Controllers& controllers, const Profile_ABC& forward )
      : controller_  ( controllers.controller_ )
      , forward_     ( forward )
+     , filtered_    ( controllers )
      , entity_      ( controllers )
      , tHierarchies_( 0 )
      , cHierarchies_( 0 )
@@ -183,9 +184,14 @@ bool UnitFilter::IsPerceived( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void UnitFilter::SetFilter( const Entity_ABC& entity )
 {
-    entity_ = & entity;
-    tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
-    cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
+    const auto tactical = entity.Retrieve< TacticalHierarchies >();
+    const auto comms = entity.Retrieve< CommunicationHierarchies >();
+    if( !tactical && !comms )
+        return;
+    filtered_ = &entity;
+    tHierarchies_ = tactical;
+    cHierarchies_ = comms;
+    entity_ = cHierarchies_ ? &entity : &tHierarchies_->GetTop();
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
     controller_.Update( *static_cast< Filter_ABC* >( this ) );
 }
@@ -205,6 +211,7 @@ void UnitFilter::SetFilter( const  kernel::Profile_ABC& /*profile*/ )
 // -----------------------------------------------------------------------------
 void UnitFilter::RemoveFilter()
 {
+    filtered_ = 0;
     entity_ = 0;
     tHierarchies_ = 0;
     cHierarchies_ = 0;
@@ -363,5 +370,5 @@ bool UnitFilter::IsObjectOfSameTeam( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC* UnitFilter::GetFilteredEntity() const
 {
-    return entity_;
+    return filtered_;
 }

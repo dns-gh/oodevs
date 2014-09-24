@@ -366,12 +366,12 @@ end
 -- <ul> <li> Boolean, whether or not the extraction occurred successfully. </li>
 -- <li> Simulation position, the extraction position. </li>
 -- <li> Simulation crowd, the id of the newly extracted crowd </li> </ul>
-integration.extractVictimsFromCrowd = function( crowd, position, distance )
-    position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
+integration.extractVictimsFromCrowd = function( crowd, center, distance )
+    local position = center or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract wounded creating a new crowd on my own position
     end
-    position = DEC_Geometrie_PositionAleatoireSurCercle( myself, position, distance or 50 )
+    position = DEC_Geometrie_PositionAleatoireDansFuseauDansCercle( myself, position, distance or 50 ) or center or DEC_Agent_Position()
     local newCrowd = DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, position )
     return ( newCrowd ~= 0 ), position, newCrowd
 end
@@ -392,12 +392,12 @@ end
 -- <ul> <li> Boolean, whether or not the extraction occurred successfully. </li>
 -- <li> Simulation position, the extraction position. </li>
 -- <li> Simulation crowd, the id of the newly extracted crowd </li> </ul>
-integration.extractDeadFromCrowd = function( crowd, position, distance )
-    position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
+integration.extractDeadFromCrowd = function( crowd, center, distance )
+    local position = center or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract dead creating a new crowd on my own position
     end
-    position = DEC_Geometrie_PositionAleatoireSurCercle( myself, position, distance or 50 )
+    position = DEC_Geometrie_PositionAleatoireDansFuseauDansCercle( myself, position, distance or 50 ) or center or DEC_Agent_Position()
     local newCrowd = DEC_Crowd_ExtractDeadFromCrowd( crowd.source, position )
     return ( newCrowd ~= 0 ), position, newCrowd
 end

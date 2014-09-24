@@ -419,7 +419,7 @@ void Param_ABC::CreateListMenu( QTreeView* list, const QStandardItemModel& model
 // -----------------------------------------------------------------------------
 QString Param_ABC::GetNextNameAndId( const QStandardItemModel& model )
 {
-    int previousId = model.rowCount() != 0? model.item( model.rowCount() -1 )->data( IdRole ).toInt() : 0 ;
+    int previousId = model.rowCount() != 0? model.item( model.rowCount() -1 )->data( ListParameterBase::IdRole ).toInt() : 0 ;
     return tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( previousId + 1 );
 }
 

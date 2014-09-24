@@ -13,7 +13,6 @@
 #include "MIL_Object_ABC.h"
 #include "ActivableCapacity.h"
 #include "AnimatorAttribute.h"
-#include "AttritionCapacity.h"
 #include "BuildableCapacity.h"
 #include "BypassAttribute.h"
 #include "BypassableCapacity.h"

@@ -19,7 +19,6 @@
 #include "protocol/ServerPublisher_ABC.h"
 
 Q_DECLARE_METATYPE( const Note* )
-#define NoteRole ( Qt::UserRole + 1 )
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel constructor
@@ -86,7 +85,7 @@ QStandardItem* NotesPanel::FindItem( unsigned int id, QStandardItem* parent /*= 
 
     for( int row = 0; row < parent->rowCount(); ++row )
     {
-        if( parent->child( row )->data( NoteRole ).isValid() && parent->child( row )->data( NoteRole ).value< const Note* >()->GetId() == id )
+        if( parent->child( row )->data( Qt::UserRole ).isValid() && parent->child( row )->data( Qt::UserRole ).value< const Note* >()->GetId() == id )
             return parent->child( row );
         else if( parent->child( row )->rowCount() > 0 )
             if( QStandardItem* item = FindItem( id, parent->child( row ) ) )
@@ -159,7 +158,7 @@ void NotesPanel::AddNoteInfo( const Note& note, QStandardItem* parent )
 {
     QList< QStandardItem* > list;
     QStandardItem* item = new QStandardItem( note.GetName() );
-    item->setData( QVariant::fromValue( &note ), NoteRole );
+    item->setData( QVariant::fromValue( &note ), Qt::UserRole );
     list.append( item );
     list.append( new QStandardItem( note.GetNumber() ) );
     list.append( new QStandardItem( note.GetDesc() ) );
@@ -214,7 +213,7 @@ void NotesPanel::ConfirmDeleteNote()
             return;
         QStandardItem* item = noteModel_.itemFromIndex( index )->parent()? noteModel_.itemFromIndex( index )->parent()->child( index.row() ) : noteModel_.item( index.row() );
         if( item )
-            if( const Note* note = item->data( NoteRole ).value< const Note* >() )
+            if( const Note* note = item->data( Qt::UserRole ).value< const Note* >() )
             {
                 plugins::messenger::MarkerDestructionRequest message;
                 message().mutable_marker()->set_id( note->GetId() );
@@ -236,7 +235,7 @@ void NotesPanel::AddSubNote()
     {
         QStandardItem* item = noteModel_.itemFromIndex( index )->parent()? noteModel_.itemFromIndex( index )->parent()->child( index.row() ) : noteModel_.item( index.row() );
         if( item )
-            if( const Note* note = item->data( NoteRole ).value< const Note* >() )
+            if( const Note* note = item->data( Qt::UserRole ).value< const Note* >() )
                 parent = note->GetId();
     }
     noteDialog_->ChangeParent( parent );
@@ -264,8 +263,8 @@ void NotesPanel::UpdateNote()
     if( !index.isValid() )
         return;
     QStandardItem* item = noteModel_.itemFromIndex( index )->parent()? noteModel_.itemFromIndex( index )->parent()->child( index.row() ) : noteModel_.item( index.row() );
-    if( item && item->data( NoteRole ).isValid() )
-           noteDialog_->SetUpdate( *( item->data( NoteRole ).value< const Note* >() ) );
+    if( item && item->data( Qt::UserRole ).isValid() )
+           noteDialog_->SetUpdate( *( item->data( Qt::UserRole ).value< const Note* >() ) );
     noteDialog_->show();
 }
 

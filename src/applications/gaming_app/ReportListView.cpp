@@ -21,9 +21,15 @@
 
 Q_DECLARE_METATYPE( const Report* )
 
-#define ReportRole ( Qt::UserRole + 1 )
-#define TypeFilterRole ( Qt::UserRole + 2 )
-#define OrderRole ( Qt::UserRole + 3 )
+namespace
+{
+    enum E_Roles
+    {
+        ReportRole = Qt::UserRole,
+        TypeFilterRole = Qt::UserRole + 1,
+        OrderRole = Qt::UserRole +2
+    };
+}
 
 unsigned int ReportListView::sortOrder_ = 0;
 

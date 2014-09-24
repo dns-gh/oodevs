@@ -27,8 +27,14 @@ using namespace gui;
 
 Q_DECLARE_METATYPE( const Karma* )
 
-#define KarmaRole ( Qt::UserRole + 1 )
-#define ValueSetRole ( Qt::UserRole + 2 )
+namespace
+{
+    enum E_Roles
+    {
+        KarmaRole = Qt::UserRole,
+        ValueSetRole = Qt::UserRole + 1
+    };
+}
 
 namespace
 {

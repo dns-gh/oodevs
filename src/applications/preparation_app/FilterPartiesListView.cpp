@@ -13,8 +13,14 @@
 #include "clients_gui/resources.h"
 #include "clients_kernel/Tools.h"
 
-#define PartyIdRole ( Qt::UserRole + 1 )
-#define CheckedRole ( Qt::UserRole + 2 )
+namespace
+{
+    enum E_Roles
+    {
+        PartyIdRole = Qt::UserRole,
+        CheckedRole = Qt::UserRole + 1
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: FilterPartiesListView constructor

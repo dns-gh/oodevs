@@ -30,8 +30,6 @@ Q_DECLARE_METATYPE( const kernel::PopulationKnowledge_ABC* )
 Q_DECLARE_METATYPE( const PopulationFlowKnowledge* )
 Q_DECLARE_METATYPE( const PopulationConcentrationKnowledge* )
 
-#define EntityRole ( Qt::UserRole )
-
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePanel constructor
 // Created: AGE 2006-02-24
@@ -115,9 +113,9 @@ void PopulationKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
     if( !index.isValid() )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
-    if( item && item->data( EntityRole ).isValid() )
-        if( item->data( EntityRole ).canConvert< const PopulationKnowledge_ABC* >() )
-            item->data( EntityRole ).value< const PopulationKnowledge_ABC* >()->ContextMenu( controllers_.actions_, knowledgeList_->viewport()->mapToGlobal( pos ), this );
+    if( item && item->data( Qt::UserRole ).isValid() )
+        if( item->data( Qt::UserRole ).canConvert< const PopulationKnowledge_ABC* >() )
+            item->data( Qt::UserRole ).value< const PopulationKnowledge_ABC* >()->ContextMenu( controllers_.actions_, knowledgeList_->viewport()->mapToGlobal( pos ), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,22 +131,22 @@ void PopulationKnowledgePanel::OnSelectionChanged()
     display_->Group( tools::translate( "PopulationKnowledgePanel", "Concentration" ) ).Hide();
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
 
-    if( item && item->data( EntityRole ).isValid() )
+    if( item && item->data( Qt::UserRole ).isValid() )
     {
-        if( item->data( EntityRole ).canConvert< const PopulationKnowledge_ABC* >() )
+        if( item->data( Qt::UserRole ).canConvert< const PopulationKnowledge_ABC* >() )
         {
-            subSelected_ = item->data( EntityRole ).value< const PopulationKnowledge_ABC* >();
+            subSelected_ = item->data( Qt::UserRole ).value< const PopulationKnowledge_ABC* >();
             subSelected_->Activate( controllers_.actions_ );
             subSelected_->Display( *display_ );
         }
-        else if( item->data( EntityRole ).canConvert< const PopulationConcentrationKnowledge* >() )
+        else if( item->data( Qt::UserRole ).canConvert< const PopulationConcentrationKnowledge* >() )
         {
-            selectedPart_ = item->data( EntityRole ).value< const PopulationConcentrationKnowledge* >();
+            selectedPart_ = item->data( Qt::UserRole ).value< const PopulationConcentrationKnowledge* >();
             selectedPart_->Display( *display_ );
         }
-        else if( item->data( EntityRole ).canConvert< const PopulationFlowKnowledge* >() )
+        else if( item->data( Qt::UserRole ).canConvert< const PopulationFlowKnowledge* >() )
         {
-            selectedPart_ = item->data( EntityRole ).value< const PopulationFlowKnowledge* >();
+            selectedPart_ = item->data( Qt::UserRole ).value< const PopulationFlowKnowledge* >();
             selectedPart_->Display( *display_ );
         }
     }
@@ -172,7 +170,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
         //population knowledge infos
         const kernel::PopulationKnowledge_ABC& knowledge = iterator.NextElement();
         knowledgeModel_.item( i )->setText( knowledge.GetEntity()? knowledge.GetEntity()->GetName() + " - "+ QString::number( knowledge.GetEntity()->GetId() ) : QString::number( knowledge.GetEntityId() ) );
-        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), EntityRole );
+        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), Qt::UserRole );
 
         const PopulationKnowledge& k = static_cast< const PopulationKnowledge& >( knowledge );
         const tools::Resolver< PopulationConcentrationKnowledge >& concentrations = static_cast< const tools::Resolver< PopulationConcentrationKnowledge >& >( k );
@@ -197,7 +195,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
         {
             const PopulationConcentrationKnowledge& concentration = iteratorConcentration.NextElement();
             knowledgeModel_.item( i )->child( j )->setText(  tools::translate( "Crowd", "Concentration - " ) + QString::number( concentration.GetNId() ) );
-            knowledgeModel_.item( i )->child( j )->setData( QVariant::fromValue( &concentration ), EntityRole );
+            knowledgeModel_.item( i )->child( j )->setData( QVariant::fromValue( &concentration ), Qt::UserRole );
             ++j;
         }
 
@@ -207,7 +205,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
         {
             const PopulationFlowKnowledge& flow = iteratorFlow.NextElement();
             knowledgeModel_.item( i )->child( j )->setText( tools::translate( "Crowd", "Flow - " ) + QString::number( flow.GetNId() ) );
-            knowledgeModel_.item( i )->child( j )->setData( QVariant::fromValue( &flow ), EntityRole );
+            knowledgeModel_.item( i )->child( j )->setData( QVariant::fromValue( &flow ), Qt::UserRole );
             ++j;
         }
         ++i;
@@ -279,5 +277,5 @@ void PopulationKnowledgePanel::NotifyUpdated( const kernel::Population_ABC& popu
         return;
     if( subSelected_ && subSelected_->GetEntity() == &population )
         subSelected_->Display( *display_ );
-    tools::UpdateEntityNameInKnowledgeModel< PopulationKnowledge_ABC >( knowledgeModel_, population, EntityRole );
+    tools::UpdateEntityNameInKnowledgeModel< PopulationKnowledge_ABC >( knowledgeModel_, population, Qt::UserRole );
 }

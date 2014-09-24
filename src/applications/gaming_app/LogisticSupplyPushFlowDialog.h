@@ -64,7 +64,6 @@ private:
     void Show();
     void ClearRecipientsData();
     void ComputeRecipients();
-    void ComputeAvailableRecipients( QStringList& displayRecipientsNames );
     void EraseRecipientData( const QString& recipient );
     void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers );
     //@}
