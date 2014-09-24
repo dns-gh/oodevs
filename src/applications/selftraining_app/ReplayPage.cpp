@@ -281,6 +281,26 @@ namespace
     }
 }
 
+namespace
+{
+    #define COUNT_OF( X ) ( sizeof( X ) / sizeof *( X ) )
+
+    static const tools::Path invalidExtensions[] =
+    {
+        ".dat",
+        ".lic",
+        ".pdb",
+    };
+
+    static const tools::Path invalidFilenames[] =
+    {
+        "adaptation_app.exe",
+        "preparation_app.exe",
+        "selftraining_app.exe",
+        "simulation_app.exe",
+    };
+}
+
 void ReplayPage::OnExport()
 {
     const auto exercise = exercise_->GetName();
@@ -328,9 +348,14 @@ void ReplayPage::OnExport()
             srcRun.Copy( dstRoot / "bin", tools::Path::FailIfExists, [&]( const tools::Path& path ) -> bool
             {
                 const auto ext = path.Extension();
-                return ext != ".lic" &&
-                       ext != ".dat" &&
-                       ext != ".pdb";
+                for( size_t i = 0; i < COUNT_OF( invalidExtensions ); ++i )
+                    if( ext == invalidExtensions[i] )
+                        return false;
+                const auto name = path.FileName();
+                for( size_t i = 0; i < COUNT_OF( invalidFilenames ); ++i )
+                    if( name == invalidFilenames[i] )
+                        return false;
+                return true;
             });
             MakeProgress();
             tools::WriteFile( dstRoot / "replay.cmd",
