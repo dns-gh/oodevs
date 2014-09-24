@@ -46,9 +46,13 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog,
-                   gui::ProfileDialog& profileDialog, const QString& license,
-                   Network& network, kernel::Logger_ABC& logger );
+             Menu( QMainWindow* parent,
+                   kernel::Controllers& controllers,
+                   StaticModel& staticModel,
+                   QDialog& prefDialog,
+                   gui::ProfileDialog& profileDialog,
+                   Network& network,
+                   kernel::Logger_ABC& logger );
     virtual ~Menu();
     //@}
 

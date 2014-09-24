@@ -65,6 +65,7 @@ private slots:
     void OnSelectExercise( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
     void OnSelectSession( const tools::Path& session );
+    void OnExport();
     //@}
 
 private:

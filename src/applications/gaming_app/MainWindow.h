@@ -99,7 +99,7 @@ public:
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel,
                  Model& model, const Simulation& simulation, SimulationController& simulationController,
                  Network& network, ProfileFilter& profile, GamingConfig& config, LoggerProxy& logger,
-                 const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers, const QString& license );
+                 const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers );
     virtual ~MainWindow();
     //@}
 

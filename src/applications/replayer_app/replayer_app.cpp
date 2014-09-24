@@ -15,7 +15,6 @@
 #include "tools/Codec.h"
 #include "tools/Main.h"
 #include "tools/WinArguments.h"
-#include <license_gui/LicenseDialog.h>
 #include <tools/Exception.h>
 
 namespace
@@ -24,9 +23,6 @@ namespace
     {
         try
         {
-#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-            license_gui::LicenseDialog::CheckLicense( "sword-replayer", !winArgs.HasOption( "verbose" ) );
-#endif
             tools::SetCodec();
             HINSTANCE hInstance = GetModuleHandle( NULL );
             HINSTANCE prevInstance = GetModuleHandle( NULL );

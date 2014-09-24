@@ -148,7 +148,7 @@ namespace
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model,
     const Simulation& simulation, SimulationController& simulationController,
     Network& network, ProfileFilter& filter, GamingConfig& config, LoggerProxy& logger,
-    const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers, const QString& license )
+    const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers )
     : QMainWindow()
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
@@ -271,7 +271,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     CreateLayers( *locationsLayer, *meteoLayer, *profilerLayer, *automatsLayer, *formationLayer, simulation, *picker, elevation2d );
 
     // Menu bar & status bar
-    setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, license, network_, logger ) );
+    setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, network_, logger ) );
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, *selector_, &dockContainer_->GetProfilingPanel() );
     pStatus->SetModes( eModes_Default, eModes_None, true );
 

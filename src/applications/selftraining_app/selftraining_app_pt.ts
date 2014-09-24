@@ -568,6 +568,22 @@ Do you want to replace it?</source>
         <source>Starting replay session</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export Replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exporting replay data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to export replay</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScenarioEditPage</name>
