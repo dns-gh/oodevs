@@ -15,6 +15,7 @@ import (
 
 const (
 	FragOrderNbcSuitOn          = uint32(345)
+	FragOrderChangeAttitude     = uint32(355)
 	FragOrderCrowdPauseMovement = uint32(44571)
 )
 
@@ -39,6 +40,10 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 	// Cannot send frag order with an invalid frag order identifier
 	_, err = client.SendAutomatFragOrder(automat.Id, InvalidIdentifier, params)
 	c.Assert(err, IsSwordError, "error_invalid_frag_order")
+
+	// Cannot send frag order without required parameters
+	_, err = client.SendAutomatFragOrder(automat.Id, FragOrderChangeAttitude, params)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Disengage automat
 	err = client.SetAutomatMode(automat.Id, false)
@@ -80,6 +85,10 @@ func (s *TestSuite) TestCrowdFragOrder(c *C) {
 	_, err = client.SendCrowdFragOrder(crowd.Id, FragOrderCrowdPauseMovement, params)
 	c.Assert(err, IsSwordError, "error_invalid_frag_order")
 
+	// Cannot send frag order without required parameters
+	_, err = client.SendAutomatFragOrder(crowd.Id, FragOrderChangeAttitude, params)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
 	missionParams := swapi.MakeParameters(
 		swapi.MakePointParam(to))
 
@@ -116,6 +125,10 @@ func (s *TestSuite) TestUnitFragOrder(c *C) {
 	// Cannot send frag order with an invalid frag order identifier
 	_, err = client.SendUnitFragOrder(unit.Id, InvalidIdentifier, params)
 	c.Assert(err, IsSwordError, "error_invalid_frag_order")
+
+	// Cannot send frag order without required parameters
+	_, err = client.SendAutomatFragOrder(unit.Id, FragOrderChangeAttitude, params)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	_, err = client.SendUnitFragOrder(unit.Id, FragOrderNbcSuitOn, params)
 	c.Assert(err, IsNil)
