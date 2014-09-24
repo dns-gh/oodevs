@@ -48,9 +48,9 @@ public:
     virtual       SupplySupplier_ABC*                             GetTransportersProvider      () const = 0;
     virtual const T_Transporters&                                 GetTransporters              () const = 0;
     virtual const SupplyConvoyFactory_ABC&                        GetConvoyFactory             () const = 0;
-    virtual       std::vector< boost::shared_ptr< MT_Vector2D > > GetPathToTransportersProvider() const = 0;
-    virtual       std::vector< boost::shared_ptr< MT_Vector2D > > GetPathToSupplier            () const = 0;
-    virtual       std::vector< boost::shared_ptr< MT_Vector2D > > GetPathToRecipient( SupplyRecipient_ABC& recipient ) const = 0;
+    virtual       std::vector< boost::shared_ptr< MT_Vector2D > > GetPathToTransportersProvider( const MT_Vector2D& start, const MT_Vector2D& end ) const = 0;
+    virtual       std::vector< boost::shared_ptr< MT_Vector2D > > GetPathToSupplier            ( const MT_Vector2D& start, const MT_Vector2D& end ) const = 0;
+    virtual       std::vector< boost::shared_ptr< MT_Vector2D > > GetPathToRecipient( const MT_Vector2D& start, SupplyRecipient_ABC& recipient ) const = 0;
 
     virtual void ToRecipientItinerary( SupplyRecipient_ABC& recipient, sword::Pathfind& pathfind ) const = 0;
     virtual void ToSupplierItinerary( sword::Pathfind& pathfind ) const = 0;

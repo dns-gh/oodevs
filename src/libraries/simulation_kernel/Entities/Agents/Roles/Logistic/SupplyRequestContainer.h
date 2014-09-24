@@ -62,10 +62,9 @@ public:
     //@{
     virtual void SetTransportersProvider      ( SupplySupplier_ABC* provider );
     virtual void SetTransporters              ( const T_Transporters& transporters );
-    virtual void SetPathToRecipient           ( SupplyRecipient_ABC& recipient, const sword::Pathfind& pathfind,
-                                                const MT_Vector2D& start, const MT_Vector2D& end );
-    virtual void SetPathToTransportersProvider( const sword::Pathfind& pathfind, const MT_Vector2D& start, const MT_Vector2D& end );
-    virtual void SetPathToSupplier            ( const sword::Pathfind& pathfind, const MT_Vector2D& start, const MT_Vector2D& end );
+    virtual void SetPathToRecipient           ( SupplyRecipient_ABC& recipient, const sword::Pathfind& pathfind );
+    virtual void SetPathToTransportersProvider( const sword::Pathfind& pathfind );
+    virtual void SetPathToSupplier            ( const sword::Pathfind& pathfind );
     virtual void SetConvoyFactory             ( const SupplyConvoyFactory_ABC& convoyFactory );
     virtual void AddResource                  ( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion,
                                                const boost::shared_ptr< SupplyResource_ABC >& resource, double quantity );
@@ -76,9 +75,9 @@ public:
     virtual       SupplySupplier_ABC*                              GetTransportersProvider      () const;
     virtual const T_Transporters&                                  GetTransporters              () const;
     virtual const SupplyConvoyFactory_ABC&                         GetConvoyFactory             () const;
-    virtual       std::vector< boost::shared_ptr< MT_Vector2D > >  GetPathToTransportersProvider() const;
-    virtual       std::vector< boost::shared_ptr< MT_Vector2D > >  GetPathToSupplier            () const;
-    virtual       std::vector< boost::shared_ptr< MT_Vector2D > >  GetPathToRecipient( SupplyRecipient_ABC& recipient ) const;
+    virtual       std::vector< boost::shared_ptr< MT_Vector2D > >  GetPathToTransportersProvider( const MT_Vector2D& start, const MT_Vector2D& end ) const;
+    virtual       std::vector< boost::shared_ptr< MT_Vector2D > >  GetPathToSupplier            ( const MT_Vector2D& start, const MT_Vector2D& end ) const;
+    virtual       std::vector< boost::shared_ptr< MT_Vector2D > >  GetPathToRecipient( const MT_Vector2D& start, SupplyRecipient_ABC& recipient ) const;
 
     virtual void ToSupplierItinerary( sword::Pathfind& pathfind ) const;
     virtual void ToTransportersItinerary( sword::Pathfind& pathfind ) const;
@@ -112,37 +111,12 @@ private:
 private:
     //! @name Tools
     //@{
-    struct Itinerary
-    {
-        Itinerary()
-        {}
-        Itinerary( const boost::shared_ptr< MT_Vector2D >& start,
-                   const boost::shared_ptr< MT_Vector2D >& end,
-                   const boost::shared_ptr< MIL_ItineraryParameter >& parameter )
-            : start_    ( start )
-            , end_      ( end )
-            , parameter_( parameter )
-        {}
-
-        template< typename Archive >
-        void serialize( Archive& a, unsigned int )
-        {
-            a & start_;
-            a & end_;
-            a & parameter_;
-        }
-
-        boost::shared_ptr< MT_Vector2D > start_;
-        boost::shared_ptr< MT_Vector2D > end_;
-        boost::shared_ptr< MIL_ItineraryParameter > parameter_;
-    };
-
     typedef tools::Map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > > T_Requests;
     typedef tools::Map< SupplyRecipient_ABC*, T_Requests >                                    T_RecipientRequests;
     typedef tools::Map< SupplySupplier_ABC*, boost::shared_ptr< SupplyConsign_ABC > >         T_Consigns;
-    typedef tools::Map< SupplyRecipient_ABC*, Itinerary >                                     T_RecipientItineraries;
+    typedef boost::shared_ptr< MIL_ItineraryParameter >                                       T_Itinerary;
+    typedef tools::Map< SupplyRecipient_ABC*, T_Itinerary >                                   T_RecipientItineraries;
     //@}
-
 
 private:
     boost::shared_ptr< SupplyRequestBuilder_ABC > builder_;
@@ -154,8 +128,8 @@ private:
     SupplySupplier_ABC* transportersProvider_; // Default to supplier
     T_Transporters transporters_;
     T_RecipientItineraries recipientPaths_;
-    boost::optional< Itinerary > transportersProviderPath_;
-    boost::optional< Itinerary > supplierPath_;
+    T_Itinerary transportersProviderPath_;
+    T_Itinerary supplierPath_;
     const SupplyConvoyFactory_ABC* convoyFactory_;
 };
 

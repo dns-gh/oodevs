@@ -612,15 +612,11 @@ int DEC_LogisticFunctions::ConvoyGetCurrentAction( const MIL_Agent_ABC& callerAg
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient( const MIL_Agent_ABC& callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
-    if( role )
-    {
-        logistic::SupplyRecipient_ABC* recipient = role->ConvoyGetCurrentSupplyRecipient();
-        if( recipient )
-            if( const MIL_AgentPion* pionPc = recipient->GetPC() )
+    if( auto role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >() )
+        if( auto recipient = role->ConvoyGetCurrentSupplyRecipient() )
+            if( auto pionPc = recipient->GetPC() )
                 return ( const_cast< DEC_Decision_ABC* >( &pionPc->GetDecision() ) );
-    }
-    return 0;
+    return nullptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -629,18 +625,9 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient( const 
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetTransportersProvider( const MIL_Agent_ABC& callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
-    if( role )
-    {
-        logistic::SupplySupplier_ABC* recipient = role->ConvoyGetTransportersProvider();
-        if( recipient )
-        {
-            const MIL_AgentPion* pc = recipient->GetPC();
-            if( pc )
-                return const_cast< DEC_Decision_ABC* >( &pc->GetDecision() );
-        }
-    }
-    return 0;
+    if( auto pc = callerAgent.GetAutomate().GetPionPC() )
+        return const_cast< DEC_Decision_ABC* >( &pc->GetDecision() );
+    return nullptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -649,14 +636,10 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetTransportersProvider( const MI
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplier( const MIL_Agent_ABC& callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
-    if( role )
-    {
-        const MIL_Agent_ABC* provider = role->ConvoyGetSupplier();
-        if( provider )
+    if( auto role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >() )
+        if( const MIL_Agent_ABC* provider = role->ConvoyGetSupplier() )
             return const_cast< DEC_Decision_ABC* >( &provider->GetDecision() );
-    }
-    return 0;
+    return nullptr;
 }
 
 // -----------------------------------------------------------------------------

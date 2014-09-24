@@ -63,7 +63,6 @@ SupplyStockPushFlowRequestBuilder::~SupplyStockPushFlowRequestBuilder()
 // -----------------------------------------------------------------------------
 void SupplyStockPushFlowRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
-    MT_Vector2D position = supplier_->GetPosition();
     BOOST_FOREACH( const sword::SupplyFlowRecipient& data, pushFlowParameters_.recipients() )
     {
         MIL_Automate* recipient = recipientResolver_->Find( data.receiver().id() );
@@ -73,20 +72,17 @@ void SupplyStockPushFlowRequestBuilder::Process( SupplyRequestContainer_ABC& con
                 CreateRequest( *recipient, resource, container );
 
             if( data.has_pathfind() )
-                container.SetPathToRecipient( recipient->GetStockSupplyManager(), data.pathfind(),
-                                              position, recipient->GetPosition() );
-            position = recipient->GetPosition();
+                container.SetPathToRecipient( recipient->GetStockSupplyManager(), data.pathfind() );
         }
     }
 
     if( pushFlowParameters_.has_waybackpathfind() )
-        container.SetPathToTransportersProvider( pushFlowParameters_.waybackpathfind(), position, supplier_->GetPosition() );
+        container.SetPathToTransportersProvider( pushFlowParameters_.waybackpathfind() );
 
     container.SetTransportersProvider( supplier_ );
     SetTransporters( pushFlowParameters_.transporters(), container );
     container.SetConvoyFactory( SupplyConvoyConfig::GetStockSupplyConvoyFactory() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStockPushFlowRequestBuilder::serialize
