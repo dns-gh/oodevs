@@ -85,7 +85,7 @@ public:
     void Update( const DEC_Knowledge_ObjectPerception& perception );
     void Update( const DEC_Knowledge_ObjectCollision& collision );
     void Update( const DEC_Knowledge_Object& knowledge, int currentTimeStep );
-    void UpdateFromCrowdPerception();
+    void UpdateFromCrowdPerception( const MIL_Population& crowd );
     void UpdateUniversalKnowledge();
     void ForceUpdate();
     bool Clean() const;
@@ -172,6 +172,7 @@ private:
     void NotifyAttributeUpdated( E_Attributes nAttribute );
     bool IsAttributeUpdated( E_Attributes nAttribute ) const;
     const MIL_Army_ABC& GetArmyKnowing() const;
+    template< typename T > void EmitDetectionReport( const T& emitter );
     //@}
 
     //! @name Internal updaters

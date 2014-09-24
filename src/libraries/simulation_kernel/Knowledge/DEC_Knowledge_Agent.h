@@ -80,7 +80,7 @@ public:
     void Prepare();
     void Update( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void Update( const DEC_Knowledge_Agent& knowledge, int currentTimeStep );
-    void UpdateFromCrowdPerception( int currentTimeStep );
+    void UpdateFromCrowdPerception( const MIL_Population& crowd, int currentTimeStep );
     void Extrapolate();
     bool Clean() const;
     void Invalidate();

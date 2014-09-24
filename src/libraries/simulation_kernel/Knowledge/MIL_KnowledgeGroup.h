@@ -242,10 +242,10 @@ private:
     void UpdateObjectKnowledgeFromCollision( const DEC_Knowledge_ObjectCollision& collision, int currentTimeStep );
     void UpdateObjectKnowledgeFromPerception( const DEC_Knowledge_ObjectPerception& perception, int currentTimeStep );
     DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( const MIL_Agent_ABC& agentKnown );
-    void UpdateAgentKnowledgeFromCrowdPerception( MIL_Agent_ABC& agent, int currentTimeStep );
+    void UpdateAgentKnowledgeFromCrowdPerception( MIL_Agent_ABC& agent, int currentTimeStep, const MIL_Population& crowd );
     void UpdateConcentrationKnowledgeFromCrowdPerception( TER_PopulationConcentration_ABC& concentration, int currentTimeStep );
     void UpdateFlowKnowledgeFromCrowdPerception( TER_PopulationFlow_ABC& flow, int currentTimeStep );
-    void UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& object );
+    void UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& object, const MIL_Population& crowd );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void UpdateAgentKnowledgeFromAgent( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     void UpdateObjectKnowledgeFromAgent( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, int currentTimeStep );
