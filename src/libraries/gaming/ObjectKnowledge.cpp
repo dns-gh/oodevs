@@ -92,8 +92,8 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
                 const std::string locationType = positions->GetLocation()->GetTypeName();
                 symbol_ = type_->GetSymbol( locationType );
             }
+            objectName_ = pRealObject->GetName();
         }
-        objectName_ = pRealObject->GetName();
     }
     if( message.has_relevance() )
         nRelevance_ = message.relevance();
