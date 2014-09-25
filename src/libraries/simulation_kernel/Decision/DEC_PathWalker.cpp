@@ -432,13 +432,7 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
     const double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
     if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) )
     {
-        bool objectIsBetweenThisAndNextStep = false;
-        for( auto it = itNextMoveStep->objectsToNextPointSet_.begin(); it != itNextMoveStep->objectsToNextPointSet_.end(); ++it )
-            if( *it == &object )
-            {
-                objectIsBetweenThisAndNextStep = true;
-                break;
-            }
+        bool objectIsBetweenThisAndNextStep = itNextMoveStep->objectsToNextPointSet_.find( &object ) != itNextMoveStep->objectsToNextPointSet_.end();
         if( objectIsBetweenThisAndNextStep )
         {
             vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
