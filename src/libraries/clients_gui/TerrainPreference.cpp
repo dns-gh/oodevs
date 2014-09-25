@@ -36,6 +36,9 @@ TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& c
     , name_       ( xis.attribute( "name", type_ ) )
     , currentShown_ ( true )
     , previousShown_ ( true )
+    , colorButton_( 0 )
+    , showCheckbox_( 0 )
+    , sizeButton_( 0 )
 {
     std::string color;
     xis >> xml::content( "color", color )
@@ -133,6 +136,9 @@ void TerrainPreference::Save() const
 // -----------------------------------------------------------------------------
 void TerrainPreference::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
+    if( !colorButton_ || !showCheckbox_ || !sizeButton_ )
+        return;
+
     const QString root( QString( "Terrains/" ) + type_.c_str() );
     QString option( name.c_str() );
     if( !option.startsWith( root ) )
@@ -163,4 +169,4 @@ void TerrainPreference::OnCategoryChecked()
 {
     currentShown_ = showCheckbox_->isChecked();
 }
-}
+
