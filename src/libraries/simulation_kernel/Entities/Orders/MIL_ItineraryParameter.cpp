@@ -184,8 +184,16 @@ void MIL_ItineraryParameter::Orientate( const boost::optional< MT_Vector2D >& be
     const auto& points = message_.result().points();
     const MT_Vector2D front = ToVector( points.Get( 0 ) );
     const MT_Vector2D back = ToVector( points.Get( points.size() - 1 ) );
-    if( begin && begin->Distance( front ) > begin->Distance( back ) )
-        Reverse( message_ );
+    if( begin && end )
+    {
+        if(  end->Distance( front ) < begin->Distance( front ) )
+            Reverse( message_ );
+    }
+    else if( begin )
+    {
+        if( begin->Distance( front ) > begin->Distance( back ) )
+            Reverse( message_ );
+    }
     else if( end && end->Distance( front ) < end->Distance( back ) )
         Reverse( message_ );
 }

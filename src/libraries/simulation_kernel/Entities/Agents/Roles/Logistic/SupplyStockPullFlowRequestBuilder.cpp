@@ -66,10 +66,10 @@ void SupplyStockPullFlowRequestBuilder::Process( SupplyRequestContainer_ABC& con
         CreateRequest( *recipient_, resource, container );
 
      if( pullFlowParameters_.has_wayoutpathfind() )
-         container.SetPathToSupplier( pullFlowParameters_.wayoutpathfind(), recipient_->GetPosition(), supplier_->GetPosition() );
+         container.SetPathToSupplier( pullFlowParameters_.wayoutpathfind() );
 
      if( pullFlowParameters_.has_waybackpathfind() )
-         container.SetPathToRecipient( recipient_->GetStockSupplyManager(), pullFlowParameters_.waybackpathfind(), supplier_->GetPosition(), recipient_->GetPosition() );
+         container.SetPathToRecipient( recipient_->GetStockSupplyManager(), pullFlowParameters_.waybackpathfind() );
 
     container.SetTransportersProvider( recipient_->FindLogisticManager() );
     SetTransporters( pullFlowParameters_.transporters(), container );
