@@ -413,7 +413,7 @@ namespace
 }
 
 bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition,
-    MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual, CIT_MoveStepSet itNextMoveStep )
+    MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual )
 {
     if( !movingEntity_.CanObjectInteractWith( object ) )
         return false;
@@ -432,8 +432,7 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
     const double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
     if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) )
     {
-        bool objectIsBetweenThisAndNextStep = itNextMoveStep->objectsToNextPointSet_.find( &object ) != itNextMoveStep->objectsToNextPointSet_.end();
-        if( objectIsBetweenThisAndNextStep )
+        if( IsOutside( startPosition, object ) )
         {
             vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
             rCurrentSpeed_ = 0;
@@ -460,13 +459,13 @@ bool DEC_PathWalker::TryToMoveToNextStep( const MT_Vector2D& startPosition, CIT_
     for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, true, itNextMoveStep ) )
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, true ) )
             return false;
     }
     for( auto itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, false, itNextMoveStep ) )
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, false ) )
             return false;
     }
 

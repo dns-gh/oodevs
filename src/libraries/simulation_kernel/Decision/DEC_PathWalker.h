@@ -139,7 +139,7 @@ private:
     E_ReturnCode SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
     void SetCurrentPathPoint( DEC_PathResult& path );
     void CheckPathNotification();
-    bool HandleObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition, MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual, CIT_MoveStepSet itNextMoveStep );
+    bool HandleObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition, MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual );
     MT_Vector2D ComputePositionBeforeObject( const MT_Vector2D& startPosition, const MT_Vector2D& currentStepPos, const MIL_Object_ABC& object ) const;
     boost::shared_ptr< DEC_Knowledge_Object > FindBlockingObject( const MT_Vector2D& endPosition, const MIL_Object_ABC& object ) const;
      //@}
