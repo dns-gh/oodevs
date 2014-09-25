@@ -430,16 +430,13 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
     }
     movingEntity_.NotifyMovingInsideObject( object );
     const double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
-    if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) )
+    if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) && IsOutside( startPosition, object ) )
     {
-        if( IsOutside( startPosition, object ) )
-        {
-            vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
-            rCurrentSpeed_ = 0;
-            pathSet_ = eBlockedByObject;
-            movingEntity_.NotifyMovingOutsideObject( object );
-            return true;
-        }
+        vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
+        rCurrentSpeed_ = 0;
+        pathSet_ = eBlockedByObject;
+        movingEntity_.NotifyMovingOutsideObject( object );
+        return true;
     }
     if( ponctual )
         movingEntity_.NotifyMovingOutsideObject( object );
