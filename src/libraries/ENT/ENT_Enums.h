@@ -43,6 +43,16 @@ enum E_LocationType
     eNbrLocationType
 };
 
+enum E_LocationCategory
+{
+    eLocationCategory_Hydrography,
+    eLocationCategory_Network,
+    eLocationCategory_Physiography,
+    eLocationCategory_Urban,
+    eLocationCategory_Vegetation,
+    eNbrLocationCategory
+};
+
 enum E_AmmunitionType
 {
     eAmmunitionType_Obus,

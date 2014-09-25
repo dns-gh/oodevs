@@ -12,8 +12,6 @@
 
 #include "clients_kernel/OptionsObserver_ABC.h"
 
-class TerrainData;
-
 namespace xml
 {
     class xistream;
@@ -29,7 +27,6 @@ namespace gui
 {
     class ColorButton;
     class SizeButton;
-    class RichCheckBox;
 
 // =============================================================================
 /** @class  TerrainPreference
@@ -52,19 +49,27 @@ public:
 
     //! @name Operations
     //@{
-    void Display( QWidget* parent );
+    void Display( QVBoxLayout* parent, QCheckBox* box );
     void SetLineWidth() const;
     void SetColor( float alpha ) const;
-    void Revert();
     void Commit();
+    void Revert();
 
     void Save() const;
     //@}
 
 public slots:
-    //! @name Slots
+    //! @name Operations
     //@{
-    void OnCategoryChecked();
+    void SetEnabled( bool value );
+    //@}
+
+private slots:
+    //! @name Operations
+    //@{
+    void OnStateChanged( int state );
+    void OnSizeChanged( int size );
+    void OnColorChanged( const QColor& color );
     //@}
 
 private:
@@ -86,13 +91,16 @@ private:
     kernel::Options& options_;
     std::string type_;
     std::string name_;
-    bool currentShown_;
     bool previousShown_;
+    bool shown_;
     ColorButton* colorButton_;
-    SizeButton*  sizeButton_;
-    RichCheckBox* showCheckbox_;
-    float  lineWidth_;
+    SizeButton* sizeButton_;
+    QGroupBox* groupBox_;
+    QCheckBox* showCheckbox_;
+    float lineWidth_;
+    float previousLineWidth_;
     QColor color_;
+    QColor previousColor_;
     //@}
 };
 

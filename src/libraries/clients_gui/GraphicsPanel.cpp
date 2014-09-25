@@ -22,10 +22,11 @@ GraphicsPanel::GraphicsPanel( QWidget* parent, GraphicPreferences& preferences )
     : PreferencePanel_ABC( parent, "GraphicsPanel" )
     , preferences_( preferences )
 {
-    SubObjectName subObject( "GraphicsPanel" );
-    Q3VBox* container = new Q3VBox( this );
+    QWidget* widget = new QWidget();
+    QVBoxLayout* container = new QVBoxLayout( this );
     preferences_.Display( container );
-    setWidget( container );
+    widget->setLayout( container );
+    setWidget( widget );
 }
 
 // -----------------------------------------------------------------------------
