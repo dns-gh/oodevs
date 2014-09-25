@@ -14,6 +14,7 @@
 #include "OptionVariant.h"
 #include "TristateOption.h"
 #include "ENT/ENT_Tr.h"
+#include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
 #include <tools/Path.h>
 
@@ -291,7 +292,7 @@ void Options::InitializeView()
     // Elevation
     Set( "Elevation/FitToViewPort", false, true );
     Set( "Elevation/Gradient", QString( "default" ), true );
-    xml::xifstream xisGradients( "gradients.xml" );
+    tools::Xifstream xisGradients( "gradients.xml" );
     xisGradients >> xml::start( "gradients" )
                  >> xml::list( "gradient", *this, &Options::ReadGradient );
 
@@ -328,7 +329,7 @@ void Options::InitializeView()
 
     // terrain
     QStringList order;
-    xml::xifstream xisPreferences( "preferences.xml" );
+    tools::Xifstream xisPreferences( "preferences.xml" );
     xisPreferences >> xml::start( "preferences" ) >> xml::start( "terrains" )
                    >> xml::list( "terrain", [&]( xml::xistream& x ) {
                        const auto type = x.attribute< std::string >( "type" );
