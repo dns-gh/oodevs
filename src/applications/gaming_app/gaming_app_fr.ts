@@ -1384,6 +1384,14 @@ Voulez-vous le remplacer ?</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Set start and end points by right-clicking on the map.</source>
+        <translation>Définir les points de départ et d'arrivée en effectuant un clic droit sur le terrain.</translation>
+    </message>
+    <message>
+        <source>Once the initial itinerary has been calculated, waypoints can be added and modified repeatedly by dragging and dropping from any position on the current itinerary.</source>
+        <translation>Une fois l'itinéraire initial calculé, il est possible d'ajouter et de modifier des points de passage en effectuant un glisser-déposer depuis une position sur l'itinéraire</translation>
+    </message>
 </context>
 <context>
     <name>KnowledgeAddInGroupDialog</name>

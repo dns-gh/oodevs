@@ -23,13 +23,19 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
     setCaption( tr( "Itinerary creation" ) );
     setFloating( true );
     setVisible( false );
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    QPushButton* okButton = new gui::RichPushButton( "itineraryEdition-dock-widget-ok-button", tr( "Ok" ) );
+    QPushButton* cancelButton = new gui::RichPushButton( "itineraryEdition-dock-widget-cancel-button", tr( "Cancel" ) );
+    buttonLayout->addStretch( 1 );
+    buttonLayout->addWidget( okButton );
+    buttonLayout->addWidget( cancelButton );
     QWidget* mainWidget = new QWidget( this );
-    QHBoxLayout* mainLayout = new QHBoxLayout( mainWidget );
-    mainLayout->setAlignment( Qt::AlignRight | Qt::AlignBottom );
-    QPushButton* okButton = new gui::RichPushButton( "itineraryEdition-dock-widget-ok-button", tr( "Ok" ), mainWidget );
-    QPushButton* cancelButton = new gui::RichPushButton( "itineraryEdition-dock-widget-cancel-button", tr( "Cancel" ), mainWidget );
-    mainLayout->addWidget( okButton );
-    mainLayout->addWidget( cancelButton );
+    QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
+    mainLayout->addWidget( new QLabel( "<ul><li>" + tr( "Set start and end points by right-clicking on the map." ) + "</li>"
+                                           "<li>" + tr( "Once the initial itinerary has been calculated, waypoints can be added and"
+                                                        " modified repeatedly by dragging and dropping from any position on the current itinerary." ) + "</li></ul>" ));
+    mainLayout->addStretch( 1 );
+    mainLayout->addLayout( buttonLayout );
     setWidget( mainWidget );
     connect( okButton, SIGNAL( clicked( bool ) ), this, SIGNAL( ItineraryAccepted() ) );
     connect( cancelButton, SIGNAL( clicked( bool ) ), this, SIGNAL( ItineraryRejected() ) );

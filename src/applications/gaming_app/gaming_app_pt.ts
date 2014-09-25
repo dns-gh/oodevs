@@ -1381,6 +1381,14 @@ Do you want to replace it?</source>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set start and end points by right-clicking on the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once the initial itinerary has been calculated, waypoints can be added and modified repeatedly by dragging and dropping from any position on the current itinerary.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KnowledgeAddInGroupDialog</name>
