@@ -14,7 +14,7 @@
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
-// Name: ItineraryEditionDockWidget constructor
+// Name: ItineraryEditionDockWidget constructorF
 // Created: SLI 2014-04-09
 // -----------------------------------------------------------------------------
 ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel::Controllers& controllers )
@@ -23,6 +23,7 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
     setCaption( tr( "Itinerary creation" ) );
     setFloating( true );
     setVisible( false );
+    setMinimumHeight( 100 );
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     QPushButton* okButton = new gui::RichPushButton( "itineraryEdition-dock-widget-ok-button", tr( "Ok" ) );
     QPushButton* cancelButton = new gui::RichPushButton( "itineraryEdition-dock-widget-cancel-button", tr( "Cancel" ) );
