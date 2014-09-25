@@ -1385,12 +1385,12 @@ Voulez-vous le remplacer ?</translation>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Set start and end points by right-clicking on the map.</source>
-        <translation>Définir les points de départ et d'arrivée en effectuant un clic droit sur le terrain.</translation>
+        <source>Set start and end points by right-clicking on the map.Once the initial itinerary has been calculated, waypoints can be added andmodified repeatedly by dragging and dropping from any position on the current itinerary.</source>
+        <translation>Définir les points de départ et d'arrivée en effectuant un clic droit sur le terrain. Une fois l'itinéraire initial calculé, il est possible d'ajouter et de modifier des points de passage en effectuant un glisser-déposer depuis une position sur l'itinéraire.</translation>
     </message>
     <message>
-        <source>Once the initial itinerary has been calculated, waypoints can be added and modified repeatedly by dragging and dropping from any position on the current itinerary.</source>
-        <translation>Une fois l'itinéraire initial calculé, il est possible d'ajouter et de modifier des points de passage en effectuant un glisser-déposer depuis une position sur l'itinéraire</translation>
+        <source>Tip: Press &lt;i&gt;Control&lt;/i&gt; to drag and drop to the exact position of your choice instead of snapping to the nearest road.</source>
+        <translation>Conseil: Appuyer sur &lt;i&gt;Control&lt;/i&gt; permet de glisser-déposer sur la position de votre choix au lieu d'accrocher le point de passage à la route la plus proche.</translation>
     </message>
 </context>
 <context>

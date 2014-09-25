@@ -1384,11 +1384,11 @@ Do you want to replace it?</source>
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Set start and end points by right-clicking on the map.</source>
+        <source>Set start and end points by right-clicking on the map.Once the initial itinerary has been calculated, waypoints can be added andmodified repeatedly by dragging and dropping from any position on the current itinerary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Once the initial itinerary has been calculated, waypoints can be added and modified repeatedly by dragging and dropping from any position on the current itinerary.</source>
+        <source>Tip: Press &lt;i&gt;Control&lt;/i&gt; to drag and drop to the exact position of your choice instead of snapping to the nearest road.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -31,9 +31,12 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
     buttonLayout->addWidget( cancelButton );
     QWidget* mainWidget = new QWidget( this );
     QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
-    mainLayout->addWidget( new QLabel( "<ul><li>" + tr( "Set start and end points by right-clicking on the map." ) + "</li>"
-                                           "<li>" + tr( "Once the initial itinerary has been calculated, waypoints can be added and"
-                                                        " modified repeatedly by dragging and dropping from any position on the current itinerary." ) + "</li></ul>" ));
+    QLabel* tipLabel = new QLabel( "<p>" + tr( "Set start and end points by right-clicking on the map. "
+                                               "Once the initial itinerary has been calculated, waypoints can be added and"
+                                               "modified repeatedly by dragging and dropping from any position on the current itinerary." ) + "</p>" +
+                                   "<p>" + tr( "Tip: Press <i>Control</i> to drag and drop to the exact position of your choice instead of snapping to the nearest road." ) + "</p>" );
+    tipLabel->setWordWrap( true );
+    mainLayout->addWidget( tipLabel );
     mainLayout->addStretch( 1 );
     mainLayout->addLayout( buttonLayout );
     setWidget( mainWidget );
