@@ -76,9 +76,6 @@ private:
         int min_;
         int max_;
     };
-    static const std::string strMinScale;
-    static const std::string strMaxScale;
-    static const Scale DefaultScales[ 14 ];
     Scale currentScales_[ 14 ];
     kernel::Controllers& controllers_;
     RichWidget< QComboBox >* minCombos_[ 14 ];

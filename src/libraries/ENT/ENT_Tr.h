@@ -78,6 +78,7 @@ namespace ENT_Tr
     const std::string& ConvertFromUnitStress( E_UnitStress, E_Conversion = eToSim );
     const std::string& ConvertFromUnitTiredness( E_UnitTiredness, E_Conversion = eToSim );
     const std::string& ConvertFromWeatherType( E_WeatherType, E_Conversion = eToSim );
+    const std::string& ConvertFromVisualisationScale( E_VisualisationScale, E_Conversion = eToSim );
 
     const std::string& ConvertFromDotationType( sword::DotationType, E_Conversion );
     const std::string& ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction_Type, E_Conversion = eToTr );
@@ -130,6 +131,7 @@ namespace ENT_Tr
     E_UnitStress ConvertToUnitStress( const std::string&, E_Conversion = eToSim );
     E_UnitTiredness ConvertToUnitTiredness( const std::string&, E_Conversion = eToSim );
     E_WeatherType ConvertToWeatherType( const std::string&, E_Conversion = eToSim );
+    E_VisualisationScale ConvertToVisualisationScale( const std::string&, E_Conversion = eToSim );
 
     sword::DotationType ConvertToDotationType( const std::string&, E_Conversion );
     sword::EnumLogisticLevel ConvertToLogisticLevel( const std::string&, E_Conversion = eToSim );

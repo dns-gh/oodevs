@@ -16,7 +16,8 @@
 #include "ColorButton.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/VolumeType.h"
 #include "clients_kernel/WeaponSystemType.h"
@@ -126,12 +127,12 @@ void WeaponRangesPanel::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 
 void WeaponRangesPanel::Commit()
 {
-    ph_ = controllers_.options_.GetOption( "EfficientRangePh", 50 ).To< int >();
-    volume_ = controllers_.options_.GetOption( "EfficientRangeVolume", 0 ).To< int >();
-    filter_ = controllers_.options_.GetOption( "EfficientRangeFilterIndirectWeapon", false ).To< bool >();
-    indirectWeapon_ = controllers_.options_.GetOption( "EfficientRangeIndirectWeapon", QString() ).To< QString >();
-    useColor_ = controllers_.options_.GetOption( "EfficientRangeUseCustomColor", false ).To< bool >();
-    color_ = controllers_.options_.GetOption( "EfficientRangeCustomColor", color_.name() ).To< QString >();
+    ph_ = controllers_.options_.GetOption( "EfficientRange/Ph" ).To< int >();
+    volume_ = controllers_.options_.GetOption( "EfficientRange/Volume" ).To< int >();
+    filter_ = controllers_.options_.GetOption( "EfficientRange/FilterIndirectWeapon" ).To< bool >();
+    indirectWeapon_ = controllers_.options_.GetOption( "EfficientRange/IndirectWeapon" ).To< QString >();
+    useColor_ = controllers_.options_.GetOption( "EfficientRange/UseCustomColor" ).To< bool >();
+    color_ = controllers_.options_.GetOption( "EfficientRange/CustomColor" ).To< QString >();
     colorButton_->Commit();
 }
 
@@ -148,47 +149,47 @@ void WeaponRangesPanel::Reset()
 
 void WeaponRangesPanel::OnPhChanged( int value )
 {
-    controllers_.options_.Change( "EfficientRangePh", value );
+    controllers_.options_.Change( "EfficientRange/Ph", value );
 }
 
 void WeaponRangesPanel::OnVolumeChanged( int index )
 {
-    controllers_.options_.Change( "EfficientRangeVolume", index );
+    controllers_.options_.Change( "EfficientRange/Volume", index );
 }
 
 void WeaponRangesPanel::OnFilterToggled( bool state )
 {
-    controllers_.options_.Change( "EfficientRangeFilterIndirectWeapon", state );
+    controllers_.options_.Change( "EfficientRange/FilterIndirectWeapon", state );
 }
 
 void WeaponRangesPanel::OnIndirectWeaponChanged( const QString& value )
 {
-    controllers_.options_.Change( "EfficientRangeIndirectWeapon", value );
+    controllers_.options_.Change( "EfficientRange/IndirectWeapon", value );
 }
 
 void WeaponRangesPanel::OnColorToggled( bool state )
 {
-    controllers_.options_.Change( "EfficientRangeUseCustomColor", state );
+    controllers_.options_.Change( "EfficientRange/UseCustomColor", state );
 }
 
 void WeaponRangesPanel::OnColorChanged( const QColor& color )
 {
-    controllers_.options_.Change( "EfficientRangeCustomColor", color.name() );
+    controllers_.options_.Change( "EfficientRange/CustomColor", color.name() );
 }
 
 void WeaponRangesPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "EfficientRangeVolume" )
+    if( name == "EfficientRange/Volume" )
         volumeCombo_->setCurrentIndex( value.To< int >() );
-    else if( name == "EfficientRangePh" )
+    else if( name == "EfficientRange/Ph" )
         phSpinbox_->setValue( value.To< int >() );
-    else if( name == "EfficientRangeFilterIndirectWeapon" )
+    else if( name == "EfficientRange/FilterIndirectWeapon" )
         filterCheckBox_->setChecked( value.To< bool >() );
-    else if( name == "EfficientRangeIndirectWeapon" )
+    else if( name == "EfficientRange/IndirectWeapon" )
         indirectWeaponCombo_->setCurrentIndex( indirectWeaponCombo_->findText( value.To< QString >() ) );
-    else if( name == "EfficientRangeUseCustomColor" )
+    else if( name == "EfficientRange/UseCustomColor" )
         colorCheckBox_->setChecked( value.To< bool >() );
-    else if( name == "EfficientRangeCustomColor" )
+    else if( name == "EfficientRange/CustomColor" )
     {
         const QColor color( value.To< QString >() );
         if( color != colorButton_->GetColor() )

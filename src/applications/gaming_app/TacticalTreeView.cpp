@@ -24,7 +24,8 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "gaming/Attributes.h"
@@ -122,11 +123,11 @@ void TacticalTreeView::drawRow( QPainter* painter, const QStyleOptionViewItem& o
             if( const Attributes* attributes = agent->Retrieve< Attributes >() )
             {
                 if( attributes->bDead_ || attributes->nOpState_ == eOperationalStatus_DetruitTotalement )
-                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TotallyDestroyed", QString( "" ) ).To< QString >() ) );
+                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TotallyDestroyed" ).To< QString >() ) );
                 else if( attributes->nOpState_ == eOperationalStatus_DetruitTactiquement )
-                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TacticallyDestroyed", QString( "" ) ).To< QString >() ) );
+                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TacticallyDestroyed" ).To< QString >() ) );
                 if( attributes->bNeutralized_ )
-                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/Neutralized", QString( "" ) ).To< QString >() ) );
+                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/Neutralized" ).To< QString >() ) );
             }
         }
     }

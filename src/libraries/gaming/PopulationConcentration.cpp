@@ -12,7 +12,8 @@
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
@@ -20,7 +21,7 @@
 // Name: PopulationConcentration constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( kernel::Options& options, const sword::CrowdConcentrationCreation& message, const kernel::CoordinateConverter_ABC& converter, float density )
+PopulationConcentration::PopulationConcentration( kernel::OptionsController& options, const sword::CrowdConcentrationCreation& message, const kernel::CoordinateConverter_ABC& converter, float density )
     : options_            ( options )
     , position_           ( converter.ConvertToXY( message.position() ) )
     , nID_                ( message.concentration().id() )
@@ -178,39 +179,23 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationConcentration::GetColor
-// Created: JSR 2013-09-26
-// -----------------------------------------------------------------------------
-QColor PopulationConcentration::GetColor( const std::string& option, const QColor& defaultColor ) const
-{
-    const QString clrString = options_.GetOption( option, QString( "" ) ).To< QString >();
-    if( clrString.isEmpty() )
-        return defaultColor;
-    return QColor( clrString );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationConcentration::SelectRightPartColor
 // Created: JSR 2013-09-25
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SelectRightPartColor( GLfloat alpha ) const
 {
-    static const QColor defaultHealthy( QColor::fromRgbF( COLOR_LIGHT_BLUE) );
-    static const QColor defaultContaminated( Qt::green );
-    static const QColor defaultWounded( Qt::red );
-    static const QColor defaultDead( Qt::black );
-    static const QColor defaultMostlyHealthy( Qt::yellow );
-    QColor c;
+    QString color;
     if( nWoundedHumans_ == 0 && nContaminatedHumans_ == 0 && nDeadHumans_ == 0 )
-        c = GetColor( "Color/Healthy", defaultHealthy );
+        color = options_.GetOption( "Color/Healthy" ).To< QString >();
     else if( nHealthyHumans_ == 0 && nWoundedHumans_ == 0 && nContaminatedHumans_ == 0 )
-        c = GetColor( "Color/Dead", defaultDead );
+        color = options_.GetOption( "Color/Dead" ).To< QString >();
     else if( nContaminatedHumans_ > nHealthyHumans_ && nContaminatedHumans_ > nWoundedHumans_ )
-        c = GetColor( "Color/Contaminated", defaultContaminated );
+        color = options_.GetOption( "Color/Contaminated" ).To< QString >();
     else if( nWoundedHumans_ > nHealthyHumans_ && nWoundedHumans_ > nContaminatedHumans_ )
-        c = GetColor( "Color/Wounded", defaultWounded );
+        color = options_.GetOption( "Color/Wounded" ).To< QString >();
     else // nHealthyHumans_ >= nContaminatedHumans_ && nHealthyHumans_ >= nWoundedHumans_
-        c = GetColor( "Color/MostlyHealthy", defaultMostlyHealthy );
+        color = options_.GetOption( "Color/MostlyHealthy" ).To< QString >();
+    QColor c( color ) ;
     glColor4f( c.red() / 255.f, c.green() / 255.f, c.blue() / 255.f, alpha );
 }
 

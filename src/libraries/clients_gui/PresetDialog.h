@@ -12,7 +12,7 @@
 
 namespace kernel
 {
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -32,21 +32,14 @@ namespace gui
 // =============================================================================
 class PresetDialog : public QDialog
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PresetDialog( QWidget* parent, Gradient& gradient, kernel::Options& options,
+             PresetDialog( QWidget* parent, Gradient& gradient, kernel::OptionsController& options,
                            const std::vector< std::string >& presets );
     virtual ~PresetDialog();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PresetDialog( const PresetDialog& );            //!< Copy constructor
-    PresetDialog& operator=( const PresetDialog& ); //!< Assignment operator
     //@}
 
 private slots:
@@ -71,7 +64,7 @@ private:
     RichPushButton* pAcceptButton_;
     RichPushButton* pRejectButton_;
     Gradient& gradient_;
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     const std::vector< std::string >& presets_;
     //@}
 };

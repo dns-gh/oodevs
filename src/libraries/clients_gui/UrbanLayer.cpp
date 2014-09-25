@@ -14,7 +14,7 @@
 #include "View_ABC.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include <graphics/extensions.h>

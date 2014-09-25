@@ -13,7 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace kernel;

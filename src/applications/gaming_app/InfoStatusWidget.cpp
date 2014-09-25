@@ -14,7 +14,8 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -269,18 +270,6 @@ void InfoStatusWidget::SetDefault()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoStatusWidget::GetCrowdBrush
-// Created: JSR 2013-09-27
-// -----------------------------------------------------------------------------
-QBrush InfoStatusWidget::GetCrowdBrush( const std::string& option, QColor defaultColor )
-{
-    const QString colorString = controllers_.options_.GetOption( option, QString( "" ) ).To< QString >();
-    if( colorString.isEmpty() )
-        return QBrush( defaultColor );
-    return QBrush( QColor( colorString ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: InfoStatusWidget::DrawCrowdChartPie
 // Created: JSR 2013-09-27
 // -----------------------------------------------------------------------------
@@ -305,19 +294,19 @@ void InfoStatusWidget::DrawCrowdChartPie( QPixmap& pixmap, const kernel::Populat
     QRect r = pixmap.rect();
     r.setSize( QSize( r.width() - 1, r.height() - 1 ) );
     // healthy
-    painter.setBrush( GetCrowdBrush( "Color/Healthy", QColor::fromRgbF( COLOR_LIGHT_BLUE ) ) );
+    painter.setBrush( QColor( controllers_.options_.GetOption( "Color/Healthy" ).To< QString >() ) );
     painter.drawPie( r, angleStart, healthySpanAngle );
     angleStart += healthySpanAngle;
     // contaminated
-    painter.setBrush( GetCrowdBrush( "Color/Contaminated", QColor( Qt::green ) ) );
+    painter.setBrush( QColor( controllers_.options_.GetOption( "Color/Contaminated" ).To< QString >() ) );
     painter.drawPie( r, angleStart, contaminatedSpanAngle );
     angleStart += contaminatedSpanAngle;
     // wounded
-    painter.setBrush( GetCrowdBrush( "Color/Wounded", QColor( Qt::red ) ) );
+    painter.setBrush( QColor( controllers_.options_.GetOption( "Color/Wounded" ).To< QString >() ) );
     painter.drawPie( r, angleStart, woundedSpanAngle );
     angleStart += woundedSpanAngle;
     // dead
-    painter.setBrush( GetCrowdBrush( "Color/Dead", QColor( Qt::black ) ) );
+    painter.setBrush( QColor( controllers_.options_.GetOption( "Color/Dead" ).To< QString >() ) );
     painter.drawPie( r, angleStart, deadSpanAngle );
 
     painter.setPen( QColor( Qt::black ) );

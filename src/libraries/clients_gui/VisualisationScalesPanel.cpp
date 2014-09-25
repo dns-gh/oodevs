@@ -15,21 +15,16 @@
 #include "RichGroupBox.h"
 #include "SubObjectName.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
-#pragma warning( push )
-#pragma warning( disable : 4702 )
-#include <boost/lexical_cast.hpp>
-#pragma warning( pop )
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace gui;
 
-const std::string VisualisationScalesPanel::strMinScale( "VisuScaleMin" );
-const std::string VisualisationScalesPanel::strMaxScale( "VisuScaleMax" );
-
-const VisualisationScalesPanel::Scale VisualisationScalesPanel::DefaultScales[ 14 ] =
-    { { 10000, 100000 },   { 0, 25000 },    { 0, 100000 }, { 0, 25000 },     { 0, 10000000 }
-    , { 0, 500000 },   { 0, 50000 },  { 0, 10000 },  { 0, 500000 }, { 0, 50000 }
-    , { 0, 10000000 }, { 0, 500000 }, { 0, 50000 },  { 0, 25000 } };
+namespace
+{
+    const std::string strScale = "VisualisationScales/";
+}
 
 // -----------------------------------------------------------------------------
 // Name: VisualisationScalesPanel constructor
@@ -44,12 +39,6 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     QVBoxLayout* mainLayout = new QVBoxLayout( container );
     RichGroupBox* box = new RichGroupBox( "visuScales", tr( "Visualisation scales" ) );
     QGridLayout* boxLayout = new QGridLayout( box );
-
-    const QString elements[ 14 ] =
-    { tr( "Large texts" ), tr( "Small texts" ), tr( "Edges" ),           tr( "Cliffs" ),
-      tr( "Highways" ),    tr( "Main roads" ),  tr( "Secondary roads" ), tr( "Country roads" ),
-      tr( "Bridges" ),     tr( "Railroads" ),   tr( "Main rivers" ),     tr( "Rivers" ),
-      tr( "Streams" ),     tr( "Urban blocks" ) };
 
     QStringList scales;
     scales.push_back( "1:100" );
@@ -71,11 +60,13 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     boxLayout->addWidget( minlabel, 0, 1 );
     boxLayout->addWidget( maxLabel, 0, 2 );
 
-    for( int i = 0; i < 14; ++i )
+    for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
-        QLabel* label = new QLabel( elements[ i ] );
-        currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].min_ ).To< int >();
-        currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].max_ ).To< int >();
+        auto scale = static_cast< E_VisualisationScale >( i );
+        QLabel* label = new QLabel( ENT_Tr::ConvertFromVisualisationScale( scale, ENT_Tr::eToTr ).c_str() );
+        const std::string option = strScale + ENT_Tr::ConvertFromVisualisationScale( scale );
+        currentScales_[ i ].min_ = controllers_.options_.GetOption( option + "/min" ).To< int >();
+        currentScales_[ i ].max_ = controllers_.options_.GetOption( option + "/max" ).To< int >();
         minCombos_[ i ] = new RichWidget< QComboBox >( "minCombos" + QString::number( i ) );
         minCombos_[ i ]->insertStringList( scales );
         minCombos_[ i ]->setCurrentItem( ConvertFromScale( currentScales_[ i ].min_ ) );
@@ -115,10 +106,11 @@ VisualisationScalesPanel::~VisualisationScalesPanel()
 // -----------------------------------------------------------------------------
 void VisualisationScalesPanel::Commit()
 {
-    for( int i = 0; i < 14; ++i )
+    for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
-        currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + boost::lexical_cast< std::string >( i ), currentScales_[ i ].min_ ).To< int >();
-        currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + boost::lexical_cast< std::string >( i ), currentScales_[ i ].max_ ).To< int >();
+        const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
+        currentScales_[ i ].min_ = controllers_.options_.GetOption( name + "/min" ).To< int >();
+        currentScales_[ i ].max_ = controllers_.options_.GetOption( name + "/max" ).To< int >();
     }
 }
 
@@ -128,10 +120,11 @@ void VisualisationScalesPanel::Commit()
 // -----------------------------------------------------------------------------
 void VisualisationScalesPanel::Reset()
 {
-    for( int i = 0; i < 14; ++i )
+    for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
-        controllers_.options_.Change( strMinScale + boost::lexical_cast< std::string >( i ), currentScales_[ i ].min_ );
-        controllers_.options_.Change( strMaxScale + boost::lexical_cast< std::string >( i ), currentScales_[ i ].max_ );
+        const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
+        controllers_.options_.Change( name + "/min", currentScales_[ i ].min_ );
+        controllers_.options_.Change( name + "/max", currentScales_[ i ].max_ );
     }
 }
 
@@ -141,12 +134,13 @@ void VisualisationScalesPanel::Reset()
 // -----------------------------------------------------------------------------
 void VisualisationScalesPanel::OnValueChanged( int )
 {
-    for( int i = 0; i < 14; ++i )
+    for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
         if( minCombos_[ i ]->currentItem() > maxCombos_[ i ]->currentItem() )
             maxCombos_[ i ]->setCurrentItem( minCombos_[ i ]->currentItem() );
-        controllers_.options_.Change( strMinScale + boost::lexical_cast< std::string >( i ), ConvertToScale( minCombos_[ i ]->currentItem() ) );
-        controllers_.options_.Change( strMaxScale + boost::lexical_cast< std::string >( i ), ConvertToScale( maxCombos_[ i ]->currentItem() ) );
+        const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
+        controllers_.options_.Change( name + "/min", ConvertToScale( minCombos_[ i ]->currentItem() ) );
+        controllers_.options_.Change( name + "/max", ConvertToScale( maxCombos_[ i ]->currentItem() ) );
     }
 }
 
@@ -156,25 +150,29 @@ void VisualisationScalesPanel::OnValueChanged( int )
 // -----------------------------------------------------------------------------
 void VisualisationScalesPanel::OnReset()
 {
-    for( int i = 0; i < 14; ++i )
+    // TODO
+/*    for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
-        controllers_.options_.Change( strMinScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].min_ );
-        controllers_.options_.Change( strMaxScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].max_ );
+        const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
+        controllers_.options_.Change( name + "/min", DefaultScales[ i ].min_ );
+        controllers_.options_.Change( name + "/max", DefaultScales[ i ].max_ );
     }
+*/
 }
 
 // -----------------------------------------------------------------------------
 // Name: VisualisationScalesPanel::OptionChanged
 // Created: JSR 2010-06-15
 // -----------------------------------------------------------------------------
-void VisualisationScalesPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+void VisualisationScalesPanel::OptionChanged( const std::string& /*name*/, const kernel::OptionVariant& /*value*/ )
 {
-    if( name.size() > strMinScale.size() && name.substr( 0, strMinScale.size() ) == strMinScale )
+    // TODO
+    /*if( name.size() > strMinScale.size() && name.substr( 0, strMinScale.size() ) == strMinScale )
     {
         std::stringstream stream( name.substr( strMinScale.size() ) );
         int index = -1;
         stream >> index;
-        if( index >= 0 && index < 14 )
+        if( index >= 0 && index < eNbrVisualisationScale )
             minCombos_[ index ]->setCurrentItem( ConvertFromScale( value.To< int >() ) );
     }
 
@@ -183,9 +181,9 @@ void VisualisationScalesPanel::OptionChanged( const std::string& name, const ker
         std::stringstream stream( name.substr( strMaxScale.size() ) );
         int index = -1;
         stream >> index;
-        if( index >= 0 && index < 14 )
+        if( index >= 0 && index < eNbrVisualisationScale )
             maxCombos_[ index ]->setCurrentItem( ConvertFromScale( value.To< int >() ) );
-    }
+    }*/
 }
 
 // -----------------------------------------------------------------------------

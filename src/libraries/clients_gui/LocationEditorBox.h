@@ -20,7 +20,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Controllers;
     class ContextMenu;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -103,9 +103,9 @@ private:
 private:
     //! @name Member data
     //@{
-     kernel::Controllers& controllers_;
+    kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
-     kernel::Options& options_;
+    kernel::OptionsController& options_;
     std::unique_ptr< LocationParsers > parsers_;
     std::shared_ptr< const LocationParser_ABC > current_;
     QPushButton* combo_;

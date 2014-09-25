@@ -20,7 +20,8 @@
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <boost/assign.hpp>
@@ -139,11 +140,11 @@ void tools::DrawPickingText( const QString& text, const QFont& font, const geome
 
 namespace
 {
-    void ConnectColorOption( kernel::Options& options,
+    void ConnectColorOption( kernel::OptionsController& options,
                              const std::string& optionsName,
                              gui::ColorButton& colorButton )
     {
-        if( options.GetOption( optionsName, QString() ).To< QString >() == "" )
+        if( options.GetOption( optionsName ).To< QString >() == "" )
             options.Change( optionsName, colorButton.GetColor().name() );
         gui::connect( &colorButton, SIGNAL( ColorChanged( const QColor& ) ), [=,&options,&colorButton]{
             options.Change( optionsName, colorButton.GetColor().name() );
@@ -152,7 +153,7 @@ namespace
 }
 
 gui::ColorButton* tools::AddColorButton( QVBoxLayout* mainLayout,
-                                         kernel::Options& options,
+                                         kernel::OptionsController& options,
                                          const QString& objectName,
                                          const QString& name,
                                          const std::string& optionName,

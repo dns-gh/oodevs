@@ -12,7 +12,8 @@
 #include "gaming/Weapons.h"
 #include "clients_gui/Viewport2d.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "MT_Tools/MT_Logger.h"
 #include <terrain/GeosUtil.h>
 #include <terrain/GraphicData.h>
@@ -190,9 +191,9 @@ void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC
 
 void WeaponRangeLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "EfficientRangeUseCustomColor" )
+    if( name == "EfficientRange/FilterIndirectWeapon" )
         useColor_ = value.To< bool >();
-    else if( name == "EfficientRangeCustomColor" )
+    else if( name == "EfficientRange/CustomColor" )
     {
         color_.setNamedColor( value.To< QString >() );
         if( useColor_ )

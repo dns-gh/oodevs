@@ -20,7 +20,7 @@
 #include "RichWidget.h"
 
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
 
@@ -236,7 +236,7 @@ void GradientWidget::Reset()
         presetCombo_->insertItem( tools::translate( "gradients",item.GetName() ) );
         presets_.push_back( new Gradient( item ) );
     }
-    Select( options_.GetOption( "Gradient", QString( "default" ) ).To< QString >() );
+    Select( options_.GetOption( "Gradient" ).To< QString >() );
 }
 
 // -----------------------------------------------------------------------------

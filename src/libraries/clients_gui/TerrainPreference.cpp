@@ -13,9 +13,9 @@
 #include "ColorButton.h"
 #include "RichCheckBox.h"
 #include "SizeButton.h"
-#include "SubObjectName.h"
 
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 
@@ -122,9 +122,9 @@ void TerrainPreference::Revert()
 // -----------------------------------------------------------------------------
 void TerrainPreference::Save() const
 {
-    options_.Change( "Terrains/" + type_ + "/width", sizeButton_->GetSize() );
-    options_.Change( "Terrains/" + type_ + "/color", colorButton_->GetColor().name() );
-    options_.Change( "Terrains/" + type_ + "/shown", showCheckbox_->isChecked() );
+    options_.Change( "Terrains/" + type_ + "/Width", sizeButton_->GetSize() );
+    options_.Change( "Terrains/" + type_ + "/Color", colorButton_->GetColor().name() );
+    options_.Change( "Terrains/" + type_ + "/Shown", showCheckbox_->isChecked() );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,17 +138,17 @@ void TerrainPreference::OptionChanged( const std::string& name, const kernel::Op
     if( !option.startsWith( root ) )
         return;
     option.remove( root );
-    if( option == "/width" )
+    if( option == "/Width" )
     {
         sizeButton_->SetSize( value.To< float >() );
         sizeButton_->Commit();
     }
-    else if( option == "/color" )
+    else if( option == "/Color" )
     {
         colorButton_->SetColor( QColor( value.To< QString >() ) );
         colorButton_->Commit();
     }
-    else if( option == "/shown" )
+    else if( option == "/Shown" )
     {
         currentShown_ = value.To< bool >();
         showCheckbox_->setChecked( currentShown_ );
@@ -162,4 +162,5 @@ void TerrainPreference::OptionChanged( const std::string& name, const kernel::Op
 void TerrainPreference::OnCategoryChecked()
 {
     currentShown_ = showCheckbox_->isChecked();
+}
 }

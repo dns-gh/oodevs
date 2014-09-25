@@ -16,7 +16,7 @@
 namespace kernel
 {
     class Controllers;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -63,12 +63,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LightingPanel( const LightingPanel& );            //!< Copy constructor
-    LightingPanel& operator=( const LightingPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
@@ -78,7 +72,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     LightingProxy& lighting_;
 
     RichGroupBox* fixedLightBox_;

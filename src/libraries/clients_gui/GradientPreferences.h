@@ -12,6 +12,7 @@
 
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include <tools/Resolver.h>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -20,7 +21,7 @@ namespace xml
 
 namespace kernel
 {
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -37,11 +38,12 @@ namespace gui
 // Created: SBO 2007-07-03
 // =============================================================================
 class GradientPreferences : public tools::Resolver< Gradient, QString >
+                          , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GradientPreferences( kernel::Options& options );
+    explicit GradientPreferences( kernel::OptionsController& options );
     virtual ~GradientPreferences();
     //@}
 
@@ -53,12 +55,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GradientPreferences( const GradientPreferences& );            //!< Copy constructor
-    GradientPreferences& operator=( const GradientPreferences& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadGradient( xml::xistream& xis );
@@ -69,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     //@}
 };
 

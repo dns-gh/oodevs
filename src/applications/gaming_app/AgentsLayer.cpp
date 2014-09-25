@@ -15,7 +15,8 @@
 #include "actions/ActionTiming.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "gaming/Attributes.h"
 
 // -----------------------------------------------------------------------------

@@ -2445,62 +2445,6 @@ Do you want to remove it?</source>
         <translation type="unfinished">جداول التخيل</translation>
     </message>
     <message>
-        <source>Large texts</source>
-        <translation type="unfinished">النصوص الكبيرة</translation>
-    </message>
-    <message>
-        <source>Small texts</source>
-        <translation type="unfinished">نصوص صغيرة</translation>
-    </message>
-    <message>
-        <source>Edges</source>
-        <translation type="unfinished">الحواف</translation>
-    </message>
-    <message>
-        <source>Cliffs</source>
-        <translation type="unfinished">المنحدرات</translation>
-    </message>
-    <message>
-        <source>Highways</source>
-        <translation type="unfinished">الطرق السريعة</translation>
-    </message>
-    <message>
-        <source>Main roads</source>
-        <translation type="unfinished">الطرق الرئيسية</translation>
-    </message>
-    <message>
-        <source>Secondary roads</source>
-        <translation type="unfinished">الطرق الثانوية</translation>
-    </message>
-    <message>
-        <source>Country roads</source>
-        <translation type="unfinished">البلد الطرق</translation>
-    </message>
-    <message>
-        <source>Bridges</source>
-        <translation type="unfinished">الجسور</translation>
-    </message>
-    <message>
-        <source>Railroads</source>
-        <translation type="unfinished">السكك الحديدية</translation>
-    </message>
-    <message>
-        <source>Main rivers</source>
-        <translation type="unfinished">الأنهار الرئيسية</translation>
-    </message>
-    <message>
-        <source>Rivers</source>
-        <translation type="unfinished">الأنهار</translation>
-    </message>
-    <message>
-        <source>Streams</source>
-        <translation type="unfinished">تيارات</translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation type="unfinished">كتل الحضرية</translation>
-    </message>
-    <message>
         <source>Min Scale</source>
         <translation type="unfinished">مقياس دقيقة</translation>
     </message>

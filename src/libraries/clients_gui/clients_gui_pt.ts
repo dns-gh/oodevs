@@ -2440,62 +2440,6 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Large texts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Small texts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cliffs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Highways</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main roads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Secondary roads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Country roads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bridges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Railroads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main rivers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rivers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Streams</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Min Scale</source>
         <translation type="unfinished"></translation>
     </message>

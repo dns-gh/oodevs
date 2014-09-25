@@ -36,6 +36,10 @@ public:
 
     //! @name Helpers
     //@{
+    virtual void BeginGroup( const QString& prefix );
+    virtual void EndGroup();
+    virtual void RemoveKey( const QString& key );
+
     virtual QStringList EntryList( const char* path );
     virtual QStringList SubEntriesList( const char* path );
 

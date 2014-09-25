@@ -10,19 +10,9 @@
 #ifndef __Options_h_
 #define __Options_h_
 
-#include <string>
-#include <vector>
-#include <map>
-#include "OptionVariant.h"
-#include <boost/noncopyable.hpp>
-
-namespace tools
-{
-    class  Observer_ABC;
-}
 namespace kernel
 {
-    class OptionsObserver_ABC;
+    class OptionVariant;
     class Settings_ABC;
 
 // =============================================================================
@@ -31,7 +21,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Options : private boost::noncopyable
+class Options
 {
 public:
     //! @name Constructors/Destructor
@@ -40,50 +30,48 @@ public:
     virtual ~Options();
     //@}
 
+    //! @name Copy/Assignment
+    //@{
+    explicit Options( const Options& other );   //!< Copy constructor
+    Options& operator=( const Options& );       //!< Assignment operator
+    //@}
+
     //! @name Operations
     //@{
-    void Register( tools::Observer_ABC& observer );
-    void Unregister( tools::Observer_ABC& observer );
+    void Purge();
+    void InitializeGeneral();
+    void InitializeView();
+    void Set( const std::string& name, const OptionVariant& value, bool savable = true );
+    const OptionVariant& Get( const std::string& name ) const;
+    bool Has( const std::string& name ) const;
 
-    void Change( const std::string& name, const OptionVariant& value, bool savable = true );
-    const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue, bool savable = true );
-
+    void Apply( const std::function< void ( const std::string&, const OptionVariant&, bool ) >& functor ) const;
     void Remove( const std::string& name );
 
     void Load( Settings_ABC& settings, const std::string& path = "" );
-    void Save( Settings_ABC& settings );
+    void Save( Settings_ABC& settings, bool all );
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< OptionsObserver_ABC* > T_Observers;
-    typedef T_Observers::const_iterator       CIT_Observers;
-
-    typedef std::pair< OptionVariant, bool >   T_Savable;
-    typedef std::map< std::string, T_Savable > T_Options;
-    typedef T_Options::const_iterator        CIT_Options;
-
-    typedef std::vector< std::string > T_Removed;
-    //@}
-
     //! @name Helpers
     //@{
-    template< typename T >
-    void Load( Settings_ABC& settings, const std::string& name, T defaultValue );
-    void Clear( Settings_ABC& settings );
-    void CreateOption( Settings_ABC& settings, const std::string& name, char type );
+    void Create( Settings_ABC& settings, const std::string& name, char type );
+    void ReadGradient( xml::xistream& xis );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::pair< OptionVariant, bool >    T_Savable;
+    typedef std::map< std::string, T_Savable >  T_Options;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Observers observers_;
     T_Options options_;
-    T_Removed removed_;
     //@}
 };
 
-}
+} //! namespace kernel
 
 #endif // __Options_h_

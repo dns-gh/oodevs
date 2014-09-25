@@ -80,19 +80,19 @@ void WatershedLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void WatershedLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "WatershedEnabled" )
+    if( name == "Watershed/Enabled" )
         enabled_ = value.To< bool >();
-    else if( name == "WatershedHeight" )
+    else if( name == "Watershed/Height" )
     {
         height_ = unsigned short( value.To< int >() );
         updateGradient_ = true;
     }
-    else if( name == "WatershedInverse" )
+    else if( name == "Watershed/Inverse" )
     {
         inverted_ = value.To< bool >();
         updateGradient_ = true;
     }
-    else if( name == "WatershedColor" )
+    else if( name == "Watershed/Color" )
     {
         color_.setNamedColor( value.To< QString >() );
         updateGradient_ = true;

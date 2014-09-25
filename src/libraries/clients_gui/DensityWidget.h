@@ -16,7 +16,7 @@
 namespace kernel
 {
     class Controllers;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -54,13 +54,6 @@ public:
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    DensityWidget( const DensityWidget& );            //!< Copy constructor
-    DensityWidget& operator=( const DensityWidget& ); //!< Assignment operator
-    //@}
-
 private slots:
     //! @name Slots
     //@{
@@ -79,7 +72,7 @@ private:
     const std::string category_;
     std::unique_ptr< Painter_ABC > pPainter_;
     kernel::Controllers& controllers_;
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     RichLineEdit* max_;
     RichLineEdit* min_;
     GradientButton* densityEditor_;

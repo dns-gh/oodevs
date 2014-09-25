@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Options;
+    class OptionsController;
 };
 
 namespace gui
@@ -26,22 +26,17 @@ namespace gui
 */
 // Created: AGE 2006-03-30
 // =============================================================================
-class BooleanOptionButton : public RichWidget< QToolButton >, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
+class BooleanOptionButton : public RichWidget< QToolButton >
+                          , public tools::Observer_ABC
+                          , public kernel::OptionsObserver_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             BooleanOptionButton( const QString& objectName, const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options,
+             BooleanOptionButton( const QString& objectName, const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::OptionsController& options,
                                   const std::string& option, bool savable = true );
     virtual ~BooleanOptionButton();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    BooleanOptionButton( const BooleanOptionButton& );            //!< Copy constructor
-    BooleanOptionButton& operator=( const BooleanOptionButton& ); //!< Assignment operator
     //@}
 
 private slots:
@@ -58,7 +53,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     std::string option_;
     bool savable_;
     QString toolTip_;

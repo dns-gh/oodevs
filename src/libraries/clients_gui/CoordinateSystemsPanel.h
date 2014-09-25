@@ -17,7 +17,7 @@ namespace kernel
 {
     class Controllers;
     class CoordinateConverter_ABC;
-    class Options;
+    class OptionsController;
 }
 
 enum E_CoordinateSystem;
@@ -57,7 +57,7 @@ private:
     //@{
      kernel::Controllers& controllers_;
      kernel::CoordinateConverter_ABC& coordConverter_;
-     kernel::Options& options_;
+     kernel::OptionsController& options_;
      RichWidget< QComboBox >* coordSysComboBox_;
      E_CoordinateSystem previousCoordinateSystem_;
     //@}

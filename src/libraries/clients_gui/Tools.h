@@ -1,5 +1,3 @@
-
-
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
@@ -18,7 +16,7 @@ namespace kernel
 {
     class Entity_ABC;
     class Profile_ABC;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -48,7 +46,7 @@ namespace tools
     void DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GlTools_ABC& tools );
 
     gui::ColorButton* AddColorButton( QVBoxLayout* mainLayout,
-                                      kernel::Options& options,
+                                      kernel::OptionsController& options,
                                       const QString& objectName,
                                       const QString& name,
                                       const std::string& optionName,

@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "Controllers.h"
-#include "Options.h"
+#include "OptionsController.h"
 #include "Controller.h"
 #include "ActionController.h"
 #include "LanguageController.h"
@@ -24,7 +24,7 @@ using namespace kernel;
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
 Controllers::Controllers()
-    : options_     ( *new Options() )
+    : options_     ( *new OptionsController() )
     , controller_  ( *new Controller() )
     , actions_     ( *new ActionController() )
     , eventActions_( *new ActionController() )

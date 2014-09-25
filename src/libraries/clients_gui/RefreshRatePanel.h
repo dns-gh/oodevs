@@ -16,7 +16,7 @@
 namespace kernel
 {
     class Controllers;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -47,16 +47,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    RefreshRatePanel( const RefreshRatePanel& );            //!< Copy constructor
-    RefreshRatePanel& operator=( const RefreshRatePanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-     kernel::Options& options_;
+     kernel::OptionsController& options_;
      kernel::Controllers& controllers_;
      gui::RichSpinBox* spinBox_;
     //@}

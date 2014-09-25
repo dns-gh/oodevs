@@ -15,8 +15,8 @@
 #include "Layer.h"
 #include "RichPushButton.h"
 #include "RichGroupBox.h"
-#include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "resources.h"
 

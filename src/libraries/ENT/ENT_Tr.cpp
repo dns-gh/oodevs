@@ -59,6 +59,7 @@ typedef ENT_Tr::Converter< E_MissionType > T_ConverterMissionType;
 typedef ENT_Tr::Converter< E_MissionType > T_ConverterMissionType;
 typedef ENT_Tr::Converter< E_EventDockModes > T_ConverterEventDockModes;
 typedef ENT_Tr::Converter< E_CoordinateSystem > T_ConverterCoordinateSystem;
+typedef ENT_Tr::Converter< E_VisualisationScale > T_ConverterVisualisationScale;
 
 typedef ENT_Tr::Converter< sword::MagicAction::Type > T_ConverterMagicActionType;
 typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicActionType;
@@ -243,6 +244,25 @@ T_ConverterWeatherType WeatherTypeConverter_[] =
     T_ConverterWeatherType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "Snow" ), eWeatherType_Snow ),
     T_ConverterWeatherType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "Smoke" ), eWeatherType_Smoke ),
     T_ConverterWeatherType( "", "", (E_WeatherType)-1 )
+};
+
+T_ConverterVisualisationScale VisualisationScaleConverter_ [] =
+{
+    T_ConverterVisualisationScale( "large_texts",     QT_TRANSLATE_NOOP( "ENT_Tr", "Large texts" ),     eVisualisationScale_LargeTexts ),
+    T_ConverterVisualisationScale( "small_texts",     QT_TRANSLATE_NOOP( "ENT_Tr", "Small texts" ),     eVisualisationScale_SmallTexts ),
+    T_ConverterVisualisationScale( "edges",           QT_TRANSLATE_NOOP( "ENT_Tr", "Edges" ),           eVisualisationScale_Edges ),
+    T_ConverterVisualisationScale( "cliffs",          QT_TRANSLATE_NOOP( "ENT_Tr", "Cliffs" ),          eVisualisationScale_Cliffs ),
+    T_ConverterVisualisationScale( "highways",        QT_TRANSLATE_NOOP( "ENT_Tr", "Highways" ),        eVisualisationScale_Highways ),
+    T_ConverterVisualisationScale( "main_roads",      QT_TRANSLATE_NOOP( "ENT_Tr", "Main roads" ),      eVisualisationScale_MainRoads ),
+    T_ConverterVisualisationScale( "secondary_roads", QT_TRANSLATE_NOOP( "ENT_Tr", "Secondary roads" ), eVisualisationScale_SecondaryRoads ),
+    T_ConverterVisualisationScale( "country_roads",   QT_TRANSLATE_NOOP( "ENT_Tr", "Country roads" ),   eVisualisationScale_CountryRoads ),
+    T_ConverterVisualisationScale( "bridges",         QT_TRANSLATE_NOOP( "ENT_Tr", "Bridges" ),         eVisualisationScale_Bridges ),
+    T_ConverterVisualisationScale( "railroads",       QT_TRANSLATE_NOOP( "ENT_Tr", "Railroads" ),       eVisualisationScale_Railroads ),
+    T_ConverterVisualisationScale( "main_rivers",     QT_TRANSLATE_NOOP( "ENT_Tr", "Main rivers" ),     eVisualisationScale_MainRivers ),
+    T_ConverterVisualisationScale( "rivers",          QT_TRANSLATE_NOOP( "ENT_Tr", "Rivers" ),          eVisualisationScale_Rivers ),
+    T_ConverterVisualisationScale( "streams",         QT_TRANSLATE_NOOP( "ENT_Tr", "Streams" ),         eVisualisationScale_Streams ),
+    T_ConverterVisualisationScale( "urban_blocks",    QT_TRANSLATE_NOOP( "ENT_Tr", "Urban blocks" ),    eVisualisationScale_UrbanBlocks ),
+    T_ConverterVisualisationScale( "", "", ( E_VisualisationScale) - 1 )
 };
 
 T_ConverterObstacleActivation ObstacleActivationConverter_[] =
@@ -791,6 +811,7 @@ void ENT_Tr::InitTranslations()
     INIT_TR( UnitStress );
     INIT_TR( UnitTiredness );
     INIT_TR( WeatherType );
+    INIT_TR( VisualisationScale );
 
     INIT_PROTO_TR( DotationType, DotationType );
     INIT_PROTO_TR( EnumLogisticLevel, LogisticLevel );
@@ -843,6 +864,7 @@ IMPLEMENT_CONVERT_METHODS( UnitPosture );
 IMPLEMENT_CONVERT_METHODS( UnitStress );
 IMPLEMENT_CONVERT_METHODS( UnitTiredness );
 IMPLEMENT_CONVERT_METHODS( WeatherType );
+IMPLEMENT_CONVERT_METHODS( VisualisationScale );
 
 IMPLEMENT_CONVERT_METHODS_PROTO( DotationType, DotationType );
 IMPLEMENT_CONVERT_METHODS_PROTO( EnumLogisticLevel, LogisticLevel );

@@ -22,7 +22,8 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Hierarchies.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/StandardIconProxyStyle.h"
@@ -206,7 +207,7 @@ void HierarchyTreeView_ABC::drawRow( QPainter* painter, const QStyleOptionViewIt
     {
         if( item->data( Roles::MimeTypeRole ).toString() == typeid( kernel::Ghost_ABC ).name() )
         {
-            QColor color( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
+            QColor color( controllers_.options_.GetOption( "Color/Phantom" ).To< QString >() );
             painter->fillRect( options.rect, color );
         }
     }

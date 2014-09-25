@@ -446,4 +446,24 @@ enum E_CoordinateSystem
     eNbrCoordinateSystem,
 };
 
+enum E_VisualisationScale
+{
+    eVisualisationScale_LargeTexts,
+    eVisualisationScale_SmallTexts,
+    eVisualisationScale_Edges,
+    eVisualisationScale_Cliffs,
+    eVisualisationScale_Highways,
+    eVisualisationScale_MainRoads,
+    eVisualisationScale_SecondaryRoads,
+    eVisualisationScale_CountryRoads,
+    eVisualisationScale_Bridges,
+    eVisualisationScale_Railroads,
+    eVisualisationScale_MainRivers,
+    eVisualisationScale_Rivers,
+    eVisualisationScale_Streams,
+    eVisualisationScale_UrbanBlocks,
+
+    eNbrVisualisationScale
+};
+
 #endif __ENT_Enums_h_

@@ -17,7 +17,7 @@
 #include "RichGroupBox.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 
 using namespace gui;
 

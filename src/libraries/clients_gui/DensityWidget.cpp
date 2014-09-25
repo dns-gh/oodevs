@@ -20,7 +20,7 @@
 #include "SubObjectName.h"
 
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
 #include <boost/lexical_cast.hpp>

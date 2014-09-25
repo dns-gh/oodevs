@@ -19,7 +19,8 @@
 #include "SoundManager.h"
 
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
 
 #include "tools/GeneralConfig.h"
@@ -50,6 +51,7 @@ namespace
         return sliderBox;
     }
 
+    // TODO à passer dans ENT (attention, c'est hardcodé à plein d'endroits)
     const std::vector< std::string > soundList = boost::assign::list_of< std::string >
         ( "directfire" )
         ( "indirectsmoke" )
@@ -70,10 +72,9 @@ SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers, Sound
     RichGroupBox* box = new RichGroupBox( "soundControl", tools::translate( "SoundPanel", "Sound control" ), this );
 
     QLabel* soundDirectoryLabel = new QLabel( tools::translate( "SoundPanel", "Sound directory :" ) );
-    tools::Path soundPath;
-    soundPath = soundPath.Absolute( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) );
-    soundDirectory_ = controllers_.options_.GetOption( "soundDirectory", QString( soundPath.Normalize().ToUTF8().c_str() ) ).To< QString >().toStdString().c_str();
-    soundDirectoryEditor_ = new RichLineEdit( "soundDirectoryEditor", soundPath.Normalize().ToUTF8().c_str() );
+    const std::string soundPath = controllers_.options_.GetOption( "Sound/Directory" ).To< QString >().toStdString();
+    soundDirectory_ = soundPath.c_str();
+    soundDirectoryEditor_ = new RichLineEdit( "soundDirectoryEditor", soundPath.c_str() );
     QPushButton* soundDirectoryButton = new RichPushButton( "soundDirectoryButton", "..." );
     connect( soundDirectoryButton, SIGNAL( clicked( bool ) ), this, SLOT( OnChooseSoundsDirectory() ) );
 
@@ -84,7 +85,7 @@ SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers, Sound
     soundBrowseLayout->addWidget( soundDirectoryButton );
 
     for( auto it = ::soundList.begin(); it != ::soundList.end(); ++it )
-        soundValues_[ *it ] = controllers_.options_.GetOption( *it + "volume", 50 ).To< int >();
+        soundValues_[ *it ] = controllers_.options_.GetOption( "Sound/Volume/" + *it ).To< int >();
 
     activated_ = new CheckBox( "MuteSounds", tools::translate( "SoundPanel", "Mute sounds" ) );
     connect( activated_, SIGNAL( toggled( bool ) ), SLOT( OnStateChanged( bool ) ) );
@@ -125,11 +126,11 @@ void SoundPanel::Reset()
 {
     for( auto it = ::soundList.begin(); it != ::soundList.end(); ++it )
     {        
-        controllers_.options_.Change( *it + "volume", soundValues_[ *it ] );
+        controllers_.options_.Change( "Sound/Volume/" + *it, soundValues_[ *it ] );
         if( soundSliders_[ *it ] )
             soundSliders_[ *it ]->setValue( soundValues_[ *it ] );
     }
-    controllers_.options_.Change( "soundDirectory", QString( soundDirectory_.Normalize().ToUTF8().c_str() ) );
+    controllers_.options_.Change( "Sound/Directory", QString( soundDirectory_.Normalize().ToUTF8().c_str() ) );
     soundDirectoryEditor_->setText( soundDirectory_.Normalize().ToUTF8().c_str() );
     activated_->Revert();
 }
@@ -142,10 +143,10 @@ void SoundPanel::Commit()
 {
     for( auto it = ::soundList.begin(); it != ::soundList.end(); ++it )
     {
-        controllers_.options_.Change( *it + "volume", soundSliders_[ *it ]->value() );
+        controllers_.options_.Change( "Sound/Volume/" + *it, soundSliders_[ *it ]->value() );
         OnChangeVolume( *it, soundSliders_[ *it ]->value() );
     }
-    controllers_.options_.Change( "soundDirectory", soundDirectoryEditor_->text() );
+    controllers_.options_.Change( "Sound/Directory", soundDirectoryEditor_->text() );
     activated_->Commit();
 }
 
@@ -155,24 +156,22 @@ void SoundPanel::Commit()
 // -----------------------------------------------------------------------------
 void SoundPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "soundDirectory" )
+    if( name == "Sound/Directory" )
     {
         soundDirectory_ = value.To< QString >().toStdString().c_str();
         soundDirectoryEditor_->setText( soundDirectory_.Normalize().ToUTF8().c_str() );
     }
-    else if( name == "soundActivated" )
-        activated_->setChecked( value.To< bool >() );
     else
     {
         QString soundName = name.c_str();
-        if( !soundName.contains( "volume" ) )
+        if( !soundName.contains( "Sound/Volume/" ) )
             return;
         for( auto it = soundValues_.begin(); it != soundValues_.end(); ++it )
         {
-            if( it->first == soundName.remove( "volume" ).toStdString() )
+            if( it->first == soundName.remove( "Sound/Volume/" ).toStdString() )
             {
                 it->second = value.To< int >();
-                soundSliders_[ soundName.remove( "volume" ).toStdString() ]->setValue( it->second );
+                soundSliders_[ it->first ]->setValue( it->second );
                 return;
             }
         }
@@ -230,5 +229,4 @@ std::map< std::string, RichSlider*>& SoundPanel::GetSoundSliders()
 void SoundPanel::OnStateChanged( bool state )
 {
     soundPlayer_.SetSoundState( !state );
-    controllers_.options_.Change( "soundActivated", state );
 }

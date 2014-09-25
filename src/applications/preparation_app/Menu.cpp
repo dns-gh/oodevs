@@ -54,13 +54,13 @@ namespace
         menu.AddItem( kernel::FourStateOption::SelectedName(), kernel::FourStateOption::Selected() );
         menu.AddItem( kernel::FourStateOption::OffName(), kernel::FourStateOption::Off() );
     }
-    void AddSubMenu3( kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
+    void AddSubMenu3( kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::OptionsController& options, const std::string& option )
     {
         gui::OptionMenu< kernel::TristateOption >* optionMenu = new gui::OptionMenu< kernel::TristateOption >( parent, options, option );
         Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
-    void AddSubMenu4( kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
+    void AddSubMenu4( kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::OptionsController& options, const std::string& option )
     {
         gui::OptionMenu< kernel::FourStateOption >* optionMenu = new gui::OptionMenu< kernel::FourStateOption >( parent, options, option );
         Populate( *optionMenu );

@@ -18,7 +18,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/tools.h"
 #include "preparation/InhabitantPositions.h"
 

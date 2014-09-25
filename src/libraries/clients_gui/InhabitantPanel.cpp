@@ -10,13 +10,9 @@
 #include "clients_gui_pch.h"
 #include "InhabitantPanel.h"
 #include "moc_InhabitantPanel.cpp"
-#include "CheckBox.h"
 #include "DensityWidget.h"
 #include "RichGroupBox.h"
 #include "SubObjectName.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
-#include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
 
@@ -26,8 +22,6 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent, "InhabitantPanel" )
-    , controllers_( controllers )
-    , options_    ( controllers.options_ )
 {
     SubObjectName subObject( "InhabitantPanel" );
     RichGroupBox* densityGroup = new RichGroupBox( "densityGroup", tr( "Density Gradient map" ) );

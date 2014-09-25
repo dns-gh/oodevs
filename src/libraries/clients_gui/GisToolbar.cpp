@@ -20,7 +20,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
@@ -145,44 +145,44 @@ void GisToolbar::NotifyUpdated( const ContourLinesObserver& observer )
 // -----------------------------------------------------------------------------
 void GisToolbar::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "WatershedEnabled" )
+    if( name == "Watershed/Enabled" )
     {
         const bool val = value.To< bool >();
         if( val != watershedEnabled_->isChecked() )
             watershedEnabled_->setChecked( val );
     }
-    else if( name == "WatershedHeight" )
+    else if( name == "Watershed/Height" )
     {
         const int val = value.To< int >();
         if( val != height_->value() )
             height_->setValue( val );
     }
-    else if( name == "WatershedInverse" )
+    else if( name == "Watershed/Inverse" )
     {
         const int val = value.To< bool >() ? 1 : 0;
         if( val != mode_->currentItem() )
             mode_->setCurrentItem( val );
     }
-    else if( name == "WatershedColor" )
+    else if( name == "Watershed/Color" )
     {
         QColor color( value.To< QString >() );
         if( color != color_->GetColor() )
             color_->SetColor( color );
         color_->update();
     }
-    else if( name == "ContourLinesEnabled" )
+    else if( name == "ContourLines/Enabled" )
     {
         const bool val = value.To< bool >();
         if( val != contourBoxEnabled_->isChecked() )
             contourBoxEnabled_->setChecked( val );
     }
-    else if( name == "ContourLinesHeight" )
+    else if( name == "ContourLines/Height" )
     {
         const int val = value.To< int >();
         if( val != linesHeight_->value() )
             linesHeight_->setValue( val );
     }
-    else if( name == "ContourLinesColor" )
+    else if( name == "ContourLines/Color" )
     {
         QColor color( value.To< QString >() );
         if( color != colorContourLines_->GetColor() )
@@ -200,7 +200,7 @@ void GisToolbar::OnToggleWatershedEnabled( bool toggled )
     mode_->setEnabled( toggled );
     height_->setEnabled( toggled );
     color_->setEnabled( toggled );
-    controllers_.options_.Change( "WatershedEnabled", toggled );
+    controllers_.options_.Change( "Watershed/Enabled", toggled );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void GisToolbar::OnToggleContourLinesEnabled( bool toggled )
 {
     colorContourLines_->setEnabled( toggled );
     linesHeight_->setEnabled( toggled );
-    controllers_.options_.Change( "ContourLinesEnabled", toggled );
+    controllers_.options_.Change( "ContourLines/Enabled", toggled );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ void GisToolbar::OnToggleContourLinesEnabled( bool toggled )
 // -----------------------------------------------------------------------------
 void GisToolbar::OnModeChanged( int mode )
 {
-    controllers_.options_.Change( "WatershedInverse", mode == 1 );
+    controllers_.options_.Change( "Watershed/Inverse", mode == 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ void GisToolbar::OnModeChanged( int mode )
 // -----------------------------------------------------------------------------
 void GisToolbar::OnHeightChanged( int height )
 {
-    controllers_.options_.Change( "WatershedHeight", height );
+    controllers_.options_.Change( "Watershed/Height", height );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ void GisToolbar::OnHeightChanged( int height )
 // -----------------------------------------------------------------------------
 void GisToolbar::OnLinesHeightChanged()
 {
-    controllers_.options_.Change( "ContourLinesHeight", linesHeight_->value() );
+    controllers_.options_.Change( "ContourLines/Height", linesHeight_->value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,7 +247,7 @@ void GisToolbar::OnLinesHeightChanged()
 // -----------------------------------------------------------------------------
 void GisToolbar::OnColorContourChanged( const QColor& color )
 {
-    controllers_.options_.Change( "ContourLinesColor", color.name() );
+    controllers_.options_.Change( "ContourLines/Color", color.name() );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ void GisToolbar::OnColorContourChanged( const QColor& color )
 // -----------------------------------------------------------------------------
 void GisToolbar::OnColorChanged( const QColor& color )
 {
-    controllers_.options_.Change( "WatershedColor", color.name() );
+    controllers_.options_.Change( "Watershed/Color", color.name() );
 }
 
 // -----------------------------------------------------------------------------

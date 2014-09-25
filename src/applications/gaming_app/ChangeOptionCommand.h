@@ -11,10 +11,11 @@
 #define __ChangeOptionCommand_h_
 
 #include "gaming/CommandHandler_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
-    class Options;
+    class OptionsController;
 }
 
 class CommandHandler;
@@ -26,11 +27,12 @@ class CommandHandler;
 // Created: AGE 2008-06-25
 // =============================================================================
 class ChangeOptionCommand : public CommandHandler_ABC
+                          , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeOptionCommand( CommandHandler& handler, kernel::Options& options );
+             ChangeOptionCommand( CommandHandler& handler, kernel::OptionsController& options );
     virtual ~ChangeOptionCommand();
     //@}
 
@@ -40,12 +42,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ChangeOptionCommand( const ChangeOptionCommand& );            //!< Copy constructor
-    ChangeOptionCommand& operator=( const ChangeOptionCommand& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ChangeOption( char type, const std::string& name, const std::string& value );
@@ -57,7 +53,7 @@ private:
     //! @name Member data
     //@{
     CommandHandler& handler_;
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     //@}
 };
 

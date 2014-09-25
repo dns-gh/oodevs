@@ -14,7 +14,7 @@
 #include "resources.h"
 
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/Tools.h"
 
 #include "tools/GeneralConfig.h"

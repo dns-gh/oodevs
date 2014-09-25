@@ -81,11 +81,11 @@ void ContourLinesLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void ContourLinesLayer::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    if( name == "ContourLinesColor" )
+    if( name == "ContourLines/Color" )
         color_.setNamedColor( value.To< QString >() );
-    else if( name == "ContourLinesEnabled" )
+    else if( name == "ContourLines/Enabled" )
         enabled_ = value.To< bool >();
-    else if( name == "ContourLinesHeight" )
+    else if( name == "ContourLines/Height" )
     {
         int h = value.To< int >();
         if( h > 0 && h != linesHeight_ )

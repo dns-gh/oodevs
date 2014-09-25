@@ -15,7 +15,7 @@
 namespace kernel
 {
     class Controllers;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -80,12 +80,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GradientWidget( const GradientWidget& );            //!< Copy constructor
-    GradientWidget& operator=( const GradientWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     Gradient* CurrentPreset() const;
@@ -102,7 +96,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     GradientPreferences& preferences_;
     GradientButton* gradientEditor_;
     ColorButton* color_;

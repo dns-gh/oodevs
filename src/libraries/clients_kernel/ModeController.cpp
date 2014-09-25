@@ -11,7 +11,7 @@
 #include "ModeController.h"
 #include "ModesObserver_ABC.h"
 #include "DisplayableModesObserver_ABC.h"
-#include "Options.h"
+#include "OptionsController.h"
 #include "Settings.h"
 #include "Tools.h"
 #pragma warning( push, 0 )
@@ -151,7 +151,7 @@ void ModeController::SaveGeometry( E_Modes mode )
 // Name: ModeController::LoadOptions
 // Created: ABR 2013-02-15
 // -----------------------------------------------------------------------------
-void ModeController::LoadOptions( E_Modes mode, Options& options )
+void ModeController::LoadOptions( E_Modes mode, OptionsController& options )
 {
     EnsureModeIsAvailableForRegistry( mode );
     Settings settings( "MASA Group", "SWORD" );
@@ -164,7 +164,7 @@ void ModeController::LoadOptions( E_Modes mode, Options& options )
 // Name: ModeController::SaveOptions
 // Created: ABR 2013-02-15
 // -----------------------------------------------------------------------------
-void ModeController::SaveOptions( E_Modes mode, Options& options )
+void ModeController::SaveOptions( E_Modes mode, OptionsController& options )
 {
     EnsureModeIsAvailableForRegistry( mode );
     Settings settings( "MASA Group", "SWORD" );

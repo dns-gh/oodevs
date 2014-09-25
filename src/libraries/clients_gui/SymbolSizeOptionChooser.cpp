@@ -11,7 +11,7 @@
 #include "SymbolSizeOptionChooser.h"
 #include "moc_SymbolSizeOptionChooser.cpp"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/SubObjectName.h"
@@ -21,7 +21,6 @@ namespace
 {
     const float min_ = 1.0f;
     const float max_ = 24.0f;
-    const float default_ = 3.0f;
     const float increment_ = 1.0f;
     const std::string name_( "SymbolSize" );
     const float epsilon = increment_ / 100;
@@ -57,7 +56,7 @@ SymbolSizeOptionChooser::SymbolSizeOptionChooser( QWidget* parent, QToolBar* too
         connect( decreaseButton_, SIGNAL( clicked() ), this, SLOT( OnDecreaseSymbolUnit() ) );
     }
 
-    float curValue = controllers.options_.GetOption( name_, default_ ).To< float >();
+    float curValue = controllers.options_.GetOption( name_ ).To< float >();
     if( curValue <= min_ )
         controllers_.options_.Change( name_, min_ );
     else if( curValue >= max_ )
@@ -81,7 +80,7 @@ SymbolSizeOptionChooser::~SymbolSizeOptionChooser()
 // -----------------------------------------------------------------------------
 void SymbolSizeOptionChooser::OnIncreaseSymbolUnit()
 {
-    float nextValue = increment_ + controllers_.options_.GetOption( name_, default_ ).To< float >();
+    float nextValue = increment_ + controllers_.options_.GetOption( name_ ).To< float >();
     if( nextValue <= max_ )
         controllers_.options_.Change( name_, nextValue );
 }
@@ -92,7 +91,7 @@ void SymbolSizeOptionChooser::OnIncreaseSymbolUnit()
 // -----------------------------------------------------------------------------
 void SymbolSizeOptionChooser::OnDecreaseSymbolUnit()
 {
-    float nextValue = -increment_ + controllers_.options_.GetOption( name_, default_ ).To< float >();
+    float nextValue = -increment_ + controllers_.options_.GetOption( name_ ).To< float >();
     if( nextValue >= min_ )
         controllers_.options_.Change( name_, nextValue );
 }
