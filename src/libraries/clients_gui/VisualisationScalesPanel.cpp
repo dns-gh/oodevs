@@ -65,8 +65,8 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
         auto scale = static_cast< E_VisualisationScale >( i );
         QLabel* label = new QLabel( ENT_Tr::ConvertFromVisualisationScale( scale, ENT_Tr::eToTr ).c_str() );
         const std::string option = strScale + ENT_Tr::ConvertFromVisualisationScale( scale );
-        currentScales_[ i ].min_ = controllers_.options_.GetOption( option + "/min" ).To< int >();
-        currentScales_[ i ].max_ = controllers_.options_.GetOption( option + "/max" ).To< int >();
+        currentScales_[ i ].min_ = controllers_.options_.GetOption( option + "/Min" ).To< int >();
+        currentScales_[ i ].max_ = controllers_.options_.GetOption( option + "/Max" ).To< int >();
         minCombos_[ i ] = new RichWidget< QComboBox >( "minCombos" + QString::number( i ) );
         minCombos_[ i ]->insertStringList( scales );
         minCombos_[ i ]->setCurrentItem( ConvertFromScale( currentScales_[ i ].min_ ) );
@@ -109,8 +109,8 @@ void VisualisationScalesPanel::Commit()
     for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
         const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
-        currentScales_[ i ].min_ = controllers_.options_.GetOption( name + "/min" ).To< int >();
-        currentScales_[ i ].max_ = controllers_.options_.GetOption( name + "/max" ).To< int >();
+        currentScales_[ i ].min_ = controllers_.options_.GetOption( name + "/Min" ).To< int >();
+        currentScales_[ i ].max_ = controllers_.options_.GetOption( name + "/Max" ).To< int >();
     }
 }
 
@@ -123,8 +123,8 @@ void VisualisationScalesPanel::Reset()
     for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
         const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
-        controllers_.options_.Change( name + "/min", currentScales_[ i ].min_ );
-        controllers_.options_.Change( name + "/max", currentScales_[ i ].max_ );
+        controllers_.options_.Change( name + "/Min", currentScales_[ i ].min_ );
+        controllers_.options_.Change( name + "/Max", currentScales_[ i ].max_ );
     }
 }
 
@@ -139,8 +139,8 @@ void VisualisationScalesPanel::OnValueChanged( int )
         if( minCombos_[ i ]->currentItem() > maxCombos_[ i ]->currentItem() )
             maxCombos_[ i ]->setCurrentItem( minCombos_[ i ]->currentItem() );
         const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
-        controllers_.options_.Change( name + "/min", ConvertToScale( minCombos_[ i ]->currentItem() ) );
-        controllers_.options_.Change( name + "/max", ConvertToScale( maxCombos_[ i ]->currentItem() ) );
+        controllers_.options_.Change( name + "/Min", ConvertToScale( minCombos_[ i ]->currentItem() ) );
+        controllers_.options_.Change( name + "/Max", ConvertToScale( maxCombos_[ i ]->currentItem() ) );
     }
 }
 
@@ -154,8 +154,8 @@ void VisualisationScalesPanel::OnReset()
 /*    for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
         const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
-        controllers_.options_.Change( name + "/min", DefaultScales[ i ].min_ );
-        controllers_.options_.Change( name + "/max", DefaultScales[ i ].max_ );
+        controllers_.options_.Change( name + "/Min", DefaultScales[ i ].min_ );
+        controllers_.options_.Change( name + "/Max", DefaultScales[ i ].max_ );
     }
 */
 }

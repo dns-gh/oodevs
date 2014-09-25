@@ -190,7 +190,7 @@ void GradientWidget::OnPresetDeleted()
     if( Gradient* current = CurrentPreset() )
     {
         presetCombo_->removeItem( presetCombo_->currentItem() );
-        options_.Remove( std::string( "Gradients/" ) + current->GetName().toStdString() );
+        options_.Remove( std::string( "Elevation/Gradients/" ) + current->GetName().toStdString() );
         presets_.erase( std::find( presets_.begin(), presets_.end(), current ) );
         preferences_.Commit( presets_ );
         delete current;
@@ -218,7 +218,7 @@ Gradient* GradientWidget::CurrentPreset() const
 void GradientWidget::Commit()
 {
     if( const Gradient* current = CurrentPreset() )
-        options_.Change( "Gradient", current->GetName() );
+        options_.Change( "Elevation/Gradient", current->GetName() );
     preferences_.Commit( presets_ );
 }
 
@@ -236,7 +236,7 @@ void GradientWidget::Reset()
         presetCombo_->insertItem( tools::translate( "gradients",item.GetName() ) );
         presets_.push_back( new Gradient( item ) );
     }
-    Select( options_.GetOption( "Gradient" ).To< QString >() );
+    Select( options_.GetOption( "Elevation/Gradient" ).To< QString >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +257,7 @@ void GradientWidget::Clear()
 // -----------------------------------------------------------------------------
 void GradientWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "Gradient" )
+    if( name == "Elevation/Gradient" )
         Select( value.To< QString >() );
 }
 

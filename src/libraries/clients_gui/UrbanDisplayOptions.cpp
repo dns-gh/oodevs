@@ -60,33 +60,33 @@ UrbanDisplayOptions::~UrbanDisplayOptions()
 
 void UrbanDisplayOptions::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    if( name == "UrbanDensityColor" )
+    if( name == "Density/Color" )
         densityColor_ = value.To< bool >();
-    else if( name == "Density/urbanBlock" )
+    else if( name == "Density/Gradient" )
     {
         pGradient_.reset( new Gradient() );
         pGradient_->LoadValues( value.To< QString >() );
     }
-    else if( name == "Density/min" )
+    else if( name == "Density/Min" )
         minDensity_ = value.To< float >();
-    else if( name == "Density/max" )
+    else if( name == "Density/Max" )
         maxDensity_ = value.To< float >();
-    else if( name == "Accommodation/urbanBlock" )
+    else if( name == "Accommodation/Gradient" )
     {
         pAccommodationGradient_.reset( new Gradient() );
         pAccommodationGradient_->LoadValues( value.To< QString >() );
     }
-    else if( name == "Accommodation/min" )
+    else if( name == "Accommodation/Min" )
         minAccommodationDensity_ = value.To< float >();
-    else if( name == "Accommodation/max" )
+    else if( name == "Accommodation/Max" )
         maxAccommodationDensity_ = value.To< float >();
-    else if( name == "UrbanAccommodationColor" )
+    else if( name == "Accommodation/Color" )
         accommodationColor_ = value.To< bool >();
-    else if( name == "UrbanAccommodationDisplayed" )
+    else if( name == "Accommodation/Displayed" )
         accommodationDisplayed_ = value.To< QString >();
-    else if( name == "Accommodation/unoccupied" )
+    else if( name == "Accommodation/Unoccupied" )
         unoccupiedAccommodation_ = QColor( value.To< QString >() );
-    else if( name == "Density/unoccupied" )
+    else if( name == "Density/Unoccupied" )
         unoccupiedDensity_ = QColor( value.To< QString >() );
     else
         return;

@@ -93,7 +93,7 @@ void PresetDialog::Accept()
         QMessageBox::warning( this, tr( "Warning" ), tr( "Preset name already exists." ) );
     else
     {
-        options_.Remove( std::string( "Gradients/" ) + gradient_.GetName().toStdString() );
+        options_.Remove( std::string( "Elevation/Gradients/" ) + gradient_.GetName().toStdString() );
         gradient_.SetName( pLineEdit_->text() );
         QDialog::accept();
     }

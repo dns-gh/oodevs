@@ -76,7 +76,7 @@ void GradientPreferences::Load( xml::xistream& xis )
 void GradientPreferences::Save() const
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Save( options_, "Gradients/" );
+        it->second->Save( options_, "Elevation/Gradients/" );
 }
 
 // -----------------------------------------------------------------------------

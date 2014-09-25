@@ -188,15 +188,16 @@ void Options::ReadGradient( xml::xistream& xis )
 void Options::InitializeGeneral()
 {
     // int
+    Set( "BookmarkCoordSystem",  static_cast< int >( eCoordinateSystem_Mgrs ), true );
     Set( "CoordSystem",          static_cast< int >( eCoordinateSystem_Mgrs ), true );
     Set( "RefreshRate",          50,                        true );
 
     // replay
-    Set( "Replay/SmoothPositions", true, true );
+    Set( "Replay/SmoothPositions", true, true ); // not used yet
 
     // color
-    Set( "Color/ActiveViewFrame",      QString( "#f00f0f" ), true );
-    Set( "Color/MissingLogisticLinks", QString( "#ffff00" ), true );
+    Set( "Color/ActiveViewFrame",      QString( "#f00f0f" ), true ); // not used yet
+    Set( "Color/MissingLogisticLinks", QString( "#ffff00" ), true ); // not used yet
     Set( "Color/Neutralized",          QString( "#ebe665" ), true );
     Set( "Color/Phantom",              QString( "#3cb45a" ), true );
     Set( "Color/TacticallyDestroyed",  QString( "#ebb965" ), true );
@@ -227,6 +228,7 @@ void Options::InitializeView()
 {
     // bool
     Set( "3D",       false, true );
+    Set( "DisplayDestroyedUnits", true, true );
     Set( "FogOfWar", false, true );
     Set( "Infra",    true,  true );
 
@@ -243,7 +245,6 @@ void Options::InitializeView()
 
     // four state
     Set( "ConvexHulls",          FourStateOption::Selected(), true );
-    Set( "DebugPoints",          FourStateOption::Selected(), true );
     Set( "DecisionalState",      FourStateOption::Selected(), true );
     Set( "Direction",            FourStateOption::Selected(), true );
     Set( "LogisticLinks",        FourStateOption::Selected(), true );
@@ -253,6 +254,7 @@ void Options::InitializeView()
     Set( "Paths",                FourStateOption::Selected(), true );
     Set( "RealTimeLogistic",     FourStateOption::Selected(), true );
     Set( "TacticalLines",        FourStateOption::Selected(), true );
+    Set( "UnitDetails",          FourStateOption::On()      , true );
     Set( "VisionCones",          FourStateOption::Selected(), true );
     Set( "VisionLines",          FourStateOption::Selected(), true );
     Set( "VisionSurfaces",       FourStateOption::Selected(), true );
@@ -295,7 +297,7 @@ void Options::InitializeView()
 
     // Fires
     // FireRules are empty by default
-    Set( "FireIndicators", 0, true ); // FIRE_INDICATORS_DEFAULT
+    Set( "FireIndicators", 0, true ); // FIRE_INDICATORS_DEFAULT // not used yet
 
     // HillShade
     Set( "HillShade/Enabled",    false, true );
@@ -322,7 +324,7 @@ void Options::InitializeView()
     Set( "SymbolSize", 3.f, true );
 
     for( int i = eNatureLevel_c; i < eNbrNatureLevel; ++i )
-        Set( "SymbolSize/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ), 1.f, true );
+        Set( "SymbolSize/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ), 1.f, true ); // not used yet
 
     // terrain
     QStringList order;
@@ -330,24 +332,24 @@ void Options::InitializeView()
     xisPreferences >> xml::start( "preferences" ) >> xml::start( "terrains" )
                    >> xml::list( "terrain", [&]( xml::xistream& x ) {
                        const auto type = x.attribute< std::string >( "type" );
-                       //const QString category = x.attribute< std::string >( "category" ).c_str();
-                       //Set( "Terrains/" + type + "/Category", category, true );
-                       Set( "Terrains/" + type + "/Name", QString( x.attribute< std::string >( "name", type ).c_str() ), true );
+                       const QString category = x.attribute< std::string >( "category", "" ).c_str(); // not used yet
+                       Set( "Terrains/" + type + "/Category", category, true ); // not in trunk yet
+                       Set( "Terrains/" + type + "/Name", QString( x.attribute< std::string >( "name", type ).c_str() ), true ); // not in trunk yet
                        Set( "Terrains/" + type + "/Shown", true );
                        Set( "Terrains/" + type + "/Width", x.content< float >( "width", 1.f ) );
                        Set( "Terrains/" + type + "/Color", QString( x.content< std::string >( "color", "#000000" ).c_str() ) );
-                       //if( !order.contains( category ) )
-                       //    order << category;
+                       if( !category.isEmpty() && !order.contains( category ) )
+                           order << category;
                        } );
-    Set( "Terrains/Order", order.join( ";" ) );
+    Set( "Terrains/Order", order.join( ";" ) ); // not used yet
 
     // visualisation scales
     for( int i = 0; i < DefaultVisualisationScales::size_; ++i )
     {
         const auto& scale = DefaultVisualisationScales::data_[i];
         const auto name = "VisualisationScales/" + ENT_Tr::ConvertFromVisualisationScale( scale.type_ );
-        Set( name + "/min", scale.min_, true );
-        Set( name + "/max", scale.max_, true );
+        Set( name + "/Min", scale.min_, true );
+        Set( name + "/Max", scale.max_, true );
     }
 
     // watershed

@@ -83,8 +83,8 @@ PopulationOptionChooser::~PopulationOptionChooser()
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::OnDisplayChanged( int index )
 {
-    controllers_.options_.Change( "UrbanDensityColor", index  == 1 );
-    controllers_.options_.Change( "UrbanAccommodationColor", index  == 2 );
+    controllers_.options_.Change( "Density/Color", index  == 1 );
+    controllers_.options_.Change( "Accommodation/Color", index  == 2 );
     activityCombo_->setEnabled( index  == 2 );
     occupationList_->setEnabled( index  == 2  );
 }
@@ -95,7 +95,7 @@ void PopulationOptionChooser::OnDisplayChanged( int index )
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::OnActivityChanged( int index )
 {
-    controllers_.options_.Change( "UrbanAccommodationDisplayed", activityCombo_->itemText( index ) );
+    controllers_.options_.Change( "Accommodation/Displayed", activityCombo_->itemText( index ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,10 +167,10 @@ void PopulationOptionChooser::NotifyCreated( const kernel::Inhabitant_ABC& inhab
 void PopulationOptionChooser::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
     if( displayCombo_ )
-        if( name == "UrbanDensityColor" )
+        if( name == "Density/Color" )
             if( value.To< bool >() )
                 displayCombo_->setCurrentIndex( 1 );
-        else if( name == "UrbanAccommodationColor" )
+        else if( name == "Accommodation/Color" )
             if( value.To< bool >() )
                 displayCombo_->setCurrentIndex( 2 );
 }
