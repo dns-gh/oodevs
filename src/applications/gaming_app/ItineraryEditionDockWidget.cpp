@@ -14,7 +14,7 @@
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
-// Name: ItineraryEditionDockWidget constructorF
+// Name: ItineraryEditionDockWidget constructor
 // Created: SLI 2014-04-09
 // -----------------------------------------------------------------------------
 ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel::Controllers& controllers )
@@ -33,7 +33,7 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
     QWidget* mainWidget = new QWidget( this );
     QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
     QLabel* tipLabel = new QLabel( "<p>" + tr( "Set start and end points by right-clicking on the map. "
-                                               "Once the initial itinerary has been calculated, waypoints can be added and"
+                                               "Once the initial itinerary has been calculated, waypoints can be added and "
                                                "modified repeatedly by dragging and dropping from any position on the current itinerary." ) + "</p>" +
                                    "<p>" + tr( "Tip: Press <i>Control</i> to drag and drop to the exact position of your choice instead of snapping to the nearest road." ) + "</p>" );
     tipLabel->setWordWrap( true );
