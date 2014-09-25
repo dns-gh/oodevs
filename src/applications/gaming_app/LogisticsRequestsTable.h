@@ -67,6 +67,7 @@ public:
     //! @name Operations
     //@{
     virtual void AddRequest( const LogisticsConsign_ABC& consign );
+    virtual void RemoveRequest( const LogisticsConsign_ABC& consign );
     virtual void SelectRequest( unsigned int id );
     virtual const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
     const LogisticsConsign_ABC* GetCurrentRequest() const;

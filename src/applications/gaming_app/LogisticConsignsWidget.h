@@ -40,8 +40,9 @@ class LogisticsModel;
 // Created: MMC 2013-10-21
 // =============================================================================
 template< typename Extension, typename Request >
-class LogisticConsignsWidget : public LogisticConsignsWidget_ABC,
-                               public tools::ElementObserver_ABC< typename Request::History >
+class LogisticConsignsWidget : public LogisticConsignsWidget_ABC
+                             , public tools::ElementObserver_ABC< typename Request::History >
+                             , public tools::ElementObserver_ABC< Request >
 {
 public:
     //! @name Constructors/Destructor
@@ -51,9 +52,13 @@ public:
                             E_LogisticChain type, const QStringList& requestsHeader = QStringList() )
         : LogisticConsignsWidget_ABC( parent, controllers, extractor, profile, simulationController, model, requestsHeader )
         , type_( type )
-        {}
-    ~LogisticConsignsWidget()
-        {}
+        {
+            controllers_.Update( *this );
+        }
+    virtual ~LogisticConsignsWidget()
+        {
+            controllers_.Unregister( *this );
+        }
     //@}
 
 public:
@@ -105,6 +110,12 @@ protected:
     {
         if( history.GetConsign().GetType() == type_ )
             DisplayHistory( history );
+    }
+    virtual void NotifyDeleted( const Request& request )
+    {
+        RemoveRequest( request );
+        if( requestSelected_ == &request )
+            requestSelected_ = 0;
     }
     //@}
 
