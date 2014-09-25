@@ -300,9 +300,14 @@ integration.updateBuildItSecu = function( object )
             reportOnceFunction( eRC_PasDotationConstructionObjet )
             return true
         elseif object[ myself ].actionBuildState == eActionObjetPasDeCapacite then
-            reportOnceFunction( eRC_PasDotationConstructionObjet )
-            return true
+            object[ myself ].needDotationToWork = true
+            reportOnceFunction( eRC_CannotWork )
+            return true 
         end
+    end
+    if object[ myself ].needDotationToWork  then
+        reportOnceFunction( eRC_WorkResumptionStart )
+        object[ myself ].needDotationToWork  = false
     end
     return false
 end
@@ -325,6 +330,7 @@ integration.stopBuildItSecu = function( object )
         reportFunction(eRC_FinTravauxObjet, object.knowledge.source )
     end
     myself.hasStartedBuilding = nil
+    object[ myself ].needDotationToWork = nil
     return result
 end
 
