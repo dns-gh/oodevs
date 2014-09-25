@@ -367,7 +367,12 @@ namespace
         int index = 1;
         for( int nRow = 0; nRow < table.rowCount(); ++nRow )
         {
-            if( !checkState || ( checkState && table.item( nRow, 0 )->checkState() == Qt::Checked ) )
+            const auto item = table.item( nRow, 0 );
+            if( !item || item->text().isEmpty() )
+                // Skip empty trailing entry
+                continue;
+
+            if( !checkState || ( checkState && item->checkState() == Qt::Checked ) )
             {
                 ParameterList& personalList = list.AddList( CreateName( name, index ) );
                 personalList.AddIdentifier( identifier, idFunctor( nRow ) );
