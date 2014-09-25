@@ -7,13 +7,9 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::TerrainPreferenceWidget */
-
 #include "clients_gui_pch.h"
 #include "TerrainPreferenceWidget.h"
-#include "moc_TerrainPreferenceWidget.cpp"
 #include "TerrainPreference.h"
-#include <boost/bind.hpp>
 
 using namespace gui;
 

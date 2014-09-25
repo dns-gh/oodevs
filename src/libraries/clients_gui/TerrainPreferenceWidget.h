@@ -21,8 +21,6 @@ namespace gui
 // =============================================================================
 class TerrainPreferenceWidget : public QWidget
 {
-    Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{

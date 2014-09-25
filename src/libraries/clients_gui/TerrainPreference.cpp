@@ -24,20 +24,22 @@ using namespace gui;
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
 TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& controllers )
-    : controllers_  ( controllers )
-    , options_      ( controllers_.options_ )
-    , type_         ( xis.attribute< std::string >( "type" ) )
-    , name_         ( xis.attribute( "name", type_ ) )
-    , previousShown_( true )
-    , shown_        ( true )
+    : controllers_      ( controllers )
+    , options_          ( controllers_.options_ )
+    , type_             ( xis.attribute< std::string >( "type" ) )
+    , name_             ( xis.attribute( "name", type_ ) )
+    , previousShown_    ( true )
+    , shown_            ( true )
+    , colorButton_      ( 0 )
+    , sizeButton_       ( 0 )
+    , groupBox_         ( 0 )
+    , showCheckbox_     ( 0 )
+    , lineWidth_        ( xis.content< float >( "width" ) )
+    , previousLineWidth_( lineWidth_ )
+    , color_            ( xis.content< std::string >( "color" ).c_str() )
+    , previousColor_    ( color_ )
 {
-    std::string color;
-    xis >> xml::content( "color", color )
-        >> xml::content( "width", lineWidth_ );
-    color_ = QColor( color.c_str() );
     controllers_.Register( *this );
-    previousLineWidth_ = lineWidth_;
-    previousColor_ = color_;
 }
 
 // -----------------------------------------------------------------------------

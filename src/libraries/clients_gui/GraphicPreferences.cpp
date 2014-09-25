@@ -16,10 +16,6 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Tools.h"
 #include <terrain/GraphicData.h>
-#include <xeumeuleu/xml.hpp>
-#include <boost/bind.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
@@ -39,10 +35,10 @@ GraphicPreferences::GraphicPreferences( kernel::Controllers& controllers )
     , downSignalMapper_( new QSignalMapper( this ) )
     , layout_          ( 0 )
 {
-    xml::xifstream xis( "preferences.xml" );
+    tools::Xifstream xis( "preferences.xml" );
     xis >> xml::start( "preferences" )
-        >> xml::start( "terrains" )
-        >> xml::list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );
+            >> xml::start( "terrains" )
+                >> xml::list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );
     connect( upSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( Up( int ) ) );
     connect( downSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( Down( int ) ) );
     controllers_.Register( *this );
@@ -55,7 +51,6 @@ GraphicPreferences::GraphicPreferences( kernel::Controllers& controllers )
 GraphicPreferences::~GraphicPreferences()
 {
     controllers_.Unregister( *this );
-    categories_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +61,7 @@ void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 {
     const std::string type = xis.attribute< std::string >( "type" );
     const std::string category = xis.attribute< std::string >( "category" );
-    std::shared_ptr< TerrainPreference > preference( new TerrainPreference( xis, controllers_ ) );
+    auto preference = std::make_shared< TerrainPreference >( xis, controllers_ );
     categories_[ category ].push_back( preference );
     if( std::find( currentOrders_.begin(), currentOrders_.end(), category ) == currentOrders_.end() )
         currentOrders_.push_back( category );
@@ -93,7 +88,7 @@ void GraphicPreferences::Display( QVBoxLayout* parent )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Up( int index )
 {
-    if( index != 0 && currentOrders_.size() > index )
+    if( index > 0 && static_cast< int >( currentOrders_.size() ) > index )
     {
         std::swap( currentOrders_[ index ], currentOrders_[ index - 1 ] );
         Build();
@@ -106,8 +101,7 @@ void GraphicPreferences::Up( int index )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Down( int index )
 {
-    const auto count = currentOrders_.size() - 1;
-    if( index != count && count > index )
+    if( index >= 0 && index < static_cast< int >( currentOrders_.size() ) - 1 )
     {
         std::swap( currentOrders_[ index ], currentOrders_[ index + 1 ] );
         Build();
@@ -131,7 +125,7 @@ void GraphicPreferences::Commit()
 {
     previousOrders_ = currentOrders_;
     for( auto it = categories_.begin(); it != categories_.end(); ++it )
-        std::for_each( it->second.begin(), it->second.end(), boost::bind( &TerrainPreference::Commit, _1 ) );
+        std::for_each( it->second.begin(), it->second.end(), std::mem_fn( &TerrainPreference::Commit ) );
     Save();
 }
 
@@ -142,7 +136,7 @@ void GraphicPreferences::Commit()
 void GraphicPreferences::Save() const
 {
     for( auto it = categories_.begin(); it != categories_.end(); ++it )
-        std::for_each( it->second.begin(), it->second.end(), boost::bind( &TerrainPreference::Save, _1 ) );
+        std::for_each( it->second.begin(), it->second.end(), std::mem_fn( &TerrainPreference::Save ) );
 
     QString order;
     for( auto it = currentOrders_.begin(); it != currentOrders_.end(); ++it )
@@ -162,7 +156,7 @@ void GraphicPreferences::Revert()
 {
     currentOrders_ = previousOrders_;
     for( auto it = categories_.begin(); it != categories_.end(); ++it )
-        std::for_each( it->second.begin(), it->second.end(), boost::bind( &TerrainPreference::Revert, _1 ) );
+        std::for_each( it->second.begin(), it->second.end(), std::mem_fn( &TerrainPreference::Revert ) );
     Build();
 }
 
@@ -226,7 +220,7 @@ void GraphicPreferences::SetupAreaGraphics( const Data_ABC* pData )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    QString option( name.c_str() );
+    const QString option( name.c_str() );
     if( option.startsWith( "Terrains/Order" ) )
     {
         const auto orders = value.To< QString >().toStdString();
