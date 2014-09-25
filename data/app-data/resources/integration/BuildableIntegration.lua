@@ -288,7 +288,6 @@ end
 -- @param object Object knowledge
 -- @reurn Boolean true if simulation action is over, false otherwise
 integration.updateBuildItSecu = function( object )
-    object[ myself ].needDotationToWork = object[ myself ].needDotationToWork or false
     if object[ myself ].actionBuildState == eActionObjetTerminee and object.knowledge ~= nil then
         object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
         object[ myself ].actionBuildState = nil
