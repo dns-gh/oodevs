@@ -70,8 +70,7 @@ void RemoteTacticalObjectController::RemoteCreated( const std::string& identifie
     objectCreations_[ identifier ] = T_ObjectCreation( new simulation::ObjectMagicAction() );
     simulation::ObjectMagicAction& message = *objectCreations_[ identifier ];
     message().set_type( sword::ObjectMagicAction::create );
-    message().mutable_object()->set_id( objId ); // FIXME
-    --objId;
+    message().mutable_object()->set_id( 0 );
     message().mutable_parameters()->add_elem(); // type
     message().mutable_parameters()->add_elem(); // position
     message().mutable_parameters()->add_elem()->add_value()->set_acharstr("remote"+boost::lexical_cast<std::string>(objId)); // name FIXME
@@ -84,6 +83,7 @@ void RemoteTacticalObjectController::RemoteCreated( const std::string& identifie
     entry = ext->add_entries(); // extension
     entry->set_name( "HLA_ObjectID" );
     entry->set_value( identifier );
+    --objId;
 }
 
 // -----------------------------------------------------------------------------

@@ -158,7 +158,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const sword::MissionParameters&
 {
     auto it = prototypes_.find( protocol::GetString( message, 0 ) );
     protocol::Check( it != prototypes_.end(), "is an invalid object type", 0 );
-    protocol::CheckCount( message, 4, 5 );
+    protocol::CheckCount( message, 4, 6 );
     TER_Localisation location;
     const double rPointSize = it->second->GetPointSize();
     protocol::Check( NET_ASN_Tools::ReadLocation( protocol::GetLocation( message, 1 ),
