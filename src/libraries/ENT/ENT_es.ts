@@ -826,26 +826,6 @@
         <source>Weapon ranges</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Hydrography</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Physiography</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vegetation</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

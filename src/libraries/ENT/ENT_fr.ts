@@ -826,26 +826,6 @@
         <source>Weapon ranges</source>
         <translation>Portées d&apos;armes</translation>
     </message>
-    <message>
-        <source>Hydrography</source>
-        <translation>Hydrographie</translation>
-    </message>
-    <message>
-        <source>Network</source>
-        <translation>Réseau</translation>
-    </message>
-    <message>
-        <source>Physiography</source>
-        <translation>Physiographie</translation>
-    </message>
-    <message>
-        <source>Urban</source>
-        <translation>Urbain</translation>
-    </message>
-    <message>
-        <source>Vegetation</source>
-        <translation>Végétation</translation>
-    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

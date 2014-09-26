@@ -9,16 +9,12 @@
 
 #include "clients_gui_pch.h"
 #include "GraphicPreferences.h"
-#include "moc_GraphicPreferences.cpp"
+#include "RichGroupBox.h"
 #include "TerrainPreference.h"
-#include "TerrainPreferenceWidget.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
 #include "clients_kernel/Tools.h"
 #include <terrain/GraphicData.h>
-#pragma warning( push, 0 )
-#include <boost/algorithm/string.hpp>
-#pragma warning( pop )
+#include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 
 using namespace gui;
 
@@ -27,21 +23,13 @@ using namespace gui;
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
 GraphicPreferences::GraphicPreferences( kernel::Controllers& controllers )
-    : controllers_     ( controllers )
-    , alpha_           ( 1 )
-    , upIcon_          ( "resources/images/gui/up.png" )
-    , downIcon_        ( "resources/images/gui/down.png" )
-    , upSignalMapper_  ( new QSignalMapper( this ) )
-    , downSignalMapper_( new QSignalMapper( this ) )
-    , layout_          ( 0 )
+    : controllers_( controllers )
+    , alpha_( 1 )
 {
     tools::Xifstream xis( "preferences.xml" );
     xis >> xml::start( "preferences" )
             >> xml::start( "terrains" )
                 >> xml::list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );
-    connect( upSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( Up( int ) ) );
-    connect( downSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( Down( int ) ) );
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +38,8 @@ GraphicPreferences::GraphicPreferences( kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 GraphicPreferences::~GraphicPreferences()
 {
-    controllers_.Unregister( *this );
+    for( auto it = displays_.begin(); it != displays_.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,52 +49,20 @@ GraphicPreferences::~GraphicPreferences()
 void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 {
     const std::string type = xis.attribute< std::string >( "type" );
-    const std::string category = xis.attribute< std::string >( "category" );
-    auto preference = std::make_shared< TerrainPreference >( xis, controllers_ );
-    categories_[ category ].push_back( preference );
-    if( std::find( currentOrders_.begin(), currentOrders_.end(), category ) == currentOrders_.end() )
-        currentOrders_.push_back( category );
-    terrainPrefs_[ TerrainData( type ) ] = preference;
+    displays_.push_back( new TerrainPreference( xis, controllers_ ) );
+    terrainPrefs_[ TerrainData( type ) ] = displays_.back();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GraphicPreferences::AddToPanel
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-void GraphicPreferences::Display( QVBoxLayout* parent )
+void GraphicPreferences::Display( QWidget* parent ) const
 {
-    previousOrders_ = currentOrders_;
-    QGroupBox* colorBox = new QGroupBox( tools::translate( "gui::GraphicPreferences", "Colors and line thickness" ) );
-    layout_ = new QVBoxLayout();
-    colorBox->setLayout( layout_ );
-    parent->addWidget( colorBox );
-    Build();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicPreferences::Up
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void GraphicPreferences::Up( int index )
-{
-    if( index > 0 && static_cast< int >( currentOrders_.size() ) > index )
-    {
-        std::swap( currentOrders_[ index ], currentOrders_[ index - 1 ] );
-        Build();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicPreferences::Down
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void GraphicPreferences::Down( int index )
-{
-    if( index >= 0 && index < static_cast< int >( currentOrders_.size() ) - 1 )
-    {
-        std::swap( currentOrders_[ index ], currentOrders_[ index + 1 ] );
-        Build();
-    }
+    RichGroupBox* colorBox = new RichGroupBox( "colorBox", tools::translate( "gui::GraphicPreferences", "Colors and line thickness" ), parent );
+    QVBoxLayout* colorBoxLayout = new QVBoxLayout( colorBox );
+    std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Display, _1, colorBox ) );
+    colorBoxLayout->addStretch();
 }
 
 // -----------------------------------------------------------------------------
@@ -123,9 +80,7 @@ void GraphicPreferences::SetAlpha( float a )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Commit()
 {
-    previousOrders_ = currentOrders_;
-    for( auto it = categories_.begin(); it != categories_.end(); ++it )
-        std::for_each( it->second.begin(), it->second.end(), std::mem_fn( &TerrainPreference::Commit ) );
+    std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Commit, _1 ) );
     Save();
 }
 
@@ -135,17 +90,7 @@ void GraphicPreferences::Commit()
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Save() const
 {
-    for( auto it = categories_.begin(); it != categories_.end(); ++it )
-        std::for_each( it->second.begin(), it->second.end(), std::mem_fn( &TerrainPreference::Save ) );
-
-    QString order;
-    for( auto it = currentOrders_.begin(); it != currentOrders_.end(); ++it )
-    {
-        if( it != currentOrders_.begin() )
-            order += ";";
-        order += it->c_str();
-    }
-    controllers_.options_.Change( "Terrains/Order", order );
+    std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Save, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,10 +99,7 @@ void GraphicPreferences::Save() const
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Revert()
 {
-    currentOrders_ = previousOrders_;
-    for( auto it = categories_.begin(); it != categories_.end(); ++it )
-        std::for_each( it->second.begin(), it->second.end(), std::mem_fn( &TerrainPreference::Revert ) );
-    Build();
+    std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Revert, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +110,7 @@ void GraphicPreferences::SetupLineGraphics( const Data_ABC* pData )
 {
     const GraphicData* d = static_cast< const GraphicData* >( pData );
     const TerrainData& data = *d;
-    const auto preference = terrainPrefs_[ data ];
+    const TerrainPreference* preference = terrainPrefs_[ data ];
     if( preference )
     {
         preference->SetLineWidth();
@@ -193,7 +135,7 @@ void GraphicPreferences::SetupBorderGraphics( const Data_ABC* pData )
 {
     const GraphicData* d = static_cast< const GraphicData* >( pData );
     const TerrainData& data = *d;
-    const auto preference = terrainPrefs_[ data ];
+    const TerrainPreference* preference = terrainPrefs_[ data ];
     if( preference )
     {
         preference->SetLineWidth();
@@ -209,61 +151,7 @@ void GraphicPreferences::SetupAreaGraphics( const Data_ABC* pData )
 {
     const GraphicData* d = static_cast< const GraphicData* >( pData );
     const TerrainData& data = *d;
-    const auto preference = terrainPrefs_[ data ];
+    const TerrainPreference* preference = terrainPrefs_[ data ];
     if( preference )
         preference->SetColor( alpha_ * 0.5f );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicPreferences::OptionChanged
-// Created: LGY 2014-06-20
-// -----------------------------------------------------------------------------
-void GraphicPreferences::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    const QString option( name.c_str() );
-    if( option.startsWith( "Terrains/Order" ) )
-    {
-        const auto orders = value.To< QString >().toStdString();
-        boost::split( previousOrders_, orders, boost::algorithm::is_any_of( ";" ) );
-        currentOrders_ = previousOrders_;
-        Build();
-    }
-}
-
-namespace
-{
-    QLayoutItem* ClearLayoutItem( QLayoutItem* item )
-    {
-        if( auto layout = item->layout() )
-            for( int i = 0; i < layout->count(); ++i )
-                ClearLayoutItem( layout->itemAt( i ) );
-        delete item->widget();
-        return item;
-    }
-
-    void ClearLayout( QLayout* layout )
-    {
-        QLayoutItem* child;
-        while( ( child = layout->takeAt( 0 ) ) != 0 )
-            delete ClearLayoutItem( child );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicPreferences::Builds
-// Created: LGY 2014-06-20
-// -----------------------------------------------------------------------------
-void GraphicPreferences::Build()
-{
-    ClearLayout( layout_ );
-    for( int i = 0; i < currentOrders_.size(); ++i )
-    {
-        auto category = categories_.find( currentOrders_.at( i ) );
-        if( category != categories_.end() )
-        {
-            const auto displayText = ENT_Tr::ConvertFromLocationCategory( ENT_Tr::ConvertToLocationCategory( category->first ), ENT_Tr::eToTr );
-            layout_->insertWidget( i, new TerrainPreferenceWidget( displayText.c_str(), i == 0,
-                i == currentOrders_.size() - 1, i, category->second, upSignalMapper_, downSignalMapper_ ) );
-        }
-    }
 }

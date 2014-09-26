@@ -39,7 +39,6 @@ typedef ENT_Tr::Converter< E_WeatherType > T_ConverterWeatherType;
 typedef ENT_Tr::Converter< E_ObstacleActivation > T_ConverterObstacleActivation;
 typedef ENT_Tr::Converter< E_PopulationAttitude > T_ConverterPopulationAttitude;
 typedef ENT_Tr::Converter< E_Location > T_ConverterLocation;
-typedef ENT_Tr::Converter< E_LocationCategory > T_ConverterLocationCategory;
 typedef ENT_Tr::Converter< E_CrossingType > T_ConverterCrossingType;
 typedef ENT_Tr::Converter< E_HumanWound > T_ConverterHumanWound;
 typedef ENT_Tr::Converter< E_HumanRank > T_ConverterHumanRank;
@@ -82,16 +81,6 @@ T_ConverterLocationType LocationTypeConverter_[] =
     T_ConverterLocationType( "point", QT_TRANSLATE_NOOP( "ENT_Tr", "point" ), eLocationType_Point ),
     T_ConverterLocationType( "sector", QT_TRANSLATE_NOOP( "ENT_Tr", "sector" ), eLocationType_Sector ),
     T_ConverterLocationType( "", "", (E_LocationType)-1 )
-};
-
-T_ConverterLocationCategory LocationCategoryConverter_[] =
-{
-    T_ConverterLocationCategory( "hydrography" , QT_TRANSLATE_NOOP( "ENT_Tr", "Hydrography" ),  eLocationCategory_Hydrography  ),
-    T_ConverterLocationCategory( "network",      QT_TRANSLATE_NOOP( "ENT_Tr", "Network" ),      eLocationCategory_Network      ),
-    T_ConverterLocationCategory( "physiography", QT_TRANSLATE_NOOP( "ENT_Tr", "Physiography" ), eLocationCategory_Physiography ),
-    T_ConverterLocationCategory( "urban",        QT_TRANSLATE_NOOP( "ENT_Tr", "Urban" ),        eLocationCategory_Urban        ),
-    T_ConverterLocationCategory( "vegetation",   QT_TRANSLATE_NOOP( "ENT_Tr", "Vegetation" ),   eLocationCategory_Vegetation   ),
-    T_ConverterLocationCategory( "", "", (E_LocationCategory)-1 )
 };
 
 T_ConverterAmmunitionType AmmunitionTypeConverter_[] =
@@ -786,7 +775,6 @@ void ENT_Tr::InitTranslations()
     INIT_TR( LightingType );
     INIT_TR( Location );
     INIT_TR( LocationType );
-    INIT_TR( LocationCategory );
     INIT_TR( MeetingEngagementStatus );
     INIT_TR( MissionType );
     INIT_TR( Modes );
@@ -839,7 +827,6 @@ IMPLEMENT_CONVERT_METHODS( LayerTypes );
 IMPLEMENT_CONVERT_METHODS( LightingType );
 IMPLEMENT_CONVERT_METHODS( Location );
 IMPLEMENT_CONVERT_METHODS( LocationType );
-IMPLEMENT_CONVERT_METHODS( LocationCategory );
 IMPLEMENT_CONVERT_METHODS( MeetingEngagementStatus );
 IMPLEMENT_CONVERT_METHODS( MissionType );
 IMPLEMENT_CONVERT_METHODS( Modes );

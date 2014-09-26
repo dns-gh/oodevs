@@ -10,7 +10,6 @@
 #ifndef __GraphicPreferences_h_
 #define __GraphicPreferences_h_
 
-#include "clients_kernel/OptionsObserver_ABC.h"
 #include <spatialcontainer/TerrainData.h>
 #include <graphics/GraphicSetup_ABC.h>
 
@@ -35,13 +34,8 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class GraphicPreferences : public QObject
-                         , public GraphicSetup_ABC
-                         , public tools::Observer_ABC
-                         , public kernel::OptionsObserver_ABC
+class GraphicPreferences : public GraphicSetup_ABC
 {
-    Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,7 +47,7 @@ public:
     //@{
     void SetAlpha( float a );
 
-    void Display( QVBoxLayout* parent );
+    void Display( QWidget* parent ) const;
 
     virtual void SetupLineGraphics  ( const Data_ABC* pData );
     virtual void SetupLineGraphics  ( unsigned int offset );
@@ -76,24 +70,15 @@ private:
     void ReadTerrainPreference( xml::xistream& xis );
     void Save() const;
     void Save( xml::xostream& xos, const TerrainPreference& preference ) const;
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    void Build(); 
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void Up( int );
-    void Down( int );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< TerrainData, std::shared_ptr< TerrainPreference > > T_TerrainPreferences;
-    typedef std::vector< std::shared_ptr< TerrainPreference > >           T_Displays;
-    typedef std::map< std::string, T_Displays >                           T_Categories;
-    typedef std::vector< std::string >                                    T_Orders;
+    typedef std::map< TerrainData, TerrainPreference* > T_TerrainPreferences;
+    typedef T_TerrainPreferences::const_iterator      CIT_TerrainPreferences;
+    typedef std::vector< TerrainPreference* >           T_Displays;
+    typedef T_Displays::const_iterator                CIT_Displays;
     //@}
 
 private:
@@ -101,16 +86,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     T_TerrainPreferences terrainPrefs_;
-    T_Categories categories_;
-    T_Orders currentOrders_;
-    T_Orders previousOrders_;
+    T_Displays displays_;
     float alpha_;
-
-    QVBoxLayout* layout_;
-    QIcon upIcon_;
-    QIcon downIcon_;
-    QSignalMapper* upSignalMapper_;
-    QSignalMapper* downSignalMapper_;
     //@}
 };
 

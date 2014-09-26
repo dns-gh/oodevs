@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <preferences>
   <terrains>
-    <terrain name="forest" type="forest edge" category="vegetation">
+    <terrain name="forest" type="forest edge">
       <width>1</width>
       <color>#aae2a4</color>
     </terrain>
-    <terrain name="orchard" type="orchard edge" category="vegetation">
+    <terrain name="orchard" type="orchard edge">
       <width>1</width>
       <color>#d3e0ad</color>
     </terrain>
-    <terrain name="swamp" type="swamp edge" category="vegetation">
+    <terrain name="swamp" type="swamp edge">
       <width>1</width>
       <color>#92d081</color>
     </terrain>
-    <terrain name="urban area" type="suburb" category="urban">
+    <terrain name="urban area" type="suburb">
       <width>1</width>
       <color>#c3c1c2</color>
     </terrain>
-    <terrain name="lake" type="waterfront" category="hydrography">
+    <terrain name="lake" type="waterfront">
       <width>1</width>
       <color>#aaaaff</color>
     </terrain>
-    <terrain name="dune" type="dune edge" category="physiography">
+    <terrain name="dune" type="dune edge">
       <width>1</width>
       <color>#dce062</color>
     </terrain>
-    <terrain name="glacier" type="glacier edge" category="physiography">
+    <terrain name="glacier" type="glacier edge">
       <width>1</width>
       <color>#c0c0ff</color>
     </terrain>
-    <terrain name="mountain" type="mountain edge" category="physiography">
+    <terrain name="mountain" type="mountain edge">
       <width>1</width>
       <color>#909090</color>
     </terrain>
-    <terrain type="cliff" category="physiography">
+    <terrain type="cliff">
       <width>3</width>
       <color>#a7a500</color>
     </terrain>
-    <terrain type="highway" category="network">
+    <terrain type="highway">
       <width>3</width>
       <color>#f7a500</color>
     </terrain>
-    <terrain type="main road" category="network">
+    <terrain type="main road">
       <width>2</width>
       <color>#f42020</color>
     </terrain>
-    <terrain type="secondary road" category="network">
+    <terrain type="secondary road">
       <width>1.5</width>
       <color>#c88033</color>
     </terrain>
-    <terrain type="country road" category="network">
+    <terrain type="country road">
       <width>1</width>
       <color>#b00000</color>
     </terrain>
-    <terrain type="bridge" category="network">
+    <terrain type="bridge">
       <width>1</width>
       <color>#a80000</color>
     </terrain>
-    <terrain type="railroad" category="network">
+    <terrain type="railroad">
       <width>1</width>
       <color>#b0b0b0</color>
     </terrain>
-    <terrain type="main river" category="hydrography">
+    <terrain type="main river">
       <width>1</width>
       <color>#aaaaff</color>
     </terrain>
-    <terrain type="river" category="hydrography">
+    <terrain type="river">
       <width>2</width>
       <color>#aaaaff</color>
     </terrain>
-    <terrain type="stream" category="hydrography">
+    <terrain type="stream">
       <width>1</width>
       <color>#aaaaff</color>
     </terrain>

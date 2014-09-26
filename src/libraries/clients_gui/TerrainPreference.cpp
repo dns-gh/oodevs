@@ -11,10 +11,16 @@
 #include "TerrainPreference.h"
 #include "moc_TerrainPreference.cpp"
 #include "ColorButton.h"
+#include "RichCheckBox.h"
 #include "SizeButton.h"
-#include "clients_kernel/Tools.h"
+#include "SubObjectName.h"
+
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
+
+#include "ENT/Ent_Tr.h"
+
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -24,21 +30,17 @@ using namespace gui;
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
 TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& controllers )
-    : controllers_      ( controllers )
-    , options_          ( controllers_.options_ )
-    , type_             ( xis.attribute< std::string >( "type" ) )
-    , name_             ( xis.attribute( "name", type_ ) )
-    , previousShown_    ( true )
-    , shown_            ( true )
-    , colorButton_      ( 0 )
-    , sizeButton_       ( 0 )
-    , groupBox_         ( 0 )
-    , showCheckbox_     ( 0 )
-    , lineWidth_        ( xis.content< float >( "width" ) )
-    , previousLineWidth_( lineWidth_ )
-    , color_            ( xis.content< std::string >( "color" ).c_str() )
-    , previousColor_    ( color_ )
+    : controllers_( controllers )
+    , options_    ( controllers_.options_ )
+    , type_       ( xis.attribute< std::string >( "type" ) )
+    , name_       ( xis.attribute( "name", type_ ) )
+    , currentShown_ ( true )
+    , previousShown_ ( true )
 {
+    std::string color;
+    xis >> xml::content( "color", color )
+        >> xml::content( "width", lineWidth_ );
+    color_ = QColor( color.c_str() );
     controllers_.Register( *this );
 }
 
@@ -55,39 +57,20 @@ TerrainPreference::~TerrainPreference()
 // Name: TerrainPreference::Display
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-void TerrainPreference::Display( QVBoxLayout* parent, QCheckBox* box )
+void TerrainPreference::Display( QWidget* parent )
 {
-    QVBoxLayout* layout = new QVBoxLayout();
-    layout->setContentsMargins( 15, 0, 0, 0 );
-    Q3HBox* pBox = new Q3HBox();
-    showCheckbox_ = new QCheckBox( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( name_ ), ENT_Tr::eToTr ).c_str(), pBox );
-    showCheckbox_->setChecked( shown_ );
-    box->setChecked( shown_ || box->isChecked() );
-    connect( box, SIGNAL( toggled( bool ) ), showCheckbox_, SLOT( setChecked( bool ) ) );
-    connect( showCheckbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnStateChanged( int ) ) );
+    SubObjectName subObject( name_.c_str() );
+    Q3HBox* pBox = new Q3HBox( parent );
+    pBox->setSpacing( 5 );
+    if( parent->layout() )
+        parent->layout()->addWidget( pBox );
+    showCheckbox_ = new RichCheckBox( "showCheckbox", ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( name_ ), ENT_Tr::eToTr ).c_str(), pBox );
+    showCheckbox_->setChecked( previousShown_ );
+    connect( showCheckbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnCategoryChecked() ) );
     pBox->setStretchFactor( showCheckbox_, 2 );
-    sizeButton_  = new SizeButton( "terrain-line-thickness", pBox, "", lineWidth_ );
+    sizeButton_  = new SizeButton( "sizeButton", pBox, "", lineWidth_ );
     sizeButton_->EnableValueLabel( tools::translate( "gui::TerrainPreference", " px" ) );
-    connect( sizeButton_, SIGNAL( valueChanged( int ) ), this, SLOT( OnSizeChanged( int ) ) );
-    colorButton_ = new ColorButton( "terrain-color", pBox, "", color_ );
-    connect( colorButton_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( OnColorChanged( const QColor& ) ) );
-    connect( box, SIGNAL( toggled( bool ) ), this, SLOT( SetEnabled( bool ) ) );
-    layout->addWidget( pBox );
-    parent->addLayout( layout );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainPreference::SetEnabled
-// Created: LGY 2014-06-20
-// -----------------------------------------------------------------------------
-void TerrainPreference::SetEnabled( bool value )
-{
-    if( showCheckbox_ && colorButton_ && sizeButton_ )
-    {
-        showCheckbox_->setEnabled( value );
-        colorButton_->setEnabled( value );
-        sizeButton_->setEnabled( value );
-    }
+    colorButton_ = new ColorButton( "colorButton", pBox, "", color_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +79,8 @@ void TerrainPreference::SetEnabled( bool value )
 // -----------------------------------------------------------------------------
 void TerrainPreference::SetLineWidth() const
 {
-    glLineWidth( lineWidth_ );
+    const float lineWidth = sizeButton_->GetSize();
+    glLineWidth( lineWidth );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +89,8 @@ void TerrainPreference::SetLineWidth() const
 // -----------------------------------------------------------------------------
 void TerrainPreference::SetColor( float alpha ) const
 {
-    glColor4f( color_.red() / 255.f, color_.green() / 255.f, color_.blue() / 255.f, shown_ ? alpha : 0.f );
+    const QColor color = colorButton_->GetColor();
+    glColor4f( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f, currentShown_ ? alpha : 0.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,9 +99,10 @@ void TerrainPreference::SetColor( float alpha ) const
 // -----------------------------------------------------------------------------
 void TerrainPreference::Commit()
 {
-    previousColor_ = color_;
-    previousLineWidth_ = lineWidth_;
-    previousShown_ = shown_;
+    colorButton_->Commit();
+    sizeButton_->Commit();
+    currentShown_ = showCheckbox_->isChecked();
+    previousShown_ = currentShown_;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +111,8 @@ void TerrainPreference::Commit()
 // -----------------------------------------------------------------------------
 void TerrainPreference::Revert()
 {
-    colorButton_->SetColor( previousColor_ );
-    sizeButton_->SetSize( previousLineWidth_ );
+    colorButton_->Revert();
+    sizeButton_->Revert();
     showCheckbox_->setChecked( previousShown_ );
 }
 
@@ -136,9 +122,9 @@ void TerrainPreference::Revert()
 // -----------------------------------------------------------------------------
 void TerrainPreference::Save() const
 {
-    options_.Change( "Terrains/" + type_ + "/width", previousLineWidth_ );
-    options_.Change( "Terrains/" + type_ + "/color", previousColor_.name() );
-    options_.Change( "Terrains/" + type_ + "/shown", previousShown_ );
+    options_.Change( "Terrains/" + type_ + "/width", sizeButton_->GetSize() );
+    options_.Change( "Terrains/" + type_ + "/color", colorButton_->GetColor().name() );
+    options_.Change( "Terrains/" + type_ + "/shown", showCheckbox_->isChecked() );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,44 +140,26 @@ void TerrainPreference::OptionChanged( const std::string& name, const kernel::Op
     option.remove( root );
     if( option == "/width" )
     {
-        previousLineWidth_ = value.To< float >();
-        sizeButton_->SetSize( previousLineWidth_ );
+        sizeButton_->SetSize( value.To< float >() );
+        sizeButton_->Commit();
     }
     else if( option == "/color" )
     {
-        previousColor_ = QColor( value.To< QString >() );
-        colorButton_->SetColor( previousColor_ );
+        colorButton_->SetColor( QColor( value.To< QString >() ) );
+        colorButton_->Commit();
     }
     else if( option == "/shown" )
     {
-        previousShown_ = value.To< bool >();
-        showCheckbox_->setChecked( previousShown_ );
+        currentShown_ = value.To< bool >();
+        showCheckbox_->setChecked( currentShown_ );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainPreference::OnStateChanged
-// Created: LGY 2014-06-20
+// Name: TerrainPreference::OnCategoryChecked
+// Created: NPT 2013-03-25
 // -----------------------------------------------------------------------------
-void TerrainPreference::OnStateChanged( int state )
+void TerrainPreference::OnCategoryChecked()
 {
-    shown_ = state == Qt::Checked;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainPreference::OnSizeChanged
-// Created: LGY 2014-06-20
-// -----------------------------------------------------------------------------
-void TerrainPreference::OnSizeChanged( int )
-{
-    lineWidth_ = sizeButton_->GetSize();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainPreference::OnColorChanged
-// Created: LGY 2014-06-20
-// -----------------------------------------------------------------------------
-void TerrainPreference::OnColorChanged( const QColor& color )
-{
-    color_ = color;
+    currentShown_ = showCheckbox_->isChecked();
 }
