@@ -170,15 +170,6 @@ const MIL_Agent_ABC* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetTransportersProvider
-// Created: NLD 2011-08-02
-// -----------------------------------------------------------------------------
-logistic::SupplySupplier_ABC* PHY_RolePionLOGConvoy_Supply::ConvoyGetTransportersProvider() const
-{
-    return convoy_ ? &convoy_->GetTransportersProvider() : 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetCurrentSupplyRecipient
 // Created: NLD 2011-08-02
 // -----------------------------------------------------------------------------

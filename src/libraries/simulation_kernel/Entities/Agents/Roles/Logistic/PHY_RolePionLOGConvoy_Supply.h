@@ -70,7 +70,6 @@ public:
     virtual int                                             ConvoyGetCurrentAction         () const;
     virtual logistic::SupplyRecipient_ABC*                  ConvoyGetCurrentSupplyRecipient() const;
     virtual const MIL_Agent_ABC*                            ConvoyGetSupplier              () const;
-    virtual logistic::SupplySupplier_ABC*                   ConvoyGetTransportersProvider  () const;
     virtual std::vector< boost::shared_ptr< MT_Vector2D > > ConvoyGetPathToNextDestination () const;
     virtual bool                                            ConvoyIsPushedFlow             () const;
     virtual bool                                            IsConvoy                       () const;
