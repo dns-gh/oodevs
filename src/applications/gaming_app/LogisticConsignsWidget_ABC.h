@@ -84,6 +84,7 @@ protected:
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void DisplayHistory( const LogisticsConsign_ABC::History& history );
     virtual void DisplayRequest( const LogisticsConsign_ABC& consign );
+    virtual void RemoveRequest( const LogisticsConsign_ABC& consign );
     virtual bool IsHistoryChecked() const;
     virtual void DisplayCurrentHistory();
     virtual void SelectRequest();
