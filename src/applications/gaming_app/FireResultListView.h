@@ -92,7 +92,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QStandardItemModel model_;
+    QStandardItemModel* model_[2];
     QSortFilterProxyModel proxy_;
     kernel::Controllers& controllers_;
     gui::DisplayExtractor& extractor_;
