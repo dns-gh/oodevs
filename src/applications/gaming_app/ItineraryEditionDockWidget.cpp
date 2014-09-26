@@ -40,6 +40,7 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
     mainLayout->addWidget( tipLabel );
     mainLayout->addStretch( 1 );
     mainLayout->addLayout( buttonLayout );
+    mainWidget->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     setWidget( mainWidget );
     connect( okButton, SIGNAL( clicked( bool ) ), this, SIGNAL( ItineraryAccepted() ) );
     connect( cancelButton, SIGNAL( clicked( bool ) ), this, SIGNAL( ItineraryRejected() ) );

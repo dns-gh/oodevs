@@ -1390,7 +1390,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Set start and end points by right-clicking on the map. Once the initial itinerary has been calculated, waypoints can be added and modified repeatedly by dragging and dropping from any position on the current itinerary.</source>
-        <translation>Définir les points de départ et d'arrivée en effectuant un clic droit sur le terrain. Une fois l'itinéraire initial calculé, il est possible d'ajouter et de modifier des points de passage en effectuant un glisser-déposer depuis une position sur l'itinéraire.</translation>
+        <translation>Définir les points de départ et d&apos;arrivée en effectuant un clic droit sur le terrain. Une fois l&apos;itinéraire initial calculé, il est possible d&apos;ajouter et de modifier des points de passage en effectuant un glisser-déposer depuis une position sur l&apos;itinéraire.</translation>
     </message>
 </context>
 <context>
