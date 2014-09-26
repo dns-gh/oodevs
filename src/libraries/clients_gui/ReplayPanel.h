@@ -16,7 +16,7 @@
 namespace kernel
 {
     class Controllers;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -48,16 +48,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ReplayPanel( const ReplayPanel& );            //!< Copy constructor
-    ReplayPanel& operator=( const ReplayPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-     kernel::Options& options_;
+     kernel::OptionsController& options_;
      kernel::Controllers& controllers_;
      QCheckBox* checkbox_;
     //@}

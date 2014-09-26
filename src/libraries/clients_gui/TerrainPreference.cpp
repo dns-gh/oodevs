@@ -13,7 +13,7 @@
 #include "ColorButton.h"
 #include "RichCheckBox.h"
 #include "SizeButton.h"
-
+#include "clients_gui/SubObjectName.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Controllers.h"
@@ -169,4 +169,3 @@ void TerrainPreference::OnCategoryChecked()
 {
     currentShown_ = showCheckbox_->isChecked();
 }
-
