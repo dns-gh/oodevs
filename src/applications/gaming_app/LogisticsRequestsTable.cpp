@@ -163,6 +163,15 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticsRequestsTable::RemoveRequest
+// Created: ABR 2014-09-25
+// -----------------------------------------------------------------------------
+void LogisticsRequestsTable::RemoveRequest( const LogisticsConsign_ABC& consign )
+{
+    dataModel_.removeRow( GetRequestRow( consign ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticsRequestsTable::SetData
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------

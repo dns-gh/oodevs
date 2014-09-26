@@ -235,6 +235,15 @@ void LogisticConsignsWidget_ABC::DisplayRequest( const LogisticsConsign_ABC& con
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget_ABC::RemoveRequest
+// Created: ABR 2014-09-25
+// -----------------------------------------------------------------------------
+void LogisticConsignsWidget_ABC::RemoveRequest( const LogisticsConsign_ABC& consign )
+{
+    requestsTable_->RemoveRequest( consign );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticConsignsWidget_ABC::DisplayCurrentHistory
 // Created: MMC 2013-09-26
 // -----------------------------------------------------------------------------

@@ -106,8 +106,8 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename Type >
-    void Delete( unsigned long id );
+    template< typename C >
+    void Delete( const C& consign );
     template< typename M, typename C, typename E >
     void CreateConsign( const M& message, const std::function< C*( const M&, kernel::Agent_ABC& ) >& create );
     template< typename C, typename E >

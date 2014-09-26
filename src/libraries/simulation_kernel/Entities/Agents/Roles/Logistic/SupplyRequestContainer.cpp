@@ -138,8 +138,8 @@ void SupplyRequestContainer::Prepare()
     requests_.clear();
     transporters_.clear();
     recipientPaths_.clear();
-    supplierPath_ = boost::none;
-    transportersProviderPath_ = boost::none;
+    supplierPath_.reset();
+    transportersProviderPath_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -247,23 +247,20 @@ const SupplyRequestContainer::T_Transporters& SupplyRequestContainer::GetTranspo
     return transporters_;
 }
 
-void SupplyRequestContainer::SetPathToRecipient( SupplyRecipient_ABC& recipient, const sword::Pathfind& pathfind,
-                                                 const MT_Vector2D& start, const MT_Vector2D& end )
+void SupplyRequestContainer::SetPathToRecipient( SupplyRecipient_ABC& recipient, const sword::Pathfind& pathfind )
 {
-    recipientPaths_[ &recipient ] = Itinerary( boost::make_shared< MT_Vector2D >( start ),
-         boost::make_shared< MT_Vector2D >( end ),
-         boost::make_shared< MIL_ItineraryParameter >( pathfind, start ) );
+    recipientPaths_[ &recipient ] = boost::make_shared< MIL_ItineraryParameter >( pathfind, boost::none );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::GetPath
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToRecipient( SupplyRecipient_ABC& recipient ) const
+std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToRecipient( const MT_Vector2D& start, SupplyRecipient_ABC& recipient ) const
 {
     auto it = recipientPaths_.find( &recipient );
     if( it != recipientPaths_.end() )
-        return it->second.parameter_->AddClosestWaypoints( it->second.start_, it->second.end_ );
+        return it->second->AddClosestWaypoints( boost::make_shared< MT_Vector2D >( start ), boost::make_shared< MT_Vector2D >( recipient.GetPosition() ) );
     return std::vector< boost::shared_ptr< MT_Vector2D > >();
 }
 
@@ -271,39 +268,37 @@ void SupplyRequestContainer::ToRecipientItinerary( SupplyRecipient_ABC& recipien
 {
     auto it = recipientPaths_.find( &recipient );
     if( it != recipientPaths_.end() )
-       it->second.parameter_->ToItinerary( pathfind );
+        it->second->ToItinerary( pathfind );
 }
 
 void SupplyRequestContainer::ToTransportersItinerary( sword::Pathfind& pathfind ) const
 {
     if( transportersProviderPath_ )
-        transportersProviderPath_->parameter_->ToItinerary( pathfind );
+        transportersProviderPath_->ToItinerary( pathfind );
 }
 
 void SupplyRequestContainer::ToSupplierItinerary( sword::Pathfind& pathfind ) const
 {
     if( supplierPath_ )
-        supplierPath_->parameter_->ToItinerary( pathfind );
+        supplierPath_->ToItinerary( pathfind );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::SetPathToTransportersProvider
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::SetPathToTransportersProvider( const sword::Pathfind& pathfind, const MT_Vector2D& start, const MT_Vector2D& end )
+void SupplyRequestContainer::SetPathToTransportersProvider( const sword::Pathfind& pathfind )
 {
-    transportersProviderPath_ = Itinerary( boost::make_shared< MT_Vector2D >( start ),
-        boost::make_shared< MT_Vector2D >( end ),
-        boost::make_shared< MIL_ItineraryParameter >( pathfind, start ) );
+    transportersProviderPath_ = boost::make_shared< MIL_ItineraryParameter >( pathfind, boost::none );
 }
 
 namespace
 {
     template< typename T >
-    std::vector< boost::shared_ptr< MT_Vector2D > > GetClosestWaypoints( const boost::optional< T >& itinerary )
+    std::vector< boost::shared_ptr< MT_Vector2D > > GetClosestWaypoints( const T& itinerary, const MT_Vector2D& start, const MT_Vector2D& end )
     {
         if( itinerary )
-            return itinerary->parameter_->AddClosestWaypoints( itinerary->start_, itinerary->end_ );
+            return itinerary->AddClosestWaypoints( boost::make_shared< MT_Vector2D >( start ), boost::make_shared< MT_Vector2D >( end ) );
         return std::vector< boost::shared_ptr< MT_Vector2D > >();
     }
 }
@@ -312,29 +307,27 @@ namespace
 // Name: SupplyRequestContainer::GetPathToTransportersProvider
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToTransportersProvider() const
+std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToTransportersProvider( const MT_Vector2D& start, const MT_Vector2D& end ) const
 {
-    return GetClosestWaypoints( transportersProviderPath_ );
+    return GetClosestWaypoints( transportersProviderPath_, start, end );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::SetPathToSupplier
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::SetPathToSupplier( const sword::Pathfind& pathfind, const MT_Vector2D& start, const MT_Vector2D& end )
+void SupplyRequestContainer::SetPathToSupplier( const sword::Pathfind& pathfind )
 {
-    supplierPath_ = Itinerary( boost::make_shared< MT_Vector2D >( start ),
-        boost::make_shared< MT_Vector2D >( end ),
-        boost::make_shared< MIL_ItineraryParameter >( pathfind, start ) );
+    supplierPath_ = boost::make_shared< MIL_ItineraryParameter >( pathfind, boost::none );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::GetPathToSupplier
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToSupplier() const
+std::vector< boost::shared_ptr< MT_Vector2D > > SupplyRequestContainer::GetPathToSupplier( const MT_Vector2D& start, const MT_Vector2D& end ) const
 {
-    return GetClosestWaypoints( supplierPath_ );
+    return GetClosestWaypoints( supplierPath_, start, end );
 }
 
 // -----------------------------------------------------------------------------

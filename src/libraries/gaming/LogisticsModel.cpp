@@ -65,11 +65,11 @@ void LogisticsModel::Purge()
 // Name: LogisticsModel::Delete
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-template< typename Type >
-void LogisticsModel::Delete( unsigned long id )
+template< typename C >
+void LogisticsModel::Delete( const C& consign )
 {
-    delete tools::Resolver< Type >::Find( id );
-    tools::Resolver< Type >::Remove( id );
+    controller_.Delete( consign );
+    delete tools::Resolver< C >::Remove( consign.GetId() );;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ void LogisticsModel::DeleteConsign( unsigned long id )
         if( kernel::Entity_ABC* handler = consign->GetHandler() )
             if( E* consigns = handler->Retrieve< E >() )
                 consigns->TerminateConsign( *consign );
-        Delete< C >( id );
+        Delete< C >( *consign );
     }
 }
 
@@ -254,13 +254,12 @@ void LogisticsModel::DeleteSupplyConsign( unsigned long id )
     {
         for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = consign->CreateIterator(); it.HasMoreElements(); )
             it.NextElement().recipient_.Get< LogSupplyConsigns >().RemoveConsign( *consign );
-
         if( kernel::Entity_ABC* pLogHandlingEntity = consign->GetHandler() )
             pLogHandlingEntity->Get< LogSupplyConsigns >().TerminateConsign( *consign );
         if(  kernel::Agent_ABC* pPionLogConvoying = consign->GetConvoy() )
             pPionLogConvoying->Get< LogSupplyConsigns >().TerminateConsign( *consign );
         consign->DeleteAll();
-        Delete< LogSupplyConsign >( id );
+        Delete< LogSupplyConsign >( *consign );
     }
 }
 

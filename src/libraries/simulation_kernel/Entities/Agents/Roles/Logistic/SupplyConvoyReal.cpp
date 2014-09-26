@@ -16,6 +16,9 @@
 #include "SupplyConvoyEventsObserver_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "SpeedComputer_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
@@ -219,11 +222,20 @@ SupplySupplier_ABC& SupplyConvoyReal::GetTransportersProvider() const
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > SupplyConvoyReal::GetPathToNextDestination() const
 {
-    switch( currentAction_ )
+    if( convoyPion_ )
     {
-        case eMoveToSupplier: return parameters_->GetPathToSupplier();
-        case eMoveToTransportersProvider: return parameters_->GetPathToTransportersProvider();
-        case eMoveToSupplyRecipient: assert( currentSupplyRecipient_ ); return parameters_->GetPathToRecipient( *currentSupplyRecipient_ );
+        const MT_Vector2D& convoyPosition = convoyPion_->GetRole< PHY_RoleInterface_Location >().GetPosition();
+        const MT_Vector2D& supplierPosition = convoyPion_->GetRole< PHY_RoleInterface_Supply >().ConvoyGetSupplier()->GetRole< PHY_RoleInterface_Location >().GetPosition();
+        const MT_Vector2D& returnPosition = convoyPion_->GetAutomate().GetPosition();
+        switch( currentAction_ )
+        {
+            // pull flow
+            case eMoveToSupplier: return parameters_->GetPathToSupplier( convoyPosition, supplierPosition );
+            // return trip
+            case eMoveToTransportersProvider: return parameters_->GetPathToTransportersProvider( convoyPosition, returnPosition );
+            // push flow
+            case eMoveToSupplyRecipient: assert( currentSupplyRecipient_ ); return parameters_->GetPathToRecipient( convoyPosition, *currentSupplyRecipient_ );
+        }
     }
     return std::vector< boost::shared_ptr< MT_Vector2D > >();
 }
