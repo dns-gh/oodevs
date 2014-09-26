@@ -211,35 +211,33 @@ void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_Object_ABC& object )
 // Name: DEC_KS_ObjectInteraction::NotifyDisasterCollision
 // Created: LGY 2012-12-06
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectInteraction::NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
+void DEC_KS_ObjectInteraction::NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
     // Detect disaster with a sensor
-    NotifyCollision( object, vPosition, vDirection );
+    NotifyCollision( object, startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::NotifyObjectCollision
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
+void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
     // Detect object but no disaster without sensors
     if( object.CanBeSeen() )
-        NotifyCollision( object, vPosition, vDirection );
+        NotifyCollision( object, startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::NotifyCollision
 // Created: LGY 2012-12-06
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectInteraction::NotifyCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
+void DEC_KS_ObjectInteraction::NotifyCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
     static const double epsilon = 1e-8;
-    static const double lineFactor = 2 * TER_World::GetWorld().GetWeldValue();
     const TER_Localisation& objectLocation = object.GetLocalisation();
-    MT_Vector2D vThrough( vPosition + lineFactor * vDirection );
-    MT_Line orientedLine( vPosition, vThrough );
-    TER_DistanceLess collisionCmp( vPosition );
+    MT_Line orientedLine( startPos, endPos );
+    TER_DistanceLess collisionCmp( startPos );
     T_PointSet collisions( collisionCmp );
     if( objectLocation.Intersect2D( orientedLine, collisions, epsilon ) && !collisions.empty() )
     {

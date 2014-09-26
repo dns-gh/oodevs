@@ -108,7 +108,7 @@ public:
     virtual void PreprocessAgent         ( MIL_Agent_ABC& agent );
     virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent );
     virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent );
     virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
     virtual void ApplyStructuralState( float structuralState ) const;

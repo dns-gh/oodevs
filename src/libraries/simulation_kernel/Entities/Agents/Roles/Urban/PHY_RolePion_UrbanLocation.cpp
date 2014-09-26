@@ -112,7 +112,7 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
 // Name: PHY_RolePion_UrbanLocation::NotifyMovingInsideObject
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& object )
+void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D&, const MT_Vector2D& )
 {
     if( const MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
     {

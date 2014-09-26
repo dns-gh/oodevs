@@ -15,10 +15,11 @@
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
-class MIL_Object_ABC;
-class MIL_AgentPion;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_ObjectPerception;
+class MIL_Object_ABC;
+class MIL_AgentPion;
+class MT_Line;
 
 // =============================================================================
 /** @class  DEC_KS_ObjectInteraction
@@ -49,8 +50,8 @@ public:
     //! @name Events
     //@{
     void NotifyObjectInteraction( MIL_Object_ABC& object );
-    void NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection );
-    void NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection );
+    void NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
+    void NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     //@}
 
     //! @name CheckPoints
@@ -77,7 +78,7 @@ private:
     //! @name Helpers
     //@{
     void CleanKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge );
-    void NotifyCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection );
+    void NotifyCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     //@}
 
 private:

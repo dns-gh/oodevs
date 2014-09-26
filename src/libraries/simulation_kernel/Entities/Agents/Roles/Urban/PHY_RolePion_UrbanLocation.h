@@ -82,7 +82,7 @@ public:
 
     //! @name Event handlers
     //@{
-    virtual void NotifyMovingInsideObject( MIL_Object_ABC& urbanObject );
+    virtual void NotifyMovingInsideObject( MIL_Object_ABC& urbanObject, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& urbanObject );
     virtual void NotifyPutInsideObject( MIL_Object_ABC& /*object*/ ) {}
     virtual void NotifyPutOutsideObject( MIL_Object_ABC& /*object*/ ) {}

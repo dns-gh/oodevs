@@ -92,7 +92,9 @@ BOOST_FIXTURE_TEST_CASE( PhComputerFirerPositionTest, Fixture )
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerlocationRole );
-    urbanRole->NotifyMovingInsideObject( *urbanBlock);
+    PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
+    targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
+    urbanRole->NotifyMovingInsideObject( *urbanBlock, MT_Vector2D(), MT_Vector2D() );
     firerlocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     const MT_Vector2D result( 2, 1.5 );
     BOOST_CHECK_EQUAL( result, urbanRole->GetFirerPosition( MT_Vector2D( 3, 2 ) ) );
@@ -106,7 +108,7 @@ BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
     targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
     PHY_RolePion_Location* firerLocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerLocationRole );
-    urbanRole->NotifyMovingInsideObject( *urbanBlock );
+    urbanRole->NotifyMovingInsideObject( *urbanBlock, MT_Vector2D(), MT_Vector2D() );
     targetLocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     firerLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
     const MT_Vector2D firerPosition( 3, 2 );
@@ -122,7 +124,7 @@ BOOST_FIXTURE_TEST_CASE( PhComputerIndirectPhModifier, Fixture )
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    urbanRole->NotifyMovingInsideObject( *urbanBlock );
+    urbanRole->NotifyMovingInsideObject( *urbanBlock, MT_Vector2D(), MT_Vector2D() );
     locationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *locationRole );
     const MT_Ellipse attritionSurface( MT_Vector2D( 3, 2 ), MT_Vector2D( 5, 2 ),  MT_Vector2D( 3, 3 ) );

@@ -47,6 +47,7 @@ class MIL_StructuralStateNotifier_ABC;
 class MIL_ObjectManipulator_ABC;
 class MIL_ObjectType_ABC;
 class MIL_PopulationElement_ABC;
+class MT_Line;
 class TER_Localisation;
 class PHY_DotationCategory;
 class PHY_UrbanAttritionData;
@@ -111,9 +112,9 @@ public:
     void NotifyPopulationMovingInside ( MIL_PopulationElement_ABC& population );
     void NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& population );
 
-    void NotifyAgentMovingInside ( MIL_Agent_ABC& agent );
+    void NotifyAgentMovingInside ( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     void NotifyAgentMovingOutside( MIL_Agent_ABC& agent );
-    void NotifyAgentPutInside    ( MIL_Agent_ABC& agent );
+    void NotifyAgentPutInside    ( MIL_Agent_ABC& agent, const MT_Vector2D& position );
     void NotifyAgentPutOutside   ( MIL_Agent_ABC& agent );
     //@}
 
@@ -130,7 +131,7 @@ public:
     virtual void PreprocessAgent         ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent ) = 0;
-    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent ) = 0;
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos ) = 0;
     virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population ) = 0;
     //@}

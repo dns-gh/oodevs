@@ -819,11 +819,11 @@ void MIL_UrbanObject::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // Name: MIL_UrbanObject::ProcessAgentMovingInside
 // Created: LDC 2012-11-07
 // -----------------------------------------------------------------------------
-void MIL_UrbanObject::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
+void MIL_UrbanObject::ProcessAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
     if( !IsBlock() )
         return;
-    MIL_UrbanObject_ABC::ProcessAgentMovingInside( agent );
+    MIL_UrbanObject_ABC::ProcessAgentMovingInside( agent, startPos, endPos );
 }
     
 // -----------------------------------------------------------------------------

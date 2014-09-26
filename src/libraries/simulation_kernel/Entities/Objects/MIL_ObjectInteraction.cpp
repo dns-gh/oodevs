@@ -54,6 +54,7 @@ void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned 
     file >> agentsExiting_;
     file >> agentsMovingInside_;
     file >> agentsDelayedEntering_;
+    file >> agentCollisionPositions_;
     file >> populationsInside_;
     file >> populationsMovingInside_;
     file >> height_;
@@ -70,6 +71,7 @@ void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const unsigned
     file << agentsExiting_;
     file << agentsMovingInside_;
     file << agentsDelayedEntering_;
+    file << agentCollisionPositions_;
     file << populationsInside_;
     file << populationsMovingInside_;
     file << height_;
@@ -201,10 +203,11 @@ void MIL_ObjectInteraction::NotifyPopulationMovingOutside( MIL_PopulationElement
 // Name: MIL_ObjectInteraction::NotifyAgentMovingInside
 // Created: JCR 2008-05-29
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
+void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos  )
 {
     if( agentsInside_.insert( &agent ).second )
         agentsEntering_.insert( &agent );
+    agentCollisionPositions_[ &agent ] = std::pair< MT_Vector2D, MT_Vector2D >( startPos, endPos );
     agentsMovingInside_.insert( &agent );
     agentsExiting_.erase( &agent );
 }
@@ -224,9 +227,9 @@ void MIL_ObjectInteraction::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 // Name: MIL_ObjectInteraction::NotifyAgentPutInside
 // Created: JCR 2008-05-29
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::NotifyAgentPutInside( MIL_Agent_ABC& agent )
+void MIL_ObjectInteraction::NotifyAgentPutInside( MIL_Agent_ABC& agent, const MT_Vector2D& position )
 {
-    NotifyAgentMovingInside( agent );
+    NotifyAgentMovingInside( agent, position, position );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,6 +255,7 @@ void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
     agentsEntering_.clear();
     agentsMovingInside_.clear();
     agentsDelayedEntering_.clear();
+    agentCollisionPositions_.clear();
     populationsInside_.clear();
     populationsMovingInside_.clear();
     ProcessInteractionEvents( object );
@@ -273,7 +277,10 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
             agents.insert( *it );
             object.ProcessAgentEntering( **it );
             if( agentsMovingInside_.find( *it ) ==  agentsMovingInside_.end() )
-                object.ProcessAgentMovingInside( **it );
+            {
+                auto pos = agentCollisionPositions_[ *it ];
+                object.ProcessAgentMovingInside( **it, pos.first, pos.second );
+            }
         }
     for( auto it = agents.begin(); it != agents.end(); ++it )
         agentsDelayedEntering_.erase( *it );
@@ -289,7 +296,10 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
 
     for( auto it = agentsMovingInside_.begin(); it != agentsMovingInside_.end(); ++it )
         if( object.CanInteractWith( **it ) )
-            object.ProcessAgentMovingInside( **it );
+        {
+            auto pos = agentCollisionPositions_[ *it ];
+            object.ProcessAgentMovingInside( **it, pos.first, pos.second );
+        }
 
     for( auto it = agentsInside_.begin(); it != agentsInside_.end(); ++it )
         if( object.CanInteractWith( **it ) )
@@ -306,6 +316,7 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
     agentsEntering_.clear();
     agentsExiting_.clear();
     agentsMovingInside_.clear();
+    agentCollisionPositions_.clear();
     populationsInside_.clear();
     populationsMovingInside_.clear();
 }

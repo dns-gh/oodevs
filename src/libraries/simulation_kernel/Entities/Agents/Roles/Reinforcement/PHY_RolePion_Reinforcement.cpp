@@ -301,10 +301,10 @@ void PHY_RolePion_Reinforcement::ChangeConsumptionMode( dotation::ConsumptionMod
 // Name: PHY_RolePion_Reinforcement::NotifyMovingInsideObject
 // Created: AHC 2009-10-06
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& object )
+void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
     for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
-        (*it)->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
+        (*it)->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object, startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------
