@@ -353,6 +353,10 @@
         <source>Refresh rate</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Replay</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RenameDialog</name>
@@ -1848,6 +1852,17 @@ Desea eliminarlo?</translation>
     <name>gui::RenameInterface</name>
     <message>
         <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::ReplayPanel</name>
+    <message>
+        <source>Replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set smooth movement</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

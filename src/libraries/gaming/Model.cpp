@@ -83,7 +83,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , urbanKnowledgeFactory_   ( *new UrbanKnowledgeFactory( controllers.controller_, *this ) )
     , knowledgeGroupFactory_   ( *new KnowledgeGroupFactory( controllers, *this, profile, actions_ ) )
     , teamFactory_             ( *new TeamFactory( controllers, *this, staticModel, profile, actions_ ) )
-    , agentFactory_            ( *new AgentFactory( controllers, *this, staticModel, publisher, workers, profile, actions_ ) )
+    , agentFactory_            ( *new AgentFactory( controllers, *this, staticModel, publisher, workers, profile, actions_, simulation ) )
     , objectFactory_           ( *new ObjectFactory( controllers, *this, staticModel, simulation, profile, actions_ ) )
     , logisticFactory_         ( *new LogisticConsignFactory( controllers, *this, staticModel, simulation ) )
     , fireFactory_             ( *new FireFactory( *this, controllers_.controller_, filter ) )

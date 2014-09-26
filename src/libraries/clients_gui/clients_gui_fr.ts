@@ -353,6 +353,10 @@
         <source>Refresh rate</source>
         <translation>Période de rafraîchissement</translation>
     </message>
+    <message>
+        <source>Replay</source>
+        <translation>Rejeu</translation>
+    </message>
 </context>
 <context>
     <name>RenameDialog</name>
@@ -1846,6 +1850,17 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Rename</source>
         <translation>Renommer</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ReplayPanel</name>
+    <message>
+        <source>Replay</source>
+        <translation>Rejeu</translation>
+    </message>
+    <message>
+        <source>Set smooth movement</source>
+        <translation>Active le mouvement continu</translation>
     </message>
 </context>
 <context>

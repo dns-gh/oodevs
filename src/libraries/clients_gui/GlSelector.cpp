@@ -91,11 +91,21 @@ void GlSelector::Load()
     proxy_.RegisterTo( widget2d_ );
     setCurrentWidget( widget2d_ );
     controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel_ ));
-    connect( displayTimer_, SIGNAL(timeout()), widget2d_, SLOT(updateGL()) );
+    connect( displayTimer_, SIGNAL( timeout() ), this, SLOT( OnUpdateGL() ) );
+    connect( this, SIGNAL( UpdateGL() ), widget2d_, SLOT( updateGL() ) );
     displayTimer_->start( refreshRate_ );
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
     widget2d_->show();
     emit Widget2dChanged( widget2d_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlSelector::updateGL
+// Created: SLI 2014-06-16
+// -----------------------------------------------------------------------------
+void GlSelector::OnUpdateGL()
+{
+    emit UpdateGL();
 }
 
 // -----------------------------------------------------------------------------

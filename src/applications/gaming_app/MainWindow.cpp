@@ -203,6 +203,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_underground    , -200, 50 );
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
+    connect( selector_.get(), SIGNAL( UpdateGL() ), this, SLOT( OnUpdateGL() ) );
 
     //sound player
     firePlayer_.reset( new FirePlayer( controllers, profile_, simulation ) );
@@ -718,3 +719,12 @@ void MainWindow::PlayPauseSoundControl( bool play )
     firePlayer_->PlayPauseSoundControl( play );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OnUpdateGL
+// Created: SLI 2014-06-16
+// -----------------------------------------------------------------------------
+void MainWindow::OnUpdateGL()
+{
+    model_.agents_.Resolver< Agent_ABC >::Apply( []( Agent_ABC& agent ){ agent.Get< kernel::Positions >().Compute(); } );
+}

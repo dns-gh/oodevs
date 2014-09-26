@@ -27,7 +27,9 @@ namespace kernel
 
 class Model;
 class Publisher_ABC;
+class Simulation;
 class StaticModel;
+class Services;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -36,6 +38,8 @@ class StaticModel;
 // Created: AGE 2006-02-13
 // =============================================================================
 class AgentFactory : public AgentFactory_ABC
+                   , public tools::Observer_ABC
+                   , public tools::ElementObserver_ABC< Services >
 {
 public:
     //! @name Constructors/Destructor
@@ -46,7 +50,8 @@ public:
                            Publisher_ABC& publisher,
                            kernel::Workers& workers,
                            const kernel::Profile_ABC& profile,
-                           actions::ActionsModel& actionsModel );
+                           actions::ActionsModel& actionsModel,
+                           const Simulation& simulation );
     virtual ~AgentFactory();
     //@}
 
@@ -64,6 +69,11 @@ private:
     void AttachExtensions( kernel::Entity_ABC& agent );
     //@}
 
+    //! @name Updates
+    //@{
+    virtual void NotifyUpdated( const Services& services );
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -74,6 +84,8 @@ private:
     kernel::Workers& workers_;
     const kernel::Profile_ABC& profile_;
     actions::ActionsModel& actionsModel_;
+    const Simulation& simulation_;
+    bool isInReplay_;
     //@}
 };
 
