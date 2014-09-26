@@ -133,7 +133,6 @@ public:
     virtual int                                             ConvoyGetCurrentAction() const { return 0; };
     virtual logistic::SupplyRecipient_ABC*                  ConvoyGetCurrentSupplyRecipient() const { return 0; };
     virtual const MIL_Agent_ABC*                            ConvoyGetSupplier() const { return 0; };
-    virtual logistic::SupplySupplier_ABC*                   ConvoyGetTransportersProvider() const { return 0; };
     virtual std::vector< boost::shared_ptr< MT_Vector2D > > ConvoyGetPathToNextDestination() const { return std::vector< boost::shared_ptr< MT_Vector2D > >(); };
     virtual bool                                            ConvoyIsPushedFlow() const { return false; }
     virtual bool                                            IsConvoy() const { return false; }
