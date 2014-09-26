@@ -1159,7 +1159,7 @@ namespace
     {
         typedef const std::vector< T* >&( MIL_PopulationElement_ABC::*T_Getter )() const;
     public:
-        explicit sCollidingPopulationVisitor( std::function< void( T& ) > fun, T_Getter getter )
+        explicit sCollidingPopulationVisitor( std::function< void( T&, MIL_Population& ) > fun, T_Getter getter )
             : fun_( fun )
             , getter_( getter )
         {
@@ -1169,10 +1169,10 @@ namespace
         {
             auto collidingAgents = ( element.*getter_)();
             for( auto it = collidingAgents.begin(); it != collidingAgents.end(); ++it )
-                fun_( **it );
+                fun_( **it, element.GetPopulation() );
         }
     private:
-        std::function< void( T& ) > fun_;
+        std::function< void( T&, MIL_Population& ) > fun_;
         T_Getter getter_;
     };
         
@@ -1338,7 +1338,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
 
     for( auto it = populations_.begin(); it != populations_.end(); ++it )
     {
-        sCollidingPopulationVisitor< MIL_Agent_ABC > visitor1( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception, this, _1, currentTimeStep ), &MIL_PopulationElement_ABC::GetCollidingAgents );
+        sCollidingPopulationVisitor< MIL_Agent_ABC > visitor1( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception, this, _1, currentTimeStep, _2 ), &MIL_PopulationElement_ABC::GetCollidingAgents );
         ( *it )->Apply( visitor1 );
     }
 
@@ -1401,7 +1401,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
     // Crowds
     for( auto it = populations_.begin(); it != populations_.end(); ++it )
     {
-        sCollidingPopulationVisitor< MIL_Object_ABC > visitor( boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception, this, _1 ), &MIL_PopulationElement_ABC::GetCollidingObjects );
+        sCollidingPopulationVisitor< MIL_Object_ABC > visitor( boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception, this, _1, _2 ), &MIL_PopulationElement_ABC::GetCollidingObjects );
         auto& population = *it;
         population->Apply( visitor );
         population->ClearObjectCollisions();
@@ -1469,12 +1469,12 @@ DEC_Knowledge_Population& MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate( MI
 // Name: MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception
 // Created: JSR 2013-07-10
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception( MIL_Agent_ABC& agent, int currentTimeStep )
+void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception( MIL_Agent_ABC& agent, int currentTimeStep, const MIL_Population& crowd )
 {
     if( agent.IsMarkedForDestruction() )
         return;
     DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( agent );
-    knowledgeAgent.UpdateFromCrowdPerception( currentTimeStep );
+    knowledgeAgent.UpdateFromCrowdPerception( crowd, currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -1509,13 +1509,13 @@ void MIL_KnowledgeGroup::UpdateFlowKnowledgeFromCrowdPerception( TER_PopulationF
 // Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception
 // Created: JSR 2013-07-10
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& object )
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& object, const MIL_Population& crowd )
 {
     if( object.IsMarkedForDestruction() )
         return;
     boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = GetObjectKnowledgeToUpdate( object );
     if( knowledgeObject )
-        knowledgeObject->UpdateFromCrowdPerception();
+        knowledgeObject->UpdateFromCrowdPerception( crowd );
 }
 
 // -----------------------------------------------------------------------------

@@ -72,6 +72,7 @@ namespace report
     extern const MIL_DecisionalReport eRC_DemandeRavitaillementStocks;
     extern const MIL_DecisionalReport eRC_DepassementCapaciteStockage;
     extern const MIL_DecisionalReport eRC_DestructionPC;
+    extern const MIL_DecisionalReport eRC_DetectedObject;
     extern const MIL_DecisionalReport eRC_DetectedUnit;
     extern const MIL_DecisionalReport eRC_DifficultMovementProgression;
     extern const MIL_DecisionalReport eRC_DisembarkmentFinished;

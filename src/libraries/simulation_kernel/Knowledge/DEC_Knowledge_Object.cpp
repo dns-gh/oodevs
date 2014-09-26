@@ -21,8 +21,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
@@ -32,18 +30,19 @@
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/InteractionHeightAttribute.h"
 #include "Entities/Objects/InteractWithSideCapacity.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/MobilityCapacity.h"
 #include "Entities/Objects/NBCAttribute.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Entities/Objects/TrafficabilityAttribute.h"
-#include "Entities/Objects/MIL_ObjectFactory.h"
-#include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Units/PHY_UnitType.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/Orders/MIL_Report.h"
+#include "Entities/Populations/MIL_Population.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -447,6 +446,29 @@ void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionL
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::EmitDetectionReport
+// Created: LDC 2014-09-24
+// -----------------------------------------------------------------------------
+template< typename T > void DEC_Knowledge_Object::EmitDetectionReport( const T& emitter ) const
+{
+    boost::shared_ptr< DEC_Knowledge_Object > shared_this;
+    if( groupId_ )
+    {
+        auto knowledgeGroup = pArmyKnowing_->FindKnowledgeGroup( *groupId_ );
+        if( knowledgeGroup )
+            shared_this = knowledgeGroup->ResolveKnowledgeObjectByObjectID( objectId_ );
+    }
+    else if( pArmyKnowing_ )
+        shared_this = pArmyKnowing_->GetKnowledge().ResolveKnowledgeObjectByObjectID( objectId_ );
+    if( !shared_this )
+    {
+        MT_LOG_ERROR_MSG( "Object knowledge with neither an army nor a knowledge group!" );
+    }
+    else
+        MIL_Report::PostEvent( emitter, report::eRC_DetectedObject, shared_this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::Update
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
@@ -455,7 +477,8 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     const PHY_PerceptionLevel& currentPerceptionLevel = perception.GetCurrentPerceptionLevel();
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
-    UpdateMaxPerceptionLevel( currentPerceptionLevel );
+    if( UpdateMaxPerceptionLevel( currentPerceptionLevel ) )
+        EmitDetectionReport( perception.GetAgentPerceiving() );
     // NB - Quand nPerceptionLevel vaut eNotPerceived => l'agent associé vient juste d'être perdu de vue
     //      => Pas de eNotPerceived aux ticks suivant la perte de contact
     UpdateLocalisations();// Updaté même quand 'NotPerceived', pour les objets pouvant bouger
@@ -467,11 +490,12 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
 // Name: DEC_Knowledge_Object::UpdateFromCrowdPerception
 // Created: JSR 2013-07-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::UpdateFromCrowdPerception()
+void DEC_Knowledge_Object::UpdateFromCrowdPerception( const MIL_Population& crowd )
 {
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::recognized_ );
-    UpdateMaxPerceptionLevel( PHY_PerceptionLevel::recognized_ );
+    if( UpdateMaxPerceptionLevel( PHY_PerceptionLevel::recognized_ ) )
+        EmitDetectionReport( crowd );
     UpdateLocalisations();// Updaté même quand 'NotPerceived', pour les objets pouvant bouger    
     if( pObjectKnown_ && !pObjectKnown_->IsMarkedForDestruction() )
     {
@@ -542,8 +566,12 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
     if( !collision.IsValid() || !pObjectKnown_ )
         return;
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
-    UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::identified_ );
-    UpdateMaxPerceptionLevel( PHY_PerceptionLevel::identified_ );
+    if( UpdateMaxPerceptionLevel( PHY_PerceptionLevel::identified_ ) )
+    {
+        auto agent = collision.GetAgentColliding();
+        if( agent )
+            EmitDetectionReport( *agent );
+    }
     //$$$ TMP BULLSHIT
     if( !( localisation_ == pObjectKnown_->GetLocalisation() ) )
     {
