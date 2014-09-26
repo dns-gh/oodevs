@@ -172,7 +172,7 @@ private:
     void NotifyAttributeUpdated( E_Attributes nAttribute );
     bool IsAttributeUpdated( E_Attributes nAttribute ) const;
     const MIL_Army_ABC& GetArmyKnowing() const;
-    template< typename T > void EmitDetectionReport( const T& emitter );
+    template< typename T > void EmitDetectionReport( const T& emitter ) const;
     //@}
 
     //! @name Internal updaters

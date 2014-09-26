@@ -446,16 +446,15 @@ void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionL
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void DEC_Knowledge_Object::EmitDetectionReport
+// Name: DEC_Knowledge_Object::EmitDetectionReport
 // Created: LDC 2014-09-24
 // -----------------------------------------------------------------------------
-template< typename T > void DEC_Knowledge_Object::EmitDetectionReport( const T& emitter )
+template< typename T > void DEC_Knowledge_Object::EmitDetectionReport( const T& emitter ) const
 {
-    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< DEC_Knowledge_Object > shared_this;
     if( groupId_ )
     {
-        auto knowledgeGroup = GetArmy()->FindKnowledgeGroup( *groupId_ );
+        auto knowledgeGroup = pArmyKnowing_->FindKnowledgeGroup( *groupId_ );
         if( knowledgeGroup )
             shared_this = knowledgeGroup->ResolveKnowledgeObjectByObjectID( objectId_ );
     }
@@ -567,8 +566,12 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
     if( !collision.IsValid() || !pObjectKnown_ )
         return;
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
-    UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::identified_ );
-    UpdateMaxPerceptionLevel( PHY_PerceptionLevel::identified_ );
+    if( UpdateMaxPerceptionLevel( PHY_PerceptionLevel::identified_ ) )
+    {
+        auto agent = collision.GetAgentColliding();
+        if( agent )
+            EmitDetectionReport( *agent );
+    }
     //$$$ TMP BULLSHIT
     if( !( localisation_ == pObjectKnown_->GetLocalisation() ) )
     {
