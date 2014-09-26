@@ -1136,11 +1136,11 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Sword_Gaming_Player_Guide</source>
-        <translation type="unfinished"></translation>
+        <translation>Sword_Gaming_Guide_Joueur</translation>
     </message>
     <message>
         <source>Sword_Gaming_Supervisor_Guide</source>
-        <translation type="unfinished"></translation>
+        <translation>Sword_Gaming_Guide_Superviseur</translation>
     </message>
 </context>
 <context>
