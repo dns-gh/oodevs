@@ -141,10 +141,12 @@ func SendMoveAndTakePosition(client *swapi.Client, unitId uint32, from, to swapi
 }
 
 func checkUnitWaitsOnObject(c *C, phydb *phy.PhysicalFile,
-	client *swapi.Client, unitId uint32, from, to swapi.Point) {
+	client *swapi.Client, unitId uint32, from, to swapi.Point,
+	action func()) {
 
 	reporter, _ := newReporter(c, unitId, phydb, "^Blocked by object")
 	reporter.Start(client.Model)
+	action()
 	ok := reporter.WaitCount(1)
 	c.Assert(ok, Equals, true)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -177,20 +179,26 @@ func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
 	})
 	unit := CreateUnitInParty(c, client, phydb, "party1", "Movers",
 		"Mover", from)
-	err = SendMoveAndTakePosition(client, unit.Id, from, to)
-	c.Assert(err, IsNil)
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
+	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to,
+		func() {
+			err = SendMoveAndTakePosition(client, unit.Id, from, to)
+			c.Assert(err, IsNil)
+		})
 	// unit waits if teleported inside object
 	inside := swapi.Point{X: -15.721507, Y: 28.372396}
-	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), inside)
-	c.Assert(err, IsNil)
-	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, inside)
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
+	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to,
+		func() {
+			err = client.Teleport(swapi.MakeUnitTasker(unit.Id), inside)
+			c.Assert(err, IsNil)
+			c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, inside)
+		})
 	// unit waits back on object if teleported outside object
-	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), from)
-	c.Assert(err, IsNil)
-	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, from)
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
+	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to,
+		func() {
+			err = client.Teleport(swapi.MakeUnitTasker(unit.Id), from)
+			c.Assert(err, IsNil)
+			c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, from)
+		})
 	// unit moves when object is deactivated
 	err = client.UpdateObject(object.Id,
 		swapi.MakeList(
@@ -209,9 +217,11 @@ func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
 	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), from)
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, from)
-	err = SendMoveAndTakePosition(client, unit.Id, from, to)
-	c.Assert(err, IsNil)
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to)
+	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to,
+		func() {
+			err = SendMoveAndTakePosition(client, unit.Id, from, to)
+			c.Assert(err, IsNil)
+		})
 	// unit moves when object is destroyed
 	err = client.DeleteObject(object.Id)
 	c.Assert(err, IsNil)
