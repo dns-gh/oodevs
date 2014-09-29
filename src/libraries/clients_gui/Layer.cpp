@@ -12,7 +12,6 @@
 #include "moc_Layer.cpp"
 #include "Gl3dWidget.h"
 #include "GlWidget.h"
-#include "MapLayerProxy.h"
 #include "Viewport2d.h"
 #include "Viewport3d.h"
 
