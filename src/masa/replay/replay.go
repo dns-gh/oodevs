@@ -17,6 +17,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -121,11 +122,14 @@ type xNetwork struct {
 }
 
 func parsePort(host string) (int, error) {
-	_, value, err := net.SplitHostPort(host)
-	if err != nil {
-		return 0, err
+	if strings.Contains(host, ":") {
+		_, value, err := net.SplitHostPort(host)
+		if err != nil {
+			return 0, err
+		}
+		host = value
 	}
-	port, err := strconv.Atoi(value)
+	port, err := strconv.Atoi(host)
 	if err != nil {
 		return 0, err
 	}
