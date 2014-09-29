@@ -19,8 +19,9 @@ using namespace gui;
 // Name: TooltipsLayer constructor
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-TooltipsLayer::TooltipsLayer( gui::GlTools_ABC& tools )
-    : tools_( tools )
+TooltipsLayer::TooltipsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools )
+    : TooltipsLayer_ABC( controllers )
+    , tools_( tools )
 {
     // NOTHING
 }

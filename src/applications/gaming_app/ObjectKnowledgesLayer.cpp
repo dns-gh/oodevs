@@ -19,7 +19,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ObjectKnowledgesLayer::ObjectKnowledgesLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                               View_ABC& view, const Profile_ABC& profile )
-    : KnowledgeLayer< ObjectKnowledge_ABC >( controllers, tools, strategy, view, profile )
+    : KnowledgeLayer< ObjectKnowledge_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_ObjectKnowledges )
 {
     // NOTHING
 }

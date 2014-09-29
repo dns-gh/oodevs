@@ -71,7 +71,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const kernel::DetectionMap& elevation_;
     std::unique_ptr< ElevationShader > shader_;
     std::unique_ptr< TextureSet > layer_;

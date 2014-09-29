@@ -56,7 +56,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const GlTools_ABC& tools_;
     bool displaying_;
     bool firstPointSet_;

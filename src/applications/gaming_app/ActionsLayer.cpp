@@ -17,11 +17,11 @@
 // Created: SBO 2010-04-30
 // -----------------------------------------------------------------------------
 ActionsLayer::ActionsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools )
-    : controllers_( controllers )
+    : gui::Layer( controllers, eLayerTypes_Actions )
     , tools_( tools )
-    , current_( controllers_ )
+    , current_( controllers )
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

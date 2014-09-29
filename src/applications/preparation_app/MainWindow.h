@@ -22,18 +22,15 @@ namespace kernel
 
 namespace gui
 {
-    class AutomatsLayer;
     class CircularEventStrategy;
     class ColorStrategy;
-    class Elevation2dLayer;
     class EntitySymbols;
     class ExclusiveEventStrategy;
-    class FormationLayer;
     class GlProxy;
     class GlSelector;
     class GraphicPreferences;
     class HelpSystem;
-    class Layer;
+    class Layer_ABC;
     class LightingProxy;
     class Painter_ABC;
     class ParametersLayer;
@@ -114,12 +111,12 @@ private:
     bool DoLoad();
     void LoadExercise();
     void CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
-                       const std::shared_ptr< gui::Layer >& locations,
-                       const std::shared_ptr< gui::Layer >& weather,
-                       const std::shared_ptr< gui::Layer >& profilerLayer,
-                       const std::shared_ptr< gui::AutomatsLayer >& automats,
-                       const std::shared_ptr< gui::FormationLayer >& formation,
-                       const std::shared_ptr< gui::Elevation2dLayer >& elevation2d,
+                       const std::shared_ptr< gui::Layer_ABC >& locations,
+                       const std::shared_ptr< gui::Layer_ABC >& weather,
+                       const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
+                       const std::shared_ptr< gui::Layer_ABC >& automats,
+                       const std::shared_ptr< gui::Layer_ABC >& formation,
+                       const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                        const kernel::Profile_ABC& profile,
                        gui::TerrainPicker& picker );
     void closeEvent( QCloseEvent* pEvent );

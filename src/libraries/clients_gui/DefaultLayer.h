@@ -52,7 +52,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     geometry::Point2f point_;
     //@}
 };

@@ -36,16 +36,14 @@ using namespace gui;
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 EntityLayerBase::EntityLayerBase( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
-                                 const Profile_ABC& profile, E_LayerTypes type )
-    : controllers_( controllers )
+                                  const Profile_ABC& profile, E_LayerTypes type )
+    : Layer( controllers, type )
     , profile_    ( profile )
     , tools_      ( tools )
     , strategy_   ( strategy )
     , view_       ( view )
     , infoTooltip_( new InformationToolTip() )
     , selected_   ( controllers )
-    , name_       ( ENT_Tr::ConvertFromLayerTypes( type ).c_str() )
-    , type_       ( type )
 {
     // NOTHING
 }
@@ -108,7 +106,7 @@ geometry::Point2f EntityLayerBase::GetPosition( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode )
 {
-    if( ShouldDisplay( entity ) && tools_.ShouldDisplay( type_ ) )
+    if( ShouldDisplay( entity ) && tools_.ShouldDisplay( GetType() ) )
     {
         SelectColor( entity );
         const geometry::Point2f position = GetPosition( entity );
@@ -118,7 +116,7 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bo
 
         if( pickingMode )
         {
-            tools_.RenderPicking( std::make_pair( entity.GetId(), type_ ) );
+            tools_.RenderPicking( std::make_pair( entity.GetId(), GetType() ) );
             drawer.Pick( position, viewport, tools_ );
             tools_.Picking();
         }
@@ -327,21 +325,12 @@ void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const 
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
         const kernel::Entity_ABC& entity = **it;
-        if( ShouldDisplay( **it ) && IsInLayerSelection( entity, selection, type_ ) )
+        if( ShouldDisplay( **it ) && IsInLayerSelection( entity, selection, GetType() ) )
         {
             extractedElement[ this ].push_back( &entity );
             selection_.insert( entity.GetId() );
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::GetName
-// Created: ABR 2013-01-25
-// -----------------------------------------------------------------------------
-QString EntityLayerBase::GetName() const
-{
-    return name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -353,7 +342,7 @@ bool EntityLayerBase::ShowTooltip( const T_ObjectPicking& selection )
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
         const kernel::Entity_ABC& entity = **it;
-        if( ShouldDisplay( entity ) && IsValid( entity, selection, type_ ) )
+        if( ShouldDisplay( entity ) && IsValid( entity, selection, GetType() ) )
         {
             entity.GetInterfaces().Apply( &Displayable_ABC::DisplayInTooltip, *infoTooltip_ );
             return true;
@@ -379,12 +368,12 @@ void EntityLayerBase::Pick( const geometry::Point2f& point )
 {
     selection_.clear();
     GlTools_ABC::T_ObjectsPicking selection;
-    tools_.FillSelection( point, selection, type_ );
+    tools_.FillSelection( point, selection, GetType() );
     if( !selection.empty() )
         for( auto it = entities_.begin(); it != entities_.end(); ++it )
         {
             const kernel::Entity_ABC& entity = **it;
-            if( ShouldDisplay( **it ) && IsInLayerSelection( entity, selection, type_ ) )
+            if( ShouldDisplay( **it ) && IsInLayerSelection( entity, selection, GetType() ) )
                 selection_.insert( entity.GetId() );
         }
 }

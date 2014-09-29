@@ -12,13 +12,15 @@
 
 #include "TooltipsLayer_ABC.h"
 
-namespace gui
+namespace kernel
 {
-    class GlTools_ABC;
+    class Controllers;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
+
 // =============================================================================
 /** @class  TooltipsLayer
     @brief  TooltipsLayer
@@ -30,7 +32,7 @@ class TooltipsLayer : public TooltipsLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TooltipsLayer( GlTools_ABC& tools );
+    explicit TooltipsLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
     virtual ~TooltipsLayer();
     //@}
 

@@ -22,7 +22,7 @@ class CompiledVisitor3d;
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
     class DetectionMap;
     class ModelLoaded;
 }
@@ -48,7 +48,7 @@ class Elevation3dLayer : public Layer3D
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation3dLayer( kernel::Controller& controller, const kernel::DetectionMap& elevation, Lighting_ABC& lighting );
+             Elevation3dLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation, Lighting_ABC& lighting );
     virtual ~Elevation3dLayer();
     //@}
 
@@ -70,7 +70,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     const kernel::DetectionMap& elevation_;
     Lighting_ABC& lighting_;
     ViewFrustum lastFrustum_;

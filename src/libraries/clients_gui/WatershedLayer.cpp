@@ -27,7 +27,7 @@ using namespace gui;
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 WatershedLayer::WatershedLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation )
-    : controllers_    ( controllers )
+    : Layer2D( controllers, eLayerTypes_Watershed )
     , elevation_      ( elevation )
     , reset_          ( false )
     , modelLoaded_    ( false )
@@ -40,7 +40,7 @@ WatershedLayer::WatershedLayer( kernel::Controllers& controllers, const kernel::
     , inverted_       ( false )
     , color_          ( 20, 164, 218 )
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

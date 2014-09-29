@@ -13,7 +13,7 @@
 #include "protocol/Simulation.h"
 
 #include <tools/Helpers.h>
-
+#include <tools/Exception.h>
 #include <boost/preprocessor/stringize.hpp>
 
 namespace
@@ -450,22 +450,52 @@ T_ConverterAviationRange AviationRangeConverter_[] =
 
 T_ConverterLayerTypes LayerTypesConverter_[] =
 {
-    T_ConverterLayerTypes( "units",             QT_TRANSLATE_NOOP( "ENT_Tr", "Units" ),             eLayerTypes_Agent ),
-    T_ConverterLayerTypes( "objects",           QT_TRANSLATE_NOOP( "ENT_Tr", "Objects" ),           eLayerTypes_Objects ),
-    T_ConverterLayerTypes( "automata",          QT_TRANSLATE_NOOP( "ENT_Tr", "Automata" ),          eLayerTypes_Automats ),
-    T_ConverterLayerTypes( "formations",        QT_TRANSLATE_NOOP( "ENT_Tr", "Formations" ),        eLayerTypes_Formations ),
-    T_ConverterLayerTypes( "crowds",            QT_TRANSLATE_NOOP( "ENT_Tr", "Crowds" ),            eLayerTypes_Populations ),
-    T_ConverterLayerTypes( "urban_blocks",      QT_TRANSLATE_NOOP( "ENT_Tr", "Urban blocks" ),      eLayerTypes_UrbanObjects ),
-    T_ConverterLayerTypes( "tactical_lines",    QT_TRANSLATE_NOOP( "ENT_Tr", "Tactical lines" ),    eLayerTypes_TacticalLines ),
-    T_ConverterLayerTypes( "ghosts",            QT_TRANSLATE_NOOP( "ENT_Tr", "Ghosts" ),            eLayerTypes_Ghosts ),
-    T_ConverterLayerTypes( "fog",               QT_TRANSLATE_NOOP( "ENT_Tr", "Fog" ),               eLayerTypes_Fog ),
-    T_ConverterLayerTypes( "parties",           QT_TRANSLATE_NOOP( "ENT_Tr", "Parties" ),           eLayerTypes_Parties ),
-    T_ConverterLayerTypes( "drawings",          QT_TRANSLATE_NOOP( "ENT_Tr", "Drawings" ),          eLayerTypes_Drawers ),
-    T_ConverterLayerTypes( "knowledges",        QT_TRANSLATE_NOOP( "ENT_Tr", "Knowledges" ),        eLayerTypes_Knowledges ),
-    T_ConverterLayerTypes( "inhabitants",       QT_TRANSLATE_NOOP( "ENT_Tr", "Inhabitants" ),       eLayerTypes_Inhabitants ),
-    T_ConverterLayerTypes( "resource_networks", QT_TRANSLATE_NOOP( "ENT_Tr", "Resource networks" ), eLayerTypes_ResourceNetworks ),
-    T_ConverterLayerTypes( "pathfinds",         QT_TRANSLATE_NOOP( "ENT_Tr", "Itineraries" ),       eLayerTypes_Pathfinds ),
-    T_ConverterLayerTypes( "weapon_ranges",     QT_TRANSLATE_NOOP( "ENT_Tr", "Weapon ranges" ),      eLayerTypes_WeaponRanges ),
+    T_ConverterLayerTypes( "action",                   QT_TRANSLATE_NOOP( "ENT_Tr", "Actions" ),                     eLayerTypes_Actions ),
+    T_ConverterLayerTypes( "agent_knowledge",          QT_TRANSLATE_NOOP( "ENT_Tr", "Agent knowledges" ),            eLayerTypes_AgentKnowledges ),
+    T_ConverterLayerTypes( "agents",                   QT_TRANSLATE_NOOP( "ENT_Tr", "Agents" ),                      eLayerTypes_Agents ),
+    T_ConverterLayerTypes( "automats",                 QT_TRANSLATE_NOOP( "ENT_Tr", "Automats" ),                    eLayerTypes_Automats ),
+    T_ConverterLayerTypes( "contour_lines",            QT_TRANSLATE_NOOP( "ENT_Tr", "Contour lines" ),               eLayerTypes_ContourLines ),
+    T_ConverterLayerTypes( "creations",                QT_TRANSLATE_NOOP( "ENT_Tr", "Creations" ),                   eLayerTypes_Creations ),
+    T_ConverterLayerTypes( "crowd_knowledges",         QT_TRANSLATE_NOOP( "ENT_Tr", "Crowd knowledges" ),            eLayerTypes_CrowdKnowledges ),
+    T_ConverterLayerTypes( "crowds",                   QT_TRANSLATE_NOOP( "ENT_Tr", "Crowds" ),                      eLayerTypes_Crowds ),
+    T_ConverterLayerTypes( "crowds_composite",         QT_TRANSLATE_NOOP( "ENT_Tr", "Crowds" ),                      eLayerTypes_CrowdsComposite ),
+    T_ConverterLayerTypes( "default",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Default" ),                     eLayerTypes_Default ),
+    T_ConverterLayerTypes( "drawings",                 QT_TRANSLATE_NOOP( "ENT_Tr", "Drawings" ),                    eLayerTypes_Drawings ),
+    T_ConverterLayerTypes( "elevation_2d",             QT_TRANSLATE_NOOP( "ENT_Tr", "Elevation" ),                   eLayerTypes_Elevation2d ),
+    T_ConverterLayerTypes( "elevation_3d",             QT_TRANSLATE_NOOP( "ENT_Tr", "Elevation 3d" ),                eLayerTypes_Elevation3d ),
+    T_ConverterLayerTypes( "events",                   QT_TRANSLATE_NOOP( "ENT_Tr", "Events" ),                      eLayerTypes_Events ),
+    T_ConverterLayerTypes( "fog",                      QT_TRANSLATE_NOOP( "ENT_Tr", "Fog" ),                         eLayerTypes_Fog ),
+    T_ConverterLayerTypes( "formations",               QT_TRANSLATE_NOOP( "ENT_Tr", "Formations" ),                  eLayerTypes_Formations ),
+    T_ConverterLayerTypes( "ghosts",                   QT_TRANSLATE_NOOP( "ENT_Tr", "Ghosts" ),                      eLayerTypes_Ghosts ),
+    T_ConverterLayerTypes( "grid",                     QT_TRANSLATE_NOOP( "ENT_Tr", "Grid" ),                        eLayerTypes_Grid ),
+    T_ConverterLayerTypes( "indicator_creation",       QT_TRANSLATE_NOOP( "ENT_Tr", "Indicator creation" ),          eLayerTypes_IndicatorCreation ),
+    T_ConverterLayerTypes( "inhabitant_creation",      QT_TRANSLATE_NOOP( "ENT_Tr", "Inhabitant creation" ),         eLayerTypes_InhabitantCreation ),
+    T_ConverterLayerTypes( "inhabitants",              QT_TRANSLATE_NOOP( "ENT_Tr", "Inhabitants" ),                 eLayerTypes_InhabitantsComposite ),
+    T_ConverterLayerTypes( "inhabitants_composite",    QT_TRANSLATE_NOOP( "ENT_Tr", "Inhabitants" ),                 eLayerTypes_Inhabitants ),
+    T_ConverterLayerTypes( "locations",                QT_TRANSLATE_NOOP( "ENT_Tr", "Locations" ),                   eLayerTypes_Locations ),
+    T_ConverterLayerTypes( "mapnik",                   QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain (new rendering)" ),     eLayerTypes_Mapnik ),
+    T_ConverterLayerTypes( "metric",                   QT_TRANSLATE_NOOP( "ENT_Tr", "Metric tools" ),                eLayerTypes_Metric ),
+    T_ConverterLayerTypes( "object_creation",          QT_TRANSLATE_NOOP( "ENT_Tr", "Object creation" ),             eLayerTypes_ObjectCreation ),
+    T_ConverterLayerTypes( "object_knowledges",        QT_TRANSLATE_NOOP( "ENT_Tr", "Object knowledges" ),           eLayerTypes_ObjectKnowledges ),
+    T_ConverterLayerTypes( "objects",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Objects" ),                     eLayerTypes_Objects ),
+    T_ConverterLayerTypes( "objects_composite",        QT_TRANSLATE_NOOP( "ENT_Tr", "Objects" ),                     eLayerTypes_ObjectsComposite ),
+    T_ConverterLayerTypes( "parameters",               QT_TRANSLATE_NOOP( "ENT_Tr", "Parameters" ),                  eLayerTypes_Parameters ),
+    T_ConverterLayerTypes( "parties",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Parties" ),                     eLayerTypes_Parties ),
+    T_ConverterLayerTypes( "pathfinds",                QT_TRANSLATE_NOOP( "ENT_Tr", "Itineraries" ),                 eLayerTypes_Pathfinds ),
+    T_ConverterLayerTypes( "raster",                   QT_TRANSLATE_NOOP( "ENT_Tr", "Raster" ),                      eLayerTypes_Raster ),
+    T_ConverterLayerTypes( "resource_network",         QT_TRANSLATE_NOOP( "ENT_Tr", "Resource networks" ),           eLayerTypes_ResourceNetworks ),
+    T_ConverterLayerTypes( "selection",                QT_TRANSLATE_NOOP( "ENT_Tr", "Selection" ),                   eLayerTypes_Selection ),
+    T_ConverterLayerTypes( "tactical_lines",           QT_TRANSLATE_NOOP( "ENT_Tr", "Tactical lines" ),              eLayerTypes_TacticalLines ),
+    T_ConverterLayerTypes( "tactical_lines_composite", QT_TRANSLATE_NOOP( "ENT_Tr", "Tactical lines and drawings" ), eLayerTypes_TacticalLinesComposite ),
+    T_ConverterLayerTypes( "terrain",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),                     eLayerTypes_Terrain ),
+    T_ConverterLayerTypes( "terrain_profiler",         QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain profiler" ),            eLayerTypes_TerrainProfiler ),
+    T_ConverterLayerTypes( "tooltip",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Tooltip" ),                     eLayerTypes_Tooltips ),
+    T_ConverterLayerTypes( "units_composite",          QT_TRANSLATE_NOOP( "ENT_Tr", "Units" ),                       eLayerTypes_UnitsComposite ),
+    T_ConverterLayerTypes( "urban",                    QT_TRANSLATE_NOOP( "ENT_Tr", "Urban" ),                       eLayerTypes_Urban ),
+    T_ConverterLayerTypes( "watershed",                QT_TRANSLATE_NOOP( "ENT_Tr", "Watershed" ),                   eLayerTypes_Watershed ),
+    T_ConverterLayerTypes( "weapon_ranges",            QT_TRANSLATE_NOOP( "ENT_Tr", "Weapon ranges" ),               eLayerTypes_WeaponRanges ),
+    T_ConverterLayerTypes( "weather",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Weather" ),                     eLayerTypes_Weather ),
+    T_ConverterLayerTypes( "weather_composite",        QT_TRANSLATE_NOOP( "ENT_Tr", "Weather and watershed" ),       eLayerTypes_WeatherComposite ),
     T_ConverterLayerTypes( "", "", (E_LayerTypes)-1 )
 };
 
@@ -854,7 +884,6 @@ IMPLEMENT_CONVERT_METHODS( HumanRank );
 IMPLEMENT_CONVERT_METHODS( HumanState );
 IMPLEMENT_CONVERT_METHODS( HumanWound );
 IMPLEMENT_CONVERT_METHODS( InjuriesSeriousness );
-IMPLEMENT_CONVERT_METHODS( LayerTypes );
 IMPLEMENT_CONVERT_METHODS( LightingType );
 IMPLEMENT_CONVERT_METHODS( Location );
 IMPLEMENT_CONVERT_METHODS( LocationType );
@@ -887,3 +916,15 @@ IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogSupplyHandlingUpdate, EnumLogSupplyHandl
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( MagicAction, Type, MagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( ObjectMagicAction, Type, ObjectMagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( UnitMagicAction, Type, UnitMagicActionType );
+
+const std::string& ENT_Tr::ConvertFromLayerTypes( E_LayerTypes value, E_Conversion conversion )
+{
+    return InverseFindInConverter( LayerTypesConverter_, value, conversion );
+}
+
+E_LayerTypes ENT_Tr::ConvertToLayerTypes( const std::string& text, E_Conversion conversion )
+{
+    if( conversion != eToSim )
+        throw MASA_EXCEPTION( "Some layers have the same translation, unable to convert" );
+    return FindInConverter( LayerTypesConverter_, text, conversion );
+}

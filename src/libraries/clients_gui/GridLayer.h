@@ -114,7 +114,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const GlTools_ABC& tools_;
     const kernel::CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f extent_;

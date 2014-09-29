@@ -14,6 +14,8 @@
 #include "GlWidget.h"
 #include "Viewport2d.h"
 #include "Viewport3d.h"
+#include "clients_kernel/Controllers.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace gui;
 
@@ -21,13 +23,14 @@ using namespace gui;
 // Name: Layer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Layer::Layer()
-    : alpha_        ( 1 )
+Layer::Layer( kernel::Controllers& controllers, E_LayerTypes type )
+    : controllers_( controllers )
+    , type_( type )
+    , alpha_( 1 )
     , currentWidget_( 0 )
-    , currentProxy_ ( 0 )
-    , enabled_      ( true )
+    , enabled_( true )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +39,7 @@ Layer::Layer()
 // -----------------------------------------------------------------------------
 Layer::~Layer()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +175,7 @@ bool Layer::IsVisible() const
 // -----------------------------------------------------------------------------
 QString Layer::GetName() const
 {
-    return "";
+    return QString::fromStdString( ENT_Tr::ConvertFromLayerTypes( type_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,4 +257,13 @@ void Layer::HideTooltip()
 void Layer::Reset()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::GetType
+// Created: ABR 2014-09-29
+// -----------------------------------------------------------------------------
+E_LayerTypes Layer::GetType() const
+{
+    return type_;
 }

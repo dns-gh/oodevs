@@ -14,11 +14,13 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class Controllers;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
+
 // =============================================================================
 /** @class  LocationsLayer
     @brief  LocationsLayer
@@ -30,7 +32,7 @@ class LocationsLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LocationsLayer( const gui::GlTools_ABC& tools );
+    explicit LocationsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools );
     virtual ~LocationsLayer();
     //@}
 

@@ -70,7 +70,6 @@ private:
     //! @name Member data
     //@{
     kernel::DetectionMap& map_;
-    kernel::Controllers& controllers_;
     bool modelLoaded_;
     bool enabled_;
     QColor color_;

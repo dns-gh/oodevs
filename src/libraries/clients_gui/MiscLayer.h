@@ -27,7 +27,9 @@ class MiscLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MiscLayer( Panel& panel ) : panel_( panel ) {}
+    explicit MiscLayer( kernel::Controllers& controllers, E_LayerTypes type, Panel& panel )
+        : Layer( controllers, type )
+        , panel_( panel ) {}
     virtual ~MiscLayer() {}
     //@}
 

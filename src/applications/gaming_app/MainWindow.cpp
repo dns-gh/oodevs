@@ -215,7 +215,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
-    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_.controller_, staticModel_.detection_ );
+    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, staticModel_.detection_ );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateConverter_, *pPainter_, *glProxy_, elevation2d, *graphicPreferences_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
@@ -226,12 +226,12 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // First layers
     auto picker = new gui::TerrainPicker( this );
-    parameters_ = std::make_shared< gui::ParametersLayer >( *glProxy_, *textEditor_ );
-    auto locationsLayer = std::make_shared< gui::LocationsLayer >( *glProxy_ );
+    parameters_ = std::make_shared< gui::ParametersLayer >( controllers_, *glProxy_, *textEditor_ );
+    auto locationsLayer = std::make_shared< gui::LocationsLayer >( controllers_, *glProxy_ );
     auto meteoLayer = std::make_shared< WeatherLayer >( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, profile_ );
     auto automatsLayer = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_ );
     auto formationLayer = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_ );
-    auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( *glProxy_ );
+    auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( controllers_, *glProxy_ );
 
     // Misc
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, parameters_, profile_, *selector_ );
@@ -330,21 +330,21 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::Layer_ABC >& location
                                const Simulation& simulation,
                                gui::TerrainPicker& picker )
 {
-    std::shared_ptr< gui::TooltipsLayer_ABC > tooltipLayer = std::make_shared< gui::TooltipsLayer >( *glProxy_ );
+    std::shared_ptr< gui::TooltipsLayer_ABC > tooltipLayer = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
     std::shared_ptr< gui::Layer_ABC > mapnik;
     if( config_.HasMapnik() )
-        mapnik = std::make_shared< gui::MapnikLayer >( controllers_.controller_, config_.GetMapnikThreads() );
+        mapnik = std::make_shared< gui::MapnikLayer >( controllers_, config_.GetMapnikThreads() );
     auto terrainLayer          = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, *graphicPreferences_, picker );
     auto agents                = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, simulation );
-    auto creationsLayer        = std::make_shared< gui::MiscLayer< CreationPanels > >( dockContainer_->GetCreationPanel() );
-    auto eventLayer            = std::make_shared< gui::MiscLayer< EventDockWidget > >( dockContainer_->GetEventDockWidget() );
-    auto raster                = std::make_shared< gui::RasterLayer >( controllers_.controller_ );
+    auto creationsLayer        = std::make_shared< gui::MiscLayer< CreationPanels > >( controllers_, eLayerTypes_Creations, dockContainer_->GetCreationPanel() );
+    auto eventLayer            = std::make_shared< gui::MiscLayer< EventDockWidget > >( controllers_, eLayerTypes_Events, dockContainer_->GetEventDockWidget() );
+    auto raster                = std::make_shared< gui::RasterLayer >( controllers_ );
     auto watershed             = std::make_shared< gui::WatershedLayer >( controllers_, staticModel_.detection_ );
-    auto elevation3d           = std::make_shared< gui::Elevation3dLayer >( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    auto elevation3d           = std::make_shared< gui::Elevation3dLayer >( controllers_, staticModel_.detection_, *lighting_ );
     auto resourceNetworksLayer = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     auto urbanLayer            = std::make_shared< gui::UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     auto grid                  = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
-    auto metrics               = std::make_shared< gui::MetricsLayer >( staticModel_.detection_, *glProxy_ );
+    auto metrics               = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
     auto limits                = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters_, model_.tacticalLineFactory_, *glProxy_, profile_, *drawingsBuilder_ );
     auto objectsLayer          = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, picker );
     auto populations           = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
@@ -674,7 +674,7 @@ void MainWindow::OnAddRaster()
                 {
                     if( !exitCode )
                     {
-                        auto raster = std::make_shared< gui::RasterLayer >( controllers_.controller_, output );
+                        auto raster = std::make_shared< gui::RasterLayer >( controllers_, output );
                         raster->SetPasses( "main" );
                         glProxy_->Register( raster );
                         preferenceDialog_->AddLayer( tr( "User layer [%1]" ).arg( addRasterDialog_->GetName() ), raster, true );

@@ -25,8 +25,9 @@ using namespace gui;
 // Name: MetricsLayer constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-MetricsLayer::MetricsLayer( const kernel::DetectionMap& elevation, GlTools_ABC& tools )
-    : tools_            ( tools )
+MetricsLayer::MetricsLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation, GlTools_ABC& tools )
+    : Layer( controllers, eLayerTypes_Metric )
+    , tools_            ( tools )
     , elevation_        ( elevation )
     , multiRulingMode_  ( false )
 {

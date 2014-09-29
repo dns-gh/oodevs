@@ -19,7 +19,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 AgentKnowledgesLayer::AgentKnowledgesLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                             View_ABC& view, const Profile_ABC& profile )
-    : KnowledgeLayer< AgentKnowledge_ABC >( controllers, tools, strategy, view, profile )
+    : KnowledgeLayer< AgentKnowledge_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_AgentKnowledges )
 {
     // NOTHING
 }

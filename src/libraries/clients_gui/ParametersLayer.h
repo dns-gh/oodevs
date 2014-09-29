@@ -40,7 +40,7 @@ class ParametersLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             ParametersLayer( GlTools_ABC& tools, TextEditor& textEditor );
+             ParametersLayer( kernel::Controllers& controllers, GlTools_ABC& tools, TextEditor& textEditor );
     virtual ~ParametersLayer();
     //@}
 

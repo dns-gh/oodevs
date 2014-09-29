@@ -17,7 +17,7 @@
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
     class ModelLoaded;
 }
 
@@ -38,7 +38,7 @@ class MapnikLayer : public Layer2D
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 public:
-    explicit MapnikLayer( kernel::Controller& controller, uint32_t theads );
+    explicit MapnikLayer( kernel::Controllers& controllers, uint32_t theads );
     virtual ~MapnikLayer();
 
     virtual void Paint( const geometry::Rectangle2f& viewport );
@@ -51,7 +51,6 @@ private:
     void Update( const geometry::Rectangle2f& viewport );
 
 private:
-    kernel::Controller& controller_;
     boost::scoped_ptr< graphics::MapnikLayer > layer_;
     tools::Path terrain_;
     const uint32_t threads_;

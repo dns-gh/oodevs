@@ -46,7 +46,7 @@ class Layer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer();
+    explicit Layer( kernel::Controllers& controllers, E_LayerTypes type );
     virtual ~Layer();
     //@}
 
@@ -79,6 +79,7 @@ public:
 
     //! @name Layer_ABC implementation
     //@{
+    virtual E_LayerTypes GetType() const;
     virtual QString GetName() const;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
@@ -90,11 +91,14 @@ public:
     virtual void HideTooltip();
     //@}
 
+protected:
+    kernel::Controllers& controllers_;
+
 private:
     //! @name Member data
     //@{
+    const E_LayerTypes type_;
     GlWidget*     currentWidget_;
-    Layer*        currentProxy_;
     float         alpha_;
     std::string   passes_;
     bool          enabled_;
@@ -112,7 +116,7 @@ class Layer2D : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer2D() {};
+             Layer2D( kernel::Controllers& controllers, E_LayerTypes type ) : Layer( controllers, type ) {};
     virtual ~Layer2D() {};
     //@}
 
@@ -133,7 +137,7 @@ class Layer3D : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer3D() {}
+             Layer3D( kernel::Controllers& controllers, E_LayerTypes type ) : Layer( controllers, type ) {}
     virtual ~Layer3D() {}
     //@}
 

@@ -21,7 +21,7 @@ using namespace gui;
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 DefaultLayer::DefaultLayer( Controllers& controllers )
-    : controllers_( controllers )
+    : Layer( controllers, eLayerTypes_Default )
 {
     // NOTHING
 }

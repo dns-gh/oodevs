@@ -22,14 +22,13 @@
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
 WeatherLayer::WeatherLayer( gui::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker, const kernel::Profile_ABC& profile )
-    : gui::WeatherLayer( tools, eventStrategy )
-    , controllers_ ( controllers )
-    , meteoModel_  ( meteoModel )
+    : gui::WeatherLayer( controllers, tools, eventStrategy )
+    , meteoModel_( meteoModel )
     , profile_( profile )
     , currentMeteo_( new weather::Meteo( 0 , weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, 0, 0 ) )
     , picker_( picker )
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
     picker_.RegisterLayer( *this );
 }
 

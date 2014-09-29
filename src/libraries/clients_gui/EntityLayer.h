@@ -101,7 +101,6 @@ protected:
 
     //! @name Layer_ABC implementation
     //@{
-    virtual QString GetName() const;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >& elements, const geometry::Point2f&, const QPoint& where );
@@ -129,8 +128,6 @@ protected:
 private:
     //! @name Private Member data
     //@{
-    QString                                   name_;
-    kernel::Controllers&                      controllers_; // TODO protected?? utilisé dans EntityLayer
     ColorStrategy_ABC&                        strategy_;
     View_ABC&                                 view_;
     std::unique_ptr< InformationToolTip >     infoTooltip_;
@@ -177,7 +174,6 @@ protected:
 protected:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     ColorStrategy_ABC& strategy_;
     //@}
 };

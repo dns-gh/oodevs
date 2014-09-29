@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
     class ModelLoaded;
 }
 
@@ -36,8 +36,8 @@ class RasterLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RasterLayer( kernel::Controller& controller );
-             RasterLayer( kernel::Controller& controller, const tools::Path& texture );
+    explicit RasterLayer( kernel::Controllers& controllers );
+             RasterLayer( kernel::Controllers& controllers, const tools::Path& texture );
     virtual ~RasterLayer();
     //@}
 
@@ -54,7 +54,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller&         controller_;
     std::unique_ptr< TextureSet > textures_;
     bool                        ignore_;
     tools::Path                 directory_;

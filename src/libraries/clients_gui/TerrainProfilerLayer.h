@@ -12,13 +12,15 @@
 
 #include "Layer.h"
 
-namespace gui
+namespace kernel
 {
-    class GlTools_ABC;
+    class Controllers;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
+
 // =============================================================================
 /** @class  TerrainProfilerLayer
     @brief  TerrainProfilerLayer
@@ -30,7 +32,7 @@ class TerrainProfilerLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainProfilerLayer( const GlTools_ABC& tools );
+    explicit TerrainProfilerLayer( kernel::Controllers& controllers, const GlTools_ABC& tools );
     virtual ~TerrainProfilerLayer();
     //@}
 

@@ -56,6 +56,7 @@ public:
     virtual void Paint( Viewport_ABC& viewport ) = 0;
     using MapLayer_ABC::Paint;
 
+    virtual E_LayerTypes GetType() const = 0;
     virtual void SetAlpha( float ) = 0;
     virtual float GetAlpha() const = 0;
     virtual void Reset() = 0;

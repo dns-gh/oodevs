@@ -34,14 +34,14 @@ using namespace gui;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicPreferences& setup, TerrainPicker& picker )
-    : controllers_( controllers )
+    : Layer2D( controllers, eLayerTypes_Terrain )
     , tools_      ( tools )
     , setup_      ( setup )
     , picker_     ( picker )
     , pickingEnabled_( true )
 {
     picker_.RegisterLayer( *this );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

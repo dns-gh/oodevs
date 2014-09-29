@@ -29,7 +29,7 @@ DrawerLayer::DrawerLayer( kernel::Controllers& controllers,
                           View_ABC& view,
                           const kernel::Profile_ABC& profile,
                           ModelObserver_ABC& model )
-    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Drawers )
+    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Drawings )
     , parameters_( parameters )
     , tools_     ( tools )
     , model_     ( model )

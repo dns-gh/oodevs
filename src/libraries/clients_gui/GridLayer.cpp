@@ -24,13 +24,13 @@ using namespace gui;
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 GridLayer::GridLayer( Controllers& controllers, const GlTools_ABC& tools, const CoordinateConverter_ABC& converter )
-    : controllers_( controllers )
+    : Layer2D( controllers, eLayerTypes_Grid )
     , tools_( tools )
     , converter_( converter )
     , gridType_( eCoordinateSystem_Local )
     , gridSize_( 10000 ) // meters
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

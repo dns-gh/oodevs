@@ -195,13 +195,13 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::OverFlyingColorModifier( controllers ) ) );
 
     // Layer 1
-    auto locationsLayer = std::make_shared< gui::LocationsLayer >( *glProxy_ );
-    auto paramLayer = std::make_shared< gui::ParametersLayer >( *glProxy_, *textEditor_ );
+    auto locationsLayer = std::make_shared< gui::LocationsLayer >( controllers_, *glProxy_ );
+    auto paramLayer = std::make_shared< gui::ParametersLayer >( controllers_, *glProxy_, *textEditor_ );
     auto automats = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
     auto formation = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
-    auto weatherLayer = std::make_shared< gui::WeatherLayer >( *glProxy_, *eventStrategy_ );
-    auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( *glProxy_ );
-    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_.controller_, staticModel_.detection_ );
+    auto weatherLayer = std::make_shared< gui::WeatherLayer >( controllers_, *glProxy_, *eventStrategy_ );
+    auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( controllers_, *glProxy_ );
+    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, staticModel_.detection_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
 
     // Dialogs
@@ -298,32 +298,32 @@ namespace
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
-                               const std::shared_ptr< gui::Layer >& locations,
-                               const std::shared_ptr< gui::Layer >& weather,
-                               const std::shared_ptr< gui::Layer >& profilerLayer,
-                               const std::shared_ptr< gui::AutomatsLayer >& automats,
-                               const std::shared_ptr< gui::FormationLayer >& formation,
-                               const std::shared_ptr< gui::Elevation2dLayer >& elevation2d,
+                               const std::shared_ptr< gui::Layer_ABC >& locations,
+                               const std::shared_ptr< gui::Layer_ABC >& weather,
+                               const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
+                               const std::shared_ptr< gui::Layer_ABC >& automats,
+                               const std::shared_ptr< gui::Layer_ABC >& formation,
+                               const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                                const kernel::Profile_ABC& profile,
                                gui::TerrainPicker& picker )
 {
     assert( dialogContainer_.get() && dockContainer_.get() );
-    std::shared_ptr< gui::TooltipsLayer_ABC > tooltipLayer = std::make_shared< gui::TooltipsLayer >( *glProxy_ );
+    std::shared_ptr< gui::TooltipsLayer_ABC > tooltipLayer = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
     std::shared_ptr< gui::Layer_ABC > mapnik;
     if( config_.HasMapnik() )
-        mapnik = std::make_shared< gui::MapnikLayer >( controllers_.controller_, config_.GetMapnikThreads() );
+        mapnik = std::make_shared< gui::MapnikLayer >( controllers_, config_.GetMapnikThreads() );
     auto terrain                 = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, *graphicPreferences_, picker );
     auto agents                  = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
-    auto objectCreationLayer     = std::make_shared< gui::MiscLayer< ObjectCreationPanel > >( dockContainer_->GetObjectCreationPanel() );
-    auto inhabitantCreationLayer = std::make_shared< gui::MiscLayer< InhabitantCreationPanel > >( dockContainer_->GetInhabitantCreationPanel() );
-    auto indicatorCreationLayer  = std::make_shared< gui::MiscLayer< ScoreDialog > >( dialogContainer_->GetScoreDialog() );
-    auto raster                  = std::make_shared< gui::RasterLayer >( controllers_.controller_ );
+    auto objectCreationLayer     = std::make_shared< gui::MiscLayer< ObjectCreationPanel > >( controllers_, eLayerTypes_ObjectCreation, dockContainer_->GetObjectCreationPanel() );
+    auto inhabitantCreationLayer = std::make_shared< gui::MiscLayer< InhabitantCreationPanel > >( controllers_, eLayerTypes_InhabitantCreation, dockContainer_->GetInhabitantCreationPanel() );
+    auto indicatorCreationLayer  = std::make_shared< gui::MiscLayer< ScoreDialog > >( controllers_, eLayerTypes_IndicatorCreation, dialogContainer_->GetScoreDialog() );
+    auto raster                  = std::make_shared< gui::RasterLayer >( controllers_ );
     auto watershed               = std::make_shared< gui::WatershedLayer >( controllers_, staticModel_.detection_ );
-    auto elevation3d             = std::make_shared< gui::Elevation3dLayer >( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    auto elevation3d             = std::make_shared< gui::Elevation3dLayer >( controllers_, staticModel_.detection_, *lighting_ );
     auto resourceNetworksLayer   = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     auto urbanLayer              = std::make_shared< UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, *model_.urban_, profile );
     auto grid                    = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
-    auto metrics                 = std::make_shared< gui::MetricsLayer >( staticModel_.detection_, *glProxy_ );
+    auto metrics                 = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
     auto limits                  = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
     auto objectsLayer            = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
     auto populations             = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
@@ -879,7 +879,7 @@ void MainWindow::OnAddRaster()
                 {
                     if( !exitCode )
                     {
-                        auto raster = std::make_shared< gui::RasterLayer >( controllers_.controller_, output );
+                        auto raster = std::make_shared< gui::RasterLayer >( controllers_, output );
                         raster->SetPasses( "main" );
                         glProxy_->Register( raster );
                         dialogContainer_->GetPrefDialog().AddLayer(

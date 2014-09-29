@@ -74,7 +74,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const GlTools_ABC& tools_;
     GraphicPreferences& setup_;
     TerrainPicker& picker_;

@@ -667,10 +667,6 @@
         <translation>Objets</translation>
     </message>
     <message>
-        <source>Automata</source>
-        <translation>Automates</translation>
-    </message>
-    <message>
         <source>Formations</source>
         <translation>Formations</translation>
     </message>
@@ -693,10 +689,6 @@
     <message>
         <source>Drawings</source>
         <translation>Dessins</translation>
-    </message>
-    <message>
-        <source>Knowledges</source>
-        <translation>Connaissances</translation>
     </message>
     <message>
         <source>Inhabitants</source>
@@ -819,10 +811,6 @@
         <translation>Itinéraire</translation>
     </message>
     <message>
-        <source>Itineraries</source>
-        <translation>Itinéraires</translation>
-    </message>
-    <message>
         <source>Weapon ranges</source>
         <translation>Portées d&apos;armes</translation>
     </message>
@@ -889,6 +877,122 @@
     <message>
         <source>Identification</source>
         <translation>Identification</translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation>Actions</translation>
+    </message>
+    <message>
+        <source>Agents</source>
+        <translation>Pions</translation>
+    </message>
+    <message>
+        <source>Agent knowledges</source>
+        <translation>Connaissance de pion</translation>
+    </message>
+    <message>
+        <source>Contour lines</source>
+        <translation>Lignes de niveau</translation>
+    </message>
+    <message>
+        <source>Creations</source>
+        <translation>Créations</translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
+        <translation>Lignes tactique et dessins</translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation>Elévation</translation>
+    </message>
+    <message>
+        <source>Elevation 3d</source>
+        <translation>Elévation 3d</translation>
+    </message>
+    <message>
+        <source>Events</source>
+        <translation>Evenements</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation>Grille</translation>
+    </message>
+    <message>
+        <source>Locations</source>
+        <translation>Locations</translation>
+    </message>
+    <message>
+        <source>Terrain (new rendering)</source>
+        <translation>Terrain (nouveau rendu)</translation>
+    </message>
+    <message>
+        <source>Metric tools</source>
+        <translation>Outil de mesure</translation>
+    </message>
+    <message>
+        <source>Object knowledges</source>
+        <translation>Connaissances d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation>Paramètres</translation>
+    </message>
+    <message>
+        <source>Itineraries</source>
+        <translation>Itinéraires</translation>
+    </message>
+    <message>
+        <source>Raster</source>
+        <translation>Raster</translation>
+    </message>
+    <message>
+        <source>Selection</source>
+        <translation>Séléction</translation>
+    </message>
+    <message>
+        <source>Tooltip</source>
+        <translation>Infobulle</translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation>Urbain</translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation>Montée des eaux</translation>
+    </message>
+    <message>
+        <source>Weather</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
+        <translation>Météo</translation>
+    </message>
+    <message>
+        <source>Automats</source>
+        <translation>Automates</translation>
+    </message>
+    <message>
+        <source>Crowd knowledges</source>
+        <translation>Connaissances de foule</translation>
+    </message>
+    <message>
+        <source>Indicator creation</source>
+        <translation>Création d&apos;indicateur</translation>
+    </message>
+    <message>
+        <source>Inhabitant creation</source>
+        <translation>Création de population couvrante</translation>
+    </message>
+    <message>
+        <source>Object creation</source>
+        <translation>Création d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Terrain profiler</source>
+        <translation>Analyseur de terrain</translation>
     </message>
 </context>
 <context>

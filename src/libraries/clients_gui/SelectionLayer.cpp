@@ -22,7 +22,7 @@ using namespace gui;
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
 SelectionLayer::SelectionLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools )
-    : controllers_  ( controllers )
+    : Layer2D( controllers, eLayerTypes_Selection )
     , tools_        ( tools )
     , displaying_   ( false )
     , firstPointSet_( false )

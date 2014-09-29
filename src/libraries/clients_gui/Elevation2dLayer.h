@@ -21,7 +21,7 @@ class ElevationShader;
 namespace kernel
 {
     class DetectionMap;
-    class Controller;
+    class Controllers;
     class ModelLoaded;
 }
 
@@ -44,7 +44,7 @@ class Elevation2dLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation2dLayer( kernel::Controller& controller, const kernel::DetectionMap& elevation );
+             Elevation2dLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation );
     virtual ~Elevation2dLayer();
     //@}
 
@@ -75,7 +75,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     const kernel::DetectionMap& elevation_;
     std::unique_ptr< ElevationExtrema > extrema_;
     std::unique_ptr< ElevationShader > shader_;

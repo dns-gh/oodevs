@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Controllers;
     class DetectionMap;
 }
 
@@ -36,7 +37,7 @@ class MetricsLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MetricsLayer( const kernel::DetectionMap& elevation, gui::GlTools_ABC& tools  );
+    explicit MetricsLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation, gui::GlTools_ABC& tools  );
     virtual ~MetricsLayer();
     //@}
 

@@ -12,10 +12,9 @@
 
 #include "Layer.h"
 
-namespace gui
+namespace kernel
 {
-    class ExclusiveEventStrategy;
-    class GlTools_ABC;
+    class Controllers;
 }
 
 namespace weather
@@ -26,6 +25,8 @@ namespace weather
 
 namespace gui
 {
+    class ExclusiveEventStrategy;
+    class GlTools_ABC;
 
 // =============================================================================
 /** @class  WeatherLayer
@@ -40,7 +41,7 @@ class WeatherLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherLayer( GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy );
+             WeatherLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy );
     virtual ~WeatherLayer();
     //@}
 
