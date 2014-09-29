@@ -203,6 +203,8 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
                     objectHeight += structuralState * physical->GetHeight();
                     occupation = physical->GetOccupation();
                 }
+                if( structuralState <= 0 )
+                    continue;
                 if( occupation > 0 )
                 {
                     ++numberOfBlocksInBetween;
