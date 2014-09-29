@@ -1384,6 +1384,14 @@ Voulez-vous le remplacer ?</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Tip: Press &lt;i&gt;Control&lt;/i&gt; to drag and drop to the exact position of your choice instead of snapping to the nearest road.</source>
+        <translation>Conseil: Appuyer sur &lt;i&gt;Control&lt;/i&gt; permet de glisser-déposer sur la position de votre choix au lieu d&apos;accrocher le point de passage à la route la plus proche.</translation>
+    </message>
+    <message>
+        <source>Set start and end points by right-clicking on the map. Once the initial itinerary has been calculated, waypoints can be added and modified repeatedly by dragging and dropping from any position on the current itinerary.</source>
+        <translation>Définir les points de départ et d&apos;arrivée en effectuant un clic droit sur le terrain. Une fois l&apos;itinéraire initial calculé, il est possible d&apos;ajouter et de modifier des points de passage en effectuant un glisser-déposer depuis une position sur l&apos;itinéraire.</translation>
+    </message>
 </context>
 <context>
     <name>KnowledgeAddInGroupDialog</name>

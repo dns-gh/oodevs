@@ -1382,6 +1382,14 @@ Do you want to replace it?</translation>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
+    <message>
+        <source>Tip: Press &lt;i&gt;Control&lt;/i&gt; to drag and drop to the exact position of your choice instead of snapping to the nearest road.</source>
+        <translation>Tip: Press &lt;i&gt;Control&lt;/i&gt; to drag and drop to the exact position of your choice instead of snapping to the nearest road.</translation>
+    </message>
+    <message>
+        <source>Set start and end points by right-clicking on the map. Once the initial itinerary has been calculated, waypoints can be added and modified repeatedly by dragging and dropping from any position on the current itinerary.</source>
+        <translation>Set start and end points by right-clicking on the map. Once the initial itinerary has been calculated, waypoints can be added and modified repeatedly by dragging and dropping from any position on the current itinerary.</translation>
+    </message>
 </context>
 <context>
     <name>KnowledgeAddInGroupDialog</name>

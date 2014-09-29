@@ -52,7 +52,7 @@ void ShowRenameDialog( QWidget* parent, const kernel::SafePointer< kernel::Entit
     const auto text = QInputDialog::getText( parent, tools::translate( "RenameDialog", "Rename" ),
        tools::translate( "RenameDialog", "New name:" ), QLineEdit::Normal,
         entity->GetName(), &ok );
-    if( ok )
+    if( ok && entity )
         entity.ConstCast()->Rename( text );
 }
 
