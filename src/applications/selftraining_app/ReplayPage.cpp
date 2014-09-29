@@ -33,6 +33,7 @@
 
 #include "tools/Loader_ABC.h"
 #include "tools/StdFileWrapper.h"
+#include "tools/Version.h"
 
 #include <QtGui/QProgressDialog>
 #include <boost/filesystem.hpp>
@@ -242,36 +243,6 @@ namespace
         return true;
     }
 
-    std::string GetLastError()
-    {
-        LPSTR buffer;
-        FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                       FORMAT_MESSAGE_FROM_SYSTEM |
-                       FORMAT_MESSAGE_IGNORE_INSERTS, NULL,
-                       ::GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                       reinterpret_cast< LPSTR >( &buffer ), 0, NULL );
-        const std::string error( buffer );
-        LocalFree( buffer );
-        return error;
-    }
-
-    tools::Path GetModuleFilename( const std::string& name )
-    {
-        auto module = GetModuleHandle( name.c_str() );
-        if( !name.empty() && !module )
-            throw std::runtime_error( "missing module " + name + ": " + GetLastError() );
-        DWORD ret;
-        std::vector< wchar_t > buffer( 256 );
-        for(;;)
-        {
-            ret = ::GetModuleFileNameW( module, &buffer[0], static_cast< DWORD >( buffer.size() ) );
-            if( ret < static_cast< DWORD >( buffer.size() ) || ::GetLastError() != ERROR_INSUFFICIENT_BUFFER )
-                break;
-            buffer.resize( buffer.size() * 2 );
-        }
-        return tools::Path::FromUnicode( std::wstring( &buffer[0], ret ) );
-    }
-
     tools::Path GetExportDirectory( const tools::Path& exercise, const tools::Path& session )
     {
         std::string name = exercise.ToUTF8() + "-" + session.ToUTF8();
@@ -344,7 +315,7 @@ void ReplayPage::OnExport()
                 return !BeginsWith( path.ToBoost(), exoPrefix );
             });
             CopyFrom( config_.BuildSessionDir( exercise, session_ ),  tools::Path::T_Functor() );
-            const auto srcRun = GetModuleFilename( "" ).Parent();
+            const auto srcRun = tools::Path::FromUnicode( tools::GetModuleFilename() ).Parent();
             srcRun.Copy( dstRoot / "bin", tools::Path::FailIfExists, [&]( const tools::Path& path ) -> bool
             {
                 const auto ext = path.Extension();
