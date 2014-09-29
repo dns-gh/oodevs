@@ -15,6 +15,7 @@
 #include <boost/typeof/typeof.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/type_traits.hpp>
+#include <boost/mpl/identity.hpp>
 #undef BOOST_TYPEOF_SILENT
 
 namespace
@@ -57,11 +58,16 @@ namespace
     }
 
 #   define UPDATE_PROPERTY( message, value, field, property, container )\
-    if( UpdateProperty( value, message, &BOOST_TYPEOF( message )::has_##field, &BOOST_TYPEOF( message )::field ) )\
+    if( UpdateProperty( value, message, \
+                &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::has_##field, \
+                &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::field ) )\
         container.insert( property );
 
 #   define UPDATE_SUBPROPERTY( message, value, parent, field, property, container )\
-    if( UpdateSubProperty( value, message, &BOOST_TYPEOF( message )::has_##parent, &BOOST_TYPEOF( message )::parent, &boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( message )::parent ) >::type >::type >::type::field ) )\
+    if( UpdateSubProperty( value, message,\
+            &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::has_##parent, \
+            &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::parent, \
+            &boost::remove_const< typename boost::remove_reference< typename boost::function_types::result_type< boost::mpl::identity< BOOST_TYPEOF( &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::parent ) >::type >::type >::type >::type::field ) )\
         container.insert( property );
 }
 
