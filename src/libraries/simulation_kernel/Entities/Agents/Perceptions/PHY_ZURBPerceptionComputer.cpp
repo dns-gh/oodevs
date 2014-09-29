@@ -199,8 +199,7 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
                 double structuralState = 1.;
                 if( const UrbanPhysicalCapacity* physical = object.Retrieve< UrbanPhysicalCapacity >() )
                 {
-                    const StructuralCapacity* structuralCapacity = object.Retrieve< StructuralCapacity >();
-                    structuralState = structuralCapacity ? structuralCapacity->GetStructuralState() : 1;
+                    structuralState = object.GetStructuralState();
                     objectHeight += structuralState * physical->GetHeight();
                     occupation = physical->GetOccupation();
                 }

@@ -82,16 +82,11 @@ MIL_LivingArea::~MIL_LivingArea()
 
 namespace
 {
-    float GetStructuralState( const MIL_UrbanObject_ABC& object )
-    {
-        const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
-        return structural ? structural->GetStructuralState() : 1.f;
-    }
-
     template< typename T >
     bool CompareLivingSpace( const T* lhs, const T* rhs )
     {
-        return lhs->GetObject().GetLivingSpace() * GetStructuralState( lhs->GetObject() ) > rhs->GetObject().GetLivingSpace() * GetStructuralState( rhs->GetObject() );
+        return lhs->GetObject().GetLivingSpace() * lhs->GetObject().GetStructuralState() >
+            rhs->GetObject().GetLivingSpace() * rhs->GetObject().GetStructuralState();
     }
 }
 
@@ -125,13 +120,13 @@ void MIL_LivingArea::DistributeHumans( unsigned long population )
 {
     float area = 0;
     for( auto it = blocks_.begin(); it != blocks_.end(); ++it )
-        area += ( *it )->GetObject().GetLivingSpace() * GetStructuralState( ( *it )->GetObject() );
+        area += ( *it )->GetObject().GetLivingSpace() * ( *it )->GetObject().GetStructuralState();
     population_ = population;
     std::sort( blocks_.begin(), blocks_.end(), boost::bind( &CompareLivingSpace< MIL_LivingAreaBlock >, _1, _2 ) );
     unsigned long tmp = population_;
     for( auto it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
-        float ratio = ( *it )->GetObject().GetLivingSpace() * GetStructuralState( ( *it )->GetObject() ) / area;
+        float ratio = ( *it )->GetObject().GetLivingSpace() * ( *it )->GetObject().GetStructuralState() / area;
         unsigned long person = static_cast< unsigned long >( ratio * population_ );
         if( tmp - person < 0 )
             person = tmp;
@@ -247,7 +242,7 @@ float MIL_LivingArea::HealthCount() const
         {
             const InfrastructureCapacity* infrastructure = block->GetObject().Retrieve< InfrastructureCapacity >();
             if( !infrastructure || infrastructure->IsActive() )
-                healthCount += GetStructuralState( block->GetObject() );
+                healthCount += block->GetObject().GetStructuralState();
         }
     return healthCount;
 }

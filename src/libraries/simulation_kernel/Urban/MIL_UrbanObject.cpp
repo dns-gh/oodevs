@@ -869,3 +869,10 @@ bool MIL_UrbanObject::CanCollideWithEntity() const
         return false;
     return MIL_UrbanObject_ABC::CanCollideWithEntity();
 }
+
+float MIL_UrbanObject::GetStructuralState() const
+{
+    if( const StructuralCapacity* pCapacity = Retrieve< StructuralCapacity >() )
+        return pCapacity->GetStructuralState();
+    return 1.f;
+}

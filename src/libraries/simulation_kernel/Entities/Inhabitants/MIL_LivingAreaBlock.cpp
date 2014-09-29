@@ -218,15 +218,6 @@ unsigned int MIL_LivingAreaBlock::GetTotalNumberOfPersons() const
     return sum;
 }
 
-namespace
-{
-    float GetStructuralState( const MIL_UrbanObject_ABC& object )
-    {
-        const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
-        return structural ? structural->GetStructuralState() : 1.f;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingAreaBlock::GetNominalOccupation
 // Created: JSR 2011-03-23
@@ -246,7 +237,8 @@ unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motiv
 unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motivation, const PHY_AccomodationType* accomodation ) const
 {
     if( accomodation )
-        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * accomodation->GetNominalCapacity() );
+        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * urbanObject_->GetStructuralState() *
+            GetProportion( motivation ) * accomodation->GetNominalCapacity() );
     return 0u;
 }
 
@@ -258,7 +250,8 @@ unsigned int MIL_LivingAreaBlock::GetMaxOccupation( const std::string& motivatio
 {
     auto ptr = PHY_AccomodationType::Find( motivation );
     if( ptr )
-        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * ptr->GetMaxCapacity() );
+        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * urbanObject_->GetStructuralState() *
+            GetProportion( motivation ) * ptr->GetMaxCapacity() );
     return 0u;
 }
 

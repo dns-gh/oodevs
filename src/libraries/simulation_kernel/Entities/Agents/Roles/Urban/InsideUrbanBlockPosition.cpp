@@ -94,15 +94,6 @@ double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
     return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
 }
 
-namespace
-{
-    float GetStructuralState( const MIL_UrbanObject_ABC& object )
-    {
-        const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
-        return structural ? structural->GetStructuralState() : 1.f;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: InsideUrbanBlockPosition::ComputeRatioPionInside
 // Created: SLG 2010-04-27
@@ -111,7 +102,7 @@ double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
 {
     if( modificator > result.urbanDeployment_ ) // SLG : permet d'éviter des incohérence dans la perception d'unité quand la cible passe en état posté.
         return polygon.IsInside( result.position_, 0 ) ? 1 : 0;
-    const double urbanObjectArea = urbanObject_.GetLocalisation().GetArea() * GetStructuralState( urbanObject_ );
+    const double urbanObjectArea = urbanObject_.GetLocalisation().GetArea() * urbanObject_.GetStructuralState();
     if( urbanObjectArea <= 0 )
         return 1;
     const double intersectArea = TER_Geometry::IntersectionArea( polygon, urbanObject_.GetLocalisation() );
@@ -126,10 +117,6 @@ double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCateg
 {
     if( const MaterialAttribute* materialAttribute = urbanObject_.RetrieveAttribute< MaterialAttribute >() )
         if( const UrbanPhysicalCapacity* physical = urbanObject_.Retrieve< UrbanPhysicalCapacity >() )
-        {
-            const StructuralCapacity* structural = urbanObject_.Retrieve< StructuralCapacity >();
-            float structuralState = structural ? structural->GetStructuralState() : 1.f;
-            return dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) * physical->GetOccupation() * structuralState;
-        }
+            return dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) * physical->GetOccupation() * urbanObject_.GetStructuralState();
     return 0.;
 }
