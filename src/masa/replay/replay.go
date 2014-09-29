@@ -129,8 +129,8 @@ func parsePort(host string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	if port == 0 {
-		return 0, fmt.Errorf("invalid dispatcher port")
+	if port <= 0 || port >= 1<<16 {
+		return 0, fmt.Errorf("invalid dispatcher port %d", port)
 	}
 	return port, nil
 }
