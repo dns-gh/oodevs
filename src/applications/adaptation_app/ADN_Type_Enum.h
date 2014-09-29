@@ -22,7 +22,7 @@ template< class T, int nb >
 class ADN_Type_Enum : public ADN_Connector_ABC
 {
 public:
-    typedef typename const std::string& (*T_Converter)( T, ENT_Tr::E_Conversion );
+    typedef const std::string& (*T_Converter)( T, ENT_Tr::E_Conversion );
 
     explicit ADN_Type_Enum();
     explicit ADN_Type_Enum( const T& value );
@@ -49,7 +49,7 @@ public:
     //@}
 
     void SetAlphabeticalSort( bool sort );
-    static void SetConverter( typename ADN_Type_Enum::T_Converter enumConverter );
+    static void SetConverter( typename ADN_Type_Enum< T,nb >::T_Converter enumConverter );
     const std::string& Convert( ENT_Tr::E_Conversion nConversion = ENT_Tr::eToSim ) const;
 
 protected:

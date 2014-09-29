@@ -43,7 +43,7 @@ void check( const boost::false_type&, const std::string& message )
 template< typename T >
 void check( const char* message )
 {
-    check( typename T::type(), message );
+    check( T::type(), message );
 }
 
 template< typename T >

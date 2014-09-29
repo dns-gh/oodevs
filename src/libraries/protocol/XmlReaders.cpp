@@ -74,8 +74,8 @@ namespace
     template< typename T >
     boost::optional< typename T::value_type > FindName( const std::string& value )
     {
-        const auto& map = typename T::data_;
-        for( size_t i = 0; i < typename T::size_; ++i )
+        const auto& map = T::data_;
+        for( size_t i = 0; i < T::size_; ++i )
             if( map[i].name == value )
                 return map[i].type;
         return boost::none;
