@@ -489,6 +489,22 @@ void DEC_MiscFunctions::ReportPionPion( DEC_Decision_ABC& caller, int type, cons
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::ReportPionInt
+// Created: NMI 2014-09-29
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportPionInt( DEC_Decision_ABC& caller, int type, const std::string& reportId, DEC_Decision_ABC* param1, int param2 )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam1( MIL_MissionParameterFactory::CreatePion( param1 ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam2( MIL_MissionParameterFactory::CreateInteger( param2 ) );
+        params.push_back( missionParam1 );
+        params.push_back( missionParam2 );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::ReportPopulationKnowledge

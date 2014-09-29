@@ -307,6 +307,16 @@ integration.RC_AgentKnowledge_Int = function( myself, typeMessage, id, firstList
     DEC_RC_AgentKnowledge_Int( myself, typeMessage, id, firstList, secondList )
 end
 
+--- Emits a message with an Agent parameter and an Integer parameter
+-- @param myself the message sender
+-- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id the identifier of the message
+-- @param param1 the Simulation Agent parameter
+-- @param param2 the Integer parameter
+integration.RC_Pion_Int = function( myself, typeMessage, id, param1, param2 )
+    DEC_RC_Pion_Int( myself, typeMessage, id, param1, param2 )
+end
+
 --- Emits a message with a Float and a Float parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
