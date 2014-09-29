@@ -787,6 +787,8 @@ void RegisterReportFunctions( sword::Brain& brain )
         std::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion_Pion",
         std::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionPion, _1, _2, _3, _4, _5 ) ) );
+    brain.RegisterFunction( "DEC_RC_Pion_Int",
+        std::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, int ) >( boost::bind( &DEC_MiscFunctions::ReportPionInt, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_PopulationKnowledge",
         std::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_TirPion",

@@ -65,6 +65,7 @@ public:
     static void ReportPion               ( DEC_Decision_ABC& caller, int type, const std::string& reportId, DEC_Decision_ABC* pion );
     static void ReportPionAutomate       ( DEC_Decision_ABC& caller, int type, const std::string& reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate );
     static void ReportPionPion           ( DEC_Decision_ABC& caller, int type, const std::string& reportId, DEC_Decision_ABC* pion1, DEC_Decision_ABC* pion2 );
+    static void ReportPionInt            ( DEC_Decision_ABC& caller, int type, const std::string& reportId, DEC_Decision_ABC* param1, int param2 );
     static void ReportPopulationKnowledge( DEC_Decision_ABC& caller, int type, const std::string& reportId, int populationKnowledge );
     static void ReportTirPion            ( DEC_Decision_ABC& caller, int type, const std::string& reportId, int id );
     static void ReportString             ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
