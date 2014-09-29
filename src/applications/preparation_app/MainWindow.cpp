@@ -57,6 +57,7 @@
 #include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/InhabitantLayer.h"
+#include "clients_gui/LayerComposite.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/MapnikLayer.h"
@@ -300,79 +301,93 @@ namespace
 void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
                                const std::shared_ptr< gui::Layer_ABC >& locations,
                                const std::shared_ptr< gui::Layer_ABC >& weather,
-                               const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
+                               const std::shared_ptr< gui::Layer_ABC >& profiler,
                                const std::shared_ptr< gui::Layer_ABC >& automats,
-                               const std::shared_ptr< gui::Layer_ABC >& formation,
+                               const std::shared_ptr< gui::Layer_ABC >& formations,
                                const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                                const kernel::Profile_ABC& profile,
                                gui::TerrainPicker& picker )
 {
     assert( dialogContainer_.get() && dockContainer_.get() );
-    std::shared_ptr< gui::TooltipsLayer_ABC > tooltipLayer = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
+    std::shared_ptr< gui::TooltipsLayer_ABC > tooltips = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
     std::shared_ptr< gui::Layer_ABC > mapnik;
     if( config_.HasMapnik() )
         mapnik = std::make_shared< gui::MapnikLayer >( controllers_, config_.GetMapnikThreads() );
-    auto terrain                 = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, *graphicPreferences_, picker );
-    auto agents                  = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
-    auto objectCreationLayer     = std::make_shared< gui::MiscLayer< ObjectCreationPanel > >( controllers_, eLayerTypes_ObjectCreation, dockContainer_->GetObjectCreationPanel() );
-    auto inhabitantCreationLayer = std::make_shared< gui::MiscLayer< InhabitantCreationPanel > >( controllers_, eLayerTypes_InhabitantCreation, dockContainer_->GetInhabitantCreationPanel() );
-    auto indicatorCreationLayer  = std::make_shared< gui::MiscLayer< ScoreDialog > >( controllers_, eLayerTypes_IndicatorCreation, dialogContainer_->GetScoreDialog() );
-    auto raster                  = std::make_shared< gui::RasterLayer >( controllers_ );
-    auto watershed               = std::make_shared< gui::WatershedLayer >( controllers_, staticModel_.detection_ );
-    auto elevation3d             = std::make_shared< gui::Elevation3dLayer >( controllers_, staticModel_.detection_, *lighting_ );
-    auto resourceNetworksLayer   = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    auto urbanLayer              = std::make_shared< UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, *model_.urban_, profile );
-    auto grid                    = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
-    auto metrics                 = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
-    auto limits                  = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
-    auto objectsLayer            = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
-    auto populations             = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    auto ghosts                  = std::make_shared< GhostsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    auto defaultLayer            = std::make_shared< gui::DefaultLayer >( controllers_ );
-    auto drawerLayer             = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *modelBuilder_ );
-    auto inhabitantLayer         = std::make_shared< InhabitantLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
-    auto contour                 = std::make_shared< gui::ContourLinesLayer >( controllers_, staticModel_.detection_ );
-    auto selection               = std::make_shared< gui::SelectionLayer >( controllers_, *glProxy_ );
+    auto terrain            = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, *graphicPreferences_, picker );
+    auto agents             = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
+    auto objectCreation     = std::make_shared< gui::MiscLayer< ObjectCreationPanel > >( controllers_, eLayerTypes_ObjectCreation, dockContainer_->GetObjectCreationPanel() );
+    auto inhabitantCreation = std::make_shared< gui::MiscLayer< InhabitantCreationPanel > >( controllers_, eLayerTypes_InhabitantCreation, dockContainer_->GetInhabitantCreationPanel() );
+    auto indicatorCreation  = std::make_shared< gui::MiscLayer< ScoreDialog > >( controllers_, eLayerTypes_IndicatorCreation, dialogContainer_->GetScoreDialog() );
+    auto raster             = std::make_shared< gui::RasterLayer >( controllers_ );
+    auto watershed          = std::make_shared< gui::WatershedLayer >( controllers_, staticModel_.detection_ );
+    auto elevation3d        = std::make_shared< gui::Elevation3dLayer >( controllers_, staticModel_.detection_, *lighting_ );
+    auto resourceNetworks   = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    auto urbanLayer         = std::make_shared< UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, *model_.urban_, profile );
+    auto grid               = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
+    auto metrics            = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
+    auto limits             = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
+    auto objects            = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
+    auto crowds             = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    auto ghosts             = std::make_shared< GhostsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    auto defaultLayer       = std::make_shared< gui::DefaultLayer >( controllers_ );
+    auto drawings           = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *modelBuilder_ );
+    auto inhabitants        = std::make_shared< InhabitantLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
+    auto contour            = std::make_shared< gui::ContourLinesLayer >( controllers_, staticModel_.detection_ );
+    auto selection          = std::make_shared< gui::SelectionLayer >( controllers_, *glProxy_ );
+
+    auto inhabitantsComposite   = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_InhabitantsComposite );
+    auto objectsComposite       = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_ObjectsComposite );
+    auto tacticalLinesComposite = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_TacticalLinesComposite );
+    auto unitsComposite         = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_UnitsComposite );
+    auto weatherComposite       = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_WeatherComposite );
+    inhabitantsComposite->Register( inhabitants );
+    inhabitantsComposite->Register( inhabitantCreation );
+    objectsComposite->Register( objects );
+    objectsComposite->Register( objectCreation );
+    tacticalLinesComposite->Register( limits );
+    tacticalLinesComposite->Register( drawings );
+    unitsComposite->Register( formations );
+    unitsComposite->Register( automats );
+    unitsComposite->Register( agents );
+    weatherComposite->Register( weather );
+    weatherComposite->Register( watershed );
 
     // Drawing order
     gui::PreferencesDialog& preferences = dialogContainer_->GetPrefDialog();
     AddLayer( *glProxy_, preferences, defaultLayer );
-    AddLayer( *glProxy_, preferences, elevation2d,              "main",                         tools::translate( "MainWindow", "Elevation" ) );
-    AddLayer( *glProxy_, preferences, raster,                   "main",                         tools::translate( "MainWindow", "Raster" ) );
+    AddLayer( *glProxy_, preferences, elevation2d,            "main",                       tools::translate( "MainWindow", "Elevation" ) );
+    AddLayer( *glProxy_, preferences, raster,                 "main",                       tools::translate( "MainWindow", "Raster" ) );
     if( mapnik )
-        AddLayer( *glProxy_, preferences, mapnik,               "main,composition,miniviews",   tools::translate( "MainWindow", "Terrain (new rendering)" ) );
-    AddLayer( *glProxy_, preferences, terrain,                  "main",                         tools::translate( "MainWindow", "Terrain" ) );
-    AddLayer( *glProxy_, preferences, contour,                  "main,composition,miniviews",   tools::translate( "MainWindow", "Contour Lines" ) );
-    AddLayer( *glProxy_, preferences, urbanLayer,               "main",                         tools::translate( "MainWindow", "Urban blocks" ) );
-    AddLayer( *glProxy_, preferences, resourceNetworksLayer,    "main",                         tools::translate( "MainWindow", "Resource networks" ) );
-    AddLayer( *glProxy_, preferences, watershed,                "main",                         tools::translate( "MainWindow", "Watershed" ) );
+        AddLayer( *glProxy_, preferences, mapnik,             "main,composition,miniviews", tools::translate( "MainWindow", "Terrain (new rendering)" ) );
+    AddLayer( *glProxy_, preferences, terrain,                "main",                       tools::translate( "MainWindow", "Terrain" ) );
+    AddLayer( *glProxy_, preferences, contour,                "main,composition,miniviews", tools::translate( "MainWindow", "Contour Lines" ) );
+    AddLayer( *glProxy_, preferences, urbanLayer,             "main",                       tools::translate( "MainWindow", "Urban blocks" ) );
+    AddLayer( *glProxy_, preferences, resourceNetworks,       "main",                       tools::translate( "MainWindow", "Resource networks" ) );
+    AddLayer( *glProxy_, preferences, weatherComposite,       "main",                       tools::translate( "MainWindow", "Weather and watershed" ) );
+    AddLayer( *glProxy_, preferences, tacticalLinesComposite, "main",                       tools::translate( "MainWindow", "Tactical lines and drawings" ) );
+    AddLayer( *glProxy_, preferences, inhabitantsComposite,   "main",                       tools::translate( "MainWindow", "Populations" ) );
+    AddLayer( *glProxy_, preferences, objectsComposite,       "main",                       tools::translate( "MainWindow", "Objects" ) );
+    AddLayer( *glProxy_, preferences, crowds,                 "main",                       tools::translate( "MainWindow", "Crowd" ) );
+    AddLayer( *glProxy_, preferences, ghosts,                 "main",                       tools::translate( "MainWindow", "Ghost" ) );
+    AddLayer( *glProxy_, preferences, unitsComposite,         "main",                       tools::translate( "MainWindow", "Units" ) );
+
+    AddLayer( *glProxy_, preferences, indicatorCreation );
     AddLayer( *glProxy_, preferences, elevation3d );
-    AddLayer( *glProxy_, preferences, grid,                     "main" );
-    AddLayer( *glProxy_, preferences, metrics,                  "main" );
-    AddLayer( *glProxy_, preferences, weather,                  "main" );
-    AddLayer( *glProxy_, preferences, limits,                   "main" );
-    AddLayer( *glProxy_, preferences, indicatorCreationLayer );
-    AddLayer( *glProxy_, preferences, inhabitantLayer,          "main",                         tools::translate( "MainWindow", "Populations" ) );
-    AddLayer( *glProxy_, preferences, objectsLayer,             "main",                         tools::translate( "MainWindow", "Objects" ) );
-    AddLayer( *glProxy_, preferences, populations,              "main",                         tools::translate( "MainWindow", "Crowd" ) );
-    AddLayer( *glProxy_, preferences, ghosts,                   "main",                         tools::translate( "MainWindow", "Ghost" ) );
-    AddLayer( *glProxy_, preferences, agents,                   "main",                         tools::translate( "MainWindow", "Units" ) );
-    AddLayer( *glProxy_, preferences, automats,                 "main",                         tools::translate( "MainWindow", "Automats" ) );
-    AddLayer( *glProxy_, preferences, formation,                "main",                         tools::translate( "MainWindow", "Formations" ) );
-    AddLayer( *glProxy_, preferences, objectCreationLayer,      "main" );
-    AddLayer( *glProxy_, preferences, inhabitantCreationLayer,  "main" );
-    AddLayer( *glProxy_, preferences, parameters,               "main" );
-    AddLayer( *glProxy_, preferences, locations,                "main" );
-    AddLayer( *glProxy_, preferences, profilerLayer,            "main" );
-    AddLayer( *glProxy_, preferences, drawerLayer,              "main" );
-    AddLayer( *glProxy_, preferences, selection,                "main" );
-    AddLayer( *glProxy_, preferences, tooltipLayer,             "tooltip" );
+    AddLayer( *glProxy_, preferences, grid,                   "main" );
+    AddLayer( *glProxy_, preferences, metrics,                "main" );
+    AddLayer( *glProxy_, preferences, objectCreation,         "main" );
+    AddLayer( *glProxy_, preferences, inhabitantCreation,     "main" );
+    AddLayer( *glProxy_, preferences, parameters,             "main" );
+    AddLayer( *glProxy_, preferences, locations,              "main" );
+    AddLayer( *glProxy_, preferences, profiler,               "main" );
+    AddLayer( *glProxy_, preferences, selection,              "main" );
+    AddLayer( *glProxy_, preferences, tooltips,               "tooltip" );
 
     // Display modes
     agents->SetModes( eModes_LivingArea, eModes_None, true );
     limits->SetModes( eModes_LivingArea, eModes_None, true );
-    objectsLayer->SetModes( eModes_LivingArea, eModes_None, true );
-    populations->SetModes( eModes_LivingArea, eModes_None, true );
+    objects->SetModes( eModes_LivingArea, eModes_None, true );
+    crowds->SetModes( eModes_LivingArea, eModes_None, true );
     ghosts->SetModes( eModes_LivingArea, eModes_None, true );
     // Readonly modes
     urbanLayer->SetReadOnlyModes( eModes_None );
@@ -384,16 +399,16 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     forward_->Register( parameters );
     forward_->Register( agents );
     forward_->Register( automats );
-    forward_->Register( formation );
-    forward_->Register( populations );
-    forward_->Register( objectsLayer );
+    forward_->Register( formations );
+    forward_->Register( crowds );
+    forward_->Register( objects );
     forward_->Register( weather );
-    forward_->Register( inhabitantLayer );
+    forward_->Register( inhabitants );
     forward_->Register( ghosts );
     forward_->Register( limits );
-    forward_->Register( resourceNetworksLayer );
+    forward_->Register( resourceNetworks );
     forward_->Register( urbanLayer );
-    forward_->Register( drawerLayer );
+    forward_->Register( drawings );
     forward_->Register( metrics );
     forward_->Register( elevation3d );
     forward_->Register( selection );

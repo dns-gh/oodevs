@@ -898,10 +898,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Watershed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Populations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -919,14 +915,6 @@
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Formations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1028,6 +1016,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Terrain (new rendering)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

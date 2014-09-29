@@ -2148,20 +2148,8 @@ Voulez-vous le remplacer ?</translation>
         <translation>Lignes de niveau</translation>
     </message>
     <message>
-        <source>Watershed</source>
-        <translation>Montée des eaux</translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation>Formations</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unités</translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation>Automates</translation>
     </message>
     <message>
         <source> - Not connected</source>
@@ -2214,10 +2202,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Réseaux de ressource</translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation>Météo</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation>Son</translation>
     </message>
@@ -2232,6 +2216,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Terrain (new rendering)</source>
         <translation>Terrain (nouveau rendu)</translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

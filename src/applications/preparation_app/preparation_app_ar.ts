@@ -898,10 +898,6 @@
         <translation type="unfinished">الخطوط الكنتورية</translation>
     </message>
     <message>
-        <source>Watershed</source>
-        <translation type="unfinished">مستجمعات المياه</translation>
-    </message>
-    <message>
         <source>Populations</source>
         <translation type="unfinished">السكان</translation>
     </message>
@@ -916,14 +912,6 @@
     <message>
         <source>Units</source>
         <translation type="unfinished">وحدات</translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation type="unfinished">الدائرة</translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation type="unfinished">التدريب</translation>
     </message>
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
@@ -1029,6 +1017,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Terrain (new rendering)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

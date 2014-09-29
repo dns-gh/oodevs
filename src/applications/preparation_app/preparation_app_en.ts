@@ -901,10 +901,6 @@
         <translation>Contour Lines</translation>
     </message>
     <message>
-        <source>Watershed</source>
-        <translation>Watershed</translation>
-    </message>
-    <message>
         <source>Populations</source>
         <translation>Populations</translation>
     </message>
@@ -919,14 +915,6 @@
     <message>
         <source>Units</source>
         <translation>Units</translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation>Automats</translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation>Formations</translation>
     </message>
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
@@ -1033,6 +1021,14 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Terrain (new rendering)</source>
         <translation>Terrain (new rendering)</translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

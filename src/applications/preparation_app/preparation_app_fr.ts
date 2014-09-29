@@ -894,16 +894,8 @@
         <translation>Elévation</translation>
     </message>
     <message>
-        <source>Automats</source>
-        <translation>Automates</translation>
-    </message>
-    <message>
         <source>Load exercise definition file (exercise.xml)</source>
         <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
-    </message>
-    <message>
-        <source>Watershed</source>
-        <translation>Montée des eaux</translation>
     </message>
     <message>
         <source>Crowd</source>
@@ -912,10 +904,6 @@
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation>Formations</translation>
     </message>
     <message>
         <source>Save exercise as ...</source>
@@ -1030,6 +1018,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Terrain (new rendering)</source>
         <translation>Terrain (nouveau rendu)</translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

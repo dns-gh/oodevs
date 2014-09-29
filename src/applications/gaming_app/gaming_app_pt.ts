@@ -2137,14 +2137,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Watershed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2158,10 +2150,6 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2210,10 +2198,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2227,6 +2211,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Terrain (new rendering)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

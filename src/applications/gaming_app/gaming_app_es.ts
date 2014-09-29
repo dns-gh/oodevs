@@ -2147,20 +2147,8 @@ Do you want to replace it?</source>
         <translation>Curvas de nivel</translation>
     </message>
     <message>
-        <source>Watershed</source>
-        <translation>Linea de agua</translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation>Formaciones</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unidades</translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation>Autómatas</translation>
     </message>
     <message>
         <source> - Not connected</source>
@@ -2213,10 +2201,6 @@ Los datos no pueden ser proyectados.</translation>
         <translation>Redes de recursos</translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation>Clima</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation>Sonido</translation>
     </message>
@@ -2230,6 +2214,14 @@ Los datos no pueden ser proyectados.</translation>
     </message>
     <message>
         <source>Terrain (new rendering)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
