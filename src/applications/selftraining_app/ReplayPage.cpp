@@ -196,6 +196,18 @@ tools::Path ReplayPage::ConfigureSession( const tools::Path& exercise, const too
     return sessionDir;
 }
 
+void ReplayPage::OnExport()
+{
+    const auto dir = QFileDialog::getExistingDirectory( this,
+        tr( "Export Replay" ) );
+    if( dir.isEmpty() )
+        return;
+    const auto error = ExportReplay( this, fileLoader_, config_, exercise_->GetName(), session_,
+        tools::Path::FromUnicode( dir.toStdWString() ) );
+    if( !error.isEmpty() )
+        QMessageBox::critical( this, tr( "Error" ), tr( "Unable to export replay" ) + "\n" + error );
+}
+
 namespace
 {
     struct Properties
@@ -250,10 +262,7 @@ namespace
         std::replace( name.begin(), name.end(), '/', '-');
         return tools::Path::FromUTF8( name );
     }
-}
 
-namespace
-{
     #define COUNT_OF( X ) ( sizeof( X ) / sizeof *( X ) )
 
     static const tools::Path invalidExtensions[] =
@@ -272,16 +281,15 @@ namespace
     };
 }
 
-void ReplayPage::OnExport()
+QString ReplayPage::ExportReplay( QWidget* parent,
+                                  const tools::Loader_ABC& loader,
+                                  const Config& config,
+                                  const tools::Path& exercise,
+                                  const tools::Path& session,
+                                  const tools::Path& output )
 {
-    const auto exercise = exercise_->GetName();
-    const auto props = GetProperties( config_, fileLoader_, exercise );
-    const auto dir = QFileDialog::getExistingDirectory( this,
-        tr( "Export Replay" ) );
-    if( dir.isEmpty() )
-        return;
-
-    QProgressDialog progress( tr( "Exporting replay data" ), QString(), 0, 7, this, Qt::Dialog |
+    const auto props = GetProperties( config, loader, exercise );
+    QProgressDialog progress( tr( "Exporting replay data" ), QString(), 0, 7, parent, Qt::Dialog |
         Qt::CustomizeWindowHint );
     MainWindow::SetStyle( &progress );
     progress.setWindowModality( Qt::WindowModal );
@@ -298,23 +306,23 @@ void ReplayPage::OnExport()
     {
         try
         {
-            const auto prefix = config_.GetRootDir();
-            const auto dstRoot = tools::Path::FromUnicode( dir.toStdWString() ) / GetExportDirectory( exercise, session_ );
+            const auto prefix = config.GetRootDir();
+            const auto dstRoot = output / GetExportDirectory( exercise, session );
             const auto CopyFrom = [&]( const tools::Path& src, const tools::Path::T_Functor& predicate )
             {
                 const auto dst = MovePath( dstRoot.ToBoost(), prefix.ToBoost(), src.ToBoost() );
                 src.Copy( dst, tools::Path::FailIfExists, predicate );
                 MakeProgress();
             };
-            CopyFrom( config_.GetPhysicalsDir( props.model, props.physical ), tools::Path::T_Functor() );
-            CopyFrom( config_.GetTerrainDir( props.terrain ), tools::Path::T_Functor() );
-            const auto srcExo = config_.GetExerciseDir( exercise );
+            CopyFrom( config.GetPhysicalsDir( props.model, props.physical ), tools::Path::T_Functor() );
+            CopyFrom( config.GetTerrainDir( props.terrain ), tools::Path::T_Functor() );
+            const auto srcExo = config.GetExerciseDir( exercise );
             const auto exoPrefix = ( srcExo / "sessions" ).ToBoost();
             CopyFrom( srcExo, [&]( const tools::Path& path )
             {
                 return !BeginsWith( path.ToBoost(), exoPrefix );
             });
-            CopyFrom( config_.BuildSessionDir( exercise, session_ ),  tools::Path::T_Functor() );
+            CopyFrom( config.BuildSessionDir( exercise, session ),  tools::Path::T_Functor() );
             const auto srcRun = tools::Path::FromUnicode( tools::GetModuleFilename() ).Parent();
             srcRun.Copy( dstRoot / "bin", tools::Path::FailIfExists, [&]( const tools::Path& path ) -> bool
             {
@@ -333,7 +341,7 @@ void ReplayPage::OnExport()
                 "@echo off\n"
                 "set CUR=%~dp0\n"
                 "set CUR=%CUR:\\=/%\n"
-                "\"%CUR%/bin/replay.exe\" \"%CUR%\" \"" + exercise.ToUTF8() + "\" \"" + session_.ToUTF8() + "\"\n" );
+                "\"%CUR%/bin/replay.exe\" \"%CUR%\" \"" + exercise.ToUTF8() + "\" \"" + session.ToUTF8() + "\"\n" );
             MakeProgress();
             tools::WriteFile( dstRoot / "replay.vbs",
                 "DIM objShell\n"
@@ -348,6 +356,5 @@ void ReplayPage::OnExport()
     } );
     while( !background.timed_join( boost::posix_time::milliseconds( 100 ) ) )
         qApp->processEvents();
-    if( !error.isEmpty() )
-        QMessageBox::critical( this, tr( "Error" ), tr( "Unable to export replay" ) + "\n" + error );
+    return error;
 }

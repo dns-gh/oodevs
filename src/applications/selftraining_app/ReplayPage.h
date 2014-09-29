@@ -58,6 +58,14 @@ public:
     virtual ~ReplayPage();
     //@}
 
+public:
+    static QString ExportReplay( QWidget* parent,
+                                 const tools::Loader_ABC& loader,
+                                 const Config& config,
+                                 const tools::Path& exercise,
+                                 const tools::Path& session,
+                                 const tools::Path& output );
+
 private slots:
     //! @name Operations
     //@{

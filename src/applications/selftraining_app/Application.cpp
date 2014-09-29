@@ -15,6 +15,7 @@
 #include "MainWindow.h"
 #include "MessageDialog.h"
 #include "ProgressPage.h"
+#include "ReplayPage.h"
 #include "SessionTray.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LanguageController.h"
@@ -92,6 +93,13 @@ void Application::InitializeStyle()
 // -----------------------------------------------------------------------------
 int Application::Run()
 {
+    const auto& exportReplay = config_->GetExportReplay();
+    if( !exportReplay.IsEmpty() )
+    {
+        const auto error = ReplayPage::ExportReplay( mainWindow_.get(), *fileLoader_,
+            *config_, config_->GetExercise(), config_->GetSession(), exportReplay );
+        return !error.isEmpty();
+    }
     mainWindow_->show();
     QCoreApplication::sendEvent( mainWindow_.get(), new QEvent( QEvent::LanguageChange ) );
 
