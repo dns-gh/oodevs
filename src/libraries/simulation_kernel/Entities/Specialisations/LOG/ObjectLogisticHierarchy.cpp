@@ -9,10 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "ObjectLogisticHierarchy.h"
-
 #include "MIL_AutomateLOG.h"
 #include "ObjectLogisticLink.h"
-#include "CheckPoints/SerializationTools.h"
 #include <tools/Iterator.h>
 #include <boost/make_shared.hpp>
 

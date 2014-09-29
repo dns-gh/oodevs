@@ -21,7 +21,6 @@
 #include "protocol/Protocol.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "CheckPoints/SerializationTools.h"
 #include <boost/make_shared.hpp>
 #include <boost/optional.hpp>
 

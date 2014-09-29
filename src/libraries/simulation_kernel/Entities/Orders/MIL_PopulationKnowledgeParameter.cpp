@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationKnowledgeParameter.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"

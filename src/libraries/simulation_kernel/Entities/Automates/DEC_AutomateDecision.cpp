@@ -32,6 +32,29 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ )
+{
+    archive << role->pEntity_;
+    archive << role->gcPause_;
+    archive << role->gcMult_;
+    archive << role->logger_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int /*version*/ )
+{
+    MIL_Automate* automate;
+    unsigned int gcPause;
+    unsigned int gcMult;
+    sword::DEC_Logger* logger;
+    archive >> automate;
+    archive >> gcPause;
+    archive >> gcMult;
+    archive >> logger;
+    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult, logger );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision constructor
 // Created: NLD 2004-08-13
@@ -91,7 +114,6 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> nOperationalState_;
     file >> nRoePopulationID;
     pRoePopulation_ = PHY_RoePopulation::Find( nRoePopulationID );
-
     unsigned int nID;
     file >> nID;
 }

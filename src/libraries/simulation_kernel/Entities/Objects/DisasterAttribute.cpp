@@ -28,8 +28,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DisasterAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute > )
 
 namespace bpt = boost::posix_time;
 
@@ -232,7 +231,8 @@ void DisasterAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void DisasterAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< DisasterAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< DisasterAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -39,12 +39,6 @@ class DisasterAttribute : public ObjectAttribute_ABC
                         , public UpdatableAttribute_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute > T_KnowledgeProxyType;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              DisasterAttribute();

@@ -24,9 +24,7 @@
 #include <gdal_ogr/gdal_ogr_lib.h>
 #pragma warning( pop )
 #include <tools/PathSerialization.h>
-#pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
 
 namespace bpt = boost::posix_time;
 

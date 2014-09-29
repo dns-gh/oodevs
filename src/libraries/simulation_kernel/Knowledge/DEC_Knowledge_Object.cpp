@@ -15,7 +15,6 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_ObjectMagicPerception.h"
 #include "MIL_Time_ABC.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

@@ -16,7 +16,6 @@
 #include "PHY_HumanWound.h"
 #include "MIL_Time_ABC.h"
 #include "HumansActionsNotificationHandler_ABC.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConsign.h"

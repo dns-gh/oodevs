@@ -17,8 +17,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FloodAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: FloodAttribute constructor
@@ -145,7 +144,8 @@ void FloodAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void FloodAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< FloodAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< FloodAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

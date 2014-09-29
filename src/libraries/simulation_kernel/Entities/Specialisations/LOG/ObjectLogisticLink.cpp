@@ -9,9 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ObjectLogisticLink.h"
-
 #include "MIL_AutomateLOG.h"
-#include "CheckPoints/SerializationTools.h"
 
 using namespace logistic;
 

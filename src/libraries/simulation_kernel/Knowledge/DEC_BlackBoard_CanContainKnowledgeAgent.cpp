@@ -16,7 +16,6 @@
 #include "MIL_Time_ABC.h"
 #include "KnowledgesVisitor_ABC.h"
 #include "MIL_KnowledgeGroup.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "MT_Tools/MT_Logger.h"

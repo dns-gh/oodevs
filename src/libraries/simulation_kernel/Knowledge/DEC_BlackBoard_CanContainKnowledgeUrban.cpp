@@ -11,7 +11,6 @@
 #include "DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "DEC_Knowledge_Urban.h"
 #include "MIL_AgentServer.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Urban/MIL_UrbanCache.h"

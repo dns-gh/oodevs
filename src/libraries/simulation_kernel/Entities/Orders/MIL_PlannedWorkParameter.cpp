@@ -13,7 +13,6 @@
 #include "protocol/Protocol.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
-#include "CheckPoints/SerializationTools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PlannedWorkParameter )
 

@@ -34,9 +34,6 @@ class ConstructionAttribute : public ObjectAttribute_ABC
                             , private UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< ConstructionAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              ConstructionAttribute();

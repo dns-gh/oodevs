@@ -56,7 +56,6 @@
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_Logger.h"
 #include <tools/Map.h>
-#include <boost/serialization/map.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/lexical_cast.hpp>

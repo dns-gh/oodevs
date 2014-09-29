@@ -18,7 +18,6 @@
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "MIL_KnowledgeGroup.h"
-#include "Checkpoints/SerializationTools.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -28,7 +27,6 @@
 #include "Entities/MIL_Army.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Population )
 

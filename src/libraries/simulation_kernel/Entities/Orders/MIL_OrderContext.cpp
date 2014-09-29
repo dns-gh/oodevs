@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_OrderContext.h"
 #include "MIL_LimaFunction.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"

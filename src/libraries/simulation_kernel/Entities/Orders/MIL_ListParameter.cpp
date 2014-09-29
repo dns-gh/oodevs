@@ -11,7 +11,6 @@
 #include "MIL_ListParameter.h"
 #include "MIL_MissionParameterFactory.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
-#include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 #include "MIL.h"
 #include <boost/optional.hpp>

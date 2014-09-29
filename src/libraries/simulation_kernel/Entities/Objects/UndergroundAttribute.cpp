@@ -14,8 +14,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< UndergroundAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< UndergroundAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< UndergroundAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: UndergroundAttribute constructor
@@ -122,7 +121,8 @@ void UndergroundAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void UndergroundAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< UndergroundAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< UndergroundAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< UndergroundAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

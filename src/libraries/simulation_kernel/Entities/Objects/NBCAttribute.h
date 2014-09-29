@@ -38,8 +38,6 @@ public:
     //! @name Types
     //@{
     typedef std::vector< const MIL_NbcAgentType* > T_NBCAgents;
-
-    typedef DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > T_KnowledgeProxyType;
     //@}
 
 public:

@@ -19,7 +19,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Random.h"
-#include <iostream>
+#include <sstream>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::PointToString

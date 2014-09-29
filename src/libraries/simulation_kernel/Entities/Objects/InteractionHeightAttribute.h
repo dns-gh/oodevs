@@ -28,9 +28,6 @@ namespace xml
 class InteractionHeightAttribute : public ObjectAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              InteractionHeightAttribute();

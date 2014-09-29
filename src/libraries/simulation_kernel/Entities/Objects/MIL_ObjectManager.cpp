@@ -39,8 +39,6 @@
 #include "Tools/MIL_MessageParameters.h"
 #include "tools/NET_AsnException.h"
 #include <boost/lexical_cast.hpp>
-#include <boost/serialization/export.hpp>
-#include <boost/serialization/map.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )

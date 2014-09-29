@@ -30,12 +30,6 @@ class LodgingAttribute : public ObjectAttribute_ABC
                        , private UpdatableAttribute_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef DEC_Knowledge_ObjectAttributeProxyRecon< LodgingAttribute > T_KnowledgeProxyType;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              LodgingAttribute();

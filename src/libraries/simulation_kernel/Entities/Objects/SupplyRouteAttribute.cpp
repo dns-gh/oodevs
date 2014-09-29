@@ -15,8 +15,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( SupplyRouteAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute constructor
@@ -132,7 +131,8 @@ void SupplyRouteAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< SupplyRouteAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< SupplyRouteAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

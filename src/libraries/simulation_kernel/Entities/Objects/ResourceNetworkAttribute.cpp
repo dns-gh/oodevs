@@ -11,15 +11,13 @@
 #include "ResourceNetworkAttribute.h"
 #include "MIL_Object_ABC.h"
 #include "ResourceNetworkCapacity.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ResourceNetworkAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< ResourceNetworkAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ResourceNetworkAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ResourceNetworkAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute constructor
@@ -80,7 +78,8 @@ ResourceNetworkAttribute& ResourceNetworkAttribute::operator=( const ResourceNet
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< ResourceNetworkAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< ResourceNetworkAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< ResourceNetworkAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ABC.h"
-#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ABC )
 

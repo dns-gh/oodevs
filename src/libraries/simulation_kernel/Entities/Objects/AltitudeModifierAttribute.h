@@ -27,9 +27,6 @@ class AltitudeModifierAttribute : public ObjectAttribute_ABC
                                 , public UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< AltitudeModifierAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              AltitudeModifierAttribute();

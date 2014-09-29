@@ -28,13 +28,10 @@
 #include "protocol/EnumMaps.h"
 #include "protocol/MessageParameters.h"
 
-#pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 
 namespace bpt = boost::posix_time;
 

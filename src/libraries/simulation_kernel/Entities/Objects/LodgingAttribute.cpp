@@ -23,8 +23,7 @@ using namespace surrender;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( LodgingAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyRecon< LodgingAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< LodgingAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyRecon< LodgingAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: LodgingAttribute constructor
@@ -102,7 +101,8 @@ void LodgingAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) 
 // -----------------------------------------------------------------------------
 void LodgingAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< LodgingAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< LodgingAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyRecon< LodgingAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

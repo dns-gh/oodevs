@@ -33,7 +33,6 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
-#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObject )
 

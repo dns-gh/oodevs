@@ -35,7 +35,6 @@
 #include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <boost/range/algorithm_ext/erase.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Maintenance )

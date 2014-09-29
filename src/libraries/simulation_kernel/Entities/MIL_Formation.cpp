@@ -27,7 +27,6 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "CheckPoints/SerializationTools.h"
-#include <boost/serialization/map.hpp>
 #include <boost/foreach.hpp>
 
 namespace

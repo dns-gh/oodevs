@@ -42,7 +42,6 @@
 #include "simulation_terrain/TER_Geometry.h"
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/scoped_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )

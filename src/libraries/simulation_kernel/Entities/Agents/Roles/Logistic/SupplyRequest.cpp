@@ -12,7 +12,6 @@
 #include "ConsignHelper.h"
 #include "SupplyResource_ABC.h"
 #include "SupplyRecipient_ABC.h"
-#include "Checkpoints/SerializationTools.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -385,7 +384,6 @@ void SupplyRequest::load( MIL_CheckPointInArchive& archive, const unsigned int )
     archive >> complementarySupply_;
     archive >> supplierQuotas_;
     archive >> provider_;
-    archive >> needNetworkUpdate_;
     RegisterConsignId( id_ );
 }
 
@@ -411,7 +409,6 @@ void SupplyRequest::save( MIL_CheckPointOutArchive& archive, const unsigned int 
     archive << complementarySupply_;
     archive << supplierQuotas_;
     archive << provider_;
-    archive << needNetworkUpdate_;
 }
 
 // -----------------------------------------------------------------------------

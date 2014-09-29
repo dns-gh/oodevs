@@ -13,7 +13,6 @@
 #include "protocol/Protocol.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL.h"
-#include "CheckPoints/SerializationTools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PointParameter )
 

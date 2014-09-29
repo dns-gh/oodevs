@@ -16,8 +16,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BypassAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute constructor
@@ -99,7 +98,8 @@ void BypassAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void BypassAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BypassAttribute > >( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute >() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BypassAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

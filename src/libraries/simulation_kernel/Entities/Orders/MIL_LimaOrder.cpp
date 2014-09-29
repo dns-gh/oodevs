@@ -18,7 +18,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/NET_AsnException.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 #include <boost/make_shared.hpp>
 

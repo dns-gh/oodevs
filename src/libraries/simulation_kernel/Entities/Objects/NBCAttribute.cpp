@@ -17,8 +17,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute constructor
@@ -119,7 +118,8 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // -----------------------------------------------------------------------------
 void NBCAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< NBCAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< NBCAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -33,9 +33,6 @@ namespace resource
 class ResourceNetworkAttribute : public ObjectAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< ResourceNetworkAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              ResourceNetworkAttribute();

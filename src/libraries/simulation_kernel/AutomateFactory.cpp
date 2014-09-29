@@ -16,18 +16,18 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/map.hpp>
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ )
 {
     const MIL_IDManager* const idManager = &factory->idManager_;
     const MissionController_ABC* const controller = &factory->controller_;
+    const bool logEnabled = factory->logger_;
     archive << idManager;
     archive << controller;
     archive << factory->gcPause_;
     archive << factory->gcMult_;
-    archive << factory->logger_;
+    archive << logEnabled;
 }
 
 template< typename Archive >
@@ -37,13 +37,13 @@ void load_construct_data( Archive& archive, AutomateFactory* factory, const unsi
     MissionController_ABC* controller;
     unsigned int gcPause;
     unsigned int gcMult;
-    std::unique_ptr< sword::DEC_Logger > logger;
+    bool logEnabled;
     archive >> idManager;
     archive >> controller;
     archive >> gcPause;
     archive >> gcMult;
-    archive >> logger;
-    ::new( factory )AutomateFactory( *idManager, *controller, gcPause, gcMult, std::move( logger ) );
+    archive >> logEnabled;
+    ::new( factory )AutomateFactory( *idManager, *controller, gcPause, gcMult, logEnabled );
 }
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
@@ -64,24 +64,6 @@ AutomateFactory::AutomateFactory( MIL_IDManager& idManager,
     , logger_    ( logEnabled ? new sword::DEC_Logger( "Automate" ) : 0 )
 {
     //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateFactory constructor
-// Created: SLI 2013-02-22
-// -----------------------------------------------------------------------------
-AutomateFactory::AutomateFactory( MIL_IDManager& idManager,
-                                  MissionController_ABC& controller,
-                                  unsigned int gcPause,
-                                  unsigned int gcMult,
-                                  std::unique_ptr< sword::DEC_Logger > logger )
-    : idManager_ ( idManager )
-    , controller_( controller )
-    , gcPause_   ( gcPause )
-    , gcMult_    ( gcMult )
-    , logger_    ( std::move( logger ) )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

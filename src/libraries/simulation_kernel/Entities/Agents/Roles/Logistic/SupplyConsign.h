@@ -12,7 +12,6 @@
 
 #include "SupplyConsign_ABC.h"
 #include "SupplyConvoyEventsObserver_ABC.h"
-#include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include <tools/Map.h>
 #include <deque>

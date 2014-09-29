@@ -38,9 +38,6 @@ class LogisticAttribute : public ObjectAttribute_ABC
                         , private UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< LogisticAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Constructors/Destructor
     //@{
              LogisticAttribute();

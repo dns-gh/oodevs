@@ -42,14 +42,6 @@ class PHY_RoleInterface_Composantes : public tools::Role_ABC
 public:
     //! @name Types
     //@{
-    struct T_ComposanteUse
-    {
-        unsigned int nNbrAvailable_;
-        unsigned int nNbrUsed_;
-        unsigned int nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
-        unsigned int nNbrLent_;
-    };
-
     typedef PHY_RoleInterface_Composantes RoleInterface;
 
     typedef std::vector< const PHY_Volume* > T_ComposanteVolumes;

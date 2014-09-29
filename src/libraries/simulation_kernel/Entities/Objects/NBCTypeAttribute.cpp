@@ -15,8 +15,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCTypeAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute > )
+BOOST_CLASS_EXPORT( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: NBCTypeAttribute constructor
@@ -146,7 +145,8 @@ void NBCTypeAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) 
 // -----------------------------------------------------------------------------
 void NBCTypeAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< NBCTypeAttribute > >( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< NBCTypeAttribute > >(
+        *new DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
