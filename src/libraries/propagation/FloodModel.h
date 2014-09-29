@@ -63,7 +63,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    void Propagate( int floodElevation, unsigned short halfWidth, const geometry::Point2f& center, sCell** ppCells, int refDist ) const;
+    void Propagate( double floodElevation, unsigned short halfWidth, const geometry::Point2f& center, sCell** ppCells, int refDist ) const;
     bool FindFirstUnmarkedCell( int& xRet, int& yRet, unsigned short halfWidth, sCell** ppCells ) const;
     bool FindFirstMarkedCell( int& xRet, int& yRet, int index, unsigned short halfWidth, sCell** ppCells ) const;
     int MarkAdjacentCells( int x, int y, bool deep, int nPolygonIndex, unsigned short halfWidth, sCell** ppCells ) const;
@@ -72,7 +72,7 @@ private:
     int FindUnmarkedOnNextLine( int xStart, int xEnd, int y, bool deep, unsigned short halfWidth, sCell** ppCells ) const;
     int FindFirstMarkedOnLine( int y, int index, unsigned short halfWidth, sCell** ppCells ) const;
     int FindLastMarkedOnLine( int y, int index, unsigned short halfWidth, sCell** ppCells ) const;
-    short GetMaxElevationInCell( const geometry::Point2f& center, int floodElevation ) const;
+    double GetMaxElevationInCell( const geometry::Point2f& center, double floodElevation ) const;
     //@}
 
 private:

@@ -49,9 +49,9 @@ namespace
         {
             // NOTHING
         }
-        virtual short GetElevationAt( const geometry::Point2f& point ) const
+        virtual double GetElevationAt( const geometry::Point2f& point ) const
         {
-            return static_cast< short >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( point.X(), point.Y(), true ) );
+            return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( point.X(), point.Y(), true );
         }
         virtual float GetCellSize() const
         {

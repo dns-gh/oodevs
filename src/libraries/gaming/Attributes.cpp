@@ -292,8 +292,8 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         const geometry::Vector2f direction = geometry::Vector2f( std::sin( angle ), std::cos( angle ) );
         const geometry::Point2f vDst = vPos_ + cellDistance_ * direction;
         const float distance = vDst.Distance( vPos_ );
-        const short diff = elevation_.ElevationAt( vDst ) - elevation_.ElevationAt( vPos_ );
-        nSlope_ = distance == 0 ? 0 : static_cast< int >( 100.f * diff / distance );
+        const double diff = elevation_.ElevationAt( vDst ) - elevation_.ElevationAt( vPos_ );
+        nSlope_ = distance == 0 ? 0 : static_cast< int >( 100 * diff / distance );
     }
 
     if( mustUpdateHierarchies )

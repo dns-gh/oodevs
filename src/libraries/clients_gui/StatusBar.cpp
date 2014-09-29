@@ -148,7 +148,7 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
             if( coordinateFields_[coord]->isVisible() )
                 coordinateFields_[coord]->setText( Format( coord, position ) );
         }
-        const QString elevation = tr( "h:%L1 " ).arg( detection_.ElevationAt( position ) );
+        const QString elevation = tr( "h:%L1 " ).arg( static_cast< int >( detection_.ElevationAt( position ) ) );
         pElevation_->setText( elevation );
     }
 }

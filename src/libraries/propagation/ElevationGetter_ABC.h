@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual short GetElevationAt( const geometry::Point2f& point ) const = 0;
+    virtual double GetElevationAt( const geometry::Point2f& point ) const = 0;
     virtual float GetCellSize() const = 0;
     //@}
 

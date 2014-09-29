@@ -184,7 +184,7 @@ void Gl3dWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit un
 // -----------------------------------------------------------------------------
 float Gl3dWidget::ElevationAt( const Point2f& point ) const
 {
-    return ( elevation_.ElevationAt( point ) + 2.f ) * zRatio_;
+    return ( static_cast< float >( elevation_.ElevationAt( point ) ) + 2.f ) * zRatio_;
 }
 
 // -----------------------------------------------------------------------------
