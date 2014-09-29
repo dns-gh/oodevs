@@ -51,11 +51,13 @@ func start() error {
 	if err != nil {
 		return err
 	}
-	replayer, err := startProcess(ctx, "replayer_app")
+	dispatcher := fmt.Sprintf("localhost:%d", ctx.dispatcher)
+	replayer, err := startProcess(ctx, "replayer_app",
+		"--dispatcher-address", dispatcher)
 	if err != nil {
 		return err
 	}
-	err = waitAddress(fmt.Sprintf("localhost:%d", ctx.dispatcher))
+	err = waitAddress(dispatcher)
 	if err != nil {
 		return err
 	}
@@ -63,7 +65,10 @@ func start() error {
 	if err != nil {
 		return err
 	}
-	gaming, err := startProcess(ctx, "gaming_app")
+	gaming, err := startProcess(ctx, "gaming_app",
+		"--host", dispatcher,
+		"--timeline", fmt.Sprintf("localhost:%d", ctx.timeline),
+	)
 	if err != nil {
 		return err
 	}
@@ -161,12 +166,15 @@ func parsePorts(ctx *Context) error {
 	return nil
 }
 
-func startProcess(ctx *Context, name string) (*exec.Cmd, error) {
-	cmd := exec.Command(
-		filepath.Join(ctx.root, "bin", name+".exe"),
+func startProcess(ctx *Context, name string, args ...string) (*exec.Cmd, error) {
+	args = append([]string{
 		"--root-dir", ctx.root,
 		"--exercise", ctx.exercise,
 		"--session", ctx.session,
+	}, args...)
+	cmd := exec.Command(
+		filepath.Join(ctx.root, "bin", name+".exe"),
+		args...,
 	)
 	cmd.Dir = filepath.Join(ctx.root, "bin")
 	cmd.Stdout = os.Stdout
@@ -179,6 +187,7 @@ func startTimeline(ctx *Context) (*exec.Cmd, error) {
 		filepath.Join(ctx.root, "bin", "timeline_server.exe"),
 		"--port", strconv.Itoa(ctx.timeline),
 		"--run", filepath.Join(ctx.getSessionDir(), "timeline.run"),
+		"--sword", fmt.Sprintf("localhost:%d", ctx.dispatcher),
 	)
 	cmd.Dir = filepath.Join(ctx.root, "bin")
 	cmd.Stdout = os.Stdout
