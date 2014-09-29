@@ -369,7 +369,6 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     AddLayer( *glProxy_, preferences, tooltipLayer,             "tooltip" );
 
     // Display modes
-    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer or Layer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer.
     agents->SetModes( eModes_LivingArea, eModes_None, true );
     limits->SetModes( eModes_LivingArea, eModes_None, true );
     objectsLayer->SetModes( eModes_LivingArea, eModes_None, true );

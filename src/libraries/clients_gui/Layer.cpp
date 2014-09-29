@@ -100,25 +100,17 @@ void Layer::SetPasses( const std::string& passes )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer::GetCurrentPass
-// Created: SBO 2008-04-14
-// -----------------------------------------------------------------------------
-std::string Layer::GetCurrentPass() const
-{
-    return currentWidget_ ? currentWidget_->GetCurrentPass() : "";
-}
-
-// -----------------------------------------------------------------------------
 // Name: Layer::ShouldDrawPass
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
 bool Layer::ShouldDrawPass() const
 {
-    bool pickingMode = false;
-    if( currentWidget_ )
-        pickingMode = currentWidget_->IsPickingMode();
-    return ( passes_.empty() || GetCurrentPass().empty() || passes_.find( GetCurrentPass() ) != std::string::npos )
-        && ( !pickingMode || ( pickingMode && IsPickable() ) );
+    if( !currentWidget_ )
+        return false;
+    const auto currentPass = currentWidget_->GetCurrentPass();
+    return IsEnabled()
+        && ( passes_.empty() || currentPass.empty() || passes_.find( currentPass ) != std::string::npos )
+        && ( !currentWidget_->IsPickingMode() || IsPickable() );
 }
 
 // -----------------------------------------------------------------------------

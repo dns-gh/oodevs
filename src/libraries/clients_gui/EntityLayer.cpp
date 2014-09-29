@@ -142,7 +142,7 @@ bool EntityLayerBase::IsPickable() const
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 {
-    return IsEnabled() && profile_.IsVisible( entity );
+    return profile_.IsVisible( entity );
 }
 
 // -----------------------------------------------------------------------------

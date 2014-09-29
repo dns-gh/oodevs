@@ -63,7 +63,6 @@ public:
     virtual void Reset();
 
     void SetPasses( const std::string& passes );
-    std::string GetCurrentPass() const;
     bool ShouldDrawPass() const;
 
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const { return false; }
