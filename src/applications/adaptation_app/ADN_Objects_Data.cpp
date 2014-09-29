@@ -1243,7 +1243,7 @@ std::string ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::Modifie
     return std::string();
 }
 
-#define INIT_DATA( CLASS, TAG_NAME ) const std::string ADN_Objects_Data::##CLASS##::TAG( TAG_NAME );
+#define INIT_DATA( CLASS, TAG_NAME ) const std::string ADN_Objects_Data::CLASS::TAG( TAG_NAME );
 
 #pragma warning( push )
 #pragma warning( disable : 4356 )

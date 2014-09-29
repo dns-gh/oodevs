@@ -57,11 +57,11 @@ namespace
     }
 
 #   define UPDATE_PROPERTY( message, value, field, property, container )\
-    if( UpdateProperty( value, message, &BOOST_TYPEOF( message )::has_##field, &BOOST_TYPEOF( message )::##field ) )\
+    if( UpdateProperty( value, message, &BOOST_TYPEOF( message )::has_##field, &BOOST_TYPEOF( message )::field ) )\
         container.insert( property );
 
 #   define UPDATE_SUBPROPERTY( message, value, parent, field, property, container )\
-    if( UpdateSubProperty( value, message, &BOOST_TYPEOF( message )::has_##parent, &BOOST_TYPEOF( message )::##parent, &boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( message )::##parent ) >::type >::type >::type::##field ) )\
+    if( UpdateSubProperty( value, message, &BOOST_TYPEOF( message )::has_##parent, &BOOST_TYPEOF( message )::parent, &boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( message )::parent ) >::type >::type >::type::field ) )\
         container.insert( property );
 }
 

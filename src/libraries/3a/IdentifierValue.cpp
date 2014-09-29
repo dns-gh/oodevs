@@ -17,7 +17,7 @@ void IdentifierValue::Receive( const sword::SimToClient& wrapper )
 
 #define SET_OID( tag, var )                             \
     if( wrapper.message().has_##tag() )                 \
-        Set( wrapper.message().tag().##var() );
+        Set( wrapper.message().tag().var() );
     SET_OID( crowd_concentration_detection, observer().id );
     SET_OID( crowd_concentration_update, crowd().id );
     SET_OID( crowd_flow_detection, observer().id );

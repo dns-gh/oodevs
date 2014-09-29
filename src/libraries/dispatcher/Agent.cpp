@@ -154,8 +154,8 @@ void Agent::DoUpdate( const sword::UnitDestruction& msg )
 }
 
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
-    if( message.has_##ASN##() )        \
-        CPP = message.##ASN##();
+    if( message.has_##ASN() )        \
+        CPP = message.ASN();
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DoUpdate

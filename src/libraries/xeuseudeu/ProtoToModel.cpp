@@ -133,7 +133,7 @@ namespace
     typedef std::pair< T_SingleExtractor, T_MultipleExtractor > T_Extractors;
 
 #define DECLARE_EXTRACTOR( CPPTYPE, TYPE, NAME )                                                                                                            \
-    ( FieldDescriptor::##CPPTYPE, std::make_pair< T_SingleExtractor, T_MultipleExtractor >( &ExtractSingle< TYPE , &Reflection::Get##NAME >,                \
+    ( FieldDescriptor::CPPTYPE, std::make_pair< T_SingleExtractor, T_MultipleExtractor >( &ExtractSingle< TYPE , &Reflection::Get##NAME >,                \
                                                                                             &ExtractMultiple< TYPE , &Reflection::GetRepeated##NAME > ) )   \
 
     const std::map< FieldDescriptor::CppType, T_Extractors > extractors = boost::assign::map_list_of
