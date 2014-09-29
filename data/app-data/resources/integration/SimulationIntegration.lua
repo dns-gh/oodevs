@@ -3,7 +3,7 @@
 require 'debug'
 
 -- optimization
-emptyTable = setmetatable( {}, { __newindex = function( t, k ) error("Assignments to emptyTable global variable are forbidden.") end } )
+emptyTable = masalife.brain.core.constants.empty
 
 --- Bind DIA4 event interface to DIA5 interface
 
