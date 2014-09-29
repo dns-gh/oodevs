@@ -51,14 +51,14 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Category, typename Message >
-    void Connect( MessageController_ABC< Category >& controller, MessageObserver_ABC< Message >& observer,
-                  typename MessageHandler< Category, Message >::T_Checker checker,
-                  typename MessageHandler< Category, Message >::T_Retriever retriever )
+    template< typename Category, typename Message2 >
+    void Connect( MessageController_ABC< Category >& controller, MessageObserver_ABC< Message2 >& observer,
+                  typename MessageHandler< Category, Message2 >::T_Checker checker,
+                  typename MessageHandler< Category, Message2 >::T_Retriever retriever )
     {
-        handlers_[ &controller ].reset( new MessageHandler< Category, Message >( controller, observer, checker, retriever ) );
+        handlers_[ &controller ].reset( new MessageHandler< Category, Message2 >( controller, observer, checker, retriever ) );
     }
-    template< typename Category, typename Message >
+    template< typename Category, typename Message2 >
     void Disconnect( MessageController_ABC< Category >& controller )
     {
         handlers_.erase( &controller );
