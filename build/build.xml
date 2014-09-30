@@ -673,6 +673,8 @@
     <target name="package.binaries" description="create a zip with all binaries">
         <setversion version="${version.version}" product="Sword"
             file="${bin.dir}/csvclient.exe"/>
+        <setversion version="${version.version}" product="Sword"
+            file="${bin.dir}/replay.exe"/>
         <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
@@ -684,7 +686,8 @@
                                   **/migratexml.exe"/>
                     <flattenmapper/>
                 </mappedresources>
-                <fileset dir="${bin.dir}" includes="csvclient.exe"/>
+                <fileset dir="${bin.dir}" includes="csvclient.exe,
+                                                    replay.exe"/>
                 <fileset dir="${run.dir}">
                     <exclude name="Debug/**"/>
                     <exclude name="resources/integration tests/**"/>
