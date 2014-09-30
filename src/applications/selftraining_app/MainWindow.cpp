@@ -28,6 +28,8 @@
 MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises )
     : gui::WidgetLanguageObserver_ABC< QMainWindow >()
 {
+    // do not initialize useless widgets like the systray
+    // if we are going to run on the command-line
     if( !config.GetExportReplay().IsEmpty() )
         return;
     setWindowIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
