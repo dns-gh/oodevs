@@ -2449,62 +2449,6 @@ Permiso &apos;Controlar&apos; permite manejar una unidad.</translation>
 <context>
     <name>gui::VisualisationScalesPanel</name>
     <message>
-        <source>Cliffs</source>
-        <translation>Acantilados</translation>
-    </message>
-    <message>
-        <source>Bridges</source>
-        <translation>Puentes</translation>
-    </message>
-    <message>
-        <source>Railroads</source>
-        <translation>Vía Férrea</translation>
-    </message>
-    <message>
-        <source>Large texts</source>
-        <translation>Textos grandes</translation>
-    </message>
-    <message>
-        <source>Small texts</source>
-        <translation>Textos pequeños</translation>
-    </message>
-    <message>
-        <source>Edges</source>
-        <translation>Bordes</translation>
-    </message>
-    <message>
-        <source>Highways</source>
-        <translation>Autopistas</translation>
-    </message>
-    <message>
-        <source>Main roads</source>
-        <translation>Vías principales</translation>
-    </message>
-    <message>
-        <source>Secondary roads</source>
-        <translation>Vías secundarias</translation>
-    </message>
-    <message>
-        <source>Country roads</source>
-        <translation>Caminos rurales</translation>
-    </message>
-    <message>
-        <source>Main rivers</source>
-        <translation>Ríos principales</translation>
-    </message>
-    <message>
-        <source>Rivers</source>
-        <translation>Ríos</translation>
-    </message>
-    <message>
-        <source>Streams</source>
-        <translation>Arroyos</translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation>Bloques urbanos</translation>
-    </message>
-    <message>
         <source>Visualisation scales</source>
         <translation>Escalas de visualización</translation>
     </message>

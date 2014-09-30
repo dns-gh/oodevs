@@ -15,7 +15,8 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/ResourceNetworkType.h"
@@ -104,7 +105,7 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, const geometry::Point2f& from, float alpha ) const
 {
-    int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
+    int filter = controllers_.options_.GetOption( "ResourceNetworks" ).To< int >();
     if( filter == 1 )// off
         return;
     if( filter == 3 && !IsSelected() ) // selected outgoing

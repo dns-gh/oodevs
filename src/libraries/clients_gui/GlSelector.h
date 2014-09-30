@@ -96,9 +96,6 @@ private:
     void InitializePasses();
     //@}
 
-public:
-    static const int defaultFrameRate_;
-
 private:
     //! @name Member data
     //@{
@@ -119,7 +116,6 @@ private:
     GlPlaceHolder*            glPlaceHolder_;
 
     bool b3d_;
-    bool bDragMapWithWheel_;
     int refreshRate_;
     //@}
 };

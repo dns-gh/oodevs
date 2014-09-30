@@ -14,7 +14,8 @@
 #include "GLToolColors.h"
 #include "Tools.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
 

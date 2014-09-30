@@ -87,7 +87,6 @@ private:
     void SetReinforcements( const Reinforcements& reinforcements );
 
     void DrawCrowdChartPie( QPixmap& pixmap, const kernel::Population_ABC& population );
-    QBrush GetCrowdBrush( const std::string& option, QColor defaultColor );
 
     virtual void resizeEvent( QResizeEvent* ev );
     //@}

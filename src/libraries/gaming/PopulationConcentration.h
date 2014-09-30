@@ -18,7 +18,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class Options;
+    class OptionsController;
 }
 
 namespace sword
@@ -38,7 +38,7 @@ class PopulationConcentration : public kernel::PopulationConcentration_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( kernel::Options& options, const sword::CrowdConcentrationCreation& message, const kernel::CoordinateConverter_ABC& converter, float density );
+             PopulationConcentration( kernel::OptionsController& options, const sword::CrowdConcentrationCreation& message, const kernel::CoordinateConverter_ABC& converter, float density );
     virtual ~PopulationConcentration();
     //@}
 
@@ -67,13 +67,12 @@ private:
     //@{
     virtual void DoUpdate( const sword::CrowdConcentrationUpdate& message );
     void SelectRightPartColor( GLfloat alpha ) const;
-    QColor GetColor( const std::string& option, const QColor& defaultColor ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     geometry::Point2f position_;
     geometry::Rectangle2f boundingBox_;
     float density_;

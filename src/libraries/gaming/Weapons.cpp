@@ -13,7 +13,8 @@
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/WeaponSystemType.h"
 #include "protocol/Protocol.h"
 
@@ -58,10 +59,10 @@ void Weapons::DrawEfficientRange( const geometry::Point2f& where, gui::GlTools_A
 // -----------------------------------------------------------------------------
 void Weapons::OptionChanged( const std::string& name, const kernel::OptionVariant& /*value*/ )
 {
-    if( name == "EfficientRangeVolume"
-        || name == "EfficientRangePh"
-        || name == "EfficientRangeFilterIndirectWeapon"
-        || name == "EfficientRangeIndirectWeapon" )
+    if( name == "EfficientRange/Volume"
+        || name == "EfficientRange/Ph"
+        || name == "EfficientRange/FilterIndirectWeapon"
+        || name == "EfficientRange/IndirectWeapon" )
         UpdateRange();
 }
 
@@ -96,8 +97,8 @@ void Weapons::UpdateRange()
     minRange_ = std::numeric_limits< unsigned int >::max();
     maxRange_ = 0;
     efficientRange_ = 0;
-    const auto filter = controllers_.options_.GetOption( "EfficientRangeFilterIndirectWeapon", false ).To< bool >()
-        ? weapons_.Find( controllers_.options_.GetOption( "EfficientRangeIndirectWeapon", QString() ).To< QString >().toStdString() )
+    const auto filter = controllers_.options_.GetOption( "EfficientRange/FilterIndirectWeapon" ).To< bool >()
+        ? weapons_.Find( controllers_.options_.GetOption( "EfficientRange/IndirectWeapon" ).To< QString >().toStdString() )
         : 0;
     tools::Iterator< const Equipment& > it = CreateIterator();
     while( it.HasMoreElements() )
@@ -125,8 +126,8 @@ void Weapons::AddEquipmentRange( const kernel::EquipmentType& type, const kernel
             minRange_ = std::min( minRange_, weapon.GetMinRange() );
             maxRange_ = std::max( maxRange_, weapon.GetMaxRange() );
         }
-        const int ph = controllers_.options_.GetOption( "EfficientRangePh", 50 ).To< int >();
-        const int volume = controllers_.options_.GetOption( "EfficientRangeVolume", 0 ).To< int >();
+        const int ph = controllers_.options_.GetOption( "EfficientRange/Ph" ).To< int >();
+        const int volume = controllers_.options_.GetOption( "EfficientRange/Volume" ).To< int >();
         efficientRange_ = std::max( efficientRange_, weapon.GetEfficientRange( volume, 0.01 * ph ) );
     }
 }

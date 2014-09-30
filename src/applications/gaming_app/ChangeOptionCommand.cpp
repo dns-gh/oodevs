@@ -11,7 +11,7 @@
 #include "ChangeOptionCommand.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/Command.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Settings_ABC.h"
 #include "clients_kernel/TriStateOption.h"
@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: ChangeOptionCommand constructor
 // Created: AGE 2008-06-25
 // -----------------------------------------------------------------------------
-ChangeOptionCommand::ChangeOptionCommand( CommandHandler& handler, Options& options )
+ChangeOptionCommand::ChangeOptionCommand( CommandHandler& handler, OptionsController& options )
     : handler_( handler )
     , options_( options )
 {

@@ -40,7 +40,7 @@ namespace
     template< typename T >
     struct CompositeMenu
     {
-        CompositeMenu( kernel::ContextMenu* menu, QToolBar* toolBar, const QString& label, const QIcon& icons, kernel::Options& options, const std::string& option )
+        CompositeMenu( kernel::ContextMenu* menu, QToolBar* toolBar, const QString& label, const QIcon& icons, kernel::OptionsController& options, const std::string& option )
             : menu_( new OptionMenu< T >( menu, options, option ) )
         {
             {
@@ -93,7 +93,7 @@ namespace
             menu.OnSelected( index );
     }
 
-    void AddSubMenu3( QToolBar* toolBar, kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
+    void AddSubMenu3( QToolBar* toolBar, kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::OptionsController& options, const std::string& option )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
@@ -113,7 +113,7 @@ namespace
         }
     }
 
-    void AddSubMenu4( QToolBar* toolBar, kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option, kernel::FourStateOption state = kernel::FourStateOption::Off() )
+    void AddSubMenu4( QToolBar* toolBar, kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::OptionsController& options, const std::string& option, kernel::FourStateOption state = kernel::FourStateOption::Off() )
     {
         {
             QToolButton* button = new QToolButton( toolBar );

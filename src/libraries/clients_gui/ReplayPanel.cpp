@@ -11,7 +11,8 @@
 #include "ReplayPanel.h"
 #include "moc_ReplayPanel.cpp"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_gui/CheckBox.h"
 
 using namespace gui;

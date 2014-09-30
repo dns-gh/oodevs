@@ -9,7 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "Gradient.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include <graphics/extensions.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
@@ -320,7 +321,7 @@ unsigned Gradient::FindBaseDistance() const
 // Name: Gradient::Save
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void Gradient::Save( kernel::Options& options, const std::string& group ) const
+void Gradient::Save( kernel::OptionsController& options, const std::string& group ) const
 {
     QStringList colors;
     for( auto it = colors_.begin(); it != colors_.end(); ++it )

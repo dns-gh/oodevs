@@ -13,8 +13,6 @@
 #include <boost/noncopyable.hpp>
 #include "ENT/ENT_Enums.h"
 
-class QMainWindow;
-
 namespace tools
 {
     class  Observer_ABC;
@@ -26,7 +24,7 @@ namespace kernel
     class Controller;
     class LanguageController;
     class ModeController;
-    class Options;
+    class OptionsController;
 
 // =============================================================================
 /** @class  Controllers
@@ -57,7 +55,7 @@ public:
 public:
     //! @name Member data
     //@{
-    Options&            options_;
+    OptionsController&  options_;
     Controller&         controller_;
     ActionController&   actions_;
     ActionController&   eventActions_;

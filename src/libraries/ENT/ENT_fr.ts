@@ -826,6 +826,58 @@
         <source>Weapon ranges</source>
         <translation>Portées d&apos;armes</translation>
     </message>
+    <message>
+        <source>Cliffs</source>
+        <translation>Falaises</translation>
+    </message>
+    <message>
+        <source>Bridges</source>
+        <translation>Ponts</translation>
+    </message>
+    <message>
+        <source>Railroads</source>
+        <translation>Voies ferrées</translation>
+    </message>
+    <message>
+        <source>Large texts</source>
+        <translation>Gros textes</translation>
+    </message>
+    <message>
+        <source>Small texts</source>
+        <translation>Petits textes</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation>Bords</translation>
+    </message>
+    <message>
+        <source>Highways</source>
+        <translation>Autoroutes</translation>
+    </message>
+    <message>
+        <source>Main roads</source>
+        <translation>Nationales</translation>
+    </message>
+    <message>
+        <source>Secondary roads</source>
+        <translation>Départementales</translation>
+    </message>
+    <message>
+        <source>Country roads</source>
+        <translation>Chemins</translation>
+    </message>
+    <message>
+        <source>Main rivers</source>
+        <translation>Grandes rivières</translation>
+    </message>
+    <message>
+        <source>Rivers</source>
+        <translation>Rivières</translation>
+    </message>
+    <message>
+        <source>Streams</source>
+        <translation>Ruisseaux</translation>
+    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

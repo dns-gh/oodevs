@@ -20,7 +20,7 @@
 #include "SubObjectName.h"
 
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
 #include <boost/lexical_cast.hpp>
@@ -136,7 +136,7 @@ void DensityWidget::OnColorChanged( const QColor& color )
 // -----------------------------------------------------------------------------
 void DensityWidget::OnUnoccupiedColorChanged( const QColor& color )
 {
-    options_.Change( category_ + "/unoccupied", color.name() );
+    options_.Change( category_ + "/Unoccupied", color.name() );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void DensityWidget::OnUnoccupiedColorChanged( const QColor& color )
 // -----------------------------------------------------------------------------
 void DensityWidget::OnGradientEdited( Gradient& gradient )
 {
-    gradient.SetName( "urbanBlock" );
+    gradient.SetName( "Gradient" );
     gradient.Save( options_, category_ + "/" );
 }
 
@@ -170,7 +170,7 @@ void DensityWidget::Reset()
 void DensityWidget::OnMinChanged( const QString& value )
 {
     if( !value.isEmpty() )
-        options_.Change( category_ + "/min", value.toFloat() );
+        options_.Change( category_ + "/Min", value.toFloat() );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +180,7 @@ void DensityWidget::OnMinChanged( const QString& value )
 void DensityWidget::OnMaxChanged( const QString& value )
 {
     if( !value.isEmpty() )
-        options_.Change( category_ + "/max", value.toFloat() );
+        options_.Change( category_ + "/Max", value.toFloat() );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +189,7 @@ void DensityWidget::OnMaxChanged( const QString& value )
 // -----------------------------------------------------------------------------
 void DensityWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( !blockLoaded_ && name == category_ + "/urbanBlock"  )
+    if( !blockLoaded_ && name == category_ + "/Gradient" )
     {
         blockLoaded_ = true;
         Gradient gradient;
@@ -197,12 +197,12 @@ void DensityWidget::OptionChanged( const std::string& name, const kernel::Option
         gradient.LoadValues( colors );
         densityEditor_->LoadGradient( gradient );
     }
-    else if( !minLoaded_ && name == category_ + "/min"  )
+    else if( !minLoaded_ && name == category_ + "/Min" )
     {
         minLoaded_ = true;
         min_->setText( boost::lexical_cast< std::string >( value.To< float >() ).c_str() );
     }
-    else if( !maxLoaded_ && name == category_ + "/max"  )
+    else if( !maxLoaded_ && name == category_ + "/Max" )
     {
         maxLoaded_ = true;
         max_->setText( boost::lexical_cast< std::string >( value.To< float >() ).c_str() );

@@ -13,9 +13,9 @@
 #include "ColorButton.h"
 #include "RichCheckBox.h"
 #include "SizeButton.h"
-#include "SubObjectName.h"
-
-#include "clients_kernel/Options.h"
+#include "clients_gui/SubObjectName.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 
@@ -36,6 +36,9 @@ TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& c
     , name_       ( xis.attribute( "name", type_ ) )
     , currentShown_ ( true )
     , previousShown_ ( true )
+    , colorButton_( 0 )
+    , showCheckbox_( 0 )
+    , sizeButton_( 0 )
 {
     std::string color;
     xis >> xml::content( "color", color )
@@ -122,9 +125,9 @@ void TerrainPreference::Revert()
 // -----------------------------------------------------------------------------
 void TerrainPreference::Save() const
 {
-    options_.Change( "Terrains/" + type_ + "/width", sizeButton_->GetSize() );
-    options_.Change( "Terrains/" + type_ + "/color", colorButton_->GetColor().name() );
-    options_.Change( "Terrains/" + type_ + "/shown", showCheckbox_->isChecked() );
+    options_.Change( "Terrains/" + type_ + "/Width", sizeButton_->GetSize() );
+    options_.Change( "Terrains/" + type_ + "/Color", colorButton_->GetColor().name() );
+    options_.Change( "Terrains/" + type_ + "/Shown", showCheckbox_->isChecked() );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,22 +136,25 @@ void TerrainPreference::Save() const
 // -----------------------------------------------------------------------------
 void TerrainPreference::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
+    if( !colorButton_ || !showCheckbox_ || !sizeButton_ )
+        return;
+
     const QString root( QString( "Terrains/" ) + type_.c_str() );
     QString option( name.c_str() );
     if( !option.startsWith( root ) )
         return;
     option.remove( root );
-    if( option == "/width" )
+    if( option == "/Width" )
     {
         sizeButton_->SetSize( value.To< float >() );
         sizeButton_->Commit();
     }
-    else if( option == "/color" )
+    else if( option == "/Color" )
     {
         colorButton_->SetColor( QColor( value.To< QString >() ) );
         colorButton_->Commit();
     }
-    else if( option == "/shown" )
+    else if( option == "/Shown" )
     {
         currentShown_ = value.To< bool >();
         showCheckbox_->setChecked( currentShown_ );

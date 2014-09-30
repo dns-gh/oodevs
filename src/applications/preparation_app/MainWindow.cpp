@@ -93,7 +93,7 @@
 #include "clients_kernel/ModeController.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "frontend/commands.h"

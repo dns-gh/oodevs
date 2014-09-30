@@ -45,6 +45,10 @@ public:
 
     //! @name Operations
     //@{
+    virtual void BeginGroup( const QString& prefix ) = 0;
+    virtual void EndGroup() = 0;
+    virtual void RemoveKey( const QString& key ) = 0;
+
     virtual QStringList EntryList( const char* path ) = 0;
     virtual QStringList SubEntriesList( const char* path ) = 0;
 

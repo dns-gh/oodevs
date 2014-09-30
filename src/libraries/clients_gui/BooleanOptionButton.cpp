@@ -10,7 +10,8 @@
 #include "clients_gui_pch.h"
 #include "BooleanOptionButton.h"
 #include "moc_BooleanOptionButton.cpp"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
 
@@ -18,7 +19,7 @@ using namespace gui;
 // Name: BooleanOptionButton constructor
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-BooleanOptionButton::BooleanOptionButton( const QString& objectName, const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options,
+BooleanOptionButton::BooleanOptionButton( const QString& objectName, const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::OptionsController& options,
                                           const std::string& option, bool savable )
     : RichWidget< QToolButton >( objectName, parent )
     , options_( options )

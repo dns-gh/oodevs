@@ -14,7 +14,8 @@
 #include "RichSpinBox.h"
 #include "SignalAdapter.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
 
@@ -24,13 +25,12 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 RefreshRatePanel::RefreshRatePanel( QWidget* parent, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent, "RefreshRatePanel" )
-    , controllers_ ( controllers )
-    , options_  ( controllers.options_ )
+    , controllers_( controllers )
+    , options_( controllers.options_ )
 {
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Vertical, tr( "Refresh rate" ), this );
     new QLabel( tr( "Select refresh rate (in ms):" ), box );
     spinBox_ = new RichSpinBox( "RefreshRateSpinBox", box, 10 );
-    spinBox_->setValue( GlSelector::defaultFrameRate_ );
     gui::connect( spinBox_, SIGNAL( valueChanged( int ) ), [&]{
         options_.Change( "RefreshRate", spinBox_->value() );
     } );
@@ -53,7 +53,7 @@ RefreshRatePanel::~RefreshRatePanel()
 // -----------------------------------------------------------------------------
 void RefreshRatePanel::Reset()
 {
-    spinBox_->setValue( GlSelector::defaultFrameRate_ );
+    spinBox_->setValue( 50 );// tmp, va virer
 }
     
 // -----------------------------------------------------------------------------

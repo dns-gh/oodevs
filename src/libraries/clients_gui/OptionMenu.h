@@ -10,7 +10,8 @@
 #ifndef __OptionMenu_h_
 #define __OptionMenu_h_
 
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include <tools/Observer_ABC.h>
@@ -40,13 +41,6 @@ private slots:
     void OnItemSelected( int id );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    OptionMenuBase( const OptionMenuBase& );            //!< Copy constructor
-    OptionMenuBase& operator=( const OptionMenuBase& ); //!< Assignment operator
-    //@}
-
 public:
     //! @name Helpers
     //@{
@@ -69,12 +63,14 @@ public:
 // Created: SBO 2006-04-28
 // =============================================================================
 template< typename T >
-class OptionMenu : public OptionMenuBase, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
+class OptionMenu : public OptionMenuBase
+                 , public tools::Observer_ABC
+                 , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    OptionMenu( QWidget* parent, kernel::Options& options, const std::string& option, bool savable = true )
+    OptionMenu( QWidget* parent, kernel::OptionsController& options, const std::string& option, bool savable = true )
         : OptionMenuBase( parent )
         , options_( options )
         , option_( option )
@@ -128,16 +124,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    OptionMenu( const OptionMenu& );            //!< Copy constructor
-    OptionMenu& operator=( const OptionMenu& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     std::string option_;
     std::vector< T > values_;
     bool savable_;

@@ -21,7 +21,8 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include <xeumeuleu/xml.hpp>
 
 #define DEFAULT_THRESHOLD 30
@@ -168,7 +169,7 @@ void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( type_ && viewport.IsHotpointVisible() && controllers_.options_.GetOption( "Infra", true ).To< bool >() )
+    if( type_ && viewport.IsHotpointVisible() && controllers_.options_.GetOption( "Infra" ).To< bool >() )
         tools.DrawInfrastructureSymbol( type_->GetSymbol(), position_, 0.1f, 0.1f );
 }
 

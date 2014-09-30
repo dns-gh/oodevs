@@ -22,7 +22,7 @@ namespace xml
 namespace kernel
 {
     class Controllers;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -68,12 +68,6 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TerrainPreference( const TerrainPreference& );            //!< Copy constructor
-    TerrainPreference& operator=( const TerrainPreference& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
@@ -83,7 +77,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     std::string type_;
     std::string name_;
     bool currentShown_;

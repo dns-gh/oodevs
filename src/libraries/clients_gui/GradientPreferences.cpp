@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GradientPreferences.h"
 #include "Gradient.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace gui;
 // Name: GradientPreferences constructor
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-GradientPreferences::GradientPreferences( kernel::Options& options )
+GradientPreferences::GradientPreferences( kernel::OptionsController& options )
     : options_( options )
 {
     Reset();
@@ -76,7 +76,7 @@ void GradientPreferences::Load( xml::xistream& xis )
 void GradientPreferences::Save() const
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Save( options_, "Gradients/" );
+        it->second->Save( options_, "Elevation/Gradients/" );
 }
 
 // -----------------------------------------------------------------------------

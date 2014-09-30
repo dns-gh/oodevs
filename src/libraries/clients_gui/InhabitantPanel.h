@@ -11,20 +11,14 @@
 #define gui_InhabitantPanel_h
 
 #include "PreferencePanel_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
-#include <tools/Observer_ABC.h>
 
 namespace kernel
 {
     class Controllers;
-    class Options;
-    class OptionVariant;
-    class OptionsObserver_ABC;
 }
 
 namespace gui
 {
-    class CheckBox;
     class DensityWidget;
 
 // =============================================================================
@@ -35,7 +29,7 @@ namespace gui
 // =============================================================================
 class InhabitantPanel : public PreferencePanel_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -47,8 +41,6 @@ public:
 private:
     //! @name Member Data
     //@{
-    kernel::Controllers& controllers_;
-    kernel::Options& options_;
     DensityWidget* widget_;
     //@}
 };

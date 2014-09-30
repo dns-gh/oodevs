@@ -17,7 +17,7 @@
 #include "RichGroupBox.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 
 using namespace gui;
 
@@ -153,7 +153,7 @@ void ElevationPanel::Reset()
 void ElevationPanel::OnEnableVariableGradient( bool bState )
 {
     layer_.EnableVariableGradient( bState );
-    options_.Change( "FitColorGradienttoViewPort", bState );
+    options_.Change( "Elevation/FitToViewPort", bState );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ void ElevationPanel::OnEnableHillshade( bool bState )
 {
     enableHs_ = bState;
     layer_.SetHillShadeStrength( enableHs_ ? strengthHs_ : 0.f );
-    options_.Change( "EnableHillShade", bState );
+    options_.Change( "HillShade/Enabled", bState );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ void ElevationPanel::OnEnableHillshade( bool bState )
 void ElevationPanel::OnHillShadeDirection( int value )
 {
     layer_.SetHillShadeDirection( directionHs_ = value );
-    options_.Change( "HillShadeDirection", value );
+    options_.Change( "HillShade/Direction", value );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ void ElevationPanel::OnStrengthChanged( int value )
 {
     strengthHs_ = pow( 1.1f, value );
     OnEnableHillshade( enableHs_ );
-    options_.Change( "HillShadeStrength", value );
+    options_.Change( "HillShade/Strength", value );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,29 +195,29 @@ void ElevationPanel::OnStrengthChanged( int value )
 void ElevationPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
     QString option ( name.c_str() );
-    if( option == "FitColorGradienttoViewPort" )
+    if( option == "Elevation/FitToViewPort" )
     {
         fitColorGradienttoViewPort_->setChecked( value.To< bool >() );
         return;
     }
-    else if( option == "EnableHillShade" )
+    else if( option == "HillShade/Enabled" )
     {
         hsBox_->setChecked( value.To< bool >() );
         return;
     }
-    else if( option == "HillShadeDirection" )
+    else if( option == "HillShade/Direction" )
     {
         hsDial_->setValue( value.To< int >() );
         return;
     }
-    else if( option == "HillShadeStrength" )
+    else if( option == "HillShade/Strength" )
     {
         hillShadeStrength_->setValue( value.To< int >() );
         return;
     }
-    else if( !option.startsWith( "Gradients/" ) )
+    else if( !option.startsWith( "Elevation/Gradients/" ) )
         return;
-    option.remove( "Gradients/" );
+    option.remove( "Elevation/Gradients/" );
     preferences_.SetGradient( option, value.To< QString >() );
     gradient_->Reset(); // $$$$ SBO 2008-08-18: bof... notify Gradient creation/destruction instead
 }

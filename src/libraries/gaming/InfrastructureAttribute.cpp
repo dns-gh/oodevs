@@ -18,7 +18,8 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_gui/DictionaryUpdated.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
 #include "Tools.h"
 #include "protocol/Protocol.h"
@@ -110,7 +111,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && controllers_.options_.GetOption( "Infra", true ).To< bool >() )
+    if( viewport.IsHotpointVisible() && controllers_.options_.GetOption( "Infra" ).To< bool >() )
     {
         if( type_ )
             tools.DrawInfrastructureSymbol( type_->GetSymbol(), position_, 0.1f, 0.1f );

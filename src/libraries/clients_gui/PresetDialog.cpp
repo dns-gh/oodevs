@@ -16,7 +16,7 @@
 
 #include "Gradient.h"
 
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 
 using namespace gui;
 
@@ -24,7 +24,7 @@ using namespace gui;
 // Name: PresetDialog constructor
 // Created: LGY 2010-09-24
 // -----------------------------------------------------------------------------
-PresetDialog::PresetDialog( QWidget* parent, Gradient& gradient, kernel::Options& options,
+PresetDialog::PresetDialog( QWidget* parent, Gradient& gradient, kernel::OptionsController& options,
                             const std::vector< std::string >& presets )
     : QDialog( parent )
     , pLayout_ ( new Q3VBoxLayout( this ) )
@@ -93,7 +93,7 @@ void PresetDialog::Accept()
         QMessageBox::warning( this, tr( "Warning" ), tr( "Preset name already exists." ) );
     else
     {
-        options_.Remove( std::string( "Gradients/" ) + gradient_.GetName().toStdString() );
+        options_.Remove( std::string( "Elevation/Gradients/" ) + gradient_.GetName().toStdString() );
         gradient_.SetName( pLineEdit_->text() );
         QDialog::accept();
     }

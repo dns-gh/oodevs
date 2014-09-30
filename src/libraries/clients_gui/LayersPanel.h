@@ -16,7 +16,7 @@
 namespace kernel
 {
     class Controllers;
-    class Options;
+    class OptionsController;
 }
 
 namespace gui
@@ -88,7 +88,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::Options& options_;
+    kernel::OptionsController& options_;
     GlSelector& selector_;
     T_Layers layers_;
     T_Layers dynamicLayers_;

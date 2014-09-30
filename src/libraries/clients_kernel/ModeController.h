@@ -19,7 +19,7 @@ class QMainWindow;
 
 namespace kernel
 {
-    class Options;
+    class OptionsController;
 
 // =============================================================================
 /** @class  ModeController
@@ -50,8 +50,8 @@ public:
     void LoadGeometry( E_Modes mode );
     void SaveGeometry( E_Modes mode );
 
-    void LoadOptions( E_Modes mode, Options& options );
-    void SaveOptions( E_Modes mode, Options& options );
+    void LoadOptions( E_Modes mode, OptionsController& options );
+    void SaveOptions( E_Modes mode, OptionsController& options );
     //@}
 
 private:

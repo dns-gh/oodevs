@@ -20,14 +20,13 @@
 #include "TextureRenderPass.h"
 #include "CompositionPass.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "tools/ExerciseConfig.h"
 #include <graphics/DragMovementLayer.h>
 
 using namespace gui;
 using namespace kernel;
-
-const int GlSelector::defaultFrameRate_( 50 );
 
 // -----------------------------------------------------------------------------
 // Name: GlSelector constructor
@@ -46,8 +45,7 @@ GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controller
     , widget3d_         ( 0 )
     , glPlaceHolder_    ( 0 )
     , b3d_              ( false )
-    , bDragMapWithWheel_( false )
-    , refreshRate_      ( defaultFrameRate_ )
+    , refreshRate_      ( 50 )
 {
     setObjectName( "GlSelector" );
     displayTimer_ = new QTimer( this );
@@ -90,7 +88,6 @@ void GlSelector::Load()
     proxy_.ChangeTo( widget2d_ );
     proxy_.RegisterTo( widget2d_ );
     setCurrentWidget( widget2d_ );
-    controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel_ ));
     connect( displayTimer_, SIGNAL( timeout() ), this, SLOT( OnUpdateGL() ) );
     connect( this, SIGNAL( UpdateGL() ), widget2d_, SLOT( updateGL() ) );
     displayTimer_->start( refreshRate_ );
@@ -205,10 +202,6 @@ void GlSelector::OptionChanged( const std::string& name, const OptionVariant& va
             connect( displayTimer_, SIGNAL( timeout()), currentWidget(), SLOT( updateGL() ) );
             b3d_ = new3d;
         }
-    }
-    else if( name == "MapDraggingType" )
-    {
-        bDragMapWithWheel_ = value.To< int >() == 0 ? false : true;
     }
     else if( name == "RefreshRate" )
     {

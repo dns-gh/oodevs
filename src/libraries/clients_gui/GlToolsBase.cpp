@@ -10,7 +10,8 @@
 #include "clients_gui_pch.h"
 #include "GlToolsBase.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
@@ -103,7 +104,7 @@ bool GlToolsBase::ShouldDisplay( const std::string& name, bool b1, bool b2, bool
     IT_Options it = options_.find( name );
     if( it == options_.end() )
     {
-        const FourStateOption& option = controllers_.options_.GetOption( name, FourStateOption::Selected() ).To< FourStateOption >();
+        const FourStateOption& option = controllers_.options_.GetOption( name ).To< FourStateOption >();
         it = options_.insert( std::make_pair( name, option ) ).first;
     }
     return it->second.IsSet( b1, b2, b3 );
