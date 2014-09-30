@@ -428,7 +428,7 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
         pathSet_ = eBlockedByObject;
         return true;
     }
-    movingEntity_.NotifyMovingInsideObject( object );
+    movingEntity_.NotifyMovingInsideObject( object, startPosition, endPosition );
     const double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
     if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) && IsOutside( startPosition, object ) )
     {

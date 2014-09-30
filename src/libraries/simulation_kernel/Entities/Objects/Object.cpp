@@ -218,13 +218,13 @@ bool Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::ProcessAgentMovingInside
+// Name: Object::ProcessAgentMovingInsideAt
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
+void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
-    MIL_Object::ProcessAgentMovingInside( agent );
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this, startPos, endPos );
+    MIL_Object::ProcessAgentMovingInside( agent, startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +233,8 @@ void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
+    const MT_Vector2D& position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this, position, position );
     MIL_Object::ProcessAgentInside( agent );
 }
 

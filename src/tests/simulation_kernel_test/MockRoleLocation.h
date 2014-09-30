@@ -20,7 +20,7 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockRoleLocation, PHY_RoleInterface_Location )
 {
-    MOCK_METHOD( NotifyTerrainObjectCollision, 1 );
+    MOCK_METHOD( NotifyTerrainObjectCollision, 3 );
     MOCK_METHOD( NotifyTerrainPutInsideObject, 1 );
     MOCK_METHOD( NotifyTerrainPutOutsideObject, 1 );
 

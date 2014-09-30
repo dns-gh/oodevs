@@ -125,7 +125,7 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
     xisModel >> xml::end;
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( firer );
 
-    urbanRole->NotifyMovingInsideObject( *urbanBlock );
+    urbanRole->NotifyMovingInsideObject( *urbanBlock, MT_Vector2D(), MT_Vector2D() );
     firer.RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
     BOOST_CHECK_CLOSE( 0.32, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );

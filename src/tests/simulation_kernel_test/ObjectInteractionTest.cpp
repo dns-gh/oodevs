@@ -124,7 +124,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC, O
     MockAgent agent;
     agent.RegisterRole( *new MockRoleLocation() );
     MOCK_EXPECT( agent.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
-    MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).once().returns( position );
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( position );
 
     agent.RegisterRole( *new MockRoleNBC() );
     MOCK_EXPECT( agent.GetRole< MockRoleNBC >().Contaminate ).never();
@@ -163,7 +163,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC, Obj
     MockAgent agent;
     agent.RegisterRole( *new MockRoleLocation() );
     MOCK_EXPECT( agent.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
-    MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).once().returns( position );
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( position );
 
     agent.RegisterRole( *new MockRoleNBC() );
     MOCK_EXPECT( agent.GetRole< MockRoleNBC >().Contaminate ).never();
@@ -201,7 +201,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapa
     {
         // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
         MOCK_EXPECT( agent.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
-//        MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).exactly( 2 ).returns( position );
+        MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( position );
     }
     agent.RegisterRole( *new MockRoleInterface_Posture() );
     {
@@ -352,8 +352,10 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
     static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >().AddDetector( detector );
 
     MOCK_EXPECT( time.GetCurrentTimeStep ).once().returns( 3u );
-
+    
     MOCK_EXPECT( intruder.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
+    MT_Vector2D position;
+    MOCK_EXPECT( intruder.GetRole< MockRoleLocation >().GetPosition ).returns( position );
     MOCK_EXPECT( detector.GetRole< MockRolePerceiver >().NotifyExternalPerception ).with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
 
     BOOST_CHECK_NO_THROW( object->ProcessAgentInside( intruder ) );

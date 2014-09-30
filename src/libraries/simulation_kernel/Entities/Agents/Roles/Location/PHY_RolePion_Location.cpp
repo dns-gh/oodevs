@@ -284,21 +284,21 @@ void PHY_RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentr
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location::NotifyObjectCollision
+// Name: PHY_RolePion_Location::NotifyTerrainObjectCollision
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object )
+void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
-    owner_->GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_, vDirection_ );
+    owner_->GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location::NotifyMovingInsideObject
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
+void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
-    object.NotifyAgentMovingInside( *owner_ );
+    object.NotifyAgentMovingInside( *owner_, startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +316,7 @@ void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentPutInside( *owner_ );
+    object.NotifyAgentPutInside( *owner_, *pvPosition_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,7 +31,7 @@ MOCK_BASE_CLASS( MockMIL_Object_ABC, MIL_Object_ABC )
     MOCK_METHOD( PreprocessAgent, 1 );
     MOCK_METHOD( ProcessAgentEntering, 1 );
     MOCK_METHOD( ProcessAgentExiting, 1 );
-    MOCK_METHOD( ProcessAgentMovingInside, 1 );
+    MOCK_METHOD( ProcessAgentMovingInside, 3 );
     MOCK_METHOD( ProcessAgentInside, 1 );
     MOCK_METHOD( ProcessPopulationInside, 1 );
     MOCK_METHOD( ApplyIndirectFire, 3 );

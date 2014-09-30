@@ -348,9 +348,9 @@ void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_P
 // Name: PHY_RoleAction_Moving::NotifyMovingInsideObject
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object )
+void PHY_RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos  )
 {
-    owner_->Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
+    owner_->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object, startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------

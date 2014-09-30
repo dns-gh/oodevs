@@ -272,11 +272,11 @@ void MIL_Object_ABC::NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& p
 // Name: MIL_Object_ABC::NotifyAgentMovingInside
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
-void MIL_Object_ABC::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
+void MIL_Object_ABC::NotifyAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos  )
 {
     if( !CanCollideWithEntity() )
         return;
-    interaction_.NotifyAgentMovingInside( agent );
+    interaction_.NotifyAgentMovingInside( agent, startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,11 +292,11 @@ void MIL_Object_ABC::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 // Name: MIL_Object_ABC::NotifyAgentPutInside
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-void MIL_Object_ABC::NotifyAgentPutInside( MIL_Agent_ABC& agent )
+void MIL_Object_ABC::NotifyAgentPutInside( MIL_Agent_ABC& agent, const MT_Vector2D& position )
 {
     if( !CanCollideWithEntity() )
         return;
-    interaction_.NotifyAgentPutInside( agent );
+    interaction_.NotifyAgentPutInside( agent, position );
 }
 
 // -----------------------------------------------------------------------------

@@ -308,7 +308,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
 // Name: MIL_PopulationFlow::NotifyMovingInsideObject
 // Created: NLD 2005-12-10
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
+void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D&, const MT_Vector2D& )
 {
     object.NotifyPopulationMovingInside( *this );
     //$$$ DEUGUEU Cf. refactor gestion objets <-> population

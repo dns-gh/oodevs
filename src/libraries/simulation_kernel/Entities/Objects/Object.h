@@ -61,7 +61,7 @@ public:
     //! @name Interaction
     //@{
     virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
-    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     virtual void ProcessAgentInside( MIL_Agent_ABC& agent );
     //@}
 

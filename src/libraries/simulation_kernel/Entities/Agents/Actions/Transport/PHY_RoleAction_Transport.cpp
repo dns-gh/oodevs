@@ -709,13 +709,13 @@ std::vector< DEC_Decision_ABC* > PHY_RoleAction_Transport::GetTransportedUnits()
 // Name: PHY_RoleAction_Transport::NotifyMovingInsideObject
 // Created: LDC 2014-08-11
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::NotifyMovingInsideObject( MIL_Object_ABC& object )
+void PHY_RoleAction_Transport::NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
 {
     if( propagating_ )
         return;
     propagating_ = true;
     for( auto it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
-        it->first->Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
+        it->first->Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object, startPos, endPos );
     propagating_ = false;
 }
 

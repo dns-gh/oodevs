@@ -10,17 +10,20 @@
 #ifndef __MIL_ObjectInteraction_h_
 #define __MIL_ObjectInteraction_h_
 
+#include <tools/Map.h>
 #include <tools/Set.h>
 #include <boost/serialization/split_member.hpp>
 #include <boost/noncopyable.hpp>
 #include <algorithm>
 
 class MIL_Agent_ABC;
-class TER_Localisation;
 class MIL_CheckPointOutArchive;
 class MIL_CheckPointInArchive;
 class MIL_Object_ABC;
 class MIL_PopulationElement_ABC;
+class MT_Line;
+class MT_Vector2D;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_ObjectInteraction
@@ -54,9 +57,9 @@ public:
     void NotifyPopulationMovingInside( MIL_PopulationElement_ABC& population );
     void NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& population );
 
-    void NotifyAgentMovingInside( MIL_Agent_ABC& agent );
+    void NotifyAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     void NotifyAgentMovingOutside( MIL_Agent_ABC& agent );
-    void NotifyAgentPutInside( MIL_Agent_ABC& agent );
+    void NotifyAgentPutInside( MIL_Agent_ABC& agent, const MT_Vector2D& position );
     void NotifyAgentPutOutside( MIL_Agent_ABC& agent );
 
     template< typename F >
@@ -87,6 +90,7 @@ private:
     T_Agents agentsDelayedEntering_;
     T_Populations populationsInside_;
     T_Populations populationsMovingInside_;
+    tools::Map< MIL_Agent_ABC*, std::pair< MT_Vector2D, MT_Vector2D > > agentCollisionPositions_;
     double height_;
     //@}
 };

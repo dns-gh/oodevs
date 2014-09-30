@@ -248,7 +248,7 @@ void MIL_Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // Name: MIL_Object::ProcessAgentMovingInside
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void MIL_Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
+void MIL_Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D&, const MT_Vector2D& )
 {
     for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
         (*it)->ProcessAgentMovingInside( *this, agent );

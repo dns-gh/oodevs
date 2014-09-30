@@ -42,7 +42,7 @@ public:
     virtual void PreprocessAgent( MIL_Agent_ABC& /*agent*/ ) {}
     virtual void ProcessAgentEntering( MIL_Agent_ABC& /*agent*/ ) {}
     virtual void ProcessAgentExiting( MIL_Agent_ABC& /*agent*/ ) {}
-    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& /*agent*/, const MT_Vector2D&, const MT_Vector2D& ) {}
     virtual void ProcessAgentInside( MIL_Agent_ABC& /*agent*/ ) {}
     virtual void ProcessPopulationInside( MIL_PopulationElement_ABC& /*population*/ ) {}
     virtual void ApplyIndirectFire( const TER_Localisation& /*attritionSurface*/, const PHY_DotationCategory& /*dotation*/, MIL_Army_ABC* /*army*/ ) {};

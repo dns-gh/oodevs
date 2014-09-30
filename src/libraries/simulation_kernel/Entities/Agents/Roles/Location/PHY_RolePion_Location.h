@@ -26,6 +26,7 @@ namespace urbanLocation
 }
 
 class MIL_AgentPion;
+class MT_Vector2D;
 
 // =============================================================================
 // @class  PHY_RolePion_Location
@@ -62,14 +63,14 @@ public:
     virtual void Follow( const MIL_Agent_ABC& agent );
     void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
 
-    virtual void NotifyTerrainObjectCollision( MIL_Object_ABC& object );
+    virtual void NotifyTerrainObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     virtual void NotifyTerrainPutInsideObject( MIL_Object_ABC& object );
     virtual void NotifyTerrainPutOutsideObject( MIL_Object_ABC& object );
     //@}
 
     //! @name Event handlers
     //@{
-    virtual void NotifyMovingInsideObject( MIL_Object_ABC& object );
+    virtual void NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
     virtual void NotifyPutInsideObject( MIL_Object_ABC& object ) ;
     virtual void NotifyPutOutsideObject( MIL_Object_ABC& object );

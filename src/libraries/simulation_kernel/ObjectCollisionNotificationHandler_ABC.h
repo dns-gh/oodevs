@@ -11,6 +11,7 @@
 #define __terrain_ObjectCollisionNotificationHandler_ABC_H__
 
 class MIL_Object_ABC;
+class MT_Vector2D;
 
 namespace terrain
 {
@@ -32,7 +33,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    virtual void NotifyMovingInsideObject( MIL_Object_ABC& object ) = 0;
+    virtual void NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos  ) = 0;
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object ) = 0;
     virtual void NotifyPutInsideObject( MIL_Object_ABC& object ) = 0;
     virtual void NotifyPutOutsideObject( MIL_Object_ABC& object ) = 0;

@@ -25,6 +25,7 @@ class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
+class MT_Line;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Location
@@ -48,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyTerrainObjectCollision( MIL_Object_ABC& object ) = 0;
+    virtual void NotifyTerrainObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos ) = 0;
 
     virtual void NotifyTerrainPutInsideObject( MIL_Object_ABC& object ) = 0;
     virtual void NotifyTerrainPutOutsideObject( MIL_Object_ABC& object ) = 0;
