@@ -48,7 +48,7 @@ inline std::istream& operator>>( std::istream& is, QString& s )
 {
     std::string tmp;
     is >> tmp;
-    s = tmp.c_str();
+    s = QString::fromStdString( tmp );
     return is;
 }
 
@@ -56,7 +56,7 @@ inline xml::xistream& operator>>( xml::xistream& xis, QString& s )
 {
     std::string tmp;
     xis >> tmp;
-    s = tmp.c_str();
+    s = QString::fromStdString( tmp );
     return xis;
 }
 
