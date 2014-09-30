@@ -3,23 +3,20 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_CoordinateManager.cpp $
-// $Author: Age $
-// $Modtime: 25/05/05 13:30 $
-// $Revision: 4 $
-// $Workfile: TER_CoordinateManager.cpp $
+// Copyright (c) 2005 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_terrain_pch.h"
 #include "TER_CoordinateManager.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/thread/mutex.hpp>
 #include <cmath>
+
+namespace
+{
+    boost::mutex mutex_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: TER_CoordinateManager constructor
@@ -51,6 +48,7 @@ void TER_CoordinateManager::MosToSimMgrsCoord( const std::string& strMgrs, MT_Ve
 {
     try
     {
+        boost::mutex::scoped_lock lock( mutex_ );
         mgrs_.SetString( strMgrs );
         planar_.SetCoordinates( mgrs_ );
         pos.rX_ = planar_.GetX();
@@ -72,6 +70,7 @@ void TER_CoordinateManager::MosToSimMgrsCoord( double latitude, double longitude
 {
     try
     {
+        boost::mutex::scoped_lock lock( mutex_ );
         static const double rPiOver180 = std::acos( -1. ) / 180;
         geodetic_.Set( latitude * rPiOver180, longitude * rPiOver180 );
         planar_.SetCoordinates( geodetic_ );
@@ -94,6 +93,7 @@ void TER_CoordinateManager::SimToMosMgrsCoord( const MT_Vector2D& pos, std::stri
 {
     try
     {
+        boost::mutex::scoped_lock lock( mutex_ );
         const MT_Vector2D translated = pos - translation_;
         planar_.Set( translated.rX_, translated.rY_ );
         mgrs_.SetCoordinates( planar_ );
@@ -114,6 +114,7 @@ void TER_CoordinateManager::SimToMosMgrsCoord( const MT_Vector2D& pos, double& l
 {
     try
     {
+        boost::mutex::scoped_lock lock( mutex_ );
         static const double iPiOver180 = 180. / std::acos( -1. );
         const MT_Vector2D translated = pos - translation_;
         planar_.Set( translated.rX_, translated.rY_ );
