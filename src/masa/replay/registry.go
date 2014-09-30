@@ -27,8 +27,8 @@ var (
 	procRegOpenKey   = advapi32.NewProc("RegOpenKeyExW")
 )
 
-func regOpenKey(hkey int, subkey string) bool {
-	var result int
+func regOpenKey(hkey uint, subkey string) bool {
+	var result uint
 	ret, _, _ := procRegOpenKey.Call(
 		uintptr(hkey),
 		uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(subkey))),
@@ -43,7 +43,7 @@ func regOpenKey(hkey int, subkey string) bool {
 	return true
 }
 
-func regCloseKey(hkey int) error {
+func regCloseKey(hkey uint) error {
 	ret, _, _ := procRegCloseKey.Call(uintptr(hkey))
 	if ret != 0 {
 		return fmt.Errorf("unable to close registry key %v", hkey)
@@ -51,8 +51,8 @@ func regCloseKey(hkey int) error {
 	return nil
 }
 
-func regCreateKey(hkey int, subkey string) error {
-	var result int
+func regCreateKey(hkey uint, subkey string) error {
+	var result uint
 	ret, _, _ := procRegCreateKey.Call(
 		uintptr(hkey),
 		uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(subkey))),
