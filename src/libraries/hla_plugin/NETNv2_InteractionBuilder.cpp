@@ -140,47 +140,47 @@ namespace
     struct ArrayOfUuidDecoder : public ::hla::Encodable_ABC< T >
     {
     private:
-    	interactions::ListOfUnits T::* member_;
+        interactions::ListOfUnits T::* member_;
 
     public:
-    	ArrayOfUuidDecoder(interactions::ListOfUnits T::* m) : member_(m) {}
-    	virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
-    	{
-    		VariableArray< NETN_UUID > tmp;
-    		tmp.Deserialize(deserializer);
-    		(object.*member_).list.resize(tmp.list.size());
-    		std::transform( tmp.list.begin(), tmp.list.end(), (object.*member_).list.begin(), &uuid2ObjDef );
-    	}
-    	virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
-    	{
-    		VariableArray< NETN_UUID > tmp;
-    		tmp.list.resize((object.*member_).list.size());
-    		std::transform( (object.*member_).list.begin(), (object.*member_).list.end(), tmp.list.begin(), &objectDef2uuid );
-    		tmp.Serialize(serializer);
-    	}
+        ArrayOfUuidDecoder(interactions::ListOfUnits T::* m) : member_(m) {}
+        virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
+        {
+            VariableArray< NETN_UUID > tmp;
+            tmp.Deserialize(deserializer);
+            (object.*member_).list.resize(tmp.list.size());
+            std::transform( tmp.list.begin(), tmp.list.end(), (object.*member_).list.begin(), &uuid2ObjDef );
+        }
+        virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
+        {
+            VariableArray< NETN_UUID > tmp;
+            tmp.list.resize((object.*member_).list.size());
+            std::transform( (object.*member_).list.begin(), (object.*member_).list.end(), tmp.list.begin(), &objectDef2uuid );
+            tmp.Serialize(serializer);
+        }
     };
 
     template< typename T >
     struct TransportUnitIdentifierDecoder : public ::hla::Encodable_ABC< T >
     {
-    	virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
-    	{
-    		NETN_UUID tmp;
-    		tmp.Deserialize(deserializer);
-    		boost::uuids::uuid uid;
-    		const std::vector< char > tmpData = tmp.data();
-    		memcpy(&uid, tmpData.data(), 16);
-    		object.transportUnitIdentifier = UnicodeString(boost::lexical_cast<std::string>(uid));
-    	}
-    	virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
-    	{
-    		boost::uuids::string_generator gen;
-    		const boost::uuids::uuid uid = gen(object.transportUnitIdentifier.str());
-    		std::vector<char> v(uid.size());
-    		std::copy(uid.begin(), uid.end(), v.begin());
-    		NETN_UUID tmp(v);
-    		tmp.Serialize(serializer);
-    	}
+        virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
+        {
+            NETN_UUID tmp;
+            tmp.Deserialize(deserializer);
+            boost::uuids::uuid uid;
+            const std::vector< char > tmpData = tmp.data();
+            memcpy(&uid, tmpData.data(), 16);
+            object.transportUnitIdentifier = UnicodeString(boost::lexical_cast<std::string>(uid));
+        }
+        virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
+        {
+            boost::uuids::string_generator gen;
+            const boost::uuids::uuid uid = gen(object.transportUnitIdentifier.str());
+            std::vector<char> v(uid.size());
+            std::copy(uid.begin(), uid.end(), v.begin());
+            NETN_UUID tmp(v);
+            tmp.Serialize(serializer);
+        }
     };
 }
 

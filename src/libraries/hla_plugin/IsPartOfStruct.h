@@ -29,23 +29,23 @@ class IsPartOfStruct
 public:
     enum ConstituentPartNatureEnum16
     {
-        constituentPartNatureEnum16_Other 	= 0,
-        constituentPartNatureEnum16_HostFireableMunition 	= 1,
-        constituentPartNatureEnum16_MunitionCarriedAsCargo 	= 2,
-        constituentPartNatureEnum16_FuelCarriedAsCargo 	= 3,
-        constituentPartNatureEnum16_GunmountAttachedToHost 	= 4,
-        constituentPartNatureEnum16_ComputerGeneratedForcesCarriedAsCargo 	= 5,
-        constituentPartNatureEnum16_VehicleCarriedAsCargo 	= 6,
-        constituentPartNatureEnum16_EmitterMountedOnHost 	= 7,
-        constituentPartNatureEnum16_MobileCommandAndControlEntityCarriedAboardHost 	= 8,
-        constituentPartNatureEnum16_EntityStationedWithRespectToHost 	= 9,
-        constituentPartNatureEnum16_TeamMemberInFormationWith 	= 10
+        constituentPartNatureEnum16_Other     = 0,
+        constituentPartNatureEnum16_HostFireableMunition     = 1,
+        constituentPartNatureEnum16_MunitionCarriedAsCargo     = 2,
+        constituentPartNatureEnum16_FuelCarriedAsCargo     = 3,
+        constituentPartNatureEnum16_GunmountAttachedToHost     = 4,
+        constituentPartNatureEnum16_ComputerGeneratedForcesCarriedAsCargo     = 5,
+        constituentPartNatureEnum16_VehicleCarriedAsCargo     = 6,
+        constituentPartNatureEnum16_EmitterMountedOnHost     = 7,
+        constituentPartNatureEnum16_MobileCommandAndControlEntityCarriedAboardHost     = 8,
+        constituentPartNatureEnum16_EntityStationedWithRespectToHost     = 9,
+        constituentPartNatureEnum16_TeamMemberInFormationWith     = 10
     };
     enum ConstituentPartPositionEnum16
     {
-        constituentPartPosition_Other 	= 0,
-        constituentPartPosition_OnTopOf 	= 1,
-        constituentPartPosition_Inside 	= 2
+        constituentPartPosition_Other     = 0,
+        constituentPartPosition_OnTopOf     = 1,
+        constituentPartPosition_Inside     = 2
     };
     enum ConstituentPartStationNameEnum16
     {

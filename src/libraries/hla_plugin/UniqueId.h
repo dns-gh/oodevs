@@ -62,11 +62,11 @@ public:
     }
     std::string str() const
     {
-    	std::stringstream ss;
-    	ss << std::hex;
+        std::stringstream ss;
+        ss << std::hex;
         for( unsigned int i = 0; i < Number; ++i )
         {
-        	ss << (uint16_t)identifier_[ i ];
+            ss << (uint16_t)identifier_[ i ];
         }
         return ss.str();
     }

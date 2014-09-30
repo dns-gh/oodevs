@@ -104,15 +104,15 @@ BOOST_FIXTURE_TEST_CASE( orientation_serialization, SerializationFixture )
 
 BOOST_FIXTURE_TEST_CASE( paddedvariablearray_serialization, SerializationFixture )
 {
-	const plugins::hla::UnicodeString s1("abc");
-	const plugins::hla::UnicodeString s2("abcde");
-	plugins::hla::PaddedVariableArray< plugins::hla::UnicodeString, 4 > arr;
-	arr.list.push_back(s1);
-	arr.list.push_back(s2);
-	::hla::Deserializer deserializer = Serialize( arr,
-		sizeof(uint32_t) + // count
-		sizeof(uint32_t) + sizeof(uint16_t) * s1.str().size() + // s1 size
-		sizeof(uint16_t) + // padding
-		sizeof(uint32_t) + sizeof(uint16_t) * s2.str().size() // s2 size
-		);
+    const plugins::hla::UnicodeString s1("abc");
+    const plugins::hla::UnicodeString s2("abcde");
+    plugins::hla::PaddedVariableArray< plugins::hla::UnicodeString, 4 > arr;
+    arr.list.push_back(s1);
+    arr.list.push_back(s2);
+    ::hla::Deserializer deserializer = Serialize( arr,
+        sizeof(uint32_t) + // count
+        sizeof(uint32_t) + sizeof(uint16_t) * s1.str().size() + // s1 size
+        sizeof(uint16_t) + // padding
+        sizeof(uint32_t) + sizeof(uint16_t) * s2.str().size() // s2 size
+        );
 }
