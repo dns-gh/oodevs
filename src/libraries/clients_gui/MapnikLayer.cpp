@@ -17,8 +17,8 @@
 
 using namespace gui;
 
-MapnikLayer::MapnikLayer( kernel::Controllers& controllers, uint32_t threads )
-    : Layer2D( controllers, eLayerTypes_Mapnik )
+MapnikLayer::MapnikLayer( kernel::Controllers& controllers, GlTools_ABC& tools, uint32_t threads )
+    : Layer2D( controllers, tools, eLayerTypes_Mapnik )
     , threads_( threads )
 {
     SetAlpha( 0 );

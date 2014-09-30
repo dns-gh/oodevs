@@ -46,13 +46,11 @@ private:
     //! @name Types
     //@{
     typedef std::vector< std::pair< geometry::Point2f, QImage > > T_Tooltips;
-    typedef T_Tooltips::const_iterator                          CIT_Tooltips;
     //@}
 
 private:
     //! @name Member data
     //@{
-    GlTools_ABC& tools_;
     T_Tooltips tooltips_;
     //@}
 };

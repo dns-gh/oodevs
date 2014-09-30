@@ -26,7 +26,9 @@ class TooltipsLayer_ABC : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             TooltipsLayer_ABC( kernel::Controllers& controllers ) : Layer( controllers, eLayerTypes_Tooltips ) {}
+             TooltipsLayer_ABC( kernel::Controllers& controllers, GlTools_ABC& tools )
+                 : Layer( controllers, tools, eLayerTypes_Tooltips )
+             {}
     virtual ~TooltipsLayer_ABC() {}
     //@}
 

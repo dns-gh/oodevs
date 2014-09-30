@@ -41,7 +41,9 @@ class WeatherLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy );
+             WeatherLayer( kernel::Controllers& controllers,
+                           GlTools_ABC& tools,
+                           ExclusiveEventStrategy& eventStrategy );
     virtual ~WeatherLayer();
     //@}
 
@@ -64,8 +66,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const GlTools_ABC&  tools_;
-    bool                displaying_;
+    bool displaying_;
     //@}
 
 private:

@@ -23,9 +23,8 @@ using namespace gui;
 // Name: GridLayer constructor
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-GridLayer::GridLayer( Controllers& controllers, const GlTools_ABC& tools, const CoordinateConverter_ABC& converter )
-    : Layer2D( controllers, eLayerTypes_Grid )
-    , tools_( tools )
+GridLayer::GridLayer( Controllers& controllers, GlTools_ABC& tools, const CoordinateConverter_ABC& converter )
+    : Layer2D( controllers, tools, eLayerTypes_Grid )
     , converter_( converter )
     , gridType_( eCoordinateSystem_Local )
     , gridSize_( 10000 ) // meters

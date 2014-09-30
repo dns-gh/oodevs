@@ -17,8 +17,7 @@
 // Created: SBO 2010-04-30
 // -----------------------------------------------------------------------------
 ActionsLayer::ActionsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools )
-    : gui::Layer( controllers, eLayerTypes_Actions )
-    , tools_( tools )
+    : gui::Layer( controllers, tools, eLayerTypes_Actions )
     , current_( controllers )
 {
     controllers_.Update( *this );

@@ -56,7 +56,6 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::GlTools_ABC& tools_;
     kernel::SafePointer< actions::Action_ABC > current_;
     //@}
 };

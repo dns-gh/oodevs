@@ -989,3 +989,12 @@ void Gl3dWidget::DrawShapeText( const QImage& image, const geometry::Point2f& wh
         glDeleteTextures( 1, &texture );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::GetCurrentPass
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+std::string Gl3dWidget::GetCurrentPass() const
+{
+    return "";
+}

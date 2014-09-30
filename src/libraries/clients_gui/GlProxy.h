@@ -72,6 +72,7 @@ public:
     virtual bool ShouldDisplay( E_LayerTypes type ) const;
     virtual bool ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const;
 
+    virtual std::string GetCurrentPass() const;
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
     virtual float LineWidth( float base ) const;

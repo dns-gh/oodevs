@@ -673,3 +673,12 @@ void GlProxy::Purge()
     widget2d_.reset();
     widget3d_.reset();
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::GetCurrentPass
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+std::string GlProxy::GetCurrentPass() const
+{
+    return tools_ ? tools_->GetCurrentPass() : "";
+}

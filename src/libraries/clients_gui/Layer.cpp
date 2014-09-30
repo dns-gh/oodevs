@@ -23,11 +23,11 @@ using namespace gui;
 // Name: Layer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Layer::Layer( kernel::Controllers& controllers, E_LayerTypes type )
+Layer::Layer( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
     : controllers_( controllers )
+    , tools_( tools )
     , type_( type )
     , alpha_( 1 )
-    , currentWidget_( 0 )
     , enabled_( true )
 {
     controllers_.Register( *this );
@@ -107,12 +107,10 @@ void Layer::SetPasses( const std::string& passes )
 // -----------------------------------------------------------------------------
 bool Layer::ShouldDrawPass() const
 {
-    if( !currentWidget_ )
-        return false;
-    const auto currentPass = currentWidget_->GetCurrentPass();
+    const auto currentPass = tools_.GetCurrentPass();
     return IsEnabled()
         && ( passes_.empty() || currentPass.empty() || passes_.find( currentPass ) != std::string::npos )
-        && ( !currentWidget_->IsPickingMode() || IsPickable() );
+        && ( !tools_.IsPickingMode() || IsPickable() );
 }
 
 // -----------------------------------------------------------------------------

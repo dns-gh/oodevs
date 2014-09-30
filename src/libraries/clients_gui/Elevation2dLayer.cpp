@@ -30,8 +30,8 @@ using namespace gui;
 // Name: Elevation2dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation2dLayer::Elevation2dLayer( Controllers& controllers, const DetectionMap& elevation )
-    : Layer2D( controllers, eLayerTypes_Elevation2d )
+Elevation2dLayer::Elevation2dLayer( Controllers& controllers, GlTools_ABC& tools, const DetectionMap& elevation )
+    : Layer2D( controllers, tools, eLayerTypes_Elevation2d )
     , elevation_      ( elevation )
     , reset_          ( false )
     , modelLoaded_    ( false )

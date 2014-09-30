@@ -57,6 +57,7 @@ public:
     void Register( const std::shared_ptr< Layer_ABC >& layer );
     void Unregister( const std::shared_ptr< Layer_ABC >& layer );
 
+    virtual std::string     GetCurrentPass() const;
     virtual unsigned short  StipplePattern( int factor = 1 ) const;
     virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
     virtual float           LineWidth( float base ) const;

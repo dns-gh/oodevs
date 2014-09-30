@@ -22,10 +22,7 @@ namespace gui
 {
     class GlTools_ABC;
     class GlTooltip_ABC;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  MetricsLayer
     @brief  MetricsLayer
@@ -37,7 +34,9 @@ class MetricsLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MetricsLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation, gui::GlTools_ABC& tools  );
+    explicit MetricsLayer( kernel::Controllers& controllers,
+                           const kernel::DetectionMap& elevation,
+                           gui::GlTools_ABC& tools );
     virtual ~MetricsLayer();
     //@}
 
@@ -56,14 +55,6 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< geometry::Point2f >        T_MetricPoints;
-    typedef T_MetricPoints::iterator                IT_MetricPoints;
-    typedef T_MetricPoints::const_iterator          CIT_MetricPoints;
-    //@}
-
-private:
     //! @name Helpers
     //@{
     float ComputeRuleDistance( bool b3dComputation );
@@ -72,13 +63,12 @@ private:
 private:
     //! @name Member data
     //@{
-    GlTools_ABC& tools_;
     const kernel::DetectionMap& elevation_;
     std::unique_ptr< GlTooltip_ABC > tooltip_;
     bool multiRulingMode_;
     geometry::Point2f start_;
     geometry::Point2f end_;
-    T_MetricPoints metricPoints_;
+    std::vector< geometry::Point2f > metricPoints_;
     //@}
 };
 

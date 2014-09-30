@@ -44,7 +44,10 @@ class TerrainLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, GraphicPreferences& setup, TerrainPicker& picker );
+             TerrainLayer( kernel::Controllers& controllers,
+                           GlTools_ABC& tools,
+                           GraphicPreferences& setup,
+                           TerrainPicker& picker );
     virtual ~TerrainLayer();
     //@}
 
@@ -74,7 +77,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const GlTools_ABC& tools_;
     GraphicPreferences& setup_;
     TerrainPicker& picker_;
     bool pickingEnabled_;

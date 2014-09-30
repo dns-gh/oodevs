@@ -83,7 +83,6 @@ private:
 private:
     //! @name Member data
     //@{
-    GlTools_ABC& tools_;
     TextEditor& textEditor_;
     std::unique_ptr< CursorStrategy_ABC > cursors_;
     ShapeHandler_ABC* handler_;

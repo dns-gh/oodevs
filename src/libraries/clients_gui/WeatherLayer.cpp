@@ -20,9 +20,10 @@ using namespace gui;
 // Name: WeatherLayer constructor
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy )
-    : Layer( controllers, eLayerTypes_Weather )
-    , tools_( tools )
+WeatherLayer::WeatherLayer( kernel::Controllers& controllers,
+                            GlTools_ABC& tools,
+                            ExclusiveEventStrategy& eventStrategy )
+    : Layer( controllers, tools, eLayerTypes_Weather )
     , eventStrategy_( eventStrategy )
     , displaying_( false )
     , firstPointSet_( false )

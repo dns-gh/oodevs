@@ -34,8 +34,8 @@ using namespace gui;
 // Name: Elevation3dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation3dLayer::Elevation3dLayer( Controllers& controllers, const DetectionMap& elevation, Lighting_ABC& lighting )
-    : Layer3D( controllers, eLayerTypes_Elevation3d )
+Elevation3dLayer::Elevation3dLayer( Controllers& controllers, GlTools_ABC& tools, const DetectionMap& elevation, Lighting_ABC& lighting )
+    : Layer3D( controllers, tools, eLayerTypes_Elevation3d )
     , elevation_     ( elevation )
     , lighting_      ( lighting )
     , zRatio_        ( 5.f )

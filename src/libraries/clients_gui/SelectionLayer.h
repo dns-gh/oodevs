@@ -35,7 +35,7 @@ class SelectionLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionLayer( kernel::Controllers& controllers, const GlTools_ABC& tools );
+             SelectionLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
     virtual ~SelectionLayer();
     //@}
 
@@ -56,7 +56,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const GlTools_ABC& tools_;
     bool displaying_;
     bool firstPointSet_;
     geometry::Point2f topLeft_;

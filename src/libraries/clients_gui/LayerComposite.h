@@ -28,7 +28,7 @@ class LayerComposite : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             LayerComposite( kernel::Controllers& controllers, E_LayerTypes type );
+             LayerComposite( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type );
     virtual ~LayerComposite();
     //@}
 

@@ -32,6 +32,8 @@ namespace gui
 
 namespace gui
 {
+    class GlTools_ABC;
+
 // =============================================================================
 /** @class  Elevation2dLayer
     @brief  Elevation2dLayer
@@ -44,7 +46,7 @@ class Elevation2dLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation2dLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation );
+             Elevation2dLayer( kernel::Controllers& controllers, GlTools_ABC& tools, const kernel::DetectionMap& elevation );
     virtual ~Elevation2dLayer();
     //@}
 

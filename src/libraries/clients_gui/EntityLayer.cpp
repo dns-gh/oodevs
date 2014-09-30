@@ -11,6 +11,7 @@
 #include "EntityLayer.h"
 
 #include "DrawVisitor.h"
+#include "GlProxy.h"
 #include "InformationToolTip.h"
 #include "View_ABC.h"
 #include "Viewport_ABC.h"
@@ -35,11 +36,14 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
-                                  const Profile_ABC& profile, E_LayerTypes type )
-    : Layer( controllers, type )
+EntityLayerBase::EntityLayerBase( Controllers& controllers,
+                                  GlTools_ABC& tools,
+                                  ColorStrategy_ABC& strategy,
+                                  View_ABC& view,
+                                  const Profile_ABC& profile,
+                                  E_LayerTypes type )
+    : Layer( controllers, tools, type )
     , profile_    ( profile )
-    , tools_      ( tools )
     , strategy_   ( strategy )
     , view_       ( view )
     , infoTooltip_( new InformationToolTip() )

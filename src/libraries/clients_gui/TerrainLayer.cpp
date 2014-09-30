@@ -33,9 +33,11 @@ using namespace gui;
 // Name: TerrainLayer constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicPreferences& setup, TerrainPicker& picker )
-    : Layer2D( controllers, eLayerTypes_Terrain )
-    , tools_      ( tools )
+TerrainLayer::TerrainLayer( Controllers& controllers,
+                            GlTools_ABC& tools,
+                            GraphicPreferences& setup,
+                            TerrainPicker& picker )
+    : Layer2D( controllers, tools, eLayerTypes_Terrain )
     , setup_      ( setup )
     , picker_     ( picker )
     , pickingEnabled_( true )

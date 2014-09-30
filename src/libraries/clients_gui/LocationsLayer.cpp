@@ -19,9 +19,8 @@ using namespace gui;
 // Name: LocationsLayer constructor
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
-LocationsLayer::LocationsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools )
-    : Layer( controllers, eLayerTypes_Locations )
-    , tools_( tools )
+LocationsLayer::LocationsLayer( kernel::Controllers& controllers, GlTools_ABC& tools )
+    : Layer( controllers, tools, eLayerTypes_Locations )
 {
     // NOTHING
 }

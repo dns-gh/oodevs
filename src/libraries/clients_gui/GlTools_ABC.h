@@ -84,6 +84,7 @@ public:
 
     //! @name Accessors
     //@{
+    virtual std::string     GetCurrentPass() const = 0;
     virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const = 0;
     virtual float           LineWidth( float base ) const = 0;
     virtual unsigned short  StipplePattern( int factor = 1 ) const = 0;

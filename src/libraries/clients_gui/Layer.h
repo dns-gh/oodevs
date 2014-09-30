@@ -25,13 +25,9 @@ namespace kernel
 
 namespace gui
 {
-    class GlWidget;
-    class Gl3dWidget;
+    class GlTools_ABC;
     class Viewport_ABC;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  Layer
     @brief  Layer
@@ -46,7 +42,7 @@ class Layer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Layer( kernel::Controllers& controllers, E_LayerTypes type );
+             Layer( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type );
     virtual ~Layer();
     //@}
 
@@ -93,12 +89,12 @@ public:
 
 protected:
     kernel::Controllers& controllers_;
+    GlTools_ABC& tools_;
 
 private:
     //! @name Member data
     //@{
     const E_LayerTypes type_;
-    GlWidget*     currentWidget_;
     float         alpha_;
     std::string   passes_;
     bool          enabled_;
@@ -116,7 +112,9 @@ class Layer2D : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer2D( kernel::Controllers& controllers, E_LayerTypes type ) : Layer( controllers, type ) {};
+             Layer2D( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
+                 : Layer( controllers, tools, type )
+             {}
     virtual ~Layer2D() {};
     //@}
 
@@ -137,7 +135,9 @@ class Layer3D : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer3D( kernel::Controllers& controllers, E_LayerTypes type ) : Layer( controllers, type ) {}
+             Layer3D( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
+                 : Layer( controllers, tools, type )
+             {}
     virtual ~Layer3D() {}
     //@}
 

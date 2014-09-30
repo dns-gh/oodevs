@@ -32,7 +32,7 @@ class TerrainProfilerLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainProfilerLayer( kernel::Controllers& controllers, const GlTools_ABC& tools );
+    explicit TerrainProfilerLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
     virtual ~TerrainProfilerLayer();
     //@}
 
@@ -48,7 +48,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const GlTools_ABC& tools_;
     geometry::Point2f from_;
     geometry::Point2f to_;
     geometry::Point2f current_;

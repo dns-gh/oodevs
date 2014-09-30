@@ -48,7 +48,10 @@ class Elevation3dLayer : public Layer3D
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation3dLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation, Lighting_ABC& lighting );
+             Elevation3dLayer( kernel::Controllers& controllers,
+                               GlTools_ABC& tools,
+                               const kernel::DetectionMap& elevation,
+                               Lighting_ABC& lighting );
     virtual ~Elevation3dLayer();
     //@}
 

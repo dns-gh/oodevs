@@ -22,16 +22,16 @@ using namespace gui;
 // Name: RasterLayer constructor
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-RasterLayer::RasterLayer( kernel::Controllers& controllers )
-    : Layer2D( controllers, eLayerTypes_Raster )
+RasterLayer::RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools )
+    : Layer2D( controllers, tools, eLayerTypes_Raster )
     , ignore_( false )
     , texture_( "usrp.texture" )
 {
     controllers_.Update( *this );
 }
 
-RasterLayer::RasterLayer( kernel::Controllers& controllers, const tools::Path& texture )
-    : Layer2D( controllers, eLayerTypes_Raster )
+RasterLayer::RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools, const tools::Path& texture )
+    : Layer2D( controllers, tools, eLayerTypes_Raster )
     , ignore_( false )
 {
     GenerateTexture( texture );

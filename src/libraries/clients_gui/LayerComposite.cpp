@@ -16,8 +16,8 @@ using namespace gui;
 // Name: LayerComposite::LayerComposite
 // Created: SLI 2014-07-01
 // -----------------------------------------------------------------------------
-LayerComposite::LayerComposite( kernel::Controllers& controllers, E_LayerTypes type )
-    : Layer( controllers, type )
+LayerComposite::LayerComposite( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
+    : Layer( controllers, tools, type )
 {
     // NOTHING
 }

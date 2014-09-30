@@ -216,7 +216,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
-    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, staticModel_.detection_ );
+    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateConverter_, *pPainter_, *glProxy_, elevation2d, *graphicPreferences_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
@@ -334,14 +334,14 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::Layer_ABC >& location
     std::shared_ptr< gui::TooltipsLayer_ABC > tooltips = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
     std::shared_ptr< gui::Layer_ABC > mapnik;
     if( config_.HasMapnik() )
-        mapnik                  = std::make_shared< gui::MapnikLayer >( controllers_, config_.GetMapnikThreads() );
+        mapnik                  = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_, config_.GetMapnikThreads() );
     auto terrain                = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, *graphicPreferences_, picker );
     auto agents                 = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, simulation );
-    auto creations              = std::make_shared< gui::MiscLayer< CreationPanels > >( controllers_, eLayerTypes_Creations, dockContainer_->GetCreationPanel() );
-    auto eventLayer             = std::make_shared< gui::MiscLayer< EventDockWidget > >( controllers_, eLayerTypes_Events, dockContainer_->GetEventDockWidget() );
-    auto raster                 = std::make_shared< gui::RasterLayer >( controllers_ );
-    auto watershed              = std::make_shared< gui::WatershedLayer >( controllers_, staticModel_.detection_ );
-    auto elevation3d            = std::make_shared< gui::Elevation3dLayer >( controllers_, staticModel_.detection_, *lighting_ );
+    auto creations              = std::make_shared< gui::MiscLayer< CreationPanels > >( controllers_, *glProxy_, eLayerTypes_Creations, dockContainer_->GetCreationPanel() );
+    auto eventLayer             = std::make_shared< gui::MiscLayer< EventDockWidget > >( controllers_, *glProxy_, eLayerTypes_Events, dockContainer_->GetEventDockWidget() );
+    auto raster                 = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_ );
+    auto watershed              = std::make_shared< gui::WatershedLayer >( controllers_, *glProxy_, staticModel_.detection_ );
+    auto elevation3d            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
     auto resourceNetwork        = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     auto urban                  = std::make_shared< gui::UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     auto grid                   = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
@@ -353,20 +353,20 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::Layer_ABC >& location
     auto agentKnowledges        = std::make_shared< AgentKnowledgesLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     auto crowdKnowledges        = std::make_shared< PopulationKnowledgesLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     auto objectKnowledges       = std::make_shared< ObjectKnowledgesLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    auto defaultLayer           = std::make_shared< gui::DefaultLayer >( controllers_ );
+    auto defaultLayer           = std::make_shared< gui::DefaultLayer >( controllers_, *glProxy_ );
     auto parties                = std::make_shared< TeamLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
     auto fog                    = std::make_shared< FogLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     auto drawings               = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters_, *glProxy_, profile_, *drawingsBuilder_ );
     auto actions                = std::make_shared< ActionsLayer >( controllers_, *glProxy_ );
-    auto contour                = std::make_shared< gui::ContourLinesLayer >( controllers_, staticModel_.detection_ );
+    auto contour                = std::make_shared< gui::ContourLinesLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     auto weaponRanges           = std::make_shared< WeaponRangeLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     auto pathfinds              = std::make_shared< PathfindLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_, *drawingsBuilder_ );
 
-    auto crowdsComposite        = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_CrowdsComposite );
-    auto objectsComposite       = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_ObjectsComposite );
-    auto tacticalLinesComposite = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_TacticalLinesComposite );
-    auto unitsComposite         = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_UnitsComposite );
-    auto weatherComposite       = std::make_shared< gui::LayerComposite >( controllers_, eLayerTypes_WeatherComposite );
+    auto crowdsComposite        = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, eLayerTypes_CrowdsComposite );
+    auto objectsComposite       = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, eLayerTypes_ObjectsComposite );
+    auto tacticalLinesComposite = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, eLayerTypes_TacticalLinesComposite );
+    auto unitsComposite         = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, eLayerTypes_UnitsComposite );
+    auto weatherComposite       = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, eLayerTypes_WeatherComposite );
     crowdsComposite->Register( crowds );
     crowdsComposite->Register( crowdKnowledges );
     objectsComposite->Register( objects );
@@ -688,7 +688,7 @@ void MainWindow::OnAddRaster()
                 {
                     if( !exitCode )
                     {
-                        auto raster = std::make_shared< gui::RasterLayer >( controllers_, output );
+                        auto raster = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_, output );
                         raster->SetPasses( "main" );
                         glProxy_->Register( raster );
                         preferenceDialog_->AddLayer( tr( "User layer [%1]" ).arg( addRasterDialog_->GetName() ), raster, true );
