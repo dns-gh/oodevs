@@ -990,10 +990,12 @@ func (model *ModelData) handleUrbanCreation(m *sword.SimToClient_Content) error 
 	if mm == nil {
 		return ErrSkipHandler
 	}
+	attributes := mm.GetAttributes()
 	urban := NewUrban(
 		mm.GetObject().GetId(),
 		mm.GetName(),
-		NewResourceNetworks(mm.GetAttributes()),
+		attributes.GetStructure().GetState(),
+		NewResourceNetworks(attributes),
 	)
 	if !model.addObject(urban) {
 		return fmt.Errorf("cannot insert urban block %d", urban.Id)
@@ -1006,7 +1008,9 @@ func (model *ModelData) handleUrbanUpdate(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.updateUrban(mm.GetObject().GetId(), NewResourceNetworks(mm.GetAttributes())) {
+	attributes := mm.GetAttributes()
+	if !model.updateUrban(mm.GetObject().GetId(), attributes.GetStructure().GetState(),
+		NewResourceNetworks(attributes)) {
 		return fmt.Errorf("cannot update urban block %d",
 			mm.GetObject().GetId())
 	}

@@ -228,7 +228,7 @@ func (s *TestSuite) TestIsUrbanInProfile(c *C) {
 	d := model.data
 	p := &Profile{Login: "noname"}
 	d.Profiles[p.Login] = p
-	urban := NewUrban(1, "noname", nil)
+	urban := NewUrban(1, "noname", 100, nil)
 	d.Objects[urban.Id] = urban
 	c.Assert(d.IsObjectInProfile(1, p), Equals, true)
 }

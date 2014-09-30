@@ -240,6 +240,7 @@ func NewResourceNetworks(attributes *sword.UrbanAttributes) map[string]*Resource
 
 type Urban struct {
 	ResourceNetworks map[string]*ResourceNetwork
+	State            uint32
 }
 
 type Object struct {
@@ -264,7 +265,7 @@ func NewObject(id, partyId uint32, objectType, name string) *Object {
 	}
 }
 
-func NewUrban(id uint32, name string,
+func NewUrban(id uint32, name string, state uint32,
 	resourceNetworks map[string]*ResourceNetwork) *Object {
 	return &Object{
 		Id:         id,
@@ -272,6 +273,7 @@ func NewUrban(id uint32, name string,
 		Name:       name,
 		Urban: &Urban{
 			ResourceNetworks: resourceNetworks,
+			State:            state,
 		},
 	}
 }
@@ -1026,9 +1028,10 @@ func (model *ModelData) removePathfind(id uint32) bool {
 	return size != len(model.Pathfinds)
 }
 
-func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*ResourceNetwork) bool {
+func (model *ModelData) updateUrban(id, state uint32, resourceNetworks map[string]*ResourceNetwork) bool {
 	if urban, ok := model.Objects[id]; ok && urban.Urban != nil {
 		urban.Urban.ResourceNetworks = resourceNetworks
+		urban.Urban.State = state
 		return true
 	}
 	return false

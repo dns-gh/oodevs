@@ -158,7 +158,7 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	c.Assert(err, IsNil)
 
 	// update full parameters
-	urban := swapi.NewUrban(21, "Bloc urbain [21]",
+	urban := swapi.NewUrban(21, "Bloc urbain [21]", 100,
 		map[string]*swapi.ResourceNetwork{
 			"Running Water": {Name: "Running Water",
 				Consumption: 1, Critical: true, Activated: false, Production: 2,
@@ -176,7 +176,7 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	})
 
 	// the magic action changes resources network values totally
-	urban = swapi.NewUrban(21, "Bloc urbain [21]",
+	urban = swapi.NewUrban(21, "Bloc urbain [21]", 100,
 		map[string]*swapi.ResourceNetwork{
 			"Electricity": {Name: "Electricity",
 				Consumption: 7, Critical: true, Activated: true, Production: 8,
