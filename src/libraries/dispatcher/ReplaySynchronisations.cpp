@@ -123,6 +123,7 @@ DO_UPDATE( sword::UnitCreation );
 DO_UPDATE( sword::UnitKnowledgeCreation );
 DO_UPDATE( sword::UrbanCreation );
 DO_UPDATE( sword::UrbanKnowledgeCreation );
+DO_UPDATE( sword::UnitVisionCones );
 
 // -----------------------------------------------------------------------------
 // Name: ReplaySynchronisations::DoUpdate

@@ -848,8 +848,6 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
             owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
-    if( bExternalMustUpdateVisionCones_ && MIL_AgentServer::GetWorkspace().GetEntityManager().SendVisionCones() )
-        SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -1059,6 +1057,7 @@ void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
     MT_Vector2D direction;
     GetMainPerceptionDirection( direction );
     NET_ASN_Tools::WriteDirection( direction, *msg().mutable_sensors_direction() );
+    SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -1067,7 +1066,10 @@ void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendChangedState( client::UnitAttributes& msg ) const
 {
-    SendFullState( msg );
+    if( bRadarStateHasChanged_ )
+        msg().set_radar_active( IsUsingActiveRadar() );
+    if( bExternalMustUpdateVisionCones_ )
+        SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------

@@ -216,8 +216,7 @@ void AgentServerMsgMgr::OnReceiveUnitDestruction( const sword::SimToClient& msg 
 void AgentServerMsgMgr::OnReceiveUnitVisionCones( const sword::SimToClient& msg )
 {
     const auto& message = msg.message().unit_vision_cones();
-    if( !simulation_.IsPaused() )
-        GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

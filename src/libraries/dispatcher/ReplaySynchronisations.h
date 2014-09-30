@@ -66,6 +66,7 @@ namespace sword
     class UnitDestruction;
     class UnitKnowledgeDestruction;
     class UrbanKnowledgeDestruction;
+    class UnitVisionCones;
 }
 
 namespace kernel
@@ -131,6 +132,7 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::UnitDestruction >
                              , public kernel::Updatable_ABC< sword::UnitKnowledgeDestruction >
                              , public kernel::Updatable_ABC< sword::UrbanKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::UnitVisionCones >
                              , private boost::noncopyable
 {
 public:
@@ -195,6 +197,7 @@ public:
     virtual void DoUpdate( const sword::UnitDestruction& msg );
     virtual void DoUpdate( const sword::UnitKnowledgeDestruction& msg );
     virtual void DoUpdate( const sword::UrbanKnowledgeDestruction& msg );
+    virtual void DoUpdate( const sword::UnitVisionCones& msg );
     //@}
 
 private:

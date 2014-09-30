@@ -25,6 +25,7 @@
 #include "logistic_plugin/LogisticPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "web_control_plugin/WebPlugin.h"
+#include "vision_plugin/VisionPlugin.h"
 #include "tools/FileWrapper.h"
 #include "protocol/Replay.h"
 #include "protocol/Simulation.h"
@@ -75,21 +76,23 @@ Replayer::Replayer( const Config& config )
     , publisher_       ( new NullPublisher() )
     , started_         ( false )
     , rights_          ( boost::make_shared< plugins::rights::RightsPlugin >(
-        *model_, *clientsNetworker_, config, *clientsNetworker_,
-        handler_, *clientsNetworker_, registrables_, 0, true ))
+                            *model_, *clientsNetworker_, config, *clientsNetworker_,
+                            handler_, *clientsNetworker_, registrables_, 0, true ) )
     , stopped_( false )
 {
     clientsNetworker_->RegisterMessage( *this, &Replayer::ReceiveClientToReplay );
 
     handler_.AddHandler( model_ );
-    handler_.AddHandler( clientsNetworker_ );
+    auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
+    handler_.Add( vision );
+    vision->Add( clientsNetworker_ );
     handler_.Add( rights_ );
     handler_.Add( plugin_ );
     handler_.Add( boost::make_shared< plugins::aar::AarPlugin >( *clientsNetworker_, *rights_, config ) );
     handler_.Add( boost::make_shared< plugins::score::ScorePlugin >(
-                *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
+                  *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( boost::make_shared< plugins::messenger::MessengerPlugin >(
-                *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
+                  *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( plugins::logistic::ReloadLogisticPlugin( config ) );
     tools::Xifstream xis( config.GetSessionFile() );
     xis >> xml::start( "session" )

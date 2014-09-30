@@ -133,7 +133,7 @@ void VisionPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher,
 
 void VisionPlugin::Update()
 {
-    NotifyFilterChanged(); 
+    NotifyFilterChanged();
     dispatcher::PluginContainer::Update();
 }
 

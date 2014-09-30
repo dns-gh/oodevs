@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NET_SimMsgHandler( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation,
-                    ActionManager& actions, bool enableTestCommands );
+                                ActionManager& actions, bool enableTestCommands );
     virtual ~NET_SimMsgHandler();
     //@}
 

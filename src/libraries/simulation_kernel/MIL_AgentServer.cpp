@@ -476,7 +476,7 @@ void MIL_AgentServer::SendControlInformation() const
     message().set_time_factor( nTimeFactor_ );
     message().set_status( sword::EnumSimulationState( nSimState_ == eSimWait ? eSimRunning : nSimState_ ) );
     message().set_checkpoint_frequency( GetCheckPointManager().GetCheckPointFrequency() );
-    message().set_send_vision_cones( false );
+    message().set_send_vision_cones( false ); // only sent to the dispatcher upon initialization anyway, so always false
     message().set_profiling_enabled( config_.IsDecisionalProfilingEnabled() );
     if( !localTime_.empty() )
         message().mutable_checkpoint_real_time()->set_data( localTime_ );
