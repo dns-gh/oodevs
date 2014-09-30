@@ -345,7 +345,7 @@ void Options::InitializeView()
     Set( "Terrains/Order", order.join( ";" ) ); // not used yet
 
     // visualisation scales
-    for( int i = 0; i < DefaultVisualisationScales::size_; ++i )
+    for( size_t i = 0; i < DefaultVisualisationScales::size_; ++i )
     {
         const auto& scale = DefaultVisualisationScales::data_[i];
         const auto name = "VisualisationScales/" + ENT_Tr::ConvertFromVisualisationScale( scale.type_ );
