@@ -12,6 +12,7 @@
 #include "OptionsObserver_ABC.h"
 #include "Options.h"
 #include "Settings_ABC.h"
+#include <boost/range/algorithm_ext/erase.hpp>
 
 using namespace kernel;
 
@@ -61,9 +62,7 @@ void OptionsController::Register( tools::Observer_ABC& o )
 void OptionsController::Unregister( tools::Observer_ABC& o )
 {
     OptionsObserver_ABC* observer = dynamic_cast< OptionsObserver_ABC* >( &o );
-    auto it = std::find( observers_.begin(), observers_.end(), observer );
-    if( it != observers_.end() )
-        observers_.erase( it );
+    boost::remove_erase( observers_, observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,8 +75,8 @@ void OptionsController::Change( const std::string& name, const OptionVariant& va
         generalOptions_->Set( name, value, savable );
     else
         viewOptions_->Set( name, value, savable );
-    for( unsigned i = 0; i < observers_.size(); ++i )
-        observers_.at( i )->OptionChanged( name, value );
+    for( auto it = observers_.begin(); it != observers_.end(); ++it )
+        ( *it )->OptionChanged( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,9 +192,8 @@ const std::shared_ptr< Options >& OptionsController::GetViewOptions() const
 // -----------------------------------------------------------------------------
 void OptionsController::SetViewOptions( const std::shared_ptr< Options >& options )
 {
-    if( !options )
-        return;
-    viewOptions_ = options;
+    if( options )
+        viewOptions_ = options;
 }
 
 // -----------------------------------------------------------------------------
@@ -204,9 +202,8 @@ void OptionsController::SetViewOptions( const std::shared_ptr< Options >& option
 // -----------------------------------------------------------------------------
 void OptionsController::SetGeneralOptions( const std::shared_ptr< Options >& options )
 {
-    if( !options )
-        return;
-    generalOptions_ = options;
+    if( options )
+        generalOptions_ = options;
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +226,7 @@ void OptionsController::Load( Settings_ABC& settings )
 // -----------------------------------------------------------------------------
 void OptionsController::Save( Settings_ABC& settings )
 {
-    // remove old configuration, can't use clear cause geometry are already written
+    // remove old configuration, can't use clear cause geometries are already written
     settings.RemoveKey( "/Options" );
     settings.RemoveKey( "/General" );
     settings.RemoveKey( "/MainView" );

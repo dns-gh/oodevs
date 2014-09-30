@@ -142,7 +142,7 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
     QStringList list = settings.EntryList( root.c_str() );
     for( auto it = list.begin(); it != list.end(); ++it )
     {
-        const std::string typedName = (*it).toAscii().constData();
+        const std::string typedName = (*it).toStdString();
         if( ! typedName.empty() )
         {
             char type = typedName[0];
@@ -153,7 +153,7 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
     }
     list = settings.SubEntriesList( root.c_str() );
     for( auto it = list.begin(); it != list.end(); ++it )
-        Load( settings, ( root + (*it).toAscii().constData() ).c_str() );
+        Load( settings, ( root + (*it).toStdString() ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +162,7 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
 // -----------------------------------------------------------------------------
 void Options::Save( Settings_ABC& settings, bool all )
 {
-    Apply( [&settings, &all]( const std::string& name, const OptionVariant& option, bool savable ) {
+    Apply( [&]( const std::string& name, const OptionVariant& option, bool savable ) {
         if( all || savable )
             option.Save( settings, name );
     } );
@@ -176,8 +176,8 @@ void Options::ReadGradient( xml::xistream& xis )
 {
     QStringList values;
     xis >> xml::list( "color", [&values]( xml::xistream& xisColor ) { 
-        values << QString( "%1,%2" ).arg( xisColor.attribute< std::string >( "position" ).c_str() )
-                                    .arg( xisColor.attribute< std::string >( "color" ).c_str() );
+        values << QString( "%1,%2" ).arg( xisColor.attribute< QString >( "position" ) )
+                                    .arg( xisColor.attribute< QString >( "color" ) );
     } );
     Set( "Elevation/Gradients/" + xis.attribute< std::string >( "name" ), values.join( ";" ) );
 }
@@ -333,12 +333,12 @@ void Options::InitializeView()
     xisPreferences >> xml::start( "preferences" ) >> xml::start( "terrains" )
                    >> xml::list( "terrain", [&]( xml::xistream& x ) {
                        const auto type = x.attribute< std::string >( "type" );
-                       const QString category = x.attribute< std::string >( "category", "" ).c_str(); // not used yet
+                       const QString category = x.attribute< QString >( "category", "" ); // not used yet
                        Set( "Terrains/" + type + "/Category", category, true ); // not in trunk yet
-                       Set( "Terrains/" + type + "/Name", QString( x.attribute< std::string >( "name", type ).c_str() ), true ); // not in trunk yet
+                       Set( "Terrains/" + type + "/Name", x.attribute< QString >( "name", type.c_str() ), true ); // not in trunk yet
                        Set( "Terrains/" + type + "/Shown", true );
                        Set( "Terrains/" + type + "/Width", x.content< float >( "width", 1.f ) );
-                       Set( "Terrains/" + type + "/Color", QString( x.content< std::string >( "color", "#000000" ).c_str() ) );
+                       Set( "Terrains/" + type + "/Color", x.content< QString >( "color", "#000000" ) );
                        if( !category.isEmpty() && !order.contains( category ) )
                            order << category;
                        } );

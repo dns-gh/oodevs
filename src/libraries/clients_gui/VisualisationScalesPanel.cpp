@@ -62,7 +62,7 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
 
     for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
-        auto scale = static_cast< E_VisualisationScale >( i );
+        const auto scale = static_cast< E_VisualisationScale >( i );
         QLabel* label = new QLabel( ENT_Tr::ConvertFromVisualisationScale( scale, ENT_Tr::eToTr ).c_str() );
         const std::string option = strScale + ENT_Tr::ConvertFromVisualisationScale( scale );
         currentScales_[ i ].min_ = controllers_.options_.GetOption( option + "/Min" ).To< int >();
