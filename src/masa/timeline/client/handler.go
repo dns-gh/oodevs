@@ -27,10 +27,11 @@ type Handler interface {
 
 type SdkHandler struct {
 	controller server.SdkController
+	sword      *string
 }
 
-func MakeHandler(controller server.SdkController) *SdkHandler {
-	return &SdkHandler{controller}
+func MakeHandler(controller server.SdkController, sword *string) *SdkHandler {
+	return &SdkHandler{controller, sword}
 }
 
 func (s *SdkHandler) Process(msg *sdk.ClientRequest) error {
@@ -65,8 +66,12 @@ func (s *SdkHandler) Attach(args *sdk.SessionAttach) error {
 		_, err = s.controller.AttachTimerService(uuid, name,
 			timer.GetBase())
 	} else if sword := src.GetSword(); sword != nil {
+		address := sword.GetAddress()
+		if s.sword != nil {
+			address = *s.sword
+		}
 		_, err = s.controller.AttachSwordService(uuid, name,
-			src.GetClock(), sword.GetAddress())
+			src.GetClock(), address)
 	}
 	return err
 }

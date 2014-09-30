@@ -80,7 +80,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
 
     // GUI
     mainWindow_.reset( new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *simulationController_,
-        *network_, *filter_, *config_, *logger_, *knowledgeConverter_, *workers_, GetExpiration() ) );
+        *network_, *filter_, *config_, *logger_, *knowledgeConverter_, *workers_ ) );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
 }
 

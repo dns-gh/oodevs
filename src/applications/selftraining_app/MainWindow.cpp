@@ -28,10 +28,14 @@
 MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises )
     : gui::WidgetLanguageObserver_ABC< QMainWindow >()
 {
+    // do not initialize useless widgets like the systray
+    // if we are going to run on the command-line
+    if( !config.GetExportReplay().IsEmpty() )
+        return;
     setWindowIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
     setFixedWidth( 800 );
     setFixedHeight( 600 );
-    SetStyle();
+    SetStyle( this );
     pages_ = new QStackedWidget( this );
     HomePage* home = new HomePage( app, this, pages_, config, fileLoader, controllers, exercises );
     pages_->setCurrentWidget( home );
@@ -67,15 +71,15 @@ void MainWindow::OnLanguageChanged()
 // Name: MainWindow::SetStyle
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void MainWindow::SetStyle()
+void MainWindow::SetStyle( QWidget* w )
 {
     QFont font( "Calibri", 12, QFont::Bold );
-    setFont( font );
+    w->setFont( font );
     QImage background( "resources/images/selftraining/background.png" );
     QPixmap px;
     px.convertFromImage( background );
 
-    QPalette p( palette() );
+    QPalette p( w->palette() );
     p.setColor( QPalette::Background     , QColor( 48, 48, 64 ) );
     p.setColor( QPalette::Foreground     , QColor( 240, 240, 240 ) );
     p.setColor( QPalette::BrightText     , Qt::white );
@@ -92,8 +96,8 @@ void MainWindow::SetStyle()
     p.setColor( QPalette::Mid     , QColor(  70, 170, 220 ) );
     p.setColor( QPalette::Shadow  , QColor(  40,  40,  40 ) );
 
-    p.setBrush( backgroundRole(), QBrush( px ) );
-    setPalette( p );
+    p.setBrush( w->backgroundRole(), QBrush( px ) );
+    w->setPalette( p );
 }
 
 // -----------------------------------------------------------------------------

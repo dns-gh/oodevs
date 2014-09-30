@@ -15,11 +15,11 @@
 #include "DebugConfigPanel.h"
 #include "ExerciseContainer.h"
 #include "ExerciseList.h"
+#include "MainWindow.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "SessionList.h"
 
-#include "frontend/Config.h"
 #include "frontend/CreateSession.h"
 #include "frontend/DebugConfig.h"
 #include "frontend/Exercise_ABC.h"
@@ -31,14 +31,24 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 
+#include "tools/Loader_ABC.h"
+#include "tools/StdFileWrapper.h"
+#include "tools/Version.h"
+
+#include <QtGui/QProgressDialog>
+#include <boost/filesystem.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/thread.hpp>
+#include <xeumeuleu/xml.hpp>
+
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises, const frontend::DebugConfig& debug )
-    : ContentPage( pages, previous, eButtonBack | eButtonStart )
+    : ContentPage( pages, previous, eButtonBack | eButtonStart | eButtonExport )
     , config_( config )
     , debug_( debug )
     , fileLoader_( fileLoader )
@@ -64,6 +74,7 @@ ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previ
     connect( sessions_, SIGNAL( Select( const tools::Path& ) ), SLOT( OnSelectSession( const tools::Path& ) ) );
 
     EnableButton( eButtonStart, false );
+    EnableButton( eButtonExport, false );
     AddContent( mainBox );
 }
 
@@ -140,7 +151,9 @@ void ReplayPage::OnSelectExercise( const frontend::Exercise_ABC& exercise, const
     }
     exercise_ = &exercise;
     profile_ = profile;
-    EnableButton( eButtonStart, !session_.IsEmpty() && profile_.IsValid() );
+    const bool enabled = !session_.IsEmpty();
+    EnableButton( eButtonStart, enabled && profile_.IsValid() );
+    EnableButton( eButtonExport, enabled );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,6 +167,7 @@ void ReplayPage::ClearSelection()
     session_ = "";
     sessions_->Update( "" );
     EnableButton( eButtonStart, false );
+    EnableButton( eButtonExport, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +177,9 @@ void ReplayPage::ClearSelection()
 void ReplayPage::OnSelectSession( const tools::Path& session )
 {
     session_ = session;
-    EnableButton( eButtonStart, exercise_ && !session_.IsEmpty() && profile_.IsValid() );
+    const bool enabled = exercise_ && !session_.IsEmpty();
+    EnableButton( eButtonStart, enabled  && profile_.IsValid() );
+    EnableButton( eButtonExport, enabled );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,4 +193,167 @@ tools::Path ReplayPage::ConfigureSession( const tools::Path& exercise, const too
     action.SetDefaultValues(); // reset specific parameters
     action.Commit();
     return sessionDir;
+}
+
+void ReplayPage::OnExport()
+{
+    const auto dir = QFileDialog::getExistingDirectory( this,
+        tr( "Export Replay" ) );
+    if( dir.isEmpty() )
+        return;
+    const auto error = ExportReplay( this, fileLoader_, config_, exercise_->GetName(), session_,
+        tools::Path::FromUnicode( dir.toStdWString() ) );
+    if( !error.isEmpty() )
+        QMessageBox::critical( this, tr( "Error" ), tr( "Unable to export replay" ) + "\n" + error );
+}
+
+namespace
+{
+    struct Properties
+    {
+        tools::Path model;
+        tools::Path physical;
+        tools::Path terrain;
+    };
+
+    Properties GetProperties( const frontend::Config& config,
+                              const tools::Loader_ABC& loader,
+                              const tools::Path& exercise )
+    {
+        Properties props;
+        auto xis = loader.LoadFile( config.GetExerciseFile( exercise ) );
+        *xis >> xml::start( "exercise" )
+                >> xml::start( "terrain" )
+                    >> xml::attribute( "name", props.terrain )
+                >> xml::end
+                >> xml::start( "model" )
+                    >> xml::attribute( "dataset", props.model )
+                    >> xml::attribute( "physical", props.physical )
+                >> xml::end;
+        return props;
+    }
+
+    tools::Path MovePath( bfs::path dst, const bfs::path& prefix, const bfs::path& src )
+    {
+        auto cursor = src.begin();
+        for( auto it = prefix.begin(); it != prefix.end(); ++it, ++cursor )
+            if( *it != *cursor )
+                throw std::runtime_error( "error: " + prefix.string() + " is not a prefix of " + src.string() );
+        for( ; cursor != src.end(); ++cursor )
+            dst /= *cursor;
+        return tools::Path::FromUnicode( dst.wstring() );
+    }
+
+    bool BeginsWith( const bfs::path& path, const bfs::path& prefix )
+    {
+        for( auto a = prefix.begin(), b = path.begin(); a != prefix.end(); ++a, ++b )
+            if( b == path.end() )
+                return false;
+            else if( *a != *b )
+                return false;
+        return true;
+    }
+
+    tools::Path GetExportDirectory( const tools::Path& exercise, const tools::Path& session )
+    {
+        std::string name = exercise.ToUTF8() + "-" + session.ToUTF8();
+        std::replace( name.begin(), name.end(), '\\', '-');
+        std::replace( name.begin(), name.end(), '/', '-');
+        return tools::Path::FromUTF8( name );
+    }
+
+    #define COUNT_OF( X ) ( sizeof( X ) / sizeof *( X ) )
+
+    static const tools::Path invalidExtensions[] =
+    {
+        ".dat",
+        ".lic",
+        ".pdb",
+    };
+
+    static const tools::Path invalidFilenames[] =
+    {
+        "adaptation_app.exe",
+        "preparation_app.exe",
+        "selftraining_app.exe",
+        "simulation_app.exe",
+    };
+}
+
+QString ReplayPage::ExportReplay( QWidget* parent,
+                                  const tools::Loader_ABC& loader,
+                                  const Config& config,
+                                  const tools::Path& exercise,
+                                  const tools::Path& session,
+                                  const tools::Path& output )
+{
+    const auto props = GetProperties( config, loader, exercise );
+    QProgressDialog progress( tr( "Exporting replay data" ), QString(), 0, 7, parent, Qt::Dialog |
+        Qt::CustomizeWindowHint );
+    MainWindow::SetStyle( &progress );
+    progress.setWindowModality( Qt::WindowModal );
+    progress.show();
+
+    QString error;
+    int idx = 0;
+    const auto MakeProgress = [&]()
+    {
+        ++idx;
+        QMetaObject::invokeMethod( &progress, "setValue", Q_ARG( int, idx ) );
+    };
+    boost::thread background( [&]()
+    {
+        try
+        {
+            const auto prefix = config.GetRootDir();
+            const auto dstRoot = output / GetExportDirectory( exercise, session );
+            const auto CopyFrom = [&]( const tools::Path& src, const tools::Path::T_Functor& predicate )
+            {
+                const auto dst = MovePath( dstRoot.ToBoost(), prefix.ToBoost(), src.ToBoost() );
+                src.Copy( dst, tools::Path::FailIfExists, predicate );
+                MakeProgress();
+            };
+            CopyFrom( config.GetPhysicalsDir( props.model, props.physical ), tools::Path::T_Functor() );
+            CopyFrom( config.GetTerrainDir( props.terrain ), tools::Path::T_Functor() );
+            const auto srcExo = config.GetExerciseDir( exercise );
+            const auto exoPrefix = ( srcExo / "sessions" ).ToBoost();
+            CopyFrom( srcExo, [&]( const tools::Path& path )
+            {
+                return !BeginsWith( path.ToBoost(), exoPrefix );
+            });
+            CopyFrom( config.BuildSessionDir( exercise, session ),  tools::Path::T_Functor() );
+            const auto srcRun = tools::Path::FromUnicode( tools::GetModuleFilename() ).Parent();
+            srcRun.Copy( dstRoot / "bin", tools::Path::FailIfExists, [&]( const tools::Path& path ) -> bool
+            {
+                const auto ext = path.Extension();
+                for( size_t i = 0; i < COUNT_OF( invalidExtensions ); ++i )
+                    if( ext == invalidExtensions[i] )
+                        return false;
+                const auto name = path.FileName();
+                for( size_t i = 0; i < COUNT_OF( invalidFilenames ); ++i )
+                    if( name == invalidFilenames[i] )
+                        return false;
+                return true;
+            });
+            MakeProgress();
+            tools::WriteFile( dstRoot / "replay.cmd",
+                "@echo off\n"
+                "set CUR=%~dp0\n"
+                "set CUR=%CUR:\\=/%\n"
+                "\"%CUR%/bin/replay.exe\" \"%CUR%\" \"" + exercise.ToUTF8() + "\" \"" + session.ToUTF8() + "\"\n" );
+            MakeProgress();
+            tools::WriteFile( dstRoot / "replay.vbs",
+                "DIM objShell\n"
+                "set objShell=wscript.createObject(\"wscript.shell\")\n"
+                "iReturn=objShell.Run(\"replay.cmd\", 0, TRUE)\n" );
+            MakeProgress();
+        }
+        catch( const std::exception& err )
+        {
+            error = err.what();
+        }
+    } );
+    while( !background.timed_join( boost::posix_time::milliseconds( 100 ) ) )
+        qApp->processEvents();
+    return error;
 }

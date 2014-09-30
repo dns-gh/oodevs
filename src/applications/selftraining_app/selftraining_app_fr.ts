@@ -572,6 +572,22 @@ Do you want to replace it?</source>
         <source>Starting replay session</source>
         <translation>Démarrage session rejeu</translation>
     </message>
+    <message>
+        <source>Export Replay</source>
+        <translation>Exporter le rejeu</translation>
+    </message>
+    <message>
+        <source>Exporting replay data</source>
+        <translation>Export du rejeu en cours</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Unable to export replay</source>
+        <translation>Impossible d&apos;exporter le rejeu</translation>
+    </message>
 </context>
 <context>
     <name>ScenarioEditPage</name>

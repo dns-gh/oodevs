@@ -58,6 +58,14 @@ public:
     virtual ~ReplayPage();
     //@}
 
+public:
+    static QString ExportReplay( QWidget* parent,
+                                 const tools::Loader_ABC& loader,
+                                 const Config& config,
+                                 const tools::Path& exercise,
+                                 const tools::Path& session,
+                                 const tools::Path& output );
+
 private slots:
     //! @name Operations
     //@{
@@ -65,6 +73,7 @@ private slots:
     void OnSelectExercise( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
     void OnSelectSession( const tools::Path& session );
+    void OnExport();
     //@}
 
 private:

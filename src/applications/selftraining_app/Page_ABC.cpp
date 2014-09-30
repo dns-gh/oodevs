@@ -46,6 +46,7 @@ Page_ABC::Page_ABC( QStackedWidget* pages, Page_ABC& previous, unsigned short fl
     , deleteButton_ ( 0 )
     , upgradeButton_( 0 )
     , cancelButton_ ( 0 )
+    , exportButton_ ( 0 )
     , titleLabel_   ( 0 )
 {
     QVBoxLayout* layout = new QVBoxLayout( this );
@@ -79,7 +80,8 @@ Page_ABC::Page_ABC( QStackedWidget* pages, Page_ABC& previous, unsigned short fl
         upgradeButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnUpgrade() ) );
     if( flags & eButtonCancel )
         cancelButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnCancel() ) );
-
+    if( flags & eButtonExport )
+        exportButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnExport() ) );
     if( flags & eButtonStart )
         startButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnStart() ) );
     else if( flags & eButtonJoin )
@@ -128,6 +130,8 @@ void Page_ABC::OnLanguageChanged()
         upgradeButton_->setText( tools::translate( "Page_ABC", "Upgrade" ) );
     if( cancelButton_ )
         cancelButton_->setText( tools::translate( "Page_ABC", "Cancel" ) );
+    if( exportButton_ )
+        exportButton_->setText( tools::translate( "Page_ABC", "Export" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -204,6 +208,8 @@ void Page_ABC::EnableButton( unsigned short flags, bool enable )
         upgradeButton_->setEnabled( enable );
     if( ( flags & eButtonCancel ) && cancelButton_ )
         cancelButton_->setEnabled( enable );
+    if( ( flags & eButtonExport ) && exportButton_ )
+        exportButton_->setEnabled( enable );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,6 +232,8 @@ void Page_ABC::SetButtonText( unsigned short flags, const QString& text )
         upgradeButton_->setText( text );
     if( ( flags & eButtonCancel ) && cancelButton_ )
         cancelButton_->setText( text );
+    if( ( flags & eButtonExport ) && exportButton_ )
+        exportButton_->setText( text );
 }
 
 // -----------------------------------------------------------------------------

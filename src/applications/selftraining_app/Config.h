@@ -41,11 +41,15 @@ public:
     bool CheckFeature( Feature feature ) const;
     bool HasFeature( Feature feature ) const;
     bool IsOnDebugMode() const;
+    const tools::Path& GetExercise() const;
     const tools::Path& GetSession() const;
+    const tools::Path& GetExportReplay() const;
     //@}
 
 private:
+    tools::Path exercise_;
     tools::Path session_;
+    tools::Path exportReplay_;
 };
 
 #endif // __Config_h_

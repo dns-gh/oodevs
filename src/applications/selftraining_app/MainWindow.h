@@ -53,6 +53,11 @@ public:
     virtual ~MainWindow();
     //@}
 
+    //! @name public methods
+    //@{
+    static void SetStyle( QWidget* );
+    //@}
+
 public slots:
     //! @name Slots
     //@{
@@ -69,7 +74,6 @@ private:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
-    void SetStyle();
     void CenterWindow();
     //@}
 

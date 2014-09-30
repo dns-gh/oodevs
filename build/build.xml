@@ -1159,6 +1159,7 @@
         <update name="buildtools"/>
         <update name="cmake" version="3.0"/>
         <update name="depends" version="2.2.6000"/>
+        <update name="elevate" version="1.0"/>
         <update name="flexlm" version="11.8"/>
         <update name="gdal" version="1.9.1.r671"/>
         <update name="geos" version="3.3.7.r662"/>

@@ -55,7 +55,9 @@ Config::Config()
 {
     po::options_description desc( "General options" );
     desc.add_options()
+        ( "exercise", po::value( &exercise_ ), "specify exercise name" )
         ( "session", po::value( &session_ ), "specify session name" )
+        ( "export-replay", po::value( &exportReplay_ ), "export replay into specified directory" )
         ( "debug", "activate debug mode" );
     AddOptions( desc );
 }
@@ -120,3 +122,14 @@ const tools::Path& Config::GetSession() const
 {
     return session_;
 }
+
+const tools::Path& Config::GetExercise() const
+{
+    return exercise_;
+}
+
+const tools::Path& Config::GetExportReplay() const
+{
+    return exportReplay_;
+}
+

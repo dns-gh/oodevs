@@ -39,6 +39,7 @@ protected:
         eButtonDelete   = 1 << 7,
         eButtonUpgrade  = 1 << 8,
         eButtonCancel   = 1 << 9,
+        eButtonExport   = 1 << 10,
     };
 
 public:
@@ -83,6 +84,7 @@ private slots:
     virtual void OnDelete() {}
     virtual void OnUpgrade() {}
     virtual void OnCancel() {}
+    virtual void OnExport() {}
     void OnQuit();
     //@}
 
@@ -110,6 +112,7 @@ private:
     QPushButton* deleteButton_;
     QPushButton* upgradeButton_;
     QPushButton* cancelButton_;
+    QPushButton* exportButton_;
     QLabel*      titleLabel_;
     //@}
 };

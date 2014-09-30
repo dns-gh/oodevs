@@ -37,6 +37,7 @@ GamingConfig::GamingConfig( int argc, char** argv )
     po::options_description desc( "Gaming options" );
     desc.add_options()
         ( "host",  po::value( &host_ ), "specify host to join" )
+        ( "timeline", po::value( &timelineUrl_ ), "timeline host address" )
         ( "login", po::value( &login_ ), "specify login" )
         ( "password", po::value( &password_ ), "specify password" )
         ( "order-file", po::value( &orderFile_ ), "specify an order file to load" )
@@ -75,6 +76,7 @@ void GamingConfig::ReadSession()
     if( !session.IsEmpty() && session.Exists() )
     {
         tools::Xifstream xis( session );
+        std::string url;
         xis >> xml::start( "session" )
                 >> xml::start( "config" )
                     >> xml::start( "gaming" )
@@ -85,7 +87,9 @@ void GamingConfig::ReadSession()
         xis             >> xml::end // network
                     >> xml::end; // gaming
         xis >> xml::optional >> xml::start( "timeline" )
-                >> xml::attribute( "url", timelineUrl_ );
+                >> xml::attribute( "url", url );
+        if( timelineUrl_.empty() )
+            timelineUrl_ = url;
     }
     else
     {
