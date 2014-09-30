@@ -13,7 +13,10 @@
 
 using namespace kernel;
 
-static const float rIteratorEpsilon = 1e-10f;
+namespace
+{
+    const float rIteratorEpsilon = 1e-10f;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DetectionMapIterator constructor
