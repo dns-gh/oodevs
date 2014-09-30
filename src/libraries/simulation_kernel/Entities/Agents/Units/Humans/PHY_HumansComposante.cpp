@@ -371,10 +371,10 @@ double PHY_HumansComposante::GetOperationalState() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::GetNbrUsableHumans
+// Name: PHY_HumansComposante::GetNbrLivingHumans
 // Created: NLD 2006-02-09
 // -----------------------------------------------------------------------------
-unsigned int PHY_HumansComposante::GetNbrUsableHumans() const
+unsigned int PHY_HumansComposante::GetNbrLivingHumans() const
 {
     return nNbrUsableHumans_;
 }
@@ -506,6 +506,22 @@ unsigned int PHY_HumansComposante::GetNbrHealthyHumans( const PHY_HumanRank& ran
         ++result;
     }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::CanBeUsed
+// Created: LDC 2014-09-30
+// -----------------------------------------------------------------------------
+bool PHY_HumansComposante::CanBeUsed() const
+{
+    for( auto it = humans_.begin(); it != humans_.end(); ++it )
+    {
+        if( (*it)->IsDead() || (*it)->IsSeriouslyPhysicallyWounded() )
+            continue;
+        else
+            return true;
+    }
+    return IsEmpty();
 }
 
 // -----------------------------------------------------------------------------

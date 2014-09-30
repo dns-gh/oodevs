@@ -140,7 +140,7 @@ public:
     //! @name Humans
     //@{
     unsigned int GetNbrHumans() const;
-    unsigned int GetNbrUsableHumans() const;
+    unsigned int GetNbrLivingHumans() const;
     unsigned int GetNbrHealthyHumans( const PHY_HumanRank& rank ) const;
     void HealAllHumans( bool withLog );
     void KillAllHumans();

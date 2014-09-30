@@ -207,7 +207,7 @@ unsigned int PHY_RolePion_Refugee::GetNbrHumansCampManaged() const
 unsigned int PHY_RolePion_Refugee::GetNbrHumansCampUnmanaged() const
 {
     const PHY_RolePion_Composantes& composantes = owner_->GetRole< PHY_RolePion_Composantes >();
-    unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
+    unsigned int nbrUsableHumans = composantes.GetNbrLivingHumans();
     if( nbrUsableHumans == 0 )
         return 0;
     if( nbrHumansLodgingManaged_ > nbrUsableHumans )
@@ -235,7 +235,7 @@ void PHY_RolePion_Refugee::UpdateLodging( unsigned int nbrHumansCampManaged )
     nbrHumansLodgingManaged_ = nbrHumansCampManaged;
 
     PHY_RolePion_Composantes& composantes = owner_->GetRole< PHY_RolePion_Composantes >();
-    unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
+    unsigned int nbrUsableHumans = composantes.GetNbrLivingHumans();
 
     if( nbrUsableHumans > 0 )
         lodgingSatisfaction_ = std::min( 1.0f, float( nbrHumansCampManaged ) / float( nbrUsableHumans) );

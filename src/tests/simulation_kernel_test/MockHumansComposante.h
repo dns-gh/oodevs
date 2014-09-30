@@ -43,7 +43,7 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( EvacuateWoundedHumans, 1 );
     MOCK_METHOD( GetComposante, 0 );
     MOCK_METHOD( GetNbrHumans, 0 );
-    MOCK_METHOD( GetNbrUsableHumans, 0 );
+    MOCK_METHOD( GetNbrLivingHumans, 0 );
     MOCK_METHOD( GetNbrHealthyHumans, 1 );
 };
 

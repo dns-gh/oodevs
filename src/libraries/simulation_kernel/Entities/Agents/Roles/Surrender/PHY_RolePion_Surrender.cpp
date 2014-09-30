@@ -329,7 +329,7 @@ unsigned int PHY_RolePion_Surrender::GetNbrHumansCampManaged() const
 unsigned int PHY_RolePion_Surrender::GetNbrHumansCampUnmanaged() const
 {
     const PHY_RolePion_Composantes& composantes = owner_->GetRole< PHY_RolePion_Composantes >();
-    unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
+    unsigned int nbrUsableHumans = composantes.GetNbrLivingHumans();
     if( nbrUsableHumans == 0 )
         return 0;
     if( nbrHumansLodgingManaged_ > nbrUsableHumans )

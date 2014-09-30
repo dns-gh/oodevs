@@ -90,8 +90,9 @@ public:
     //@{
     virtual const PHY_ComposantePion& GetComposante() const = 0;
     virtual unsigned int GetNbrHumans() const = 0;
-    virtual unsigned int GetNbrUsableHumans() const = 0;
+    virtual unsigned int GetNbrLivingHumans() const = 0;
     virtual unsigned int GetNbrHealthyHumans( const PHY_HumanRank& rank ) const = 0;
+    virtual bool CanBeUsed() const = 0;
     //@}
 };
 

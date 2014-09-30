@@ -204,7 +204,7 @@ void PHY_MaintenanceRepairConsign::EnterStateRepairing()
     assert( pRepairer_ );
     SetState( sword::LogMaintenanceHandlingUpdate::repairing,
               PHY_BreakdownType::GetRepairDurationInManHours()
-                ? CeiledDivision( GetComposanteBreakdown().GetRepairTime(), pRepairer_->GetNbrUsableHumans() )
+                ? CeiledDivision( GetComposanteBreakdown().GetRepairTime(), pRepairer_->GetNbrLivingHumans() )
                 : GetComposanteBreakdown().GetRepairTime() );
 }
 
