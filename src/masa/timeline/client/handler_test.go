@@ -130,7 +130,7 @@ func (f *FakeHandler) UnregisterObserver(session string, observer server.SdkObse
 
 func process(c *C, msg *sdk.ClientRequest) *FakeHandler {
 	dummy := FakeHandler{}
-	handler := MakeHandler(&dummy)
+	handler := MakeHandler(&dummy, nil)
 	err := handler.Process(msg)
 	swtest.DeepEquals(c, err, DummyError)
 	return &dummy
