@@ -162,13 +162,13 @@ void TerrainProfile::UpdateSlopes( int threshold )
 }
 namespace
 {
-    geometry::Point2f Projection( const geometry::Point2f& from, const geometry::Point2f& to,
+    geometry::Point2f Project( const geometry::Point2f& from, const geometry::Point2f& to,
                                 double distanceFrom, double distanceTo, double distanceCurrent )
     {
        return from + geometry::Vector2f( from, to ) *
             static_cast< float >( ( distanceCurrent - distanceFrom ) / ( distanceTo - distanceFrom ) );
     }
-    geometry::Point2f Projection( double distance, const std::vector< geometry::Point2f >& path )
+    geometry::Point2f Project( double distance, const std::vector< geometry::Point2f >& path )
     {
         double current = 0;
         auto previous = path.begin();
@@ -176,7 +176,7 @@ namespace
         {
             const auto nextDistance = current + previous->Distance( *it );
             if( distance < nextDistance )
-                return Projection( *previous, *it, current, nextDistance, distance );
+                return Project( *previous, *it, current, nextDistance, distance );
             current = nextDistance;
         }
         return path.back();
@@ -199,7 +199,7 @@ void TerrainProfile::mouseMoveEvent( QMouseEvent* event )
             selection_->AddPoint( pos.first, 0 );
             const auto b = ( previous->second * next->first  - next->second * previous->first ) / ( next->first - previous->first ) ;
             const auto a = ( next->second - b ) / ( next->first );
-            layer_.SetCurrentPosition( Projection( pos.first * 1000 , path_ ) );
+            layer_.SetCurrentPosition( Project( pos.first * 1000 , path_ ) );
             selection_->AddPoint( pos.first, YAxis().GetMaxAxisValue() );
             currentHeight_ = static_cast< int >( a * pos.first + b );
             currentSlope_ = ComputeSlope( *previous, *next );

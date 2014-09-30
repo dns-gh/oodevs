@@ -337,7 +337,7 @@ void DetectionMapIterator::AlignFirstPointOnGrid()
 
     // calcul de la prochaine position de l'iterateur dans l'espace de l'algorithme -> vOutPoint
     // calcul de la longueur réelle parcourue                                       -> rLength
-    if( fabs( rNextY - ++nNextCellRow_ ) < rIteratorEpsilon )
+    if( std::abs( rNextY - ++nNextCellRow_ ) < rIteratorEpsilon )
     {
         SetOutPointXY( static_cast< float >( ++nNextCellCol_ ), static_cast< float >( nNextCellRow_ ) );
         rLength_ = rDl_ * ( 1.f - rAlreadyUsedDX_ );
