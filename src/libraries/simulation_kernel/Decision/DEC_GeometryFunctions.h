@@ -101,6 +101,7 @@ public:
     static bool IsPointInUrbanBlock( const MT_Vector2D& point, const MIL_UrbanObject_ABC* pUrbanBlock );
     static bool IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point );
     static bool IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decision_ABC* pion, const MT_Vector2D& point );
+    static bool IsPointInDestroyedUrbanBlock( const MT_Vector2D& point );
     static bool IsPointInCity( const MT_Vector2D& point );
     static std::vector< boost::shared_ptr< MT_Vector2D > > SplitLocalisation( const TER_Localisation* location, unsigned int nbr );
     static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisation( const TER_Localisation& localisation, MT_Vector2D vOrigin, const MT_Vector2D& vDirection, double rSectionLength );
