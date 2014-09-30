@@ -21,6 +21,7 @@
 #include "MockLogger.h"
 #include "MockContextHandler.h"
 #include "MockPropagationManager.h"
+#include "MockSimulationTimeManager.h"
 
 #include "protocol/SimulationSenders.h"
 
@@ -53,11 +54,12 @@ struct Fixture
 struct ControllerFixture : Fixture
 {
     ControllerFixture()
-        : controller( extent, sideResolver, objectTypeResolver, ctxHandler, remoteSubject, logger, propagationManager )
+        : controller( extent, sideResolver, objectTypeResolver, ctxHandler, remoteSubject, logger, propagationManager, timeManager )
     {
         BOOST_CHECK( remoteListener );
     }
     MockPropagationManager propagationManager;
+    MockSimulationTimeManager timeManager;
     RemoteTacticalObjectController controller;
 };
 
@@ -211,5 +213,6 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_disaster_obje
     simulation::ObjectMagicAction actual;
     MOCK_EXPECT( ctxHandler.SendObject ).once();
     MOCK_EXPECT( propagationManager.saveDataFile ).once();
+    MOCK_EXPECT( timeManager.getSimulationTime ).once().returns( "19020508T075200" );
     objectListener->PropagationChanged( "an_object", datas, col, lig, 3, 42, 1, 2 );
 }

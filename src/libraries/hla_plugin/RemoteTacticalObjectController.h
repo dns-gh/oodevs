@@ -50,6 +50,7 @@ namespace hla
     class RemoteTacticalObjectSubject_ABC;
     class PropagationManager_ABC;
     template< typename ResponseMessage > class ContextHandler_ABC;
+    class SimulationTimeManager_ABC;
 
 /// =============================================================================
 /// @class hla::RemoteTacticalObjectController
@@ -66,7 +67,8 @@ public:
     //! @name Contructors destructors
     //@{
     RemoteTacticalObjectController( const ExtentResolver_ABC& extent, const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver,
-            ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler, RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr );
+            ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler, RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr,
+            const SimulationTimeManager_ABC& timeManager );
     virtual ~RemoteTacticalObjectController();
     //@}
 
@@ -120,6 +122,7 @@ private:
     RemoteTacticalObjectSubject_ABC& subject_;
     dispatcher::Logger_ABC& logger_;
     PropagationManager_ABC& propagationManager_;
+    const SimulationTimeManager_ABC& timeManager_;
     T_ObjectCreations objectCreations_;
     T_Centers centers_;
     T_Perimeters perimeters_;
