@@ -14,7 +14,6 @@ import (
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
 	"os"
-	"reflect"
 	"regexp"
 )
 
@@ -117,78 +116,6 @@ func (s *TestSuite) TestFireOrderOnLocationCreation(c *C) {
 
 	err = client.CreateFireOnLocation(point, ResourceTypeWithIndirectFire, 2)
 	c.Assert(err, IsNil)
-}
-
-func (s *TestSuite) TestResourceNetworkChange(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer stopSimAndClient(c, sim, client)
-
-	// error: invalid parameters count, 2 parameters expected
-	params := swapi.MakeParameters()
-	err := client.ChangeResourceNetworkTest(params)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-
-	// error: first parameter must be a location or an identifier
-	params = swapi.MakeParameters(nil, nil)
-	err = client.ChangeResourceNetworkTest(params)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-
-	// error: first parameter must be a valid identifier
-	params.Elem[0] = swapi.MakeIdentifier(uint32(1000))
-	err = client.ChangeResourceNetworkTest(params)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-
-	// first parameter with a valid identifier
-	params.Elem[0] = swapi.MakeIdentifier(uint32(21))
-	err = client.ChangeResourceNetworkTest(params)
-	c.Assert(err, IsNil)
-
-	// error: second parameter must be a list with valid resource names
-	params.Elem[1] = swapi.MakeParameter(
-		swapi.MakeList(swapi.MakeString("Running Water")),
-		swapi.MakeList(swapi.MakeString("invalid resource name")))
-	err = client.ChangeResourceNetworkTest(params)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-
-	// second parameter with valid resource names
-	params.Elem[1] = swapi.MakeParameter(
-		swapi.MakeList(swapi.MakeString("Running Water")),
-		swapi.MakeList(swapi.MakeString("Natural Gas")))
-	err = client.ChangeResourceNetworkTest(params)
-	c.Assert(err, IsNil)
-
-	// update full parameters
-	urban := swapi.NewUrban(21, "Bloc urbain [21]", 100,
-		map[string]*swapi.ResourceNetwork{
-			"Running Water": {Name: "Running Water",
-				Consumption: 1, Critical: true, Activated: false, Production: 2,
-				StockMax: 3},
-			"Natural Gas": {Name: "Natural Gas",
-				Consumption: 4, Critical: false, Activated: true, Production: 5,
-				StockMax: 6},
-		})
-	err = client.ChangeResourceNetwork(urban)
-	c.Assert(err, IsNil)
-
-	// model updated
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(urban, data.Objects[21])
-	})
-
-	// the magic action changes resources network values totally
-	urban = swapi.NewUrban(21, "Bloc urbain [21]", 100,
-		map[string]*swapi.ResourceNetwork{
-			"Electricity": {Name: "Electricity",
-				Consumption: 7, Critical: true, Activated: true, Production: 8,
-				StockMax: 9},
-		})
-	err = client.ChangeResourceNetwork(urban)
-	c.Assert(err, IsNil)
-
-	// model updated
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(urban, data.Objects[21])
-	})
 }
 
 func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
