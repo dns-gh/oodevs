@@ -110,7 +110,6 @@ void TerrainProfile::UpdateVision( int height )
     if( data.size() < 2 )
         return;
     auto previous = data.begin();
-    vision_->AddPoint( previous->first, previous->second + height );
     vision_->AddPoint( *previous );
     const geometry::Point2d viewer( 0, previous->second + height );
     geometry::Point2d maxpt( 0, previous->second );
