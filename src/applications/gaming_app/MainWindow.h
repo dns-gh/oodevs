@@ -10,6 +10,7 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
+#include "clients_gui/LayersHelpers.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "gaming/Simulation.h"
@@ -47,7 +48,6 @@ namespace gui
     class RichToolBar;
     class TerrainLayer;
     class TerrainPicker;
-    class TooltipsLayer_ABC;
     class TextEditor;
 }
 
@@ -138,12 +138,13 @@ private:
 
     static std::string BuildRemotePath( std::string server, std::string path );
 
-    void CreateLayers( const std::shared_ptr< gui::Layer_ABC >& locationsLayer,
+    void CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
+                       const std::shared_ptr< gui::Layer_ABC >& locations,
                        const std::shared_ptr< gui::Layer_ABC >& weather,
-                       const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
+                       const std::shared_ptr< gui::Layer_ABC >& profiler,
                        const std::shared_ptr< gui::Layer_ABC >& automats,
-                       const std::shared_ptr< gui::Layer_ABC >& formationLayer,
-                       const std::shared_ptr< gui::Layer_ABC >& elevation2dLayer,
+                       const std::shared_ptr< gui::Layer_ABC >& formations,
+                       const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                        const Simulation& simulation,
                        gui::TerrainPicker& picker );
 
@@ -180,7 +181,7 @@ private:
     std::unique_ptr< UnitStateDialog > unitStateDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
     std::unique_ptr< gui::TextEditor > textEditor_;
-    std::shared_ptr< gui::ParametersLayer > parameters_;
+    gui::T_LayersMap layers_;
     QByteArray states_;
     bool connected_;
     bool onPlanif_;

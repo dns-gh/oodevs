@@ -11,6 +11,7 @@
 #define __Layer_h_
 
 #include "Layer_ABC.h"
+#include "LayersHelpers.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include <tools/Observer_ABC.h>
 
@@ -34,8 +35,7 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class Layer : public QObject
-            , public Layer_ABC
+class Layer : public Layer_ABC
 {
     Q_OBJECT
 
@@ -46,7 +46,15 @@ public:
     virtual ~Layer();
     //@}
 
-    //! @name Operations
+    //! @name ModesObserver implementation
+    //@{
+    virtual void SetVisible( bool visible );
+    virtual void ForceEnabled( bool enabled );
+    virtual void EnsureIsEnabled();
+    virtual bool IsVisible() const;
+    //@}
+
+    //! @name Layer_ABC implementation
     //@{
     virtual void Paint( const ViewFrustum& frustum );
     virtual void Paint( const geometry::Rectangle2f& viewport );
@@ -56,27 +64,13 @@ public:
     virtual float GetAlpha() const;
 
     virtual bool IsEnabled() const;
+    virtual bool IsConfigurable() const;
     virtual void Reset();
 
-    void SetPasses( const std::string& passes );
-    bool ShouldDrawPass() const;
-
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const { return false; }
-    //@}
-
-    //! @name ModesObserver implementation
-    //@{
-    virtual void SetVisible( bool visible );
-    virtual void ForceEnabled( bool enabled );
-    virtual void EnsureIsEnabled();
-    virtual bool IsVisible() const;
-    virtual bool IsPickable() const;
-    //@}
-
-    //! @name Layer_ABC implementation
-    //@{
     virtual E_LayerTypes GetType() const;
     virtual QString GetName() const;
+    virtual std::string GetOptionName() const;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >&, const geometry::Point2f&, const QPoint& );
@@ -88,17 +82,27 @@ public:
     //@}
 
 protected:
-    kernel::Controllers& controllers_;
-    GlTools_ABC& tools_;
+    //! @name Helpers
+    //@{
+    bool ShouldDrawPass() const;
+    const std::vector< E_LayerTypes >& GetChildrenTypes() const;
+    //@}
 
 private:
-    //! @name Member data
+    //! @name Helpers
     //@{
-    const E_LayerTypes type_;
-    float         alpha_;
-    std::string   passes_;
-    bool          enabled_;
+    bool IsPickable() const;
     //@}
+
+protected:
+    kernel::Controllers& controllers_;
+    GlTools_ABC& tools_;
+    QString name_;
+
+private:
+    const gui::layers::Descriptor& descriptor_;
+    float alpha_;
+    bool enabled_;
 };
 
 // =============================================================================
@@ -112,7 +116,7 @@ class Layer2D : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer2D( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
+            Layer2D( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
                  : Layer( controllers, tools, type )
              {}
     virtual ~Layer2D() {};

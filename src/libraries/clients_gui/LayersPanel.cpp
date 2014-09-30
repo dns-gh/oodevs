@@ -198,7 +198,7 @@ void LayersPanel::RemoveDynamicLayer( QStandardItem& item )
     RemoveFromVector( layer, layers_, names_ );
 
     layersModel_->removeRow( item.row() );
-    proxy_.Unregister( layer );
+    proxy_.RemoveLayer( layer );
     UpdateLeastAndMostVisible();
 }
 

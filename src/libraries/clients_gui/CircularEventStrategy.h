@@ -12,6 +12,7 @@
 
 #include <graphics/EventStrategy_ABC.h>
 #include "Layer_ABC.h"
+#include "LayersHelpers.h"
 
 namespace kernel
 {
@@ -54,9 +55,8 @@ public:
 
     //! @name Operations
     //@{
-    void SetDefault( const std::shared_ptr< Layer_ABC >& layer );
-    void Register  ( const std::shared_ptr< Layer_ABC >& layer );
-    void Remove    ( const std::shared_ptr< Layer_ABC >& layer );
+    void SetDefault( const T_Layer& layer );
+    void AddLayers( const T_LayersVector& layers );
 
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
@@ -96,10 +96,10 @@ private slots:
 private:
     //! @name Member data
     //@{
-    Layer_ABC::T_Layers layers_;
-    std::shared_ptr< Layer_ABC > default_;
+    T_LayersVector layers_;
+    T_Layer default_;
     bool exclusive_;
-    Layer_ABC::T_Layers::const_reverse_iterator rlast_;
+    T_LayersVector::const_reverse_iterator rlast_;
     std::unique_ptr< SelectionMenu > menu_;
     std::unique_ptr< Selection > selection_;
     GlTools_ABC& tools_;

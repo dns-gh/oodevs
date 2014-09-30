@@ -911,10 +911,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Events</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -992,6 +988,14 @@
     </message>
     <message>
         <source>Terrain profiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User layer [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event creation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

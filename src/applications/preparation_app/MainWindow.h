@@ -10,6 +10,7 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
+#include "clients_gui/LayersHelpers.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/ControllerObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
@@ -17,7 +18,6 @@
 namespace kernel
 {
     class Controllers;
-    class Profile_ABC;
 }
 
 namespace gui
@@ -117,7 +117,6 @@ private:
                        const std::shared_ptr< gui::Layer_ABC >& automats,
                        const std::shared_ptr< gui::Layer_ABC >& formation,
                        const std::shared_ptr< gui::Layer_ABC >& elevation2d,
-                       const kernel::Profile_ABC& profile,
                        gui::TerrainPicker& picker );
     void closeEvent( QCloseEvent* pEvent );
     void DoClose();
@@ -162,6 +161,7 @@ private:
     boost::shared_ptr< QProcess >                  process_;
     std::unique_ptr< gui::EntitySymbols >          icons_;
     std::unique_ptr< gui::TextEditor >             textEditor_;
+    gui::T_LayersMap                               layers_;
     //@}
 };
 

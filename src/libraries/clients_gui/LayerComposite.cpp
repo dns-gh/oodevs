@@ -16,10 +16,23 @@ using namespace gui;
 // Name: LayerComposite::LayerComposite
 // Created: SLI 2014-07-01
 // -----------------------------------------------------------------------------
-LayerComposite::LayerComposite( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
+LayerComposite::LayerComposite( kernel::Controllers& controllers,
+                                GlTools_ABC& tools,
+                                const T_LayersMap& layersMap,
+                                E_LayerTypes type )
     : Layer( controllers, tools, type )
 {
-    // NOTHING
+    const auto& childrenTypes = GetChildrenTypes();
+    if( childrenTypes.empty() )
+        throw MASA_EXCEPTION( "bad composite descriptor, no children defined" );
+    for( auto itType = childrenTypes.begin(); itType != childrenTypes.end(); ++itType )
+    {
+        auto itLayer = layersMap.find( *itType );
+        if( itLayer != layersMap.end() && itLayer->second )
+            layers_.push_back( itLayer->second );
+    }
+    if( layers_.size() < 2 )
+        throw MASA_EXCEPTION( "bad composite initialisation, not enough children" );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,15 +42,6 @@ LayerComposite::LayerComposite( kernel::Controllers& controllers, GlTools_ABC& t
 LayerComposite::~LayerComposite()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LayerComposite::Register
-// Created: SLI 2014-06-25
-// -----------------------------------------------------------------------------
-void LayerComposite::Register( const std::shared_ptr< Layer_ABC >& layer )
-{
-    layers_.push_back( layer );
 }
 
 // -----------------------------------------------------------------------------

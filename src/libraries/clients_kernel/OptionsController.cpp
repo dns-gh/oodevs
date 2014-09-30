@@ -38,6 +38,15 @@ OptionsController::~OptionsController()
 }
 
 // -----------------------------------------------------------------------------
+// Name: OptionsController::InitializeLayers
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+void OptionsController::InitializeLayers( const std::vector< E_LayerTypes >& layerOrder )
+{
+    viewOptions_->InitializeLayers( layerOrder );
+}
+
+// -----------------------------------------------------------------------------
 // Name: OptionsController::Register
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------

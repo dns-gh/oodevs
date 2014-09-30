@@ -10,8 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Layer.h"
 #include "moc_Layer.cpp"
-#include "Gl3dWidget.h"
-#include "GlWidget.h"
+#include "GlTools_ABC.h"
 #include "Viewport2d.h"
 #include "Viewport3d.h"
 #include "clients_kernel/Controllers.h"
@@ -26,10 +25,13 @@ using namespace gui;
 Layer::Layer( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
     : controllers_( controllers )
     , tools_( tools )
-    , type_( type )
+    , descriptor_( layers::GetDescriptor( type ) )
     , alpha_( 1 )
     , enabled_( true )
+    , name_( QString::fromStdString( ENT_Tr::ConvertFromLayerTypes( type ) ) )
 {
+    SetModes( descriptor_.hiddenModes_, eModes_None, true );
+    SetReadOnlyModes( descriptor_.readOnlyModes_ );
     controllers_.Register( *this );
 }
 
@@ -93,15 +95,6 @@ float Layer::GetAlpha() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer::SetPasses
-// Created: SBO 2008-04-15
-// -----------------------------------------------------------------------------
-void Layer::SetPasses( const std::string& passes )
-{
-    passes_ = passes;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Layer::ShouldDrawPass
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
@@ -109,7 +102,7 @@ bool Layer::ShouldDrawPass() const
 {
     const auto currentPass = tools_.GetCurrentPass();
     return IsEnabled()
-        && ( passes_.empty() || currentPass.empty() || passes_.find( currentPass ) != std::string::npos )
+        && ( descriptor_.passes_.empty() || currentPass.empty() || descriptor_.passes_.find( currentPass ) != std::string::npos )
         && ( !tools_.IsPickingMode() || IsPickable() );
 }
 
@@ -119,7 +112,16 @@ bool Layer::ShouldDrawPass() const
 // -----------------------------------------------------------------------------
 bool Layer::IsPickable() const
 {
-    return false;
+    return descriptor_.pickable_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::IsConfigurable
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+bool Layer::IsConfigurable() const
+{
+    return descriptor_.configurable_;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +175,16 @@ bool Layer::IsVisible() const
 // -----------------------------------------------------------------------------
 QString Layer::GetName() const
 {
-    return QString::fromStdString( ENT_Tr::ConvertFromLayerTypes( type_ ) );
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::GetOptionName
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+std::string Layer::GetOptionName() const
+{
+    return ENT_Tr::ConvertFromLayerTypes( descriptor_.type_, ENT_Tr::eToSim );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,5 +274,14 @@ void Layer::Reset()
 // -----------------------------------------------------------------------------
 E_LayerTypes Layer::GetType() const
 {
-    return type_;
+    return descriptor_.type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< E_LayerTypes >& Layer::GetChildrenTypes
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+const std::vector< E_LayerTypes >& Layer::GetChildrenTypes() const
+{
+    return descriptor_.children_;
 }

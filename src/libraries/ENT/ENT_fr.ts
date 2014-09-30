@@ -911,10 +911,6 @@
         <translation>Elévation 3d</translation>
     </message>
     <message>
-        <source>Events</source>
-        <translation>Evenements</translation>
-    </message>
-    <message>
         <source>Grid</source>
         <translation>Grille</translation>
     </message>
@@ -993,6 +989,14 @@
     <message>
         <source>Terrain profiler</source>
         <translation>Analyseur de terrain</translation>
+    </message>
+    <message>
+        <source>User layer [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event creation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

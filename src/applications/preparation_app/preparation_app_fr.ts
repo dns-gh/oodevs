@@ -874,36 +874,8 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Units</source>
-        <translation>Unités</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terrain</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Cartes Raster</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation>Elévation</translation>
-    </message>
-    <message>
         <source>Load exercise definition file (exercise.xml)</source>
         <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation>Foule</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
     </message>
     <message>
         <source>Save exercise as ...</source>
@@ -932,10 +904,6 @@
     <message>
         <source>Preparation - [%1]</source>
         <translation>Préparation - [%1]</translation>
-    </message>
-    <message>
-        <source>Contour Lines</source>
-        <translation>Lignes de contour</translation>
     </message>
     <message>
         <source>Loading configuration ...</source>
@@ -990,42 +958,14 @@
         <translation>Erreur fatale en ajoutant la source de Raster.</translation>
     </message>
     <message>
-        <source>User layer [%1]</source>
-        <translation>Calque utilisateur [%1]</translation>
-    </message>
-    <message>
         <source>The following raster you add is missing spatial reference information.
 This data can&apos;t be projected.</source>
         <translation>L&apos;image que vous rajoutez manque d&apos;information de référence spatiale.
 Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
-        <source>Ghost</source>
-        <translation>Fantôme</translation>
-    </message>
-    <message>
         <source>Generate symbols</source>
         <translation>Génération des symbols</translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation>Blocs urbains</translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation>Réseaux de ressource</translation>
-    </message>
-    <message>
-        <source>Terrain (new rendering)</source>
-        <translation>Terrain (nouveau rendu)</translation>
-    </message>
-    <message>
-        <source>Weather and watershed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactical lines and drawings</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

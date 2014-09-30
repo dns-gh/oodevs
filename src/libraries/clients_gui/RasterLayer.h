@@ -38,7 +38,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
-             RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools, const tools::Path& texture );
+             RasterLayer( kernel::Controllers& controllers,
+                          GlTools_ABC& tools,
+                          const tools::Path& texture,
+                          const QString& userName );
     virtual ~RasterLayer();
     //@}
 

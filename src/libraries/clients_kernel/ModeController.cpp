@@ -155,7 +155,7 @@ void ModeController::LoadOptions( E_Modes mode, OptionsController& options )
 {
     EnsureModeIsAvailableForRegistry( mode );
     Settings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + registryModes_[ mode ] + "/Options" );
+    settings.beginGroup( "/" + registryModes_[ mode ] );
     options.Load( settings );
     settings.endGroup();
 }
@@ -168,7 +168,7 @@ void ModeController::SaveOptions( E_Modes mode, OptionsController& options )
 {
     EnsureModeIsAvailableForRegistry( mode );
     Settings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + registryModes_[ mode ] + "/Options" );
+    settings.beginGroup( "/" + registryModes_[ mode ] );
     options.Save( settings );
     settings.endGroup();
 }

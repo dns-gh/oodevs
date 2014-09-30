@@ -2114,38 +2114,6 @@ Do you want to replace it?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Objects</source>
-        <translation>Objects</translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Crowds</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation>Elevation</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Raster</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terrain</translation>
-    </message>
-    <message>
-        <source>Contour Lines</source>
-        <translation>Contour Lines</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Units</translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation>Error loading exercise: </translation>
     </message>
@@ -2175,10 +2143,6 @@ This data can&apos;t be projected.</source>
         <translation>Fatal error adding Raster source.</translation>
     </message>
     <message>
-        <source>User layer [%1]</source>
-        <translation>User layer [%1]</translation>
-    </message>
-    <message>
         <source>Error while loading Raster source.</source>
         <translation>Error while loading Raster source.</translation>
     </message>
@@ -2191,14 +2155,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"> - Planning mode on</translation>
     </message>
     <message>
-        <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation type="unfinished">Resource networks</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation>Sound</translation>
     </message>
@@ -2209,18 +2165,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Weapon Ranges</source>
         <translation>Weapon Ranges</translation>
-    </message>
-    <message>
-        <source>Terrain (new rendering)</source>
-        <translation>Terrain (new rendering)</translation>
-    </message>
-    <message>
-        <source>Tactical lines and drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weather and watershed</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

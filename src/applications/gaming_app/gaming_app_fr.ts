@@ -2116,40 +2116,8 @@ Voulez-vous le remplacer ?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation>Erreur lors du chargement de l&apos;exercice: </translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation>Elévation</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Cartes raster</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terrain</translation>
-    </message>
-    <message>
-        <source>Contour Lines</source>
-        <translation>Lignes de niveau</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Unités</translation>
     </message>
     <message>
         <source> - Not connected</source>
@@ -2176,10 +2144,6 @@ Voulez-vous le remplacer ?</translation>
         <translation>Erreur fatale en ajoutant la source de Raster.</translation>
     </message>
     <message>
-        <source>User layer [%1]</source>
-        <translation>Calque utilisateur [%1]</translation>
-    </message>
-    <message>
         <source>The following raster you add is missing spatial reference information.
 This data can&apos;t be projected.</source>
         <translation>L&apos;image que vous rajoutez manque d&apos;information de référence spatiale.
@@ -2194,14 +2158,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation> - Mode Planification</translation>
     </message>
     <message>
-        <source>Urban blocks</source>
-        <translation>Blocs urbains</translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation>Réseaux de ressource</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation>Son</translation>
     </message>
@@ -2212,18 +2168,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Weapon Ranges</source>
         <translation>Portées Utiles de Combat</translation>
-    </message>
-    <message>
-        <source>Terrain (new rendering)</source>
-        <translation>Terrain (nouveau rendu)</translation>
-    </message>
-    <message>
-        <source>Tactical lines and drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weather and watershed</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

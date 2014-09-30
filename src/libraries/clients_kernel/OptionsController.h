@@ -11,6 +11,7 @@
 #define __OptionsController_h_
 
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Enums.h"
 
 namespace tools
 {
@@ -40,6 +41,8 @@ public:
 
     //! @name Operations
     //@{
+    void InitializeLayers( const std::vector< E_LayerTypes >& layerOrder );
+
     void Register( tools::Observer_ABC& observer );
     void Unregister( tools::Observer_ABC& observer );
 

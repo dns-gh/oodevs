@@ -130,15 +130,6 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bo
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityLayer::IsPickable
-// Created: LGY 2013-02-25
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::IsPickable() const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityLayerBase::ShouldDisplay
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

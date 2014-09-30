@@ -2113,38 +2113,6 @@ Do you want to replace it?</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Objects</source>
-        <translation type="unfinished">الكائنات</translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation type="unfinished">الحشود</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation type="unfinished">السكان</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation type="unfinished">ارتفاع</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation type="unfinished">الشبكة</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation type="unfinished">حقل</translation>
-    </message>
-    <message>
-        <source>Contour Lines</source>
-        <translation type="unfinished">الخطوط الكنتورية</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished">وحدات</translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation type="unfinished">خطأ في تحميل التمرين:</translation>
     </message>
@@ -2175,10 +2143,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">خطأ فادح: إضافة النقطية المصدر.</translation>
     </message>
     <message>
-        <source>User layer [%1]</source>
-        <translation type="unfinished">طبقة المستخدم [%1]</translation>
-    </message>
-    <message>
         <source>Error while loading Raster source.</source>
         <translation type="unfinished">حدث خطأ أثناء تحميل النقطية المصدر.</translation>
     </message>
@@ -2191,14 +2155,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">-وضع التخطيط في</translation>
     </message>
     <message>
-        <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation type="unfinished">شبكات للموارد</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2208,18 +2164,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Weapon Ranges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain (new rendering)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactical lines and drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weather and watershed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

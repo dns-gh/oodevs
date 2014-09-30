@@ -12,11 +12,13 @@
 
 #include "View_ABC.h"
 #include "GlTools_ABC.h"
+#include "LayersHelpers.h"
 
 namespace kernel
 {
     class GraphicalEntity_ABC;
     class Logger_ABC;
+    class Options;
 }
 
 namespace gui
@@ -45,6 +47,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
+    void UpdateLayerOrder( kernel::Options& options );
 
     void SetWidget3D( const std::shared_ptr< Gl3dWidget >& newWidget );
     void SetWidget2D( const std::shared_ptr< GlWidget >& newWidget );
@@ -52,12 +55,12 @@ public:
     void ChangeTo( const std::shared_ptr< GlWidget >& newWidget );
     void ChangeTo( const std::shared_ptr< Gl3dWidget >& newWidget );
 
-    void Register( const std::shared_ptr< TooltipsLayer_ABC >& layer );
-    virtual void Register( const std::shared_ptr< Layer_ABC >& layer );
-    virtual void Unregister( const std::shared_ptr< Layer_ABC >& layer );
+    void SetTooltipsLayer( const std::shared_ptr< TooltipsLayer_ABC >& layer );
+    void AddLayers( const T_LayersVector& layers );
+    void RemoveLayer( const T_Layer& layer );
+    void ApplyToLayers( const T_LayerFunctor& functor ) const;
 
-    virtual bool MoveBelow( const std::shared_ptr< Layer_ABC >& lhs,
-                            const std::shared_ptr< Layer_ABC >& rhs );
+    virtual bool MoveBelow( const T_Layer& lhs, const T_Layer& rhs );
 
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );
@@ -121,16 +124,10 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< std::shared_ptr< Layer_ABC > > T_Layers;
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Logger_ABC& logger_;
-    T_Layers layers_;
+    T_LayersVector layers_;
     std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
     std::shared_ptr< View_ABC > view_;
     std::shared_ptr< GlTools_ABC > tools_;

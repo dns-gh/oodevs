@@ -14,6 +14,8 @@
 #include "GlWidget.h"
 #include "Layer.h"
 #include "TooltipsLayer_ABC.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace kernel;
 using namespace gui;
@@ -41,33 +43,34 @@ GlProxy::~GlProxy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::Register
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void GlProxy::Register( const std::shared_ptr< Layer_ABC >&  layer )
-{
-    layers_.push_back( layer );
-    if( widget2d_ )
-        widget2d_->Register( layer );
-    if( widget3d_ )
-        widget3d_->Register( layer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::Register
+// Name: GlProxy::SetTooltipsLayer
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-void GlProxy::Register( const std::shared_ptr< TooltipsLayer_ABC >& layer )
+void GlProxy::SetTooltipsLayer( const std::shared_ptr< TooltipsLayer_ABC >& layer )
 {
-    layers_.push_back( layer );
     tooltipLayer_ = layer;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::Unregister
+// Name: GlProxy::AddLayers
+// Created: AGE 2006-03-29
+// -----------------------------------------------------------------------------
+void GlProxy::AddLayers( const T_LayersVector& layers )
+{
+    layers_.insert( layers_.end(), layers.begin(), layers.end() );
+    std::for_each( layers.begin(), layers.end(), [&]( const T_Layer& layer ){
+        if( widget2d_ )
+            widget2d_->Register( layer );
+        if( widget3d_ )
+            widget3d_->Register( layer );
+    } );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::RemoveLayer
 // Created: ABR 2012-06-12
 // -----------------------------------------------------------------------------
-void GlProxy::Unregister( const std::shared_ptr< Layer_ABC >& layer )
+void GlProxy::RemoveLayer( const T_Layer& layer )
 {
     auto it = std::find( layers_.begin(), layers_.end(), layer );
     if( it != layers_.end() )
@@ -79,10 +82,19 @@ void GlProxy::Unregister( const std::shared_ptr< Layer_ABC >& layer )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::ApplyToLayers
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+void GlProxy::ApplyToLayers( const T_LayerFunctor& functor ) const
+{
+    std::for_each( layers_.begin(), layers_.end(), functor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::MoveBelow
 // Created: ABR 2014-09-24
 // -----------------------------------------------------------------------------
-bool GlProxy::MoveBelow( const std::shared_ptr< Layer_ABC >& lhs, const std::shared_ptr< Layer_ABC >& rhs )
+bool GlProxy::MoveBelow( const T_Layer& lhs, const T_Layer& rhs )
 {
     auto itLhs = std::find( layers_.begin(), layers_.end(), lhs );
     auto itRhs = std::find( layers_.begin(), layers_.end(), rhs );
@@ -98,6 +110,39 @@ bool GlProxy::MoveBelow( const std::shared_ptr< Layer_ABC >& lhs, const std::sha
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::UpdateLayerOrder
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+void GlProxy::UpdateLayerOrder( kernel::Options& options )
+{
+    T_LayersVector orderedLayers;
+    ApplyToLayers( [&orderedLayers]( const T_Layer& layer ) {
+        if( layer->IsConfigurable() || layer->GetType() == eLayerTypes_RasterDynamic )
+            orderedLayers.insert( orderedLayers.begin(), layer );
+    } );
+    std::sort( orderedLayers.begin(),
+               orderedLayers.end(),
+               [&]( const T_Layer& lhs, const T_Layer& rhs ) -> bool {
+                   const int lhsPosition = options.Get( "Layers/" + lhs->GetOptionName() + "/Position" ).To< int >();
+                   const int rhsPosition = options.Get( "Layers/" + rhs->GetOptionName() + "/Position" ).To< int >();
+                   return lhsPosition < rhsPosition;
+               } );
+    bool moved = true;
+    while( moved )
+    {
+        moved = false;
+        for( auto it = orderedLayers.rbegin(); it != orderedLayers.rend() && it + 1 != orderedLayers.rend(); ++it )
+            moved |= MoveBelow( *( it + 1 ), *it );
+    }
+    for( int i = 0; i < orderedLayers.size(); ++i )
+    {
+        const auto& layer = orderedLayers[ i ];
+        layer->SetAlpha( options.Get( "Layers/" + layer->GetOptionName() + "/Alpha" ).To< float >() );
+        options.Set( "Layers/" + layer->GetOptionName() + "/Position", i );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::SetWidget3D
 // Created: ABR 2014-09-24
 // -----------------------------------------------------------------------------
@@ -105,7 +150,7 @@ void GlProxy::SetWidget3D( const std::shared_ptr< Gl3dWidget >& newWidget )
 {
     widget3d_ = newWidget;
     if( widget3d_ )
-        std::for_each( layers_.begin(), layers_.end(), [&]( const std::shared_ptr< Layer_ABC >& layer ){ 
+        std::for_each( layers_.begin(), layers_.end(), [&]( const T_Layer& layer ){ 
             widget3d_->Register( layer );
         } );
 }
@@ -118,7 +163,7 @@ void GlProxy::SetWidget2D( const std::shared_ptr< GlWidget >& newWidget )
 {
     widget2d_ = newWidget;
     if( widget2d_ )
-        std::for_each( layers_.begin(), layers_.end(), [&]( const std::shared_ptr< Layer_ABC >& layer ){ 
+        std::for_each( layers_.begin(), layers_.end(), [&]( const T_Layer& layer ){ 
             widget2d_->Register( layer );
         } );
 }

@@ -30,7 +30,8 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class Layer_ABC : public MapLayer_ABC
+class Layer_ABC : public QObject
+                , public MapLayer_ABC
                 , public tools::Observer_ABC
                 , public kernel::DisplayableModesObserver_ABC
 {
@@ -43,7 +44,6 @@ public:
 
     //! @name Types
     //@{
-    typedef std::vector< std::shared_ptr< Layer_ABC > > T_Layers;
     typedef std::map< Layer_ABC*, kernel::GraphicalEntity_ABC::T_GraphicalEntities > T_LayerElements;
 
     typedef std::pair< unsigned int, E_LayerTypes > T_ObjectPicking;
@@ -61,6 +61,7 @@ public:
     virtual float GetAlpha() const = 0;
     virtual void Reset() = 0;
     virtual QString GetName() const = 0;
+    virtual std::string GetOptionName() const = 0;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift ) = 0;
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& ) = 0;
     virtual bool ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >& elements, const geometry::Point2f&, const QPoint& ) = 0;
@@ -71,7 +72,7 @@ public:
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection ) = 0;
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const = 0;
     virtual bool IsEnabled() const = 0;
-    virtual void SetPasses( const std::string& passes ) = 0;
+    virtual bool IsConfigurable() const = 0;
     //@}
 };
 

@@ -148,7 +148,7 @@ void GlSelector::Close()
 // -----------------------------------------------------------------------------
 void GlSelector::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    if( name == "3D" )
+    if( name == "3D" && widget2d_ && widget3d_ )
         ChangeTo( value.To< bool >() ? eWidget_3D : eWidget_2D );
     else if( name == "RefreshRate" )
         displayTimer_->start( value.To< int >() );

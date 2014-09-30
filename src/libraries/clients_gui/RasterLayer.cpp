@@ -30,10 +30,14 @@ RasterLayer::RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools )
     controllers_.Update( *this );
 }
 
-RasterLayer::RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools, const tools::Path& texture )
-    : Layer2D( controllers, tools, eLayerTypes_Raster )
+RasterLayer::RasterLayer( kernel::Controllers& controllers,
+                          GlTools_ABC& tools,
+                          const tools::Path& texture,
+                          const QString& userName )
+    : Layer2D( controllers, tools, eLayerTypes_RasterDynamic )
     , ignore_( false )
 {
+    name_ = name_.arg( userName );
     GenerateTexture( texture );
     controllers_.Update( *this );
 }

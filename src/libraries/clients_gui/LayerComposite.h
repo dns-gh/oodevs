@@ -28,16 +28,14 @@ class LayerComposite : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             LayerComposite( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type );
+             LayerComposite( kernel::Controllers& controllers,
+                             GlTools_ABC& tools,
+                             const T_LayersMap& layersMap,
+                             E_LayerTypes type );
     virtual ~LayerComposite();
     //@}
 
-    //! @name Operations
-    //@{
-    void Register( const T_Layer& layer );
-    //@}
-
-    //! @name Layers forward
+    //! @name Forwarded operations
     //@{
     virtual void SetAlpha( float alpha );
     virtual void Paint( gui::Viewport_ABC& viewport );
@@ -68,7 +66,7 @@ public:
     //@}
 
 private:
-    std::vector< std::shared_ptr< gui::Layer_ABC > > layers_;
+    T_LayersVector layers_;
 };
 
 } //! namespace gui

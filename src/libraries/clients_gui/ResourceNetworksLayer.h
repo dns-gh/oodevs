@@ -50,7 +50,6 @@ public:
     virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual bool IsSelected( const kernel::Entity_ABC& entity ) const;
-    virtual bool IsPickable() const;
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
     //@}
 };

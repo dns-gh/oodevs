@@ -875,36 +875,8 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Units</source>
-        <translation>Unidades</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objetos</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Poblaciones</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terreno</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Imágenes raster</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation>Elevación</translation>
-    </message>
-    <message>
         <source>Load exercise definition file (exercise.xml)</source>
         <translation>Cargar archivo de definición de escenario (exercise.xml)</translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation>Muchedumbre</translation>
     </message>
     <message>
         <source>Save exercise as ...</source>
@@ -933,10 +905,6 @@
     <message>
         <source>Preparation - [%1]</source>
         <translation>Preparación - [%1]</translation>
-    </message>
-    <message>
-        <source>Contour Lines</source>
-        <translation>Curvas de nivel</translation>
     </message>
     <message>
         <source>Loading configuration ...</source>
@@ -991,42 +959,14 @@
         <translation>Error grave agregando imagen Raster.</translation>
     </message>
     <message>
-        <source>User layer [%1]</source>
-        <translation>Capa de usuario [%1]</translation>
-    </message>
-    <message>
         <source>The following raster you add is missing spatial reference information.
 This data can&apos;t be projected.</source>
         <translation>La siguiente imagen que agregó no tiene información de georeferencia.
 Este dato no puede ser proyectado.</translation>
     </message>
     <message>
-        <source>Ghost</source>
-        <translation>Fantasma</translation>
-    </message>
-    <message>
         <source>Generate symbols</source>
         <translation>Generar símbolos</translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation>Bloques urbanos</translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation>Redes de recursos</translation>
-    </message>
-    <message>
-        <source>Terrain (new rendering)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weather and watershed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactical lines and drawings</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
