@@ -205,6 +205,7 @@ private:
     std::string criticalIntelligence_;
     // Internal attributes
     unsigned int nTimeLastUpdate_;
+    int nTimeForDelayedCrowdPerception_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel* pMaxPerceptionLevel_; // Niveau maximal de perception auquel l'unité a été vue

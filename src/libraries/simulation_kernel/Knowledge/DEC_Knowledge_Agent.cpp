@@ -64,6 +64,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& group, MIL_A
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
     , nTimeLastUpdate_               ( 0 )
+    , nTimeForDelayedCrowdPerception_( 0 )
     , rRelevance_                    ( rRelevance )
     , nTimeExtrapolationEnd_         ( -1 )
     , locked_                        ( 0 )
@@ -132,6 +133,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , pArmyKnowing_                  ( 0 )
     , pAgentKnown_                   ( 0 )
     , nTimeLastUpdate_               ( 0 )
+    , nTimeForDelayedCrowdPerception_( 0 )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
@@ -178,6 +180,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
     file >> dataRecognition_;
     file >> dataIdentification_;
     file >> nTimeLastUpdate_;
+    file >> nTimeForDelayedCrowdPerception_;
     idManager_.GetId( nID_, true );
     file >> pCurrentPerceptionLevel_;
     file >> pPreviousPerceptionLevel_;
@@ -215,6 +218,7 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned i
     file << dataRecognition_;
     file << dataIdentification_;
     file << nTimeLastUpdate_;
+    file << nTimeForDelayedCrowdPerception_;
     file << pCurrentPerceptionLevel_;
     file << pPreviousPerceptionLevel_;
     file << pMaxPerceptionLevel_;
@@ -415,33 +419,66 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int curr
     }
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::UpdateFromCrowdPerception
 // Created: JSR 2013-07-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::UpdateFromCrowdPerception( const MIL_Population& crowd, int currentTimeStep )
+void DEC_Knowledge_Agent::UpdateFromCrowdPerception( const MIL_Population& population, int currentTimeStep )
 {
+    static const int crowdPerceptionDelayTicks = 3;
     nTimeLastUpdate_ = currentTimeStep;
     ChangeRelevance( 1. );
-    if( PHY_PerceptionLevel::recognized_ > *pCurrentPerceptionLevel_ )
+    pCurrentPerceptionLevel_ = pPreviousPerceptionLevel_;
+    if( pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::notSeen_ )
+    {
+        pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::detected_;
+        bCurrentPerceptionLevelUpdated_ = true;
+        if( pAgentKnown_ )
+        {
+            DEC_Knowledge_AgentPerceptionDataDetection data;
+            data.Update( *pAgentKnown_, *pCurrentPerceptionLevel_ );
+            dataDetection_.Update( data );
+        }
+        nTimeForDelayedCrowdPerception_ = currentTimeStep + crowdPerceptionDelayTicks;
+    }
+    else if( pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::detected_ && currentTimeStep >= nTimeForDelayedCrowdPerception_ )
     {
         pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
-        bCurrentPerceptionLevelUpdated_ = ( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ );
+        bCurrentPerceptionLevelUpdated_ = true;
+        if( pAgentKnown_ )
+        {
+            DEC_Knowledge_AgentPerceptionDataRecognition data;
+            data.Update( *pAgentKnown_, *pCurrentPerceptionLevel_ );
+            dataRecognition_.Update( data );
+        }
+        nTimeForDelayedCrowdPerception_ = currentTimeStep + crowdPerceptionDelayTicks;
     }
-    if( PHY_PerceptionLevel::recognized_ > *pMaxPerceptionLevel_ )
+    else if( pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::recognized_  && currentTimeStep >= nTimeForDelayedCrowdPerception_ )
     {
-        pMaxPerceptionLevel_= &PHY_PerceptionLevel::recognized_;
+        pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::identified_;
+        bCurrentPerceptionLevelUpdated_ = true;
+        if( pAgentKnown_ )
+        {
+            DEC_Knowledge_AgentPerceptionDataIdentification data;
+            data.Update( *pAgentKnown_, *pCurrentPerceptionLevel_ );
+            dataIdentification_.Update( data );
+        }
+    }
+    if( *pCurrentPerceptionLevel_ > *pMaxPerceptionLevel_ )
+    {
+        pMaxPerceptionLevel_= pCurrentPerceptionLevel_;
         bMaxPerceptionLevelUpdated_ = true;
         bCurrentPerceptionLevelUpdated_ = true;
     }
     if( bMaxPerceptionLevelUpdated_ && pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::recognized_ && pAgentKnown_ && !IsDead() )
     {
         if( pArmyKnowing_->IsAFriend( pAgentKnown_->GetArmy() ) == eTristate_True )
-            MIL_Report::PostEvent( crowd, report::eRC_FriendUnitRecognized );
+            MIL_Report::PostEvent( population, report::eRC_FriendUnitRecognized );
         else if( pArmyKnowing_->IsAnEnemy( pAgentKnown_->GetArmy() ) == eTristate_True )
-            MIL_Report::PostEvent( crowd, report::eRC_EnemyUnitRecognized );
+            MIL_Report::PostEvent( population, report::eRC_EnemyUnitRecognized );
         else if( pArmyKnowing_->IsNeutral( pAgentKnown_->GetArmy() ) == eTristate_True )
-            MIL_Report::PostEvent( crowd, report::eRC_NeutralUnitRecognized );
+            MIL_Report::PostEvent( population, report::eRC_NeutralUnitRecognized );
     }
     nTimeExtrapolationEnd_ = extrapolationTime_;
 }
