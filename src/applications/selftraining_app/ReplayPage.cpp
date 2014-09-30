@@ -40,7 +40,6 @@
 #include <boost/make_shared.hpp>
 #include <boost/thread.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <windows.h>
 
 namespace bfs = boost::filesystem;
 
