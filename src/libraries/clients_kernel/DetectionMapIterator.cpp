@@ -81,7 +81,7 @@ DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const geome
     // Calcul des coefficients d'environnement initiaux
     // rDx est utilisé ici pour stocker le rGroundCoeff initial
     geometry::Point2f vBeginPos2D( vBeginPos.X(), vBeginPos.Y() );
-    rDx = vBeginPos.Z() - map_.ElevationAt( vBeginPos2D );
+    rDx = static_cast< float >( vBeginPos.Z() - map_.ElevationAt( vBeginPos2D ) );
 
     currentCell_ = map_.Unmap( vBeginPos2D );
     // rDy est utilisé ici pour stocker le rEnvCoeff initial
@@ -95,7 +95,7 @@ DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const geome
     // Calcul des coefficients d'environnement après le parcours du premier point
     geometry::Point2f realFirstPos = CurrentPoint();
 
-    rGroundCoeff_ = vOutPoint_.Z() - map_.ElevationAt( realFirstPos );
+    rGroundCoeff_ = static_cast< float >( vOutPoint_.Z() - map_.ElevationAt( realFirstPos ) );
     rEnvCoeff_    = rGroundCoeff_  - map_.EnvironmentAt( realFirstPos ).ElevationDelta();
 
     bIsInGround_  = ( rGroundCoeff_ < 0. ) || ( ( rGroundCoeff_ * rDx ) < 0. );
@@ -211,7 +211,7 @@ void DetectionMapIterator::Increment()
 
     float realX = ( nRealCellCol + rNextY * nCellXOffset ) * cellSize_;
     float realY = ( nRealCellRow + nCellYOffset * rNextY ) * cellSize_;
-    float rGroundHeight = map_.ElevationAt( geometry::Point2f( realX, realY ) );
+    float rGroundHeight = static_cast< float >( map_.ElevationAt( geometry::Point2f( realX, realY ) ) );
 
     // calcul des coefficients de changement d'environnement
     float rOldGroundCoeff = rGroundCoeff_;
@@ -248,7 +248,7 @@ float DetectionMapIterator::Length() const
 // -----------------------------------------------------------------------------
 short DetectionMapIterator::Altitude() const
 {
-    return map_.ElevationAt( CurrentPoint() );
+    return static_cast< short >( map_.ElevationAt( CurrentPoint() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -283,7 +283,7 @@ void TerrainProfiler::Update( const T_PointVector& path )
         auto previous = path.begin();
         const auto environment = detection_.EnvironmentAt( *previous );
         const auto height = heightValue_->value();
-        points.push_back( CreatePointInfo( environment.IsInForest(), environment.IsInTown(), detection_.ElevationAt( from_ ), 0 ) );
+        points.push_back( CreatePointInfo( environment.IsInForest(), environment.IsInTown(), static_cast< short >( detection_.ElevationAt( from_ ) ), 0 ) );
         double x = 0;
         for( auto it = previous + 1; it != path.end(); previous = it++ )
         {
