@@ -179,7 +179,7 @@ bool PHY_ActionMove::AvoidObstacles()
     boost::shared_ptr< DEC_Knowledge_Object > collision;
     role_.ComputeFutureObjectCollision( objectsToAvoid_, distance, collision, pion_, isBlockedByObject_, true );
     if( collision &&
-        collision->IsValid() &&
+        collision->GetObjectKnown() &&
         pMainPath_->GetPathClass().AvoidObjects() )
     {
         role_.SendRC( report::eRC_DifficultMovementProgression, collision->GetType().GetRealName() );
