@@ -25,6 +25,7 @@ namespace kernel
 
 namespace gui
 {
+    class RichCheckBox;
     class TerrainProfile;
     class TerrainProfilerLayer;
 
@@ -91,9 +92,9 @@ private:
     geometry::Point2f from_;
     geometry::Point2f to_;
     T_PointVector path_;
-    QCheckBox* heightCheckbox_;
+    RichCheckBox* heightCheckbox_;
     QSpinBox* heightValue_;
-    QCheckBox* slopeCheckbox_;
+    RichCheckBox* slopeCheckbox_;
     QSpinBox* slopeValue_;
     //@}
 };
