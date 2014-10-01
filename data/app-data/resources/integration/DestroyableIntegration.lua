@@ -233,12 +233,13 @@ integration.porteeMaxPourTirerSurUnitePosturesReelles = function( eni, ph )
 end
 
 --- Informs if the agent is in range to engage the given target, regarding the given PH (Probability to Hit).
--- Checks if the target distance is in between maximum and minimum range.
+-- Checks if the target distance is in between maximum and minimum range regarding the provided position. If no position
+-- is provided, the distance is computed between the agent's current position and the given target.
 -- The range takes into account the current posture of both agents.
 -- This method can only be called by an agent.
 -- @param eni a DirectIA agent knowledge.
 -- @param ph the probability to hit.
--- @param position the position from which to compute the range.
+-- @param position the position from which to compute the range (optional).
 -- @return boolean returns 'true' if the agent is in range, 'false' otherwise.
 integration.niTropPresNiTropLoin = function( eni, ph, position )
     local currentPosition = position or meKnowledge -- if position is not issued, compute the range from current agent's position.
