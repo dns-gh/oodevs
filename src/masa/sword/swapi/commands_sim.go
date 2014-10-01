@@ -937,10 +937,10 @@ func (c *Client) ChangeExtensions(crowdId uint32, extensions *map[string]string)
 		sword.UnitMagicAction_change_extension)
 }
 
-func (c *Client) ChangeAttitude(crowdId uint32, attitude int32) error {
+func (c *Client) ChangeAttitude(crowdId uint32, attitude sword.EnumCrowdAttitude) error {
 	params := MakeParameters()
-	if attitude != 0 {
-		params = MakeParameters(MakeEnumeration(attitude))
+	if attitude >= 0 {
+		params = MakeParameters(MakeEnumeration(int32(attitude)))
 	}
 	return c.sendUnitMagicAction(MakeCrowdTasker(crowdId), params,
 		sword.UnitMagicAction_crowd_change_attitude)

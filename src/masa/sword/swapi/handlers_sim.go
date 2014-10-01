@@ -550,9 +550,13 @@ func (model *ModelData) handleCrowdFlowCreation(m *sword.SimToClient_Content) er
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId(), Point{}) {
+	element := CrowdElement{
+		Id:   mm.GetFlow().GetId(),
+		Type: CrowdFlow,
+	}
+	if !model.addCrowdElement(mm.GetCrowd().GetId(), &element) {
 		return fmt.Errorf("cannot insert crowd flow %d into crowd %d",
-			mm.GetFlow().GetId(), mm.GetCrowd().GetId())
+			element.Id, mm.GetCrowd().GetId())
 	}
 	return nil
 }
@@ -584,7 +588,7 @@ func (model *ModelData) handleCrowdFlowUpdate(m *sword.SimToClient_Content) erro
 		return fmt.Errorf("cannot update crowd flow %d",
 			mm.GetFlow().GetId())
 	}
-	element.Attitude = int32(mm.GetAttitude())
+	element.Attitude = mm.GetAttitude()
 	return nil
 }
 
@@ -593,7 +597,12 @@ func (model *ModelData) handleCrowdConcentrationCreation(m *sword.SimToClient_Co
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId(), ReadPoint(mm.GetPosition())) {
+	element := CrowdElement{
+		Id:       mm.GetConcentration().GetId(),
+		Type:     CrowdConcentration,
+		Position: ReadPoint(mm.GetPosition()),
+	}
+	if !model.addCrowdElement(mm.GetCrowd().GetId(), &element) {
 		return fmt.Errorf("cannot insert crowd concentration %d into crowd %d",
 			mm.GetConcentration().GetId(), mm.GetCrowd().GetId())
 	}
@@ -627,7 +636,7 @@ func (model *ModelData) handleCrowdConcentrationUpdate(m *sword.SimToClient_Cont
 		return fmt.Errorf("cannot update crowd concentration %d",
 			mm.GetConcentration().GetId())
 	}
-	element.Attitude = int32(mm.GetAttitude())
+	element.Attitude = mm.GetAttitude()
 	return nil
 }
 
