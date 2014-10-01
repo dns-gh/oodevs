@@ -26,6 +26,7 @@ namespace gui
 {
     class Elevation2dLayer;
     class GlProxy;
+    class GlTools_ABC;
     class GraphicPreferences;
     class GraphicsPanel;
     class Layer_ABC;
@@ -69,7 +70,6 @@ public:
     virtual void reject();
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
-    void AddLayer( const QString& name, const std::shared_ptr< gui::Layer_ABC >& layer, bool dynamic = false );
 
     void PurgeDialog();
     //@}
@@ -105,6 +105,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const Painter_ABC& painter_;
+    const GlProxy& proxy_;
     T_Pages pages_;
     PreferencesList* list_;
     LayersPanel* layersPanel_;
