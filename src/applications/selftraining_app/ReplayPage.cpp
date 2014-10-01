@@ -336,11 +336,14 @@ QString ReplayPage::ExportReplay( QWidget* parent,
                 return true;
             });
             MakeProgress();
+            const std::string mapnik = config.HasMapnik() ? "-mapnik" : "";
             tools::WriteFile( dstRoot / "replay.cmd",
                 "@echo off\n"
                 "set CUR=%~dp0\n"
                 "set CUR=%CUR:\\=/%\n"
-                "\"%CUR%/bin/replay.exe\" \"%CUR%\" \"" + exercise.ToUTF8() + "\" \"" + session.ToUTF8() + "\"\n" );
+                "\"%CUR%/bin/replay.exe\" " + mapnik +
+                " \"%CUR%\" \"" + exercise.ToUTF8() +
+                "\" \"" + session.ToUTF8() + "\"\n" );
             MakeProgress();
             tools::WriteFile( dstRoot / "replay.vbs",
                 "DIM objShell\n"

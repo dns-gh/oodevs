@@ -36,6 +36,7 @@ type Context struct {
 	session    string
 	dispatcher int
 	timeline   int
+	mapnik     bool
 }
 
 func start() error {
@@ -65,10 +66,14 @@ func start() error {
 	if err != nil {
 		return err
 	}
-	gaming, err := startProcess(ctx, "gaming_app",
+	args := []string{
 		"--host", dispatcher,
 		"--timeline", fmt.Sprintf("localhost:%d", ctx.timeline),
-	)
+	}
+	if ctx.mapnik {
+		args = append(args, "--mapnik")
+	}
+	gaming, err := startProcess(ctx, "gaming_app", args...)
 	if err != nil {
 		return err
 	}
@@ -93,6 +98,7 @@ func (c *Context) getSessionDir() string {
 
 func parseArgs() (*Context, error) {
 	ctx := Context{}
+	mapnik := flag.Bool("mapnik", false, "enable mapnik rendering")
 	flag.Parse()
 	if flag.NArg() != 3 {
 		return nil, fmt.Errorf("usage: replay <root> <exercise> <session>")
@@ -110,6 +116,7 @@ func parseArgs() (*Context, error) {
 	}
 	ctx.session = args[2]
 	err = hasDirectory(ctx.getSessionDir())
+	ctx.mapnik = *mapnik
 	return &ctx, err
 }
 
