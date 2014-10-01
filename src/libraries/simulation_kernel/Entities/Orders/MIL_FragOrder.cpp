@@ -85,9 +85,7 @@ void MIL_FragOrder::SetParameters( const DEC_KnowledgeResolver_ABC& resolver,
         {
             const auto& parameter = parameters.elem( i );
             protocol::Check( !parameter.null_value(), "cannot be null", i );
-            const unsigned int size = parameter.value_size();
-            protocol::Check( !orderParameter->IsList() ||
-                size >= orderParameter->GetMinOccurs() && size <= orderParameter->GetMaxOccurs(), "invalid number of parameters", i );
+            protocol::Check( orderParameter->CheckSize( parameter.value_size() ), "invalid number of parameters", i );
         }
     }
     MIL_MissionParameterFactory::Copy( type_, parameters, parameters_, resolver );

@@ -50,8 +50,7 @@ public:
     const MIL_ParameterType_ABC& GetType() const;
     bool IsList() const;
     bool IsOptional() const { return bIsOptional_; }
-    unsigned int GetMinOccurs() const;
-    unsigned int GetMaxOccurs() const;
+    bool CheckSize( unsigned int size ) const;
     //@}
 
 private:

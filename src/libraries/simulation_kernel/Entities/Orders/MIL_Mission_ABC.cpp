@@ -124,12 +124,9 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParame
             }
             else
             {
-                if( !parameterType.IsOptional() && parameterType.IsList() )
-                {
-                    const unsigned int count = parameters.elem( i ).value_size();
-                    if( count < parameterType.GetMinOccurs() || count > parameterType.GetMaxOccurs() )
-                        throw ORDER_BADPARAM( "parameter[" << i << "] : invalid number of parameters" );
-                }
+                if( !parameterType.IsOptional() && !parameterType.CheckSize( parameters.elem( i ).value_size() ) )
+                    throw ORDER_BADPARAM( "parameter[" << i << "] : invalid number of parameters" );
+
                 pParameter = MIL_MissionParameterFactory::Create( parameterType,
                         parameters.elem( i ), knowledgeResolver_, orientation_ );
             }

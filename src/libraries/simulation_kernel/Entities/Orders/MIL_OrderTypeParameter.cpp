@@ -107,12 +107,9 @@ bool MIL_OrderTypeParameter::IsList() const
     return maxOccurs_ > 1;
 }
 
-unsigned int MIL_OrderTypeParameter::GetMinOccurs() const
+bool MIL_OrderTypeParameter::CheckSize( unsigned int size ) const
 {
-    return minOccurs_;
-}
-
-unsigned int  MIL_OrderTypeParameter::GetMaxOccurs() const
-{
-    return maxOccurs_;
+    if( !IsList() )
+        return true;
+    return minOccurs_ <= size && size <= maxOccurs_;
 }
