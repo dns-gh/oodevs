@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="bml" version="1.0" 
+	library="bml_plugin"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	<descriptions>
+		<description lang="en" name="OpenBML"><![CDATA[OpenBML communication plugin.]]></description>
+		<description lang="fr" name="OpenBML"><![CDATA[Plugin de communication OpenBML.]]></description>
+	</descriptions>
+	<settings>
+	    <setting attribute="@process" type="string" default="Sword.BMLService.Application.exe" display="false"/>
+		<group>
+			<descriptions>
+				<description lang="en" name="Web Server"><![CDATA[OpenBML Webserver]]></description>
+				<description lang="fr" name="Serveur Web"><![CDATA[OpenBML Webserver]]></description>
+			</descriptions>
+			<settings>
+				<setting attribute="server/@url" type="string" default="">
+					<descriptions>
+						<description name="URL: " lang="en"><![CDATA[URL]]></description>
+						<description name="URL: " lang="fr"><![CDATA[URL]]></description>
+					</descriptions>
+				</setting>
+				<setting attribute="server/@ssl" type="boolean" default="false">
+					<descriptions>
+						<description name="ssl: " lang="en"><![CDATA[Use SSL connection]]></description>
+						<description name="ssl: " lang="fr"><![CDATA[Se connecter avec SSL]]></description>
+					</descriptions>
+				</setting>
+				<setting attribute="server/@log" type="boolean" default="true">
+					<descriptions>
+						<description name="log: " lang="en"><![CDATA[Activate log generation]]></description>
+						<description name="log: " lang="fr"><![CDATA[Active l'écriture d'informations]]></description>
+					</descriptions>
+				</setting>
+				<group>
+					<descriptions>
+						<description lang="en" name="Webserver"><![CDATA[Proxy Parameters]]></description>
+						<description lang="fr" name="Webserveur"><![CDATA[Proxy Parameters]]></description>
+					</descriptions>
+					<settings>
+						<setting attribute="server/proxy/@user" type="string" default="">
+							<descriptions>
+								<description name="Proxy username: " lang="en"><![CDATA[Proxy username]]></description>
+								<description name="Proxy username: " lang="fr"><![CDATA[Proxy username]]></description>
+							</descriptions>
+						</setting>
+						<setting attribute="server/proxy/@pass" type="string" default="">
+							<descriptions>
+								<description name="Proxy pass: " lang="en"><![CDATA[Proxy pass]]></description>
+								<description name="Proxy pass: " lang="fr"><![CDATA[Proxy pass]]></description>
+							</descriptions>
+						</setting>
+					</settings>
+				</group>
+			</settings>
+		</group>
+		
+		<!-- reports !-->
+		<group>
+			<descriptions>
+				<description lang="en" name="Reports"><![CDATA[OpenBML Reports]]></description>
+				<description lang="fr" name="Reports"><![CDATA[OpenBML Reports]]></description>
+			</descriptions>
+			<settings>
+				<setting attribute="reports/@activate" type="boolean" default="true">
+					<descriptions>
+						<description name="Activate Reports	:" lang="en"><![CDATA[Activate Reports]]></description>
+						<description name="Activer l'envoi de reports:" lang="fr"><![CDATA[Activate Reports]]></description>
+					</descriptions>
+				</setting>
+				<setting attribute="reports/@frequency" type="integer" default="30">
+					<descriptions>
+						<description name="Frequency:" lang="en"><![CDATA[Report genaration frequency]]></description>
+						<description name="Frequence:" lang="fr"><![CDATA[Report genaration frequency]]></description>
+					</descriptions>
+				</setting>
+			</settings>
+		</group>
+	</settings>
+</plugin>

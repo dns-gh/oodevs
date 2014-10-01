@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+[[ $pg := set_default .url "pg" "nodes" ]]
+<html lang="en">
+    [[ template "head.ttml" . ]]
+    <body>
+        [[ template "top_bar.ttml" . ]]
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <div class="well sidebar">
+                        <ul class="nav nav-list">
+                            [[ define "cluster_sidebar_item" ]]
+                            <li[[ if eq .item .pg ]] class="active"[[ end ]]>
+                            <a href="?pg=[[ .item ]]"><img alt="" width="32" height="32" src="img/tango/32x32/[[ .img ]].png" /> [[ .name ]] </a>
+                            </li>
+                            [[ end ]]
+                            [[ template "cluster_sidebar_item" sub "name" "Nodes"  "item" "nodes" "pg" .url.pg "img" "places/network-workgroup" ]]
+                            [[ template "cluster_sidebar_item" sub "name" "Admins" "item" "users" "pg" .url.pg "img" "apps/system-users" ]]
+                            [[ template "cluster_sidebar_item" sub "name" "About"  "item" "about" "pg" .url.pg "img" "apps/help-browser" ]]
+                        </ul>
+                    </div>
+                    <hr/>
+                    <p class="footer">
+                    <a href="http://www.masagroup.net">http://www.masagroup.net</a>
+                    <br/>
+                    &copy; MASA Group 2013
+                    </p>
+                </div>
+                <div class="span9">
+                    [[ if eq .url.pg "nodes" ]]
+                    [[ template "nodes.ttml" . ]]
+                    [[ end ]]
+                    [[ if eq .url.pg "users" ]]
+                    [[ template "users.ttml" . ]]
+                    [[ end ]]
+                    [[ if eq .url.pg "about" ]]
+                    [[ template "about.ttml" . ]]
+                    [[ end ]]
+                </div>
+            </div>
+        </div>
+    </body>
+    [[ template "imports.ttml" . ]]
+    [[ if eq .url.pg "nodes" ]]
+    <script src="js/nodes.js"></script>
+    [[ end ]]
+    [[ if eq .url.pg "users" ]]
+    <script src="js/users.js"></script>
+    [[ end ]]
+    [[ if eq .url.pg "about" ]]
+    <script src="js/about.js"></script>
+    [[ end ]]
+</html>

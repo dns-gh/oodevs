@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/">
+    <file>logo32x32.png</file>
+    <file>go-down.png</file>
+    <file>edit-clear.png</file>
+    <file>edit-delete.png</file>
+    <file>drive-harddisk.png</file>
+  </qresource>
+</RCC>

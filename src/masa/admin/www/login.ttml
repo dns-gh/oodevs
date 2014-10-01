@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    [[ template "head.ttml" . ]]
+    <body>
+        [[ $_ := reset . "user" ]]
+        [[ template "top_bar.ttml" . ]]
+        <div class="container">
+            <div class="row">
+                <div class="hero-unit masa_header">
+                    <h1>MASA Sword</h1>
+                </div>
+                <div id="sign_in_form" action="login" method="post" class="form-horizontal sign_in">
+                    [[ template "input_text" sub "id" "username" "label" "Email" "class" "input-xlarge" ]]
+                    [[ template "input_text" sub "id" "password" "label" "Password" "class" "input-xlarge" "type" "password" ]]
+                    <div class="sign_in_action">
+                        <a class="btn btn-large btn-inverse log_in">Sign in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    [[ template "imports.ttml" . ]]
+    <script src="js/login.js"></script>
+</html>

@@ -1,0 +1,13 @@
+syntax: glob
+
+*.ipch
+*.rej
+*.sdf
+*.suo
+*.vcxproj.user
+bin/*
+include/*
+dist/*
+lib/*
+out/*
+run/*
