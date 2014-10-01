@@ -1209,6 +1209,7 @@ void DEC_Knowledge_Object::Invalidate()
         if( pObjectType_ )
             SendMsgDestruction();
     }
+    CleanObjectKnown();
 }
 
 // -----------------------------------------------------------------------------
