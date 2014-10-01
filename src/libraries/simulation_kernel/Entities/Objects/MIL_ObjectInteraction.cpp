@@ -207,7 +207,7 @@ void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_Agent_ABC& agent, const
 {
     if( agentsInside_.insert( &agent ).second )
         agentsEntering_.insert( &agent );
-    agentCollisionPositions_[ &agent ] = std::pair< MT_Vector2D, MT_Vector2D >( startPos, endPos );
+    agentCollisionPositions_[ &agent ] = std::make_pair( startPos, endPos );
     agentsMovingInside_.insert( &agent );
     agentsExiting_.erase( &agent );
 }
@@ -278,7 +278,7 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
             object.ProcessAgentEntering( **it );
             if( agentsMovingInside_.find( *it ) ==  agentsMovingInside_.end() )
             {
-                auto pos = agentCollisionPositions_[ *it ];
+                const auto& pos = agentCollisionPositions_[ *it ];
                 object.ProcessAgentMovingInside( **it, pos.first, pos.second );
             }
         }

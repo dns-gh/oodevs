@@ -235,7 +235,7 @@ void DEC_KS_ObjectInteraction::NotifyCollision( MIL_Object_ABC& object, const MT
 {
     static const double epsilon = 1e-8;
     const TER_Localisation& objectLocation = object.GetLocalisation();
-    MT_Line orientedLine( startPos, endPos );
+    const MT_Line orientedLine( startPos, endPos );
     TER_DistanceLess collisionCmp( startPos );
     T_PointSet collisions( collisionCmp );
     if( objectLocation.Intersect2D( orientedLine, collisions, epsilon ) && !collisions.empty() )

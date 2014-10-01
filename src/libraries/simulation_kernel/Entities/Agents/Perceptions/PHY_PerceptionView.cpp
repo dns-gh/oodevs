@@ -300,7 +300,7 @@ void PHY_PerceptionView::ExecuteCollisions( const TER_Object_ABC::T_ObjectVector
                 perceiver_, object, perceiver_.GetDisasterDetectors(),
                 position, boost::bind( &ComputeDisaster, _1, _2, _3 ) );
         if( level > PHY_PerceptionLevel::notSeen_ )
-            perceiver_.NotifyPerception( object, position, position );
+            perceiver_.NotifyPerception( object, position );
     }
 }
 
