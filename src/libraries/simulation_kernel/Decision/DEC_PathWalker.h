@@ -72,7 +72,9 @@ public:
 
     //! @name Tools
     //@{
-    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
+    bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest,
+        double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
+        const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
     MT_Vector2D ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const;
     bool IsMovingOn( const DEC_Path_ABC& path ) const;
     //@}
@@ -86,7 +88,7 @@ public:
 private:
      //! @name Types
     //@{
-    typedef tools::Set< const MIL_Object_ABC* > T_ObjectSet;
+    typedef tools::Set< MIL_Object_ABC* > T_ObjectSet;
 
     // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
     struct T_MoveStep

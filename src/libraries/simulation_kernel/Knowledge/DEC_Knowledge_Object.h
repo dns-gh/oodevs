@@ -89,7 +89,6 @@ public:
     void UpdateUniversalKnowledge();
     void ForceUpdate();
     bool Clean() const;
-    void CleanObjectKnown();
     bool IsValid() const;
     void Invalidate();
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
@@ -169,6 +168,7 @@ protected:
 private:
     //! @name Tools
     //@{
+    void CleanObjectKnown();
     void NotifyAttributeUpdated( E_Attributes nAttribute );
     bool IsAttributeUpdated( E_Attributes nAttribute ) const;
     const MIL_Army_ABC& GetArmyKnowing() const;

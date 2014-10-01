@@ -132,9 +132,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge )
 {
-    if( knowledge.IsValid() )
-        knowledge.Invalidate();
-    knowledge.CleanObjectKnown();
+    knowledge.Invalidate();
     if( objectMap_.erase( knowledge.GetObjectId() ) < 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }

@@ -63,11 +63,13 @@ DEC_PathWalker::~DEC_PathWalker()
 // Name: DEC_PathWalker::ComputeFutureObjectCollision
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
+bool DEC_PathWalker::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest,
+    double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
+    const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
 {
     if( !pCurrentPath_ )
         return false;
-    return pCurrentPath_->ComputeFutureObjectCollision( objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
+    return pCurrentPath_->ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +318,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     T_PointSet collisions( colCmp );
     for( auto itObject = objects.begin(); itObject != objects.end(); ++itObject )
     {
-        const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
+        MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
         if( const FloodAttribute* flood = object.RetrieveAttribute< FloodAttribute > () )
         {
             T_PointSet collisionsTmp( colCmp );
@@ -453,44 +455,25 @@ bool DEC_PathWalker::TryToMoveToNextStep( const MT_Vector2D& startPosition, CIT_
 {
     double rMaxSpeedForStep = std::numeric_limits< double >::max();
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
-    for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
-    {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, true ) )
+    for( auto it = itCurMoveStep->ponctualObjectsOnSet_.begin(); it != itCurMoveStep->ponctualObjectsOnSet_.end(); ++it )
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, **it, rMaxSpeedForStep, true ) )
             return false;
-    }
-    for( auto itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
-    {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( HandleObject( startPosition, itCurMoveStep->vPos_, object, rMaxSpeedForStep, false ) )
+    for( auto it = itCurMoveStep->objectsToNextPointSet_.begin(); it != itCurMoveStep->objectsToNextPointSet_.end(); ++it )
+        if( HandleObject( startPosition, itCurMoveStep->vPos_, **it, rMaxSpeedForStep, false ) )
             return false;
-    }
-
     // itCurMoveStep a pu être dépassé => notification des objets dont on sort
-    for( auto itObject = itNextMoveStep->objectsOutSet_.begin(); itObject != itNextMoveStep->objectsOutSet_.end(); ++itObject )
-    {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        if( movingEntity_.CanObjectInteractWith( object ) )
-            movingEntity_.NotifyMovingOutsideObject( object );
-    }
+    for( auto it = itNextMoveStep->objectsOutSet_.begin(); it != itNextMoveStep->objectsOutSet_.end(); ++it )
+        if( movingEntity_.CanObjectInteractWith( **it ) )
+            movingEntity_.NotifyMovingOutsideObject( **it );
 
     if( rMaxSpeedForStep != std::numeric_limits< double >::max() )
         rCurrentSpeed_ = rMaxSpeedForStep;
-    const double rDistToWalk = rTimeRemaining * rCurrentSpeed_;
-    const MT_Vector2D vNewPosTmp( vNewPos_ + ( vNewDir_ * rDistToWalk ) );
-
-    if( vNewPos_.SquareDistance( vNewPosTmp ) >= vNewPos_.SquareDistance( itNextMoveStep->vPos_ )  )
-    {
-        rTimeRemaining -= ( itNextMoveStep->vPos_ - vNewPos_ ).Magnitude() / rCurrentSpeed_;
-        vNewPos_ = itNextMoveStep->vPos_;
-        return true;
-    }
-    else
-    {
-        rTimeRemaining -= ( vNewPosTmp - vNewPos_ ).Magnitude() / rCurrentSpeed_;
-        vNewPos_ = vNewPosTmp;
-        return false;
-    }
+    const MT_Vector2D vNewPosTmp = vNewPos_ + vNewDir_ * rTimeRemaining * rCurrentSpeed_;
+    const bool success = vNewPos_.SquareDistance( vNewPosTmp ) >= vNewPos_.SquareDistance( itNextMoveStep->vPos_ );
+    const auto pos = success ? itNextMoveStep->vPos_ : vNewPosTmp;
+    rTimeRemaining -= ( pos - vNewPos_ ).Magnitude() / rCurrentSpeed_;
+    vNewPos_ = pos;
+    return success;
 }
 
 //-----------------------------------------------------------------------------
