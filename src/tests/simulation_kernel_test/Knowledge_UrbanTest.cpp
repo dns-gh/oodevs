@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
         std::unique_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( flux, 0 ) );
         flux >> xml::end;
         PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *pion.pPion_ );
-    urbanRole->NotifyMovingInsideObject( *pObject, MT_Vector2D(), MT_Vector2D() );
+        urbanRole->NotifyMovingInsideObject( *pObject, MT_Vector2D(), MT_Vector2D() );
         pion.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
         MockPHY_RoleInterface_Perceiver* perceiver = new MockPHY_RoleInterface_Perceiver();
         pion.pPion_->RegisterRole< PHY_RoleInterface_Perceiver >( *perceiver );
