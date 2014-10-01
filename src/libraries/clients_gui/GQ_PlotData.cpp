@@ -29,6 +29,7 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot )
 , bOwnData_       ( true  )
 , nUserID_        ( nUserID )
 , bVisible_       ( true )
+, canUpdateBBox_  ( true )
 , pointPen_       ( Qt::red   )
 , linePen_        ( Qt::blue  )
 , barPen_         ( Qt::black )
@@ -59,6 +60,7 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot, T_Data& data, uns
 , bOwnData_       ( false )
 , nUserID_        ( nUserID )
 , bVisible_       ( true )
+, canUpdateBBox_  ( true )
 , pointPen_       ( Qt::red   )
 , linePen_        ( Qt::blue  )
 , barPen_         ( Qt::black )
@@ -125,6 +127,15 @@ void GQ_PlotData::SetVisible( bool bShow )
     bVisible_ = bShow;
 
     TouchRange();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::SetCanUpdateBBox
+// Created: JSR 2014-06-13
+// -----------------------------------------------------------------------------
+void GQ_PlotData::SetCanUpdateBBox( bool canUpdateBBox )
+{
+    canUpdateBBox_ = canUpdateBBox;
 }
 
 // -----------------------------------------------------------------------------
@@ -330,6 +341,8 @@ void GQ_PlotData::ClearData()
     if( pData_->empty() )
         return;
 
+    overrideColors_.clear();
+    offsetHeights_.clear();
     pData_->clear();
     barLimits_.clear();
 
@@ -420,6 +433,24 @@ void GQ_PlotData::AddPoint( double rX, double rY )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GQ_PlotData::AddColor
+// Created: JSR 2014-06-11
+// -----------------------------------------------------------------------------
+void GQ_PlotData::AddColor( double rX, const QColor& color )
+{
+    overrideColors_[ rX ] = color;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::AddHeight
+// Created: JSR 2014-06-12
+// -----------------------------------------------------------------------------
+void GQ_PlotData::AddHeight( double rX, float offset )
+{
+    offsetHeights_[ rX ] = offset;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GQ_PlotData::ChangePoint
 /** @param  nIndex
     @param  point
@@ -480,14 +511,15 @@ void GQ_PlotData::Draw( QPainter& painter )
         return;
 
     Q3PointArray points;
-
-    PreparePoints( points );
+    std::map< int, QColor > colors;
+    std::map< int, float > offsets;
+    PreparePoints( points, colors, offsets );
 
     if( points.isEmpty() )
         return;
 
     DrawPoints  ( painter, points );
-    DrawPolyline( painter, points );
+    DrawPolyline( painter, points, &colors, &offsets );
     DrawBars    ( painter, points );
 }
 
@@ -567,7 +599,7 @@ struct QPointVector_Comp
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
-void GQ_PlotData::PreparePoints( Q3PointArray& points )
+void GQ_PlotData::PreparePoints( Q3PointArray& points, std::map< int, QColor >& colors, std::map< int, float >& offsets )
 {
     unsigned int nLastPoint = static_cast< unsigned >( pData_->size() );
 
@@ -582,6 +614,12 @@ void GQ_PlotData::PreparePoints( Q3PointArray& points )
 
     QPoint ppoint;
     points.resize( nLastPoint - nFirstPoint_ );
+
+    for( auto it = offsetHeights_.begin(); it != offsetHeights_.end(); ++it )
+        offsets[ xAxis.MapToViewport( it->first ) ] = it->second;
+
+    for( auto it = overrideColors_.begin(); it != overrideColors_.end(); ++it )
+        colors[ xAxis.MapToViewport( it->first ) ] = it->second;
 
     for( unsigned int i = nFirstPoint_; i < nLastPoint; ++i )
     {
@@ -661,16 +699,52 @@ void GQ_PlotData::DrawPoint( QPainter& painter, const QPoint& point )
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
-void GQ_PlotData::DrawPolyline( QPainter& painter, const Q3PointArray& polyline )
+void GQ_PlotData::DrawPolyline( QPainter& painter, const Q3PointArray& polyline, const std::map< int, QColor >* colors, const std::map< int, float >* offsets )
 {
     if( linePen_ == Qt::NoPen )
         return;
+
+    painter.setRenderHint( QPainter::Antialiasing );
 
     painter.setPen( linePen_ );
     Q3PointArray::ConstIterator first = polyline.begin();
     for( Q3PointArray::ConstIterator it = polyline.begin() + 1; it != polyline.end(); ++first, ++it )
         if( !first->isNull() && !it->isNull() )
-            painter.drawLine( *first, *it );
+        {
+            QColor color = linePen_.color();
+            int lineWidth = linePen_.width();
+            if( colors )
+            {
+                auto itColor = colors->find( first->x() );
+                if( itColor != colors->end() )
+                    color = itColor->second;
+            }
+
+            bool isLine = true;
+            if( offsets )
+            {
+                auto itOffset = offsets->find( first->x() );
+                if( itOffset != offsets->end() )
+                {
+                    painter.setPen( QPen( color ) );
+                    painter.setBrush( QBrush( color ) );
+                    isLine = false;
+                    const int offset = static_cast< int >( plot_.YAxis().Scale() * itOffset->second + 0.5 );
+                    const QPoint points[ 4 ] =
+                        { QPoint( first->x(), first->y() ),
+                          QPoint( first->x(), first->y() - offset ),
+                          QPoint( it->x(), it->y() - offset ),
+                          QPoint( it->x(), it->y() ) };
+                    painter.drawPolygon( points, 4 );
+                }
+            }
+            if( isLine )
+            {
+                painter.setBrush( QBrush( Qt::NoBrush ) );
+                painter.setPen( QPen( color, lineWidth ) );
+                painter.drawLine( *first, *it );
+            }
+        }
         else if( first->isNull() )
             painter.drawLine( *polyline.begin(), *it );
 }
@@ -808,7 +882,13 @@ void GQ_PlotData::UpdateBBox()
     {
         const auto& point = (*pData_)[i];
         if( ignoredValues_.find( point.second ) == ignoredValues_.end() )
-            boundingBox.UpdateWithPoint( point );
+        {
+            T_Point p = point;
+            auto it = offsetHeights_.find( point.first );
+            if( it != offsetHeights_.end() )
+                p.second += it->second;
+            boundingBox.UpdateWithPoint( p );
+        }
     }
 
     // If we are drawing bars, we must take into account the bars' width.

@@ -18,16 +18,36 @@ using namespace gui;
 namespace
 {
     const geometry::Point2f notSet = geometry::Point2f( -1.f, -1.f );
+    const int size = 20;
+    const float half = size / 2.f;
+
+    void DrawDisc( QPainter& p, QColor contour, QColor inside, float radius )
+    {
+        p.setPen( QPen( contour, 2 ) );
+        p.setBrush( QBrush( inside ) );
+        p.drawEllipse( QPointF( half, half ), radius, radius );
+    }
+    QImage MakeBitmap( QColor disc, QColor circle )
+    {
+        QPixmap pm( size, size );
+        pm.fill( Qt::transparent );
+        QPainter p( &pm );
+        p.setRenderHint( QPainter::Antialiasing, true );
+        DrawDisc( p, disc, disc, 5 );
+        DrawDisc( p, circle, disc, 4 );
+        return pm.convertToImage().mirror();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: TerrainProfilerLayer constructor
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-TerrainProfilerLayer::TerrainProfilerLayer( const gui::GlTools_ABC& tools )
-    : tools_( tools )
-    , from_ ( notSet )
-    , to_   ( notSet )
+TerrainProfilerLayer::TerrainProfilerLayer( const GlTools_ABC& tools )
+    : tools_  ( tools )
+    , from_   ( notSet )
+    , to_     ( notSet )
+    , current_( notSet )
 {
     SetAlpha( 0 );
 }
@@ -73,6 +93,13 @@ void TerrainProfilerLayer::Paint( Viewport_ABC& viewport )
                 tools_.DrawCross( to_ );
                 tools_.DrawSvg( "flag.svg", to_, tools_.GetAdaptiveZoomFactor( false ) );
             }
+            if( current_ != notSet && viewport.IsVisible( current_ ) )
+            {
+                static const QImage normal = MakeBitmap( Qt::yellow, Qt::magenta );
+                const float factor = tools_.Pixels( current_ );
+                tools_.DrawImage( normal,
+                    geometry::Point2f( current_.X() - half * factor, current_.Y() - half * factor ) );
+            }
         glPopAttrib();
     }
 }
@@ -93,4 +120,22 @@ void TerrainProfilerLayer::SetFromPosition( const geometry::Point2f& point )
 void TerrainProfilerLayer::SetToPosition( const geometry::Point2f& point )
 {
     to_ = point;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainProfilerLayer::SetCurrentPosition
+// Created: LGY 2014-06-18
+// -----------------------------------------------------------------------------
+void TerrainProfilerLayer::SetCurrentPosition( const geometry::Point2f& point )
+{
+    current_ = point;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainProfilerLayer::ClearCurrentPosition
+// Created: LGY 2014-06-18
+// -----------------------------------------------------------------------------
+void TerrainProfilerLayer::ClearCurrentPosition()
+{
+    current_ = notSet;
 }

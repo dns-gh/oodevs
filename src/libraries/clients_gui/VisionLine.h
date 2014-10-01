@@ -25,7 +25,7 @@ class VisionLine : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height );
+             VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height, bool realEnvironment = false );
     virtual ~VisionLine();
     //@}
 
@@ -47,13 +47,14 @@ public:
 private:
     //! @name Member data
     //@{
-    kernel::DetectionMapIterator iterator_;
     float fromAltitude_;
     float toAltitude_;
+    kernel::DetectionMapIterator iterator_;
     float totalDistance_;
     float advancedDistance_;
     float currentAltitude_;
     float length_;
+    bool realEnvironment_;
     //@}
 };
 

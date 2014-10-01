@@ -17,13 +17,14 @@ using namespace gui;
 // Name: VisionLine constructor
 // Created: AGE 2006-04-14
 // -----------------------------------------------------------------------------
-VisionLine::VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height )
-    : iterator_        ( map, from, to )
-    , fromAltitude_    ( map.ElevationAt( from ) + height )
+VisionLine::VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height, bool realEnvironment )
+    : fromAltitude_    ( map.ElevationAt( from ) + height )
     , toAltitude_      ( map.ElevationAt( to ) + 2.f )
+    , iterator_        ( map, geometry::Point3f( from.X(), from.Y(), fromAltitude_ ), geometry::Point3f( to.X(), to.Y(), toAltitude_ ) )
     , totalDistance_   ( from.Distance( to ) + 0.1f )
     , advancedDistance_( 0 )
     , length_          ( 0 )
+    , realEnvironment_( realEnvironment )
 {
     // NOTHING
 }
@@ -72,7 +73,7 @@ bool VisionLine::IsInGround() const
 // -----------------------------------------------------------------------------
 bool VisionLine::IsInTown() const
 {
-    return currentAltitude_ < iterator_.Elevation() && iterator_.IsInTown();
+    return ( realEnvironment_ || currentAltitude_ < iterator_.Elevation() ) && iterator_.IsInTown();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +82,7 @@ bool VisionLine::IsInTown() const
 // -----------------------------------------------------------------------------
 bool VisionLine::IsInForest() const
 {
-    return currentAltitude_ < iterator_.Elevation() && iterator_.IsInForest();
+    return ( realEnvironment_ || currentAltitude_ < iterator_.Elevation() ) && iterator_.IsInForest();
 }
 
 short VisionLine::Elevation() const
