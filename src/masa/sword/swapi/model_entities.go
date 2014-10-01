@@ -167,9 +167,17 @@ func NewPopulation(id, partyId uint32, name string) *Population {
 	}
 }
 
+type CrowdElementType string
+
+const (
+	CrowdFlow          CrowdElementType = "flow"
+	CrowdConcentration                  = "concentration"
+)
+
 type CrowdElement struct {
 	Id       uint32
-	Attitude int32
+	Type     CrowdElementType
+	Attitude sword.EnumCrowdAttitude
 	Position Point
 }
 
@@ -748,13 +756,13 @@ func (model *ModelData) removeAutomat(automatId uint32) bool {
 	return deleted
 }
 
-func (model *ModelData) addCrowdElement(crowdId, elementId uint32, position Point) bool {
+func (model *ModelData) addCrowdElement(crowdId uint32, element *CrowdElement) bool {
 	crowd, ok := model.Crowds[crowdId]
 	if !ok {
 		return false
 	}
 	size := len(crowd.CrowdElements)
-	crowd.CrowdElements[elementId] = &CrowdElement{elementId, 0, position}
+	crowd.CrowdElements[element.Id] = element
 	return size != len(crowd.CrowdElements)
 }
 

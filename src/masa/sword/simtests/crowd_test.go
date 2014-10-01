@@ -327,7 +327,7 @@ func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
 		DeepEquals, newExtensions)
 }
 
-func CheckAttitude(crowd *swapi.Crowd, attitude int32) bool {
+func CheckAttitude(crowd *swapi.Crowd, attitude sword.EnumCrowdAttitude) bool {
 	for _, v := range crowd.CrowdElements {
 		if v.Attitude != attitude {
 			return false
@@ -335,14 +335,6 @@ func CheckAttitude(crowd *swapi.Crowd, attitude int32) bool {
 	}
 	return true
 }
-
-const (
-	// Attitude enumeration
-	Peaceful  = int32(0)
-	Agitated  = int32(1)
-	Excited   = int32(2)
-	Agressive = int32(3)
-)
 
 func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
@@ -354,11 +346,11 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 
 	// Check attitude is peaceful
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckAttitude(data.Crowds[crowd.Id], Peaceful)
+		return CheckAttitude(data.Crowds[crowd.Id], sword.EnumCrowdAttitude_peaceful)
 	})
 
 	// Error : missing parameter
-	err := client.ChangeAttitude(crowd.Id, 0)
+	err := client.ChangeAttitude(crowd.Id, -1)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error : invalid attitude
@@ -366,12 +358,12 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change attitude(agitated)
-	err = client.ChangeAttitude(crowd.Id, Agitated)
+	err = client.ChangeAttitude(crowd.Id, sword.EnumCrowdAttitude_agitated)
 	c.Assert(err, IsNil)
 
 	// Check attitude is agitated
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckAttitude(data.Crowds[crowd.Id], Agitated)
+		return CheckAttitude(data.Crowds[crowd.Id], sword.EnumCrowdAttitude_agitated)
 	})
 
 	// Send moveTo mission on the crowd
@@ -386,13 +378,13 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	})
 
 	// Change attitude(excited)
-	err = client.ChangeAttitude(crowd.Id, Excited)
+	err = client.ChangeAttitude(crowd.Id, sword.EnumCrowdAttitude_excited)
 	c.Assert(err, IsNil)
 
 	// Check flow and concentation have an excited attitude
 	knownElements := map[uint32]*swapi.CrowdElement{}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		done := CheckAttitude(data.Crowds[crowd.Id], Excited)
+		done := CheckAttitude(data.Crowds[crowd.Id], sword.EnumCrowdAttitude_excited)
 		if done {
 			swapi.DeepCopy(&knownElements, data.Crowds[crowd.Id].CrowdElements)
 		}
@@ -411,7 +403,7 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 				return false
 			}
 		}
-		return CheckAttitude(data.Crowds[crowd.Id], Excited)
+		return CheckAttitude(data.Crowds[crowd.Id], sword.EnumCrowdAttitude_excited)
 	})
 }
 
@@ -445,21 +437,25 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	defer stopSimAndClient(c, sim, client)
 	data := client.Model.GetData()
 	// Create agressive crowd
-	party := data.FindPartyByName("another-party")
-	c.Assert(party, NotNil)
-	// Create crowd in party
-	crowd, err := client.CreateCrowd(party.Id, 0, "Motorized Crowd",
-		swapi.Point{X: -15.8105, Y: 28.3451}, 600, 0, 0, "crowd")
+	another := data.FindPartyByName("another-party")
+	c.Assert(another, NotNil)
+	// Create crowd in another-party
+	const x = -15.8105
+	const y = 28.3451
+	const step = 0.003
+	crowd, err := client.CreateCrowd(another.Id, 0, "Motorized Crowd",
+		swapi.Point{X: x, Y: y}, 600, 0, 0, "crowd")
+	c.Assert(err, IsNil)
 
-	err = client.ChangeAttitude(crowd.Id, Agressive)
+	err = client.ChangeAttitude(crowd.Id, sword.EnumCrowdAttitude_agressive)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckAttitude(data.Crowds[crowd.Id], Agressive)
+		return CheckAttitude(data.Crowds[crowd.Id], sword.EnumCrowdAttitude_agressive)
 	})
 
 	// Create barricade
-	location := swapi.MakePointLocation(swapi.Point{X: -15.8045, Y: 28.3451})
-	party = data.FindPartyByName("party")
+	location := swapi.MakePointLocation(swapi.Point{X: x + step, Y: y})
+	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 	object, err := client.CreateObject("barricade", party.Id, location)
 	c.Assert(err, IsNil)
@@ -467,22 +463,23 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 
 	// Create Safety police patrol
 	phydb := loadPhysical(c, "worldwide")
-	safetyPolicePatrolId := uint32(185)
+	const safetyPolicePatrolId = 185
 	safetyPoliceUnit := getUnitTypeFromName(c, phydb, "SAFETY.Police Unit")
 	automat := createSpecificAutomat(c, client, "party", safetyPolicePatrolId)
-	unitPos := swapi.Point{X: -15.7928, Y: 28.3451}
+	unitPos := swapi.Point{X: x + step*2, Y: y}
 	for i := 0; i != 2; i++ {
 		_, err := client.CreateUnit(automat.Id, safetyPoliceUnit, unitPos)
 		c.Assert(err, IsNil)
 	}
 
 	// Send SAFETY - Operate a checkpoint (filter crowds)
-	operateCheckpoint := uint32(445949258)
+	const operateCheckpoint = 445949258
+	const size = 0.01
 	params := swapi.MakeParameters(
 		swapi.MakeHeading(0),
 		nil,
-		swapi.MakeLimit(unitPos.Shift(-0.01, 0.01), unitPos.Shift(0.01, 0.01)),
-		swapi.MakeLimit(unitPos.Shift(-0.01, -0.01), unitPos.Shift(0.01, -0.01)),
+		swapi.MakeLimit(unitPos.Shift(-size, size), unitPos.Shift(size, size)),
+		swapi.MakeLimit(unitPos.Shift(-size, -size), unitPos.Shift(size, -size)),
 		swapi.MakePlannedWork("checkpoint", unitPos),
 		nil,
 		nil,
@@ -504,18 +501,18 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	reporter.Start(client.Model)
 
 	// Send demonstrate mission on the crowd
-	to := swapi.Point{X: -15.786, Y: 28.3451}
+	to := swapi.Point{X: x + step*3, Y: y}
 	params = swapi.MakeParameters(swapi.MakePointParam(to))
 	_, err = client.SendCrowdOrder(crowd.Id, MissionDemonstrateCrowdId, params)
 	c.Assert(err, IsNil)
 
 	// Check crowd position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.Crowds[crowd.Id]
-		if len(unit.CrowdElements) != 1 {
+		elements := data.Crowds[crowd.Id].CrowdElements
+		if len(elements) != 1 {
 			return false
 		}
-		for _, value := range unit.CrowdElements {
+		for _, value := range elements {
 			return isNearby(value.Position, to)
 		}
 		return false
