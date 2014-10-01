@@ -18,8 +18,8 @@ using namespace gui;
 // Created: AGE 2006-04-14
 // -----------------------------------------------------------------------------
 VisionLine::VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height, bool realEnvironment )
-    : fromAltitude_    ( map.ElevationAt( from ) + height )
-    , toAltitude_      ( map.ElevationAt( to ) + 2.f )
+    : fromAltitude_    ( static_cast< float >( map.ElevationAt( from ) ) + height )
+    , toAltitude_      ( static_cast< float >( map.ElevationAt( to ) ) + 2.f )
     , iterator_        ( map, geometry::Point3f( from.X(), from.Y(), fromAltitude_ ), geometry::Point3f( to.X(), to.Y(), toAltitude_ ) )
     , totalDistance_   ( from.Distance( to ) + 0.1f )
     , advancedDistance_( 0 )

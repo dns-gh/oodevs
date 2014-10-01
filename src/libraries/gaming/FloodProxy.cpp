@@ -40,10 +40,10 @@ FloodProxy::~FloodProxy()
 // Name: FloodProxy::GetElevationAt
 // Created: JSR 2011-10-07
 // -----------------------------------------------------------------------------
-short FloodProxy::GetElevationAt( const geometry::Point2f& point ) const
+double FloodProxy::GetElevationAt( const geometry::Point2f& point ) const
 {
     if( detection_.Extent().IsOutside( point ) )
-        return std::numeric_limits< short >::max();
+        return std::numeric_limits< double >::max();
     return detection_.ElevationAt( point, true );
 }
 

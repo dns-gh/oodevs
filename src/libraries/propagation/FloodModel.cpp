@@ -79,14 +79,14 @@ void FloodModel::GenerateFlood( const Point2d& center, T_Polygons& deepAreas, T_
 // Name: FloodModel::GetMaxElevationInCell
 // Created: JSR 2014-08-11
 // -----------------------------------------------------------------------------
-short FloodModel::GetMaxElevationInCell( const geometry::Point2f& center, int floodElevation ) const
+double FloodModel::GetMaxElevationInCell( const geometry::Point2f& center, double floodElevation ) const
 {
     const float size = getter_.GetCellSize();
     const float x1 = center.X() - cellWidth_ * 0.5f;
     const float y1 = center.Y() - cellWidth_ * 0.5f;
     const float x2 = center.X() + cellWidth_ * 0.5f;
     const float y2 = center.Y() + cellWidth_ * 0.5f;
-    short ret = 0;
+    double ret = 0;
     for( float y = y1; y < y2; y += size )
         for( float x = x1; x < x2; x += size )
         {
@@ -101,7 +101,7 @@ short FloodModel::GetMaxElevationInCell( const geometry::Point2f& center, int fl
 // Name: FloodModel::Propagate
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
-void FloodModel::Propagate( int floodElevation, unsigned short halfWidth, const Point2f& center, sCell** ppCells, int refDist ) const
+void FloodModel::Propagate( double floodElevation, unsigned short halfWidth, const Point2f& center, sCell** ppCells, int refDist ) const
 {
     std::queue< std::pair< unsigned short, unsigned short > > queue;
     queue.push( std::make_pair( halfWidth, halfWidth ) );
@@ -116,7 +116,7 @@ void FloodModel::Propagate( int floodElevation, unsigned short halfWidth, const 
             cell.visited_ = true;
             if( cellCenter.SquareDistance( center ) < refDist * refDist )
             {
-                const short elevation = GetMaxElevationInCell( cellCenter, floodElevation );
+                const double elevation = GetMaxElevationInCell( cellCenter, floodElevation );
                 if( elevation <= floodElevation )
                 {
                     cell.polIndex_ = -1; // to be marked

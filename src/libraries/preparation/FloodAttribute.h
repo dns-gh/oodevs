@@ -71,7 +71,7 @@ public:
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void NotifyUpdated( const FloodAttribute& attribute );
     virtual void NotifyUpdated( const kernel::AltitudeModified& attribute );
-    virtual short GetElevationAt( const geometry::Point2f& point ) const;
+    virtual double GetElevationAt( const geometry::Point2f& point ) const;
     virtual float GetCellSize() const;
     //@}
 

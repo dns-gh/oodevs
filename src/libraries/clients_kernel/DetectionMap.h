@@ -69,7 +69,7 @@ public:
     std::pair< unsigned int, unsigned int > Unmap( const geometry::Point2f& point ) const;
     const short* Data( unsigned int x, unsigned int y ) const;
     unsigned int Unmap( float distance ) const;
-    short ElevationAt( const geometry::Point2f& point, bool applyOffsetOnCell = false ) const;
+    double ElevationAt( const geometry::Point2f& point, bool applyOffsetOnCell = false ) const;
     void SetAltitudeOffset( unsigned int id, const geometry::Polygon2f::T_Vertices& points, bool isPolygon, short offset );
     //@}
 
@@ -123,7 +123,7 @@ unsigned int DetectionMap::Unmap( float distance ) const
 }
 
 inline
-short DetectionMap::ElevationAt( const geometry::Point2f& point, bool applyOffsetOnCell /*= false*/ ) const
+double DetectionMap::ElevationAt( const geometry::Point2f& point, bool applyOffsetOnCell /*= false*/ ) const
 {
     return map_ ? map_->ElevationAt( point, applyOffsetOnCell ) : 0;
 }

@@ -161,12 +161,12 @@ float MetricsLayer::ComputeRuleDistance( bool b3dComputation )
         {
             geometry::Point2f start2d = *(it - 1 );
             geometry::Point2f end2d = *(it );
-            geometry::Point3f start3d = geometry::Point3f( start2d.X(), start2d.Y(), elevation_.ElevationAt( start2d ) ) ;
-            geometry::Point3f end3d = geometry::Point3f( end2d.X(), end2d.Y(), elevation_.ElevationAt( end2d ) );
+            geometry::Point3f start3d = geometry::Point3f( start2d.X(), start2d.Y(), static_cast< float >( elevation_.ElevationAt( start2d ) ) ) ;
+            geometry::Point3f end3d = geometry::Point3f( end2d.X(), end2d.Y(), static_cast< float >( elevation_.ElevationAt( end2d ) ) );
             distance += start3d.Distance( end3d );
         }
-        geometry::Point3f start3dPoint = geometry::Point3f( metricPoints_.back().X(), metricPoints_.back().Y(), elevation_.ElevationAt( metricPoints_.back() ) );
-        geometry::Point3f end3dPoint = geometry::Point3f( end_.X(), end_.Y(), elevation_.ElevationAt( end_ ) );
+        geometry::Point3f start3dPoint = geometry::Point3f( metricPoints_.back().X(), metricPoints_.back().Y(), static_cast< float >( elevation_.ElevationAt( metricPoints_.back() ) ) );
+        geometry::Point3f end3dPoint = geometry::Point3f( end_.X(), end_.Y(), static_cast< float >( elevation_.ElevationAt( end_ ) ) );
         distance += start3dPoint.Distance( end3dPoint );
         return distance;
     }

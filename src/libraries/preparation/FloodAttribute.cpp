@@ -127,10 +127,10 @@ void FloodAttribute::NotifyUpdated( const AltitudeModified& attribute )
 // Name: FloodAttribute::GetElevationAt
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
-short FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
+double FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
 {
     if( detection_.Extent().IsOutside( point ) )
-        return std::numeric_limits< short >::max();
+        return std::numeric_limits< double >::max();
     return detection_.ElevationAt( point, true );
 }
 
