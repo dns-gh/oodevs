@@ -11,6 +11,7 @@
 #include "TerrainProfiler.h"
 #include "moc_TerrainProfiler.cpp"
 #include "Paths.h"
+#include "RichCheckBox.h"
 #include "RichSpinBox.h"
 #include "SubObjectName.h"
 #include "TerrainProfile.h"
@@ -45,14 +46,14 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     {
         QWidget* box = new QWidget( this );
         profile_ = new TerrainProfile( box, layer );
-        heightCheckbox_ = new QCheckBox();
+        heightCheckbox_ = new RichCheckBox( "heightCheckBox" );
         heightCheckbox_->setCheckState( Qt::Checked );
         QLabel* heightLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Observation height" ) );
         heightValue_ = new RichSpinBox( "heightValue" );
         heightValue_->setFixedSize( 100, 30 );
         heightValue_->setSuffix( " " + kernel::Units::meters.AsString() );
         heightValue_->setValue( 2 );
-        slopeCheckbox_ = new QCheckBox();
+        slopeCheckbox_ = new RichCheckBox( "slopeCheckBox" );
         slopeCheckbox_->setCheckState( Qt::Checked );
         QLabel* slopeLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Slope threshold" ) );
         slopeValue_ = new RichSpinBox( "slopeValue", 0, 0, 90 );
