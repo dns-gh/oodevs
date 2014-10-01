@@ -238,17 +238,19 @@ end
 -- This method can only be called by an agent.
 -- @param eni a DirectIA agent knowledge.
 -- @param ph the probability to hit.
+-- @param position the position from which to compute the range.
 -- @return boolean returns 'true' if the agent is in range, 'false' otherwise.
-integration.niTropPresNiTropLoin = function( eni, ph )
+integration.niTropPresNiTropLoin = function( eni, ph, position )
+    local currentPosition = position or meKnowledge -- if position is not issued, compute the range from current agent's position.
 
     -- check if eni is not too close.
     local rPorteeMin = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( eni.source, ph )
-    local rDistanceAEni = integration.distance( meKnowledge, eni)
+    local rDistanceAEni = integration.distance( currentPosition, eni)
     local bTropProche = rDistanceAEni < rPorteeMin
 
     -- check if eni is not too far.
     local rPorteeMax = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( eni.source, ph )
-    local rDistanceAEni = DEC_Geometrie_Distance3D( meKnowledge:getPosition(), 0, eni:getPosition(), DEC_ConnaissanceAgent_Altitude( eni.source ) )
+    local rDistanceAEni = DEC_Geometrie_Distance3D( currentPosition:getPosition(), 0, eni:getPosition(), DEC_ConnaissanceAgent_Altitude( eni.source ) )
     local bTropLoin =  rDistanceAEni > rPorteeMax
 
     return ( not ( bTropProche or bTropLoin ) )
