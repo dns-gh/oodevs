@@ -148,26 +148,26 @@ std::pair< TER_Polygon, std::size_t > DEC_PathResult::ComputePathHull( const T_P
 namespace
 {
     static const double epsilon = 1e-8;
-}
 
-bool DEC_PathResult::HullIntersects( const TER_Polygon& hull, const TER_Localisation& location ) const
-{
-    const T_PointVector& points = hull.GetBorderPoints();
-    if( points.empty() )
-        return false;
-    auto it = points.begin();
-    auto itNext = std::next( it );
-    for( ; itNext != points.end(); ++it, ++itNext )
+    bool HullIntersects( const TER_Polygon& hull, const TER_Localisation& location )
     {
-        const MT_Line lineTmp( *it, *itNext );
-        const TER_DistanceLess colCmp( *itNext );
-        T_PointSet collisions( colCmp );
-        if( location.Intersect2D( lineTmp, collisions, epsilon ) )
-            return true;
+        const T_PointVector& points = hull.GetBorderPoints();
+        if( points.empty() )
+            return false;
+        auto it = points.begin();
+        auto itNext = std::next( it );
+        for( ; itNext != points.end(); ++it, ++itNext )
+        {
+            const MT_Line lineTmp( *it, *itNext );
+            const TER_DistanceLess colCmp( *itNext );
+            T_PointSet collisions( colCmp );
+            if( location.Intersect2D( lineTmp, collisions, epsilon ) )
+                return true;
+        }
+        const TER_Localisation localisationHull( hull );
+        return location.Contains( localisationHull, epsilon )
+            || localisationHull.Contains( location, epsilon );
     }
-    const TER_Localisation localisationHull( hull );
-    return location.Contains( localisationHull, epsilon )
-        || localisationHull.Contains( location, epsilon );
 }
 
 void DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, double& rDistance,

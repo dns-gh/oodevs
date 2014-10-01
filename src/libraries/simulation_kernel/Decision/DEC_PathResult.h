@@ -73,7 +73,6 @@ private:
     //@{
     MT_Vector2D InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     std::pair< TER_Polygon, std::size_t > ComputePathHull( const T_PathPoints::const_iterator& itCurrentPathPoint ) const;
-    bool HullIntersects( const TER_Polygon& hull, const TER_Localisation& location ) const;
     void ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, double& rDistance,
         boost::shared_ptr< DEC_Knowledge_Object >& pObject, const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge,
         const T_PathPoints::const_iterator& itCurrentPathPoint, const TER_Localisation& location ) const;
