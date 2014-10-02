@@ -104,14 +104,16 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
         }
     }
     geometry::Rectangle2d box(left,bottom,right,top);
-    const int mx = 100, my=100;
-    const double incx = (box.Right() - box.Left())/mx;
-    const double incy = (box.Top() - box.Bottom())/my;
+    const double incx = 0.005;
+    const double incy = 0.005;
+    const uint32_t mx= static_cast< uint32_t >( ( box.Right() - box.Left() ) / incx ) +1;
+    const uint32_t my= static_cast< uint32_t >( ( box.Top() - box.Bottom() ) / incy ) +1;
+
     std::vector< ObjectListener_ABC::PropagationData > data;
-    for( int i=0; i<my; ++i )
+    for( uint32_t i=0; i<my; ++i )
     {
         const double y = box.Top() - i * incy;
-        for( int j=0; j<mx; ++j )
+        for( uint32_t j=0; j<mx; ++j )
         {
             const double x = box.Left() + j * incx;
             bool found=false;
