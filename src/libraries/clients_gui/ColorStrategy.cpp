@@ -33,9 +33,6 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 
-#include <boost/bind.hpp>
-#include <numeric>
-
 using namespace kernel;
 using namespace gui;
 
@@ -315,7 +312,7 @@ void ColorStrategy::SelectColor( const UrbanObject_ABC& object )
 {
     if( const kernel::UrbanColor_ABC* attribute = object.Retrieve< kernel::UrbanColor_ABC >() )
     {
-        float alpha = ApplyModifiers( object, attribute->Alpha() );
+        const float alpha = ApplyModifiers( object, attribute->Alpha() );
         ApplyColor( QColor( attribute->Red(), attribute->Green(), attribute->Blue() ), alpha_ * alpha );
     }
 }
@@ -395,15 +392,14 @@ void ColorStrategy::NotifyUpdated( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ColorStrategy::NotifyDeleted( const Team_ABC& team )
 {
-    T_TeamColors::iterator it = teamColors_.find( &team );
-    if( it != teamColors_.end() )
-    {
-        if( it->second.second )
-            it->second.second->push_back( it->second.first );
-        teamColors_.erase( it );
-        if( teamColors_.empty() )
-            InitializeColors();
-    }
+    auto it = teamColors_.find( &team );
+    if( it == teamColors_.end() )
+        return;
+    if( it->second.second )
+        it->second.second->push_back( it->second.first );
+    teamColors_.erase( it );
+    if( teamColors_.empty() )
+        InitializeColors();
 }
 
 // -----------------------------------------------------------------------------
@@ -412,7 +408,7 @@ void ColorStrategy::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 QColor ColorStrategy::FindTeamColor( const Entity_ABC& entity )
 {
-    T_TeamColors::const_iterator it = teamColors_.find( &entity );
+    auto it = teamColors_.find( &entity );
     if( it != teamColors_.end() )
         return it->second.first;
 
@@ -426,7 +422,7 @@ QColor ColorStrategy::FindTeamColor( const Entity_ABC& entity )
         available = &neutralAvailable_;
 
     if( available->empty() )
-        teamColors_[ &entity ] = std::make_pair( RandomColor(), (T_Colors*)0 );
+        teamColors_[ &entity ] = std::make_pair( RandomColor(), nullptr );
     else
     {
         teamColors_[ &entity ] = std::make_pair( available->back(), available );

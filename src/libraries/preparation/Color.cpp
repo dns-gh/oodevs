@@ -17,7 +17,7 @@
 
 namespace
 {
-    boost::tuple< unsigned int ,unsigned int, unsigned int > HexToRgb( const std::string& strColor )
+    boost::tuple< unsigned int, unsigned int, unsigned int > HexToRgb( const std::string& strColor )
     {
         unsigned int color;
         std::stringstream ss( strColor );
@@ -71,9 +71,7 @@ Color::Color( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Color::ChangeColor( xml::xistream& xis )
 {
-    std::string color;
-    xis >> xml::optional
-        >> xml::attribute< std::string >( "color", color );
+    const std::string color = xis.attribute< std::string >( "color", "" );
     if( !color.empty() )
         color_ = HexToRgb( color );
 }
