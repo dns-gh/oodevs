@@ -1233,7 +1233,7 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
 {
     if( const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
     {
-        if( object->GetStructuralState() == 0 )
+        if( object->GetStructuralState() <= 0 )
             return false;
         if( const UrbanPhysicalCapacity* pPhysical = object->Retrieve< UrbanPhysicalCapacity >() )
             return pPhysical->GetTrafficability() > weight;
@@ -1271,7 +1271,7 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decisi
 bool DEC_GeometryFunctions::IsPointInDestroyedUrbanBlock( const MT_Vector2D& point )
 {
     if( const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
-        return object->GetStructuralState() == 0;
+        return object->GetStructuralState() <= 0;
     return false;
 }
 
