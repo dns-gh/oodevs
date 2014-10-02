@@ -123,13 +123,13 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
     if( !bIsEnabled_ )
         return PHY_PerceptionLevel::notSeen_;
 
+    if( FailDirectView( target ) )
+        return PHY_PerceptionLevel::notSeen_;
+
     const PHY_PerceptionLevel& result = ComputePerception( perceiver_, target );
     if( result == PHY_PerceptionLevel::notSeen_ ||
         !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
         return result;
-
-    if( FailDirectView( target ) )
-        return PHY_PerceptionLevel::notSeen_;
 
     const T_PerceptionParameterPair p = GetParameter( target );
     perceptionsBuffer_[ &target ] = std::make_pair( p.first + 1, p.second );
