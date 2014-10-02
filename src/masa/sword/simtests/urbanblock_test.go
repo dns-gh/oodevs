@@ -132,3 +132,55 @@ func (s *TestSuite) TestUrbanResourceNetworkChange(c *C) {
 			data.Objects[21].Urban.ResourceNetworks)
 	})
 }
+
+// A urban block is between units.They don't see each other.
+// But if the urban bock is destroyed, the perception begins.
+func (s *TestSuite) TestUrbanBlockPerception(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+	// Create units in 'another-party'
+	party := data.FindPartyByName("another-party")
+	c.Assert(party, NotNil)
+	formation := CreateFormation(c, client, party.Id)
+	kg, err := client.CreateKnowledgeGroup(party.Id, "Standard")
+	c.Assert(err, IsNil)
+	_, units, err := client.CreateAutomatAndUnits(formation.Id, AutomatType,
+		kg.Id, swapi.Point{X: -15.9311, Y: 28.4392})
+	c.Assert(err, IsNil)
+	// Teleport the hidden unit
+	unit := units[0]
+	position := swapi.Point{X: -15.8234, Y: 28.3485}
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), position)
+	c.Assert(err, IsNil)
+
+	// Check unit position
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return isNearby(data.Units[unit.Id].Position, position)
+	})
+
+	// Wait the model to be updated
+	client.Model.WaitTicks(1)
+
+	// Check no unit knowledge
+	data = client.Model.GetData()
+	c.Assert(len(data.UnitKnowledges), Equals, 0)
+
+	// Destroy the urban block
+	blockId := uint32(35)
+	params := swapi.MakeList(
+		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_structural_state)),
+		swapi.MakeFloat(0),
+	)
+	err = client.UpdateObject(blockId, params)
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Objects[blockId].Urban.State == 0
+	})
+
+	// Check creation of an unit knowledge
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.UnitKnowledges) != 0
+	})
+}
