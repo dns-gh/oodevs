@@ -66,8 +66,9 @@ struct Package_ABC : public boost::noncopyable
     virtual size_t GetSize() const = 0;
     virtual Path GetPath() const = 0;
     virtual Path GetRoot( const Item_ABC& item ) const = 0;
-    virtual T_Item Find( size_t id, bool alive ) const = 0;
-    virtual T_Item Find( const Item_ABC& item, bool alive ) const = 0;
+    virtual T_Item FindId( size_t id ) const = 0;
+    virtual T_Item FindAlive( const Item_ABC& item ) const = 0;
+    virtual T_Items FindAll( const Item_ABC& item ) const = 0;
     virtual T_Item Find( const std::string& type, const std::string& name, const std::string& checksum ) const = 0;
     virtual T_Exercises GetExercises( int offset, int limit ) const = 0;
     virtual size_t CountExercises() const = 0;

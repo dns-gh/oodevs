@@ -377,13 +377,13 @@ namespace
             action_.clear();
             error_.clear();
             BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
-                if( !ref.Find( *dep, true ) && !root.Find( *dep, true ) )
+                if( !ref.FindAlive( *dep ) && !root.FindAlive( *dep ) )
                 {
                     action_ = "error";
                     error_ = "Missing " + dep->GetType() + " " + Utf8( dep->GetName() );
                     return;
                 }
-            Package_ABC::T_Item next = ref.Find( *this, true );
+            const auto next = ref.FindAlive( *this );
             if( !next )
                 action_ = "add";
             else if( GetChecksum() != next->GetChecksum() )
@@ -418,7 +418,7 @@ namespace
         void CheckDependencies( const Package_ABC& dst, const Package::T_Items& targets ) const
         {
             BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
-                if( !dst.Find( *dep, true ) && !HasItem( targets, *dep ) )
+                if( !dst.FindAlive( *dep ) && !HasItem( targets, *dep ) )
                     throw web::HttpException( web::BAD_REQUEST, "Missing dependency "
                         + Utf8( dep->GetName() ) + " on package " + Utf8( GetName() ) );
         }
@@ -426,10 +426,11 @@ namespace
         void Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& root, const Package_ABC& dst,
                       const PathOperand& operand, bool move, bool replace ) const
         {
-            Package_ABC::T_Item old = dst.Find( *this, false );
+            const auto olds = dst.FindAll( *this );
             const std::string checksum = GetChecksum();
-            if( old && old->GetChecksum() == checksum )
-                return old->Reinstall( fs );
+            for( auto it = olds.begin(); it != olds.end(); ++it )
+                if( *it && (*it)->GetChecksum() == checksum )
+                    return (*it)->Reinstall( fs );
 
             const Path output = fs.MakeAnyPath( root );
             if( move )
@@ -444,8 +445,10 @@ namespace
                 fs.CopyDirectory( root_ / GetSuffix(), sub );
             }
             meta_.Save( fs, output, true );
-            if( old && replace )
-                old->Uninstall( async, fs, tomb );
+            if( replace )
+                for( auto it = olds.begin(); it != olds.end(); ++it )
+                    if( (*it)->IsInstalled() )
+                        (*it)->Uninstall( async, fs, tomb );
             operand( output );
         }
 
@@ -486,12 +489,9 @@ namespace
             tree.put( prefix + ".root", Utf8( root_ ) );
             tree.put( prefix + ".checksum", GetChecksum() );
             if( recurse )
-                BOOST_FOREACH( const T_Dependencies::value_type& it, GetDependencies() )
-                {
-                    Package_ABC::T_Item next = ref.Find( *it, true );
-                    if( next )
+                BOOST_FOREACH( const auto& it, GetDependencies() )
+                    if( auto next = ref.FindAlive( *it ) )
                         next->Link( tree, ref, false );
-                }
             meta_.Link();
         }
 
@@ -980,9 +980,9 @@ void Package::Identify( const Package_ABC& ref )
 // Name: Package::Find
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Package_ABC::T_Item Package::Find( size_t id, bool installed ) const
+Package_ABC::T_Item Package::FindId( size_t id ) const
 {
-    T_Items::const_iterator it = FindItem( items_, id, installed );
+    T_Items::const_iterator it = FindItem( items_, id, true );
     return it == items_.end() ? T_Item() : *it;
 }
 
@@ -990,10 +990,19 @@ Package_ABC::T_Item Package::Find( size_t id, bool installed ) const
 // Name: Package::Find
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Package_ABC::T_Item Package::Find( const Item_ABC& item, bool installed ) const
+Package_ABC::T_Item Package::FindAlive( const Item_ABC& item ) const
 {
-    T_Items::const_iterator it = FindItem( items_, item, installed );
+    T_Items::const_iterator it = FindItem( items_, item, true );
     return it == items_.end() ? T_Item() : *it;
+}
+
+Package_ABC::T_Items Package::FindAll( const Item_ABC& item ) const
+{
+    T_Items reply;
+    for( auto it = items_.begin(); it != items_.end(); ++it )
+        if( ItemCompare( *it, item, false ) )
+            reply.push_back( *it );
+    return reply;
 }
 
 // -----------------------------------------------------------------------------
@@ -1079,7 +1088,7 @@ void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, cons
     T_Items install;
     BOOST_FOREACH( size_t id, ids )
     {
-        T_Item item = src.Find( id, true );
+        T_Item item = src.FindId( id );
         if( !item )
             throw web::HttpException( web::BAD_REQUEST, "Missing package "
                 + boost::lexical_cast< std::string >( id ) );
@@ -1172,12 +1181,12 @@ Tree Link( const Package_ABC::T_Item& item, const Package_ABC& pkg, bool recurse
 // -----------------------------------------------------------------------------
 Tree Package::LinkExercise( const std::string& name )
 {
-    return Link( Find( Dependency( "exercise", name ), true ), *this, true );
+    return Link( FindAlive( Dependency( "exercise", name ) ), *this, true );
 }
 
 Tree Package::GetExerciseProperties( const std::string& name )
 {
-    auto item = Find( Dependency( "exercise", name ), true );
+    auto item = FindAlive( Dependency( "exercise", name ) );
     if( !item )
         return Tree();
     return GetPropertiesFrom( *item );
