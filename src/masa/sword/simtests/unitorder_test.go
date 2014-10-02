@@ -18,6 +18,7 @@ const (
 	MissionMoveId          = uint32(44582)
 	MissionAutomatAttackId = uint32(44523)
 	MissionMoveCrowdId     = uint32(4490)
+	MissionDefendId        = uint32(44535)
 	InvalidIdentifier      = uint32(129500)
 )
 
@@ -55,9 +56,9 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	_, err = client.SendUnitOrder(unit.Id, InvalidIdentifier, params)
 	c.Assert(err, IsSwordError, "error_invalid_mission")
 
-	checkParams := func(expected string, params ...interface{}) {
+	checkParams := func(mission uint32, expected string, params ...interface{}) {
 		missionParams := swapi.MakeParameters(params...)
-		order, err := client.SendUnitOrder(unit.Id, MissionMoveId, missionParams)
+		order, err := client.SendUnitOrder(unit.Id, mission, missionParams)
 		if len(expected) > 0 {
 			c.Assert(err, ErrorMatches, expected)
 		} else {
@@ -67,56 +68,65 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	}
 
 	// Missing heading
-	checkParams(".*missing.*heading expected.*")
+	checkParams(MissionMoveId, ".*missing.*heading expected.*")
 
 	// Invalid heading
-	checkParams(".*invalid.*heading expected.*", dest)
+	checkParams(MissionMoveId, ".*invalid.*heading expected.*", dest)
 
 	// Missing limit 1
-	checkParams(".*missing.*limit expected.*", heading, nil)
+	checkParams(MissionMoveId, ".*missing.*limit expected.*", heading, nil)
 
 	// Invalid limit 1
-	checkParams(".*must be a limit.*", heading, nil, dest)
+	checkParams(MissionMoveId, ".*must be a limit.*", heading, nil, dest)
 
 	// Limit1 is empty
-	checkParams(".*limit value is invalid.*", heading, nil, swapi.MakeLimit())
+	checkParams(MissionMoveId, ".*limit value is invalid.*", heading, nil, swapi.MakeLimit())
 
 	// Missing limit 2
 	limit1 := swapi.MakeLimit(
 		swapi.Point{X: from.X + 0.001, Y: from.Y},
 		swapi.Point{X: to.X + 0.001, Y: to.Y})
-	checkParams(".*missing.*limit expected.*", heading, nil, limit1)
+	checkParams(MissionMoveId, ".*missing.*limit expected.*", heading, nil, limit1)
 
 	// Invalid limit 2
-	checkParams(".*must be a limit.*", heading, nil, limit1, swapi.MakeHeading(0))
+	checkParams(MissionMoveId, ".*must be a limit.*", heading, nil, limit1, swapi.MakeHeading(0))
 
 	// Limit2 is empty
-	checkParams(".*limit value is invalid.*", heading, nil, limit1, swapi.MakeLimit())
+	checkParams(MissionMoveId, ".*limit value is invalid.*", heading, nil, limit1, swapi.MakeLimit())
 
 	// Limit1 is null but not limit2
 	limit2 := swapi.MakeLimit(
 		swapi.Point{X: from.X - 0.001, Y: from.Y},
 		swapi.Point{X: to.X - 0.001, Y: to.Y})
-	checkParams(".*must be both null.*", heading, nil, nil, limit2)
+	checkParams(MissionMoveId, ".*must be both null.*", heading, nil, nil, limit2)
 
 	// Limit2 is empty but not limit1
-	checkParams(".*must be both null.*", heading, nil, limit1, nil)
+	checkParams(MissionMoveId, ".*must be both null.*", heading, nil, limit1, nil)
 
 	// Limits are equal
-	checkParams(".*or different.*", heading, nil, limit1, limit1)
+	checkParams(MissionMoveId, ".*or different.*", heading, nil, limit1, limit1)
 
 	// Missing destination
-	checkParams(".*got 4 parameters, an additional LocationComposite is expected.*",
+	checkParams(MissionMoveId, ".*got 4 parameters, an additional LocationComposite is expected.*",
 		heading, nil, limit1, limit2)
 
 	// Invalid destination type
-	checkParams(".*must be a LocationComposite.*", heading, nil, limit1, limit2, heading)
+	checkParams(MissionMoveId, ".*must be a LocationComposite.*", heading, nil, limit1, limit2, heading)
 
 	// With nil limits
-	checkParams("", heading, nil, nil, nil, dest)
+	checkParams(MissionMoveId, "", heading, nil, nil, nil, dest)
 
 	// With valid limits
-	checkParams("", heading, nil, limit1, limit2, dest)
+	checkParams(MissionMoveId, "", heading, nil, limit1, limit2, dest)
+
+	// Required list parameter is empty
+	checkParams(MissionDefendId, ".*invalid number of parameters", heading, nil, nil, nil, swapi.MakeEmpty())
+
+	// With valid list parameter
+	checkParams(MissionDefendId, "", heading, nil, nil, nil, dest)
+
+	// With valid empty optional list parameter
+	checkParams(MissionDefendId, "", heading, nil, nil, nil, dest, swapi.MakeEmpty())
 }
 
 // Test we can send a automat mission and get a successful acknowledgement.

@@ -50,6 +50,7 @@ public:
     const MIL_ParameterType_ABC& GetType() const;
     bool IsList() const;
     bool IsOptional() const { return bIsOptional_; }
+    bool CheckSize( unsigned int size ) const;
     //@}
 
 private:
@@ -58,8 +59,9 @@ private:
           std::string            strName_;
           std::string            strDiaName_;
           bool                   bIsOptional_;
-          bool                   bIsList_;
     const MIL_ParameterType_ABC* pParameter_;
+    unsigned int           minOccurs_;
+    unsigned int           maxOccurs_;
     //@}
 };
 

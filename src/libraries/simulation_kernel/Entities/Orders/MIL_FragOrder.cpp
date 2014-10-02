@@ -23,6 +23,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "MIL_MissionParameter_ABC.h"
 #include "MIL_Time_ABC.h"
 #include "MT_Tools/MT_Logger.h"
@@ -30,6 +31,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessageParameters.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
@@ -73,10 +75,18 @@ MIL_FragOrder::~MIL_FragOrder()
 void MIL_FragOrder::SetParameters( const DEC_KnowledgeResolver_ABC& resolver,
                                    const sword::MissionParameters& parameters )
 {
-    if( static_cast< int >( type_.GetParameters().size() ) != parameters.elem_size() )
+    const auto& orderParameters = type_.GetParameters();
+    const auto count = static_cast< int >( orderParameters.size() );
+    protocol::CheckCount( parameters, count );
+    for( int i = 0; i < count; ++i )
     {
-        MT_LOG_ERROR_MSG( "Frag Order " << type_.GetName() << " invalid parameters" );
-        throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
+        const auto* orderParameter = orderParameters.at( i );
+        if( !orderParameter->IsOptional() )
+        {
+            const auto& parameter = parameters.elem( i );
+            protocol::Check( !parameter.null_value(), "cannot be null", i );
+            protocol::Check( orderParameter->CheckSize( parameter.value_size() ), "invalid number of parameters", i );
+        }
     }
     MIL_MissionParameterFactory::Copy( type_, parameters, parameters_, resolver );
 }
