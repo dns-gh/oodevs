@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="span9">
+        <div id="upload_error"></div>
+        <div id="packages">
+        </div>
+    </div>
+</div>
+<!-- Error Template -->
+<script type="text/template" id="package_error_template">
+    <div class="alert alert-error"><b>Error</b> {{content}}</div>
+</script>
+<!-- Package Template -->
+<script type="text/template" id="package_template">
+    {{#if items.length}}
+    <div class="package_header">
+        <h2>Installed Packages</h2>
+        [[ if ne .user.type "user" ]]
+        <span class="remove_all">
+            <a class="btn"><i class="icon-trash"></i> Clear </a>
+        </span>
+        [[ end ]]
+    </div>
+    {{/if}}
+    <table class="table table-striped">
+
+        [[ $cols := 5 ]]
+        [[ define "package_header" ]]
+        <tr class="package_row[[ .more ]]">
+            <[[ .tag ]] class="type">[[ .type ]]s</[[ .tag ]]>
+            <[[ .tag ]]>Package</[[ .tag ]]>
+            <[[ .tag ]]>Date</[[ .tag ]]>
+            <[[ .tag ]]>Checksum</[[ .tag ]]>
+            <[[ .tag ]]></[[ .tag ]]>
+        </tr>
+        [[ end ]]
+
+        [[ define "package_row" ]]
+        {{#is_first_item items "[[ .type ]]"}}
+        <thead>
+            [[ template "package_header" sub "tag" "th" "more" "" "type" .type ]]
+        </thead>
+        <tbody>
+            {{else}}
+            {{#has_item_type items "[[ .type ]]"}}
+            {{#is_odd_item_row items "[[ .type ]]"}}
+            <tr class="hide"><td colspan="[[ .cols ]]"></td></tr>
+            {{/is_odd_item_row}}
+            [[ template "package_header" sub "tag" "td" "more" " sub_header" "type" .type ]]
+            {{/has_item_type}}
+            {{/is_first_item}}
+
+            {{#for_all_items items "[[ .type ]]"}}
+            <tr class="package_row{{#equal action "error"}} error{{/equal}}">
+                <td class="name">
+                    {{name}}
+                    {{#equal action "error"}}
+                    <span>
+                        <a class="label label-important error" rel="tooltip" title="{{error}}">Error</a>
+                    </span>
+                    {{/equal}}
+                </td>
+                <td class="name">
+                    <span>{{package}}</span>
+                    <br/>
+                    <span class="label label-info">{{version}}</span>
+                </td>
+                <td class="date">{{date}}</td>
+                <td>0x{{checksum}}</td>
+                <td class="action" data-rel="{{id}}">
+                    [[ if eq .type "exercise" ]]
+                    <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
+                    [[ end ]]
+                    [[/*
+                    <a class="btn" href="/api/download_install?id=[[ .node ]]&item={{id}}"><i class="icon-download"></i> </a>
+                    */]]
+                    [[ if ne .user.type "user" "player" ]]
+                    <a class="btn delete"><i class="icon-trash"></i> </a>
+                    [[ end ]]
+                </td>
+            </tr>
+            [[ if eq .type "exercise" ]]
+            <tr id="briefing_{{id}}" class="hide">
+                <td colspan="[[ .cols ]]" class="item_briefing">
+                    {{#if model.length}}<div><span class="item_label">Model</span> {{model}}</div>{{/if}}
+                    {{#if terrain.length}}<div><span class="item_label">Terrain</span> {{terrain}}</div>{{/if}}
+                    <div class="briefing_content">{{{briefing}}}</div>
+                </td>
+            </tr>
+            <tr class="hide"><td colspan="[[ .cols ]]"></td></tr>
+            [[ end ]]
+            {{/for_all_items}}
+            [[ end ]]
+            [[ template "package_row" sub "node" .uuid "user" .user "cols" $cols "type" "model" ]]
+            [[ template "package_row" sub "node" .uuid "user" .user "cols" $cols "type" "terrain" ]]
+            [[ template "package_row" sub "node" .uuid "user" .user "cols" $cols "type" "exercise" ]]
+        </tbody>
+    </table>
+</script>

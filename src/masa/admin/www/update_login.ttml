@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    [[ template "head.ttml" . ]]
+    <body>
+        [[ template "top_bar.ttml" . ]]
+        <div class="container">
+            <div class="row">
+                <div class="hero-unit masa_header">
+                    <h1>MASA Sword</h1>
+                </div>
+                <div class="update_login_header">
+                    <p>Please change your password</p>
+                </div>
+                <form action="login" method="post" class="form-horizontal update_login">
+                    [[ template "input_text" sub "id" "current"      "label" "Current"      "class" "input-xlarge" "type" "password" ]]
+                    [[ template "input_text" sub "id" "password"     "label" "New Password" "class" "input-xlarge" "type" "password" ]]
+                    [[ template "input_text" sub "id" "password_bis" "label" "Confirm"      "class" "input-xlarge" "type" "password" ]]
+                    <div class="update_login_action">
+                        <a class="btn btn-large btn-inverse update_login">Change Password</a>
+                        <a class="btn btn-large btn-inverse cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    [[ template "imports.ttml" . ]]
+    <script src="js/update_login.js"></script>
+</html>

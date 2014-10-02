@@ -8,11 +8,14 @@ include_directories( ${root_dir}/src/libraries )
 
 include( ${MASA_MACROS} )
 
+# 4127 conditional expression is constant
+add_flag( CMAKE_CXX_FLAGS "/wd4127" )
+# 4505 'function' : unreferenced local function has been removed
+add_flag( CMAKE_CXX_FLAGS "/wd4505" )
+
 add_definitions(
     -DBOOST_SPIRIT_THREADSAFE
     -DPLATFORM=${platform}
-    -D_WIN32_WINNT=0x501
-    -DWINVER=0x501
 )
 if( MSVC )
     add_definitions(
@@ -27,6 +30,8 @@ endif()
 set( COMPANY "MASA Group" )
 set( PRODUCT "Sword" )
 
+set( Boost_USE_STATIC_LIBS ON )
+find_package( Boost COMPONENTS thread REQUIRED )
 find_package( Protobuf REQUIRED )
 find_package( OpenGL REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
@@ -53,21 +58,27 @@ masa_set_library( TIMELINE_LIBRARIES
 )
 
 
-masa_set_external_library( DIRECTIA_LIBRARIES         directia-${platform}-mt-gd-4_6 directia-${platform}-mt-4_6 )
-masa_set_external_library( EXCEL_LIBRARIES            excel_d excel )
-masa_set_external_library( GDAL_I_LIBRARIES           gdal_i_d gdal_i )
-masa_set_external_library( GEOS_I_LIBRARIES           geos_i_d geos_i )
-masa_set_external_library( HLA_LIBRARIES              hla_d hla )
-masa_set_external_library( ICONV_LIBRARIES            libiconv_d libiconv )
-masa_set_external_library( LICENSE_GUI_LIBRARIES      license_gui_d license_gui )
-masa_set_external_library( MONGOOSE_LIBRARIES         mongoose_d mongoose )
-masa_set_external_library( PROJ_I_LIBRARIES           proj_i_d proj_i )
-masa_set_external_library( PROTOBUF_LIBRARIES         libprotobufd libprotobuf )
-masa_set_external_library( SPATIALITE_LIBRARIES       spatialite_d spatialite )
-masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
-masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
-masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
-masa_set_external_library( MINIZIP_LIBRARIES          minizipd minizip )
+masa_set_external_library( ARCHIVE_LIBRARIES            archive_static_d archive_static )
+masa_set_external_library( CPP_NETLIB_CLIENT_LIBRARIES  cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
+masa_set_external_library( CPP_NETLIB_URI_LIBRARIES     cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
+masa_set_external_library( DIRECTIA_LIBRARIES           directia-${platform}-mt-gd-4_6 directia-${platform}-mt-4_6 )
+masa_set_external_library( EXCEL_LIBRARIES              excel_d excel )
+masa_set_external_library( GDAL_I_LIBRARIES             gdal_i_d gdal_i )
+masa_set_external_library( GEOS_I_LIBRARIES             geos_i_d geos_i )
+masa_set_external_library( HLA_LIBRARIES                hla_d hla )
+masa_set_external_library( ICONV_LIBRARIES              libiconv_d libiconv )
+masa_set_external_library( LICENSE_GUI_LIBRARIES        license_gui_d license_gui )
+masa_set_external_library( MINIZIP_LIBRARIES            minizipd minizip )
+masa_set_external_library( MONGOOSE_LIBRARIES           mongoose_d mongoose )
+masa_set_external_library( PROJ_I_LIBRARIES             proj_i_d proj_i )
+masa_set_external_library( PROTOBUF_LIBRARIES           libprotobufd libprotobuf )
+masa_set_external_library( SPATIALITE_LIBRARIES         spatialite_d spatialite )
+masa_set_external_library( TOOLS_LIBRARIES              tools_d tools )
+masa_set_external_library( XALAN_LIBRARIES              Xalan-C_1D Xalan-C_1 )
+masa_set_external_library( XERCES_LIBRARIES             xerces-c_3D xerces-c_3 )
+masa_set_external_library( ZLIB_LIBRARIES               zlibd zlib )
+masa_set_internal_library( BCRYPT_LIBRARIES             bcrypt )
+masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
 
 masa_set_internal_library( ANALYSYS_LIBRARIES         libanalysis )
 masa_set_internal_library( EXTRACTOR_LIBRARIES        libextractor )
@@ -101,6 +112,7 @@ function( add_target target group dir )
     masa_has_item( executable "executable" ${options} )
     masa_has_item( shared "shared" ${options} )
     masa_has_item( test "test" ${options} )
+    masa_has_item( vista "vista" ${options} )
     masa_add_target( ${target} ${group} ${dir} OPTIONS ${options} )
     masa_set_output_directory( ${target}
         "${root_dir}/out/${platform}/release"
@@ -141,6 +153,15 @@ function( add_target target group dir )
     endif()
     if( executable OR shared )
         masa_add_version( ${target} "${root_dir}/build/template.res" "${PRODUCT}" )
+    endif()
+    if( WIN32 )
+        if( vista )
+            masa_add_target_definition( ${target} "_WIN32_WINNT=0x600" )
+            masa_add_target_definition( ${target} "WINVER=0x600" )
+        else()
+            masa_add_target_definition( ${target} "_WIN32_WINNT=0x501" )
+            masa_add_target_definition( ${target} "WINVER=0x501" )
+        endif()
     endif()
 endfunction()
 
@@ -663,4 +684,81 @@ target_link_libraries( casava_odb_gen_app
 add_target( migratexml clients "applications/migratexml" OPTIONS executable )
 target_link_libraries( migratexml
     sword_tools
+)
+
+# runtime
+add_target( runtime libraries "libraries/runtime" )
+target_link_libraries( runtime
+    shlwapi
+    ${ARCHIVE_LIBRARIES}
+)
+if( WIN32 )
+    add_target( runtime_win32 libraries "libraries/runtime/win32" )
+    add_target( runtime_server libraries "libraries/runtime/win32/server" OPTIONS vista )
+    target_link_libraries( runtime_server runtime runtime_win32 )
+    add_target( runtime_client libraries "libraries/runtime/win32/client" )
+    target_link_libraries( runtime_client runtime runtime_win32 )
+endif()
+
+# web_server
+add_target( web libraries "libraries/web" )
+target_link_libraries( web
+    ws2_32
+    ${CPP_NETLIB_CLIENT_LIBRARIES}
+    ${CPP_NETLIB_URI_LIBRARIES}
+    ${MONGOOSE_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
+)
+
+# host
+add_target( host libraries "libraries/host" OPTIONS qt )
+target_link_libraries( host
+    web
+    version
+    ${BCRYPT_LIBRARIES}
+    ${SQLITE3_LIBRARIES}
+    ${TOOLS_LIBRARIES}
+)
+
+# cloud_server
+add_target( cloud_server applications "applications/cloud_server" OPTIONS executable )
+target_link_libraries( cloud_server
+    host
+    runtime_server
+)
+
+# client
+add_target( client libraries "libraries/client" OPTIONS qt )
+
+# cloud_client
+add_target( cloud_client applications "applications/cloud_client" OPTIONS win32 qt executable )
+target_link_libraries( cloud_client
+    client
+    host
+    runtime_client
+)
+
+# runtime_test
+add_target( runtime_test tests "tests/runtime_test" OPTIONS test )
+target_link_libraries( runtime_test
+    runtime_server
+    ${TOOLS_LIBRARIES}
+    ${ZLIB_LIBRARIES}
+)
+
+# host_test
+add_target( host_test tests "tests/host_test" OPTIONS test )
+masa_set_target_folder( host_test tests )
+target_link_libraries( host_test
+    host
+    runtime_server
+)
+
+# web_test
+add_target( web_test tests "tests/web_test" OPTIONS test )
+target_link_libraries( web_test
+    runtime_server
+    web
+    ${TOOLS_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )

@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="span9">
+        <div id="node_error"></div>
+        <div class="form-inline create_form">
+            <div class="control-group">
+                <div class="controls">
+                    <input id="node_ident" type="text" placeholder="Identifier..."/>
+                    <a title="Settings..." id="node_edit" class="btn"><i class="icon-cog"></i></a>
+                    <a id="node_create" class="btn"><i class="icon-plus"></i> Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="span9">
+        <div id="nodes" class="accordion">
+        </div>
+    </div>
+</div>
+<div id="node_settings"></div>
+<!-- Error Template -->
+<script type="text/template" id="node_error_template">
+    <div class="alert alert-error"><b>Error</b> {{content}}</div>
+</script>
+<!-- Node Settings Dialog -->
+<script type="text/template" id="node_settings_template">
+    <div class="modal fade">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>{{ident}} Node Settings</h3>
+        </div>
+        <form class="modal-body tabbable form-horizontal">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
+                <li><a href="#tab_plugins" data-toggle="tab"> Plugins </a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_general">
+                    {{#unless is_default}}
+                    [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
+                    {{/unless}}
+                    [[ template "input_number" sub "id" "sessions_max_play" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_play}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_play}}" "append" "Sessions" ]]
+                    [[ template "input_number" sub "id" "sessions_max_parallel" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_parallel}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_parallel}}" "append" "Sessions" ]]
+                    [[ template "input_checkbox" sub "id" "sessions_reset" "label" "Allow Session Reset" "value" "{{#bool sessions.reset }} checked=\"checked\"{{/bool}}" ]]
+                </div>
+                <div class="tab-pane" id="tab_plugins">
+                    {{#iterate_pair plugins}}
+                    {{#if list}}
+                    [[ template "input_checkbox" sub "id" "{{list.0.id}}" "label" "{{list.0.name}}" "value" "{{list.0.checked}}" "pair" 1 "id2" "{{list.1.id}}" "label2" "{{list.1.name}}" "value2" "{{list.1.checked}}" ]]
+                    {{else}}
+                    [[ template "input_checkbox" sub "id" "{{item.id}}" "label" "{{item.name}}" "value" "{{item.checked}}" ]]
+                    {{/if}}
+                    {{/iterate_pair}}
+                </div>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <a class="btn btn-inverse apply">Save</a>
+            <a class="btn btn-inverse" data-dismiss="modal">Discard</a>
+        </div>
+    </div>
+</script>
+<!-- Node Template -->
+<script type="text/template" id="node_template">
+    <div id="id_{{{id}}}" class="node_row">
+        <div class="node_header accordion-heading">
+            <div class="node_buttons">
+                <div class="btn-group">
+                    {{#is_option status running=""}}
+                    <a href="/{{{ident}}}/" title="Open..." class="btn"><i class="icon-share"></i></a>
+                    {{/is_option}}
+                    {{#is_option status stopped=""}}
+                    <a title="Play" class="btn play"><i class="icon-play"></i></a>
+                    {{/is_option}}
+                    <a title="Settings..." class="btn edit"><i class="icon-cog"></i></a>
+                    {{#is_option status running=""}}
+                    <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
+                    {{/is_option}}
+                    {{#is_option status stopped=""}}
+                    <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
+                    {{/is_option}}
+                </div>
+            </div>
+            <span class="well session {{{status}}}"></span>
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" alt="" src="img/tango/32x32/places/network-server.png"/>
+                {{ident}}
+            </a>
+        </div>
+        <div id="collapse_{{{id}}}" class="accordion-body collapse{{#if is_open}} in{{/if}}">
+            <div class="accordion-inner">
+                <form class="form-horizontal">
+                    [[ template "uneditable_input_text" sub "label" "Name" "value" "{{name}}" ]]
+                    <div class="control-group">
+                        <label class="control-label">Sessions</label>
+                        <div class="controls">
+                            <span class="uneditable-input input-small read_only">{{sessions.max_play}} total</span>
+                            <span class="uneditable-input input-small read_only">{{sessions.num_play}} played</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls">
+                            <span class="uneditable-input input-small read_only">{{sessions.max_parallel}} parallel</span>
+                            <span class="uneditable-input input-small read_only">{{sessions.num_parallel}} running</span>
+                        </div>
+                    </div>
+                    [[ template "uneditable_input_text" sub "label" "" "value" "Reset {{#bool sessions.reset}}enabled{{else}}disabled{{/bool}}" ]]
+                    [[ template "uneditable_input_text" sub "label" "Exercises" "value" "{{num_exercises}} available" ]]
+                    [[ template "uneditable_input_text" sub "label" "Data" "value" "{{data_size}}" ]]
+                </form>
+            </div>
+        </div>
+    </div>
+</script>
