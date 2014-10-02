@@ -171,7 +171,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
     {
         if( !(*it) )
             continue;
-        if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
+        if( material )
         {
             rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false, material ) );
             dangerousEnemies_.push_back( *it );
@@ -185,13 +185,10 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
         {
             if( !(*it) )
                 continue;
-            if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
-            {
-                double rTotalDangerosity = 0.;
-                for( auto itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                    rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true, material ) * ( *it )->GetOperationalState() );
-                rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
-            }
+            double rTotalDangerosity = 0.;
+            for( auto itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
+                rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true, ( *itAgentEnemy )->GetUrbanMaterial() ) * ( *it )->GetOperationalState() );
+            rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
         }
     }
 

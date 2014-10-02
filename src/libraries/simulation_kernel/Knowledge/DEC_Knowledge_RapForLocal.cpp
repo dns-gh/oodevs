@@ -14,8 +14,9 @@
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_KnowledgeGroup.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "MIL_Time_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_RapForLocal )
 
@@ -82,11 +83,13 @@ void DEC_Knowledge_RapForLocal::Update()
     double rTotalFightScoreEnemy  = 0;
     double rTotalFightScoreFriend = 0;
 
+    const PHY_MaterialCompositionType* material = pPion_->GetRole< PHY_RoleInterface_UrbanLocation >().GetUrbanMaterial();
+
     // 1 - Compute the enemy fight score, and get the dangerous enemies
     for( auto itEnemy = enemies.begin(); itEnemy != enemies.end(); ++itEnemy )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > knowledgeEnemy = *itEnemy;
-        double rDangerosity = knowledgeEnemy->GetDangerosity( *pPion_, false, 0 ) * knowledgeEnemy->GetOperationalState();
+        double rDangerosity = knowledgeEnemy->GetDangerosity( *pPion_, false, material ) * knowledgeEnemy->GetOperationalState();
         if( rDangerosity != 0. )
         {
             rTotalFightScoreEnemy += rDangerosity;
@@ -104,7 +107,7 @@ void DEC_Knowledge_RapForLocal::Update()
             double rTotalDangerosity = 0.;
             double operationalState = knowledgeFriend.GetOperationalState();
             for( auto itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy, true, 0 ) * operationalState );
+                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy, true, ( *itAgentEnemy )->GetUrbanMaterial() ) * operationalState );
             rTotalFightScoreFriend += ( rTotalDangerosity / enemiesSize );
         }
     }

@@ -13,9 +13,10 @@
 #include "MT_Tools/Role_ABC.h"
 
 class MIL_UrbanObject_ABC;
-class PHY_DotationCategory;
 class MIL_Agent_ABC;
 class MT_Ellipse;
+class PHY_DotationCategory;
+class PHY_MaterialCompositionType;
 class TER_Polygon;
 
 // =============================================================================
@@ -40,6 +41,7 @@ public:
     //@{
     virtual void MagicMove( MT_Vector2D vPosition ) = 0;
     virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
+    virtual const PHY_MaterialCompositionType* GetUrbanMaterial() const = 0;
     virtual MT_Vector2D GetFirerPosition( const MT_Vector2D& target ) const = 0;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& target ) const = 0;
     virtual double ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target  ) const = 0;

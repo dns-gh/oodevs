@@ -20,6 +20,7 @@
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/MaterialAttribute.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_ObjectManager.h"
@@ -193,6 +194,16 @@ double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const TER_Polygon& po
 double PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
     return delegate_->ComputeUrbanProtection( dotationCategory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::GetUrbanMaterial
+// Created: JSR 2014-10-01
+// -----------------------------------------------------------------------------
+const PHY_MaterialCompositionType* PHY_RolePion_UrbanLocation::GetUrbanMaterial() const
+{
+    const MaterialAttribute* attr = urbanObject_ ? urbanObject_->RetrieveAttribute< MaterialAttribute >() : 0;
+    return attr ? &attr->GetMaterial() : 0;
 }
 
 // -----------------------------------------------------------------------------

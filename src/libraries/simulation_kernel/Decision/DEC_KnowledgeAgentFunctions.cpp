@@ -20,6 +20,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_Entity_ABC.h"
@@ -53,7 +54,10 @@ float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAg
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< float >( pKnowledge->GetDangerosity( callerAgent, false, 0 ) + 1.f );
+    {
+        const PHY_MaterialCompositionType* material = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetUrbanMaterial();
+        return static_cast< float >( pKnowledge->GetDangerosity( callerAgent, false, material ) + 1.f );
+    }
     return 0.f;
 }
 
@@ -64,7 +68,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAg
 float DEC_KnowledgeAgentFunctions::GetPotentialAttrition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< MT_Vector2D > position )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< float >( callerAgent.GetDangerosity( pKnowledge, position, false, 0 ) );
+        return static_cast< float >( callerAgent.GetDangerosity( pKnowledge, position, false, pKnowledge->GetUrbanMaterial() ) );
     return 0.f;
 }
 
@@ -304,7 +308,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( boost::shared_ptr<
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pSource && pTarget && pSource->IsValid() && pTarget->IsValid() )
-        return static_cast< float >( pSource->GetDangerosity( *pTarget, false, 0 ) + 1. );
+        return static_cast< float >( pSource->GetDangerosity( *pTarget, false, pTarget->GetUrbanMaterial() ) + 1. );
     return 0.f;
 }
 
@@ -318,7 +322,11 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( boost::shared_ptr< DEC_
         throw MASA_EXCEPTION( "invalid parameter." );
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< float >( pKnowledge->GetDangerosity( pTarget->GetPion(), false, 0 ) + 1. );
+    {
+        const MIL_AgentPion& pion = pTarget->GetPion();
+        const PHY_MaterialCompositionType* material = pion.GetRole< PHY_RoleInterface_UrbanLocation >().GetUrbanMaterial();
+        return static_cast< float >( pKnowledge->GetDangerosity( pion, false, material ) + 1. );
+    }
     return 0.f;
 }
 

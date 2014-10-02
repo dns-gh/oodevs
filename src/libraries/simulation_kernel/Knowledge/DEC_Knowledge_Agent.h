@@ -133,6 +133,7 @@ public:
     E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
     E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;
     bool IsInUrbanBlock( const MIL_Object_ABC& urban ) const;
+    const PHY_MaterialCompositionType* GetUrbanMaterial() const;
     const std::string& GetCriticalIntelligence() const;
     bool IsPerceptionDistanceHacked() const;
     bool IsTransported() const;
