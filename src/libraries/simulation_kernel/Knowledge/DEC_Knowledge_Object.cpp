@@ -202,7 +202,8 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::~DEC_Knowledge_Object()
 {
-    Invalidate();
+    if( bValid_ && pObjectType_ )
+        SendMsgDestruction();
 }
 
 // -----------------------------------------------------------------------------
