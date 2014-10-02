@@ -122,6 +122,8 @@ void ColorButton::SetColor( const QColor& rgb )
 // -----------------------------------------------------------------------------
 QColor ColorButton::GetColor() const
 {
+    if( current_ == Qt::black )
+        return QColor( 1, 1, 1 );
     return current_;
 }
 

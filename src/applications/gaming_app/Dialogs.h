@@ -17,6 +17,12 @@ namespace kernel
     class Time_ABC;
 }
 
+namespace gui
+{
+    class ColorStrategy_ABC;
+    class ColorEditor_ABC;
+}
+
 namespace actions
 {
     class ActionsModel;
@@ -50,7 +56,9 @@ public:
                       const kernel::Time_ABC& simulation,
                       const kernel::Profile_ABC& profile,
                       CommandHandler& handler,
-                      const tools::ExerciseConfig& config );
+                      const tools::ExerciseConfig& config,
+                      gui::ColorStrategy_ABC& colorStrategy,
+                      gui::ColorEditor_ABC& colorEditor );
     virtual ~Dialogs();
     //@}
 };

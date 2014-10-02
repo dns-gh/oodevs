@@ -36,8 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Add( const kernel::Entity_ABC& entity, const QColor& color ) = 0;
-    virtual void Remove( const kernel::Entity_ABC& entity ) = 0;
+    virtual void Add( const kernel::Entity_ABC& entity, const QColor& color, bool applyToSubordinates = true, bool force = false ) = 0;
+    virtual void Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates = true, bool force = false ) = 0;
     virtual void Reset( const kernel::Entity_ABC& entity, const QColor& color ) = 0;
     //@}
 };

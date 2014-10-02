@@ -65,6 +65,7 @@ public:
     virtual QColor FindColor( const kernel::Entity_ABC& entity ) = 0;
     virtual QColor FindColorWithModifiers( const kernel::Entity_ABC& entity ) = 0;
     virtual QColor FindBaseColor( const kernel::Entity_ABC& entity ) = 0;
+    virtual QColor FindTeamColor( const kernel::Entity_ABC& team ) = 0;
     virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge ) = 0;
     //@}
 };

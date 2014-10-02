@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class Color : public kernel::Color_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
