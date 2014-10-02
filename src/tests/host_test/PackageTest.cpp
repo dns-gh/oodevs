@@ -335,6 +335,40 @@ struct Fixture
         MOCK_EXPECT( fs.Rename ).once().with( boost::bind( &BeginWith, install.GetPath(), _1 ), boost::bind( &BeginWith, sub, _1 ) ).returns( true );
         MOCK_EXPECT( fs.Remove ).with( sub ).returns( true );
     }
+
+    void InstallWith( const std::string& model,    const std::string& modelChecksum,
+                      const std::string& terrain,  const std::string& terrainChecksum,
+                      const std::string& exercise, const std::string& exerciseChecksum )
+    {
+        T_Paths dst;
+        const auto root = install.GetPath();
+        AddModel   ( dst, true, GetItemRoot( root, true ), model, modelChecksum );
+        AddTerrain ( dst, true, GetItemRoot( root, true ), terrain, terrainChecksum );
+        AddExercise( dst, true, GetItemRoot( root, true ), exercise, exerciseChecksum, model, terrain );
+        MOCK_EXPECT( fs.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
+        install.Parse();
+        mock::verify();
+    }
+
+    void Install( const std::string& exercise, const std::string& checksum )
+    {
+        InstallWith( "ada", "v1", "ter", "v1", exercise, checksum );
+    }
+
+    Path UploadAndInstall( const std::string& exercise, const std::string& checksum )
+    {
+        T_Paths dst;
+        Package upload( pool, fs, GetFileIndex(), false, true );
+        const auto root = upload.GetPath();
+        AddPackageDescriptor( root, "upload name", "upload description", "upload version" );
+        AddModel   ( dst, false, GetItemRoot( root, false ), "ada", "v1" );
+        AddTerrain ( dst, false, GetItemRoot( root, false ), "ter", "v1" );
+        AddExercise( dst, false, GetItemRoot( root, false ), exercise, checksum, "ada", "ter" );
+        upload.Parse();
+        const auto tomb = InstallPackage( upload, "exercise", exercise, checksum, "ada", "ter" );
+        mock::verify();
+        return tomb;
+    }
 };
 }
 
@@ -532,133 +566,73 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
 
 BOOST_FIXTURE_TEST_CASE( package_check_versioning_basics, Fixture<> )
 {
+    // setup & link v1 exercise
+    Install( "exo", "v1" );
+    CheckCounts( install.GetProperties(), 1, 1, 1 );
+    const auto v1Link = install.LinkExercise( "exo" );
+    BOOST_REQUIRE_EQUAL( v1Link.get< std::string >( "exercise.checksum" ), "v1" );
+
+    // replace v1 with v2 and link v2
+    const auto tomb1 = UploadAndInstall( "exo", "v2" );
+    CheckCounts( install.GetProperties(), 1, 1, 1 );
+    BOOST_REQUIRE( install.Find( "exercise", "exo", "v2" ) );
+    const auto v2Link = install.LinkExercise( "exo" );
+    BOOST_REQUIRE_EQUAL( v2Link.get< std::string >( "exercise.checksum" ), "v2" );
+
+    // replace v2 with v3 and link v3
+    const auto tomb2 = UploadAndInstall( "exo", "v3" );
+    CheckCounts( install.GetProperties(), 1, 1, 1 );
+    const auto v3Link = install.LinkExercise( "exo" );
+    BOOST_REQUIRE_EQUAL( v3Link.get< std::string >( "exercise.checksum" ), "v3" );
+
     Async async( pool );
-
-    // install old exercise CCCCCCCC
-    T_Paths dst;
-    const auto iroot = install.GetPath();
-    AddModel   ( dst, true, GetItemRoot( iroot, true ), "ada", "AAAAAAAA" );
-    AddTerrain ( dst, true, GetItemRoot( iroot, true ), "ter", "BBBBBBBB" );
-    AddExercise( dst, true, GetItemRoot( iroot, true ), "exo", "CCCCCCCC", "ada", "ter" );
-    MOCK_EXPECT( fs.Walk ).once().with( iroot, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
-    install.Parse();
-    CheckCounts( install.GetProperties(), 1, 1, 1 );
-    mock::verify();
-
-    // keep a reference on CCCCCCCC
-    const auto clink = install.LinkExercise( "exo" );
-    BOOST_REQUIRE_EQUAL( clink.get< std::string >( "exercise.checksum" ), "CCCCCCCC" );
-
-    // update exercise CCCCCCCC with DDDDDDDD
-    dst.clear();
-    const auto croot = cache.GetPath();
-    AddPackageDescriptor( croot, "some_name", "some_description", "some_version" );
-    // useless model & terrain, but too annoying to skip them
-    AddModel   ( dst, false, GetItemRoot( croot, false ), "ada", "12345678" );
-    AddTerrain ( dst, false, GetItemRoot( croot, false ), "ter", "23456789" );
-    AddExercise( dst, false, GetItemRoot( croot, false ), "exo", "DDDDDDDD", "ada", "ter" );
-    cache.Parse();
-    const auto dtomb = InstallPackage( cache, "exercise", "exo", "DDDDDDDD", "ada", "ter" );
-    CheckCounts( install.GetProperties(), 1, 1, 1 );
-    mock::verify();
-
-    // keep a reference on DDDDDDDD
-    const auto dlink = install.LinkExercise( "exo" );
-    BOOST_REQUIRE_EQUAL( dlink.get< std::string >( "exercise.checksum" ), "DDDDDDDD" );
-
-    // update exercise CCCCCCCC & DDDDDDDD with EEEEEEEE
-    dst.clear();
-    Package ecache( pool, fs, GetFileIndex(), false, true );
-    const auto eroot = ecache.GetPath();
-    AddPackageDescriptor( eroot, "some_name", "some_description", "some_version" );
-    // useless model & terrain, but too annoying to skip them
-    AddModel   ( dst, false, GetItemRoot( eroot, false ), "ada", "12345678" );
-    AddTerrain ( dst, false, GetItemRoot( eroot, false ), "ter", "23456789" );
-    AddExercise( dst, false, GetItemRoot( eroot, false ), "exo", "EEEEEEEE", "ada", "ter" );
-    ecache.Parse();
-    const auto etomb = InstallPackage( ecache, "exercise", "exo", "EEEEEEEE", "ada", "ter" );
-    CheckCounts( install.GetProperties(), 1, 1, 1 );
-    mock::verify();
-
-    // keep a reference on current
-    const auto elink = install.LinkExercise( "exo" );
-    BOOST_REQUIRE_EQUAL( elink.get< std::string >( "exercise.checksum" ), "EEEEEEEE" );
-
-    // unlink current, nothing should change
-    install.UnlinkItem( async, elink );
-    BOOST_REQUIRE( install.Find( "exercise", "exo", std::string( "CCCCCCCC" ) ) );
-    BOOST_REQUIRE( install.Find( "exercise", "exo", std::string( "DDDDDDDD" ) ) );
-    BOOST_REQUIRE( install.Find( "exercise", "exo", std::string( "EEEEEEEE" ) ) );
+    // unlink v3, nothing should change
+    install.UnlinkItem( async, v3Link );
+    BOOST_REQUIRE( install.Find( "exercise", "exo", "v1" ) );
+    BOOST_REQUIRE( install.Find( "exercise", "exo", "v2" ) );
+    BOOST_REQUIRE( install.Find( "exercise", "exo", "v3" ) );
     CheckCounts( install.GetProperties(), 1, 1, 1 );
 
-    // unlink cccccccc, it gets uninstalled silently
-    ExpectItemRemoval( dtomb );
-    install.UnlinkItem( async, clink );
-    BOOST_REQUIRE( !install.Find( "exercise", "exo", std::string( "CCCCCCCC" ) ) );
-    BOOST_REQUIRE(  install.Find( "exercise", "exo", std::string( "DDDDDDDD" ) ) );
-    BOOST_REQUIRE(  install.Find( "exercise", "exo", std::string( "EEEEEEEE" ) ) );
+    // unlink v1, it gets uninstalled silently
+    ExpectItemRemoval( tomb1 );
+    install.UnlinkItem( async, v1Link );
+    BOOST_REQUIRE( !install.Find( "exercise", "exo", "v1" ) );
+    BOOST_REQUIRE(  install.Find( "exercise", "exo", "v2" ) );
+    BOOST_REQUIRE(  install.Find( "exercise", "exo", "v3" ) );
     CheckCounts( install.GetProperties(), 1, 1, 1 );
 
-    // eeeeeeee can be uninstalled
-    ExpectItemRemoval( etomb );
-    install.Uninstall( async, etomb, boost::assign::list_of( 4 ) );
-    BOOST_REQUIRE( !install.Find( "exercise", "exo", std::string( "CCCCCCCC" ) ) );
-    BOOST_REQUIRE(  install.Find( "exercise", "exo", std::string( "DDDDDDDD" ) ) );
-    BOOST_REQUIRE( !install.Find( "exercise", "exo", std::string( "EEEEEEEE" ) ) );
+    // uninstall v3, the current version
+    ExpectItemRemoval( tomb2 );
+    install.Uninstall( async, tomb2, boost::assign::list_of( 4 ) );
+    BOOST_REQUIRE( !install.Find( "exercise", "exo", "v1" ) );
+    BOOST_REQUIRE(  install.Find( "exercise", "exo", "v2" ) );
+    BOOST_REQUIRE( !install.Find( "exercise", "exo", "v3" ) );
     CheckCounts( install.GetProperties(), 1, 1, 0 );
 
-    // unlink dddddddd, it gets uninstalled silently
-    ExpectItemRemoval( etomb );
-    install.UnlinkItem( async, dlink );
-    BOOST_REQUIRE( !install.Find( "exercise", "exo", std::string( "CCCCCCCC" ) ) );
-    BOOST_REQUIRE( !install.Find( "exercise", "exo", std::string( "DDDDDDDD" ) ) );
-    BOOST_REQUIRE( !install.Find( "exercise", "exo", std::string( "EEEEEEEE" ) ) );
+    // unlink v2, it gets uninstalled silently
+    ExpectItemRemoval( tomb2 );
+    install.UnlinkItem( async, v2Link );
+    BOOST_REQUIRE( !install.Find( "exercise", "exo", "v1" ) );
+    BOOST_REQUIRE( !install.Find( "exercise", "exo", "v2" ) );
+    BOOST_REQUIRE( !install.Find( "exercise", "exo", "v3" ) );
     CheckCounts( install.GetProperties(), 1, 1, 0 );
 }
 
 BOOST_FIXTURE_TEST_CASE( package_allows_not_replacing_packages, Fixture< false > )
 {
-    // install exercise CCCCCCCC
-    T_Paths dst;
-    const auto iroot = install.GetPath();
-    AddModel   ( dst, true, GetItemRoot( iroot, true ), "ada", "AAAAAAAA" );
-    AddTerrain ( dst, true, GetItemRoot( iroot, true ), "ter", "BBBBBBBB" );
-    AddExercise( dst, true, GetItemRoot( iroot, true ), "exo", "CCCCCCCC", "ada", "ter" );
-    MOCK_EXPECT( fs.Walk ).once().with( iroot, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
-    install.Parse();
-    CheckCounts( install.GetProperties(), 1, 1, 1 );
-    mock::verify();
-
-    // install exercise DDDDDDDD
-    dst.clear();
-    const auto croot = cache.GetPath();
-    AddPackageDescriptor( croot, "some_name", "some_description", "some_version" );
-    // useless model & terrain, but too annoying to skip them
-    AddModel   ( dst, false, GetItemRoot( croot, false ), "ada", "12345678" );
-    AddTerrain ( dst, false, GetItemRoot( croot, false ), "ter", "23456789" );
-    AddExercise( dst, false, GetItemRoot( croot, false ), "exo", "DDDDDDDD", "ada", "ter" );
-    cache.Parse();
-    const auto tomb = InstallPackage( cache, "exercise", "exo", "DDDDDDDD", "ada", "ter" );
+    Install( "exo", "v1" );
+    UploadAndInstall( "exo", "v2" );
     CheckCounts( install.GetProperties(), 1, 1, 2 );
-    mock::verify();
 }
 
 BOOST_FIXTURE_TEST_CASE( package_reloads_metadata, Fixture< true BOOST_PP_COMMA() true > )
 {
     // default methods provide empty metadata without checksum and use fs.Checksum
-    T_Paths dst;
-    const auto root = install.GetPath();
-    AddModel   ( dst, true, GetItemRoot( root, true ), "ada", "AAAAAAAA" );
-    AddTerrain ( dst, true, GetItemRoot( root, true ), "ter", "BBBBBBBB" );
-    AddExercise( dst, true, GetItemRoot( root, true ), "exo", "CCCCCCCC", "ada", "ter" );
-    AddClient  ( dst, true, GetItemRoot( root, true ), "DDDDDDDD" );
-    MOCK_EXPECT( fs.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
-    // first time, metadata is not found, and checksums are computed by default
-    install.Parse();
-    mock::verify();
+    InstallWith( "ada", "AAAAAAAA", "ter", "BBBBBBBB", "exo", "CCCCCCCC" );
 
     // don't give checksums and expect them to be read from metadata tag
-    dst.clear();
+    T_Paths dst;
+    const auto root = install.GetPath();
     const auto odo = GetItemRoot( root, true );
     AddModel( dst, true, odo, "odo", "" );
     const auto tur = GetItemRoot( root, true );

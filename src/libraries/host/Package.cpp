@@ -1009,7 +1009,7 @@ Package_ABC::T_Items Package::FindAll( const Item_ABC& item ) const
 // Name: Package::Find
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
-Package_ABC::T_Item Package::Find( const Path& root, const std::string& checksum, bool installed ) const
+Package_ABC::T_Item Package::FindRoot( const Path& root, const std::string& checksum, bool installed ) const
 {
     T_Items::const_iterator it = FindItem( items_, std::make_pair( root, checksum ), installed );
     return it == items_.end() ? T_Item() : *it;
@@ -1198,7 +1198,7 @@ void Link( Tree& dst, const Tree& src, const std::string& key, const Package& pk
 {
     const Path root = Utf8( Get< std::string >( src, key + ".root"  ) );
     const std::string checksum = Get< std::string >( src, key + ".checksum" );
-    Package_ABC::T_Item item = pkg.Find( root, checksum, false );
+    Package_ABC::T_Item item = pkg.FindRoot( root, checksum, false );
     if( item )
         item->Link( dst, pkg, false );
 }
