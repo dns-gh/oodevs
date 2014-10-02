@@ -300,7 +300,7 @@ double PHY_WeaponDataType_DirectFire::GetDangerosity( const PHY_ComposanteType_A
     double rDangerosity  = GetPH( targetVolume, rDistBtwFirerAndTarget );
     rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
     if( material )
-        rDangerosity *= weaponType_.GetDotationCategory().GetUrbanAttritionScore( *material );
+        rDangerosity *= 1 - weaponType_.GetDotationCategory().GetUrbanAttritionScore( *material );
     return rDangerosity;
 }
 

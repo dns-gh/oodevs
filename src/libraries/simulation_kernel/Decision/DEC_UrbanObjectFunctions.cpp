@@ -157,41 +157,31 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
         return 1.;
 
     //@TODO MGD Add a rapFor computer, common with DEC_Knowledge_RapForLocal
-    T_KnowledgeAgentVector dangerousEnemies_;
-
     double rTotalFightScoreEnemy  = 0;
     double rTotalFightScoreFriend = 0;
 
-    const PHY_MaterialCompositionType* material = 0;
-    if( const MaterialAttribute* materialAttribute = pUrbanObject ? pUrbanObject->RetrieveAttribute< MaterialAttribute >() : 0 )
-        material = &materialAttribute->GetMaterial();
-
     const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
-    for( auto it = enemies.begin(); it != enemies.end(); it++ )
+    const std::size_t enemiesSize = enemies.size();
+    if( enemiesSize )
     {
-        if( !(*it) )
-            continue;
-        if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
-        {
-            rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false, material ) );
-            dangerousEnemies_.push_back( *it );
-        }
-    }
+        const PHY_MaterialCompositionType* material = 0;
+        if( const MaterialAttribute* materialAttribute = pUrbanObject ? pUrbanObject->RetrieveAttribute< MaterialAttribute >() : 0 )
+            material = &materialAttribute->GetMaterial();
 
-    if( !dangerousEnemies_.empty() )
-    {
+        for( auto it = enemies.begin(); it != enemies.end(); ++it )
+            if( *it)
+                rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false, material ) );
+
         const T_KnowledgeAgentVector& allies = bbKg->GetFriends();
-        for( auto it = allies.begin(); it != allies.end(); it++ )
+        for( auto it = allies.begin(); it != allies.end(); it )
         {
             if( !(*it) )
                 continue;
-            if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
-            {
-                double rTotalDangerosity = 0.;
-                for( auto itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                    rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true, material ) * ( *it )->GetOperationalState() );
-                rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
-            }
+            double rTotalDangerosity = 0.;
+            for( auto itAgentEnemy = enemies.begin(); itAgentEnemy != enemies.end(); ++itAgentEnemy )
+                if( *itAgentEnemy )
+                    rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true, ( *itAgentEnemy )->GetUrbanMaterial() ) * ( *it )->GetOperationalState() );
+            rTotalFightScoreFriend += ( rTotalDangerosity / enemiesSize );
         }
     }
 

@@ -23,6 +23,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
@@ -980,9 +981,18 @@ bool DEC_Knowledge_Agent::IsInUrbanBlock( const MIL_Object_ABC& urban ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetUrbanMaterial
+// Created: JSR 2014-10-01
+// -----------------------------------------------------------------------------
+const PHY_MaterialCompositionType* DEC_Knowledge_Agent::GetUrbanMaterial() const
+{
+    return pAgentKnown_->GetRole< PHY_RoleInterface_UrbanLocation >().GetUrbanMaterial();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetDirection
 // Created: JVT 2005-02-17
-// -----------------------------------------------------ivi------------------------
+// -----------------------------------------------------------------------------
 const MT_Vector2D& DEC_Knowledge_Agent::GetDirection() const
 {
     return dataDetection_.GetDirection();
