@@ -48,7 +48,7 @@ void ColorController::ChangeColor( const kernel::Entity_ABC& entity )
 {
     if( const kernel::Color_ABC* color = entity.Retrieve< kernel::Color_ABC >() )
     {
-        colors_[ entity.GetId() ] = static_cast< QColor >( *color );
+        colors_[ entity.GetId() ] = *color;
         UpdateHierarchies( entity );
     }
 }

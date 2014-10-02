@@ -427,10 +427,6 @@
         <translation>Custom color</translation>
     </message>
     <message>
-        <source>changeColorDialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Apply to subordinates</source>
         <translation>Apply to subordinates</translation>
     </message>

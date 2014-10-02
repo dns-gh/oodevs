@@ -39,7 +39,7 @@
 // -----------------------------------------------------------------------------
 ColorEditor::ColorEditor( QWidget* parent, kernel::Controllers& controllers,
                           gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor )
-    : QDialog( parent, tr( "changeColorDialog" ) )
+    : QDialog( parent, "changeColorDialog" )
     , controllers_  ( controllers )
     , colorStrategy_( colorStrategy )
     , colorEditor_  ( colorEditor )
@@ -114,11 +114,8 @@ namespace
         if( !applyToSubordinates )
             return;
         if( const kernel::TacticalHierarchies* pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            auto it = pTacticalHierarchies->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
+            for( auto it = pTacticalHierarchies->CreateSubordinateIterator(); it.HasMoreElements(); )
                 ApplyDefaultColor( it.NextElement(), strategy, colorEditor, applyToSubordinates );
-        }
     }
 }
 
@@ -130,9 +127,9 @@ void ColorEditor::Show()
 {
     if( !selected_ )
         return;
-    QColor baseColor = FindBaseColor( *selected_, colorStrategy_ );
-    QColor sideColor = colorStrategy_.FindTeamColor( selected_->Get< kernel::TacticalHierarchies >().GetTop() );
-    QColor currentColor = colorStrategy_.FindColor( *selected_ );
+    const QColor baseColor = FindBaseColor( *selected_, colorStrategy_ );
+    const QColor sideColor = colorStrategy_.FindTeamColor( selected_->Get< kernel::TacticalHierarchies >().GetTop() );
+    const QColor currentColor = colorStrategy_.FindColor( *selected_ );
     if( currentColor == baseColor )
         defaultButton_->setChecked( true );
     else if( currentColor == sideColor )
@@ -165,7 +162,7 @@ void ColorEditor::Accept()
         newColor = colorButton_->GetColor();
     if( newColor )
         colorEditor_.Add( *selected_, *newColor, applyToSubordinates, true );
-    QDialog::accept();
+    accept();
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +247,7 @@ void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
 {
     if( const kernel::Color_ABC* pTeamColor = team.Retrieve< kernel::Color_ABC >() )
     {
-        QColor baseColor = colorStrategy_.FindBaseColor( team );
+        const QColor baseColor = colorStrategy_.FindBaseColor( team );
         if( pTeamColor->IsOverriden() && static_cast< QColor >( *pTeamColor ) != baseColor )
             colorEditor_.Reset( team, baseColor );
     }

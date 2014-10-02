@@ -427,10 +427,6 @@
         <translation>Couleur personnalisée</translation>
     </message>
     <message>
-        <source>changeColorDialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Apply to subordinates</source>
         <translation>Appliquer aux subordonnés</translation>
     </message>
