@@ -224,6 +224,7 @@ private:
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
     template< typename T >
     void Reset( std::unique_ptr< T >& pointer );
+    void SendState( client::UnitAttributes& msg, bool sendVisionCones ) const;
     //@}
 
 private:

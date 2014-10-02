@@ -279,7 +279,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
-    , bSendUnitVisionCones_         ( false )
     , bEnableRandomBreakdowns_      ( config.EnableRandomBreakdowns() )
     , actions_                      ( actions )
     , nRandomBreakdownsNextTimeStep_( 0 )
@@ -318,7 +317,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
-    , bSendUnitVisionCones_         ( false )
     , bEnableRandomBreakdowns_      ( config.EnableRandomBreakdowns() )
     , actions_                      ( actions )
     , nRandomBreakdownsNextTimeStep_( 0  )
@@ -3034,29 +3032,4 @@ void MIL_EntityManager::ProcessExecScript( const sword::UnitMagicAction& msg,
         throw MASA_BADUNIT_UNIT( "invalid unit: " << brainOwnerId );
 
     ack.mutable_result()->add_elem()->add_value()->set_acharstr( result );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::SetVisionCones
-// Created: NLD 2003-10-24
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveControlToggleVisionCones( const sword::ControlEnableVisionCones& message )
-{
-    const bool enable = message.vision_cones();
-    MT_LOG_INFO_MSG( (enable ? "Enabling" : "Disabling") << " vision cones" );
-    bSendUnitVisionCones_ = enable;
-    if( enable )
-        sink_->Apply( []( MIL_Agent_ABC& agent )
-        {
-            agent.Apply( &PHY_RoleInterface_Perceiver::SendVisionCones );
-        } );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::SendVisionCones
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-bool MIL_EntityManager::SendVisionCones() const
-{
-    return bSendUnitVisionCones_;
 }

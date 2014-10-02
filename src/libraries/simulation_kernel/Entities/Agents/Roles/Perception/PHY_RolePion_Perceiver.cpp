@@ -1053,11 +1053,7 @@ void PHY_RolePion_Perceiver::SendVisionCones() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_radar_active( IsUsingActiveRadar() );
-    MT_Vector2D direction;
-    GetMainPerceptionDirection( direction );
-    NET_ASN_Tools::WriteDirection( direction, *msg().mutable_sensors_direction() );
-    SendVisionCones();
+    SendState( msg, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1066,9 +1062,20 @@ void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendChangedState( client::UnitAttributes& msg ) const
 {
-    if( bRadarStateHasChanged_ )
-        msg().set_radar_active( IsUsingActiveRadar() );
-    if( bExternalMustUpdateVisionCones_ )
+    SendState( msg, bExternalMustUpdateVisionCones_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::SendState
+// Created: SLI 2014-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::SendState( client::UnitAttributes& msg, bool sendVisionCones ) const
+{
+    msg().set_radar_active( IsUsingActiveRadar() );
+    MT_Vector2D direction;
+    GetMainPerceptionDirection( direction );
+    NET_ASN_Tools::WriteDirection( direction, *msg().mutable_sensors_direction() );
+    if( sendVisionCones )
         SendVisionCones();
 }
 
