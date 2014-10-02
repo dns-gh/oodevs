@@ -5,7 +5,7 @@
 #include "DEC_Workspace.h"
 #include "DEC_Model.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireData.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionView.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
@@ -118,8 +118,8 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
                       >> xml::attribute( "threshold", PHY_RoleInterface_Composantes::rOpStateDecisionalThreshold_ )
                   >> xml::end;
 
-    xisDecisional >> xml::optional >> xml::start( "urban-combat" )
-                      >> xml::attribute( "hit-factor", firing::PHY_DirectFireData::nUrbanCoefficient_ )
+    xisDecisional >> xml::optional >> xml::start( "urban-perception" )
+                      >> xml::attribute( "view-factor", PHY_PerceptionView::nUrbanCoefficient_ )
                   >> xml::end;
 
     xisDecisional >> xml::start( "critical-intelligence-delay" );

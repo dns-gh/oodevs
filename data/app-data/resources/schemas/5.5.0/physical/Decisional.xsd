@@ -24,9 +24,9 @@
             <xs:attribute name="default-feedback-time" type="T_Time" use="required"/>
           </xs:complexType>
         </xs:element>
-        <xs:element name="urban-combat" minOccurs="0">
+        <xs:element name="urban-perception" minOccurs="0">
           <xs:complexType>
-            <xs:attribute name="hit-factor" type="xs:nonNegativeInteger" use="required"/>
+            <xs:attribute name="view-factor" type="xs:nonNegativeInteger" use="required"/>
           </xs:complexType>
         </xs:element>
         <xs:element name="critical-intelligence-delay">

@@ -156,8 +156,6 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
             return eRunning;
         if( firerWeapons.HasWeaponsAndNoAmmo() )
             return eNoAmmo;
-        if( firerWeapons.IsTemporarilyBlocked() )
-            return eTemporarilyBlocked;
         return eNoCapacity;
     }
     // Targets
@@ -293,8 +291,6 @@ int PHY_RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID
             return eRunning;
         if( firerWeapons.HasWeaponsAndNoAmmo() )
             return eNoAmmo;
-        if( firerWeapons.IsTemporarilyBlocked() )
-            return eTemporarilyBlocked;
         return eNoCapacity;
     }
     owner_->NotifyAttacking ( *pTarget );

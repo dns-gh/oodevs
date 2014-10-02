@@ -97,10 +97,6 @@
         <translation>Urban combat computation</translation>
     </message>
     <message>
-        <source>Urban combat hit ratio</source>
-        <translation>Urban combat hit ratio</translation>
-    </message>
-    <message>
         <source>Time to acquire critical intelligence</source>
         <translation>Time to acquire critical intelligence</translation>
     </message>
@@ -170,6 +166,10 @@
     </message>
     <message>
         <source>Recon and search speeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban perception view factor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
