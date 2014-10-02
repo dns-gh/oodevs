@@ -1002,7 +1002,7 @@ void PHY_RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent , co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const MT_Vector2D& position )
 {
-    owner_->GetKnowledge().GetKsObjectInteraction().NotifyDisasterCollision( object, position, position );
+    owner_->GetKnowledge().GetKsObjectInteraction().NotifyDisasterCollision( object, position );
 }
 
 // -----------------------------------------------------------------------------

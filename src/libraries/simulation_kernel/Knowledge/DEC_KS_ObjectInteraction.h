@@ -51,7 +51,7 @@ public:
     //@{
     void NotifyObjectInteraction( MIL_Object_ABC& object );
     void NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
-    void NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
+    void NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos );
     //@}
 
     //! @name CheckPoints
