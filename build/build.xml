@@ -637,7 +637,8 @@
         ,package.gaming_app
         ,package.sdk
         ,package.proto
-        ,package.xsd"
+        ,package.xsd
+        ,package.admin"
         description="package the installers and packs"/>
 
     <!-- Package misc -->
