@@ -42,13 +42,11 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
     , converter_( converter )
     , selected_( controllers )
 {
-    model_.setHorizontalHeaderLabels( QStringList() << tr( "Date" )
-                                                    << tr( "Firer" )
-                                                    << tr( "Target" )
-                                                    << "" );
+    model_[0] = new QStandardItemModel();
+    model_[1] = new QStandardItemModel();
     header()->setResizeMode( QHeaderView::ResizeToContents );
 
-    proxy_.setSourceModel( &model_ );
+    proxy_.setSourceModel( model_[0] );
     proxy_.setDynamicSortFilter( true );
     proxy_.setSortRole( gui::Roles::SortRole );
     proxy_.sort( 0, Qt::DescendingOrder );
@@ -120,7 +118,7 @@ QStandardItem* FireResultListView::AddRoot( int row,
                                             const QString& text,
                                             const kernel::Entity_ABC* entity /* = 0 */ )
 {
-    if( auto root = model_.invisibleRootItem() )
+    if( auto root = model_[0]->invisibleRootItem() )
     {
         auto item = AddChild( *root, row, col, text );
         if( entity )
@@ -158,7 +156,7 @@ QStandardItem* FireResultListView::AddChild( QStandardItem& root,
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const AgentFireResult& result )
 {
-    int row = model_.rowCount();
+    int row = model_[0]->rowCount();
     auto root = AddRoot( row, 0, extractor_.GetDisplayName( result.time_ ) );
     root->setData( result.time_, gui::Roles::SortRole );
     AddRoot( row, 1, GetFirerName( result.firer_ ), result.firer_ );
@@ -193,7 +191,7 @@ void FireResultListView::Display( const AgentFireResult& result )
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const PopulationFireResult& result )
 {
-    int row = model_.rowCount();
+    int row = model_[0]->rowCount();
     auto root = AddRoot( row, 0, extractor_.GetDisplayName( result.time_ ) );
     root->setData( result.time_, gui::Roles::SortRole );
     AddRoot( row, 1, GetFirerName( result.firer_ ), result.firer_ );
@@ -251,7 +249,12 @@ void FireResultListView::Display( const Casualties& casualties, QStandardItem& r
 // -----------------------------------------------------------------------------
 void FireResultListView::UpdateDisplay()
 {
-    model()->removeRows( 0, model()->rowCount() );
+    std::swap( model_[0], model_[1] );
+    model_[0]->clear();
+    model_[0]->setHorizontalHeaderLabels( QStringList() << tr( "Date" )
+                                                        << tr( "Firer" )
+                                                        << tr( "Target" )
+                                                        << "" );
     std::for_each( explosions_.begin(), explosions_.end(), [&]( const Explosions* explosion ){
         if( !explosion )
             return;
@@ -262,6 +265,7 @@ void FireResultListView::UpdateDisplay()
         for( auto it = popFires.rbegin(); it != popFires.rend(); ++it )
             Display( *it );
     } );
+    proxy_.setSourceModel( model_[0] );
 }
 
 namespace
@@ -332,13 +336,13 @@ void FireResultListView::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void FireResultListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
-    for( int i = 0; i < model_.rowCount(); ++i )
+    for( int i = 0; i < model_[0]->rowCount(); ++i )
     {
-        if( auto* firerItem = model_.item( i, 1 ) )
+        if( auto* firerItem = model_[0]->item( i, 1 ) )
             if( const auto* firer = firerItem->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
                 if( firer == &entity )
                     firerItem->setData( GetFirerName( &entity ), Qt::DisplayRole );
-        if( auto* targetItem = model_.item( i, 2 ) )
+        if( auto* targetItem = model_[0]->item( i, 2 ) )
             if( const auto* target = targetItem->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
                 if( target == &entity )
                     if( target->GetTypeName() == kernel::Agent_ABC::typeName_ )
