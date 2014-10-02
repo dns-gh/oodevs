@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionRecoLima.h"
 #include "MIL_AgentServer.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -150,7 +151,7 @@ bool PHY_ActionRecoLima::IsFirstInAutomatValid()
 {
     auto pions = caller_.GetAutomate().GetPions();
     for( auto it = pions.begin(); it != pions.end(); ++it )
-        if( !(*it)->IsJammed() && !(*it)->IsDead() )
+        if( !(*it)->IsJammed() && !(*it)->IsDead() && !!(*it)->GetDecision().GetMission() )
             return caller_.GetID() == (*it)->GetID();
     return false;
 }
