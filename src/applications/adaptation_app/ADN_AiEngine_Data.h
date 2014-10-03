@@ -108,6 +108,7 @@ public:
     ADN_Type_Double reconSpeed_;
     ADN_Type_Double searchSpeed_;
     T_UrbanSpeedsInfos_Vector urbanSearchSpeeds_;
+    ADN_Type_Enum< E_PerceptionLevel, eNbrPerceptionLevel > nMaxPerceptionLevel_;
 };
 
 #endif // __ADN_AiEngine_Data_h_

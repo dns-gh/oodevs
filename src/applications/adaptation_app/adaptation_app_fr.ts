@@ -172,6 +172,10 @@
         <source>Urban perception view factor</source>
         <translation>Pourcentage de vues directes en bloc urbain</translation>
     </message>
+    <message>
+        <source>Maximum perception level of hostile units</source>
+        <translation>Niveau maximal de perception des unités ennemies</translation>
+    </message>
 </context>
 <context>
     <name>ADN_AiEngine_UrbanSpeeds_Table</name>

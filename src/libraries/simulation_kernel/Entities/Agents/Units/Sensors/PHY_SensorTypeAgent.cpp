@@ -20,22 +20,23 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
-#include "Entities/Agents/Units/Radars/PHY_RadarClass.h" // LTO
-#include "Entities/Agents/Units/Radars/PHY_RadarType.h" // LTO
+#include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
+#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Tools/MIL_Tools.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 #include <boost/range/algorithm.hpp>
@@ -436,7 +437,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     const MT_Vector2D& vTargetPos = targetRole.GetPosition();
 
     if( target.IsDead() )
-        return ComputePerception( source, vTargetPos, rSensorHeight );
+        return GetMaxHostilePerceptionLevel( source, target, ComputePerception( source, vTargetPos, rSensorHeight ) );
 
     const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *this );
     if( !pSignificantVolume )
@@ -450,7 +451,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     const double      rSourceAltitude = MIL_Tools::GetAltitude( vSourcePos ) + source.GetRole< PHY_RoleInterface_Location >().GetHeight() + rSensorHeight;
     const double      rTargetAltitude = targetRole.GetAltitude() + 2;
 
-    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator, IsPosted( source ) );
+    return GetMaxHostilePerceptionLevel( source, target, RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator, IsPosted( source ) ) );
 }
 
 // -----------------------------------------------------------------------------

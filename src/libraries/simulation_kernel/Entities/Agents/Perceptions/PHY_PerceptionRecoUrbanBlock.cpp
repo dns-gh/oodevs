@@ -148,7 +148,7 @@ void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVecto
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
             if( detectionComputer.CanBeSeen() && itReco->CanSeeIt() )
-                perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
+                perceiver_.NotifyPerception( target, GetMaxHostilePerceptionLevel( perceiver_.GetPion(), target, PHY_PerceptionLevel::recognized_ ) );
         }
     }
 }

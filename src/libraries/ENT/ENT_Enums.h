@@ -462,8 +462,15 @@ enum E_VisualisationScale
     eVisualisationScale_Rivers,
     eVisualisationScale_Streams,
     eVisualisationScale_UrbanBlocks,
-
     eNbrVisualisationScale
+};
+
+enum E_PerceptionLevel
+{
+    ePerceptionLevel_Detection,
+    ePerceptionLevel_Recognition,
+    ePerceptionLevel_Identification,
+    eNbrPerceptionLevel
 };
 
 #endif __ENT_Enums_h_

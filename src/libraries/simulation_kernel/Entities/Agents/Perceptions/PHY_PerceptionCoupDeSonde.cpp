@@ -59,7 +59,7 @@ const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MT_Vector2D
 const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MIL_Agent_ABC& target ) const
 {
     if( target.BelongsTo( *perceiver_.GetKnowledgeGroup() ) || perceiver_.IsIdentified( target ) )
-        return PHY_PerceptionLevel::recognized_;
+        return GetMaxHostilePerceptionLevel( perceiver_.GetPion(), target, PHY_PerceptionLevel::recognized_ );
 
     const MT_Vector2D& vSourcePos = GetPerceiverPosition();
     const MT_Vector2D& vTargetPos = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
@@ -67,7 +67,7 @@ const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MIL_Agent_A
         return PHY_PerceptionLevel::notSeen_;
 
     if( fabs( ( vSourcePos - vTargetPos ) * GetPerceiverDirection() ) <= rWidth_ )
-        return PHY_PerceptionLevel::recognized_;
+        return GetMaxHostilePerceptionLevel( perceiver_.GetPion(), target, PHY_PerceptionLevel::recognized_ );
 
     return PHY_PerceptionLevel::notSeen_;
 }

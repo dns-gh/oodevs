@@ -201,7 +201,7 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
             if( detectionComputer.CanBeSeen() )
-                perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
+                perceiver_.NotifyPerception( target, GetMaxHostilePerceptionLevel( perceiver_.GetPion(), target, PHY_PerceptionLevel::recognized_ ) );
         }
     }
 }
@@ -212,7 +212,7 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MIL_Agent_ABC& agent ) const
 {
-    return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    return GetMaxHostilePerceptionLevel( perceiver_.GetPion(), agent, Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
 }
 
 // -----------------------------------------------------------------------------

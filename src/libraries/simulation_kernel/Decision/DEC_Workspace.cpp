@@ -142,9 +142,17 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
 
     DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional, tickDuration );
     
+    std::string maxHostilePerceptionLevel;
     xisDecisional >> xml::optional >> xml::start( "perception" )
                     >> xml::attribute( "detect-destroyed-units", DEC_Knowledge_Agent::detectDestroyedUnits_ )
+                    >> xml::optional >> xml::attribute( "max-level", maxHostilePerceptionLevel )
                   >> xml::end;
+    if( maxHostilePerceptionLevel == "detection" )
+        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::detected_;
+    else if( maxHostilePerceptionLevel == "recognition" )
+        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
+    else
+        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::identified_;
 
     xisDecisional >> xml::end;
 }

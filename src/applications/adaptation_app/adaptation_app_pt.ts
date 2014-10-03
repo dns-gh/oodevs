@@ -172,6 +172,10 @@
         <source>Urban perception view factor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Maximum perception level of hostile units</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_AiEngine_UrbanSpeeds_Table</name>

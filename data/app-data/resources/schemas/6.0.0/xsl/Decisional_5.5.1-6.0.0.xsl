@@ -4,6 +4,13 @@
 
     <xsl:template match="urban-combat"/>
 
+    <xsl:template match="perception">
+      <xsl:copy>
+          <xsl:apply-templates select="text()|@*"/>
+          <xsl:attribute name="max-level">identification</xsl:attribute>
+      </xsl:copy>
+    </xsl:template>
+
     <xsl:template match="node()|@*">
         <xsl:copy>
             <xsl:apply-templates select="node()|@*"/>

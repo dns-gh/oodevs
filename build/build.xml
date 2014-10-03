@@ -362,7 +362,7 @@
         <attribute name="todir" default="${out.dir}/test-adaptation-newbase"/>
         <sequential>
             <delete dir="@{todir}"/>
-            <exec executable="${out.dir}/release/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+            <exec taskname="adn" executable="${out.dir}/release/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-c"/>
                 <arg value="@{todir}/physical.xml"/>
                 <arg value="--silent"/>
@@ -415,7 +415,7 @@
         </sequential>
     </macrodef>
 
-    <target name="adaptation_test" description="load, save then diff physical data">
+    <target name="adaptation_test" depends="deploy-application-data" description="load, save then diff physical data">
         <test-adaptation-newbase/>
         <!-- This should be replaced by an equivalent test on ww-ML
         <test-adaptation dir="${data.dir}/data/models/ada/physical/scipio"/>
@@ -448,8 +448,8 @@
         -->
     </target>
 
-    <target name="data_migrations_test">
-        <exec executable="${root.dir}/bin/migrations_test.exe" failonerror="true">
+    <target name="data_migrations_test" depends="deploy-application-data" description="test data migrations">
+        <exec taskname="migrations_test" executable="${root.dir}/bin/migrations_test.exe" failonerror="true">
             <arg value="${root.dir}"/>
             <arg value="${data.dir}"/>
             <arg value="${out.dir}"/>
@@ -971,7 +971,7 @@
     </target>
 
     <target name="checkmigrations" description="check migrations.xml consistency">
-        <exec executable="${bin.dir}/checkmigrations" failonerror="true">
+        <exec taskname="checkmigrations" executable="${bin.dir}/checkmigrations" failonerror="true">
             <arg value="${data.dir}/app-data/resources"/>
         </exec>
     </target>

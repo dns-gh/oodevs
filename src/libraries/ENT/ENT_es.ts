@@ -878,6 +878,18 @@
         <source>Streams</source>
         <translation>Arroyos</translation>
     </message>
+    <message>
+        <source>Detection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recognition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identification</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

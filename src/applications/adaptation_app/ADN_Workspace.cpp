@@ -186,6 +186,7 @@ ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfi
     INITIALIZE_ENT_ENUMTYPE( AmmunitionType );
     INITIALIZE_ADN_ENUMTYPE( NatureAtlasType );
     INITIALIZE_ENT_ENUMTYPE( NatureLevel );
+    INITIALIZE_ENT_ENUMTYPE( PerceptionLevel );
     INITIALIZE_ENT_ENUMTYPE( PopulationAttitude );
     INITIALIZE_ADN_ENUMTYPE( PropagationModel );
     INITIALIZE_ADN_ENUMTYPE( ProtectionType );

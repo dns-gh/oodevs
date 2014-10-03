@@ -1489,7 +1489,10 @@ void DEC_AgentFunctions::IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, co
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *location, agentsDetected );
     PHY_RoleInterface_Perceiver& perceiver = callerAgent.GetRole< PHY_RoleInterface_Perceiver >();
     for( auto itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
-        perceiver.NotifyPerception( static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent(), PHY_PerceptionLevel::identified_ );
+    {
+        MIL_Agent_ABC& agentDetected = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
+        perceiver.NotifyPerception( agentDetected, GetMaxHostilePerceptionLevel( callerAgent, agentDetected, PHY_PerceptionLevel::identified_ ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

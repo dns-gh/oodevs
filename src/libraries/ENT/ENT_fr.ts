@@ -878,6 +878,18 @@
         <source>Streams</source>
         <translation>Ruisseaux</translation>
     </message>
+    <message>
+        <source>Detection</source>
+        <translation>Détection</translation>
+    </message>
+    <message>
+        <source>Recognition</source>
+        <translation>Reconnaissance</translation>
+    </message>
+    <message>
+        <source>Identification</source>
+        <translation>Identification</translation>
+    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

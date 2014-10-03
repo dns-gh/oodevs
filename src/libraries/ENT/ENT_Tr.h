@@ -69,6 +69,7 @@ namespace ENT_Tr
     const std::string& ConvertFromNbcState( E_NbcState, E_Conversion = eToSim );
     const std::string& ConvertFromObstacleActivation( E_ObstacleActivation, E_Conversion = eToSim );
     const std::string& ConvertFromOperationalStatus( E_OperationalStatus, E_Conversion = eToSim );
+    const std::string& ConvertFromPerceptionLevel( E_PerceptionLevel, E_Conversion = eToSim );
     const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
     const std::string& ConvertFromPopulationRoe( E_PopulationRoe, E_Conversion = eToSim );
     const std::string& ConvertFromRoe( E_Roe, E_Conversion = eToSim );
@@ -77,8 +78,8 @@ namespace ENT_Tr
     const std::string& ConvertFromUnitPosture( E_UnitPosture, E_Conversion = eToSim );
     const std::string& ConvertFromUnitStress( E_UnitStress, E_Conversion = eToSim );
     const std::string& ConvertFromUnitTiredness( E_UnitTiredness, E_Conversion = eToSim );
-    const std::string& ConvertFromWeatherType( E_WeatherType, E_Conversion = eToSim );
     const std::string& ConvertFromVisualisationScale( E_VisualisationScale, E_Conversion = eToSim );
+    const std::string& ConvertFromWeatherType( E_WeatherType, E_Conversion = eToSim );
 
     const std::string& ConvertFromDotationType( sword::DotationType, E_Conversion );
     const std::string& ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction_Type, E_Conversion = eToTr );
@@ -122,6 +123,7 @@ namespace ENT_Tr
     E_NbcState ConvertToNbcState( const std::string&, E_Conversion = eToSim );
     E_ObstacleActivation ConvertToObstacleActivation( const std::string&, E_Conversion = eToSim );
     E_OperationalStatus ConvertToOperationalStatus( const std::string&, E_Conversion = eToSim );
+    E_PerceptionLevel ConvertToPerceptionLevel( const std::string&, E_Conversion = eToSim );
     E_PopulationAttitude ConvertToPopulationAttitude( const std::string&, E_Conversion = eToSim );
     E_PopulationRoe ConvertToPopulationRoe( const std::string&, E_Conversion = eToSim );
     E_Roe ConvertToRoe( const std::string&, E_Conversion = eToSim );
@@ -130,8 +132,8 @@ namespace ENT_Tr
     E_UnitPosture ConvertToUnitPosture( const std::string&, E_Conversion = eToSim );
     E_UnitStress ConvertToUnitStress( const std::string&, E_Conversion = eToSim );
     E_UnitTiredness ConvertToUnitTiredness( const std::string&, E_Conversion = eToSim );
-    E_WeatherType ConvertToWeatherType( const std::string&, E_Conversion = eToSim );
     E_VisualisationScale ConvertToVisualisationScale( const std::string&, E_Conversion = eToSim );
+    E_WeatherType ConvertToWeatherType( const std::string&, E_Conversion = eToSim );
 
     sword::DotationType ConvertToDotationType( const std::string&, E_Conversion );
     sword::EnumLogisticLevel ConvertToLogisticLevel( const std::string&, E_Conversion = eToSim );

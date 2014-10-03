@@ -60,6 +60,7 @@ typedef ENT_Tr::Converter< E_MissionType > T_ConverterMissionType;
 typedef ENT_Tr::Converter< E_EventDockModes > T_ConverterEventDockModes;
 typedef ENT_Tr::Converter< E_CoordinateSystem > T_ConverterCoordinateSystem;
 typedef ENT_Tr::Converter< E_VisualisationScale > T_ConverterVisualisationScale;
+typedef ENT_Tr::Converter< E_PerceptionLevel > T_ConverterPerceptionLevel;
 
 typedef ENT_Tr::Converter< sword::MagicAction::Type > T_ConverterMagicActionType;
 typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicActionType;
@@ -712,6 +713,14 @@ T_ConverterDotationType DotationTypeConverter_[] =
     T_ConverterDotationType( "", "", sword::DotationType_MAX )
 };
 
+T_ConverterPerceptionLevel PerceptionLevelConverter_ [] =
+{
+    T_ConverterPerceptionLevel( "detection", QT_TRANSLATE_NOOP( "ENT_Tr", "Detection" ), ePerceptionLevel_Detection ),
+    T_ConverterPerceptionLevel( "recognition", QT_TRANSLATE_NOOP( "ENT_Tr", "Recognition" ), ePerceptionLevel_Recognition ),
+    T_ConverterPerceptionLevel( "identification", QT_TRANSLATE_NOOP( "ENT_Tr", "Identification" ), ePerceptionLevel_Identification ),
+    T_ConverterPerceptionLevel( "", "", ( E_PerceptionLevel ) - 1 )
+};
+
 }  // namespace
 
 #define INIT_TRANSLATION( NAME, CONTEXT )\
@@ -802,6 +811,7 @@ void ENT_Tr::InitTranslations()
     INIT_TR( NbcState );
     INIT_TR( ObstacleActivation );
     INIT_TR( OperationalStatus );
+    INIT_TR( PerceptionLevel );
     INIT_TR( PopulationAttitude );
     INIT_TR( PopulationRoe );
     INIT_TR( Roe );
@@ -855,6 +865,7 @@ IMPLEMENT_CONVERT_METHODS( NatureLevel );
 IMPLEMENT_CONVERT_METHODS( NbcState );
 IMPLEMENT_CONVERT_METHODS( ObstacleActivation );
 IMPLEMENT_CONVERT_METHODS( OperationalStatus );
+IMPLEMENT_CONVERT_METHODS( PerceptionLevel );
 IMPLEMENT_CONVERT_METHODS( PopulationAttitude );
 IMPLEMENT_CONVERT_METHODS( PopulationRoe );
 IMPLEMENT_CONVERT_METHODS( Roe );
@@ -863,8 +874,8 @@ IMPLEMENT_CONVERT_METHODS( UnitMorale );
 IMPLEMENT_CONVERT_METHODS( UnitPosture );
 IMPLEMENT_CONVERT_METHODS( UnitStress );
 IMPLEMENT_CONVERT_METHODS( UnitTiredness );
-IMPLEMENT_CONVERT_METHODS( WeatherType );
 IMPLEMENT_CONVERT_METHODS( VisualisationScale );
+IMPLEMENT_CONVERT_METHODS( WeatherType );
 
 IMPLEMENT_CONVERT_METHODS_PROTO( DotationType, DotationType );
 IMPLEMENT_CONVERT_METHODS_PROTO( EnumLogisticLevel, LogisticLevel );
