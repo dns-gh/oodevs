@@ -717,7 +717,7 @@ integration.updateMoveToItArea = function( objective, pathType )
             -- delayInSeconds constant), then a new objective should be computed. This is done to ensure
             -- a better following behaviour.
             
-            local distance = DEC_Geometrie_DistanceBetweenPoints( objective.destination, objective:getPosition() )
+            local distance = DEC_Geometrie_DistanceBetweenPoints( objective.initialeDestination, objective:getPosition() )
             local delayInSeconds = 40
             
             if distance > integration.getMaxSpeed( meKnowledge )*delayInSeconds then
