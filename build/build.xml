@@ -411,7 +411,7 @@
         </sequential>
     </macrodef>
 
-    <target name="adaptation_test" description="load, save then diff physical data">
+    <target name="adaptation_test" depends="deploy-application-data" description="load, save then diff physical data">
         <test-adaptation-newbase/>
         <!-- This should be replaced by an equivalent test on ww-ML
         <test-adaptation dir="${data.dir}/data/models/ada/physical/scipio"/>
@@ -444,7 +444,7 @@
         -->
     </target>
 
-    <target name="data_migrations_test">
+    <target name="data_migrations_test" depends="deploy-application-data" description="test data migrations">
         <exec executable="${root.dir}/bin/migrations_test.exe" failonerror="true">
             <arg value="${root.dir}"/>
             <arg value="${data.dir}"/>
