@@ -794,17 +794,18 @@
         <sequential>
             <local name="output"/>
             <property name="output" value="${out.dir}/sword_cloud_${platform}_bin.zip"/>
-            <zip destfile="${output}">
-                <mappedresources>
-                    <fileset dir="${out.dir}/release"
-                        includes="**/cloud_*.pdb **/cloud_*.exe"/>
-                    <flattenmapper/>
-                </mappedresources>
-                <fileset dir="${bin.dir}" includes="node.exe,proxy.exe,swproxy.exe"/>
-                <fileset dir="${admin.dir}" includes="www/"/>
-                <fileset dir="${root.dir}/helpers/soft_restart" includes="soft_restart.cmd"/>
-            </zip>
-            <safe-move file="${output}"/>
+            <safe-move file="${output}">
+                <zip destfile="@{file}">
+                    <mappedresources>
+                        <fileset dir="${out.dir}/release"
+                            includes="**/cloud_*.pdb **/cloud_*.exe"/>
+                        <flattenmapper/>
+                    </mappedresources>
+                    <fileset dir="${bin.dir}" includes="node.exe,proxy.exe,swproxy.exe"/>
+                    <fileset dir="${admin.dir}" includes="www/"/>
+                    <fileset dir="${root.dir}/helpers/soft_restart" includes="soft_restart.cmd"/>
+                </zip>
+            </safe-move>
         </sequential>
     </target>
 
