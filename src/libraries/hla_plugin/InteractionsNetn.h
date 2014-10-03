@@ -19,6 +19,7 @@
 #include "rpr/Coordinates.h"
 #include <hla/HLA_Types.h>
 #include <hla/FederateIdentifier.h>
+#include <cstring>
 
 namespace plugins
 {
@@ -124,12 +125,7 @@ struct TransactionId
 
         const uint8_t* b1 = federateHandle.Buffer();
         const uint8_t* b2 = rhs.federateHandle.Buffer();
-        for( std::size_t i=0; i < federateHandle.Size() ; ++i )
-        {
-            if( b1[i] != b2[i] )
-                return false;
-        }
-        return true;
+        return std::memcmp( b1, b2, federateHandle.Size() ) == 0;
     }
     bool operator<(const TransactionId& rhs) const
     {
@@ -144,14 +140,7 @@ struct TransactionId
 
         const uint8_t* b1 = federateHandle.Buffer();
         const uint8_t* b2 = rhs.federateHandle.Buffer();
-        for( std::size_t i=0; i < federateHandle.Size() ; ++i )
-        {
-            if( b1[i] < b2[i] )
-                return true;
-            if( b1[i] > b2[i] )
-                return false;
-        }
-        return false;
+        return std::memcmp( b1, b2, federateHandle.Size() ) < 0;
     }
     uint32_t transactionCounter;
     ::hla::FederateIdentifier federateHandle;
