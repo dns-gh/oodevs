@@ -389,7 +389,7 @@ QStringList LogisticTreeView::MimeTypes() const
 {
     QStringList l;
     l << typeid( kernel::Automat_ABC ).name() << typeid( kernel::Formation_ABC ).name()
-      << typeid( sword::EnumLogisticLevel ).name();
+      << typeid( kernel::Ghost_ABC ).name() << typeid( sword::EnumLogisticLevel ).name();
     return l;
 }
 

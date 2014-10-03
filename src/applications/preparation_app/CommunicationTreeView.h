@@ -30,6 +30,7 @@ class CommunicationTreeView : public gui::HierarchyTreeView< kernel::Communicati
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC > // LTO
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
+                            , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
 {
     Q_OBJECT
 public:
@@ -65,6 +66,7 @@ private:
     // LTO begin
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& knowledgegroup, kernel::ContextMenu& menu );
     // LTO end
+    virtual void NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu );
     virtual void Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::Ghost_ABC& item, const kernel::Entity_ABC& target );
