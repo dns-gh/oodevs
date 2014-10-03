@@ -19,9 +19,9 @@
 #include <hla/InteractionIdentifier.h>
 #include <hla/Parameter.h>
 
+#include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace plugins::hla;

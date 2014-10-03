@@ -29,7 +29,7 @@ class CallsignResolver : public CallsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CallsignResolver( xml::xisubstream xis );
+    explicit CallsignResolver( xml::xisubstream xis );
     virtual ~CallsignResolver();
     //@}
 
@@ -52,7 +52,7 @@ private:
 
     //! @name Member data
     //@{
-    bool addIdentifier_;
+    const bool addIdentifier_;
     T_Identifiers identifiers_;
     T_SimulationIdentifiers simulationIdentifiers_;
     //@}

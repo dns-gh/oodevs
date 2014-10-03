@@ -186,7 +186,7 @@ namespace
             dispatcher::Logger_ABC& logger, InteractionBuilder& interactionBuilder, RemoteAgentSubject_ABC& remoteSubject, const LocalAgentResolver_ABC& agentResolver,
             const CallsignResolver_ABC& callsignResolver, tools::MessageController_ABC< sword::MessengerToClient_Content >& controller, const std::string& divestZone )
     {
-        const std::string policy(  xis.attribute< std::string >( "ownership-policy", "internal" ) );
+        const std::string policy( xis.attribute< std::string >( "ownership-policy", "internal" ) );
         if( policy == "external" )
         {
             return new ExternalOwnershipPolicy( federateName, interactionBuilder, ownershipController, logger, remoteSubject, agentResolver, callsignResolver, transferSender );
