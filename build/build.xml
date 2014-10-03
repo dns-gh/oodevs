@@ -1224,15 +1224,6 @@
                   ,json2.js"/>
     </target>
 
-    <target name="admin.watch">
-        <retry retrycount="999999999" retrydelay="1000">
-            <sequential>
-                <antcall target="admin.web"/>
-                <fail/>
-            </sequential>
-        </retry>
-    </target>
-
     <target name="admin.plugins">
         <xslt basedir="${data.dir}/app-data/plugins"
             includes="**/plugin.xml"
