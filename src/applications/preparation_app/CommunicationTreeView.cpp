@@ -220,13 +220,23 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
     menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ), false, 1 );
 }
 
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyContextMenu
+// Created: JSR 2014-10-03
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
+{
+    if( isVisible() && ghost.GetGhostType() == eGhostType_Automat )
+        menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ), false, 1 );
+}
+
 namespace
 {
     void Update( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& group )
     {
-        if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* > ( &entity ) )
+        if( dynamic_cast< const kernel::Automat_ABC* > ( &entity ) || dynamic_cast< const kernel::Ghost_ABC* > ( &entity ) )
         {
-            kernel::CommunicationHierarchies& hierarchy = const_cast< kernel::CommunicationHierarchies& >( automat->Get< kernel::CommunicationHierarchies >() );
+            kernel::CommunicationHierarchies& hierarchy = const_cast< kernel::CommunicationHierarchies& >( entity.Get< kernel::CommunicationHierarchies >() );
             if( &hierarchy.GetTop() == &group.Get< kernel::CommunicationHierarchies >().GetTop() )
                 static_cast< AutomatCommunications& >( hierarchy ).ChangeSuperior( const_cast< kernel::Entity_ABC& >( group ) );
         }
