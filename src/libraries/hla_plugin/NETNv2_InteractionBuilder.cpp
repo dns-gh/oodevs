@@ -168,8 +168,7 @@ namespace
             NETN_UUID tmp;
             tmp.Deserialize(deserializer);
             boost::uuids::uuid uid;
-            const std::vector< char > tmpData = tmp.data();
-            memcpy(&uid, tmpData.data(), 16);
+            memcpy(&uid, tmp.data().data(), sizeof( uid ) );
             object.transportUnitIdentifier = UnicodeString(boost::lexical_cast<std::string>(uid));
         }
         virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
