@@ -173,7 +173,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
                 rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false, material ) );
 
         const T_KnowledgeAgentVector& allies = bbKg->GetFriends();
-        for( auto it = allies.begin(); it != allies.end(); it )
+        for( auto it = allies.begin(); it != allies.end(); ++it )
         {
             if( !(*it) )
                 continue;
