@@ -629,7 +629,7 @@ end
 -- comments: used to move toward agent (objective.proxy is the agent)
 -- only start/stop action exept for dismounting action
 -- ****************************************************************************
-integration.startMoveToItArea = function( objective, pathType )
+integration.startMoveToItArea = function(  objective, pathType, waypoints )
 
     objective[ myself ] = objective[ myself ] or {}
 
@@ -661,10 +661,23 @@ integration.startMoveToItArea = function( objective, pathType )
     if pathType == NIL  or pathType == nil then -- pathType can have the MASA Life 'NIL' value 
         pathType = eTypeItiMouvement
     end
-    local it = DEC_CreerItineraireBM( objective.destination, pathType )
+    local itinerary
+    local simWaypoints = {}
+    if waypoints ~= nil then
+        for i = 1, #waypoints do
+            simWaypoints[ i ] = waypoints[ i ]:getPosition()
+        end
+    end
+    if #simWaypoints > 0 then
+        simWaypoints[ #simWaypoints + 1 ] = objective.destination
+        myself.movingOnPath = true
+        itinerary = DEC_CreerItineraireListe( simWaypoints, pathType )
+    else
+        itinerary = DEC_CreerItineraireBM( objective.destination, pathType )
+    end
     F_Pion_SetitMvt( meKnowledge.source, it )
     objective[ myself ] = {}
-    objective[ myself ].moveAction = DEC_StartDeplacement( it )
+    objective[ myself ].moveAction = DEC_StartDeplacement( itinerary )
     local moveAction = objective[ myself ].moveAction
     actionCallbacks[ objective[ myself ].moveAction ] = function( arg )
         objective[ myself ].etat = arg
