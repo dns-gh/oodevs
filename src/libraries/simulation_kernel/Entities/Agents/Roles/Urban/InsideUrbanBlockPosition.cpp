@@ -87,28 +87,26 @@ MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& firer, U
 // -----------------------------------------------------------------------------
 double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
 {
-    TER_Localisation attritionPolygon( attritionSurface );
-    return TER_Geometry::IntersectionArea( attritionSurface, urbanObject_.GetLocalisation() ) * result.urbanDeployment_;
+    const double urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
+    if( urbanObjectArea <= 0 )
+        return 0;
+    const double intersectArea = TER_Geometry::IntersectionArea( attritionSurface, urbanObject_.GetLocalisation() );
+    return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: InsideUrbanBlockPosition::ComputeRatioPionInside
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const TER_Polygon& polygon, double modicator ) const
+double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const TER_Polygon& polygon, double modificator ) const
 {
-    if( modicator > result.urbanDeployment_ ) // SLG : permet d'éviter des incohérence dans la percpetion d'unité quand la cible passe en état posté.
-        return polygon.IsInside( result.position_, 0 ) ? 1.0 : 0.0;
-    else
-    {
-        double urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
-        if( urbanObjectArea )
-        {
-            double intersectArea = TER_Geometry::IntersectionArea( TER_Localisation( polygon ), urbanObject_.GetLocalisation() );
-            return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
-        }
-        return 0.;
-    }
+    if( modificator > result.urbanDeployment_ ) // SLG : permet d'éviter des incohérence dans la perception d'unité quand la cible passe en état posté.
+        return polygon.IsInside( result.position_, 0 ) ? 1 : 0;
+    const double urbanObjectArea = urbanObject_.GetLocalisation().GetArea() * urbanObject_.GetStructuralState();
+    if( urbanObjectArea <= 0 )
+        return 1;
+    const double intersectArea = TER_Geometry::IntersectionArea( polygon, urbanObject_.GetLocalisation() );
+    return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
 }
 
 // -----------------------------------------------------------------------------
@@ -119,10 +117,6 @@ double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCateg
 {
     if( const MaterialAttribute* materialAttribute = urbanObject_.RetrieveAttribute< MaterialAttribute >() )
         if( const UrbanPhysicalCapacity* physical = urbanObject_.Retrieve< UrbanPhysicalCapacity >() )
-        {
-            const StructuralCapacity* structural = urbanObject_.Retrieve< StructuralCapacity >();
-            float structuralState = structural ? structural->GetStructuralState() : 1.f;
-            return dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) * physical->GetOccupation() * structuralState;
-        }
+            return dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) * physical->GetOccupation() * urbanObject_.GetStructuralState();
     return 0.;
 }

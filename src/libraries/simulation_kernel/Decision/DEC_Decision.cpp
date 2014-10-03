@@ -380,6 +380,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
         std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) ) );
     brain.RegisterFunction( "DEC_IsPointInUrbanBlockTrafficableForPlatoon",
         std::function< bool( DEC_Decision_ABC*, MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon, _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_IsPointInDestroyedUrbanBlock", &DEC_GeometryFunctions::IsPointInDestroyedUrbanBlock );
     brain.RegisterFunction( "DEC_Geometrie_PositionsParRapportALocalisation",
         std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const std::vector< DEC_Decision_ABC* >&, TER_Localisation*, MT_Vector2D*, double ) >( boost::bind( &DEC_GeometryFunctions ::ComputeLocalisationPointsForPionsInFuseau, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointArriveePourFuseau",

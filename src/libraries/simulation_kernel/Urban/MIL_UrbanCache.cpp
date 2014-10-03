@@ -169,7 +169,7 @@ namespace
                         cost_ = -1.f;
                         return false;
                     }
-                    tempCost =  pPhysical->GetOccupation();
+                    tempCost =  pPhysical->GetOccupation() / key->GetStructuralState();
                 }
                 cost_ = std::max( cost_, tempCost );
                 return wrapper_.DoContinue();

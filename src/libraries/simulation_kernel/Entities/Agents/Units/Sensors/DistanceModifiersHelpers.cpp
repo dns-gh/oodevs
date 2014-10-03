@@ -96,6 +96,8 @@ bool distance_modifiers::ComputeUrbanExtinction( const MT_Vector2D& vSource, con
         const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() );
         if( !materialCompositionType )
             continue;
+        if( object.GetStructuralState() <= 0 )
+             continue;
 
         const TER_Localisation& footPrint = object.GetLocalisation();
 

@@ -54,6 +54,7 @@ public:
     virtual TER_Polygon GetScaledLocation( double distance ) const = 0;
     virtual int GetFloorNumber() const = 0;
     virtual double GetOccupation() const = 0;
+    virtual float GetStructuralState() const = 0;
     //@}
 
     //! @name Operations

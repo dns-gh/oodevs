@@ -204,11 +204,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
 float DEC_UrbanObjectFunctions::GetStateUrbanBlock( MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
-    {
-        StructuralCapacity* pCapacity = pUrbanObject->Retrieve< StructuralCapacity >();
-        if( pCapacity )
-            return pCapacity->GetStructuralState();
-    }
+        return pUrbanObject->GetStructuralState();
     return -1.f;
 }
 

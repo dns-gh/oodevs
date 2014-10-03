@@ -1232,8 +1232,12 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight )
 {
     if( const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
+    {
+        if( object->GetStructuralState() <= 0 )
+            return false;
         if( const UrbanPhysicalCapacity* pPhysical = object->Retrieve< UrbanPhysicalCapacity >() )
             return pPhysical->GetTrafficability() > weight;
+    }
     return true;
 }
 
@@ -1262,6 +1266,13 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion,
 bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decision_ABC* pion, const MT_Vector2D& point )
 {
     return DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( pion->GetPion(), point );
+}
+
+bool DEC_GeometryFunctions::IsPointInDestroyedUrbanBlock( const MT_Vector2D& point )
+{
+    if( const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
+        return object->GetStructuralState() <= 0;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

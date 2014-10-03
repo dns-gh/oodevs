@@ -56,6 +56,7 @@ public:
     void ReadData( xml::xistream& xis );
     virtual int GetFloorNumber() const;
     virtual double GetOccupation() const;
+    virtual float GetStructuralState() const;
     //@}
 
     //! @name CheckPoints
