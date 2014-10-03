@@ -145,7 +145,7 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
     std::string maxHostilePerceptionLevel;
     xisDecisional >> xml::optional >> xml::start( "perception" )
                     >> xml::attribute( "detect-destroyed-units", DEC_Knowledge_Agent::detectDestroyedUnits_ )
-                      >> xml::attribute( "max-level", maxHostilePerceptionLevel )
+                    >> xml::optional >> xml::attribute( "max-level", maxHostilePerceptionLevel )
                   >> xml::end;
     if( maxHostilePerceptionLevel == "detection" )
         DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::detected_;

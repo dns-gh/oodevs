@@ -177,7 +177,7 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 
     std::string maxPerceptionLevel;
     input >> xml::optional >> xml::start( "perception" )
-            >> xml::attribute( "max-level", maxPerceptionLevel )
+            >> xml::optional >> xml::attribute( "max-level", maxPerceptionLevel )
             >> xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
           >> xml::end;
     if( !maxPerceptionLevel.empty() )
