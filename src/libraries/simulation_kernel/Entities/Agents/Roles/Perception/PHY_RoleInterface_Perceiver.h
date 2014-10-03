@@ -78,7 +78,7 @@ public:
     virtual bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape ) = 0;
     virtual bool NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const = 0;
     virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC& block, const PHY_PerceptionLevel& level ) const = 0;
-    virtual void NotifyPerception( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection ) = 0;
+    virtual void NotifyPerception( MIL_Object_ABC& object, const MT_Vector2D& position ) = 0;
     //@}
 
     //! @name Operations

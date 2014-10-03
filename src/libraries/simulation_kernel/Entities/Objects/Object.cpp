@@ -218,7 +218,7 @@ bool Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::ProcessAgentMovingInsideAt
+// Name: Object::ProcessAgentMovingInside
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent, const MT_Vector2D& startPos, const MT_Vector2D& endPos )

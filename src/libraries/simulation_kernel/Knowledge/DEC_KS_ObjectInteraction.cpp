@@ -210,10 +210,10 @@ void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_Object_ABC& object )
 // Name: DEC_KS_ObjectInteraction::NotifyDisasterCollision
 // Created: LGY 2012-12-06
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectInteraction::NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos )
+void DEC_KS_ObjectInteraction::NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& startPos )
 {
     // Detect disaster with a sensor
-    NotifyCollision( object, startPos, endPos );
+    NotifyCollision( object, startPos, startPos );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ void DEC_KS_ObjectInteraction::NotifyCollision( MIL_Object_ABC& object, const MT
 {
     static const double epsilon = 1e-8;
     const TER_Localisation& objectLocation = object.GetLocalisation();
-    MT_Line orientedLine( startPos, endPos );
+    const MT_Line orientedLine( startPos, endPos );
     TER_DistanceLess collisionCmp( startPos );
     T_PointSet collisions( collisionCmp );
     if( objectLocation.Intersect2D( orientedLine, collisions, epsilon ) && !collisions.empty() )

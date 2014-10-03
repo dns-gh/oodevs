@@ -120,11 +120,10 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC, O
     std::unique_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
-    MT_Vector2D position;
     MockAgent agent;
     agent.RegisterRole( *new MockRoleLocation() );
     MOCK_EXPECT( agent.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
-    MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( position );
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( MT_Vector2D() );
 
     agent.RegisterRole( *new MockRoleNBC() );
     MOCK_EXPECT( agent.GetRole< MockRoleNBC >().Contaminate ).never();
@@ -159,11 +158,10 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC, Obj
     BOOST_CHECK_NO_THROW( ( static_cast< Object& >( *pObject ).GetAttribute< MockToxicAttribute, ToxicAttribute_ABC >() ) );
     BOOST_CHECK_NO_THROW( ( static_cast< Object& >( *pObject ).GetAttribute< NBCAttribute >() ) );
 
-    MT_Vector2D position;
     MockAgent agent;
     agent.RegisterRole( *new MockRoleLocation() );
     MOCK_EXPECT( agent.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
-    MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( position );
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( MT_Vector2D() );
 
     agent.RegisterRole( *new MockRoleNBC() );
     MOCK_EXPECT( agent.GetRole< MockRoleNBC >().Contaminate ).never();
@@ -195,13 +193,12 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapa
     CheckCapacity< ProtectionCapacity >( *pObject );
 
     //First add
-    MT_Vector2D position;
     MockAgent agent;
     agent.RegisterRole( *new MockRoleLocation() );
     {
         // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
         MOCK_EXPECT( agent.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
-        MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( position );
+        MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).returns( MT_Vector2D() );
     }
     agent.RegisterRole( *new MockRoleInterface_Posture() );
     {
@@ -238,42 +235,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped, Ob
     // Force creation of attribute SupplyRouteAttribute...
     BOOST_CHECK_NO_THROW( ( static_cast< Object& >( *pObject ).GetAttribute< SupplyRouteAttribute >() ) );
     BOOST_CHECK_EQUAL( pObject->GetAttribute< SupplyRouteAttribute >().IsEquipped(), pObject->CanInteractWith( agent ) );
-}
-
-// -----------------------------------------------------------------------------
-/* Name: Test VerifyObjectCapacity_Interaction_Supply
-    Create an object prototype able to be a supply area.
-    Instanciate the object and test if the interaction mechanism is triggered
-*/
-// Created: MGD 2009-03-05
-// -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Supply, ObjectCapacityFixture )
-{
-    //@TODO test à renforcer après le merge
-    {
-        xml::xistringstream xis( "<objects>"
-                                 "    <object type='plot ravitaillement'>"
-                                 "        <supply/>"
-                                 "    </object>"
-                                 "</objects>" );
-        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
-    }
-    const MIL_ObjectType_ABC& type = factory.FindType( "plot ravitaillement" );
-
-    std::unique_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
-    CheckCapacity< SupplyCapacity >( *pObject );
-
-    //First add
-    MT_Vector2D position;
-    MockAgent agent;
-    MOCK_EXPECT( agent.GetArmy ).once().returns( boost::ref( army ) );
-    agent.RegisterRole( *new MockRoleLocation() );
-    {
-        // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
-//        MOCK_EXPECT( agent.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
-//        MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).once().returns( position );
-    }
-    BOOST_CHECK_NO_THROW( pObject->ProcessAgentEntering( agent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -354,8 +315,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
     MOCK_EXPECT( time.GetCurrentTimeStep ).once().returns( 3u );
     
     MOCK_EXPECT( intruder.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
-    MT_Vector2D position;
-    MOCK_EXPECT( intruder.GetRole< MockRoleLocation >().GetPosition ).returns( position );
+    MOCK_EXPECT( intruder.GetRole< MockRoleLocation >().GetPosition ).returns( MT_Vector2D() );
     MOCK_EXPECT( detector.GetRole< MockRolePerceiver >().NotifyExternalPerception ).with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
 
     BOOST_CHECK_NO_THROW( object->ProcessAgentInside( intruder ) );
