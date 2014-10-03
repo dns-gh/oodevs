@@ -88,7 +88,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , searchSpeed_                 ( 6 )
     , nMaxPerceptionLevel_         ( ePerceptionLevel_Identification )
 {
-    // NOTHING
+    nMaxPerceptionLevel_.SetAlphabeticalSort( false );
 }
 
 // -----------------------------------------------------------------------------
