@@ -693,10 +693,10 @@ target_link_libraries( runtime
     ${ARCHIVE_LIBRARIES}
 )
 if( WIN32 )
-    add_target( runtime_win32 libraries "libraries/runtime/win32" )
-    add_target( runtime_server libraries "libraries/runtime/win32/server" OPTIONS vista )
+    add_target( runtime_win32 admin "libraries/runtime/win32" )
+    add_target( runtime_server admin "libraries/runtime/win32/server" OPTIONS vista )
     target_link_libraries( runtime_server runtime runtime_win32 )
-    add_target( runtime_client libraries "libraries/runtime/win32/client" )
+    add_target( runtime_client admin "libraries/runtime/win32/client" )
     target_link_libraries( runtime_client runtime runtime_win32 )
 endif()
 
