@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/profiles.xsd">
+  <profile name="Supervisor" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="3"/>
+        <side id="35"/>
+        <side id="38"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Blue" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>
+<!-- signature="1798358625" -->

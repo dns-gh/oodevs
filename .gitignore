@@ -1,4 +1,6 @@
 /bin/
+/node/bin/
+/proxy/bin/
 /run/
 /out/
 /dist/
@@ -6,6 +8,7 @@
 /lib/
 /pkg/
 /src/sword/
+/data/tests/host_test/packages/0/metadata.tag
 tags
 *.swp
 *.pyc
@@ -28,4 +31,16 @@ tags
 /src/masa/timeline/www/js/*.js
 /src/masa/timeline/www/lib/*.min.js
 /src/masa/timeline/www/tests/*.js
+/src/masa/admin/www/js/*.js
+/src/masa/admin/www/about.ttml
+/src/masa/admin/www/css/iexplore.css
+/src/masa/admin/www/css/style.css
+/src/masa/admin/www/dis.ttml
+/src/masa/admin/www/hla.ttml
+/src/masa/admin/www/logistic.ttml
+/src/masa/admin/www/plugins.ttml
+/src/masa/admin/www/positions.ttml
+/src/masa/admin/www/sword_client_setup_vc100.exe
+/src/masa/admin/www/timeline.ttml
+/host_agent/data/tests/host_test/packages
 sessions/

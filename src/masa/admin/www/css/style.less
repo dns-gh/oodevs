@@ -1,0 +1,596 @@
+/* MASA Group Style */
+
+@run:       #93C47D;
+@pause:     #FFD966;
+@replay:    #6FA8DC;
+@stop:      #E06666;
+@archive:   #999;
+@waiting:   #8E7CC3;
+
+@common_padding: 24px;
+@session_margin:  6px;
+@topbar_margin:  20px;
+@button_margin:  10px;
+
+body
+{
+    padding-top:    60px;
+    padding-bottom: 40px;
+}
+
+.session
+{
+    border:     0;
+    padding:    0;
+    margin:     0;
+    position:   absolute;
+    top:        0;
+    left:       0;
+    width:      32px;
+    height:     100%;
+}
+
+.playing, .running
+{
+    background-color:   @run;
+}
+
+.paused
+{
+    background-color:   @pause;
+}
+
+.replaying
+{
+    background-color:   @replay;
+}
+
+.waiting
+{
+    background-color:   @waiting;
+}
+
+.stopped
+{
+    background-color:   @stop;
+}
+
+.archived
+{
+    background-color:   @archive;
+}
+
+.session_row
+{
+    position:       relative;
+    width:          auto !important;
+    margin-bottom:  @topbar_margin;
+}
+
+#session_filters .legend
+{
+    width:          80px;
+    text-align:     center;
+    display:        inline-block;
+    font-weight:    normal;
+    font-size:      small;
+    color:          #333;
+    text-shadow:    none;
+    padding:        2px;
+}
+
+.sub_session
+{
+    margin-left:    20px;
+    margin-top:     4px - @topbar_margin;
+}
+
+.session_name
+{
+    padding-left:   32px;
+}
+
+.session_name .info
+{
+    color:      #999;
+    font-size:  x-small;
+}
+
+.session_content
+{
+    margin-left:    12px;
+    margin-top:     12px;
+}
+
+.session_name, .package_name
+{
+    font-size:      large;
+    font-weight:    bold;
+}
+
+.shift_right
+{
+    padding-left:   @common_padding;
+}
+
+.session_top_right
+{
+    position:   absolute;
+    top:        @button_margin;
+    right:      @button_margin;
+}
+
+.session_top_right .dropdown-toggle
+{
+    margin-right:              -1px;
+    border-top-right-radius:    0;
+    border-bottom-right-radius: 0;
+}
+
+.session_bottom_right
+{
+    position:   absolute;
+    right:      @session_margin;
+    bottom:     @session_margin;
+}
+
+.create_form
+{
+    margin-bottom:  @topbar_margin;
+}
+
+.session_search
+{
+    float:          right;
+    margin-bottom:  @topbar_margin;
+    position:       relative;
+}
+
+.session_search i
+{
+    position:   absolute;
+    top:        8px;
+    left:       8px;
+}
+
+.session_search input
+{
+    padding-left:   @common_padding;
+}
+
+.spin_btn
+{
+    width:  14px;
+    height: 20px;
+}
+
+.spin_btn .spinner
+{
+    position:   relative;
+    top:        10px;
+    left:       8px;
+}
+
+#nodes .accordion-group
+{
+    position:       relative;
+    margin-bottom:  @button_margin;
+}
+
+.node_buttons
+{
+    .session_top_right;
+}
+
+.node_header
+{
+    position:   relative;
+}
+
+.node_header a
+{
+    margin-left: @common_padding;
+}
+
+.shadow( @value )
+{
+	-webkit-box-shadow: @value;
+	-moz-box-shadow:    @value;
+	box-shadow:         @value;
+}
+
+.read_only
+{
+    .shadow( none );
+    color:              inherit !important;
+    background-color:   inherit;
+    cursor:             text;
+    border:             0;
+    margin-top:         1px;
+}
+
+.footer
+{
+    text-align: center;
+}
+
+.navbar .brand
+{
+    cursor: default;
+    color:  #999;
+}
+
+.navbar .brand:hover
+{
+    color:  #999;
+}
+
+.pull-right .label
+{
+    float:      left;
+    margin-top: 11px;
+}
+
+.sub_header td
+{
+    padding-top:    @common_padding;
+    font-weight:    bold;
+    border-top:     0;
+}
+
+.ufirst
+{
+    text-transform: capitalize;
+}
+
+.package_name:first-letter, .package_description:first-letter
+{
+    text-transform: uppercase;
+}
+
+.package_name, .package_description
+{
+    margin:  @topbar_margin;
+}
+
+.package .form-actions
+{
+    margin:     0;
+    text-align: right;
+}
+
+.package table
+{
+    margin-bottom: 0;
+}
+
+.upload_alert span
+{
+    margin-left: 28px;
+}
+
+.upload
+{
+    margin-left:    @session_margin;
+}
+
+.briefing_content h3, .briefing_content h2, .briefing_content h1
+{
+    font-size:      small;
+    font-weight:    bold;
+}
+
+.briefing_content h1:first-child
+{
+    display:    none;
+}
+
+.package_row .type:first-letter, .package_row .name:first-letter
+{
+    text-transform: uppercase;
+}
+
+.package_row .name, .package_row .date, .package_row .checksum
+{
+    font-size: small;
+}
+
+.package_row .date
+{
+    white-space: nowrap;
+}
+
+.package th:first-child, .package td:first-child
+{
+    padding-left: @topbar_margin;
+}
+
+.item_briefing
+{
+    padding-top: @topbar_margin !important;
+}
+
+.briefing_content
+{
+    margin-top: @topbar_margin;
+}
+
+.item_label
+{
+    font-size: small;
+}
+
+.item_label span:first-child
+{
+    font-style:  oblique;
+    float:       left;
+    width:       64px;
+}
+
+.package_row .error
+{
+    position:   relative;
+    top:        -1px;
+}
+
+.action
+{
+    white-space:    nowrap;
+    text-align:     right !important;
+}
+
+.package_description
+{
+    position:       relative;
+    margin-bottom:  @button_margin;
+}
+
+.toggle
+{
+    float:          right;
+    margin-top:     -3px;
+    margin-right:   -@session_margin;
+}
+
+.emu_btn
+{
+    cursor:                 pointer;
+    -webkit-user-select:    none;
+    -khtml-user-select:     none;
+    -moz-user-select:  -moz-none;
+    -o-user-select:         none;
+    user-select:            none;
+}
+
+.btn
+{
+    .emu_btn;
+}
+
+.no_select
+{
+    cursor: default;
+}
+
+.package_header
+{
+    margin-bottom:  @topbar_margin;
+}
+
+.package_header h2
+{
+    display:    inline;
+}
+
+.package_header .remove_all
+{
+    float:          right;
+    margin-right:   @session_margin;
+    margin-top:     @session_margin;
+}
+
+.masa_header
+{
+    text-align: center;
+}
+
+.sign_in, form.update_login
+{
+    margin-left: 180px;
+}
+
+.sign_in_action, .update_login_action
+{
+    margin-left: 180px;
+}
+
+.sign_in_action a
+{
+    width: 244px;
+}
+
+.update_login_header
+{
+    text-align:     center;
+    margin-bottom:  @common_padding;
+    font-weight:    bold;
+}
+
+.update_login_action .cancel
+{
+    width: 91px;
+}
+
+.checkbox, .radio
+{
+    .emu_btn;
+}
+
+.checkbox_addon label.add-on
+{
+    margin-left:    0;
+    margin-bottom:  0;
+    width:          22px;
+}
+
+.checkbox_addon input[type=checkbox]
+{
+    position:   relative;
+    top:        -3px;
+}
+
+.checkbox_addon .field
+{
+    width:      173px;
+}
+
+.sidebar
+{
+    padding:    8px 0;
+}
+
+.modal-body.form-horizontal
+{
+    margin-bottom:  0;
+    padding-bottom: 0;
+}
+
+.modal-body.form-horizontal #tab_plugins
+{
+    padding-bottom: @topbar_margin;
+}
+
+.plugin_left_col
+{
+    margin-left: 69px !important;
+}
+
+.plugin_edit
+{
+    padding-left: 10px;
+}
+
+#settings_slide
+{
+    margin-bottom: 0;
+}
+
+.modal_confirm .alert
+{
+    margin-bottom: 0;
+    padding-right: 14px;
+}
+
+.modal_confirm .buttons
+{
+    text-align: right;
+}
+
+#tab_plugins .control-group:last-child
+{
+    margin-bottom: 0;
+}
+
+.modal_redirect .modal-header
+{
+    text-align: center;
+}
+
+.modal_redirect .btn
+{
+    min-width: 120px;
+}
+
+.modal_session
+{
+    width: 720px;
+}
+
+.sides
+{
+    text-transform: capitalize;
+}
+
+.log_content .download, .log_tabs
+{
+    margin-bottom: @button_margin;
+}
+
+.log_content pre
+{
+    font-size:   11px;
+    line-height: 16px;
+}
+
+.session_name .error-btn
+{
+    position:   relative;
+    top:        -3px;
+}
+
+.session_name .popover
+{
+    max-width: 600px;
+}
+
+.session_name .popover-content
+{
+    white-space: pre-wrap;
+    font-weight: normal;
+    font-size:   11px;
+    line-height: 16px;
+}
+
+.btn.btn_check i
+{
+    position: relative;
+    display:  inline-block;
+    width:    11px;
+}
+
+.btn.btn_check i:before
+{
+    font-family: FontAwesome;
+    font-style:  normal;
+    content:     "\f096";
+}
+
+.btn.btn_check.active i:before
+{
+    content: "\f046";
+}
+
+.user_table
+{
+    margin-top: 10px;
+}
+
+.profile_label
+{
+    padding-right:  6px;
+    float:          none;
+}
+
+.profile_delete
+{
+    padding-left: 2px;
+}
+
+.user_buttons
+{
+    white-space: nowrap;
+}
+
+.btn.profile
+{
+    border-top-right-radius:    0;
+    border-bottom-right-radius: 0;
+    border-right:               0;
+}
+
+.profile_menu
+{
+    position:   fixed;
+    height:     auto;
+    overflow-x: hidden;
+}

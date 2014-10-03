@@ -1,0 +1,538 @@
+<!-- Session Toolbar -->
+<div class="row">
+    <div class="span9">
+        <div id="session_error"></div>
+        [[ if ne .user.type "player" ]]
+        <span class="form-inline session_create_form">
+            <span class="control-group">
+                <span class="controls">
+                    <input id="session_name" class="input-medium" type="text" placeholder="Name..."/>
+                </span>
+            </span>
+            <span class="control-group">
+                <span class="controls">
+                    <select id="exercises"></select>
+                    <a title="Settings..." id="session_edit" class="btn"><i class="icon-cog"></i></a>
+                    <a id="session_create" class="btn"><i class="icon-plus"></i> Add</a>
+                </span>
+            </span>
+        </span>
+        [[ end ]]
+        <span class="form-search session_search">
+            <input type="text" class="input-medium search-query" placeholder="Search..."/>
+            <i class="icon-search"></i>
+        </span>
+    </div>
+</div>
+<!-- Session List -->
+<div id="sessions">
+</div>
+<div id="settings">
+</div>
+<!-- general settings -->
+[[ define "general_session_settings" ]]
+[[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
+[[ template "uneditable_input_text" sub "label" "Exercise" "value" "{{exercise.name}}" ]]
+[[ end ]]
+<!-- checkpoint settings -->
+[[ define "checkpoint_session_settings" ]]
+[[ template "input_checkbox" sub "id" "checkpoints_enabled"   "label" "Save Checkpoints" "value" "{{#bool checkpoints.enabled}} checked=\"checked\"{{/bool}}" ]]
+[[ template "input_number"   sub "id" "checkpoints_frequency" "label" "Frequency" "append" "Minutes" "value" "{{checkpoints.frequency}}" ]]
+[[ template "input_number"   sub "id" "checkpoints_keep"      "label" "Keep" "append" "Checkpoints" "value" "{{checkpoints.keep}}" ]]
+[[ end ]]
+<!-- time settings -->
+[[ define "time_session_settings" ]]
+[[ template "input_checkbox" sub "id" "time_paused"   "label" "Start Paused" "value" "{{#bool time.paused}} checked=\"checked\"{{/bool}}" ]]
+[[ template "input_number"   sub "id" "time_step"     "label" "Time Step" "append" "Seconds" "value" "{{time.step}}" ]]
+[[ template "input_number"   sub "id" "time_factor"   "label" "Time Factor" "append" "&times;" "value" "{{time.factor}}" ]]
+[[ template "input_number"   sub "id" "time_end_tick" "label" "End" "prepend" 1 "prepend_value" "{{#is_positive time.end_tick}} checked=\"checked\"{{/is_positive}}" "append" "Ticks" "value" "{{time.end_tick}}" ]]
+[[ end ]]
+<!-- orbat settings -->
+[[ define "orbat_session_settings" ]]
+{{#each_pair sides.list}}
+    <div class="sides">
+    [[ template "input_checkbox" sub "id" "sides_{{key}}" "label" "Create {{value.name}}" "value" "{{#bool value.created}} checked=\"checked\"{{/bool}}" ]]
+    </div>
+{{/each_pair}}
+[[ template "input_checkbox" sub "id" "no_side_object_creation" "label" "Create objects without sides" "value" "{{#bool sides.no_side_objects}} checked=\"checked\"{{/bool}}" ]]
+[[ end ]]
+<!-- access settings -->
+[[ define "access_session_settings" ]]
+<div class="control-group">
+    <label class="control-label">Owner</label>
+    <div class="controls">
+        <span class="uneditable-input read_only">{{owner.name}}</span>
+    </div>
+</div>
+[[ template "input_checkbox" sub "id" "access_restricted" "label" "Limit to authorized users only" "value" "{{#bool restricted.enabled}} checked=\"checked\"{{/bool}}" ]]
+<div class="control-group user_group">
+    <label class="control-label">Users</label>
+    <div class="controls">
+        <div class="input-append">
+            <select id="user_select">
+            {{#each_pair users}}
+                <option value="{{value.id}}">{{value.name}}</option>
+            {{/each_pair}}
+            </select>
+            <a class="btn user_add"><i class="icon-plus"></i> Add</a>
+        </div>
+        <table class="table table-striped user_table">
+            <tbody/>
+        </table>
+    </div>
+</div>
+[[ end ]]
+<!-- logs settings -->
+[[ define "logs_session_settings" ]]
+[[ template "input_checkbox" sub "id" "logs_rotate" "label" "Rotate Logs" "value" "{{#bool logs.rotate}} checked=\"checked\"{{/bool}}" ]]
+<div class="control-group">
+    <label class="control-label" for="logs_size">Max File Size</label>
+    <div class="controls">
+        <div class="input-append">
+            <input type="number" id="logs_size" value="{{logs.max_size}}">
+            <div id="size_unit" class="btn-group">
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">
+                       {{#equal logs.size_unit "kbytes"}} KB {{/equal}}
+                       {{#equal logs.size_unit "mbytes"}} MB {{/equal}}
+                       {{#equal logs.size_unit "lines"}} Lines {{/equal}}
+                    </span>
+                    <span class="caret"/>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="emu_btn"> KB </a></li>
+                    <li><a class="emu_btn"> MB </a></li>
+                    <li><a class="emu_btn"> Lines </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+[[ template "input_number" sub "id" "logs_files" "label" "Keep" "prepend" 1 "prepend_value" "{{#is_positive logs.max_files}} checked=\"checked\"{{/is_positive}}" "append" "Rotated Files" "value" "{{logs.max_files}}" ]]
+<div class="control-group">
+    <label class="control-label">Level</label>
+    <div class="controls">
+        <select id="logs_level">
+            <option type="error"{{#equal logs.level "error"}} selected="selected"{{/equal}} value="error">Error</option>
+            <option type="info"{{#equal logs.level "info"}} selected="selected"{{/equal}} value="info">Info</option>
+            <option type="all"{{#equal logs.level "all"}} selected="selected"{{/equal}} value="all">All</option>
+        </select>
+    </div>
+</div>
+[[ end ]]
+<!-- advanced settings -->
+[[ define "advanced_session_settings" ]]
+[[ template "input_number" sub "id" "pathfind_threads" "label" "Path Find" "append" "Threads" "value" "{{pathfind.threads}}" ]]
+[[ template "input_number" sub "id" "recorder_frequency" "label" "Recorder Frequency" "append" "Ticks" "value" "{{recorder.frequency}}" ]]
+[[ template "input_number" sub "id" "reports_clean_frequency" "label" "Report Clean Frequency" "append" "Ticks" "value" "{{reports.clean_frequency}}" ]]
+[[ template "input_checkbox" sub "id" "timeline_autostart" "label" "Automatically start timeline events" "value" "{{#bool timeline.autostart}} checked='checked'{{/bool}}" ]]
+[[ template "input_checkbox" sub "id" "mapnik_enabled" "label" "Activate new terrain rendering (EXPERIMENTAL)" "value" "{{#bool mapnik.enabled}} checked='checked'{{/bool}}" ]]
+[[ end ]]
+
+<!-- rng context -->
+[[ define "rng_context" ]]
+<div class="control-group">
+    <label class="control-label">Distribution</label>
+    <div class="controls">
+        <select id="rng_[[ .type ]]_distribution">
+            [[ $v := concat "rng." .type ".distribution" ]]
+            <option type="linear"{{#equal [[ $v ]] "linear"}} selected="selected"{{/equal}} value="linear">Linear</option>
+            <option type="gaussian"{{#equal [[ $v ]] "gaussian"}} selected="selected"{{/equal}} value="gaussian">Gaussian</option>
+        </select>
+    </div>
+</div>
+[[ $id := concat "rng_" .type "_deviation" ]]
+[[ $v := concat "{{rng." .type ".deviation}}" ]]
+[[ template "input_number" sub "id" $id "label" "Deviation" "value" $v "float" 1 ]]
+[[ $id := concat "rng_" .type "_mean" ]]
+[[ $v := concat "{{rng." .type ".mean}}" ]]
+[[ template "input_number" sub "id" $id "label" "Mean" "value" $v "float" 1 ]]
+[[ end ]]
+<!-- rng settings -->
+[[ define "rng_session_settings" ]]
+[[ template "input_number" sub "id" "rng_seed" "label" "Seed" "prepend" 1 "prepend_value" "{{#is_positive rng.seed}} checked=\"checked\"{{/is_positive}}" "value" "{{rng.seed}}" ]]
+<ul class="nav nav-pills controls">
+    <li class="active"><a href="#pill_fire" data-toggle="tab">Fire</a></li>
+    <li><a href="#pill_wound" data-toggle="tab">Wound</a></li>
+    <li><a href="#pill_perception" data-toggle="tab">Perception</a></li>
+    <li><a href="#pill_breakdown" data-toggle="tab">Breakdown</a></li>
+</ul>
+<div class="pill-content">
+    <div class="pill-pane active" id="pill_fire"> [[ template "rng_context" sub "type" "fire" ]] </div>
+    <div class="pill-pane" id="pill_wound"> [[ template "rng_context" sub "type" "wound" ]] </div>
+    <div class="pill-pane" id="pill_perception"> [[ template "rng_context" sub "type" "perception" ]] </div>
+    <div class="pill-pane" id="pill_breakdown"> [[ template "rng_context" sub "type" "breakdown" ]] </div>
+</div>
+[[ end ]]
+<!-- Settings Template -->
+<script type="text/template" id="session_settings_template">
+    <div class="modal fade modal_session">
+        <div id="settings_slide" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="active item">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+                        <h3>{{name}} Session Settings</h3>
+                    </div>
+                    <form class="modal-body tabbable form-horizontal">
+                        {{#is_option status stopped=""}}
+                        <ul class="nav nav-tabs">
+                            {{#unless is_default}}
+                            <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
+                            {{/unless}}
+                            <li{{#if is_default}} class="active"{{/if}}><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
+                            <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
+                            <li><a href="#tab_rng" data-toggle="tab"> Random </a></li>
+                            {{#unless is_default}}
+                            <li><a href="#tab_orbat" data-toggle="tab"> Orbat </a></li>
+                            {{/unless}}
+                            <li><a href="#tab_access" data-toggle="tab"> Access </a></li>
+                            <li><a href="#tab_logs" data-toggle="tab"> Logs </a></li>
+                            <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
+                            {{#if ui_plugins}}
+                            <li><a href="#tab_plugins" data-toggle="tab"> Plugins </a></li>
+                            {{/if}}
+                        </ul>
+                        <div class="tab-content">
+                            {{/is_option}}
+                            {{#unless is_default}}
+                            <div class="tab-pane active" id="tab_general">[[ template "general_session_settings" . ]] </div>
+                            {{/unless}}
+                            {{#is_option status stopped=""}}
+                            <div class="tab-pane{{#if is_default}} active{{/if}}" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_orbat"> [[ template "orbat_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_access"> [[ template "access_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_logs"> [[ template "logs_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
+                            {{#if ui_plugins}}
+                            <div class="tab-pane" id="tab_plugins">
+                                {{#iterate_pair ui_plugins}}
+                                {{#if list}}
+                                <div class="row-fluid">
+                                    <div class="span3 plugin_left_col">
+                                        <label class="checkbox inline">
+                                            <input type="checkbox" id="{{list.0.id}}"{{list.0.checked}}/>
+                                            {{list.0.label}}
+                                        </label>
+                                    </div>
+                                    <div class="pull-left plugin_edit">
+                                        <a class="btn btn-small" data-link="#{{list.0.id}}" data-ref="{{list.0.idx}}"><i class="icon-cog"></i></a>
+                                    </div>
+                                    <div class="span3 offset1">
+                                        <label class="checkbox inline">
+                                            <input type="checkbox" id="{{list.1.id}}"{{list.1.checked}}/>
+                                            {{list.1.label}}
+                                        </label>
+                                    </div>
+                                    <div class="pull-left plugin_edit">
+                                        <a class="btn btn-small" data-link="#{{list.1.id}}" data-ref="{{list.1.idx}}"><i class="icon-cog"></i></a>
+                                    </div>
+                                </div>
+                                {{else}}
+                                <div class="row-fluid">
+                                    <div class="span3 plugin_left_col">
+                                        <label class="checkbox inline">
+                                            <input type="checkbox" id="{{item.id}}"{{item.checked}}/>
+                                            {{item.label}}
+                                        </label>
+                                    </div>
+                                    <div class="pull-left plugin_edit">
+                                        <a class="btn btn-small" data-link="#{{item.id}}" data-ref="{{item.idx}}"><i class="icon-cog"></i></a>
+                                    </div>
+                                </div>
+                                {{/if}}
+                                {{/iterate_pair}}
+                            </div>
+                            {{/if}}
+                        </div>
+                        {{/is_option}}
+                    </form>
+                </div>
+                {{#each ui_plugins}}
+                <div class="item">
+                    <div class="modal-header">
+                        <h3>
+                            <a class="btn slide_back" href="#settings_slide"><i class="icon-chevron-left"></i></a>
+                            {{label}} Plugin Settings
+                        </h3>
+                    </div>
+                    <form class="modal-body tabbable form-horizontal">
+                        {{#if headers}}
+                        <ul class="nav nav-tabs">
+                            {{#each headers}}
+                            <li{{#if active}} class="active"{{/if}}><a href="#tab_{{id}}" data-toggle="tab"> {{label}} </a></li>
+                            {{/each}}
+                        </ul>
+                        {{/if}}
+                        <div class="tab-content plugin_items">
+                            {{#each contents}}
+                            <div class="tab-pane{{#if active}} active{{/if}}" id="tab_{{id}}">
+                                {{#each options}}
+                                {{#equal type "string|file|file_list"}}
+                                [[ template "input_text" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{value}}" ]]
+                                {{/equal}}
+                                {{#equal type "boolean"}}
+                                [[ template "input_checkbox" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{checked}}" ]]
+                                {{/equal}}
+                                {{#equal type "integer|time"}}
+                                [[ template "input_number" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{value}}" ]]
+                                {{/equal}}
+                                {{#equal type "enumeration"}}
+                                <div class="control-group">
+                                    <label class="control-label" for="{{xid}}">{{label}}</label>
+                                    <div class="controls">
+                                        <select id="{{xid}}">
+                                            {{#each items}}
+                                            <option value="{{value}}"{{selected}}>{{value}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                {{/equal}}
+                                {{/each}}
+                            </div>
+                            {{/each}}
+                        </div>
+                    </form>
+                </div>
+                {{/each}}
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-inverse apply">Save</a>
+                <a class="btn btn-inverse" data-dismiss="modal">Discard</a>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+<!-- Error Template -->
+<script type="text/template" id="session_error_template">
+    <div class="alert alert-error"><b>Error</b> {{content}}</div>
+</script>
+<!-- session_play_btn -->
+[[ define "session_play_btn" ]]
+{{#if buttons.play}}
+<a class="btn{{#if buttons.play_disabled}} disabled{{/if}}{{#if buttons.play_dropdown}} dropdown-toggle" data-toggle="dropdown{{else}} play{{/if}}">
+    <i class="icon-play"></i>
+    {{#if buttons.play_dropdown}}
+    <span class="caret"></span>
+    {{/if}}
+</a>
+{{#if buttons.play_dropdown}}
+<ul class="dropdown-menu">
+    [[ if .reset ]]
+    <li><a class="play emu_btn">From Scratch</a></li>
+    <li class="divider"></li>
+    [[ end ]]
+    {{#each checkpoints.list}}
+        <li><a class="play emu_btn" name="{{.}}">{{.}}</a></li>
+    {{/each}}
+</ul>
+{{/if}}
+{{/if}}
+[[ end ]]
+<!-- session_join_btn -->
+[[ define "session_join_btn" ]]
+{{#if buttons.join}}
+<a title="Join" class="btn link"><i class="icon-share"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_pause_btn -->
+[[ define "session_pause_btn" ]]
+{{#if buttons.pause}}
+<a title="Pause" class="btn pause"><i class="icon-pause"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_replay_btn -->
+[[ define "session_replay_btn" ]]
+{{#if buttons.replay}}
+<a title="Replay" class="btn replay"><i class="icon-repeat"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_stop_btn -->
+[[ define "session_stop_btn" ]]
+{{#if buttons.stop}}
+<a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_restore_btn -->
+[[ define "session_restore_btn" ]]
+{{#if buttons.restore}}
+<a title="Restore" class="btn restore"><i class="icon-eject"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_edit_btn -->
+[[ define "session_edit_btn" ]]
+{{#if buttons.edit}}
+<a title="Settings..." class="btn edit"><i class="icon-cog"></i> </a>
+{{/if}}
+[[ end ]]
+<!-- session_clone_btn -->
+[[ define "session_clone_btn" ]]
+{{#if buttons.clone}}
+<a title="Clone" class="btn clone"><i class="icon-plus-sign"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_download_btn -->
+[[ define "session_download_btn" ]]
+{{#if buttons.download}}
+<a title="Download" class="btn download"><i class="icon-download-alt"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_log_btn -->
+[[ define "session_log_btn" ]]
+{{#if buttons.log}}
+<a title="Logs..." href="?pg=logs&session={{{id}}}" class="btn log"><i class="icon-file-text-alt"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_archive_btn -->
+[[ define "session_archive_btn" ]]
+{{#if buttons.archive}}
+<a title="Archive" class="btn archive{{#if buttons.archive_disabled}} disabled{{/if}}"><i class="icon-hdd"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_delete_btn -->
+[[ define "session_delete_btn" ]]
+{{#if buttons.delete}}
+<a title="Delete" class="btn delete{{#if buttons.delete_disabled}} disabled{{/if}}"><i class="icon-trash"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_spin_btn -->
+[[ define "session_spin_btn" ]]
+{{#if buttons.busy}}
+<a class="btn disabled spin_btn busy"></a>
+{{/if}}
+[[ end ]]
+<!-- Session Template -->
+<script type="text/template" id="session_plugins">
+    [[ template "plugins.ttml" . ]]
+</script>
+<script type="text/template" id="session_template">
+    <div id="{{{id}}}" class="span9">
+        <div class="row-fluid well session_row{{#is_option status replaying="" waiting=""}} sub_session{{/is_option}}">
+            <span class="well session {{{status}}}"></span>
+            <div class="session_name">
+                {{name}}
+                {{#if last_error}}
+                <span class="badge badge-important emu_btn error-btn">
+                    <i class="icon-exclamation"/>
+                </span>
+                {{/if}}
+                <span class="info"> :{{port}} </span>
+                <span class="info"> {{status}} </span>
+            </div>
+            {{#is_option status replaying="" waiting=""}}
+            {{else}}
+            <div class="session_content">
+                <div class="span5">
+                    <div class="shift_right">
+                        <div class="item_label">
+                            <span>Model</span>
+                            {{model.name}}
+                        </div>
+                        <div class="item_label">
+                            <span>Terrain</span>
+                            {{terrain.name}}
+                        </div>
+                        <div class="item_label">
+                            <span>Exercise</span>
+                            {{exercise.name}}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    {{#if start_time}}
+                    <div class="item_label">
+                        <span>Start</span>
+                        {{start_time}}
+                    </div>
+                    <div class="item_label">
+                        <span>Duration</span>
+                        {{duration}}
+                    </div>
+                    <div class="item_label">
+                        <span>Clients</span>
+                        {{clients.length}} connected
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+            {{/is_option}}
+            <div class="session_top_right">
+                <div class="btn-group">
+                    [[ template "session_join_btn" . ]]
+                    [[ if ne .user.type "player" ]]
+                        [[ template "session_play_btn" . ]]
+                        [[ template "session_pause_btn" . ]]
+                        [[ template "session_replay_btn" . ]]
+                        [[ template "session_stop_btn" . ]]
+                        [[ template "session_restore_btn" . ]]
+                        [[ template "session_edit_btn" . ]]
+                        [[ template "session_clone_btn" . ]]
+                        [[ template "session_download_btn" . ]]
+                        [[ template "session_log_btn" . ]]
+                        [[ template "session_archive_btn" . ]]
+                        [[ template "session_delete_btn" . ]]
+                        [[ template "session_spin_btn" . ]]
+                    [[ end ]]
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- Session Redirect Template -->
+<script type="text/template" id="session_redirect_template">
+    <div class="modal fade in modal_redirect">
+        <div class="modal-header" style="text-align:center">
+            <h4> To open this link, you need a Sword Client </h4>
+        </div>
+        <form class="modal-body form-horizontal">
+            <div class="control-group">
+                <div class="controls">
+                    <a class="btn btn-success redirect">
+                        <img alt="" width="32" height="32" src="img/tango/32x32/categories/applications-other.png" />
+                        Run Client
+                    </a>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <a class="btn btn-info" href="/sword_client_setup_vc100.exe">
+                        <img alt="" width="32" height="32" src="img/tango/32x32/apps/system-installer.png" />
+                        Get Client
+                    </a>
+                </div>
+            </div>
+            [[ template "input_checkbox" sub "id" "redirect_{{id}}" "label" "Remember my choice" ]]
+        </form>
+    </div>
+</script>
+<!-- Profile Template -->
+<script type="text/template" id="profile_template">
+<span class="emu_btn label label-info profile_label" data-id="{{id}}">{{id}}<span class="profile_delete">&times;</span></span>
+</script>
+<!-- User selected Template -->
+<script type="text/template" id="user_selected_template">
+    <td class="user_name" data-name="{{name}}">{{name}}</td>
+    <td class="profiles"/>
+    <td class="user_buttons">
+        <div class="btn-group pull-right">
+            {{#if profiles}}
+            <div class="btn-group">
+                <button class="btn profile dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-user"></i>
+                    <span class="caret"></span>
+                </button>
+                <ul class="profile_menu dropdown-menu">
+                    {{#each profiles}}
+                        <li><a class="emu_btn profile_add" name="{{.}}">{{.}}</a></li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/if}}
+            <button class="btn user_delete"> <i class="icon-trash"></i> </button>
+        </div>
+    </td>
+</script>

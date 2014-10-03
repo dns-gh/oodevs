@@ -1,0 +1,47 @@
+[[ define "input_text" ]]
+<div class="control-group">
+    <label class="control-label" for="[[ .id ]]">[[ .label ]]</label>
+    <div class="controls">
+        <input type="[[ if .type ]][[ .type ]][[ else ]]text[[ end ]]" id="[[ .id ]]"[[ if .value ]] value="[[ .value ]]"[[ end ]][[ if .class ]] class="[[ .class ]]"[[ end ]]>
+    </div>
+</div>
+[[ end ]]
+
+[[ define "uneditable_input_text" ]]
+<div class="control-group">
+    <label class="control-label">[[ .label ]]</label>
+    <div class="controls">
+        <span class="uneditable-input read_only">[[ .value ]]</span>
+    </div>
+</div>
+[[ end ]]
+
+[[ define "input_number" ]]
+<div class="control-group">
+    <label class="control-label" for="[[ .id ]]">[[ .label ]]</label>
+    <div class="controls">
+        <div class="[[ if .prepend ]]input-prepend checkbox_addon[[ end ]][[ if .append ]] input-append[[ end ]]">
+            [[ if .prepend ]]<label class="add-on"><input id="[[ .id ]]_check" type="checkbox"[[ if .prepend_value ]][[ .prepend_value ]][[ end ]]/>
+                </label>[[ end ]]<input[[ if .prepend ]] class="field"[[ end ]] type="number"[[ if .float ]] data-type="float"[[ end ]] id="[[ .id ]]"[[ if .value ]] value="[[ .value ]]"[[ end ]]>[[ if .append ]]<span class="add-on">
+                [[ .append ]]</span>[[ end ]]
+        </div>
+    </div>
+</div>
+[[ end ]]
+
+[[ define "input_checkbox" ]]
+<div class="control-group">
+    <div class="controls">
+        <label class="checkbox[[ if .pair ]] inline input-small[[ end ]]">
+            <input type="checkbox" id="[[ .id ]]"[[ if .value ]][[ .value ]][[ end ]]>
+            [[ .label ]]
+        </label>
+        [[ if .pair ]]
+        <label class="checkbox inline">
+            <input type="checkbox" id="[[ .id2 ]]"[[ if .value2 ]][[ .value2 ]][[ end ]]>
+            [[ .label2 ]]
+        </label>
+        [[ end ]]
+    </div>
+</div>
+[[ end ]]

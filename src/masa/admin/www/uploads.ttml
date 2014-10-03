@@ -1,0 +1,121 @@
+<div class="row">
+    <div class="span9">
+        <div class="hide">
+            <iframe id="upload_target" name="upload_target"></iframe>
+        </div>
+        <form id="upload_form" class="form-horizontal" enctype="multipart/form-data" method="post" target="upload_target">
+            <div class="control-group">
+                <label class="control-label"><strong>Package</strong></label>
+                <div class="controls">
+                    <input type="file" name="cache"/>
+                    <a class="btn upload disabled"><i class="icon-upload"></i> Upload</a>
+                </div>
+            </div>
+        </form>
+        <div id="upload_error"></div>
+        <div class="hide alert alert-info upload_alert">
+            <a class="spin_btn"></a>
+            <span>
+                <strong>Uploading, </strong>
+                please wait...
+            </span>
+        </div>
+        <div id="packages">
+        </div>
+    </div>
+</div>
+<!-- Error template -->
+<script type="text/template" id="upload_error_template">
+    <div class="alert alert-error"><b>Error</b> {{content}}</div>
+</script>
+<!-- Package template -->
+<script type="text/template" id="package_template">
+    <form class="package accordion-group">
+        <div class="package_name">
+            {{name}}
+            <br/>
+            <span class="label label-info">{{version}}</span>
+        </div>
+        <div class="package_description">
+            {{description}}
+            <span class="toggle">
+                <a class="btn"><i class="icon-arrow-down"></i> Toggle All </a>
+            </span>
+        </div>
+        {{#if items.length}}
+        <table class="table table-striped">
+
+            [[ $cols := 4 ]]
+            [[ define "upload_header" ]]
+            <tr class="package_row[[ .more ]]">
+                <[[ .tag ]] class="type">[[ .type ]]s</[[ .tag ]]>
+                <[[ .tag ]]>Date</[[ .tag ]]>
+                <[[ .tag ]]>Checksum</[[ .tag ]]>
+                <[[ .tag ]]></[[ .tag ]]>
+            </tr>
+            [[ end ]]
+
+            [[ define "upload_row" ]]
+            {{#is_first_item items "[[ .type ]]"}}
+            <thead>
+                [[ template "upload_header" sub "tag" "th" "more" "" "type" .type ]]
+            </thead>
+            <tbody>
+                {{else}}
+                {{#has_item_type items "[[ .type ]]"}}
+                {{#is_odd_item_row items "[[ .type ]]"}}
+                <tr class="hide"><td colspan="[[ .cols ]]"></td></tr>
+                {{/is_odd_item_row}}
+                [[ template "upload_header" sub "tag" "td" "more" " sub_header" "type" .type ]]
+                {{/has_item_type}}
+                {{/is_first_item}}
+
+                {{#for_all_items items "[[ .type ]]"}}
+                <tr class="package_row{{#equal action "error"}} error{{/equal}}">
+                    <td class="name">
+                        {{name}}
+                        {{#equal action "error"}}
+                        <span>
+                            <a class="label label-important error" rel="tooltip" title="{{error}}">Error</a>
+                        </span>
+                        {{/equal}}
+                    </td>
+                    <td class="date">{{date}}</td>
+                    <td class="checksum">{{#if checksum.length}}0x{{checksum}}{{/if}}</td>
+                    <td class="action" data-rel="{{id}}">
+                        {{#equal action "add"}}
+                        <a class="btn btn_check add" data-toggle="button"> <i></i> Add </a>
+                        {{/equal}}
+                        {{#equal action "update"}}
+                        <a class="btn btn_check update" data-toggle="button"> <i></i> Replace </a>
+                        {{/equal}}
+                        [[ if eq .type "exercise" ]]
+                        <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
+                        [[ end ]]
+                    </td>
+                </tr>
+                [[ if eq .type "exercise" ]]
+                <tr id="briefing_{{id}}" class="hide">
+                    <td colspan="[[ .cols ]]" class="item_briefing">
+                        {{#if model.length}}<div><span class="item_label">Model</span> {{model}}</div>{{/if}}
+                        {{#if terrain.length}}<div><span class="item_label">Terrain</span> {{terrain}}</div>{{/if}}
+                        <div class="briefing_content">{{{briefing}}}</div>
+                    </td>
+                </tr>
+                <tr class="hide"><td colspan="[[ .cols ]]"></td></tr>
+                [[ end ]]
+                {{/for_all_items}}
+                [[ end ]]
+
+                [[ template "upload_row" sub "cols" $cols "type" "model" ]]
+                [[ template "upload_row" sub "cols" $cols "type" "terrain" ]]
+                [[ template "upload_row" sub "cols" $cols "type" "exercise" ]]
+            </tbody>
+        </table>
+        <div class="form-actions">
+            <a class="btn save"><i class="icon-ok"></i> Install</a>
+            <a class="btn discard"><i class="icon-remove"></i> Discard</a>
+        </div>
+        {{/if}}
+    </form>
+</script>

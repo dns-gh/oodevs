@@ -1,0 +1,26 @@
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    [[ if eq .type "cluster" ]]
+    <title>Sword Cluster</title>
+    [[ else ]]
+    <title>[[ .name ]] Sword Node </title>
+    [[ end ]]
+    <meta name="description" content="" />
+    <script>
+        [[ if ne .type "cluster" ]]
+        var uuid = "[[ .uuid ]]";
+        var tcp = [[ .tcp ]];
+        [[ end ]]
+        var user = {};
+        [[ range $k, $v := .user ]]
+        user.[[ $k ]] = "[[ $v ]]";
+        [[ end ]]
+    </script>
+    <link rel="stylesheet" href="css/bootstrap-2.3.0.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <!--[if IE ]>
+    <link rel="stylesheet" type="text/css" href="css/iexplore.css" />
+    <![endif]-->
+</head>

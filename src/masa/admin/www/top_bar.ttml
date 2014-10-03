@@ -1,0 +1,42 @@
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container">
+            [[ if ne .type "cluster" ]]
+            [[ if eq .user.type "administrator" ]]
+            <ul class="nav pull-left">
+                <a href=".." class="btn btn-inverse"><i class="icon-sitemap"></i></a>
+            </ul>
+            [[ end ]]
+            <a class="brand_name brand"> [[ .name ]]</a>
+            [[ end ]]
+            <a class="brand"> Sword <span class="ufirst">[[ .type ]]</span></a>
+            <ul class="nav pull-right">
+                [[ if .user ]]
+                <li class="label
+                [[ if eq .user.type "administrator" ]]
+                label-important
+                [[ else ]]
+                [[ if eq .user.type "manager" ]]
+                label-warning
+                [[ else ]]
+                [[ if eq .user.type "user" ]]
+                label-success
+                [[ else ]]
+                label-info
+                [[ end ]]
+                [[ end ]]
+                [[ end ]]
+                ufirst"> [[ .user.type ]] </li>
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> [[ .user.name ]] <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="emu_btn no_select"><b>[[ .user.name ]]</b><br/>[[ .user.username ]]</a></li>
+                    <li class="divider"></li>
+                    <li><a class="emu_btn sign_out"><i class="i"></i> Sign Out </a></li>
+                </ul>
+                </li>
+                [[ end ]]
+            </ul>
+        </div>
+    </div>
+</div>

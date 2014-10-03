@@ -29,7 +29,11 @@
     <!-- Maximum number of concurrently running simulations in data_migrations_test -->
     <property name="migrations.jobs" value="4"/>
 
-    <propertyregex property="platform32" input="${platform}" regexp="(\w+)_x64" select="\1" defaultvalue="${platform}"/>
+    <!-- admin properties -->
+    <property name="admin.dir" location="${root.dir}/src/masa/admin"/>
+    <propertyregex property="sub_platform" input="${platform}" regexp="(\w+)_x64" select="\1"/>
+    <propertyregex property="platform32"   input="${platform}" regexp="(\w+)_x64" select="\1" defaultvalue="${platform}"/>
+    <property name="platform64" value="${platform32}_x64"/>
 
     <math result="test.port2">
         <op op="+" datatype="int">
@@ -633,7 +637,8 @@
         ,package.gaming_app
         ,package.sdk
         ,package.proto
-        ,package.xsd"
+        ,package.xsd
+        ,package.admin"
         description="package the installers and packs"/>
 
     <!-- Package misc -->
@@ -783,6 +788,25 @@
                     prefix="${sdk.prefix}/SWORD_API_Protocol"/>
             </zip>
         </safe-move>
+    </target>
+
+    <target name="package.admin">
+        <sequential>
+            <local name="output"/>
+            <property name="output" value="${out.dir}/sword_cloud_${platform}_bin.zip"/>
+            <safe-move file="${output}">
+                <zip destfile="@{file}">
+                    <mappedresources>
+                        <fileset dir="${out.dir}/release"
+                            includes="**/cloud_*.pdb **/cloud_*.exe"/>
+                        <flattenmapper/>
+                    </mappedresources>
+                    <fileset dir="${bin.dir}" includes="node.exe,proxy.exe,swproxy.exe"/>
+                    <fileset dir="${admin.dir}" includes="www/"/>
+                    <fileset dir="${root.dir}/helpers/soft_restart" includes="soft_restart.cmd"/>
+                </zip>
+            </safe-move>
+        </sequential>
     </target>
 
     <!--
@@ -1152,15 +1176,112 @@
 
     <!--
     ============================================================================
+    admin
+    ============================================================================
+    -->
+
+    <macrodef name="pretty_json">
+        <attribute name="src"/>
+        <attribute name="dst"/>
+        <sequential>
+            <echo file="@{dst}/plugins.ttml">{"_":0</echo>
+            <generate input="@{src}" extension="json" target="@{dst}/.PHONY">
+                <python taskname="json">
+                    <arg value="-m"/>
+                    <arg value="json.tool"/>
+                    <arg value="@{file}"/>
+                    <arg value="@{dst}/@{basename}.ttml"/>
+                </python>
+                <echo taskname="json" message="@{basename}"/>
+                <echo file="@{dst}/plugins.ttml" append="true">,"@{basename}":[[ template "@{basename}.ttml" . ]]</echo>
+            </generate>
+            <echo file="@{dst}/plugins.ttml" append="true">}</echo>
+        </sequential>
+    </macrodef>
+
+    <target name="admin.web">
+        <lessdir dir="${admin.dir}/www/css"/>
+        <coffee  dir="${admin.dir}/www/js" dst="uploads"      files="utils.coffee,uploads.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="sessions"     files="utils.coffee,sessions.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="packages"     files="utils.coffee,packages.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="nodes"        files="utils.coffee,nodes.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="login"        files="utils.coffee,login.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="update_login" files="utils.coffee,update_login.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="users"        files="utils.coffee,users.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="about"        files="utils.coffee,about.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="logs"         files="utils.coffee,logs.coffee"/>
+        <coffee  dir="${admin.dir}/www/js" dst="utils"        files="utils.coffee"/>
+    </target>
+
+    <target name="admin.externals">
+        <uglify dir="${admin.dir}/www/debug" dst="${admin.dir}/www/js/externals.js"
+            files="jquery-1.8.2.js
+                  ,bootstrap-2.3.0.js
+                  ,underscore-1.3.3.js
+                  ,backbone-0.9.2.js
+                  ,handlebars-1.0.0.beta.6.js
+                  ,spin.js
+                  ,jquery.cookie.js
+                  ,json2.js"/>
+    </target>
+
+    <target name="admin.plugins">
+        <xslt basedir="${data.dir}/app-data/plugins"
+            includes="**/plugin.xml"
+            destdir="${out.dir}/json"
+            style="${admin.dir}/plugin.xsl" >
+            <regexpmapper from="(\w+)[\\\/]+plugin.xml$" to="\1.json" />
+        </xslt>
+        <pretty_json src="${out.dir}/json" dst="${admin.dir}/www" />
+    </target>
+
+    <macrodef name="setversion2">
+        <attribute name="dir"/>
+        <attribute name="filename"/>
+        <sequential>
+            <python>
+                <arg value="${root.dir}/bin/buildtools/editres.py"/>
+                <arg value="copy"/>
+                <arg value="--type=RT_VERSION"/>
+                <arg value="${root.dir}/build/template.res"/>
+                <arg value="@{dir}/@{filename}"/>
+            </python>
+            <python>
+                <arg value="${root.dir}/bin/buildtools/editres.py"/>
+                <arg value="editversion"/>
+                <arg value="--version=${version.version}"/>
+                <arg value="--product-name=Sword Cloud"/>
+                <arg value="--original-filename=@{filename}"/>
+                <arg value="@{dir}/@{filename}"/>
+            </python>
+        </sequential>
+    </macrodef>
+
+    <target name="admin.versions">
+        <setversion2 dir="${bin.dir}" filename="node.exe"/>
+        <setversion2 dir="${bin.dir}" filename="proxy.exe"/>
+    </target>
+
+    <!-- go target -->
+    <target name="admin" depends="admin.web
+                                 ,admin.externals
+                                 ,admin.plugins
+                                 ,go.build
+                                 ,admin.versions"/>
+
+    <!--
+    ============================================================================
     main
     ============================================================================
     -->
     <target name="update" description="update package dependencies">
         <update name="7z" version="9.30-1"/>
         <update name="asciidoc" version="8.6.8"/>
+        <update name="bcrypt" version="2.2ccc049ff4f2"/>
         <update name="boost" version="1.55.r717"/>
         <update name="buildtools"/>
         <update name="cmake" version="3.0"/>
+        <update name="cpp-netlib" version="0.9.3.r721"/>
         <update name="depends" version="2.2.6000"/>
         <update name="elevate" version="1.0"/>
         <update name="flexlm" version="11.8"/>
@@ -1175,6 +1296,7 @@
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="iconv" version="1.14.r619"/>
         <update name="icu" version="4.52.1"/>
+        <update name="libarchive" version="3.0.4.r691"/>
         <update name="libpng" version="1.6.6"/>
         <update name="mapnik" version="2.2.0.r735"/>
         <update name="DIA"/>
@@ -1262,6 +1384,7 @@
                                 build,
                                 go,
                                 timeline,
+                                admin,
                                 test,
                                 documentation,
                                 package"/>
