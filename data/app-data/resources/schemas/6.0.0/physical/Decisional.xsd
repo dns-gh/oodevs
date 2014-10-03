@@ -48,6 +48,7 @@
         <xs:element name="perception" minOccurs="0">
           <xs:complexType>
             <xs:attribute name="detect-destroyed-units" type="xs:boolean" use="required"/>
+            <xs:attribute name="max-level" type="xs:string" use="required"/>
           </xs:complexType>
         </xs:element>
         <xs:element name="recon-and-search-speeds" minOccurs="0">
