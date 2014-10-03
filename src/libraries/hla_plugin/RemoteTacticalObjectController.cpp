@@ -370,7 +370,7 @@ void RemoteTacticalObjectController::PropagationChanged( const std::string& iden
     elem->set_latitude( data[0].latitude );
     elem->set_longitude( data[0].longitude );
     // side
-    message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( 1 );
+    message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( 0 );
     // attributes
     sword::MissionParameter_Value* value = message().mutable_parameters()->mutable_elem( 4 )->add_value();
     value->add_list()->set_identifier( sword::ObjectMagicAction::disaster );
