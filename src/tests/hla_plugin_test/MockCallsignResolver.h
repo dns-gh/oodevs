@@ -24,6 +24,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockCallsignResolver, CallsignResolver_ABC )
 {
+    MOCK_METHOD( Generate, 2 )
     MOCK_METHOD( Add, 3 )
     MOCK_METHOD( ResolveCallsign, 1 )
     MOCK_METHOD( ResolveUniqueId, 1 )

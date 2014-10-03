@@ -16,6 +16,7 @@
 #include "hla_plugin/UniqueId.h"
 #include "hla_plugin/UnicodeString.h"
 #include "hla_plugin/InteractionsNetn.h"
+#include "rpr/EntityIdentifier.h"
 #include <vector>
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
@@ -46,6 +47,33 @@ namespace hla
         return lhs.list == rhs.list;
     }
 }
+}
+
+namespace rpr
+{
+    template <typename Archive>
+    inline void operator >> (  Archive& archive, EntityIdentifier& id )
+    {
+        id.Deserialize( archive );
+    }
+    std::ostream& operator<< ( std::ostream& os, const EntityIdentifier& id );
+    inline std::ostream& operator<< ( std::ostream& os, const WorldLocation& loc )
+    {
+        return os << "(" << loc.X() << "," << loc.Y() << ","<< loc.Z() << ")";
+    }
+    template< typename F >
+    inline bool fequal( F lhs, F rhs, F tol )
+    {
+        return boost::test_tools::check_is_close_t()( lhs, rhs, boost::test_tools::percent_tolerance_t<F>(tol) );
+    }
+    inline bool operator== (const WorldLocation& lhs, const WorldLocation& rhs )
+    {
+        return fequal( lhs.X(), rhs.X(), 1e-6) && fequal( lhs.Y(), rhs.Y(), 1e-6) && fequal( lhs.Z(), rhs.Z(), 1e-6);
+    }
+    inline bool operator== (const Orientation& lhs, const Orientation& rhs )
+    {
+        return fequal( lhs.Psi(), rhs.Psi(), 1e-6) && fequal( lhs.Theta(), rhs.Theta(), 1e-6) && fequal( lhs.Psi(), rhs.Psi(), 1e-6);
+    }
 }
 
 namespace

@@ -114,7 +114,8 @@ namespace hla
                 unsigned long st = archive.GetSize();
                 archive << list[i];
                 unsigned long en = archive.GetSize();
-                writePadding( archive, en-st );
+                if( i < size-1 )
+                    writePadding( archive, en-st );
             }
         }
         template< typename Archive >
@@ -134,7 +135,8 @@ namespace hla
                 list[i] = tmp;
                 std::size_t en = archive.GetSize();
                 // since we are deserializing, st > en
-                readPadding( archive, st-en );
+                if( i < size-1 )
+                    readPadding( archive, st-en );
             }
         }
         std::vector< ElemType > list;

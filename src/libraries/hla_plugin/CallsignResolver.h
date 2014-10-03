@@ -11,6 +11,7 @@
 #define plugins_hla_CallsignResolver_h
 
 #include "CallsignResolver_ABC.h"
+#include <xeumeuleu/streams/xisubstream.hpp>
 #include <map>
 
 namespace plugins
@@ -28,12 +29,13 @@ class CallsignResolver : public CallsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CallsignResolver();
+    explicit CallsignResolver( xml::xisubstream xis );
     virtual ~CallsignResolver();
     //@}
 
     //! @name Operations
     //@{
+    virtual std::string Generate( const std::string& name, unsigned long simId ) const;
     virtual void Add( unsigned long simulationIdentifier, const std::string& callsign, const std::vector< char >& uniqueId );
     virtual std::string ResolveCallsign( unsigned long simulationIdentifier ) const;
     virtual std::vector< char > ResolveUniqueId( unsigned long simulationIdentifier ) const;
@@ -50,6 +52,7 @@ private:
 
     //! @name Member data
     //@{
+    const bool addIdentifier_;
     T_Identifiers identifiers_;
     T_SimulationIdentifiers simulationIdentifiers_;
     //@}

@@ -19,6 +19,11 @@
 #include <hla/InteractionIdentifier.h>
 #include <hla/Parameter.h>
 
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
+
 using namespace plugins::hla;
 
 namespace
@@ -130,6 +135,52 @@ namespace
             tmp.Serialize( serializer );
         }
     };
+
+    template< typename T >
+    struct ArrayOfUuidDecoder : public ::hla::Encodable_ABC< T >
+    {
+    private:
+        interactions::ListOfUnits T::* member_;
+
+    public:
+        ArrayOfUuidDecoder(interactions::ListOfUnits T::* m) : member_(m) {}
+        virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
+        {
+            VariableArray< NETN_UUID > tmp;
+            tmp.Deserialize(deserializer);
+            (object.*member_).list.resize(tmp.list.size());
+            std::transform( tmp.list.begin(), tmp.list.end(), (object.*member_).list.begin(), &uuid2ObjDef );
+        }
+        virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
+        {
+            VariableArray< NETN_UUID > tmp;
+            tmp.list.resize((object.*member_).list.size());
+            std::transform( (object.*member_).list.begin(), (object.*member_).list.end(), tmp.list.begin(), &objectDef2uuid );
+            tmp.Serialize(serializer);
+        }
+    };
+
+    template< typename T >
+    struct TransportUnitIdentifierDecoder : public ::hla::Encodable_ABC< T >
+    {
+        virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
+        {
+            NETN_UUID tmp;
+            tmp.Deserialize(deserializer);
+            boost::uuids::uuid uid;
+            memcpy(&uid, tmp.data().data(), sizeof( uid ) );
+            object.transportUnitIdentifier = UnicodeString(boost::lexical_cast<std::string>(uid));
+        }
+        virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
+        {
+            boost::uuids::string_generator gen;
+            const boost::uuids::uuid uid = gen(object.transportUnitIdentifier.str());
+            std::vector<char> v(uid.size());
+            std::copy(uid.begin(), uid.end(), v.begin());
+            NETN_UUID tmp(v);
+            tmp.Serialize(serializer);
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +228,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnOff
     RegisterNetnService( interaction, name, logger_ );
     interaction.Register( "TransportData", * new TransportDataEncoder< interactions::NetnOfferConvoy >() );
     REGISTER( "OfferType"         , &interactions::NetnOfferConvoy::offerType );
-    REGISTER( "Transporters", &interactions::NetnOfferConvoy::listOfTransporters );
+    interaction.Register( "Transporters", * new ArrayOfUuidDecoder<interactions::NetnOfferConvoy>(&interactions::NetnOfferConvoy::listOfTransporters) );
     return DoRegister( name, interaction, true, true );
 }
 
@@ -246,8 +297,8 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnCon
 {
     const std::string name = "SCP_Service.TransportEmbarkmentStatus";
     RegisterNetnService( interaction, name, logger_ );
-    REGISTER( "EmbarkedObjects"   , &interactions::NetnConvoyEmbarkmentStatus::listOfObjectEmbarked );
-    REGISTER( "TransportUnitIdentifier", &interactions::NetnConvoyEmbarkmentStatus::transportUnitIdentifier );
+    interaction.Register( "EmbarkedObjects", * new ArrayOfUuidDecoder<interactions::NetnConvoyEmbarkmentStatus>(&interactions::NetnConvoyEmbarkmentStatus::listOfObjectEmbarked) );
+    interaction.Register( "TransportUnitIdentifier", * new TransportUnitIdentifierDecoder< interactions::NetnConvoyEmbarkmentStatus >() );
     return DoRegister( name, interaction, true, true );
 }
 
@@ -259,8 +310,8 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnCon
 {
     const std::string name = "SCP_Service.TransportDisembarkmentStatus";
     RegisterNetnService( interaction, name, logger_ );
-    REGISTER( "DisembarkedObjects", &interactions::NetnConvoyDisembarkmentStatus::listOfObjectDisembarked );
-    REGISTER( "TransportUnitIdentifier", &interactions::NetnConvoyDisembarkmentStatus::transportUnitIdentifier );
+    interaction.Register( "DisembarkedObjects", * new ArrayOfUuidDecoder<interactions::NetnConvoyDisembarkmentStatus>(&interactions::NetnConvoyDisembarkmentStatus::listOfObjectDisembarked) );
+    interaction.Register( "TransportUnitIdentifier", * new TransportUnitIdentifierDecoder< interactions::NetnConvoyDisembarkmentStatus >() );
     return DoRegister( name, interaction, true, true );
 }
 
@@ -326,6 +377,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_Off
     RegisterTMR( interaction, name, logger_ );
     REGISTER( "isOffering", &interactions::TMR_OfferTransferModellingResponsibility::isOffering );
     REGISTER( "Reason", &interactions::TMR_OfferTransferModellingResponsibility::reason );
+    REGISTER( "Respondent", &interactions::TMR_OfferTransferModellingResponsibility::respondent );
     return DoRegister( name, interaction, true, true );
 }
 
@@ -390,7 +442,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_Dis
 {
     const std::string name = "MRM_Object.MRM_DisaggregationRequest";
     RegisterMRM( interaction, name, logger_ );
-    REGISTER( "AggregateUUID", &interactions::MRM_DisaggregationRequest::aggregateUUID );
+    REGISTER( "AggregateUuid", &interactions::MRM_DisaggregationRequest::aggregateUUID );
     REGISTER( "AggregationState", &interactions::MRM_DisaggregationRequest::aggregationState );
     REGISTER( "UuidList", &interactions::MRM_DisaggregationRequest::uuidsList );
     return DoRegister( name, interaction, true, true );

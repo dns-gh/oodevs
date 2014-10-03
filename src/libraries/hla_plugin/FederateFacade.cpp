@@ -166,10 +166,10 @@ void FederateFacade::Register( ClassListener_ABC& listener )
         surfaceVesselClass_->Register( listener );
     if( aircraftClass_ )
         aircraftClass_->Register( listener );
-	if( groundVehicleClass_ )
-		groundVehicleClass_->Register( listener );
-	if( humanClass_ )
-		humanClass_->Register( listener );
+    if( groundVehicleClass_ )
+        groundVehicleClass_->Register( listener );
+    if( humanClass_ )
+        humanClass_->Register( listener );
     if( rprAggregateClass_ )
         rprAggregateClass_->Register( listener );
     if( rprSurfaceVesselClass_ )
@@ -190,10 +190,10 @@ void FederateFacade::Unregister( ClassListener_ABC& listener )
         surfaceVesselClass_->Unregister( listener );
     if( aggregateClass_ )
         aggregateClass_->Unregister( listener );
-	if( groundVehicleClass_.get() )
-		groundVehicleClass_->Unregister( listener );
-	if( humanClass_.get() )
-		humanClass_->Unregister( listener );
+    if( groundVehicleClass_.get() )
+        groundVehicleClass_->Unregister( listener );
+    if( humanClass_.get() )
+        humanClass_->Unregister( listener );
     if( rprAggregateClass_.get() )
         rprAggregateClass_->Unregister( listener );
     if( rprSurfaceVesselClass_.get() )
@@ -368,15 +368,15 @@ void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier,
     if( type.Kind() == static_cast< char >( rpr::EntityType::kind_LIFEFORM ) )
     {   
         if( humanClass_ )
-	        humanClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+            humanClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
     }
     else
     {
         switch( type.Domain() )
         {
         case rpr::EntityType::domain_LAND:
-		    if( groundVehicleClass_ )
-			    groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+            if( groundVehicleClass_ )
+                groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
             break;
         case rpr::EntityType::domain_AIR:
             if( aircraftClass_ )

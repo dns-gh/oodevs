@@ -14,7 +14,7 @@
 
 namespace hla
 {
-	template <typename T> class Interaction;
+    template <typename T> class Interaction;
 }
 
 namespace plugins
