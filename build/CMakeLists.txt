@@ -739,7 +739,7 @@ target_link_libraries( cloud_client
 )
 
 # runtime_test
-add_target( runtime_test admin "tests/runtime_test" OPTIONS test )
+add_target( runtime_test tests "tests/runtime_test" OPTIONS test )
 target_link_libraries( runtime_test
     runtime_server
     ${TOOLS_LIBRARIES}
@@ -747,7 +747,7 @@ target_link_libraries( runtime_test
 )
 
 # host_test
-add_target( host_test admin "tests/host_test" OPTIONS test )
+add_target( host_test tests "tests/host_test" OPTIONS test )
 masa_set_target_folder( host_test tests )
 target_link_libraries( host_test
     host
@@ -755,7 +755,7 @@ target_link_libraries( host_test
 )
 
 # web_test
-add_target( web_test admin "tests/web_test" OPTIONS test )
+add_target( web_test tests "tests/web_test" OPTIONS test )
 target_link_libraries( web_test
     runtime_server
     web
