@@ -175,6 +175,10 @@ integration.startReccePoint = function( point, partially, radius, recceSpeed )
     perceptionReconnaissanceCallbacks[ point.reconnaissanceAction ] = function( arg )
         point.bActionRecceFinished = true
     end
+    point.bActionRecceObjFinished = false
+    perceptionReconnaissanceCallbacks[ point.recceObj ] = function( arg )
+        point.bActionRecceObjFinished = true
+    end
     reportFunction(eRC_DebutReconnaissancePoint )
     if partially then
         point:elementIsReconnoitered()
@@ -309,6 +313,10 @@ integration.startRecceArea = function( area, recceSpeed )
     area.bActionRecceFinished = false
     perceptionReconnaissanceCallbacks[ area.reconnaissanceAction ] = function( arg )
         area.bActionRecceFinished = true
+    end
+    area.bActionRecceObjFinished = false
+    perceptionReconnaissanceCallbacks[ area.recceObj ] = function( arg )
+        area.bActionRecceObjFinished = true
     end
     reportFunction(eRC_DebutReconnaissanceZone )
     return true
@@ -603,9 +611,12 @@ end
 -- @see integration.startReccePoint
 -- @see integration.startRecceArea
 -- @param target Area or point knowledge
+-- @param waitForObjectRecce Boolean, whether or not this method should wait
+-- for both the target reconnoitering and the object reconnoitering actions
+-- to be finished before returning true.
 -- @return Boolean
-integration.startedRecce = function( target )
-    return target.bActionRecceFinished
+integration.startedRecce = function( target, waitForObjectRecce )
+    return target.bActionRecceFinished and ( ( not waitForObjectRecce ) or target.bActionRecceObjFinished )
 end
 
 --- Returns true if the ongoing searching action on the given target is finished, false otherwise.
