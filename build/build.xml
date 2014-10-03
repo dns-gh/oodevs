@@ -1082,7 +1082,7 @@
         </sequential>
     </macrodef>
 
-    <target name="web">
+    <target name="timeline.web">
         <i18n/>
         <lessdir dir="${www.dir}/css"/>
         <coffee  dir="${www.dir}/js" dst="core" files="segment_tree.coffee
@@ -1101,7 +1101,7 @@
         <minify  dst="underscore"/>
     </target>
 
-    <target name="web.test.build">
+    <target name="timeline.web.test.build">
         <coffee dir="${www.dir}" dst="tests/content" files="js/segment_tree.coffee
                                                           ,tests/tests.coffee"/>
         <concat destfile="${www.dir}/tests/tests.js">
@@ -1110,11 +1110,11 @@
         </concat>
     </target>
 
-    <target name="web.test" depends="web.test.build">
+    <target name="timeline.web.test" depends="timeline.web.test.build">
         <mocha dir="${www.dir}/tests" files="tests.js"/>
     </target>
 
-    <target name="server.test">
+    <target name="timeline.go.test">
         <!-- Unify these tests with gosword -->
         <go cmd="test" module="masa/timeline/...">
             <env key="TEST_PORT" value="${test.port}"/>
@@ -1122,7 +1122,7 @@
         </go>
     </target>
 
-    <target name="timeline_ui.test">
+    <target name="timeline.ui.test">
         <echo message="test.port=${test.port}"/>
         <go cmd="test" module="masa/timelineui/...">
             <env key="TIMELINE_DISABLE_PROXY" value=""/>
@@ -1135,7 +1135,7 @@
         </go>
     </target>
 
-    <target name="timeline.test" depends="server.test,web.test,timeline_ui.test"/>
+    <target name="timeline.test" depends="timeline.go.test,timeline.web.test,timeline.ui.test"/>
 
     <target name="timeline.package">
         <setversion file="${bin.dir}/timeline_player.exe"
@@ -1168,11 +1168,11 @@
 
     <target name="timeline.deploy"
         description="minimal build to have a working timeline for selftraining"
-        depends="go.proto,go.build,web,timeline.package">
+        depends="go.proto,go.build,timeline.web,timeline.package">
     </target>
 
     <target name="timeline" description="build time applications"
-        depends="go.proto,go.build,web,timeline.test,timeline.package"/>
+        depends="go.proto,go.build,timeline.web,timeline.test,timeline.package"/>
 
     <!--
     ============================================================================
