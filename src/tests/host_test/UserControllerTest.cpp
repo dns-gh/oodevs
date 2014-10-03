@@ -11,7 +11,7 @@
 #   pragma warning( disable : 4244 )
 #endif
 
-#include "host_test.h"
+#include "host_test_pch.h"
 
 #include "runtime/FileSystem.h"
 #include "runtime/PropertyTree.h"

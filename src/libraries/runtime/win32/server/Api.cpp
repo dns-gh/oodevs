@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 #include "../Api.h"
+#include "runtime/Helpers.h"
 #include "runtime/Scoper.h"
 #include <cpplog/cpplog.hpp>
 #include <boost/bind.hpp>
@@ -21,8 +22,6 @@ using namespace runtime;
 
 namespace
 {
-#define COUNT_OF(X) (sizeof(X)/sizeof*(X))
-
 void TryCloseHandle( HANDLE handle )
 {
     if( handle )

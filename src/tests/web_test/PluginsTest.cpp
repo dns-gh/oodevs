@@ -7,9 +7,10 @@
 //
 // *****************************************************************************
 
-#include "web_test.h"
+#include "web_test_pch.h"
 
 #include "runtime/FileSystem.h"
+#include "runtime/Helpers.h"
 #include "runtime/PropertyTree.h"
 #include "web/Configs.h"
 #include "web/Plugins.h"
@@ -31,8 +32,6 @@ BOOST_AUTO_TEST_CASE( plugin_directory_skips_invalid_root )
     BOOST_CHECK( !plugins.Count() );
     BOOST_CHECK( plugins.GetNames( 0, INT_MAX ).empty() );
 }
-
-#define COUNT_OF( X ) (sizeof(X)/sizeof*(X))
 
 BOOST_AUTO_TEST_CASE( plugin_directory_parses )
 {

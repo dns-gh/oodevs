@@ -7,6 +7,15 @@
 //
 // *****************************************************************************
 
+#ifdef _MSC_VER
+#pragma warning( push, 0 )
+#endif
+#include <QtCore>
+#include <QtGui>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
+
 #include "client/Head.h"
 
 #include "runtime/CrashHandler.h"
@@ -15,10 +24,6 @@
 #include "runtime/Factory.h"
 
 #include "cpplog/cpplog.hpp"
-
-#include <QApplication>
-#include <QDebug>
-#include <QMessageBox>
 
 using namespace runtime;
 using namespace gui;

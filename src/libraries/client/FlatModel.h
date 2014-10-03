@@ -9,9 +9,6 @@
 #ifndef FLATMODEL_H_
 #define FLATMODEL_H_
 
-#include <QAbstractItemModel>
-#include <QVector>
-#include <QStringList>
 #include <boost/shared_ptr.hpp>
 
 namespace gui
@@ -143,9 +140,10 @@ struct FlatModel : public QAbstractItemModel
     template< typename U >
     QModelIndex Find( const U& target )
     {
-        for( T_Items::const_iterator it = items_.begin(); it != items_.end(); ++it )
+        int row = 0;
+        for( auto it = items_.begin(); it != items_.end(); ++it, ++row )
             if( (*it)->Equal( target ) )
-                return index( std::distance< T_Items::const_iterator >( items_.begin(), it ), 0 );
+                return index( row, 0 );
         return QModelIndex();
     }
 

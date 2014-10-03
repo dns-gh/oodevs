@@ -8,7 +8,8 @@
 // *****************************************************************************
 #ifndef WIN32_MOCK_API_H__
 #define WIN32_MOCK_API_H__
-#include "runtime_test.h"
+
+#include "runtime_test_pch.h"
 #include <runtime/win32/Api_ABC.h>
 
 namespace test

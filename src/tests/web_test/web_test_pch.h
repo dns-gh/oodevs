@@ -7,10 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef HOST_TEST_H__
-#define HOST_TEST_H__
+#ifndef web_test_pch_h__
+#define web_test_pch_h__
 
 #include "runtime/Io.h"
+
+#ifdef _MSC_VER
+#pragma warning( disable: 4505 )
+#endif
 
 #include <boost/test/auto_unit_test.hpp>
 #include <turtle/mock.hpp>
@@ -18,9 +22,15 @@
 
 extern tools::TestOptions testOptions;
 
-struct NilReader : public io::Reader_ABC
+struct StreamReader : public io::Reader_ABC
 {
-    int Read( void* /*dst*/, size_t /*size*/ ) { return 0; }
+    StreamReader( std::istream& src ) : src_( src ) {}
+    int Read( void* dst, size_t size )
+    {
+        src_.read( reinterpret_cast< char* >( dst ), size );
+        return static_cast< int >( src_.gcount() );
+    }
+    std::istream& src_;
 };
 
-#endif // HOST_TEST_H__
+#endif // web_test_pch_h__

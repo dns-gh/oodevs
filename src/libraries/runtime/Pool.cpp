@@ -143,7 +143,7 @@ Pool::Future Pool::Post( const Task& task )
 void Pool::Stop()
 {
     service_.stop();
-    while( true )
+    for( ;; )
     {
         boost::unique_lock< boost::mutex > lock( access_ );
         if( threads_.empty() )

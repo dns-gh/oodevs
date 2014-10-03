@@ -3,16 +3,23 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
-#include "web_test.h"
 
-tools::TestOptions testOptions;
+#ifndef __client_pch_h_
+#define __client_pch_h_
 
-::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
-{
-    testOptions = tools::ParseBoostTestOptions( argc, argv );
-    return 0;
-}
+#ifdef _MSC_VER
+#pragma warning( push, 0 )
+#endif
 
+#include <QtCore>
+#include <QtGui>
+#include <QtNetwork>
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
+
+#endif // __client_pch_h_

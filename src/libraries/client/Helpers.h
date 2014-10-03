@@ -10,8 +10,6 @@
 #ifndef HELPERS_H__
 #define HELPERS_H__
 
-#define COUNT_OF(X) (sizeof(X)/sizeof*(X))
-
 namespace gui
 {
     inline QString QUtf8( const std::string& text )

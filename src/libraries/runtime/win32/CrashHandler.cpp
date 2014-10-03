@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "runtime/CrashHandler.h"
+#include "runtime/Helpers.h"
 
 #include <windows.h> // must be included first
 #include <dbghelp.h>
@@ -20,8 +21,6 @@ using namespace runtime;
 namespace
 {
 static LONG g_access;
-
-#define COUNT_OF( X ) (sizeof(X)/sizeof*(X))
 
 // disable all further calls to SetUnhandledExceptionFilter
 #ifndef _WIN64

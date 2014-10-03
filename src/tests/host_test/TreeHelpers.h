@@ -10,7 +10,7 @@
 #ifndef TREE_HELPERS_H
 #define TREE_HELPERS_H
 
-#include "host_test.h"
+#include "host_test_pch.h"
 #include <runtime/PropertyTree.h>
 
 #include <boost/optional/optional.hpp>

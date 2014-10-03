@@ -7,20 +7,17 @@
 //
 // *****************************************************************************
 
+#include "client_pch.h"
 #include "ItemModel.h"
 #include "moc_ItemModel.cpp"
 #include "Helpers.h"
 
+#include "runtime/Helpers.h"
 #include "runtime/PropertyTree.h"
 
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/static_assert.hpp>
-
-#include <QApplication>
-#include <QPainter>
-#include <QPixmap>
-#include <QStyledItemDelegate>
 
 using namespace gui;
 using namespace property_tree;
