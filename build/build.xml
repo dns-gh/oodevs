@@ -1235,31 +1235,9 @@
         <pretty_json src="${out.dir}/json" dst="${admin.dir}/www" />
     </target>
 
-    <macrodef name="setversion2">
-        <attribute name="dir"/>
-        <attribute name="filename"/>
-        <sequential>
-            <python>
-                <arg value="${root.dir}/bin/buildtools/editres.py"/>
-                <arg value="copy"/>
-                <arg value="--type=RT_VERSION"/>
-                <arg value="${root.dir}/build/template.res"/>
-                <arg value="@{dir}/@{filename}"/>
-            </python>
-            <python>
-                <arg value="${root.dir}/bin/buildtools/editres.py"/>
-                <arg value="editversion"/>
-                <arg value="--version=${version.version}"/>
-                <arg value="--product-name=Sword Cloud"/>
-                <arg value="--original-filename=@{filename}"/>
-                <arg value="@{dir}/@{filename}"/>
-            </python>
-        </sequential>
-    </macrodef>
-
     <target name="admin.versions">
-        <setversion2 dir="${bin.dir}" filename="node.exe"/>
-        <setversion2 dir="${bin.dir}" filename="proxy.exe"/>
+        <setversion version="${version.version}" file="${bin.dir}/node.exe" product="Sword Cloud"/>
+        <setversion version="${version.version}" file="${bin.dir}/proxy.exe" product="Sword Cloud"/>
     </target>
 
     <!-- go target -->
