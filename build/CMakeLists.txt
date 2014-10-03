@@ -687,7 +687,7 @@ target_link_libraries( migratexml
 )
 
 # runtime
-add_target( runtime libraries "libraries/runtime" )
+add_target( runtime admin "libraries/runtime" )
 target_link_libraries( runtime
     shlwapi
     ${ARCHIVE_LIBRARIES}
@@ -701,7 +701,7 @@ if( WIN32 )
 endif()
 
 # web_server
-add_target( web libraries "libraries/web" )
+add_target( web admin "libraries/web" )
 target_link_libraries( web
     ws2_32
     ${CPP_NETLIB_CLIENT_LIBRARIES}
@@ -711,7 +711,7 @@ target_link_libraries( web
 )
 
 # host
-add_target( host libraries "libraries/host" OPTIONS qt )
+add_target( host admin "libraries/host" OPTIONS qt )
 target_link_libraries( host
     web
     version
@@ -721,17 +721,17 @@ target_link_libraries( host
 )
 
 # cloud_server
-add_target( cloud_server applications "applications/cloud_server" OPTIONS executable )
+add_target( cloud_server admin "applications/cloud_server" OPTIONS executable )
 target_link_libraries( cloud_server
     host
     runtime_server
 )
 
 # client
-add_target( client libraries "libraries/client" OPTIONS qt )
+add_target( client admin "libraries/client" OPTIONS qt )
 
 # cloud_client
-add_target( cloud_client applications "applications/cloud_client" OPTIONS win32 qt executable )
+add_target( cloud_client admin "applications/cloud_client" OPTIONS win32 qt executable )
 target_link_libraries( cloud_client
     client
     host
@@ -739,7 +739,7 @@ target_link_libraries( cloud_client
 )
 
 # runtime_test
-add_target( runtime_test tests "tests/runtime_test" OPTIONS test )
+add_target( runtime_test admin "tests/runtime_test" OPTIONS test )
 target_link_libraries( runtime_test
     runtime_server
     ${TOOLS_LIBRARIES}
@@ -747,7 +747,7 @@ target_link_libraries( runtime_test
 )
 
 # host_test
-add_target( host_test tests "tests/host_test" OPTIONS test )
+add_target( host_test admin "tests/host_test" OPTIONS test )
 masa_set_target_folder( host_test tests )
 target_link_libraries( host_test
     host
@@ -755,7 +755,7 @@ target_link_libraries( host_test
 )
 
 # web_test
-add_target( web_test tests "tests/web_test" OPTIONS test )
+add_target( web_test admin "tests/web_test" OPTIONS test )
 target_link_libraries( web_test
     runtime_server
     web
