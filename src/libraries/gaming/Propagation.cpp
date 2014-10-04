@@ -47,7 +47,9 @@ Propagation::Propagation( const tools::Path& file, const PropagationManager& man
     const geometry::Rectangle2d& extent = extractor->GetExtent();
     globalExtent_= geometry::Rectangle2f( converter.ConvertFromGeo( extent.BottomLeft() ),
                                           converter.ConvertFromGeo( extent.TopRight() ) );
-    const double pixelSize = extractor->GetPixelSize().X();
+    const double pixelSizeX = ( globalExtent_.Right() - globalExtent_.Left() ) / colsCount;
+    const double pixelSizeY = ( globalExtent_.Top() - globalExtent_.Bottom() ) / rowsCount;
+    const double pixelSize = ( pixelSizeX + pixelSizeY) / 2.;
     pFactory_.reset( new RGBATextureFactory( &rgba[ 0 ], colsCount, pixelSize ) );
     pTree_.reset( new TextureTree( *pFactory_, colsCount, rowsCount ) );
 }
