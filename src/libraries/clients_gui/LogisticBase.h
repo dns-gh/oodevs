@@ -58,12 +58,14 @@ public:
                            const kernel::Entity_ABC& entity,
                            gui::PropertiesDictionary& dictionary,
                            bool active,
-                           bool isBase );
+                           bool isBase,
+                           bool readonly );
              LogisticBase( kernel::Controllers& controllers,
                            const kernel::Entity_ABC& entity,
                            gui::PropertiesDictionary& dictionary,
                            bool active,
-                           xml::xistream& xis );
+                           xml::xistream& xis,
+                           bool readonly );
     virtual ~LogisticBase();
     //@}
 
