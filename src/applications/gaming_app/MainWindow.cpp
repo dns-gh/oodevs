@@ -343,7 +343,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
     AddLayer( raster, "main,composition,miniviews", tr( "Raster" ) );
     if( mapnik )
-        AddLayer( *mapnik, "main,composition,miniviews", tr( "Terrain (new rendering)" ) );
+        AddLayer( *mapnik, "main,composition", tr( "Terrain (new rendering)" ) );
     AddLayer( terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
     AddLayer( contour, "main,composition,miniviews", tr( "Contour Lines" ) );
     AddLayer( urbanLayer, "main,miniviews", tr( "Urban blocks" ) );

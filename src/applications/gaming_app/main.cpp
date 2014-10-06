@@ -15,6 +15,7 @@
 #include "tools/WinArguments.h"
 #include "MT_Tools/MT_Logger.h"
 #include <gdal_ogr/GdalLogging.h>
+#include <graphics/GraphicsLogging.h>
 
 namespace
 {
@@ -40,6 +41,7 @@ namespace
 int main()
 {
     gdal_ogr::SetLogger( CreateMTLogger( "gdal_ogr" ) );
+    graphics::SetLogger( CreateMTLogger( "graphics" ) );
     return tools::Main(
         tools::WinArguments( GetCommandLineW() ),
         MT_Logger_ABC::eGaming, false, &Main );
