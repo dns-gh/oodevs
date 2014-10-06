@@ -401,7 +401,7 @@ Tree NodeController::GetClient( bool x64 ) const
     if( !client_ )
         throw web::HttpException( web::NOT_FOUND );
     const auto target = Package::MakeDependency( ::GetClient( x64 ), "gaming" );
-    const auto item = client_->Find( *target, false );
+    const auto item = client_->FindAlive( *target );
     if( !item )
         throw web::HttpException( web::NOT_FOUND );
     return client_->GetPropertiesFrom( *item );
@@ -416,7 +416,7 @@ void NodeController::DownloadClient( web::Chunker_ABC& dst, bool x64 ) const
     if( !client_ )
         throw web::HttpException( web::NOT_FOUND );
     const auto target = Package::MakeDependency( ::GetClient( x64 ), "gaming" );
-    const auto item = client_->Find( *target, false );
+    const auto item = client_->FindAlive( *target );
     if( !item )
         throw web::HttpException( web::NOT_FOUND );
     try

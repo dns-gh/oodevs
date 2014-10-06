@@ -47,9 +47,10 @@ public:
     virtual size_t GetSize() const;
     virtual Path GetPath() const;
     virtual Path GetRoot( const Item_ABC& item ) const;
-    virtual T_Item Find( size_t id, bool alive ) const;
-    virtual T_Item Find( const Item_ABC& item, bool alive ) const;
-    virtual T_Item Find( const Path& root, const std::string& checksum, bool alive ) const;
+    virtual T_Item FindId( size_t id ) const;
+    virtual T_Item FindAlive( const Item_ABC& item ) const;
+    virtual T_Items FindAll( const Item_ABC& item ) const;
+    virtual T_Item FindRoot( const Path& root, const std::string& checksum, bool alive ) const;
     virtual T_Item Find( const std::string& type, const std::string& name, const std::string& checksum ) const;
     virtual T_Exercises GetExercises( int offset, int limit ) const;
     virtual size_t CountExercises() const;

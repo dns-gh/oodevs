@@ -26,9 +26,10 @@ namespace mocks
         MOCK_METHOD( InstallWith, 4 );
         MOCK_METHOD( Install, 4 )
         MOCK_METHOD( Uninstall, 3 );
-        MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( size_t, bool ), FindById );
-        MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC&, bool ), FindByItem );
-        MOCK_METHOD_EXT( Find, 3, host::Package_ABC::T_Item( const std::string&, const std::string&, const std::string& ), FindByChecksum );
+        MOCK_METHOD( FindAlive, 1 );
+        MOCK_METHOD( FindAll, 1 );
+        MOCK_METHOD( FindId, 1 );
+        MOCK_METHOD( Find, 3 );
         MOCK_METHOD( GetExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
         MOCK_METHOD( LinkExercise, 1 );

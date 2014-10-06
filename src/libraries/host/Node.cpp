@@ -497,7 +497,7 @@ void Node::DownloadInstall( web::Chunker_ABC& dst, size_t id )
     Scoper unlink;
     {
         boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-        item = install_->Find( id, true );
+        item = install_->FindId( id );
         if( !item )
             throw web::HttpException( web::NOT_FOUND );
         boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
