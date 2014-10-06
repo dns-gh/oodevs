@@ -46,7 +46,7 @@ public:
 private:
     //! @name gui::LogisticTreeView implementation
     //@{
-    virtual void SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior );
+    virtual void SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* currentsuperior, const kernel::Entity_ABC* nominalsuperior );
     virtual const kernel::Entity_ABC* RetrieveSuperior( const kernel::Entity_ABC& entity ) const;
     //@}
 

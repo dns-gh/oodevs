@@ -48,6 +48,7 @@ private:
     virtual void DoUpdate( const sword::ChangeLogisticLinks& message );
     virtual void SetLogisticSuperior( const kernel::LogisticBaseSuperior& );
     virtual void Load( xml::xistream&, const kernel::Entity_ABC* );
+    virtual void UnregisterCurrentSuperior( const gui::LogisticHierarchiesBase* parent );
     //@}
 
 private:

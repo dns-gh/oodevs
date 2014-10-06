@@ -155,6 +155,10 @@ message UnitActionAck {
         error_supply_denied     = 5;
         //! Operation failed because the target is undeployed
         error_undeployed        = 6;
+        //! Operation failed because the parameter is not a logistics automat
+        error_not_log_automat   = 7;
+        //! Operation failed because it would create a cycle in a hierarchy
+        error_hierarchy_cycle   = 8;
     }
 }
 

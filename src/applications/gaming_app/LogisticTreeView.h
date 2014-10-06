@@ -57,7 +57,9 @@ private:
     //@{
     virtual void NotifyUpdated( const LogisticLinks& links );
     virtual const kernel::Entity_ABC* RetrieveSuperior( const kernel::Entity_ABC& entity ) const;
-    virtual void SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior );
+    virtual void SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* currentsuperior, const kernel::Entity_ABC* nominalsuperior );
+    bool PopContext( int context );
+    QString GetErrorText( const sword::UnitMagicActionAck& ack );
     //@}
 
 private:
@@ -66,6 +68,7 @@ private:
     actions::ActionsModel&  actionsModel_;
     const StaticModel&      static_;
     const kernel::Time_ABC& simulation_;
+    std::vector< int >      contexts_;
     //@}
 };
 

@@ -267,3 +267,12 @@ bool LogisticBaseStates::HasQuotas() const
             return true;
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBaseStates::UnregisterCurrentSuperior
+// Created: LDC 2014-10-07
+// -----------------------------------------------------------------------------
+void LogisticBaseStates::UnregisterCurrentSuperior( const gui::LogisticHierarchiesBase* )
+{
+    // NOTHING
+}

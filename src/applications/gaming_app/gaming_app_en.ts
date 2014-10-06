@@ -2021,6 +2021,29 @@ Do you want to replace it?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticTreeView</name>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">SWORD</translation>
+    </message>
+    <message>
+        <source>The operation couldn&apos;t be performed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid subordinate automat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target is not a logistic entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Action cancelled: It would create a cycle in the logistic hierarchy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticsRequestsHistoryTable</name>
     <message>
         <source>Previous state</source>

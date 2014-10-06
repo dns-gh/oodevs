@@ -45,7 +45,7 @@ EntityHierarchies< Interface >::~EntityHierarchies()
     while( it.HasMoreElements() )
     {
         Interface* child = const_cast< kernel::Entity_ABC& >( it.NextElement() ).Retrieve< Interface >();
-        if( child )
+        if( child && child->GetSuperior() == &entity_ )
             child->UnregisterParent();
     }
 }
