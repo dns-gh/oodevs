@@ -357,7 +357,7 @@ void Options::InitializeView()
 // -----------------------------------------------------------------------------
 void Options::InitializeLayers( const std::vector< E_LayerTypes >& types )
 {
-    for( int i = 0; i < types.size(); ++i )
+    for( int i = 0; i < static_cast< int >( types.size() ); ++i )
     {
         const auto name = "Layers/" + ENT_Tr::ConvertFromLayerTypes( types[ i ], ENT_Tr::eToSim );
         Set( name + "/Alpha", 1.f, true );
