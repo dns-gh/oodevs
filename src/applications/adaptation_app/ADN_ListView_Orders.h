@@ -34,7 +34,7 @@ class ADN_ListView_Orders : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_Orders( QWidget* parent );
+             ADN_ListView_Orders( QWidget* parent, const QString& objectName );
     virtual ~ADN_ListView_Orders();
     //@}
 
