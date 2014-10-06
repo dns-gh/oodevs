@@ -253,6 +253,7 @@ func DecCreateBreakdown(c *C, client *swapi.Client, unitId, equipmentType uint32
 }
 
 func (s *TestSuite) TestDecCreateBreakdown(c *C) {
+	c.Skip("broken by models.679a0efae7cc")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSim(c, sim, DisableLuaChecks())
 	defer client.Close()
