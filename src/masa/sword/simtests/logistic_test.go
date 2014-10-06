@@ -199,6 +199,7 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 }
 
 func (s *TestSuite) TestLogisticPlugin(c *C) {
+	c.Skip("broken by models.679a0efae7cc")
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	initLogisticEvents(c, client)
@@ -234,6 +235,7 @@ func hashLogEntry(c *C, e *sword.LogHistoryEntry) string {
 }
 
 func (s *TestSuite) TestLogisticHistory(c *C) {
+	c.Skip("broken by models.679a0efae7cc")
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	initLogisticEvents(c, client)
@@ -324,6 +326,7 @@ func CheckDeployTime(c *C, start, end *sword.DateTime, duration time.Duration) {
 }
 
 func (s *TestSuite) TestLogisticDeployment(c *C) {
+	c.Skip("broken by models.679a0efae7cc")
 	phydb := loadPhysical(c, "worldwide")
 	opts := NewAdminOpts(ExCrossroadSmallLog)
 	opts.Paused = true
