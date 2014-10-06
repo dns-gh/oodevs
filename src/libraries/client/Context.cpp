@@ -410,7 +410,7 @@ void Context::OpenDownload( QNetworkReply* rpy )
 {
     const size_t id = static_cast< size_t >( rpy->request().attribute( id_attribute ).toULongLong() );
     T_Download down = MakeDownload( id, rpy, fs_, pool_, root_ / tmp_dir );
-    connect( down.get(), SIGNAL( Progress( size_t, size_t, int ) ), this, SLOT( OnDownloadProgress( size_t, size_t, int ) ) );
+    connect( down.get(), SIGNAL( Progress( size_t, int64_t, int ) ), this, SLOT( OnDownloadProgress( size_t, int64_t, int ) ) );
     connect( down.get(), SIGNAL( Error( size_t, const QString& ) ), this, SLOT( OnDownloadError( size_t, const QString& ) ) );
     connect( down.get(), SIGNAL( End( size_t, bool ) ), this, SLOT( OnCloseDownload( size_t, bool ) ) );
     QWriteLocker lock( &access_ );
@@ -444,7 +444,7 @@ void SetValue( ItemModel& model,
 // Name: Context::OnDownloadProgress
 // Created: BAX 2012-09-25
 // -----------------------------------------------------------------------------
-void Context::OnDownloadProgress( size_t id, size_t current, int progress )
+void Context::OnDownloadProgress( size_t id, int64_t current, int progress )
 {
     QWriteLocker write( &access_ );
     QModelIndex idx = items_.Find( id );

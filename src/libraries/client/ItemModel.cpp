@@ -81,7 +81,7 @@ Item::Item( const Tree& tree, int status )
     , date_       ( QDateTime::fromString( QGet( tree, "date" ), Qt::ISODate ) )
     , checksum_   ( QGet( tree, "checksum" ) )
     , required_   ( false )
-    , size_       ( Get< uint64_t >( tree, "size" ) )
+    , size_       ( Get< int64_t >( tree, "size" ) )
     , check_state_( Qt::Unchecked )
 {
     // NOTHING

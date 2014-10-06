@@ -47,7 +47,7 @@ signals:
     void Abort();
     void End( size_t id, bool valid );
     void Error( size_t id, const QString& error );
-    void Progress( size_t id, size_t current, int progress );
+    void Progress( size_t id, int64_t current, int progress );
 };
 
 size_t GetDownloadId( const QNetworkReply* rpy );
