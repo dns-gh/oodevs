@@ -31,12 +31,12 @@
 // Name: ADN_ListView_Orders constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Orders::ADN_ListView_Orders( QWidget* parent )
+ADN_ListView_Orders::ADN_ListView_Orders( QWidget* parent, const QString& objectName )
     : ADN_ListView( parent,
-                    "ADN_ListView_Orders",
+                    objectName,
                     QString::fromStdString( ENT_Tr::ConvertFromMissionType( eMissionType_FragOrder ) ) )
     , filterFunctor_( []( const ADN_Missions_ABC& ){ return true; } )
-{   
+{
     pConnector_.reset( new ADN_Connector_ListView< ADN_Models_OrderInfos >( *this ) );
     SetDeletionEnabled( true );
 }

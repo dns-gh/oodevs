@@ -139,7 +139,7 @@ int ADN_App::Run()
         if( !swapLanguage.empty() && ( inputFile.IsEmpty() || outputFile.IsEmpty() ) )
             throw MASA_EXCEPTION( tools::translate( "ADN_App" , "Swap language option needs both the input and the output file options." ).toStdString() );
         if( !qtNamePath.IsEmpty() && inputFile.IsEmpty() )
-            throw MASA_EXCEPTION( tools::translate( "ADN_App" , "Debug qt name path option needs the input file options." ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "ADN_App" , "Debug qt name path option needs the input file option." ).toStdString() );
         if( !newFile.IsEmpty() )
         {
             if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( newFile ) )

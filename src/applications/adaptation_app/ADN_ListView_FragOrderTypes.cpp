@@ -180,7 +180,7 @@ std::string ADN_ListView_FragOrderTypes::GetToolTipFor( const QModelIndex& index
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ListView_Missions::ContextMenuDelete
+// Name: ADN_ListView_FragOrderTypes::ContextMenuDelete
 // Created: NPT 2012-08-01
 // -----------------------------------------------------------------------------
 bool ADN_ListView_FragOrderTypes::ContextMenuDelete()
