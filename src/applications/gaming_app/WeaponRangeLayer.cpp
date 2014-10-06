@@ -111,7 +111,7 @@ WeaponRangeLayer::WeaponRangeLayer( kernel::Controllers& controllers, gui::GlToo
     , strategy_( strategy )
     , useColor_( false )
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 WeaponRangeLayer::~WeaponRangeLayer()
