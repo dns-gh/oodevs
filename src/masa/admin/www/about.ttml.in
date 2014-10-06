@@ -3,8 +3,6 @@
         <dl class="dl-horizontal">
             <dt> Sword Cloud </dt>
             <dd><span class="label label-info"> CLOUD_VERSION </span></dd>
-            <dt> Sword Simulation </dt>
-            <dd><span class="label label-info"> SIMULATION_VERSION </span></dd>
         </dl>
         <div id="license_error"></div>
         <div id="licenses"></div>
