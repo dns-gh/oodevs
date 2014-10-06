@@ -65,6 +65,7 @@ protected:
     //! @name Operations
     //@{
     void CreateOrReplace( const kernel::Entity_ABC& entity );
+    void AddChangeLinksToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 protected slots:
@@ -87,7 +88,6 @@ private:
     //! @name Helpers
     //@{
     virtual void contextMenuEvent( QContextMenuEvent* event );
-    void AddChangeLinksToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
 
     void UpdateLongName( const kernel::Entity_ABC& entity );
     void NotifyDeletedInternal( const kernel::Entity_ABC& entity );

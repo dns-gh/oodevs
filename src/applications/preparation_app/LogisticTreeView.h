@@ -28,6 +28,7 @@ namespace gui
 class LogisticTreeView : public gui::LogisticTreeView
                        , public tools::ElementObserver_ABC< LogisticBaseStates >
                        , public tools::ElementObserver_ABC< gui::LogisticBase >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
 {
 
 public:
@@ -55,6 +56,7 @@ private:
     //@{
     virtual void NotifyUpdated( const LogisticBaseStates& hierarchy );
     virtual void NotifyUpdated( const gui::LogisticBase& hierarchy );
+    virtual void NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu );
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
 };

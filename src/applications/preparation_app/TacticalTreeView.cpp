@@ -267,10 +267,10 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& team, kernel::
 // -----------------------------------------------------------------------------
 void TacticalTreeView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
 {
-    if( ghost.GetGhostType() != eGhostType_Automat || !AddCommonMenu( ghost, menu ) )
+    if( !AddCommonMenu( ghost, menu ) )
         return;
-    AddCommonMenu( ghost, menu );
-    menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ), false, 6 );
+    if( ghost.GetGhostType() == eGhostType_Automat )
+        menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ), false, 6 );
 }
 
 // -----------------------------------------------------------------------------
