@@ -136,7 +136,7 @@ void ColorEditor::Show()
         sideButton_->setChecked( true );
     else
         customButton_->setChecked( true );
-    subordinatesCheckBox_->setChecked( false );
+    subordinatesCheckBox_->setChecked( true );
     colorButton_->SetColor( currentColor );
     okButton_->setFocus();
     show();
