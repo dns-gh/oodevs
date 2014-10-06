@@ -7,7 +7,8 @@
 //
 // *****************************************************************************
 
-#include "runtime_test.h"
+#include "runtime_test_pch.h"
+#include <runtime/Helpers.h>
 #include <runtime/Utf8.h>
 #include <boost/filesystem/path.hpp>
 
@@ -15,8 +16,6 @@ using namespace runtime;
 
 namespace
 {
-    #define COUNT_OF( X ) ( sizeof( X ) / sizeof*( X ) )
-
     // tamil poetry converted with http://macchiato.com/unicode/convert.html
 
     static const unsigned char tamil_utf8[] =

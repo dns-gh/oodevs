@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "runtime_test.h"
+#include "runtime_test_pch.h"
 #include "Win32MockApi.h"
 #include <runtime/Utf8.h>
 #include <runtime/win32/Api_ABC.h>

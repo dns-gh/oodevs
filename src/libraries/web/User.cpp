@@ -9,6 +9,8 @@
 
 #include "User.h"
 
+#include "runtime/Helpers.h"
+
 #include <boost/static_assert.hpp>
 
 using namespace web;
@@ -21,7 +23,6 @@ static const struct { UserType type; std::string text; } types_map[] =
     { USER_TYPE_PLAYER,        "player" },
 };
 
-#define COUNT_OF(X) (sizeof(X)/sizeof*(X))
 BOOST_STATIC_ASSERT( COUNT_OF( types_map ) == USER_TYPE_COUNT );
 
 // -----------------------------------------------------------------------------

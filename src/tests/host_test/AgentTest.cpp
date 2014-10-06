@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "host_test.h"
+#include "host_test_pch.h"
 
 #include "host/Agent.h"
 #include "runtime/PropertyTree.h"

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "runtime_test.h"
+#include "runtime_test_pch.h"
 
 #include <runtime/FileSystem.h>
 #include <runtime/Io.h>

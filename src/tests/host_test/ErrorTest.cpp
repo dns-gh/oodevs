@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "host_test.h"
+#include "host_test_pch.h"
 #include "host/Error.h"
 #include "MockFileSystem.h"
 #include <boost/bind/apply.hpp>

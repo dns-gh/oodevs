@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+#include "client_pch.h"
 #include "Context.h"
 #include "moc_Context.cpp"
 
@@ -16,6 +17,7 @@
 
 #include <runtime/win32/Api.h>
 #include "runtime/FileSystem_ABC.h"
+#include "runtime/Helpers.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
@@ -26,11 +28,6 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-
-#include <QCoreApplication>
-#include <QSettings>
-#include <QSslSocket>
-#include <QStringList>
 
 using namespace gui;
 using namespace property_tree;
@@ -116,7 +113,7 @@ void Context::Start()
 #define RETURN_STATUS( ... ) do {\
     emit StatusMessage( __VA_ARGS__ );\
     return;\
-} while( 0 )
+} ONCE
 
 // -----------------------------------------------------------------------------
 // Name: Context::ParseArguments

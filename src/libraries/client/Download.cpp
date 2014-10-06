@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+#include "client_pch.h"
 #include "Download.h"
 #include "moc_Download.cpp"
 
@@ -18,9 +19,6 @@
 #include <boost/make_shared.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
-
-#include <QCoreApplication>
-#include <QPointer>
 
 using namespace gui;
 using runtime::FileSystem_ABC;

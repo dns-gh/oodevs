@@ -8,11 +8,6 @@ include_directories( ${root_dir}/src/libraries )
 
 include( ${MASA_MACROS} )
 
-# 4127 conditional expression is constant
-add_flag( CMAKE_CXX_FLAGS "/wd4127" )
-# 4505 'function' : unreferenced local function has been removed
-add_flag( CMAKE_CXX_FLAGS "/wd4505" )
-
 add_definitions(
     -DBOOST_SPIRIT_THREADSAFE
     -DPLATFORM=${platform}

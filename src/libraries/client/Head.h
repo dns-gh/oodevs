@@ -12,10 +12,6 @@
 
 #include "ItemModel.h"
 
-#include <QLabel>
-#include <QMainWindow>
-#include <QProgressBar>
-
 namespace runtime
 {
     struct Async;

@@ -6,7 +6,7 @@
 // Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-#include "host_test.h"
+#include "host_test_pch.h"
 
 tools::TestOptions testOptions;
 

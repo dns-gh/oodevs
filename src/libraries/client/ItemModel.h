@@ -12,9 +12,6 @@
 #include "FlatModel.h"
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
-#include <QDateTime>
-#include <QSortFilterProxyModel>
-#include <QAbstractItemView>
 
 namespace gui
 {

@@ -21,8 +21,6 @@ using namespace runtime;
 
 namespace
 {
-#define COUNT_OF(X) (sizeof(X)/sizeof*(X))
-
 void TryCloseHandle( HANDLE handle )
 {
     if( handle )

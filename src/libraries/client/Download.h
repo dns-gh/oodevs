@@ -15,8 +15,6 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include <QNetworkReply>
-
 namespace runtime
 {
     struct FileSystem_ABC;

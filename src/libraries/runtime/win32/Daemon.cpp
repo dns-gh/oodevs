@@ -12,6 +12,7 @@
 #include "Api.h"
 #include "cpplog/cpplog.hpp"
 #include "runtime/Event.h"
+#include "runtime/Helpers.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
@@ -29,7 +30,7 @@ using namespace runtime;
 #define DAEMON_ERROR( MSG ) do {\
     LOG_ERROR( log_ ) << "[daemon] " << api_.GetLastError();\
     LOG_ERROR( log_ ) << "[daemon] " << ( MSG );\
-} while(0 )
+} ONCE
 
 #define ABORT_IF( X, MSG ) if( !( X ) ) {} else {\
     DAEMON_ERROR( MSG );\

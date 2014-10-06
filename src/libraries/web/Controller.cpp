@@ -10,6 +10,7 @@
 #include "Controller.h"
 
 #include "cpplog/cpplog.hpp"
+#include "runtime/Helpers.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "Agent_ABC.h"
@@ -59,7 +60,6 @@ Controller::~Controller()
 
 namespace
 {
-#define COUNT_OF( array ) ( sizeof (array) / sizeof *(array) )
 #define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
 
 // -----------------------------------------------------------------------------

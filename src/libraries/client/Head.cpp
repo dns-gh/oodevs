@@ -7,16 +7,12 @@
 //
 // *****************************************************************************
 
+#include "client_pch.h"
 #include "Head.h"
 #include "moc_Head.cpp"
+#include "ui_Head.h"
 
 #include "Context.h"
-#include "ui_head.h"
-
-#include <QMessageBox>
-#include <QMetaType>
-#include <QSettings>
-
 
 using namespace gui;
 using namespace runtime;

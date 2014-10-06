@@ -16,14 +16,6 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
 
-#include <QReadWriteLock>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QSharedMemory>
-#include <QSslError>
-#include <QUrl>
-
 namespace host
 {
     struct Package_ABC;
