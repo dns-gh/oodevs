@@ -1,0 +1,358 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+
+package sword;
+
+/** @file
+ *  @brief Messages from clients to the messenger module
+ *  @addtogroup Messenger
+ *  @{
+ */
+
+/** @struct PhaseLineCreationRequest
+    @brief A message to request the creation of a phase line
+
+    @see PhaseLineCreationAck
+    @see PhaseLineCreation
+*/
+message PhaseLineCreationRequest {
+    //! The phase line data to use for creation @see TacticalLine
+    required TacticalLine tactical_line = 1;
+}
+
+/** @struct PhaseLineUpdateRequest
+    @brief A message to request the update of a phase line
+
+    @see PhaseLineUpdateRequestAck
+    @see PhaseLineUpdate
+*/
+message PhaseLineUpdateRequest {
+    //! The identifier of the phase line to update
+    required Id             id            = 1;
+    //! Specifies the phase line data to use for update @see
+    //! TacticalLine @bug should not be optional
+    optional TacticalLine   tactical_line = 2;
+}
+
+/** @struct PhaseLineDestructionRequest
+    @brief A message to request the destruction of a phase line
+
+    @see PhaseLineDestructionRequestAck
+    @see PhaseLineDestruction
+*/
+message PhaseLineDestructionRequest {
+    //! The identifier of the phase line to destroy
+    required Id             id = 1;
+}
+
+/** @struct LimitCreationRequest
+    @brief A message to request the creation of a limit
+
+    @see LimitCreationRequestAck
+    @see LimitCreation
+*/
+message LimitCreationRequest {
+    //! The limit data to use for creation @see TacticalLine
+    required TacticalLine tactical_line = 1;
+}
+
+/** @struct LimitUpdateRequest
+    @brief A message to request the update of a limit
+
+    @see LimitUpdateRequestAck
+    @see LimitUpdate
+*/
+message LimitUpdateRequest {
+    //! The identifier of the limit to update
+    required Id              id            = 1;
+    //! Specifies the limit data to use for update @see TacticalLine
+    //! @bug should not be optional
+    optional TacticalLine    tactical_line = 2;
+}
+
+/** @struct LimitDestructionRequest
+    @brief A message to request the destruction of a limit
+
+    @see LimitDestructionRequestAck
+    @see LimitDestruction
+*/
+message LimitDestructionRequest {
+    //! The identifier of the limit to destroy
+    required Id             id = 1;
+}
+
+/** @struct ShapeCreationRequest
+    @brief A message to request the creation of a shape
+
+    @see ShapeCreationRequestAck
+    @see ShapeCreation
+    @todo rename into Drawing/Graphics
+*/
+message ShapeCreationRequest {
+    //! The shape data to use for creation @see Shape
+    required Shape shape = 1;
+}
+
+/** @struct ShapeUpdateRequest
+    @brief A message to request the update of a shape
+
+    Optional fields need only be set if the data needs to be updated.
+
+    @see ShapeUpdateRequestAck
+    @see ShapeUpdate
+    @todo rename into Drawing/Graphics
+*/
+message ShapeUpdateRequest {
+    required Id               shape    = 1;
+    optional string           category = 2;
+    optional RgbColor         color    = 3;
+    optional string           pattern  = 4;
+    optional CoordLatLongList points   = 5;
+    optional string           name     = 6;
+    optional string           text     = 7;
+    optional string           font     = 8;
+}
+
+/** @struct ShapeDestructionRequest
+    @brief A message to request the destruction of a shape
+
+    @see ShapeDestructionRequestAck
+    @see ShapeDestruction
+    @todo rename into Drawing/Graphics
+*/
+message ShapeDestructionRequest {
+    //! The identifier of the shape to destroy
+    required Id        id = 1;
+}
+
+/** @struct MarkerCreationRequest
+    @brief A message to request the creation of a marker
+
+    @see MarkerCreationRequestAck
+    @see MarkerCreation
+*/
+message MarkerCreationRequest {
+    //! The marker data to use for creation @see Marker
+    required Marker marker = 1;
+}
+
+/** @struct MarkerUpdateRequest
+    @brief A message to request the update of a marker
+
+    @see MarkerUpdateRequestAck
+    @see MarkerUpdate
+*/
+message MarkerUpdateRequest {
+    /** @property marker
+        @brief The identifier of the marker to update.
+        @todo should be named "id" instead of "marker" (coherence)
+    */
+    required Id       marker      = 1;
+    /** @property name
+        @brief The new name of the marker.
+        @note Only needs to be set if data has changed.
+    */
+    optional string   name        = 2;
+    /** @property number
+        @brief The new number of the marker. This is a user defined
+               identifier.
+        @note Only needs to be set if data has changed.
+        @todo remove/rename/generalize for user defined marker data
+    */
+    optional string   number      = 3;
+    /** @property description
+        @brief The new description of the marker.
+        @note Only needs to be set if data has changed.
+    */
+    optional string   description = 4;
+    /** @property parent
+        @brief The identifier of the new parent marker (for nested markers).
+        @note Only needs to be set if data has changed.
+    */
+    optional Id       parent      = 5;
+}
+
+/** @struct MarkerDestructionRequest
+    @brief A message to request marker destruction.
+
+    This message requests the destruction of an existing marker.
+    @li A MarkerDestructionRequestAck message is sent to acknowledge the
+        marker destruction.
+    @li A MarkerDestruction message is sent to all clients to notify the
+        actual destruction of the marker.
+*/
+message MarkerDestructionRequest {
+    /** @property marker
+        @brief The identifier of the marker to destroy.
+        @todo should be named "id" instead of "marker" (coherence)
+    */
+    required Id       marker     = 1;
+    /** @property delete_all
+        @brief Flag used to request recursive destruction of any child marker.
+        @todo should be named "cascade" or "recursive" instead of
+              "delete_all" which tends to imply that all markers (not only
+              specified/children) are going to be deleted.
+    */
+    required bool     delete_all = 2;
+}
+
+/** @struct ClientObjectCreationRequest
+    @brief A message to request client object creation.
+
+    This message requests the creation of a client object.
+    @li A ClientObjectCreationRequestAck message is sent to acknowledge
+        the client object creation.
+    @li A ClientObjectCreation message is sent to all clients to notify
+        the actual creation of the client object.
+*/
+message ClientObjectCreationRequest {
+    /** @property name
+        @brief The name of the client object to create.
+    */
+    optional string               name       = 1;
+    /** @property properties
+        @brief The list of properties of the client object.
+        @see ClientObjectProperty
+    */
+    repeated ClientObjectProperty properties = 2;
+    /** @property persistent
+        @brief Flag used to toggle client object persistence.
+
+        If set to "true", this flag enables client object persistence on
+        simulation checkpoints.
+    */
+    optional bool                 persistent = 3;
+}
+
+/** @struct ClientObjectUpdateRequest
+    @brief A message to request client object update.
+
+    This message requests the update of an existing client object.
+    @li A ClientObjectUpdateRequestAck message is sent to acknowledge
+        the client object update.
+    @li A ClientObjectUpdate message is sent to all clients to notify
+        the actual update of the client object.
+*/
+message ClientObjectUpdateRequest {
+    /** @property object
+        @brief The identifier of the client object to update.
+        @todo should be named "id" instead of "object" (coherence)
+    */
+    required Id                   object     = 1;
+    /** @property name
+        @brief The new name of the client object.
+        @note Only needs to be set if data has changed.
+    */
+    optional string               name       = 2;
+    /** @property properties
+        @brief The new properties values of the client object.
+        @see ClientObjectProperty
+        @note Only needs to be set if data has changed.
+    */
+    repeated ClientObjectProperty properties = 3;
+}
+
+/** @struct ClientObjectDestructionRequest
+    @brief A message to request client object destruction.
+
+    This message requests the destruction of an existing client object.
+    @li A ClientObjectDestructionRequestAck message is sent to
+        acknowledge the client object destruction.
+    @li A ClientObjectDestruction message is sent to all clients to
+        notify the actual destruction of the client object.
+*/
+message ClientObjectDestructionRequest {
+    /** @property object
+        @brief The identifier of the client object to destroy.
+        @todo should be named "id" instead of "object" (coherence)
+    */
+    required Id             object = 1;
+}
+
+/** @struct ClientToMessenger
+    @brief Wraps available messages going from client to messenger.
+
+    This is the actual message sent over the network.
+*/
+message ClientToMessenger {
+    /** @struct Content
+        @brief The possible messages contained in a client to messenger
+               message.
+        @warning Each Content message must contain exactly one of the
+                 possible messages.
+    */
+    message Content {
+        //! @copybrief LimitCreationRequest @see LimitCreationRequest
+        optional LimitCreationRequest        limit_creation_request        = 1;
+        //! @copybrief LimitDestructionRequest @see
+        //! LimitDestructionRequest
+        optional LimitDestructionRequest     limit_destruction_request     = 2;
+        //! @copybrief LimitUpdateRequest @see LimitUpdateRequest
+        optional LimitUpdateRequest          limit_update_request          = 3;
+        //! @copybrief PhaseLineCreationRequest @see
+        //! PhaseLineCreationRequest
+        optional PhaseLineCreationRequest    phase_line_creation_request   = 4;
+        //! @copybrief PhaseLineDestructionRequest @see
+        //! PhaseLineDestructionRequest
+        optional PhaseLineDestructionRequest
+            phase_line_destruction_request    = 5;
+        //! @copybrief PhaseLineUpdateRequest @see PhaseLineUpdateRequest
+        optional PhaseLineUpdateRequest      phase_line_update_request    = 6;
+        //! @copybrief ShapeCreationRequest @see ShapeCreationRequest
+        //! @todo rename into drawings/graphics_creation_request
+        optional ShapeCreationRequest        shape_creation_request       = 10;
+        //! @copybrief ShapeDestructionRequest @see
+        //! ShapeDestructionRequest @todo rename into
+        //! drawings/graphics_destruction_request
+        optional ShapeDestructionRequest     shape_destruction_request    = 11;
+        //! @copybrief ShapeUpdateRequest @see ShapeUpdateRequest @todo
+        //! rename into drawings/graphics_update_request
+        optional ShapeUpdateRequest          shape_update_request         = 12;
+        //! @copybrief TextMessage @see TextMessage
+        optional TextMessage                 text_message                 = 13;
+        //! @copybrief MarkerCreationRequest @see MarkerCreationRequest
+        optional MarkerCreationRequest       marker_creation_request      = 14;
+        //! @copybrief MarkerUpdateRequest @see MarkerUpdateRequest
+        optional MarkerUpdateRequest         marker_update_request        = 15;
+        //! @copybrief MarkerDestructionRequest @see
+        //! MarkerDestructionRequest
+        optional MarkerDestructionRequest    marker_destruction_request   = 16;
+        //! @copybrief ClientObjectCreationRequest @see
+        //! ClientObjectCreationRequest
+        optional ClientObjectCreationRequest
+            client_object_creation_request = 17;
+        //! @copybrief ClientObjectUpdateRequest @see
+        //! ClientObjectUpdateRequest
+        optional ClientObjectUpdateRequest   client_object_update_request = 18;
+        //! @copybrief ClientObjectDestructionRequest @see
+        //! ClientObjectDestructionRequest
+        optional ClientObjectDestructionRequest
+            client_object_destruction_request = 19;
+    }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is used to fill the "context" fields in the response
+        message. This context allows the client application to put an
+        unique identifier (based for instance on MAC address), thus
+        allowing to track response message matching a specific request
+        emitted by the client.
+
+        @see MessengerToClient
+    */
+    optional int32   context = 1;
+    /** @property message
+        @brief A field containing one of the messages to be sent.
+    */
+    required Content message = 2;
+}
+
+/** @}*/
