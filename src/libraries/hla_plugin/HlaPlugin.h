@@ -174,7 +174,6 @@ private:
     std::unique_ptr< OwnershipPolicy_ABC > pOwnershipPolicy_;
     std::unique_ptr< EntityIdentifierResolver_ABC > pEntityIdentifierResolver_;
     std::unique_ptr< SimulationTimeManager_ABC > pSimulationTimeManager_;
-    std::unique_ptr< OwnershipPolicy_ABC > pExternalOwnershipPolicy_;
     std::unique_ptr< MRMController > pMrmController;
     //@}
 };

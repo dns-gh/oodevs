@@ -15,6 +15,7 @@
 #include "rpr/ForceIdentifier.h"
 #include "MockTacticalObject.h"
 #include "MockUpdateFunctor.h"
+#include "SerializationFixture.h"
 #pragma warning( push, 0 )
 #include "protocol/proto/common.pb.h"
 #pragma warning( pop )
@@ -87,33 +88,6 @@ BOOST_FIXTURE_TEST_CASE( minefield_serializes_all_its_attributes, RegisteredFixt
         BOOST_FOREACH( const std::string& attribute, attributes )
             MOCK_EXPECT( functor.Visit ).once().in( s ).with( attribute, mock::any );
         minefield.Serialize( functor, true );
-    }
-}
-
-namespace rpr
-{
-    template <typename Archive>
-    void operator >> (  Archive& archive, EntityIdentifier& id )
-    {
-        id.Deserialize( archive );
-    }
-    std::ostream& operator<< ( std::ostream& os, const EntityIdentifier& id );
-    std::ostream& operator<< ( std::ostream& os, const WorldLocation& loc )
-    {
-        return os << "(" << loc.X() << "," << loc.Y() << ","<< loc.Z() << ")";
-    }
-    template< typename F >
-    bool fequal( F lhs, F rhs, F tol )
-    {
-        return boost::test_tools::check_is_close_t()( lhs, rhs, boost::test_tools::percent_tolerance_t<F>(tol) );
-    }
-    bool operator== (const WorldLocation& lhs, const WorldLocation& rhs )
-    {
-        return fequal( lhs.X(), rhs.X(), 1e-6) && fequal( lhs.Y(), rhs.Y(), 1e-6) && fequal( lhs.Z(), rhs.Z(), 1e-6);
-    }
-    bool operator== (const Orientation& lhs, const Orientation& rhs )
-    {
-        return fequal( lhs.Psi(), rhs.Psi(), 1e-6) && fequal( lhs.Theta(), rhs.Theta(), 1e-6) && fequal( lhs.Psi(), rhs.Psi(), 1e-6);
     }
 }
 

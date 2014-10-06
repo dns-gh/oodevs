@@ -19,6 +19,7 @@
 #include "rpr/Coordinates.h"
 #include <hla/HLA_Types.h>
 #include <hla/FederateIdentifier.h>
+#include <cstring>
 
 namespace plugins
 {
@@ -119,15 +120,27 @@ struct TransactionId
     }
     bool operator==(const TransactionId& rhs) const
     {
-        return transactionCounter == rhs.transactionCounter &&
-                static_cast<std::string>(federateHandle) == static_cast<std::string>(rhs.federateHandle);
+        if( transactionCounter != rhs.transactionCounter || federateHandle.Size() != rhs.federateHandle.Size() )
+            return false;
 
+        const uint8_t* b1 = federateHandle.Buffer();
+        const uint8_t* b2 = rhs.federateHandle.Buffer();
+        return std::memcmp( b1, b2, federateHandle.Size() ) == 0;
     }
     bool operator<(const TransactionId& rhs) const
     {
-        return transactionCounter < rhs.transactionCounter ||
-                ( rhs.transactionCounter == rhs.transactionCounter &&
-                  std::string(federateHandle) < std::string(rhs.federateHandle) );
+        if( transactionCounter < rhs.transactionCounter )
+            return true;
+        if( transactionCounter > rhs.transactionCounter )
+            return false;
+        if( federateHandle.Size() < rhs.federateHandle.Size() )
+            return true;
+        if( federateHandle.Size() > rhs.federateHandle.Size() )
+            return false;
+
+        const uint8_t* b1 = federateHandle.Buffer();
+        const uint8_t* b2 = rhs.federateHandle.Buffer();
+        return std::memcmp( b1, b2, federateHandle.Size() ) < 0;
     }
     uint32_t transactionCounter;
     ::hla::FederateIdentifier federateHandle;

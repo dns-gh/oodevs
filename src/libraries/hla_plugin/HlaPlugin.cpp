@@ -151,9 +151,9 @@ namespace
             OwnershipController_ABC& controller,  dispatcher::Logger_ABC& logger,
             const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
     {
-        std::string value( xis.attribute< std::string >( "transfer-sender", "null" ) );
+        const bool useNetn(  xis.attribute< bool >( "netn", false ) );
         TransferSender_ABC* transferResult = NULL;
-        if( value == "rpr" )
+        if( !useNetn )
         {
             try
             {
@@ -161,10 +161,10 @@ namespace
             }
             catch( const ::hla::HLAException& e )
             {
-                logger.LogError( "Unable to create RPR transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );    
+                logger.LogError( "Unable to create RPR transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will be disabled." );
             }
         }
-        else if( value == "netn" )
+        else
         {
             try
             {
@@ -172,7 +172,7 @@ namespace
             }
             catch( const ::hla::HLAException& e )
             {
-                logger.LogError( "Unable to create NETN transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );
+                logger.LogError( "Unable to create NETN transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will be disabled." );
             }
         }
 
@@ -180,6 +180,18 @@ namespace
             transferResult = new NullTransferSender( federateID, ctxtFactory, builder, strategy, controller, logger);
 
         return transferResult;
+    }
+
+    OwnershipPolicy_ABC* CreateOwnershipPolicy( xml::xisubstream xis, const std::string& federateName, OwnershipController_ABC& ownershipController, TransferSender_ABC& transferSender,
+            dispatcher::Logger_ABC& logger, InteractionBuilder& interactionBuilder, RemoteAgentSubject_ABC& remoteSubject, const LocalAgentResolver_ABC& agentResolver,
+            const CallsignResolver_ABC& callsignResolver, tools::MessageController_ABC< sword::MessengerToClient_Content >& controller, const std::string& divestZone )
+    {
+        const std::string policy( xis.attribute< std::string >( "ownership-policy", "internal" ) );
+        if( policy == "external" )
+        {
+            return new ExternalOwnershipPolicy( federateName, interactionBuilder, ownershipController, logger, remoteSubject, agentResolver, callsignResolver, transferSender );
+        }
+        return new LocationOwnershipPolicy( controller, ownershipController, remoteSubject, transferSender, divestZone );
     }
 }
 
@@ -217,7 +229,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pAutomatTypeResolver_       ( new UnitTypeResolver< kernel::AutomatType >( *pAutomatAggregateResolver_, staticModel.types_, logger ) )
     , pMunitionTypeResolver_      ( new DotationTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pLocalAgentResolver_        ( new LocalAgentResolver() )
-    , pCallsignResolver_          ( new CallsignResolver() )
+    , pCallsignResolver_          ( new CallsignResolver( *pXis_ ) )
     , pMissionResolver_           ( new MissionResolver( staticModel.types_, staticModel.types_ ) )
     , pSubordinates_              ( new Subordinates( *pCallsignResolver_, dynamicModel.Automats() ) )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
@@ -282,9 +294,8 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pOwnershipController_.reset( new OwnershipController( federateID, *pFederate_, logger_ ) );
             transferSender_.reset( CreateTransferSender( *pXis_, federateID, pXis_->attribute< std::string >( "name", "SWORD" ), pFederate_->GetFederateHandle(),
                     *pContextFactory_, *pInteractionBuilder_, *pOwnershipStrategy_, *pOwnershipController_, logger_, *pLocalAgentResolver_, *pCallsignResolver_ ) );
-            pOwnershipPolicy_.reset( new LocationOwnershipPolicy( *pMessengerMessageController_, *pOwnershipController_, *pFederate_, *transferSender_, ReadDivestitureZone( *pXisConfiguration_ ) ) );
-            pExternalOwnershipPolicy_.reset( new ExternalOwnershipPolicy( pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_, *pOwnershipController_,
-                    logger_, *pFederate_, *pLocalAgentResolver_, *pCallsignResolver_, *transferSender_ ));
+            pOwnershipPolicy_.reset( CreateOwnershipPolicy(  *pXis_, pXis_->attribute< std::string >( "name", "SWORD" ), *pOwnershipController_, *transferSender_ ,
+                    logger_, *pInteractionBuilder_, *pFederate_, *pLocalAgentResolver_, *pCallsignResolver_, *pMessengerMessageController_, ReadDivestitureZone( *pXisConfiguration_ ) ) ),
             pMrmController.reset( new MRMController( pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_,  *pFederate_, logger_,
                     *pLocalAgentResolver_, *pCallsignResolver_ ) );
             // must be last action

@@ -11,11 +11,7 @@
 #define plugins_hla_MarkingFactory_h
 
 #include "MarkingFactory_ABC.h"
-
-namespace xml
-{
-    class xisubstream;
-}
+#include <xeumeuleu/streams/xisubstream.hpp>
 
 namespace plugins
 {

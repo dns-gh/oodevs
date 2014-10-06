@@ -33,8 +33,6 @@ using namespace plugins::hla;
 namespace
 {
 
-static const double rPiOver180 = std::acos( -1. ) / 180.;
-
 void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
 {
     int8_t tmpForce;

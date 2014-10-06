@@ -57,7 +57,7 @@ namespace hla
         virtual std::unique_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long simId, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& rtiId, const std::vector< char >& uniqueId ) const
         {
             std::unique_ptr< HlaObject_ABC > object = factory_->Create( agent, name, simId, force, type, symbol, rtiId, uniqueId );
-            const std::string callsign( name + boost::lexical_cast< std::string >( simId ) );
+            const std::string callsign( resolver_.Generate( name, simId ) );
             resolver_.Add( simId, callsign, uniqueId );
             return std::unique_ptr< HlaObject_ABC >( new T( std::move( object ), agent, callsign, uniqueId, symbol, fomSerializer_, rtiId ) );
         }

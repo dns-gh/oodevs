@@ -305,7 +305,7 @@ void AgentController::CreateAutomat( dispatcher::Automat_ABC& entity )
         GetUniqueId( entity, uniqueId, logger_, netnVersion_ );
         T_Agent proxy( new AutomatProxy( entity, localAgentResolver_ ) );
         agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
-		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
+        const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
         std::string typeName = entity.GetType().GetName();
         rpr::EntityType entityType = ComputeEntityType( entity, logger_, automatEntityTypeResolver_, typeName );
         for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
@@ -342,7 +342,7 @@ void AgentController::CreateFormation( dispatcher::Formation_ABC& entity )
         GetUniqueId( entity, uniqueId, logger_, netnVersion_ );
         T_Agent proxy( new FormationProxy( entity, localAgentResolver_ ) );
         agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
-		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
+        const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
         
         std::string typeName = "formation"; // FIXME AHC
         rpr::EntityType entityType = ComputeEntityType( entity, logger_, automatEntityTypeResolver_, "formation" );

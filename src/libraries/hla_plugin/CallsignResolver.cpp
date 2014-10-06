@@ -17,7 +17,8 @@ using namespace plugins::hla;
 // Name: CallsignResolver constructor
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-CallsignResolver::CallsignResolver()
+CallsignResolver::CallsignResolver( xml::xisubstream xis )
+    : addIdentifier_( xis.attribute< bool >( "marking-with-identifier", true ) )
 {
     // NOTHING
 }
@@ -75,4 +76,11 @@ unsigned long CallsignResolver::ResolveSimulationIdentifier( const std::vector< 
     if( identifier == simulationIdentifiers_.end() )
         throw MASA_EXCEPTION( "Unknown unique identifier '" + std::string( uniqueId.begin(), uniqueId.end() ) + "'" );
     return identifier->second;
+}
+
+std::string CallsignResolver::Generate( const std::string& name, unsigned long simId ) const
+{
+    if( addIdentifier_ )
+        return name + boost::lexical_cast< std::string >( simId );
+    return name;
 }
