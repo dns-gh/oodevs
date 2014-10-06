@@ -207,7 +207,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Debug qt name path option needs the input file options.</source>
+        <source>Debug qt name path option needs the input file option.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

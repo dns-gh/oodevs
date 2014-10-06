@@ -45,7 +45,7 @@ namespace
 {
     void DisplayErrorMessage( const QString& message )
     {
-        _MT_LOG_WARNING_MSG( "Naming Errors :" + message );
+        _MT_LOG_WARNING_MSG( "Naming Errors: " + message );
     }
 }
 
@@ -95,7 +95,7 @@ void ObjectNameManager::SetObjectName( QObject* obj, const QString& name )
     }
     if( paths_.contains( GetSubName() + "_" + name ) )
     {
-        DisplayErrorMessage( QString( GetSubName() + "_" + name + " : this object name already exist" ) );
+        DisplayErrorMessage( GetSubName() + "_" + name + " : this object name already exists" );
         return;
     }
     obj->setObjectName( GetSubName() + "_" + name );

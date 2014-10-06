@@ -208,7 +208,7 @@
         <translation>La opción de cambio de idioma necesita las opciones de archivo de entrada y salida.</translation>
     </message>
     <message>
-        <source>Debug qt name path option needs the input file options.</source>
+        <source>Debug qt name path option needs the input file option.</source>
         <translation>La opción de depuración nombres qt requiere la opción de entrada.</translation>
     </message>
 </context>
