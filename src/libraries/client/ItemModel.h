@@ -12,6 +12,7 @@
 #include "FlatModel.h"
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <cstdint>
 
 namespace gui
 {
@@ -68,7 +69,7 @@ private:
 
     QString         error_;
     int             status_;
-    size_t          size_;
+    int64_t         size_;
     Qt::CheckState  check_state_;
     //@}
 };

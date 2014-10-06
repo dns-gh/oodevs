@@ -102,10 +102,10 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
     {
         boost::lock_guard< boost::mutex > lock( access_ );
         ReadHeaders( rpy_ );
-        const qint64 left = buffer_size - write_;
-        const size_t next = std::min( left, rpy_->bytesAvailable() );
-        const qint64 len  = next ? rpy_->read( &buffer_[write_], next ) : 0;
-        write_           += len;
+        const int64_t left = buffer_size - write_;
+        const int64_t next = std::min( left, rpy_->bytesAvailable() );
+        const int64_t len = next ? rpy_->read( &buffer_[write_], next ) : 0;
+        write_ += static_cast< size_t >( len );
         gate_.notify_one();
     }
 
@@ -151,11 +151,11 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         current_ += size;
         if( !total_ )
             return rpy;
-        const qint64 next = ( current_ * 100 ) / total_;
+        const int64_t next = ( current_ * 100 ) / total_;
         if( next <= progress_ )
             return rpy;
-        progress_ = next;
-        emit Progress( id_, current_, static_cast< int >( next ) );
+        progress_ = static_cast< int >( next );
+        emit Progress( id_, current_, progress_ );
         return rpy;
     }
 
@@ -256,9 +256,9 @@ private:
     QPointer< QNetworkReply > rpy_;
     size_t write_;
     size_t read_;
-    qint64 current_;
-    size_t total_;
-    qint64 progress_;
+    int64_t current_;
+    int64_t total_;
+    int progress_;
     bool eof_;
     bool headers_;
     bool finished_;
