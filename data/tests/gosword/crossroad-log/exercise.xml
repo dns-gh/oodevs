@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.8.2" valid="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.5.0/exercise/exercise.xsd">
+<exercise model-version="4.8.2" valid="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/6.0.0/exercise/exercise.xsd">
   <meta>
     <briefing/>
     <resources/>

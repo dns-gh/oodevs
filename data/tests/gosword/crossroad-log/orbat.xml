@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.5.0/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/6.0.0/exercise/orbat.xsd">
   <parties>
     <party id="1" name="party1" type="friend">
       <objects/>
@@ -7,7 +7,7 @@
         <formation id="76" level="xxx" name="Maintenance F3" symbol="symbols/sfgpusx">
           <formation id="83" level="xx" name="Maintenance F2" symbol="symbols/sfgpusx">
             <formation id="90" level="x" name="Maintenance F1" symbol="symbols/sfgpusx">
-              <automat engaged="true" id="91" knowledge-group="3" logistic-level="logistic-base" name="Maintenance Automat 1" symbol="symbols/sfgpusx" type="Maintenance Log Automat 1">
+              <automat engaged="true" id="91" knowledge-group="3" name="Maintenance Automat 1" symbol="symbols/sfgpusx" type="Maintenance Log Automat 1">
                 <unit command-post="true" id="92" name="Maintenance Log Unit 1" position="28RDS1398330726" type="Maintenance Log Unit 1"/>
                 <unit command-post="false" id="93" name="Maintenance Log Unit 1" position="28RDS1398430826" type="Maintenance Log Unit 1"/>
                 <unit command-post="false" id="94" name="Maintenance Log Unit 1" position="28RDS1408330725" type="Maintenance Log Unit 1"/>
@@ -44,7 +44,7 @@
         <formation id="175" level="xxx" name="PushPull F3" symbol="symbols/sfgpuss">
           <formation id="219" level="xx" name="PushPull F2" symbol="symbols/sfgpuss">
             <formation id="227" level="x" name="PushPull F1" symbol="symbols/sfgpuss">
-              <automat engaged="true" id="250" knowledge-group="3" logistic-level="logistic-base" name="PushPull Automat 1" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+              <automat engaged="true" id="250" knowledge-group="3" name="PushPull Automat 1" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
                 <unit command-post="true" id="251" name="PushPull Unit 1" position="28RDS2430332201" type="Supply Log Unit 1"/>
               </automat>
               <automat engaged="true" id="252" knowledge-group="3" name="PushPull Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
@@ -84,7 +84,7 @@
               <unit command-post="false" id="134" name="Supply Mobile Infantry" position="28RDS1381641649" type="Mobile Infantry"/>
               <unit command-post="false" id="135" name="Supply Mobile Infantry" position="28RDS1384341631" type="Mobile Infantry"/>
             </automat>
-            <automat engaged="true" id="180" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1c" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+            <automat engaged="true" id="180" knowledge-group="3" name="Supply Log Automat 1c" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
               <unit command-post="true" id="181" name="Supply Log Unit 1c" position="28RDS1376141521" type="Supply Log Unit 1">
                 <stocks>
                   <resource name="electrogen 1" quantity="50"/>
@@ -94,8 +94,9 @@
             </automat>
           </formation>
           <formation id="177" level="xx" logistic-level="logistic-base" name="Supply F2" symbol="symbols/sfgpuss">
-            <automat engaged="true" id="182" knowledge-group="3" name="Supply Log Automat 1d" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
-              <unit command-post="true" id="183" name="Supply Log Unit 1d" position="28RDS1385341492" type="Supply Log Unit 1">
+            <automat engaged="true" id="275" knowledge-group="3" name="Supply Log Automat F2" symbol="symbols/sfgpuss" type="Supply Log Automat 2">
+              <unit command-post="true" id="276" name="Supply Log Unit CP" position="28RDS1384441546" type="Supply Log Unit CP"/>
+              <unit command-post="false" id="277" name="Supply Log Unit System" position="28RDS1384541645" type="Supply Log Unit System">
                 <stocks>
                   <resource name="electrogen 2" quantity="50"/>
                 </stocks>
@@ -103,8 +104,9 @@
             </automat>
           </formation>
           <formation id="184" level="xx" logistic-level="logistic-base" name="Supply F3" symbol="symbols/sfgpuss">
-            <automat engaged="true" id="185" knowledge-group="3" name="Supply Log Automat 1e" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
-              <unit command-post="true" id="186" name="Supply Log Unit 1e" position="28RDS1396741523" type="Supply Log Unit 1">
+            <automat engaged="true" id="269" knowledge-group="3" name="Supply Log Automat F3" symbol="symbols/sfgpuss" type="Supply Log Automat 2">
+              <unit command-post="true" id="270" name="Supply Log Unit CP" position="28RDS1392941567" type="Supply Log Unit CP"/>
+              <unit command-post="false" id="271" name="Supply Log Unit System" position="28RDS1392941667" type="Supply Log Unit System">
                 <stocks>
                   <resource name="electrogen 1" quantity="1000"/>
                 </stocks>
@@ -112,8 +114,9 @@
             </automat>
           </formation>
           <formation id="187" level="xx" logistic-level="logistic-base" name="Supply F4" symbol="symbols/sfgpuss">
-            <automat engaged="true" id="188" knowledge-group="3" name="Supply Log Automat 1f" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
-              <unit command-post="true" id="189" name="Supply Log Unit 1f" position="28RDS1394341434" type="Supply Log Unit 1">
+            <automat engaged="true" id="272" knowledge-group="3" name="Supply Log Automat F4" symbol="symbols/sfgpuss" type="Supply Log Automat 2">
+              <unit command-post="true" id="273" name="Supply Log Unit CP" position="28RDS1394441455" type="Supply Log Unit CP"/>
+              <unit command-post="false" id="274" name="Supply Log Unit System" position="28RDS1394541554" type="Supply Log Unit System">
                 <stocks>
                   <resource name="electrogen 3" quantity="1000"/>
                 </stocks>
@@ -121,7 +124,7 @@
             </automat>
           </formation>
           <formation id="211" level="xx" logistic-level="logistic-base" name="Supply F6" symbol="symbols/sfgpuss">
-            <automat engaged="true" id="212" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1g" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+            <automat engaged="true" id="212" knowledge-group="3" name="Supply Log Automat 1g" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
               <unit command-post="true" id="213" name="Supply Log Unit 1g" position="28RDS1473841437" type="Supply Log Unit 1">
                 <stocks>
                   <resource name="electrogen 1" quantity="50"/>
@@ -129,7 +132,7 @@
                 </stocks>
               </unit>
             </automat>
-            <automat engaged="true" id="214" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1h" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+            <automat engaged="true" id="214" knowledge-group="3" name="Supply Log Automat 1h" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
               <unit command-post="true" id="215" name="Supply Log Unit 1h" position="28RDS1495941051" type="Supply Log Unit 1">
                 <stocks>
                   <resource name="electrogen 2" quantity="50"/>
@@ -147,7 +150,7 @@
                 <unit command-post="false" id="196" name="Medical Mobile Infantry" position="28RDS2608341100" type="Mobile Infantry"/>
                 <unit command-post="false" id="197" name="Medical Mobile Infantry" position="28RDS2591041101" type="Mobile Infantry"/>
               </automat>
-              <automat engaged="true" id="198" knowledge-group="3" logistic-level="logistic-base" name="Medical Log Automat 1" symbol="symbols/sfgpusm" type="Medical Log Automat 1">
+              <automat engaged="true" id="198" knowledge-group="3" name="Medical Log Automat 1" symbol="symbols/sfgpusm" type="Medical Log Automat 1">
                 <unit command-post="true" id="199" name="Medical Log Unit 1" position="28RDS2597641311" type="Medical Log Unit 1"/>
               </automat>
             </formation>
