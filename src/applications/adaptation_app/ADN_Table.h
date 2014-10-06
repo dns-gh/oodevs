@@ -202,7 +202,7 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
 
     // Alignment
-    if( type != ADN_StandardItem::eString && type != ADN_StandardItem::eLocalizedString )
+    if( type != ADN_StandardItem::eString && type != ADN_StandardItem::eLocalizedString && type != ADN_StandardItem::eTime )
         item->setTextAlignment( Qt::AlignRight );
 
     // Variant
