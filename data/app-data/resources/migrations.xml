@@ -215,7 +215,8 @@
     <upgrade schema="schemas/5.4.4/physical/Reports.xsd" apply="schemas/5.5.0/xsl/reports_5.4.4-5.5.0.xsl"/>
   </migration>
   <migration from="5.5.0" to="5.5.1"/>
-  <migration from="5.5.1" to="6.0.0">
-    <upgrade schema="schemas/5.5.1/physical/Decisional.xsd" apply="schemas/6.0.0/xsl/decisional_5.5.1-6.0.0.xsl"/>
+  <migration from="5.5.1" to="5.5.2"/>
+  <migration from="5.5.2" to="6.0.0">
+    <upgrade schema="schemas/5.5.2/physical/Decisional.xsd" apply="schemas/6.0.0/xsl/decisional_5.5.1-6.0.0.xsl"/>
   </migration>
 </migrations>

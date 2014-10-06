@@ -967,7 +967,8 @@
             <arg value="--exclude=SimToClient.Content.UnitCreationRequestAck.UnitActionAck.ErrorCode"/>
             <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitActionAck.ErrorCode"/>
         </compare-proto>
-        <compare-proto olddir="${proto.dir}/5.5.1" newdir="${src.dir}/libraries/protocol/proto/"/>
+        <compare-proto olddir="${proto.dir}/5.5.1" newdir="${proto.dir}/5.5.2"/>
+        <compare-proto olddir="${proto.dir}/5.5.2" newdir="${src.dir}/libraries/protocol/proto/"/>
     </target>
 
     <target name="checkmigrations" description="check migrations.xml consistency">

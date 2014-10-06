@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="sections">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Root element, describes the list of section.</xs:documentation>
+			<xs:documentation xml:lang="fr">Element racine, décrit la liste des sections.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="section" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the filter section.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit la section de filtre.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="descriptions" type="T_Descriptions">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Defines the list of description.</xs:documentation>
+									<xs:documentation xml:lang="fr">Définit la liste des descriptions.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="filters">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Defines the list of filters</xs:documentation>
+									<xs:documentation xml:lang="fr">Définit la liste des filtres.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="filter" type="T_Filter" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="id" type="T_SectionId" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="T_Filter">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a filter. Use either command + arguments, or xsl + target + output.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit un filtre. Utilisez soit command + arguments, soit xsl + target + output.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="arguments" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the list of arguments.</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit la liste des descriptions.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="argument" type="T_Argument" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="descriptions" type="T_Descriptions">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the list of description.</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit la liste des descriptions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="command" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the executable to launch.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le nom de l'executable à lancer.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="xsl" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the xsl filter to apply.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le filtre xsl à appliquer.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="target">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the file on which filter will be apply.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le fichier sur lequel le filtre sera appliquer.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="orbat"/>
+					<xs:enumeration value="exercise"/>
+					<xs:enumeration value="profiles"/>
+					<xs:enumeration value="scores"/>
+					<xs:enumeration value="success-factors"/>
+					<xs:enumeration value="urbanstate"/>
+					<xs:enumeration value="weather"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="output">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the output format, html, xml, etc.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le format de sortie, html, xml, etc.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="html"/>
+					<xs:enumeration value="xml"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="reload-exercise" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines if it's needed to reload the exercise after the execution of the filter.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit si c'est neccessaire de recharger l'exercice apres l'execution du filtre.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="non-blocking" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines if the filter blocks the main window. False by default, so blocking.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit si le filtre est bloquant pour la fenêtre principale. Faux par défaut, donc bloquant.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="minimal-display" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines if all information will be displayed.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit si toutes les informations seront affichées.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="directory" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the directory where the command will be. Default value is '.'. The program will also look in the $PATH environment variable and in the 'Filters' directory.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le répertoire où est la commande. La valeur par défaut est '.'. Le programme cherchera également dans la variable d'environnement $PATH et dans le répertoire 'Filters'.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="T_Argument">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines an argument</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit un argument.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="descriptions" type="T_Descriptions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the list of description.</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit la liste des descriptions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the argument name.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le nom de l'argument.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="display-name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the argument display name.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le nom d'affichage de l'argument.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="value" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the value of the argument.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit la valeur de l'argument.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="T_Descriptions">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the list of description.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit la liste des descriptions.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="description" type="T_Description" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Description">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a description.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit une description.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the display name of the description.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit le nom d'affichage de la description.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="lang" type="xs:language" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the language of the description.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit la langue de la description.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="T_SectionId">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines list of filter sections</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit la liste des sections de filtres.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="export"/>
+			<xs:enumeration value="import"/>
+			<xs:enumeration value="tools"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_SectionMenu">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines list of filter menus</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit la liste des menus de filtres.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="File"/>
+			<xs:enumeration value="Exercise"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
