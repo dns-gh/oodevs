@@ -13,15 +13,16 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeDisaster.h"
+#include "Entities/Objects/DisasterCapacity.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-#include "Entities/Objects/DisasterCapacity.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 
 unsigned int PHY_PerceptionView::nUrbanCoefficient_ = 100;
 
@@ -140,8 +141,10 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
 
 bool PHY_PerceptionView::FailDirectView( const MIL_Agent_ABC& target ) const
 {
-    if( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() &&
-        !target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() )
+    const auto perceiverBlock = perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    const auto targetBlock = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    if( ( !perceiverBlock || perceiverBlock->GetStructuralState() <= 0 ) &&
+        ( !targetBlock || targetBlock->GetStructuralState() <= 0 ) )
         return false;
     if( !perceiver_.GetKnowledgeGroup()->GetKnowledge()->ResolveKnowledgeAgent( target ) )
         return false;
