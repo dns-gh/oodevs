@@ -43,6 +43,7 @@
 #include "UrbanKnowledge.h"
 #include "UrbanObject.h"
 #include "Visitors.h"
+#include "VisionCone.h"
 #include "MemoryLogger_ABC.h"
 #include "EntityPublisher.h"
 
@@ -117,6 +118,7 @@ void Model::Reset()
     urbanBlocks_           .DeleteAll();
     actions_               .DeleteAll();
     pathfinds_             .DeleteAll();
+    cones_                 .DeleteAll();
 }
 
 namespace
@@ -201,6 +203,8 @@ void Model::Update( const sword::SimToClient& wrapper )
         message.has_crowd_magic_action_ack() )
         { // NOTHING
         }
+    else if( message.has_unit_vision_cones() )
+        CreateUpdate< VisionCone >( cones_, message.unit_vision_cones().unit().id(), message.unit_vision_cones() );
     else if( message.has_change_diplomacy_ack() )
         sides_.Get( message.change_diplomacy_ack().party1().id() ).Update( message.change_diplomacy_ack() );
     else if( message.has_change_diplomacy() )
@@ -681,6 +685,7 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     urbanKnowledges_       .Apply( boost::bind( &dispatcher::UrbanKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     actions_               .Apply( boost::bind( &dispatcher::Action::Accept, _1, boost::ref( visitor ) ) );
     pathfinds_             .Apply( boost::bind( &dispatcher::Pathfind::Accept, _1, boost::ref( visitor ) ) );
+    cones_                 .Apply( boost::bind( &VisionCone::Accept, _1, boost::ref( visitor ) ) );
     meteoModel_->Accept( visitor );
 }
 

@@ -42,6 +42,7 @@ namespace dispatcher
     class SimulationModel;
     class UrbanKnowledge_ABC;
     class MemoryLogger_ABC;
+    class VisionCone;
 
 // =============================================================================
 /** @class  Model
@@ -183,6 +184,7 @@ private:
     tools::Resolver< Report >                reports_;
     tools::Resolver< Action >                actions_;
     tools::Resolver< Pathfind >              pathfinds_;
+    tools::Resolver< VisionCone >            cones_;
     //@}
 };
 
