@@ -266,10 +266,23 @@ func (s *TestSuite) TestSupplyHandlingsBaseHighThreshold(c *C) {
 	checkSupplyUpdates(c, client, unit3, supplier, supplier, removeElectrogen_3)
 }
 
-// Deploy all crossroad-log supply automats between terrain wide limits.
-func deployCrossroadLogSupply(c *C, client *swapi.Client) {
+func deployCrossroadLogAutomat(c *C, client *swapi.Client, automatId uint32) {
 	MissionLogDeploy := uint32(8)
 
+	_, err := client.SendAutomatOrder(automatId, MissionLogDeploy,
+		swapi.MakeParameters(swapi.MakeHeading(0), nil,
+			swapi.MakeLimit(
+				swapi.Point{X: -15.9137, Y: 28.42},
+				swapi.Point{X: -15.9137, Y: 28.25}),
+			swapi.MakeLimit(
+				swapi.Point{X: -15.7153, Y: 28.42},
+				swapi.Point{X: -15.7153, Y: 28.25}),
+			nil))
+	c.Assert(err, IsNil)
+}
+
+// Deploy all crossroad-log supply automats between terrain wide limits.
+func deployCrossroadLogSupply(c *C, client *swapi.Client) {
 	automatNames := []string{
 		"Supply Log Automat F2",
 		"Supply Log Automat F3",
@@ -279,16 +292,7 @@ func deployCrossroadLogSupply(c *C, client *swapi.Client) {
 
 	for _, name := range automatNames {
 		automatId := getSomeAutomatByName(c, d, name).Id
-		_, err := client.SendAutomatOrder(automatId, MissionLogDeploy,
-			swapi.MakeParameters(swapi.MakeHeading(0), nil,
-				swapi.MakeLimit(
-					swapi.Point{X: -15.9137, Y: 28.42},
-					swapi.Point{X: -15.9137, Y: 28.25}),
-				swapi.MakeLimit(
-					swapi.Point{X: -15.7153, Y: 28.42},
-					swapi.Point{X: -15.7153, Y: 28.25}),
-				nil))
-		c.Assert(err, IsNil)
+		deployCrossroadLogAutomat(c, client, automatId)
 	}
 }
 

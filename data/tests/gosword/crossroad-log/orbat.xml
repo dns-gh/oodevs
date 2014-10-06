@@ -155,14 +155,14 @@
               </automat>
             </formation>
             <formation id="210" level="x" logistic-level="logistic-base" name="Medical BLD" symbol="symbols/sfgpusm">
-              <automat engaged="true" id="204" knowledge-group="3" name="Medical Log Automat 2" symbol="symbols/sfgpusm" type="Medical Log Automat 1">
-                <unit command-post="true" id="205" name="Medical Log Unit 2" position="28RDS2591741287" type="Medical Log Unit 1"/>
+              <automat engaged="true" id="204" knowledge-group="3" name="Medical Log Automat 2" symbol="symbols/sfgpusm" type="Medical Log Automat 2">
+                <unit command-post="true" id="205" name="Medical Log Unit 2" position="28RDS2591741287" type="Medical Log Unit CP"/>
               </automat>
             </formation>
           </formation>
           <formation id="206" level="xx" logistic-level="logistic-base" name="Medical BLT" symbol="symbols/sfgpusm">
-            <automat engaged="true" id="207" knowledge-group="3" name="Medical Log Automat 3" symbol="symbols/sfgpusm" type="Medical Log Automat 1">
-              <unit command-post="true" id="208" name="Medical Log Unit 3" position="28RDS2604041312" type="Medical Log Unit 1"/>
+            <automat engaged="true" id="207" knowledge-group="3" name="Medical Log Automat 3" symbol="symbols/sfgpusm" type="Medical Log Automat 2">
+              <unit command-post="true" id="208" name="Medical Log Unit 3" position="28RDS2604041312" type="Medical Log Unit CP"/>
             </automat>
           </formation>
         </formation>
