@@ -152,7 +152,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol, model_.symbolsFactory_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
-    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, type->IsTC2(), message.logistic_level() == sword::logistic_base, true ) );
+    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, type->IsTC2(), message.logistic_level() == sword::logistic_base ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, dictionary, *result ) );
     result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( controllers_.controller_, *result, static_.types_.automatModels_ ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );

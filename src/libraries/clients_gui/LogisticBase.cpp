@@ -12,7 +12,6 @@
 #include "PropertiesDictionary.h"
 #include "LogisticHierarchiesBase.h"
 
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
@@ -28,15 +27,14 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
                             const kernel::Entity_ABC& entity,
                             gui::PropertiesDictionary& dictionary,
                             bool active,
-                            bool isBase,
-                            bool readonly )
+                            bool isBase )
     : controller_( controllers.controller_ )
     , isBase_( isBase )
     , entity_( entity )
     , isMaintenanceManual_( false )
     , isSupplyManual_( false )
 {
-    CreateDictionary( dictionary, active, readonly );
+    CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +45,7 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
                             const kernel::Entity_ABC& entity,
                             gui::PropertiesDictionary& dictionary,
                             bool active,
-                            xml::xistream& xis,
-                            bool readonly )
+                            xml::xistream& xis )
     : controller_( controllers.controller_ )
     , isBase_( xis.has_attribute( "logistic-level" ) &&
                xis.attribute( "logistic-level", "" ) == ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) )
@@ -56,7 +53,7 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
     , isMaintenanceManual_( false )
     , isSupplyManual_( false )
 {
-    CreateDictionary( dictionary, active, readonly );
+    CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,9 +131,6 @@ const kernel::Entity_ABC& LogisticBase::GetEntity() const
 // -----------------------------------------------------------------------------
 void LogisticBase::SerializeAttributes( xml::xostream& xos ) const
 {
-    const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &entity_ );
-    if( automat )
-        return;
     if( isBase_ )
         xos << xml::attribute( "logistic-level", ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) );
 }

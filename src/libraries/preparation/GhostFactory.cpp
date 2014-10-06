@@ -81,7 +81,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
         assert( prototype.ghostType_ == eGhostType_Automat );
         kernel::Entity_ABC* kg = AgentFactory::FindOrCreateKnowledgeGroup( parent );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
-        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, true, false, true ) );
+        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, true, false ) );
         result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, false ) );
     }
     result->Polish();
@@ -108,7 +108,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     {
         assert( result->GetGhostType() == eGhostType_Automat );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.GetKnowledgeGroupResolver() ) );
-        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, true, xis, true ) );
+        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, true, xis ) );
         result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, result->Get< gui::LogisticBase >().IsBase() ) );
     }
     result->Polish();
@@ -138,7 +138,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
         const geometry::Point2f position = model_.ClipPosition( ComputeAutomatPosition( xis ), result );
         result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary, parent ) );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.GetKnowledgeGroupResolver() ) );
-        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, true, xis, true ) );
+        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, true, xis ) );
         result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, result->Get< gui::LogisticBase >().IsBase() ) );
     }
     result->Polish();

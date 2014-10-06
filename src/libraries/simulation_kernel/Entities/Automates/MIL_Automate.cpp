@@ -331,9 +331,14 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
         throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has no knowledge group", GetID() ) );
-    if( GetType().IsLogisticBase() )
+    std::string logLevelStr = PHY_LogisticLevel::none_.GetName();
+    xis >> xml::optional >> xml::attribute( "logistic-level", logLevelStr );
+    const PHY_LogisticLevel* pLogLevel = PHY_LogisticLevel::Find( logLevelStr );
+    if( !pLogLevel )
+        throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has an invalid logistic level", GetID() ) );
+    if( *pLogLevel != PHY_LogisticLevel::none_ )
     {
-        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, PHY_LogisticLevel::logistic_base_ ) );
+        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *pLogLevel ) );
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_ ) );
         RegisterAction( pLogisticAction_ );
         pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, *pBrainLogistic_, false /* no quotas*/, xis ) );
@@ -387,6 +392,8 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     xos     << xml::attribute( "id", GetID() )
             << xml::attribute( "engaged", bEngaged_ )
             << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() );
+    if( pBrainLogistic_ )
+        xos << xml::attribute( "logistic-level", pBrainLogistic_->GetLogisticLevel().GetName() );
     xos << xml::attribute( "type", pType_->GetName() );
     if( !symbol_.empty() )
         xos << xml::attribute( "symbol", symbol_ );

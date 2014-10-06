@@ -134,7 +134,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     bool isTC2 = type.IsTC2(); //$$ NAZE
-    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2, true ) );
+    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2 ) );
     result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
@@ -267,7 +267,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, *model_.knowledgeGroups_ ) );
 
     bool isTC2 = type->IsTC2(); //$$ NAZE
-    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2, true ) );
+    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, xis ) );
     result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
@@ -395,7 +395,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
         const gui::LogisticHierarchiesBase& ghostHierarchy = ghost.Get< gui::LogisticHierarchiesBase >();
         // $$$$ ABR 2012-06-27: TODO: Warn if dropping a non log base to a log base ghost.
         bool isTC2 = type.IsTC2(); //$$ NAZE
-        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2, true ) );
+        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2 ) );
         LogisticBaseStates* logBaseStates = new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 );
         result->Attach< gui::LogisticHierarchiesBase >( *logBaseStates );
         logBaseStates->SetLogisticSuperior( ghostHierarchy.GetSuperior() );

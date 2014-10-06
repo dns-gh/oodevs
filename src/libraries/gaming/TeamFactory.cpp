@@ -154,7 +154,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     symbol = symbol.empty() ? model_.symbolsFactory_.GetSymbolBase( karma ) : symbol;
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol, model_.symbolsFactory_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_, model_.GetFormationResolver(), model_.GetTeamResolver() ) );
-    result->Attach( *new gui::LogisticBase( controllers_, *result, dico, true, message.logistic_level() == sword::logistic_base, false ) );
+    result->Attach( *new gui::LogisticBase( controllers_, *result, dico, true, message.logistic_level() == sword::logistic_base ) );
     if( result->Get< gui::LogisticBase >().IsBase() )
         result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, dico, *result ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
