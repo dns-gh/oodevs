@@ -262,7 +262,7 @@ BOOST_REQUIRE_EQUAL( attribute##.list( index ).datetime().data(), value );
 
 #define CHECK_ATTRIBUTE_SIZE_AND_ID( attribute, size ) \
 BOOST_REQUIRE_EQUAL( attribute##.list_size(), size ); \
-CHECK_ATTRIBUTE_PARAMETER( attribute##, 0, identifier, static_cast< unsigned int >( sword::ObjectMagicAction::##attribute ) );
+CHECK_ATTRIBUTE_PARAMETER( attribute##, 0, identifier, static_cast< unsigned int >( sword::ObjectMagicAction::attribute ) );
 
 BOOST_FIXTURE_TEST_CASE( serializes_object_creation, Fixture )
 {

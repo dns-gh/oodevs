@@ -24,7 +24,7 @@ public:                                                             \
         message.set_context( context );                             \
         publisher.Send( message );                          \
     }                                                               \
-    NAMESPACE##::MSG& operator()()                                  \
+    NAMESPACE::MSG& operator()()                                  \
     {                                                               \
         return *message.mutable_message()->mutable_##VAR();         \
     }                                                               \
@@ -49,7 +49,7 @@ public:                                                              \
             message.set_client_id( clientId );                       \
         publisher.Send( message );                                   \
     }                                                                \
-    NAMESPACE##::MSG& operator()()                                   \
+    NAMESPACE::MSG& operator()()                                   \
     {                                                                \
         return *message.mutable_message()->mutable_##VAR();          \
     }                                                                \
@@ -65,7 +65,7 @@ public:                                                            \
     {                                                              \
         operator()();                                              \
     }                                                              \
-    MSG( NAMESPACE##::MSG& msg )                                   \
+    MSG( NAMESPACE::MSG& msg )                                   \
     {                                                              \
         operator()() = msg;                                        \
     }                                                              \
@@ -74,7 +74,7 @@ public:                                                            \
     {                                                              \
         publisher.Send( message );                                 \
     }                                                              \
-    NAMESPACE##::MSG& operator()()                                 \
+    NAMESPACE::MSG& operator()()                                 \
     {                                                              \
         return *message.mutable_message()->mutable_##VAR();        \
     }                                                              \

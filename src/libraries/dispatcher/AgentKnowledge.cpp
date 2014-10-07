@@ -72,28 +72,28 @@ AgentKnowledge::~AgentKnowledge()
 }
 
 #define UPDATE_ASN_ATTRIBUTE( MESSAGE, ASN, CPP ) \
-    if( ##MESSAGE##.has_##ASN##() )               \
+    if( MESSAGE.has_##ASN() )               \
     {                                             \
-        CPP = ##MESSAGE##.##ASN();                \
-        optionals_.##ASN##Present = 1;             \
+        CPP = MESSAGE.ASN();                \
+        optionals_.ASN##Present = 1;             \
     }
 
 #define UPDATE_ASN_ATTRIBUTE_ID(MESSAGE, ASN, CPP ) \
-    if( ##MESSAGE##.has_##ASN##() )              \
+    if( MESSAGE.has_##ASN() )              \
 {                                            \
-    CPP = ##MESSAGE##.##ASN().id();               \
+    CPP = MESSAGE.ASN().id();               \
 }
 
 #define SEND_ASN_ATTRIBUTE( MESSAGE, ASN, CPP )  \
-    if( optionals_.##ASN##Present )    \
+    if( optionals_.ASN##Present )    \
     {                                   \
-        ##MESSAGE##.set_##ASN( CPP );  \
+        MESSAGE.set_##ASN( CPP );  \
     }
 
 #define SEND_ASN_ATTRIBUTE_MUT( MESSAGE, ASN, CPP )  \
-    if ( ##MESSAGE##.has_##ASN##() )    \
+    if ( MESSAGE.has_##ASN##() )    \
 {                                   \
-##MESSAGE##.mutable_##ASN## ()->set_id( ##CPP## );  \
+    MESSAGE.mutable_##ASN ()->set_id( CPP );  \
 }
 
 // -----------------------------------------------------------------------------

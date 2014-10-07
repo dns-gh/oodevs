@@ -30,9 +30,9 @@
 #include <boost/make_shared.hpp>
 
 #define MASA_ORDER_EXCEPTION( ErrorId ) \
-    MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::##ErrorId )
+    MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::ErrorId )
 #define MASA_ORDER_EXCEPTION_MSG( ErrorId, Message ) \
-    NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::##ErrorId, __FILE__, __FUNCTION__, __LINE__, Message )
+    NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::ErrorId, __FILE__, __FUNCTION__, __LINE__, Message )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor

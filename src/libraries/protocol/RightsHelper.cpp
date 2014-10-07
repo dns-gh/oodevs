@@ -13,9 +13,9 @@ namespace protocol
 {
 
 #define RETURN_CONTROL_ERROR(in, name, out)                                     \
-    if ( in##.message().has_##name##() )                                        \
+    if ( in.message().has_##name() )                                        \
     {                                                                           \
-        out##.mutable_message()->mutable_##name##_ack()                         \
+        out.mutable_message()->mutable_##name##_ack()                         \
             ->set_error_code( sword::ControlAck::error_forbidden );             \
         return true;                                                            \
     }
@@ -46,10 +46,10 @@ std::string GetLogin( const sword::ClientToAuthentication& msg )
 }  // namespace
 
 #define RETURN_AUTH_ERROR(in, name, ackname, out)                               \
-    if ( in##.message().has_##name##() )                                        \
+    if ( in.message().has_##name() )                                        \
     {                                                                           \
-        auto ack = out##.mutable_message()->mutable_##name##_ack();             \
-        ack->set_error_code( sword::##ackname##::forbidden );                   \
+        auto ack = out.mutable_message()->mutable_##name##_ack();             \
+        ack->set_error_code( sword::ackname::forbidden );                   \
         ack->set_login( GetLogin( in ));                                        \
         return true;                                                            \
     }

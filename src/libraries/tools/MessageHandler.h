@@ -28,8 +28,8 @@ class MessageHandler : public MessageHandler_ABC< Category >
 public:
     //! @name Types
     //@{
-    typedef typename bool( Category::*T_Checker )() const;
-    typedef typename const Message&( Category::*T_Retriever )() const;
+    typedef bool( Category::*T_Checker )() const;
+    typedef const Message&( Category::*T_Retriever )() const;
     //@}
 
 public:

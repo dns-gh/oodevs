@@ -36,6 +36,20 @@ namespace sword
 namespace kernel
 {
 
+class Displayer_ABC;
+
+// =============================================================================
+/** @class  Formatter
+    @brief  Formatter
+*/
+// Created: AGE 2006-02-21
+// =============================================================================
+class FormatterNotImplemented
+{
+public:
+    void Error( Displayer_ABC& displayer, const std::type_info& type ) const;
+};
+
 // =============================================================================
 /** @class  Displayer_ABC
     @brief  Displayer_ABC
@@ -104,6 +118,13 @@ private:
     virtual void DisplayFormatted( const QString& formatted ) = 0;
     virtual void EndDisplay() = 0;
     //@}
+};
+
+template< typename T >
+struct Formatter : public FormatterNotImplemented {
+    void operator()( const T&, Displayer_ABC& displayer ) const {
+        Error( displayer, typeid( T ) );
+    }
 };
 
 // -----------------------------------------------------------------------------
@@ -182,24 +203,6 @@ void Displayer_ABC::AddToDisplay( const T& element )
 }
 
 class UrbanKnowledge_ABC;
-// =============================================================================
-/** @class  Formatter
-    @brief  Formatter
-*/
-// Created: AGE 2006-02-21
-// =============================================================================
-class FormatterNotImplemented
-{
-public:
-    void Error( Displayer_ABC& displayer, const type_info& type ) const;
-};
-
-template< typename T >
-struct Formatter : public FormatterNotImplemented {
-    void operator()( const T&, Displayer_ABC& displayer ) const {
-        Error( displayer, typeid( T ) );
-    }
-};
 
 // =============================================================================
 /** @class  Formatter
@@ -315,7 +318,7 @@ struct Formatter< StrongType< T, LogisticBaseSuperior_ > > : public Formatter< c
     {
         if( element )
         {
-            if( const DictionaryExtensions* dico = element->Retrieve< DictionaryExtensions >() )
+            if( const DictionaryExtensions* dico = element->template Retrieve< DictionaryExtensions >() )
             {
                 const std::string& value = dico->GetValue( "NomLong" );
                 if( !value.empty() )
@@ -531,7 +534,7 @@ struct Formatter< std::vector< T > >
         if( v.empty() )
             displayer.AddToDisplay( ValueNotSet() );
         else
-            for( std::vector< T >::const_iterator it = v.begin(); it != v.end(); ++it )
+            for( auto it = v.begin(); it != v.end(); ++it )
             {
                 if( it != v.begin() )
                     displayer.AddToDisplay( Separator() );

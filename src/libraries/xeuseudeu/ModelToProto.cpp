@@ -70,7 +70,7 @@ namespace
     typedef std::pair< T_SingleSetter, T_MultipleSetter > T_Setters;
 
 #define DECLARE_SETTER( CPPTYPE, TYPE, NAME )                                                                                           \
-    ( FieldDescriptor::##CPPTYPE, std::make_pair< T_SingleSetter, T_MultipleSetter >( &SetSingle< TYPE , &Reflection::Set##NAME >,      \
+    ( FieldDescriptor::CPPTYPE, std::make_pair< T_SingleSetter, T_MultipleSetter >( &SetSingle< TYPE , &Reflection::Set##NAME >,      \
                                                                                       &SetMultiple< TYPE , &Reflection::Add##NAME > ) ) \
 
     const std::map< FieldDescriptor::CppType, T_Setters > setters = boost::assign::map_list_of

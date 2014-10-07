@@ -69,7 +69,7 @@ PARAMS_PAIR( name, identifier, "identifier", quantity, "quantity" )
 // Defines an object attribute
 // <name>_attribute_params should be declared before the call to OBJECT_ATTRIBUTE
 #define OBJECT_ATTRIBUTE( attribute, name ) \
-{ sword::ObjectMagicAction::##attribute, name, attribute##_attribute_params, COUNT_OF( attribute##_attribute_params ) }
+{ sword::ObjectMagicAction::attribute, name, attribute##_attribute_params, COUNT_OF( attribute##_attribute_params ) }
 
 namespace protocol
 {

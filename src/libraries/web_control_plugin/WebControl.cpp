@@ -99,7 +99,7 @@ WebControl::WebControl( dispatcher::SimulationPublisher_ABC& publisher )
     , controller_( boost::make_shared< tools::MessageController< sword::SimToClient_Content > >() )
 {
 #define REGISTER_OBSERVER( TYPE, NAME, FUNCTOR ) do {\
-    const TYPE ##::Update update = boost::bind( &WebControl::## FUNCTOR, this, _1 );\
+    const TYPE ::Update update = boost::bind( &WebControl:: FUNCTOR, this, _1 );\
     boost::shared_ptr< TYPE > ptr = boost::make_shared< TYPE >( update );\
     CONNECT( *controller_, *ptr, NAME );\
     observers_.push_back( ptr );\

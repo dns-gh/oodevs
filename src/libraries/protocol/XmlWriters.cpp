@@ -28,8 +28,8 @@ namespace
     template< typename T >
     boost::optional< std::string > FindType( int32_t type )
     {
-        const auto& map = typename T::data_;
-        for( size_t i = 0; i < typename T::size_; ++i )
+        const auto& map = T::data_;
+        for( size_t i = 0; i < T::size_; ++i )
             if( map[i].type == type )
                 return map[i].name;
         return boost::none;

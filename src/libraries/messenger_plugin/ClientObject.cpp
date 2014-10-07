@@ -22,7 +22,7 @@ using namespace plugins::messenger;
 #define REGISTER_PROPERTY( MSG, TYPE ) \
     if( msg.value().has_##MSG##_value() ) \
     { \
-        Register( msg.name(), *new ClientObjectProperty< TYPE >( msg.value().##MSG##_value(), msg.name() ) ); \
+        Register( msg.name(), *new ClientObjectProperty< TYPE >( msg.value().MSG##_value(), msg.name() ) ); \
         continue; \
     }
 
@@ -84,7 +84,7 @@ unsigned int ClientObject::GetID() const
     { \
         ClientObjectProperty< TYPE >* dyn = dynamic_cast< ClientObjectProperty< TYPE >* >( prop ); \
         if( dyn ) \
-            dyn->Update( msg.value().##MSG##_value() ); \
+            dyn->Update( msg.value().MSG##_value() ); \
         continue; \
     }
 

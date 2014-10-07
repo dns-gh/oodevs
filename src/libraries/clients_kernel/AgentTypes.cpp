@@ -390,8 +390,8 @@ namespace
     template< typename T >
     void RegisterMagicActions( const T_Register& operand, AgentTypes* types )
     {
-        const auto& tab = typename T::data_;
-        for( size_t i = 0; i < typename T::size_; ++i )
+        const auto& tab = T::data_;
+        for( size_t i = 0; i < T::size_; ++i )
             ( types->*operand )( *new MagicActionType( tab[i].name, tab[i].type ) );
     }
 }
