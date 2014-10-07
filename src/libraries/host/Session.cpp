@@ -709,6 +709,7 @@ Session::T_Process Session::StartSimulation( const web::session::Config& cfg,
                                              const std::string& checkpoint,
                                              bool replay,
                                              const Path& output,
+                                             const Path& cwd,
                                              const Path& app ) const
 {
     deps_.fs.MakePaths( output );
@@ -733,8 +734,7 @@ Session::T_Process Session::StartSimulation( const web::session::Config& cfg,
         options.push_back( "--checkpoint" );
         options.push_back( checkpoint );
     }
-    return deps_.runtime.Start( Utf8( app ),
-        options, Utf8( Path( app ).remove_filename() ), "" );
+    return deps_.runtime.Start( Utf8( app ), options, Utf8( cwd ), "" );
 }
 
 namespace
@@ -879,7 +879,10 @@ boost::shared_ptr< Session::PrivateState > Session::PrepareStart( const std::str
 // Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-bool Session::Start( const Path& app, const Path& timeline, const std::string& checkpoint )
+bool Session::Start( const Path& cwd,
+                     const Path& app,
+                     const Path& timeline,
+                     const std::string& checkpoint )
 {
     auto data = PrepareStart( checkpoint );
     if( data->immediate )
@@ -891,7 +894,7 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
         boost::lock_guard< boost::shared_mutex > lock( access_ );
         busy_ = false;
     } );
-    auto sword = StartSimulation( data->cfg, checkpoint, data->replay, data->output, app );
+    auto sword = StartSimulation( data->cfg, checkpoint, data->replay, data->output, cwd, app );
     if( !sword )
     {
         LOG_ERROR( deps_.log ) << "[session] Unable to start simulation " << id_;

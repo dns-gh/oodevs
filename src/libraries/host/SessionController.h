@@ -54,6 +54,7 @@ public:
                                 const SessionFactory_ABC& sessions,
                                 const NodeController_ABC& nodes,
                                 const Path& root,
+                                const Path& cwd,
                                 const Path& simulation,
                                 const Path& replayer,
                                 const Path& timeline,
@@ -118,6 +119,7 @@ private:
     const NodeController_ABC& nodes_;
     const Path root_;
     const Path trash_;
+    const Path cwd_;
     const Path simulation_;
     const Path replayer_;
     const Path timeline_;

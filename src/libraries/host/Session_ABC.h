@@ -83,7 +83,7 @@ struct Session_ABC : public boost::noncopyable
     //! @name Public methods
     //@{
     virtual Tree  Save() const = 0;
-    virtual bool  Start( const Path& app, const Path& timeline, const std::string& checkpoint ) = 0;
+    virtual bool  Start( const Path& cwd, const Path& app, const Path& timeline, const std::string& checkpoint ) = 0;
     virtual bool  Stop() = 0;
     virtual bool  Refresh() = 0;
     virtual bool  RefreshSize() = 0;

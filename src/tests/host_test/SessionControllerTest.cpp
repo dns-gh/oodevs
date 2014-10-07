@@ -41,12 +41,13 @@ namespace
 {
     struct SubFixture
     {
-        SubFixture( const Path& root, const Path& simulation, const Path& replayer, const Path& timeline )
+        SubFixture( const Path& root, const Path& cwd, const Path& simulation, const Path& replayer, const Path& timeline )
             : nodes( false )
             , idx  ( 0 )
         {
             MOCK_EXPECT( fs.MakePaths ).with( root / "sessions" / "_" );
             MOCK_EXPECT( fs.IsDirectory ).with( root ).returns( true );
+            MOCK_EXPECT( fs.IsDirectory ).with( cwd ).returns( true );
             MOCK_EXPECT( fs.IsFile ).with( simulation ).returns( true );
             MOCK_EXPECT( fs.IsFile ).with( replayer ).returns( true );
             MOCK_EXPECT( fs.IsFile ).with( timeline ).returns( true );
@@ -104,15 +105,17 @@ namespace
     {
         Fixture()
             : root      ( "e:/root" )
+            , cwd       ( "e:/apps" )
             , simulation( "e:/apps/sim.exe" )
             , replayer  ( "e:/apps/sim.exe" )
             , timeline  ( "e:/apps/timeline.exe" )
-            , sub       ( root, simulation, replayer, timeline )
-            , control   ( sub.log, sub.runtime, sub.fs, sub.factory, sub.nodes, root, simulation, replayer, timeline, sub.pool )
+            , sub       ( root, cwd, simulation, replayer, timeline )
+            , control   ( sub.log, sub.runtime, sub.fs, sub.factory, sub.nodes, root, cwd, simulation, replayer, timeline, sub.pool )
         {
             // NOTHING
         }
         const Path root;
+        const Path cwd;
         const Path simulation;
         const Path replayer;
         const Path timeline;
@@ -193,7 +196,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
 {
     Reload();
     const std::string checkpoint = "checkpoint";
-    MOCK_EXPECT( idle->Start ).once().with( mock::any, mock::any, checkpoint ).returns( true );
+    MOCK_EXPECT( idle->Start ).once().with( mock::any, mock::any, mock::any, checkpoint ).returns( true );
     MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
     SessionController::T_Session session = control.Start( standardUser, idIdle, checkpoint );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
@@ -218,12 +221,12 @@ BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_controller_starts_with_right_app, Fixture )
 {
     Reload();
-    MOCK_EXPECT( idle->Start ).once().with( simulation, timeline, mock::any ).returns( true );
+    MOCK_EXPECT( idle->Start ).once().with( mock::any, simulation, timeline, mock::any ).returns( true );
     MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
     control.Start( standardUser, idIdle, std::string() );
     MOCK_RESET( idle->IsReplay );
     MOCK_EXPECT( idle->IsReplay ).once().returns( true );
     MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
-    MOCK_EXPECT( idle->Start ).once().with( replayer, timeline, mock::any ).returns( true );
+    MOCK_EXPECT( idle->Start ).once().with( mock::any, replayer, timeline, mock::any ).returns( true );
     control.Start( standardUser, idIdle, std::string() );
 }
