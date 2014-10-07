@@ -10,14 +10,13 @@
 #include "adaptation_app_pch.h"
 #include "ADN_AiEngine_UrbanSpeeds_Table.h"
 #include "ADN_AiEngine_Data.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "moc_ADN_AiEngine_UrbanSpeeds_Table.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_UrbanSpeeds_Table constructor
 // Created: JSR 2014-07-09
 // -----------------------------------------------------------------------------
-ADN_AiEngine_UrbanSpeeds_Table::ADN_AiEngine_UrbanSpeeds_Table(  const QString& objectName, ADN_Ref_ABC& vector, QWidget* parent /*= 0*/ )
+ADN_AiEngine_UrbanSpeeds_Table::ADN_AiEngine_UrbanSpeeds_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* parent /*= 0*/ )
     : ADN_Table( objectName, vector, parent )
 {
     setShowGrid( false );

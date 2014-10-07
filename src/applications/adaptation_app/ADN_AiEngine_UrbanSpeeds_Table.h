@@ -29,7 +29,7 @@ public:
     virtual ~ADN_AiEngine_UrbanSpeeds_Table();
     //@}
 
-    void AddRow( int row, void* data );
+    virtual void AddRow( int row, void* data );
 };
 
 #endif // __ADN_AiEngine_UrbanSpeeds_Table_h_
