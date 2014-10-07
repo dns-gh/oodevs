@@ -134,7 +134,7 @@ void GlProxy::UpdateLayerOrder( kernel::Options& options )
         for( auto it = orderedLayers.rbegin(); it != orderedLayers.rend() && it + 1 != orderedLayers.rend(); ++it )
             moved |= MoveBelow( *( it + 1 ), *it );
     }
-    for( int i = 0; i < orderedLayers.size(); ++i )
+    for( int i = 0; i < static_cast< int >( orderedLayers.size() ); ++i )
     {
         const auto& layer = orderedLayers[ i ];
         layer->SetAlpha( options.Get( "Layers/" + layer->GetOptionName() + "/Alpha" ).To< float >() );
