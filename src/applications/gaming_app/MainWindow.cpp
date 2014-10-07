@@ -242,7 +242,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     //Dialogs
-    new Dialogs( this, controllers, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, profile_, network.GetCommands(), config );
+    new Dialogs( this, controllers, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, profile_, network.GetCommands(), config, *strategy_, *pColorController_ );
     addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
     gui::ProfileDialog* profileDialog = new gui::ProfileDialog( this, controllers, profile_, *icons_, model_, model.profiles_ );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );

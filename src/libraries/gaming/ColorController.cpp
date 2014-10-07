@@ -9,22 +9,26 @@
 
 #include "gaming_pch.h"
 #include "ColorController.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_gui/LogisticHierarchiesBase.h"
+#include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/Color_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
+
+#include <boost/optional.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ColorController constructor
 // Created: LGY 2011-06-27
 // -----------------------------------------------------------------------------
 ColorController::ColorController( kernel::Controllers& controllers )
-    : controllers_( controllers )
+    : gui::ColorController( controllers )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,14 +37,18 @@ ColorController::ColorController( kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 ColorController::~ColorController()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorController::UpdateHierarchies
-// Created: LDC 2012-05-04
+// Name: ColorController::ChangeColor
+// Created: SLI 2014-10-02
 // -----------------------------------------------------------------------------
-void ColorController::UpdateHierarchies( const kernel::Entity_ABC& /*entity*/ )
+void ColorController::ChangeColor( const kernel::Entity_ABC& entity )
 {
-    // NOTHING
+    if( const kernel::Color_ABC* color = entity.Retrieve< kernel::Color_ABC >() )
+    {
+        colors_[ entity.GetId() ] = *color;
+        UpdateHierarchies( entity );
+    }
 }

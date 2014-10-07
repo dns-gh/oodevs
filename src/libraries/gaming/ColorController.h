@@ -7,29 +7,23 @@
 //
 // *****************************************************************************
 
-#ifndef __ColorController_h_
-#define __ColorController_h_
+#ifndef _ColorController_h
+#define _ColorController_h
 
 #include "clients_gui/ColorController.h"
-#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
     class Controllers;
-    class Agent_ABC;
-    class Formation_ABC;
-    class Team_ABC;
-    class Automat_ABC;
 }
 
 // =============================================================================
 /** @class  ColorController
     @brief  Color controller
 */
-// Created: LGY 2011-06-27
+// Created: LGY 2011-06-23
 // =============================================================================
 class ColorController : public gui::ColorController
-
 {
 public:
     //! @name Constructors/Destructor
@@ -41,14 +35,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void UpdateHierarchies( const kernel::Entity_ABC& entity );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Controllers& controllers_;
+    virtual void ChangeColor( const kernel::Entity_ABC& entity );
     //@}
 };
 
-#endif // __ColorController_h_
+#endif // _ColorController_h

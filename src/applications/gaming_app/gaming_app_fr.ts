@@ -409,6 +409,37 @@
     </message>
 </context>
 <context>
+    <name>ColorEditor</name>
+    <message>
+        <source>Change color</source>
+        <translation>Modifier la couleur</translation>
+    </message>
+    <message>
+        <source>Default color</source>
+        <translation>Couleur par défaut</translation>
+    </message>
+    <message>
+        <source>Side color</source>
+        <translation>Couleur du camp</translation>
+    </message>
+    <message>
+        <source>Custom color</source>
+        <translation>Couleur personnalisée</translation>
+    </message>
+    <message>
+        <source>Apply to subordinates</source>
+        <translation>Appliquer aux subordonnés</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>CommunicationTreeView</name>
     <message>
         <source>Create Knowledge Group</source>

@@ -13,6 +13,7 @@
 #include "BriefingDialog.h"
 #include "ChangeDiplomacyDialog.h"
 #include "ChangeHumanFactorsDialog.h"
+#include "ColorEditor.h"
 #include "CreateFormationDialog.h"
 #include "CriticalIntelligenceDialog.h"
 #include "EquipmentTransferDialog.h"
@@ -41,7 +42,9 @@ Dialogs::Dialogs( QWidget* parent,
                   const kernel::Time_ABC& simulation,
                   const kernel::Profile_ABC& profile,
                   CommandHandler& handler,
-                  const tools::ExerciseConfig& config )
+                  const tools::ExerciseConfig& config,
+                  gui::ColorStrategy_ABC& colorStrategy,
+                  gui::ColorEditor_ABC& colorEditor )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, actionsModel, profile );
@@ -60,6 +63,7 @@ Dialogs::Dialogs( QWidget* parent,
     new CriticalIntelligenceDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new EquipmentTransferDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ObjectStateDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new ColorEditor( parent, controllers, colorStrategy, colorEditor );
 }
 
 // -----------------------------------------------------------------------------
