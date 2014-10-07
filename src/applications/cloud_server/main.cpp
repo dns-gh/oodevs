@@ -453,10 +453,14 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
                                   const Path& root, cpplog::BaseLogger& log, int argc, const char* argv[] )
 {
     const Path module = runtime.GetModuleFilename();
-    const Path config = Path( module ).replace_extension( ".config" );
+    const Path previous = Path( module ).replace_extension( ".config" );
+    const Path config = root / Path( module ).filename().replace_extension( ".config" );
 
     Tree tree;
-    if( fs.IsFile( config ) )
+    const bool hasCurrent = fs.IsFile( config );
+    if( !hasCurrent && fs.IsFile( previous ) )
+        tree = FromJson( fs.ReadFile( previous ) );
+    else if( hasCurrent )
         tree = FromJson( fs.ReadFile( config ) );
 
     const Path bin = Path( module ).remove_filename();
