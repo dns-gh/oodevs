@@ -393,8 +393,8 @@ integration.startMoveToIt = function( objective, pathType, waypoints )
         integration.equipNBCOutfit()
     end
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
-    if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
-       and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) 
+    if ( not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination ) or DEC_IsPointInDestroyedUrbanBlock( objective.initialeDestination ) )
+        and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) 
         and not DEC_Agent_PionCanFly( myself ) then
         local simPositions = DEC_Geometrie_CalculerTrafficablePointPourPoint( objective.initialeDestination )
         objective.destination = DEC_Geometrie_CopiePoint(  getNearestSimPoint( objective.initialeDestination, simPositions ) )
@@ -465,7 +465,8 @@ integration.updateMoveToIt = function( objective, pathType, waypoints )
         end
         if objective.initialeDestination ~= objective.destination -- moving toward a non-traficable urban block for instance
            and not myself.dismountedDone
-           and integration.canDismount() then
+           and integration.canDismount()
+           and not DEC_IsPointInDestroyedUrbanBlock( objective.initialeDestination ) then
 
             -- Entering in a non-traficable element: dismount then re-compute path
             myself.enteringNonTrafficableElement = true
@@ -893,6 +894,7 @@ integration.updateMoveToListPointCrowd = function( objective, pathType, wayPoint
 end
 
 integration.isUrbanBlockTrafficable = function( self, loaded )
+    if integration.getUrbanBlockState( self ) == 0 then return 0 end
     if not loaded then return 100 end
     if not self.isUrbanBlockTrafficableCache then
         self.isUrbanBlockTrafficableCache = ( DEC_ConnaissanceBlocUrbain_Traficabilite( self.source ) >= 0 and 100 ) or 0
@@ -912,30 +914,44 @@ integration.moveToItItinerary = masalife.brain.integration.startStopAction( {
         started = integration.updateMoveToIt, 
         stop = integration.deselectMoveToIt } )
         
-integration.isPointInUrbanBlockTrafficableForProxy = function( self, loaded )
+integration.isPointInUrbanBlockTrafficableForProxy = function( location, loaded )
+    local pos = location:getPosition()
+    if DEC_IsPointInDestroyedUrbanBlock( pos ) then return false end
     if not loaded then return 100 end
     local pos = self:getPosition()
     return ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
 end
 
-integration.isPointInUrbanBlockTrafficable = function( self, loaded )
+--- Informs about the accessibility of a given location.
+-- @param simPosition DirectIA knowledge
+-- @param loaded Boolean The agent state used to access the location (loaded:on board, unloaded:off board)
+-- @return Integer, the accessibility level from 0 to 100, 0 meaning the location is not accessible at all.
+integration.isPointInUrbanBlockTrafficable = function( location, loaded )
+    local pos = location:getPosition()
+    if DEC_IsPointInDestroyedUrbanBlock( pos ) then return 0 end
     if not loaded then return 100 end
     local isTrafficable = false
-    if not self.isPointInUrbanBlockTrafficableCache then
-        local pos = self:getPosition()
+    if not location.isPointInUrbanBlockTrafficableCache then
         if masalife.brain.core.class.isOfType( meKnowledge, integration.ontology.types.automat ) then 
             local platoons = DEC_Automate_PionsAvecPC()
-            for i = 1, #platoons do -- Est ce que ce point est trafficable pour tous les pions de l'automate
-                if integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i], self.source ) then
+            for i = 1, #platoons do
+                if integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i], location.source ) then
                     isTrafficable = true
                 end
             end
-            self.isPointInUrbanBlockTrafficableCache = ( pos and isTrafficable and 100 ) or 0
+            location.isPointInUrbanBlockTrafficableCache = ( pos and isTrafficable and 100 ) or 0
         else
-          self.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
+          location.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
         end
     end
-    return self.isPointInUrbanBlockTrafficableCache
+    return location.isPointInUrbanBlockTrafficableCache
+end
+
+--- Informs if the given position is located inside a destroyed urban block.
+-- @param simPosition Simulation point 
+-- @return Boolean, true if the position  is located inside a destroyed urban block
+integration.isPointInDestroyedUrbanBlock = function( simPosition )
+    return DEC_IsPointInDestroyedUrbanBlock( simPosition )
 end
 
 integration.renfortMouvement = function( entity )
