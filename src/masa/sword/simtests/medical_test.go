@@ -190,7 +190,7 @@ func checkMedical(c *C, admin, client *swapi.Client, unit *swapi.Unit, offset in
 	c.Assert(err, IsNil)
 	select {
 	case <-quit:
-	case <-time.After(1 * time.Minute):
+	case <-time.After(WaitTimeout):
 		c.Error("timeout")
 	}
 	go func() {
@@ -203,6 +203,20 @@ func checkMedical(c *C, admin, client *swapi.Client, unit *swapi.Unit, offset in
 	c.Assert(idx, Equals, len(checkers))
 }
 
+// Deploy all crossroad-log supply automats between terrain wide limits.
+func deployCrossroadLogMedical(c *C, client *swapi.Client) {
+	automatNames := []string{
+		"Medical Log Automat 2",
+		"Medical Log Automat 3",
+	}
+	d := client.Model.GetData()
+
+	for _, name := range automatNames {
+		automatId := getSomeAutomatByName(c, d, name).Id
+		deployCrossroadLogAutomat(c, client, automatId)
+	}
+}
+
 func (s *TestSuite) TestMedicalHandlings(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
@@ -212,21 +226,11 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Medical Mobile Infantry")
 	tc2 := swapi.MakeAutomatTasker(getSomeUnitByName(c, d, "Medical Log Unit 1").Id)
-	bld := getSomeAutomatByName(c, d, "Medical Log Automat 2")
 	triage := swapi.MakeUnitTasker(getSomeUnitByName(c, d, "Medical Log Unit 2").Id)
 	none := &sword.Tasker{}
-	// deploy for triage
-	MissionLogDeploy := uint32(8)
-	_, err := client.SendAutomatOrder(bld.Id, MissionLogDeploy,
-		swapi.MakeParameters(swapi.MakeHeading(0), nil,
-			swapi.MakeLimit(
-				swapi.Point{X: -15.7568, Y: 28.4116},
-				swapi.Point{X: -15.7688, Y: 28.3885}),
-			swapi.MakeLimit(
-				swapi.Point{X: -15.7413, Y: 28.4091},
-				swapi.Point{X: -15.7522, Y: 28.3877}),
-			nil))
-	c.Assert(err, IsNil)
+
+	deployCrossroadLogMedical(c, client)
+
 	// physical injury
 	checkMedical(c, admin, client, unit, 0, sword.EnumHumanRank_trooper, eInjured, false,
 		MedicalCreateChecker{},

@@ -152,7 +152,7 @@ func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, callb
 	client.Resume(0)
 	select {
 	case <-quit:
-	case <-time.After(1 * time.Minute):
+	case <-time.After(WaitTimeout):
 		c.Error("timeout")
 	}
 	go func() {
@@ -266,6 +266,36 @@ func (s *TestSuite) TestSupplyHandlingsBaseHighThreshold(c *C) {
 	checkSupplyUpdates(c, client, unit3, supplier, supplier, removeElectrogen_3)
 }
 
+func deployCrossroadLogAutomat(c *C, client *swapi.Client, automatId uint32) {
+	MissionLogDeploy := uint32(8)
+
+	_, err := client.SendAutomatOrder(automatId, MissionLogDeploy,
+		swapi.MakeParameters(swapi.MakeHeading(0), nil,
+			swapi.MakeLimit(
+				swapi.Point{X: -15.9137, Y: 28.42},
+				swapi.Point{X: -15.9137, Y: 28.25}),
+			swapi.MakeLimit(
+				swapi.Point{X: -15.7153, Y: 28.42},
+				swapi.Point{X: -15.7153, Y: 28.25}),
+			nil))
+	c.Assert(err, IsNil)
+}
+
+// Deploy all crossroad-log supply automats between terrain wide limits.
+func deployCrossroadLogSupply(c *C, client *swapi.Client) {
+	automatNames := []string{
+		"Supply Log Automat F2",
+		"Supply Log Automat F3",
+		"Supply Log Automat F4",
+	}
+	d := client.Model.GetData()
+
+	for _, name := range automatNames {
+		automatId := getSomeAutomatByName(c, d, name).Id
+		deployCrossroadLogAutomat(c, client, automatId)
+	}
+}
+
 func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
@@ -273,6 +303,9 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
 	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
 	supplier := swapi.MakeAutomatTasker(supplierId)
+
+	deployCrossroadLogSupply(c, client)
+
 	removeElectrogen_1 := func() {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
@@ -316,6 +349,9 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 	supplier := swapi.MakeFormationTasker(supplierId)
 	automat := getSomeAutomatByName(c, d, "Supply Log Automat 1c")
 	provider := swapi.MakeAutomatTasker(automat.Id)
+
+	deployCrossroadLogSupply(c, client)
+
 	quotas := map[uint32]int32{
 		uint32(electrogen_1): 1000,
 		uint32(electrogen_3): 1000,

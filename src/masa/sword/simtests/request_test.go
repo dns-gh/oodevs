@@ -150,7 +150,7 @@ func checkRequest(c *C, admin, client *swapi.Client, offset int,
 	c.Assert(err, IsNil)
 	select {
 	case <-quit:
-	case <-time.After(1 * time.Minute):
+	case <-time.After(WaitTimeout):
 		c.Error("timeout")
 	}
 	go func() {
