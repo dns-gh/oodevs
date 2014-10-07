@@ -338,35 +338,27 @@ func (s *TestSuite) TestCheckpointFormation(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	opts := NewAdminOpts(ExCrossroadSmallLog)
+	opts := NewAdminOpts(ExCrossroadLog)
 	opts.Step = 300
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 
-	// Find the supply base
-	model := client.Model.GetData()
-	supplyAutomat := getSomeAutomatByName(c, model, "LOG.Supply logistic area")
-	c.Assert(supplyAutomat, NotNil)
+	data := client.Model.GetData()
+	deployCrossroadLogSupply(c, client)
+	unit := getSomeUnitByName(c, data, "Supply Mobile Infantry")
 
-	// Deploy it
-	MissionLogDeploy := uint32(44584)
-	heading := swapi.MakeHeading(0)
-	limit1 := swapi.MakeLimit(
-		swapi.Point{X: -15.8302, Y: 28.3765},
-		swapi.Point{X: -15.825, Y: 28.3413})
-	limit2 := swapi.MakeLimit(
-		swapi.Point{X: -15.7983, Y: 28.3765},
-		swapi.Point{X: -15.7991, Y: 28.3413})
-	params := swapi.MakeParameters(heading, nil, limit1, limit2, nil)
-	_, err := client.SendAutomatOrder(supplyAutomat.Id, MissionLogDeploy, params)
+	// Change some resources and wait for a convoy to be created with a path
+	err := client.ChangeResource(unit.Id,
+		map[uint32]*swapi.Resource{
+			uint32(electrogen_1): {
+				Quantity:      0,
+				LowThreshold:  50,
+				HighThreshold: 100,
+			}})
 	c.Assert(err, IsNil)
-
-	// Once scout ammunitions are depleted, a convoy should be generated, with
-	// a pathfind, eventually.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, u := range data.Units {
-			if strings.Contains(u.Name, "LOG.Convoy") && u.PathPoints > 0 {
+			if strings.Contains(u.Name, "Log Convoy") && u.PathPoints > 0 {
 				return true
 			}
 		}
