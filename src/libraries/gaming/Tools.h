@@ -57,18 +57,15 @@ namespace
         return true;
     }
 
-#   define UPDATE_PROPERTY( message, value, field, property, container )\
-    if( UpdateProperty( value, message, \
-                &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::has_##field, \
-                &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::field ) )\
-        container.insert( property );
+#   define UPDATE_PROPERTY( message, value, field, property, container ) { \
+    typedef BOOST_TYPEOF( message ) T_Message; \
+    if( UpdateProperty( value, message, &T_Message::has_##field, &T_Message::field ) )\
+        container.insert( property ); }
 
-#   define UPDATE_SUBPROPERTY( message, value, parent, field, property, container )\
-    if( UpdateSubProperty( value, message,\
-            &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::has_##parent, \
-            &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::parent, \
-            &boost::remove_const< typename boost::remove_reference< typename boost::function_types::result_type< boost::mpl::identity< BOOST_TYPEOF( &boost::mpl::identity< BOOST_TYPEOF( message ) >::type::parent ) >::type >::type >::type >::type::field ) )\
-        container.insert( property );
+#   define UPDATE_SUBPROPERTY( message, value, parent, field, property, container ) { \
+        typedef BOOST_TYPEOF( message ) T_Message; \
+    if( UpdateSubProperty( value, message, &T_Message::has_##parent, &T_Message::parent, &boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &T_Message::parent ) >::type >::type >::type::field ) )\
+        container.insert( property ); }
 }
 
 #endif // __Gaming_Tools_h_

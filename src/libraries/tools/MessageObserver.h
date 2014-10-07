@@ -21,14 +21,17 @@
 #undef BOOST_TYPEOF_SILENT
 #include <map>
 
-#define CONNECT( sender, receiver, name ) \
-    (receiver).MessageObserver< typename boost::remove_const< typename boost::remove_reference< typename boost::function_types::result_type< BOOST_TYPEOF( &boost::mpl::identity< BOOST_TYPEOF( sender ) >::type::category_type::name ) >::type >::type >::type >::\
-     Connect< boost::mpl::identity< BOOST_TYPEOF( sender ) >::type::category_type, typename boost::remove_const< typename boost::remove_reference< typename boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::name ) >::type >::type >::type >\
-     ( sender, (receiver), &boost::mpl::identity< BOOST_TYPEOF( sender ) >::type::category_type::has_##name, &boost::mpl::identity< BOOST_TYPEOF( sender ) >::type::category_type::name );
+#define CONNECT( sender, receiver, name ) { \
+    typedef BOOST_TYPEOF( sender ) T_Sender; \
+    (receiver).MessageObserver< boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &T_Sender::category_type::name ) >::type >::type >::type >::\
+     Connect< T_Sender::category_type, boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &T_Sender::category_type::name ) >::type >::type >::type >\
+     ( sender, (receiver), &T_Sender::category_type::has_##name, &T_Sender::category_type::name ); }
 
-#define DISCONNECT( sender, receiver, name ) \
-    (receiver).MessageObserver< typename boost::remove_const< typename boost::remove_reference< typename boost::function_types::result_type< BOOST_TYPEOF( &boost::mpl::identity< BOOST_TYPEOF( sender ) >::type::category_type::name ) >::type >::type >::type >::\
-     Disconnect< boost::mpl::identity< BOOST_TYPEOF( sender ) >::type::category_type, typename boost::remove_const< typename boost::remove_reference< typename boost::function_types::result_type< BOOST_TYPEOF( &boost::mpl::identity< BOOST_TYPEOF( sender ) >::type::category_type::name ) >::type >::type >::type >( sender )
+#define DISCONNECT( sender, receiver, name ) { \
+    typedef BOOST_TYPEOF( sender ) T_Sender; \
+    (receiver).MessageObserver< boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &T_Sender::category_type::name ) >::type >::type >::type >::\
+    Disconnect< T_Sender::category_type, boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &T_Sender::category_type::name ) >::type >::type >::type >( sender ); }
+
 
 namespace tools
 {
