@@ -314,30 +314,26 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointAutomat(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	// Need one which is a logistic base
-	automat := client.Model.GetAutomat(14)
-	c.Assert(automat, NotNil)
-	err := client.SetManualMaintenance(automat.Id, true)
-	c.Assert(err, IsNil)
-	err = client.SetManualSupply(automat.Id, true)
-	c.Assert(err, IsNil)
+	d := client.Model.GetData()
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
+	SetManualMaintenance(c, client, tc2Id)
+	SetManualSupply(c, client, tc2Id, true)
 	checkpointCompareAndStop(c, sim, client)
 }
 
 func (s *TestSuite) TestCheckpointFormation(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	// Need one which is a logistic base
-	formation := client.Model.GetFormation(13)
-	c.Assert(formation, NotNil)
-	err := client.SetManualMaintenance(formation.Id, true)
-	c.Assert(err, IsNil)
-	err = client.SetManualSupply(formation.Id, true)
-	c.Assert(err, IsNil)
+	d := client.Model.GetData()
+	supplyFormation := getSomeFormationByName(c, d, "Supply F2").Id
+	SetManualSupply(c, client, supplyFormation, true)
+	maintenanceFormation := getSomeFormationByName(c, d, "Maintenance BLD").Id
+	SetManualMaintenance(c, client, maintenanceFormation)
+
 	checkpointCompareAndStop(c, sim, client)
 }
 
@@ -381,8 +377,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointPathfind(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	data := client.Model.GetData()
 	unit := getSomeUnit(c, data)
@@ -401,8 +396,7 @@ func (s *TestSuite) TestCheckpointPathfind(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointTimeskips(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	valid, err := swapi.GetTime("20200908T060504")
 	c.Assert(err, IsNil)
