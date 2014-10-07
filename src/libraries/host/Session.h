@@ -183,7 +183,7 @@ public:
     virtual void  DetachReplay( const Session_ABC& replay );
     virtual void  NotifyNode();
     virtual bool  DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const;
-    virtual void DeleteUser( const web::User& user, int id );
+    virtual void  DeleteUser( const web::User& user, int id );
     //@}
 
     //! @name Typedef helpers
