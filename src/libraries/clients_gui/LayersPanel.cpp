@@ -39,14 +39,6 @@ namespace
         ePositionBackup,
         eAlphaBackup
     };
-    QPushButton* AddButton( const QIcon& icon, const QString& tooltip, const QObject* receiver, const char* member )
-    {
-        QPushButton* button = new QPushButton( icon, QString::null );
-        button->setFixedSize( 32, 32 );
-        QToolTip::add( button, tooltip );
-        button->connect( button, SIGNAL( clicked() ), receiver, member );
-        return button;
-    }
     QStandardItem* GetItemFromProxy( const QStandardItemModel& model, const QSortFilterProxyModel& proxy, int row )
     {
         return model.itemFromIndex( proxy.mapToSource( proxy.index( row, 0 ) ) );
@@ -73,7 +65,7 @@ namespace
         layout->addWidget( box, 1 );
         return checkbox;
     }
-    QWidget* AddButton( const QString& objectName, const QIcon& icon, const QString& tooltip, const QObject* receiver, const char* member )
+    QPushButton* AddButton( const QString& objectName, const QIcon& icon, const QString& tooltip, const QObject* receiver, const char* member )
     {
         RichPushButton* button = new RichPushButton( objectName, icon, QString::null );
         button->setFixedSize( 32, 32 );
@@ -123,10 +115,10 @@ LayersPanel::LayersPanel( QWidget* parent,
              SLOT( OnSelectionChanged( const QItemSelection&, const QItemSelection& ) ) );
 
     // buttons
-    upButton_ = AddButton( MAKE_PIXMAP( arrow_up ),   tr( "Move the selected layer forwards" ),  this,   SLOT( OnUp() ) );
-    downButton_ = AddButton( MAKE_PIXMAP( arrow_down ), tr( "Move the selected layer backwards" ), this,   SLOT( OnDown() ) );
-    QWidget* add  = AddButton( MAKE_PIXMAP( add_point ),  tr( "Add a user raster layer" ),           parent, SIGNAL( OnAddRaster() ) );
-    removeButton_ = AddButton( MAKE_PIXMAP( trash ),      tr( "Remove a user raster layer" ),        this,   SLOT( OnRemoveDynamicLayer() ) );
+    upButton_ = AddButton( "up", MAKE_PIXMAP( arrow_up ),   tr( "Move the selected layer forwards" ), this, SLOT( OnUp() ) );
+    downButton_ = AddButton( "down", MAKE_PIXMAP( arrow_down ), tr( "Move the selected layer backwards" ), this, SLOT( OnDown() ) );
+    QWidget* add  = AddButton( "add", MAKE_PIXMAP( add_point ),  tr( "Add a user raster layer" ), parent, SIGNAL( OnAddRaster() ) );
+    removeButton_ = AddButton( "remove", MAKE_PIXMAP( trash ),      tr( "Remove a user raster layer" ), this, SLOT( OnRemoveDynamicLayer() ) );
     QWidget* buttonBox = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout( buttonBox );
     layout->setMargin( 10 );
