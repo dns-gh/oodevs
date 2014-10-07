@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <extractor/Logging.h>
 #include <gdal_ogr/GdalLogging.h>
+#include <graphics/GraphicsLogging.h>
 
 namespace
 {
@@ -42,6 +43,7 @@ int main()
 {
     extractor::SetLogger( CreateMTLogger( "extractor" ) );
     gdal_ogr::SetLogger( CreateMTLogger( "gdal_ogr" ) );
+    graphics::SetLogger( CreateMTLogger( "graphics" ) );
     return tools::Main(
         tools::WinArguments( GetCommandLineW() ),
         MT_Logger_ABC::ePreparation, false, &Main );

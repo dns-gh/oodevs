@@ -144,7 +144,7 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_Locations,              "main",                             false,  false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
-    { eLayerTypes_Mapnik,                 "main,composition,miniviews",       false,  false,
+    { eLayerTypes_Mapnik,                 "main,composition",                 false,  true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
     { eLayerTypes_Metric,                 "main",                             false,  false,
