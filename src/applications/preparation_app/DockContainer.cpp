@@ -31,11 +31,22 @@
 // Name: DockContainer constructor
 // Created: LGY 2012-01-04
 // -----------------------------------------------------------------------------
-DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controllers, gui::AutomatsLayer& automats,
-                              gui::FormationLayer& formation, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
-                              Model& model, StaticModel& staticModel, const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
-                              gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
-                              gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfileLayer,
+DockContainer::DockContainer( QMainWindow* parent,
+                              kernel::Controllers& controllers,
+                              const std::shared_ptr< gui::AutomatsLayer >& automats,
+                              const std::shared_ptr< gui::FormationLayer >& formation,
+                              const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                              const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
+                              const std::shared_ptr< gui::TerrainProfilerLayer >& terrainProfileLayer,
+                              gui::EntitySymbols& icons,
+                              ModelBuilder& modelBuilder,
+                              Model& model,
+                              StaticModel& staticModel,
+                              const tools::ExerciseConfig& config,
+                              gui::SymbolIcons& symbols,
+                              gui::ColorStrategy_ABC& colorStrategy,
+                              gui::GlProxy& glProxy,
+                              ColorController& colorController,
                               const kernel::Profile_ABC& profile )
     : pCreationPanel_  ( 0 )
     , pLivingAreaPanel_( 0 )
@@ -44,7 +55,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Agent list panel
     {
         orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
-                                                automats, formation, icons, modelBuilder, model, staticModel, symbols, paramLayer );
+                                                automats, formation, paramLayer, icons, modelBuilder, model, staticModel, symbols );
         orbatDockWidget_->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
     }

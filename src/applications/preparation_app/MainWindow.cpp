@@ -57,6 +57,7 @@
 #include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/InhabitantLayer.h"
+#include "clients_gui/LayerComposite.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/MapnikLayer.h"
@@ -113,7 +114,10 @@
 #include "MT_Tools/MT_Logger.h"
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/assign.hpp>
 #include <boost/bind.hpp>
+
+namespace ba = boost::assign;
 
 namespace
 {
@@ -158,6 +162,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::SubObjectName subObject( "MainWindow" );
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Prepare, "Preparation" );
+    controllers_.actions_.AllowMultipleSelection< kernel::UrbanObject_ABC >( eModes_Terrain );
+    gui::layers::CheckConsistency();
 
     // Migration
     if( config_.HasGenerateScores() || !config_.GetFolderToMigrate().IsEmpty() )
@@ -195,28 +201,28 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::OverFlyingColorModifier( controllers ) ) );
 
     // Layer 1
-    gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
-    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *textEditor_ );
-    gui::AutomatsLayer& automats = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
-    gui::FormationLayer& formation = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
-    gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
+    auto locationsLayer = std::make_shared< gui::LocationsLayer >( controllers_, *glProxy_ );
+    auto paramLayer = std::make_shared< gui::ParametersLayer >( controllers_, *glProxy_, *textEditor_ );
+    auto automats = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
+    auto formation = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
+    auto weatherLayer = std::make_shared< gui::WeatherLayer >( controllers_, *glProxy_, *eventStrategy_ );
+    auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( controllers_, *glProxy_ );
+    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
-    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
-    gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
 
     // Dialogs
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_,
-                                                 *icons_, config, *symbols, *lighting_, *pPainter_, *paramLayer, *glProxy_, *selector_, elevation2d, *graphicPreferences_ ) );
+                                                 *icons_, config, *symbols, *lighting_, *pPainter_, paramLayer, elevation2d, *glProxy_, *graphicPreferences_ ) );
 
     // Dock widgets
-    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons_, *modelBuilder_, model_, staticModel_, config_, *symbols,
-                                             *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer, PreparationProfile::GetProfile() ) );
+    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, paramLayer, weatherLayer, profilerLayer, *icons_, *modelBuilder_, model_,
+                                             staticModel_, config_, *symbols, *strategy_, *glProxy_, *colorController_, PreparationProfile::GetProfile() ) );
 
     // ToolBars
-    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, *model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
+    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, locationsLayer, paramLayer, *eventStrategy_, *model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
 
     // Layers 2
-    CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *profilerLayer, PreparationProfile::GetProfile(), *picker, automats, formation, elevation2d );
+    CreateLayers( paramLayer, locationsLayer, weatherLayer, profilerLayer, automats, formation, elevation2d, *picker );
 
     // Help
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ), &controllers_.modes_ );
@@ -279,118 +285,67 @@ void MainWindow::Load()
     }
 }
 
-namespace
-{
-    template< typename Layer >
-    void AddLayer( gui::GlProxy& glProxy, gui::PreferencesDialog& preference, Layer& layer, const std::string& passes = "", const QString& text = "" )
-    {
-        glProxy.Register( layer );
-        if( !text.isEmpty() )
-            preference.AddLayer( text, layer );
-        if( !passes.empty() )
-            layer.SetPasses( passes );
-        layer.SetReadOnlyModes( eModes_Terrain );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
-                               const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
-                               gui::Elevation2dLayer& elevation2d )
+void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
+                               const std::shared_ptr< gui::Layer_ABC >& locations,
+                               const std::shared_ptr< gui::Layer_ABC >& weather,
+                               const std::shared_ptr< gui::Layer_ABC >& profiler,
+                               const std::shared_ptr< gui::Layer_ABC >& automats,
+                               const std::shared_ptr< gui::Layer_ABC >& formations,
+                               const std::shared_ptr< gui::Layer_ABC >& elevation2d,
+                               gui::TerrainPicker& picker )
 {
     assert( dialogContainer_.get() && dockContainer_.get() );
-    gui::Layer& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, *graphicPreferences_, picker );
-    ::AgentsLayer& agents                   = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
-    gui::TooltipsLayer_ABC& tooltipLayer    = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
-    gui::Layer& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
-    gui::Layer& indicatorCreationLayer  = *new gui::MiscLayer< ScoreDialog >( dialogContainer_->GetScoreDialog() );
-    gui::Layer& raster                  = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer* mapnik                  = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_, config_.GetMapnikThreads() ) : 0;
-    gui::Layer& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
-    gui::Layer& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer& resourceNetworksLayer   = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *model_.urban_, profile );
-    gui::Layer& grid                    = *new gui::GridLayer( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
-    gui::Layer& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
-    gui::Layer& objectsLayer            = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
-    gui::Layer& populations             = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    gui::Layer& ghosts                  = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    gui::Layer& defaultLayer            = *new gui::DefaultLayer( controllers_ );
-    gui::Layer& drawerLayer             = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *modelBuilder_ );
-    gui::Layer& inhabitantLayer         = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
-    gui::Layer& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
-    gui::Layer& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
-
-    // Drawing order
-    gui::PreferencesDialog& preferences = dialogContainer_->GetPrefDialog();
-    AddLayer( *glProxy_, preferences, defaultLayer );
-    AddLayer( *glProxy_, preferences, elevation2d,              "main",                         tools::translate( "MainWindow", "Elevation" ) );
-    AddLayer( *glProxy_, preferences, raster,                   "main",                         tools::translate( "MainWindow", "Raster" ) );
-    if( mapnik )
-        AddLayer( *glProxy_, preferences, *mapnik,              "main,composition,miniviews",   tools::translate( "MainWindow", "Terrain (new rendering)" ) );
-    AddLayer( *glProxy_, preferences, terrain,                  "main",                         tools::translate( "MainWindow", "Terrain" ) );
-    AddLayer( *glProxy_, preferences, contour,                  "main,composition,miniviews",   tools::translate( "MainWindow", "Contour Lines" ) );
-    AddLayer( *glProxy_, preferences, urbanLayer,               "main",                         tools::translate( "MainWindow", "Urban blocks" ) );
-    AddLayer( *glProxy_, preferences, resourceNetworksLayer,    "main",                         tools::translate( "MainWindow", "Resource networks" ) );
-    AddLayer( *glProxy_, preferences, watershed,                "main",                         tools::translate( "MainWindow", "Watershed" ) );
-    AddLayer( *glProxy_, preferences, elevation3d );
-    AddLayer( *glProxy_, preferences, grid,                     "main" );
-    AddLayer( *glProxy_, preferences, metrics,                  "main" );
-    AddLayer( *glProxy_, preferences, weather,                  "main" );
-    AddLayer( *glProxy_, preferences, limits,                   "main" );
-    AddLayer( *glProxy_, preferences, indicatorCreationLayer );
-    AddLayer( *glProxy_, preferences, inhabitantLayer,          "main",                         tools::translate( "MainWindow", "Populations" ) );
-    AddLayer( *glProxy_, preferences, objectsLayer,             "main",                         tools::translate( "MainWindow", "Objects" ) );
-    AddLayer( *glProxy_, preferences, populations,              "main",                         tools::translate( "MainWindow", "Crowd" ) );
-    AddLayer( *glProxy_, preferences, ghosts,                   "main",                         tools::translate( "MainWindow", "Ghost" ) );
-    AddLayer( *glProxy_, preferences, agents,                   "main",                         tools::translate( "MainWindow", "Units" ) );
-    AddLayer( *glProxy_, preferences, automats,                 "main",                         tools::translate( "MainWindow", "Automats" ) );
-    AddLayer( *glProxy_, preferences, formation,                "main",                         tools::translate( "MainWindow", "Formations" ) );
-    AddLayer( *glProxy_, preferences, objectCreationLayer,      "main" );
-    AddLayer( *glProxy_, preferences, inhabitantCreationLayer,  "main" );
-    AddLayer( *glProxy_, preferences, parameters,               "main" );
-    AddLayer( *glProxy_, preferences, locations,                "main" );
-    AddLayer( *glProxy_, preferences, profilerLayer,            "main" );
-    AddLayer( *glProxy_, preferences, drawerLayer,              "main" );
-    AddLayer( *glProxy_, preferences, selection,                "main" );
-    AddLayer( *glProxy_, preferences, tooltipLayer,             "tooltip" );
-
-    // Display modes
-    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer or Layer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer.
-    agents.SetModes( eModes_LivingArea, eModes_None, true );
-    limits.SetModes( eModes_LivingArea, eModes_None, true );
-    objectsLayer.SetModes( eModes_LivingArea, eModes_None, true );
-    populations.SetModes( eModes_LivingArea, eModes_None, true );
-    ghosts.SetModes( eModes_LivingArea, eModes_None, true );
-    // Readonly modes
-    urbanLayer.SetReadOnlyModes( eModes_None );
-    // Multiple Selection
-    controllers_.actions_.AllowMultipleSelection< kernel::UrbanObject_ABC >( eModes_Terrain );
-
-    // events order
-    forward_->Register( terrain );
-    forward_->Register( parameters );
-    forward_->Register( agents );
-    forward_->Register( automats );
-    forward_->Register( formation );
-    forward_->Register( populations );
-    forward_->Register( objectsLayer );
-    forward_->Register( weather );
-    forward_->Register( inhabitantLayer );
-    forward_->Register( ghosts );
-    forward_->Register( limits );
-    forward_->Register( resourceNetworksLayer );
-    forward_->Register( urbanLayer );
-    forward_->Register( drawerLayer );
-    forward_->Register( metrics );
-    forward_->Register( elevation3d );
-    forward_->Register( selection );
-    forward_->SetDefault( defaultLayer );
+    const auto& profile = PreparationProfile::GetProfile();
+    auto tooltips = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
+    layers_[ eLayerTypes_Agents ]             = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
+    layers_[ eLayerTypes_Automats ]           = automats;
+    layers_[ eLayerTypes_ContourLines ]       = std::make_shared< gui::ContourLinesLayer >( controllers_, *glProxy_, staticModel_.detection_ );
+    layers_[ eLayerTypes_Crowds ]             = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    layers_[ eLayerTypes_Default ]            = std::make_shared< gui::DefaultLayer >( controllers_, *glProxy_ );
+    layers_[ eLayerTypes_Drawings ]           = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *modelBuilder_ );
+    layers_[ eLayerTypes_Elevation2d ]        = elevation2d;
+    layers_[ eLayerTypes_Elevation3d ]        = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
+    layers_[ eLayerTypes_Formations ]         = formations;
+    layers_[ eLayerTypes_Ghosts ]             = std::make_shared< GhostsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    layers_[ eLayerTypes_Grid ]               = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
+    layers_[ eLayerTypes_IndicatorCreation ]  = std::make_shared< gui::MiscLayer< ScoreDialog > >( controllers_, *glProxy_, eLayerTypes_IndicatorCreation, dialogContainer_->GetScoreDialog() );
+    layers_[ eLayerTypes_InhabitantCreation ] = std::make_shared< gui::MiscLayer< InhabitantCreationPanel > >( controllers_, *glProxy_, eLayerTypes_InhabitantCreation, dockContainer_->GetInhabitantCreationPanel() );
+    layers_[ eLayerTypes_Inhabitants ]        = std::make_shared< InhabitantLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
+    layers_[ eLayerTypes_Locations ]          = locations;
+    if( config_.HasMapnik() )
+        layers_[ eLayerTypes_Mapnik ]         = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_, config_.GetMapnikThreads() );
+    layers_[ eLayerTypes_Metric ]             = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
+    layers_[ eLayerTypes_ObjectCreation ]     = std::make_shared< gui::MiscLayer< ObjectCreationPanel > >( controllers_, *glProxy_, eLayerTypes_ObjectCreation, dockContainer_->GetObjectCreationPanel() );
+    layers_[ eLayerTypes_Objects ]            = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
+    layers_[ eLayerTypes_Parameters ]         = parameters;
+    layers_[ eLayerTypes_Raster ]             = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_ );
+    layers_[ eLayerTypes_ResourceNetworks ]   = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    layers_[ eLayerTypes_Selection ]          = std::make_shared< gui::SelectionLayer >( controllers_, *glProxy_ );
+    layers_[ eLayerTypes_TacticalLines ]      = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
+    layers_[ eLayerTypes_Terrain ]            = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, *graphicPreferences_, picker );
+    layers_[ eLayerTypes_TerrainProfiler ]    = profiler;
+    layers_[ eLayerTypes_Tooltips ]           = tooltips;
+    layers_[ eLayerTypes_Urban ]              = std::make_shared< UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, *model_.urban_, profile );
+    layers_[ eLayerTypes_Watershed ]          = std::make_shared< gui::WatershedLayer >( controllers_, *glProxy_, staticModel_.detection_ );
+    layers_[ eLayerTypes_Weather ]            = weather;
+    // composites, need others to be created
+    layers_[ eLayerTypes_InhabitantsComposite ]   = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_InhabitantsComposite );
+    layers_[ eLayerTypes_ObjectsComposite ]       = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_ObjectsComposite );
+    layers_[ eLayerTypes_TacticalLinesComposite ] = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_TacticalLinesComposite );
+    layers_[ eLayerTypes_UnitsComposite ]         = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_UnitsComposite );
+    layers_[ eLayerTypes_WeatherComposite ]       = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_WeatherComposite );
+    // init orders
+    glProxy_->AddLayers( gui::layers::GetDefaultDrawingOrder( layers_, eModes_AllPrepare ) );
+    forward_->AddLayers( gui::layers::GetEventOrder( layers_, eModes_AllPrepare ) );
+    forward_->SetDefault( layers_.at( eLayerTypes_Default ) );
+    // init options
+    controllers_.options_.InitializeLayers( gui::layers::GetDefaultConfigurableOrder( layers_, eModes_AllPrepare ) );
+    // other init
+    glProxy_->SetTooltipsLayer( tooltips );
 }
 
 // -----------------------------------------------------------------------------
@@ -497,6 +452,7 @@ bool MainWindow::DoLoad()
         controllers_.SaveOptions( eModes_Prepare );
         dockContainer_->Purge();
         model_.Purge();
+        glProxy_->Purge();
         selector_->Close();
         selector_->Load();
         SetProgression( 20, tools::translate( "MainWindow", "Loading physical model ..." ) );
@@ -542,6 +498,7 @@ void MainWindow::DoClose()
     dockContainer_->Purge();
     model_.Purge();
     staticModel_.Purge();
+    glProxy_->Purge();
     selector_->Close();
     dialogContainer_->Purge();
     SetWindowTitle( false );
@@ -572,6 +529,7 @@ void MainWindow::LoadExercise()
 
         loading_ = false;
         controllers_.ChangeMode( eModes_Prepare );
+        glProxy_->UpdateLayerOrder( *controllers_.options_.GetViewOptions() );
         emit CheckConsistency();
         SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_->NeedSaving() || model_.HasConsistencyErrorsOnLoad() ||  model_.OldUrbanMode() );
     }
@@ -860,8 +818,8 @@ void MainWindow::OnAddRaster()
     }
     try
     {
-        gui::AddRasterDialog& dialog = dialogContainer_->GetAddRasterDialog();
-        QDialog::DialogCode result = static_cast< QDialog::DialogCode >( dialog.exec() );
+        auto& dialog = dialogContainer_->GetAddRasterDialog();
+        auto result = static_cast< QDialog::DialogCode >( dialog.exec() );
         if( result == QDialog::Accepted )
         {
             const auto input = tools::Path::FromUnicode( dialog.GetFiles().toStdWString() );
@@ -869,13 +827,7 @@ void MainWindow::OnAddRaster()
                 [&]( int exitCode, const tools::Path& output, const std::string& error )
                 {
                     if( !exitCode )
-                    {
-                        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, output );
-                        raster.SetPasses( "main" );
-                        selector_->AddLayer( raster );
-                        dialogContainer_->GetPrefDialog().AddLayer(
-                            tools::translate( "MainWindow", "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
-                    }
+                        glProxy_->AddLayers( gui::T_LayersVector( 1, std::make_shared< gui::RasterLayer >( controllers_, *glProxy_, output, dialog.GetName() ) ) );
                     else
                         QMessageBox::warning( this, tools::translate( "MainWindow", "Error loading image file" ),
                             error.empty() ? tools::translate( "MainWindow", "Error while loading Raster source." ) : error.c_str() );

@@ -15,6 +15,7 @@
 #include "Elevation2dLayer.h"
 #include "RefreshRatePanel.h"
 #include "ReplayPanel.h"
+#include "GlProxy.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
 #include "InhabitantPanel.h"
@@ -41,12 +42,13 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
                                       LightingProxy& lighting,
                                       kernel::CoordinateConverter_ABC& coordConverter,
                                       const Painter_ABC& painter,
-                                      GlSelector& selector,
-                                      Elevation2dLayer& elevation2dLayer,
+                                      GlProxy& proxy,
+                                      const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
                                       GraphicPreferences& preferences )
     : ModalDialog( parent, "PreferencesDialog", false )
     , controllers_      ( controllers )
     , painter_          ( painter )
+    , proxy_            ( proxy )
     , pGraphicPrefPanel_( 0 )
     , lighting_         ( lighting )
     , elevation2dLayer_ ( elevation2dLayer )
@@ -84,7 +86,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     grid->addWidget( box, 1, 0 );
 
     pGraphicPrefPanel_       = new GraphicsPanel( this, preferences );
-    layersPanel_             = new LayersPanel( this, controllers, selector );
+    layersPanel_             = new LayersPanel( this, controllers, proxy );
     pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordConverter );
 
     box = new Q3HBox( this );
@@ -139,7 +141,8 @@ QSize PreferencesDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void PreferencesDialog::showEvent( QShowEvent * event )
 {
-    layersPanel_->Update();
+    for( auto it = pages_.begin(); it != pages_.end(); ++it )
+        ( *it )->Load( proxy_ );
     QDialog::showEvent( event );
 }
 
@@ -175,15 +178,6 @@ void PreferencesDialog::OnCancel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PreferencesDialog::AddLayer
-// Created: AGE 2007-01-04
-// -----------------------------------------------------------------------------
-void PreferencesDialog::AddLayer( const QString& name, gui::Layer& layer, bool dynamic /* = false */ )
-{
-    layersPanel_->AddLayer( name, layer, dynamic );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PreferencesDialog::PurgeDialog
 // Created: NPT 2013-07-15
 // -----------------------------------------------------------------------------
@@ -216,5 +210,6 @@ void PreferencesDialog::BuildSettings()
 // -----------------------------------------------------------------------------
 void PreferencesDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
-    OnCancel();
+    if( isVisible() )
+        OnCancel();
 }

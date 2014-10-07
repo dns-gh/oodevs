@@ -10,24 +10,24 @@
 #include "clients_gui_pch.h"
 #include "MapnikLayer.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "tools/ExerciseConfig.h"
 #include "MT_Tools/MT_Logger.h"
 #include <graphics/MapnikLayer.h>
 
 using namespace gui;
 
-MapnikLayer::MapnikLayer( kernel::Controller& controller, uint32_t threads )
-    : controller_( controller )
+MapnikLayer::MapnikLayer( kernel::Controllers& controllers, GlTools_ABC& tools, uint32_t threads )
+    : Layer2D( controllers, tools, eLayerTypes_Mapnik )
     , threads_( threads )
 {
     SetAlpha( 0 );
-    controller_.Register( *this );
+    controllers_.Update( *this );
 }
 
 MapnikLayer::~MapnikLayer()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 void MapnikLayer::NotifyUpdated( const kernel::ModelLoaded& modelLoaded )

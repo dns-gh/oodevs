@@ -43,8 +43,13 @@ class DrawerLayer : public EntityLayer< kernel::Drawing_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, ModelObserver_ABC& model );
+             DrawerLayer( kernel::Controllers& controllers,
+                          GlTools_ABC& tools,
+                          ColorStrategy_ABC& strategy,
+                          const std::shared_ptr< ParametersLayer >& parameters,
+                          View_ABC& view,
+                          const kernel::Profile_ABC& profile,
+                          ModelObserver_ABC& model );
     virtual ~DrawerLayer();
     //@}
 
@@ -76,7 +81,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ParametersLayer& parameters_;
+    std::shared_ptr< ParametersLayer > parameters_;
     GlTools_ABC& tools_;
     ModelObserver_ABC& model_;
     geometry::Rectangle2f viewport_;

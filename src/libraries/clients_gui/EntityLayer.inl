@@ -22,13 +22,16 @@ namespace gui
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                            View_ABC& view, const kernel::Profile_ABC& profile, E_LayerTypes type )
+EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers,
+                                            GlTools_ABC& tools,
+                                            ColorStrategy_ABC& strategy,
+                                            View_ABC& view,
+                                            const kernel::Profile_ABC& profile,
+                                            E_LayerTypes type )
     : EntityLayerBase( controllers, tools, strategy, view, profile, type )
-    , controllers_( controllers )
     , strategy_( strategy )
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

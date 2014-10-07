@@ -40,7 +40,7 @@ class ParametersLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             ParametersLayer( GlTools_ABC& tools, TextEditor& textEditor );
+             ParametersLayer( kernel::Controllers& controllers, GlTools_ABC& tools, TextEditor& textEditor );
     virtual ~ParametersLayer();
     //@}
 
@@ -83,7 +83,6 @@ private:
 private:
     //! @name Member data
     //@{
-    GlTools_ABC& tools_;
     TextEditor& textEditor_;
     std::unique_ptr< CursorStrategy_ABC > cursors_;
     ShapeHandler_ABC* handler_;

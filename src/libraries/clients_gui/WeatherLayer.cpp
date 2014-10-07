@@ -20,8 +20,10 @@ using namespace gui;
 // Name: WeatherLayer constructor
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( gui::GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy )
-    : tools_( tools )
+WeatherLayer::WeatherLayer( kernel::Controllers& controllers,
+                            GlTools_ABC& tools,
+                            ExclusiveEventStrategy& eventStrategy )
+    : Layer( controllers, tools, eLayerTypes_Weather )
     , eventStrategy_( eventStrategy )
     , displaying_( false )
     , firstPointSet_( false )
@@ -131,7 +133,7 @@ void WeatherLayer::StartEdition( weather::MeteoLocal& weather )
     displaying_ = true;
     topLeft_ = geometry::Point2f();
     bottomRight_ = geometry::Point2f();
-    eventStrategy_.TakeExclusiveFocus( *this );
+    eventStrategy_.TakeExclusiveFocus( shared_from_this() );
     isEditing_ = true;
     firstPointSet_ = false;
 }

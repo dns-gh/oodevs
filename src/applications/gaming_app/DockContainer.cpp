@@ -69,11 +69,11 @@ DockContainer::DockContainer( QMainWindow* parent,
                               const Simulation& simulation,
                               const GamingConfig& config,
                               ProfileFilter& profile,
-                              gui::ParametersLayer& paramLayer,
-                              gui::TerrainProfilerLayer& profilerLayer,
-                              AutomatsLayer& automatsLayer,
-                              FormationLayer& formationLayer,
-                              ::WeatherLayer& weatherLayer,
+                              const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                              const std::shared_ptr< gui::TerrainProfilerLayer >& profilerLayer,
+                              const std::shared_ptr< AutomatsLayer >& automatsLayer,
+                              const std::shared_ptr< FormationLayer >& formationLayer,
+                              const std::shared_ptr< ::WeatherLayer >& weatherLayer,
                               gui::GlProxy& proxy,
                               gui::RichItemFactory& factory,
                               gui::ColorStrategy_ABC& colorStrategy,
@@ -89,11 +89,14 @@ DockContainer::DockContainer( QMainWindow* parent,
 {
     const bool hasLegacyTimeline = config.HasTimeline();
     // Tools
-    interfaceBuilder_.reset(
-        new actions::gui::InterfaceBuilder(
-            controllers, config, paramLayer, staticModel,
-            &model.objectKnowledgeConverter_,
-            &simulation, &model.limits_, &model.pathfinds_ ) );
+    interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers,
+                                                                 config,
+                                                                 paramLayer,
+                                                                 staticModel,
+                                                                 &model.objectKnowledgeConverter_,
+                                                                 &simulation,
+                                                                 &model.limits_,
+                                                                 &model.pathfinds_ ) );
     scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, model.actions_, network.GetMessageMgr(), simulationController, hasLegacyTimeline ) );
     plotFactory_.reset( new IndicatorPlotFactory( parent, controllers, network.GetMessageMgr(), indicatorExportDialog, simulation ) );
 
@@ -138,8 +141,8 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Orbat panel
     {
-        orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, automatsLayer, formationLayer,
-            model.actions_, staticModel, simulation, entitySymbols, drawingsBuilder, paramLayer );
+        orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, automatsLayer, formationLayer, paramLayer,
+                                                model.actions_, staticModel, simulation, entitySymbols, drawingsBuilder );
         orbatDockWidget_->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
     }

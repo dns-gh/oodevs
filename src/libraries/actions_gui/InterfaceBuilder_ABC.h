@@ -73,7 +73,7 @@ public:
     //@{
     virtual QObject* GetParentObject() const = 0;
     virtual ParamInterface_ABC& GetParamInterface() const = 0;
-    virtual ::gui::ParametersLayer& GetParameterLayer() const = 0;
+    virtual std::shared_ptr< ::gui::ParametersLayer > GetParameterLayer() const = 0;
     virtual kernel::Controllers& GetControllers() const = 0;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const = 0;
     virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const = 0;

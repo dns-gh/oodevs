@@ -31,9 +31,12 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/AgentsModel.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
+#include "gaming/Model.h"
 #include "gaming/Pathfind.h"
+#include "gaming/StaticModel.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -48,12 +51,8 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
                               gui::ColorStrategy_ABC& strategy,
                               gui::View_ABC& view,
                               const kernel::Profile_ABC& profile,
-                              Publisher_ABC& publisher,
-                              const kernel::CoordinateConverter_ABC& converter,
-                              const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
-                              const tools::Resolver_ABC< kernel::Population_ABC >& populations,
-                              gui::ModelObserver_ABC& model,
-                              actions::ActionsModel& actions )
+                              Model& model,
+                              gui::ModelObserver_ABC& modelObserver )
     : EntityLayer< kernel::Pathfind_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Pathfinds )
     , controllers_( controllers )
     , tools_( tools )
@@ -61,12 +60,12 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
     , target_( controllers )
     , selectedEntity_( controllers )
     , selectedPathfind_( controllers )
-    , publisher_( publisher )
-    , converter_( converter )
-    , model_( model )
-    , actions_( actions )
-    , agents_( agents )
-    , populations_( populations )
+    , publisher_( model.publisher_ )
+    , converter_( model.static_.coordinateConverter_ )
+    , modelObserver_( modelObserver )
+    , actions_( model.actions_ )
+    , agents_( model.agents_ )
+    , populations_( model.agents_ )
     , replaceable_( false )
     , lock_( false )
 {
@@ -539,7 +538,7 @@ void PathfindLayer::OnDeletePathfind()
         return;
     if( !profile_.CanBeOrdered( *selectedPathfind_ ) )
         return;
-    model_.DeleteEntity( *selectedPathfind_ );
+    modelObserver_.DeleteEntity( *selectedPathfind_ );
 }
 
 void PathfindLayer::OnEditPathfind()

@@ -46,9 +46,13 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model,
-                              const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam,
-                              gui::ParametersLayer& layer, const tools::GeneralConfig& config );
+             ObjectPrototype( QWidget* parent,
+                              kernel::Controllers& controllers,
+                              const StaticModel& model,
+                              const kernel::Time_ABC& simulation,
+                              const kernel::Team_ABC& noSideTeam,
+                              const std::shared_ptr< gui::ParametersLayer >& layer,
+                              const tools::GeneralConfig& config );
     virtual ~ObjectPrototype();
     //@}
 

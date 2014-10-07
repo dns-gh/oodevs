@@ -43,7 +43,14 @@ class MagicOrdersInterface : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile, gui::GlSelector& selector );
+             MagicOrdersInterface( QWidget* parent,
+                                   kernel::Controllers& controllers,
+                                   actions::ActionsModel& actionsModel,
+                                   const StaticModel& staticModel,
+                                   const kernel::Time_ABC& simulation,
+                                   const std::shared_ptr< gui::ParametersLayer >& layer,
+                                   const kernel::Profile_ABC& profile,
+                                   gui::GlSelector& selector );
     virtual ~MagicOrdersInterface();
     //@}
 };

@@ -33,8 +33,13 @@ class LimitsLayer : public gui::TacticalLinesLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                          gui::ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile,
+             LimitsLayer( kernel::Controllers& controllers,
+                          gui::GlTools_ABC& tools,
+                          gui::ColorStrategy_ABC& strategy,
+                          const std::shared_ptr< gui::ParametersLayer >& parameters,
+                          TacticalLineFactory& factory,
+                          gui::View_ABC& view,
+                          const kernel::Profile_ABC& profile,
                           gui::ModelObserver_ABC& model );
     virtual ~LimitsLayer();
     //@}

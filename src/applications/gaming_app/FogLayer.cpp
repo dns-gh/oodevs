@@ -24,7 +24,7 @@ FogLayer::FogLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, g
     , controllers_( controllers )
     , texture_( 0 )
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

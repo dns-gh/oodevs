@@ -10,6 +10,7 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
+#include "clients_gui/LayersHelpers.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "gaming/Simulation.h"
@@ -32,7 +33,6 @@ namespace gui
     class CircularEventStrategy;
     class ColorStrategy;
     class DisplayExtractor;
-    class Elevation2dLayer;
     class EntitySymbols;
     class ExclusiveEventStrategy;
     class FormationLayer;
@@ -40,7 +40,7 @@ namespace gui
     class GlSelector;
     class GraphicPreferences;
     class HelpSystem;
-    class Layer;
+    class Layer_ABC;
     class LightingProxy;
     class Painter_ABC;
     class ParametersLayer;
@@ -48,7 +48,6 @@ namespace gui
     class RichToolBar;
     class TerrainLayer;
     class TerrainPicker;
-    class TooltipsLayer_ABC;
     class TextEditor;
 }
 
@@ -139,11 +138,15 @@ private:
 
     static std::string BuildRemotePath( std::string server, std::string path );
 
-    void CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,
-                       gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker,
-                       gui::Elevation2dLayer& elevation2dLayer );
-    void AddLayer( gui::Layer& layer, const std::string& passes = "", const QString& text = "" );
-    void AddTooltipLayer( gui::TooltipsLayer_ABC& layer );
+    void CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
+                       const std::shared_ptr< gui::Layer_ABC >& locations,
+                       const std::shared_ptr< gui::Layer_ABC >& weather,
+                       const std::shared_ptr< gui::Layer_ABC >& profiler,
+                       const std::shared_ptr< gui::Layer_ABC >& automats,
+                       const std::shared_ptr< gui::Layer_ABC >& formations,
+                       const std::shared_ptr< gui::Layer_ABC >& elevation2d,
+                       const Simulation& simulation,
+                       gui::TerrainPicker& picker );
 
 private:
     //! @name Member data
@@ -178,7 +181,7 @@ private:
     std::unique_ptr< UnitStateDialog > unitStateDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
     std::unique_ptr< gui::TextEditor > textEditor_;
-    gui::ParametersLayer* parameters_; // $$$$ ABR 2013-02-14: Can't make an unique_ptr of this one, because every layers are destroyed into GlProxy destructor.
+    gui::T_LayersMap layers_;
     QByteArray states_;
     bool connected_;
     bool onPlanif_;

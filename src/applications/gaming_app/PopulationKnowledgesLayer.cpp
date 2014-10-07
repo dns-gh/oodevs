@@ -19,7 +19,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 PopulationKnowledgesLayer::PopulationKnowledgesLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                                       View_ABC& view, const kernel::Profile_ABC& profile )
-    : KnowledgeLayer< PopulationKnowledge_ABC >( controllers, tools, strategy, view, profile )
+    : KnowledgeLayer< PopulationKnowledge_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_CrowdKnowledges )
 {
     // NOTHING
 }

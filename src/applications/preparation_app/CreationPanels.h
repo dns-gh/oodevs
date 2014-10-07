@@ -50,9 +50,17 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model,
-                             const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
-                             gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy, ColorController& colorController );
+             CreationPanels( QWidget* parent,
+                             kernel::Controllers& controllers,
+                             const StaticModel& staticModel,
+                             const Model& model,
+                             const tools::ExerciseConfig& config,
+                             gui::SymbolIcons& icons,
+                             gui::ColorStrategy_ABC& colorStrategy,
+                             const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                             const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
+                             gui::GlProxy& glProxy,
+                             ColorController& colorController );
     virtual ~CreationPanels();
     //@}
 

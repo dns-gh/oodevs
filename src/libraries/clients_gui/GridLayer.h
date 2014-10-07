@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GridLayer( kernel::Controllers& controllers,
-                        const GlTools_ABC& tools,
+                        GlTools_ABC& tools,
                         const kernel::CoordinateConverter_ABC& converter );
     virtual ~GridLayer();
     //@}
@@ -114,8 +114,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const GlTools_ABC& tools_;
     const kernel::CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f extent_;
     E_CoordinateSystem gridType_;

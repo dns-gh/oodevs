@@ -23,8 +23,13 @@ using namespace gui;
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-LimitsLayer::LimitsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                          ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, const kernel::Profile_ABC& profile )
+LimitsLayer::LimitsLayer( Controllers& controllers,
+                          GlTools_ABC& tools,
+                          ColorStrategy_ABC& strategy,
+                          const std::shared_ptr< ParametersLayer >& parameters,
+                          ModelBuilder& modelBuilder,
+                          gui::View_ABC& view,
+                          const kernel::Profile_ABC& profile )
     : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, modelBuilder )
     , modelBuilder_( modelBuilder )
     , tools_( tools )
@@ -117,7 +122,7 @@ void LimitsLayer::NotifyContextMenu( const kernel::TacticalLine_ABC& /* line */,
 void LimitsLayer::OnEdit()
 {
     if( selected_ )
-        static_cast< TacticalLinePositions& >( const_cast< kernel::Positions& >( selected_->Get< kernel::Positions >() ) ).Edit( parameters_ );
+        static_cast< TacticalLinePositions& >( const_cast< kernel::Positions& >( selected_->Get< kernel::Positions >() ) ).Edit( *parameters_ );
 }
 
 // -----------------------------------------------------------------------------

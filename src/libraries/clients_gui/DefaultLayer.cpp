@@ -20,8 +20,8 @@ using namespace gui;
 // Name: DefaultLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-DefaultLayer::DefaultLayer( Controllers& controllers )
-    : controllers_( controllers )
+DefaultLayer::DefaultLayer( Controllers& controllers, GlTools_ABC& tools )
+    : Layer( controllers, tools, eLayerTypes_Default )
 {
     // NOTHING
 }

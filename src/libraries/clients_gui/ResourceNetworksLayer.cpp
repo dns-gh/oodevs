@@ -104,15 +104,6 @@ bool ResourceNetworksLayer::IsSelected( const kernel::Entity_ABC& /*entity*/ ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworksLayer::IsPickable
-// Created: LGY 2013-05-15
-// -----------------------------------------------------------------------------
-bool ResourceNetworksLayer::IsPickable() const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ResourceNetworksLayer::ActivateEntity
 // Created: LGY 2013-05-24
 // -----------------------------------------------------------------------------

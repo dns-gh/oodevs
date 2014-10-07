@@ -22,7 +22,7 @@ using namespace gui;
 // Name: TerrainProfile constructor
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-TerrainProfile::TerrainProfile( QWidget* parent, TerrainProfilerLayer& layer )
+TerrainProfile::TerrainProfile( QWidget* parent, const std::shared_ptr< TerrainProfilerLayer >& layer )
     : gui::GQ_Plot( parent )
     , layer_        ( layer )
     , data_         ( new GQ_PlotData( 0, *this ) )
@@ -85,7 +85,7 @@ void TerrainProfile::Update( const std::vector< T_PointInfo >& points, bool disp
     vision_->ClearData();
     slopes_->ClearData();
     selection_->ClearData();
-    layer_.ClearCurrentPosition();
+    layer_->ClearCurrentPosition();
     for( auto it = points.begin(); it != points.end(); ++it )
     {
         data_->AddPoint( it->point_ );
@@ -198,7 +198,7 @@ void TerrainProfile::mouseMoveEvent( QMouseEvent* event )
             selection_->AddPoint( pos.first, 0 );
             const auto b = ( previous->second * next->first  - next->second * previous->first ) / ( next->first - previous->first ) ;
             const auto a = ( next->second - b ) / ( next->first );
-            layer_.SetCurrentPosition( Project( pos.first * 1000 , path_ ) );
+            layer_->SetCurrentPosition( Project( pos.first * 1000 , path_ ) );
             selection_->AddPoint( pos.first, YAxis().GetMaxAxisValue() );
             currentHeight_ = static_cast< int >( a * pos.first + b );
             currentSlope_ = ComputeSlope( *previous, *next );

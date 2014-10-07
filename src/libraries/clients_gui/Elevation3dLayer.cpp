@@ -12,7 +12,7 @@
 
 #include "GLTools_ABC.h"
 
-#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "tools/ExerciseConfig.h"
@@ -34,8 +34,8 @@ using namespace gui;
 // Name: Elevation3dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& elevation, Lighting_ABC& lighting )
-    : controller_    ( controller )
+Elevation3dLayer::Elevation3dLayer( Controllers& controllers, GlTools_ABC& tools, const DetectionMap& elevation, Lighting_ABC& lighting )
+    : Layer3D( controllers, tools, eLayerTypes_Elevation3d )
     , elevation_     ( elevation )
     , lighting_      ( lighting )
     , zRatio_        ( 5.f )
@@ -43,7 +43,7 @@ Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& 
     , ignoreShader_  ( false )
     , ignoreTextures_( false )
 {
-    controller_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& 
 // -----------------------------------------------------------------------------
 Elevation3dLayer::~Elevation3dLayer()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

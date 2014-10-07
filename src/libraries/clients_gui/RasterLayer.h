@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
     class ModelLoaded;
 }
 
@@ -23,6 +23,7 @@ class TextureSet;
 
 namespace gui
 {
+    class GlTools_ABC;
 
 // =============================================================================
 /** @class  RasterLayer
@@ -36,8 +37,11 @@ class RasterLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RasterLayer( kernel::Controller& controller );
-             RasterLayer( kernel::Controller& controller, const tools::Path& texture );
+    explicit RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
+             RasterLayer( kernel::Controllers& controllers,
+                          GlTools_ABC& tools,
+                          const tools::Path& texture,
+                          const QString& userName );
     virtual ~RasterLayer();
     //@}
 
@@ -54,7 +58,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller&         controller_;
     std::unique_ptr< TextureSet > textures_;
     bool                        ignore_;
     tools::Path                 directory_;

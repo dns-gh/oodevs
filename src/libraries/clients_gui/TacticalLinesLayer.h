@@ -49,8 +49,12 @@ class TacticalLinesLayer : public EntityLayer< kernel::TacticalLine_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLinesLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                 ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile,
+             TacticalLinesLayer( kernel::Controllers& controllers,
+                                 GlTools_ABC& tools,
+                                 ColorStrategy_ABC& strategy,
+                                 const std::shared_ptr< ParametersLayer >& parameters,
+                                 View_ABC& view,
+                                 const kernel::Profile_ABC& profile,
                                  ModelObserver_ABC& model );
     virtual ~TacticalLinesLayer();
     //@}
@@ -95,7 +99,7 @@ protected:
     kernel::Controllers& controllers_;
     const GlTools_ABC& tools_;
     gui::ColorStrategy_ABC& strategy_;
-    gui::ParametersLayer& parameters_;
+    std::shared_ptr< gui::ParametersLayer > parameters_;
     ModelObserver_ABC& model_;
     bool isLimit_;
     bool isEditing_;

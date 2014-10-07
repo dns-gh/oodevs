@@ -33,7 +33,7 @@ ParamLocation_ABC< BaseParameter >::~ParamLocation_ABC()
 {
     if( location_ )
         location_.reset();
-    layer_.Reset();
+    layer_->Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -126,15 +126,15 @@ template< typename BaseParameter >
 void ParamLocation_ABC< BaseParameter >::OnMenuClick()
 {
     if( parameter_.GetType() == "point" && popupPosition_ )
-        layer_.SetPoint( *this, *popupPosition_ );
+        layer_->SetPoint( *this, *popupPosition_ );
     else if( parameter_.GetType() == "circle" )
-        layer_.StartCircle( *this );
+        layer_->StartCircle( *this );
     else if( parameter_.GetType() == "line" )
-        layer_.StartLine( *this );
+        layer_->StartLine( *this );
     else if( parameter_.GetType() == "polygon" )
-        layer_.StartPolygon( *this );
+        layer_->StartPolygon( *this );
     else if( parameter_.GetType() == "rectangle" )
-        layer_.StartRectangle( *this );
+        layer_->StartRectangle( *this );
 }
 
 // -----------------------------------------------------------------------------

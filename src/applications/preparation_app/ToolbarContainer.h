@@ -45,9 +45,16 @@ class ToolbarContainer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ToolbarContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::View_ABC& view,
-                               gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer,
-                               UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog, gui::TerrainProfiler& terrainProfiler );
+             ToolbarContainer( QMainWindow* parent,
+                               kernel::Controllers& controllers,
+                               const StaticModel& staticModel,
+                               gui::View_ABC& view,
+                               const std::shared_ptr< gui::LocationsLayer >& layer,
+                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                               gui::ExclusiveEventStrategy& eventStrategy,
+                               UrbanModel& urbanModel,
+                               RemoveBlocksDialog& removeBlocksDialog,
+                               gui::TerrainProfiler& terrainProfiler );
     virtual ~ToolbarContainer();
     //@}
 

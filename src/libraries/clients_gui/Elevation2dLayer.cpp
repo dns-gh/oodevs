@@ -14,7 +14,7 @@
 #include "Gradient.h"
 #include "ElevationExtrema.h"
 
-#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 
 #include <graphics/ElevationShader.h>
@@ -30,8 +30,8 @@ using namespace gui;
 // Name: Elevation2dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& elevation )
-    : controller_     ( controller )
+Elevation2dLayer::Elevation2dLayer( Controllers& controllers, GlTools_ABC& tools, const DetectionMap& elevation )
+    : Layer2D( controllers, tools, eLayerTypes_Elevation2d )
     , elevation_      ( elevation )
     , reset_          ( false )
     , modelLoaded_    ( false )
@@ -47,7 +47,7 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
 {
     gradient_.AddColor( 0, Qt::white );
     gradient_.AddColor( 1, Qt::black );
-    controller_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
 // -----------------------------------------------------------------------------
 Elevation2dLayer::~Elevation2dLayer()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

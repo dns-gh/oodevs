@@ -55,7 +55,14 @@ class PopulationMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile, gui::GlSelector& selector );
+             PopulationMagicOrdersInterface( QWidget* parent,
+                                             kernel::Controllers& controllers,
+                                             actions::ActionsModel& actionsModel,
+                                             const StaticModel& staticModel,
+                                             const kernel::Time_ABC& simulation,
+                                             const std::shared_ptr< gui::ParametersLayer >& layer,
+                                             const kernel::Profile_ABC& profile,
+                                             gui::GlSelector& selector );
     virtual ~PopulationMagicOrdersInterface();
     //@}
 

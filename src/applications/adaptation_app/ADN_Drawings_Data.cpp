@@ -42,6 +42,7 @@ namespace
 
         //! @name Accessors
         //@{
+        virtual std::string     GetCurrentPass() const { return ""; }
         virtual float           Pixels( const geometry::Point2f& ) const { return 0.001f; } // $$$$ ABR 2011-04-21: hard coded
         virtual unsigned short  StipplePattern( int ) const { return 0; }
         virtual float           Zoom() const { return 0.f; }

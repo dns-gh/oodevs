@@ -37,7 +37,9 @@ namespace
 // Name: LivingAreaPanel constructor
 // Created: LGY 2012-01-05
 // -----------------------------------------------------------------------------
-LivingAreaPanel::LivingAreaPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ParametersLayer& paramLayer,
+LivingAreaPanel::LivingAreaPanel( QMainWindow* parent,
+                                  kernel::Controllers& controllers,
+                                  const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                   const gui::GlTools_ABC& tools )
     : gui::RichDockWidget( controllers, parent, "livingArea", tools::translate( "LivingAreaPanel", "Living Area" ) )
     , controllers_  ( controllers )
@@ -182,7 +184,7 @@ void LivingAreaPanel::Reset()
 void LivingAreaPanel::Add()
 {
     mode_ = add;
-    paramLayer_.StartPolygon( *this );
+    paramLayer_->StartPolygon( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +194,7 @@ void LivingAreaPanel::Add()
 void LivingAreaPanel::Remove()
 {
     mode_ = remove;
-    paramLayer_.StartPolygon( *this );
+    paramLayer_->StartPolygon( *this );
 }
 
 // -----------------------------------------------------------------------------

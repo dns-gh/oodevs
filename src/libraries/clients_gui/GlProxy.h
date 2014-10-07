@@ -12,11 +12,13 @@
 
 #include "View_ABC.h"
 #include "GlTools_ABC.h"
+#include "LayersHelpers.h"
 
 namespace kernel
 {
     class GraphicalEntity_ABC;
     class Logger_ABC;
+    class Options;
 }
 
 namespace gui
@@ -44,17 +46,21 @@ public:
 
     //! @name Operations
     //@{
-    void RegisterTo( Gl3dWidget* newWidget );
-    void RegisterTo( GlWidget* newWidget );
-    void ChangeTo( Gl3dWidget* newWidget );
-    void ChangeTo( GlWidget* newWidget );
+    void Purge();
+    void UpdateLayerOrder( kernel::Options& options );
 
-    void Reset2d();
-    void Reset3d();
+    void SetWidget3D( const std::shared_ptr< Gl3dWidget >& newWidget );
+    void SetWidget2D( const std::shared_ptr< GlWidget >& newWidget );
 
-    void Register( Layer& layer );
-    void Register( TooltipsLayer_ABC& layer );
-    void Unregister( Layer& layer );
+    void ChangeTo( const std::shared_ptr< GlWidget >& newWidget );
+    void ChangeTo( const std::shared_ptr< Gl3dWidget >& newWidget );
+
+    void SetTooltipsLayer( const std::shared_ptr< TooltipsLayer_ABC >& layer );
+    void AddLayers( const T_LayersVector& layers );
+    void RemoveLayer( const T_Layer& layer );
+    void ApplyToLayers( const T_LayerFunctor& functor ) const;
+
+    virtual bool MoveBelow( const T_Layer& lhs, const T_Layer& rhs );
 
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );
@@ -69,6 +75,7 @@ public:
     virtual bool ShouldDisplay( E_LayerTypes type ) const;
     virtual bool ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const;
 
+    virtual std::string GetCurrentPass() const;
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
     virtual float LineWidth( float base ) const;
@@ -117,19 +124,15 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< Layer* > T_Layers;
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Logger_ABC& logger_;
-    View_ABC* view_;
-    GlTools_ABC* tools_;
-    T_Layers layers_;
-    TooltipsLayer_ABC* tooltipLayer_;
+    T_LayersVector layers_;
+    std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
+    std::shared_ptr< View_ABC > view_;
+    std::shared_ptr< GlTools_ABC > tools_;
+    std::shared_ptr< GlWidget > widget2d_;
+    std::shared_ptr< Gl3dWidget > widget3d_;
     //@}
 };
 

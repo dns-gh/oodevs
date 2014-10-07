@@ -50,7 +50,12 @@ class TerrainToolBar : public gui::RichToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainToolBar( QWidget* parent, kernel::Controllers& controllers, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog );
+             TerrainToolBar( QWidget* parent,
+                             kernel::Controllers& controllers,
+                             gui::ExclusiveEventStrategy& eventStrategy,
+                             const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                             UrbanModel& urbanModel,
+                             RemoveBlocksDialog& removeBlocksDialog );
     virtual ~TerrainToolBar();
     //@}
 
@@ -100,7 +105,7 @@ private:
     //! @name Member data
     //@{
     gui::ExclusiveEventStrategy& eventStrategy_;
-    gui::ParametersLayer& paramLayer_;
+    std::shared_ptr< gui::ParametersLayer > paramLayer_;
     UrbanModel& urbanModel_;
     kernel::SafePointer< kernel::UrbanObject_ABC > selected_;
     gui::RichWidget< QToolButton >* switchModeButton_;

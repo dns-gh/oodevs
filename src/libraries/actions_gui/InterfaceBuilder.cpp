@@ -64,7 +64,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
                                     const tools::ExerciseConfig& config,
-                                    gui::ParametersLayer& layer,
+                                    const std::shared_ptr< gui::ParametersLayer >& layer,
                                     const kernel::StaticModel& staticModel,
                                     kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter /* = 0*/,
                                     const kernel::Time_ABC* simulation /* = 0*/,
@@ -220,7 +220,7 @@ ParamInterface_ABC& InterfaceBuilder::GetParamInterface() const
 // Name: InterfaceBuilder::GetParameterLayer
 // Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------
-::gui::ParametersLayer& InterfaceBuilder::GetParameterLayer() const
+std::shared_ptr< ::gui::ParametersLayer > InterfaceBuilder::GetParameterLayer() const
 {
     return layer_;
 }

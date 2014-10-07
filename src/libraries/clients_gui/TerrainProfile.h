@@ -26,7 +26,7 @@ class TerrainProfile : public gui::GQ_Plot
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainProfile( QWidget* parent, TerrainProfilerLayer& layer );
+             TerrainProfile( QWidget* parent, const std::shared_ptr< TerrainProfilerLayer >& layer );
     virtual ~TerrainProfile();
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TerrainProfilerLayer& layer_;
+    std::shared_ptr< TerrainProfilerLayer > layer_;
     gui::GQ_PlotData* data_;
     gui::GQ_PlotData* vision_;
     gui::GQ_PlotData* slopes_;

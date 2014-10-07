@@ -68,9 +68,14 @@ class FireCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
-                              , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel
-                              , gui::ParametersLayer& paramLayer, const gui::GlTools_ABC& tools );
+             FireCreationPanel( QWidget* parent,
+                                gui::PanelStack_ABC& panel,
+                                kernel::Controllers& controllers,
+                                actions::ActionsModel& actionsModel,
+                                const kernel::Time_ABC& simulation,
+                                const StaticModel& staticModel,
+                                const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                                const gui::GlTools_ABC& tools );
     virtual ~FireCreationPanel();
     //@}
 
@@ -95,12 +100,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FireCreationPanel( const FireCreationPanel& );            //!< Copy constructor
-    FireCreationPanel& operator=( const FireCreationPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );

@@ -19,7 +19,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 PopulationsLayer::PopulationsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                     View_ABC& view, const Profile_ABC& profile )
-    : EntityLayer< Population_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Populations )
+    : EntityLayer< Population_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Crowds )
 {
     // NOTHING
 }

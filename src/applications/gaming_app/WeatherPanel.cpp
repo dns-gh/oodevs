@@ -29,8 +29,13 @@
 // Name: WeatherPanel constructor
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
-WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
-                            const StaticModel& model, const kernel::Time_ABC& simulation, WeatherLayer& layer )
+WeatherPanel::WeatherPanel( QWidget* parent,
+                            gui::PanelStack_ABC& panel,
+                            kernel::Controllers& controllers,
+                            actions::ActionsModel& actionsModel,
+                            const StaticModel& model,
+                            const kernel::Time_ABC& simulation,
+                            const std::shared_ptr< WeatherLayer >& layer )
     : gui::WeatherPanel( parent, panel, layer )
     , controllers_ ( controllers )
     , actionsModel_( actionsModel )
@@ -62,7 +67,7 @@ WeatherPanel::~WeatherPanel()
 // -----------------------------------------------------------------------------
 void WeatherPanel::Reset()
 {
-    layer_.Clear();
+    layer_->Clear();
     selectedLocal_ = 0;
     if( localWeathers_ != 0 )
         while( static_cast< WeatherListView* >( localWeathers_ )->PopTrashedWeather() != 0 )

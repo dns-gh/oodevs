@@ -41,6 +41,7 @@ public:
     void Purge();
     void InitializeGeneral();
     void InitializeView();
+    void InitializeLayers( const std::vector< E_LayerTypes >& types );
     void Set( const std::string& name, const OptionVariant& value, bool savable = true );
     const OptionVariant& Get( const std::string& name ) const;
     bool Has( const std::string& name ) const;

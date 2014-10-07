@@ -27,6 +27,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlTools_ABC;
 
 // =============================================================================
 /** @class  ContourLinesLayer
@@ -41,7 +42,7 @@ class ContourLinesLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             ContourLinesLayer( kernel::Controllers& controllers, kernel::DetectionMap& map );
+             ContourLinesLayer( kernel::Controllers& controllers, GlTools_ABC& tools, kernel::DetectionMap& map );
     virtual ~ContourLinesLayer();
     //@}
 
@@ -70,7 +71,6 @@ private:
     //! @name Member data
     //@{
     kernel::DetectionMap& map_;
-    kernel::Controllers& controllers_;
     bool modelLoaded_;
     bool enabled_;
     QColor color_;

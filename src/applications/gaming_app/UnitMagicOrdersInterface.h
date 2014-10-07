@@ -74,7 +74,7 @@ public:
                                        actions::ActionsModel& actionsModel,
                                        const StaticModel& staticModel,
                                        const kernel::Time_ABC& simulation,
-                                       gui::ParametersLayer& layer,
+                                       const std::shared_ptr< gui::ParametersLayer >& layer,
                                        const kernel::Profile_ABC& profile,
                                        gui::GlSelector& selector );
     virtual ~UnitMagicOrdersInterface();

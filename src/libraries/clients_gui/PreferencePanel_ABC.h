@@ -16,6 +16,7 @@
 
 namespace gui
 {
+    class GlProxy;
 
 // =============================================================================
 /** @class  PreferencePanel_ABC
@@ -34,15 +35,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Load( const GlProxy& ) {}
     virtual void Commit() {}
     virtual void Reset() {}
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PreferencePanel_ABC( const PreferencePanel_ABC& );            //!< Copy constructor
-    PreferencePanel_ABC& operator=( const PreferencePanel_ABC& ); //!< Assignment operator
     //@}
 };
 

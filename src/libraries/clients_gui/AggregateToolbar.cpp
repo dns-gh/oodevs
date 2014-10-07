@@ -38,7 +38,9 @@ namespace
 // Created: LGY 2011-10-14
 // -----------------------------------------------------------------------------
 AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
-                                    AutomatsLayer& automatsLayer, FormationLayer& formationsLayer, bool showDisplayModes )
+                                    const std::shared_ptr< AutomatsLayer >& automatsLayer,
+                                    const std::shared_ptr< FormationLayer >& formationsLayer,
+                                    bool showDisplayModes )
     : QHBoxLayout()
     , controller_     ( controller )
     , automatsLayer_  ( automatsLayer )
@@ -117,7 +119,7 @@ void AggregateToolbar::Aggregate()
 {
     DisaggregateAll();
     for( auto it = automats_.begin(); it != automats_.end(); ++it )
-        automatsLayer_.Aggregate( **it );
+        automatsLayer_->Aggregate( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +131,7 @@ void AggregateToolbar::DisaggregateAll()
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
         levelMenu_->setItemChecked( i, false );
     for( auto it = formations_.begin(); it != formations_.end(); ++it )
-        formationsLayer_.Disaggregate( **it );
+        formationsLayer_->Disaggregate( **it );
 }
 
 namespace
@@ -153,12 +155,12 @@ void AggregateToolbar::Aggregate( int id )
     const std::string level = LEVELS[ id ];
     for( IT_Formations it = formations_.begin(); it != formations_.end(); ++it )
         if( IsValid( ENT_Tr::ConvertFromNatureLevel( (*it)->GetLevel() ), level ) )
-            formationsLayer_.Aggregate( **it );
+            formationsLayer_->Aggregate( **it );
     for( IT_Automats it = automats_.begin(); it != automats_.end(); ++it )
     {
         const std::string path = (*it)->Get< kernel::TacticalHierarchies >().GetLevel();
         if( path != "" && IsValid( path.substr( 7, path.length() ), level ) )
-            automatsLayer_.Aggregate( **it );
+            automatsLayer_->Aggregate( **it );
     }
     levelMenu_->setItemChecked( id, true );
 }

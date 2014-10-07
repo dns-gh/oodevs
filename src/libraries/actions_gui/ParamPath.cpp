@@ -49,7 +49,7 @@ void ParamPath::OnMenuClick()
 {
     if( !entity_ )
         return;
-    layer_.StartPath( *this, entity_->Get< kernel::Positions >() );
+    layer_->StartPath( *this, entity_->Get< kernel::Positions >() );
     ParamLocation_ABC< actions::parameters::Path >::OnMenuClick();
 }
 

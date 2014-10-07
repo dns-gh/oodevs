@@ -57,10 +57,16 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers,
-                                  actions::ActionsModel& actionsModel, const StaticModel& staticModel,
-                                  const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam,
-                                  gui::ParametersLayer& layer, const gui::GlTools_ABC& tools, const tools::GeneralConfig& config );
+             ObjectCreationPanel( QWidget* parent,
+                                  gui::PanelStack_ABC& panel,
+                                  kernel::Controllers& controllers,
+                                  actions::ActionsModel& actionsModel,
+                                  const StaticModel& staticModel,
+                                  const kernel::Time_ABC& simulation,
+                                  const kernel::Team_ABC& noSideTeam,
+                                  const std::shared_ptr< gui::ParametersLayer >& layer,
+                                  const gui::GlTools_ABC& tools,
+                                  const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 
@@ -76,12 +82,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectCreationPanel( const ObjectCreationPanel& );            //!< Copy constructor
-    ObjectCreationPanel& operator=( const ObjectCreationPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );

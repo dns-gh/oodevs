@@ -34,7 +34,10 @@ using namespace gui;
 // Name: TerrainProfiler constructor
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
+TerrainProfiler::TerrainProfiler( QMainWindow* parent,
+                                  kernel::Controllers& controllers,
+                                  const kernel::DetectionMap& detection,
+                                  const std::shared_ptr< TerrainProfilerLayer >& layer )
     : RichDockWidget( controllers, parent, "terrainProfiler", tools::translate( "gui::TerrainProfiler", "Terrain profile" ) )
     , controllers_( controllers )
     , detection_  ( detection )
@@ -203,7 +206,7 @@ void TerrainProfiler::SetFromPosition( const geometry::Point2f& point )
 {
     path_.clear();
     from_ = point;
-    layer_.SetFromPosition( from_ );
+    layer_->SetFromPosition( from_ );
     UpdateView();
 }
 
@@ -215,7 +218,7 @@ void TerrainProfiler::SetToPosition( const geometry::Point2f& point )
 {
     path_.clear();
     to_ = point;
-    layer_.SetToPosition( to_ );
+    layer_->SetToPosition( to_ );
     UpdateView();
 }
 
@@ -227,8 +230,8 @@ void TerrainProfiler::SetPath()
     path_.insert( path_.end(), candidatePath_.begin(), candidatePath_.end() );
     from_ = path_.front();
     to_ = path_.back();
-    layer_.SetFromPosition( from_ );
-    layer_.SetToPosition( to_ );
+    layer_->SetFromPosition( from_ );
+    layer_->SetToPosition( to_ );
     UpdateView();
 }
 
@@ -300,7 +303,7 @@ void TerrainProfiler::Update( const T_PointVector& path )
 // -----------------------------------------------------------------------------
 void TerrainProfiler::showEvent( QShowEvent* /*e*/ )
 {
-    layer_.SetAlpha( 1.f );
+    layer_->SetAlpha( 1.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +312,7 @@ void TerrainProfiler::showEvent( QShowEvent* /*e*/ )
 // -----------------------------------------------------------------------------
 void TerrainProfiler::hideEvent( QHideEvent* /*e*/ )
 {
-    layer_.SetAlpha( 0.f );
+    layer_->SetAlpha( 0.f );
 }
 
 // -----------------------------------------------------------------------------

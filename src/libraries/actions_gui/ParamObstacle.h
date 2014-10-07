@@ -108,7 +108,7 @@ private:
     //@{
     kernel::Controller&                                 controller_;
     const kernel::ObjectTypes&                          objectTypes_;
-    ::gui::ParametersLayer&                             layer_;
+    std::shared_ptr< ::gui::ParametersLayer >           layer_;
     const kernel::CoordinateConverter_ABC&              converter_;
     ::gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
     ParamObstacleType*                                  activatedCombo_;

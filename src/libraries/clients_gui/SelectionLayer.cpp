@@ -21,9 +21,8 @@ using namespace gui;
 // Name: SelectionLayer constructor
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-SelectionLayer::SelectionLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools )
-    : controllers_  ( controllers )
-    , tools_        ( tools )
+SelectionLayer::SelectionLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools )
+    : Layer2D( controllers, tools, eLayerTypes_Selection )
     , displaying_   ( false )
     , firstPointSet_( false )
 {

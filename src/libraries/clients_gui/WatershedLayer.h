@@ -26,6 +26,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlTools_ABC;
 
 // =============================================================================
 /** @class  WatershedLayer
@@ -40,7 +41,9 @@ class WatershedLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             WatershedLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation );
+             WatershedLayer( kernel::Controllers& controllers,
+                             GlTools_ABC& tools,
+                             const kernel::DetectionMap& elevation );
     virtual ~WatershedLayer();
     //@}
 
@@ -71,7 +74,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const kernel::DetectionMap& elevation_;
     std::unique_ptr< ElevationShader > shader_;
     std::unique_ptr< TextureSet > layer_;

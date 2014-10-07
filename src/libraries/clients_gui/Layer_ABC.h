@@ -18,15 +18,20 @@
 #include <graphics/MapLayer_ABC.h>
 #include <boost/noncopyable.hpp>
 
+class ViewFrustum;
+
 namespace gui
 {
+    class Viewport_ABC;
+
 // =============================================================================
 /** @class  Layer_ABC
     @brief  Layer_ABC
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class Layer_ABC : public MapLayer_ABC
+class Layer_ABC : public QObject
+                , public MapLayer_ABC
                 , public tools::Observer_ABC
                 , public kernel::DisplayableModesObserver_ABC
 {
@@ -39,7 +44,6 @@ public:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* >                                                T_Layers;
     typedef std::map< Layer_ABC*, kernel::GraphicalEntity_ABC::T_GraphicalEntities > T_LayerElements;
 
     typedef std::pair< unsigned int, E_LayerTypes > T_ObjectPicking;
@@ -48,7 +52,16 @@ public:
 
     //! @name Abstract methods
     //@{
+    virtual void Paint( const ViewFrustum& frustum ) = 0;
+    virtual void Paint( Viewport_ABC& viewport ) = 0;
+    using MapLayer_ABC::Paint;
+
+    virtual E_LayerTypes GetType() const = 0;
+    virtual void SetAlpha( float ) = 0;
+    virtual float GetAlpha() const = 0;
+    virtual void Reset() = 0;
     virtual QString GetName() const = 0;
+    virtual std::string GetOptionName() const = 0;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift ) = 0;
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& ) = 0;
     virtual bool ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >& elements, const geometry::Point2f&, const QPoint& ) = 0;
@@ -57,6 +70,9 @@ public:
     virtual bool ShowTooltip( const T_ObjectPicking& selection ) = 0;
     virtual void HideTooltip() = 0;
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection ) = 0;
+    virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const = 0;
+    virtual bool IsEnabled() const = 0;
+    virtual bool IsConfigurable() const = 0;
     //@}
 };
 

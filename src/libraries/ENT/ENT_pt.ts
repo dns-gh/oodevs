@@ -667,10 +667,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Formations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -696,10 +692,6 @@
     </message>
     <message>
         <source>Drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Knowledges</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -819,10 +811,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Itineraries</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Weapon ranges</source>
         <translation type="unfinished"></translation>
     </message>
@@ -888,6 +876,126 @@
     </message>
     <message>
         <source>Identification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent knowledges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contour lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines and drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevation 3d</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object knowledges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather and watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd knowledges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indicator creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inhabitant creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain (new rendering)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Metric tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Itineraries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain profiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User layer [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event creation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

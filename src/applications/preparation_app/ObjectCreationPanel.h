@@ -54,7 +54,17 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const WeatherModel& weatherModel, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer, const gui::GlTools_ABC& tools, const tools::GeneralConfig& config );
+             ObjectCreationPanel( QWidget* parent,
+                                  gui::PanelStack_ABC& panel,
+                                  kernel::Controllers& controllers,
+                                  const StaticModel& model,
+                                  ObjectsModel& objectsModel,
+                                  const UrbanModel& urbanModel,
+                                  const WeatherModel& weatherModel,
+                                  const kernel::Team_ABC& noSideTeam,
+                                  const std::shared_ptr< gui::ParametersLayer >& layer,
+                                  const gui::GlTools_ABC& tools,
+                                  const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 

@@ -36,6 +36,7 @@
 #include "UnitStateDialog.h"
 #include "clients_gui/LinkInterpreter.h"
 #include "clients_gui/AddRasterDialog.h"
+#include "clients_gui/GlProxy.h"
 #include "clients_gui/ProfileDialog.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/DisplayExtractor.h"
@@ -54,10 +55,22 @@
 // Name: DialogContainer constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, const kernel::Profile_ABC& profile,
-                                  gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
-                                  const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                                  gui::ParametersLayer& paramLayer, gui::GlTools_ABC& tools, gui::GlSelector& selector, gui::Elevation2dLayer& elevation2dLayer, gui::GraphicPreferences& preferences )
+DialogContainer::DialogContainer( QWidget* parent,
+                                  kernel::Controllers& controllers,
+                                  Model& model,
+                                  const ::StaticModel& staticModel,
+                                  const kernel::Profile_ABC& profile,
+                                  gui::ColorStrategy_ABC& colorStrategy,
+                                  gui::ColorEditor_ABC& colorEditor,
+                                  const gui::EntitySymbols& symbols,
+                                  const tools::ExerciseConfig& config,
+                                  gui::SymbolIcons& icons,
+                                  gui::LightingProxy& lighting,
+                                  const gui::Painter_ABC& painter,
+                                  const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                                  const std::shared_ptr< gui::Elevation2dLayer >& elevation2dLayer,
+                                  gui::GlProxy& proxy,
+                                  gui::GraphicPreferences& preferences )
     : QObject( parent )
 {
     displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
@@ -77,11 +90,11 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LogisticStocksDialog( parent, controllers, staticModel );
 
     std::vector< std::string > sounds;
-    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateConverter_, painter, selector, elevation2dLayer, preferences );
+    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateConverter_, painter, proxy, elevation2dLayer, preferences );
     prefDialog_->AddPage( tools::translate( "DialogContainer", "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new gui::ProfileDialog( parent, controllers, PreparationProfile::GetProfile(), symbols, model, *model.profiles_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
-    scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, tools );
+    scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, proxy );
     successFactorDialog_ = new SuccessFactorDialog( parent, controllers, *model.successFactors_, staticModel.successFactorActionTypes_, *model.scores_ );
     exerciseDialog_ = new ExerciseDialog( parent, controllers, *model.exercise_, config );
     consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, const_cast< tools::RealFileLoaderObserver_ABC& >( static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() ) );

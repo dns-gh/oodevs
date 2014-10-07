@@ -59,9 +59,9 @@ void CircularEventStrategy::SetExclusive( bool b )
 // Name: CircularEventStrategy::SetDefault
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::SetDefault( Layer_ABC& layer )
+void CircularEventStrategy::SetDefault( const T_Layer& layer )
 {
-    default_ = &layer;
+    default_ = layer;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,24 +74,12 @@ const SelectionMenu* CircularEventStrategy::GetSelectionMenu() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::Register
+// Name: CircularEventStrategy::AddLayers
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::Register( Layer_ABC& layer )
+void CircularEventStrategy::AddLayers( const T_LayersVector& layers )
 {
-    layers_.push_back( &layer );
-    rlast_ = layers_.rbegin();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::Remove
-// Created: AGE 2006-08-21
-// -----------------------------------------------------------------------------
-void CircularEventStrategy::Remove( Layer_ABC& layer )
-{
-    auto it = std::find( layers_.begin(), layers_.end(), &layer );
-    if( it != layers_.end() )
-        layers_.erase( it );
+    layers_.insert( layers_.end(), layers.begin(), layers.end() );
     rlast_ = layers_.rbegin();
 }
 
@@ -191,7 +179,7 @@ bool CircularEventStrategy::Loop( It& use, It first, It begin, It end, Functor f
 template< typename Functor >
 bool CircularEventStrategy::Apply( Functor functor )
 {
-    const Layer_ABC::T_Layers& layers = layers_;
+    const auto& layers = layers_;
     functor.SetExclusive( exclusive_ );
     return Loop( rlast_, rlast_, layers.rbegin(), layers.rend(), functor );
 }

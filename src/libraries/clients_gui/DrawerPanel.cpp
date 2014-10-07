@@ -55,8 +55,13 @@ namespace
 // Name: DrawerPanel constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers,
-                          DrawerModel& model, DrawingTypes& types, const tools::ExerciseConfig& config )
+DrawerPanel::DrawerPanel( QWidget* parent,
+                          PanelStack_ABC& panel,
+                          const std::shared_ptr< ParametersLayer >& layer,
+                          kernel::Controllers& controllers,
+                          DrawerModel& model,
+                          DrawingTypes& types,
+                          const tools::ExerciseConfig& config )
     : InfoPanel_ABC( parent, panel, tr( "Drawings" ) )
     , controllers_    ( controllers )
     , layer_          ( layer )
@@ -300,17 +305,17 @@ void DrawerPanel::StartDrawing()
     if( selectedStyle_ )
     {
         if( selectedStyle_->GetType() == "line" )
-            layer_.StartLine( *this );
+            layer_->StartLine( *this );
         else if( selectedStyle_->GetType() == "polygon" )
-            layer_.StartPolygon( *this );
+            layer_->StartPolygon( *this );
         else if( selectedStyle_->GetType() == "point" )
-            layer_.StartPoint( *this );
+            layer_->StartPoint( *this );
         else if( selectedStyle_->GetType() == "circle" )
-            layer_.StartCircle( *this );
+            layer_->StartCircle( *this );
         else if( selectedStyle_->GetType() == "curve" )
-            layer_.StartCurve( *this );
+            layer_->StartCurve( *this );
         else if( selectedStyle_->GetType() == "rectangle" )
-            layer_.StartRectangle( *this );
+            layer_->StartRectangle( *this );
     }
 }
 
@@ -325,7 +330,7 @@ void DrawerPanel::StartTextEdition()
 
     color_->Commit();
     selectedStyle_ = &types_.Get( "Internal" ).GetTemplate( "Text" );
-    layer_.StartText( *this, color_->GetColor() );
+    layer_->StartText( *this, color_->GetColor() );
 }
 
 // -----------------------------------------------------------------------------

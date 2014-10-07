@@ -28,8 +28,8 @@ bool ContourLinesLayer::valid_ =  true;
 // Name: ContourLinesLayer constructor
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-ContourLinesLayer::ContourLinesLayer( Controllers& controllers, DetectionMap& map )
-    : controllers_  ( controllers )
+ContourLinesLayer::ContourLinesLayer( Controllers& controllers, GlTools_ABC& tools, DetectionMap& map )
+    : Layer2D( controllers, tools, eLayerTypes_ContourLines )
     , map_          ( map )
     , modelLoaded_  ( false )
     , enabled_      ( false )
@@ -41,7 +41,7 @@ ContourLinesLayer::ContourLinesLayer( Controllers& controllers, DetectionMap& ma
     , computed_     ( false )
     , glMaxVerticesSize_( 1000 )
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
     thread_.reset( new tools::thread::ThreadPool( 1 ) );
     glGetIntegerv( GL_MAX_TEXTURE_SIZE, &glMaxVerticesSize_ );
 }

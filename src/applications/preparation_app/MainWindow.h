@@ -10,6 +10,7 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
+#include "clients_gui/LayersHelpers.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/ControllerObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
@@ -17,23 +18,19 @@
 namespace kernel
 {
     class Controllers;
-    class Profile_ABC;
 }
 
 namespace gui
 {
-    class AutomatsLayer;
     class CircularEventStrategy;
     class ColorStrategy;
-    class Elevation2dLayer;
     class EntitySymbols;
     class ExclusiveEventStrategy;
-    class FormationLayer;
     class GlProxy;
     class GlSelector;
     class GraphicPreferences;
     class HelpSystem;
-    class Layer;
+    class Layer_ABC;
     class LightingProxy;
     class Painter_ABC;
     class ParametersLayer;
@@ -113,9 +110,14 @@ private:
     //@{
     bool DoLoad();
     void LoadExercise();
-    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
-                       const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
-                       gui::Elevation2dLayer& elevation2d );
+    void CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
+                       const std::shared_ptr< gui::Layer_ABC >& locations,
+                       const std::shared_ptr< gui::Layer_ABC >& weather,
+                       const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
+                       const std::shared_ptr< gui::Layer_ABC >& automats,
+                       const std::shared_ptr< gui::Layer_ABC >& formation,
+                       const std::shared_ptr< gui::Layer_ABC >& elevation2d,
+                       gui::TerrainPicker& picker );
     void closeEvent( QCloseEvent* pEvent );
     void DoClose();
     void DoLoad( const tools::Path& filename );
@@ -159,6 +161,7 @@ private:
     boost::shared_ptr< QProcess >                  process_;
     std::unique_ptr< gui::EntitySymbols >          icons_;
     std::unique_ptr< gui::TextEditor >             textEditor_;
+    gui::T_LayersMap                               layers_;
     //@}
 };
 

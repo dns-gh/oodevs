@@ -32,7 +32,11 @@ using namespace gui;
 // Name: LocationEditorToolbar constructor
 // Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
-LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer )
+LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent,
+                                              kernel::Controllers& controllers,
+                                              const kernel::CoordinateConverter_ABC& converter,
+                                              View_ABC& view,
+                                              const std::shared_ptr< LocationsLayer >& layer )
     : RichToolBar( controllers, parent, "locationeditor", tr( "Location editor" ) )
     , controllers_( controllers )
     , converter_( converter )
@@ -124,7 +128,7 @@ void LocationEditorToolbar::CreateBookmark( const std::string& defaultName )
             return;
         bookmarksMenu_->clear();
         bookmarks_.push_back( Bookmark( name.toStdString(), converter_.ConvertToMgrs( menuPoint_ ) ) );
-        layer_.AddLocation( menuPoint_ );
+        layer_->AddLocation( menuPoint_ );
         for( size_t i = 0; i < bookmarks_.size(); ++i )
         {
             int index = static_cast< int >( i );
@@ -166,7 +170,7 @@ void LocationEditorToolbar::GotoBookmark( int index )
 void LocationEditorToolbar::ClearBookmarks()
 {
     bookmarks_.clear();
-    layer_.Reset();
+    layer_->Reset();
     bookmarksMenu_->clear();
     bookmarksMenu_->insertItem( tr( "No bookmark defined" ) );
 }

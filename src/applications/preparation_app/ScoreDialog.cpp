@@ -42,8 +42,13 @@ namespace
 // Name: ScoreDialog constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-ScoreDialog::ScoreDialog( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
-                          gui::ParametersLayer& layer, const ::StaticModel& staticModel, const tools::ExerciseConfig& config,
+ScoreDialog::ScoreDialog( const QString& objectName,
+                          QWidget* parent,
+                          kernel::Controllers& controllers,
+                          ScoresModel& model,
+                          const std::shared_ptr< gui::ParametersLayer >& layer,
+                          const ::StaticModel& staticModel,
+                          const tools::ExerciseConfig& config,
                           gui::GlTools_ABC& tools)
     : QDialog( parent, "ScoreDialog" )
     , builder_( new actions::gui::InterfaceBuilder( controllers, config, layer, staticModel ) )

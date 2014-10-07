@@ -44,12 +44,6 @@ public:
                               ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~InhabitantLayer();
     //@}
-
-    //! @name Operations
-    //@{
-    virtual bool IsPickable() const;
-    //@}
-
 };
 
 }

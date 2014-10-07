@@ -58,7 +58,7 @@ namespace
 // -----------------------------------------------------------------------------
 GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, float height, IconLayout& iconLayout )
     : SetGlOptions()
-    , MapWidget( context_, pParent, width, height )
+    , MapWidget( context_, pParent, width, height, 0 )
     , GlToolsBase( controllers )
     , baseWidth_( 600.f )
     , windowHeight_( 0 )

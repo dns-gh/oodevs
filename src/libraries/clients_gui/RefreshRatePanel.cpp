@@ -53,9 +53,9 @@ RefreshRatePanel::~RefreshRatePanel()
 // -----------------------------------------------------------------------------
 void RefreshRatePanel::Reset()
 {
-    spinBox_->setValue( 50 );// tmp, va virer
+    spinBox_->setValue( 50 );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: RefreshRatePanel::OptionChanged
 // Created: LDC 2014-02-21

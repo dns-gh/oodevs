@@ -91,6 +91,7 @@ void Options::Set( const std::string& name, const OptionVariant& value, bool sav
 // -----------------------------------------------------------------------------
 const OptionVariant& Options::Get( const std::string& name ) const
 {
+    assert( options_.count( name ) != 0 );
     return options_.at( name ).first;
 }
 
@@ -311,16 +312,6 @@ void Options::InitializeView()
     Set( "Lighting/Ambient",   QString( "#323232" ), true );
     Set( "Lighting/Diffuse",   QString( "#c8c8c8" ), true );
 
-    // layers
-/*    for( int i = 0; i < eNbrRegistryLayer; ++i )
-    {
-        const auto name = "Layers/" + ENT_Tr::ConvertFromRegistryLayer( static_cast< E_RegistryLayer >( i ) );
-        Set( name + "/Alpha", 1.f, true );
-        Set( name + "/Position", i, true );
-    }
-    Set( "Layers/" + ENT_Tr::ConvertFromRegistryLayer( eRegistryLayer_VisionSurfaces ) + "/Alpha", 0.5f, true );
-    Set( "Layers/" + ENT_Tr::ConvertFromRegistryLayer( eRegistryLayer_Logo ) + "/Alpha", 0.7f, true );*/
-
     // symbol size
     Set( "SymbolSize", 3.f, true );
 
@@ -358,4 +349,18 @@ void Options::InitializeView()
     Set( "Watershed/Enabled", false,                true );
     Set( "Watershed/Height",  0,                    true );
     Set( "Watershed/Inverse", false,                true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Options::InitializeLayers
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+void Options::InitializeLayers( const std::vector< E_LayerTypes >& types )
+{
+    for( int i = 0; i < static_cast< int >( types.size() ); ++i )
+    {
+        const auto name = "Layers/" + ENT_Tr::ConvertFromLayerTypes( types[ i ], ENT_Tr::eToSim );
+        Set( name + "/Alpha", 1.f, true );
+        Set( name + "/Position", i, true );
+    }
 }

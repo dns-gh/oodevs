@@ -882,54 +882,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Elevation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contour Lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Watershed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ghost</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load exercise definition file (exercise.xml)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1011,23 +963,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User layer [%1]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error while loading Raster source.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain (new rendering)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

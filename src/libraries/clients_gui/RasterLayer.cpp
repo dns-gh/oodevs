@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "RasterLayer.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "tools/ExerciseConfig.h"
 #include "MT_Tools/MT_Logger.h"
 #include <graphics/TextureSet.h>
@@ -22,19 +22,24 @@ using namespace gui;
 // Name: RasterLayer constructor
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-RasterLayer::RasterLayer( kernel::Controller& controller )
-    : controller_( controller )
+RasterLayer::RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools )
+    : Layer2D( controllers, tools, eLayerTypes_Raster )
     , ignore_( false )
     , texture_( "usrp.texture" )
 {
-    controller_.Register( *this );
+    controllers_.Update( *this );
 }
 
-RasterLayer::RasterLayer( kernel::Controller& controller, const tools::Path& texture )
-    : controller_( controller )
+RasterLayer::RasterLayer( kernel::Controllers& controllers,
+                          GlTools_ABC& tools,
+                          const tools::Path& texture,
+                          const QString& userName )
+    : Layer2D( controllers, tools, eLayerTypes_RasterDynamic )
     , ignore_( false )
 {
+    name_ = name_.arg( userName );
     GenerateTexture( texture );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +48,7 @@ RasterLayer::RasterLayer( kernel::Controller& controller, const tools::Path& tex
 // -----------------------------------------------------------------------------
 RasterLayer::~RasterLayer()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

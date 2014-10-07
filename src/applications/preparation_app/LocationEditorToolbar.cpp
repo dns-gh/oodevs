@@ -17,8 +17,11 @@
 // Name: LocationEditorToolbar constructor
 // Created: LGY 2012-01-11
 // -----------------------------------------------------------------------------
-LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
-                                              gui::View_ABC& view, gui::LocationsLayer& layer )
+LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent,
+                                              kernel::Controllers& controllers,
+                                              const kernel::CoordinateConverter_ABC& converter,
+                                              gui::View_ABC& view,
+                                              const std::shared_ptr< gui::LocationsLayer >& layer )
     : gui::LocationEditorToolbar( parent, controllers, converter, view, layer )
     , controllers_( controllers )
 {

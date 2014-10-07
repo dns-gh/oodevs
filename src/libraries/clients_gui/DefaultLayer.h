@@ -19,6 +19,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlTools_ABC;
 
 // =============================================================================
 /** @class  DefaultLayer
@@ -31,7 +32,7 @@ class DefaultLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DefaultLayer( kernel::Controllers& controllers );
+             DefaultLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
     virtual ~DefaultLayer();
     //@}
 
@@ -52,7 +53,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     geometry::Point2f point_;
     //@}
 };

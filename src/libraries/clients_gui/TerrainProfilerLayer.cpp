@@ -43,10 +43,11 @@ namespace
 // Name: TerrainProfilerLayer constructor
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-TerrainProfilerLayer::TerrainProfilerLayer( const GlTools_ABC& tools )
-    : tools_  ( tools )
-    , from_   ( notSet )
-    , to_     ( notSet )
+TerrainProfilerLayer::TerrainProfilerLayer( kernel::Controllers& controllers,
+                                            GlTools_ABC& tools )
+    : Layer( controllers, tools, eLayerTypes_TerrainProfiler )
+    , from_( notSet )
+    , to_( notSet )
     , current_( notSet )
 {
     SetAlpha( 0 );

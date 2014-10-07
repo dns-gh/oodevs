@@ -11,7 +11,6 @@
 #define __LayersPanel_h_
 
 #include "PreferencePanel_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
@@ -22,8 +21,8 @@ namespace kernel
 namespace gui
 {
     class CheckBox;
-    class GlSelector;
-    class Layer;
+    class GlProxy;
+    class Layer_ABC;
 
 // =============================================================================
 /** @class  LayersPanel
@@ -32,56 +31,42 @@ namespace gui
 // Created: AGE 2007-01-04
 // =============================================================================
 class LayersPanel : public PreferencePanel_ABC
-                  , public tools::Observer_ABC
-                  , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlSelector& selector );
+             LayersPanel( QWidget* parent,
+                          kernel::Controllers& controllers,
+                          GlProxy& view );
     virtual ~LayersPanel();
     //@}
 
-    //! @name Operations
+private:
+    //! @name PreferencePanel_ABC implementation
     //@{
-    void AddLayer( const QString& name, Layer& layer, bool dynamic = false );
-    void Update();
-    virtual void Commit();
+    virtual void Load( const GlProxy& proxy );
     virtual void Reset();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnValueChanged();
-    void OnSelectionChanged();
+    void OnAlphaChanged();
+    void OnSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected );
     void OnUp();
     void OnDown();
-    void OnFogOfWarChanged( bool value );
-    void OnInfraChanged( bool value );
     void OnRemoveDynamicLayer();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    virtual void showEvent( QShowEvent* event );
+    void UpdateButtonsStates();
     void UpdateLeastAndMostVisible();
-    void ResetLayers();
-    void RemoveDynamicLayer( QStandardItem& item );
-    void MoveItem( int row, Layer* layer, int newPlace, int oldPlace, int step );
-    Layer* GetCurrentLayer() const;
-    int GetCurrentRow( Layer* layer ) const;
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< Layer* >     T_Layers;
-    typedef std::vector< float >          T_Alphas;
-    typedef std::vector< QString >        T_Names;
+    void SwapSelection( int direction );
+    QStandardItem* GetSelectedItem() const;
     //@}
 
 private:
@@ -89,23 +74,18 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::OptionsController& options_;
-    GlSelector& selector_;
-    T_Layers layers_;
-    T_Layers dynamicLayers_;
-    T_Alphas current_;
-    T_Alphas new_;
-    T_Names  names_;
-    CheckBox* fogOfWar_;
-    CheckBox* infra_;
-    QTreeView* layersList_;
-    QStandardItemModel* layersModel_;
+
+    GlProxy& proxy_;
+    QCheckBox* fogOfWar_;
+    QCheckBox* infra_;
+    QListView* layersListView_;
+    QStandardItemModel dataModel_;
+    QSortFilterProxyModel proxyModel_;
     QSlider* transparency_;
     QLabel* transparencyLabel_;
-    int currentLayer_;
-    T_Layers currentLayers_;
-    T_Layers newLayers_;
     QWidget* removeButton_;
-    //@}
+    QPushButton* upButton_;
+    QPushButton* downButton_;
 };
 
 }

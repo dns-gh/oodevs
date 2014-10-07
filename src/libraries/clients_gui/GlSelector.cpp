@@ -34,25 +34,18 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy, kernel::Logger_ABC& logger )
     : QStackedWidget( parent )
-    , proxy_            ( proxy )
-    , controllers_      ( controllers )
-    , config_           ( config )
-    , map_              ( map )
-    , strategy_         ( strategy )
-    , logger_           ( logger )
-    , iconLayout_       ( new IconLayout() )
-    , widget2d_         ( 0 )
-    , widget3d_         ( 0 )
-    , glPlaceHolder_    ( 0 )
-    , b3d_              ( false )
-    , refreshRate_      ( 50 )
+    , proxy_       ( proxy )
+    , controllers_ ( controllers )
+    , config_      ( config )
+    , map_         ( map )
+    , strategy_    ( strategy )
+    , logger_      ( logger )
+    , iconLayout_  ( new IconLayout() )
+    , displayTimer_( new QTimer( this ) )
 {
     setObjectName( "GlSelector" );
-    displayTimer_ = new QTimer( this );
-    glPlaceHolder_ = new GlPlaceHolder( this );
-    addWidget( glPlaceHolder_ );
-    setCurrentWidget( glPlaceHolder_ );
-
+    insertWidget( eWidget_Empty, new GlPlaceHolder( this ) );
+    ChangeTo( eWidget_Empty );
     controllers_.options_.Register( *this );
 }
 
@@ -73,62 +66,67 @@ GlSelector::~GlSelector()
 // -----------------------------------------------------------------------------
 void GlSelector::Load()
 {
-    if( widget2d_ )
+    if( widget2d_ && widget3d_ )
     {
         widget2d_->Load( config_ );
+        widget3d_->Load( config_ );
         return;
     }
-    widget2d_ = new GlWidget( this, controllers_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_ );
+
+    widget2d_ = std::make_shared< GlWidget >( this, controllers_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_ );
+    widget3d_ = std::make_shared< Gl3dWidget >( this, controllers_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_ );
+
     widget2d_->Load( config_ );
-    addWidget( widget2d_ );
-    InitializePasses();
-    moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
     widget2d_->Configure( strategy_ );
-    widget2d_->Configure( *moveLayer_ );
-    proxy_.ChangeTo( widget2d_ );
-    proxy_.RegisterTo( widget2d_ );
-    setCurrentWidget( widget2d_ );
-    connect( displayTimer_, SIGNAL( timeout() ), this, SLOT( OnUpdateGL() ) );
-    connect( this, SIGNAL( UpdateGL() ), widget2d_, SLOT( updateGL() ) );
-    displayTimer_->start( refreshRate_ );
-    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
-    widget2d_->show();
-    emit Widget2dChanged( widget2d_ );
+    widget2d_->Configure( std::make_shared< DragMovementLayer >( *widget2d_ ) );
+    widget3d_->Load( config_ );
+
+    proxy_.SetWidget2D( widget2d_ );
+    proxy_.SetWidget3D( widget3d_ );
+
+    insertWidget( eWidget_2D, widget2d_.get() );
+    insertWidget( eWidget_3D, widget3d_.get() );
+
+    connect( widget2d_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
+    connect( widget3d_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
+    connect( displayTimer_, SIGNAL( timeout() ), this, SIGNAL( UpdateGL() ) );
+
+    InitializePasses();
+    controllers_.options_.Change( "RefreshRate", static_cast< int >( 50 ) ); // TMP, default value
+    ChangeTo( eWidget_2D );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlSelector::updateGL
-// Created: SLI 2014-06-16
+// Name: GlSelector::ChangeTo
+// Created: ABR 2014-09-24
 // -----------------------------------------------------------------------------
-void GlSelector::OnUpdateGL()
+void GlSelector::ChangeTo( E_Widget type )
 {
-    emit UpdateGL();
-}
+    auto currentType = static_cast< E_Widget >( currentIndex() );
+    if( type == currentType )
+        return;
 
-// -----------------------------------------------------------------------------
-// Name: GlSelector::AddLayer
-// Created: ABR 2012-06-11
-// -----------------------------------------------------------------------------
-void GlSelector::AddLayer( Layer& layer )
-{
-    proxy_.Register( layer );
-    if( widget2d_ )
-        layer.RegisterIn( *widget2d_, logger_ );
-    if( widget3d_ )
-        layer.RegisterIn( *widget3d_, logger_ );
-}
+    if( currentType == eWidget_2D )
+        disconnect( displayTimer_, SIGNAL( timeout() ), widget2d_.get(), SLOT( updateGL() ) );
+    else if( currentType == eWidget_3D )
+        disconnect( displayTimer_, SIGNAL( timeout() ), widget3d_.get(), SLOT( updateGL() ) );
 
-// -----------------------------------------------------------------------------
-// Name: GlSelector::RemoveLayer
-// Created: ABR 2012-06-11
-// -----------------------------------------------------------------------------
-void GlSelector::RemoveLayer( Layer& layer )
-{
-    proxy_.Unregister( layer );
-    if( widget2d_ )
-        layer.UnregisterIn( *widget2d_ );
-    if( widget3d_ )
-        layer.UnregisterIn( *widget3d_ );
+    if( type == eWidget_2D )
+    {
+        proxy_.ChangeTo( widget2d_ );
+        emit Widget2dChanged( widget2d_.get() );
+        emit Widget3dChanged( 0 );
+        connect( displayTimer_, SIGNAL( timeout() ), widget2d_.get(), SLOT( updateGL() ) );
+    }
+    else if( type == eWidget_3D )
+    {
+        proxy_.ChangeTo( widget3d_ );
+        emit Widget2dChanged( 0 );
+        emit Widget3dChanged( widget3d_.get() );
+        connect( displayTimer_, SIGNAL( timeout() ), widget3d_.get(), SLOT( updateGL() ) );
+    }
+
+    setCurrentIndex( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,35 +135,11 @@ void GlSelector::RemoveLayer( Layer& layer )
 // -----------------------------------------------------------------------------
 void GlSelector::Close()
 {
-    setCurrentWidget( glPlaceHolder_ );
-    glPlaceHolder_->show();
-    Clean();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlSelector::Clean
-// Created: AGE 2007-03-09
-// -----------------------------------------------------------------------------
-void GlSelector::Clean()
-{
-    if( widget3d_ )
-    {
-        widget3d_->makeCurrent();
-        proxy_.Reset3d();
-        emit Widget3dChanged( 0 );
-        delete widget3d_;
-        widget3d_ = 0;
-        proxy_.ChangeTo( widget3d_ );
-    }
-    if( widget2d_ )
-    {
-        widget2d_->makeCurrent();
-        proxy_.Reset2d();
-        emit Widget2dChanged( 0 );
-        delete widget2d_;
-        widget2d_ = 0;
-        proxy_.ChangeTo( widget2d_ );
-    }
+    ChangeTo( eWidget_Empty );
+    removeWidget( widget2d_.get() );
+    removeWidget( widget3d_.get() );
+    widget2d_.reset();
+    widget3d_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -174,40 +148,10 @@ void GlSelector::Clean()
 // -----------------------------------------------------------------------------
 void GlSelector::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    if( name == "3D" && glPlaceHolder_ != currentWidget() )
-    {
-        bool new3d = value.To< bool >();
-        if( new3d != b3d_ )
-        {
-            disconnect( displayTimer_, SIGNAL( timeout() ), currentWidget(), SLOT( updateGL() ) );
-            if( new3d )
-            {
-                if( ! widget3d_ )
-                {
-                    widget3d_ = new Gl3dWidget( this, controllers_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_ );
-                    widget3d_->Load( config_ );
-                    addWidget( widget3d_ );
-                    connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
-                    proxy_.RegisterTo( widget3d_ );
-                    emit Widget3dChanged( widget3d_ );
-                }
-                proxy_.ChangeTo( widget3d_ );
-                setCurrentWidget( widget3d_ );
-            }
-            else
-            {
-                proxy_.ChangeTo( widget2d_ );
-                setCurrentWidget( widget2d_ );
-            }
-            connect( displayTimer_, SIGNAL( timeout()), currentWidget(), SLOT( updateGL() ) );
-            b3d_ = new3d;
-        }
-    }
+    if( name == "3D" && widget2d_ && widget3d_ )
+        ChangeTo( value.To< bool >() ? eWidget_3D : eWidget_2D );
     else if( name == "RefreshRate" )
-    {
-        refreshRate_ = value.To< int >();
-        displayTimer_->start( refreshRate_ );
-    }
+        displayTimer_->start( value.To< int >() );
 }
 
 // -----------------------------------------------------------------------------

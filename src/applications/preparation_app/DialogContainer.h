@@ -24,8 +24,7 @@ namespace gui
     class ColorEditor_ABC;
     class ConsistencyDialog_ABC;
     class EntitySymbols;
-    class GlTools_ABC;
-    class GlSelector;
+    class GlProxy;
     class LightingProxy;
     class Painter_ABC;
     class ParametersLayer;
@@ -66,10 +65,22 @@ class DialogContainer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const kernel::Profile_ABC& profile,
-                              gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
-                              const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                              gui::ParametersLayer& paramLayer, gui::GlTools_ABC& tools, gui::GlSelector& selector, gui::Elevation2dLayer& elevation2dLayer, gui::GraphicPreferences& preferences );
+             DialogContainer( QWidget* parent,
+                              kernel::Controllers& controllers,
+                              Model& model,
+                              const StaticModel& staticModel,
+                              const kernel::Profile_ABC& profile,
+                              gui::ColorStrategy_ABC& colorStrategy,
+                              gui::ColorEditor_ABC& colorEditor,
+                              const gui::EntitySymbols& symbols,
+                              const tools::ExerciseConfig& config,
+                              gui::SymbolIcons& icons,
+                              gui::LightingProxy& lighting,
+                              const gui::Painter_ABC& painter,
+                              const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                              const std::shared_ptr< gui::Elevation2dLayer >& elevation2dLayer,
+                              gui::GlProxy& proxy,
+                              gui::GraphicPreferences& preferences );
     virtual ~DialogContainer();
     //@}
 

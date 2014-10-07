@@ -29,14 +29,14 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   QWidget* parent,
                                   const QString& objectName,
                                   const QString& windowTitle,
-                                  gui::AutomatsLayer& automats,
-                                  gui::FormationLayer& formation,
+                                  const std::shared_ptr< gui::AutomatsLayer >& automats,
+                                  const std::shared_ptr< gui::FormationLayer >& formation,
+                                  const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                   gui::EntitySymbols& icons,
                                   ModelBuilder& modelBuilder,
                                   Model& model,
                                   StaticModel& staticModel,
-                                  gui::SymbolIcons& symbols,
-                                  gui::ParametersLayer& paramLayer )
+                                  gui::SymbolIcons& symbols )
     : gui::RichDockWidget( controllers, parent, objectName, windowTitle )
     , pTreeViewPanel_( 0 )
     , expandIcon_  ( qApp->layoutDirection() == Qt::RightToLeft ? ICON_LEFT : ICON_RIGHT )

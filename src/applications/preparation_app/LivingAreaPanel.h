@@ -47,7 +47,9 @@ class LivingAreaPanel : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             LivingAreaPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ParametersLayer& paramLayer,
+             LivingAreaPanel( QMainWindow* parent,
+                              kernel::Controllers& controllers,
+                              const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               const gui::GlTools_ABC& tools );
     virtual ~LivingAreaPanel();
     //@}
@@ -99,7 +101,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Inhabitant_ABC > selected_;
-    gui::ParametersLayer& paramLayer_;
+    std::shared_ptr< gui::ParametersLayer > paramLayer_;
     const gui::GlTools_ABC& tools_;
     Mode mode_;
     kernel::Location_ABC* location_;

@@ -95,6 +95,7 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/Layer.h"
+#include "clients_gui/LayerComposite.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/Logger.h"
@@ -170,6 +171,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     controllers_.modes_.AddRegistryEntry( eModes_Replay, "Replayer" );
     controllers_.actions_.AddSelectionner( new Selectionner< actions::Action_ABC >() );
     controllers_.eventActions_.AddSelectionner( new Selectionner< gui::Event >() );
+    gui::layers::CheckConsistency();
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );
@@ -215,8 +217,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
-    gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateConverter_, *pPainter_, *selector_, elevation2d, *graphicPreferences_ ) );
+    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateConverter_, *pPainter_, *glProxy_, elevation2d, *graphicPreferences_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
     preferenceDialog_->AddPage( tr( "Weapon Ranges" ), *new gui::WeaponRangesPanel( preferenceDialog_.get(), controllers_, staticModel_ ) );
@@ -225,16 +227,16 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
 
     // First layers
-    parameters_ = new gui::ParametersLayer( *glProxy_, *textEditor_ );
-    gui::LocationsLayer* locationsLayer      = new gui::LocationsLayer( *glProxy_ );
-    gui::TerrainPicker* picker               = new gui::TerrainPicker( this );
-    WeatherLayer* meteoLayer                 = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, profile_ );
-    AutomatsLayer* automatsLayer             = new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_ );
-    FormationLayer* formationLayer           = new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_ );
-    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
+    auto picker = new gui::TerrainPicker( this );
+    auto parameters = std::make_shared< gui::ParametersLayer >( controllers_, *glProxy_, *textEditor_ );
+    auto locationsLayer = std::make_shared< gui::LocationsLayer >( controllers_, *glProxy_ );
+    auto meteoLayer = std::make_shared< WeatherLayer >( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, profile_ );
+    auto automatsLayer = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_ );
+    auto formationLayer = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_ );
+    auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( controllers_, *glProxy_ );
 
     // Misc
-    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, profile_, *selector_ );
+    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, parameters, profile_, *selector_ );
     new LogisticMagicInterface( this, controllers_, model_, staticModel_, simulation, profile_, *icons_ );
     displayExtractor_.reset( new gui::DisplayExtractor( this ) );
     connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
@@ -248,7 +250,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
-                                             *parameters_, *profilerLayer, *automatsLayer, *formationLayer, *meteoLayer,
+                                             parameters, profilerLayer, automatsLayer, formationLayer, meteoLayer,
                                              *glProxy_, *factory, *strategy_, *symbols, *icons_, *indicatorExportDialog,
                                              simulationController, *drawingsBuilder_, *displayExtractor_, converter, *unitStateDialog_ ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
@@ -259,7 +261,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     AddToolBar( *this, new gui::DisplayToolbar( this, controllers ), eModes_Default );
     AddToolBar( *this, new EventToolbar( this, controllers, profile_ ), eModes_Default );
     AddToolBar( *this, new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
-    AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ), eModes_Default );
+    AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, locationsLayer ), eModes_Default );
     addToolBarBreak();
     AddToolBar( *this, new ReplayerToolbar( this, controllers, simulationController, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_Replay );
     AddToolBar( *this, new MessagePanel( this, controllers_, network_.GetMessageMgr(), network.GetCommands(), *factory ), eModes_Default );
@@ -269,7 +271,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
     // Last layers
-    CreateLayers( *locationsLayer, *meteoLayer, *profilerLayer, *automatsLayer, *formationLayer, simulation, *picker, elevation2d );
+    CreateLayers( parameters, locationsLayer, meteoLayer, profilerLayer, automatsLayer, formationLayer, elevation2d, simulation, *picker );
 
     // Menu bar & status bar
     setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, network_, logger ) );
@@ -307,129 +309,68 @@ MainWindow::~MainWindow()
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,
-                               gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker,
-                               gui::Elevation2dLayer& elevation2dLayer )
+void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
+                               const std::shared_ptr< gui::Layer_ABC >& locations,
+                               const std::shared_ptr< gui::Layer_ABC >& weather,
+                               const std::shared_ptr< gui::Layer_ABC >& profiler,
+                               const std::shared_ptr< gui::Layer_ABC >& automats,
+                               const std::shared_ptr< gui::Layer_ABC >& formations,
+                               const std::shared_ptr< gui::Layer_ABC >& elevation2d,
+                               const Simulation& simulation,
+                               gui::TerrainPicker& picker )
 {
-    gui::TooltipsLayer& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer& terrainLayer         = *new gui::TerrainLayer( controllers_, *glProxy_, *graphicPreferences_, picker );
-    gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, simulation );
-    gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
-    gui::Layer& eventLayer           = *new gui::MiscLayer< EventDockWidget >( dockContainer_->GetEventDockWidget() );
-    gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer* mapnik               = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_, config_.GetMapnikThreads() ) : 0;
-    gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
-    gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer& resourceNetworksLayer = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& grid                 = *new gui::GridLayer( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
-    gui::Layer& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, *parameters_, model_.tacticalLineFactory_, *glProxy_, profile_, *drawingsBuilder_ );
-    gui::Layer& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, picker );
-    gui::Layer& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& defaultLayer         = *new gui::DefaultLayer( controllers_ );
-    gui::Layer& teamLayer            = *new TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
-    gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, profile_, *drawingsBuilder_ );
-    gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
-    gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
-    gui::Layer& weaponRangeLayer     = *new WeaponRangeLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-
-    // ordre de dessin
-    AddLayer( defaultLayer );
-    AddLayer( elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
-    AddLayer( raster, "main,composition,miniviews", tr( "Raster" ) );
-    if( mapnik )
-        AddLayer( *mapnik, "main,composition,miniviews", tr( "Terrain (new rendering)" ) );
-    AddLayer( terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
-    AddLayer( contour, "main,composition,miniviews", tr( "Contour Lines" ) );
-    AddLayer( urbanLayer, "main,miniviews", tr( "Urban blocks" ) );
-    AddLayer( resourceNetworksLayer,"main", tr( "Resource networks" ) );
-    AddLayer( watershed, "main,composition,miniviews", tr( "Watershed" ) );
-    glProxy_->Register( elevation3d );
-    AddLayer( grid, "main,miniviews" );
-    AddLayer( weather, "main,miniviews", tr( "Weather" ) );
-    AddLayer( limits, "main,miniviews" );
-    AddLayer( objectKnowledges, "main,miniviews" );
-    AddLayer( populationKnowledges, "main,miniviews" );
-    AddLayer( agentKnowledges, "main,miniviews" );
-    AddLayer( formationLayer, "main,miniviews", tr( "Formations" ) );
-    AddLayer( teamLayer, "main,miniviews" );
-    AddLayer( objectsLayer, "main,miniviews", tr( "Objects" ) );
-    AddLayer( populations, "main,miniviews", tr( "Crowds" ) );
-    AddLayer( inhabitants, "main,miniviews", tr( "Populations" ) );
-    AddLayer( agents, "main,miniviews", tr( "Units" ) );
-    AddLayer( automats, "main,miniviews", tr( "Automats" ) );
-    AddLayer( weaponRangeLayer, "main,miniviews" );
-    AddLayer( actionsLayer, "main" );
-    AddLayer( creationsLayer, "main" );
-    AddLayer( eventLayer, "main,miniviews" );
-    AddLayer( *parameters_, "main" );
-    AddLayer( metrics, "main" );
-    AddLayer( locationsLayer, "main" );
-    AddLayer( profilerLayer, "main" );
-    AddLayer( drawerLayer, "main,miniviews" );
-    AddLayer( fogLayer, "fog" );
-    AddTooltipLayer( tooltipLayer );
-
-    // ordre des evenements
-    forward_->Register( terrainLayer );
-    forward_->Register( *parameters_ );
-    forward_->Register( agents );
-    forward_->Register( automats );
-    forward_->Register( formationLayer );
-    forward_->Register( teamLayer );
-    forward_->Register( populations );
-    forward_->Register( inhabitants );
-    forward_->Register( objectsLayer );
-    forward_->Register( agentKnowledges );
-    forward_->Register( populationKnowledges );
-    forward_->Register( objectKnowledges );
-    forward_->Register( limits );
-    forward_->Register( resourceNetworksLayer );
-    forward_->Register( urbanLayer );
-    forward_->Register( drawerLayer );
-    forward_->Register( metrics );
-    forward_->Register( elevation3d );
-    forward_->Register( weather );
-
-    gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.publisher_, staticModel_.coordinateConverter_,
-                                                    model_.agents_, model_.agents_, *drawingsBuilder_, model_.actions_ );
-    connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), &pathfindLayer, SLOT( OnAcceptEdit() ) );
-    connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( OnRejectEdit() ) );
-    AddLayer( pathfindLayer, "main" );
-    forward_->Register( pathfindLayer );
-    pathfindLayer.SetReadOnlyModes( 0 );
-
-    forward_->SetDefault( defaultLayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::AddLayer
-// Created: LDC 2013-06-21
-// -----------------------------------------------------------------------------
-void MainWindow::AddLayer( gui::Layer& layer, const std::string& passes /*= ""*/, const QString& text /*= ""*/ )
-{
-    glProxy_->Register( layer );
-    if( !text.isEmpty() )
-        preferenceDialog_->AddLayer( text, layer );
-    if( !passes.empty() )
-        layer.SetPasses( passes );
-    layer.SetReadOnlyModes( eModes_Itinerary );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::AddTooltipLayer
-// Created: LDC 2013-06-21
-// -----------------------------------------------------------------------------
-void MainWindow::AddTooltipLayer( gui::TooltipsLayer_ABC& layer )
-{
-    glProxy_->Register( layer );
-    layer.SetPasses( "tooltip" );
+    auto tooltips = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
+    layers_[ eLayerTypes_Actions ]                = std::make_shared< ActionsLayer >( controllers_, *glProxy_ );
+    layers_[ eLayerTypes_AgentKnowledges ]        = std::make_shared< AgentKnowledgesLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_Agents ]                 = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, simulation );
+    layers_[ eLayerTypes_Automats ]               = automats;
+    layers_[ eLayerTypes_ContourLines ]           = std::make_shared< gui::ContourLinesLayer >( controllers_, *glProxy_, staticModel_.detection_ );
+    layers_[ eLayerTypes_CrowdKnowledges ]        = std::make_shared< PopulationKnowledgesLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_Creations ]              = std::make_shared< gui::MiscLayer< CreationPanels > >( controllers_, *glProxy_, eLayerTypes_Creations, dockContainer_->GetCreationPanel() );
+    layers_[ eLayerTypes_Crowds ]                 = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_Default ]                = std::make_shared< gui::DefaultLayer >( controllers_, *glProxy_ );
+    layers_[ eLayerTypes_Drawings ]               = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile_, *drawingsBuilder_ );
+    layers_[ eLayerTypes_EventCreation ]          = std::make_shared< gui::MiscLayer< EventDockWidget > >( controllers_, *glProxy_, eLayerTypes_EventCreation, dockContainer_->GetEventDockWidget() );
+    layers_[ eLayerTypes_Fog ]                    = std::make_shared< FogLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_Formations ]             = formations;
+    layers_[ eLayerTypes_Inhabitants ]            = std::make_shared< gui::InhabitantLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_Elevation2d ]            = elevation2d;
+    layers_[ eLayerTypes_Elevation3d ]            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
+    layers_[ eLayerTypes_Grid ]                   = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
+    layers_[ eLayerTypes_Locations ]              = locations;
+    if( config_.HasMapnik() )                     
+        layers_[ eLayerTypes_Mapnik ]             = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_, config_.GetMapnikThreads() );
+    layers_[ eLayerTypes_Metric ]                 = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
+    layers_[ eLayerTypes_ObjectKnowledges ]       = std::make_shared< ObjectKnowledgesLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_Objects ]                = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, picker );
+    layers_[ eLayerTypes_Parameters ]             = parameters;
+    layers_[ eLayerTypes_Parties ]                = std::make_shared< TeamLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
+    layers_[ eLayerTypes_Pathfinds ]              = std::make_shared< PathfindLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_, *drawingsBuilder_ );
+    layers_[ eLayerTypes_Raster ]                 = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_ );
+    layers_[ eLayerTypes_ResourceNetworks ]       = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_TacticalLines ]          = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile_, *drawingsBuilder_ );
+    layers_[ eLayerTypes_Terrain ]                = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, *graphicPreferences_, picker );
+    layers_[ eLayerTypes_TerrainProfiler ]        = profiler;
+    layers_[ eLayerTypes_Urban ]                  = std::make_shared< gui::UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_Watershed ]              = std::make_shared< gui::WatershedLayer >( controllers_, *glProxy_, staticModel_.detection_ );
+    layers_[ eLayerTypes_WeaponRanges ]           = std::make_shared< WeaponRangeLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    layers_[ eLayerTypes_Weather ]                = weather;
+    // composites, need others to be created
+    layers_[ eLayerTypes_CrowdsComposite ]        = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_CrowdsComposite );
+    layers_[ eLayerTypes_ObjectsComposite ]       = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_ObjectsComposite );
+    layers_[ eLayerTypes_TacticalLinesComposite ] = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_TacticalLinesComposite );
+    layers_[ eLayerTypes_UnitsComposite ]         = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_UnitsComposite );
+    layers_[ eLayerTypes_WeatherComposite ]       = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers_, eLayerTypes_WeatherComposite );
+    // init orders
+    glProxy_->AddLayers( gui::layers::GetDefaultDrawingOrder( layers_, eModes_AllGaming ) );
+    forward_->AddLayers( gui::layers::GetEventOrder( layers_, eModes_AllGaming ) );
+    forward_->SetDefault( layers_.at( eLayerTypes_Default ) );
+    // init options
+    controllers_.options_.InitializeLayers( gui::layers::GetDefaultConfigurableOrder( layers_, eModes_AllGaming ) );
+    // other init
+    glProxy_->SetTooltipsLayer( tooltips );
+    connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), layers_.at( eLayerTypes_Pathfinds ).get(), SLOT( OnAcceptEdit() ) );
+    connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), layers_.at( eLayerTypes_Pathfinds ).get(), SLOT( OnRejectEdit() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -452,6 +393,7 @@ void MainWindow::Load()
         workers_.Initialize();
         staticModel_.Load( config_ );
         controllers_.LoadOptions( eModes_Gaming );
+        glProxy_->UpdateLayerOrder( *controllers_.options_.GetViewOptions() );
         unitStateDialog_->Load();
     }
     catch( const xml::exception& e )
@@ -469,8 +411,8 @@ void MainWindow::Close()
 {
     controllers_.ChangeMode( eModes_Default );
     network_.Disconnect();
-    parameters_->Reset();
     selector_->Close();
+    glProxy_->Purge();
     unitStateDialog_->Purge();
     dockContainer_->Purge();
     if( lockMapViewController_.get() )
@@ -678,12 +620,7 @@ void MainWindow::OnAddRaster()
                 [&]( int exitCode, const tools::Path& output, const std::string& error )
                 {
                     if( !exitCode )
-                    {
-                        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, output );
-                        raster.SetPasses( "main" );
-                        selector_->AddLayer( raster );
-                        preferenceDialog_->AddLayer( tr( "User layer [%1]" ).arg( addRasterDialog_->GetName() ), raster, true );
-                    }
+                        glProxy_->AddLayers( gui::T_LayersVector( 1, std::make_shared< gui::RasterLayer >( controllers_, *glProxy_, output, addRasterDialog_->GetName() ) ) );
                     else
                         QMessageBox::warning( this, tr( "Error loading image file" ),
                             error.empty() ? tr( "Error while loading Raster source." ) : error.c_str() );

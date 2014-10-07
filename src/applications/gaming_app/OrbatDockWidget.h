@@ -56,14 +56,14 @@ public:
                      QWidget* parent,
                      const QString& objectName,
                      ProfileFilter& filter,
-                     gui::AutomatsLayer& automats,
-                     gui::FormationLayer& formations,
+                     const std::shared_ptr< gui::AutomatsLayer >& automats,
+                     const std::shared_ptr< gui::FormationLayer >& formations,
+                     const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                      actions::ActionsModel& actionsModel,
                      const StaticModel& staticModel,
                      const kernel::Time_ABC& simulation,
                      const gui::EntitySymbols& icons,
-                     DrawingsBuilder& drawingsBuilder,
-                     gui::ParametersLayer& paramLayer );
+                     DrawingsBuilder& drawingsBuilder );
     virtual ~OrbatDockWidget();
     //@}
 

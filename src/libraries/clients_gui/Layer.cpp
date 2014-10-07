@@ -10,11 +10,11 @@
 #include "clients_gui_pch.h"
 #include "Layer.h"
 #include "moc_Layer.cpp"
-#include "Gl3dWidget.h"
-#include "GlWidget.h"
-#include "MapLayerProxy.h"
+#include "GlTools_ABC.h"
 #include "Viewport2d.h"
 #include "Viewport3d.h"
+#include "clients_kernel/Controllers.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace gui;
 
@@ -22,13 +22,17 @@ using namespace gui;
 // Name: Layer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Layer::Layer()
-    : alpha_        ( 1 )
-    , currentWidget_( 0 )
-    , currentProxy_ ( 0 )
-    , enabled_      ( true )
+Layer::Layer( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
+    : controllers_( controllers )
+    , tools_( tools )
+    , descriptor_( layers::GetDescriptor( type ) )
+    , alpha_( 1 )
+    , enabled_( true )
+    , name_( QString::fromStdString( ENT_Tr::ConvertFromLayerTypes( type ) ) )
 {
-    // NOTHING
+    SetModes( descriptor_.hiddenModes_, eModes_None, true );
+    SetReadOnlyModes( descriptor_.readOnlyModes_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +41,7 @@ Layer::Layer()
 // -----------------------------------------------------------------------------
 Layer::~Layer()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,64 +77,6 @@ void Layer::Paint( Viewport_ABC& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer::RegisterIn
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void Layer::RegisterIn( Gl3dWidget& widget, kernel::Logger_ABC& logger )
-{
-    currentProxy_ = new MapLayerProxy( *this, logger );
-    widget.Register( *currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::RegisterIn
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void Layer::RegisterIn( GlWidget& widget, kernel::Logger_ABC& logger )
-{
-    currentWidget_ = &widget;
-    currentProxy_ = new MapLayerProxy( *this, logger );
-    widget.Register( *currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::UnregisterIn
-// Created: ABR 2012-06-11
-// -----------------------------------------------------------------------------
-void Layer::UnregisterIn( Gl3dWidget& widget )
-{
-    widget.Unregister( *currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::UnregisterIn
-// Created: ABR 2012-06-11
-// -----------------------------------------------------------------------------
-void Layer::UnregisterIn( GlWidget& widget )
-{
-    widget.Unregister( *currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::Reset2d
-// Created: AGE 2007-01-19
-// -----------------------------------------------------------------------------
-void Layer::Reset2d()
-{
-    currentWidget_ = 0;
-    currentProxy_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::Reset3d
-// Created: AGE 2007-01-19
-// -----------------------------------------------------------------------------
-void Layer::Reset3d()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Layer::SetAlpha
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
@@ -149,91 +95,15 @@ float Layer::GetAlpha() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer::MoveAbove
-// Created: AGE 2007-04-27
-// -----------------------------------------------------------------------------
-void Layer::MoveAbove( Layer& layer )
-{
-    if( currentWidget_ && currentProxy_ && layer.currentProxy_ )
-        currentWidget_->MoveAbove( *currentProxy_, *layer.currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::MoveBelow
-// Created: AGE 2007-04-27
-// -----------------------------------------------------------------------------
-void Layer::MoveBelow( Layer& layer )
-{
-    if( currentWidget_ && currentProxy_ && layer.currentProxy_ )
-        currentWidget_->MoveBelow( *currentProxy_, *layer.currentProxy_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer2D::Reset2d
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Layer2D::Reset2d()
-{
-    Layer::Reset2d();
-    Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer2D::Reset
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Layer2D::Reset()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer3D::Reset3d
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Layer3D::Reset3d()
-{
-    Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer3D::Reset
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Layer3D::Reset()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::SetPasses
-// Created: SBO 2008-04-15
-// -----------------------------------------------------------------------------
-void Layer::SetPasses( const std::string& passes )
-{
-    passes_ = passes;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::GetCurrentPass
-// Created: SBO 2008-04-14
-// -----------------------------------------------------------------------------
-std::string Layer::GetCurrentPass() const
-{
-    return currentWidget_ ? currentWidget_->GetCurrentPass() : "";
-}
-
-// -----------------------------------------------------------------------------
 // Name: Layer::ShouldDrawPass
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
 bool Layer::ShouldDrawPass() const
 {
-    bool pickingMode = false;
-    if( currentWidget_ )
-        pickingMode = currentWidget_->IsPickingMode();
-    return ( passes_.empty() || GetCurrentPass().empty() || passes_.find( GetCurrentPass() ) != std::string::npos )
-        && ( !pickingMode || ( pickingMode && IsPickable() ) );
+    const auto currentPass = tools_.GetCurrentPass();
+    return IsEnabled()
+        && ( descriptor_.passes_.empty() || currentPass.empty() || descriptor_.passes_.find( currentPass ) != std::string::npos )
+        && ( !tools_.IsPickingMode() || IsPickable() );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +112,16 @@ bool Layer::ShouldDrawPass() const
 // -----------------------------------------------------------------------------
 bool Layer::IsPickable() const
 {
-    return false;
+    return descriptor_.pickable_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::IsConfigurable
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+bool Layer::IsConfigurable() const
+{
+    return descriptor_.configurable_;
 }
 
 // -----------------------------------------------------------------------------
@@ -296,7 +175,16 @@ bool Layer::IsVisible() const
 // -----------------------------------------------------------------------------
 QString Layer::GetName() const
 {
-    return "";
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::GetOptionName
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+std::string Layer::GetOptionName() const
+{
+    return ENT_Tr::ConvertFromLayerTypes( descriptor_.type_, ENT_Tr::eToSim );
 }
 
 // -----------------------------------------------------------------------------
@@ -369,4 +257,31 @@ bool Layer::ShowTooltip( const T_ObjectPicking& /*selection*/ )
 void Layer::HideTooltip()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::Reset
+// Created: ABR 2014-09-24
+// -----------------------------------------------------------------------------
+void Layer::Reset()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::GetType
+// Created: ABR 2014-09-29
+// -----------------------------------------------------------------------------
+E_LayerTypes Layer::GetType() const
+{
+    return descriptor_.type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< E_LayerTypes >& Layer::GetChildrenTypes
+// Created: ABR 2014-09-30
+// -----------------------------------------------------------------------------
+const std::vector< E_LayerTypes >& Layer::GetChildrenTypes() const
+{
+    return descriptor_.children_;
 }

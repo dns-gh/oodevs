@@ -2115,52 +2115,8 @@ Do you want to replace it?</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Objects</source>
-        <translation>Objetos</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Poblaciones</translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation>Error cargando ejercicio: </translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Muchedumbres</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation>Elevación</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Imagen</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terreno</translation>
-    </message>
-    <message>
-        <source>Contour Lines</source>
-        <translation>Curvas de nivel</translation>
-    </message>
-    <message>
-        <source>Watershed</source>
-        <translation>Linea de agua</translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation>Formaciones</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Unidades</translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation>Autómatas</translation>
     </message>
     <message>
         <source> - Not connected</source>
@@ -2183,10 +2139,6 @@ Do you want to replace it?</source>
         <translation>Error fatal agregando imagen Raster.</translation>
     </message>
     <message>
-        <source>User layer [%1]</source>
-        <translation>Capa de usuario [%1]</translation>
-    </message>
-    <message>
         <source>Error while loading Raster source.</source>
         <translation>Error cargando imagen Raster.</translation>
     </message>
@@ -2205,18 +2157,6 @@ Los datos no pueden ser proyectados.</translation>
         <translation> - En Modo de planificación</translation>
     </message>
     <message>
-        <source>Urban blocks</source>
-        <translation>Bloques urbanos</translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation>Redes de recursos</translation>
-    </message>
-    <message>
-        <source>Weather</source>
-        <translation>Clima</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation>Sonido</translation>
     </message>
@@ -2226,10 +2166,6 @@ Los datos no pueden ser proyectados.</translation>
     </message>
     <message>
         <source>Weapon Ranges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain (new rendering)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

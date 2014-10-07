@@ -14,11 +14,13 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class Controllers;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
+
 // =============================================================================
 /** @class  LocationsLayer
     @brief  LocationsLayer
@@ -30,7 +32,7 @@ class LocationsLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LocationsLayer( const gui::GlTools_ABC& tools );
+    explicit LocationsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools );
     virtual ~LocationsLayer();
     //@}
 
@@ -42,17 +44,9 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< geometry::Point2f > T_Locations;
-    typedef T_Locations::const_iterator    CIT_Locations;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    const gui::GlTools_ABC& tools_;
-    T_Locations locations_;
+    std::vector< geometry::Point2f > locations_;
     //@}
 };
 

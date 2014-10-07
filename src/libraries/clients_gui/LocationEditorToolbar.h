@@ -46,7 +46,11 @@ class LocationEditorToolbar : public RichToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer );
+             LocationEditorToolbar( QMainWindow* parent,
+                                    kernel::Controllers& controllers,
+                                    const kernel::CoordinateConverter_ABC& converter,
+                                    View_ABC& view,
+                                    const std::shared_ptr< LocationsLayer >& layer );
     virtual ~LocationEditorToolbar();
     //@}
 
@@ -99,7 +103,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     View_ABC& view_;
-    LocationsLayer& layer_;
+    std::shared_ptr< LocationsLayer > layer_;
     gui::RichWidget< QToolButton >* paramsButton_;
     kernel::ContextMenu* bookmarksMenu_;
     T_Bookmarks bookmarks_;

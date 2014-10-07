@@ -33,8 +33,8 @@ using namespace gui;
 // Name: ParametersLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ParametersLayer::ParametersLayer( GlTools_ABC& tools, TextEditor& textEditor )
-    : tools_( tools )
+ParametersLayer::ParametersLayer( kernel::Controllers& controllers, GlTools_ABC& tools, TextEditor& textEditor )
+    : Layer( controllers, tools, eLayerTypes_Parameters )
     , textEditor_( textEditor )
     , cursors_( new CursorStrategy( tools_ ) )
     , handler_( 0 )

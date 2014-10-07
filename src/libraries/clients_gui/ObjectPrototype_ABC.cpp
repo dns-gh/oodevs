@@ -40,10 +40,14 @@ using namespace gui;
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype_ABC::ObjectPrototype_ABC( const QString& objectName, QWidget* parent, Controllers& controllers,
-                                         const kernel::CoordinateConverter_ABC& coordinateConverter,
-                                         const tools::Resolver_ABC< ObjectType, std::string >& resolver, const Team_ABC& noSideTeam,
-                                         ParametersLayer& layer, std::unique_ptr< ObjectAttributePrototypeFactory_ABC > factory )
+ObjectPrototype_ABC::ObjectPrototype_ABC( const QString& objectName,
+                                          QWidget* parent,
+                                          Controllers& controllers,
+                                          const kernel::CoordinateConverter_ABC& coordinateConverter,
+                                          const tools::Resolver_ABC< ObjectType, std::string >& resolver,
+                                          const Team_ABC& noSideTeam,
+                                          const std::shared_ptr< ParametersLayer >& layer,
+                                          std::unique_ptr< ObjectAttributePrototypeFactory_ABC > factory )
     : QWidget( parent )
     , coordinateConverter_( coordinateConverter )
     , controllers_( controllers )

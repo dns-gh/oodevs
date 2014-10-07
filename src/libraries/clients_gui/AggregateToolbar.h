@@ -43,8 +43,10 @@ class AggregateToolbar : public QHBoxLayout
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateToolbar( kernel::Controller& controller, AutomatsLayer& automatsLayer,
-                               FormationLayer& formationsLayer, bool showDisplayModes );
+             AggregateToolbar( kernel::Controller& controller,
+                               const std::shared_ptr< AutomatsLayer >& automatsLayer,
+                               const std::shared_ptr< FormationLayer >& formationsLayer,
+                               bool showDisplayModes );
     virtual ~AggregateToolbar();
     //@}
 
@@ -93,8 +95,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    AutomatsLayer& automatsLayer_;
-    FormationLayer& formationsLayer_;
+    const std::shared_ptr< AutomatsLayer >& automatsLayer_;
+    const std::shared_ptr< FormationLayer >& formationsLayer_;
     T_Automats automats_;
     T_Formations formations_;
     kernel::ContextMenu* levelMenu_;
