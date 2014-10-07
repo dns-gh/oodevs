@@ -534,7 +534,7 @@ struct Formatter< std::vector< T > >
         if( v.empty() )
             displayer.AddToDisplay( ValueNotSet() );
         else
-            for( typename std::vector< T >::const_iterator it = v.begin(); it != v.end(); ++it )
+            for( auto it = v.begin(); it != v.end(); ++it )
             {
                 if( it != v.begin() )
                     displayer.AddToDisplay( Separator() );
