@@ -49,6 +49,7 @@ public:
 
     NumericValue operator+( const NumericValue& rhs ) const;
     NumericValue operator-( const NumericValue& rhs ) const;
+    NumericValue operator*( const NumericValue& rhs ) const;
     NumericValue operator/( const NumericValue& rhs ) const;
     NumericValue& operator+=( const NumericValue& rhs );
     bool operator<( const NumericValue& rhs ) const;

@@ -39,8 +39,8 @@ private:
     void Reduce( const std::string& name, xml::xistream& xis, Task& result ) const;
     template< typename F >
     void ReduceFunction( const std::string& name, xml::xistream& xis, Task& result ) const;
-    template< typename T >
-    void ReduceFunction2( const std::string& name, xml::xistream& xis, Task& result ) const;
+    template< typename F, typename T >
+    void ReduceFunction2( const std::string& name, xml::xistream& xis, Task& result, const boost::function< T( const T&, const T& ) >& f ) const;
     struct ReduceDispatcher;
     //@}
 };
