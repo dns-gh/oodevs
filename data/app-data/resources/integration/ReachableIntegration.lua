@@ -916,14 +916,14 @@ integration.moveToItItinerary = masalife.brain.integration.startStopAction( {
         
 integration.isPointInUrbanBlockTrafficableForProxy = function( location, loaded )
     local pos = location:getPosition()
-    if DEC_IsPointInDestroyedUrbanBlock( pos ) then return false end
+    if DEC_IsPointInDestroyedUrbanBlock( pos ) then return 0 end
     if not loaded then return 100 end
-    local pos = self:getPosition()
+    local pos = location:getPosition()
     return ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
 end
 
 --- Informs about the accessibility of a given location.
--- @param simPosition DirectIA knowledge
+-- @param location DirectIA knowledge
 -- @param loaded Boolean The agent state used to access the location (loaded:on board, unloaded:off board)
 -- @return Integer, the accessibility level from 0 to 100, 0 meaning the location is not accessible at all.
 integration.isPointInUrbanBlockTrafficable = function( location, loaded )
