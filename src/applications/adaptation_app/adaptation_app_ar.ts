@@ -178,6 +178,73 @@
     </message>
 </context>
 <context>
+    <name>ADN_AiEngine_Perception_Table</name>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recognition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heading</source>
+        <translation type="unfinished">العنوان</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operational State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature (partial)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature (full)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surrendered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prisoner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refugees picked up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command Post</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AiEngine_UrbanSpeeds_Table</name>
     <message>
         <source>Material</source>

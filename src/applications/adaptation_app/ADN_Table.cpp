@@ -16,9 +16,10 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Languages_GUI.h"
 #include "ADN_WorkspaceElement.h"
-#include "excel/ExcelFormat.h"
+#include "clients_gui/Roles.h"
 #include "clients_kernel/LanguageController.h"
 #include "clients_kernel/VariantPointer.h"
+#include "excel/ExcelFormat.h"
 
 using namespace ExcelFormat;
 
@@ -102,7 +103,6 @@ void ADN_Table::Initialize( const QString& objectName )
 // -----------------------------------------------------------------------------
 ADN_Table::~ADN_Table()
 {
-    // NOTHING
     ADN_Workspace::GetWorkspace().GetLanguageController().Unregister( *this );
 }
 
@@ -130,9 +130,9 @@ void ADN_Table::setNumRows( int numRows )
 // Name: ADN_Table::AddRow
 // Created: ABR 2012-10-19
 // -----------------------------------------------------------------------------
-void ADN_Table::AddRow( int /* row */, void* /* data */ )
+void ADN_Table::AddRow( int row, void* /* data */ )
 {
-    // NOTHING
+    CheckValidity( row );
 }
 
 // -----------------------------------------------------------------------------
@@ -712,6 +712,78 @@ QStandardItem* ADN_Table::AddItem( int row, int col, int rowSpan, int columnSpan
     return item;
 }
 
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Connector_ABC* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags /* = 0 */ )
+{
+    if( !data || !parentData )
+        return 0;
+
+    // Item creation
+    ADN_StandardItem* item = new ADN_StandardItem( parentData, type );
+    dataModel_.setItem( row, col, item );
+
+    // Flags
+    if( delegate_.IsCheckBox( item->index() ) )
+    {
+        assert( type == ADN_StandardItem::eBool );
+        flags = flags | Qt::ItemIsUserCheckable;
+    }
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
+
+    // Alignment
+    if( type != ADN_StandardItem::eString && type != ADN_StandardItem::eLocalizedString && type != ADN_StandardItem::eTime )
+        item->setTextAlignment( Qt::AlignRight );
+
+    // Variant
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
+
+    // ADN Connection
+    item->Connect( data );
+    return item;
+}
+
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Connector_ABC* data, const QStringList& content, Qt::ItemFlags flags /* = 0 */ )
+{
+    if( !data || !parentData )
+        return 0;
+
+    // Item creation
+    ADN_StandardItem* item = new ADN_StandardItem( parentData, ADN_StandardItem::eEnum );
+    dataModel_.setItem( row, col, item );
+
+    // Flags
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
+
+    // Variant
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
+
+    // ADN Connection
+    item->Connect( data, &content );
+    return item;
+}
+
+ADN_StandardItem* ADN_Table::AddItemInternal( int row, int col, void* parentData, ADN_Connector_ABC* data, Qt::ItemFlags flags /*= 0*/ )
+{
+    // Item creation
+    ADN_StandardItem* item = new ADN_StandardItem( parentData, ADN_StandardItem::ePtrInVector );
+    dataModel_.setItem( row, col, item );
+
+    // Flags
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
+
+    // Variant
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_TypePtrInVector<> pointer
+
+    // ADN Connection
+    item->Connect( data );
+    return item;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::GetDelegate
 // Created: NPT 2012-11-07
@@ -728,4 +800,9 @@ ADN_TableDelegate& ADN_Table::GetDelegate()
 const QStandardItemModel& ADN_Table::GetModel() const
 {
     return dataModel_;
+}
+
+void ADN_Table::SetEnabled( bool enable )
+{
+    setEnabled( enable );
 }

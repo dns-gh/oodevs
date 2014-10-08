@@ -10,17 +10,15 @@
 #ifndef __ADN_Table_h_
 #define __ADN_Table_h_
 
-#include "ADN_Gfx_ABC.h"
+#include "ADN_Table_ABC.h"
 #include "ADN_NavigationInfos.h"
 #include "ADN_TableDelegate.h"
 #include "ADN_Types.h"
 #include "ADN_StandardItem.h"
-#include "clients_gui/Roles.h"
-#include "clients_kernel/VariantPointer.h"
 #include "tools/LanguageObserver_ABC.h"
 
 class ADN_Table : public QTableView
-                , public ADN_Gfx_ABC
+                , public ADN_Table_ABC
                 , public tools::Observer_ABC
                 , public tools::LanguageObserver_ABC
 {
@@ -39,10 +37,10 @@ public:
     //! @name Operations
     //@{
     int numRows() const;
-    void setNumRows( int numRows );
+    virtual void setNumRows( int numRows );
 
     virtual void AddRow( int row, void* data );
-    void RemoveItem( void* item );
+    virtual void RemoveItem( void* item );
     virtual void RemoveCurrentElement();
 
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
@@ -66,10 +64,8 @@ public:
 
     QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     QStandardItem* AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
-    template< typename T >
-    QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags = 0 );
-    template< typename Enum, int Max >
-    QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddItem( int row, int col, void* parentData, ADN_Connector_ABC* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddItem( int row, int col, void* parentData, ADN_Connector_ABC* data, const QStringList& content, Qt::ItemFlags flags = 0 );
     template< typename T >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags = 0 );
     ADN_TableDelegate& GetDelegate();
@@ -99,12 +95,15 @@ private:
     //@{
     void Initialize( const QString& objectName );
     QString GetToolTips( int nRow, int nCol ) const;
+    ADN_StandardItem* AddItemInternal( int row, int col, void* parentData, ADN_Connector_ABC* data, Qt::ItemFlags flags = 0 );
     //@}
 
     //! @name LanguageObserver_ABC
     //@{
     virtual void OnLanguageChanged();
     //@}
+
+    virtual void SetEnabled( bool enable );
 
 private slots:
     //! @name Slots
@@ -146,69 +145,6 @@ T* ADN_Table::CreateNewElement()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::AddItem
-// Created: ABR 2012-10-18
-// -----------------------------------------------------------------------------
-template< typename T >
-QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags /* = 0 */ )
-{
-    if( !data || !parentData )
-        return 0;
-
-    // Item creation
-    ADN_StandardItem* item = new ADN_StandardItem( parentData, type );
-    dataModel_.setItem( row, col, item );
-
-    // Flags
-    if( delegate_.IsCheckBox( item->index() ) )
-    {
-        assert( type == ADN_StandardItem::eBool );
-        flags = flags | Qt::ItemIsUserCheckable;
-    }
-    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
-
-    // Alignment
-    if( type != ADN_StandardItem::eString && type != ADN_StandardItem::eLocalizedString && type != ADN_StandardItem::eTime )
-        item->setTextAlignment( Qt::AlignRight );
-
-    // Variant
-    QVariant variant;
-    variant.setValue( kernel::VariantPointer( data ) );
-    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
-
-    // ADN Connection
-    item->Connect( data );
-    return item;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::AddItem
-// Created: ABR 2012-10-26
-// -----------------------------------------------------------------------------
-template< typename Enum, int Max >
-QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags /* = 0 */ )
-{
-    if( !data || !parentData )
-        return 0;
-
-    // Item creation
-    ADN_StandardItem* item = new ADN_StandardItem( parentData, ADN_StandardItem::eEnum );
-    dataModel_.setItem( row, col, item );
-
-    // Flags
-    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
-
-    // Variant
-    QVariant variant;
-    variant.setValue( kernel::VariantPointer( data ) );
-    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
-
-    // ADN Connection
-    item->Connect( data, &content );
-    return item;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::AddItem
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -216,25 +152,9 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypeP
 {
     if( !data || !parentData )
         return 0;
-
-    // Item creation
-    ADN_StandardItem* item = new ADN_StandardItem( parentData, ADN_StandardItem::ePtrInVector );
-    dataModel_.setItem( row, col, item );
-
-    // Flags
-    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
-
-    // Variant
-    QVariant variant;
-    variant.setValue( kernel::VariantPointer( data ) );
-    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_TypePtrInVector<> pointer
-
-    // ADN Connection
-    item->Connect( data );
-
+    ADN_StandardItem* item = AddItemInternal( row, col, parentData, data, flags );
     if( data->GetData() )
         connect( &data->GetData()->strName_, SIGNAL( DataChanged( void* ) ), item->GetConnector(), SLOT( Rename( void* ) ) );
-
     return item;
 }
 

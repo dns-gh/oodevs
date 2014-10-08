@@ -47,6 +47,14 @@
         </xs:element>
         <xs:element name="perception" minOccurs="0">
           <xs:complexType>
+            <xs:sequence>
+              <xs:element name="availability" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="type" type="xs:string" use="required"/>
+                  <xs:attribute name="level" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
             <xs:attribute name="detect-destroyed-units" type="xs:boolean" use="required"/>
             <xs:attribute name="max-level" type="xs:string" use="required"/>
           </xs:complexType>

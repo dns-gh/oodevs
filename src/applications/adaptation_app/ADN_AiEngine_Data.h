@@ -71,7 +71,26 @@ public:
         };
     };
 
+public:
+    class PerceptionInfos : public ADN_Ref_ABC
+    {
+    public:
+        PerceptionInfos();
+
+    public:
+        std::string GetItemName();
+        void ReadArchive( xml::xistream& );
+        void WriteArchive( xml::xostream&, const std::string& );
+
+    public:
+        ADN_Type_Bool bDetection_;
+        ADN_Type_Bool bRecognition_;
+        ADN_Type_Bool bIdentification_;
+        ADN_Type_Bool bNever_;
+    };
+
     typedef ADN_Type_VectorFixed_ABC< UrbanSpeedsInfos > T_UrbanSpeedsInfos_Vector;
+    typedef ADN_Type_Vector_ABC< PerceptionInfos > T_PerceptionInfos_Vector;
 
 public:
     //! @name Constructors/Destructor
@@ -109,6 +128,7 @@ public:
     ADN_Type_Double searchSpeed_;
     T_UrbanSpeedsInfos_Vector urbanSearchSpeeds_;
     ADN_Type_Enum< E_PerceptionLevel, eNbrPerceptionLevel > nMaxPerceptionLevel_;
+    T_PerceptionInfos_Vector perceptionInfos_;
 };
 
 #endif // __ADN_AiEngine_Data_h_

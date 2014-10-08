@@ -15,6 +15,7 @@
 #include "ADN_Tr.h"
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
+#include <boost/assign/list_of.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanSpeedsInfos: Constructor
@@ -61,6 +62,98 @@ void ADN_AiEngine_Data::UrbanSpeedsInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PerceptionInfos Constructor
+// Created: JSR 2014-07-04
+// -----------------------------------------------------------------------------
+ADN_AiEngine_Data::PerceptionInfos::PerceptionInfos()
+    : bDetection_( false )
+    , bRecognition_( false )
+    , bIdentification_( false )
+    , bNever_( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerceptionInfos::GetItemName
+// Created: JSR 2014-07-04
+// -----------------------------------------------------------------------------
+std::string ADN_AiEngine_Data::PerceptionInfos::GetItemName()
+{
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerceptionInfos::ReadArchive
+// Created: JSR 2014-07-04
+// -----------------------------------------------------------------------------
+void ADN_AiEngine_Data::PerceptionInfos::ReadArchive( xml::xistream& xis )
+{
+    const std::string level = xis.attribute< std::string >( "level" );
+    bDetection_ = level == "detection";
+    bRecognition_ = level == "recognition";
+    bIdentification_ = level == "identification";
+    bNever_ = level == "never";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_AiEngine_Data::WriteArchive
+// Created: JSR 2014-07-04
+// -----------------------------------------------------------------------------
+void ADN_AiEngine_Data::PerceptionInfos::WriteArchive( xml::xostream& xos, const std::string& name )
+{
+    const std::string level = bDetection_.GetData() ?      "detection" :
+                              bRecognition_.GetData() ?    "recognition" :
+                              bIdentification_.GetData() ? "identification" :
+                                                           "never";
+    xos << xml::start( "availability" )
+          << xml::attribute( "type", name )
+          << xml::attribute( "level", level )
+        << xml::end;
+}
+
+namespace
+{
+    const int perceptionsSize = 11;
+    const bool defaultPerceptions[ perceptionsSize ][ 4 ] =
+    {
+        { true,  false, false, false }, // heading
+        { true,  false, false, false }, // speed
+        { false, false, true,  false }, // opstate
+        { false, true,  false, false }, // side
+        { false, false, true,  false }, // level
+        { false, true,  false, false }, // nature (partial)
+        { false, false, true,  false }, // nature (full)
+        { false, false, true,  false }, // surrendered
+        { false, false, true,  false }, // prisoner
+        { false, false, true,  false }, // refugees
+        { false, false, true,  false }  // CP
+    };
+
+    const std::vector< std::string> perceptionsIds =
+        boost::assign::list_of
+        ( "heading" )
+        ( "speed" )
+        ( "opstate" )
+        ( "side" )
+        ( "level" )
+        ( "nature-partial" )
+        ( "nature-full" )
+        ( "surrendered" )
+        ( "prisoner" )
+        ( "refugees" )
+        ( "cp" );
+
+    int FindPerceptionId( const std::string& name )
+    {
+        for( std::size_t i = 0; i < perceptionsIds.size(); ++i )
+            if( perceptionsIds[ i ] == name )
+                return static_cast< int >( i );
+        return -1;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data constructor
 // Created: AGN 2004-06-15
 // -----------------------------------------------------------------------------
@@ -89,6 +182,15 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , nMaxPerceptionLevel_         ( ePerceptionLevel_Identification )
 {
     nMaxPerceptionLevel_.SetAlphabeticalSort( false );
+    for( int i = 0; i < perceptionsSize; ++i )
+    {
+        PerceptionInfos* infos = new PerceptionInfos();
+        infos->bDetection_      = defaultPerceptions[ i ][ 0 ];
+        infos->bRecognition_    = defaultPerceptions[ i ][ 1 ];
+        infos->bIdentification_ = defaultPerceptions[ i ][ 2 ];
+        infos->bNever_          = defaultPerceptions[ i ][ 3 ];
+        perceptionInfos_.AddItem( infos );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -179,6 +281,13 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
     input >> xml::optional >> xml::start( "perception" )
             >> xml::optional >> xml::attribute( "max-level", maxPerceptionLevel )
             >> xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
+            >> xml::list( "availability", [&]( xml::xistream& xis )
+            {
+                const std::string type = xis.attribute< std::string >( "type" );
+                const int index = FindPerceptionId( type );
+                if( index != -1 )
+                    perceptionInfos_[ index ]->ReadArchive( xis );
+            } )
           >> xml::end;
     if( !maxPerceptionLevel.empty() )
         nMaxPerceptionLevel_ = ENT_Tr::ConvertToPerceptionLevel( maxPerceptionLevel );
@@ -246,8 +355,10 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output ) const
             << xml::end
             << xml::start( "perception" )
                 << xml::attribute( "max-level", nMaxPerceptionLevel_.Convert() )
-                << xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
-            << xml::end
+                << xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ );
+    for( std::size_t i = 0; i < perceptionInfos_.size(); ++i )
+        perceptionInfos_[ i ]->WriteArchive( output, perceptionsIds[ i ] );
+    output  << xml::end
             << xml::start( "recon-and-search-speeds" )
             << xml::attribute( "recon-speed", reconSpeed_ )
             << xml::attribute( "search-speed", searchSpeed_ );

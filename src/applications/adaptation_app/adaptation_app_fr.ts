@@ -178,6 +178,73 @@
     </message>
 </context>
 <context>
+    <name>ADN_AiEngine_Perception_Table</name>
+    <message>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <source>Detection</source>
+        <translation>Détection</translation>
+    </message>
+    <message>
+        <source>Recognition</source>
+        <translation>Reconnaissance</translation>
+    </message>
+    <message>
+        <source>Identification</source>
+        <translation>Identification</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Jamais</translation>
+    </message>
+    <message>
+        <source>Heading</source>
+        <translation>Direction</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Vitesse</translation>
+    </message>
+    <message>
+        <source>Operational State</source>
+        <translation>Etat opérationnel</translation>
+    </message>
+    <message>
+        <source>Side</source>
+        <translation>Camp</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation>Niveau</translation>
+    </message>
+    <message>
+        <source>Nature (partial)</source>
+        <translation>Nature (partielle)</translation>
+    </message>
+    <message>
+        <source>Nature (full)</source>
+        <translation>Nature (complète)</translation>
+    </message>
+    <message>
+        <source>Surrendered</source>
+        <translation>Rendu</translation>
+    </message>
+    <message>
+        <source>Prisoner</source>
+        <translation>Prisonnier</translation>
+    </message>
+    <message>
+        <source>Refugees picked up</source>
+        <translation>Réfugiés pris en compte</translation>
+    </message>
+    <message>
+        <source>Command Post</source>
+        <translation>Poste de Commande</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AiEngine_UrbanSpeeds_Table</name>
     <message>
         <source>Material</source>

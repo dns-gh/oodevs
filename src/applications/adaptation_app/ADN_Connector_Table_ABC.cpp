@@ -8,19 +8,22 @@
 // $Workfile: ADN_Connector_Table_ABC.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_Table_ABC.h"
+#include "ADN_Table_ABC.h"
+#include "ADN_Workspace.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
-ADN_Connector_Table_ABC::ADN_Connector_Table_ABC( ADN_Table& tab )
+ADN_Connector_Table_ABC::ADN_Connector_Table_ABC( ADN_Table_ABC& tab )
     : tab_(tab)
     , bIsConnected_(false)
 {
     if( tab_.IsAutoEnabled())
-        tab_.setEnabled(false);
+        tab_.SetEnabled( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -43,7 +46,7 @@ void ADN_Connector_Table_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarg
     connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
 
     if( tab_.IsAutoEnabled() )
-        tab_.setEnabled(true);
+        tab_.SetEnabled( true );
     bIsConnected_=true;
 
     pTarget->Initialize( *this );
@@ -62,7 +65,7 @@ void ADN_Connector_Table_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pT
 
     bIsConnected_=false;
     if( tab_.IsAutoEnabled() )
-        tab_.setEnabled(false);
+        tab_.SetEnabled( false );
     if( IsAutoClear() )
         Clear();
 }
@@ -123,7 +126,7 @@ void ADN_Connector_Table_ABC::ClearPrivate(bool bInConnection)
     }
     else
     {
-        tab_.setNumRows(0);
+        tab_.setNumRows( 0 );
         vDatas_.clear();
     }
 }
@@ -145,5 +148,4 @@ void ADN_Connector_Table_ABC::AddSubItems( int nRow, void* pObj )
 {
     assert( pObj );
     tab_.AddRow( nRow, pObj );
-    tab_.CheckValidity( nRow );
 }

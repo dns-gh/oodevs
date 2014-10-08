@@ -12,9 +12,11 @@
 #ifndef __ADN_Connector_Table_ABC_h_
 #define __ADN_Connector_Table_ABC_h_
 
-#include "ADN_Table.h"
+#include "ADN_Table_ABC.h"
 #include "ADN_Connector_Vector_ABC.h"
 #include <boost/noncopyable.hpp>
+
+class ADN_Table_ABC;
 
 //*****************************************************************************
 // Created: JDY 03-07-09
@@ -24,7 +26,7 @@ class ADN_Connector_Table_ABC : public ADN_Connector_Vector_ABC
 {
 
 public:
-             ADN_Connector_Table_ABC( ADN_Table& tab );
+             ADN_Connector_Table_ABC( ADN_Table_ABC& tab );
     virtual ~ADN_Connector_Table_ABC();
 
     bool IsConnected() const;
@@ -44,7 +46,7 @@ private:
 
 protected:
     std::vector< void* > vDatas_;
-    ADN_Table& tab_;
+    ADN_Table_ABC& tab_;
     bool bIsConnected_;
 };
 

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "clients_kernel/VariantPointer.h"
+#include "clients_gui/Roles.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_VectorEditionDialog constructor
