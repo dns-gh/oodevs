@@ -63,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const sword::Indicator& message );
+    void Update( unsigned int currentTick, const sword::Indicator& message );
     void Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const;
     void Serialize( xml::xostream& xos ) const;
     void Accept( ScoreAnnouncer& visitor );
@@ -79,6 +79,7 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< xml::xibufferstream > xml_;
+    unsigned int beginTick_;
     std::deque< float > values_;
     std::vector< std::string > profiles_;
     //@}

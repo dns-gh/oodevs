@@ -24,6 +24,7 @@
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/make_shared.hpp>
+#include <float.h>
 
 using namespace plugins::score;
 
@@ -119,7 +120,7 @@ void ScoresModel::Update( const sword::Indicator& message )
 {
     T_Scores::const_iterator it = scores_.find( message.name() );
     if( it != scores_.end() )
-        it->second->Update( message );
+        it->second->Update( currentTick_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,6 +129,8 @@ void ScoresModel::Update( const sword::Indicator& message )
 // -----------------------------------------------------------------------------
 void ScoresModel::Update( const sword::SimToClient& message )
 {
+    if( message.message().has_control_begin_tick() )
+        currentTick_ = message.message().control_begin_tick().current_tick();
     BOOST_FOREACH( const T_Task& task, tasks_ )
         task->Receive( message );
     if( !dateTimeInitialized_ && message.message().has_control_information() )
@@ -274,16 +277,13 @@ std::size_t ScoresModel::AddHeader( std::ostream& file ) const
 void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
 {
     file << index << separator_ << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).toStdString();
-    for( T_Scores::const_iterator score = scores_.begin(); score != scores_.end(); ++score )
+    for( auto score = scores_.begin(); score != scores_.end(); ++score )
     {
-        try
-        {
-            file << separator_ << score->second->GetValue( index );
-        }
-        catch( const std::exception& /*e*/ )
-        {
+        float value = score->second->GetValue( index );
+        if( _isnan( value ) )
             file << separator_ << "Invalid score";
-        }
+        else
+            file << separator_ << value;
     }
     file << std::endl;
 }

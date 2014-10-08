@@ -131,6 +131,7 @@ private:
     QDateTime initialDateTime_;
     bool dateTimeInitialized_;
     unsigned int tickDuration_;
+    unsigned int currentTick_;
     const tools::Path sessionDir_;
     static const std::string separator_;
     //@}
