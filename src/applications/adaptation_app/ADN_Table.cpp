@@ -679,3 +679,53 @@ void ADN_Table::OnLanguageChanged()
         for( int col = 0; col < dataModel_.columnCount(); ++col )
             Warn( row, col );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::AddItem
+// Created: ABR 2012-10-18
+// -----------------------------------------------------------------------------
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags /* = 0 */ )
+{
+    if( !parentData )
+        return 0;
+
+    ADN_StandardItem* item = new ADN_StandardItem( parentData );
+    item->setFlags( Qt::ItemIsEnabled | flags );
+
+    item->setData( text, Qt::EditRole );
+    item->setData( text, gui::Roles::DataRole );
+
+    dataModel_.setItem( row, col, item );
+
+    return item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::AddItem
+// Created: NPT 2012-11-07
+// -----------------------------------------------------------------------------
+QStandardItem* ADN_Table::AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags /* = 0 */ )
+{
+    QStandardItem* item = AddItem( row, col, parentData, text, flags );
+    if( item && ( rowSpan > 1 || columnSpan > 1 ) )
+        setSpan( row, col, rowSpan, columnSpan );
+    return item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetDelegate
+// Created: NPT 2012-11-07
+// -----------------------------------------------------------------------------
+ADN_TableDelegate& ADN_Table::GetDelegate()
+{
+    return delegate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetModel
+// Created: ABR 2013-02-12
+// -----------------------------------------------------------------------------
+const QStandardItemModel& ADN_Table::GetModel() const
+{
+    return dataModel_;
+}

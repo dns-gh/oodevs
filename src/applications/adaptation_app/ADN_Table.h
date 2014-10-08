@@ -148,42 +148,7 @@ T* ADN_Table::CreateNewElement()
 // Name: ADN_Table::AddItem
 // Created: ABR 2012-10-18
 // -----------------------------------------------------------------------------
-inline
-QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags /* = 0 */ )
-{
-    if( !parentData )
-        return 0;
-
-    ADN_StandardItem* item = new ADN_StandardItem( parentData );
-    item->setFlags( Qt::ItemIsEnabled | flags );
-
-    item->setData( text, Qt::EditRole );
-    item->setData( text, gui::Roles::DataRole );
-
-    dataModel_.setItem( row, col, item );
-
-    return item;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::AddItem
-// Created: NPT 2012-11-07
-// -----------------------------------------------------------------------------
-inline
-QStandardItem* ADN_Table::AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags /* = 0 */ )
-{
-    QStandardItem* item = AddItem( row, col, parentData, text, flags );
-    if( item && ( rowSpan > 1 || columnSpan > 1 ) )
-        setSpan( row, col, rowSpan, columnSpan );
-    return item;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::AddItem
-// Created: ABR 2012-10-18
-// -----------------------------------------------------------------------------
 template< typename T >
-inline
 QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags /* = 0 */ )
 {
     if( !data || !parentData )
@@ -220,7 +185,6 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
 // Created: ABR 2012-10-26
 // -----------------------------------------------------------------------------
 template< typename Enum, int Max >
-inline
 QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags /* = 0 */ )
 {
     if( !data || !parentData )
@@ -248,7 +212,6 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
 template< typename T >
-inline
 QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags /* = 0 */ )
 {
     if( !data || !parentData )
@@ -273,26 +236,6 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypeP
         connect( &data->GetData()->strName_, SIGNAL( DataChanged( void* ) ), item->GetConnector(), SLOT( Rename( void* ) ) );
 
     return item;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::GetDelegate
-// Created: NPT 2012-11-07
-// -----------------------------------------------------------------------------
-inline
-ADN_TableDelegate& ADN_Table::GetDelegate()
-{
-    return delegate_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::GetModel
-// Created: ABR 2013-02-12
-// -----------------------------------------------------------------------------
-inline
-const QStandardItemModel& ADN_Table::GetModel() const
-{
-    return dataModel_;
 }
 
 #endif // __ADN_Table_h_
