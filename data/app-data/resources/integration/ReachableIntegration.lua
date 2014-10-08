@@ -928,7 +928,7 @@ end
 -- @return Integer, the accessibility level from 0 to 100, 0 meaning the location is not accessible at all.
 integration.isPointInUrbanBlockTrafficable = function( location, loaded )
     if not location or not location.getPosition then
-        return 100
+        return loaded and 0 or 100
     end
     local pos = location:getPosition()
     if DEC_IsPointInDestroyedUrbanBlock( pos ) then return 0 end
