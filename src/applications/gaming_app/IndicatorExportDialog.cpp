@@ -21,6 +21,7 @@
 // -----------------------------------------------------------------------------
 IndicatorExportDialog::IndicatorExportDialog( QWidget* parent )
     : QDialog( parent, "IndicatorExportDialog" )
+    , request_( 0 )
 {
     setCaption( tools::translate( "Scores", "Export data" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 2, 2, 0, 5 );
@@ -65,7 +66,7 @@ IndicatorExportDialog::~IndicatorExportDialog()
 // -----------------------------------------------------------------------------
 void IndicatorExportDialog::Add( const IndicatorRequest& request )
 {
-    requests_.push_back( &request );
+    request_ = &request;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +75,7 @@ void IndicatorExportDialog::Add( const IndicatorRequest& request )
 // -----------------------------------------------------------------------------
 void IndicatorExportDialog::Export()
 {
-    if( ! requests_.empty() )
+    if( request_ )
         show();
 }
 
@@ -109,6 +110,8 @@ void IndicatorExportDialog::OnAccept()
 {
     try
     {
+        if( !request_ )
+            return;
         const tools::Path filepath( file_->text().toStdString().c_str() );
         if( filepath.Exists() )
             if( QMessageBox::warning( QApplication::activeWindow(), tools::translate( "IndicatorExportDialog", "Confirm file replace" ),
@@ -122,29 +125,21 @@ void IndicatorExportDialog::OnAccept()
         if( header_->isChecked() )
         {
             file << tools::translate( "Indicators", "Time" );
-            BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
-                file << sep << request->GetDisplayName();
+            file << sep << request_->GetDisplayName();
             file << std::endl;
         }
-        std::size_t hasData = requests_.size();
-        std::size_t index = 0;
-        while( hasData )
+        std::size_t index = request_->GetFirstTick();
+        auto requestResult = request_->Result();
+        for( auto it = requestResult.begin(); it != requestResult.end(); ++it )
         {
             file << index;
-            BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
-            {
-                const std::size_t size = request->Result().size();
-                file << sep;
-                if( index < size )
-                    file << request->Result()[ index ];
-                else if( index == size )
-                    --hasData;
-            }
+            file << sep;
+            file << *it;
             file << std::endl;
             ++index;
         }
         file.close();
-        requests_.clear();
+        request_ = 0;
         accept();
     }
     catch( const std::exception& e )

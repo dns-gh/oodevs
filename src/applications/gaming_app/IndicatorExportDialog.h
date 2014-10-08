@@ -44,15 +44,9 @@ private slots:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< const IndicatorRequest* > T_Requests;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    T_Requests requests_;
+    const IndicatorRequest* request_;
     QLineEdit* file_;
     QLineEdit* separator_;
     QCheckBox* header_;
