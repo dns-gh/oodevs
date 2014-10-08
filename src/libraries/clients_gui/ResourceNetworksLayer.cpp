@@ -76,7 +76,7 @@ void ResourceNetworksLayer::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void ResourceNetworksLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool /*pickingMode*/ )
 {
-    if( ShouldDisplay( entity ) && tools_.ShouldDisplay( type_ ) )
+    if( ShouldDisplay( entity ) && tools_.ShouldDisplay( GetType() ) )
         if( const ResourceNetwork_ABC* attribute = entity.Retrieve< ResourceNetwork_ABC >() )
         {
             const geometry::Point2f position = GetPosition( entity );

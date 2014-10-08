@@ -125,7 +125,6 @@ protected:
     const kernel::Profile_ABC& profile_;
     T_Entities                 entities_;
     geometry::Rectangle2f      world_;
-    E_LayerTypes               type_;
     //@}
 
 private:

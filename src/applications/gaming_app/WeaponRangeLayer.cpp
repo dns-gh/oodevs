@@ -170,7 +170,7 @@ void WeaponRangeLayer::Reset()
 
 void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& /*viewport*/, bool /*pickingMode*/ )
 {
-    if( !ShouldDisplay( entity ) || !tools_.ShouldDisplay( type_ ) )
+    if( !ShouldDisplay( entity ) || !tools_.ShouldDisplay( GetType() ) )
         return;
     // SelectColor actually controls the result of ShouldDisplay
     strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
