@@ -43,6 +43,15 @@ const MIL_AutomateType* MIL_AutomateTypeASA::Create( const std::string& strName,
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateTypeASA::GetArchetypeName
+// Created: FAI 2014-10-07
+// -----------------------------------------------------------------------------
+std::string MIL_AutomateTypeASA::GetArchetypeName() const
+{
+    return "MIL_AutomateTypeASA";
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeASA::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------

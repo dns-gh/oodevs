@@ -31,6 +31,7 @@ public:
 
     virtual MIL_AgentPion* InstanciatePion( MissionController_ABC& controller,
             MIL_Automate& automate, xml::xistream& xis ) const;
+    virtual std::string GetArchetypeName() const;
     virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const;
 
 };

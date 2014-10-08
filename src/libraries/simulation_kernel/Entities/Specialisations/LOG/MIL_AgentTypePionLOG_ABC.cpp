@@ -44,6 +44,15 @@ MIL_AgentPion* MIL_AgentTypePionLOG_ABC::InstanciatePion(
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionLOG_ABC::GetArchetypeName
+// Created: FAI 2014-07-10
+// -----------------------------------------------------------------------------
+std::string MIL_AgentTypePionLOG_ABC::GetArchetypeName() const
+{
+    return "MIL_AgentTypePionLOG_ABC";
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOG_ABC::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------

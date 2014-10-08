@@ -17,15 +17,15 @@
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
 MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, const std::string& strType, xml::xistream& xis )
-    : nID_         ( 0 )
-    , strName_     ( strName )
-    , strType_     ( strType )
-    , pNatureLevel_( 0 )
-    , pNatureAtlas_( 0 )
-    , isTerrorist_ ( false )
-    , isMilitia_   ( false )
-    , isRefugee_   ( false )
-    , isNBC_       ( false )
+    : nID_          ( 0 )
+    , strName_      ( strName )
+    , strType_      ( strType )
+    , pNatureLevel_ ( 0 )
+    , pNatureAtlas_ ( 0 )
+    , isTerrorist_  ( false )
+    , isMilitia_    ( false )
+    , isRefugee_    ( false )
+    , isNBC_        ( false )
 {
     xis >> xml::attribute( "id", nID_ );
     InitializeNature( xis );
@@ -36,13 +36,13 @@ MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, const std::str
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
 MIL_AgentType_ABC::MIL_AgentType_ABC()
-    : nID_         ( 0 )
-    , pNatureLevel_( 0 )
-    , pNatureAtlas_( 0 )
-    , isTerrorist_ ( false )
-    , isMilitia_   ( false )
-    , isRefugee_   ( false )
-    , isNBC_       ( false )
+    : nID_          ( 0 )
+    , pNatureLevel_ ( 0 )
+    , pNatureAtlas_ ( 0 )
+    , isTerrorist_  ( false )
+    , isMilitia_    ( false )
+    , isRefugee_    ( false )
+    , isNBC_        ( false )
 {
     // NOTHING
 }
@@ -175,6 +175,11 @@ void MIL_AgentType_ABC::SetNBC( bool isNBC )
     isNBC_ = isNBC;
 }
 
+std::string MIL_AgentType_ABC::GetArchetypeName() const
+{
+    return "MIL_AgentType_ABC";
+}
+
 void MIL_AgentType_ABC::DeleteUnit( MIL_Agent_ABC& ) const
 {
 }
@@ -183,3 +188,4 @@ bool MIL_AgentType_ABC::IsWrittenInODB() const
 {
     return true;
 }
+
