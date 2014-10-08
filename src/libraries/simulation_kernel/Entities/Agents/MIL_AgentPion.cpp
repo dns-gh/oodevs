@@ -479,7 +479,8 @@ void MIL_AgentPion::NotifySendHeadquarters()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateDecision( float duration )
 {
-    if( !RetrieveRole< DEC_Decision_ABC >() )
+    DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
+    if( !role )
         return;
 
     if( markedForDestruction_ )
@@ -510,14 +511,12 @@ void MIL_AgentPion::UpdateDecision( float duration )
         else
         {
             updateDecisionsDead_ = true;
-            GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+            role->UpdateDecision( duration );
         }
     }
     catch( const std::exception& e )
     {
-        DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
-        if( role )
-            role->LogError( &e );
+        role->LogError( &e );
         MIL_Report::PostEvent( *this, report::eRC_MissionImpossible );
     }
 }
