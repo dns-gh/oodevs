@@ -301,6 +301,7 @@ void Model::Update( const sword::SimToClient& wrapper )
         }
         ClearLogisticRequests( message.unit_destruction().unit().id() );
         Destroy( agents_, message.unit_destruction().unit().id(), message.unit_destruction() );
+        Destroy( cones_, message.unit_destruction().unit().id(), nullptr );
     }
     else if( message.has_automat_creation() )
         CreateUpdate< Automat >( automats_, message.automat_creation().automat().id(), message.automat_creation(), staticModel_.types_ );
