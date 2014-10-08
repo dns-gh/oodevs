@@ -167,7 +167,7 @@ public:
     virtual Path  GetPath( const std::string& type ) const;
     virtual Path  GetOutput() const;
     virtual Tree  Save() const;
-    virtual bool  Start( const Path& app, const Path& timeline, const std::string& checkpoint );
+    virtual bool  Start( const Path& cwd, const Path& app, const Path& timeline, const std::string& checkpoint );
     virtual bool  Stop();
     virtual bool  Refresh();
     virtual bool  RefreshSize();
@@ -183,7 +183,7 @@ public:
     virtual void  DetachReplay( const Session_ABC& replay );
     virtual void  NotifyNode();
     virtual bool  DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const;
-    virtual void DeleteUser( const web::User& user, int id );
+    virtual void  DeleteUser( const web::User& user, int id );
     //@}
 
     //! @name Typedef helpers
@@ -221,6 +221,7 @@ private:
                                const std::string& checkpoint,
                                bool replay,
                                const Path& output,
+                               const Path& cwd,
                                const Path& app ) const;
     struct PrivateState;
     boost::shared_ptr< PrivateState > PrepareStart( const std::string& checkpoint );

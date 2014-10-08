@@ -159,6 +159,7 @@ struct Configuration
     } node;
     struct
     {
+        Path cwd;
         Path simulation;
         Path replayer;
         Path timeline;
@@ -188,6 +189,7 @@ struct Configuration
             found |= ReadParameter( node.app, "--node", i, argc, argv );
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
             found |= ReadParameter( node.min_play_seconds, "--node_min_play", i, argc, argv );
+            found |= ReadParameter( session.cwd, "--cwd", i, argc, argv );
             found |= ReadParameter( session.simulation, "--simulation", i, argc, argv );
             found |= ReadParameter( session.replayer, "--replayer", i, argc, argv );
             found |= ReadParameter( session.timeline, "--timeline", i, argc, argv );
@@ -370,7 +372,8 @@ struct Facade : SqlFacade
         NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root,
             Path(), cfg.session.simulation.parent_path(), "cluster", host->Get(), cfg.ports.tcp, pool, proxy );
         SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, log, ports, client, pool );
-        SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
+        SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.cwd,
+            cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
         Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
         web::Controller controller( plugins, log, agent, users, true );
         web::Server server( runtime, log, pool, controller, host->Get() );
@@ -438,6 +441,7 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] node.app "              << cfg.node.app;
     LOG_INFO( log ) << "[cfg] node.root "             << cfg.node.root;
     LOG_INFO( log ) << "[cfg] node.min_play_seconds " << cfg.node.min_play_seconds;
+    LOG_INFO( log ) << "[cfg] session.cwd "           << cfg.session.cwd;
     LOG_INFO( log ) << "[cfg] session.simulation "    << cfg.session.simulation;
     LOG_INFO( log ) << "[cfg] session.replayer "      << cfg.session.replayer;
     LOG_INFO( log ) << "[cfg] session.timeline "      << cfg.session.timeline;
@@ -453,10 +457,14 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
                                   const Path& root, cpplog::BaseLogger& log, int argc, const char* argv[] )
 {
     const Path module = runtime.GetModuleFilename();
-    const Path config = Path( module ).replace_extension( ".config" );
+    const Path previous = Path( module ).replace_extension( ".config" );
+    const Path config = root / Path( module ).filename().replace_extension( ".config" );
 
     Tree tree;
-    if( fs.IsFile( config ) )
+    const bool hasCurrent = fs.IsFile( config );
+    if( !hasCurrent && fs.IsFile( previous ) )
+        tree = FromJson( fs.ReadFile( previous ) );
+    else if( hasCurrent )
         tree = FromJson( fs.ReadFile( config ) );
 
     const Path bin = Path( module ).remove_filename();
@@ -476,6 +484,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.node.app              = Utf8( GetTree( tree, "node.app", Utf8( bin / "node.exe" ) ) );
     cfg.node.root             = Utf8( GetTree( tree, "node.root", Utf8( bin / ".." / "www" ) ) );
     cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5 * 60 );
+    cfg.session.cwd           = Utf8( GetTree( tree, "session.cwd", Utf8( bin ) ) );
     cfg.session.simulation    = Utf8( GetTree( tree, "session.simulation", Utf8( bin / "simulation_app.exe" ) ) );
     cfg.session.replayer      = Utf8( GetTree( tree, "session.replayer", Utf8( bin / "replayer_app.exe" ) ) );
     cfg.session.timeline      = Utf8( GetTree( tree, "session.timeline", Utf8( bin / "timeline_server.exe" ) ) );

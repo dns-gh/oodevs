@@ -40,7 +40,7 @@ namespace mocks
         MOCK_METHOD( GetPort, 0 );
         MOCK_METHOD( GetProperties, 0 );
         MOCK_METHOD( Save, 0 );
-        MOCK_METHOD( Start, 3 );
+        MOCK_METHOD( Start, 4 );
         MOCK_METHOD( Stop, 0 );
         MOCK_METHOD( Refresh, 0 );
         MOCK_METHOD( RefreshSize, 0 );
