@@ -162,6 +162,10 @@ function RegisterTaskListener()
         end,
         TaskInterrupted = function( self, taskName )
             if self.main == taskName then
+                if self.stage then
+                    reportFunction( eRC_BM_FinPhase, self.stage )
+                    self.stage = nil
+                end
                 DEC_Trace( "mission interrupted" )
             end
         end,
