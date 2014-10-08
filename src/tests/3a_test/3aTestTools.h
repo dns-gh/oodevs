@@ -50,7 +50,8 @@ public:
     static sword::SimToClient MakeMaintenance( int repairersNumber, int haulersNumber, unsigned long id );
     static sword::SimToClient UpdatePopulationStates( int healthy, int wounded, int dead, unsigned long id );
     static sword::SimToClient UpdatePopulationStatesbis( int healthy, int wounded, unsigned long id );
-    static sword::SimToClient UpdatePopulationSatisfaction ( float lodging, float health, float safety, unsigned long id );
+    static sword::SimToClient UpdatePopulationSatisfaction( float lodging, float health, float safety, unsigned long id );
+    static sword::SimToClient UpdatePopulationResourceSatisfaction( const std::map< unsigned long, float >& satisfactions, unsigned long populationId );
     static sword::SimToClient UpdatePopulationInBlocks( unsigned long populationId, std::map < unsigned long, int > );
     static sword::SimToClient UpdateCrowdDeadState( unsigned long crowdId, int dead );
     static sword::SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer, unsigned long target = 42 );

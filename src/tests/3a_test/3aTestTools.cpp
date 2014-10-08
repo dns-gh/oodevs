@@ -43,7 +43,7 @@ SimToClient TestTools::BeginTick()
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::EndTick
+// Name: TestTools::EndTick
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 SimToClient TestTools::EndTick()
@@ -55,7 +55,7 @@ SimToClient TestTools::EndTick()
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeUnitCreation
+// Name: TestTools::MakeUnitCreation
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 SimToClient TestTools::MakeUnitCreation( unsigned long id, unsigned long type_id )
@@ -71,7 +71,7 @@ SimToClient TestTools::MakeUnitCreation( unsigned long id, unsigned long type_id
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::CheckValue
+// Name: TestTools::CheckValue
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 bool TestTools::CheckValue( const AarToClient& expected, const AarToClient& actual )
@@ -81,7 +81,7 @@ bool TestTools::CheckValue( const AarToClient& expected, const AarToClient& actu
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeEquipementVariation
+// Name: TestTools::MakeEquipementVariation
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 SimToClient TestTools::MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId )
@@ -100,7 +100,7 @@ SimToClient TestTools::MakeEquipementVariation( int variation[5], unsigned long 
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakePosition
+// Name: TestTools::MakePosition
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakePosition( const char* position, unsigned long id )
@@ -116,7 +116,7 @@ sword::SimToClient TestTools::MakePosition( const char* position, unsigned long 
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeResourceVariation
+// Name: TestTools::MakeResourceVariation
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId )
@@ -131,7 +131,7 @@ sword::SimToClient TestTools::MakeResourceVariation( int variation, unsigned lon
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeStockVariation
+// Name: TestTools::MakeStockVariation
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakeStockVariation( int variation, unsigned long id, unsigned long stockId )
@@ -146,7 +146,7 @@ sword::SimToClient TestTools::MakeStockVariation( int variation, unsigned long i
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::CreateUnitDetection
+// Name: TestTools::CreateUnitDetection
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::CreateUnitDetection( unsigned int detector, unsigned int detected, sword::UnitVisibility::Level visibility )
@@ -161,7 +161,7 @@ sword::SimToClient TestTools::CreateUnitDetection( unsigned int detector, unsign
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeMounted
+// Name: TestTools::MakeMounted
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakeMounted( bool mounted, unsigned long id )
@@ -191,7 +191,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeHumanVariation
+// Name: TestTools::MakeHumanVariation
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakeHumanVariation( int state[8], unsigned long id )
@@ -209,7 +209,7 @@ sword::SimToClient TestTools::MakeHumanVariation( int state[8], unsigned long id
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeAmbulances
+// Name: TestTools::MakeAmbulances
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakeAmbulances( int evacuationNumber, int collectionNumber, unsigned long id )
@@ -225,7 +225,7 @@ sword::SimToClient TestTools::MakeAmbulances( int evacuationNumber, int collecti
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeMaintenance
+// Name: TestTools::MakeMaintenance
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakeMaintenance( int repairersNumber, int haulersNumber, unsigned long id )
@@ -241,7 +241,7 @@ sword::SimToClient TestTools::MakeMaintenance( int repairersNumber, int haulersN
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::UpdatePopulation
+// Name: TestTools::UpdatePopulation
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::UpdatePopulationStates( int healthy, int wounded, int dead, unsigned long id )
@@ -256,7 +256,7 @@ sword::SimToClient TestTools::UpdatePopulationStates( int healthy, int wounded, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::UpdatePopulationbis
+// Name: TestTools::UpdatePopulationbis
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::UpdatePopulationStatesbis( int healthy, int wounded, unsigned long id )
@@ -270,7 +270,7 @@ sword::SimToClient TestTools::UpdatePopulationStatesbis( int healthy, int wounde
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::UpdatePopulationSatisfaction
+// Name: TestTools::UpdatePopulationSatisfaction
 // Created: FPO 2011-05-10
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::UpdatePopulationSatisfaction( float lodging, float health, float safety, unsigned long id )
@@ -286,7 +286,26 @@ sword::SimToClient TestTools::UpdatePopulationSatisfaction( float lodging, float
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::UpdatePopulationInBlocks
+// Name: TestTools::UpdatePopulationResourceSatisfaction
+// Created: JSR 2014-10-08
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::UpdatePopulationResourceSatisfaction( const std::map< unsigned long, float >& satisfactions, unsigned long populationId )
+{
+    SimToClient result;
+    PopulationUpdate& update = *result.mutable_message()->mutable_population_update();
+    PopulationUpdate_Satisfaction& satisfaction = *update.mutable_satisfaction();
+    update.mutable_id()->set_id( populationId );
+    for( auto it = satisfactions.begin(); it != satisfactions.end(); ++it )
+    {
+        auto* resources = satisfaction.add_resources();
+        resources->mutable_resource()->set_id( it->first );
+        resources->set_value( it->second );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TestTools::UpdatePopulationInBlocks
 // Created: FPO 2011-05-12
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::UpdatePopulationInBlocks( unsigned long populationId, std::map < unsigned long, int > blocks )
@@ -305,7 +324,7 @@ sword::SimToClient TestTools::UpdatePopulationInBlocks( unsigned long population
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::UpdateCrowdDeadConcentration
+// Name: TestTools::UpdateCrowdDeadConcentration
 // Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::UpdateCrowdDeadState( unsigned long crowdId, int dead )
@@ -318,7 +337,7 @@ sword::SimToClient TestTools::UpdateCrowdDeadState( unsigned long crowdId, int d
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::CreateDirectFire
+// Name: TestTools::CreateDirectFire
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::CreateDirectFire( unsigned fire_id, unsigned long firer, unsigned long target /*=42*/ )
@@ -333,7 +352,7 @@ sword::SimToClient TestTools::CreateDirectFire( unsigned fire_id, unsigned long 
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::CreateIndirectFire
+// Name: TestTools::CreateIndirectFire
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::CreateIndirectFire( unsigned fire_id, unsigned long firer, const char* position /*=""*/ )
@@ -351,7 +370,7 @@ sword::SimToClient TestTools::CreateIndirectFire( unsigned fire_id, unsigned lon
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::StopFire
+// Name: TestTools::StopFire
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::StopFire( unsigned fire_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/ )
@@ -367,7 +386,7 @@ sword::SimToClient TestTools::StopFire( unsigned fire_id, unsigned int target_id
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeUnitDamages
+// Name: TestTools::MakeUnitDamages
 // Created: FPO 2011-05-18
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/, unsigned int fire_id /*=0*/, bool isDirectFire /*= true*/, bool isFratricide /*= false*/ )
@@ -385,7 +404,7 @@ sword::SimToClient TestTools::MakeUnitDamages( unsigned int firer_id, unsigned i
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MakeUnitDamagesByCrowd
+// Name: TestTools::MakeUnitDamagesByCrowd
 // Created: FPO 2011-05-26
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MakeUnitDamagesByCrowd( unsigned int crowd_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/ )
@@ -400,7 +419,7 @@ sword::SimToClient TestTools::MakeUnitDamagesByCrowd( unsigned int crowd_id, uns
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::CreateConsign
+// Name: TestTools::CreateConsign
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::CreateConsign( unsigned long id, unsigned long unit_id, unsigned long equip_id, unsigned long breakdown_id )
@@ -415,7 +434,7 @@ sword::SimToClient TestTools::CreateConsign( unsigned long id, unsigned long uni
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::DestroyConsign
+// Name: TestTools::DestroyConsign
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::DestroyConsign( unsigned long id )
@@ -427,7 +446,7 @@ sword::SimToClient TestTools::DestroyConsign( unsigned long id )
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::IsCloseCombatPower
+// Name: TestTools::IsCloseCombatPower
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
 bool TestTools::IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor )
@@ -436,7 +455,7 @@ bool TestTools::IsCloseCombatPower( const extractors::PowerExtractor_ABC& extrac
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::IsDirectFirePower
+// Name: TestTools::IsDirectFirePower
 // Created: FPO 2011-06-21
 // -----------------------------------------------------------------------------
 bool TestTools::IsDirectFirePower( const extractors::PowerExtractor_ABC& extractor )
@@ -445,7 +464,7 @@ bool TestTools::IsDirectFirePower( const extractors::PowerExtractor_ABC& extract
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::CreateMedicalConsign
+// Name: TestTools::CreateMedicalConsign
 // Created: FPO 2011-05-09
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::CreateMedicalConsign( unsigned long unitId, unsigned long requestId, bool isWaiting )
@@ -460,7 +479,7 @@ sword::SimToClient TestTools::CreateMedicalConsign( unsigned long unitId, unsign
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::CreateFunctionalState
+// Name: TestTools::CreateFunctionalState
 // Created: FPO 2011-05-16
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::CreateStructuralState( unsigned long objectId, int stateValue )
@@ -478,7 +497,7 @@ sword::SimToClient TestTools::CreateStructuralState( unsigned long objectId, int
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::UpdateFunctionalState
+// Name: TestTools::UpdateFunctionalState
 // Created: FPO 2011-05-16
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::UpdateStructuralState( unsigned long objectId, int stateValue )
@@ -492,7 +511,7 @@ sword::SimToClient TestTools::UpdateStructuralState( unsigned long objectId, int
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::UpdateResourceState
+// Name: TestTools::UpdateResourceState
 // Created: FPO 2011-05-26
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::UpdateResourceState( unsigned long objectId, float stateValue )
@@ -506,7 +525,7 @@ sword::SimToClient TestTools::UpdateResourceState( unsigned long objectId, float
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::ChangeUnitRatio
+// Name: TestTools::ChangeUnitRatio
 // Created: FPO 2011-07-08
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::ChangeUnitRatio( unsigned long unitId, sword::ForceRatio_Value state )
@@ -519,7 +538,7 @@ sword::SimToClient TestTools::ChangeUnitRatio( unsigned long unitId, sword::Forc
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::CreateCarrier
+// Name: TestTools::CreateCarrier
 // Created: JSR 2011-10-05
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::CreateCarrier( unsigned long requestId, unsigned int carrierId )
@@ -533,7 +552,7 @@ sword::SimToClient TestTools::CreateCarrier( unsigned long requestId, unsigned i
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::SetupCarrier
+// Name: TestTools::SetupCarrier
 // Created: JSR 2011-10-05
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::SetupCarrier( unsigned long requestId, unsigned int carrierId, unsigned int dotationId )
@@ -554,7 +573,7 @@ sword::SimToClient TestTools::SetupCarrier( unsigned long requestId, unsigned in
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::MoveCarrier
+// Name: TestTools::MoveCarrier
 // Created: JSR 2011-10-05
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::MoveCarrier( unsigned long requestId, unsigned int carrierId )
@@ -568,7 +587,7 @@ sword::SimToClient TestTools::MoveCarrier( unsigned long requestId, unsigned int
 }
 
 // -----------------------------------------------------------------------------
-// Name: 3aTestTools::FinishCarrier
+// Name: TestTools::FinishCarrier
 // Created: JSR 2011-10-05
 // -----------------------------------------------------------------------------
 sword::SimToClient TestTools::FinishCarrier( unsigned long requestId, unsigned int carrierId )
