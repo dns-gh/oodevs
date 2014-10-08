@@ -156,8 +156,10 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const kernel::UrbanObject_AB
         return;
     selectedEntity_ = &entity;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
-    unsigned int value = static_cast< const StructuralStateAttribute* >( entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )->GetValue();
-    AddIntValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ), value );
+
+    if( const kernel::StructuralStateAttribute_ABC* attribute = entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )
+        AddIntValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ), attribute->GetValue() );
+
     AddMagic( tr( "Alert" ), SLOT( Alert() ), magicMenu );
     AddMagic( tr( "Stop alert" ), SLOT( StopAlert() ), magicMenu );
     AddMagic( tr( "Confine" ), SLOT( Confine() ), magicMenu );
