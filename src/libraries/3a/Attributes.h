@@ -23,6 +23,7 @@
 #include "LogMedicalWaitingAttention.h"
 #include "DPRESatisfaction.h"
 #include "PopulationSatisfaction.h"
+#include "PopulationResourcesSatisfaction.h"
 #include "PopulationUrbanOccupation.h"
 #include "StructuralStates.h"
 #include "ResourcesNetworksFunctionalStates.h"
@@ -109,6 +110,7 @@ typedef Attribute< extractors::LogMaintenanceEquipments >          LogMaintenanc
 typedef Attribute< extractors::LogSupplyStocks >                   LogSupplyStocks;
 typedef Attribute< extractors::PopulationStates >                  PopulationStates;
 typedef Attribute< extractors::PopulationSatisfaction >            PopulationSatisfaction;
+typedef Attribute< extractors::PopulationResourcesSatisfaction >   PopulationResourcesSatisfaction;
 typedef Attribute< extractors::DPRESatisfaction >                  DPRESatisfaction;
 typedef Attribute< extractors::PopulationUrbanOccupation >         PopulationUrbanOccupation;
 typedef Attribute< extractors::CrowdStates >                       CrowdStates;
