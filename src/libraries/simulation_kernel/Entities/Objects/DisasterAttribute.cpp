@@ -70,8 +70,7 @@ DisasterAttribute::DisasterAttribute( const sword::MissionParameter_Value& attri
     : model_   ( BuildPropagationFile( tools::Path::FromUTF8( attributes.list( 1 ).acharstr() ) ) )
     , pManager_( new PropagationManager() )
 {
-    if( attributes.list_size() > 2 )
-        date_ = attributes.list( 2 ).acharstr();
+    date_ = attributes.list( 2 ).acharstr();
     pManager_->Initialize( model_, date_ );
 }
 

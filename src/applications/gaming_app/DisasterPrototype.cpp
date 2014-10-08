@@ -48,6 +48,8 @@ void DisasterPrototype::Commit( const kernel::Team_ABC& )
     list.AddString( "model", propagationFiles_->currentText().toStdString() );
     if( checkbox_->isChecked() )
         list.AddString( "date", date_->dateTime().toString( "yyyyMMddThhmmss" ).toStdString() );
+    else
+        list.AddString( "date", "" );
 }
 
 // -----------------------------------------------------------------------------
