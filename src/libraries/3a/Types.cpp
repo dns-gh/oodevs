@@ -58,6 +58,29 @@ NumericValue NumericValue::operator-( const NumericValue& rhs ) const
 
 namespace
 {
+    class MultiplyVisitor : public boost::static_visitor< NumericValue >
+    {
+    public:
+        template< typename T, typename U >
+        NumericValue operator()( const T& t, const U& u ) const
+        {
+            return NumericValue( t * u );
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: NumericValue::operator*
+// Created: JSR 2014-10-07
+// -----------------------------------------------------------------------------
+NumericValue NumericValue::operator*( const NumericValue& rhs ) const
+{
+    MultiplyVisitor visitor;
+    return boost::apply_visitor( visitor, *this, rhs );
+}
+
+namespace
+{
     class DivideVisitor : public boost::static_visitor< NumericValue >
     {
     public:

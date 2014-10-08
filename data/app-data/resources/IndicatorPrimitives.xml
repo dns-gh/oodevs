@@ -592,8 +592,34 @@
     <comments>
       <comment lang="en"><![CDATA[Returns the product of parameters.]]></comment>
       <comment lang="fr"><![CDATA[Retourne le produit des paramètres.]]></comment>
-      <comment lang="es"><![CDATA[Devuelve el producto de los prámetros]]></comment>
+      <comment lang="es"><![CDATA[Devuelve el producto de los parámetros]]></comment>
       <comment lang="pt"><![CDATA[Retorna o produto dos parâmetros.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="input1" type="list(_1)" />
+      <parameter name="input2" type="list(_2)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="add" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns the sum of parameters.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne la somme des paramètres.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve la suma de los parámetros]]></comment>
+      <comment lang="pt"><![CDATA[Retorna a soma dos parâmetros.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="input1" type="list(_1)" />
+      <parameter name="input2" type="list(_2)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="substract" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns the difference between parameters.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne la différence entre les paramètres.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve la diferencia entre los parámetros]]></comment>
+      <comment lang="pt"><![CDATA[Retorna a diferença entre os parâmetros.]]></comment>
       <comment lang="ar"></comment>
     </comments>
     <parameters>

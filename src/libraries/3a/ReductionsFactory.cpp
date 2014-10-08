@@ -17,7 +17,7 @@
 #include "Maximum.h"
 #include "Adder.h"
 #include "Meaner.h"
-#include "Product.h"
+#include "Arithmetic.h"
 #include "Threshold.h"
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,11 @@ void ReductionsFactory::Reduce( const std::string& name, xml::xistream& xis, Tas
     else if( functionName == "threshold" )
         ReduceFunction< Threshold< K, T > >( name, xis, result );
     else if( functionName == "product" )
-        ReduceFunction2< Product< K, NumericValue > >( name, xis, result ); // Numeric( Numeric, Numeric )
+        ReduceFunction2< Arithmetic< K, NumericValue >, NumericValue >( name, xis, result, boost::bind( &NumericValue::operator*, _1, _2 ) );
+    else if( functionName == "add" )
+        ReduceFunction2< Arithmetic< K, NumericValue >, NumericValue >( name, xis, result, boost::bind( &NumericValue::operator+, _1, _2 ) );
+    else if( functionName == "substract" )
+        ReduceFunction2< Arithmetic< K, NumericValue >, NumericValue >( name, xis, result, boost::bind( &NumericValue::operator-, _1, _2 ) );
     else
         throw MASA_EXCEPTION( "Unknown reduction '" + functionName + "'" );
 }
@@ -87,15 +91,15 @@ void ReductionsFactory::ReduceFunction( const std::string& name, xml::xistream& 
 // Name: ReductionsFactory::ReduceFunction2
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-template< typename F >
-void ReductionsFactory::ReduceFunction2( const std::string& name, xml::xistream& xis, Task& result ) const
+template< typename F, typename T >
+void ReductionsFactory::ReduceFunction2( const std::string& name, xml::xistream& xis, Task& result, const boost::function< T( const T&, const T& ) >& f ) const
 {
     typedef FunctionConnector< typename F::Key_Type, typename F::Result_Type > Connector;
     typedef KeyMarshaller< typename F::Key_Type,
                            typename F::First_Argument_Type,
                            typename F::Second_Argument_Type > Marshaller;
     boost::shared_ptr< Connector > connector( new Connector() );
-    boost::shared_ptr< F > function( new F( xis, *connector ) );
+    boost::shared_ptr< F > function( new F( xis, *connector, f ) );
     boost::shared_ptr< Marshaller > marshaller( new Marshaller( *function ) );
 
     result.AddConnector( name, connector );

@@ -862,6 +862,62 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProduct, Fixture )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade_TestAdd
+// Created: JSR 2014-10-07
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestAdd, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+        "    <extract function='operational-states' id='opstate'/>"
+        "    <reduce type='float' function='select' input='opstate' key='42' id='myopstate'/>"
+        "    <constant type='float' value='10' id='ten'/>"
+        "    <reduce type='float' function='add' input='myopstate,ten' id='result'/>"
+        "    <result function='plot' input='result' type='int'/>"
+        "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 100, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 50, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 0, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 11 )( 10.5 )( 10 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestSubstract
+// Created: JSR 2014-10-07
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestSubstract, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+        "    <extract function='operational-states' id='opstate'/>"
+        "    <reduce type='float' function='select' input='opstate' key='42' id='myopstate'/>"
+        "    <constant type='float' value='10' id='ten'/>"
+        "    <reduce type='float' function='substract' input='myopstate,ten' id='result'/>"
+        "    <result function='plot' input='result' type='int'/>"
+        "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 100, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 50, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 0, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( -9 )( -9.5 )( -10 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade_TestTimeElapsedBetweenDetectionAndDestruction
 // Created: SBO 2010-07-28
 // -----------------------------------------------------------------------------

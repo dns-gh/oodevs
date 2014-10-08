@@ -7,36 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __Product_h_
-#define __Product_h_
+#ifndef __Arithmetic_h_
+#define __Arithmetic_h_
 
 #include "Reductor_ABC.h"
 #include "TypeChecks.h"
 
 // =============================================================================
-/** @class  Product
-    @brief  Product
+/** @class  Arithmetic
+    @brief  Arithmetic
 */
 // Created: SBO 2010-07-28
 // =============================================================================
 template< typename K, typename T >
-class Product : public Reductor2_ABC< K, T, T >, private types::Arithmetic< T >
+class Arithmetic : public Reductor2_ABC< K, T, T >, private types::Arithmetic< T >
 {
 public:
     //! @name
     //@{
     typedef NumericValue Result_Type;
+    typedef const std::function< T (const T&, const T& ) > Functor;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    Product( xml::xistream& /*xis*/, Function1_ABC< K, Result_Type >& next )
+    Arithmetic( xml::xistream& /*xis*/, Function1_ABC< K, Result_Type >& next, Functor& f )
         : next_( next )
+        , f_( f )
     {
         // NOTHING
     }
-    virtual ~Product()
+    virtual ~Arithmetic()
     {
         // NOTHING
     }
@@ -55,7 +57,7 @@ public:
     }
     virtual void Apply( const T& arg1, const T& arg2 )
     {
-        next_.Apply( arg1 * arg2 );
+        next_.Apply( f_( arg1, arg2 ) );
     }
     virtual void OnEndTick()
     {
@@ -67,8 +69,9 @@ private:
     //! @name Member data
     //@{
     Function1_ABC< K, Result_Type >& next_;
+    Functor f_;
     T result_;
     //@}
 };
 
-#endif // __Product_h_
+#endif // __Arithmetic_h_
