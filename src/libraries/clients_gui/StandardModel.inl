@@ -304,11 +304,11 @@ void StandardModel::DeleteItemRow( QStandardItem* item )
     {
         controllers_->Unregister( *const_cast< tools::Observer_ABC* >( static_cast< const tools::Observer_ABC* >( item->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ ) ) );
         delete item->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_;
+        item->setData( QVariant(), Roles::DataRole );
     }
     // $$$$ ABR 2012-09-20: Delete row
     QList< QStandardItem* > rowItems = parentItem->takeRow( item->row() );
-    for( QList< QStandardItem* >::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
-        delete *it;
+    qDeleteAll( rowItems );
 }
 
 // -----------------------------------------------------------------------------
