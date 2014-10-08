@@ -211,7 +211,7 @@ void LogisticTreeView::NotifyDeletedInternal( const kernel::Entity_ABC& entity )
         assert( childItem );
         const kernel::Entity_ABC* child = dataModel_.GetDataFromItem< kernel::Entity_ABC >( *childItem );
         assert( child );
-        SetSuperior( *child, 0 );
+        SetSuperior( *child, 0, 0 );
     }
 }
 
@@ -376,7 +376,7 @@ void LogisticTreeView::NotifyUpdated( const kernel::TacticalHierarchies& hierarc
     if( oldTeam && oldTeam->GetId() != hierarchy.GetTop().GetId() )
     {
         //Faire sauter les liens log et replacer correctement sous la bonne team
-        SetSuperior( entity, 0 );
+        SetSuperior( entity, 0, 0 );
         CreateOrReplace( entity );
     }
 }
@@ -511,9 +511,9 @@ void LogisticTreeView::Drop( const QString& mimeType, void* data, QStandardItem&
         if( !safePtr || !*safePtr )
             return;
         if( targetEntity )
-            SetSuperior( **safePtr, targetEntity );
+            SetSuperior( **safePtr, targetEntity, 0 );
         else if( targetLogistic && RetrieveSuperior( **safePtr ) )
-            SetSuperior( **safePtr, 0 );
+            SetSuperior( **safePtr, 0, 0 );
 
         ( *safePtr )->Select( controllers_.actions_ );
 

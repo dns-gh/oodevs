@@ -416,7 +416,7 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 	// error : 42 is an invalid superior id
 	newSuperiors := []uint32{23, 42}
 	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), newSuperiors)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_not_log_automat")
 
 	// valid automat id with no link
 	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), []uint32{})
@@ -425,7 +425,7 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 	// error : cannot set itself as its own logistic superior
 	newSuperiors = []uint32{25}
 	err = client.LogisticsChangeLinks(swapi.MakeFormationTasker(25), newSuperiors)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot set itself as its own logistic superior")
+	c.Assert(err, ErrorMatches, "error_hierarchy_cycle: cannot create a cycle in logistic hierarchy")
 
 	// valid superiors id
 	newSuperiors = []uint32{25, 31}

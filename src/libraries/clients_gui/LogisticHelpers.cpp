@@ -28,6 +28,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/StaticModel.h"
+#include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -186,6 +187,11 @@ namespace logistic_helpers
         while( logChildren.HasMoreElements() )
         {
             const kernel::Entity_ABC& child = logChildren.NextElement();
+            if( hierarchiesBase->IsSubordinateOf( child ) )
+            {
+                MT_LOG_ERROR_MSG( "Cycle in logistic hierarchies: " << child.GetId() << " and " << entity.GetId() );
+                continue;
+            }
             if( logistic_helpers::IsLogisticBase( child ) )
             {
                 if( logBase->GetId() != child.GetId() )

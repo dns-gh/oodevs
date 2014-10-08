@@ -52,9 +52,38 @@ LogisticTreeView::LogisticTreeView( const QString& objectName,
             return links ? links->GetNominalSuperior() : 0;
         },
         [&] ( kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* currentSuperior ) {
-            actionsModel.PublishChangeLogisticLinks( entity, nominalSuperior, currentSuperior );
+            SetSuperior( entity, nominalSuperior, currentSuperior );
         } );
-    controllers_.Update( *this );
+    controllers_.Update( *this );  
+    actionsModel_.RegisterHandler( [&]( const sword::SimToClient& message )
+    {
+        if( contexts_.empty() || 
+            !message.message().has_unit_magic_action_ack() || !PopContext( message.context() ) )
+            return;
+        auto ack = message.message().unit_magic_action_ack();
+        auto errorCode = ack.error_code();
+        if( errorCode != sword::UnitActionAck_ErrorCode_no_error )
+            QMessageBox::warning( this, tr( "SWORD" ), GetErrorText( ack ) );
+    } );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::GetErrorText
+// Created: LDC 2014-10-07
+// -----------------------------------------------------------------------------
+QString LogisticTreeView::GetErrorText( const sword::UnitMagicActionAck& ack )
+{
+    switch( ack.error_code() )
+    {
+        case sword::UnitActionAck::error_invalid_parameter :
+            return tr( "Invalid subordinate automat" );
+        case sword::UnitActionAck::error_not_log_automat:
+            return tr( "Target is not a logistic entity" );
+        case sword::UnitActionAck::error_hierarchy_cycle:
+            return tr( "Action cancelled: It would create a cycle in the logistic hierarchy" );
+        default:
+            return QString( ack.has_error_msg() ? QString::fromStdString( ack.error_msg() ) : tr( "The operation couldn't be performed" ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -89,10 +118,26 @@ const kernel::Entity_ABC* LogisticTreeView::RetrieveSuperior( const kernel::Enti
 // Name: LogisticTreeView::SetSuperior
 // Created: ABR 2012-09-21
 // -----------------------------------------------------------------------------
-void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior )
+void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* currentsuperior, const kernel::Entity_ABC* nominalSuperior )
 {
-    const LogisticLinks* links = entity.Retrieve< LogisticLinks >();
-    actionsModel_.PublishChangeLogisticLinks( entity,
-                                              links && links->GetNominalSuperior() ? links->GetNominalSuperior() : superior,
-                                              superior );
+    const kernel::Entity_ABC* superior = nominalSuperior;
+    if( !superior )
+    {
+        const LogisticLinks* links = entity.Retrieve< LogisticLinks >();
+        superior = links && links->GetNominalSuperior() ? links->GetNominalSuperior() : currentsuperior;
+    }
+    contexts_.push_back( actionsModel_.PublishChangeLogisticLinks( entity, superior, currentsuperior ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::PopContext
+// Created: LDC 2014-10-07
+// -----------------------------------------------------------------------------
+bool LogisticTreeView::PopContext( int context )
+{
+    auto it = std::find( contexts_.begin(), contexts_.end(), context );
+    if( it == contexts_.end() )
+        return false;
+    contexts_.erase( it );
+    return true;
 }

@@ -1768,6 +1768,23 @@ namespace
     }
 }
 
+namespace
+{
+    bool IsLogisticCycle( MIL_AutomateLOG& pNewSuperior, uint32_t subordinate )
+    {
+        auto it = pNewSuperior.GetLogisticHierarchy().CreateSuperiorsIterator();
+        if( subordinate == pNewSuperior.GetLogisticId() )
+            return true;    
+        while( it.HasMoreElements() )
+        {
+            MIL_AutomateLOG& logisticBase = it.NextElement();
+            if( IsLogisticCycle( logisticBase, subordinate ) )
+                return true;
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessChangeLogisticLinks
 // Created: NLD 2004-10-25
@@ -1777,8 +1794,8 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
     const boost::optional< uint32_t > tasker = protocol::TryGetTasker( message.tasker() );
     logistic::LogisticHierarchy_ABC* pSubordinate = TaskerToLogisticHierarchy( *this, message.tasker() );
     if( !pSubordinate )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid subordinate automate" );
-
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid subordinate automat" );
+    
     std::vector< MIL_AutomateLOG* > superiors;
     for( int i = 0; i < message.parameters().elem_size(); ++i )
     {
@@ -1787,9 +1804,9 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
         {
             MIL_AutomateLOG* pSuperior = FindBrainLogistic( parameterSuperior.value( 0 ) );
             if( !pSuperior )
-                throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supply automat" );
-            if( tasker && *tasker == pSuperior->GetLogisticId() )
-                throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "cannot set itself as its own logistic superior" );
+                throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_not_log_automat, "invalid supply automat" );
+            if( IsLogisticCycle( *pSuperior, *tasker ) )
+                throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_hierarchy_cycle, "cannot create a cycle in logistic hierarchy" );
             superiors.push_back( pSuperior );
         }
     }
