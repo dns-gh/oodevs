@@ -927,6 +927,9 @@ end
 -- @param loaded Boolean The agent state used to access the location (loaded:on board, unloaded:off board)
 -- @return Integer, the accessibility level from 0 to 100, 0 meaning the location is not accessible at all.
 integration.isPointInUrbanBlockTrafficable = function( location, loaded )
+    if not location or not location.getPosition then
+        return loaded and 0 or 100
+    end
     local pos = location:getPosition()
     if DEC_IsPointInDestroyedUrbanBlock( pos ) then return 0 end
     if not loaded then return 100 end
