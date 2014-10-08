@@ -102,11 +102,14 @@ double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
 {
     if( modificator > result.urbanDeployment_ ) // SLG : permet d'éviter des incohérence dans la perception d'unité quand la cible passe en état posté.
         return polygon.IsInside( result.position_, 0 ) ? 1 : 0;
-    const double urbanObjectArea = urbanObject_.GetLocalisation().GetArea() * urbanObject_.GetStructuralState();
-    if( urbanObjectArea <= 0 )
+    const double structuralState = urbanObject_.GetStructuralState();
+    if( structuralState <= 0 )
         return 1;
+    const auto urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
+    if( urbanObjectArea <= 0 )
+        return 0;
     const double intersectArea = TER_Geometry::IntersectionArea( polygon, urbanObject_.GetLocalisation() );
-    return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
+    return ( intersectArea / urbanObjectArea ) * structuralState * result.urbanDeployment_;
 }
 
 // -----------------------------------------------------------------------------
