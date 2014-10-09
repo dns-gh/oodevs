@@ -86,9 +86,9 @@ void LayerComposite::Reset()
 // Name: LayerComposite::Select
 // Created: SLI 2014-06-27
 // -----------------------------------------------------------------------------
-void LayerComposite::Select( const kernel::GraphicalEntity_ABC& entity, bool control, bool shift )
+void LayerComposite::Select( unsigned int id, bool control )
 {
-    Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->Select( entity, control, shift ); } );
+    Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->Select( id, control ); } );
 }
 
 // -----------------------------------------------------------------------------

@@ -103,10 +103,10 @@ void SelectionMenu::OnWidget3dChanged( gui::Gl3dWidget* parent )
 
 namespace
 {
-    void ApplyMousePress( Layer_ABC& layer, const GraphicalEntity_ABC& selectable, QMouseEvent* mouse, Qt::MouseButton button )
+    void ApplyMousePress( Layer_ABC& layer, unsigned int id, QMouseEvent* mouse, Qt::MouseButton button )
     {
         if( button == Qt::LeftButton )
-            layer.Select( selectable, ( mouse->modifiers() & Qt::ControlModifier ) != 0, ( mouse->modifiers() & Qt::ShiftModifier ) != 0 );
+            layer.Select( id, ( mouse->modifiers() & Qt::ControlModifier ) != 0 );
     }
 
     void FillPixmapBackground( QPixmap& pix )
@@ -187,15 +187,14 @@ bool SelectionMenu::GenerateIcons()
             if( !graphicalEntity )
                 continue;
 
-            QPixmap& pixmap = icons_[ graphicalEntity ];
-            if( !pixmap.isNull() )
-                continue;
-
             // Use something like that instead of the following crap when GraphicalEntity will be into clients_gui
             // pixmap = graphicalEntity->GetPixmap( entitySymbols_, colorStrategy_, drawingTypes_, tools_ );
-
             if( const Entity_ABC* entity = dynamic_cast< const Entity_ABC* >( graphicalEntity ) )
             {
+                QPixmap& pixmap = icons_[ entity->GetId() ];
+                if( !pixmap.isNull() )
+                    continue;
+
                 if( entity->GetTypeName() == kernel::TacticalLine_ABC::typeName_ )                              // Tactical line
                 {
                     const TacticalHierarchies& tacticalHierarchy = entity->Get< TacticalHierarchies >();
@@ -310,16 +309,16 @@ namespace
         Qt::MouseButton button_;
     };
 
-    QAction* GenerateAction( const kernel::GraphicalEntity_ABC& graphicalEntity, Menu_ABC& menu, QMouseEvent& event, gui::Layer_ABC& /*layer*/ )
+    QAction* GenerateAction( const QString& tooltip, Menu_ABC& menu, QMouseEvent& event )
     {
         if( event.button() == Qt::RightButton )
         {
             kernel::ContextMenu* context = new kernel::ContextMenu( &menu );
-            context->setTitle( graphicalEntity.GetTooltip() );
+            context->setTitle( tooltip );
             return menu.addMenu( context );
         }
         else
-            return menu.addAction( graphicalEntity.GetTooltip() );
+            return menu.addAction( tooltip );
     }
 }
 
@@ -362,20 +361,24 @@ void SelectionMenu::GenerateMenu()
             if( !graphicalEntity )
                 continue;
 
-            QAction* action = GenerateAction( *graphicalEntity, *menu, *mouseEvent_, *layer );
-            QPixmap& pixmap = icons_[ graphicalEntity ];
-            if( !action )
-                continue;
-
-            if( !pixmap.isNull() )
-                action->setIcon( pixmap );
-            else
+            if( const Entity_ABC* entity = dynamic_cast< const Entity_ABC* >( graphicalEntity ) )
             {
-                QPixmap pix( 64, 64 );
-                FillPixmapBackground( pix );
-                QPainter painter( &pix );
-                DrawPixmapFrame( painter );
-                action->setIcon( pix );
+                QAction* action = GenerateAction( graphicalEntity->GetTooltip(), *menu, *mouseEvent_ );
+                action->setData( QVariant::fromValue( entity->GetId() ) );
+                if( !action )
+                    continue;
+                entityLayer_[ entity->GetId() ] = layer;
+                QPixmap& pixmap = icons_[ entity->GetId() ];
+                if( !pixmap.isNull() )
+                    action->setIcon( pixmap );
+                else
+                {
+                    QPixmap pix( 64, 64 );
+                    FillPixmapBackground( pix );
+                    QPainter painter( &pix );
+                    DrawPixmapFrame( painter );
+                    action->setIcon( pix );
+                }
             }
         }
     }
@@ -389,11 +392,12 @@ void SelectionMenu::GenerateMenu()
 
     if( QAction* resultingAction = menu->QMenu::exec( mouseEvent_->globalPos() ) )
     {
-        T_Result result = GetSelected( resultingAction->text() );
-        if( result.first && result.second )
-            ApplyMousePress( *result.first, *result.second, &*mouseEvent_, menu->GetButton() );
+        auto it = entityLayer_.find( resultingAction->data().toUInt() );
+        if( it != entityLayer_.end() )
+            ApplyMousePress( *it->second, resultingAction->data().toUInt(), &*mouseEvent_, menu->GetButton() );
     }
     icons_.clear();
+    entityLayer_.clear();
     moreElements_ = 0;
 }
 
@@ -409,7 +413,7 @@ void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElement
     if( extractedElements.size() == 1 && extractedElements.begin()->second.size() == 1 &&
         extractedElements.begin()->first && *extractedElements.begin()->second.begin() )    // Only one element extracted, classic way
     {
-        ApplyMousePress( *extractedElements.begin()->first, **extractedElements.begin()->second.begin(), &*mouseEvent_, mouseEvent_->button() );
+        ApplyMousePress( *extractedElements.begin()->first, dynamic_cast< const Entity_ABC* >( *extractedElements.begin()->second.begin() )->GetId(), &*mouseEvent_, mouseEvent_->button() );
         return;
     }
 
@@ -482,42 +486,14 @@ void SelectionMenu::OnSelectionChanged( QAction* action )
 {
     if( mouseEvent_->button() == Qt::RightButton )
     {
-        if( !action || ( current_ && current_ == action ) )
-            return;
-
-        T_Result result = GetSelected( action->text() );
-        if( !result.first || !result.second )
+        auto it = entityLayer_.find( action->data().toUInt() );
+        if( !action || ( current_ && current_ == action ) || it == entityLayer_.end() )
             return;
 
         kernel::ContextMenu* context = new kernel::ContextMenu( action->parentWidget() );
-        result.first->FillContextMenu( static_cast< const kernel::Entity_ABC& >( *result.second ), *context );
+        it->second->FillContextMenu( action->data().toUInt(), *context );
         context->FillMenu();
         action->setMenu( context );
-
         current_ = action;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: SelectionMenu::GetSelected
-// Created: LGY 2013-04-08
-// -----------------------------------------------------------------------------
-std::pair< Layer_ABC*, const GraphicalEntity_ABC* > SelectionMenu::GetSelected( const QString& text )
-{
-    for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
-    {
-        Layer_ABC* layer = extractedPair->first;
-        kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
-        if( !layer )
-            continue;
-        for( auto extractedElement = entities.begin(); extractedElement != entities.end(); ++extractedElement )
-        {
-            const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
-            if( !graphicalEntity )
-                continue;
-            if( graphicalEntity->GetTooltip() == text )
-                return std::make_pair( layer, graphicalEntity );
-        }
-    }
-    return std::make_pair( nullptr, nullptr );
 }

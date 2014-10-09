@@ -10,7 +10,8 @@
 #ifndef __AgentsLayer_h_
 #define __AgentsLayer_h_
 
-#include "clients_gui/AgentsLayer.h"
+#include "clients_gui/EntityLayer.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace actions
@@ -29,7 +30,7 @@ namespace kernel
 */
 // Created: SBO 2006-08-18
 // =============================================================================
-class AgentsLayer : public gui::AgentsLayer
+class AgentsLayer : public gui::EntityLayer< kernel::Agent_ABC >
                   , public kernel::OptionsObserver_ABC
 {
 public:

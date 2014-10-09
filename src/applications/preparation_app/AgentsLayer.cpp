@@ -33,7 +33,7 @@
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile )
-    : gui::AgentsLayer( controllers, tools, strategy, view, profile )
+    : gui::EntityLayer< kernel::Agent_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Agents )
     , model_            ( model )
     , modelBuilder_     ( modelBuilder )
     , selectedAgent_    ( controllers )
@@ -60,7 +60,7 @@ AgentsLayer::~AgentsLayer()
 // -----------------------------------------------------------------------------
 void AgentsLayer::BeforeMultiSelection()
 {
-    gui::AgentsLayer::BeforeMultiSelection();
+    gui::EntityLayer< kernel::Agent_ABC >::BeforeMultiSelection();
     selectedAgent_ = 0;
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
@@ -74,7 +74,7 @@ void AgentsLayer::BeforeMultiSelection()
 void AgentsLayer::MultipleSelect( const std::vector< const kernel::Agent_ABC* >& elements )
 {
     selectedAgent_ = elements.size() == 1 ? elements.front() : 0;
-    gui::AgentsLayer::MultipleSelect( elements );
+    gui::EntityLayer< kernel::Agent_ABC >::MultipleSelect( elements );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
     const kernel::Entity_ABC* entity = dnd::FindSafeEntityData< kernel::Agent_ABC, kernel::Automat_ABC, kernel::Formation_ABC >( event );
     if( entity )
         oldPosition_ = entity->Retrieve< kernel::Positions >()->GetPosition();
-    return gui::AgentsLayer::HandleEnterDragEvent( event, point );
+    return gui::EntityLayer< kernel::Agent_ABC >::HandleEnterDragEvent( event, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ bool AgentsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
         }
         return true;
     }
-    return gui::AgentsLayer::HandleMoveDragEvent( event, point );
+    return gui::EntityLayer< kernel::Agent_ABC >::HandleMoveDragEvent( event, point );
 }
 
 // -----------------------------------------------------------------------------

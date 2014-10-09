@@ -151,10 +151,17 @@ bool EntityLayerBase::HandleMouseDoubleClick( QMouseEvent* event, const geometry
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Select( const kernel::GraphicalEntity_ABC& selectable, bool control, bool /*shift*/ )
+void EntityLayerBase::Select( unsigned int id, bool control )
 {
-    selected_ = &static_cast< const kernel::Entity_ABC& >( selectable );
-    controllers_.actions_.SetSelected( selectable, control );
+    const auto it = std::find_if( entities_.begin(), entities_.end(), [&]( const kernel::Entity_ABC* value )
+    {
+        return value && value->GetId() == id;
+    } );
+    if( it != entities_.end() )
+    {
+        selected_ = *it;
+        controllers_.actions_.SetSelected( *selected_, control );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -398,7 +405,7 @@ void EntityLayer<kernel::Entity_ABC>::ContextMenu( const kernel::GraphicalEntity
 // Created: JSR 2013-06-07
 // -----------------------------------------------------------------------------
 template<>
-void EntityLayer< kernel::Entity_ABC >::FillContextMenu( const kernel::GraphicalEntity_ABC& , kernel::ContextMenu& )
+void EntityLayer< kernel::Entity_ABC >::FillContextMenu( unsigned int, kernel::ContextMenu& )
 {
     // NOTHING
 }

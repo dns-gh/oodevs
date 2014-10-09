@@ -128,16 +128,6 @@ void UrbanLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanLayer::FillContextMenu
-// Created: LGY 2013-04-05
-// -----------------------------------------------------------------------------
-void UrbanLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
-{
-    const kernel::UrbanObject_ABC& urbanObject = static_cast< const kernel::UrbanObject_ABC& >( selectable );
-    controllers_.actions_.ContextMenu( this, urbanObject, kernel::Nothing(), menu );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanLayer::ShouldDisplay
 // Created: LDC 2010-09-10
 // -----------------------------------------------------------------------------
@@ -221,13 +211,20 @@ namespace
 // Name: UrbanLayer::Select
 // Created: JSR 2012-05-29
 // -----------------------------------------------------------------------------
-void UrbanLayer::Select( const kernel::GraphicalEntity_ABC& selectable, bool control, bool shift )
+void UrbanLayer::Select( unsigned int id, bool control )
 {
-    const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
+    const auto it = std::find_if( entities_.begin(), entities_.end(), [&]( const kernel::Entity_ABC* value )
+    {
+        return value && value->GetId() == id;
+    } );
+    if( it == entities_.end() )
+        return;
+
+    const kernel::Entity_ABC& entity = **it;
     const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >();
     const kernel::Hierarchies* hierarchies = entity.Retrieve< kernel::Hierarchies >();
     if( !control || !hierarchies || controllers_.actions_.IsSingleSelection( &entity ) || ( positions && !positions->IsSelected() ) )
-        EntityLayerBase::Select( selectable, control, shift );
+        EntityLayerBase::Select( id, control );
     else
     {
         const kernel::Entity_ABC* district = hierarchies->GetSuperior();
@@ -246,6 +243,6 @@ void UrbanLayer::Select( const kernel::GraphicalEntity_ABC& selectable, bool con
             controllers_.actions_.SetMultipleSelection( newSelection );
         }
         else
-            EntityLayerBase::Select( selectable, control, shift );
+            EntityLayerBase::Select( id, control );
     }
 }

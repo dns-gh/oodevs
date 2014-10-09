@@ -62,10 +62,10 @@ public:
     virtual void Reset() = 0;
     virtual QString GetName() const = 0;
     virtual std::string GetOptionName() const = 0;
-    virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift ) = 0;
+    virtual void Select( unsigned int id, bool control ) = 0;
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& ) = 0;
     virtual bool ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >& elements, const geometry::Point2f&, const QPoint& ) = 0;
-    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu ) = 0;
+    virtual void FillContextMenu( unsigned int id, kernel::ContextMenu& menu ) = 0;
     virtual void FillContextMenu( QMouseEvent* mouse, kernel::ContextMenu& menu, const geometry::Point2f& point ) = 0;
     virtual bool ShowTooltip( const T_ObjectPicking& selection ) = 0;
     virtual void HideTooltip() = 0;

@@ -41,7 +41,7 @@ public:
     virtual void Paint( gui::Viewport_ABC& viewport );
 
     virtual void Reset();
-    virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
+    virtual void Select( unsigned int id, bool control );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection );
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const;
