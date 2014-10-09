@@ -52,17 +52,12 @@ public:
     void Reload();
     void Load( const std::string& url );
 
-private:
-    void Resize( int width, int height );
-
 protected:
     IMPLEMENT_REFCOUNTING( Browser );
     IMPLEMENT_LOCKING( Browser );
 
 private:
     const HWND hwnd_;
-    int width_;
-    int height_;
     std::string url_;
     std::string load_;
     CefRefPtr< CefBrowser > cef_;

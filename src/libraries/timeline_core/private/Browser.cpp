@@ -14,10 +14,8 @@
 using namespace timeline::core;
 
 Browser::Browser( HWND hwnd, const std::string& url )
-    : hwnd_  ( hwnd )
-    , width_ ( 0 )
-    , height_( 0 )
-    , url_   ( url )
+    : hwnd_( hwnd )
+    , url_ ( url )
 {
     // NOTHING
 }
@@ -64,25 +62,20 @@ void Browser::OnBeforeClose( CefRefPtr< CefBrowser > )
     cef_ = 0;
 }
 
-void Browser::Resize( int width, int height )
-{
-    AutoLock lock( this );
-    width_ = width;
-    height_ = height;
-    if( !cef_ )
-        return;
-    auto host = cef_->GetHost();
-    HDWP hdwp = BeginDeferWindowPos( 1 );
-    hdwp = DeferWindowPos( hdwp, host->GetWindowHandle(), NULL, 0, 0, width_, height_, SWP_NOZORDER );
-    EndDeferWindowPos( hdwp );
-}
-
 void Browser::UpdateSize()
 {
     RECT rect;
     const bool valid = !!GetClientRect( hwnd_, &rect );
-    if( valid )
-        Resize( rect.right - rect.left, rect.bottom - rect.top );
+    if( !valid )
+        return;
+    AutoLock lock( this );
+    if( !cef_ )
+        return;
+    auto hwnd = cef_->GetHost()->GetWindowHandle();
+    HDWP hdwp = BeginDeferWindowPos( 1 );
+    hdwp = DeferWindowPos( hdwp, hwnd, NULL, rect.left, rect.top,
+        rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER );
+    EndDeferWindowPos( hdwp );
 }
 
 void Browser::Load( const std::string& url )
