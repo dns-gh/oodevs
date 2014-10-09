@@ -1706,26 +1706,28 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 }
 
 func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	phydb := loadPhysicalData(c, "test")
 
-	f1 := CreateFormation(c, client, 1)
-	a1 := CreateAutomat(c, client, f1.Id, 0)
-	u1 := CreateUnit(c, client, a1.Id)
-	equipmentId := uint32(11)
-
+	u1 := getSomeUnitByName(c, client.Model.GetData(), "Maintenance Mobile Infantry 2")
+	citroen, err := phydb.Components.Find("Citroën 2CV")
+	c.Assert(err, IsNil)
+	equipmentId := citroen.Id
 	initial := swapi.Equipment{
-		Available: 4,
+		Available: 5,
 	}
+	mobility1, err := phydb.Breakdowns.Find("mobility 1")
+	c.Assert(err, IsNil)
+	breakdownId := int32(mobility1.Id)
 
 	// Error: Invalid parameters count
-	err := client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{})
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	equipment := swapi.Equipment{
 		Repairable: 1,
-		Breakdowns: []int32{82},
+		Breakdowns: []int32{breakdownId},
 	}
 
 	// Error: Invalid equipment type
@@ -1747,31 +1749,28 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Create breakdown
-	equipment.Breakdowns = []int32{82}
+	equipment.Breakdowns = []int32{breakdownId}
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
 	initial.Repairable = 1
-	initial.Available = 3
-	initial.Breakdowns = []int32{82}
-	// Check breakdown
+	initial.Available = 4
 	initial.Breakdowns = equipment.Breakdowns
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &initial)
 	})
 
-	// Create 5 breakdowns but 3 available
+	// Create 7 breakdowns but 5 available
 	equipment = swapi.Equipment{
-		Repairable: 5,
-		Breakdowns: []int32{82},
+		Repairable: 7,
+		Breakdowns: []int32{breakdownId},
 	}
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
-	// Check breakdown
-	initial.Repairable = 4
+	initial.Repairable = 5
 	initial.Available = 0
-	initial.Breakdowns = []int32{82, 82, 82, 82}
+	initial.Breakdowns = []int32{breakdownId, breakdownId, breakdownId, breakdownId, breakdownId}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &initial)
 	})
