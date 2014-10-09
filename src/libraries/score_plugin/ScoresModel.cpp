@@ -24,7 +24,6 @@
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/make_shared.hpp>
-#include <float.h>
 
 using namespace plugins::score;
 
@@ -301,11 +300,11 @@ void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
     file << index << separator_ << GetTime( index ).toString( Qt::ISODate ).toStdString();
     for( auto score = scores_.begin(); score != scores_.end(); ++score )
     {
-        float value = score->second->GetValue( index );
-        if( _isnan( value ) )
+        boost::optional< float > value = score->second->GetValue( index );
+        if( !value )
             file << separator_ << "Invalid score";
         else
-            file << separator_ << value;
+            file << separator_ << *value;
     }
     file << std::endl;
 }

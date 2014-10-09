@@ -12,6 +12,7 @@
 
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 #include <deque>
 #include <vector>
 
@@ -58,7 +59,7 @@ public:
     //! @name Accessors
     //@{
     std::size_t Size() const;
-    float GetValue( std::size_t index ) const;
+    boost::optional< float > GetValue( std::size_t index ) const;
     //@}
 
     //! @name Operations

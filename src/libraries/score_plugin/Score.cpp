@@ -12,7 +12,6 @@
 #include "ScoreAnnouncer.h"
 #include "protocol/AarSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include <limits>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::score;
@@ -86,10 +85,10 @@ std::size_t Score::Size() const
 // Name: Score::GetValue
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-float Score::GetValue( std::size_t index ) const
+boost::optional< float > Score::GetValue( std::size_t index ) const
 {
     if( index < beginTick_ || index >= beginTick_ + values_.size() )
-        return std::numeric_limits< float >::quiet_NaN();
+        return boost::optional< float >();
     return values_.at( index - beginTick_ );
 }
 
