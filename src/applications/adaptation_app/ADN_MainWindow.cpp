@@ -245,6 +245,16 @@ void ADN_MainWindow::LoadStatusChanged( bool isLoaded )
     UpdateTitle();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::SetWindowModified
+// Created: JSR 2014-10-08
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::SetWindowModified( bool isModified )
+{
+    setWindowModified( isModified );
+    actionSave_->setEnabled( isModified );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::BuildGUI
 // Created: JDY 03-06-23
@@ -339,7 +349,7 @@ void ADN_MainWindow::OnOpen()
         if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
             consistencyDialog_->CheckConsistency();
         else
-            setWindowModified( false );
+            SetWindowModified( false );
     }
     catch( const std::exception& e )
     {
@@ -405,7 +415,7 @@ void ADN_MainWindow::OnSave()
         QMessageBox::critical( this, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         return;
     }
-    setWindowModified( false );
+    SetWindowModified( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -442,7 +452,7 @@ void ADN_MainWindow::OnSaveAs()
     if( hasSaved )
     {
         UpdateTitle();
-        setWindowModified( false );
+        SetWindowModified( false );
     }
 }
 
