@@ -1613,9 +1613,12 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	equipment := swapi.Equipment{
 		Available: 5,
 	}
-	unrelatedBreakdown := int32(114)
-	mobility1 := int32(111)
-	mobility2 := int32(112)
+	unusedBreakdown, err := phydb.Breakdowns.Find("unused breakdown")
+	c.Assert(err, IsNil)
+	mobility1, err := phydb.Breakdowns.Find("mobility 1")
+	c.Assert(err, IsNil)
+	mobility2, err := phydb.Breakdowns.Find("mobility 2")
+	c.Assert(err, IsNil)
 
 	// Check initial state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -1679,12 +1682,12 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] must be a breakdown identifier`)
 
 	// Error: invalid breakdown for the composante
-	equipment.Breakdowns = []int32{unrelatedBreakdown}
+	equipment.Breakdowns = []int32{int32(unusedBreakdown.Id)}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] invalid breakdown identifier for the equipment`)
 
 	// Change equipments
-	equipment.Breakdowns = []int32{mobility1}
+	equipment.Breakdowns = []int32{int32(mobility1.Id)}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
@@ -1693,7 +1696,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	})
 
 	// Change breakdown
-	equipment.Breakdowns = []int32{mobility2}
+	equipment.Breakdowns = []int32{int32(mobility2.Id)}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 

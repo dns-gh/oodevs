@@ -24,6 +24,7 @@ type FileHolder struct {
 type PhysicalFile struct {
 	XMLName    xml.Name   `xml:"physical"`
 	Automats   FileHolder `xml:"automats"`
+	Breakdowns FileHolder `xml:"breakdowns"`
 	Components FileHolder `xml:"components"`
 	Objects    FileHolder `xml:"objects"`
 	Reports    FileHolder `xml:"reports"`
@@ -321,8 +322,41 @@ func (r *Objects) GetObject(t string) *Object {
 	return nil
 }
 
+type Breakdown struct {
+	Id   uint32 `xml:"id,attr"`
+	Name string `xml:"name,attr"`
+}
+
+type BreakdownCategory struct {
+	Name       string       `xml:"name,attr"`
+	Breakdowns []*Breakdown `xml:"breakdown"`
+}
+
+type Breakdowns struct {
+	XmlName    xml.Name             `xml:"breakdowns"`
+	Categories []*BreakdownCategory `xml:"category"`
+}
+
+func ReadBreakdowns(physical *PhysicalFile) (*Breakdowns, error) {
+	breakdowns := &Breakdowns{}
+	err := readXml(physical.BaseDir, physical.Breakdowns.File, &breakdowns)
+	return breakdowns, err
+}
+
+func (breakdowns *Breakdowns) Find(typeName string) (*Breakdown, error) {
+	for _, category := range breakdowns.Categories {
+		for _, breakdown := range category.Breakdowns {
+			if breakdown.Name == typeName {
+				return breakdown, nil
+			}
+		}
+	}
+	return nil, fmt.Errorf("cannot find breakdown: %s", typeName)
+}
+
 type PhysicalData struct {
 	Automats   *Automats
+	Breakdowns *Breakdowns
 	Components *Components
 	Objects    *Objects
 	Reports    Reports
@@ -337,6 +371,10 @@ func ReadPhysicalData(path string) (*PhysicalData, error) {
 		return nil, err
 	}
 	automats, err := ReadAutomats(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	breakdowns, err := ReadBreakdowns(phydb)
 	if err != nil {
 		return nil, err
 	}
@@ -362,6 +400,7 @@ func ReadPhysicalData(path string) (*PhysicalData, error) {
 	}
 	return &PhysicalData{
 		Automats:   automats,
+		Breakdowns: breakdowns,
 		Components: components,
 		Objects:    objects,
 		Resources:  resources,

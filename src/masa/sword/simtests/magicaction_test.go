@@ -252,11 +252,12 @@ func TriggerBreakdownTest(c *C, client *swapi.Client, phydb *phy.PhysicalData) u
 	unit := getSomeUnitByName(c, client.Model.GetData(), "Maintenance Mobile Infantry 2")
 	citroen, err := phydb.Components.Find("Citroën 2CV")
 	c.Assert(err, IsNil)
-	mobility1 := int32(111)
+	mobility1, err := phydb.Breakdowns.Find("mobility 1")
+	c.Assert(err, IsNil)
 	equipment := swapi.Equipment{
 		Available:  4,
 		Repairable: 1,
-		Breakdowns: []int32{mobility1},
+		Breakdowns: []int32{int32(mobility1.Id)},
 	}
 	err = client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.Equipment{citroen.Id: &equipment})
 	c.Assert(err, IsNil)
