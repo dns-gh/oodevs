@@ -127,6 +127,15 @@ func ReadAutomats(physical PhysicalFile) (*Automats, error) {
 	return &automats, err
 }
 
+func (automats *Automats) GetType(typeName string) (uint32, error) {
+	for _, automat := range automats.Automats {
+		if automat.Name == typeName {
+			return automat.Id, nil
+		}
+	}
+	return 0, fmt.Errorf("cannot find automat type named '%s'", typeName)
+}
+
 type Unit struct {
 	Equipments []Equipment `xml:"equipments>equipment"`
 	Id         uint32      `xml:"id,attr"`
@@ -140,6 +149,15 @@ func (units *Units) GetName(id uint32) (string, error) {
 		}
 	}
 	return "", errors.New("Unknown unit " + fmt.Sprintf("%d", id))
+}
+
+func (units *Units) GetType(typeName string) (uint32, error) {
+	for _, unit := range units.Units {
+		if unit.Name == typeName {
+			return unit.Id, nil
+		}
+	}
+	return 0, fmt.Errorf("cannot find unit named '%s'", typeName)
 }
 
 type Units struct {
