@@ -11,6 +11,7 @@
 #include "AlarmsWidget.h"
 #include "moc_AlarmsWidget.cpp"
 #include "gaming/Simulation.h"
+#include "gaming/SimulationController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 
@@ -18,11 +19,10 @@
 // Name: AlarmsWidget constructor
 // Created: AGE 2007-05-07
 // -----------------------------------------------------------------------------
-AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation )
-    : QDialog     ( parent, "AlarmsWidget" )
+AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, const SimulationController& simulationController )
+    : QDialog( parent, "AlarmsWidget" )
     , controllers_( controllers )
-    , simulation_ ( simulation )
-    , remove_     ( 0 )
+    , simulationController_( simulationController )
 {
     setCaption( tr( "Alarms" ) );
     Q3GridLayout* pLayout = new Q3GridLayout( this, 2, 1 );
@@ -154,10 +154,10 @@ namespace
     class AlarmEditor : public QDialog
     {
     public:
-        AlarmEditor( QWidget* parent, const kernel::Time_ABC& simulation )
-            : QDialog    ( parent )
-            , simulation_( simulation )
-            , item_      ( 0 )
+        AlarmEditor( QWidget* parent, const SimulationController& simulationController )
+            : QDialog( parent )
+            , simulationController_( simulationController )
+            , item_( 0 )
         {
             setCaption( tools::translate( "AlarmsWidget", "Alarm parameters" ) );
             Q3GridLayout* pLayout = new Q3GridLayout( this, 2, 3 );
@@ -185,7 +185,7 @@ namespace
             if( item_ && ! item_->text( 0 ).isEmpty() )
                 time_->setDateTime( QDateTime::fromString( item_->text( 0 ), Qt::ISODate ) );
             else
-                time_->setDateTime( simulation_.GetDateTime() );
+                time_->setDateTime( simulationController_.GetDateTime() );
             if( item_ )
             {
                 text_->setText( item_->text( 1 ) );
@@ -202,7 +202,7 @@ namespace
             QDialog::accept();
         }
     private:
-        const kernel::Time_ABC& simulation_;
+        const SimulationController& simulationController_;
         QTreeWidgetItem* item_;
         QDateTimeEdit* time_;
         QLineEdit* text_;
@@ -215,7 +215,7 @@ namespace
 // -----------------------------------------------------------------------------
 void AlarmsWidget::ShowEditor( QTreeWidgetItem* item, bool newAlarm )
 {
-    static AlarmEditor* editor = new AlarmEditor( this, simulation_ );
+    static AlarmEditor* editor = new AlarmEditor( this, simulationController_ );
     editor->Show( item );
     if( newAlarm && editor->result() == QDialog::Rejected )
         delete item;

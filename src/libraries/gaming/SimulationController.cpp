@@ -79,6 +79,15 @@ unsigned int SimulationController::GetTickDuration() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationController::GetDateTime
+// Created: JSR 2014-10-09
+// -----------------------------------------------------------------------------
+QDateTime SimulationController::GetDateTime() const
+{
+    return simulation_.GetDateTime();
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationController::Pause
 // Created: JSR 2013-03-26
 // -----------------------------------------------------------------------------
@@ -145,7 +154,7 @@ void SimulationController::Step()
 // Name: SimulationController::ChangeTimeFactor
 // Created: JSR 2013-03-26
 // -----------------------------------------------------------------------------
-void SimulationController::ChangeTimeFactor( int factor )
+void SimulationController::ChangeTimeFactor( int factor ) const
 {
     if( hasReplay_ )
     {
@@ -165,7 +174,7 @@ void SimulationController::ChangeTimeFactor( int factor )
 // Name: SimulationController::SkipToDate
 // Created: JSR 2013-03-27
 // -----------------------------------------------------------------------------
-void SimulationController::SkipToDate( const QDateTime& dateTime )
+void SimulationController::SkipToDate( const QDateTime& dateTime ) const
 {
     replay::ControlSkipToDate skip;
     skip().mutable_date_time()->set_data( tools::QDateTimeToGDHString( dateTime ) );
@@ -173,10 +182,24 @@ void SimulationController::SkipToDate( const QDateTime& dateTime )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationController::SetDate
+// Created: JSR 2014-10-09
+// -----------------------------------------------------------------------------
+void SimulationController::SetDate( const QDateTime& dateTime ) const
+{
+    QDateTime newTime( dateTime );
+    if( newTime < simulation_.GetInitialDateTime() )
+        newTime = simulation_.GetInitialDateTime();
+    simulation::ControlDateTimeChange message;
+    message().mutable_date_time()->set_data( tools::QDateTimeToGDHString( dateTime ) );
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationController::SkipToTick
 // Created: JSR 2013-03-27
 // -----------------------------------------------------------------------------
-void SimulationController::SkipToTick( unsigned int tick )
+void SimulationController::SkipToTick( unsigned int tick ) const
 {
     replay::ControlSkipToTick skip;
     skip().set_tick( tick );
@@ -187,7 +210,7 @@ void SimulationController::SkipToTick( unsigned int tick )
 // Name: SimulationController::RequestCheckpoint
 // Created: JSR 2013-03-27
 // -----------------------------------------------------------------------------
-void SimulationController::RequestCheckpoint( const std::string& name )
+void SimulationController::RequestCheckpoint( const std::string& name ) const
 {
     simulation::ControlCheckPointSaveNow message;
     if( !name.empty() )
@@ -199,7 +222,7 @@ void SimulationController::RequestCheckpoint( const std::string& name )
 // Name: SimulationController::ForceReplayDataRequest
 // Created: JSR 2013-03-27
 // -----------------------------------------------------------------------------
-void SimulationController::ForceReplayDataRequest()
+void SimulationController::ForceReplayDataRequest() const
 {
     replay::ForceRefreshDataRequest reload;
     reload.Send( publisher_ );

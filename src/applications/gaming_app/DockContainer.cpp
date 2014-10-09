@@ -46,7 +46,6 @@
 #include "clients_gui/MiniViews.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/RichItemFactory.h"
-#include "gaming/ActionsScheduler.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/LimitsModel.h"
 #include "gaming/Model.h"
@@ -95,7 +94,6 @@ DockContainer::DockContainer( QMainWindow* parent,
                                                                  &simulation,
                                                                  &model.limits_,
                                                                  &model.pathfinds_ ) );
-    scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, network.GetMessageMgr() ) );
     plotFactory_.reset( new IndicatorPlotFactory( parent, controllers, network.GetMessageMgr(), indicatorExportDialog, simulation ) );
 
     // -----------------------------------------------------------------------------
@@ -118,7 +116,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Clock
     {
-        gui::RichDockWidget* clockWnd = new ClockDock( parent, controllers, simulation, *scheduler_ );
+        gui::RichDockWidget* clockWnd = new ClockDock( parent, controllers, simulationController );
         clockWnd->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, clockWnd );
         clockWnd->setVisible( false );

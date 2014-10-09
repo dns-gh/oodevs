@@ -41,7 +41,6 @@ namespace kernel
     class KnowledgeConverter_ABC;
 }
 
-class ActionsScheduler;
 class AfterAction;
 class AutomatsLayer;
 class CreationPanels;
@@ -138,7 +137,6 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< actions::gui::InterfaceBuilder > interfaceBuilder_;
-    std::unique_ptr< ActionsScheduler > scheduler_;
     std::unique_ptr< IndicatorPlotFactory > plotFactory_;
     //@}
 };

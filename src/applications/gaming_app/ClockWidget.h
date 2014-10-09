@@ -16,11 +16,10 @@
 namespace kernel
 {
     class Controllers;
-    class Time_ABC;
 }
 
-class ActionsScheduler;
 class Simulation;
+class SimulationController;
 
 // =============================================================================
 /** @class  ClockWidget
@@ -36,7 +35,7 @@ class ClockWidget : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ClockWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, ActionsScheduler& scheduler );
+             ClockWidget( QWidget* parent, kernel::Controllers& controllers, const SimulationController& simulationController );
     virtual ~ClockWidget();
     //@}
 

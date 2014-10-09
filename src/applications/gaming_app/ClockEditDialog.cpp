@@ -10,8 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ClockEditDialog.h"
 #include "moc_ClockEditDialog.cpp"
-#include "gaming/ActionsScheduler.h"
-#include "gaming/Simulation.h"
+#include "gaming/SimulationController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 
@@ -19,10 +18,10 @@
 // Name: ClockEditDialog constructor
 // Created: SBO 2010-05-31
 // -----------------------------------------------------------------------------
-ClockEditDialog::ClockEditDialog( QWidget* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler )
+ClockEditDialog::ClockEditDialog( QWidget* parent, kernel::Controllers& controllers, const SimulationController& simulationController )
     : QDialog( parent, "ClockEditDialog" )
     , controllers_( controllers )
-    , scheduler_  ( scheduler )
+    , simulationController_( simulationController )
 {
     setCaption( tr( "Edit current time" ) );
     Q3GridLayout* pLayout = new Q3GridLayout( this, 2, 1 );
@@ -64,9 +63,9 @@ ClockEditDialog::~ClockEditDialog()
 void ClockEditDialog::OnCommit()
 {
     if( controllers_.GetCurrentMode() == eModes_Replay )
-        scheduler_.SkipToDate( editor_->dateTime() );
+        simulationController_.SkipToDate( editor_->dateTime() );
     else
-        scheduler_.SetDate( editor_->dateTime() );
+        simulationController_.SetDate( editor_->dateTime() );
     accept();
 }
 
