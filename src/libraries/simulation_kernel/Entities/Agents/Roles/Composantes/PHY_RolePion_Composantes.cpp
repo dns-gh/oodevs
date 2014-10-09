@@ -978,7 +978,7 @@ void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& comp
         if( composante.CanTransportHumans() )
             ++ nNbrHumansCarrier;
         if( composante.IsLoadableAndUsable() )
-            nNbrHumansLoaded += composante.GetNbrUsableHumans();
+            nNbrHumansLoaded += composante.GetNbrLivingHumans();
     }
     assert( nNbrHumansCarrier != 0 );
     unsigned int nNbrHumansToWound = nNbrHumansLoaded / nNbrHumansCarrier;
@@ -987,7 +987,7 @@ void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& comp
         PHY_ComposantePion& composante = **itComp;
         if( composante.IsLoadableAndUsable() )
         {
-            nNbrHumansToWound -= std::min( nNbrHumansToWound, composante.GetNbrUsableHumans() );
+            nNbrHumansToWound -= std::min( nNbrHumansToWound, composante.GetNbrLivingHumans() );
             composante.ApplyHumansWounds( newState, fireDamages );
         }
     }
@@ -1633,14 +1633,14 @@ void PHY_RolePion_Composantes::KillAllHumans()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetNbrUsableHumans
+// Name: PHY_RolePion_Composantes::GetNbrLivingHumans
 // Created: MMC 2011-05-09
 // -----------------------------------------------------------------------------
-unsigned int PHY_RolePion_Composantes::GetNbrUsableHumans() const
+unsigned int PHY_RolePion_Composantes::GetNbrLivingHumans() const
 {
     unsigned int count = 0;
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-       count += (*it)->GetNbrUsableHumans();
+       count += (*it)->GetNbrLivingHumans();
     return count;
 }
 
@@ -1704,7 +1704,7 @@ void PHY_RolePion_Composantes::Execute( transport::HumanLoadingTimeComputer_ABC&
     {
         const PHY_ComposantePion& composante= **it;
         if( composante.IsLoadableAndUsable() )
-            algorithm.AddHumans(composante.GetNbrUsableHumans());
+            algorithm.AddHumans(composante.GetNbrLivingHumans());
         if( composante.CanTransportHumans() )
         {
             const PHY_ComposanteTypePion& compType = composante.GetType();

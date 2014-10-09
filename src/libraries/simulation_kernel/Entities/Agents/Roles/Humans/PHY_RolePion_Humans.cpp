@@ -573,10 +573,10 @@ bool PHY_RolePion_Humans::HasNoMoreOperationalHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::GetNbrUsableHumans
+// Name: PHY_RolePion_Humans::GetNbrLivingHumans
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-unsigned int PHY_RolePion_Humans::GetNbrUsableHumans() const
+unsigned int PHY_RolePion_Humans::GetNbrLivingHumans() const
 {
     return nNbrUsableHumans_;
 }

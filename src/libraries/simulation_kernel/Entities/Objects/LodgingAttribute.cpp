@@ -199,7 +199,7 @@ void LodgingAttribute::ManageResident( MIL_AgentPion& pion, MIL_AgentPion& trans
 
     unsigned nbrFreeLodging = capacity_ - nbrResidents;
     PHY_RolePion_Composantes& composantes = pion.GetRole< PHY_RolePion_Composantes >();
-    unsigned int nbrHumans = composantes.GetNbrUsableHumans();
+    unsigned int nbrHumans = composantes.GetNbrLivingHumans();
 
     if( nbrHumans <= nbrFreeLodging  )
     {

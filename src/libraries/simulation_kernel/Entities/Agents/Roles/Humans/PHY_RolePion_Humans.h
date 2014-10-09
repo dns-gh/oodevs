@@ -57,7 +57,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned int GetNbrUsableHumans() const;
+    virtual unsigned int GetNbrLivingHumans() const;
     virtual unsigned int GetNumber() const;
     bool HasNoMoreOperationalHumans() const;
     //@}

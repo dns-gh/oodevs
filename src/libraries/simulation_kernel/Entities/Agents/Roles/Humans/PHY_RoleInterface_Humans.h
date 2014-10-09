@@ -52,7 +52,7 @@ public:
     virtual ~PHY_RoleInterface_Humans() {}
     //@}
 
-    virtual unsigned int GetNbrUsableHumans() const = 0;
+    virtual unsigned int GetNbrLivingHumans() const = 0;
     //@}
 
     //! @name Medical

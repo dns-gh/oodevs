@@ -624,6 +624,8 @@ bool PHY_ComposantePion::CanBeUsed( bool bWithLoaded ) const
     const transport::PHY_RoleAction_Loading* roleLoading = ( bLoadable_ && !bWithLoaded ) ? pRole_->GetPion().RetrieveRole< transport::PHY_RoleAction_Loading >() : 0;
     if( !CanComponentBeUsed( roleLoading, bWithLoaded ) )
         return false;
+    if( !pHumans_->CanBeUsed() )
+        return false;
     assert( pRole_ );
     // $$$$ LDC: All this should be rewritten with GetRole/RetrieveRole's but using Apply.
     const transport::PHY_RoleInterface_Transported* roleTransported = pRole_->GetPion().RetrieveRole< transport::PHY_RoleInterface_Transported >();
@@ -787,7 +789,10 @@ double PHY_ComposantePion::GetOperationalState() const
     assert( pHumans_ );
     if( pHumans_->IsEmpty() )
         return 1.;
-    return ( 1. - rOpStateWeightHumans_ ) + rOpStateWeightHumans_ * pHumans_->GetOperationalState();
+    double humanOpState = pHumans_->GetOperationalState();
+    if( !humanOpState && rOpStateWeightHumans_ )
+        return 0.;
+    return ( 1. - rOpStateWeightHumans_ ) + rOpStateWeightHumans_ * humanOpState;
 }
 
 unsigned int PHY_ComposantePion::GetNbrHumans() const
@@ -796,13 +801,13 @@ unsigned int PHY_ComposantePion::GetNbrHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::GetNbrUsableHumans
+// Name: PHY_ComposantePion::GetNbrLivingHumans
 // Created: NLD 2005-01-07
 // -----------------------------------------------------------------------------
-unsigned int PHY_ComposantePion::GetNbrUsableHumans() const
+unsigned int PHY_ComposantePion::GetNbrLivingHumans() const
 {
     assert( pHumans_ );
-    return pHumans_->GetNbrUsableHumans();
+    return pHumans_->GetNbrLivingHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -1154,6 +1159,8 @@ bool PHY_ComposantePion::CanMove() const
 // -----------------------------------------------------------------------------
 bool PHY_ComposantePion::IsUsable() const
 {
+    if( !pHumans_->CanBeUsed() )
+        return false;
     assert( pState_ );
     return pState_->IsUsable();
 }
