@@ -13,10 +13,7 @@
 #include "Action_ABC.h"
 #include "ActionFactory_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
-
-class Publisher_ABC;
 
 namespace sword
 {
@@ -38,7 +35,6 @@ namespace kernel
     class Object_ABC;
     class PopulationType;
     class StaticModel;
-    class Resolver_ABC;
     class Time_ABC;
 }
 
@@ -57,9 +53,6 @@ class AgentServerMsgMgr;
 
 namespace actions
 {
-    class Action_ABC;
-    class ActionFactory_ABC;
-    class ActionsFilter_ABC;
     class ActionPublisher;
     class CreationListener_ABC;
 
@@ -74,8 +67,7 @@ namespace actions
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionsModel : public tools::Resolver< Action_ABC >
-                   , private boost::noncopyable
+class ActionsModel : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -89,10 +81,6 @@ public:
 
     //! @name Operations
     //@{
-    void Destroy( const Action_ABC& action );
-    void Purge( const ActionsFilter_ABC* filter = 0 );
-    void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader );
-    void Save( const tools::Path& filename, const ActionsFilter_ABC* filter = 0 ) const;
     int Publish( const Action_ABC& action );
     void RegisterHandler( Publisher_ABC::T_SimHandler handler );
     //@}
@@ -100,10 +88,7 @@ public:
     //! @name Creation operations
     //@{
     template< typename T >
-    Action_ABC* CreateAction( const T& order, const kernel::Entity_ABC* target = 0 );
-
-    template< typename T >
-    Action_ABC* CreateAction( const T& message, bool needRegistration );
+    Action_ABC* CreateAction( const T& message );
 
     int PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected );
     int PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ );
@@ -153,31 +138,14 @@ private:
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::CreateAction
-// Created: ABR 2013-06-13
-// -----------------------------------------------------------------------------
-template< typename T >
-Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC* target )
-{
-    std::unique_ptr< Action_ABC > action( factory_.CreateAction( target, order ) );
-    if( !action.get() )
-        return nullptr;
-    Register( action->GetId(), *action );
-    if( !action->CheckValidity() )
-        action->Invalidate();
-    return action.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateAction
 // Created: ABR 2013-06-18
 // -----------------------------------------------------------------------------
 template< typename T >
-Action_ABC* ActionsModel::CreateAction( const T& message, bool needRegistration )
+Action_ABC* ActionsModel::CreateAction( const T& message )
 {
-    std::unique_ptr< Action_ABC > action( factory_.CreateAction( message, needRegistration ) );
+    std::unique_ptr< Action_ABC > action( factory_.CreateAction( message, true ) );
     if( !action.get() )
         return nullptr;
-    Register( action->GetId(), *action );
     if( !action->CheckValidity() )
         action->Invalidate();
     return action.release();

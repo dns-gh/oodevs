@@ -9,22 +9,10 @@
 
 #include "actions_pch.h"
 #include "ActionsModel.h"
-#include "ActionsFilter_ABC.h"
 #include "ActionPublisher.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Tools.h"
-#include "clients_kernel/StaticModel.h"
-#include "protocol/ServerPublisher_ABC.h"
-#include "tools/Loader_ABC.h"
-#include "tools/FileWrapper.h"
-#include "tools/SchemaWriter.h"
-#include <tools/Path.h>
-#include <boost/bind.hpp>
-#include <boost/ptr_container/ptr_vector.hpp>
-#include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
 using namespace actions;
 
 // -----------------------------------------------------------------------------
@@ -33,8 +21,8 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 ActionsModel::ActionsModel( ActionFactory_ABC& factory,
                             Publisher_ABC& defaultPublisher,
-                            Controllers& controllers,
-                            const Time_ABC& simulation )
+                            kernel::Controllers& controllers,
+                            const kernel::Time_ABC& simulation )
     : factory_( factory )
     , controller_( controllers.controller_ )
     , publisher_( new ActionPublisher( defaultPublisher, controllers, simulation ) )
@@ -49,31 +37,7 @@ ActionsModel::ActionsModel( ActionFactory_ABC& factory,
 // -----------------------------------------------------------------------------
 ActionsModel::~ActionsModel()
 {
-    Purge();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::Purge
-// Created: SBO 2007-03-12
-// -----------------------------------------------------------------------------
-void ActionsModel::Purge( const ActionsFilter_ABC* filter /* = 0*/ )
-{
-    if( !filter )
-        DeleteAll();
-    else
-    {
-        boost::ptr_vector< actions::Action_ABC > toDestroy;
-        for( IT_Elements it = elements_.begin(); it != elements_.end();  )
-            if( filter->Allows( *it->second ) )
-            {
-                actions::Action_ABC* action = it->second;
-                toDestroy.push_back( action );
-                ++it;
-                elements_.erase( action->GetId() );
-            }
-            else
-                ++it;
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -404,59 +368,6 @@ int ActionsModel::PublishRename( const kernel::Entity_ABC& entity, const QString
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateRename( entity, name ) );
     return Publish( *action );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::Destroy
-// Created: AGE 2007-07-11
-// -----------------------------------------------------------------------------
-void ActionsModel::Destroy( const Action_ABC& action )
-{
-    Action_ABC* toDeleteAction = Remove( action.GetId() );
-    if( toDeleteAction )
-    {
-        controller_.Delete( *toDeleteAction );
-        delete toDeleteAction;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::Load
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void ActionsModel::Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader )
-{
-    const auto readaction = [&]( xml::xistream& xis ){
-        std::unique_ptr< Action_ABC > action( factory_.CreateAction( xis ) );
-        if( !action.get() )
-            return;
-        Register( action->GetId(), *action );
-        action.release();
-    };
-    fileLoader.LoadFile( filename, [&]( xml::xistream& xis ){
-        xis >> xml::start( "actions" )
-            >> xml::list( "action", readaction )
-            >> xml::end;
-    });
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::Save
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void ActionsModel::Save( const tools::Path& filename, const ActionsFilter_ABC* filter /* = 0*/ ) const
-{
-    tools::Xofstream xos( filename );
-    tools::SchemaWriter schemaWriter;
-    xos << xml::start( "actions" );
-    schemaWriter.WriteExerciseSchema( xos, "orders" );
-    for( auto it = elements_.begin(); it != elements_.end(); ++it )
-        if( !filter || filter->Allows( *it->second ) )
-        {
-            xos << xml::start( "action" );
-            it->second->Serialize( xos );
-            xos << xml::end;
-        }
 }
 
 // -----------------------------------------------------------------------------
