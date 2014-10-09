@@ -48,8 +48,8 @@
         <translation>www.masagroup.net</translation>
     </message>
     <message>
-        <source>images/gui/splash_swordot.png</source>
-        <translation>images/gui/splash_swordot.png</translation>
+        <source>images/gui/splash.png</source>
+        <translation>images/gui/splash.png</translation>
     </message>
     <message>
         <source>About</source>

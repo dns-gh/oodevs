@@ -36,9 +36,9 @@ AboutDialog::AboutDialog( QWidget* parent, const QString& license )
     setCaption( tools::translate( "Application", "About" ) );
 
     QPixmap pixmap;
-    const tools::Path filename = tools::Path::FromUnicode( tools::translate( "Application", "images/gui/splash_swordot.png" ).toStdWString() );
+    const tools::Path filename = tools::Path::FromUnicode( tools::translate( "Application", "images/gui/splash.png" ).toStdWString() );
     pixmap = gui::Pixmap( filename.IsEmpty()
-        ? tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.png" )
+        ? tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash.png" )
         : tools::GeneralConfig::BuildResourceChildFile( filename ) );
 
     QVBoxLayout* vbox = new QVBoxLayout( this );

@@ -39,7 +39,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>images/gui/splash_swordot.png</source>
+        <source>images/gui/splash.png</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
