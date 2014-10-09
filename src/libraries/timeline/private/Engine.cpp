@@ -19,11 +19,10 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
 
-using namespace timeline::core;
+using namespace timeline;
 
-Engine::Engine( tools::ipc::Device& device, const T_Logger& log )
-    : log_   ( log )
-    , device_( device )
+Engine::Engine( const T_Logger& log )
+    : log_( log )
 {
     // NOTHING
 }
@@ -144,8 +143,9 @@ namespace
     }
 }
 
-void Engine::Register( CefRefPtr< CefV8Context > context )
+void Engine::Register( CefRefPtr< CefBrowser > browser, CefRefPtr< CefV8Context > context )
 {
+    browser_ = browser;
     ctx_ = context;
     auto window = context->GetGlobal();
     auto gaming = SetValue( window, "gaming" );
@@ -171,7 +171,8 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
 
 void Engine::Unregister()
 {
-    ctx_ = 0;
+    ctx_ = nullptr;
+    browser_ = nullptr;
 }
 
 namespace
@@ -320,8 +321,8 @@ void Engine::CreateEvents( const timeline::Events& events )
     auto create_events = GetValue( ctx_, "gaming.create_events" );
     if( !create_events )
         return SendCreatedEvents( events, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.create_events" ) );
-    auto data = CefV8Value::CreateArray( events.size() );
-    size_t idx = 0;
+    auto data = CefV8Value::CreateArray( static_cast< int >( events.size() ) );
+    int idx = 0;
     for( auto it = events.begin(); it != events.end(); ++it )
     {
         auto v = AddValue( data, idx++, CefV8Value::CreateObject( 0 ) );
@@ -345,14 +346,22 @@ void Engine::SelectEvent( const std::string& uuid )
     }
 }
 
+namespace
+{
+    void Post( const CefRefPtr< CefBrowser >& browser, const CefRefPtr< CefProcessMessage >& msg )
+    {
+        browser->SendProcessMessage( PID_BROWSER, msg );
+    }
+}
+
 void Engine::SendCreatedEvents( const timeline::Events& events, const timeline::Error& error )
 {
-    controls::CreatedEvents( device_, log_, events, error );
+    Post( browser_, controls::CreatedEvents( log_, events, error ) );
 }
 
 CefRefPtr< CefV8Value > Engine::OnReady( const CefV8ValueList& /*args*/ )
 {
-    controls::ReadyServer( device_, log_ );
+    Post( browser_, controls::ReadyServer( log_ ) );
     return 0;
 }
 
@@ -370,49 +379,49 @@ CefRefPtr< CefV8Value > Engine::OnCreatedEvents( const CefV8ValueList& args )
 
 CefRefPtr< CefV8Value > Engine::OnSelectEvent( const CefV8ValueList& args )
 {
-    controls::SelectedEvent( device_, log_, GetEvent( args[0] ) );
+    Post( browser_, controls::SelectedEvent( log_, GetEvent( args[0] ) ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnDeselectEvent( const CefV8ValueList& /*args*/ )
 {
-    controls::DeselectedEvent( device_, log_ );
+    Post( browser_, controls::DeselectedEvent( log_ ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnActivateEvent( const CefV8ValueList& args )
 {
-    controls::ActivatedEvent( device_, log_, GetEvent( args[0] ) );
+    Post( browser_, controls::ActivatedEvent( log_, GetEvent( args[0] ) ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnContextMenuEvent( const CefV8ValueList& args )
 {
-    controls::ContextMenuEvent( device_, log_, GetEvent( args[0] ) );
+    Post( browser_, controls::ContextMenuEvent( log_, GetEvent( args[0] ) ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnContextMenuBackground( const CefV8ValueList& args )
 {
-    controls::ContextMenuBackground( device_, log_, args[0]->GetStringValue() );
+    Post( browser_, controls::ContextMenuBackground( log_, args[0]->GetStringValue() ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyDown( const CefV8ValueList& args )
 {
-    controls::KeyDown( device_, log_, args[0]->GetIntValue() );
+    Post( browser_, controls::KeyDown( log_, args[0]->GetIntValue() ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyPress( const CefV8ValueList& args )
 {
-    controls::KeyPress( device_, log_, args[0]->GetIntValue() );
+    Post( browser_, controls::KeyPress( log_, args[0]->GetIntValue() ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyUp( const CefV8ValueList& args )
 {
-    controls::KeyUp( device_, log_, args[0]->GetIntValue() );
+    Post( browser_, controls::KeyUp( log_, args[0]->GetIntValue() ) );
     return 0;
 }
 
@@ -424,8 +433,8 @@ void Engine::DeleteEvents( const std::vector< std::string >& uuids )
     auto delete_events = GetValue( ctx_, "gaming.delete_events" );
     if( !delete_events )
         return SendDeletedEvents( uuids, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.delete_events" ) );
-    auto data = CefV8Value::CreateArray( uuids.size() );
-    size_t idx = 0;
+    auto data = CefV8Value::CreateArray( static_cast< int >( uuids.size() ) );
+    int idx = 0;
     for( auto it = uuids.begin(); it != uuids.end(); ++it )
         AddValue( data, idx++, CefV8Value::CreateString( *it ) );
     CefV8ValueList args;
@@ -468,17 +477,17 @@ CefRefPtr< CefV8Value > Engine::OnDeletedEvent( const CefV8ValueList& args )
 
 void Engine::SendDeletedEvents( const std::vector< std::string >& uuids, const timeline::Error& error )
 {
-    controls::DeletedEvents( device_, log_, uuids, error );
+    Post( browser_, controls::DeletedEvents( log_, uuids, error ) );
 }
 
 void Engine::SendLoadedEvents( const timeline::Error& err )
 {
-    controls::LoadedEvents( device_, log_, err );
+    Post( browser_, controls::LoadedEvents( log_, err ) );
 }
 
 void Engine::SendSavedEvents( const std::string& events, const timeline::Error& err )
 {
-    controls::SavedEvents( device_, log_, events, err );
+    Post( browser_, controls::SavedEvents( log_, events, err ) );
 }
 
 CefRefPtr< CefV8Value > Engine::OnLoadedEvents( const CefV8ValueList& args )
@@ -517,7 +526,7 @@ CefRefPtr< CefV8Value > Engine::OnReadEvents( const CefV8ValueList& args )
 
 void Engine::SendReadEvents( const timeline::Events& events, const timeline::Error& error )
 {
-    controls::ReadEvents( device_, log_, events, error );
+    Post( browser_, controls::ReadEvents( log_, events, error ) );
 }
 
 void Engine::ReadEvent( const std::string& uuid )
@@ -542,7 +551,7 @@ CefRefPtr< CefV8Value > Engine::OnReadEvent( const CefV8ValueList& args )
 
 void Engine::SendReadEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    controls::ReadEvent( device_, log_, event, error );
+    Post( browser_, controls::ReadEvent( log_, event, error ) );
 }
 
 void Engine::UpdateEvent( const timeline::Event& event )
@@ -569,5 +578,5 @@ CefRefPtr< CefV8Value > Engine::OnUpdatedEvent( const CefV8ValueList& args )
 
 void Engine::SendUpdatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    controls::UpdatedEvent( device_, log_, event, error );
+    Post( browser_, controls::UpdatedEvent( log_, event, error ) );
 }

@@ -10,7 +10,6 @@
 #include <timeline/api.h>
 
 #include "Controller.h"
-#include <timeline/private/Embedded_ABC.h>
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
@@ -27,9 +26,6 @@ namespace bpo = boost::program_options;
 
 int main( int argc, char* argv[] )
 {
-    if( timeline::SpawnServer() )
-        return 0;
-
     QT_REQUIRE_VERSION( argc, argv, "4.7.0" );
     QApplication app( argc, argv );
     QObject::connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
@@ -43,11 +39,7 @@ int main( int argc, char* argv[] )
         bpo::options_description opts( "options" );
         opts.add_options()
             ( "help",       "print this message" )
-#ifndef USE_EMBEDDED_CORE
-            ( "binary",     bpo::value( &cfg.binary )->required(), "set client binary when using external process" )
-#endif
-            ( "rundir",     bpo::value( &cfg.rundir )->default_value( "." ), "set client binary run directory" )
-            ( "url",        bpo::value( &cfg.url )->required(), "set url target" )
+            ( "url",        bpo::value( &cfg.url )->default_value( "http://www.google.com" ), "set url target" )
             ( "command",    bpo::value( &command )->default_value( std::string() ), "execute optional command and return" )
             ( "cmdargs",    bpo::value( &cmdargs ), "optional command arguments" )
             ( "server_log", bpo::value( &cfg.server_log ), "output server log filename" )
@@ -64,13 +56,6 @@ int main( int argc, char* argv[] )
             return 0;
         }
         bpo::notify( vmap );
-#if defined(_WIN64) && defined(USE_EMBEDDED_CORE)
-        BOOST_STATIC_ASSERT_MSG( false, "Unable to disable external process in 64-bit mode" )
-#endif
-#ifndef USE_EMBEDDED_CORE
-        if( !cfg.binary.IsRegularFile() )
-            throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
-#endif
         Controller controller( cfg );
         if( !command.empty() )
             return controller.Execute( command, cmdargs );

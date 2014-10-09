@@ -8,21 +8,18 @@
 // *****************************************************************************
 
 #include "Browser.h"
-#include "Engine.h"
-#include <timeline/api.h>
+#include "Server.h"
 
-using namespace timeline::core;
+#include "controls/controls.h"
 
-Browser::Browser( HWND hwnd, const std::string& url )
-    : hwnd_( hwnd )
-    , url_ ( url )
+using namespace timeline;
+
+Browser::Browser( Server& server, HWND hwnd, const std::string& url )
+    : hwnd_  ( hwnd )
+    , server_( server )
+    , url_   ( url )
 {
     // NOTHING
-}
-
-CefRefPtr< Browser > Browser::Factory( HWND hwnd, const std::string& url )
-{
-    return new Browser( hwnd, url );
 }
 
 void Browser::Start()
@@ -31,7 +28,7 @@ void Browser::Start()
     info.SetAsChild( hwnd_, RECT() );
     CefBrowserHost::CreateBrowser( info,
         static_cast< CefRefPtr< CefClient > >( this ),
-        std::string(), CefBrowserSettings() );
+        std::string(), CefBrowserSettings(), nullptr );
 }
 
 Browser::~Browser()
@@ -52,7 +49,7 @@ void Browser::OnAfterCreated( CefRefPtr< CefBrowser > cef )
         cef_ = cef;
         url = url_;
     }
-    UpdateSize();
+    Resize();
     Load( url );
 }
 
@@ -60,9 +57,10 @@ void Browser::OnBeforeClose( CefRefPtr< CefBrowser > )
 {
     AutoLock lock( this );
     cef_ = 0;
+    server_.Quit();
 }
 
-void Browser::UpdateSize()
+void Browser::Resize()
 {
     RECT rect;
     const bool valid = !!GetClientRect( hwnd_, &rect );
@@ -95,4 +93,21 @@ void Browser::Reload()
     AutoLock lock( this );
     if( cef_ )
         cef_->Reload();
+}
+
+void Browser::Post( CefRefPtr< CefProcessMessage > msg )
+{
+    AutoLock lock( this );
+    if( cef_ )
+        cef_->SendProcessMessage( PID_RENDERER, msg );
+}
+
+bool Browser::OnProcessMessageReceived( CefRefPtr< CefBrowser >,
+                                        CefProcessId,
+                                        CefRefPtr< CefProcessMessage > message )
+{
+    if( message->GetName() != controls::GetClientToServerMessage() )
+        return false;
+    ParseServer( server_, message, controls::T_Logger() );
+    return true;
 }
