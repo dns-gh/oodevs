@@ -11,6 +11,7 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
+	"masa/sword/swapi/phy"
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
 	"os"
@@ -243,6 +244,35 @@ func TriggerBreakdown(c *C, client *swapi.Client) uint32 {
 	return handlingId
 }
 
+// Creates a mobility breakdown on one unit supported by the maintenance
+// logistic chain in crossroad-log exercise.
+// TODO: migrate all transport tests on "test" phydb and rename this into
+// TriggerBreakdown.
+func TriggerBreakdownTest(c *C, client *swapi.Client, phydb *phy.PhysicalData) uint32 {
+	unit := getSomeUnitByName(c, client.Model.GetData(), "Maintenance Mobile Infantry 2")
+	citroen, err := phydb.Components.Find("Citroën 2CV")
+	c.Assert(err, IsNil)
+	mobility1 := int32(111)
+	equipment := swapi.Equipment{
+		Available:  4,
+		Repairable: 1,
+		Breakdowns: []int32{mobility1},
+	}
+	err = client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.Equipment{citroen.Id: &equipment})
+	c.Assert(err, IsNil)
+	var handlingId uint32
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, h := range data.MaintenanceHandlings {
+			if h.Provider != nil {
+				handlingId = h.Id
+				return true
+			}
+		}
+		return false
+	})
+	return handlingId
+}
+
 func WaitStateEntered(c *C, client *swapi.Client, handlingId uint32,
 	state sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus) {
 
@@ -269,53 +299,71 @@ const (
 )
 
 func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	opts := NewAllUserOpts(ExCrossroadSmallLog)
+	opts := NewAllUserOpts(ExCrossroadLog)
 	opts.Step = 300
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
-	const TRANSHeavyEquipmentTransporterSystem = 24
+
+	// Map transporting equipements
+	phydb := loadPhysicalData(c, "test")
+	towTruck, err := phydb.Components.Find("Tow Truck")
+	c.Assert(err, IsNil)
+	gyroScrew, err := phydb.Components.Find("Gyroscrew 1")
+	c.Assert(err, IsNil)
+	otherTransporter, err := phydb.Components.Find("equipment")
+	c.Assert(err, IsNil)
+
+	maintenanceAutomat := getSomeAutomatByName(c, client.Model.GetData(), "Maintenance Automat 1")
 
 	// error: invalid parameters count, 2 mandatory parameters expected
-	err := client.SelectMaintenanceTransporterTest(swapi.MakeParameters())
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid number of parameters: want between 2 and 3, got 0")
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters())
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid number of parameters: "+
+		"want between 2 and 3, got 0")
 
 	// error: first parameter must be an identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeEmpty(), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem)))
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeEmpty(),
+		swapi.MakeIdentifier(towTruck.Id)))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[0\\] is missing")
 
 	// error: second parameter must be an identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
+	err = client.SelectMaintenanceTransporterTest(
+		swapi.MakeParameters(swapi.MakeIdentifier(towTruck.Id),
+			swapi.MakeEmpty()))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[1\\] is missing")
 
 	// error: third parameter must be an identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
+	err = client.SelectMaintenanceTransporterTest(
+		swapi.MakeParameters(swapi.MakeIdentifier(towTruck.Id),
+			swapi.MakeIdentifier(towTruck.Id),
+			swapi.MakeEmpty()))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[2\\] is missing")
 
 	// error: first parameter must be a valid request identifier
-	err = client.SelectMaintenanceTransporter(1000, TRANSHeavyEquipmentTransporterSystem)
+	err = client.SelectMaintenanceTransporter(1000, towTruck.Id)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
-	SetManualMaintenance(c, client, automatLog)
-	handlingId := TriggerBreakdown(c, client)
+	SetManualMaintenance(c, client, maintenanceAutomat.Id)
+	handlingId := TriggerBreakdownTest(c, client, phydb)
 
 	WaitStateEntered(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
 
 	// error: second parameter is an unknown equipment type identifier
-	err = client.SelectMaintenanceTransporter(handlingId, 1000)
+	err = client.SelectMaintenanceTransporter(handlingId, 100000)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
 
 	// error: second parameter is not an equipment type identifier managed by unit
-	err = client.SelectMaintenanceTransporter(handlingId, 57)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for maintenance transporter selection")
+	err = client.SelectMaintenanceTransporter(handlingId, otherTransporter.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified"+
+		" type available for maintenance transporter selection")
 
 	// error: second parameter is a valid equipment type identifier but cannot haul
-	err = client.SelectMaintenanceTransporter(handlingId, 26)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for maintenance transporter selection")
+	err = client.SelectMaintenanceTransporter(handlingId, gyroScrew.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified"+
+		" type available for maintenance transporter selection")
 
 	// trigger select maintenance transporter
-	err = client.SelectMaintenanceTransporter(handlingId, TRANSHeavyEquipmentTransporterSystem)
+	err = client.SelectMaintenanceTransporter(handlingId, towTruck.Id)
 	c.Assert(err, IsNil)
 
 	WaitStateLeft(c, client, handlingId,

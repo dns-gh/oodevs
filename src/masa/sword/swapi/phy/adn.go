@@ -320,3 +320,52 @@ func (r *Objects) GetObject(t string) *Object {
 	}
 	return nil
 }
+
+type PhysicalData struct {
+	Automats   *Automats
+	Components *Components
+	Objects    *Objects
+	Reports    Reports
+	Resources  *Resources
+	Units      *Units
+}
+
+// Load all physical information at once and return it.
+func ReadPhysicalData(path string) (*PhysicalData, error) {
+	phydb, err := ReadPhysical(path)
+	if err != nil {
+		return nil, err
+	}
+	automats, err := ReadAutomats(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	components, err := ReadEquipments(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	objects, err := ReadObjects(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	reports, err := ReadReports(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	resources, err := ReadResources(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	units, err := ReadUnits(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	return &PhysicalData{
+		Automats:   automats,
+		Components: components,
+		Objects:    objects,
+		Resources:  resources,
+		Reports:    reports,
+		Units:      units,
+	}, nil
+}

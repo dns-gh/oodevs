@@ -16,7 +16,7 @@
               </automat>
               <automat engaged="true" id="97" knowledge-group="3" name="Maintenance Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
                 <unit command-post="true" id="98" name="Maintenance Mobile Infantry" position="28RDS1330530703" type="Mobile Infantry"/>
-                <unit command-post="false" id="99" name="Maintenance Mobile Infantry" position="28RDS1330530802" type="Mobile Infantry"/>
+                <unit command-post="false" id="99" name="Maintenance Mobile Infantry 2" position="28RDS1325432921" type="Mobile Infantry"/>
                 <unit command-post="false" id="100" name="Maintenance Mobile Infantry" position="28RDS1339130652" type="Mobile Infantry"/>
                 <unit command-post="false" id="101" name="Maintenance Mobile Infantry" position="28RDS1321830654" type="Mobile Infantry"/>
               </automat>
