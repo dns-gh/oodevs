@@ -73,7 +73,6 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
     //timeline box
     timelineBox_ = new QGroupBox();
     timelineBox_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-    connect( timelineBox_, SIGNAL( clicked( bool ) ), SLOT( OnTimelineChecked( bool ) ) );
 
     timelineDebugPortLabel_ = new QLabel();
     timelineDebugPortSpinBox_ = new QSpinBox();
@@ -112,18 +111,11 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const Config& config,
     cefLogLayout->addWidget( cefLogLabel_ );
     cefLogLayout->addWidget( cefLog_ );
 
-    oldTimeline_ = new QCheckBox();
-    oldTimeline_->setChecked( debug_.timeline.legacyTimeline );
-    QHBoxLayout* oldTimelineLayout = new QHBoxLayout();
-    oldTimelineLayout->addWidget( oldTimeline_ );
-    connect( oldTimeline_, SIGNAL( toggled( bool ) ), this, SLOT( OnTimelineChecked( bool ) ) );
-
     QVBoxLayout* timelineGroupLayout = new QVBoxLayout( timelineBox_ );
     timelineGroupLayout->addLayout( debugPortBox );
     timelineGroupLayout->addLayout( timelineLogLayout );
     timelineGroupLayout->addLayout( debugLayout );
     timelineGroupLayout->addLayout( cefLogLayout );
-    timelineGroupLayout->addLayout( oldTimelineLayout );
 
     //profiling group box
     profilingBox_ = new QGroupBox();
@@ -259,7 +251,6 @@ void DebugConfigPanel::OnLanguageChanged()
     timelineLogLabel_->setText( tr( "Client log file" ) );
     timelineDebugLabel_->setText( tr( "Debug directory" ) );
     cefLogLabel_->setText( tr( "Chrome embedded log file" ) );
-    oldTimeline_->setText( tr( "Enable legacy timeline" ) );
     integrationLabel_->setText( tr( "Integration layer directory" ) );
     profilingBox_->setTitle( tr( "Profiling settings" ) );
     decCallsBox_->setText( tr( "Decisional functions" ) );
@@ -303,16 +294,6 @@ void DebugConfigPanel::OnSelectDataDirectory()
 void DebugConfigPanel::OnDecProfilingChanged( bool checked )
 {
     debug_.sim.decProfiling = checked;
-    frontend::SaveDebugConfig( debug_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::OnTimelineChecked
-// Created: BAX 2013-04-16
-// -----------------------------------------------------------------------------
-void DebugConfigPanel::OnTimelineChecked( bool checked )
-{
-    debug_.timeline.legacyTimeline = checked;
     frontend::SaveDebugConfig( debug_ );
 }
 

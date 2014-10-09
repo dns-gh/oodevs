@@ -170,10 +170,6 @@
         <translation>Linea de tiempo</translation>
     </message>
     <message>
-        <source>Enable legacy timeline</source>
-        <translation>Habilitar Linea de tiempo anterior</translation>
-    </message>
-    <message>
         <source>Client log file</source>
         <translation type="unfinished"></translation>
     </message>

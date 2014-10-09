@@ -60,8 +60,6 @@ JoinExercise::JoinExercise( const Config& config, const tools::Path& exercise,
     }
     if( !debug.timeline.cefLog.IsEmpty() )
         AddArgument( "cef-log", debug.timeline.cefLog.ToUTF8() );
-    if( debug.timeline.legacyTimeline )
-        AddArgument( "--legacy-timeline" );
     if( debug.timeline.debugPort )
         AddArgument( "timeline-debug-port",
                 boost::lexical_cast< std::string >( debug.timeline.debugPort ) );

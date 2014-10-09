@@ -33,14 +33,12 @@ struct DebugTimeline
 {
     DebugTimeline()
         : debugPort( 0 )
-        , legacyTimeline( false )
     {}
 
     int debugPort;
     tools::Path debugWwwDir;
     tools::Path clientLogPath;
     tools::Path cefLog;
-    bool legacyTimeline;
 };
 
 struct DebugGaming
