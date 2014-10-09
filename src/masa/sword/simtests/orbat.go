@@ -44,7 +44,7 @@ type Party struct {
 	Entity     *swapi.Party
 }
 
-func findOrCreateUnit(client *swapi.Client, phydb *phy.PhysicalFile,
+func findOrCreateUnit(client *swapi.Client, phydb *phy.PhysicalData,
 	model *swapi.ModelData, automat *swapi.Automat, unit *Unit) error {
 
 	var found *swapi.Unit
@@ -56,11 +56,7 @@ func findOrCreateUnit(client *swapi.Client, phydb *phy.PhysicalFile,
 	}
 	unit.Created = found == nil
 	if found == nil {
-		units, err := phy.ReadUnits(*phydb)
-		if err != nil {
-			return err
-		}
-		unitType, err := units.GetType(unit.Type)
+		unitType, err := phydb.Units.GetType(unit.Type)
 		if err != nil {
 			return err
 		}
@@ -75,7 +71,7 @@ func findOrCreateUnit(client *swapi.Client, phydb *phy.PhysicalFile,
 	return nil
 }
 
-func findOrCreateAutomat(client *swapi.Client, phydb *phy.PhysicalFile,
+func findOrCreateAutomat(client *swapi.Client, phydb *phy.PhysicalData,
 	model *swapi.ModelData, party *swapi.Party, formation *swapi.Formation,
 	automat *Automat) error {
 
@@ -89,13 +85,7 @@ func findOrCreateAutomat(client *swapi.Client, phydb *phy.PhysicalFile,
 
 	automat.Created = found == nil
 	if found == nil {
-		// It would be more efficient to load the physical db once but this
-		// will work for now.
-		automats, err := phy.ReadAutomats(*phydb)
-		if err != nil {
-			return err
-		}
-		automatType, err := automats.GetType(automat.Type)
+		automatType, err := phydb.Automats.GetType(automat.Type)
 		if err != nil {
 			return err
 		}
@@ -135,7 +125,7 @@ func findOrCreateAutomat(client *swapi.Client, phydb *phy.PhysicalFile,
 	return nil
 }
 
-func findOrCreateFormation(client *swapi.Client, phydb *phy.PhysicalFile,
+func findOrCreateFormation(client *swapi.Client, phydb *phy.PhysicalData,
 	model *swapi.ModelData, party *swapi.Party, parent *swapi.Formation,
 	formation *Formation) error {
 
@@ -178,7 +168,7 @@ func findOrCreateFormation(client *swapi.Client, phydb *phy.PhysicalFile,
 	return nil
 }
 
-func findParty(client *swapi.Client, phydb *phy.PhysicalFile, model *swapi.ModelData,
+func findParty(client *swapi.Client, phydb *phy.PhysicalData, model *swapi.ModelData,
 	party *Party) error {
 
 	for _, p := range model.Parties {
@@ -202,7 +192,7 @@ func findParty(client *swapi.Client, phydb *phy.PhysicalFile, model *swapi.Model
 // the entity. Otherwise an entity matching supplied properties is created then
 // referenced by "Entities". The "Created" field is set depending on the entity
 // being found or created.
-func FindOrCreateEntities(client *swapi.Client, phydb *phy.PhysicalFile,
+func FindOrCreateEntities(client *swapi.Client, phydb *phy.PhysicalData,
 	parties ...*Party) error {
 
 	model := client.Model.GetData()

@@ -256,7 +256,7 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
 	defer stopSim(c, sim, DisableLuaChecks())
 	defer client.Close()
-	phydb := loadPhysical(c, "test")
+	phydb := loadPhysicalData(c, "test")
 
 	party := &Party{
 		Name: "party1",

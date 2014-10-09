@@ -15,7 +15,7 @@ import (
 func (s *TestSuite) TestCreateOrbat(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
-	phydb := loadPhysical(c, "test")
+	phydb := loadPhysicalData(c, "test")
 
 	party := &Party{
 		Name: "party1",
