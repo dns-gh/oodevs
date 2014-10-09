@@ -2476,52 +2476,67 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 }
 
 func testSetManualLog(c *C,
+	formationName string,
+	automatName string,
 	set func(*swapi.Client, uint32, bool) error,
 	setTest func(*swapi.Client, uint32, *sword.MissionParameters) error,
 	getFromFormation func(*swapi.Formation) bool,
 	getFromAutomat func(*swapi.Automat) bool) {
 	// user without supervision rights can send log maintenance magic action
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
-	const formation = 13
+	data := client.Model.GetData()
+	formation := getSomeFormationByName(c, data, formationName)
+	automat := getSomeAutomatByName(c, data, automatName)
+
+	// Find a formation which is not a logistic base
+	var invalidFormation *swapi.Formation
+	for _, f := range data.Formations {
+		if f.LogLevel != "logistic_base" {
+			invalidFormation = f
+			break
+		}
+	}
+	c.Assert(invalidFormation, NotNil)
+
 	// invalid unit
 	err := set(client, 1000, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// invalid formation without logistic base
-	err = set(client, 5, true)
+	err = set(client, invalidFormation.Id, true)
 	c.Assert(err, ErrorMatches, "error_invalid_unit: formation must be a logistic base")
 
 	// invalid empty parameter
-	err = setTest(client, formation, swapi.MakeParameters())
+	err = setTest(client, formation.Id, swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// invalid parameter
-	err = setTest(client, formation, swapi.MakeParameters(swapi.MakeInt(1337)))
+	err = setTest(client, formation.Id, swapi.MakeParameters(swapi.MakeInt(1337)))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// setting manual mode updates formation model
-	c.Assert(getFromFormation(client.Model.GetFormation(formation)), Equals, false)
-	err = set(client, formation, true)
+	c.Assert(getFromFormation(client.Model.GetFormation(formation.Id)), Equals, false)
+	err = set(client, formation.Id, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return getFromFormation(data.Formations[formation])
+		return getFromFormation(data.Formations[formation.Id])
 	})
 
-	const automat = 14
 	// setting manual mode updates automat model
-	c.Assert(getFromAutomat(client.Model.GetAutomat(automat)), Equals, false)
-	err = set(client, automat, true)
+	c.Assert(getFromAutomat(client.Model.GetAutomat(automat.Id)), Equals, false)
+	err = set(client, automat.Id, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return getFromAutomat(data.Automats[automat])
+		return getFromAutomat(data.Automats[automat.Id])
 	})
 }
 
 func (s *TestSuite) TestSetManualMaintenance(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
 	testSetManualLog(c,
+		"Maintenance BLT",
+		"Maintenance Automat 1",
 		(*swapi.Client).SetManualMaintenance,
 		(*swapi.Client).SetManualMaintenanceTest,
 		func(f *swapi.Formation) bool { return f.LogMaintenanceManual },
@@ -2530,8 +2545,9 @@ func (s *TestSuite) TestSetManualMaintenance(c *C) {
 }
 
 func (s *TestSuite) TestSetManualSupply(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
 	testSetManualLog(c,
+		"Supply F2",
+		"Supply Log Automat 1c",
 		(*swapi.Client).SetManualSupply,
 		(*swapi.Client).SetManualSupplyTest,
 		func(f *swapi.Formation) bool { return f.LogSupplyManual },
