@@ -45,6 +45,7 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( GetNbrHumans, 0 );
     MOCK_METHOD( GetNbrLivingHumans, 0 );
     MOCK_METHOD( GetNbrHealthyHumans, 1 );
+    MOCK_METHOD( CanBeUsed, 0 );
 };
 
 #endif // __MockHumansComposante_ABC_h_
