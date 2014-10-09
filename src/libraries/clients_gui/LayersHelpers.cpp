@@ -200,7 +200,7 @@ const layers::Descriptor descriptors_[] = {
       T_LayerTypesVector() },
     { eLayerTypes_UnitsComposite,         "main,miniviews",                   true,   true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
-      ba::list_of< E_LayerTypes >( eLayerTypes_Parties )( eLayerTypes_Formations )( eLayerTypes_Automats )( eLayerTypes_Agents )( eLayerTypes_AgentKnowledges ) },
+      ba::list_of< E_LayerTypes >( eLayerTypes_Parties )( eLayerTypes_Formations )( eLayerTypes_Automats )( eLayerTypes_Ghosts )( eLayerTypes_Agents )( eLayerTypes_AgentKnowledges ) },
     { eLayerTypes_Urban,                  "main,miniviews",                   true,  true,
       eModes_All,                         eModes_Itinerary,                   eModes_None,
       T_LayerTypesVector() },
