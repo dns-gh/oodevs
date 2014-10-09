@@ -60,6 +60,7 @@ public:
     bool IsLoaded() const;
     void SetIsLoading( bool );
     void LoadStatusChanged( bool );
+    void SetWindowModified( bool isModified );
     ADN_ProgressBar& GetProgressBar() const;
     //@}
 
