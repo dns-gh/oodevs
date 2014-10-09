@@ -1602,17 +1602,20 @@ func (s *TestSuite) TestUnitChangeResource(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	phydb := loadPhysicalData(c, "test")
 
-	f1 := CreateFormation(c, client, 1)
-	a1 := CreateAutomat(c, client, f1.Id, 0)
-	u1 := CreateUnit(c, client, a1.Id)
-	equipmentId := uint32(11)
+	u1 := getSomeUnitByName(c, client.Model.GetData(), "Maintenance Mobile Infantry 2")
+	citroen, err := phydb.Components.Find("Citroën 2CV")
+	c.Assert(err, IsNil)
+	equipmentId := citroen.Id
 	equipment := swapi.Equipment{
-		Available: 4,
+		Available: 5,
 	}
+	unrelatedBreakdown := int32(114)
+	mobility1 := int32(111)
+	mobility2 := int32(112)
 
 	// Check initial state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -1622,7 +1625,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	swtest.DeepEquals(c, *client.Model.GetUnit(u1.Id).Equipments[equipmentId], equipment)
 
 	// Error: Invalid parameters count
-	err := client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
 
 	// Error: Invalid negative parameters
@@ -1635,11 +1638,11 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		Unavailable: 10,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: number of equipment states \\(10\\) different from number of existing equipments \\(4\\)")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: number of equipment states \\(10\\) different from number of existing equipments \\(5\\)")
 
 	// Error: Cannot change to repairing
 	equipment = swapi.Equipment{
-		Available:   1,
+		Available:   2,
 		Unavailable: 1,
 		Repairing:   1,
 		Captured:    1,
@@ -1649,10 +1652,9 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 
 	// Change equipments
 	equipment = swapi.Equipment{
-		Available:     1,
-		Unavailable:   1,
-		OnSiteFixable: 1,
-		Captured:      1,
+		Available:   3,
+		Unavailable: 1,
+		Captured:    1,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
@@ -1663,10 +1665,10 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 
 	// Error: breakdown missing
 	equipment = swapi.Equipment{
-		Available:     1,
+		Available:     3,
 		Unavailable:   1,
 		Repairable:    1,
-		OnSiteFixable: 1,
+		OnSiteFixable: 0,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] size must be equal to parameters\[0\]\[0\]\[3\]`)
@@ -1677,12 +1679,12 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] must be a breakdown identifier`)
 
 	// Error: invalid breakdown for the composante
-	equipment.Breakdowns = []int32{1}
+	equipment.Breakdowns = []int32{unrelatedBreakdown}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] invalid breakdown identifier for the equipment`)
 
 	// Change equipments
-	equipment.Breakdowns = []int32{82}
+	equipment.Breakdowns = []int32{mobility1}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
@@ -1691,7 +1693,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	})
 
 	// Change breakdown
-	equipment.Breakdowns = []int32{83}
+	equipment.Breakdowns = []int32{mobility2}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
