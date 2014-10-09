@@ -2146,7 +2146,7 @@ func (s *TestSuite) TestUnitReloadBrain(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Test actual reloading works
-        _, err = client.Pause()
+	_, err = client.Pause()
 	reporter := swapi.NewReporter(func(r *sword.Report) bool {
 		return swapi.ReportSources(unit.Id)(r)
 	})
@@ -2178,7 +2178,7 @@ func (s *TestSuite) TestUnitReloadBrain(c *C) {
 
 	tickTwice()
 	reporter.AddNilReport()
-	reports :=reporter.Stop()
+	reports := reporter.Stop()
 	eRC_Fixe := uint32(30)
 	c.Assert(len(reports), Equals, 7) // 2 eRC_Fixe, 2 nil, 2 eRC_Fixe; nil :
 	c.Assert(reports[0].Type.GetId(), Equals, eRC_Fixe)
