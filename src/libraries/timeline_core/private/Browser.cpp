@@ -99,5 +99,7 @@ void Browser::Load( const std::string& url )
 
 void Browser::Reload()
 {
-    cef_->Reload();
+    AutoLock lock( this );
+    if( cef_ )
+        cef_->Reload();
 }
