@@ -2110,16 +2110,17 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 }
 
 func (s *TestSuite) TestUnitReloadBrain(c *C) {
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
-	automat := createAutomat(c, client)
-	from := swapi.Point{X: -15.9219, Y: 28.3456}
-	unit, err := client.CreateUnit(automat.Id, UnitType, from)
-	c.Assert(err, IsNil)
+	phydb := loadPhysical(c, "test")
+	pos := swapi.Point{X: -15.9268, Y: 28.3453}
+	unit := CreateUnitInParty(c, client, phydb, "party1", "VW Combi Rally",
+		"VW Active Protection", pos)
+
 	tasker := swapi.MakeUnitTasker(unit.Id)
 
 	// too many parameters
-	err = client.ReloadBrainTest(tasker, swapi.MakeParameters(
+	err := client.ReloadBrainTest(tasker, swapi.MakeParameters(
 		swapi.MakeString("blah"),
 		nil,
 	))
@@ -2144,13 +2145,49 @@ func (s *TestSuite) TestUnitReloadBrain(c *C) {
 	err = client.ReloadBrain(tasker, "bad_brain")
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	// reload current brain
+	// Test actual reloading works
+        _, err = client.Pause()
+	reporter := swapi.NewReporter(func(r *sword.Report) bool {
+		return swapi.ReportSources(unit.Id)(r)
+	})
+	reporter.Start(client.Model)
+
+	tickTwice := func() {
+		tick, delay, err := client.Resume(2)
+		c.Assert(err, IsNil)
+		if !client.Model.WaitUntilTickEnds(tick + delay - 1) {
+			c.Fatal("simulation failed to resume")
+		}
+	}
+
+	// Reload unit decisional model
+	err = client.ReloadBrain(tasker, "Tracer")
+	c.Assert(err, IsNil)
+	tickTwice()
+	reporter.AddNilReport()
+
+	// reload empty brain : Should no longer be activated
 	err = client.ReloadBrain(tasker, "")
 	c.Assert(err, IsNil)
+	tickTwice()
+	reporter.AddNilReport()
 
-	// Reload automat decisional model
-	err = client.ReloadBrain(tasker, "Journalist")
+	// Reload initial decisional model again
+	err = client.ReloadBrain(tasker, "Tracer")
 	c.Assert(err, IsNil)
+
+	tickTwice()
+	reporter.AddNilReport()
+	reports :=reporter.Stop()
+	eRC_Fixe := uint32(30)
+	c.Assert(len(reports), Equals, 7) // 2 eRC_Fixe, 2 nil, 2 eRC_Fixe; nil :
+	c.Assert(reports[0].Type.GetId(), Equals, eRC_Fixe)
+	c.Assert(reports[1].Type.GetId(), Equals, eRC_Fixe)
+	c.Assert(reports[2], IsNil)
+	c.Assert(reports[3], IsNil)
+	c.Assert(reports[4].Type.GetId(), Equals, eRC_Fixe)
+	c.Assert(reports[5].Type.GetId(), Equals, eRC_Fixe)
+	c.Assert(reports[6], IsNil)
 }
 
 func (s *TestSuite) TestLoadUnit(c *C) {
