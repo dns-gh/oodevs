@@ -18,6 +18,7 @@ import (
 	"math"
 	"reflect"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -2179,15 +2180,15 @@ func (s *TestSuite) TestUnitReloadBrain(c *C) {
 	tickTwice()
 	reporter.AddNilReport()
 	reports := reporter.Stop()
-	eRC_Fixe := uint32(30)
-	c.Assert(len(reports), Equals, 7) // 2 eRC_Fixe, 2 nil, 2 eRC_Fixe; nil :
-	c.Assert(reports[0].Type.GetId(), Equals, eRC_Fixe)
-	c.Assert(reports[1].Type.GetId(), Equals, eRC_Fixe)
-	c.Assert(reports[2], IsNil)
-	c.Assert(reports[3], IsNil)
-	c.Assert(reports[4].Type.GetId(), Equals, eRC_Fixe)
-	c.Assert(reports[5].Type.GetId(), Equals, eRC_Fixe)
-	c.Assert(reports[6], IsNil)
+	received := "Received reports :"
+	for _, report := range reports {
+		if report == nil {
+			received = received + " nil,"
+		} else {
+			received = received + " " + strconv.Itoa(int(report.Type.GetId())) + ","
+		}
+	}
+	c.Assert(received, Equals, "Received reports : 30, 30, nil, nil, 30, 30, nil,")
 }
 
 func (s *TestSuite) TestLoadUnit(c *C) {
