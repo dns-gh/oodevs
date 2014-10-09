@@ -51,7 +51,6 @@ ScoresModel::ScoresModel( const tools::SessionConfig& config, dispatcher::Client
     , builder_            ( new IndicatorBuilder( config ) )
     , model_              ( new aar::StaticModel( config ) )
     , announcer_          ( new ScoreAnnouncer() )
-    , dateTimeInitialized_( false )
     , tickDuration_       ( 0 )
     , sessionDir_         ( config.GetSessionDir() )
 {
@@ -130,14 +129,19 @@ void ScoresModel::Update( const sword::Indicator& message )
 void ScoresModel::Update( const sword::SimToClient& message )
 {
     if( message.message().has_control_begin_tick() )
+    {
         currentTick_ = message.message().control_begin_tick().current_tick();
+        QDateTime expectedTime = currentDateTime_.addSecs( static_cast< int >( tickDuration_ ) );
+        currentDateTime_ = MakeDate( message.message().control_begin_tick().date_time().data() );
+        if( expectedTime != currentDateTime_ )
+            times_[ currentTick_ ] = currentDateTime_;
+    }
     BOOST_FOREACH( const T_Task& task, tasks_ )
         task->Receive( message );
-    if( !dateTimeInitialized_ && message.message().has_control_information() )
+    if( times_.empty() && message.message().has_control_information() )
     {
-        initialDateTime_ = MakeDate( message.message().control_information().initial_date_time().data() );
+        times_[0] = MakeDate( message.message().control_information().initial_date_time().data() );
         tickDuration_ = message.message().control_information().tick_duration();
-        dateTimeInitialized_ = true;
     }
 }
 
@@ -211,7 +215,7 @@ void ScoresModel::ComputeIndicator( const std::string& name, const std::string& 
 // -----------------------------------------------------------------------------
 void ScoresModel::Export() const
 {
-    if( dateTimeInitialized_ )
+    if( !times_.empty() )
         try
         {
             tools::Path path = sessionDir_ / "scores.csv";
@@ -223,7 +227,7 @@ void ScoresModel::Export() const
         }
         catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message" + tools::GetExceptionMsg( e ) );
+            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message : " + tools::GetExceptionMsg( e ) );
         }
 }
 
@@ -233,7 +237,7 @@ void ScoresModel::Export() const
 // -----------------------------------------------------------------------------
 void ScoresModel::SimplifiedExport( const tools::Path& path ) const
 {
-    if( dateTimeInitialized_ )
+    if( !times_.empty() )
         try
         {
             tools::Path filePath = path / "scores.csv";
@@ -248,7 +252,7 @@ void ScoresModel::SimplifiedExport( const tools::Path& path ) const
         }
         catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message" + tools::GetExceptionMsg( e ) );
+            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message : " + tools::GetExceptionMsg( e ) );
         }
 }
 
@@ -271,12 +275,30 @@ std::size_t ScoresModel::AddHeader( std::ostream& file ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ScoresModel::GetTime
+// Created: LDC 2014-10-09
+// -----------------------------------------------------------------------------
+QDateTime ScoresModel::GetTime( std::size_t index ) const
+{
+    unsigned int hint = 0;
+    QDateTime startDate;
+    for( auto it = times_.begin(); it != times_.end(); ++it )
+    {
+        if( it->first > index )
+            break;
+        hint = it->first;
+        startDate = it->second;
+    }
+    return startDate.addSecs( static_cast< int >( ( index - hint ) * tickDuration_ ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ScoresModel::AddLine
 // Created: FPO 2011-03-24
 // -----------------------------------------------------------------------------
 void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
 {
-    file << index << separator_ << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).toStdString();
+    file << index << separator_ << GetTime( index ).toString( Qt::ISODate ).toStdString();
     for( auto score = scores_.begin(); score != scores_.end(); ++score )
     {
         float value = score->second->GetValue( index );
