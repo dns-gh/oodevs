@@ -1899,6 +1899,34 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationSatisfaction, Fixture )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade_TestPopulationResourcesSatisfaction
+// Created: JRS 2014-10-08
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationResourcesSatisfaction, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+        "    <extract function='resources-satisfactions' resources='10' id='satisfactions'/>"
+        "    <transform function='domain' type='int' select='11,12' input='satisfactions' id='domained-satisfactions'/>"
+        "    <reduce type='int' function='mean' input='domained-satisfactions' id='mean'/>"
+        "    <result function='plot' input='mean' type='float'/>"
+        "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulationResourceSatisfaction( boost::assign::map_list_of( 10, 2.f )( 11, 42.f ), 11 ) );
+    task->Receive( TestTools::UpdatePopulationResourceSatisfaction( boost::assign::map_list_of( 10, 4.f )( 11, 42.f ), 12 ) );
+    task->Receive( TestTools::UpdatePopulationResourceSatisfaction( boost::assign::map_list_of( 10, 42.f ), 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulationResourceSatisfaction( boost::assign::map_list_of( 10, 8.f ), 11 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 3 )( 3 )( 6 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade_TestPopulationInBlocks
 // Created: FPO 2011-05-12
 // -----------------------------------------------------------------------------
