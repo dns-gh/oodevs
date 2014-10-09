@@ -12,6 +12,7 @@
 #include "ScoreAnnouncer.h"
 #include "protocol/AarSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::score;
@@ -88,7 +89,7 @@ std::size_t Score::Size() const
 boost::optional< float > Score::GetValue( std::size_t index ) const
 {
     if( index < beginTick_ || index >= beginTick_ + values_.size() )
-        return boost::optional< float >();
+        return boost::none;
     return values_.at( index - beginTick_ );
 }
 

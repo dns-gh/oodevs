@@ -12,7 +12,7 @@
 
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 #include <deque>
 #include <vector>
 

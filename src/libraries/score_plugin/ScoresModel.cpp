@@ -21,9 +21,10 @@
 #include "tools/SessionConfig.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
+#include <boost/optional.hpp>
+#include <boost/make_shared.hpp>
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/make_shared.hpp>
 
 using namespace plugins::score;
 
