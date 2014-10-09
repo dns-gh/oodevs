@@ -49,14 +49,6 @@ namespace actions
 {
     class ActionsModel;
 
-enum EActionType
-{
-    eTypeEntity,
-    eTypeObjects,
-    eTypeWeather,
-    eTypeMagic
-};
-
 // =============================================================================
 /** @class  Action_ABC
     @brief  Action_ABC

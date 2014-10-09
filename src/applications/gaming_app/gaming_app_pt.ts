@@ -2,64 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pt" sourcelanguage="en">
 <context>
-    <name>ActionProperties</name>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionsToolbar</name>
-    <message>
-        <source>Load actions file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save actions in active timeline to file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Planning mode on/off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete recorded actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Actions recorder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Actions files (*.ord)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error loading actions file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete recorded actions?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AffinitiesDialog</name>
     <message>
         <source>Activate</source>
@@ -2897,17 +2839,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>Parameter</name>
-    <message>
-        <source>Parameter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PartsView</name>
     <message>
         <source>Required Parts</source>
@@ -3443,45 +3374,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>TimelineActionItem</name>
-    <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;issued by automat&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;disabled&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Starts: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Press enter to rename, unfocus field to cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>TimelineDockWidget</name>
     <message>
         <source>Main</source>
@@ -3501,40 +3393,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TimelineListView</name>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weather</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TimelinePanel</name>
-    <message>
-        <source>Global view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current session</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Legacy Timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3602,17 +3460,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Show children</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TimelineView</name>
-    <message>
-        <source>Zoom In</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

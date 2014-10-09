@@ -2,64 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="es" sourcelanguage="en">
 <context>
-    <name>ActionProperties</name>
-    <message>
-        <source>Properties</source>
-        <translation>Propiedades</translation>
-    </message>
-</context>
-<context>
-    <name>ActionsToolbar</name>
-    <message>
-        <source>Load</source>
-        <translation>Cargar</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Grabar</translation>
-    </message>
-    <message>
-        <source>Actions recorder</source>
-        <translation>Grabador de acciones</translation>
-    </message>
-    <message>
-        <source>Planning mode on/off</source>
-        <translation>Modo planeamiento on/off</translation>
-    </message>
-    <message>
-        <source>Load actions file</source>
-        <translation>Cargar archivo de acciones</translation>
-    </message>
-    <message>
-        <source>Save actions in active timeline to file</source>
-        <translation>Grabar acciones de la linea de tiempo activa</translation>
-    </message>
-    <message>
-        <source>Delete recorded actions</source>
-        <translation>Borrar acciones grabadas</translation>
-    </message>
-    <message>
-        <source>Actions files (*.ord)</source>
-        <translation>Archivo de acciones (*.ord)</translation>
-    </message>
-    <message>
-        <source>Error loading actions file</source>
-        <translation>Error cargando archivo de acciones</translation>
-    </message>
-    <message>
-        <source>Delete recorded actions?</source>
-        <translation>¿Borrar acciones grabadas?</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation>Recargar</translation>
-    </message>
-    <message>
-        <source>orders</source>
-        <translation>órdenes</translation>
-    </message>
-</context>
-<context>
     <name>AffinitiesDialog</name>
     <message>
         <source>Activate</source>
@@ -2907,17 +2849,6 @@ Los datos no pueden ser proyectados.</translation>
     </message>
 </context>
 <context>
-    <name>Parameter</name>
-    <message>
-        <source>Parameter</source>
-        <translation>Parámetro</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Valor</translation>
-    </message>
-</context>
-<context>
     <name>PartsView</name>
     <message>
         <source>Required Parts</source>
@@ -3453,45 +3384,6 @@ Los datos no pueden ser proyectados.</translation>
     </message>
 </context>
 <context>
-    <name>TimelineActionItem</name>
-    <message>
-        <source>Delete</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation>Renombrar</translation>
-    </message>
-    <message>
-        <source>Press enter to rename, unfocus field to cancel</source>
-        <translation>Presione enter para renombrar, deseleccione el campo para cancelar</translation>
-    </message>
-    <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;issued by automat&lt;/i&gt;</source>
-        <translation>&lt;i&gt;asignado por autómata&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;disabled&lt;/i&gt;</source>
-        <translation>&lt;i&gt;desactivado&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Starts: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Inicios: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
-        <source>Disable</source>
-        <translation>Deshabilitar</translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation>Habilitar</translation>
-    </message>
-</context>
-<context>
     <name>TimelineDockWidget</name>
     <message>
         <source>Main</source>
@@ -3512,40 +3404,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Name</source>
         <translation>Nombre</translation>
-    </message>
-</context>
-<context>
-    <name>TimelineListView</name>
-    <message>
-        <source>Units</source>
-        <translation>Unidades</translation>
-    </message>
-    <message>
-        <source>Weather</source>
-        <translation>Clima</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objetos</translation>
-    </message>
-    <message>
-        <source>Magic</source>
-        <translation>Mágico</translation>
-    </message>
-</context>
-<context>
-    <name>TimelinePanel</name>
-    <message>
-        <source>Global view</source>
-        <translation>Vista global</translation>
-    </message>
-    <message>
-        <source>Current session</source>
-        <translation>Sesión actual</translation>
-    </message>
-    <message>
-        <source>Legacy Timeline</source>
-        <translation>Cronología Anterior</translation>
     </message>
 </context>
 <context>
@@ -3613,17 +3471,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Show children</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TimelineView</name>
-    <message>
-        <source>Zoom In</source>
-        <translation>Ampliar</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation>Reducir</translation>
     </message>
 </context>
 <context>
