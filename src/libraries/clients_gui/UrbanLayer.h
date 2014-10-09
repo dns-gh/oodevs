@@ -49,11 +49,10 @@ protected:
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point );
-    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
-    virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
+    virtual void Select( unsigned int id, bool control );
     //@}
 
 private:

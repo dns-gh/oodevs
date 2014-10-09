@@ -54,17 +54,6 @@ void DrawerLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerLayer::FillContextMenu
-// Created: LGY 2014-05-12
-// -----------------------------------------------------------------------------
-void DrawerLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
-{
-    const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
-    const kernel::Drawing_ABC& drawing = static_cast< const kernel::Drawing_ABC& >( entity );
-    controllers_.actions_.ContextMenu( this, entity, drawing, menu );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DrawerLayer::NotifyContextMenu
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------

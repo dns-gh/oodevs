@@ -79,7 +79,6 @@ private:
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, float g, float b, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, const QColor& color, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    T_Result GetSelected( const QString& text );
     //@}
 
 private:
@@ -92,7 +91,8 @@ private:
     GlTools_ABC& tools_;
     geometry::Point2f point_;
     Layer_ABC::T_LayerElements extractedElements_;
-    std::map< const kernel::GraphicalEntity_ABC*, QPixmap > icons_;
+    std::map< unsigned int, QPixmap > icons_;
+    std::map< unsigned int, Layer_ABC* > entityLayer_;
     std::unique_ptr< QMouseEvent > mouseEvent_;
     gui::GlWidget* parent2d_;
     gui::Gl3dWidget* parent3d_;

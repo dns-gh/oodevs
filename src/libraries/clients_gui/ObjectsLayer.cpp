@@ -53,20 +53,6 @@ void ObjectsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geo
         controllers_.actions_.ContextMenu( this, object, entity, point, where );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectsLayer::FillContextMenu
-// Created: LGY 2013-04-05
-// -----------------------------------------------------------------------------
-void ObjectsLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
-{
-    const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
-    const Object_ABC& object = static_cast< const Object_ABC& >( entity );
-    if( object.GetType().IsUrban() )
-        controllers_.actions_.ContextMenu( this, object, menu );
-    else
-        controllers_.actions_.ContextMenu( this, object, entity, menu );
-}
-
 namespace
 {
     struct TerrainPickFunctor : boost::noncopyable

@@ -63,8 +63,6 @@ protected:
     virtual bool CanCreateLine();
 
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
-    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu );
-
     virtual bool HandleKeyPress        ( QKeyEvent* key );
     virtual void NotifyContextMenu     ( const kernel::Nothing&, kernel::ContextMenu& menu );
     virtual void NotifySelectionChanged( const std::vector< const kernel::TacticalLine_ABC* >& elements );

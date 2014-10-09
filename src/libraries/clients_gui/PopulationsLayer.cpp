@@ -43,14 +43,3 @@ void PopulationsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const
     const Population_ABC& popu = static_cast< const Population_ABC& >( entity );
     controllers_.actions_.ContextMenu( this, popu, entity, point, where );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PopulationsLayer::FillContextMenu
-// Created: LGY 2013-04-05
-// -----------------------------------------------------------------------------
-void PopulationsLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
-{
-    const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
-    const Population_ABC& popu = static_cast< const Population_ABC& >( entity );
-    controllers_.actions_.ContextMenu( this, popu, entity, menu );
-}
