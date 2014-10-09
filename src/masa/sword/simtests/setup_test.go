@@ -21,22 +21,33 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"testing"
 	"time"
 )
 
-const (
-	ConnectTimeout = 40 * time.Second
-	PostTimeout    = 40 * time.Second
-	WaitTimeout    = 60 * time.Second
-)
-
 var (
-	Cfg *swtest.Config
+	Cfg            *swtest.Config
+	ConnectTimeout time.Duration
+	PostTimeout    time.Duration
+	WaitTimeout    time.Duration
 )
 
 func init() {
 	Cfg = swtest.ParseFlags()
+
+	// Use timeout multiplier to tweak timeout without modifying code. The
+	timeoutMult := time.Duration(1)
+	mult := os.Getenv("MASA_TIMEOUT_MULT")
+	if mult != "" {
+		m, err := strconv.ParseUint(mult, 10, 32)
+		if err == nil {
+			timeoutMult = time.Duration(m)
+		}
+	}
+	ConnectTimeout = 4 * timeoutMult * time.Second
+	PostTimeout = 4 * timeoutMult * time.Second
+	WaitTimeout = 6 * timeoutMult * time.Second
 }
 
 const (
@@ -423,6 +434,15 @@ func loadPhysical(c *C, name string) *phy.PhysicalFile {
 	phydb, err := phy.ReadPhysical(path)
 	c.Assert(err, IsNil)
 	return phydb
+}
+
+func loadPhysicalData(c *C, name string) *phy.PhysicalData {
+	wd, err := os.Getwd()
+	c.Assert(err, IsNil)
+	path := filepath.Join(wd, "../../../../data/data/models/ada/physical", name)
+	data, err := phy.ReadPhysicalData(path)
+	c.Assert(err, IsNil)
+	return data
 }
 
 func Test(t *testing.T) { TestingT(t) }
