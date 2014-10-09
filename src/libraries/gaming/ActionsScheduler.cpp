@@ -10,10 +10,6 @@
 #include "gaming_pch.h"
 #include "ActionsScheduler.h"
 #include "Simulation.h"
-#include "SimulationController.h"
-#include "actions/Action_ABC.h"
-#include "actions/ActionsModel.h"
-#include "actions/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
@@ -25,16 +21,10 @@ using namespace kernel;
 // Name: ActionsScheduler constructor
 // Created: SBO 2007-07-13
 // -----------------------------------------------------------------------------
-ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, const Simulation& simulation,
-                                    const actions::ActionsModel& actions, Publisher_ABC& publisher,
-                                    const SimulationController& simulationController,
-                                    bool publish )
+ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, const Simulation& simulation, Publisher_ABC& publisher )
     : QObject( parent )
-    , publish_( publish )
     , controllers_( controllers )
     , simulation_( simulation )
-    , simulationController_( simulationController )
-    , actions_( actions )
     , publisher_( publisher )
     , currentTime_()
 {
@@ -67,19 +57,6 @@ void ActionsScheduler::NotifyUpdated( const Simulation& )
 void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
 {
     currentTime_ = simulation_.GetDateTime();
-    if( !publish_ )
-        return;
-    tools::Iterator< const actions::Action_ABC& > it( actions_.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const actions::Action_ABC& action = it.NextElement();
-        if( const actions::ActionTiming* timing = action.Retrieve< actions::ActionTiming >() )
-        {
-            const QDateTime dateTime = timing->GetTime();
-            if( timing->IsEnabled() && dateTime <= currentTime_ && dateTime.secsTo( currentTime_ ) < int( simulation_.GetTickDuration() ) )
-                simulationController_.PublishAction( action );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------

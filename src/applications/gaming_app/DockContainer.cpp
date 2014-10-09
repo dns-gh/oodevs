@@ -33,7 +33,6 @@
 #include "Properties.h"
 #include "ResourceLinksDialog.h"
 #include "ScorePanel.h"
-#include "TimelinePanel.h"
 #include "TimelineDockWidget.h"
 #include "TimelineWebView.h"
 
@@ -87,7 +86,6 @@ DockContainer::DockContainer( QMainWindow* parent,
                               UnitStateDialog& unitStateDialog )
     : timelineDockWidget_( 0 )
 {
-    const bool hasLegacyTimeline = config.HasTimeline();
     // Tools
     interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers,
                                                                  config,
@@ -97,7 +95,7 @@ DockContainer::DockContainer( QMainWindow* parent,
                                                                  &simulation,
                                                                  &model.limits_,
                                                                  &model.pathfinds_ ) );
-    scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, model.actions_, network.GetMessageMgr(), simulationController, hasLegacyTimeline ) );
+    scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, network.GetMessageMgr() ) );
     plotFactory_.reset( new IndicatorPlotFactory( parent, controllers, network.GetMessageMgr(), indicatorExportDialog, simulation ) );
 
     // -----------------------------------------------------------------------------
@@ -236,13 +234,6 @@ DockContainer::DockContainer( QMainWindow* parent,
         parent->addDockWidget( Qt::TopDockWidgetArea, timelineDockWidget_ );
         eventDockWidget_->SetTimelineHandler( timelineDockWidget_->GetWebView() );
         QObject::connect( timelineDockWidget_->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), &eventDockWidget_->GetPresenter(), SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
-    }
-    if( hasLegacyTimeline )
-    {
-        // Old Timeline
-        TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, extractor );
-        timelinePanel->SetModes( eModes_Default );
-        parent->addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
     }
 
     // -----------------------------------------------------------------------------
