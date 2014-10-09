@@ -223,8 +223,8 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
                 assert( objectHeight );
                 double heightFactor         = perceiverUrbanBlockHeight / objectHeight;
                 double materialVisibility   = std::min( 1., ( *itSensor )->GetUrbanBlockFactor( object ) );
-                double opacityFactor        = std::min( 1., occupation * ( 1. - materialVisibility ) * structuralState );
-                double visibilityFactor     = std::min( 1., ( 1. - opacityFactor ) * heightFactor );
+                double opacityFactor        = std::min( 1., occupation * ( 1. - materialVisibility ) );
+                double visibilityFactor     = std::min( 1., ( 1. - opacityFactor ) * heightFactor * structuralState );
                 worstFactor = std::min( worstFactor, visibilityFactor );
             }
         double identification = 0.;
