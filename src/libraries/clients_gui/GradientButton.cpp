@@ -30,7 +30,6 @@ namespace
             setBackgroundColor( parent->backgroundColor() );
             resize( 140, 50 );
             retune( 140, 1 );
-//            setUpdatePeriod( 50 );
         }
         virtual ~GradientCanvas()
         {
@@ -57,14 +56,6 @@ namespace
         }
 
     private:
-        //! @name Copy/Assignment
-        //@{
-        GradientCanvas( const GradientCanvas& );
-        GradientCanvas& operator=( const GradientCanvas& );
-        //@}
-
-        //! @name Helpers
-        //@{
         void DrawGradient( QPainter& painter, const QRect& rect, int from, int to )
         {
             GradientItem* item1 = colors_.at( from );
@@ -87,20 +78,11 @@ namespace
                 painter.fillRect( region, color );
             }
         }
-        //@}
-
-        //! @name Types
-        //@{
-        typedef std::vector< GradientItem* > T_Colors;
-        //@}
 
     private:
-        //! @name Member data
-        //@{
-        const T_Colors& colors_;
+        const std::vector< GradientItem* >& colors_;
         unsigned short topMargin_;
         unsigned short bottomMargin_;
-        //@}
     };
 
     struct sComparator
@@ -117,19 +99,25 @@ namespace
 
 // Created: LGY 2011-01-06
 // -----------------------------------------------------------------------------
-GradientButton::GradientButton( const QString& objectName, QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin /*= Qt::white*/, QColor end /*= Qt::black*/ )
-    : Q3CanvasView( new GradientCanvas( parent, colors_ ), parent )
-    , painter_     ( painter )
+GradientButton::GradientButton( const QString& objectName,
+                                bool disableState,
+                                const GradientItem::T_Drawer& itemDrawer,
+                                QColor begin /* = Qt::green */,
+                                QColor end /* = Qt::red */,
+                                QWidget* parent /* = 0 */ )
+    : Q3CanvasView( parent )
     , selected_    ( 0 )
     , disableState_( disableState )
+    , itemDrawer_  ( itemDrawer )
 {
     setObjectName( objectName );
     setFrameStyle( Q3Frame::Raised | Q3Frame::Box );
-
     setMargin( 5 );
     setFixedHeight( 80 );
     setHScrollBarMode( Q3ScrollView::AlwaysOff );
     setVScrollBarMode( Q3ScrollView::AlwaysOff );
+
+    setCanvas( new GradientCanvas( this, colors_ ) );
 
     AddItem( 0, begin );
     AddItem( 100, end );
@@ -187,7 +175,7 @@ void GradientButton::mouseMoveEvent( QMouseEvent* event )
 {
     if( !canvas()->onCanvas( event->pos() ) || !selected_ )
         return;
-    if( event->button() | Qt::LeftButton ) // $$$$ ABR 2013-01-29: Button on mouse move ? wtf ?
+    if( event->button() | Qt::LeftButton )
     {
         selected_->SetPercentage( unsigned short( event->pos().x() * 100.f / canvas()->rect().width() ) );
         std::sort( colors_.begin(), colors_.end(), sComparator() );
@@ -205,7 +193,7 @@ void GradientButton::keyPressEvent( QKeyEvent* event )
         return;
     if( event->key() == Qt::Key_Delete && colors_.size() > 2 )
     {
-        T_Colors::iterator it = std::find( colors_.begin(), colors_.end(), selected_ );
+        auto it = std::find( colors_.begin(), colors_.end(), selected_ );
         if( it != colors_.end() )
         {
             (*it)->hide();
@@ -239,7 +227,7 @@ namespace
 // Name: GradientButton::LoadGradient
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void GradientButton::LoadGradient( const Gradient& gradient )
+void GradientButton::LoadGradient( const T_Gradient& gradient )
 {
     ClearSelection();
     for( auto it = colors_.begin(); it != colors_.end(); ++it )
@@ -249,9 +237,12 @@ void GradientButton::LoadGradient( const Gradient& gradient )
             delete *it;
         }
     colors_.clear();
+
+    gradient_ = gradient;
     GradientBuilder builder( *this );
-    gradient.Accept( builder );
-    Update();
+    gradient_->Accept( builder );
+    Update( false );
+    //canvas()->update();
 }
 
 // -----------------------------------------------------------------------------
@@ -264,6 +255,17 @@ void GradientButton::SetSelectedColor( const QColor& color )
         return;
     selected_->SetColor( color );
     Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientButton::GetSelectedColor
+// Created: ABR 2014-10-03
+// -----------------------------------------------------------------------------
+QColor GradientButton::GetSelectedColor() const
+{
+    if( !selected_ )
+        return QColor();
+    return selected_->GetColor();
 }
 
 // -----------------------------------------------------------------------------
@@ -295,19 +297,22 @@ void GradientButton::ClearSelection()
 // Name: GradientButton::Update
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-void GradientButton::Update()
+void GradientButton::Update( bool emitSignal /* = true */ )
 {
+    if( !gradient_ )
+        return;
     canvas()->setAllChanged();
-    Gradient gradient;
+    *gradient_ = Gradient( gradient_->GetName() );
     Q3CanvasItemList list = canvas()->allItems();
     for( Q3CanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
     {
         GradientItem* item = static_cast< GradientItem* >( *it );
         item->ToggleScale( disableState_ );
-        gradient.AddColor( item->GetPercentage() / 100.f, item->GetColor() );
+        gradient_->AddColor( item->GetPercentage() / 100.f, item->GetColor() );
     }
     canvas()->update();
-    emit GradientChanged( gradient );
+    if( emitSignal )
+        emit GradientChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +321,7 @@ void GradientButton::Update()
 // -----------------------------------------------------------------------------
 GradientItem* GradientButton::AddItem( unsigned int percentage, const QColor& color )
 {
-    GradientItem* item = new GradientItem( canvas(), painter_, unsigned short( percentage ), color, disableState_ );
+    GradientItem* item = new GradientItem( canvas(), itemDrawer_, unsigned short( percentage ), color, disableState_ );
     colors_.push_back( item );
     std::sort( colors_.begin(), colors_.end(), sComparator() );
     return item;
@@ -338,8 +343,8 @@ void GradientButton::resizeEvent( QResizeEvent* event )
 // Name: GradientButton::OnEnableVariableGradient
 // Created: LGY 2010-09-29
 // -----------------------------------------------------------------------------
-void GradientButton::OnEnableVariableGradient( bool state )
+void GradientButton::OnFitToViewPortChanged( int state )
 {
-    disableState_ = state;
+    disableState_ = state == Qt::Checked;
     Update();
 }

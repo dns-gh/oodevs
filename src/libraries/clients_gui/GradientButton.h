@@ -10,15 +10,12 @@
 #ifndef __GradientButton_h_
 #define __GradientButton_h_
 
-namespace gui
-{
-    class Gradient;
-    class GradientItem;
-    class Painter_ABC;
-}
+#include "GradientItem.h"
 
 namespace gui
 {
+    class Gradient;
+
 // =============================================================================
 /** @class  GradientButton
     @brief  GradientButton
@@ -28,18 +25,28 @@ namespace gui
 class GradientButton : public Q3CanvasView
 {
     Q_OBJECT;
-
+public:
+    //! @name Types
+    //@{
+    typedef std::shared_ptr< Gradient > T_Gradient;
+    //@}
 public:
     //! @name Constructors/Destructor
     //@{
-             GradientButton( const QString& objectName, QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin = Qt::white, QColor end = Qt::black );
+             GradientButton( const QString& objectName,
+                             bool disableState,
+                             const GradientItem::T_Drawer& itemDrawer,
+                             QColor begin = Qt::green,
+                             QColor end = Qt::red,
+                             QWidget* parent = 0 );
     virtual ~GradientButton();
     //@}
 
     //! @name Operations
     //@{
-    void LoadGradient( const Gradient& gradient );
+    void LoadGradient( const T_Gradient& gradient );
     void SetSelectedColor( const QColor& color );
+    QColor GetSelectedColor() const;
     GradientItem* AddItem( unsigned int percentage, const QColor& color );
     //@}
 
@@ -47,22 +54,16 @@ signals:
     //! @name Signals
     //@{
     void SelectionChanged( const QColor& );
-    void GradientChanged( Gradient& );
+    void GradientChanged();
     //@}
 
 private slots:
     //! @name slots
     //@{
-    void OnEnableVariableGradient( bool state );
+    void OnFitToViewPortChanged( int state );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GradientButton( const GradientButton& );            //!< Copy constructor
-    GradientButton& operator=( const GradientButton& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void mousePressEvent( QMouseEvent* event );
@@ -73,25 +74,20 @@ private:
 
     void SetSelected( GradientItem& item );
     void ClearSelection();
-    void Update();
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< GradientItem* > T_Colors;
-    typedef T_Colors::const_iterator   CIT_Colors;
+    void Update( bool emitSignal = true );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Painter_ABC& painter_;
-    T_Colors colors_;
+    GradientItem::T_Drawer itemDrawer_;
+    T_Gradient gradient_;
+    std::vector< GradientItem* > colors_;
     GradientItem* selected_;
     bool disableState_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GradientButton_h_

@@ -10,11 +10,11 @@
 #include "clients_gui_pch.h"
 #include "ElevationPanel.h"
 #include "moc_ElevationPanel.cpp"
-#include "CheckBox.h"
 #include "Elevation2dLayer.h"
-#include "GradientWidget.h"
-#include "GradientPreferences.h"
-#include "RichGroupBox.h"
+#include "GradientPreferencesEditor.h"
+#include "OptionWidgets.h"
+#include "SignalAdapter.h"
+#include "Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/OptionsController.h"
@@ -26,77 +26,35 @@ using namespace gui;
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
 ElevationPanel::ElevationPanel( QWidget* parent,
-                                const std::shared_ptr< Elevation2dLayer >& layer,
-                                kernel::Controllers& controllers,
-                                const Painter_ABC& painter )
+                                kernel::OptionsController& options,
+                                const kernel::DetectionMap& detection,
+                                const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
+                                const std::shared_ptr< GradientPreferences >& preferences )
     : PreferencePanel_ABC( parent, "ElevationPanel" )
-    , layer_              ( layer )
-    , controllers_        ( controllers )
-    , options_            ( controllers.options_ )
-    , preferences_        ( *new GradientPreferences( controllers_.options_ ) )
-    , enableHs_           ( true )
-    , previousEnableHs_   ( true )
-    , directionHs_        ( 315 )
-    , previousDirectionHs_( 315 )
-    , strengthHs_         ( 1 )
-    , previousStrengthHs_ ( 1 )
+    , options_( options )
+    , layer_( elevation2dLayer )
 {
+    gradient_ = new GradientPreferencesEditor( options, detection, preferences, "elevation-gradient" );
+
+    auto hsBox = new OptionGroupBox( options, "hill-shade-enabled", "HillShade/Enabled", tr( "Hillshade" ) );
+    auto hsDial = new OptionDial( options, "hill-shade-direction", "HillShade/Direction", 0, 359 );
+    hsDial->setMaximumSize( 50, 50 );
+    QVBoxLayout* hsLayout = new QVBoxLayout( hsBox );
+    hsLayout->addWidget( tools::AddLabeledWidget( tr( "Direction" ), hsDial ) );
+    auto hsSlider = new OptionSlider( options, "hill-shade-strength", "HillShade/Strength", 1, 50 );
+    hsLayout->addWidget( tools::AddLabeledWidget( tr( "Strength" ), hsSlider ) );
+
     QVBoxLayout* container = new QVBoxLayout( this );
-    container->setSizeConstraint( QLayout::SetMinimumSize );
-    {
-        fitColorGradienttoViewPort_ = new CheckBox( "fitColorGradienttoViewPort", tr( "Fit color gradient to viewport" ) );
-        fitColorGradienttoViewPort_->setChecked( true );
-        connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariableGradient( bool ) ) );
-
-        gradient_ = new GradientWidget( 0, preferences_, controllers, painter );
-        connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), gradient_, SLOT( OnEnableVariableGradient( bool ) ) );
-        connect( gradient_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientChanged( Gradient& ) ) );
-
-        RichGroupBox* gradientBox = new RichGroupBox( "gradientMap", tr( "Gradient map" ) );
-        QVBoxLayout* gradientBoxLayout = new QVBoxLayout( gradientBox );
-        gradientBoxLayout->addWidget( gradient_ );
-        gradientBoxLayout->addStretch();
-
-        RichGroupBox* box = new RichGroupBox( "elevationColor", tr( "Elevation colors" ) );
-        QVBoxLayout* boxLayout = new QVBoxLayout( box );
-        boxLayout->addWidget( fitColorGradienttoViewPort_, 1 );
-        boxLayout->addWidget( gradientBox );
-        boxLayout->addStretch();
-        container->addWidget( box );
-        container->addStretch();
-    }
-    {
-        QLabel* directionLabel = new QLabel( tr( "Direction" ) );
-        hsDial_ = new QDial( 0, 359, 1, directionHs_ );
-        hsDial_->setObjectName( "hill-shade-direction" );
-        hsDial_->setMaximumSize( 50, 50 );
-        connect( hsDial_, SIGNAL( valueChanged( int ) ), SLOT( OnHillShadeDirection( int ) ) );
-
-        QLabel* strengthLabel = new QLabel( tr( "Strength" ) );
-        hillShadeStrength_ = new QSlider( 1, 50, 1, int( strengthHs_ ), Qt::Horizontal );
-        hillShadeStrength_->setObjectName( "hill-shade-strength" );
-        connect( hillShadeStrength_, SIGNAL( valueChanged( int ) ), SLOT( OnStrengthChanged( int ) ) );
-
-        hsBox_ = new RichGroupBox( "hsBox", tr( "Hillshade" ) );
-        connect( hsBox_, SIGNAL( toggled( bool ) ), SLOT( OnEnableHillshade( bool ) ) );
-        hsBox_->setCheckable( true );
-        hsBox_->setChecked( enableHs_ );
-        QGridLayout* hsBoxLayout = new QGridLayout();
-        hsBoxLayout->addWidget( hsDial_, 0, 1 );
-        hsBoxLayout->addWidget( strengthLabel, 1, 0 );
-        hsBoxLayout->addWidget( hillShadeStrength_, 1, 1 );
-        hsBoxLayout->setColStretch( 1, 10 );
-        container->addWidget( hsBox_ );
-
-        QVBoxLayout* hsLayout = new QVBoxLayout( hsBox_ );
-        hsLayout->addLayout( hsBoxLayout );
-        hsLayout->addStretch();
-
-        hsBoxLayout->addWidget( directionLabel, 0, 0 );
-        container->addStretch( 1 );
-    }
+    container->addWidget( tools::AddGroupBoxWidget( "elevation-groupbox", tr( "Elevation colors" ), gradient_ ) );
+    container->addWidget( hsBox );
+    container->addStretch( 1 );
     setLayout( container );
-    controllers_.Register( *this );
+
+    connect( gradient_, SIGNAL( FitToViewportChanged( int ) ), SLOT( OnFitToViewPortChanged( int ) ) );
+    connect( gradient_, SIGNAL( UpdateGradient() ), SLOT( OnGradientUpdated() ) );
+    connect( hsBox, SIGNAL( clicked( bool ) ), SLOT( OnEnableHillshade( bool ) ) );
+    connect( hsDial, SIGNAL( valueChanged( int ) ), SLOT( OnHillShadeDirection( int ) ) );
+    connect( hsSlider, SIGNAL( valueChanged( int ) ), SLOT( OnStrengthChanged( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,57 +63,35 @@ ElevationPanel::ElevationPanel( QWidget* parent,
 // -----------------------------------------------------------------------------
 ElevationPanel::~ElevationPanel()
 {
-    controllers_.Unregister( *this );
-    delete &preferences_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationPanel::OnGradientChanged
-// Created: SBO 2007-07-03
+// Name: ElevationPanel::Load
+// Created: ABR 2014-08-05
 // -----------------------------------------------------------------------------
-void ElevationPanel::OnGradientChanged( Gradient& gradient )
+void ElevationPanel::Load( const GlProxy& )
 {
-    layer_->SetGradient( gradient );
+    gradient_->Load();
+    // gradient_->SetElevation2dTexture( view.GetActiveOptions().GetElevation2dTexture() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationPanel::Commit
-// Created: AGE 2007-01-17
+// Name: ElevationPanel::OnGradientUpdated
+// Created: ABR 2014-10-08
 // -----------------------------------------------------------------------------
-void ElevationPanel::Commit()
+void ElevationPanel::OnGradientUpdated()
 {
-    fitColorGradienttoViewPort_->Commit();
-    gradient_->Commit();
-    previousEnableHs_ = enableHs_;
-    previousDirectionHs_ = directionHs_;
-    previousStrengthHs_ = strengthHs_;
+    layer_->UpdateGradient();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationPanel::Reset
-// Created: AGE 2007-01-17
-// -----------------------------------------------------------------------------
-void ElevationPanel::Reset()
-{
-    fitColorGradienttoViewPort_->Revert();
-    gradient_->Reset();
-    enableHs_ = previousEnableHs_;
-    hsBox_->setChecked( enableHs_ );
-    directionHs_ = previousDirectionHs_;
-    hsDial_->setValue( directionHs_ );
-    strengthHs_ = previousStrengthHs_;
-    hillShadeStrength_->setValue( static_cast< int >( strengthHs_ ) );
-    OnEnableHillshade( enableHs_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ElevationPanel::OnEnableVariableGradient
+// Name: ElevationPanel::OnFitToViewPortChanged
 // Created: AGE 2007-01-18
 // -----------------------------------------------------------------------------
-void ElevationPanel::OnEnableVariableGradient( bool bState )
+void ElevationPanel::OnFitToViewPortChanged( int bState )
 {
-    layer_->EnableVariableGradient( bState );
-    options_.Change( "Elevation/FitToViewPort", bState );
+    layer_->EnableVariableGradient( bState == Qt::Checked );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,9 +100,7 @@ void ElevationPanel::OnEnableVariableGradient( bool bState )
 // -----------------------------------------------------------------------------
 void ElevationPanel::OnEnableHillshade( bool bState )
 {
-    enableHs_ = bState;
-    layer_->SetHillShadeStrength( enableHs_ ? strengthHs_ : 0.f );
-    options_.Change( "HillShade/Enabled", bState );
+    layer_->EnableHillShade( bState );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,8 +109,7 @@ void ElevationPanel::OnEnableHillshade( bool bState )
 // -----------------------------------------------------------------------------
 void ElevationPanel::OnHillShadeDirection( int value )
 {
-    layer_->SetHillShadeDirection( directionHs_ = value );
-    options_.Change( "HillShade/Direction", value );
+    layer_->SetHillShadeDirection( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,41 +118,5 @@ void ElevationPanel::OnHillShadeDirection( int value )
 // -----------------------------------------------------------------------------
 void ElevationPanel::OnStrengthChanged( int value )
 {
-    strengthHs_ = pow( 1.1f, value );
-    OnEnableHillshade( enableHs_ );
-    options_.Change( "HillShade/Strength", value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ElevationPanel::OptionChanged
-// Created: SBO 2008-08-18
-// -----------------------------------------------------------------------------
-void ElevationPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    QString option ( name.c_str() );
-    if( option == "Elevation/FitToViewPort" )
-    {
-        fitColorGradienttoViewPort_->setChecked( value.To< bool >() );
-        return;
-    }
-    else if( option == "HillShade/Enabled" )
-    {
-        hsBox_->setChecked( value.To< bool >() );
-        return;
-    }
-    else if( option == "HillShade/Direction" )
-    {
-        hsDial_->setValue( value.To< int >() );
-        return;
-    }
-    else if( option == "HillShade/Strength" )
-    {
-        hillShadeStrength_->setValue( value.To< int >() );
-        return;
-    }
-    else if( !option.startsWith( "Elevation/Gradients/" ) )
-        return;
-    option.remove( "Elevation/Gradients/" );
-    preferences_.SetGradient( option, value.To< QString >() );
-    gradient_->Reset(); // $$$$ SBO 2008-08-18: bof... notify Gradient creation/destruction instead
+    layer_->SetHillShadeStrength( pow( 1.1f, value ) );
 }

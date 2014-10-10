@@ -20,26 +20,23 @@ using namespace gui;
 // Name: InhabitantPanel constructor
 // Created: LGY 2010-12-31
 // -----------------------------------------------------------------------------
-InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controllers )
+InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::OptionsController& options )
     : PreferencePanel_ABC( parent, "InhabitantPanel" )
 {
     SubObjectName subObject( "InhabitantPanel" );
     RichGroupBox* densityGroup = new RichGroupBox( "densityGroup", tr( "Density Gradient map" ) );
-    QHBoxLayout* densityGroupLayout = new QHBoxLayout( densityGroup );
-    DensityWidget* densityWidget = new DensityWidget( "densityGroup", densityGroup, controllers, "Density" );
-    densityGroupLayout->addWidget( densityWidget );
+    QHBoxLayout* densityLayout = new QHBoxLayout( densityGroup );
+    densityLayout->addWidget( new DensityWidget( options, "densityGroup", "Density" ) );
 
     RichGroupBox* occupationGroup = new RichGroupBox( "occupationGroup", tr( "Occupation Gradient map" ) );
-    QHBoxLayout* occupationGroupLayout = new QHBoxLayout( occupationGroup );
-    DensityWidget* occupationWidget = new DensityWidget( "occupationWidget", occupationGroup, controllers, "Accommodation" );
-    occupationGroupLayout->addWidget( occupationWidget );
+    QHBoxLayout* occupationLayout = new QHBoxLayout( occupationGroup );
+    occupationLayout->addWidget( new DensityWidget( options, "occupationWidget", "Accommodation" ) );
 
-    RichGroupBox* box = new RichGroupBox( "colorsBox", tr( "Colors" ), this );
-    QVBoxLayout* boxLayout = new QVBoxLayout( box );
-    boxLayout->addWidget( densityGroup );
-    boxLayout->addWidget( occupationGroup );
-    boxLayout->addStretch( 1 );
-    setWidget( box );
+    QVBoxLayout* layout = new QVBoxLayout();
+    layout->addWidget( densityGroup );
+    layout->addWidget( occupationGroup );
+    layout->addStretch( 1 );
+    setLayout( layout );
 }
 
 // -----------------------------------------------------------------------------

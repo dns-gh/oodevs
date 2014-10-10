@@ -45,6 +45,7 @@ GraphicPreferences::GraphicPreferences( kernel::OptionsController& options,
     , downSignalMapper_( new QSignalMapper( this ) )
     , layout_          ( new QVBoxLayout( this ) )
 {
+    setObjectName( "graphic-preferences" );
     layout_->setMargin( 0 );
     connect( upSignalMapper_, SIGNAL( mapped( QWidget* ) ), this, SLOT( Up( QWidget* ) ) );
     connect( downSignalMapper_, SIGNAL( mapped( QWidget* ) ), this, SLOT( Down( QWidget* ) ) );

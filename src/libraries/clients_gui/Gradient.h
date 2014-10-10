@@ -43,7 +43,7 @@ class Gradient
 public:
     //! @name Constructors/Destructor
     //@{
-             Gradient();
+    explicit Gradient( const QString& name = "" );
     explicit Gradient( xml::xistream& xis );
              Gradient( const QString& name, const QString& colors );
     virtual ~Gradient();
@@ -58,12 +58,15 @@ public:
     //@{
     void SetName( const QString& name );
     QString GetName() const;
+    QString GetDisplayName() const;
+
     void MakeGlTexture( float alpha );
     unsigned Length() const;
     float UsedRatio() const;
     void Save( kernel::OptionsController& options, const std::string& group ) const;
     void Accept( GradientVisitor_ABC& visitor ) const;
     void LoadValues( const QString& values );
+    QString GetValues() const;
     Gradient& operator=( const Gradient& rhs );
     QColor Compute( float density, float alpha, float min, float max );
     //@}
@@ -85,6 +88,7 @@ private:
     //! @name Member data
     //@{
     QString  name_;
+    QString  displayName_;
     T_Colors colors_;
     unsigned textureSize_;
     float    usedRatio_;

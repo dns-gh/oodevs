@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GradientPreferences.h"
 #include "Gradient.h"
-#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,10 +20,20 @@ using namespace gui;
 // Name: GradientPreferences constructor
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-GradientPreferences::GradientPreferences( kernel::OptionsController& options )
-    : options_( options )
+GradientPreferences::GradientPreferences()
 {
-    Reset();
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences constructor
+// Created: ABR 2014-07-28
+// -----------------------------------------------------------------------------
+GradientPreferences::GradientPreferences( const GradientPreferences& other )
+{
+    for( auto it = other.gradients_.begin(); it != other.gradients_.end(); ++it )
+        Add( std::make_shared< Gradient >( **it ) );
+    current_ = GetByName( other.current_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,75 +42,113 @@ GradientPreferences::GradientPreferences( kernel::OptionsController& options )
 // -----------------------------------------------------------------------------
 GradientPreferences::~GradientPreferences()
 {
-    DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GradientPreferences::Commit
-// Created: SBO 2007-07-03
-// -----------------------------------------------------------------------------
-void GradientPreferences::Commit( const std::vector< Gradient* >& presets )
-{
-    DeleteAll();
-    for( auto it = presets.begin(); it != presets.end(); ++it )
-        Register( (*it)->GetName(), *new Gradient( **it ) );
-    Save();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GradientPreferences::Reset
-// Created: SBO 2007-07-03
-// -----------------------------------------------------------------------------
-void GradientPreferences::Reset()
-{
-    tools::Xifstream xis( "gradients.xml" );
-    Load( xis );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: GradientPreferences::Load
-// Created: SBO 2007-07-03
+// Created: ABR 2014-08-05
 // -----------------------------------------------------------------------------
-void GradientPreferences::Load( xml::xistream& xis )
+void GradientPreferences::Load( const kernel::Options& options )
 {
-    DeleteAll();
-    xis >> xml::start( "gradients" )
-            >> xml::list( "gradient", *this, &GradientPreferences::ReadGradient )
-        >> xml::end;
+    gradients_.clear();
+    options.Apply( [&]( const std::string& option, const kernel::OptionVariant& value, bool ) {
+        QString name = option.c_str();
+        if( name.indexOf( "Elevation/Gradients/" ) != 0 )
+            return;
+        name.remove( "Elevation/Gradients/" );
+        Add( std::make_shared< Gradient >( name, value.To< QString >() ) );
+    } );
+    current_ = GetByName( options.Get( "Elevation/Gradient" ).To< QString >() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GradientPreferences::Save
-// Created: SBO 2007-07-03
+// Name: GradientPreferences::Add
+// Created: ABR 2014-10-09
 // -----------------------------------------------------------------------------
-void GradientPreferences::Save() const
+void GradientPreferences::Add( const T_Gradient& gradient )
 {
-    for( auto it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Save( options_, "Elevation/Gradients/" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GradientPreferences::ReadGradient
-// Created: SBO 2007-07-03
-// -----------------------------------------------------------------------------
-void GradientPreferences::ReadGradient( xml::xistream& xis )
-{
-    Gradient* gradient = new Gradient( xis );
-    Register( gradient->GetName(), *gradient );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GradientPreferences::SetGradient
-// Created: SBO 2008-08-18
-// -----------------------------------------------------------------------------
-void GradientPreferences::SetGradient( const QString& name, const QString& values )
-{
-    Gradient* gradient = Find( name );
     if( !gradient )
-    {
-        gradient = new Gradient( name, values );
-        Register( gradient->GetName(), *gradient );
-    }
-    else
-        gradient->LoadValues( values );
+        return;
+    auto it = std::find( gradients_.begin(), gradients_.end(), gradient );
+    if( it != gradients_.end() )
+        throw MASA_EXCEPTION( "gradient already registered" );
+    gradients_.push_back( gradient );
+    if( !current_ )
+        current_ = gradient;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences::Remove
+// Created: ABR 2014-10-09
+// -----------------------------------------------------------------------------
+void GradientPreferences::Remove( const T_Gradient& gradient )
+{
+    auto it = std::find( gradients_.begin(), gradients_.end(), gradient );
+    if( it != gradients_.end() )
+        gradients_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences::Count
+// Created: ABR 2014-10-09
+// -----------------------------------------------------------------------------
+size_t GradientPreferences::Count() const
+{
+    return gradients_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences::function< void
+// Created: ABR 2014-10-09
+// -----------------------------------------------------------------------------
+void GradientPreferences::Apply( const std::function< void( const T_Gradient ) >& functor ) const
+{
+    std::for_each( gradients_.begin(), gradients_.end(), functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences::GetByName
+// Created: ABR 2014-10-09
+// -----------------------------------------------------------------------------
+GradientPreferences::T_Gradient GradientPreferences::GetByName( const QString& name ) const
+{
+    auto it = std::find_if( gradients_.begin(), gradients_.end(), [&name]( const T_Gradient& gradient ){
+        return gradient->GetName() == name;
+    } );
+    if( it == gradients_.end() )
+        return T_Gradient();
+    return *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences::GetByDisplayName
+// Created: ABR 2014-10-09
+// -----------------------------------------------------------------------------
+GradientPreferences::T_Gradient GradientPreferences::GetByDisplayName( const QString& name ) const
+{
+    auto it = std::find_if( gradients_.begin(), gradients_.end(), [&name]( const T_Gradient& gradient ){
+        return gradient->GetDisplayName() == name;
+    } );
+    if( it == gradients_.end() )
+        return T_Gradient();
+    return *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences::GetCurrent
+// Created: ABR 2014-10-09
+// -----------------------------------------------------------------------------
+GradientPreferences::T_Gradient GradientPreferences::GetCurrent() const
+{
+    return current_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences::SetCurrent
+// Created: ABR 2014-10-09
+// -----------------------------------------------------------------------------
+void GradientPreferences::SetCurrent( const T_Gradient& current )
+{
+    current_ = current;
 }
