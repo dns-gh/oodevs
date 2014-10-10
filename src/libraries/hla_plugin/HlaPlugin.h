@@ -92,6 +92,7 @@ namespace hla
     class SideResolver_ABC;
     class SimulationTimeManager_ABC;
     class MRMController;
+    class UnitModelReloader;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -175,6 +176,7 @@ private:
     std::unique_ptr< EntityIdentifierResolver_ABC > pEntityIdentifierResolver_;
     std::unique_ptr< SimulationTimeManager_ABC > pSimulationTimeManager_;
     std::unique_ptr< MRMController > pMrmController;
+    std::unique_ptr< UnitModelReloader > pUnitModelReloader_;
     //@}
 };
 
