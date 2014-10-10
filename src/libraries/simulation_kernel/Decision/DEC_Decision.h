@@ -62,6 +62,7 @@ public:
     virtual bool IsUsedByDIA() const;
     virtual void ActivateBrainDebug( bool activate );
     void DeleteBrain();
+    bool IsDeleted();
 
     virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission );
     virtual boost::shared_ptr< MIL_Mission_ABC > GetMission();
@@ -354,6 +355,17 @@ void DEC_Decision< T >::DeleteBrain()
 {
     pBrain_.reset();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsDeleted
+// Created: LDC 2014-10-09
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsDeleted()
+{
+    return !pBrain_;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::SetModel
