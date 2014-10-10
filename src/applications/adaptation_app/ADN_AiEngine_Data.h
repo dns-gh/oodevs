@@ -83,10 +83,10 @@ public:
         void WriteArchive( xml::xostream&, const std::string& );
 
     public:
-        ADN_Type_Bool bDetection_;
-        ADN_Type_Bool bRecognition_;
-        ADN_Type_Bool bIdentification_;
-        ADN_Type_Bool bNever_;
+        ADN_Type_Bool detection_;
+        ADN_Type_Bool recognition_;
+        ADN_Type_Bool identification_;
+        ADN_Type_Bool never_;
     };
 
     typedef ADN_Type_VectorFixed_ABC< UrbanSpeedsInfos > T_UrbanSpeedsInfos_Vector;

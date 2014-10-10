@@ -65,10 +65,10 @@ void ADN_AiEngine_Data::UrbanSpeedsInfos::WriteArchive( xml::xostream& output )
 // Created: JSR 2014-07-04
 // -----------------------------------------------------------------------------
 ADN_AiEngine_Data::PerceptionInfos::PerceptionInfos()
-    : bDetection_( false )
-    , bRecognition_( false )
-    , bIdentification_( false )
-    , bNever_( false )
+    : detection_( false )
+    , recognition_( false )
+    , identification_( false )
+    , never_( false )
 {
     // NOTHING
 }
@@ -89,10 +89,10 @@ std::string ADN_AiEngine_Data::PerceptionInfos::GetItemName()
 void ADN_AiEngine_Data::PerceptionInfos::ReadArchive( xml::xistream& xis )
 {
     const std::string level = xis.attribute< std::string >( "level" );
-    bDetection_ = level == "detection";
-    bRecognition_ = level == "recognition";
-    bIdentification_ = level == "identification";
-    bNever_ = level == "never";
+    detection_ = level == "detection";
+    recognition_ = level == "recognition";
+    identification_ = level == "identification";
+    never_ = level == "never";
 }
 
 // -----------------------------------------------------------------------------
@@ -101,9 +101,9 @@ void ADN_AiEngine_Data::PerceptionInfos::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_AiEngine_Data::PerceptionInfos::WriteArchive( xml::xostream& xos, const std::string& name )
 {
-    const std::string level = bDetection_.GetData() ?      "detection" :
-                              bRecognition_.GetData() ?    "recognition" :
-                              bIdentification_.GetData() ? "identification" :
+    const std::string level = detection_.GetData() ?      "detection" :
+                              recognition_.GetData() ?    "recognition" :
+                              identification_.GetData() ? "identification" :
                                                            "never";
     xos << xml::start( "availability" )
           << xml::attribute( "type", name )
@@ -177,10 +177,10 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     for( int i = 0; i < boost::size( defaultPerceptions ); ++i )
     {
         PerceptionInfos* infos = new PerceptionInfos();
-        infos->bDetection_      = defaultPerceptions[ i ].detection;
-        infos->bRecognition_    = defaultPerceptions[ i ].recognition;
-        infos->bIdentification_ = defaultPerceptions[ i ].identification;
-        infos->bNever_          = defaultPerceptions[ i ].never;
+        infos->detection_      = defaultPerceptions[ i ].detection;
+        infos->recognition_    = defaultPerceptions[ i ].recognition;
+        infos->identification_ = defaultPerceptions[ i ].identification;
+        infos->never_          = defaultPerceptions[ i ].never;
         perceptionInfos_.AddItem( infos );
     }
 }

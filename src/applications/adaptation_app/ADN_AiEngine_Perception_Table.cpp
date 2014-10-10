@@ -82,25 +82,25 @@ void ADN_AiEngine_Perception_Table::AddRow( int row, void* data )
     {
         ADN_RadioButton* button = new ADN_RadioButton( this );
         group->addButton( button );
-        button->GetConnector().Connect( &infos->bDetection_ );
+        button->GetConnector().Connect( &infos->detection_ );
         setCellWidget( row, 1, button );
     }
     {
         ADN_RadioButton* button = new ADN_RadioButton( this );
         group->addButton( button );
-        button->GetConnector().Connect( &infos->bRecognition_ );
+        button->GetConnector().Connect( &infos->recognition_ );
         setCellWidget( row, 2, button );
     }
     {
         ADN_RadioButton* button = new ADN_RadioButton( this );
         group->addButton( button );
-        button->GetConnector().Connect( &infos->bIdentification_ );
+        button->GetConnector().Connect( &infos->identification_ );
         setCellWidget( row, 3, button );
     }
     {
         ADN_RadioButton* button = new ADN_RadioButton( this );
         group->addButton( button );
-        button->GetConnector().Connect( &infos->bNever_ );
+        button->GetConnector().Connect( &infos->never_ );
         setCellWidget( row, 4, button );
     }
 }
