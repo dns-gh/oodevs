@@ -2838,3 +2838,34 @@ message TerrainData {
     required uint32 left   = 3;
     required uint32 right  = 4;
 }
+
+/** @struct ControlEnableVisionCones
+    @brief A vision cones toggle request.
+
+    This message is sent by a client to toggle the sending of vision
+    cones. Enabling vision cones will produce UnitVisionCones messages.
+
+    @see UnitVisionCones
+    @todo see how it is related to ControlInformation::send_vision_cones
+*/
+message ControlEnableVisionCones {
+    //! Whether to activate vision cones or not
+    required bool vision_cones = 1;
+    //! Units for which to activate/deactivate vision cones updates,
+    //! applies to all units if empty
+    repeated Id   units = 2;
+}
+
+/** @struct ListEnabledVisionCones
+    @brief requests the list of units for which vision updates are currently
+           listened to.
+    @see ListEnableVisionConesAck
+    @see ControlEnableVisionCones
+*/
+message ListEnabledVisionCones {
+    //! Identifier to start from (included), if omitted start from the
+    //! beginning
+    optional Id     start = 1;
+    //! Maximum number of identifiers to send
+    optional uint32 count = 2;
+}

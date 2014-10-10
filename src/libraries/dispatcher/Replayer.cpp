@@ -14,6 +14,7 @@
 #include "ClientsNetworker.h"
 #include "SimulationDispatcher.h"
 #include "SimulationPublisher_ABC.h"
+#include "ReplaySynchronizer.h"
 #include "Loader.h"
 #include "Services.h"
 #include "StaticModel.h"
@@ -36,13 +37,6 @@ using namespace dispatcher;
 
 namespace
 {
-    boost::shared_ptr< SimulationDispatcher > CreateSimulation( ClientPublisher_ABC& publisher, Model& model, PluginContainer& handler )
-    {
-        boost::shared_ptr< SimulationDispatcher > result( new SimulationDispatcher( publisher, model ) );
-        handler.AddHandler( result );
-        return result;
-    }
-
     struct NullMemoryLogger : MemoryLogger_ABC
     {
         virtual void Update( const sword::ControlEndTick& )
@@ -58,7 +52,39 @@ namespace
         virtual void Send( const sword::DispatcherToSim& )
         {}
     };
+
+    struct ReceiverToSender : public PluginContainer
+    {
+        explicit ReceiverToSender( ClientPublisher_ABC& publisher )
+            : publisher_( publisher )
+        {}
+        virtual void Receive( const sword::SimToClient& message )
+        {
+            publisher_.Send( message );
+        }
+    private:
+        ClientPublisher_ABC& publisher_;
+    };
 }
+
+struct Replayer::SenderToReceiver : public ClientPublisher_ABC
+                                  , public PluginContainer
+{
+    explicit SenderToReceiver( ClientPublisher_ABC& publisher )
+        : publisher_( publisher )
+    {}
+    virtual void Send( const sword::SimToClient& message )
+    {
+        Receive( message );
+    }
+    virtual void Send( const sword::AuthenticationToClient& message ) { publisher_.Send( message ); }
+    virtual void Send( const sword::ReplayToClient&         message ) { publisher_.Send( message ); }
+    virtual void Send( const sword::AarToClient&            message ) { publisher_.Send( message ); }
+    virtual void Send( const sword::MessengerToClient&      message ) { publisher_.Send( message ); }
+    virtual void Send( const sword::DispatcherToClient&     message ) { publisher_.Send( message ); }
+private:
+    ClientPublisher_ABC& publisher_;
+};
 
 // -----------------------------------------------------------------------------
 // Name: Replayer constructor
@@ -70,24 +96,29 @@ Replayer::Replayer( const Config& config )
     , logger_          ( new ::NullMemoryLogger() )
     , model_           ( new Model( config, *staticModel_, *logger_ ) )
     , clientsNetworker_( new ClientsNetworker( config, handler_, *services_, *model_ ) )
-    , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
-    , loader_          ( new Loader( *simulation_, handler_, config, *clientsNetworker_ ) )
-    , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
+    , modelHandler_    ( new SenderToReceiver( *clientsNetworker_ ) )
+    , synchronizer_    ( new ReplaySynchronizer( *modelHandler_, *model_ ) )
+    , loader_          ( new Loader( *synchronizer_, handler_, config, *clientsNetworker_ ) )
+    , replay_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *synchronizer_ ) )
     , publisher_       ( new NullPublisher() )
     , started_         ( false )
     , rights_          ( boost::make_shared< plugins::rights::RightsPlugin >(
                             *model_, *clientsNetworker_, config, *clientsNetworker_,
                             handler_, *clientsNetworker_, registrables_, 0, true ) )
-    , stopped_( false )
+    , stopped_         ( false )
+    , log_             ( config.BuildSessionChildFile( "Protobuf_replay.log" ), config.GetDispatcherProtobufLogFiles(),
+                         config.GetDispatcherProtobufLogSize(), true, config.IsDispatcherProtobufLogInBytes() )
 {
-    clientsNetworker_->RegisterMessage( *this, &Replayer::ReceiveClientToReplay );
-
+    clientsNetworker_->RegisterMessage( MakeLogger( log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToReplay ) );
+    clientsNetworker_->RegisterMessage( MakeLogger( log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToSim ) );
+    ConfigureModelHandler();
     handler_.AddHandler( model_ );
     auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
+    vision->AddHandler( clientsNetworker_ );
+    vision->AddHandler( boost::make_shared< SimulationDispatcher >( *clientsNetworker_, *synchronizer_ ) );
     handler_.Add( vision );
-    vision->Add( clientsNetworker_ );
     handler_.Add( rights_ );
-    handler_.Add( plugin_ );
+    handler_.Add( replay_ );
     handler_.Add( boost::make_shared< plugins::aar::AarPlugin >( *clientsNetworker_, *rights_, config ) );
     handler_.Add( boost::make_shared< plugins::score::ScorePlugin >(
                   *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
@@ -114,6 +145,17 @@ Replayer::~Replayer()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Replayer::ConfigureModelHandler
+// Created: SLI 2014-10-14
+// -----------------------------------------------------------------------------
+void Replayer::ConfigureModelHandler()
+{
+    auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
+    vision->AddHandler( boost::make_shared< ReceiverToSender >( *clientsNetworker_ ) );
+    modelHandler_->Add( vision );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Replayer::Update
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
@@ -136,7 +178,7 @@ void Replayer::OnWebControl( xml::xistream& xis )
 }
 
 void Replayer::ReceiveClientToReplay( const std::string& link,
-        const sword::ClientToReplay& msg )
+        sword::ClientToReplay& msg )
 {
     dispatcher::UnicastPublisher unicaster( rights_->GetAuthenticatedPublisher( link ),
             link, rights_->GetClientID( link ), msg.context() );
@@ -149,4 +191,13 @@ void Replayer::ReceiveClientToReplay( const std::string& link,
         unicaster.Send( ack );
     }
     handler_.HandleClientToReplay( msg, unicaster, *clientsNetworker_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Replayer::ReceiveClientToSim
+// Created: SLI 2014-10-14
+// -----------------------------------------------------------------------------
+void Replayer::ReceiveClientToSim( const std::string&, sword::ClientToSim& )
+{
+    // NOTHING
 }

@@ -67,7 +67,7 @@ public:
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& link, bool uncounted );
 
 private:
-    void OnReceive( const std::string& link, const sword::ClientToSim& message );
+    template< typename T > void OnReceive( const std::string& link, const T& message );
 
     void Handle( const std::string& link, const sword::ControlEnableVisionCones& message, int context );
     void Handle( const std::string& link, const sword::ListEnabledVisionCones& message, int context ) const;

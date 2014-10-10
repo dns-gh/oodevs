@@ -16,6 +16,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/ReplaySenders.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 
@@ -30,7 +31,8 @@ VisionPlugin::VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDi
     , units_     ( new Units() )
     , enabled_   ( false )
 {
-    dispatcher.RegisterMessage( *this, &VisionPlugin::OnReceive );
+    dispatcher.RegisterMessage( *this, &VisionPlugin::OnReceive< sword::ClientToSim > );
+    dispatcher.RegisterMessage( *this, &VisionPlugin::OnReceive< sword::ClientToReplay > );
 }
 
 VisionPlugin::~VisionPlugin()
@@ -38,7 +40,8 @@ VisionPlugin::~VisionPlugin()
     // NOTHING
 }
 
-void VisionPlugin::OnReceive( const std::string& link, const sword::ClientToSim& message )
+template< typename T >
+void VisionPlugin::OnReceive( const std::string& link, const T& message )
 {
     if( message.message().has_control_toggle_vision_cones() )
         Handle( link, message.message().control_toggle_vision_cones(), message.context() );
