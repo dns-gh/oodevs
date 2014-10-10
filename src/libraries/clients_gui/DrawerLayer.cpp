@@ -147,7 +147,7 @@ void DrawerLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC&, bool pi
     if( ShouldDisplay( entity ) )
     {
         if( pickingMode )
-            tools_.RenderPicking( std::make_pair( entity.GetId(), type_ ) );
+            tools_.RenderPicking( std::make_pair( entity.GetId(), GetType() ) );
         SelectColor( entity );
         static_cast< const Drawing& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
         if( pickingMode )
