@@ -12,6 +12,19 @@
 #include "LocalAgentResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
 
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable : 4724 )
+#endif
+
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/random_generator.hpp>
+#include <boost/uuid/string_generator.hpp>
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
+
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
@@ -45,4 +58,13 @@ std::string UniqueIdSerializer::GetAgentId( const NETN_UUID& uniqueID, const Loc
         // NOTHING
     }
     return std::string("");
+}
+
+std::vector< char > UniqueIdSerializer::GenerateUniqueId( std::size_t sz )
+{
+    static boost::uuids::random_generator gen;
+    boost::uuids::uuid uid = gen();
+    std::vector< char > retval( sz, 0);
+    std::copy( uid.begin(), uid.begin() + sz, retval.begin() );
+    return retval;
 }

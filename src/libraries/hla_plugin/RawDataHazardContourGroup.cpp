@@ -44,11 +44,11 @@ void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& 
 {
     // NOTHING
 }
-void ReadMaterial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, uint16_t& material )
+void ReadMaterial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, uint16_t& agent )
 {
-    deserializer >> material;
+    deserializer >> agent;
     std::stringstream ss;
-    ss << "100 0 0 0 0 " << (material >> 8) << " " << (material % 256); // FIXME AHC : configure DIS prefix
+    ss << "100 0 0 0 0 " << (agent >> 8) << " " << (agent % 256); // FIXME AHC : configure DIS prefix
     rpr::EntityType type( ss.str() );
     listener.TypeChanged( identifier, type );
 }
@@ -59,6 +59,10 @@ void ReadTime( ::hla::Deserializer_ABC& deserializer, const std::string& , Objec
 void ReadHazardType(::hla::Deserializer_ABC& deserializer, const std::string& , ObjectListener_ABC& , uint8_t hazardType )
 {
     deserializer >> hazardType;
+}
+void ReadUniqueId(::hla::Deserializer_ABC& deserializer, const std::string&, ObjectListener_ABC& , NETN_UUID& uuid )
+{
+    deserializer >> uuid;
 }
 void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< RawDataHazardContour >& contours )
 {
@@ -100,14 +104,16 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
         }
     }
     geometry::Rectangle2d box(left,bottom,right,top);
-    const int mx = 100, my=100;
-    const double incx = (box.Right() - box.Left())/mx;
-    const double incy = (box.Top() - box.Bottom())/my;
+    const double incx = 0.005;
+    const double incy = 0.005;
+    const uint32_t mx= static_cast< uint32_t >( ( box.Right() - box.Left() ) / incx ) +1;
+    const uint32_t my= static_cast< uint32_t >( ( box.Top() - box.Bottom() ) / incy ) +1;
+
     std::vector< ObjectListener_ABC::PropagationData > data;
-    for( int i=0; i<my; ++i )
+    for( uint32_t i=0; i<my; ++i )
     {
         const double y = box.Top() - i * incy;
-        for( int j=0; j<mx; ++j )
+        for( uint32_t j=0; j<mx; ++j )
         {
             const double x = box.Left() + j * incx;
             bool found=false;
@@ -141,8 +147,9 @@ RawDataHazardContourGroup::RawDataHazardContourGroup( TacticalObject_ABC& object
     , listeners_ ( new ObjectListenerComposite() )
     , identifier_( rtiId )
     , attributes_( new AttributesUpdater( identifier_, *listeners_ ) )
-    , material_( type.Specific()*256 +  type.Extra() )
+    , agent_( type.Specific()*256 +  type.Extra() )
     , hazardType_( 1 ) // aTP45HazardAreaTypeEnum8_Detailed
+    , uniqueId_( UniqueIdSerializer::GenerateUniqueId( 16 ) )
 {
     RegisterAttributes();
     object_->Register( *this );
@@ -157,7 +164,7 @@ RawDataHazardContourGroup::RawDataHazardContourGroup( const std::string& identif
     , listeners_ ( new ObjectListenerComposite() )
     , identifier_( identifier )
     , attributes_( new AttributesUpdater( identifier_, *listeners_ ) )
-    , material_( 1000 ) // agentTypeEnum16_Chemical
+    , agent_( 1000 ) // agentTypeEnum16_Chemical
     , hazardType_( 1 ) // aTP45HazardAreaTypeEnum8_Detailed
 {
     RegisterAttributes();
@@ -225,9 +232,10 @@ void RawDataHazardContourGroup::Unregister( ObjectListener_ABC& listener )
 void RawDataHazardContourGroup::RegisterAttributes()
 {
     attributes_->Register( "Time", boost::bind( &ReadTime, _1, _2, _3, boost::ref( time_ ) ), Wrapper< uint64_t >( time_ ) );
-    attributes_->Register( "Material", boost::bind( &ReadMaterial, _1, _2, _3, boost::ref( material_ ) ), Wrapper< uint16_t >( material_ ) );
+    attributes_->Register( "Agent", boost::bind( &ReadMaterial, _1, _2, _3, boost::ref( agent_ ) ), Wrapper< uint16_t >( agent_ ) );
     attributes_->Register( "HazardType", boost::bind( &ReadHazardType, _1, _2, _3, boost::ref( hazardType_ ) ), Wrapper< uint8_t >( hazardType_ ) );
     attributes_->Register( "Contours", boost::bind( &ReadContours, _1, _2, _3, boost::ref( contours_ ) ), Wrapper< std::vector< RawDataHazardContour > >( contours_ ) );
+    attributes_->Register( "UniqueID", boost::bind( &ReadUniqueId, _1, _2, _3, boost::ref( uniqueId_ ) ), Wrapper< NETN_UUID >( uniqueId_ ) );
 }
 
 // -----------------------------------------------------------------------------
