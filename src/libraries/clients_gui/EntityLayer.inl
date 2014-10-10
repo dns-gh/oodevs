@@ -122,12 +122,8 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::GraphicalEntity_A
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::FillContextMenu( unsigned int id, kernel::ContextMenu& menu )
 {
-    const auto it = std::find_if( entities_.begin(), entities_.end(), [&]( const kernel::Entity_ABC* value )
-    {
-        return value && value->GetId() == id;
-    } );
-    if( it != entities_.end() )
-        controllers_.actions_.ContextMenu( this, **it, static_cast< const ConcreteEntity& >( **it ), menu );
+    if( const kernel::Entity_ABC* entity = FindEntity( id ) )
+        controllers_.actions_.ContextMenu( this, *entity, static_cast< const ConcreteEntity& >( *entity ), menu );
 }
 
 // -----------------------------------------------------------------------------

@@ -363,12 +363,13 @@ void SelectionMenu::GenerateMenu()
 
             if( const Entity_ABC* entity = dynamic_cast< const Entity_ABC* >( graphicalEntity ) )
             {
-                QAction* action = GenerateAction( graphicalEntity->GetTooltip(), *menu, *mouseEvent_ );
-                action->setData( QVariant::fromValue( entity->GetId() ) );
+                QAction* action = GenerateAction( entity->GetTooltip(), *menu, *mouseEvent_ );
                 if( !action )
                     continue;
+                action->setData( QVariant::fromValue( entity->GetId() ) );
+
                 entityLayer_[ entity->GetId() ] = layer;
-                QPixmap& pixmap = icons_[ entity->GetId() ];
+                const QPixmap& pixmap = icons_[ entity->GetId() ];
                 if( !pixmap.isNull() )
                     action->setIcon( pixmap );
                 else
@@ -392,9 +393,10 @@ void SelectionMenu::GenerateMenu()
 
     if( QAction* resultingAction = menu->QMenu::exec( mouseEvent_->globalPos() ) )
     {
-        auto it = entityLayer_.find( resultingAction->data().toUInt() );
+        const auto id = resultingAction->data().toUInt();
+        auto it = entityLayer_.find( id );
         if( it != entityLayer_.end() )
-            ApplyMousePress( *it->second, resultingAction->data().toUInt(), &*mouseEvent_, menu->GetButton() );
+            ApplyMousePress( *it->second, id, &*mouseEvent_, menu->GetButton() );
     }
     icons_.clear();
     entityLayer_.clear();
@@ -486,12 +488,15 @@ void SelectionMenu::OnSelectionChanged( QAction* action )
 {
     if( mouseEvent_->button() == Qt::RightButton )
     {
-        auto it = entityLayer_.find( action->data().toUInt() );
-        if( !action || ( current_ && current_ == action ) || it == entityLayer_.end() )
+        const auto id = action->data().toUInt();
+        if( !action || current_ == action )
+            return;
+        auto it = entityLayer_.find( id );
+        if( it == entityLayer_.end() )
             return;
 
         kernel::ContextMenu* context = new kernel::ContextMenu( action->parentWidget() );
-        it->second->FillContextMenu( action->data().toUInt(), *context );
+        it->second->FillContextMenu( id, *context );
         context->FillMenu();
         action->setMenu( context );
         current_ = action;

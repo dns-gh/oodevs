@@ -213,17 +213,13 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanLayer::Select( unsigned int id, bool control )
 {
-    const auto it = std::find_if( entities_.begin(), entities_.end(), [&]( const kernel::Entity_ABC* value )
-    {
-        return value && value->GetId() == id;
-    } );
-    if( it == entities_.end() )
+    const kernel::Entity_ABC* entity = FindEntity( id );
+    if( !entity )
         return;
 
-    const kernel::Entity_ABC& entity = **it;
-    const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >();
-    const kernel::Hierarchies* hierarchies = entity.Retrieve< kernel::Hierarchies >();
-    if( !control || !hierarchies || controllers_.actions_.IsSingleSelection( &entity ) || ( positions && !positions->IsSelected() ) )
+    const kernel::UrbanPositions_ABC* positions = entity->Retrieve< kernel::UrbanPositions_ABC >();
+    const kernel::Hierarchies* hierarchies = entity->Retrieve< kernel::Hierarchies >();
+    if( !control || !hierarchies || controllers_.actions_.IsSingleSelection( entity ) || ( positions && !positions->IsSelected() ) )
         EntityLayerBase::Select( id, control );
     else
     {
@@ -237,9 +233,9 @@ void UrbanLayer::Select( unsigned int id, bool control )
             for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = actualSelection_.begin(); it != actualSelection_.end(); ++it )
                 newSelection.push_back( *it );
             if( citySelected )
-                AppendCity( newSelection, city, district, &entity );
+                AppendCity( newSelection, city, district, entity );
             else
-                AppendDistrict( newSelection, district, &entity );
+                AppendDistrict( newSelection, district, entity );
             controllers_.actions_.SetMultipleSelection( newSelection );
         }
         else

@@ -147,20 +147,24 @@ bool EntityLayerBase::HandleMouseDoubleClick( QMouseEvent* event, const geometry
     return HandleMousePress( event, point );
 }
 
+const kernel::Entity_ABC* EntityLayerBase::FindEntity( unsigned int id ) const
+{
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
+        if( (*it)->GetId() == id )
+            return *it;
+    return 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Select( unsigned int id, bool control )
 {
-    const auto it = std::find_if( entities_.begin(), entities_.end(), [&]( const kernel::Entity_ABC* value )
+    if( const kernel::Entity_ABC* entity = FindEntity( id ) )
     {
-        return value && value->GetId() == id;
-    } );
-    if( it != entities_.end() )
-    {
-        selected_ = *it;
-        controllers_.actions_.SetSelected( *selected_, control );
+        controllers_.actions_.SetSelected( *entity, control );
+        selected_ = entity;
     }
 }
 
