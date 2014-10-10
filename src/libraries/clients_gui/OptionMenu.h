@@ -70,11 +70,10 @@ class OptionMenu : public OptionMenuBase
 public:
     //! @name Constructors/Destructor
     //@{
-    OptionMenu( QWidget* parent, kernel::OptionsController& options, const std::string& option, bool savable = true )
+    OptionMenu( QWidget* parent, kernel::OptionsController& options, const std::string& option )
         : OptionMenuBase( parent )
         , options_( options )
         , option_( option )
-        , savable_( savable )
     {
         options_.Register( *this );
     }
@@ -106,7 +105,7 @@ public:
     virtual void OnSelected( int selected )
     {
         const T& value = values_.at( selected );
-        options_.Change( option_, value, savable_ );
+        options_.Change( option_, value );
     };
 
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value )

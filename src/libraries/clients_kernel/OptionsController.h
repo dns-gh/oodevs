@@ -54,7 +54,7 @@ public:
     void UpdateViewOptions();
 
     const OptionVariant& GetOption( const std::string& name ) const;
-    void Change( const std::string& name, const OptionVariant& value, bool savable = true );
+    void Change( const std::string& name, const OptionVariant& value );
     void Remove( const std::string& name );
 
     void LoadGeneralOptions( Settings_ABC& settings );

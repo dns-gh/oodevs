@@ -162,7 +162,7 @@ void GradientPreferencesEditor::OnSelectionChanged()
 {
     auto current = combo_->itemData( combo_->currentIndex(), Qt::UserRole ).value< T_Gradient >();
     preferences_->SetCurrent( current );
-    options_.Change( "Elevation/Gradient", current->GetName(), true );
+    options_.Change( "Elevation/Gradient", current->GetName() );
     gradientWidget_->LoadGradient( current );
     emit UpdateGradient();
 }

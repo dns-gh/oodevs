@@ -78,12 +78,12 @@ void OptionsController::Unregister( tools::Observer_ABC& o )
 // Name: OptionsController::Change
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void OptionsController::Change( const std::string& name, const OptionVariant& value, bool savable )
+void OptionsController::Change( const std::string& name, const OptionVariant& value )
 {
     if( generalOptions_->Has( name ) )
-        generalOptions_->Set( name, value, savable );
+        generalOptions_->Set( name, value );
     else
-        viewOptions_->Set( name, value, savable );
+        viewOptions_->Set( name, value );
     for( auto it = observers_.begin(); it != observers_.end(); ++it )
         ( *it )->OptionChanged( name, value );
 }

@@ -154,10 +154,14 @@ void PreferencesDialog::showEvent( QShowEvent * event )
 // -----------------------------------------------------------------------------
 void PreferencesDialog::reject()
 {
-    controllers_.options_.SetViewOptions( previousViewOptions_ );
-    controllers_.options_.UpdateViewOptions();
-    controllers_.options_.SetGeneralOptions( previousGeneralOptions_ );
-    controllers_.options_.UpdateGeneralOptions();
+    previousViewOptions_->Apply( [&]( const std::string& name, const OptionVariant& option, bool isInPreferencePanel ) {
+        if( isInPreferencePanel )
+            controllers_.options_.Change( name, option );
+    } );
+    previousGeneralOptions_->Apply( [&]( const std::string& name, const OptionVariant& option, bool isInPreferencePanel ) {
+        if( isInPreferencePanel )
+            controllers_.options_.Change( name, option );
+    } );
     previousViewOptions_.reset();
     previousGeneralOptions_.reset();
     proxy_.UpdateLayerOrder( *controllers_.options_.GetViewOptions() );
