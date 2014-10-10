@@ -110,7 +110,7 @@ private:
     QLabel* morale_;
     QLabel* tiredness_;
 
-    QPixmap csword_;
+    QPixmap logo_;
     QImage background_;
     QPixmap boost_, warning_, error_;
     QPixmap experienced_, veteran_;
