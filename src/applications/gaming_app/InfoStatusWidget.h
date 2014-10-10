@@ -112,8 +112,8 @@ private:
 
     QPixmap csword_;
     QImage background_;
-    QImage boost_, warning_, error_;
-    QImage experienced_, veteran_;
+    QPixmap boost_, warning_, error_;
+    QPixmap experienced_, veteran_;
     //@}
 };
 

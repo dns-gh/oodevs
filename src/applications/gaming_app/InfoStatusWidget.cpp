@@ -220,9 +220,9 @@ InfoStatusWidget::~InfoStatusWidget()
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::resizeEvent( QResizeEvent* ev )
 {
-    QImage img( background_.smoothScale( ev->size() ) );
-    setPaletteBackgroundPixmap( QPixmap::fromImage( img ) );
-    name_->setBackgroundPixmap( QPixmap::fromImage( img ) );
+    const QPixmap pixmap = QPixmap::fromImage( background_.smoothScale( ev->size() ) );
+    setPaletteBackgroundPixmap( pixmap );
+    name_->setBackgroundPixmap( pixmap );
     Q3VBox::resizeEvent( ev );
 }
 
@@ -400,9 +400,9 @@ void InfoStatusWidget::SetExperience( const HumanFactors& humans )
 {
     const E_UnitExperience experience = humans.GetExperience();
     if( experience == eUnitExperience_Experimente )
-        experience_->setPixmap( QPixmap::fromImage( experienced_ ) );
+        experience_->setPixmap( experienced_ );
     else if( experience == eUnitExperience_Veteran )
-        experience_->setPixmap( QPixmap::fromImage( veteran_ ) );
+        experience_->setPixmap( veteran_ );
     else
         experience_->setPixmap( QPixmap() );
     QToolTip::add( experience_, tr( "Experience: " ) + tools::ToString( experience ) );
@@ -417,11 +417,11 @@ void InfoStatusWidget::SetMorale( const HumanFactors& humans )
     const E_UnitMorale morale = humans.GetMorale();
     morale_->setVisible( morale != eUnitMorale_Bon );
     if( morale == eUnitMorale_Fanatique )
-        morale_->setPixmap( QPixmap::fromImage( boost_ ) );
+        morale_->setPixmap( boost_ );
     else if( morale == eUnitMorale_Moyen )
-        morale_->setPixmap( QPixmap::fromImage( warning_ ) );
+        morale_->setPixmap( warning_ );
     else if( morale == eUnitMorale_Mauvais )
-        morale_->setPixmap( QPixmap::fromImage( error_ ) );
+        morale_->setPixmap( error_ );
     QToolTip::add( morale_, tr( "Morale: " ) + tools::ToString( morale ) );
 }
 
@@ -434,9 +434,9 @@ void InfoStatusWidget::SetTiredness( const HumanFactors& humans )
     const E_UnitTiredness tiredness = humans.GetTiredness();
     tiredness_->setVisible( tiredness != eUnitTiredness_Normal );
     if( tiredness == eUnitTiredness_Fatigue )
-        tiredness_->setPixmap( QPixmap::fromImage( warning_ ) );
+        tiredness_->setPixmap( warning_ );
     else if( tiredness == eUnitTiredness_Epuise )
-        tiredness_->setPixmap( QPixmap::fromImage( error_ ) );
+        tiredness_->setPixmap( error_ );
     QToolTip::add( tiredness_, tr( "Tiredness: " ) + tools::ToString( tiredness ) );
 }
 
