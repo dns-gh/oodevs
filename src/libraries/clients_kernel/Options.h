@@ -10,6 +10,8 @@
 #ifndef __Options_h_
 #define __Options_h_
 
+#include "ENT/ENT_Enums.h"
+
 namespace kernel
 {
     class OptionVariant;

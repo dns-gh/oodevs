@@ -155,6 +155,24 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
     list = settings.SubEntriesList( root.c_str() );
     for( auto it = list.begin(); it != list.end(); ++it )
         Load( settings, ( root + (*it).toStdString() ).c_str() );
+
+    // TMP, the following will be removed in few weeks when everyone will have a clean registry.
+    // This is due to the fact that the options were added before the xml was filled with the category information,
+    // so right now the registry may be dirty with an empty value in that field.
+    // Uninstalling and reinstalling will also fix that problem.
+    if( Has( "Terrains/Order" ) && !Get( "Terrains/Order" ).To< QString >().isEmpty() )
+        return;
+    QStringList order;
+    tools::Xifstream xisPreferences( "preferences.xml" );
+    xisPreferences >> xml::start( "preferences" ) >> xml::start( "terrains" )
+                   >> xml::list( "terrain", [&]( xml::xistream& x ) {
+                       const auto type = x.attribute< std::string >( "type" );
+                       const QString category = x.attribute< QString >( "category" );
+                       Set( "Terrains/" + type + "/Category", category, true );
+                       if( !category.isEmpty() && !order.contains( category ) )
+                           order << category;
+                       } );
+    Set( "Terrains/Order", order.join( ";" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,26 +213,25 @@ void Options::InitializeGeneral()
     Set( "RefreshRate",          50,                        true );
 
     // replay
-    Set( "Replay/SmoothPositions", true, true ); // not used yet
+    Set( "Replay/SmoothPositions", true, true );
 
     // color
-    Set( "Color/ActiveViewFrame",      QString( "#f00f0f" ), true ); // not used yet
-    Set( "Color/MissingLogisticLinks", QString( "#ffff00" ), true ); // not used yet
-    Set( "Color/Neutralized",          QString( "#ebe665" ), true );
-    Set( "Color/Phantom",              QString( "#3cb45a" ), true );
-    Set( "Color/TacticallyDestroyed",  QString( "#ebb965" ), true );
-    Set( "Color/TotallyDestroyed",     QString( "#eb6a65" ), true );
-
-    Set( "Color/Healthy",       QString( "#2180ff" ), true );
-    Set( "Color/Dead",          QString( "#000000" ), true );
-    Set( "Color/Contaminated",  QString( "#00ff00" ), true );
-    Set( "Color/Wounded",       QString( "#ff0000" ), true );
-    Set( "Color/MostlyHealthy", QString( "#ffff00" ), true );
+    Set( "Color/ActiveViewFrame",     QString( "#f00f0f" ), true ); // not used yet
+    Set( "Color/Contaminated",        QString( "#00ff00" ), true );
+    Set( "Color/Dead",                QString( "#000000" ), true );
+    Set( "Color/Healthy",             QString( "#2180ff" ), true );
+    Set( "Color/MostlyHealthy",       QString( "#ffff00" ), true );
+    Set( "Color/Neutralized",         QString( "#ebe665" ), true );
+    Set( "Color/Phantom",             QString( "#3cb45a" ), true );
+    Set( "Color/TacticallyDestroyed", QString( "#ebb965" ), true );
+    Set( "Color/TotallyDestroyed",    QString( "#eb6a65" ), true );
+    Set( "Color/Wounded",             QString( "#ff0000" ), true );
 
     // sound
     tools::Path soundPath;
     soundPath = soundPath.Absolute( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) );
     Set( "Sound/Directory", QString( soundPath.Normalize().ToUTF8().c_str() ), true );
+    Set( "Sound/Mute", false, true );
     Set( "Sound/Volume/directfire", 50, true );
     Set( "Sound/Volume/indirectsmoke", 50, true );
     Set( "Sound/Volume/indirectexplosive", 50, true );
@@ -263,7 +280,7 @@ void Options::InitializeView()
     Set( "WeaponRanges",         FourStateOption::Selected(), true );
 
     // Accommodation
-    Set( "Accommodation/Color",      false,                            true );
+    Set( "Accommodation/Enabled",    false,                            true );
     Set( "Accommodation/Displayed",  QString( "" ),                    true );
     Set( "Accommodation/Gradient",   QString( "0,#00ff00;1,#ff0000" ), true );
     Set( "Accommodation/Max",        1.f,                              true );
@@ -276,7 +293,7 @@ void Options::InitializeView()
     Set( "ContourLines/Height",  100,                  true );
 
     // Density
-    Set( "Density/Color",      false,                            true );
+    Set( "Density/Enabled",    false,                            true );
     Set( "Density/Gradient",   QString( "0,#00ff00;1,#ff0000" ), true );
     Set( "Density/Max",        1.f,                              true );
     Set( "Density/Min",        0.f,                              true );
@@ -324,16 +341,16 @@ void Options::InitializeView()
     xisPreferences >> xml::start( "preferences" ) >> xml::start( "terrains" )
                    >> xml::list( "terrain", [&]( xml::xistream& x ) {
                        const auto type = x.attribute< std::string >( "type" );
-                       const QString category = x.attribute< QString >( "category", "" ); // not used yet
-                       Set( "Terrains/" + type + "/Category", category, true ); // not in trunk yet
-                       Set( "Terrains/" + type + "/Name", x.attribute< QString >( "name", type.c_str() ), true ); // not in trunk yet
+                       const QString category = x.attribute< QString >( "category" );
+                       Set( "Terrains/" + type + "/Category", category, true );
+                       Set( "Terrains/" + type + "/Name", x.attribute< QString >( "name", type.c_str() ), true );
                        Set( "Terrains/" + type + "/Shown", true );
                        Set( "Terrains/" + type + "/Width", x.content< float >( "width", 1.f ) );
                        Set( "Terrains/" + type + "/Color", x.content< QString >( "color", "#000000" ) );
                        if( !category.isEmpty() && !order.contains( category ) )
                            order << category;
                        } );
-    Set( "Terrains/Order", order.join( ";" ) ); // not used yet
+    Set( "Terrains/Order", order.join( ";" ) );
 
     // visualisation scales
     for( size_t i = 0; i < DefaultVisualisationScales::size_; ++i )
