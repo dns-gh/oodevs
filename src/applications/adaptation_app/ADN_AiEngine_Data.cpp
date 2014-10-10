@@ -135,14 +135,6 @@ namespace
         { false, false, true,  false, "refugees" },
         { false, false, true,  false, "cp" }
     };
-
-    int FindPerceptionId( const std::string& name )
-    {
-        for( std::size_t i = 0; i < boost::size( defaultPerceptions ); ++i )
-            if( defaultPerceptions[ i ].name == name )
-                return static_cast< int >( i );
-        return -1;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -276,9 +268,12 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::list( "availability", [&]( xml::xistream& xis )
             {
                 const std::string type = xis.attribute< std::string >( "type" );
-                const int index = FindPerceptionId( type );
-                if( index != -1 )
-                    perceptionInfos_[ index ]->ReadArchive( xis );
+                for( std::size_t i = 0; i < boost::size( defaultPerceptions ); ++i )
+                    if( defaultPerceptions[ i ].name == type )
+                    {
+                        perceptionInfos_[ i ]->ReadArchive( xis );
+                        return;
+                    }
             } )
           >> xml::end;
     if( !maxPerceptionLevel.empty() )
