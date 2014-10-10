@@ -138,6 +138,7 @@ public:
 
         void SetWorkingDirectory( const tools::Path& filename );
         ADN_Type_Path& GetWorkingDirectory();                         //!< Returns the working directory
+        ADN_Type_Path& GetOldWorkingDirectory();                      //!< Returns the old working directory
 
         void UseTempDirectory( bool bUse );
         const tools::Path& GetTempDirectory() const;                            //!< Returns a temporary directory
@@ -148,6 +149,7 @@ public:
 
     private:
         ADN_Type_Path szWorkingDir_;
+        ADN_Type_Path szOldWorkingDir_;
         tools::Path   szTempDir_;
         bool          bTmpActivated_;
     };
@@ -191,6 +193,16 @@ inline
 ADN_Type_Path& ADN_Project_Data::WorkDirInfos::GetWorkingDirectory()
 {
     return szWorkingDir_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::GetOldWorkingDirectory
+// Created: SLI 2014-10-09
+// -----------------------------------------------------------------------------
+inline
+ADN_Type_Path& ADN_Project_Data::WorkDirInfos::GetOldWorkingDirectory()
+{
+    return szOldWorkingDir_;
 }
 
 //-----------------------------------------------------------------------------

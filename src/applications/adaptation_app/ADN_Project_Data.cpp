@@ -273,9 +273,7 @@ ADN_Project_Data::FileInfos& ADN_Project_Data::FileInfos::operator=( const tools
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
 ADN_Project_Data::WorkDirInfos::WorkDirInfos()
-    : szWorkingDir_ ()
-    , szTempDir_    ()
-    , bTmpActivated_( false )
+    : bTmpActivated_( false )
 {
     // NOTHING
 }
@@ -305,6 +303,7 @@ tools::Path ADN_Project_Data::WorkDirInfos::GetRelativePath( const tools::Path& 
 //-----------------------------------------------------------------------------
 void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const tools::Path& directory )
 {
+    szOldWorkingDir_ = szWorkingDir_.GetData();
     if( directory.IsDirectory() )
     {
         directory.CreateDirectories();
