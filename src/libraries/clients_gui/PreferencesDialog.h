@@ -17,25 +17,21 @@
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class Controllers;
     class ModelUnLoaded;
+    class Options;
+    class StaticModel;
 }
 
 namespace gui
 {
     class Elevation2dLayer;
     class GlProxy;
-    class GlTools_ABC;
-    class GraphicPreferences;
-    class GraphicsPanel;
-    class Layer_ABC;
-    class LayersPanel;
+    class GradientPreferences;
     class LightingProxy;
     class PreferencesList;
     class PreferencePanel_ABC;
-    class CoordinateSystemsPanel;
-    class Painter_ABC;
+    class TerrainSettings;
 
 // =============================================================================
 /** @class  PreferencesDialog
@@ -55,30 +51,20 @@ public:
              PreferencesDialog( QWidget* parent,
                                 kernel::Controllers& controllers,
                                 LightingProxy& lighting,
-                                kernel::CoordinateConverter_ABC& coordConverter,
-                                const Painter_ABC& painter,
+                                const kernel::StaticModel& staticModel,
                                 GlProxy& proxy,
                                 const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
-                                GraphicPreferences& preferences );
+                                const std::shared_ptr< TerrainSettings >& settings,
+                                const std::shared_ptr< GradientPreferences >& preferences );
     virtual ~PreferencesDialog();
     //@}
 
     //! @name Operations
     //@{
-    virtual QSize sizeHint () const;
     virtual void showEvent( QShowEvent * event );
     virtual void reject();
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
-
-    void PurgeDialog();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnOk();
-    void OnCancel();
     //@}
 
 signals:
@@ -88,31 +74,25 @@ signals:
     //@}
 
 private:
-
     //! @name Helpers
     //@{
-    void BuildSettings();
+    void Load( const GlProxy& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< PreferencePanel_ABC* > T_Pages;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const Painter_ABC& painter_;
-    const GlProxy& proxy_;
-    T_Pages pages_;
+    GlProxy& proxy_;
+    std::shared_ptr< TerrainSettings > settings_;
+    std::shared_ptr< GradientPreferences > preferences_;
+    std::shared_ptr< kernel::Options > previousGeneralOptions_;
+    std::shared_ptr< kernel::Options > previousViewOptions_;
+    //std::vector< std::unique_ptr< GLOptions > > previousViewsOptions_;
     PreferencesList* list_;
-    LayersPanel* layersPanel_;
-    GraphicsPanel* pGraphicPrefPanel_;
-    CoordinateSystemsPanel* pCoordinateSystemsPanel_;
-    LightingProxy& lighting_;
-    std::shared_ptr< Elevation2dLayer > elevation2dLayer_;
+    QStackedWidget* stack_;
+    std::vector< PreferencePanel_ABC* > panels_;
     //@}
 };
 

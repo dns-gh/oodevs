@@ -29,18 +29,16 @@ class PreferencePanel_ABC : public QScrollArea
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PreferencePanel_ABC( QWidget* parent, const char* name = 0 );
+             PreferencePanel_ABC( QWidget* parent, const QString& objectName );
     virtual ~PreferencePanel_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Load( const GlProxy& ) {}
-    virtual void Commit() {}
-    virtual void Reset() {}
+    virtual void Load( const GlProxy& );
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __PreferencePanel_ABC_h_
