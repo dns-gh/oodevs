@@ -351,6 +351,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers_[ eLayerTypes_TacticalLines ]          = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile_, *drawingsBuilder_ );
     layers_[ eLayerTypes_Terrain ]                = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, *graphicPreferences_, picker );
     layers_[ eLayerTypes_TerrainProfiler ]        = profiler;
+    layers_[ eLayerTypes_Tooltips ]               = tooltips;
     layers_[ eLayerTypes_Urban ]                  = std::make_shared< gui::UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     layers_[ eLayerTypes_Watershed ]              = std::make_shared< gui::WatershedLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers_[ eLayerTypes_WeaponRanges ]           = std::make_shared< WeaponRangeLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
