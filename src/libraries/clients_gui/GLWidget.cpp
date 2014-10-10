@@ -20,7 +20,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <iterator>
 #include <ctime>
-#include <GL/glu.h>
 
 using namespace geometry;
 using namespace kernel;
@@ -37,18 +36,6 @@ bool GlWidget::passLess::operator()( GlRenderPass_ABC* lhs, GlRenderPass_ABC* rh
 
 namespace
 {
-    void CALLBACK vertexCallback( GLvoid* vertex )
-    {
-        glVertex3dv( (GLdouble*) vertex );
-    }
-    void CALLBACK beginCallback( GLenum which )
-    {
-        glBegin( which );
-    }
-    void CALLBACK endCallback()
-    {
-        glEnd();
-    }
     float defaultSymbolSize = 3.f;
 }
 
