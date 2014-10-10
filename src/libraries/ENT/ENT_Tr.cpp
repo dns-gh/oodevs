@@ -62,6 +62,7 @@ typedef ENT_Tr::Converter< E_CoordinateSystem > T_ConverterCoordinateSystem;
 typedef ENT_Tr::Converter< E_VisualisationScale > T_ConverterVisualisationScale;
 typedef ENT_Tr::Converter< E_PerceptionLevel > T_ConverterPerceptionLevel;
 typedef ENT_Tr::Converter< E_PerceptionType > T_ConverterPerceptionType;
+typedef ENT_Tr::Converter< E_LocationCategory > T_ConverterLocationCategory;
 
 typedef ENT_Tr::Converter< sword::MagicAction::Type > T_ConverterMagicActionType;
 typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicActionType;
@@ -540,6 +541,16 @@ T_ConverterCoordinateSystem CoordinateSystemConverter_[] =
     T_ConverterCoordinateSystem( "", "", (E_CoordinateSystem)-1 )
 };
 
+T_ConverterLocationCategory LocationCategoryConverter_[] =
+{
+    T_ConverterLocationCategory( "hydrography" , QT_TRANSLATE_NOOP( "LocationCategory", "Hydrography" ),  eLocationCategory_Hydrography  ),
+    T_ConverterLocationCategory( "network",      QT_TRANSLATE_NOOP( "LocationCategory", "Network" ),      eLocationCategory_Network      ),
+    T_ConverterLocationCategory( "physiography", QT_TRANSLATE_NOOP( "LocationCategory", "Physiography" ), eLocationCategory_Physiography ),
+    T_ConverterLocationCategory( "urban",        QT_TRANSLATE_NOOP( "LocationCategory", "Urban" ),        eLocationCategory_Urban        ),
+    T_ConverterLocationCategory( "vegetation",   QT_TRANSLATE_NOOP( "LocationCategory", "Vegetation" ),   eLocationCategory_Vegetation   ),
+    T_ConverterLocationCategory( "", "", (E_LocationCategory)-1 )
+};
+
 T_ConverterMagicActionType MagicActionTypeConverter_[] =
 {
     T_ConverterMagicActionType( "change_diplomacy",               QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change diplomacy" ), sword::MagicAction::change_diplomacy ),
@@ -851,6 +862,7 @@ void ENT_Tr::InitTranslations()
     INIT_TR( LayerTypes );
     INIT_TR( LightingType );
     INIT_TR( Location );
+    INIT_TR( LocationCategory );
     INIT_TR( LocationType );
     INIT_TR( MeetingEngagementStatus );
     INIT_TR( MissionType );
@@ -905,6 +917,7 @@ IMPLEMENT_CONVERT_METHODS( HumanWound );
 IMPLEMENT_CONVERT_METHODS( InjuriesSeriousness );
 IMPLEMENT_CONVERT_METHODS( LightingType );
 IMPLEMENT_CONVERT_METHODS( Location );
+IMPLEMENT_CONVERT_METHODS( LocationCategory );
 IMPLEMENT_CONVERT_METHODS( LocationType );
 IMPLEMENT_CONVERT_METHODS( MeetingEngagementStatus );
 IMPLEMENT_CONVERT_METHODS( MissionType );

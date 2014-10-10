@@ -992,11 +992,34 @@
     </message>
     <message>
         <source>User layer [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Calque utilisateur [%1]</translation>
     </message>
     <message>
         <source>Event creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Création d&apos;évenement</translation>
+    </message>
+</context>
+<context>
+    <name>LocationCategory</name>
+    <message>
+        <source>Hydrography</source>
+        <translation>Hydrographie</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Réseau</translation>
+    </message>
+    <message>
+        <source>Physiography</source>
+        <translation>Physiographie</translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation>Urbain</translation>
+    </message>
+    <message>
+        <source>Vegetation</source>
+        <translation>Végétation</translation>
     </message>
     <message>
         <source>Heading</source>

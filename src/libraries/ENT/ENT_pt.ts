@@ -1040,6 +1040,29 @@
     </message>
 </context>
 <context>
+    <name>LocationCategory</name>
+    <message>
+        <source>Hydrography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physiography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vegetation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>sword::DotationType</name>
     <message>
         <source>Ammunition</source>

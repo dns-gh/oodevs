@@ -10,23 +10,20 @@
 #ifndef __GraphicPreferences_h_
 #define __GraphicPreferences_h_
 
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include <spatialcontainer/TerrainData.h>
-#include <graphics/GraphicSetup_ABC.h>
-
-namespace xml
-{
-    class xistream;
-    class xostream;
-}
 
 namespace kernel
 {
-    class Controllers;
+    class Options;
+    class OptionsController;
 }
 
 namespace gui
 {
     class TerrainPreference;
+    class TerrainSettings;
+    class TerrainPreferenceWidget;
 
 // =============================================================================
 /** @class  GraphicPreferences
@@ -34,63 +31,57 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class GraphicPreferences : public GraphicSetup_ABC
+class GraphicPreferences : public QWidget
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GraphicPreferences( kernel::Controllers& controllers );
+    explicit GraphicPreferences( kernel::OptionsController& options,
+                                 const std::shared_ptr< TerrainSettings >& settings,
+                                 QWidget* parent = 0 );
     virtual ~GraphicPreferences();
     //@}
 
     //! @name Operations
     //@{
-    void SetAlpha( float a );
-
-    void Display( QWidget* parent ) const;
-
-    virtual void SetupLineGraphics  ( const Data_ABC* pData );
-    virtual void SetupLineGraphics  ( unsigned int offset );
-    virtual void SetupBorderGraphics( const Data_ABC* pData );
-    virtual void SetupAreaGraphics  ( const Data_ABC* pData );
-
-    void Commit();
-    void Revert();
+    void Display( QVBoxLayout* parent );
+    void Load( const kernel::Options& options );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GraphicPreferences( const GraphicPreferences& );            //!< Copy constructor
-    GraphicPreferences& operator=( const GraphicPreferences& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void ReadTerrainPreference( xml::xistream& xis );
     void Save() const;
     void Save( xml::xostream& xos, const TerrainPreference& preference ) const;
+    void Build(); 
+    void Swap( int direction, QWidget* widget );
     //@}
 
-private:
-    //! @name Types
+private slots:
+    //! @name Slots
     //@{
-    typedef std::map< TerrainData, TerrainPreference* > T_TerrainPreferences;
-    typedef T_TerrainPreferences::const_iterator      CIT_TerrainPreferences;
-    typedef std::vector< TerrainPreference* >           T_Displays;
-    typedef T_Displays::const_iterator                CIT_Displays;
+    void Up( QWidget* );
+    void Down( QWidget* );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    T_TerrainPreferences terrainPrefs_;
-    T_Displays displays_;
-    float alpha_;
+    kernel::OptionsController& options_;
+    std::shared_ptr< TerrainSettings > settings_;
+    std::map< QString, TerrainPreferenceWidget* > widgets_;
+    QStringList orders_;
+
+    QVBoxLayout* layout_;
+    QIcon upIcon_;
+    QIcon downIcon_;
+    QSignalMapper* upSignalMapper_;
+    QSignalMapper* downSignalMapper_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GraphicPreferences_h_
