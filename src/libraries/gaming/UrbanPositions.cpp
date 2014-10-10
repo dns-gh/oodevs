@@ -29,8 +29,9 @@ namespace
 // Name: UrbanPositions constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter, const kernel::UrbanObject_ABC& object )
-    : gui::UrbanPositions( eUrbanLevelBlock, object, Convert( location, converter ) )
+UrbanPositions::UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter, const kernel::UrbanObject_ABC& object,
+                                gui::Tesselator& tesselator )
+    : gui::UrbanPositions( eUrbanLevelBlock, object, Convert( location, converter ), tesselator )
 {
     // NOTHING
 }

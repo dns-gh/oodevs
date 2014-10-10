@@ -46,6 +46,9 @@ enum E_PerceptionResult
     eIdentification = 3,
 };
 
+typedef std::vector< geometry::Point2d >               T_TessellatedPoints;
+typedef std::pair< unsigned int, T_TessellatedPoints > T_TessellatedData;
+typedef std::vector< T_TessellatedData >               T_TessellatedPolygon;
 }
 
 #endif // __Kernel_Types_h_

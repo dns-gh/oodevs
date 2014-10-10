@@ -28,6 +28,7 @@ namespace kernel
 namespace gui
 {
     class PropertiesDictionary;
+    class Tesselator;
 }
 
 // =============================================================================
@@ -42,9 +43,12 @@ class UrbanPositions : public gui::UrbanPositions
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
-             UrbanPositions( const geometry::Polygon2f& location, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
-             UrbanPositions( xml::xistream& xis, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object,
+                             const kernel::CoordinateConverter_ABC& converter, gui::Tesselator& tesselator );
+             UrbanPositions( const geometry::Polygon2f& location, gui::PropertiesDictionary& dictionary, EUrbanLevel level,
+                             const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter, gui::Tesselator& tesselator );
+             UrbanPositions( xml::xistream& xis, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object,
+                             const kernel::CoordinateConverter_ABC& converter, gui::Tesselator& tesselator );
     virtual ~UrbanPositions();
     //@}
 

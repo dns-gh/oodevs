@@ -11,6 +11,7 @@
 #include "UrbanPositions.h"
 
 #include "GlTools_ABC.h"
+#include "Tesselator.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -27,9 +28,10 @@ namespace
 // Name: UrbanPositions constructor
 // Created: ABR 2012-06-05
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object )
+UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object, Tesselator& tesselator )
     : level_            ( level )
     , object_           ( object )
+    , tesselator_       ( tesselator )
     , selected_         ( false )
     , hasInfrastructure_( false )
     , area_             ( 0.f )
@@ -41,9 +43,11 @@ UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object
 // Name: UrbanPositions constructor
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object, std::vector< geometry::Point2f > positions )
+UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object, std::vector< geometry::Point2f > positions,
+                                Tesselator& tesselator )
     : level_            ( level )
     , object_           ( object )
+    , tesselator_       ( tesselator )
     , selected_         ( false )
     , hasInfrastructure_( false )
     , area_             ( 0.f )
@@ -180,7 +184,7 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
             if( zoom <= 0.0007f )
                 nameSize = static_cast< unsigned int >( nameSize * zoom * 1600 );
         }
-        tools.DrawDecoratedPolygon( polygon_, name, nameSize );
+        tools.DrawDecoratedPolygon( tessellatedPolygon_, polygon_.Vertices(), boundingBox_.Center(), name, nameSize );
         if( selected_ )
             tools.DrawSelectedPolygon( polygon_.Vertices() );
     }
@@ -213,6 +217,7 @@ void UrbanPositions::ComputeCachedValues( std::vector< geometry::Point2f >& poin
         boundingBox_ = polygon_.BoundingBox();
         barycenter_ = polygon_.Barycenter();
         area_ = polygon_.ComputeArea();
+        tessellatedPolygon_ = tesselator_.Tessellate( polygon_ );
     }
 }
 

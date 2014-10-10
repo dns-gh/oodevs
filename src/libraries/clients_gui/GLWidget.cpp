@@ -72,9 +72,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     , currentPass_ ()
     , bMulti_      ( false )
     , SymbolSize_  ( defaultSymbolSize )
-    , tesselator_  ( 0 )
     , pPickingSelector_( new PickingSelector() )
-    , selectionBuffer_( 1024 )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -87,8 +85,6 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
 // -----------------------------------------------------------------------------
 GlWidget::~GlWidget()
 {
-    if( tesselator_ )
-        gluDeleteTess( tesselator_ );
     glDeleteLists( halfCircle_, 1 );
     glDeleteLists( circle_, 1 );
 }
@@ -111,10 +107,6 @@ void GlWidget::initializeGL()
     glEnable( GL_LINE_SMOOTH );
     glEnable( GL_BLEND );
     bMulti_ = gl::HasMultiTexturing();
-    tesselator_ = gluNewTess();
-    gluTessCallback( tesselator_, GLU_TESS_VERTEX, (void (__stdcall *)(void))vertexCallback );
-    gluTessCallback( tesselator_, GLU_TESS_BEGIN,  (void (__stdcall *)(void))beginCallback );
-    gluTessCallback( tesselator_, GLU_TESS_END,    (void (__stdcall *)(void))endCallback );
 }
 
 // -----------------------------------------------------------------------------
@@ -640,38 +632,27 @@ namespace
 // Name: GlWidget::DrawDecoratedPolygon
 // Created: RPD 2009-12-15
 // -----------------------------------------------------------------------------
-void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const std::string& name, unsigned int fontHeight )
+void GlWidget::DrawDecoratedPolygon( const kernel::T_TessellatedPolygon& polygon, const T_PointVector& vertices,
+                                     const geometry::Point2f& center, const std::string& name, unsigned int fontHeight )
 {
-    if( !tesselator_ )
+    if( polygon.empty() )
         return;
 
-    // TODO renommer en DrawUrbanBlock?
-    const T_PointVector& vertices = polygon.Vertices();
-    const std::size_t size = vertices.size();
-
-    if( size == 0u )
-        return;
-
-    if( size > urbanGeometryBuffer_.size() )
-        urbanGeometryBuffer_.resize( size );
-
-    Fill( urbanGeometryBuffer_, vertices );
-
-    gluTessBeginPolygon( tesselator_, NULL );
-    gluTessBeginContour( tesselator_ );
-
-    for( size_t i = 0; i< vertices.size(); i++ )
-        gluTessVertex( tesselator_, (GLdouble*)&urbanGeometryBuffer_[ i ][ 0 ], (GLdouble*)&urbanGeometryBuffer_[ i ][ 0 ] );
-
-    gluTessEndContour( tesselator_ );
-    gluTessEndPolygon( tesselator_ );
+    for( auto it = polygon.begin(); it != polygon.end(); ++it )
+    {
+        glBegin( it->first );
+        const auto& points = it->second;
+        for( auto itPoint = points.begin(); itPoint != points.end(); ++itPoint )
+            glVertex2dv( (const double*) &*itPoint );
+        glEnd();
+    }
 
     for( auto it = vertices.begin(); it + 1 != vertices.end(); ++it )
-        DrawLine( *it, *(it+1), 1. );
+        DrawLine( *it, *( it + 1 ), 1. );
     DrawLine( vertices.back(), vertices.front(), 1. );
 
     if( !name.empty() )
-        DrawTextLabel( name, polygon.BoundingBoxCenter(), fontHeight );
+        DrawTextLabel( name, center, fontHeight );
 }
 
 // -----------------------------------------------------------------------------

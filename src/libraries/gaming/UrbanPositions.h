@@ -17,6 +17,11 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace gui
+{
+    class Tesselator;
+}
+
 namespace sword
 {
     class Location;
@@ -33,7 +38,8 @@ class UrbanPositions : public gui::UrbanPositions
 public:
     //! @name Constructors/Destructor
     //@{s
-             UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter, const kernel::UrbanObject_ABC& object );
+             UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter, const kernel::UrbanObject_ABC& object,
+                             gui::Tesselator& tesselator );
     virtual ~UrbanPositions();
     //@}
 };
