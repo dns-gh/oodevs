@@ -15,7 +15,6 @@
 #include "ADN_Tr.h"
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
-#include <boost/assign/list_of.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanSpeedsInfos: Constructor
@@ -114,40 +113,33 @@ void ADN_AiEngine_Data::PerceptionInfos::WriteArchive( xml::xostream& xos, const
 
 namespace
 {
-    const int perceptionsSize = 11;
-    const bool defaultPerceptions[ perceptionsSize ][ 4 ] =
+    struct DefaultPerception
     {
-        { true,  false, false, false }, // heading
-        { true,  false, false, false }, // speed
-        { false, false, true,  false }, // opstate
-        { false, true,  false, false }, // side
-        { false, false, true,  false }, // level
-        { false, true,  false, false }, // nature (partial)
-        { false, false, true,  false }, // nature (full)
-        { false, false, true,  false }, // surrendered
-        { false, false, true,  false }, // prisoner
-        { false, false, true,  false }, // refugees
-        { false, false, true,  false }  // CP
+        bool detection;
+        bool recognition;
+        bool identification;
+        bool never;
+        std::string name;
     };
 
-    const std::vector< std::string> perceptionsIds =
-        boost::assign::list_of
-        ( "heading" )
-        ( "speed" )
-        ( "opstate" )
-        ( "side" )
-        ( "level" )
-        ( "nature-partial" )
-        ( "nature-full" )
-        ( "surrendered" )
-        ( "prisoner" )
-        ( "refugees" )
-        ( "cp" );
+    static const DefaultPerception defaultPerceptions[] = {
+        { true,  false, false, false, "heading" },
+        { true,  false, false, false, "speed" },
+        { false, false, true,  false, "opstate" },
+        { false, true,  false, false, "side" },
+        { false, false, true,  false, "level" },
+        { false, true,  false, false, "nature-partial" },
+        { false, false, true,  false, "nature-full" },
+        { false, false, true,  false, "surrendered" },
+        { false, false, true,  false, "prisoner" },
+        { false, false, true,  false, "refugees" },
+        { false, false, true,  false, "cp" }
+    };
 
     int FindPerceptionId( const std::string& name )
     {
-        for( std::size_t i = 0; i < perceptionsIds.size(); ++i )
-            if( perceptionsIds[ i ] == name )
+        for( std::size_t i = 0; i < boost::size( defaultPerceptions ); ++i )
+            if( defaultPerceptions[ i ].name == name )
                 return static_cast< int >( i );
         return -1;
     }
@@ -182,13 +174,13 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , nMaxPerceptionLevel_         ( ePerceptionLevel_Identification )
 {
     nMaxPerceptionLevel_.SetAlphabeticalSort( false );
-    for( int i = 0; i < perceptionsSize; ++i )
+    for( int i = 0; i < boost::size( defaultPerceptions ); ++i )
     {
         PerceptionInfos* infos = new PerceptionInfos();
-        infos->bDetection_      = defaultPerceptions[ i ][ 0 ];
-        infos->bRecognition_    = defaultPerceptions[ i ][ 1 ];
-        infos->bIdentification_ = defaultPerceptions[ i ][ 2 ];
-        infos->bNever_          = defaultPerceptions[ i ][ 3 ];
+        infos->bDetection_      = defaultPerceptions[ i ].detection;
+        infos->bRecognition_    = defaultPerceptions[ i ].recognition;
+        infos->bIdentification_ = defaultPerceptions[ i ].identification;
+        infos->bNever_          = defaultPerceptions[ i ].never;
         perceptionInfos_.AddItem( infos );
     }
 }
@@ -357,7 +349,7 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output ) const
                 << xml::attribute( "max-level", nMaxPerceptionLevel_.Convert() )
                 << xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ );
     for( std::size_t i = 0; i < perceptionInfos_.size(); ++i )
-        perceptionInfos_[ i ]->WriteArchive( output, perceptionsIds[ i ] );
+        perceptionInfos_[ i ]->WriteArchive( output, defaultPerceptions[ i ].name );
     output  << xml::end
             << xml::start( "recon-and-search-speeds" )
             << xml::attribute( "recon-speed", reconSpeed_ )
