@@ -140,6 +140,18 @@
       <parameter name="types" type="list(satisfaction-type)" attribute="type" />
     </parameters>
   </primitive>
+  <primitive category="extract" name="resources-satisfactions" type="list(key,satisfaction-states)">
+    <comments>
+      <comment lang="en"><![CDATA[Satisfaction values for specified resources.]]></comment>
+      <comment lang="fr"><![CDATA[Valeurs de satisfactions pour les resources spécifiées.]]></comment>
+      <comment lang="es"><![CDATA[Valores de satisfacción para los recursos especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Valores de satisfação para os recursos especificados.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="resources" type="list(resource-type)" attribute="types" />
+    </parameters>
+  </primitive>
   <primitive category="extract" name="population-in-selected-blocks" type="list(key,populations)">
     <comments>
       <comment lang="en"><![CDATA[Amount of population into specified urban blocks.]]></comment>

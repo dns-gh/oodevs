@@ -2054,6 +2054,29 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticTreeView</name>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
+    </message>
+    <message>
+        <source>Action cancelled: It would create a cycle in the logistic hierarchy</source>
+        <translation>Action annulée : elle causerait la création d&apos;un cycle dans la hiérarchie logistique</translation>
+    </message>
+    <message>
+        <source>The operation couldn&apos;t be performed</source>
+        <translation>L&apos;opération n&apos;a pas pu être réalisée</translation>
+    </message>
+    <message>
+        <source>Invalid subordinate automat</source>
+        <translation>Automate subordonné invalide</translation>
+    </message>
+    <message>
+        <source>Target is not a logistic entity</source>
+        <translation>La cible n&apos;est pas une entité logistique</translation>
+    </message>
+</context>
+<context>
     <name>LogisticsRequestsHistoryTable</name>
     <message>
         <source>Previous state</source>

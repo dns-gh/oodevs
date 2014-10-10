@@ -36,6 +36,7 @@ public:
     virtual QString GetLinkType() const { return "logistic-base"; }
     virtual void Load( xml::xistream& xis, const kernel::Entity_ABC* superior ) = 0;
     virtual void SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior ) = 0;
+    virtual void UnregisterCurrentSuperior( const LogisticHierarchiesBase* parent ) = 0;
     //@}
 };
 

@@ -111,6 +111,7 @@ namespace
             ( "resources"                             , BuildExtractor< Value, attributes::Resources >() )
             ( "satisfactions"                         , BuildExtractor< Value, attributes::PopulationSatisfaction >() )
             ( "satisfactions-dpre"                    , BuildExtractor< Value, attributes::DPRESatisfaction >() )
+            ( "resources-satisfactions"               , BuildExtractor< Value, attributes::PopulationResourcesSatisfaction >() )
             ( "stocks"                                , BuildExtractor< Value, attributes::LogSupplyStocks >() )
             ( "waiting-for-medical"                   , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() )
             ( "contaminated"                          , BuildExtractor< Value, attributes::Contaminated >() )

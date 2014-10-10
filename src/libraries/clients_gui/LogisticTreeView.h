@@ -58,7 +58,7 @@ public:
 protected:
     //! @name Abstract methods
     //@{
-    virtual void SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior ) = 0;
+    virtual void SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* currentsuperior, const kernel::Entity_ABC* nominalsuperior ) = 0;
     virtual const kernel::Entity_ABC* RetrieveSuperior( const kernel::Entity_ABC& entity ) const = 0;
     //@}
 

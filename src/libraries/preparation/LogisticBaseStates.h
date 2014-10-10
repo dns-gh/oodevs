@@ -78,6 +78,7 @@ private:
 
     void DrawLink( const geometry::Point2f& where, const gui::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const;
     bool HasMissingLogisticLinks() const;
+    virtual void UnregisterCurrentSuperior( const gui::LogisticHierarchiesBase* parent );
     //@}
 
 private:

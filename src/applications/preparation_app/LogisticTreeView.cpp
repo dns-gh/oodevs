@@ -34,7 +34,7 @@ LogisticTreeView::LogisticTreeView( const QString& objectName,
             return RetrieveSuperior( entity );
         },
         [&] ( kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* ) {
-            SetSuperior( entity, nominalSuperior );
+            SetSuperior( entity, nominalSuperior, 0 );
         } );
     controllers_.Update( *this );
 }
@@ -52,11 +52,11 @@ LogisticTreeView::~LogisticTreeView()
 // Name: LogisticTreeView::SetSuperior
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------
-void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior )
+void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* currentsuperior, const kernel::Entity_ABC* )
 {
     gui::LogisticHierarchiesBase* hierarchy = const_cast< kernel::Entity_ABC& >( entity ).Retrieve< gui::LogisticHierarchiesBase >();
     assert( hierarchy );
-    hierarchy->SetLogisticSuperior( ( superior ) ? superior : kernel::LogisticBaseSuperior() );
+    hierarchy->SetLogisticSuperior( ( currentsuperior ) ? currentsuperior : kernel::LogisticBaseSuperior() );
 }
 
 // -----------------------------------------------------------------------------

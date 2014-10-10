@@ -40,6 +40,13 @@ LogisticHierarchies::~LogisticHierarchies()
 {
     if( currentSuperior_ )
         currentSuperior_->RemoveSubordinate( entity_ );
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        auto child = const_cast< kernel::Entity_ABC& >( it.NextElement() ).Retrieve< gui::LogisticHierarchiesBase >();
+        if( child )
+            child->UnregisterCurrentSuperior( this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -94,4 +101,14 @@ void LogisticHierarchies::SetLogisticSuperior( const kernel::LogisticBaseSuperio
 void LogisticHierarchies::Load( xml::xistream&, const kernel::Entity_ABC* )
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticHierarchies::UnregisterCurrentSuperior
+// Created: LDC 2014-10-06
+// -----------------------------------------------------------------------------
+void LogisticHierarchies::UnregisterCurrentSuperior( const gui::LogisticHierarchiesBase* parent )
+{
+    if( parent == currentSuperior_ )
+        currentSuperior_ = 0;
 }

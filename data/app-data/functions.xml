@@ -659,6 +659,24 @@
       <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
+  <function name="Population resource satisfaction">
+    <descriptions>
+      <description name="Population resource satisfaction" lang="en"><![CDATA[Satisfaction values of population for specified resources.]]></description>
+      <description name="Indice de satisfaction en ressources des populations" lang="fr"><![CDATA[Indices de satisfaction des populations couvrantes pour les ressources spécifiées.]]></description>
+      <description name="Satisfacción de la población para recursos" lang="es"><![CDATA[Valores de satisfacción de la población para los recursos especificados.]]></description>
+      <description name="Satisfação da população para recursos" lang="pt"><![CDATA[Valores de satisfação de população para os recursos especificados.]]></description>
+    </descriptions>
+    <parameters>
+      <parameter name="Resources" type="dotation list" />
+      <parameter name="Populations" type="population list" />
+    </parameters>
+    <indicator>
+      <extract function="resources-satisfactions" resources="${Resources}" id="satisfactions" />
+	  <transform function="domain" type="int" select="${Populations}" input="satisfactions" id="domained-satisfactions"/>
+	  <reduce type="int" function="mean" input="domained-satisfactions" id='mean'/>
+      <result function="plot" input="mean" type="float" />
+    </indicator>
+  </function>
   <function name="Number of people in urban blocks">
     <descriptions>
       <description name="Number of people in urban blocks" lang="en"><![CDATA[Number of people in a specified list of urban blocks.]]></description>
