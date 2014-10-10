@@ -1284,7 +1284,7 @@
 
     <target name="admin.run">
         <exec taskname="admin" failonerror="true"
-            executable="${env.ComSpec}">
+            executable="${env.COMSPEC}">
             <arg value="/C"/>
             <arg value="start"/>
             <arg value="Admin Server"/>
