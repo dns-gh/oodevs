@@ -52,10 +52,6 @@
         <translation>www.masagroup.net</translation>
     </message>
     <message>
-        <source>images/gui/splash.png</source>
-        <translation>images/gui/splash.png</translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation>Warning</translation>
     </message>

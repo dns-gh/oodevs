@@ -48,10 +48,6 @@
         <translation>www.masagroup.net</translation>
     </message>
     <message>
-        <source>images/gui/splash.png</source>
-        <translation>images/gui/splash.png</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>A propos</translation>
     </message>
