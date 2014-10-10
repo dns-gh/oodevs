@@ -10,56 +10,40 @@
 #ifndef __BooleanOptionButton_h_
 #define __BooleanOptionButton_h_
 
-#include "clients_kernel/OptionsObserver_ABC.h"
-#include "RichWidget.h"
-
-namespace kernel
-{
-    class OptionsController;
-};
+#include "OptionWidgets.h"
 
 namespace gui
 {
+
 // =============================================================================
 /** @class  BooleanOptionButton
     @brief  BooleanOptionButton
 */
 // Created: AGE 2006-03-30
 // =============================================================================
-class BooleanOptionButton : public RichWidget< QToolButton >
-                          , public tools::Observer_ABC
-                          , public kernel::OptionsObserver_ABC
+class BooleanOptionButton : public OptionWidget< RichWidget< QToolButton > >
 {
     Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             BooleanOptionButton( const QString& objectName, const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::OptionsController& options,
-                                  const std::string& option, bool savable = true );
+             BooleanOptionButton( kernel::OptionsController& options,
+                                  const QString& objectName,
+                                  const std::string& optionName,
+                                  const QIcon& iconSet,
+                                  const QString& toolTip,
+                                  QWidget* parent = 0 );
     virtual ~BooleanOptionButton();
     //@}
 
-private slots:
-    //! @name Helpers
-    //@{
-    void OnToggled( bool );
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    //@}
-
 private:
-    //! @name Member data
+    //! @name Helpers
     //@{
-    kernel::OptionsController& options_;
-    std::string option_;
-    bool savable_;
-    QString toolTip_;
+    virtual void OnOptionChanged( const kernel::OptionVariant& value );
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __BooleanOptionButton_h_

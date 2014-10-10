@@ -36,8 +36,8 @@ namespace
 DisplayToolbar::DisplayToolbar( QMainWindow* parent, kernel::Controllers& controllers )
     : RichToolBar( controllers, parent, "displaytoolbar", tools::translate( "gui::DisplayToolbar", "Display toolbar" ) )
 {
-    addWidget( new BooleanOptionButton( "3DToolButton", MAKE_ICON( threed ), tools::translate( "gui::DisplayToolbar", "3D" ), this, controllers.options_, "3D", false ) );
-    addWidget( new BooleanOptionButton( "FogOfWarButton", MakeIcon( "images/gui/fogofwar.png" ), tools::translate( "gui::DisplayToolbar", "Fog of war" ), this, controllers.options_, "FogOfWar" ) );
+    addWidget( new BooleanOptionButton( controllers.options_, "3DToolButton", "3D", MAKE_ICON( threed ), tools::translate( "gui::DisplayToolbar", "3D" ), this ) );
+    addWidget( new BooleanOptionButton( controllers.options_, "FogOfWarButton", "FogOfWar", MakeIcon( "images/gui/fogofwar.png" ), tools::translate( "gui::DisplayToolbar", "Fog of war" ), this ) );
 
     // Raster
     QAction* rasterAction = new QAction( tools::translate( "gui::DisplayToolbar", "Add raster data" ), this );
