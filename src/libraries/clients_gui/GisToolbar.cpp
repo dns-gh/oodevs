@@ -13,9 +13,10 @@
 #include "ColorButton.h"
 #include "ContourLinesObserver.h"
 #include "ImageWrapper.h"
-#include "RichSpinBox.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "TerrainProfiler.h"
+#include "OptionWidgets.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
@@ -41,73 +42,67 @@ namespace
 // Name: GisToolbar constructor
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, gui::TerrainProfiler& terrainProfiler )
-    : RichToolBar( controllers, parent, "gistoolbar", tools::translate( "gui::GisToolBar", "GIS tools" ) )
+GisToolbar::GisToolbar( QMainWindow* parent,
+                        kernel::Controllers& controllers,
+                        const kernel::DetectionMap& detection,
+                        gui::TerrainProfiler& terrainProfiler )
+    : RichToolBar( controllers, parent, "gistoolbar", tr( "GIS tools" ) )
     , controllers_      ( controllers )
     , detection_        ( detection )
 {
     SubObjectName subObject( "GisToolbar" );
-    {
-        Q3HBox* waterShedBox = new Q3HBox( this );
-        watershedEnabled_ = new RichCheckBox( "watershedEnabled", tools::translate( "gui::GisToolBar", "Watershed" ), waterShedBox );
-        QToolTip::add( watershedEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable watershed display" ) );
-        mode_ = new RichWidget< QComboBox >( "mode", waterShedBox );
-        mode_->insertItem( tools::translate( "gui::GisToolBar", "<" ) );
-        mode_->insertItem( tools::translate( "gui::GisToolBar", ">" ) );
-        mode_->setMaximumWidth( 60 );
-        QToolTip::add( mode_, tools::translate( "gui::GisToolBar", "Display water below or above specified height" ) );
-        height_ = new RichSpinBox( "height", waterShedBox, 0, 10000, 1 );
-        height_->setSuffix( kernel::Units::meters.AsString() );
-        height_->setEnabled( false );
-        QToolTip::add( height_, tools::translate( "gui::GisToolBar", "Set water height limit" ) );
-        color_ = new ColorButton( "color", this );
-        color_->SetColor( QColor( 20, 164, 218 ) ); // $$$$ SBO 2010-03-23: default from layer
-        QToolTip::add( color_, tools::translate( "gui::GisToolBar", "Change watershed color" ) );
+    auto& options = controllers_.options_;
 
-        connect( watershedEnabled_, SIGNAL( toggled( bool ) ), SLOT( OnToggleWatershedEnabled( bool ) ) );
-        connect( mode_, SIGNAL( activated( int ) ), SLOT( OnModeChanged( int ) ) );
-        connect( height_, SIGNAL( valueChanged( int ) ), SLOT( OnHeightChanged( int ) ) );
-        connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
+    // watershed
+    auto watershedEnabled = new OptionCheckBox( options, "watershedEnabled", "Watershed/Enabled", tr( "Watershed" ) );
+    QToolTip::add( watershedEnabled, tr( "Enable/disable watershed display" ) );
 
-        terrainProfilerButton_ = new RichWidget< QToolButton >( "terrainProfilerButton", this );
-        terrainProfilerButton_->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
-        QToolTip::add( terrainProfilerButton_, tools::translate( "gui::GisToolBar", "Show terrain profiler tool" ) );
-        terrainProfilerButton_->setToggleButton( true );
+    mode_ = new RichWidget< QComboBox >( "mode" );
+    mode_->insertItem( tr( "<" ) );
+    mode_->insertItem( tr( ">" ) );
+    mode_->setMaximumWidth( 60 );
+    QToolTip::add( mode_, tr( "Display water below or above specified height" ) );
 
-        connect( terrainProfilerButton_, SIGNAL( toggled( bool ) ), &terrainProfiler, SLOT( setVisible( bool ) ) );
-        connect( &terrainProfiler, SIGNAL( visibilityChanged( bool ) ), this, SLOT( SetTerrainProfilerChecked( bool ) ) );
+    watershedHeight_ = new OptionSpinBox( options, "height", "Watershed/Height", 0, 10000 );
+    watershedHeight_->setSuffix( kernel::Units::meters.AsString() );
+    QToolTip::add( watershedHeight_, tr( "Set water height limit" ) );
+    watershedColor_ = new OptionColorButton( controllers_.options_, "color", "Watershed/Color" );
+    QToolTip::add( watershedColor_, tr( "Change watershed color" ) );
 
-        Q3HBox* contourBox = new Q3HBox( this );
-        contourBoxEnabled_ = new RichCheckBox( "contourBoxEnabled", tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
-        QToolTip::add( contourBoxEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable contour lines display" ) );
+    // terrain profiler
+    terrainProfilerButton_ = new RichWidget< QToolButton >( "terrainProfilerButton", this );
+    terrainProfilerButton_->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
+    QToolTip::add( terrainProfilerButton_, tr( "Show terrain profiler tool" ) );
+    terrainProfilerButton_->setToggleButton( true );
 
-        linesHeight_ = new RichSpinBox( "linesHeight", contourBox, 1, 10000, 1 );
-        linesHeight_->setValue( 100 );
-        linesHeight_->setSuffix( kernel::Units::meters.AsString() );
-        linesHeight_->setEnabled( false );
-        QToolTip::add( linesHeight_, tools::translate( "gui::GisToolBar", "Set contour lines height" ) );
-        colorContourLines_ = new ColorButton( "colorContourLines", this );
-        colorContourLines_->SetColor( QColor( 245, 245, 220 ) ); // $$$$ SBO 2010-03-23: default from layer
-        QToolTip::add( colorContourLines_, tools::translate( "gui::GisToolBar", "Change contour lines color" ) );
+    // contour lines
+    auto contourEnabled = new OptionCheckBox( options, "contourBoxEnabled", "ContourLines/Enabled", tr( "Contour lines" ) );
+    QToolTip::add( contourEnabled, tr( "Enable/disable contour lines display" ) );
 
-        progress_ = new QLabel( contourBox );
+    contourHeight_ = new OptionSpinBox( options, "linesHeight", "ContourLines/Height", 1, 10000 );
+    contourHeight_->setSuffix( kernel::Units::meters.AsString() );
+    QToolTip::add( contourHeight_, tr( "Set contour lines height" ) );
+    contourColor_ = new OptionColorButton( options, "colorContourLines", "ContourLines/Color" );
+    QToolTip::add( contourColor_, tr( "Change contour lines color" ) );
 
-        connect( contourBoxEnabled_, SIGNAL( toggled( bool ) ), SLOT( OnToggleContourLinesEnabled( bool ) ) );
-        connect( linesHeight_, SIGNAL( editingFinished() ), SLOT( OnLinesHeightChanged() ) );
-        connect( colorContourLines_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorContourChanged( const QColor& ) ) );
+    progress_ = new QLabel();
 
-        addWidget( watershedEnabled_ );
-        addWidget( mode_ );
-        addWidget( height_ );
-        addWidget( color_ );
-        addWidget( terrainProfilerButton_ );
-        addWidget( contourBoxEnabled_ );
-        addWidget( linesHeight_ );
-        addWidget( colorContourLines_ );
-        addWidget( progress_ );
-    }
-    OnToggleWatershedEnabled( false );
-    OnToggleContourLinesEnabled( false );
+    addWidget( watershedEnabled );
+    addWidget( mode_ );
+    addWidget( watershedHeight_ );
+    addWidget( watershedColor_ );
+    addWidget( terrainProfilerButton_ );
+    addWidget( contourEnabled );
+    addWidget( contourHeight_ );
+    addWidget( contourColor_ );
+    addWidget( progress_ );
+
+    connect( watershedEnabled, SIGNAL( toggled( bool ) ), SLOT( OnToggleWatershedEnabled( bool ) ) );
+    connect( mode_, SIGNAL( activated( int ) ), SLOT( OnModeChanged( int ) ) );
+    connect( terrainProfilerButton_, SIGNAL( toggled( bool ) ), &terrainProfiler, SLOT( setVisible( bool ) ) );
+    connect( &terrainProfiler, SIGNAL( visibilityChanged( bool ) ), this, SLOT( SetTerrainProfilerChecked( bool ) ) );
+    connect( contourEnabled, SIGNAL( toggled( bool ) ), SLOT( OnToggleContourLinesEnabled( bool ) ) );
+
     controllers_.Update( *this );
 }
 
@@ -126,7 +121,7 @@ GisToolbar::~GisToolbar()
 // -----------------------------------------------------------------------------
 void GisToolbar::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 {
-    height_->setMaxValue( detection_.MaximumElevation() );
+    watershedHeight_->setMaxValue( detection_.MaximumElevation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,73 +140,12 @@ void GisToolbar::NotifyUpdated( const ContourLinesObserver& observer )
 // -----------------------------------------------------------------------------
 void GisToolbar::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "Watershed/Enabled" )
-    {
-        const bool val = value.To< bool >();
-        if( val != watershedEnabled_->isChecked() )
-            watershedEnabled_->setChecked( val );
-    }
-    else if( name == "Watershed/Height" )
-    {
-        const int val = value.To< int >();
-        if( val != height_->value() )
-            height_->setValue( val );
-    }
-    else if( name == "Watershed/Inverse" )
+    if( name == "Watershed/Inverse" )
     {
         const int val = value.To< bool >() ? 1 : 0;
         if( val != mode_->currentItem() )
             mode_->setCurrentItem( val );
     }
-    else if( name == "Watershed/Color" )
-    {
-        QColor color( value.To< QString >() );
-        if( color != color_->GetColor() )
-            color_->SetColor( color );
-        color_->update();
-    }
-    else if( name == "ContourLines/Enabled" )
-    {
-        const bool val = value.To< bool >();
-        if( val != contourBoxEnabled_->isChecked() )
-            contourBoxEnabled_->setChecked( val );
-    }
-    else if( name == "ContourLines/Height" )
-    {
-        const int val = value.To< int >();
-        if( val != linesHeight_->value() )
-            linesHeight_->setValue( val );
-    }
-    else if( name == "ContourLines/Color" )
-    {
-        QColor color( value.To< QString >() );
-        if( color != colorContourLines_->GetColor() )
-            colorContourLines_->SetColor( color );
-        colorContourLines_->update();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: GisToolbar::OnToggleWatershedEnabled
-// Created: SBO 2010-03-23
-// -----------------------------------------------------------------------------
-void GisToolbar::OnToggleWatershedEnabled( bool toggled )
-{
-    mode_->setEnabled( toggled );
-    height_->setEnabled( toggled );
-    color_->setEnabled( toggled );
-    controllers_.options_.Change( "Watershed/Enabled", toggled );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GisToolbar::OnToggleContourLinesEnabled
-// Created: GGE 2011-06-23
-// -----------------------------------------------------------------------------
-void GisToolbar::OnToggleContourLinesEnabled( bool toggled )
-{
-    colorContourLines_->setEnabled( toggled );
-    linesHeight_->setEnabled( toggled );
-    controllers_.options_.Change( "ContourLines/Enabled", toggled );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,39 +158,24 @@ void GisToolbar::OnModeChanged( int mode )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GisToolbar::OnHeightChanged
+// Name: GisToolbar::OnToggleWatershedEnabled
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-void GisToolbar::OnHeightChanged( int height )
+void GisToolbar::OnToggleWatershedEnabled( bool toggled )
 {
-    controllers_.options_.Change( "Watershed/Height", height );
+    mode_->setEnabled( toggled );
+    watershedHeight_->setEnabled( toggled );
+    watershedColor_->setEnabled( toggled );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GisToolbar::OnLinesHeightChanged
-// Created: JSR 2012-01-23
+// Name: GisToolbar::OnToggleContourLinesEnabled
+// Created: GGE 2011-06-23
 // -----------------------------------------------------------------------------
-void GisToolbar::OnLinesHeightChanged()
+void GisToolbar::OnToggleContourLinesEnabled( bool toggled )
 {
-    controllers_.options_.Change( "ContourLines/Height", linesHeight_->value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GisToolbar::OnColorContourChanged
-// Created: SBO 2010-03-23
-// -----------------------------------------------------------------------------
-void GisToolbar::OnColorContourChanged( const QColor& color )
-{
-    controllers_.options_.Change( "ContourLines/Color", color.name() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GisToolbar::OnColorChanged
-// Created: SBO 2010-03-23
-// -----------------------------------------------------------------------------
-void GisToolbar::OnColorChanged( const QColor& color )
-{
-    controllers_.options_.Change( "Watershed/Color", color.name() );
+    contourColor_->setEnabled( toggled );
+    contourHeight_->setEnabled( toggled );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,13 +187,4 @@ void GisToolbar::SetTerrainProfilerChecked( bool visible )
     bool wasBlocked = terrainProfilerButton_->blockSignals( true );
     terrainProfilerButton_->setChecked( visible );
     terrainProfilerButton_->blockSignals( wasBlocked );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GisToolbar::GetTerrainProfilerButton
-// Created: ABR 2012-05-15
-// -----------------------------------------------------------------------------
-RichWidget< QToolButton >* GisToolbar::GetTerrainProfilerButton() const
-{
-    return terrainProfilerButton_;
 }

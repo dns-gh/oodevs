@@ -19,21 +19,19 @@ namespace gui
 */
 // Created: AGE 2007-01-02
 // =============================================================================
-class DirectionWidget : public Q3Frame
+class DirectionWidget : public QFrame
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DirectionWidget( QWidget* parent );
+             DirectionWidget( const QString& objectName, QWidget* parent );
     virtual ~DirectionWidget();
     //@}
 
     //! @name Operations
     //@{
-    void Commit();
-    void Revert();
     QString GetValue() const;
     void SetValue( const QString& value );
     //@}
@@ -53,12 +51,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DirectionWidget( const DirectionWidget& );            //!< Copy constructor
-    DirectionWidget& operator=( const DirectionWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Move( const QPoint& pos );
@@ -68,11 +60,10 @@ private:
 private:
     //! @name Member data
     //@{
-    QPoint old_;
     QPoint point_;
     //@}
 };
 
-}
+} //! namespacae gui
 
 #endif // __DirectionWidget_h_

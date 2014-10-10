@@ -10,52 +10,20 @@
 #include "clients_gui_pch.h"
 #include "ColorButton.h"
 #include "moc_ColorButton.cpp"
-#include "ObjectNameManager.h"
+#include "SignalAdapter.h"
 
 using namespace gui;
-
-namespace
-{
-    unsigned int Convert( const std::string& color )
-    {
-        unsigned int alpha;
-        std::stringstream ss( color );
-        ss >> std::hex >> alpha;
-        return alpha;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorButton constructor
-// Created: LGY 2011-09-30
-// -----------------------------------------------------------------------------
-ColorButton::ColorButton( const QString& objectName, QWidget* parent, const std::string& color )
-    : RichWidget< QToolButton >( objectName, parent )
-    , options_( QColorDialog::ShowAlphaChannel )
-{
-    setAutoRaise( true );
-    current_.setNamedColor( color.substr( 0, 7 ).c_str() );
-    current_.setAlpha( Convert( color.substr( 7, 8 ) ) );
-    previous_ = current_;
-    connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
-    repaint();
-}
 
 // -----------------------------------------------------------------------------
 // Name: ColorButton constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-ColorButton::ColorButton( const QString& objectName, QWidget* parent /* = 0*/, const char* text /* = 0*/, QColor color /* = black*/ )
+ColorButton::ColorButton( const QString& objectName, QWidget* parent /* = 0 */, QColor color /* = Qt::black */, bool hasAlpha /* = false */ )
     : RichWidget< QToolButton >( objectName, parent )
-    , previous_( color )
     , current_( color )
-    , options_( static_cast< QColorDialog::ColorDialogOption >( 0 ) )
+    , options_( hasAlpha ? QColorDialog::ShowAlphaChannel : static_cast< QColorDialog::ColorDialogOption >( 0 ) )
 {
-    setText( text );
-    setAutoRaise( true );
-    setMinimumSize( 25, 25 );
-    setMaximumWidth( height() * 4 / 3 );
-    connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
+    Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -65,6 +33,23 @@ ColorButton::ColorButton( const QString& objectName, QWidget* parent /* = 0*/, c
 ColorButton::~ColorButton()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorButton::Initialize
+// Created: ABR 2014-10-02
+// -----------------------------------------------------------------------------
+void ColorButton::Initialize()
+{
+    setAutoRaise( true );
+    setMinimumSize( 25, 25 );
+    setMaximumWidth( height() * 4 / 3 );
+    gui::connect( this, SIGNAL( clicked() ), [&](){
+        QColor color = QColorDialog::getColor( current_, this, tr( "Select color" ), options_ );
+        if( color.isValid() )
+            SetColor( color );
+    } );
+    repaint();
 }
 
 // -----------------------------------------------------------------------------
@@ -83,23 +68,12 @@ void ColorButton::drawButton( QPainter* )
 void ColorButton::paintEvent( QPaintEvent* )
 {
     QPainter paint;
-    if( paint.begin( this ) )
+    if ( paint.begin( this ) )
     {
         paint.fillRect( 4, 4, width() - 8, height() - 8, current_ );
         paint.drawRect( 4, 4, width() - 8, height() - 8 );
         paint.end();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorButton::OnClick
-// Created: SBO 2006-04-04
-// -----------------------------------------------------------------------------
-void ColorButton::OnClick()
-{
-    QColor color = QColorDialog::getColor( current_, this, tr( "Select color" ), options_ );
-    if( color.isValid() )
-        SetColor( color );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +84,6 @@ void ColorButton::SetColor( const QColor& rgb )
 {
     if( current_ == rgb )
         return;
-    previous_ = current_;
     current_ = rgb;
     repaint();
     emit ColorChanged( current_ );
@@ -125,24 +98,4 @@ QColor ColorButton::GetColor() const
     if( current_ == Qt::black )
         return QColor( 1, 1, 1 );
     return current_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorButton::Revert
-// Created: SBO 2006-04-04
-// -----------------------------------------------------------------------------
-void ColorButton::Revert()
-{
-    current_ = previous_;
-    repaint();
-    emit ColorChanged( current_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorButton::Commit
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-void ColorButton::Commit()
-{
-    previous_ = current_;
 }

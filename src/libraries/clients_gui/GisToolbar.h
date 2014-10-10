@@ -11,18 +11,8 @@
 #define __GisToolbar_h_
 
 #include "RichToolBar.h"
-#include "RichCheckBox.h"
-#include "RichWidget.h"
-#include "RichSpinBox.h"
-
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
-
-#pragma warning( push, 0 )
-#include <QtGui/qtoolbar.h>
-#pragma warning( pop )
-
-class QColor;
 
 namespace kernel
 {
@@ -33,12 +23,8 @@ namespace kernel
 
 namespace gui
 {
-    class ColorButton;
     class TerrainProfiler;
-    class TerrainProfilerLayer;
     class ContourLinesObserver;
-    class RichDockWidget;
-    template< typename T > class RichWidget;
 
 // =============================================================================
 /** @class  GisToolbar
@@ -56,13 +42,11 @@ class GisToolbar : public RichToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, gui::TerrainProfiler& terrainProfiler );
+             GisToolbar( QMainWindow* parent,
+                         kernel::Controllers& controllers,
+                         const kernel::DetectionMap& detection,
+                         gui::TerrainProfiler& terrainProfiler );
     virtual ~GisToolbar();
-    //@}
-
-    //! @name Accessors
-    //@{
-    RichWidget< QToolButton >* GetTerrainProfilerButton() const;
     //@}
 
 private slots:
@@ -70,11 +54,7 @@ private slots:
     //@{
     void OnToggleWatershedEnabled( bool toggled );
     void OnModeChanged( int mode );
-    void OnHeightChanged( int height );
-    void OnColorChanged( const QColor& color );
     void OnToggleContourLinesEnabled( bool toggled );
-    void OnLinesHeightChanged();
-    void OnColorContourChanged( const QColor& color );
     void SetTerrainProfilerChecked( bool visible );
     //@}
 
@@ -91,15 +71,15 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
-    RichCheckBox* watershedEnabled_;
-    RichWidget< QComboBox >* mode_;
-    RichSpinBox* height_;
-    RichSpinBox* linesHeight_;
-    ColorButton* color_;
-    RichCheckBox* contourBoxEnabled_;
-    ColorButton* colorContourLines_;
+    QComboBox* mode_;
     QLabel* progress_;
-    RichWidget< QToolButton >* terrainProfilerButton_;
+    QToolButton* terrainProfilerButton_;
+
+    QSpinBox* watershedHeight_;
+    QToolButton* watershedColor_;
+
+    QSpinBox* contourHeight_;
+    QToolButton* contourColor_;
     //@}
 };
 

@@ -10,6 +10,8 @@
 #ifndef __ButtonGroup_h_
 #define __ButtonGroup_h_
 
+#include "RichWidget.h"
+
 namespace gui
 {
 
@@ -19,36 +21,39 @@ namespace gui
 */
 // Created: RPD 2008-08-21
 // =============================================================================
-class ButtonGroup : public Q3ButtonGroup
+class ButtonGroup : public RichWidget< QGroupBox >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ButtonGroup( int columns, Qt::Orientation o, const QString& title, QWidget* parent = 0, const char* name = 0 );
+             ButtonGroup( const QString& objectName,
+                          QWidget* parent = 0 );
     virtual ~ButtonGroup();
     //@}
 
     //! @name Operations
     //@{
-    virtual void setButton( int id );
-    void Revert();
-    void Commit();
+    void AddButton( int id, QAbstractButton* button );
+    void SetChecked( int id );
+
+    int CheckedId() const;
+    QAbstractButton* CheckedButton() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+signals:
+    //! @name Signals
     //@{
-    ButtonGroup( const ButtonGroup& );            //!< Copy constructor
-    ButtonGroup& operator=( const ButtonGroup& ); //!< Assignment operator
+    void ButtonClicked( int );
+    void ButtonClicked( QAbstractButton* );
     //@}
 
 private:
     //! @name Member data
     //@{
-    int currentId_;
-    int previousId_;
+    QButtonGroup* buttonGroup_;
+    QHBoxLayout* layout_;
     //@}
 };
 

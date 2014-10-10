@@ -17,14 +17,14 @@ using namespace gui;
 // Name: DirectionWidget constructor
 // Created: AGE 2007-01-02
 // -----------------------------------------------------------------------------
-DirectionWidget::DirectionWidget( QWidget* parent )
-    : Q3Frame( parent )
-    , old_  ( 0, 0 )
+DirectionWidget::DirectionWidget( const QString& objectName, QWidget* parent )
+    : QFrame( parent )
     , point_( 0, 0 )
 {
+    setObjectName( objectName );
     setFixedSize( 48, 48 );
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-    old_ = point_ = rect().center();
+    point_ = rect().center();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,24 +53,6 @@ void DirectionWidget::mousePressEvent( QMouseEvent* e )
 void DirectionWidget::mouseMoveEvent( QMouseEvent* e )
 {
     Move( e->pos() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectionWidget::Revert
-// Created: AGE 2007-02-22
-// -----------------------------------------------------------------------------
-void DirectionWidget::Revert()
-{
-    Move( old_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectionWidget::Commit
-// Created: AGE 2007-02-22
-// -----------------------------------------------------------------------------
-void DirectionWidget::Commit()
-{
-    old_ = point_;
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +117,8 @@ QString DirectionWidget::GetValue() const
 // -----------------------------------------------------------------------------
 void DirectionWidget::SetValue( const QString& value )
 {
+    if( value == GetValue() )
+        return;
     QStringList list = QStringList::split( ":", value );
     if( list.size() != 2 )
         return;
