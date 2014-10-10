@@ -79,28 +79,16 @@ void ADN_AiEngine_Perception_Table::AddRow( int row, void* data )
     setRowCount( std::max( rowCount(), row + 1 ) );
     setItem( row, 0, new QTableWidgetItem( perceptions[ row ] ) );
     QButtonGroup* group = new QButtonGroup( this );
-    {
-        ADN_RadioButton* button = new ADN_RadioButton( this );
-        group->addButton( button );
-        button->GetConnector().Connect( &infos->detection_ );
-        setCellWidget( row, 1, button );
-    }
-    {
-        ADN_RadioButton* button = new ADN_RadioButton( this );
-        group->addButton( button );
-        button->GetConnector().Connect( &infos->recognition_ );
-        setCellWidget( row, 2, button );
-    }
-    {
-        ADN_RadioButton* button = new ADN_RadioButton( this );
-        group->addButton( button );
-        button->GetConnector().Connect( &infos->identification_ );
-        setCellWidget( row, 3, button );
-    }
-    {
-        ADN_RadioButton* button = new ADN_RadioButton( this );
-        group->addButton( button );
-        button->GetConnector().Connect( &infos->never_ );
-        setCellWidget( row, 4, button );
-    }
+    const auto addRadioButton =
+        [&]( int column, ADN_Ref_ABC& target )
+        {
+            ADN_RadioButton* button = new ADN_RadioButton( this );
+            group->addButton( button );
+            button->GetConnector().Connect( &target );
+            setCellWidget( row, column, button );
+        };
+    addRadioButton( 1, infos->detection_ );
+    addRadioButton( 2, infos->recognition_ );
+    addRadioButton( 3, infos->identification_ );
+    addRadioButton( 4, infos->never_ );
 }
