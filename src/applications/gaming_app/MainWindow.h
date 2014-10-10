@@ -10,7 +10,6 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include "clients_gui/LayersHelpers.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "gaming/Simulation.h"
@@ -38,7 +37,7 @@ namespace gui
     class FormationLayer;
     class GlProxy;
     class GlSelector;
-    class GraphicPreferences;
+    class GradientPreferences;
     class HelpSystem;
     class Layer_ABC;
     class LightingProxy;
@@ -48,6 +47,7 @@ namespace gui
     class RichToolBar;
     class TerrainLayer;
     class TerrainPicker;
+    class TerrainSettings;
     class TextEditor;
 }
 
@@ -159,20 +159,31 @@ private:
     GamingConfig& config_;
     const kernel::Profile_ABC& profile_;
     kernel::Workers& workers_;
-    std::unique_ptr< gui::GraphicPreferences > graphicPreferences_;
+
+    QByteArray states_;
+    bool connected_;
+    bool onPlanif_;
+    QString planifName_;
+    QString savedState_;
+
+    std::unique_ptr< gui::AddRasterDialog > addRasterDialog_; // should move in layers panel
+    std::unique_ptr< gui::TextEditor > textEditor_; // should move in parameter layer
+
+    // the following will move to GLOptions or GLMainProxy
+    std::shared_ptr< gui::TerrainSettings > terrainSettings_;
+    std::shared_ptr< gui::GradientPreferences > gradientPreferences_;
+    std::unique_ptr< gui::GlProxy > glProxy_;
+    std::unique_ptr< gui::LightingProxy > lighting_;
+    std::unique_ptr< gui::GlSelector > selector_;
+
     std::unique_ptr< gui::CircularEventStrategy > forward_;
     std::unique_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    std::unique_ptr< gui::Painter_ABC > pPainter_;
     std::unique_ptr< ColorController > pColorController_;
     std::unique_ptr< DockContainer > dockContainer_;
     boost::shared_ptr< QProcess > process_;
-    std::unique_ptr< gui::AddRasterDialog > addRasterDialog_;
     std::unique_ptr< gui::PreferencesDialog > preferenceDialog_;
     std::unique_ptr< gui::EntitySymbols > icons_;
-    std::unique_ptr< gui::GlProxy > glProxy_;
     std::unique_ptr< gui::ColorStrategy > strategy_;
-    std::unique_ptr< gui::LightingProxy > lighting_;
-    std::unique_ptr< gui::GlSelector > selector_;
     std::unique_ptr< LockMapViewController > lockMapViewController_;
     std::unique_ptr< StatusBar > pStatus_;
     std::unique_ptr< FirePlayer > firePlayer_;
@@ -180,14 +191,6 @@ private:
     std::unique_ptr< DrawingsBuilder > drawingsBuilder_;
     std::unique_ptr< UnitStateDialog > unitStateDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
-    std::unique_ptr< gui::TextEditor > textEditor_;
-    gui::T_LayersMap layers_;
-    QByteArray states_;
-    bool connected_;
-    bool onPlanif_;
-
-    QString planifName_;
-    QString savedState_;
     //@}
 };
 

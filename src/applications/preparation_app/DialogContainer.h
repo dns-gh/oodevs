@@ -25,16 +25,16 @@ namespace gui
     class ConsistencyDialog_ABC;
     class EntitySymbols;
     class GlProxy;
+    class GradientPreferences;
     class LightingProxy;
-    class Painter_ABC;
     class ParametersLayer;
     class PreferencesDialog;
     class SymbolIcons;
     class Elevation2dLayer;
-    class GraphicPreferences;
     class DisplayExtractor;
     class LinkInterpreter;
     class ProfileDialog;
+    class TerrainSettings;
     class UnitStateDialog;
 }
 
@@ -76,11 +76,11 @@ public:
                               const tools::ExerciseConfig& config,
                               gui::SymbolIcons& icons,
                               gui::LightingProxy& lighting,
-                              const gui::Painter_ABC& painter,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               const std::shared_ptr< gui::Elevation2dLayer >& elevation2dLayer,
                               gui::GlProxy& proxy,
-                              gui::GraphicPreferences& preferences );
+                              const std::shared_ptr< gui::TerrainSettings >& settings,
+                              const std::shared_ptr< gui::GradientPreferences >& preferences );
     virtual ~DialogContainer();
     //@}
 
