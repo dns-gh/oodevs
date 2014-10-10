@@ -11,6 +11,7 @@
 #define __actions_ActionFactory_h_
 
 #include "ActionFactory_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace sword
 {
@@ -27,6 +28,7 @@ namespace kernel
     class OrderParameter;
     class MagicActionType;
     class StaticModel;
+    class Time_ABC;
 }
 
 namespace actions

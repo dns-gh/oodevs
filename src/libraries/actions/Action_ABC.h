@@ -13,8 +13,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "ParameterContainer_ABC.h"
 
-#include <boost/optional/optional_fwd.hpp>
-
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )
@@ -27,7 +25,6 @@ namespace sword
 namespace kernel
 {
     class Controller;
-    class Entity_ABC;
     class Displayer_ABC;
     class OrderType;
 }
@@ -47,7 +44,6 @@ class Publisher_ABC;
 
 namespace actions
 {
-    class ActionsModel;
 
 // =============================================================================
 /** @class  Action_ABC

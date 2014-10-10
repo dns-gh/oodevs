@@ -10,8 +10,6 @@
 #include "actions_pch.h"
 #include "ActionsModel.h"
 #include "ActionPublisher.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Controllers.h"
 
 using namespace actions;
 
@@ -24,7 +22,6 @@ ActionsModel::ActionsModel( ActionFactory_ABC& factory,
                             kernel::Controllers& controllers,
                             const kernel::Time_ABC& simulation )
     : factory_( factory )
-    , controller_( controllers.controller_ )
     , publisher_( new ActionPublisher( defaultPublisher, controllers, simulation ) )
     , context_( 0 )
 {

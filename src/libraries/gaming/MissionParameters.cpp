@@ -16,12 +16,9 @@
 #include "actions/ActionError.h"
 #include "actions/ActionTasker.h"
 #include "clients_gui/GlTools_ABC.h"
-#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
-#include "clients_kernel/OrderType.h"
 #include "clients_kernel/Tools.h"
-#include "protocol/Protocol.h"
 #include <boost/foreach.hpp>
 
 using namespace actions;

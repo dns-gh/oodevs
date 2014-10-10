@@ -23,38 +23,16 @@ namespace sword
 namespace kernel
 {
     class AgentType;
-    class AgentTypes;
     class AutomatType;
     class Automat_ABC;
-    class Controller;
     class Controllers;
-    class CoordinateConverter_ABC;
-    class Entity_ABC;
-    class FragOrderType;
-    class MissionType;
-    class Object_ABC;
     class PopulationType;
-    class StaticModel;
     class Time_ABC;
 }
-
-namespace xml
-{
-    class xostream;
-}
-
-namespace tools
-{
-    class Loader_ABC;
-    class Path;
-}
-
-class AgentServerMsgMgr;
 
 namespace actions
 {
     class ActionPublisher;
-    class CreationListener_ABC;
 
     namespace parameters
     {
@@ -129,7 +107,6 @@ public:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     ActionFactory_ABC& factory_;
     std::unique_ptr< ActionPublisher > publisher_;
     int context_;
