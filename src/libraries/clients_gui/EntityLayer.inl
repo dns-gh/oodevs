@@ -28,7 +28,6 @@ EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers,
                                             const kernel::Profile_ABC& profile,
                                             E_LayerTypes type )
     : EntityLayerBase( controllers, view, strategy, profile, type )
-    , strategy_( strategy )
 {
     controllers_.Update( *this );
 }

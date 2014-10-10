@@ -495,6 +495,7 @@ T_ConverterLayerTypes LayerTypesConverter_[] =
     T_ConverterLayerTypes( "tooltip",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Tooltip" ),                     eLayerTypes_Tooltips ),
     T_ConverterLayerTypes( "units_composite",          QT_TRANSLATE_NOOP( "ENT_Tr", "Units" ),                       eLayerTypes_UnitsComposite ),
     T_ConverterLayerTypes( "urban",                    QT_TRANSLATE_NOOP( "ENT_Tr", "Urban" ),                       eLayerTypes_Urban ),
+    T_ConverterLayerTypes( "vision_cones",             QT_TRANSLATE_NOOP( "ENT_Tr", "Vision surfaces" ),             eLayerTypes_VisionCones ),
     T_ConverterLayerTypes( "watershed",                QT_TRANSLATE_NOOP( "ENT_Tr", "Watershed" ),                   eLayerTypes_Watershed ),
     T_ConverterLayerTypes( "weapon_ranges",            QT_TRANSLATE_NOOP( "ENT_Tr", "Weapon ranges" ),               eLayerTypes_WeaponRanges ),
     T_ConverterLayerTypes( "weather",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Weather" ),                     eLayerTypes_Weather ),

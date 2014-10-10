@@ -37,6 +37,7 @@ GlToolsBase::GlToolsBase( Controllers& controllers, const DrawingTypes& drawingT
     , svgl_       ( new SvglProxy( *renderer_ ) )
     , graphics_   ( new TacticalGraphics( drawingTypes ) )
     , billboard_  ( 0 )
+    , alpha_      ( 1 )
 {
     controllers_.Register( *this );
 }
@@ -153,6 +154,12 @@ void GlToolsBase::SetCurrentColor( float r, float g, float b, float a /* = 1*/ )
     renderer_->SetCurrentColor( r, g, b, a );
     graphics_->SetCurrentColor( r, g, b, a );
     symbols_->SetCurrentColor( r, g, b, a );
+    alpha_ = a;
+}
+
+float GlToolsBase::GetCurrentAlpha() const
+{
+    return alpha_;
 }
 
 // -----------------------------------------------------------------------------

@@ -1038,6 +1038,10 @@
         <source>Command Post</source>
         <translation type="unfinished">Poste de Commande</translation>
     </message>
+    <message>
+        <source>Vision surfaces</source>
+        <translation>Surfaces de vision</translation>
+    </message>
 </context>
 <context>
     <name>LocationCategory</name>

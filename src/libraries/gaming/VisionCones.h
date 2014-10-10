@@ -42,7 +42,6 @@ class VisionMap;
 class VisionCones : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< sword::UnitVisionCones >
                   , public kernel::Updatable_ABC< sword::UnitAttributes >
-                  , public gui::Drawable_ABC
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< MeteoModel >
 {
@@ -56,8 +55,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
-    virtual void DrawFill( const gui::Viewport_ABC& viewport ) const;
+    void DrawMap( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const;
+    void DrawFill( const gui::Viewport_ABC& viewport ) const;
     virtual void NotifyUpdated( const MeteoModel& model );
     //@}
 

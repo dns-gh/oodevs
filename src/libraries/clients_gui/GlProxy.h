@@ -64,6 +64,7 @@ public:
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );
     virtual float   GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
+    virtual float   GetCurrentAlpha() const;
     virtual geometry::Point2f GetCenter() const;
 
     virtual boost::tuple< bool, bool, bool > UnSelect() const;

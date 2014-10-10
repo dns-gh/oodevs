@@ -60,6 +60,7 @@ public:
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
     virtual bool ShouldDisplay( const std::string& name, bool b1, bool b2, bool b3 ) const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
+    virtual float GetCurrentAlpha() const;
     virtual std::unique_ptr< GlTooltip_ABC > CreateTooltip() const;
 
     GlToolsBase& Base() const;
@@ -102,6 +103,7 @@ private:
     std::unique_ptr< SvglProxy > svgl_;
     std::unique_ptr< TacticalGraphics > graphics_;
     unsigned int billboard_;
+    float alpha_;
     mutable T_Options options_;
     //@}
 };
