@@ -15,6 +15,7 @@
 #include "ADN_Tr.h"
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
+#include <tools/Helpers.h>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanSpeedsInfos: Constructor
@@ -122,7 +123,8 @@ namespace
         std::string name;
     };
 
-    static const DefaultPerception defaultPerceptions[] = {
+    static const DefaultPerception defaultPerceptions[] =
+    {
         { true,  false, false, false, "heading" },
         { true,  false, false, false, "speed" },
         { false, false, true,  false, "opstate" },
@@ -135,6 +137,9 @@ namespace
         { false, false, true,  false, "refugees" },
         { false, false, true,  false, "cp" }
     };
+    static_assert(
+        COUNT_OF( defaultPerceptions ) == eNbrPerceptionType,
+        "invalid number of elements" );
 }
 
 // -----------------------------------------------------------------------------
