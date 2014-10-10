@@ -18,6 +18,7 @@
 #include "DEC_Knowledge_AgentDataIdentification.h"
 #include "Tristate.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "ENT/ENT_Enums.h"
 #include "Tools/MIL_IDManager.h"
 #include <tools/Map.h>
 #include <boost/shared_ptr.hpp>
@@ -52,30 +53,13 @@ class MIL_UrbanObject_ABC;
 class DEC_Knowledge_Agent : public DEC_Knowledge_ABC
 {
 public:
-    enum E_PerceptionTypes
-    {
-        ePerceptionType_Heading,
-        ePerceptionType_Speed,
-        ePerceptionType_OpState,
-        ePerceptionType_Side,
-        ePerceptionType_Level,
-        ePerceptionType_NaturePartial,
-        ePerceptionType_NatureFull,
-        ePerceptionType_Surrendered,
-        ePerceptionType_Prisoner,
-        ePerceptionType_Refugees,
-        ePerceptionType_CommandPost,
-        eNbrPerceptionTypes
-    };
-
-public:
     // Parameters - $$$ Changer - ne devrait pas être public
     static double rMaxDangerosityDegradationByRelevance_;
     static double rMaxDangerosityDegradationByOpState_;
     static double rMaxDangerosityDegradationByNeutralizedState_;
     static bool detectDestroyedUnits_;
     static const PHY_PerceptionLevel* maxHostilePerceptionLevel_;
-    static const PHY_PerceptionLevel* perceptionInfoAvailability_[ eNbrPerceptionTypes ];
+    static const PHY_PerceptionLevel* perceptionInfoAvailability_[ eNbrPerceptionType ];
 
 public:
     //! @name Constructors/Destructor

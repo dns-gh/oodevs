@@ -998,6 +998,46 @@
         <source>Event creation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Heading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operational State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature (partial)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature (full)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surrendered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refugees picked up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command Post</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::DotationType</name>

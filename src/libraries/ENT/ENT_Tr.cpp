@@ -61,6 +61,7 @@ typedef ENT_Tr::Converter< E_EventDockModes > T_ConverterEventDockModes;
 typedef ENT_Tr::Converter< E_CoordinateSystem > T_ConverterCoordinateSystem;
 typedef ENT_Tr::Converter< E_VisualisationScale > T_ConverterVisualisationScale;
 typedef ENT_Tr::Converter< E_PerceptionLevel > T_ConverterPerceptionLevel;
+typedef ENT_Tr::Converter< E_PerceptionType > T_ConverterPerceptionType;
 
 typedef ENT_Tr::Converter< sword::MagicAction::Type > T_ConverterMagicActionType;
 typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicActionType;
@@ -752,6 +753,22 @@ T_ConverterPerceptionLevel PerceptionLevelConverter_ [] =
     T_ConverterPerceptionLevel( "", "", ( E_PerceptionLevel ) - 1 )
 };
 
+T_ConverterPerceptionType PerceptionTypeConverter_ [] =
+{
+    T_ConverterPerceptionType( "heading", QT_TRANSLATE_NOOP( "ENT_Tr", "Heading" ), ePerceptionType_Heading ),
+    T_ConverterPerceptionType( "speed", QT_TRANSLATE_NOOP( "ENT_Tr", "Speed" ), ePerceptionType_Speed ),
+    T_ConverterPerceptionType( "opstate", QT_TRANSLATE_NOOP( "ENT_Tr", "Operational State" ), ePerceptionType_OpState ),
+    T_ConverterPerceptionType( "side", QT_TRANSLATE_NOOP( "ENT_Tr", "Side" ), ePerceptionType_Side ),
+    T_ConverterPerceptionType( "level", QT_TRANSLATE_NOOP( "ENT_Tr", "Level" ), ePerceptionType_Level ),
+    T_ConverterPerceptionType( "nature-partial", QT_TRANSLATE_NOOP( "ENT_Tr", "Nature (partial)" ), ePerceptionType_NaturePartial ),
+    T_ConverterPerceptionType( "nature-full", QT_TRANSLATE_NOOP( "ENT_Tr", "Nature (full)" ), ePerceptionType_NatureFull ),
+    T_ConverterPerceptionType( "surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "Surrendered" ), ePerceptionType_Surrendered ),
+    T_ConverterPerceptionType( "prisoner", QT_TRANSLATE_NOOP( "ENT_Tr", "Prisoner" ), ePerceptionType_Prisoner ),
+    T_ConverterPerceptionType( "refugees", QT_TRANSLATE_NOOP( "ENT_Tr", "Refugees picked up" ), ePerceptionType_Refugees ),
+    T_ConverterPerceptionType( "cp", QT_TRANSLATE_NOOP( "ENT_Tr", "Command Post" ), ePerceptionType_CommandPost ),
+    T_ConverterPerceptionType( "", "", ( E_PerceptionType ) - 1 )
+};
+
 }  // namespace
 
 #define INIT_TRANSLATION( NAME, CONTEXT )\
@@ -843,6 +860,7 @@ void ENT_Tr::InitTranslations()
     INIT_TR( ObstacleActivation );
     INIT_TR( OperationalStatus );
     INIT_TR( PerceptionLevel );
+    INIT_TR( PerceptionType )
     INIT_TR( PopulationAttitude );
     INIT_TR( PopulationRoe );
     INIT_TR( Roe );
@@ -896,6 +914,7 @@ IMPLEMENT_CONVERT_METHODS( NbcState );
 IMPLEMENT_CONVERT_METHODS( ObstacleActivation );
 IMPLEMENT_CONVERT_METHODS( OperationalStatus );
 IMPLEMENT_CONVERT_METHODS( PerceptionLevel );
+IMPLEMENT_CONVERT_METHODS( PerceptionType );
 IMPLEMENT_CONVERT_METHODS( PopulationAttitude );
 IMPLEMENT_CONVERT_METHODS( PopulationRoe );
 IMPLEMENT_CONVERT_METHODS( Roe );

@@ -505,4 +505,20 @@ enum E_PerceptionLevel
     eNbrPerceptionLevel
 };
 
+enum E_PerceptionType
+{
+    ePerceptionType_Heading,
+    ePerceptionType_Speed,
+    ePerceptionType_OpState,
+    ePerceptionType_Side,
+    ePerceptionType_Level,
+    ePerceptionType_NaturePartial,
+    ePerceptionType_NatureFull,
+    ePerceptionType_Surrendered,
+    ePerceptionType_Prisoner,
+    ePerceptionType_Refugees,
+    ePerceptionType_CommandPost,
+    eNbrPerceptionType
+};
+
 #endif __ENT_Enums_h_

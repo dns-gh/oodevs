@@ -50,7 +50,7 @@ double DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_           = 0.2
 double DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_  = 0.8; // 80%
 const PHY_PerceptionLevel* DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::identified_;
 bool DEC_Knowledge_Agent::detectDestroyedUnits_ = true;
-const PHY_PerceptionLevel* DEC_Knowledge_Agent::perceptionInfoAvailability_[ eNbrPerceptionTypes ] =
+const PHY_PerceptionLevel* DEC_Knowledge_Agent::perceptionInfoAvailability_[ eNbrPerceptionType ] =
 {
     &PHY_PerceptionLevel::detected_,   // Heading
     &PHY_PerceptionLevel::detected_,   // Speed

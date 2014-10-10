@@ -30,7 +30,7 @@
 #include "tools/PhyLoader.h"
 #include "tools/VersionHelper.h"
 #include "tools/XmlStreamOperators.h"
-
+#include "ENT/ENT_Tr.h"
 #include <boost/algorithm/string.hpp>
 #include <sys/stat.h>
 
@@ -84,33 +84,6 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 
 namespace
 {
-    DEC_Knowledge_Agent::E_PerceptionTypes ConvertFromType( const std::string& type )
-    {
-        if( type == "heading" )
-            return DEC_Knowledge_Agent::ePerceptionType_Heading;
-        if( type == "speed" )
-            return DEC_Knowledge_Agent::ePerceptionType_Speed;
-        if( type == "opstate" )
-            return DEC_Knowledge_Agent::ePerceptionType_OpState;
-        if( type == "side" )
-            return DEC_Knowledge_Agent::ePerceptionType_Side;
-        if( type == "level" )
-            return DEC_Knowledge_Agent::ePerceptionType_Level;
-        if( type == "nature-partial" )
-            return DEC_Knowledge_Agent::ePerceptionType_NaturePartial;
-        if( type == "nature-full" )
-            return DEC_Knowledge_Agent::ePerceptionType_NatureFull;
-        if( type == "surrendered" )
-            return DEC_Knowledge_Agent::ePerceptionType_Surrendered;
-        if( type == "prisoner" )
-            return DEC_Knowledge_Agent::ePerceptionType_Prisoner;
-        if( type == "refugees" )
-            return DEC_Knowledge_Agent::ePerceptionType_Refugees;
-        if( type == "cp" )
-            return DEC_Knowledge_Agent::ePerceptionType_CommandPost;
-        return DEC_Knowledge_Agent::eNbrPerceptionTypes;
-    }
-
     const PHY_PerceptionLevel* ConvertFromLevel( const std::string& level )
     {
         if( level == "never" )
@@ -187,13 +160,14 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
     xisDecisional >> xml::optional >> xml::start( "perception" )
                     >> xml::attribute( "detect-destroyed-units", DEC_Knowledge_Agent::detectDestroyedUnits_ )
                     >> xml::optional >> xml::attribute( "max-level", maxHostilePerceptionLevel )
-                      >> xml::list( "availability", [&]( xml::xistream& xis )
-                    {
-                        const auto eType = ConvertFromType( xis.attribute< std::string >( "type" ) );
-                        if( eType != DEC_Knowledge_Agent::eNbrPerceptionTypes )
-                            DEC_Knowledge_Agent::perceptionInfoAvailability_[ eType ] =
-                                ConvertFromLevel( xis.attribute< std::string >( "level" ) );
-                    })
+                      >> xml::list( "availability",
+                        [&]( xml::xistream& xis )
+                        {
+                            const auto type = ENT_Tr::ConvertToPerceptionType( xis.attribute< std::string >( "type" ) );
+                            if( type != eNbrPerceptionType )
+                                DEC_Knowledge_Agent::perceptionInfoAvailability_[ type ] =
+                                    ConvertFromLevel( xis.attribute< std::string >( "level" ) );
+                        } )
                   >> xml::end;
     DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = ConvertFromLevel( maxHostilePerceptionLevel );
 

@@ -309,7 +309,7 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
 
 namespace
 {
-    bool CanSend( DEC_Knowledge_Agent::E_PerceptionTypes type, const PHY_PerceptionLevel& level )
+    bool CanSend( E_PerceptionType type, const PHY_PerceptionLevel& level )
     {
         const auto availableLevel = DEC_Knowledge_Agent::perceptionInfoAvailability_[ type ];
         return availableLevel != &PHY_PerceptionLevel::notSeen_ && *availableLevel <= level;
@@ -323,24 +323,24 @@ namespace
 void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate& msg, const PHY_PerceptionLevel& level ) const
 {
     NET_ASN_Tools::WritePoint( *vPosition_, *msg.mutable_position() );
-    if( CanSend( DEC_Knowledge_Agent::ePerceptionType_Heading, level ) )
+    if( CanSend( ePerceptionType_Heading, level ) )
         NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
-    if( CanSend( DEC_Knowledge_Agent::ePerceptionType_Speed, level ) )
+    if( CanSend( ePerceptionType_Speed, level ) )
         msg.set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
-    if( CanSend( DEC_Knowledge_Agent::ePerceptionType_Surrendered, level ) )
+    if( CanSend( ePerceptionType_Surrendered, level ) )
         msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
-    if( CanSend( DEC_Knowledge_Agent::ePerceptionType_Prisoner, level ) )
+    if( CanSend( ePerceptionType_Prisoner, level ) )
         msg.set_prisoner( bPrisoner_ );
-    if( CanSend( DEC_Knowledge_Agent::ePerceptionType_Refugees, level ) )
+    if( CanSend( ePerceptionType_Refugees, level ) )
         msg.set_refugees_managed( bRefugeeManaged_ );
-    if( CanSend( DEC_Knowledge_Agent::ePerceptionType_OpState, level ) )
+    if( CanSend( ePerceptionType_OpState, level ) )
     {
         msg.set_dead( bDead_ );
         msg.set_operational_state( std::max( 0, std::min( 100, static_cast< int >( rOperationalState_ * 100 ) ) ) );
     }
-    if( pArmy_ && CanSend( DEC_Knowledge_Agent::ePerceptionType_Side, level ) )
+    if( pArmy_ && CanSend( ePerceptionType_Side, level ) )
         msg.mutable_party()->set_id( pArmy_->GetID() );
-    if( CanSend( DEC_Knowledge_Agent::ePerceptionType_CommandPost, level ) )
+    if( CanSend( ePerceptionType_CommandPost, level ) )
         msg.set_command_post( bIsPC_ );
 }
 
@@ -352,26 +352,26 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpd
 {
     if( bPositionUpdated_ )
         NET_ASN_Tools::WritePoint( *vPosition_, *msg.mutable_position() );
-    if( ( levelChanged || bDirectionUpdated_ && !vDirection_.IsZero() ) && CanSend( DEC_Knowledge_Agent::ePerceptionType_Heading, level ) )
+    if( ( levelChanged || bDirectionUpdated_ && !vDirection_.IsZero() ) && CanSend( ePerceptionType_Heading, level ) )
         NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
-    if( ( levelChanged || bSpeedUpdated_ && rSpeed_ != std::numeric_limits< double >::max() ) && CanSend( DEC_Knowledge_Agent::ePerceptionType_Speed, level ) )
+    if( ( levelChanged || bSpeedUpdated_ && rSpeed_ != std::numeric_limits< double >::max() ) && CanSend( ePerceptionType_Speed, level ) )
         msg.set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
-    if( ( levelChanged ||  bSurrenderedUpdated_ ) && CanSend( DEC_Knowledge_Agent::ePerceptionType_Surrendered, level ) )
+    if( ( levelChanged ||  bSurrenderedUpdated_ ) && CanSend( ePerceptionType_Surrendered, level ) )
         msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
-    if( ( levelChanged || bPrisonerUpdated_ ) && CanSend( DEC_Knowledge_Agent::ePerceptionType_Prisoner, level ) )
+    if( ( levelChanged || bPrisonerUpdated_ ) && CanSend( ePerceptionType_Prisoner, level ) )
         msg.set_prisoner( bPrisoner_ );
-    if( ( levelChanged || bRefugeeManagedUpdated_ ) && CanSend( DEC_Knowledge_Agent::ePerceptionType_Refugees, level ) )
+    if( ( levelChanged || bRefugeeManagedUpdated_ ) && CanSend( ePerceptionType_Refugees, level ) )
         msg.set_refugees_managed( bRefugeeManaged_ );
-    if( CanSend( DEC_Knowledge_Agent::ePerceptionType_OpState, level ) )
+    if( CanSend( ePerceptionType_OpState, level ) )
     {
         if( levelChanged || bDeadUpdated_ )
             msg.set_dead( bDead_ );
         if( levelChanged || bOperationalStateUpdated_ )
             msg.set_operational_state( std::max( 0, std::min( 100, static_cast< int >( rOperationalState_ * 100 ) ) ) );
     }
-    if( ( levelChanged || bArmyAndPcUpdated_ ) && pArmy_ && CanSend( DEC_Knowledge_Agent::ePerceptionType_Side, level ) )
+    if( ( levelChanged || bArmyAndPcUpdated_ ) && pArmy_ && CanSend( ePerceptionType_Side, level ) )
         msg.mutable_party()->set_id( pArmy_->GetID() );
-    if( ( levelChanged || bArmyAndPcUpdated_ ) && CanSend( DEC_Knowledge_Agent::ePerceptionType_CommandPost, level ) )
+    if( ( levelChanged || bArmyAndPcUpdated_ ) && CanSend( ePerceptionType_CommandPost, level ) )
         msg.set_command_post( bIsPC_ );
 }
 

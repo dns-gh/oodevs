@@ -57,27 +57,14 @@ void ADN_AiEngine_Perception_Table::RemoveItem( void* /*item*/ )
 
 void ADN_AiEngine_Perception_Table::AddRow( int row, void* data )
 {
-    static const QString perceptions[ 11 ] =
-    {
-        tr( "Heading" ),
-        tr( "Speed" ),
-        tr( "Operational State" ),
-        tr( "Side" ),
-        tr( "Level" ),
-        tr( "Nature (partial)" ),
-        tr( "Nature (full)" ),
-        tr( "Surrendered" ),
-        tr( "Prisoner" ),
-        tr( "Refugees picked up" ),
-        tr( "Command Post" )
-    };
-    if( row > boost::size( perceptions ) )
+    if( row > eNbrPerceptionType )
         throw MASA_EXCEPTION( "invalid row in ADN_AiEngine_Perception_Table" );
     auto infos = static_cast< ADN_AiEngine_Data::PerceptionInfos* >( data );
     if( !infos )
         return;
     setRowCount( std::max( rowCount(), row + 1 ) );
-    setItem( row, 0, new QTableWidgetItem( perceptions[ row ] ) );
+    const QString type = ENT_Tr::ConvertFromPerceptionType( static_cast< E_PerceptionType >( row ), ENT_Tr::eToTr ).c_str();
+    setItem( row, 0, new QTableWidgetItem( type ) );
     QButtonGroup* group = new QButtonGroup( this );
     const auto addRadioButton =
         [&]( int column, ADN_Ref_ABC& target )

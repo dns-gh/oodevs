@@ -199,50 +199,6 @@
         <source>Never</source>
         <translation>Never</translation>
     </message>
-    <message>
-        <source>Heading</source>
-        <translation>Heading</translation>
-    </message>
-    <message>
-        <source>Speed</source>
-        <translation>Speed</translation>
-    </message>
-    <message>
-        <source>Operational State</source>
-        <translation>Operational State</translation>
-    </message>
-    <message>
-        <source>Side</source>
-        <translation>Side</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation>Level</translation>
-    </message>
-    <message>
-        <source>Nature (partial)</source>
-        <translation>Nature (partial)</translation>
-    </message>
-    <message>
-        <source>Nature (full)</source>
-        <translation>Nature (full)</translation>
-    </message>
-    <message>
-        <source>Surrendered</source>
-        <translation>Surrendered</translation>
-    </message>
-    <message>
-        <source>Prisoner</source>
-        <translation>Prisoner</translation>
-    </message>
-    <message>
-        <source>Refugees picked up</source>
-        <translation>Refugees picked up</translation>
-    </message>
-    <message>
-        <source>Command Post</source>
-        <translation>Command Post</translation>
-    </message>
 </context>
 <context>
     <name>ADN_AiEngine_UrbanSpeeds_Table</name>
