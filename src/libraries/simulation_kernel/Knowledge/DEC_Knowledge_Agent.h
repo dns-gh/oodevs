@@ -54,7 +54,7 @@ class DEC_Knowledge_Agent : public DEC_Knowledge_ABC
 public:
     enum E_PerceptionTypes
     {
-        ePerceptionType_Heading = 0,
+        ePerceptionType_Heading,
         ePerceptionType_Speed,
         ePerceptionType_OpState,
         ePerceptionType_Side,
