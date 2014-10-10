@@ -2855,10 +2855,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>preparation::OrbatPanel</name>
     <message>
-        <source>Edition</source>
-        <translation>Edition</translation>
-    </message>
-    <message>
         <source>Ghost:</source>
         <translation>Fantôme:</translation>
     </message>

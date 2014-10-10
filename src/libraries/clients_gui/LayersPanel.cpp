@@ -11,12 +11,12 @@
 #include "clients_gui_pch.h"
 #include "LayersPanel.h"
 #include "moc_LayersPanel.cpp"
-#include "CheckBox.h"
 #include "GlProxy.h"
 #include "Layer_ABC.h"
-#include "SignalAdapter.h"
-#include "RichGroupBox.h"
+#include "OptionWidgets.h"
 #include "RichPushButton.h"
+#include "RichGroupBox.h"
+#include "Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
@@ -31,7 +31,7 @@ namespace
 {
     enum LayersRole
     {
-        eData = Qt::UserRole,
+        eData = Qt::UserRole + 1,
         ePosition,
         eAlpha,
         eDynamic,
@@ -52,22 +52,9 @@ namespace
         item.setData( position, ePosition );
         options.Change( GetLayerOptionText( item, "Position" ), position );
     }
-    QCheckBox* AddCheckbox( QVBoxLayout* layout,
-                            const QString& objectName,
-                            const QString& boxName,
-                            const QString& title,
-                            const QString& boxTitle )
-    {
-        QCheckBox* checkbox = new CheckBox( objectName, title );
-        RichGroupBox* box = new RichGroupBox( boxName, boxTitle );
-        QHBoxLayout* boxlayout = new QHBoxLayout( box );
-        boxlayout->addWidget( checkbox );
-        layout->addWidget( box, 1 );
-        return checkbox;
-    }
     QPushButton* AddButton( const QString& objectName, const QIcon& icon, const QString& tooltip, const QObject* receiver, const char* member )
     {
-        RichPushButton* button = new RichPushButton( objectName, icon, QString::null );
+        QPushButton* button = new RichPushButton( objectName, icon, QString::null );
         button->setFixedSize( 32, 32 );
         QToolTip::add( button, tooltip );
         button->connect( button, SIGNAL( clicked() ), receiver, member );
@@ -80,27 +67,22 @@ namespace
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
 LayersPanel::LayersPanel( QWidget* parent,
-                          kernel::Controllers& controllers,
+                          kernel::OptionsController& options,
                           GlProxy& proxy )
     : PreferencePanel_ABC( parent, "LayersPanel" )
-    , controllers_( controllers )
-    , options_( controllers.options_ )
+    , options_( options )
     , proxy_( proxy )
     , dataModel_( this )
     , proxyModel_( this )
 {
-    QVBoxLayout* container = new QVBoxLayout( this );
-    container->setSizeConstraint( QLayout::SetMinimumSize );
+    QVBoxLayout* layout = new QVBoxLayout();
+    layout->setSizeConstraint( QLayout::SetMinimumSize );
 
     // checkboxes
-    fogOfWar_ = AddCheckbox( container, "fogOfWar", "fogBox", tr( "Display fog of war" ), tr( "Fog of war" ) );
-    infra_ = AddCheckbox( container, "infra", "infraBox", tr( "Display Infrastructures" ), tr( "Infrastructures" ) );
-    gui::connect( fogOfWar_, SIGNAL( toggled( bool ) ), [&]{
-        options_.Change( "FogOfWar", fogOfWar_->isChecked() );
-    } );
-    gui::connect( infra_, SIGNAL( toggled( bool ) ), [&]{
-        options_.Change( "Infra", infra_->isChecked() );
-    } );
+    layout->addWidget( tools::AddGroupBoxWidget( "fog-groupbox", tr( "Fog of war" ),
+        new OptionCheckBox( options, "fog-checkbox", "FogOfWar", tr( "Display fog of war" ) ) ) );
+    layout->addWidget( tools::AddGroupBoxWidget( "infra-groupbox", tr( "Infrastructures" ),
+        new OptionCheckBox( options, "infra-checkbox", "Infra", tr( "Display Infrastructures" ) ) ) );
 
     // listview
     layersListView_ = new QListView();
@@ -120,13 +102,13 @@ LayersPanel::LayersPanel( QWidget* parent,
     QWidget* add  = AddButton( "add", MAKE_PIXMAP( add_point ),  tr( "Add a user raster layer" ), parent, SIGNAL( OnAddRaster() ) );
     removeButton_ = AddButton( "remove", MAKE_PIXMAP( trash ),      tr( "Remove a user raster layer" ), this, SLOT( OnRemoveDynamicLayer() ) );
     QWidget* buttonBox = new QWidget();
-    QVBoxLayout* layout = new QVBoxLayout( buttonBox );
-    layout->setMargin( 10 );
-    layout->addWidget( upButton_ );
-    layout->addWidget( downButton_ );
-    layout->addStretch();
-    layout->addWidget( add );
-    layout->addWidget( removeButton_ );
+    QVBoxLayout* buttonLayout = new QVBoxLayout( buttonBox );
+    buttonLayout->setMargin( 10 );
+    buttonLayout->addWidget( upButton_ );
+    buttonLayout->addWidget( downButton_ );
+    buttonLayout->addStretch();
+    buttonLayout->addWidget( add );
+    buttonLayout->addWidget( removeButton_ );
 
     // transparency slider
     transparencyLabel_ = new QLabel( tr( "Transparency " ) );
@@ -136,16 +118,16 @@ LayersPanel::LayersPanel( QWidget* parent,
     connect( transparency_, SIGNAL( valueChanged( int ) ), SLOT( OnAlphaChanged() ) );
 
     // Layout
-    RichGroupBox* groupBox = new RichGroupBox( "LayerDisplay", tr( "Layer display order and transparency" ) );
+    QGroupBox* groupBox = new RichGroupBox( "layers", tr( "Layer display order and transparency" ) );
     QGridLayout* groupBoxLayout = new QGridLayout( groupBox );
     groupBoxLayout->setSpacing( 6 );
     groupBoxLayout->addWidget( layersListView_, 0, 0 );
     groupBoxLayout->addWidget( buttonBox, 0, 1 );
     groupBoxLayout->addWidget( transparencyLabel_, 1, 0 );
     groupBoxLayout->addWidget( transparency_, 2, 0 );
-    container->addWidget( groupBox, 100 );
+    layout->addWidget( groupBox, 100 );
 
-    setLayout( container );
+    setLayout( layout );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,8 +148,6 @@ void LayersPanel::Load( const GlProxy& proxy )
     // purge
     dataModel_.clear();
     // load
-    fogOfWar_->setChecked( options_.GetOption( "FogOfWar" ).To< bool >() );
-    infra_->setChecked( options_.GetOption( "Infra" ).To< bool >() );
     proxy.ApplyToLayers( [&]( const T_Layer& layer ) {
         if( !layer->IsConfigurable() )
             return;
@@ -187,22 +167,6 @@ void LayersPanel::Load( const GlProxy& proxy )
     } );
     UpdateLeastAndMostVisible();
     layersListView_->selectionModel()->select( proxyModel_.index( 0, 0 ), QItemSelectionModel::SelectCurrent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LayersPanel::Reset
-// Created: ABR 2014-09-30
-// -----------------------------------------------------------------------------
-void LayersPanel::Reset()
-{
-    for( int row = 0; row < dataModel_.rowCount(); ++row )
-        if( auto item = dataModel_.item( row ) )
-        {
-            options_.Change( GetLayerOptionText( *item, "Alpha" ), item->data( eAlphaBackup ).toFloat() ); 
-            options_.Change( GetLayerOptionText( *item, "Position" ), item->data( ePositionBackup ).toInt() ); 
-        }
-    proxy_.UpdateLayerOrder( *options_.GetViewOptions() );
-    dataModel_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -285,11 +249,9 @@ void LayersPanel::SwapSelection( int direction )
     SetItemPosition( options_, *item, position + direction );
     SetItemPosition( options_, *targetItem, position );
     if( direction > 0 )
-        proxy_.MoveBelow( targetItem->data( eData ).value< T_Layer >(),
-                          item->data( eData ).value< T_Layer >() );
-    else
-        proxy_.MoveBelow( item->data( eData ).value< T_Layer >(),
-                          targetItem->data( eData ).value< T_Layer >() );
+        std::swap( item, targetItem );
+    proxy_.MoveBelow( item->data( eData ).value< T_Layer >(),
+                      targetItem->data( eData ).value< T_Layer >() );
     UpdateLeastAndMostVisible();
 }
 
@@ -336,7 +298,7 @@ void LayersPanel::UpdateButtonsStates()
 QStandardItem* LayersPanel::GetSelectedItem() const
 {
     const auto selectedIndexes = layersListView_->selectionModel()->selectedIndexes();
-    if( !selectedIndexes.size() )
+    if( selectedIndexes.isEmpty() )
         return 0;
     auto item = dataModel_.itemFromIndex( proxyModel_.mapToSource( selectedIndexes[ 0 ] ) );
     return item && item->isEnabled() ? item : 0;

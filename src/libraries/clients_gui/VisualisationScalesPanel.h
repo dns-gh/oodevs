@@ -11,16 +11,15 @@
 #define __VisualisationScalesPanel_h_
 
 #include "PreferencePanel_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
+    class OptionsController;
 }
 
 namespace gui
 {
-    template< typename T > class RichWidget;
+
 // =============================================================================
 /** @class  VisualisationScalesPanel
     @brief  VisualisationScalesPanel
@@ -28,61 +27,41 @@ namespace gui
 // Created: JSR 2010-06-14
 // =============================================================================
 class VisualisationScalesPanel : public PreferencePanel_ABC
-                  , public tools::Observer_ABC
-                  , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             VisualisationScalesPanel( QWidget* parent, kernel::Controllers& controllers );
+             VisualisationScalesPanel( QWidget* parent, kernel::OptionsController& options );
     virtual ~VisualisationScalesPanel();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Commit();
-    virtual void Reset();
+    virtual void Load( const GlProxy& );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    VisualisationScalesPanel( const VisualisationScalesPanel& );            //!< Copy constructor
-    VisualisationScalesPanel& operator=( const VisualisationScalesPanel& ); //!< Assignment operator
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnValueChanged( int );
-    void OnReset();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    int ConvertFromScale( int scale );
-    int ConvertToScale( int index );
-    //@}
-
-private:
-    //! @name Member data
+    //! @name Types
     //@{
     typedef struct Scale
     {
         int min_;
         int max_;
     };
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::OptionsController& options_;
     Scale currentScales_[ 14 ];
-    kernel::Controllers& controllers_;
-    RichWidget< QComboBox >* minCombos_[ 14 ];
-    RichWidget< QComboBox >* maxCombos_[ 14 ];
+    QComboBox* minCombos_[ 14 ];
+    QComboBox* maxCombos_[ 14 ];
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __VisualisationScalesPanel_h_

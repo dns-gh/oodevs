@@ -10,11 +10,10 @@
 #include "clients_gui_pch.h"
 #include "WeaponRangesPanel.h"
 #include "moc_WeaponRangesPanel.cpp"
+#include "OptionWidgets.h"
 #include "RichGroupBox.h"
-#include "RichSpinBox.h"
-#include "RichCheckBox.h"
-#include "ColorButton.h"
-#include "clients_kernel/Controllers.h"
+#include "SignalAdapter.h"
+#include "Tools.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
@@ -25,174 +24,71 @@
 
 using namespace gui;
 
-WeaponRangesPanel::WeaponRangesPanel( QWidget* parent, kernel::Controllers& controllers, const kernel::StaticModel& model )
+WeaponRangesPanel::WeaponRangesPanel( QWidget* parent,
+                                      kernel::OptionsController& options,
+                                      const kernel::StaticModel& model )
     : PreferencePanel_ABC( parent, "WeaponRangesPanel" )
-    , controllers_( controllers )
+    , options_( options )
     , model_( model )
-    , volumeCombo_( 0 )
-    , phSpinbox_( 0 )
-    , filterCheckBox_( 0 )
-    , indirectWeaponCombo_( 0 )
-    , colorCheckBox_( 0 )
-    , colorButton_( 0 )
-    , ph_( 0 )
-    , volume_( 0 )
-    , filter_( false )
-    , useColor_( false )
-    , color_( Qt::white )
 {
-    RichGroupBox* box = new RichGroupBox( "weaponRanges", tr( "Weapon ranges" ), this );
-    RichGroupBox* directFire = new RichGroupBox( "directFireRange", tr( "Direct fire efficient range" ), box );
-    {
-        QHBoxLayout* phLayout = new QHBoxLayout();
-        {
-            phSpinbox_ = new gui::RichSpinBox( "phSpinbox", 0, 0, 100 );
-            phLayout->addWidget( new QLabel( tr( "Percentage (PH):" ) ) );
-            phLayout->addWidget( phSpinbox_ );
-        }
-        QHBoxLayout* volumeLayout = new QHBoxLayout();
-        {
-            volumeCombo_ = new QComboBox( directFire );
-            volumeLayout->addWidget( new QLabel( tr( "Size:" ) ) );
-            volumeLayout->addWidget( volumeCombo_ );
-        }
-        QVBoxLayout* directFireLayout = new QVBoxLayout( directFire );
-        directFireLayout->addLayout( phLayout );
-        directFireLayout->addLayout( volumeLayout );
-        directFireLayout->addStretch();
-    }
-    RichGroupBox* indirectFire = new RichGroupBox( "indirectFireRange", tr( "Indirect fire range" ), box );
-    {
-        filterCheckBox_ = new gui::RichCheckBox( "toggleDisplayOnlyRangeOf", tr( "Display only the range of:" ) );
-        indirectWeaponCombo_ = new QComboBox( indirectFire );
-        QHBoxLayout* colorLayout = new QHBoxLayout();
-        {
-            colorCheckBox_ = new gui::RichCheckBox( "toggleUseCustomColor", tr( "Use custom color:" ) );
-            colorButton_ = new gui::ColorButton( "weaponRangesColor", indirectFire );
-            colorLayout->addWidget( colorCheckBox_ );
-            colorLayout->addWidget( colorButton_ );
-        }
-        QVBoxLayout* indirectFireLayout = new QVBoxLayout( indirectFire );
-        indirectFireLayout->addWidget( filterCheckBox_ );
-        indirectFireLayout->addWidget( indirectWeaponCombo_ );
-        indirectFireLayout->addLayout( colorLayout );
-        indirectFireLayout->addStretch();
-    }
+    volumeCombo_ = new QComboBox();
+    indirectWeaponCombo_ = new QComboBox();
 
-    QVBoxLayout* boxLayout = new QVBoxLayout( box );
-    boxLayout->addWidget( directFire );
-    boxLayout->addWidget( indirectFire );
-    boxLayout->addStretch( 1 );
-    setWidget( box );
+    RichGroupBox* directFire = new RichGroupBox( "directFireRange", tr( "Direct fire efficient range" ) );
+    QVBoxLayout* directFireLayout = new QVBoxLayout( directFire );
+    directFireLayout->addWidget( tools::AddLabeledWidget( tr( "Percentage (PH):" ),
+        new OptionSpinBox( options, "phSpinbox", "EfficientRange/Ph", 0, 100 ) ) );
+    directFireLayout->addWidget( tools::AddLabeledWidget( tr( "Size:" ), volumeCombo_ ) );
 
-    connect( phSpinbox_, SIGNAL( valueChanged( int ) ), SLOT( OnPhChanged( int ) ) );
-    connect( volumeCombo_, SIGNAL( currentIndexChanged( int ) ), SLOT( OnVolumeChanged( int ) ) );
-    connect( filterCheckBox_, SIGNAL( toggled( bool ) ), SLOT( OnFilterToggled( bool ) ) );
-    connect( indirectWeaponCombo_, SIGNAL( currentIndexChanged( const QString& ) ), SLOT( OnIndirectWeaponChanged( const QString& ) ) );
-    connect( colorCheckBox_, SIGNAL( toggled( bool ) ), SLOT( OnColorToggled( bool ) ) );
-    connect( colorButton_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
+    QHBoxLayout* colorLayout = new QHBoxLayout();
+    colorLayout->addWidget( new OptionCheckBox( options, "toggleUseCustomColor", "EfficientRange/UseCustomColor", tr( "Use custom color:" ) ) );
+    colorLayout->addWidget( new OptionColorButton( options, "weaponRangesColor", "EfficientRange/CustomColor" ) );
 
-    controllers_.Register( *this );
+    RichGroupBox* indirectFire = new RichGroupBox( "indirectFireRange", tr( "Indirect fire range" ) );
+    QVBoxLayout* indirectFireLayout = new QVBoxLayout( indirectFire );
+    indirectFireLayout->addWidget( new OptionCheckBox( options,
+                                                       "toggleDisplayOnlyRangeOf",
+                                                       "EfficientRange/FilterIndirectWeapon",
+                                                       tr( "Display only the range of:" ) ) );
+    indirectFireLayout->addWidget( indirectWeaponCombo_ );
+    indirectFireLayout->addLayout( colorLayout );
+
+    QVBoxLayout* layout = new QVBoxLayout();
+    layout->addWidget( directFire );
+    layout->addWidget( indirectFire );
+    layout->addStretch( 1 );
+    setLayout( layout );
+
+    gui::connect( volumeCombo_, SIGNAL( currentIndexChanged( int ) ), [&](){
+        options_.Change( "EfficientRange/Volume", volumeCombo_->currentIndex() );
+    } );
+    gui::connect( indirectWeaponCombo_, SIGNAL( currentIndexChanged( const QString& ) ), [&](){
+        options_.Change( "EfficientRange/IndirectWeapon", indirectWeaponCombo_->currentText() );
+    } );
 }
 
 WeaponRangesPanel::~WeaponRangesPanel()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
-void WeaponRangesPanel::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
+void WeaponRangesPanel::Load( const GlProxy& )
 {
-    Commit();
-    phSpinbox_->setValue( ph_ );
+    volumeCombo_->clear();
+    indirectWeaponCombo_->clear();
+    auto itVolume = model_.objectTypes_.tools::Resolver< kernel::VolumeType >::CreateIterator();
+    while( itVolume.HasMoreElements() )
+        volumeCombo_->insertItem( itVolume.NextElement().GetName().c_str() );
+    auto it = model_.objectTypes_.tools::Resolver< kernel::WeaponSystemType, std::string >::CreateIterator();
+    while( it.HasMoreElements() )
     {
-        auto it = model_.objectTypes_.tools::Resolver< kernel::VolumeType >::CreateIterator();
-        while( it.HasMoreElements() )
-            volumeCombo_->insertItem( it.NextElement().GetName().c_str() );
-        volumeCombo_->setCurrentItem( volume_ < volumeCombo_->count() ? volume_ : 0 );
+        const auto& weapon = it.NextElement();
+        if( weapon.IsIndirect() )
+            indirectWeaponCombo_->insertItem( weapon.GetId().c_str() );
     }
-    filterCheckBox_->setChecked( filter_ );
-    {
-        auto it = model_.objectTypes_.tools::Resolver< kernel::WeaponSystemType, std::string >::CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const auto& weapon = it.NextElement();
-            if( weapon.IsIndirect() )
-                indirectWeaponCombo_->insertItem( weapon.GetId().c_str() );
-        }
-        indirectWeaponCombo_->setCurrentItem( indirectWeaponCombo_->findText( indirectWeapon_ ) );
-    }
-    colorCheckBox_->setChecked( useColor_ );
-    colorButton_->SetColor( color_ );
-}
 
-void WeaponRangesPanel::Commit()
-{
-    ph_ = controllers_.options_.GetOption( "EfficientRange/Ph" ).To< int >();
-    volume_ = controllers_.options_.GetOption( "EfficientRange/Volume" ).To< int >();
-    filter_ = controllers_.options_.GetOption( "EfficientRange/FilterIndirectWeapon" ).To< bool >();
-    indirectWeapon_ = controllers_.options_.GetOption( "EfficientRange/IndirectWeapon" ).To< QString >();
-    useColor_ = controllers_.options_.GetOption( "EfficientRange/UseCustomColor" ).To< bool >();
-    color_ = controllers_.options_.GetOption( "EfficientRange/CustomColor" ).To< QString >();
-    colorButton_->Commit();
-}
-
-void WeaponRangesPanel::Reset()
-{
-    OnPhChanged( ph_ );
-    OnVolumeChanged( volume_ );
-    OnFilterToggled( filter_ );
-    OnIndirectWeaponChanged( indirectWeapon_ );
-    OnColorToggled( useColor_ );
-    OnColorChanged( color_ );
-    colorButton_->Revert();
-}
-
-void WeaponRangesPanel::OnPhChanged( int value )
-{
-    controllers_.options_.Change( "EfficientRange/Ph", value );
-}
-
-void WeaponRangesPanel::OnVolumeChanged( int index )
-{
-    controllers_.options_.Change( "EfficientRange/Volume", index );
-}
-
-void WeaponRangesPanel::OnFilterToggled( bool state )
-{
-    controllers_.options_.Change( "EfficientRange/FilterIndirectWeapon", state );
-}
-
-void WeaponRangesPanel::OnIndirectWeaponChanged( const QString& value )
-{
-    controllers_.options_.Change( "EfficientRange/IndirectWeapon", value );
-}
-
-void WeaponRangesPanel::OnColorToggled( bool state )
-{
-    controllers_.options_.Change( "EfficientRange/UseCustomColor", state );
-}
-
-void WeaponRangesPanel::OnColorChanged( const QColor& color )
-{
-    controllers_.options_.Change( "EfficientRange/CustomColor", color.name() );
-}
-
-void WeaponRangesPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "EfficientRange/Volume" )
-        volumeCombo_->setCurrentIndex( value.To< int >() );
-    else if( name == "EfficientRange/Ph" )
-        phSpinbox_->setValue( value.To< int >() );
-    else if( name == "EfficientRange/FilterIndirectWeapon" )
-        filterCheckBox_->setChecked( value.To< bool >() );
-    else if( name == "EfficientRange/IndirectWeapon" )
-        indirectWeaponCombo_->setCurrentIndex( indirectWeaponCombo_->findText( value.To< QString >() ) );
-    else if( name == "EfficientRange/UseCustomColor" )
-        colorCheckBox_->setChecked( value.To< bool >() );
-    else if( name == "EfficientRange/CustomColor" )
-    {
-        const QColor color( value.To< QString >() );
-        if( color != colorButton_->GetColor() )
-            colorButton_->SetColor( color );
-    }
+    const auto volume = options_.GetOption( "EfficientRange/Volume" ).To< int >();
+    volumeCombo_->setCurrentItem( volume < volumeCombo_->count() ? volume : 0 );
+    const auto indirectWeapon = options_.GetOption( "EfficientRange/IndirectWeapon" ).To< QString >();
+    indirectWeaponCombo_->setCurrentIndex( indirectWeaponCombo_->findText( indirectWeapon ) );
 }

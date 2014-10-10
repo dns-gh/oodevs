@@ -14,15 +14,12 @@
 
 namespace kernel
 {
-    class Controllers;
     class OptionsController;
 }
 
 namespace gui
 {
-    class CheckBox;
     class GlProxy;
-    class Layer_ABC;
 
 // =============================================================================
 /** @class  LayersPanel
@@ -38,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LayersPanel( QWidget* parent,
-                          kernel::Controllers& controllers,
+                          kernel::OptionsController& options,
                           GlProxy& view );
     virtual ~LayersPanel();
     //@}
@@ -47,7 +44,6 @@ private:
     //! @name PreferencePanel_ABC implementation
     //@{
     virtual void Load( const GlProxy& proxy );
-    virtual void Reset();
     //@}
 
 private slots:
@@ -72,12 +68,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     kernel::OptionsController& options_;
-
     GlProxy& proxy_;
-    QCheckBox* fogOfWar_;
-    QCheckBox* infra_;
+
     QListView* layersListView_;
     QStandardItemModel dataModel_;
     QSortFilterProxyModel proxyModel_;
@@ -88,6 +81,6 @@ private:
     QPushButton* downButton_;
 };
 
-}
+} //! namespace gui
 
 #endif // __LayersPanel_h_

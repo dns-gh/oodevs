@@ -315,45 +315,6 @@
     </message>
 </context>
 <context>
-    <name>PreferencesDialog</name>
-    <message>
-        <source>Coordinate System</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Visualisation Scales</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D/Terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D/Population</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D/Elevation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replay</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>RenameDialog</name>
     <message>
         <source>Rename</source>
@@ -370,45 +331,6 @@
         <source>2D: %L1m
 3D: %L2m
 %L3°</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SoundPanel</name>
-    <message>
-        <source>Sound control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sound directory :</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ajust all sound volumes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Direct fires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fumigen fires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explosive fires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Illumination fires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Neutralisation fires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute sounds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -695,10 +617,6 @@
         <source>Select current coordinate system:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Coordinate System</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>gui::CriticalIntelligenceDialog</name>
@@ -757,6 +675,14 @@
     </message>
     <message>
         <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -927,14 +853,6 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::ElevationPanel</name>
     <message>
-        <source>Fit color gradient to viewport</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gradient map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Elevation colors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -996,25 +914,6 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::FixedLightWidget</name>
-    <message>
-        <source>Light direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Light colors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ambient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Diffuse</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::FloodPrototype_ABC</name>
     <message>
         <source>Flood</source>
@@ -1041,7 +940,7 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::GisToolBar</name>
+    <name>gui::GisToolbar</name>
     <message>
         <source>GIS tools</source>
         <translation type="unfinished"></translation>
@@ -1096,7 +995,7 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::GradientWidget</name>
+    <name>gui::GradientPreferencesEditor</name>
     <message>
         <source>Copy preset</source>
         <translation type="unfinished"></translation>
@@ -1109,11 +1008,12 @@ Please check access permissions or write protection.</source>
         <source>Delete preset</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>gui::GraphicPreferences</name>
     <message>
-        <source>Colors and line thickness</source>
+        <source>Fit color gradient to viewport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gradient map</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1159,10 +1059,6 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Occupation Gradient map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Colors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1778,15 +1674,47 @@ Do you want to remove it?</source>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visualisation Scales</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D/Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D/Population</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D/Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replay</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::PresetDialog</name>
     <message>
         <source>Rename preset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1809,6 +1737,10 @@ Do you want to remove it?</source>
         <source>Preset name already exists.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::ProfileDialog</name>
@@ -1828,10 +1760,6 @@ Do you want to remove it?</source>
 <context>
     <name>gui::RefreshRatePanel</name>
     <message>
-        <source>Refresh rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select refresh rate (in ms):</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1845,10 +1773,6 @@ Do you want to remove it?</source>
 </context>
 <context>
     <name>gui::ReplayPanel</name>
-    <message>
-        <source>Replay</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Set smooth movement</source>
         <translation type="unfinished"></translation>
@@ -1973,6 +1897,38 @@ Do you want to remove it?</source>
     <name>gui::SoundPanel</name>
     <message>
         <source>Select sounds directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direct fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fumigen fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explosive fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutralisation fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute sounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ajust all sound volumes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound directory :</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2432,10 +2388,6 @@ Do you want to remove it?</source>
 <context>
     <name>gui::VisualisationScalesPanel</name>
     <message>
-        <source>Visualisation scales</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Min Scale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2450,10 +2402,6 @@ Do you want to remove it?</source>
 </context>
 <context>
     <name>gui::WeaponRangesPanel</name>
-    <message>
-        <source>Weapon ranges</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Percentage (PH):</source>
         <translation type="unfinished"></translation>

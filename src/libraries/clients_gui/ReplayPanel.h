@@ -7,20 +7,19 @@
 //
 // *****************************************************************************
 
-#ifndef ReplayPanel_h
-#define ReplayPanel_h
+#ifndef __gui__ReplayPanel_h
+#define __gui__ReplayPanel_h
 
 #include "PreferencePanel_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
     class OptionsController;
 }
 
 namespace gui
 {
+
 // =============================================================================
 /** @class  ReplayPanel
     @brief  ReplayPanel
@@ -28,34 +27,17 @@ namespace gui
 // Created: SLI 2014-06-06
 // =============================================================================
 class ReplayPanel : public PreferencePanel_ABC
-                  , public tools::Observer_ABC
-                  , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPanel( QWidget* parent, kernel::Controllers& controllers );
+             ReplayPanel( QWidget* parent, kernel::OptionsController& options );
     virtual ~ReplayPanel();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Commit();
-    virtual void Reset();
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-     kernel::OptionsController& options_;
-     kernel::Controllers& controllers_;
-     QCheckBox* checkbox_;
     //@}
 };
 
-}
+} //! namespace gui
 
-#endif // ReplayPanel_h
+#endif // __gui__ReplayPanel_h
