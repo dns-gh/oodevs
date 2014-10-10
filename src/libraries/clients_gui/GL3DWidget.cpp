@@ -254,7 +254,8 @@ void Gl3dWidget::DrawPolygon( const T_PointVector& points ) const
 // Name: Gl3dWidget::DrawDecoratedPolygon
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const std::string& /*name*/, unsigned int /*height*/ )
+void Gl3dWidget::DrawDecoratedPolygon( const kernel::T_TessellatedPolygon& /*polygon*/, const T_PointVector& /*vertices*/,
+                                       const geometry::Point2f& /*center*/, const std::string& /*name*/, unsigned int /*fontHeight*/ )
 {
     // NOTHING
 }

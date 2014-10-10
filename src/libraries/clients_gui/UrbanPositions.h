@@ -14,6 +14,7 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/UrbanTypes.h"
+#include "clients_kernel/Types.h"
 
 namespace kernel
 {
@@ -22,6 +23,7 @@ namespace kernel
 
 namespace gui
 {
+    class Tesselator;
 // =============================================================================
 /** @class  UrbanPositions
     @brief  Urban positions
@@ -36,9 +38,11 @@ public:
     //! @name Constructors/Destructor
     //@{
              UrbanPositions( EUrbanLevel level,
-                             const kernel::UrbanObject_ABC& object );
+                             const kernel::UrbanObject_ABC& object,
+                             Tesselator& tesselator );
              UrbanPositions( EUrbanLevel level,
-                             const kernel::UrbanObject_ABC& object, std::vector< geometry::Point2f > positions );
+                             const kernel::UrbanObject_ABC& object, std::vector< geometry::Point2f > positions,
+                             Tesselator& tesselator );
     virtual ~UrbanPositions();
     //@}
 
@@ -77,12 +81,14 @@ protected:
     //@{
     EUrbanLevel level_;
     const kernel::UrbanObject_ABC& object_;
+    Tesselator& tesselator_;
     bool selected_;
     bool hasInfrastructure_;
     float area_;
     geometry::Polygon2f polygon_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f barycenter_;
+    kernel::T_TessellatedPolygon tessellatedPolygon_;
     //@}
 };
 

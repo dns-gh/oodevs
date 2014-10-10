@@ -42,8 +42,9 @@ namespace
 // Name: UrbanPositions constructor for city or district from list view context menu
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
-    : gui::UrbanPositions( level, object )
+UrbanPositions::UrbanPositions( gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object,
+                                const kernel::CoordinateConverter_ABC& converter, gui::Tesselator& tesselator )
+    : gui::UrbanPositions( level, object, tesselator )
     , converter_( converter )
     , level_( level )
 {
@@ -55,8 +56,9 @@ UrbanPositions::UrbanPositions( gui::PropertiesDictionary& dictionary, EUrbanLev
 // Name: UrbanPositions constructor for urban blocs from buttons
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
-    : gui::UrbanPositions( level, object, location.Vertices() )
+UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, gui::PropertiesDictionary& dictionary, EUrbanLevel level,
+                                const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter, gui::Tesselator& tesselator )
+    : gui::UrbanPositions( level, object, location.Vertices(), tesselator )
     , converter_( converter )
     , level_( level )
 {
@@ -68,8 +70,9 @@ UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, gui::Proper
 // Name: UrbanPositions constructor for any urban object from xis
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( xml::xistream& xis, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
-    : gui::UrbanPositions( level, object, Convert( xis, level, converter ) )
+UrbanPositions::UrbanPositions( xml::xistream& xis, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object,
+                                const kernel::CoordinateConverter_ABC& converter, gui::Tesselator& tesselator )
+    : gui::UrbanPositions( level, object, Convert( xis, level, converter ), tesselator )
     , converter_( converter )
     , level_( level )
 {

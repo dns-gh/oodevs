@@ -391,10 +391,11 @@ void GlProxy::DrawSelectedPolygon( const T_PointVector& points ) const
 // Name: GlProxy::DrawDecoratedPolygon
 // Created: SLG 2009-12-14
 // -----------------------------------------------------------------------------
-void GlProxy::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const std::string& name, unsigned int fontHeight )
+void GlProxy::DrawDecoratedPolygon( const kernel::T_TessellatedPolygon& polygon, const T_PointVector& vertices,
+                                    const geometry::Point2f& center, const std::string& name, unsigned int fontHeight )
 {
     if( tools_ )
-        tools_->DrawDecoratedPolygon( polygon, name, fontHeight );
+        tools_->DrawDecoratedPolygon( polygon, vertices, center, name, fontHeight );
 }
 
 // -----------------------------------------------------------------------------

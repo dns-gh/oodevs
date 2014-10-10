@@ -22,6 +22,7 @@
 
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
+#include "clients_gui/Tesselator.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -41,6 +42,7 @@ UrbanFactory::UrbanFactory( kernel::Controllers& controllers, const tools::Resol
     , idManager_   ( idManager )
     , objects_     ( objects )
     , options_     ( options )
+    , tesselator_  ( new gui::Tesselator() )
 {
     // NOTHING
 }
@@ -64,7 +66,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Entit
     gui::PropertiesDictionary& dictionary = pTerrainObject->Get< gui::PropertiesDictionary >();
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
 
-    UrbanPositions* urbanPosition = new UrbanPositions( xis, dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_ );
+    UrbanPositions* urbanPosition = new UrbanPositions( xis, dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_, *tesselator_ );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *urbanPosition );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( xis, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
@@ -96,7 +98,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( kernel::Entity_ABC* parent ) cons
     gui::PropertiesDictionary& dictionary = pTerrainObject->Get< gui::PropertiesDictionary >();
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     assert( hierarchies->GetLevel() == eUrbanLevelCity || hierarchies->GetLevel() == eUrbanLevelDistrict );
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_ ) );
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_, *tesselator_ ) );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( parent, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( parent, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
@@ -115,7 +117,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( const geometry::Polygon2f& locati
     gui::PropertiesDictionary& dictionary = pTerrainObject->Get< gui::PropertiesDictionary >();
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     assert( hierarchies->GetLevel() == eUrbanLevelBlock );
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( location, dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_ ) );
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( location, dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_, *tesselator_ ) );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( parent, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( parent, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
 

@@ -17,9 +17,10 @@
 #include "StructuralStateAttribute.h"
 #include "UrbanColor.h"
 #include "UrbanPositions.h"
-#include "clients_gui/UrbanObject.h"
-#include "clients_gui/UrbanDisplayOptions.h"
 #include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/Tesselator.h"
+#include "clients_gui/UrbanDisplayOptions.h"
+#include "clients_gui/UrbanObject.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 
@@ -32,6 +33,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& 
     , resourceNetwork_    ( resourceNetwork )
     , static_             ( staticModel )
     , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
+    , tesselator_         ( new gui::Tesselator() )
 {
     // NOTHING
 }
@@ -63,7 +65,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     gui::UrbanObject* pTerrainObject = new gui::UrbanObject( controllers_, message.name(), id, type, static_.accommodationTypes_, *urbanDisplayOptions_ );
     gui::PropertiesDictionary& dictionary = pTerrainObject->Get< gui::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), static_.coordinateConverter_, *pTerrainObject ) );
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), static_.coordinateConverter_, *pTerrainObject, *tesselator_ ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( message.attributes(), dictionary, static_.accommodationTypes_, *pTerrainObject, static_.objectTypes_ ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();

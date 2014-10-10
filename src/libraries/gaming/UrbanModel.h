@@ -28,6 +28,7 @@ namespace kernel
 
 namespace gui
 {
+    class Tesselator;
     class UrbanDisplayOptions;
 }
 
@@ -68,6 +69,7 @@ private:
     ResourceNetworkModel& resourceNetwork_;
     const StaticModel& static_;
     std::unique_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
+    std::unique_ptr< gui::Tesselator > tesselator_;
     //@}
 };
 

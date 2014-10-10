@@ -22,6 +22,7 @@ namespace kernel
 
 namespace gui
 {
+    class Tesselator;
     class UrbanDisplayOptions;
 }
 
@@ -64,6 +65,7 @@ private:
     tools::IdManager&                                     idManager_;
     const tools::Resolver< kernel::Object_ABC >&          objects_;
     gui::UrbanDisplayOptions&                             options_;
+    std::unique_ptr< gui::Tesselator >                    tesselator_;
     //@}
 };
 

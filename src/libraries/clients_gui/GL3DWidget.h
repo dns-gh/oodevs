@@ -71,7 +71,8 @@ public:
     virtual void DrawRectangle    ( const T_PointVector& points ) const;
     virtual void DrawPolygon      ( const T_PointVector& points ) const;
     virtual void DrawSelectedPolygon( const T_PointVector& points ) const;
-    virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const std::string& name, unsigned int fontHeight);
+    virtual void DrawDecoratedPolygon( const kernel::T_TessellatedPolygon& polygon, const T_PointVector& vertices,
+                                       const geometry::Point2f& center, const std::string& name, unsigned int fontHeight );
     virtual void DrawArrow        ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2, float width = 1. ) const;
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;
