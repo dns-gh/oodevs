@@ -133,4 +133,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentDataDetection )
+
 #endif // __DEC_Knowledge_AgentDataDetection_h_
