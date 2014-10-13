@@ -2,64 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr" sourcelanguage="en">
 <context>
-    <name>ActionProperties</name>
-    <message>
-        <source>Properties</source>
-        <translation>Propriétés</translation>
-    </message>
-</context>
-<context>
-    <name>ActionsToolbar</name>
-    <message>
-        <source>Load</source>
-        <translation>Charger</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Sauvegarder</translation>
-    </message>
-    <message>
-        <source>Actions recorder</source>
-        <translation>Enregistreur d&apos;actions</translation>
-    </message>
-    <message>
-        <source>Planning mode on/off</source>
-        <translation>Basculer en mode Planification</translation>
-    </message>
-    <message>
-        <source>Load actions file</source>
-        <translation>Charger un fichier d&apos;actions</translation>
-    </message>
-    <message>
-        <source>Save actions in active timeline to file</source>
-        <translation>Enregistrer les actions de la vue courante dans un fichier</translation>
-    </message>
-    <message>
-        <source>Delete recorded actions</source>
-        <translation>Supprimer les actions enregistrées</translation>
-    </message>
-    <message>
-        <source>Actions files (*.ord)</source>
-        <translation>Fichier d&apos;actions (*.ord)</translation>
-    </message>
-    <message>
-        <source>Error loading actions file</source>
-        <translation>Erreur lors du chargement du fichier d&apos;actions</translation>
-    </message>
-    <message>
-        <source>Delete recorded actions?</source>
-        <translation>Supprimer les actions enregistrées ?</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation>Recharger</translation>
-    </message>
-    <message>
-        <source>orders</source>
-        <translation>ordres</translation>
-    </message>
-</context>
-<context>
     <name>AffinitiesDialog</name>
     <message>
         <source>Activate</source>
@@ -2912,17 +2854,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>Parameter</name>
-    <message>
-        <source>Parameter</source>
-        <translation>Paramètre</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Valeur</translation>
-    </message>
-</context>
-<context>
     <name>PartsView</name>
     <message>
         <source>Required Parts</source>
@@ -3458,45 +3389,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>TimelineActionItem</name>
-    <message>
-        <source>Delete</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation>Renommer</translation>
-    </message>
-    <message>
-        <source>Press enter to rename, unfocus field to cancel</source>
-        <translation>Appuyez sur [Entrée] pour valider, cliquez en dehors du champ pour annuler</translation>
-    </message>
-    <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;issued by automat&lt;/i&gt;</source>
-        <translation>&lt;i&gt;assignée par l&apos;automate&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;disabled&lt;/i&gt;</source>
-        <translation>&lt;i&gt;désactivée&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Starts: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Démarre: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
-        <source>Disable</source>
-        <translation>Désactiver</translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation>Activer</translation>
-    </message>
-</context>
-<context>
     <name>TimelineDockWidget</name>
     <message>
         <source>Main</source>
@@ -3517,40 +3409,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Name</source>
         <translation>Nom</translation>
-    </message>
-</context>
-<context>
-    <name>TimelineListView</name>
-    <message>
-        <source>Units</source>
-        <translation>Unités</translation>
-    </message>
-    <message>
-        <source>Weather</source>
-        <translation>Météo</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Magic</source>
-        <translation>Magique</translation>
-    </message>
-</context>
-<context>
-    <name>TimelinePanel</name>
-    <message>
-        <source>Global view</source>
-        <translation>Vue globale</translation>
-    </message>
-    <message>
-        <source>Current session</source>
-        <translation>Session courante</translation>
-    </message>
-    <message>
-        <source>Legacy Timeline</source>
-        <translation>Ancienne chronologie</translation>
     </message>
 </context>
 <context>
@@ -3618,17 +3476,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Show children</source>
         <translation>Afficher les fils</translation>
-    </message>
-</context>
-<context>
-    <name>TimelineView</name>
-    <message>
-        <source>Zoom In</source>
-        <translation>Zoomer</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation>Dézoomer</translation>
     </message>
 </context>
 <context>

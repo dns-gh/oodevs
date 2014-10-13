@@ -857,15 +857,6 @@ std::string ExerciseConfig::GetUtmZone() const
     return pWorldParameters_->GetUtmZone();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ExerciseConfig::HasTimeline
-// Created: ABR 2013-05-31
-// -----------------------------------------------------------------------------
-bool ExerciseConfig::HasTimeline() const
-{
-    return false;
-}
-
 xml::xistream& operator>>( xml::xistream& xis, ExerciseConfig::LogSettingsData& settings )
 {
     xis >> xml::optional >> xml::attribute( "loglevel", settings.level_ )

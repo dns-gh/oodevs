@@ -16,10 +16,10 @@
 namespace kernel
 {
     class Controllers;
-    class Time_ABC;
 }
 
 class Simulation;
+class SimulationController;
 
 // =============================================================================
 /** @class  AlarmsWidget
@@ -36,7 +36,7 @@ class AlarmsWidget : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation );
+             AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, const SimulationController& simulationController );
     virtual ~AlarmsWidget();
     //@}
 
@@ -62,7 +62,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::Time_ABC& simulation_;
+    const SimulationController& simulationController_;
     QTreeWidget* list_;
     QPushButton* remove_;
     QMessageBox* messageBox_;

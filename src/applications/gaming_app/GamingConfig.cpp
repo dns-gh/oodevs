@@ -28,7 +28,6 @@ GamingConfig::GamingConfig( int argc, char** argv )
     : SessionConfig( tools::CreateNullFileLoaderObserver() )
     , orderFile_     ( "" )
     , networkTimeOut_( 10000 )
-    , hasTimeline_( false )
     , timelineUrl_( "" )
     , timelineDebugPort_( 0 )
     , common_( new gui::GamingCommonConfig() )
@@ -43,7 +42,6 @@ GamingConfig::GamingConfig( int argc, char** argv )
         ( "order-file", po::value( &orderFile_ ), "specify an order file to load" )
         ( "timeline-log", po::value( &timelineLog ), "timeline log file" )
         ( "cef-log", po::value( &cefLog ), "chrome embedded log file" )
-        ( "legacy-timeline", po::value( &hasTimeline_ )->zero_tokens(), "enable legacy timeline" )
         ( "timeline-debug-port",  po::value( &timelineDebugPort_ ), "timeline chrome debugger port" );
     gui::AddGamingCommonOptions( desc, *common_ );
 
@@ -149,15 +147,6 @@ bool GamingConfig::IsLoginInCommandLine() const
 unsigned long GamingConfig::GetNetworkTimeOut() const
 {
     return networkTimeOut_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GamingConfig::HasTimeline
-// Created: ABR 2013-05-15
-// -----------------------------------------------------------------------------
-bool GamingConfig::HasTimeline() const
-{
-    return hasTimeline_;
 }
 
 // -----------------------------------------------------------------------------

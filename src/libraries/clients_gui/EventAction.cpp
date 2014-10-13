@@ -13,6 +13,7 @@
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TimelineHelpers.h"
@@ -32,7 +33,6 @@ EventAction::EventAction( E_EventTypes type,
     : Event( type, event )
     , model_( model )
     , controllers_( controllers )
-    , action_( controllers )
 {
     Event::Update();
 }
@@ -63,10 +63,10 @@ void EventAction::Purge()
 {
     if( action_ )
     {
-        if( controllers_.actions_.IsSelected( action_ ) )
+        if( controllers_.actions_.IsSelected( action_.get() ) )
             controllers_.actions_.DeselectAll();
-        model_.Destroy( *action_ );
-        action_ = 0;
+        controllers_.controller_.Delete( *action_ );
+        action_.reset();
     }
 }
 
@@ -96,15 +96,15 @@ namespace
 void EventAction::Update( const timeline::Event& event )
 {
     Event::Update( event );
-    bool wasSelected_ = action_ && controllers_.actions_.IsSelected( action_ );
+    bool wasSelected_ = action_ && controllers_.actions_.IsSelected( action_.get() );
     Purge();
     sword::ClientToSim msg;
     msg.ParsePartialFromString( event.action.payload );
     if( msg.has_message() )
     {
-        action_ = model_.CreateAction( msg, true );
+        action_.reset( model_.CreateAction( msg ) );
         if( action_ && action_->GetName().isEmpty() && !event.name.empty() )
-            action_.ConstCast()->Rename( QString::fromStdString( event.name ) );
+            action_->Rename( QString::fromStdString( event.name ) );
         UpdateTiming();
         type_ = ::GetEventType( msg );
     }
@@ -118,16 +118,7 @@ void EventAction::Update( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 const actions::Action_ABC* EventAction::GetAction() const
 {
-    return action_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventAction::SetAction
-// Created: ABR 2014-01-10
-// -----------------------------------------------------------------------------
-void EventAction::SetAction( const actions::Action_ABC* action )
-{
-    action_ = action;
+    return action_.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -166,6 +157,6 @@ void EventAction::Select( kernel::ActionController& controller ) const
 void EventAction::UpdateTiming()
 {
     if( action_ && event_ )
-        if( actions::ActionTiming* timing = action_.ConstCast()->Retrieve< actions::ActionTiming >() )
+        if( actions::ActionTiming* timing = action_->Retrieve< actions::ActionTiming >() )
             timing->SetTime( QDateTime::fromString( QString::fromStdString( event_->begin ), EVENT_DATE_FORMAT ) );
 }

@@ -274,7 +274,6 @@ void Model::Purge()
     scoreDefinitions_.Purge();
     drawings_.Purge();
     aar_.Purge();
-    actions_.Purge();
     profiles_.Purge();
     weather_.Purge();
     limits_.Purge();

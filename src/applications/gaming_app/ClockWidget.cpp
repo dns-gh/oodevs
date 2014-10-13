@@ -22,7 +22,7 @@
 // Name: ClockWidget constructor
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
-ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, ActionsScheduler& scheduler )
+ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, const SimulationController& simulationController )
     : QWidget( parent )
     , controllers_( controllers )
 {
@@ -97,8 +97,8 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
 
     alarmButton_->setVisible( controllers_.GetCurrentMode() != eModes_Replay );
 
-    ClockEditDialog* editor = new ClockEditDialog( this, controllers, scheduler );
-    AlarmsWidget* alarms = new AlarmsWidget( this, controllers, simulation );
+    ClockEditDialog* editor = new ClockEditDialog( this, controllers, simulationController );
+    AlarmsWidget* alarms = new AlarmsWidget( this, controllers, simulationController );
 
     connect( editButton, SIGNAL( clicked() ), editor, SLOT( show() ) );
     connect( alarmButton_, SIGNAL( clicked() ), alarms, SLOT( show() ) );

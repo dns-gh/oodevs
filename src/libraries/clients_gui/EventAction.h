@@ -11,7 +11,6 @@
 #define __EventAction_h_
 
 #include "Event.h"
-#include "clients_kernel/SafePointer.h"
 
 namespace actions
 {
@@ -51,7 +50,6 @@ public:
     virtual Event* Clone() const;
     virtual void Update( const timeline::Event& event );
     virtual const actions::Action_ABC* GetAction() const;
-    void SetAction( const actions::Action_ABC* action );
     //@}
 
     //! @name GraphicalEntity_ABC implementation
@@ -73,7 +71,7 @@ private:
     //@{
     actions::ActionsModel& model_;
     kernel::Controllers& controllers_;
-    kernel::SafePointer< actions::Action_ABC > action_;
+    std::unique_ptr< actions::Action_ABC > action_;
     //@}
 };
 

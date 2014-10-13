@@ -43,7 +43,6 @@ public:
     bool IsLoginInCommandLine() const;
     unsigned long GetNetworkTimeOut() const;
 
-    virtual bool HasTimeline() const;
     virtual std::string GetTimelineUrl() const;
     virtual int GetTimelineDebugPort() const;
     // Disabled if empty.
@@ -69,7 +68,6 @@ private:
     tools::Path orderFile_;
     bool isLoginInCommandLine_;
     unsigned long networkTimeOut_;
-    bool hasTimeline_;
     std::string timelineUrl_;
     int timelineDebugPort_;
     tools::Path timelineLogFile_;

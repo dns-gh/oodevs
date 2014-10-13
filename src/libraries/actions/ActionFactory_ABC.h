@@ -12,7 +12,6 @@
 
 #include "ENT/ENT_Enums.h"
 
-#include <tools/Resolver_ABC.h>
 #include <geometry/types.h>
 #include <boost/noncopyable.hpp>
 #include <boost/optional/optional_fwd.hpp>
@@ -51,10 +50,8 @@ namespace kernel
     class Location_ABC;
     class MagicActionType;
     class MissionType;
-    class Object_ABC;
     class PopulationType;
     class Team_ABC;
-    class Time_ABC;
     class OrderType;
 }
 
@@ -66,8 +63,6 @@ namespace xml
 namespace actions
 {
 class Action_ABC;
-class CreationListener_ABC;
-class ActionsModel;
 
 namespace parameters
 {

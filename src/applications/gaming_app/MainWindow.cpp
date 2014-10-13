@@ -393,6 +393,7 @@ void MainWindow::Load()
         selector_->Load();
         workers_.Initialize();
         staticModel_.Load( config_ );
+        dockContainer_->Load();
         controllers_.LoadOptions( eModes_Gaming );
         glProxy_->UpdateLayerOrder( *controllers_.options_.GetViewOptions() );
         unitStateDialog_->Load();
@@ -468,10 +469,6 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     {
         if( !connected_ && simulation.IsInitialized() )
         {
-            // Legacy timeline need both the profile and the model to be initialized before we
-            // can load the new timeline. When legacy timeline will be removed, this line could be
-            // moved into Load()
-            dockContainer_->Load();
             connected_ = true; // we update the caption until Model is totally loaded
             if( login_.isEmpty() )
                 login_ = tools::translate( "LoginDialog", "Anonymous" );

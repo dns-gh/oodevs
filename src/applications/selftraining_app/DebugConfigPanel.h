@@ -52,7 +52,6 @@ public:
 private slots:
     //! @name Operations
     //@{
-    void OnTimelineChecked( bool checked );
     void OnTimelineDebugPortChanged( int port );
     void OnTimelineLogChanged( const QString& );
     void OnTimelineDebugChanged( const QString& );
@@ -86,7 +85,6 @@ private:
     QLineEdit* timelineDebug_;
     QLabel* cefLogLabel_;
     QLineEdit* cefLog_;
-    QCheckBox* oldTimeline_;
 
     //Integration Layer Configuration
     QLabel* integrationLabel_;

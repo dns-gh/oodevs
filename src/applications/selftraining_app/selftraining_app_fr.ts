@@ -171,10 +171,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable legacy timeline</source>
-        <translation>Activer l&apos;ancienne timeline</translation>
-    </message>
-    <message>
         <source>Client log file</source>
         <translation>Fichier de log du client</translation>
     </message>

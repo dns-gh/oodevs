@@ -13,6 +13,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <tools/Resolver.h>
 
 namespace kernel
@@ -54,6 +55,7 @@ class MissionParameters : public kernel::Extension_ABC
                         , public tools::Resolver< actions::Action_ABC >
                         , public tools::ElementObserver_ABC< actions::Action_ABC >
                         , public gui::Drawable_ABC
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -72,12 +74,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MissionParameters( const MissionParameters& );            //!< Copy constructor
-    MissionParameters& operator=( const MissionParameters& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitOrder& message );

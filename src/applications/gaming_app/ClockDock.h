@@ -15,10 +15,9 @@
 namespace kernel
 {
     class Controllers;
-    class Time_ABC;
 }
 
-class ActionsScheduler;
+class SimulationController;
 
 // =============================================================================
 /** @class  ClockDock
@@ -31,7 +30,7 @@ class ClockDock : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ClockDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, ActionsScheduler& scheduler );
+             ClockDock( QWidget* parent, kernel::Controllers& controllers, const SimulationController& simulationController );
     virtual ~ClockDock();
     //@}
 };

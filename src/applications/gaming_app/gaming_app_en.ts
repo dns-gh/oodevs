@@ -2,64 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en" sourcelanguage="en">
 <context>
-    <name>ActionProperties</name>
-    <message>
-        <source>Properties</source>
-        <translation>Properties</translation>
-    </message>
-</context>
-<context>
-    <name>ActionsToolbar</name>
-    <message>
-        <source>Load actions file</source>
-        <translation>Load actions file</translation>
-    </message>
-    <message>
-        <source>Save actions in active timeline to file</source>
-        <translation>Save actions in active timeline to file</translation>
-    </message>
-    <message>
-        <source>Planning mode on/off</source>
-        <translation>Planning mode on/off</translation>
-    </message>
-    <message>
-        <source>Delete recorded actions</source>
-        <translation>Delete recorded actions</translation>
-    </message>
-    <message>
-        <source>Actions recorder</source>
-        <translation>Actions recorder</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation>Reload</translation>
-    </message>
-    <message>
-        <source>Actions files (*.ord)</source>
-        <translation>Actions files (*.ord)</translation>
-    </message>
-    <message>
-        <source>Load</source>
-        <translation>Load</translation>
-    </message>
-    <message>
-        <source>Error loading actions file</source>
-        <translation>Error loading actions file</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Save</translation>
-    </message>
-    <message>
-        <source>Delete recorded actions?</source>
-        <translation>Delete recorded actions?</translation>
-    </message>
-    <message>
-        <source>orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AffinitiesDialog</name>
     <message>
         <source>Activate</source>
@@ -2898,17 +2840,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>Parameter</name>
-    <message>
-        <source>Parameter</source>
-        <translation>Parameter</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Value</translation>
-    </message>
-</context>
-<context>
     <name>PartsView</name>
     <message>
         <source>Required Parts</source>
@@ -3444,45 +3375,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>TimelineActionItem</name>
-    <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;issued by automat&lt;/i&gt;</source>
-        <translation>&lt;i&gt;issued by automat&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;disabled&lt;/i&gt;</source>
-        <translation>&lt;i&gt;disabled&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Starts: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Starts: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
-        <source>Press enter to rename, unfocus field to cancel</source>
-        <translation>Press enter to rename, unfocus field to cancel</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation>Rename</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Delete</translation>
-    </message>
-    <message>
-        <source>Disable</source>
-        <translation>Disable</translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation>Enable</translation>
-    </message>
-</context>
-<context>
     <name>TimelineDockWidget</name>
     <message>
         <source>Main</source>
@@ -3503,40 +3395,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Name</source>
         <translation>Name</translation>
-    </message>
-</context>
-<context>
-    <name>TimelineListView</name>
-    <message>
-        <source>Units</source>
-        <translation>Units</translation>
-    </message>
-    <message>
-        <source>Magic</source>
-        <translation>Magic</translation>
-    </message>
-    <message>
-        <source>Weather</source>
-        <translation>Weather</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objects</translation>
-    </message>
-</context>
-<context>
-    <name>TimelinePanel</name>
-    <message>
-        <source>Global view</source>
-        <translation>Global view</translation>
-    </message>
-    <message>
-        <source>Current session</source>
-        <translation>Current session</translation>
-    </message>
-    <message>
-        <source>Legacy Timeline</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3604,17 +3462,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Show children</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TimelineView</name>
-    <message>
-        <source>Zoom In</source>
-        <translation>Zoom In</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation>Zoom Out</translation>
     </message>
 </context>
 <context>

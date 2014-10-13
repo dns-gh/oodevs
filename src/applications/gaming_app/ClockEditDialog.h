@@ -18,8 +18,8 @@ namespace kernel
     class Controllers;
 }
 
-class ActionsScheduler;
 class Simulation;
+class SimulationController;
 
 // =============================================================================
 /** @class  ClockEditDialog
@@ -36,7 +36,7 @@ class ClockEditDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ClockEditDialog( QWidget* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler );
+             ClockEditDialog( QWidget* parent, kernel::Controllers& controllers, const SimulationController& simulationController );
     virtual ~ClockEditDialog();
     //@}
 
@@ -57,7 +57,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ActionsScheduler& scheduler_;
+    const SimulationController& simulationController_;
     QDateTimeEdit* editor_;
     //@}
 };

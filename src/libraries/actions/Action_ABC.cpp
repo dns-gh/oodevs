@@ -10,18 +10,15 @@
 #include "actions_pch.h"
 #include "Action_ABC.h"
 #include "Parameter_ABC.h"
-#include "ActionsModel.h"
 #include "ActionTasker.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 
@@ -37,8 +34,8 @@ namespace
 // -----------------------------------------------------------------------------
 Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType* type )
     : controller_( controller )
-    , id_( ++ids )
     , type_( type )
+    , id_( ++ids )
     , name_( type ? type->GetName().c_str() : "" )
     , valid_( type != nullptr )
 {
