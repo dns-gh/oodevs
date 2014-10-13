@@ -255,3 +255,21 @@ void LayerComposite::SetReadOnlyModes( int modes )
 {
      Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { layer->SetReadOnlyModes( modes ); } );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LayerComposite::ShowTooltip
+// Created: ABR 2014-10-13
+// -----------------------------------------------------------------------------
+bool LayerComposite::ShowTooltip( const T_ObjectPicking& selection )
+{
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->ShowTooltip( selection ); } );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayerComposite::HideTooltip
+// Created: ABR 2014-10-13
+// -----------------------------------------------------------------------------
+void LayerComposite::HideTooltip()
+{
+    Forward( layers_, [&]( const T_Layer& layer ) { layer->HideTooltip(); } );
+}

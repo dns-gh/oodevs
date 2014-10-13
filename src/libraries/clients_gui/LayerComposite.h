@@ -63,6 +63,8 @@ public:
 
     virtual bool IsReadOnly() const;
     virtual void SetReadOnlyModes( int modes );
+    virtual bool ShowTooltip( const T_ObjectPicking& selection );
+    virtual void HideTooltip();
     //@}
 
 private:
