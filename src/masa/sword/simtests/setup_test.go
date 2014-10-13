@@ -21,7 +21,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strconv"
 	"testing"
 	"time"
 )
@@ -36,18 +35,17 @@ var (
 func init() {
 	Cfg = swtest.ParseFlags()
 
-	// Use timeout multiplier to tweak timeout without modifying code. The
-	timeoutMult := time.Duration(1)
-	mult := os.Getenv("MASA_TIMEOUT_MULT")
-	if mult != "" {
-		m, err := strconv.ParseUint(mult, 10, 32)
+	timeout := 5 * time.Second
+	timeoutStr := os.Getenv("MASA_TIMEOUT")
+	if timeoutStr != "" {
+		t, err := time.ParseDuration(timeoutStr)
 		if err == nil {
-			timeoutMult = time.Duration(m)
+			timeout = t
 		}
 	}
-	ConnectTimeout = 4 * timeoutMult * time.Second
-	PostTimeout = 4 * timeoutMult * time.Second
-	WaitTimeout = 6 * timeoutMult * time.Second
+	ConnectTimeout = timeout
+	PostTimeout = timeout
+	WaitTimeout = timeout
 }
 
 const (

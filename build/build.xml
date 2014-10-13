@@ -1024,7 +1024,7 @@
             <go cmd="vet"/>
             <exec_goenv name="tests" executable="${bin.dir}/gotester">
                 <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
-                <env key="MASA_TIMEOUT_MULT" value="10"/>
+                <env key="MASA_TIMEOUT" value="60s"/>
                 <arg line="${gocheck.filter}"/>
                 <arg value="-pkg=masa/(sword|testproto)"/>
                 <arg value="-port=${test.port}"/>
