@@ -57,7 +57,7 @@ void ADN_AiEngine_Perception_Table::RemoveItem( void* /*item*/ )
 
 void ADN_AiEngine_Perception_Table::AddRow( int row, void* data )
 {
-    if( row > eNbrPerceptionType )
+    if( row >= eNbrPerceptionType )
         throw MASA_EXCEPTION( "invalid row in ADN_AiEngine_Perception_Table" );
     auto infos = static_cast< ADN_AiEngine_Data::PerceptionInfos* >( data );
     if( !infos )
