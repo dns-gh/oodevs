@@ -213,7 +213,7 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanLayer::Select( unsigned int id, bool control )
 {
-    const kernel::Entity_ABC* entity = FindEntity( id );
+    const auto* entity = FindEntity( id );
     if( !entity )
         return;
 

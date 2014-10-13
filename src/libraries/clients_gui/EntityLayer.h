@@ -77,7 +77,6 @@ protected:
     virtual bool IsInSelection( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSelected( const kernel::Entity_ABC& entity ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
-    virtual const kernel::Entity_ABC* FindEntity( unsigned int id ) const;
 
     virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
 
@@ -113,6 +112,7 @@ protected:
     //@}
 
     geometry::Point2f GetPosition( const kernel::Entity_ABC& entity ) const;
+    const kernel::Entity_ABC* FindEntity( unsigned int id ) const;
 
 protected:
     //! @name Types
