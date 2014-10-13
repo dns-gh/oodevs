@@ -3416,20 +3416,12 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Actions files (*.ord)</source>
-        <translation type="unfinished">Actions files (*.ord)</translation>
-    </message>
-    <message>
         <source>Load actions file</source>
         <translation type="unfinished">Load actions file</translation>
     </message>
     <message>
         <source>Save actions in active timeline to file</source>
         <translation type="unfinished">Save actions in active timeline to file</translation>
-    </message>
-    <message>
-        <source>Timeline session files (*.timeline)</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>orders</source>
@@ -3462,6 +3454,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Show children</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All timeline files (*.ord *.timeline)</source>
+        <translation>All timeline files (*.ord *.timeline)</translation>
     </message>
 </context>
 <context>

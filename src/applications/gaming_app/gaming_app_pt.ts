@@ -3415,19 +3415,11 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Actions files (*.ord)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load actions file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Save actions in active timeline to file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Timeline session files (*.timeline)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3460,6 +3452,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Show children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All timeline files (*.ord *.timeline)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
