@@ -45,7 +45,7 @@ IndicatorExportDialog::IndicatorExportDialog( QWidget* parent )
         QPushButton* cancel = new QPushButton( tools::translate( "Scores", "Cancel" ), box );
         grid->addWidget( box, 1, 1 );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
-        connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
+        connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     }
 }
 
@@ -159,4 +159,14 @@ void IndicatorExportDialog::OnAccept()
     {
         QMessageBox::critical( this, tr( "Can not save indicator file :" ), tools::GetExceptionMsg( e ).c_str() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorExportDialog::OnReject
+// Created: LDC 2014-10-13
+// -----------------------------------------------------------------------------
+void IndicatorExportDialog::OnReject()
+{
+    requests_.clear();
+    reject();
 }

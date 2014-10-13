@@ -41,6 +41,7 @@ private slots:
     void OnBrowse();
     void OnFileChanged( const QString& text );
     void OnAccept();
+    void OnReject();
     //@}
 
 private:
