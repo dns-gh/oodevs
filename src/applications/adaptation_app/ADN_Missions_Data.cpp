@@ -41,7 +41,7 @@ tools::Path ADN_Missions_Data::obsoletePath_ = "obsolete";
 
 namespace
 {
-    tools::Path::T_Paths toDeleteMissionSheets;
+    std::vector< std::pair< tools::Path, E_MissionType > > toDeleteMissionSheets;
 
     template< typename T >
     void InitializeMissions( const ADN_Type_Vector_ABC< T >& vector )
@@ -199,10 +199,10 @@ void ADN_Missions_Data::Initialize()
 // Name: ADN_Missions_Data::DeleteMissionSheet
 // Created: ABR 2013-08-28
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::DeleteMissionSheet( const tools::Path& filename )
+void ADN_Missions_Data::DeleteMissionSheet( const tools::Path& filename, E_MissionType missionType )
 {
-    toDeleteMissionSheets.push_back( filename + ".xml" );
-    toDeleteMissionSheets.push_back( filename + ".html" );
+    toDeleteMissionSheets.push_back( std::make_pair( filename + ".xml", missionType ) );
+    toDeleteMissionSheets.push_back( std::make_pair( filename + ".html", missionType ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,12 +212,12 @@ void ADN_Missions_Data::DeleteMissionSheet( const tools::Path& filename )
 void ADN_Missions_Data::OnElementDeleted( boost::shared_ptr< kernel::LocalizedString > name, E_MissionType missionType )
 {
     const tools::Path missionPath = GetMissionSheetsPath( missionType );
-    DeleteMissionSheet( GetLocalizedMissionSheetsPath( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master(), missionPath ) / tools::Path::FromUTF8( name->Key() ) );
+    DeleteMissionSheet( GetLocalizedMissionSheetsPath( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master(), missionPath ) / tools::Path::FromUTF8( name->Key() ), missionType );
     const tools::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
         const std::string& value = name->Value( it->GetCode() );
-        DeleteMissionSheet( GetLocalizedMissionSheetsPath( it->GetCode(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ) );
+        DeleteMissionSheet( GetLocalizedMissionSheetsPath( it->GetCode(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ), missionType );
     }
 }
 
@@ -389,7 +389,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output ) const
 
     // move mission sheets to obsolete directory when mission is deleted
     for( auto it = toDeleteMissionSheets.begin(); it != toDeleteMissionSheets.end() ; ++it )
-       MoveMissionSheetsToObsolete( *it );
+        MoveMissionSheetsToObsolete( it->first, it->second );
     toDeleteMissionSheets.clear();
 
     // save Images in temp directory
@@ -401,10 +401,17 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output ) const
 // Name: ADN_Missions_Data::MoveMissionSheetsToObsolete
 // Created: NPT 2012-08-01
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::MoveMissionSheetsToObsolete( const tools::Path& fileName ) const
+void ADN_Missions_Data::MoveMissionSheetsToObsolete( const tools::Path& fileName, E_MissionType missionType ) const
 {
-    if( fileName.Exists() )
-        fileName.Rename( fileName.Parent() / ADN_Missions_Data::obsoletePath_ / fileName.FileName() );
+    if( !fileName.Exists() )
+        return;
+    const tools::Path obsoletePath = GetMissionSheetsPath( missionType ) / obsoletePath_;
+    obsoletePath_.CreateDirectories();
+    if( ADN_Project_Data::GetWorkDirInfos().GetOldWorkingDirectory().GetData() ==
+        ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() ) // Save in the same physical base
+        fileName.Rename( obsoletePath / fileName.FileName() );
+    else // Save as in a new physical base
+        fileName.Copy( obsoletePath / fileName.FileName() );
 }
 
 // -----------------------------------------------------------------------------

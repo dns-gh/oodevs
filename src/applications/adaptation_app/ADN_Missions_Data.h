@@ -74,7 +74,6 @@ public:
 
     //! @name Static Helpers
     //@{
-    static tools::Path GetMissionSheetsPath();
     static tools::Path GetMissionSheetsPath( int index );
     static tools::Path GetLocalizedMissionSheetsPath( const std::string& language, const tools::Path& basePath );
     static tools::Path GetMissionSheetsImagesPath( int index );
@@ -101,9 +100,9 @@ private:
     void ReadMission( xml::xistream& input, E_MissionType modelType );
     bool FixConsistency();
     void WriteArchive( xml::xostream& output ) const;
-    void MoveMissionSheetsToObsolete( const tools::Path& file ) const;
+    void MoveMissionSheetsToObsolete( const tools::Path& file, E_MissionType missionType ) const;
     void CheckAndFixLoadingErrors() const;
-    void DeleteMissionSheet( const tools::Path& filename );
+    void DeleteMissionSheet( const tools::Path& filename, E_MissionType missionType );
 
 private:
     std::vector< std::pair< std::string, T_Mission_Vector > > missionsVector_;
