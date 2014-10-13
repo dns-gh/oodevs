@@ -111,7 +111,7 @@ void ADN_AiEngine_GUI::Build()
         destroyedUnits->GetConnector().Connect( &data_.bDetectDestroyedUnits_ );
         pPerceptionLayout->addWidget( pPerceptionSubBox );
     }
-    ADN_AiEngine_Perception_Table* perceptionTable = new ADN_AiEngine_Perception_Table( builder.GetChildName( "urban-speeds-table" ), data_.perceptionInfos_ );
+    ADN_AiEngine_Perception_Table* perceptionTable = new ADN_AiEngine_Perception_Table( builder.GetChildName( "perceptions-table" ), data_.perceptionInfos_ );
     pPerceptionLayout->addWidget( perceptionTable );
 
     // -------------------------------------------------------------------------
