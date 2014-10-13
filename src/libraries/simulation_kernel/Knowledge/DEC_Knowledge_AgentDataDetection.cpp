@@ -135,6 +135,8 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
     file << last;
     file << current;
     file << rPostureCompletionPercentage_;
+    file << pArmy_;
+    file << rOperationalState_;
     file << bIsPC_;
     file << bDead_;
     file << bWounded_;
