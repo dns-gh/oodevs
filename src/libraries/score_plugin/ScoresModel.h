@@ -106,6 +106,7 @@ private:
     typedef std::map< std::string, T_Score > T_Scores;
     typedef boost::shared_ptr< Task > T_Task;
     typedef std::vector< T_Task > T_Tasks;
+    typedef std::map< unsigned int, QDateTime > T_Times;
     //@}
 
     //! @name Helpers
@@ -117,6 +118,7 @@ private:
     void ComputeIndicator( const std::string& name, const std::string& formula, const std::vector< boost::shared_ptr< Variable > >& variables );
     std::size_t AddHeader( std::ostream& file ) const;
     void AddLine( std::ostream& file, std::size_t index ) const;
+    QDateTime GetTime( std::size_t index ) const;
     //@}
 
 private:
@@ -128,9 +130,10 @@ private:
     std::unique_ptr< aar::StaticModel > model_;
     std::unique_ptr< ScoreAnnouncer > announcer_;
     T_Scores scores_;
-    QDateTime initialDateTime_;
-    bool dateTimeInitialized_;
+    T_Times times_;
     unsigned int tickDuration_;
+    unsigned int currentTick_;
+    QDateTime currentDateTime_;
     const tools::Path sessionDir_;
     static const std::string separator_;
     //@}

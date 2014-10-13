@@ -12,6 +12,7 @@
 #include "ScoreAnnouncer.h"
 #include "protocol/AarSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::score;
@@ -22,6 +23,7 @@ using namespace plugins::score;
 // -----------------------------------------------------------------------------
 Score::Score( xml::xisubstream xis )
     : xml_( new xml::xibufferstream( xis ) )
+    , beginTick_( 0 )
 {
     xis >> xml::optional >> xml::start( "profiles" )
             >> xml::list( "profile", *this, &Score::ReadProfile );
@@ -49,8 +51,10 @@ void Score::ReadProfile( xml::xistream& xis )
 // Name: Score::Update
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void Score::Update( const sword::Indicator& message )
+void Score::Update( unsigned int currentTick, const sword::Indicator& message )
 {
+    if( !beginTick_ )
+        beginTick_ = currentTick;
     values_.push_back( message.value() );
 }
 
@@ -63,7 +67,8 @@ void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) cons
     aar::PlotResult result;
     result().set_identifier( context );
     result().set_error( "" );
-    for( std::deque< float >::const_iterator it = values_.begin(); it != values_.end(); ++it )
+    result().set_begin_tick( beginTick_ );
+    for( auto it = values_.begin(); it != values_.end(); ++it )
         result().add_values( static_cast< float >( *it ) );
     result.Send( publisher );
 }
@@ -81,9 +86,11 @@ std::size_t Score::Size() const
 // Name: Score::GetValue
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-float Score::GetValue( std::size_t index ) const
+boost::optional< float > Score::GetValue( std::size_t index ) const
 {
-    return values_.at( index );
+    if( index < beginTick_ || index >= beginTick_ + values_.size() )
+        return boost::none;
+    return values_.at( index - beginTick_ );
 }
 
 // -----------------------------------------------------------------------------
