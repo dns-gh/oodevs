@@ -1096,7 +1096,7 @@ void GlWidget::DrawImage( const QImage& image, const geometry::Point2f& where ) 
 {
     if( image.bits() )
     {
-        glRasterPos3f( where.X(), where.Y(), 300 );
+        glRasterPos2f( where.X(), where.Y() );
         glDrawPixels( image.width(), image.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
     }
 }
