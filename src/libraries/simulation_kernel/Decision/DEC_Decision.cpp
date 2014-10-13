@@ -806,6 +806,7 @@ void RegisterReportFunctions( sword::Brain& brain )
 // -----------------------------------------------------------------------------
 void RegisterTelepathyFunctions( sword::Brain& brain )
 {
+    brain.RegisterMethod( "GetBoolVariable", &DEC_Decision_ABC::GetVariable< bool > );
     brain.RegisterMethod( "SetStateVariable", &DEC_Decision_ABC::SetStateVariable );
     brain.RegisterMethod( "SetambianceMission_", &DEC_Decision_ABC::SetAmbianceMission );
     brain.RegisterMethod( "SetbAppuieFreinage_", &DEC_Decision_ABC::SetAppuieFreinage );

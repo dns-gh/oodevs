@@ -330,6 +330,14 @@ integration.UnitIsDead = function( unit )
     return unit.source:DEC_Agent_EstMort()
 end
 
+--- Returns the value of the boolean variable with the given name
+-- from the provided entity's brain.
+-- @param entity Simulation agent, company or crowd
+-- @param varName String, the variable's name
+-- @return Boolean
+integration.getBoolVariable = function( entity, varName )
+    return entity:GetBoolVariable( varName )
+end
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
