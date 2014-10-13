@@ -3567,20 +3567,12 @@ Los datos no pueden ser proyectados.</translation>
         <translation>Centrar la vista sobre el tiempo de simulación</translation>
     </message>
     <message>
-        <source>Actions files (*.ord)</source>
-        <translation>Archivos de Acciones (*.ord)</translation>
-    </message>
-    <message>
         <source>Load actions file</source>
         <translation>Cargar archivo de acciones</translation>
     </message>
     <message>
         <source>Save actions in active timeline to file</source>
         <translation>Grabar acciones de la cronología activa en el archivo</translation>
-    </message>
-    <message>
-        <source>Timeline session files (*.timeline)</source>
-        <translation>Archivos de sesión de cronologia (*.timeline)</translation>
     </message>
     <message>
         <source>orders</source>
@@ -3612,6 +3604,10 @@ Los datos no pueden ser proyectados.</translation>
     </message>
     <message>
         <source>Show children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All timeline files (*.ord *.timeline)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

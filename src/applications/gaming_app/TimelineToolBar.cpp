@@ -32,7 +32,7 @@ TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
     : QToolBar( 0 )
     , eventActionsController_( controllers.eventActions_ )
     , config_( config )
-    , filters_( tr( "Actions files (*.ord)" )  + ";;" + tr( "Timeline session files (*.timeline)" ) )
+    , filters_( tr( "All timeline files (*.ord *.timeline)" ) )
     , displayEngaged_( false )
     , displayOrders_( true )
     , displayTasks_( true )

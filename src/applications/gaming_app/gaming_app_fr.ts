@@ -3572,20 +3572,12 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Supprimer la vue courrante</translation>
     </message>
     <message>
-        <source>Actions files (*.ord)</source>
-        <translation>Fichier d&apos;actions (*.ord)</translation>
-    </message>
-    <message>
         <source>Load actions file</source>
         <translation>Charger un fichier d&apos;actions</translation>
     </message>
     <message>
         <source>Save actions in active timeline to file</source>
         <translation>Enregistrer les actions de la vue courante dans un fichier</translation>
-    </message>
-    <message>
-        <source>Timeline session files (*.timeline)</source>
-        <translation>Fichier de session de timeline (*.timeline)</translation>
     </message>
     <message>
         <source>orders</source>
@@ -3618,6 +3610,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Show children</source>
         <translation>Afficher les fils</translation>
+    </message>
+    <message>
+        <source>All timeline files (*.ord *.timeline)</source>
+        <translation>Tous les fichiers timeline (*.ord *.timeline)</translation>
     </message>
 </context>
 <context>
