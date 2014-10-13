@@ -109,10 +109,6 @@ private:
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
 
     void OpenEditingMode( kernel::Entity_ABC* entity, const sword::Pathfind& pathfind );
-    void DrawLines( float width ) const;
-    void DrawPoints() const;
-    void DrawPoint( geometry::Point2f p, bool highlight ) const;
-    bool IsNear( float squareDistance, geometry::Point2f point ) const;
     bool PickWaypoint( geometry::Point2f point );
     void PickSegment( geometry::Point2f point );
     void NotifyDeleted( const kernel::Agent_ABC& unit );
