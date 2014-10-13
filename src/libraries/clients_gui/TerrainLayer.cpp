@@ -153,7 +153,7 @@ class TerrainLayer::MyLayer : public Base
 {
 public:
     MyLayer( TerrainLayer& parent, const tools::Path& filename )
-        : Base( *parent.settings_, filename )
+        : Base( parent.settings_, filename )
         , parent_( parent ) {}
 
     virtual bool ShouldDisplay( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
