@@ -24,13 +24,27 @@ using namespace gui;
 // Name: LightingProxy constructor
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-LightingProxy::LightingProxy( QObject* parent )
-    : QObject( parent )
-    , camera_( false )
-    , fixed_ ( new FixedLighting() )
-    , time_  ( new TimeLighting() )
+LightingProxy::LightingProxy()
+    : camera_( false )
+    , fixed_ ( std::make_shared< FixedLighting >() )
+    , time_  ( std::make_shared< TimeLighting >() )
+    , current_( fixed_ )
 {
-    current_ = fixed_.get();
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LightingProxy constructor
+// Created: ABR 2014-07-04
+// -----------------------------------------------------------------------------
+LightingProxy::LightingProxy( const LightingProxy& other )
+    : camera_( other.camera_ )
+    , fixed_ ( std::make_shared< FixedLighting >( *other.fixed_ ) )
+    , time_  ( std::make_shared< TimeLighting >( *other.time_ ) )
+    , current_( fixed_ )
+{
+    if( other.current_ == other.time_ )
+        current_ = time_;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +79,7 @@ void LightingProxy::Set()
 void LightingProxy::SwitchToFixed()
 {
     camera_ = false;
-    current_ = fixed_.get();
+    current_ = fixed_;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +89,7 @@ void LightingProxy::SwitchToFixed()
 void LightingProxy::SwitchToCameraFixed()
 {
     camera_ = true;
-    current_ = fixed_.get();
+    current_ = fixed_;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +99,7 @@ void LightingProxy::SwitchToCameraFixed()
 void LightingProxy::SwitchToSimulationTime()
 {
     camera_ = false;
-    current_ = time_.get();
+    current_ = time_;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,4 +146,13 @@ void LightingProxy::SetTime( const QDateTime& time )
 {
     time_->SetDayOfYear( time.date().dayOfYear() );
     time_->SetTime     ( time.time().hour() + time.time().minute() / 60.f + time.time().second() / 3600.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LightingProxy::Clone
+// Created: ABR 2014-07-04
+// -----------------------------------------------------------------------------
+std::shared_ptr< Lighting_ABC > LightingProxy::Clone() const
+{
+    return std::make_shared< LightingProxy >( *this );
 }

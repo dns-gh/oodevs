@@ -211,7 +211,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     firePlayer_.reset( new FirePlayer( controllers, profile_, simulation ) );
 
     // Misc
-    lighting_.reset( new SimulationLighting( controllers, this ) );
+    lighting_.reset( new SimulationLighting( controllers ) );
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, filter );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );

@@ -156,7 +156,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , modelBuilder_      ( new ModelBuilder( controllers, model ) )
     , colorController_   ( new ColorController( controllers_ ) )
     , glProxy_           ( new gui::GlProxy( logger ) )
-    , lighting_          ( new gui::LightingProxy( this ) )
+    , lighting_          ( new gui::LightingProxy() )
     , strategy_          ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
 {
     gui::SubObjectName subObject( "MainWindow" );
