@@ -99,4 +99,24 @@ private:
     //@}
 };
 
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const PHY_Posture* t )
+    {
+        unsigned int id = t ? t->GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const PHY_Posture*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = PHY_Posture::FindPosture( id );
+    }
+}
+}
+
 #endif // __PHY_Posture_h_

@@ -66,10 +66,14 @@ void ADN_AiEngine_Perception_Table::AddRow( int row, void* data )
     const QString type = ENT_Tr::ConvertFromPerceptionType( static_cast< E_PerceptionType >( row ), ENT_Tr::eToTr ).c_str();
     setItem( row, 0, new QTableWidgetItem( type ) );
     QButtonGroup* group = new QButtonGroup( this );
+    group->setObjectName( "perceptions-button-group" );
     const auto addRadioButton =
         [&]( int column, ADN_Ref_ABC& target )
         {
             ADN_RadioButton* button = new ADN_RadioButton( this );
+            button->setObjectName( "perceptions-radio-button_"
+                + QString::number( row ) + "_"
+                + QString::number( column ) );
             group->addButton( button );
             button->GetConnector().Connect( &target );
             setCellWidget( row, column, button );

@@ -171,7 +171,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , nMaxPerceptionLevel_         ( ePerceptionLevel_Identification )
 {
     nMaxPerceptionLevel_.SetAlphabeticalSort( false );
-    for( int i = 0; i < boost::size( defaultPerceptions ); ++i )
+    for( std::size_t i = 0; i < boost::size( defaultPerceptions ); ++i )
     {
         PerceptionInfos* infos = new PerceptionInfos();
         infos->detection_      = defaultPerceptions[ i ].detection;

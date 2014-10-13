@@ -67,81 +67,27 @@ DEC_Knowledge_AgentDataDetection::~DEC_Knowledge_AgentDataDetection()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataDetection::load
-// Created: JVT 2005-03-24
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, const unsigned int )
+template< typename Archive >
+void DEC_Knowledge_AgentDataDetection::serialize( Archive& a, unsigned int )
 {
-    file >> nTimeLastUpdate_;
-    file >> vPosition_;
-    file >> vDirection_;
-    file >> rSpeed_;
-    file >> rAltitude_;
-    file >> rPopulationDensity_;
-    file >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
-    std::size_t nNbr;
-    unsigned int nID;
-    file >> nNbr;
-    while( nNbr-- )
-    {
-        file >> nID;
-        const PHY_Volume* volume = PHY_Volume::FindVolume( nID );
-        if( volume )
-            visionVolumes_.push_back( volume );
-    }
-    file >> nID;
-    pLastPosture_ = PHY_Posture::FindPosture( nID );
-    file >> nID;
-    pCurrentPosture_ = PHY_Posture::FindPosture( nID );
-    file >> rPostureCompletionPercentage_;
-    file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
-    file >> rOperationalState_;
-    file >> bIsPC_;
-    file >> bDead_;
-    file >> bWounded_;
-    file >> bPrisoner_;
-    file >> bRefugeeManaged_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataDetection::save
-// Created: JVT 2005-03-24
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    file << nTimeLastUpdate_;
-    file << vPosition_;
-    file << vDirection_;
-    file << rSpeed_;
-    file << rAltitude_;
-    file << rPopulationDensity_;
-    file << pArmySurrenderedTo_;
-    std::size_t size = visionVolumes_.size();
-    for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
-        if( !(*it) )
-            --size;
-    file << size;
-    for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
-    {
-        if( *it )
-        {
-            unsigned int id = (*it)->GetID();
-            file << id;
-        }
-    }
-    unsigned int last = ( pLastPosture_ ? pLastPosture_->GetID() : static_cast< unsigned int >( -1 ) );
-    unsigned int current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : static_cast< unsigned int >( -1 ) );
-    file << last;
-    file << current;
-    file << rPostureCompletionPercentage_;
-    file << pArmy_;
-    file << rOperationalState_;
-    file << bIsPC_;
-    file << bDead_;
-    file << bWounded_;
-    file << bPrisoner_;
-    file << bRefugeeManaged_;
+    a & nTimeLastUpdate_;
+    a & vPosition_;
+    a & vDirection_;
+    a & rSpeed_;
+    a & rAltitude_;
+    a & rPopulationDensity_;
+    a & const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
+    a & visionVolumes_;
+    a & pLastPosture_;
+    a & pCurrentPosture_;
+    a & rPostureCompletionPercentage_;
+    a & const_cast< MIL_Army_ABC*& >( pArmy_ );
+    a & rOperationalState_;
+    a & bIsPC_;
+    a & bDead_;
+    a & bWounded_;
+    a & bPrisoner_;
+    a & bRefugeeManaged_;
 }
 
 // -----------------------------------------------------------------------------
