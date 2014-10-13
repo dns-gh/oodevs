@@ -877,7 +877,6 @@
     <message>
         <source>Identification</source>
         <translation>Identification</translation>
-
     </message>
     <message>
         <source>Actions</source>
