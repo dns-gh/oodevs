@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "LocationBase.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -210,7 +211,7 @@ void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& vi
     if( points_.empty() || ( ! viewport.IsVisible( boundingBox_ ) && !isPoint ) )
         return;
 
-    const bool selected = tools.ShouldDisplay();
+    const bool selected = tools.GetOptions().IsDrawingSelection();
     GLfloat color[4];
     glGetFloatv( GL_CURRENT_COLOR, color );
     glPushAttrib( GL_LINE_BIT );

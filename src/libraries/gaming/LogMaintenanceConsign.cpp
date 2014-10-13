@@ -13,6 +13,7 @@
 #include "Simulation.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/LogisticHelpers.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -81,7 +82,7 @@ bool LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
 // -----------------------------------------------------------------------------
 void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( ! provider_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+    if( ! provider_ || !tools.GetOptions().ShouldDisplay( "RealTimeLogistic" ) )
         return;
     const Point2f from = logistic_helpers::GetLogisticPosition( *provider_ );
     const Point2f to   = logistic_helpers::GetLogisticPosition( consumer_ );

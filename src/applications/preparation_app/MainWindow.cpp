@@ -119,26 +119,6 @@
 
 namespace ba = boost::assign;
 
-namespace
-{
-    class NullLogger : public kernel::Logger_ABC
-    {
-    public:
-        virtual void Info( const std::string& message )
-        {
-            MT_LOG_INFO_MSG( message );
-        }
-        virtual void Warning( const std::string& message )
-        {
-            MT_LOG_WARNING_MSG( message );
-        }
-        virtual void Error( const std::string& message )
-        {
-            MT_LOG_ERROR_MSG( message );
-        }
-    } logger;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
@@ -155,10 +135,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , gradientPreferences_( new gui::GradientPreferences() )
     , modelBuilder_      ( new ModelBuilder( controllers, model ) )
     , colorController_   ( new ColorController( controllers_ ) )
-    , glProxy_           ( new gui::GlProxy( logger ) )
     , lighting_          ( new gui::LightingProxy() )
-    , strategy_          ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
 {
+    const auto& profile = PreparationProfile::GetProfile();
     gui::SubObjectName subObject( "MainWindow" );
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Prepare, "Preparation" );
@@ -178,6 +157,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
         return;
     }
 
+    glProxy_.reset( new gui::GlProxy( controllers, profile, staticModel_, model_, lighting_ ) );
+    strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) );
+
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );
 
@@ -190,33 +172,33 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
     // Main widget
-    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, logger, staticModel_.drawings_ ) );
+    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, staticModel_.drawings_ ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );
 
     // Strategy
-    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, PreparationProfile::GetProfile() ) ) );
-    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, PreparationProfile::GetProfile() ) ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, profile ) ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, profile ) ) );
     strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::OverFlyingColorModifier( controllers ) ) );
 
     // Layer 1
     auto locationsLayer = std::make_shared< gui::LocationsLayer >( controllers_, *glProxy_ );
     auto paramLayer = std::make_shared< gui::ParametersLayer >( controllers_, *glProxy_, *textEditor_ );
-    auto automats = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, PreparationProfile::GetProfile() );
-    auto formation = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, PreparationProfile::GetProfile() );
+    auto automats = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, profile );
+    auto formation = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, profile );
     auto weatherLayer = std::make_shared< gui::WeatherLayer >( controllers_, *glProxy_, *eventStrategy_ );
     auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( controllers_, *glProxy_ );
     auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_, gradientPreferences_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
 
     // Dialogs
-    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_,
+    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, profile, *strategy_, *colorController_,
                                                  *icons_, config, *symbols, *lighting_, paramLayer, elevation2d, *glProxy_, terrainSettings_, gradientPreferences_ ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, paramLayer, weatherLayer, profilerLayer, *icons_, *modelBuilder_, model_,
-                                             staticModel_, config_, *symbols, *strategy_, *glProxy_, *colorController_, PreparationProfile::GetProfile() ) );
+                                             staticModel_, config_, *symbols, *strategy_, *glProxy_, *colorController_, profile ) );
 
     // ToolBars
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, locationsLayer, paramLayer, *eventStrategy_, *model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );

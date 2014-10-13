@@ -49,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Gl3dWidget( QWidget* pParent,
-                         kernel::Controllers& controllers,
+                         GLView_ABC& parent,
                          float width,
                          float height,
                          kernel::DetectionMap& elevation,
@@ -123,12 +123,6 @@ public:
     //@}
 
 protected:
-    //! @name Operations
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    //@}
-
-protected:
     //! @name Helpers
     //@{
     virtual void mousePressEvent( QMouseEvent* );
@@ -168,7 +162,6 @@ private:
     //picking
     std::unique_ptr< PickingSelector > pPickingSelector_;
     QPoint point_;
-    float SymbolSize_;
     int windowHeight_;
     int windowWidth_;
     //@}

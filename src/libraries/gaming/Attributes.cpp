@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Attributes.h"
 #include "clients_gui/DictionaryUpdated.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_gui/PropertiesDictionary.h"
@@ -337,7 +338,7 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
     const bool bEmptyGasTank = entity_.Get< kernel::Dotations_ABC >().IsEmptyGasTank();
     if( entity_.IsAggregated()
     || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ || bEmptyGasTank )
-    || ! viewport.IsHotpointVisible() || ! tools.ShouldDisplay( "UnitDetails" ) )
+    || ! viewport.IsHotpointVisible() || !tools.GetOptions().ShouldDisplay( "UnitDetails" ) )
         return;
     glPushAttrib( GL_CURRENT_BIT );
     glColor4f( 1, 1, 1, tools.GetCurrentAlpha() );

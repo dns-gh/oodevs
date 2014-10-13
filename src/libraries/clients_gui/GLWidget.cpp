@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "GlWidget.h"
+#include "GLOptions.h"
 #include "GlRenderPass_ABC.h"
 #include "IconLayout.h"
 #include "PickingSelector.h"
@@ -45,14 +46,14 @@ namespace
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 GlWidget::GlWidget( QWidget* pParent,
-                    Controllers& controllers,
+                    GLView_ABC& parent,
                     float width,
                     float height,
                     IconLayout& iconLayout,
                     const DrawingTypes& drawingTypes )
     : SetGlOptions()
     , MapWidget( context_, pParent, width, height, 0 )
-    , GlToolsBase( controllers, drawingTypes )
+    , GlToolsBase( parent, drawingTypes )
     , baseWidth_( 600.f )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
@@ -64,7 +65,6 @@ GlWidget::GlWidget( QWidget* pParent,
     , passes_      ( passLess( "" ) )
     , currentPass_ ()
     , bMulti_      ( false )
-    , SymbolSize_  ( defaultSymbolSize )
     , pPickingSelector_( new PickingSelector() )
 {
     setAcceptDrops( true );
@@ -335,7 +335,8 @@ void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2
     ReleaseDC( NULL, screen );
     const float scale = Pixels() * 1000.f * hRes / hSize;
 
-    if( scale < minVisuScale_ || scale >= maxVisuScale_ )
+    if( scale < GetOptions().Get( "VisualisationScales/urban_blocks/Min" ).To< int >() ||
+        scale >= GetOptions().Get( "VisualisationScales/urban_blocks/Max" ).To< int >() )
         return;
 
     QFontMetrics fm( currentFont_ );
@@ -380,7 +381,7 @@ void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2
 float GlWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
     if( !bVariableSize )
-        return SymbolSize_ * Pixels() / 60;
+        return GetOptions().Get( "SymbolSize" ).To< float >() * Pixels() / 60;
 
     float zoom = Zoom();
     float pixels = Pixels();
@@ -817,7 +818,7 @@ void GlWidget::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees
 // -----------------------------------------------------------------------------
 void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/, bool fixedSize /*= true*/ ) const
 {
-    if( !GlToolsBase::ShouldDisplay( "UnitDetails" ) )
+    if( !GetOptions().ShouldDisplay( "UnitDetails" ) )
         return;
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
     factor *= GetAdaptiveZoomFactor( !fixedSize );
@@ -932,7 +933,7 @@ void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometr
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
-    factor = fabs( factor ) * GetActualZoomFactor() * SymbolSize_/defaultSymbolSize;
+    factor = fabs( factor ) * GetActualZoomFactor() * GetOptions().Get( "SymbolSize" ).To< float >() / defaultSymbolSize;
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the defautl height...
     Rectangle2f rectangle( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) );
@@ -960,11 +961,11 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
             directionVector.Rotate( - radians );
             geometry::Point2f arrowTail = where + directionVector * (-baseDepth);
             geometry::Point2f arrowHead = where;
-            geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth * SymbolSize_/defaultSymbolSize);
+            geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth * GetOptions().Get( "SymbolSize" ).To< float >() / defaultSymbolSize );
             geometry::Vector2f symbolVector( symbolTail, arrowHead );
             geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f; 
             DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, xFactor, 1 );
-            if( baseDepth && baseDepth > symbolDepth * SymbolSize_/defaultSymbolSize )
+            if( baseDepth && baseDepth > symbolDepth * GetOptions().Get( "SymbolSize" ).To< float >() / defaultSymbolSize )
             {
                 T_PointVector points;
                 points.push_back( arrowTail );
@@ -1071,7 +1072,7 @@ void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Lo
 // -----------------------------------------------------------------------------
 void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( !GlToolsBase::ShouldDisplay( "UnitDetails" ) )
+    if( !GetOptions().ShouldDisplay( "UnitDetails" ) )
         return;
     if( size < 0 )
         size = 32 * Pixels();
@@ -1182,22 +1183,6 @@ geometry::Point2f GlWidget::MapToterrainCoordinates( int x, int y )
 bool GlWidget::HasFocus()
 {
     return hasFocus() && QApplication::widgetAt( QCursor::pos() ) == this;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::OptionChanged
-// Created: JSR 2010-06-14
-// -----------------------------------------------------------------------------
-void GlWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "VisuScaleMin13" ) // see VisualisationScalesPanel.cpp
-        minVisuScale_ = value.To< int >();
-    else if( name == "VisuScaleMax13" ) // see VisualisationScalesPanel.cpp
-        maxVisuScale_ = value.To< int >();
-    else if( name == "SymbolSize" )
-        SymbolSize_ = value.To< float >();
-    else
-        GlToolsBase::OptionChanged( name, value );
 }
 
 // -----------------------------------------------------------------------------

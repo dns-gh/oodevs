@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ObjectPositions.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Location_ABC.h"
@@ -76,7 +77,7 @@ void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewp
     if( const kernel::Location_ABC* location = GetLocation() )
     {
         if( viewport.IsVisible( boundingBox_ ) )
-            tools.DrawTacticalGraphics( symbol_, *location, tools.ShouldDisplay(), type_.GetPointSize(),
+            tools.DrawTacticalGraphics( symbol_, *location, tools.GetOptions().IsDrawingSelection(), type_.GetPointSize(),
                 dynamic_cast< const kernel::Point* >( location ) != nullptr );
     }
 }

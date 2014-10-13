@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Gl3dWidget.h"
+#include "GLOptions.h"
 #include "GlProxy.h"
 #include "GlTooltip.h"
 #include "GlWidget.h"
@@ -24,10 +25,12 @@ using namespace gui;
 // Name: GlProxy constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-GlProxy::GlProxy( kernel::Logger_ABC& logger )
-    : logger_      ( logger )
-    , view_        ( 0 )
-    , tooltipLayer_( 0 )
+GlProxy::GlProxy( kernel::Controllers& controllers,
+                  const kernel::Profile_ABC& profile,
+                  const kernel::StaticModel& staticModel,
+                  const kernel::EntityResolver_ABC& model,
+                  const std::shared_ptr< Lighting_ABC >& lighting )
+    : options_( new GLOptions( controllers, profile, staticModel, model, lighting ) )
 {
     // NOTHING
 }
@@ -39,6 +42,24 @@ GlProxy::GlProxy( kernel::Logger_ABC& logger )
 GlProxy::~GlProxy()
 {
     layers_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::GetOptions
+// Created: ABR 2014-10-16
+// -----------------------------------------------------------------------------
+GLOptions& GlProxy::GetOptions()
+{
+    return *options_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::GetOptions
+// Created: ABR 2014-10-16
+// -----------------------------------------------------------------------------
+const GLOptions& GlProxy::GetOptions() const
+{
+    return *options_;
 }
 
 // -----------------------------------------------------------------------------
@@ -210,43 +231,6 @@ geometry::Point2f GlProxy::GetCenter() const
 void GlProxy::Zoom( float width )
 {
     view_->Zoom( width );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::UnSelect
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-boost::tuple< bool, bool, bool > GlProxy::UnSelect() const
-{
-    return view_->UnSelect();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::Select
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void GlProxy::Select( bool b1, bool b2, bool b3 ) const
-{
-    if( view_ )
-        view_->Select( b1, b2, b3 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::ShouldDisplay
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-bool GlProxy::ShouldDisplay( const std::string& name ) const
-{
-    return view_ && view_->ShouldDisplay( name );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::ShouldDisplay
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
-{
-    return view_ && view_->ShouldDisplay( name, autoCondition );
 }
 
 // -----------------------------------------------------------------------------

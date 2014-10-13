@@ -7,8 +7,11 @@
 //
 // *****************************************************************************
 
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/FourStateOption.h"
+#include "clients_kernel/OptionVariant.h"
 #include "LogSupplyConsign.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
@@ -110,10 +113,11 @@ void LogisticConsigns_ABC< ConcreteExtension, Consign >::TerminateConsign( Consi
 template< typename ConcreteExtension, typename Consign >
 void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( ! tools.ShouldDisplay( "RealTimeLogistic" ) || ( handled_.empty() && requested_.empty() ) )
+    const auto& options = tools.GetOptions();
+    if( !options.ShouldDisplay( "RealTimeLogistic" ) || ( handled_.empty() && requested_.empty() ) )
         return;
-
-    const bool handledOnly = tools.ShouldDisplay( "RealTimeLogistic", false );
+    // When the option is "on", we only display the handled request so their are not displayed two times.
+    const bool handledOnly = options.Get( "RealTimeLogistic" ).To< kernel::FourStateOption >() == kernel::FourStateOption::On();
     if( handled_.empty() && handledOnly )
         return;
 

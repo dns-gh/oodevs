@@ -24,6 +24,7 @@ class FourStateOption
 public:
     //! @name Statics
     //@{
+    // if there is a fifth state, maybe we should rename the whole class ...
     static FourStateOption Off();
     static FourStateOption On();
     static FourStateOption Selected();

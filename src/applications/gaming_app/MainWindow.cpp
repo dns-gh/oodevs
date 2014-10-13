@@ -164,7 +164,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , terrainSettings_   ( new gui::TerrainSettings() )
     , gradientPreferences_( new gui::GradientPreferences() )
     , pColorController_  ( new ColorController( controllers_ ) )
-    , glProxy_           ( new gui::GlProxy( logger ) )
     , connected_         ( false )
     , onPlanif_          ( false )
     , drawingsBuilder_   ( new DrawingsBuilder( controllers_, profile_ ) )
@@ -175,6 +174,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     controllers_.actions_.AddSelectionner( new Selectionner< actions::Action_ABC >() );
     controllers_.eventActions_.AddSelectionner( new Selectionner< gui::Event >() );
     gui::layers::CheckConsistency();
+
+    lighting_.reset( new SimulationLighting( controllers ) );
+    glProxy_.reset( new gui::GlProxy( controllers, profile_, staticModel, model, lighting_ ) );
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );
@@ -193,7 +195,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
     // Main widget
-    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, logger, staticModel_.drawings_ ) );
+    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, staticModel_.drawings_ ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );
@@ -214,7 +216,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     firePlayer_.reset( new FirePlayer( controllers, profile_, simulation ) );
 
     // Misc
-    lighting_.reset( new SimulationLighting( controllers ) );
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, filter );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );

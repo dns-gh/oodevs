@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Direction.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "protocol/Protocol.h"
@@ -95,7 +96,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( !viewport.IsHotpointVisible() || !tools.ShouldDisplay( "Direction" ) || entity_.IsAggregated() )
+    if( !viewport.IsHotpointVisible() || !tools.GetOptions().ShouldDisplay( "Direction" ) || entity_.IsAggregated() )
         return;
     const float tailSize = fixedSize * tools.GetAdaptiveZoomFactor( false );
     const float arrowSize = tailSize * arrowHeightPercent;

@@ -29,17 +29,17 @@ namespace
 
         //! @name Options
         //@{
+        virtual gui::GLOptions& GetOptions() { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+        virtual const gui::GLOptions& GetOptions() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+
         virtual void CenterOn( const geometry::Point2f& ) {}
         virtual void Zoom( float ) {}
         virtual geometry::Point2f GetCenter() const { return geometry::Point2f(); }
 
-        virtual boost::tuple< bool, bool, bool > UnSelect() const { return boost::tuple< bool, bool, bool >( false, false, false ); }
-        virtual void Select( bool, bool, bool ) const {}
-        virtual bool ShouldDisplay( const std::string& ) const { return true; }
-        virtual bool ShouldDisplay( const std::string&, bool ) const { return true; }
-        virtual bool ShouldDisplay( E_LayerTypes ) const { return true; }
         virtual geometry::Point2f MapToterrainCoordinates( int x, int y ){ return geometry::Point2f( ( float )x, ( float )y ); };
         virtual bool HasFocus(){ return true; };
+
+        virtual bool ShouldDisplay( E_LayerTypes ) const { return false; }
         //@}
 
         //! @name Accessors

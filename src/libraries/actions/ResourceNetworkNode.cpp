@@ -11,6 +11,7 @@
 #include "ResourceNetworkNode.h"
 #include "ParameterVisitor_ABC.h"
 #include "Resource.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
@@ -91,7 +92,7 @@ void ResourceNetworkNode::DisplayInToolTip( kernel::Displayer_ABC& displayer ) c
 // -----------------------------------------------------------------------------
 void ResourceNetworkNode::Draw( const geometry::Point2f&, const gui::Viewport_ABC&, gui::GLView_ABC& tools ) const
 {
-    const bool selected = tools.ShouldDisplay();
+    const bool selected = tools.GetOptions().IsDrawingSelection();
     GLfloat color[4];
     glGetFloatv( GL_CURRENT_COLOR, color );
     glPushAttrib( GL_LINE_BIT );

@@ -11,6 +11,7 @@
 #include "Gl3dWidget.h"
 
 #include "EntityLayer.h"
+#include "GLOptions.h"
 #include "PickingSelector.h"
 #include "SimpleLocationDrawer.h"
 
@@ -35,7 +36,7 @@ using namespace gui;
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
 Gl3dWidget::Gl3dWidget( QWidget* pParent,
-                        Controllers& controllers,
+                        GLView_ABC& parent,
                         float width,
                         float height,
                         DetectionMap& elevation,
@@ -43,7 +44,7 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent,
                         const DrawingTypes& drawingTypes )
     : SetGlOptions   ()
     , Widget3D       ( context_, pParent, 0 )
-    , GlToolsBase    ( controllers, drawingTypes )
+    , GlToolsBase    ( parent, drawingTypes )
     , width_         ( width )
     , height_        ( height )
     , elevation_     ( elevation )
@@ -52,7 +53,6 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent,
     , frame_         ( 0 )
     , isInitialized_ ( false )
     , pPickingSelector_( new PickingSelector() )
-    , SymbolSize_  ( 3.f )
 {
     // NOTHING
 }
@@ -152,7 +152,7 @@ float Gl3dWidget::Pixels( const Point2f& at ) const
 float Gl3dWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
     if( !bVariableSize )
-        return SymbolSize_;
+        return GetOptions().Get( "SymbolSize" ).To< float >();
     return 1.f;
 }
 
@@ -451,7 +451,7 @@ void Gl3dWidget::DrawHalfDisc( const geometry::Point2f& center, float angleDegre
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /* = 1.f*/, bool /*fixedSize = true */ ) const
 {
-    if( !GlToolsBase::ShouldDisplay( "UnitDetails" ) )
+    if( !GetOptions().ShouldDisplay( "UnitDetails" ) )
         return;
     if( factor < -1.f )
         factor = GetAdaptiveZoomFactor( false );
@@ -907,18 +907,6 @@ bool Gl3dWidget::ShouldDisplay( E_LayerTypes type ) const
 QColor Gl3dWidget::GetPickingColor() const
 {
     return pPickingSelector_->GetColor();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Gl3dWidget::OptionChanged
-// Created: MMC 2013-03-12
-// -----------------------------------------------------------------------------
-void Gl3dWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "SymbolSize" )
-        SymbolSize_ = value.To< float >();
-    else
-        GlToolsBase::OptionChanged( name, value );
 }
 
 // -----------------------------------------------------------------------------

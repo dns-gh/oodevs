@@ -12,6 +12,7 @@
 #include "Surface.h"
 #include "SurfaceFactory_ABC.h"
 #include "VisionMap.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Workers.h"
@@ -166,10 +167,10 @@ void VisionCones::DrawMap( const gui::Viewport_ABC& viewport, const gui::GLView_
 {
     if( agent_.IsAggregated() )
         return;
-    if( tools.ShouldDisplay( "VisionCones" ) )
+    if( tools.GetOptions().ShouldDisplay( "VisionCones" ) )
         for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );
-    if( tools.ShouldDisplay( "VisionSurfaces" ) && map_->IsVisible( viewport ) )
+    if( tools.GetOptions().ShouldDisplay( "VisionSurfaces" ) && map_->IsVisible( viewport ) )
     {
         if( needUpdating_ )
         {

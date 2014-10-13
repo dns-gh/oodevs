@@ -46,6 +46,6 @@ GraphicsPanel::~GraphicsPanel()
 // -----------------------------------------------------------------------------
 void GraphicsPanel::Load( const GlProxy& )
 {
-    //preferences_->Load( view.GetActiveOptions() );
+    //preferences_->Load( view.GetOptions() );
     preferences_->Load( *options_.GetViewOptions() );
 }

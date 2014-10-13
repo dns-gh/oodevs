@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SelectionColorModifier.h"
 
+#include "GLOptions.h"
 #include "GLView_ABC.h"
 
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -62,7 +63,7 @@ QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QC
     const bool selected = selectedEntity_ == &entity;
     const bool superiorSelected = selectedEntity_ && ( IsSubordinate< kernel::TacticalHierarchies >( entity, *selectedEntity_ )
                                                     || IsSubordinate< kernel::CommunicationHierarchies >( entity, *selectedEntity_ ) );
-    tools_.Select( selected, superiorSelected, profile_.CanBeOrdered( entity ) );
+    tools_.GetOptions().Select( selected, superiorSelected, profile_.CanBeOrdered( entity ) );
     if( selected )
         return SelectedColor( base );
     if( superiorSelected )

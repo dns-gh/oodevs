@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "WeaponRangeLayer.h"
 #include "gaming/Weapons.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/Viewport2d.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/OptionsController.h"
@@ -176,7 +177,7 @@ void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC
         return;
     // SelectColor actually controls the result of ShouldDisplay
     strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
-    if( !view_.ShouldDisplay( "WeaponRanges" ) )
+    if( !view_.GetOptions().ShouldDisplay( "WeaponRanges" ) )
         return;
     if( const Weapons* weapons = entity.Retrieve< Weapons >() )
     {

@@ -15,6 +15,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/ActionError.h"
 #include "actions/ActionTasker.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
@@ -125,7 +126,7 @@ void MissionParameters::DoUpdate( const sword::FragOrder& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( !elements_.empty() && tools.ShouldDisplay( "MissionParameters" ) )
+    if( !elements_.empty() && tools.GetOptions().ShouldDisplay( "MissionParameters" ) )
         BOOST_REVERSE_FOREACH( const auto& content, elements_ )
             if( const Action_ABC* action = content.second )
             {

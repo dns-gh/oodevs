@@ -173,7 +173,7 @@ private:
     std::shared_ptr< gui::TerrainSettings > terrainSettings_;
     std::shared_ptr< gui::GradientPreferences > gradientPreferences_;
     std::unique_ptr< gui::GlProxy > glProxy_;
-    std::unique_ptr< gui::LightingProxy > lighting_;
+    std::shared_ptr< gui::LightingProxy > lighting_;
     std::unique_ptr< gui::GlSelector > selector_;
 
     std::unique_ptr< gui::CircularEventStrategy > forward_;

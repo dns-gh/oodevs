@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "LocationPositions.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -97,7 +98,7 @@ void LocationPositions::Draw( const geometry::Point2f& /*where*/, const gui::Vie
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
 
-    const bool selected = tools.ShouldDisplay();
+    const bool selected = tools.GetOptions().IsDrawingSelection();
     glPushAttrib( GL_LINE_BIT );
     if( selected )
     {

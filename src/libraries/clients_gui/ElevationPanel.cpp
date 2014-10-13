@@ -73,7 +73,7 @@ ElevationPanel::~ElevationPanel()
 void ElevationPanel::Load( const GlProxy& )
 {
     gradient_->Load();
-    // gradient_->SetElevation2dTexture( view.GetActiveOptions().GetElevation2dTexture() );
+    // gradient_->SetElevation2dTexture( view.GetOptions().GetElevation2dTexture() );
 }
 
 // -----------------------------------------------------------------------------

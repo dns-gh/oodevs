@@ -140,7 +140,7 @@ private:
     // the following will move to GLOptions or GLMainProxy
     std::shared_ptr< gui::GradientPreferences >    gradientPreferences_;
     std::shared_ptr< gui::TerrainSettings >        terrainSettings_;
-    std::unique_ptr< gui::LightingProxy >          lighting_;
+    std::shared_ptr< gui::LightingProxy >          lighting_;
     std::unique_ptr< gui::GlSelector >             selector_;
     std::unique_ptr< gui::GlProxy >                glProxy_;
 

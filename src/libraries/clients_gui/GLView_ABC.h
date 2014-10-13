@@ -29,6 +29,7 @@ namespace kernel
 
 namespace gui
 {
+    class GLOptions;
     class GlTooltip_ABC;
 
 // =============================================================================
@@ -61,44 +62,47 @@ public:
 
     //! @name Options
     //@{
+    virtual GLOptions& GetOptions() = 0;
+    virtual const GLOptions& GetOptions() const = 0;
+    //@}
+
+    //! @name Viewport
+    //@{
     virtual void CenterOn( const geometry::Point2f& point ) = 0;
-    virtual void Zoom( float width ) = 0;
     virtual geometry::Point2f GetCenter() const = 0;
 
-    virtual boost::tuple< bool, bool, bool > UnSelect() const = 0;
-    virtual void Select( bool, bool, bool ) const = 0;  //!< Returns the previous selection state
-    virtual bool ShouldDisplay( const std::string& name = std::string() ) const = 0;
-    virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const = 0;
-    virtual bool ShouldDisplay( E_LayerTypes type ) const = 0;
+    virtual void Zoom( float width ) = 0;
+    virtual float Zoom() const = 0;
+    virtual float GetAdaptiveZoomFactor( bool bVariableSize = true ) const = 0;
     //@}
 
     //! @name Picking
     //@{
-    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection,
-            const boost::optional< E_LayerTypes >& type ) = 0;
+    virtual bool ShouldDisplay( E_LayerTypes type ) const = 0;
+    virtual void FillSelection( const geometry::Point2f& point,
+                                T_ObjectsPicking& selection,
+                                const boost::optional< E_LayerTypes >& type ) = 0;
     virtual void Picking() = 0;
     virtual void RenderPicking( const T_ObjectPicking& object ) = 0;
     virtual bool IsPickingMode() const = 0;
     virtual QColor GetPickingColor() const = 0;
+    //@}
+
+    //! @name Tooltip
+    //@{
+    virtual std::unique_ptr< gui::GlTooltip_ABC > CreateTooltip() const = 0;
     virtual geometry::Point2f MapToterrainCoordinates( int x, int y ) = 0;
     virtual bool HasFocus() = 0;
     //@}
 
-    //! @name Accessors
+    //! @name Drawing
     //@{
-    virtual std::string     GetCurrentPass() const = 0;
-    virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const = 0;
-    virtual float           LineWidth( float base ) const = 0;
-    virtual unsigned short  StipplePattern( int factor = 1 ) const = 0;
-    virtual float           Zoom() const = 0;
-    virtual float           GetAdaptiveZoomFactor( bool bVariableSize = true ) const = 0;
-    virtual float           GetCurrentAlpha() const = 0;
-    //@}
+    virtual std::string GetCurrentPass() const = 0;
+    virtual unsigned short StipplePattern( int factor = 1 ) const = 0;
+    virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const = 0;
+    virtual float LineWidth( float base ) const = 0;
 
-    //! @name Operations
-    //@{
-    virtual std::unique_ptr< gui::GlTooltip_ABC > CreateTooltip() const = 0;
-
+    virtual float GetCurrentAlpha () const = 0;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 ) = 0;
     virtual void SetCurrentCursor ( const QCursor& cursor ) = 0;
 

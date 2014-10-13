@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "TacticalLinePositions_ABC.h"
 
+#include "GLOptions.h"
 #include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 
@@ -106,7 +107,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_A
 
     std::string symbol = owner_.Get< kernel::TacticalHierarchies >().GetSymbol();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    if( tools.ShouldDisplay() )
+    if( tools.GetOptions().IsDrawingSelection() )
         for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
             tools.DrawDisc( *it, 5.f, GLView_ABC::pixels );
     glPopAttrib();
