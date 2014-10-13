@@ -147,6 +147,12 @@ bool UrbanLayer::IsInside( const kernel::Entity_ABC& entity, const geometry::Rec
     return false;
 }
 
+void UrbanLayer::SetHotpoint( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, const geometry::Point2f& /*where*/ ) const
+{
+    if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
+        viewport.SetHotpoint( positions->BoundingBox() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: UrbanLayer::ActivateEntity
 // Created: LGY 2011-05-02

@@ -53,6 +53,7 @@ protected:
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
     virtual void Select( unsigned int id, bool control );
+    virtual void SetHotpoint( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, const geometry::Point2f& where ) const;
     //@}
 
 private:

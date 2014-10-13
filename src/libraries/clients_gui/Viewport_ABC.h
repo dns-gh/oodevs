@@ -35,6 +35,7 @@ public:
     virtual bool IsVisible( const geometry::Rectangle2f& rectangle ) const = 0;
 
     void SetHotpoint( const geometry::Point2f& point );
+    void SetHotpoint( const geometry::Rectangle2f& rectangle );
     //@}
 
 private:
