@@ -65,4 +65,24 @@ private:
     static void ReadVolume( xml::xistream& xis );
 };
 
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const PHY_Volume* t )
+    {
+        unsigned int id = t ? t->GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const PHY_Volume*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = PHY_Volume::FindVolume( id );
+    }
+}
+}
+
 #endif // __PHY_Volume_h_

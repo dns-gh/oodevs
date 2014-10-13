@@ -48,9 +48,9 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    template< typename Archive >
+    void serialize( Archive& a, unsigned int );
+
     void WriteKnowledges( xml::xostream& xos ) const;
     //@}
 
@@ -132,7 +132,5 @@ private:
     bool bArmyAndPcUpdated_;
     //@}
 };
-
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentDataDetection )
 
 #endif // __DEC_Knowledge_AgentDataDetection_h_
