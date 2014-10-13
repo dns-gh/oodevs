@@ -10,10 +10,10 @@
 #ifndef __Pathfind_h_
 #define __Pathfind_h_
 
-#include <clients_gui/Drawable_ABC.h>
-#include <clients_gui/EntityImplementation.h>
-#include <clients_gui/Itinerary.h>
-#include <clients_kernel/Pathfind_ABC.h>
+#include "clients_gui/Drawable_ABC.h"
+#include "clients_gui/EntityImplementation.h"
+#include "clients_gui/Itinerary.h"
+#include "clients_kernel/Pathfind_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/optional.hpp>
 
