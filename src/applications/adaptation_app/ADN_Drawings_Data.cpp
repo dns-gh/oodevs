@@ -12,8 +12,6 @@
 #include "ADN_Project_Data.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/GlTooltip.h"
-#include "svgl/Color.h"
-#include "svgl/RenderingContext.h"
 #include "svgl/TextRenderer.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
@@ -57,7 +55,7 @@ namespace
 
         //! @name Operations
         //@{
-        virtual std::unique_ptr< gui::GlTooltip_ABC > CreateTooltip() const { return std::unique_ptr< gui::GlTooltip_ABC >(); }
+        virtual std::unique_ptr< gui::GlTooltip_ABC > CreateTooltip() const { return 0; }
         virtual void SetCurrentColor  ( float, float, float, float ) {}
         virtual void SetCurrentCursor ( const QCursor& ) {}
         virtual void DrawCross        ( const geometry::Point2f&, float, E_Unit ) const {}
