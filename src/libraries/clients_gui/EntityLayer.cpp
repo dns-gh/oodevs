@@ -147,14 +147,25 @@ bool EntityLayerBase::HandleMouseDoubleClick( QMouseEvent* event, const geometry
     return HandleMousePress( event, point );
 }
 
+const kernel::Entity_ABC* EntityLayerBase::FindEntity( unsigned int id ) const
+{
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
+        if( (*it)->GetId() == id )
+            return *it;
+    return 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Select( const kernel::GraphicalEntity_ABC& selectable, bool control, bool /*shift*/ )
+void EntityLayerBase::Select( unsigned int id, bool control )
 {
-    selected_ = &static_cast< const kernel::Entity_ABC& >( selectable );
-    controllers_.actions_.SetSelected( selectable, control );
+    if( const kernel::Entity_ABC* entity = FindEntity( id ) )
+    {
+        controllers_.actions_.SetSelected( *entity, control );
+        selected_ = entity;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -398,7 +409,7 @@ void EntityLayer<kernel::Entity_ABC>::ContextMenu( const kernel::GraphicalEntity
 // Created: JSR 2013-06-07
 // -----------------------------------------------------------------------------
 template<>
-void EntityLayer< kernel::Entity_ABC >::FillContextMenu( const kernel::GraphicalEntity_ABC& , kernel::ContextMenu& )
+void EntityLayer< kernel::Entity_ABC >::FillContextMenu( unsigned int, kernel::ContextMenu& )
 {
     // NOTHING
 }

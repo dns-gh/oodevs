@@ -105,13 +105,14 @@ protected:
 
     //! @name Layer_ABC implementation
     //@{
-    virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
+    virtual void Select( unsigned int id, bool control );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >& elements, const geometry::Point2f&, const QPoint& where );
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection );
     //@}
 
     geometry::Point2f GetPosition( const kernel::Entity_ABC& entity ) const;
+    const kernel::Entity_ABC* FindEntity( unsigned int id ) const;
 
 protected:
     //! @name Types
@@ -172,7 +173,7 @@ protected:
     virtual void NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements );
     virtual void SelectColor( const kernel::Entity_ABC& );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
-    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void FillContextMenu( unsigned int id, kernel::ContextMenu& menu );
     virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& selectable ) const;
     //@}
@@ -191,7 +192,7 @@ template<>
 void EntityLayer< kernel::Entity_ABC >::ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
 
 template<>
-void EntityLayer< kernel::Entity_ABC >::FillContextMenu( const kernel::GraphicalEntity_ABC&, kernel::ContextMenu& );
+void EntityLayer< kernel::Entity_ABC >::FillContextMenu( unsigned int, kernel::ContextMenu& );
 
 template<>
 bool EntityLayer< kernel::Entity_ABC >::IsIn( const kernel::GraphicalEntity_ABC& ) const;

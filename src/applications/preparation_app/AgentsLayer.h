@@ -10,7 +10,8 @@
 #ifndef __AgentsLayer_h_
 #define __AgentsLayer_h_
 
-#include "clients_gui/AgentsLayer.h"
+#include "clients_gui/EntityLayer.h"
+#include "clients_kernel/Agent_ABC.h"
 
 namespace kernel
 {
@@ -28,7 +29,7 @@ class ModelBuilder;
 */
 // Created: SBO 2006-08-31
 // =============================================================================
-class AgentsLayer : public gui::AgentsLayer
+class AgentsLayer : public gui::EntityLayer< kernel::Agent_ABC >
                   , public kernel::MultipleSelectionObserver_Base< kernel::Automat_ABC >
                   , public kernel::MultipleSelectionObserver_Base< kernel::Formation_ABC >
                   , public kernel::MultipleSelectionObserver_Base< kernel::Team_ABC >

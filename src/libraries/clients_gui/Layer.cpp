@@ -191,7 +191,7 @@ std::string Layer::GetOptionName() const
 // Name: Layer::Select
 // Created: ABR 2013-01-28
 // -----------------------------------------------------------------------------
-void Layer::Select( const kernel::GraphicalEntity_ABC&, bool, bool )
+void Layer::Select( unsigned int, bool )
 {
     // NOTHING
 }
@@ -227,7 +227,7 @@ void Layer::FillContextMenu( QMouseEvent* /*mouse*/, kernel::ContextMenu& /*menu
 // Name: Layer::FillContextMenu
 // Created: LGY 2013-04-05
 // -----------------------------------------------------------------------------
-void Layer::FillContextMenu( const kernel::GraphicalEntity_ABC& /*entity*/, kernel::ContextMenu& /*menu*/ )
+void Layer::FillContextMenu( unsigned int /*id*/, kernel::ContextMenu& /*menu*/ )
 {
     // NOTHING
 }

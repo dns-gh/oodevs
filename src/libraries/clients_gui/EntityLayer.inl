@@ -120,9 +120,10 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::GraphicalEntity_A
 // Created: LGY 2013-04-05
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
+void EntityLayer< ConcreteEntity >::FillContextMenu( unsigned int id, kernel::ContextMenu& menu )
 {
-    controllers_.actions_.ContextMenu( this, static_cast< const ConcreteEntity& >( selectable ), menu );
+    if( const kernel::Entity_ABC* entity = FindEntity( id ) )
+        controllers_.actions_.ContextMenu( this, *entity, static_cast< const ConcreteEntity& >( *entity ), menu );
 }
 
 // -----------------------------------------------------------------------------
