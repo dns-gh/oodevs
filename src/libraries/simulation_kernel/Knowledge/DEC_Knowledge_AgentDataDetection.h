@@ -22,6 +22,7 @@ namespace sword
 
 class DEC_Knowledge_AgentPerceptionDataDetection;
 class MIL_KnowledgeGroupType;
+class PHY_PerceptionLevel;
 class PHY_Posture;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
@@ -79,14 +80,17 @@ public:
     bool IsRefugeeManaged() const;
     bool IsDead() const;
     bool IsWounded() const;
+    double GetOperationalState() const;
+    const MIL_Army_ABC* GetArmy() const;
+    bool IsPC() const;
     double GetPopulationDensity() const;
     //@}
 
     //! @name Network
     //@{
     bool HasChanged() const;
-    void SendChangedState( sword::UnitKnowledgeUpdate& msg ) const;
-    void SendFullState( sword::UnitKnowledgeUpdate& msg ) const;
+    void SendChangedState( sword::UnitKnowledgeUpdate& msg, const PHY_PerceptionLevel& level, bool levelChanged ) const;
+    void SendFullState( sword::UnitKnowledgeUpdate& msg, const PHY_PerceptionLevel& level ) const;
     //@}
 
 private:
@@ -110,6 +114,9 @@ private:
     const PHY_Posture* pLastPosture_;
     const PHY_Posture* pCurrentPosture_;
     double rPostureCompletionPercentage_;
+    const MIL_Army_ABC* pArmy_;
+    double rOperationalState_;
+    bool bIsPC_;
     bool bDead_;
     bool bWounded_;
     bool bPrisoner_;
@@ -121,6 +128,8 @@ private:
     bool bSurrenderedUpdated_;
     bool bRefugeeManagedUpdated_;
     bool bDeadUpdated_;
+    bool bOperationalStateUpdated_;
+    bool bArmyAndPcUpdated_;
     //@}
 };
 

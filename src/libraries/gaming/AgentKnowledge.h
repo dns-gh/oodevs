@@ -28,6 +28,11 @@ namespace kernel
     class Team_ABC;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 // =============================================================================
 /** @class  AgentKnowledge
     @brief  Represents the knowledge a gtia has of an agent.
@@ -73,12 +78,17 @@ public:
     virtual std::string GetSymbol() const;
     //@}
 
+    //! @name Static
+    //@{
+    static void LoadPerceptionAvaibilities( const tools::ExerciseConfig& config );
+    static void PurgePerceptionAvaibilities();
+    //@}
+
 private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitKnowledgeUpdate& message );
     void UpdateSymbol();
-    const kernel::Karma& TeamKarma( kernel::E_PerceptionResult perception ) const;
     //@}
 
 public:
@@ -112,6 +122,10 @@ public:
     kernel::OptionalValue< uint >                       nRelevance_;
     kernel::OptionalValue< std::string >                criticalIntelligence_;
     kernel::OptionalValue< E_UnitPosture >              posture_;
+
+    static kernel::E_PerceptionResult levelPerception_;
+    static kernel::E_PerceptionResult partialNaturePerception_;
+    static kernel::E_PerceptionResult fullNaturePerception_;
 };
 
 #endif // __AgentKnowledge_h_

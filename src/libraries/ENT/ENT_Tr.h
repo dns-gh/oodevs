@@ -70,6 +70,7 @@ namespace ENT_Tr
     const std::string& ConvertFromObstacleActivation( E_ObstacleActivation, E_Conversion = eToSim );
     const std::string& ConvertFromOperationalStatus( E_OperationalStatus, E_Conversion = eToSim );
     const std::string& ConvertFromPerceptionLevel( E_PerceptionLevel, E_Conversion = eToSim );
+    const std::string& ConvertFromPerceptionType( E_PerceptionType, E_Conversion = eToSim );
     const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
     const std::string& ConvertFromPopulationRoe( E_PopulationRoe, E_Conversion = eToSim );
     const std::string& ConvertFromRoe( E_Roe, E_Conversion = eToSim );
@@ -124,6 +125,7 @@ namespace ENT_Tr
     E_ObstacleActivation ConvertToObstacleActivation( const std::string&, E_Conversion = eToSim );
     E_OperationalStatus ConvertToOperationalStatus( const std::string&, E_Conversion = eToSim );
     E_PerceptionLevel ConvertToPerceptionLevel( const std::string&, E_Conversion = eToSim );
+    E_PerceptionType ConvertToPerceptionType( const std::string&, E_Conversion = eToSim );
     E_PopulationAttitude ConvertToPopulationAttitude( const std::string&, E_Conversion = eToSim );
     E_PopulationRoe ConvertToPopulationRoe( const std::string&, E_Conversion = eToSim );
     E_Roe ConvertToRoe( const std::string&, E_Conversion = eToSim );

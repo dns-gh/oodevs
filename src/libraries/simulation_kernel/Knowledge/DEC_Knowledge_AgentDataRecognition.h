@@ -50,17 +50,9 @@ public:
 
     //! @name Operations
     //@{
-    void Prepare();
     void Update( const DEC_Knowledge_AgentPerceptionDataRecognition& data );
     void Update( const DEC_Knowledge_AgentDataRecognition& data );
     void Extrapolate( const MIL_Agent_ABC& agentKnown );
-    //@}
-
-    //! @name Network
-    //@{
-    bool HasChanged() const;
-    void SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState( sword::UnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
     //! @name Accessors
@@ -94,9 +86,6 @@ private:
     const MIL_Army_ABC* pArmy_;
     const MIL_AgentType_ABC* pAgentType_; // For 'natures'
     bool bIsPC_;
-    // Network
-    bool bOperationalStateChanged_;
-    bool bAgentTypeUpdated_;
     //@}
 };
 

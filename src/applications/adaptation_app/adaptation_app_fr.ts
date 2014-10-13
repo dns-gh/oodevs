@@ -178,6 +178,29 @@
     </message>
 </context>
 <context>
+    <name>ADN_AiEngine_Perception_Table</name>
+    <message>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <source>Detection</source>
+        <translation>Détection</translation>
+    </message>
+    <message>
+        <source>Recognition</source>
+        <translation>Reconnaissance</translation>
+    </message>
+    <message>
+        <source>Identification</source>
+        <translation>Identification</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Jamais</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AiEngine_UrbanSpeeds_Table</name>
     <message>
         <source>Material</source>

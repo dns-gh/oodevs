@@ -66,11 +66,14 @@ public:
     const PHY_Posture& GetCurrentPosture() const;
     double GetPostureCompletionPercentage() const;
     const MIL_Army_ABC* GetArmySurrenderedTo() const;
+    const MIL_Army_ABC* GetArmy() const;
+    bool IsPC() const;
     bool IsPrisoner() const;
     bool IsRefugeeManaged() const;
     bool IsDead() const;
     bool IsWounded() const;
     double GetPopulationDensity() const;
+    double GetOperationalState() const;
     //@}
 
 private:
@@ -82,12 +85,15 @@ private:
     double rAltitude_;
     double rSpeed_;
     double rPopulationDensity_;
+    double rOperationalState_;
     const MIL_Army_ABC* pArmySurrenderedTo_;
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
     T_ComposanteVolumes visionVolumes_;
     const PHY_Posture* pLastPosture_;
     const PHY_Posture* pCurrentPosture_;
     double rPostureCompletionPercentage_;
+    const MIL_Army_ABC* pArmy_;
+    bool bIsPC_;
     bool bDead_;
     bool bPrisoner_;
     bool bRefugeeManaged_;

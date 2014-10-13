@@ -13,6 +13,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_AiEngine_Data.h"
 #include "ADN_AiEngine_UrbanSpeeds_Table.h"
+#include "ADN_AiEngine_Perception_Table.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
@@ -95,15 +96,23 @@ void ADN_AiEngine_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pOpenSpeeds, "open-terrain-search-speed", tr( "Open terrain search speed" ), data_.searchSpeed_, tr( "m/min" ), eGreaterEqualZero );
 
     ADN_AiEngine_UrbanSpeeds_Table* urbanTable = new ADN_AiEngine_UrbanSpeeds_Table( builder.GetChildName( "urban-speeds-table" ), data_.urbanSearchSpeeds_ );
-    
+
     pSpeedsLayout->addWidget( pOpenSpeeds );
     pSpeedsLayout->addWidget( urbanTable );
 
     // Perception
-    Q3GroupBox* pPerceptionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Perception" ) );
-    builder.AddEnumField( pPerceptionBox, "perception-max-level", tr( "Maximum perception level of hostile units" ), data_.nMaxPerceptionLevel_ );
-    ADN_CheckBox* destroyedUnits = new ADN_CheckBox( tr( "Destroyed units detection" ), pPerceptionBox, "destroyed-units-detection" );
-    destroyedUnits->GetConnector().Connect( &data_.bDetectDestroyedUnits_ );
+    QGroupBox* pPerceptionBox = new gui::RichGroupBox( "perception-box", tr( "Perception" ) );
+    QVBoxLayout* pPerceptionLayout = new QVBoxLayout( pPerceptionBox );
+    {
+        Q3GroupBox* pPerceptionSubBox = new Q3GroupBox( 3, Qt::Horizontal );
+        pPerceptionSubBox->setFrameStyle( Q3GroupBox::NoFrame );
+        builder.AddEnumField( pPerceptionSubBox, "perception-max-level", tr( "Maximum perception level of hostile units" ), data_.nMaxPerceptionLevel_ );
+        ADN_CheckBox* destroyedUnits = new ADN_CheckBox( tr( "Destroyed units detection" ), pPerceptionSubBox, "destroyed-units-detection" );
+        destroyedUnits->GetConnector().Connect( &data_.bDetectDestroyedUnits_ );
+        pPerceptionLayout->addWidget( pPerceptionSubBox );
+    }
+    ADN_AiEngine_Perception_Table* perceptionTable = new ADN_AiEngine_Perception_Table( builder.GetChildName( "urban-speeds-table" ), data_.perceptionInfos_ );
+    pPerceptionLayout->addWidget( perceptionTable );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -119,13 +128,13 @@ void ADN_AiEngine_GUI::Build()
     pLeftLayout->addWidget( pDangerBox );
     pLeftLayout->addWidget( pOpStateBox );
     pLeftLayout->addWidget( pSpeedsBox );
-    pLeftLayout->addWidget( new QWidget(), 1 );
+    pLeftLayout->addWidget( pCriticalIntelligenceBox );
+    pLeftLayout->addStretch( 1 );
     pRightLayout->addWidget( pUrbanStateBox );
     pRightLayout->addWidget( pWoundEffectsBox );
     pRightLayout->addWidget( pForceRatioBox );
     pRightLayout->addWidget( pPerceptionBox );
-    pRightLayout->addWidget( pCriticalIntelligenceBox );
-    pRightLayout->addWidget( new QWidget(), 1 );
+    pRightLayout->addStretch( 1 );
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }

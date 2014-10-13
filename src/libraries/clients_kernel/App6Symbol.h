@@ -25,12 +25,22 @@ namespace kernel
 class App6Symbol
 {
 public:
+    //! @name Types
+    //@{
+    enum E_LevelFilter
+    {
+        eLevelFilter_Nothing,
+        eLevelFilter_Partial,
+        eLevelFilter_Full
+    };
+    //@}
+
     //! @name Operations
     //@{
     static void SetKarma( std::string& symbol, const Karma& karma );
-    static void FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception );
+    static void FilterPerceptionLevel( std::string& symbol, E_LevelFilter filter );
     static std::string GetBase( const std::string& symbol, Karma& karma );
-    static std::string FilterNature( const std::string& nature, E_PerceptionResult perception );
+    static std::string FilterNature( const std::string& nature, E_LevelFilter perception );
     //@}
 };
 

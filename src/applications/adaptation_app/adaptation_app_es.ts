@@ -179,6 +179,29 @@
     </message>
 </context>
 <context>
+    <name>ADN_AiEngine_Perception_Table</name>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detection</source>
+        <translation type="unfinished">Detección</translation>
+    </message>
+    <message>
+        <source>Recognition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AiEngine_UrbanSpeeds_Table</name>
     <message>
         <source>Material</source>

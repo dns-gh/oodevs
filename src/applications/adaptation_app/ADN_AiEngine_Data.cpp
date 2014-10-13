@@ -15,6 +15,7 @@
 #include "ADN_Tr.h"
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
+#include <tools/Helpers.h>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanSpeedsInfos: Constructor
@@ -61,6 +62,87 @@ void ADN_AiEngine_Data::UrbanSpeedsInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PerceptionInfos Constructor
+// Created: JSR 2014-07-04
+// -----------------------------------------------------------------------------
+ADN_AiEngine_Data::PerceptionInfos::PerceptionInfos()
+    : detection_( false )
+    , recognition_( false )
+    , identification_( false )
+    , never_( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerceptionInfos::GetItemName
+// Created: JSR 2014-07-04
+// -----------------------------------------------------------------------------
+std::string ADN_AiEngine_Data::PerceptionInfos::GetItemName()
+{
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerceptionInfos::ReadArchive
+// Created: JSR 2014-07-04
+// -----------------------------------------------------------------------------
+void ADN_AiEngine_Data::PerceptionInfos::ReadArchive( xml::xistream& xis )
+{
+    const std::string level = xis.attribute< std::string >( "level" );
+    detection_ = level == "detection";
+    recognition_ = level == "recognition";
+    identification_ = level == "identification";
+    never_ = level == "never";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_AiEngine_Data::WriteArchive
+// Created: JSR 2014-07-04
+// -----------------------------------------------------------------------------
+void ADN_AiEngine_Data::PerceptionInfos::WriteArchive( xml::xostream& xos, const std::string& name )
+{
+    const std::string level = detection_.GetData() ?      "detection" :
+                              recognition_.GetData() ?    "recognition" :
+                              identification_.GetData() ? "identification" :
+                                                           "never";
+    xos << xml::start( "availability" )
+          << xml::attribute( "type", name )
+          << xml::attribute( "level", level )
+        << xml::end;
+}
+
+namespace
+{
+    struct DefaultPerception
+    {
+        bool detection;
+        bool recognition;
+        bool identification;
+        bool never;
+        std::string name;
+    };
+
+    static const DefaultPerception defaultPerceptions[] =
+    {
+        { true,  false, false, false, "heading" },
+        { true,  false, false, false, "speed" },
+        { false, false, true,  false, "opstate" },
+        { false, true,  false, false, "side" },
+        { false, false, true,  false, "level" },
+        { false, true,  false, false, "nature-partial" },
+        { false, false, true,  false, "nature-full" },
+        { false, false, true,  false, "surrendered" },
+        { false, false, true,  false, "prisoner" },
+        { false, false, true,  false, "refugees" },
+        { false, false, true,  false, "cp" }
+    };
+    static_assert(
+        COUNT_OF( defaultPerceptions ) == eNbrPerceptionType,
+        "invalid number of elements" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data constructor
 // Created: AGN 2004-06-15
 // -----------------------------------------------------------------------------
@@ -89,6 +171,15 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , nMaxPerceptionLevel_         ( ePerceptionLevel_Identification )
 {
     nMaxPerceptionLevel_.SetAlphabeticalSort( false );
+    for( int i = 0; i < boost::size( defaultPerceptions ); ++i )
+    {
+        PerceptionInfos* infos = new PerceptionInfos();
+        infos->detection_      = defaultPerceptions[ i ].detection;
+        infos->recognition_    = defaultPerceptions[ i ].recognition;
+        infos->identification_ = defaultPerceptions[ i ].identification;
+        infos->never_          = defaultPerceptions[ i ].never;
+        perceptionInfos_.AddItem( infos );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -179,6 +270,16 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
     input >> xml::optional >> xml::start( "perception" )
             >> xml::optional >> xml::attribute( "max-level", maxPerceptionLevel )
             >> xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
+            >> xml::list( "availability", [&]( xml::xistream& xis )
+            {
+                const std::string type = xis.attribute< std::string >( "type" );
+                for( std::size_t i = 0; i < boost::size( defaultPerceptions ); ++i )
+                    if( defaultPerceptions[ i ].name == type )
+                    {
+                        perceptionInfos_[ i ]->ReadArchive( xis );
+                        return;
+                    }
+            } )
           >> xml::end;
     if( !maxPerceptionLevel.empty() )
         nMaxPerceptionLevel_ = ENT_Tr::ConvertToPerceptionLevel( maxPerceptionLevel );
@@ -246,8 +347,10 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output ) const
             << xml::end
             << xml::start( "perception" )
                 << xml::attribute( "max-level", nMaxPerceptionLevel_.Convert() )
-                << xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ )
-            << xml::end
+                << xml::attribute( "detect-destroyed-units", bDetectDestroyedUnits_ );
+    for( std::size_t i = 0; i < perceptionInfos_.size(); ++i )
+        perceptionInfos_[ i ]->WriteArchive( output, defaultPerceptions[ i ].name );
+    output  << xml::end
             << xml::start( "recon-and-search-speeds" )
             << xml::attribute( "recon-speed", reconSpeed_ )
             << xml::attribute( "search-speed", searchSpeed_ );

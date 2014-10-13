@@ -18,6 +18,7 @@
 #include "DEC_Knowledge_AgentDataIdentification.h"
 #include "Tristate.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "ENT/ENT_Enums.h"
 #include "Tools/MIL_IDManager.h"
 #include <tools/Map.h>
 #include <boost/shared_ptr.hpp>
@@ -58,6 +59,7 @@ public:
     static double rMaxDangerosityDegradationByNeutralizedState_;
     static bool detectDestroyedUnits_;
     static const PHY_PerceptionLevel* maxHostilePerceptionLevel_;
+    static const PHY_PerceptionLevel* perceptionInfoAvailability_[ eNbrPerceptionType ];
 
 public:
     //! @name Constructors/Destructor

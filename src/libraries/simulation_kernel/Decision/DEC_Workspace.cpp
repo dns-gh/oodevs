@@ -30,7 +30,7 @@
 #include "tools/PhyLoader.h"
 #include "tools/VersionHelper.h"
 #include "tools/XmlStreamOperators.h"
-
+#include "ENT/ENT_Tr.h"
 #include <boost/algorithm/string.hpp>
 #include <sys/stat.h>
 
@@ -80,6 +80,20 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
     const unsigned int tickDuration = config.GetTimeStep();
     config.GetPhyLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
+}
+
+namespace
+{
+    const PHY_PerceptionLevel* ConvertFromLevel( const std::string& level )
+    {
+        if( level == "never" )
+            return &PHY_PerceptionLevel::notSeen_;
+        if( level == "detection" )
+            return &PHY_PerceptionLevel::detected_;
+        if( level == "recognition" )
+            return &PHY_PerceptionLevel::recognized_;
+        return &PHY_PerceptionLevel::identified_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -141,18 +155,21 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
         throw MASA_EXCEPTION( "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1" ); // $$$$ ABL 2007-07-25: error context
 
     DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional, tickDuration );
-    
+
     std::string maxHostilePerceptionLevel;
     xisDecisional >> xml::optional >> xml::start( "perception" )
                     >> xml::attribute( "detect-destroyed-units", DEC_Knowledge_Agent::detectDestroyedUnits_ )
                     >> xml::optional >> xml::attribute( "max-level", maxHostilePerceptionLevel )
+                      >> xml::list( "availability",
+                        [&]( xml::xistream& xis )
+                        {
+                            const auto type = ENT_Tr::ConvertToPerceptionType( xis.attribute< std::string >( "type" ) );
+                            if( type != eNbrPerceptionType )
+                                DEC_Knowledge_Agent::perceptionInfoAvailability_[ type ] =
+                                    ConvertFromLevel( xis.attribute< std::string >( "level" ) );
+                        } )
                   >> xml::end;
-    if( maxHostilePerceptionLevel == "detection" )
-        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::detected_;
-    else if( maxHostilePerceptionLevel == "recognition" )
-        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
-    else
-        DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = &PHY_PerceptionLevel::identified_;
+    DEC_Knowledge_Agent::maxHostilePerceptionLevel_ = ConvertFromLevel( maxHostilePerceptionLevel );
 
     xisDecisional >> xml::end;
 }

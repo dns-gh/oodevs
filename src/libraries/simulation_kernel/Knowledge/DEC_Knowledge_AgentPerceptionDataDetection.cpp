@@ -39,7 +39,10 @@ DEC_Knowledge_AgentPerceptionDataDetection::DEC_Knowledge_AgentPerceptionDataDet
     , pCurrentPosture_             ( 0 )
     , rPostureCompletionPercentage_( 1. )
     , rPopulationDensity_          ( 0. )
+    , rOperationalState_           ( 1. )
     , pArmySurrenderedTo_          ( 0 )
+    , pArmy_                       ( 0 )
+    , bIsPC_                       ( false )
     , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
@@ -68,14 +71,16 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
     file >> vDirection_;
     file >> rAltitude_;
     file >> rSpeed_;
+    file >> rPopulationDensity_;
+    file >> rOperationalState_;
     file >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
+    file >> rPostureCompletionPercentage_;
+    file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
+    file >> bIsPC_;
+    file >> bDead_;
     file >> bPrisoner_;
     file >> bRefugeeManaged_;
-    file >> bDead_;
     file >> bWounded_;
-    file >> rPostureCompletionPercentage_;
-    file >> rPopulationDensity_;
-    // Desérialisation des volumes par nom ( données "statiques" )
     std::size_t nNbr;
     unsigned int nID;
     file >> nNbr;
@@ -86,7 +91,6 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
         if( volume )
             visionVolumes_.push_back( volume );
     }
-    // Déserialisation des postures ( données statiques )
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
     file >> nID;
@@ -104,14 +108,16 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
     file << vDirection_;
     file << rAltitude_;
     file << rSpeed_;
+    file << rPopulationDensity_;
+    file << rOperationalState_;
     file << pArmySurrenderedTo_;
+    file << rPostureCompletionPercentage_;
+    file << pArmy_;
+    file << bIsPC_;
+    file << bDead_;
     file << bPrisoner_;
     file << bRefugeeManaged_;
-    file << bDead_;
     file << bWounded_;
-    file << rPostureCompletionPercentage_;
-    file << rPopulationDensity_;
-    // Serialisation des volumes par nom ( données "statiques" )
     std::size_t size = visionVolumes_.size();
     for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
         if( !( *it ) )
@@ -125,10 +131,10 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
             file << id;
         }
     }
-    // Serialisation des postures ( données statiques )
     unsigned int last = ( pLastPosture_ ? pLastPosture_->GetID() : static_cast< unsigned int >( -1 ) );
     unsigned int current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : static_cast< unsigned int >( -1 ) );
-    file << last << current;
+    file << last;
+    file << current;
 }
 
 // -----------------------------------------------------------------------------
@@ -170,6 +176,9 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
     bRefugeeManaged_ = agentPerceived.GetRole< PHY_RoleInterface_Refugee >().IsManaged();
     bDead_ = agentPerceived.IsDead();
     bWounded_ = agentPerceived.GetRole< human::PHY_RoleInterface_Humans >().HasWoundedHumansToEvacuate();
+    pArmy_ = &agentPerceived.GetArmy();
+    bIsPC_ = agentPerceived.IsPC();
+    rOperationalState_ = agentPerceived.GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
 }
 
 // -----------------------------------------------------------------------------
@@ -274,6 +283,24 @@ const MIL_Army_ABC* DEC_Knowledge_AgentPerceptionDataDetection::GetArmySurrender
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetArmy
+// Created: JSR 2014-07-07
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC* DEC_Knowledge_AgentPerceptionDataDetection::GetArmy() const
+{
+    return pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::IsPC
+// Created: JSR 2014-07-07
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentPerceptionDataDetection::IsPC() const
+{
+    return bIsPC_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::IsPrisoner
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
@@ -307,4 +334,13 @@ double DEC_Knowledge_AgentPerceptionDataDetection::GetPopulationDensity() const
 bool DEC_Knowledge_AgentPerceptionDataDetection::IsWounded() const
 {
     return bWounded_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetOperationalState
+// Created: JSR 2014-07-07
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_AgentPerceptionDataDetection::GetOperationalState() const
+{
+    return rOperationalState_;
 }

@@ -17,6 +17,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
@@ -37,6 +38,9 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     , pLastPosture_                ( 0 )
     , pCurrentPosture_             ( 0 )
     , rPostureCompletionPercentage_( 1. )
+    , pArmy_                       ( 0 )
+    , rOperationalState_           ( std::numeric_limits< double >::max() )
+    , bIsPC_                       ( false )
     , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
@@ -48,6 +52,8 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     , bSurrenderedUpdated_         ( true )
     , bRefugeeManagedUpdated_      ( true )
     , bDeadUpdated_                ( true )
+    , bOperationalStateUpdated_    ( false )
+    , bArmyAndPcUpdated_           ( false )
 {
     // NOTHING
 }
@@ -67,19 +73,13 @@ DEC_Knowledge_AgentDataDetection::~DEC_Knowledge_AgentDataDetection()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    MT_Vector2D positionTmp;
     file >> nTimeLastUpdate_;
-    file >> positionTmp;
+    file >> vPosition_;
     file >> vDirection_;
     file >> rSpeed_;
     file >> rAltitude_;
-    file >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
-    file >> bPrisoner_;
-    file >> bRefugeeManaged_;
-    file >> bDead_;
-    file >> bWounded_;
     file >> rPopulationDensity_;
-    vPosition_.reset( new MT_Vector2D( positionTmp ) );
+    file >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
     std::size_t nNbr;
     unsigned int nID;
     file >> nNbr;
@@ -95,13 +95,13 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
     file >> rPostureCompletionPercentage_;
-    file >> bDirectionUpdated_;
-    file >> bSpeedUpdated_;
-    file >> bPositionUpdated_;
-    file >> bPrisonerUpdated_;
-    file >> bSurrenderedUpdated_;
-    file >> bRefugeeManagedUpdated_;
-    file >> bDeadUpdated_;
+    file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
+    file >> rOperationalState_;
+    file >> bIsPC_;
+    file >> bDead_;
+    file >> bWounded_;
+    file >> bPrisoner_;
+    file >> bRefugeeManaged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,16 +111,12 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
 void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << nTimeLastUpdate_;
-    file << ( *vPosition_ );
+    file << vPosition_;
     file << vDirection_;
     file << rSpeed_;
     file << rAltitude_;
-    file << pArmySurrenderedTo_;
-    file << bPrisoner_;
-    file << bRefugeeManaged_;
-    file << bDead_;
-    file << bWounded_;
     file << rPopulationDensity_;
+    file << pArmySurrenderedTo_;
     std::size_t size = visionVolumes_.size();
     for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
         if( !(*it) )
@@ -139,13 +135,13 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
     file << last;
     file << current;
     file << rPostureCompletionPercentage_;
-    file << bDirectionUpdated_;
-    file << bSpeedUpdated_;
-    file << bPositionUpdated_;
-    file << bPrisonerUpdated_;
-    file << bSurrenderedUpdated_;
-    file << bRefugeeManagedUpdated_;
-    file << bDeadUpdated_;
+    file << pArmy_;
+    file << rOperationalState_;
+    file << bIsPC_;
+    file << bDead_;
+    file << bWounded_;
+    file << bPrisoner_;
+    file << bRefugeeManaged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,6 +198,8 @@ void DEC_Knowledge_AgentDataDetection::Prepare()
     bSurrenderedUpdated_ = false;
     bRefugeeManagedUpdated_ = false;
     bDeadUpdated_ = false;
+    bOperationalStateUpdated_ = false;
+    bArmyAndPcUpdated_ = false;
     rPopulationDensity_ = 0.;
 }
 
@@ -257,6 +255,18 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
         bDeadUpdated_ = true;
     }
     bWounded_ = data.IsWounded();
+    double rNewOpState = data.GetOperationalState();
+    if( rOperationalState_ != rNewOpState )
+    {
+        rOperationalState_ = rNewOpState;
+        bOperationalStateUpdated_ = true;
+    }
+    if( !pArmy_ )
+    {
+        pArmy_= data.GetArmy();
+        bIsPC_ = data.IsPC();
+        bArmyAndPcUpdated_ = pArmy_ != 0;
+    }
     rPopulationDensity_ = data.GetPopulationDensity();
     rAltitude_ = data.GetAltitude();
     pLastPosture_ = &data.GetLastPosture();
@@ -299,41 +309,72 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
     }
 }
 
+namespace
+{
+    bool CanSend( E_PerceptionType type, const PHY_PerceptionLevel& level )
+    {
+        const auto availableLevel = DEC_Knowledge_Agent::perceptionInfoAvailability_[ type ];
+        return availableLevel != &PHY_PerceptionLevel::notSeen_ && *availableLevel <= level;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::SendFullState
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate& msg ) const
+void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate& msg, const PHY_PerceptionLevel& level ) const
 {
     NET_ASN_Tools::WritePoint( *vPosition_, *msg.mutable_position() );
-    NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
-    msg.set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
-    msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
-    msg.set_prisoner( bPrisoner_ );
-    msg.set_refugees_managed( bRefugeeManaged_ );
-    msg.set_dead( bDead_ );
+    if( CanSend( ePerceptionType_Heading, level ) )
+        NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
+    if( CanSend( ePerceptionType_Speed, level ) )
+        msg.set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
+    if( CanSend( ePerceptionType_Surrendered, level ) )
+        msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
+    if( CanSend( ePerceptionType_Prisoner, level ) )
+        msg.set_prisoner( bPrisoner_ );
+    if( CanSend( ePerceptionType_Refugees, level ) )
+        msg.set_refugees_managed( bRefugeeManaged_ );
+    if( CanSend( ePerceptionType_OpState, level ) )
+    {
+        msg.set_dead( bDead_ );
+        msg.set_operational_state( std::max( 0, std::min( 100, static_cast< int >( rOperationalState_ * 100 ) ) ) );
+    }
+    if( pArmy_ && CanSend( ePerceptionType_Side, level ) )
+        msg.mutable_party()->set_id( pArmy_->GetID() );
+    if( CanSend( ePerceptionType_CommandPost, level ) )
+        msg.set_command_post( bIsPC_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::SendChangedState
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpdate& msg ) const
+void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpdate& msg, const PHY_PerceptionLevel& level, bool levelChanged ) const
 {
     if( bPositionUpdated_ )
         NET_ASN_Tools::WritePoint( *vPosition_, *msg.mutable_position() );
-    if( bDirectionUpdated_ && !vDirection_.IsZero() )
+    if( ( levelChanged || bDirectionUpdated_ && !vDirection_.IsZero() ) && CanSend( ePerceptionType_Heading, level ) )
         NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
-    if( bSpeedUpdated_ && rSpeed_ != std::numeric_limits< double >::max() )
+    if( ( levelChanged || bSpeedUpdated_ && rSpeed_ != std::numeric_limits< double >::max() ) && CanSend( ePerceptionType_Speed, level ) )
         msg.set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
-    if( bSurrenderedUpdated_ )
+    if( ( levelChanged ||  bSurrenderedUpdated_ ) && CanSend( ePerceptionType_Surrendered, level ) )
         msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
-    if( bPrisonerUpdated_ )
+    if( ( levelChanged || bPrisonerUpdated_ ) && CanSend( ePerceptionType_Prisoner, level ) )
         msg.set_prisoner( bPrisoner_ );
-    if( bRefugeeManagedUpdated_ )
+    if( ( levelChanged || bRefugeeManagedUpdated_ ) && CanSend( ePerceptionType_Refugees, level ) )
         msg.set_refugees_managed( bRefugeeManaged_ );
-    if( bDeadUpdated_ )
-        msg.set_dead( bDead_ );
+    if( CanSend( ePerceptionType_OpState, level ) )
+    {
+        if( levelChanged || bDeadUpdated_ )
+            msg.set_dead( bDead_ );
+        if( levelChanged || bOperationalStateUpdated_ )
+            msg.set_operational_state( std::max( 0, std::min( 100, static_cast< int >( rOperationalState_ * 100 ) ) ) );
+    }
+    if( ( levelChanged || bArmyAndPcUpdated_ ) && pArmy_ && CanSend( ePerceptionType_Side, level ) )
+        msg.mutable_party()->set_id( pArmy_->GetID() );
+    if( ( levelChanged || bArmyAndPcUpdated_ ) && CanSend( ePerceptionType_CommandPost, level ) )
+        msg.set_command_post( bIsPC_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,6 +384,33 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpd
 bool DEC_Knowledge_AgentDataDetection::IsDead() const
 {
     return bDead_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetOperationalState
+// Created: JSR 2014-07-07
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_AgentDataDetection::GetOperationalState() const
+{
+    return rOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetArmy
+// Created: JSR 2014-07-07
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC* DEC_Knowledge_AgentDataDetection::GetArmy() const
+{
+    return pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::IsPC
+// Created: JSR 2014-07-07
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataDetection::IsPC() const
+{
+    return bIsPC_;
 }
 
 // -----------------------------------------------------------------------------
@@ -479,7 +547,8 @@ unsigned int DEC_Knowledge_AgentDataDetection::GetTimeLastUpdate() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_AgentDataDetection::HasChanged() const
 {
-    return bDirectionUpdated_ || bSpeedUpdated_ || bPositionUpdated_ || bPrisonerUpdated_ || bSurrenderedUpdated_ || bRefugeeManagedUpdated_ || bDeadUpdated_;
+    return bDirectionUpdated_ || bSpeedUpdated_ || bPositionUpdated_ || bPrisonerUpdated_ || bSurrenderedUpdated_ 
+        || bRefugeeManagedUpdated_ || bDeadUpdated_ || bOperationalStateUpdated_ || bArmyAndPcUpdated_;
 }
 
 // -----------------------------------------------------------------------------

@@ -72,21 +72,21 @@ std::string App6Symbol::GetBase( const std::string& symbol, Karma& karma )
 // Name: App6Symbol::FilterPerceptionLevel
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------
-void App6Symbol::FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception )
+void App6Symbol::FilterPerceptionLevel( std::string& symbol, E_LevelFilter filter )
 {
-    if( perception == eIdentification ) // keep all if identified
+    if( filter == eLevelFilter_Full )
         return;
     symbol = symbol.substr( 0, symbol.find_last_of( '/' ) + 1 +
-        ( perception == eRecognition
+        ( filter == eLevelFilter_Partial
             ? 7      // side + category + weapon shgpuca
             : 5 ) ); // nothing                  sugpu
 }
 
-std::string App6Symbol::FilterNature( const std::string& nature, E_PerceptionResult perception )
+std::string App6Symbol::FilterNature( const std::string& nature, E_LevelFilter filter )
 {
-    if( perception < eRecognition )
+    if( filter == eLevelFilter_Nothing )
         return "";
-    if( perception == eIdentification ) // keep all if identified
+    if( filter == eLevelFilter_Full )
         return nature;
     QStringList list = QStringList::split( '/', nature.c_str() );
     while( list.size() > 2 )
