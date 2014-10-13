@@ -60,9 +60,12 @@ SvglRenderer::~SvglRenderer()
 // -----------------------------------------------------------------------------
 void SvglRenderer::SetCurrentColor( float r, float g, float b, float a )
 {
-    if( r!=r_ || g_!=g || b_!=b || a_!=a )
+    if( r != r_ || g_ != g || b_ != b || a_ != a )
     {
-        r_ = r; g_ = g; b_ = b; a_ = a;
+        r_ = r;
+        g_ = g;
+        b_ = b;
+        a_ = a;
         colorDirty_ = true;
     }
 }
@@ -120,20 +123,17 @@ void SvglRenderer::Render( const std::shared_ptr< svg::Node_ABC >& node, const s
 unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                                            unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists )
 {
-    unsigned int listId = 0;
     CIT_Lists it = lists.find( node );
-    if( it == lists.end() || colorDirty_ )
+    if( it != lists.end() && !colorDirty_ )
+        return it->second;
+    const auto listId = it == lists.end() ? glGenLists( 1 ) : it->second;
+    if( listId )
     {
-        listId = glGenLists( 1 );
-        if( !listId )
-            return 0;
         glNewList( listId, GL_COMPILE );
         Draw( node, style, viewport, vWidth, vHeight, pickingMode );
         glEndList();
         lists[ node ] = listId;
     }
-    else
-        listId = it->second;
     return listId;
 }
 

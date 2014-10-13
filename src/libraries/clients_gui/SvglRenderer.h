@@ -13,8 +13,6 @@
 namespace svg
 {
     class Node_ABC;
-    class Color;
-    class Opacity;
     class TextRenderer;
     class References;
     class RenderingContext;
