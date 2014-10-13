@@ -23,7 +23,7 @@ class TextureSet;
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  RasterLayer
@@ -37,9 +37,9 @@ class RasterLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
+    explicit RasterLayer( kernel::Controllers& controllers, GLView_ABC& tools );
              RasterLayer( kernel::Controllers& controllers,
-                          GlTools_ABC& tools,
+                          GLView_ABC& tools,
                           const tools::Path& texture,
                           const QString& userName );
     virtual ~RasterLayer();

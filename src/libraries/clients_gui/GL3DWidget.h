@@ -11,7 +11,7 @@
 #define __Gl3dWidget_h_
 
 #include "GlToolsBase.h"
-#include "View_ABC.h"
+#include "GLView_ABC.h"
 #include "SetGlOptions.h"
 #include <graphics/Widget3D.h>
 #include <graphics/ViewFrustum.h>
@@ -44,7 +44,6 @@ namespace gui
 class Gl3dWidget : private SetGlOptions
                  , public Widget3D
                  , public GlToolsBase
-                 , public View_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -17,9 +17,11 @@ using namespace gui;
 // Name: PopulationsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-PopulationsLayer::PopulationsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                    View_ABC& view, const Profile_ABC& profile )
-    : EntityLayer< Population_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Crowds )
+PopulationsLayer::PopulationsLayer( Controllers& controllers,
+                                    GLView_ABC& view,
+                                    ColorStrategy_ABC& strategy,
+                                    const Profile_ABC& profile )
+    : EntityLayer< Population_ABC >( controllers, view, strategy, profile, eLayerTypes_Crowds )
 {
     // NOTHING
 }

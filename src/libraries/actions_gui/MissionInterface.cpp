@@ -273,7 +273,7 @@ void MissionInterface::AddParameter( const QString& objectName, Param_ABC& param
 // Name: MissionInterface::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void MissionInterface::Draw( gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const
+void MissionInterface::Draw( gui::GLView_ABC& tools, ::gui::Viewport_ABC& extent ) const
 {
     for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
     {

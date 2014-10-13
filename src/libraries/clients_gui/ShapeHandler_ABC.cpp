@@ -37,7 +37,7 @@ ShapeHandler_ABC::~ShapeHandler_ABC()
 // Name: ShapeHandler_ABC::Draw
 // Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-void ShapeHandler_ABC::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GlTools_ABC& tools ) const
+void ShapeHandler_ABC::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GLView_ABC& tools ) const
 {
     gui::SimpleLocationDrawer drawer( tools );
     location.Accept( drawer );

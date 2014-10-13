@@ -14,7 +14,7 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace gui
@@ -31,7 +31,7 @@ class CursorStrategy : public CursorStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CursorStrategy( GlTools_ABC& tools );
+    explicit CursorStrategy( GLView_ABC& tools );
     virtual ~CursorStrategy();
     //@}
 
@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    GlTools_ABC& tools_;
+    GLView_ABC& tools_;
     QCursor selectedTool_;
     QCursor selectedContext_;
     //@}

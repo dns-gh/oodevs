@@ -159,7 +159,7 @@ void ParameterList::Display( kernel::Displayer_ABC& displayer ) const
 // Name: LocationList::DisplayTooltip
 // Created: MGD 2010-11-18
 // -----------------------------------------------------------------------------
-void ParameterList::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void ParameterList::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
     Parameter< QString >::DisplayTooltip( viewport, tools );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )

@@ -26,15 +26,13 @@ using namespace kernel;
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
 TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers,
-                                        GlTools_ABC& tools,
+                                        GLView_ABC& view,
                                         ColorStrategy_ABC& strategy,
                                         const std::shared_ptr< ParametersLayer >& parameters,
-                                        View_ABC& view,
                                         const kernel::Profile_ABC& profile,
                                         ModelObserver_ABC& model )
-    : EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_TacticalLines )
+    : EntityLayer< kernel::TacticalLine_ABC >( controllers, view, strategy, profile, eLayerTypes_TacticalLines )
     , controllers_ ( controllers )
-    , tools_       ( tools )
     , strategy_    ( strategy )
     , parameters_  ( parameters )
     , model_       ( model )

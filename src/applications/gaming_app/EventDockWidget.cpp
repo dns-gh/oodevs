@@ -69,7 +69,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
                                   const kernel::Time_ABC& simulation,
                                   actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                   const kernel::Profile_ABC& profile,
-                                  gui::GlTools_ABC& tools,
+                                  gui::GLView_ABC& tools,
                                   const gui::EntitySymbols& entitySymbols )
     : gui::RichDockWidget( controllers, parent, "event-dock-widget" )
     , presenter_( new gui::EventPresenter( *this, model.eventFactory_ ) )

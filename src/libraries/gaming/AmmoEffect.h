@@ -25,7 +25,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace weather
@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile ) const;
+    void Draw( const gui::GLView_ABC& tools, const kernel::Profile_ABC& profile ) const;
     bool IsInside( const geometry::Point2f& point ) const;
     void ApplyEffect( weather::Meteo& meteo ) const;
     void SetPerceivers( const ::google::protobuf::RepeatedPtrField< ::sword::Id >& perceivers );

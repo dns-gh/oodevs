@@ -9,7 +9,7 @@
 
 #include "actions_pch.h"
 #include "Mission.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/GlTooltip_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/MissionType.h"
@@ -66,7 +66,7 @@ void Mission::Serialize( xml::xostream& xos ) const
 // Name: Mission::Draw
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void Mission::Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Mission::Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !tooltip_.get() )
     {

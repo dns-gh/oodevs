@@ -68,7 +68,7 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeObjectAttributes( xml::xostream& xos ) const;
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void NotifyUpdated( const FloodAttribute& attribute );
     virtual void NotifyUpdated( const kernel::AltitudeModified& attribute );
     virtual double GetElevationAt( const geometry::Point2f& point ) const;

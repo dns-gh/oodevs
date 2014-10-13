@@ -26,7 +26,7 @@ namespace weather
 namespace gui
 {
     class ExclusiveEventStrategy;
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  WeatherLayer
@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              WeatherLayer( kernel::Controllers& controllers,
-                           GlTools_ABC& tools,
+                           GLView_ABC& tools,
                            ExclusiveEventStrategy& eventStrategy );
     virtual ~WeatherLayer();
     //@}

@@ -26,7 +26,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 
 // =============================================================================
@@ -42,7 +42,7 @@ class Layer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type );
+             Layer( kernel::Controllers& controllers, GLView_ABC& view, E_LayerTypes type );
     virtual ~Layer();
     //@}
 
@@ -96,7 +96,7 @@ private:
 
 protected:
     kernel::Controllers& controllers_;
-    GlTools_ABC& tools_;
+    GLView_ABC& view_;
     QString name_;
 
 private:
@@ -116,8 +116,8 @@ class Layer2D : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-            Layer2D( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
-                 : Layer( controllers, tools, type )
+            Layer2D( kernel::Controllers& controllers, GLView_ABC& view, E_LayerTypes type )
+                 : Layer( controllers, view, type )
              {}
     virtual ~Layer2D() {};
     //@}
@@ -139,8 +139,8 @@ class Layer3D : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer3D( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
-                 : Layer( controllers, tools, type )
+             Layer3D( kernel::Controllers& controllers, GLView_ABC& view, E_LayerTypes type )
+                 : Layer( controllers, view, type )
              {}
     virtual ~Layer3D() {}
     //@}

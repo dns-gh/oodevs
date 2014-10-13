@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "LogisticLink.h"
 #include "Tools.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_gui/LogisticHelpers.h"
 
@@ -51,7 +51,7 @@ void LogisticLink::Update( const sword::SeqOfDotationQuota& message, const tools
 // Name: LogisticLink::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void LogisticLink::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
+void LogisticLink::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& tools ) const
 {
     const geometry::Point2f pos = logistic_helpers::GetLogisticPosition( superior_ );
     if( !pos.IsZero() )

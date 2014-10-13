@@ -23,7 +23,7 @@ namespace gui
 {
     class ColorStrategy;
     class DrawingTypes;
-    class GlTools_ABC;
+    class GLView_ABC;
     class SelectionMenu;
     class Selection;
     class EntitySymbols;
@@ -43,7 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              CircularEventStrategy( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
-                                    DrawingTypes& drawingTypes, GlTools_ABC& tools );
+                                    DrawingTypes& drawingTypes, GLView_ABC& tools );
     virtual ~CircularEventStrategy();
     //@}
 
@@ -102,7 +102,7 @@ private:
     T_LayersVector::const_reverse_iterator rlast_;
     std::unique_ptr< SelectionMenu > menu_;
     std::unique_ptr< Selection > selection_;
-    GlTools_ABC& tools_;
+    GLView_ABC& tools_;
     QTimer* timer_;
     bool tooltiped_;
     //@}

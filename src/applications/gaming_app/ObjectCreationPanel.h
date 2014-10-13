@@ -28,7 +28,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
     class PanelStack_ABC;
     class Viewport_ABC;
@@ -65,7 +65,7 @@ public:
                                   const kernel::Time_ABC& simulation,
                                   const kernel::Team_ABC& noSideTeam,
                                   const std::shared_ptr< gui::ParametersLayer >& layer,
-                                  const gui::GlTools_ABC& tools,
+                                  const gui::GLView_ABC& tools,
                                   const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
@@ -94,7 +94,7 @@ private:
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
-    const gui::GlTools_ABC& tools_;
+    const gui::GLView_ABC& tools_;
     ObjectPrototype* created_;
     //@}
 };

@@ -29,7 +29,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class LocationCreator;
     class ParametersLayer;
     class RichLabel;
@@ -64,7 +64,7 @@ public:
                                       const kernel::AgentTypes& types,
                                       AgentsModel& agentsModel,
                                       const std::shared_ptr< gui::ParametersLayer >& layer,
-                                      const gui::GlTools_ABC& tools );
+                                      const gui::GLView_ABC& tools );
     virtual ~InhabitantCreationPanel();
     //@}
 
@@ -105,7 +105,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const gui::GlTools_ABC& tools_;
+    const gui::GLView_ABC& tools_;
     const tools::Resolver_ABC< kernel::InhabitantType >& resolver_;
     AgentsModel& agentsModel_;
     kernel::Location_ABC* location_;

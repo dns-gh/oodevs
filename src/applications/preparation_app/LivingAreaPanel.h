@@ -25,7 +25,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
     class Viewport_ABC;
 }
@@ -50,7 +50,7 @@ public:
              LivingAreaPanel( QMainWindow* parent,
                               kernel::Controllers& controllers,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
-                              const gui::GlTools_ABC& tools );
+                              const gui::GLView_ABC& tools );
     virtual ~LivingAreaPanel();
     //@}
 
@@ -102,7 +102,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Inhabitant_ABC > selected_;
     std::shared_ptr< gui::ParametersLayer > paramLayer_;
-    const gui::GlTools_ABC& tools_;
+    const gui::GLView_ABC& tools_;
     Mode mode_;
     kernel::Location_ABC* location_;
     QLabel* text_;

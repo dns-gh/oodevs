@@ -56,7 +56,7 @@ QWidget* ParamLocation_ABC< BaseParameter >::BuildInterface( const QString& obje
 // Created: ABR 2012-01-03
 // -----------------------------------------------------------------------------
 template< typename BaseParameter >
-void ParamLocation_ABC< BaseParameter >::Draw( const geometry::Point2f& , const ::gui::Viewport_ABC& , ::gui::GlTools_ABC& tools ) const
+void ParamLocation_ABC< BaseParameter >::Draw( const geometry::Point2f& , const ::gui::Viewport_ABC& , ::gui::GLView_ABC& tools ) const
 {
     if( InternalCheckValidity() )
         ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools );

@@ -11,7 +11,7 @@
 #include "UrbanLayer.h"
 
 #include "DrawVisitor.h"
-#include "View_ABC.h"
+#include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/OptionsController.h"
@@ -25,10 +25,11 @@ using namespace gui;
 // Name: UrbanLayer::UrbanLayer
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-UrbanLayer::UrbanLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                        View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Urban )
-    , view_          ( view )
+UrbanLayer::UrbanLayer( kernel::Controllers& controllers,
+                        GLView_ABC& view,
+                        ColorStrategy_ABC& strategy,
+                        const kernel::Profile_ABC& profile )
+    : EntityLayer< kernel::UrbanObject_ABC >( controllers, view, strategy, profile, eLayerTypes_Urban )
     , controllers_   ( controllers )
 {
     // NOTHING

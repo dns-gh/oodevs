@@ -34,11 +34,10 @@ public:
     //! @name Constructors/Destructor
     //@{
              LimitsLayer( kernel::Controllers& controllers,
-                          gui::GlTools_ABC& tools,
+                          gui::GLView_ABC& view,
                           gui::ColorStrategy_ABC& strategy,
                           const std::shared_ptr< gui::ParametersLayer >& parameters,
                           TacticalLineFactory& factory,
-                          gui::View_ABC& view,
                           const kernel::Profile_ABC& profile,
                           gui::ModelObserver_ABC& model );
     virtual ~LimitsLayer();
@@ -65,7 +64,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const gui::GlTools_ABC& tools_;
     TacticalLineFactory& factory_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     kernel::FourStateOption drawLines_;

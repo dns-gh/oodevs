@@ -14,10 +14,9 @@
 #include "actions/ActionsModel.h"
 #include "actions/Helpers.h"
 #include "clients_gui/DragAndDropHelpers.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/RichDockWidget.h"
-#include "clients_gui/View_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -47,16 +46,13 @@
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
-                              gui::GlTools_ABC& tools,
+                              gui::GLView_ABC& view,
                               gui::ColorStrategy_ABC& strategy,
-                              gui::View_ABC& view,
                               const kernel::Profile_ABC& profile,
                               Model& model,
                               gui::ModelObserver_ABC& modelObserver )
-    : EntityLayer< kernel::Pathfind_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Pathfinds )
+    : EntityLayer< kernel::Pathfind_ABC >( controllers, view, strategy, profile, eLayerTypes_Pathfinds )
     , controllers_( controllers )
-    , tools_( tools )
-    , view_( view )
     , target_( controllers )
     , selectedEntity_( controllers )
     , selectedPathfind_( controllers )
@@ -284,14 +280,14 @@ void PathfindLayer::AfterSelection()
 
 bool PathfindLayer::PickWaypoint( geometry::Point2f point )
 {
-    if( auto hover = edited_->PickWaypoint( tools_, point ) )
+    if( auto hover = edited_->PickWaypoint( view_, point ) )
         hovered_ = *hover;
     return hovered_;
 }
 
 void PathfindLayer::PickSegment( geometry::Point2f point )
 {
-    if( auto hover = edited_->PickSegment( tools_, point ) )
+    if( auto hover = edited_->PickSegment( view_, point ) )
         hovered_ = *hover;
 }
 

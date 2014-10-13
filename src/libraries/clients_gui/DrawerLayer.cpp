@@ -23,15 +23,13 @@ using namespace gui;
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
 DrawerLayer::DrawerLayer( kernel::Controllers& controllers,
-                          GlTools_ABC& tools,
+                          GLView_ABC& view,
                           ColorStrategy_ABC& strategy,
                           const std::shared_ptr< ParametersLayer >& parameters,
-                          View_ABC& view,
                           const kernel::Profile_ABC& profile,
                           ModelObserver_ABC& model )
-    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Drawings )
+    : EntityLayer< kernel::Drawing_ABC >( controllers, view, strategy, profile, eLayerTypes_Drawings )
     , parameters_( parameters )
-    , tools_     ( tools )
     , model_     ( model )
     , selected_  ( 0 )
 {
@@ -136,11 +134,11 @@ void DrawerLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC&, bool pi
     if( ShouldDisplay( entity ) )
     {
         if( pickingMode )
-            tools_.RenderPicking( std::make_pair( entity.GetId(), GetType() ) );
+            view_.RenderPicking( std::make_pair( entity.GetId(), GetType() ) );
         SelectColor( entity );
-        static_cast< const Drawing& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
+        static_cast< const Drawing& >( entity ).Draw( viewport_, view_, &entity == selected_ );
         if( pickingMode )
-            tools_.Picking();
+            view_.Picking();
     }
 }
 

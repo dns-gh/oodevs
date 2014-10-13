@@ -22,7 +22,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
 }
 
@@ -44,10 +44,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              DrawerLayer( kernel::Controllers& controllers,
-                          GlTools_ABC& tools,
+                          GLView_ABC& view,
                           ColorStrategy_ABC& strategy,
                           const std::shared_ptr< ParametersLayer >& parameters,
-                          View_ABC& view,
                           const kernel::Profile_ABC& profile,
                           ModelObserver_ABC& model );
     virtual ~DrawerLayer();
@@ -81,7 +80,6 @@ private:
     //! @name Member data
     //@{
     std::shared_ptr< ParametersLayer > parameters_;
-    GlTools_ABC& tools_;
     ModelObserver_ABC& model_;
     geometry::Rectangle2f viewport_;
     const kernel::Drawing_ABC* selected_;

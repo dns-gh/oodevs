@@ -11,7 +11,7 @@
 #include "DrawingTemplate.h"
 
 #include "DrawingCategory.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "resources.h"
 
 #include "clients_kernel/Circle.h"
@@ -253,7 +253,7 @@ DrawingTemplate::Unit DrawingTemplate::ReadUnit( xml::xistream& input )
 // Name: DrawingTemplate::Draw
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_ABC& context, const GlTools_ABC& tools, float zoom ) const
+void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_ABC& context, const GLView_ABC& tools, float zoom ) const
 {
     if( points.size() < 2 )
         return;
@@ -299,7 +299,7 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
 // Name: DrawingTemplate::Draw
 // Created: SBO 2007-03-07
 // -----------------------------------------------------------------------------
-void DrawingTemplate::Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context, const GlTools_ABC& tools, float zoom ) const
+void DrawingTemplate::Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context, const GLView_ABC& tools, float zoom ) const
 {
     if( markerStart_ )
     {
@@ -312,7 +312,7 @@ void DrawingTemplate::Draw( const geometry::Point2f& point, svg::RenderingContex
 // Name: DrawingTemplate::DrawSegment
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawSegment( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& from, const geometry::Point2f& to ) const
+void DrawingTemplate::DrawSegment( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const geometry::Point2f& from, const geometry::Point2f& to ) const
 {
     glPushMatrix();
 
@@ -332,7 +332,7 @@ void DrawingTemplate::DrawSegment( svg::RenderingContext_ABC& context, const GlT
 // Name: DrawingTemplate::ComputeFactor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-float DrawingTemplate::ComputeFactor( Unit u, float base, const GlTools_ABC& tools ) const
+float DrawingTemplate::ComputeFactor( Unit u, float base, const GLView_ABC& tools ) const
 {
     if( u == ePercent )
         return std::max( 0.8f, base );
@@ -345,7 +345,7 @@ float DrawingTemplate::ComputeFactor( Unit u, float base, const GlTools_ABC& too
 // Name: DrawingTemplate::DrawStartMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawStartMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& towards, float zoom ) const
+void DrawingTemplate::DrawStartMarker( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& towards, float zoom ) const
 {
     DrawMarker( context, tools, *markerStart_, startUnit, at, geometry::Vector2f( at, towards ), zoom );
 }
@@ -354,7 +354,7 @@ void DrawingTemplate::DrawStartMarker( svg::RenderingContext_ABC& context, const
 // Name: DrawingTemplate::DrawMiddleMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawMiddleMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom, const svg::Node_ABC& marker, const Unit& unit ) const
+void DrawingTemplate::DrawMiddleMarker( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom, const svg::Node_ABC& marker, const Unit& unit ) const
 {
     const geometry::Vector2f n( from, to );
     const geometry::Vector2f t( n.Y(), -n.X() );
@@ -365,7 +365,7 @@ void DrawingTemplate::DrawMiddleMarker( svg::RenderingContext_ABC& context, cons
 // Name: DrawingTemplate::DrawEndMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawEndMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, float zoom ) const
+void DrawingTemplate::DrawEndMarker( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, float zoom ) const
 {
     DrawMarker( context, tools, *markerEnd_, endUnit, at, geometry::Vector2f( from, at ), zoom );
 }
@@ -374,7 +374,7 @@ void DrawingTemplate::DrawEndMarker( svg::RenderingContext_ABC& context, const G
 // Name: DrawingTemplate::DrawMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const
+void DrawingTemplate::DrawMarker( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const
 {
     glPushMatrix();
     glTranslatef( at.X(), at.Y(), 0 );
@@ -414,7 +414,7 @@ void DrawingTemplate::Serialize( xml::xostream& xos ) const
 // Name: DrawingTemplate::GenerateSamplePixmap
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void DrawingTemplate::GenerateSamplePixmap( const GlTools_ABC& tools, float r /*= -1*/, float g /*= -1*/, float b /*= -1*/, float sampleMarkerRatio /*= 1*/ )
+void DrawingTemplate::GenerateSamplePixmap( const GLView_ABC& tools, float r /*= -1*/, float g /*= -1*/, float b /*= -1*/, float sampleMarkerRatio /*= 1*/ )
 {
     // Sample marker ratio
     sampleMarkerRatio_ = sampleMarkerRatio;
@@ -445,7 +445,7 @@ void DrawingTemplate::GenerateSamplePixmap( const GlTools_ABC& tools, float r /*
 // Name: DrawingTemplate::DrawSample
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawSample( const GlTools_ABC& tools )
+void DrawingTemplate::DrawSample( const GLView_ABC& tools )
 {
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
@@ -518,7 +518,7 @@ void DrawingTemplate::DrawSample( const GlTools_ABC& tools )
 // Name: DrawingTemplate::DrawOnPoint
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawOnPoint( const GlTools_ABC& tools )
+void DrawingTemplate::DrawOnPoint( const GLView_ABC& tools )
 {
     T_PointVector points;
     points.push_back( geometry::Point2f( 0.f, 0.f ) );
@@ -529,7 +529,7 @@ void DrawingTemplate::DrawOnPoint( const GlTools_ABC& tools )
 // Name: DrawingTemplate::DrawOnLine
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawOnLine( const GlTools_ABC& tools )
+void DrawingTemplate::DrawOnLine( const GLView_ABC& tools )
 {
     T_PointVector points;
     points.push_back( geometry::Point2f(                    SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE / 2.f ) );
@@ -541,7 +541,7 @@ void DrawingTemplate::DrawOnLine( const GlTools_ABC& tools )
 // Name: DrawingTemplate::DrawOnPolygon
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawOnPolygon( const GlTools_ABC& tools )
+void DrawingTemplate::DrawOnPolygon( const GLView_ABC& tools )
 {
     T_PointVector points;
     points.push_back( geometry::Point2f(                    SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN ) );
@@ -556,7 +556,7 @@ void DrawingTemplate::DrawOnPolygon( const GlTools_ABC& tools )
 // Name: DrawingTemplate::DrawOnCircle
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawOnCircle( const GlTools_ABC& tools )
+void DrawingTemplate::DrawOnCircle( const GLView_ABC& tools )
 {
     T_PointVector points;
     static const float twoPi = 2.f * std::acos( -1.f );
@@ -570,7 +570,7 @@ void DrawingTemplate::DrawOnCircle( const GlTools_ABC& tools )
 // Name: DrawingTemplate::DrawOnCurve
 // Created: LGY 2013-04-12
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawOnCurve( const GlTools_ABC& tools )
+void DrawingTemplate::DrawOnCurve( const GLView_ABC& tools )
 {
     T_PointVector points;
     static const float pi = std::acos( -1.f );
@@ -583,7 +583,7 @@ void DrawingTemplate::DrawOnCurve( const GlTools_ABC& tools )
 // Name: DrawingTemplate::DrawItem
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawItem( const T_PointVector& points, const GlTools_ABC& tools )
+void DrawingTemplate::DrawItem( const T_PointVector& points, const GLView_ABC& tools )
 {
     svg::RenderingContext context;
     context.SetViewport( geometry::BoundingBox( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE ), SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );

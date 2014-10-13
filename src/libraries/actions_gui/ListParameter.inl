@@ -354,7 +354,7 @@ void ListParameter< ConcreteElement >::CommitTo( actions::ParameterContainer_ABC
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 template< typename ConcreteElement >
-void ListParameter< ConcreteElement >::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const
+void ListParameter< ConcreteElement >::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GLView_ABC& tools ) const
 {
     if( !list_ )
         return;

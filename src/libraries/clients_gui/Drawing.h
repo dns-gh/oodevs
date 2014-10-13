@@ -22,7 +22,7 @@ namespace xml
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
 }
 
@@ -50,7 +50,7 @@ public:
 
     virtual void ChangeColor( const QColor& color ) = 0;
     virtual void Edit( ParametersLayer& parameters ) = 0;
-    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const = 0;
+    virtual void Draw( const geometry::Rectangle2f& viewport, const GLView_ABC& tools, bool overlined ) const = 0;
     //@}
 
 protected:

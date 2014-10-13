@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Weapons.h"
 #include "Equipment.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/OptionsController.h"
@@ -42,7 +42,7 @@ Weapons::~Weapons()
     controllers_.Unregister( *this );
 }
 
-void Weapons::DrawEfficientRange( const geometry::Point2f& where, gui::GlTools_ABC& tools ) const
+void Weapons::DrawEfficientRange( const geometry::Point2f& where, gui::GLView_ABC& tools ) const
 {
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_STIPPLE );

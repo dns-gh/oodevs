@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Tools.h"
 #include "ToxicCloudAttribute.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -131,7 +131,7 @@ void ToxicCloudAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message 
 // Name: ToxicCloudAttribute::Draw
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& /*tools*/ ) const
+void ToxicCloudAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& /*tools*/ ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || cloud_.empty() )
         return;

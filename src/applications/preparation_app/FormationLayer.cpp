@@ -16,8 +16,11 @@
 // Name: FormationLayer constructor
 // Created: JSR 2013-05-29
 // -----------------------------------------------------------------------------
-FormationLayer::FormationLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : gui::FormationLayer( controllers, tools, strategy, view, profile )
+FormationLayer::FormationLayer( kernel::Controllers& controllers,
+                                gui::GLView_ABC& view,
+                                gui::ColorStrategy_ABC& strategy,
+                                const kernel::Profile_ABC& profile )
+    : gui::FormationLayer( controllers, view, strategy, profile )
     , selectedFormation_( controllers )
     , dummy_( new QWidget() )
 {
@@ -87,7 +90,7 @@ bool FormationLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry:
     FormationPositions* positions = dnd::FindData< FormationPositions >( event );
     if( positions )
     {
-        if( selectedFormation_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+        if( selectedFormation_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
         {
             positions->Move( point + draggingOffset_.ToVector() );
             draggingPoint_ = point;

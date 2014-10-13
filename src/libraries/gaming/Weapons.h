@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    void DrawEfficientRange( const geometry::Point2f& where, gui::GlTools_ABC& tools ) const;
+    void DrawEfficientRange( const geometry::Point2f& where, gui::GLView_ABC& tools ) const;
     //@}
 
     unsigned int GetMinRange() const;

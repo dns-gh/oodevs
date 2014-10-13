@@ -20,8 +20,8 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
-    class View_ABC;
+    class GLView_ABC;
+    class GLView_ABC;
 }
 
 namespace gui
@@ -37,8 +37,10 @@ class ResourceNetworksLayer : public EntityLayer< kernel::Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworksLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                    View_ABC& view, const kernel::Profile_ABC& profile );
+             ResourceNetworksLayer( kernel::Controllers& controllers,
+                                    GLView_ABC& view,
+                                    ColorStrategy_ABC& strategy,
+                                    const kernel::Profile_ABC& profile );
     virtual ~ResourceNetworksLayer();
     //@}
 

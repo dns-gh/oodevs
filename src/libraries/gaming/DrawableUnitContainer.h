@@ -13,7 +13,7 @@
 namespace gui
 {
     class Viewport_ABC;
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace kernel
@@ -39,7 +39,7 @@ public:
 
     //! @name Extensions
     //@{
-    void Draw( const kernel::Entity_ABC& entity, const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools, float factor ) const;
+    void Draw( const kernel::Entity_ABC& entity, const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools, float factor ) const;
     //@}
 
 private:

@@ -11,7 +11,7 @@
 #include "ColorStrategy.h"
 
 #include "ColorModifier_ABC.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -40,7 +40,7 @@ using namespace gui;
 // Name: ColorStrategy constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools, ColorModifier_ABC& colorController )
+ColorStrategy::ColorStrategy( Controllers& controllers, GLView_ABC& tools, ColorModifier_ABC& colorController )
     : controllers_    ( controllers )
     , tools_          ( tools )
     , colorController_( colorController )

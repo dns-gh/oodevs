@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "InfrastructureAttribute.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/DictionaryUpdated.h"
@@ -167,7 +167,7 @@ void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: InfrastructureAttribute::Draw
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( type_ && viewport.IsHotpointVisible() && controllers_.options_.GetOption( "Infra" ).To< bool >() )
         tools.DrawInfrastructureSymbol( type_->GetSymbol(), position_, 0.1f, 0.1f );

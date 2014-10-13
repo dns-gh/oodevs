@@ -12,7 +12,7 @@
 #include "moc_ObjectPrototype_ABC.cpp"
 
 #include "FileDialog.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "LoadableLineEdit.h"
 #include "LocationCreator.h"
 #include "ObjectAttributePrototypeContainer.h"
@@ -343,7 +343,7 @@ void ObjectPrototype_ABC::ResetLocation()
 // Name: ObjectPrototype_ABC::Draw
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::Draw( const GlTools_ABC& tools ) const
+void ObjectPrototype_ABC::Draw( const GLView_ABC& tools ) const
 {
     if( location_ )
         Draw( *location_, geometry::Rectangle2f(), tools );
@@ -353,7 +353,7 @@ void ObjectPrototype_ABC::Draw( const GlTools_ABC& tools ) const
 // Name: ObjectPrototype_ABC::Draw
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& /*viewport*/, const GlTools_ABC& tools ) const
+void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& /*viewport*/, const GLView_ABC& tools ) const
 {
     if( isVisible() )
         if( const kernel::ObjectType* type = objectTypes_->GetValue() )

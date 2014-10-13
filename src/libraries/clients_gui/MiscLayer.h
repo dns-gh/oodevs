@@ -27,7 +27,7 @@ class MiscLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MiscLayer( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type, Panel& panel )
+    explicit MiscLayer( kernel::Controllers& controllers, GLView_ABC& tools, E_LayerTypes type, Panel& panel )
         : Layer( controllers, tools, type )
         , panel_( panel ) {}
     virtual ~MiscLayer() {}

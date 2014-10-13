@@ -10,7 +10,7 @@
 #include "actions_pch.h"
 #include "Parameter_ABC.h"
 #include "ParameterVisitor_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/GlTooltip_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -108,7 +108,7 @@ bool Parameter_ABC::IsContext() const
 // Name: Parameter_ABC::Draw
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-void Parameter_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Parameter_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     geometry::Point2f point = GetPosition();
     point = point.IsZero() ? where : point;
@@ -120,7 +120,7 @@ void Parameter_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_AB
 // Name: Parameter_ABC::DisplayTooltip
 // Created: AGE 2007-07-10
 // -----------------------------------------------------------------------------
-void Parameter_ABC::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Parameter_ABC::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
     if( !toolTip_ )
         const_cast< Parameter_ABC* >( this )->toolTip_ = tools.CreateTooltip();
@@ -131,7 +131,7 @@ void Parameter_ABC::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui
 // Name: Parameter_ABC::DrawToolTip
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Parameter_ABC::DrawToolTip( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Parameter_ABC::DrawToolTip( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
     if( !viewport.IsVisible( GetPosition() ) )
         return;

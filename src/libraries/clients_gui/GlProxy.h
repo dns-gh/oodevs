@@ -10,8 +10,8 @@
 #ifndef __GlProxy_h_
 #define __GlProxy_h_
 
-#include "View_ABC.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
+#include "GLView_ABC.h"
 #include "LayersHelpers.h"
 
 namespace kernel
@@ -34,8 +34,7 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class GlProxy : public View_ABC
-              , public GlTools_ABC
+class GlProxy : public GLView_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -130,8 +129,8 @@ private:
     kernel::Logger_ABC& logger_;
     T_LayersVector layers_;
     std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
-    std::shared_ptr< View_ABC > view_;
-    std::shared_ptr< GlTools_ABC > tools_;
+    std::shared_ptr< GLView_ABC > view_;
+
     std::shared_ptr< GlWidget > widget2d_;
     std::shared_ptr< Gl3dWidget > widget3d_;
     //@}

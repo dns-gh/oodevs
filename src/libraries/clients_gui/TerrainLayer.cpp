@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "TerrainLayer.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "TerrainSettings.h"
 #include "TerrainPicker.h"
 
@@ -37,7 +37,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 TerrainLayer::TerrainLayer( Controllers& controllers,
                             const std::shared_ptr< TerrainSettings >& settings,
-                            GlTools_ABC& tools,
+                            GLView_ABC& tools,
                             TerrainPicker& picker )
     : Layer2D( controllers, tools, eLayerTypes_Terrain )
     , settings_( settings )
@@ -161,7 +161,7 @@ public:
         if( data.Border() )
             return true;
 
-        const float scale = parent_.tools_.Pixels() * PixelsPerMeter();
+        const float scale = parent_.view_.Pixels() * PixelsPerMeter();
 
         switch( data.Linear() )
         {
@@ -193,12 +193,12 @@ public:
     }
     virtual bool ShouldDisplayBorder( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
     {
-        const float scale = parent_.tools_.Pixels() * PixelsPerMeter();
+        const float scale = parent_.view_.Pixels() * PixelsPerMeter();
         return data.Border() && parent_.minVisuScale_[ 2 ] <= scale && parent_.maxVisuScale_[ 2 ] > scale;
     }
     virtual bool ShouldDisplayNames( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
     {
-        const float scale = parent_.tools_.Pixels() * PixelsPerMeter();
+        const float scale = parent_.view_.Pixels() * PixelsPerMeter();
         return (  data.Linear() && parent_.smallNames_.IsSet( parent_.minVisuScale_[ 1 ] <= scale && parent_.maxVisuScale_[ 1 ] > scale ) )
             || ( !data.Linear() && parent_.bigNames_.IsSet( parent_.minVisuScale_[ 0 ] <= scale && parent_.maxVisuScale_[ 0 ] > scale ) );
     }
@@ -206,7 +206,7 @@ public:
     {
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 0, 0, 0 );
-            parent_.tools_.Print( name, at );
+            parent_.view_.Print( name, at );
         glPopAttrib();
     }
 

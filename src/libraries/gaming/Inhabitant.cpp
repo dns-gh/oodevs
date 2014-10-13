@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Inhabitant.h"
 #include "UrbanModel.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/UrbanObject.h"
 #include "clients_kernel/AccommodationTypes.h"
@@ -172,7 +172,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 // Name: Inhabitant::Draw
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
+void Inhabitant::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& tools ) const
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )

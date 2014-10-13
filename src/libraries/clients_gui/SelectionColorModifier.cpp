@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SelectionColorModifier.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -24,7 +24,7 @@ using namespace gui;
 // Name: SelectionColorModifier constructor
 // Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
-SelectionColorModifier::SelectionColorModifier( kernel::Controllers& controllers, gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile )
+SelectionColorModifier::SelectionColorModifier( kernel::Controllers& controllers, gui::GLView_ABC& tools, const kernel::Profile_ABC& profile )
     : controllers_( controllers )
     , tools_( tools )
     , profile_( profile )

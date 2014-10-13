@@ -13,7 +13,7 @@
 #include "UrbanHierarchies.h"
 #include "UrbanModel.h"
 
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/UrbanObject.h"
 #include "clients_kernel/AccommodationType.h"
@@ -226,7 +226,7 @@ bool InhabitantPositions::CanAggregate() const
 // Name: InhabitantPositions::Draw
 // Created: JSR 2011-01-13
 // -----------------------------------------------------------------------------
-void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
+void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& tools ) const
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const kernel::UrbanPositions_ABC* positions = ( *it ).pUrban_->Retrieve< kernel::UrbanPositions_ABC >() )

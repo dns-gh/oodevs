@@ -14,7 +14,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/DetectionMap.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 
 using namespace gui;
 

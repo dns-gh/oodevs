@@ -16,7 +16,7 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 }
 
@@ -103,7 +103,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const = 0;
-    virtual void Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools, const geometry::Point2f& position, float alpha ) const = 0;
+    virtual void Draw( const Viewport_ABC& viewport, const GLView_ABC& tools, const geometry::Point2f& position, float alpha ) const = 0;
     virtual ResourceNode& FindOrCreateResourceNode( const std::string& resource, unsigned int defaultProduction = 0 )
     {
         auto it = resourceNodes_.find( resource );

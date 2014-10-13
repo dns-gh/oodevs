@@ -30,8 +30,10 @@ class AutomatsLayer : public EntityLayer< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatsLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                            View_ABC& view, const kernel::Profile_ABC& profile );
+             AutomatsLayer( kernel::Controllers& controllers,
+                            GLView_ABC& view,
+                            ColorStrategy_ABC& strategy,
+                            const kernel::Profile_ABC& profile );
     virtual ~AutomatsLayer();
     //@}
 

@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "TacticalLinePositions_ABC.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -99,7 +99,7 @@ geometry::Rectangle2f TacticalLinePositions_ABC::GetBoundingBox() const
 // Name: TacticalLinePositions_ABC::Draw
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_ABC& viewport, GlTools_ABC& tools ) const
+void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_ABC& viewport, GLView_ABC& tools ) const
 {
     if( pointList_.empty() || !viewport.IsVisible( boundingBox_ ) )
         return;
@@ -108,7 +108,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_A
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     if( tools.ShouldDisplay() )
         for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
-            tools.DrawDisc( *it, 5.f, GlTools_ABC::pixels );
+            tools.DrawDisc( *it, 5.f, GLView_ABC::pixels );
     glPopAttrib();
 
     tools.DrawTacticalGraphics( symbol, *location_, false, 0., false );
@@ -118,7 +118,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_A
 // Name: TacticalLinePositions_ABC::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void TacticalLinePositions_ABC::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools ) const
+void TacticalLinePositions_ABC::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

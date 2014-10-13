@@ -56,8 +56,8 @@ public:
     virtual void Move( const geometry::Point2f& position );
     void Translate( const geometry::Point2f& position, const geometry::Vector2f& translation, float precision);
 
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
+    virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual bool CanAggregate() const;
 
     void Serialize( xml::xostream& xos ) const;

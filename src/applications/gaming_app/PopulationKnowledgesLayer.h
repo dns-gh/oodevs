@@ -24,8 +24,10 @@ class PopulationKnowledgesLayer : public KnowledgeLayer< kernel::PopulationKnowl
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledgesLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                                        gui::View_ABC& view, const kernel::Profile_ABC& profile );
+             PopulationKnowledgesLayer( kernel::Controllers& controllers,
+                                        gui::GLView_ABC& view,
+                                        gui::ColorStrategy_ABC& strategy,
+                                        const kernel::Profile_ABC& profile );
     virtual ~PopulationKnowledgesLayer();
     //@}
 };

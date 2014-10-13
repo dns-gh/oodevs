@@ -11,7 +11,7 @@
 #include "Fires.h"
 #include "FireFactory.h"
 #include "Fire_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/SoundEvent.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
@@ -120,7 +120,7 @@ void Fires::DoUpdate( const sword::StopUnitFireDetection& message )
 // Name: Fires::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Fires::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Fires::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( ! elements_.empty() )
     {

@@ -12,7 +12,7 @@
 #include "LogisticLinks.h"
 #include "DebugPoints.h"
 #include "clients_gui/AggregatedTools.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -53,7 +53,7 @@ bool CommandPostAttributes::IsCommandPost() const
 // Name: CommandPostAttributes::Draw
 // Created: LGY 2011-11-03
 // -----------------------------------------------------------------------------
-void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( commandPost_ && !entity_.IsAggregated() )
     {

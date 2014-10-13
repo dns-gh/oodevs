@@ -28,7 +28,7 @@ namespace graphics
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  MapnikLayer
@@ -40,7 +40,7 @@ class MapnikLayer : public Layer2D
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 public:
-    explicit MapnikLayer( kernel::Controllers& controllers, GlTools_ABC& tools, uint32_t theads );
+    explicit MapnikLayer( kernel::Controllers& controllers, GLView_ABC& tools, uint32_t theads );
     virtual ~MapnikLayer();
 
     virtual void Paint( const geometry::Rectangle2f& viewport );

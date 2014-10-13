@@ -49,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Elevation3dLayer( kernel::Controllers& controllers,
-                               GlTools_ABC& tools,
+                               GLView_ABC& tools,
                                const kernel::DetectionMap& elevation,
                                Lighting_ABC& lighting );
     virtual ~Elevation3dLayer();

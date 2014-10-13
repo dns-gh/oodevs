@@ -35,7 +35,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
     class Viewport_ABC;
     class RichPushButton;
@@ -63,7 +63,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreEditor( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
-                          const ::StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+                          const ::StaticModel& staticModel, gui::GLView_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreEditor();
     //@}
 
@@ -114,7 +114,7 @@ private:
     ScoreVariablesList* variables_;
     ScoreGaugeConfiguration* gauge_;
     ScoreProfilesPage* profiles_;
-    const gui::GlTools_ABC& tools_;
+    const gui::GLView_ABC& tools_;
     bool nameChanged_;
     //@}
 };

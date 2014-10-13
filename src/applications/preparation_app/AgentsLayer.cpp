@@ -32,8 +32,13 @@
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile )
-    : gui::EntityLayer< kernel::Agent_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Agents )
+AgentsLayer::AgentsLayer( kernel::Controllers& controllers,
+                          gui::GLView_ABC& view,
+                          gui::ColorStrategy_ABC& strategy,
+                          Model& model,
+                          ModelBuilder& modelBuilder,
+                          const kernel::Profile_ABC& profile )
+    : gui::EntityLayer< kernel::Agent_ABC >( controllers, view, strategy, profile, eLayerTypes_Agents )
     , model_            ( model )
     , modelBuilder_     ( modelBuilder )
     , selectedAgent_    ( controllers )
@@ -176,7 +181,7 @@ bool AgentsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
     AgentPositions* positions = dnd::FindData< AgentPositions >( event );
     if( positions )
     {
-        if( selectedAgent_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+        if( selectedAgent_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
         {
             positions->Move( point + draggingOffset_.ToVector() );
             draggingPoint_ = point;

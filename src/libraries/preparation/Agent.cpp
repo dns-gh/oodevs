@@ -11,7 +11,7 @@
 #include "Agent.h"
 #include "tools/IdManager.h"
 #include "AgentHierarchies.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AgentType.h"
@@ -112,7 +112,7 @@ void Agent::InitializeSymbol() const
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() && !IsAggregated() )
     {
@@ -129,7 +129,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 // Name: Agent::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Agent::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Agent::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

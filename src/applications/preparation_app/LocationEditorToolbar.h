@@ -20,7 +20,7 @@ namespace kernel
 
 namespace gui
 {
-    class View_ABC;
+    class GLView_ABC;
     class LocationsLayer;
 }
 
@@ -39,7 +39,7 @@ public:
              LocationEditorToolbar( QMainWindow* parent,
                                     kernel::Controllers& controllers,
                                     const kernel::CoordinateConverter_ABC& converter,
-                                    gui::View_ABC& view,
+                                    gui::GLView_ABC& view,
                                     const std::shared_ptr< gui::LocationsLayer >& layer );
     virtual ~LocationEditorToolbar();
     //@}

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "MSEllipse.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -49,7 +49,7 @@ MSEllipse::~MSEllipse()
 // Name: MSEllipse::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void MSEllipse::Draw( const gui::GlTools_ABC& tools ) const
+void MSEllipse::Draw( const gui::GLView_ABC& tools ) const
 {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();

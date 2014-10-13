@@ -104,9 +104,11 @@ T_TesselatedShapes Tesselate( const GeosContextPtr& h, const GeosGeomPtr& geomet
 
 }  // namespace
 
-WeaponRangeLayer::WeaponRangeLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                    gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : gui::EntityLayerBase( controllers, tools, strategy, view, profile, eLayerTypes_WeaponRanges )
+WeaponRangeLayer::WeaponRangeLayer( kernel::Controllers& controllers,
+                                    gui::GLView_ABC& view,
+                                    gui::ColorStrategy_ABC& strategy,
+                                    const kernel::Profile_ABC& profile )
+    : gui::EntityLayerBase( controllers, view, strategy, profile, eLayerTypes_WeaponRanges )
     , controllers_( controllers )
     , strategy_( strategy )
     , useColor_( false )
@@ -170,16 +172,16 @@ void WeaponRangeLayer::Reset()
 
 void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& /*viewport*/, bool /*pickingMode*/ )
 {
-    if( !ShouldDisplay( entity ) || !tools_.ShouldDisplay( GetType() ) )
+    if( !ShouldDisplay( entity ) || !view_.ShouldDisplay( GetType() ) )
         return;
     // SelectColor actually controls the result of ShouldDisplay
     strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
-    if( !tools_.ShouldDisplay( "WeaponRanges" ) )
+    if( !view_.ShouldDisplay( "WeaponRanges" ) )
         return;
     if( const Weapons* weapons = entity.Retrieve< Weapons >() )
     {
         const geometry::Point2f position = GetPosition( entity );
-        weapons->DrawEfficientRange( position, tools_ );
+        weapons->DrawEfficientRange( position, view_ );
         if( weapons->GetMaxRange() <= 0 )
             return;
         const auto color = useColor_ ? color_ : strategy_.FindColor( entity );

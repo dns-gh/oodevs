@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "GlTooltip_ABC.h"
 
 #include "clients_kernel/DetectionMap.h"
@@ -27,7 +27,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 MetricsLayer::MetricsLayer( kernel::Controllers& controllers,
                             const kernel::DetectionMap& elevation,
-                            GlTools_ABC& tools )
+                            GLView_ABC& tools )
     : Layer( controllers, tools, eLayerTypes_Metric )
     , elevation_        ( elevation )
     , multiRulingMode_  ( false )
@@ -61,10 +61,10 @@ void MetricsLayer::Paint( Viewport_ABC& )
                 glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
                     glLineWidth( 4 );
                     glColor4f( COLOR_WHITE );
-                    tools_.DrawLine( start, end );
+                    view_.DrawLine( start, end );
                     glLineWidth( 2 );
                     glColor4f( COLOR_BLACK );
-                    tools_.DrawLine( start, end );
+                    view_.DrawLine( start, end );
                 glPopAttrib();
             }
         }
@@ -74,14 +74,14 @@ void MetricsLayer::Paint( Viewport_ABC& )
             glLineWidth( 2 );
             DrawAngle();
             glLineWidth( 4 );
-            tools_.DrawLine( metricPoints_.back(), end_ );
+            view_.DrawLine( metricPoints_.back(), end_ );
             glLineWidth( 2 );
             glColor4f( COLOR_BLACK );
 
             const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
             const QString message = tools::translate( "Règle GL", "2D: %L1m\n3D: %L2m\n%L3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
             if( !tooltip_ )
-                tooltip_ = tools_.CreateTooltip();
+                tooltip_ = view_.CreateTooltip();
             // $$$$ SBO 2008-03-19: GlTooltip_ABC maybe should be a Displayer_ABC...
             static_cast< kernel::Displayer_ABC& >( *tooltip_ ).Start( Styles::bold ).Add( message.toStdString() ).End();
             tooltip_->Draw( middle );
@@ -97,11 +97,11 @@ void MetricsLayer::DrawAngle() const
 {
     const geometry::Point2f north( start_ + geometry::Vector2f( 0, 1.f ) * start_.Distance( end_ ) );
     const geometry::Vector2f halfRuler( geometry::Vector2f( start_, end_ ) / 2 );
-    tools_.DrawLine( north, start_ );
+    view_.DrawLine( north, start_ );
     if( geometry::Vector2f( start_, north ).CrossProduct( halfRuler ) > 0 )
-        tools_.DrawArc( start_, start_ + geometry::Vector2f( start_, north ) / 2, start_ + halfRuler );
+        view_.DrawArc( start_, start_ + geometry::Vector2f( start_, north ) / 2, start_ + halfRuler );
     else
-        tools_.DrawArc( start_, start_ + halfRuler, start_ + geometry::Vector2f( start_, north ) / 2 );
+        view_.DrawArc( start_, start_ + halfRuler, start_ + geometry::Vector2f( start_, north ) / 2 );
 }
 
 // -----------------------------------------------------------------------------

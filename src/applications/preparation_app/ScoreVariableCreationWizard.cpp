@@ -31,7 +31,7 @@ using namespace kernel;
 // Name: ScoreVariableCreationWizard constructor
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Controllers& controllers, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
+ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Controllers& controllers, gui::GLView_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : QDialog( parent )
     , controllers_( controllers )
     , tools_      ( tools )

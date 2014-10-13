@@ -36,8 +36,11 @@ class GhostsLayer : public gui::EntityLayer< kernel::Ghost_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             GhostsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                          gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile );
+             GhostsLayer( kernel::Controllers& controllers,
+                          gui::GLView_ABC& view,
+                          gui::ColorStrategy_ABC& strategy,
+                          Model& model,
+                          const kernel::Profile_ABC& profile );
     virtual ~GhostsLayer();
     //@}
 

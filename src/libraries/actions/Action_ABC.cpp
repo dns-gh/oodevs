@@ -135,7 +135,7 @@ namespace
 // Name: Action_ABC::Draw
 // Created: SBO 2010-05-03
 // -----------------------------------------------------------------------------
-void Action_ABC::Draw( const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Action_ABC::Draw( const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     BarycenterComputer computer;
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
@@ -153,7 +153,7 @@ void Action_ABC::Draw( const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tool
 // Name: Action_ABC::Draw
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-void Action_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Action_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Draw( where, viewport, tools );

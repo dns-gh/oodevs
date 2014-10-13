@@ -29,7 +29,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class LocationCreator;
     class PanelStack_ABC;
     class ParametersLayer;
@@ -75,7 +75,7 @@ public:
                                 const kernel::Time_ABC& simulation,
                                 const StaticModel& staticModel,
                                 const std::shared_ptr< gui::ParametersLayer >& paramLayer,
-                                const gui::GlTools_ABC& tools );
+                                const gui::GLView_ABC& tools );
     virtual ~FireCreationPanel();
     //@}
 
@@ -118,7 +118,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
-    const gui::GlTools_ABC& tools_;
+    const gui::GLView_ABC& tools_;
 
     gui::ValuedComboBox< E_StrikeType >* strikeCombo_;
     Q3HBox* locationBox_;

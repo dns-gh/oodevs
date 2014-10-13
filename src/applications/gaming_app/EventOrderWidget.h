@@ -34,7 +34,7 @@ namespace gui
     class EntitySymbols;
     class EventOrderPresenter;
     struct EventOrderViewState;
-    class GlTools_ABC;
+    class GLView_ABC;
     class TaskerWidget;
     class RichGroupBox;
     class RichLabel;
@@ -85,7 +85,7 @@ public:
                                const tools::ExerciseConfig& config,
                                actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                const kernel::Profile_ABC& profile,
-                               gui::GlTools_ABC& tools,
+                               gui::GLView_ABC& tools,
                                const kernel::Time_ABC& simulation,
                                const gui::EntitySymbols& entitySymbols );
     virtual ~EventOrderWidget();
@@ -140,7 +140,7 @@ private:
     Model& model_;
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const kernel::Profile_ABC& profile_;
-    gui::GlTools_ABC& tools_;
+    gui::GLView_ABC& tools_;
     const kernel::Time_ABC& simulation_;
     boost::shared_ptr< gui::EventOrderPresenter > orderPresenter_;
 

@@ -15,7 +15,7 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class GlWidget;
     class IconsRenderPass;
 }
@@ -36,7 +36,7 @@ class SymbolIcons : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             SymbolIcons( QObject* parent, GlTools_ABC& tools );
+             SymbolIcons( QObject* parent, GLView_ABC& tools );
     virtual ~SymbolIcons();
     //@}
 

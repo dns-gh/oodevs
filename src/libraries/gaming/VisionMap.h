@@ -19,7 +19,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 }
 
@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
+    void Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const;
     void Incorporate( const geometry::Rectangle2< int >& extent );
     void Initialize();
     bool ShouldUpdate( const std::pair< unsigned, unsigned >& cell );

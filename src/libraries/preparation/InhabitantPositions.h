@@ -28,7 +28,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class PropertiesDictionary;
 }
 
@@ -84,7 +84,7 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void Add( const kernel::Location_ABC& location );
     virtual void Remove( const kernel::Location_ABC& location );
 

@@ -17,9 +17,11 @@ using namespace gui;
 // Name: ObjectKnowledgesLayer constructor
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-ObjectKnowledgesLayer::ObjectKnowledgesLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                              View_ABC& view, const Profile_ABC& profile )
-    : KnowledgeLayer< ObjectKnowledge_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_ObjectKnowledges )
+ObjectKnowledgesLayer::ObjectKnowledgesLayer( Controllers& controllers,
+                                              GLView_ABC& view,
+                                              ColorStrategy_ABC& strategy,
+                                              const Profile_ABC& profile )
+    : KnowledgeLayer< ObjectKnowledge_ABC >( controllers, view, strategy, profile, eLayerTypes_ObjectKnowledges )
 {
     // NOTHING
 }

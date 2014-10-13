@@ -35,8 +35,11 @@ class AutomatsLayer : public gui::AutomatsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                            gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel );
+             AutomatsLayer( kernel::Controllers& controllers,
+                            gui::GLView_ABC& view,
+                            gui::ColorStrategy_ABC& strategy,
+                            const kernel::Profile_ABC& profile,
+                            actions::ActionsModel& actionsModel );
     virtual ~AutomatsLayer();
     //@}
 
@@ -57,7 +60,6 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::GlTools_ABC& tools_;
     actions::ActionsModel& actionsModel_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;
     //@}

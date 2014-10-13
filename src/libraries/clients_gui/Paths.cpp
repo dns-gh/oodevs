@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Paths.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
@@ -128,7 +128,7 @@ void Paths::UpdatePathfind()
 // Name: Paths::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Paths::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Paths::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     const bool displayPath    = viewport.IsVisible( plannedBox_ )  && tools.ShouldDisplay( "Paths" );
     const bool displayOldPath = viewport.IsVisible( previousBox_ ) && tools.ShouldDisplay( "OldPaths" );

@@ -12,7 +12,7 @@
 #include "clients_gui/TerrainPicker.h"
 #include "gaming/AmmoEffect.h"
 #include "gaming/MeteoModel.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
@@ -21,7 +21,7 @@
 // Name: WeatherLayer constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( gui::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker, const kernel::Profile_ABC& profile )
+WeatherLayer::WeatherLayer( gui::GLView_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker, const kernel::Profile_ABC& profile )
     : gui::WeatherLayer( controllers, tools, eventStrategy )
     , meteoModel_( meteoModel )
     , profile_( profile )
@@ -53,7 +53,7 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
     gui::WeatherLayer::Paint( viewport );
     glPushAttrib( GL_CURRENT_BIT );
         for( IT_Effects it = effects_.begin(); it != effects_.end(); ++it )
-            (*it)->Draw( tools_, profile_ );
+            (*it)->Draw( view_, profile_ );
     glPopAttrib();
 }
 

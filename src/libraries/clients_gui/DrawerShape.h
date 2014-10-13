@@ -31,7 +31,7 @@ namespace gui
 {
     class DrawingTemplate;
     class DrawingTypes;
-    class GlTools_ABC;
+    class GLView_ABC;
     class SvgLocationDrawer;
 }
 
@@ -74,8 +74,8 @@ public:
     virtual void Handle( kernel::Location_ABC& location );
     virtual void Reset();
 
-    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const;
-    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Rectangle2f& viewport, const GLView_ABC& tools, bool overlined ) const;
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GLView_ABC& tools ) const;
 
     virtual void ChangeColor( const QColor& color );
     virtual void Edit( ParametersLayer& parameters );

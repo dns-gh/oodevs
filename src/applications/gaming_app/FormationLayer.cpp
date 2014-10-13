@@ -18,10 +18,13 @@
 // Name: FormationLayer constructor
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-FormationLayer::FormationLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                                gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
+FormationLayer::FormationLayer( kernel::Controllers& controllers,
+                                gui::GLView_ABC& view,
+                                gui::ColorStrategy_ABC& strategy,
+                                const kernel::Profile_ABC& profile,
+                                actions::ActionsModel& actionsModel,
                                 const StaticModel& staticModel )
-    : gui::FormationLayer( controllers, tools, strategy, view, profile )
+    : gui::FormationLayer( controllers, view, strategy, profile )
     , selected_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )

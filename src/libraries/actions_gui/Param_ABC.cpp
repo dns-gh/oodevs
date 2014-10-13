@@ -94,7 +94,7 @@ void Param_ABC::Update()
 // Name: Param_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void Param_ABC::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC&, gui::GlTools_ABC& ) const
+void Param_ABC::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC&, gui::GLView_ABC& ) const
 {
     // NOTHING
 }

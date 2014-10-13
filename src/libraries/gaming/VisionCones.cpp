@@ -12,7 +12,7 @@
 #include "Surface.h"
 #include "SurfaceFactory_ABC.h"
 #include "VisionMap.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Workers.h"
 #include "clients_kernel/WorkerTask_ABC.h"
@@ -166,7 +166,7 @@ void VisionCones::Update() const
 // Name: VisionCones::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionCones::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void VisionCones::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( agent_.IsAggregated() )
         return;

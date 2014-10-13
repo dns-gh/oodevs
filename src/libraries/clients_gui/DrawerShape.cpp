@@ -14,7 +14,7 @@
 #include "DrawingHelper.h"
 #include "DrawingTemplate.h"
 #include "DrawingTypes.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "ParametersLayer.h"
 #include "SvgLocationDrawer.h"
 
@@ -134,7 +134,7 @@ void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vect
 // Name: DrawerShape::Draw
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const
+void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GLView_ABC& tools, bool overlined ) const
 {
     if( !isEditing_ )
         drawer_->Draw( location_, viewport, tools, tools.IsPickingMode() ? tools.GetPickingColor() : color_,
@@ -145,7 +145,7 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC
 // Name: DrawerShape::Draw
 // Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-void DrawerShape::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void DrawerShape::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GLView_ABC& tools ) const
 {
     // $$$$ SBO 2008-06-03: check viewport
     drawer_->Draw( location, viewport, tools, color_, true, dashStyle_, 1.f );

@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "ObjectDetections.h"
 #include "Attr_Def.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
@@ -58,7 +58,7 @@ void ObjectDetections::DoUpdate( const sword::ObjectDetection& message )
 // Name: ObjectDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void ObjectDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
+void ObjectDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
 {
     if( ! tools.ShouldDisplay( "VisionLines" ) || perceivedObjects_.empty() )
         return;

@@ -114,7 +114,7 @@ void EngineerConstruction::AddParam( Parameter_ABC& parameter, const std::string
 // Name: Obstacle::Draw
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void EngineerConstruction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void EngineerConstruction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Parameter< std::string >::Draw( where, viewport, tools );
 }

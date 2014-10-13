@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "LocationsLayer.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 
 using namespace gui;
@@ -19,7 +19,7 @@ using namespace gui;
 // Name: LocationsLayer constructor
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
-LocationsLayer::LocationsLayer( kernel::Controllers& controllers, GlTools_ABC& tools )
+LocationsLayer::LocationsLayer( kernel::Controllers& controllers, GLView_ABC& tools )
     : Layer( controllers, tools, eLayerTypes_Locations )
 {
     // NOTHING
@@ -45,8 +45,8 @@ void LocationsLayer::Paint( Viewport_ABC& viewport )
         for( auto it = locations_.begin(); it != locations_.end(); ++it )
             if( viewport.IsVisible( *it ) )
             {
-                tools_.DrawCross( *it );
-                tools_.DrawSvg( "flag.svg", *it, tools_.GetAdaptiveZoomFactor( false ) );
+                view_.DrawCross( *it );
+                view_.DrawSvg( "flag.svg", *it, view_.GetAdaptiveZoomFactor( false ) );
             }
     glPopAttrib();
 }

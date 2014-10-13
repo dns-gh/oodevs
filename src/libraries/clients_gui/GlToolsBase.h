@@ -10,7 +10,7 @@
 #ifndef __GlToolsBase_h_
 #define __GlToolsBase_h_
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 
 #include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
@@ -39,7 +39,7 @@ namespace gui
 */
 // Created: AGE 2006-04-07
 // =============================================================================
-class GlToolsBase : public gui::GlTools_ABC
+class GlToolsBase : public gui::GLView_ABC
                   , public tools::Observer_ABC
                   , public kernel::OptionsObserver_ABC
 {

@@ -11,7 +11,7 @@
 #include "ParametersLayer.h"
 
 #include "CursorStrategy.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "LocationEditor_ABC.h"
 #include "ShapeHandler_ABC.h"
 #include "TextEditor.h"
@@ -33,10 +33,10 @@ using namespace gui;
 // Name: ParametersLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ParametersLayer::ParametersLayer( kernel::Controllers& controllers, GlTools_ABC& tools, TextEditor& textEditor )
+ParametersLayer::ParametersLayer( kernel::Controllers& controllers, GLView_ABC& tools, TextEditor& textEditor )
     : Layer( controllers, tools, eLayerTypes_Parameters )
     , textEditor_( textEditor )
-    , cursors_( new CursorStrategy( tools_ ) )
+    , cursors_( new CursorStrategy( view_ ) )
     , handler_( 0 )
     , current_( 0 )
     , validation_( false )
@@ -85,7 +85,7 @@ void ParametersLayer::Paint( Viewport_ABC& /*viewport*/ )
         glLineWidth( 3.f );
         if( !validation_ )
             current_->AddPoint( lastPoint_ );
-        handler_->Draw( *current_, viewport_, tools_ );
+        handler_->Draw( *current_, viewport_, view_ );
         if( !validation_ )
             current_->PopPoint();
     glPopAttrib();

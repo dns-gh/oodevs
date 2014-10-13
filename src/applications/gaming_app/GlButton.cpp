@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "GlButton.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/GlTooltip.h"
 
 #pragma warning( push , 0 )
@@ -20,7 +20,7 @@
 // Name: GlButton constructor
 // Created: SBO 2008-07-04
 // -----------------------------------------------------------------------------
-GlButton::GlButton( const QString& label, const gui::GlTools_ABC& tools )
+GlButton::GlButton( const QString& label, const gui::GLView_ABC& tools )
     : tools_    ( tools )
     , label_    ( label )
     , current_  ( 0 )

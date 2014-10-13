@@ -14,7 +14,7 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace gui
@@ -30,8 +30,8 @@ class SimpleLocationDrawer : public kernel::LocationVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SimpleLocationDrawer( const GlTools_ABC& tools );
-             SimpleLocationDrawer( const GlTools_ABC& tools, const QColor& color );
+    explicit SimpleLocationDrawer( const GLView_ABC& tools );
+             SimpleLocationDrawer( const GLView_ABC& tools, const QColor& color );
     virtual ~SimpleLocationDrawer();
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const GlTools_ABC& tools_;
+    const GLView_ABC& tools_;
     QColor color_;
     //@}
 };

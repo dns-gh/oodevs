@@ -21,7 +21,7 @@ namespace kernel
 namespace gui
 {
     class LinkInterpreter_ABC;
-    class View_ABC;
+    class GLView_ABC;
 }
 
 namespace tools
@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config,
-                            CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view,
+                            CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::GLView_ABC& view,
                             ProfileFilter& profile, const kernel::CoordinateConverter_ABC& converter );
     virtual ~CommandFacade();
     //@}

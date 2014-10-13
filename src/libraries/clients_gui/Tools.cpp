@@ -13,7 +13,7 @@
 #include "ColorButton.h"
 #include "SignalAdapter.h"
 
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -122,7 +122,7 @@ QImage tools::DrawText( const QString& text, const QFont& font, const QColor& co
     return pix.convertToImage();
 }
 
-void tools::DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GlTools_ABC& tools )
+void tools::DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GLView_ABC& tools )
 {
     const QFontMetrics metrics( font );
     QStringList list = QStringList::split( '\n', text, true );

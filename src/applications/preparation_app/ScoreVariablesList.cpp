@@ -30,7 +30,7 @@
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const StaticModel& staticModel,
-                                        gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
+                                        gui::GLView_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : tools_( tools )
     , wizard_( new ScoreVariableCreationWizard( this, controllers, tools, builder ) )
     , list_( new gui::RichWidget< QTreeWidget >( "scoreList", this ) )

@@ -27,7 +27,6 @@ using namespace gui;
 GlProxy::GlProxy( kernel::Logger_ABC& logger )
     : logger_      ( logger )
     , view_        ( 0 )
-    , tools_       ( 0 )
     , tooltipLayer_( 0 )
 {
     // NOTHING
@@ -175,7 +174,6 @@ void GlProxy::SetWidget2D( const std::shared_ptr< GlWidget >& newWidget )
 void GlProxy::ChangeTo( const std::shared_ptr< Gl3dWidget >& newWidget )
 {
     view_  = newWidget;
-    tools_ = newWidget;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +183,6 @@ void GlProxy::ChangeTo( const std::shared_ptr< Gl3dWidget >& newWidget )
 void GlProxy::ChangeTo( const std::shared_ptr< GlWidget >& newWidget )
 {
     view_  = newWidget;
-    tools_ = newWidget;
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +218,7 @@ void GlProxy::Zoom( float width )
 // -----------------------------------------------------------------------------
 boost::tuple< bool, bool, bool > GlProxy::UnSelect() const
 {
-    return tools_->UnSelect();
+    return view_->UnSelect();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,8 +227,8 @@ boost::tuple< bool, bool, bool > GlProxy::UnSelect() const
 // -----------------------------------------------------------------------------
 void GlProxy::Select( bool b1, bool b2, bool b3 ) const
 {
-    if( tools_ )
-        tools_->Select( b1, b2, b3 );
+    if( view_ )
+        view_->Select( b1, b2, b3 );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +237,7 @@ void GlProxy::Select( bool b1, bool b2, bool b3 ) const
 // -----------------------------------------------------------------------------
 bool GlProxy::ShouldDisplay( const std::string& name ) const
 {
-    return tools_ && tools_->ShouldDisplay( name );
+    return view_ && view_->ShouldDisplay( name );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,7 +246,7 @@ bool GlProxy::ShouldDisplay( const std::string& name ) const
 // -----------------------------------------------------------------------------
 bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 {
-    return tools_ && tools_->ShouldDisplay( name, autoCondition );
+    return view_ && view_->ShouldDisplay( name, autoCondition );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +255,7 @@ bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 // -----------------------------------------------------------------------------
 bool GlProxy::ShouldDisplay( E_LayerTypes type ) const
 {
-    return tools_ && tools_->ShouldDisplay( type );
+    return view_ && view_->ShouldDisplay( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +264,7 @@ bool GlProxy::ShouldDisplay( E_LayerTypes type ) const
 // -----------------------------------------------------------------------------
 float GlProxy::Pixels( const geometry::Point2f& at /* = geometry::Point2f()*/ ) const
 {
-    return tools_->Pixels( at );
+    return view_->Pixels( at );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,7 +273,7 @@ float GlProxy::Pixels( const geometry::Point2f& at /* = geometry::Point2f()*/ ) 
 // -----------------------------------------------------------------------------
 float GlProxy::Zoom() const
 {
-    return tools_->Zoom();
+    return view_->Zoom();
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +282,7 @@ float GlProxy::Zoom() const
 // -----------------------------------------------------------------------------
 float GlProxy::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
-    return tools_->GetAdaptiveZoomFactor( bVariableSize );
+    return view_->GetAdaptiveZoomFactor( bVariableSize );
 }
 
 // -----------------------------------------------------------------------------
@@ -294,7 +291,7 @@ float GlProxy::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 // -----------------------------------------------------------------------------
 unsigned short GlProxy::StipplePattern( int factor /* = 1*/ ) const
 {
-    return tools_->StipplePattern( factor );
+    return view_->StipplePattern( factor );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,8 +300,8 @@ unsigned short GlProxy::StipplePattern( int factor /* = 1*/ ) const
 // -----------------------------------------------------------------------------
 void GlProxy::SetCurrentColor( float r, float g, float b, float a /* = 1*/ )
 {
-    if( tools_ )
-        tools_->SetCurrentColor( r, g, b, a );
+    if( view_ )
+        view_->SetCurrentColor( r, g, b, a );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,8 +310,8 @@ void GlProxy::SetCurrentColor( float r, float g, float b, float a /* = 1*/ )
 // -----------------------------------------------------------------------------
 void GlProxy::SetCurrentCursor( const QCursor& cursor )
 {
-    if( tools_ )
-        tools_->SetCurrentCursor( cursor );
+    if( view_ )
+        view_->SetCurrentCursor( cursor );
 }
 
 // -----------------------------------------------------------------------------
@@ -323,8 +320,8 @@ void GlProxy::SetCurrentCursor( const QCursor& cursor )
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCross( const geometry::Point2f& at, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( tools_ )
-        tools_->DrawCross( at, size, unit );
+    if( view_ )
+        view_->DrawCross( at, size, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -333,8 +330,8 @@ void GlProxy::DrawCross( const geometry::Point2f& at, float size /* = -1.f*/, E_
 // -----------------------------------------------------------------------------
 void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& to, float width ) const
 {
-    if( tools_ )
-        tools_->DrawLine( from, to, width );
+    if( view_ )
+        view_->DrawLine( from, to, width );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,8 +340,8 @@ void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& 
 // -----------------------------------------------------------------------------
 void GlProxy::DrawStippledLine( const geometry::Point2f& from, const geometry::Point2f& to ) const
 {
-    if( tools_ )
-        tools_->DrawStippledLine( from, to );
+    if( view_ )
+        view_->DrawStippledLine( from, to );
 }
 
 // -----------------------------------------------------------------------------
@@ -353,8 +350,8 @@ void GlProxy::DrawStippledLine( const geometry::Point2f& from, const geometry::P
 // -----------------------------------------------------------------------------
 void GlProxy::DrawLines( const T_PointVector& points ) const
 {
-    if( tools_ )
-        tools_->DrawLines( points );
+    if( view_ )
+        view_->DrawLines( points );
 }
 
 // -----------------------------------------------------------------------------
@@ -363,8 +360,8 @@ void GlProxy::DrawLines( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlProxy::DrawRectangle( const T_PointVector& points ) const
 {
-    if( tools_ )
-        tools_->DrawRectangle( points );
+    if( view_ )
+        view_->DrawRectangle( points );
 }
 
 // -----------------------------------------------------------------------------
@@ -373,8 +370,8 @@ void GlProxy::DrawRectangle( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlProxy::DrawPolygon( const T_PointVector& points ) const
 {
-    if( tools_ )
-        tools_->DrawPolygon( points );
+    if( view_ )
+        view_->DrawPolygon( points );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,8 +380,8 @@ void GlProxy::DrawPolygon( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlProxy::DrawSelectedPolygon( const T_PointVector& points ) const
 {
-    if( tools_ )
-        tools_->DrawSelectedPolygon( points );
+    if( view_ )
+        view_->DrawSelectedPolygon( points );
 }
 
 // -----------------------------------------------------------------------------
@@ -394,8 +391,8 @@ void GlProxy::DrawSelectedPolygon( const T_PointVector& points ) const
 void GlProxy::DrawDecoratedPolygon( const kernel::T_TessellatedPolygon& polygon, const T_PointVector& vertices,
                                     const geometry::Point2f& center, const std::string& name, unsigned int fontHeight )
 {
-    if( tools_ )
-        tools_->DrawDecoratedPolygon( polygon, vertices, center, name, fontHeight );
+    if( view_ )
+        view_->DrawDecoratedPolygon( polygon, vertices, center, name, fontHeight );
 }
 
 // -----------------------------------------------------------------------------
@@ -404,8 +401,8 @@ void GlProxy::DrawDecoratedPolygon( const kernel::T_TessellatedPolygon& polygon,
 // -----------------------------------------------------------------------------
 void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( tools_ )
-        tools_->DrawArrow( from, to, size, unit );
+    if( view_ )
+        view_->DrawArrow( from, to, size, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,8 +411,8 @@ void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio /* = 0.2f*/, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( tools_ )
-        tools_->DrawCurvedArrow( from, to, curveRatio, size, unit );
+    if( view_ )
+        view_->DrawCurvedArrow( from, to, curveRatio, size, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -424,8 +421,8 @@ void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Po
 // -----------------------------------------------------------------------------
 void GlProxy::DrawArc( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2, float width ) const
 {
-    if( tools_ )
-        tools_->DrawArc( center, p1, p2, width );
+    if( view_ )
+        view_->DrawArc( center, p1, p2, width );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,8 +431,8 @@ void GlProxy::DrawArc( const geometry::Point2f& center, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( tools_ )
-        tools_->DrawCircle( center, radius, unit );
+    if( view_ )
+        view_->DrawCircle( center, radius, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -444,8 +441,8 @@ void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /* = -1.
 // -----------------------------------------------------------------------------
 void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( tools_ )
-        tools_->DrawDisc( center, radius, unit );
+    if( view_ )
+        view_->DrawDisc( center, radius, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -454,8 +451,8 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /* = -1.f*
 // -----------------------------------------------------------------------------
 void GlProxy::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    if( tools_ )
-        tools_->DrawHalfDisc( center, angleDegrees, radius, unit );
+    if( view_ )
+        view_->DrawHalfDisc( center, angleDegrees, radius, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -464,8 +461,8 @@ void GlProxy::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees,
 // -----------------------------------------------------------------------------
 void GlProxy::DrawLife( const geometry::Point2f& center, float height, float factor /* = 1.f*/, bool fixedSize /*= true */ ) const
 {
-    if( tools_ )
-        tools_->DrawLife( center, height, factor, fixedSize );
+    if( view_ )
+        view_->DrawLife( center, height, factor, fixedSize );
 }
 
 // -----------------------------------------------------------------------------
@@ -474,8 +471,8 @@ void GlProxy::DrawLife( const geometry::Point2f& center, float height, float fac
 // -----------------------------------------------------------------------------
 void GlProxy::Print( const std::string& message, const geometry::Point2f& where ) const
 {
-    if( tools_ )
-        tools_->Print( message, where );
+    if( view_ )
+        view_->Print( message, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -484,8 +481,8 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where 
 // -----------------------------------------------------------------------------
 void GlProxy::Print( const std::string& message, const geometry::Point2f& where, const QFont& font ) const
 {
-    if( tools_ )
-        tools_->Print( message, where, font );
+    if( view_ )
+        view_->Print( message, where, font );
 }
 
 // -----------------------------------------------------------------------------
@@ -494,8 +491,8 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where,
 // -----------------------------------------------------------------------------
 void GlProxy::DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float thickness ) const
 {
-    if( tools_ )
-        tools_->DrawInfrastructureSymbol( symbol, where, factor, thickness );
+    if( view_ )
+        view_->DrawInfrastructureSymbol( symbol, where, factor, thickness );
 }
 
 // -----------------------------------------------------------------------------
@@ -504,8 +501,8 @@ void GlProxy::DrawInfrastructureSymbol( const std::string& symbol, const geometr
 // -----------------------------------------------------------------------------
 void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
-    if( tools_ )
-        tools_->DrawApp6Symbol( symbol, where, factor, thickness, direction );
+    if( view_ )
+        view_->DrawApp6Symbol( symbol, where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------
@@ -514,8 +511,8 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f
 // -----------------------------------------------------------------------------
 void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
-    if( tools_ )
-        tools_->DrawApp6Symbol( symbol, style, where, factor, thickness, direction );
+    if( view_ )
+        view_->DrawApp6Symbol( symbol, style, where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------
@@ -524,8 +521,8 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& styl
 // -----------------------------------------------------------------------------
 void GlProxy::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
 {
-    if( tools_ )
-        tools_->DrawApp6SymbolFixedSize( symbol, where, factor, direction );
+    if( view_ )
+        view_->DrawApp6SymbolFixedSize( symbol, where, factor, direction );
 }
 
 // -----------------------------------------------------------------------------
@@ -534,8 +531,8 @@ void GlProxy::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry
 // -----------------------------------------------------------------------------
 void GlProxy::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, const std::string& level, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
-    if( tools_ )
-        tools_->DrawUnitSymbol( symbol, moveSymbol, staticSymbol, level, isMoving, where, factor, direction, width, depth );
+    if( view_ )
+        view_->DrawUnitSymbol( symbol, moveSymbol, staticSymbol, level, isMoving, where, factor, direction, width, depth );
 }
 
 // -----------------------------------------------------------------------------
@@ -544,8 +541,8 @@ void GlProxy::DrawUnitSymbol( const std::string& symbol, const std::string& move
 // -----------------------------------------------------------------------------
 void GlProxy::DrawUnitSymbolAndTail( const std::string& symbol, const std::string& level, const T_PointVector& points ) const
 {
-    if( tools_ )
-        tools_->DrawUnitSymbolAndTail( symbol, level, points );
+    if( view_ )
+        view_->DrawUnitSymbolAndTail( symbol, level, points );
 }
 
 // -----------------------------------------------------------------------------
@@ -554,8 +551,8 @@ void GlProxy::DrawUnitSymbolAndTail( const std::string& symbol, const std::strin
 // -----------------------------------------------------------------------------
 void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( tools_ )
-        tools_->DrawIcon( xpm, where, size, unit );
+    if( view_ )
+        view_->DrawIcon( xpm, where, size, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -564,8 +561,8 @@ void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float 
 // -----------------------------------------------------------------------------
 void GlProxy::DrawImage( const QImage& image, const geometry::Point2f& where ) const
 {
-    if( tools_ )
-        tools_->DrawImage( image, where );
+    if( view_ )
+        view_->DrawImage( image, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -574,8 +571,8 @@ void GlProxy::DrawImage( const QImage& image, const geometry::Point2f& where ) c
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCell( const geometry::Point2f& center ) const
 {
-    if( tools_ )
-        tools_->DrawCell( center );
+    if( view_ )
+        view_->DrawCell( center );
 }
 
 // -----------------------------------------------------------------------------
@@ -584,8 +581,8 @@ void GlProxy::DrawCell( const geometry::Point2f& center ) const
 // -----------------------------------------------------------------------------
 void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/, bool fixedSize /*= true*/ ) const
 {
-    if( tools_ )
-        tools_->DrawSvg( svg, center, ratio, fixedSize );
+    if( view_ )
+        view_->DrawSvg( svg, center, ratio, fixedSize );
 }
 
 // -----------------------------------------------------------------------------
@@ -594,8 +591,8 @@ void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, 
 // -----------------------------------------------------------------------------
 void GlProxy::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, float pointSize, bool fixedSize /*= true*/ ) const
 {
-    if( tools_ )
-        tools_->DrawTacticalGraphics( symbol, location, overlined, pointSize, fixedSize );
+    if( view_ )
+        view_->DrawTacticalGraphics( symbol, location, overlined, pointSize, fixedSize );
 }
 
 // -----------------------------------------------------------------------------
@@ -628,8 +625,8 @@ bool GlProxy::ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const
 void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection,
         const boost::optional< E_LayerTypes >& type )
 {
-    if( tools_ )
-        tools_->FillSelection( point, selection, type );
+    if( view_ )
+        view_->FillSelection( point, selection, type );
 }
 
 // -----------------------------------------------------------------------------
@@ -638,8 +635,8 @@ void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& s
 // -----------------------------------------------------------------------------
 void GlProxy::RenderPicking( const T_ObjectPicking& object )
 {
-    if( tools_ )
-        tools_->RenderPicking( object );
+    if( view_ )
+        view_->RenderPicking( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -648,7 +645,7 @@ void GlProxy::RenderPicking( const T_ObjectPicking& object )
 // -----------------------------------------------------------------------------
 bool GlProxy::IsPickingMode() const
 {
-    return tools_ && tools_->IsPickingMode();
+    return view_ && view_->IsPickingMode();
 }
 
 // -----------------------------------------------------------------------------
@@ -657,8 +654,8 @@ bool GlProxy::IsPickingMode() const
 // -----------------------------------------------------------------------------
 void GlProxy::Picking()
 {
-    if( tools_ )
-        tools_->Picking();
+    if( view_ )
+        view_->Picking();
 }
 
 // -----------------------------------------------------------------------------
@@ -667,7 +664,7 @@ void GlProxy::Picking()
 // -----------------------------------------------------------------------------
 float GlProxy::LineWidth( float base ) const
 {
-    return tools_->LineWidth( base );
+    return view_->LineWidth( base );
 }
 
 // -----------------------------------------------------------------------------
@@ -676,7 +673,7 @@ float GlProxy::LineWidth( float base ) const
 // -----------------------------------------------------------------------------
 QColor GlProxy::GetPickingColor() const
 {
-    return tools_->GetPickingColor();
+    return view_->GetPickingColor();
 }
 
 // -----------------------------------------------------------------------------
@@ -685,7 +682,7 @@ QColor GlProxy::GetPickingColor() const
 // -----------------------------------------------------------------------------
 geometry::Point2f GlProxy::MapToterrainCoordinates( int x, int y )
 {
-    return tools_->MapToterrainCoordinates( x, y );
+    return view_->MapToterrainCoordinates( x, y );
 }
 
 // -----------------------------------------------------------------------------
@@ -694,7 +691,7 @@ geometry::Point2f GlProxy::MapToterrainCoordinates( int x, int y )
 // -----------------------------------------------------------------------------
 bool GlProxy::HasFocus()
 {
-    return tools_ && tools_->HasFocus();
+    return view_ && view_->HasFocus();
 }
 
 // -----------------------------------------------------------------------------
@@ -703,7 +700,7 @@ bool GlProxy::HasFocus()
 // -----------------------------------------------------------------------------
 void GlProxy::DrawShapeText( const QImage& image, const geometry::Point2f& where ) const
 {
-    tools_->DrawShapeText( image, where );
+    view_->DrawShapeText( image, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -715,7 +712,6 @@ void GlProxy::Purge()
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
         ( *it )->Reset();
     view_.reset();
-    tools_.reset();
     widget2d_.reset();
     widget3d_.reset();
 }
@@ -726,5 +722,5 @@ void GlProxy::Purge()
 // -----------------------------------------------------------------------------
 std::string GlProxy::GetCurrentPass() const
 {
-    return tools_ ? tools_->GetCurrentPass() : "";
+    return view_ ? view_->GetCurrentPass() : "";
 }

@@ -27,7 +27,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  ContourLinesLayer
@@ -42,7 +42,7 @@ class ContourLinesLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             ContourLinesLayer( kernel::Controllers& controllers, GlTools_ABC& tools, kernel::DetectionMap& map );
+             ContourLinesLayer( kernel::Controllers& controllers, GLView_ABC& tools, kernel::DetectionMap& map );
     virtual ~ContourLinesLayer();
     //@}
 

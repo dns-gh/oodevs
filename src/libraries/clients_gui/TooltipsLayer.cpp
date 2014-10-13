@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "TooltipsLayer.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 
 using namespace gui;
@@ -19,7 +19,7 @@ using namespace gui;
 // Name: TooltipsLayer constructor
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-TooltipsLayer::TooltipsLayer( kernel::Controllers& controllers, GlTools_ABC& tools )
+TooltipsLayer::TooltipsLayer( kernel::Controllers& controllers, GLView_ABC& tools )
     : TooltipsLayer_ABC( controllers, tools )
 {
     // NOTHING
@@ -44,7 +44,7 @@ void TooltipsLayer::Paint( Viewport_ABC& viewport )
         return;
     for( auto it = tooltips_.begin(); it != tooltips_.end(); ++it )
         if( viewport.IsVisible( it->first ) )
-            tools_.DrawImage( it->second, it->first );
+            view_.DrawImage( it->second, it->first );
     tooltips_.clear();
 }
 

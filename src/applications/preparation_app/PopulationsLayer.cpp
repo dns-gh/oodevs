@@ -21,9 +21,12 @@
 // Name: PopulationsLayer constructor
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-PopulationsLayer::PopulationsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                                    gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile )
-    : gui::PopulationsLayer( controllers, tools, strategy, view, profile )
+PopulationsLayer::PopulationsLayer( kernel::Controllers& controllers,
+                                    gui::GLView_ABC& view,
+                                    gui::ColorStrategy_ABC& strategy,
+                                    Model& model,
+                                    const kernel::Profile_ABC& profile )
+    : gui::PopulationsLayer( controllers, view, strategy, profile )
     , model_             ( model )
     , selectedEntity_    ( controllers )
     , selectedPopulation_( controllers )
@@ -76,7 +79,7 @@ bool PopulationsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometr
         if( kernel::Moveable_ABC* positions = static_cast< kernel::Moveable_ABC* >( selectedPopulation_.ConstCast()->Retrieve< kernel::Positions >() ) )
         {
             const geometry::Point2f newPosition = point + draggingOffset_.ToVector();
-            if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) && world_.IsInside( newPosition ) )
+            if( draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) && world_.IsInside( newPosition ) )
             {
                 positions->Move( newPosition );
                 draggingPoint_ = point;

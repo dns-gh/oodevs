@@ -25,7 +25,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace gui
@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GridLayer( kernel::Controllers& controllers,
-                        GlTools_ABC& tools,
+                        GLView_ABC& tools,
                         const kernel::CoordinateConverter_ABC& converter );
     virtual ~GridLayer();
     //@}

@@ -33,8 +33,11 @@ class PopulationsLayer : public gui::PopulationsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                               gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile );
+             PopulationsLayer( kernel::Controllers& controllers,
+                               gui::GLView_ABC& view,
+                               gui::ColorStrategy_ABC& strategy,
+                               Model& model,
+                               const kernel::Profile_ABC& profile );
     virtual ~PopulationsLayer();
     //@}
 

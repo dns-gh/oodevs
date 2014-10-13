@@ -21,8 +21,8 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class GlTools_ABC;
-    class View_ABC;
+    class GLView_ABC;
+    class GLView_ABC;
     class LayerFilter_ABC;
 }
 
@@ -39,8 +39,11 @@ class UrbanLayer : public gui::UrbanLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                         gui::View_ABC& view, UrbanModel& model, const kernel::Profile_ABC& profile );
+             UrbanLayer( kernel::Controllers& controllers,
+                         gui::GLView_ABC& view,
+                         gui::ColorStrategy_ABC& strategy,
+                         UrbanModel& model,
+                         const kernel::Profile_ABC& profile );
     virtual ~UrbanLayer();
     //@}
 

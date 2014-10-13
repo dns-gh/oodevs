@@ -41,7 +41,7 @@ public:
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GLView_ABC& tools ) const;
     virtual void Visit( const actions::parameters::DateTime& param );
     //@}
 

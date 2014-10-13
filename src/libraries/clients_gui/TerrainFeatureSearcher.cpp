@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainFeatureSearcher.h"
-#include "View_ABC.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ApproximativeMap.h"

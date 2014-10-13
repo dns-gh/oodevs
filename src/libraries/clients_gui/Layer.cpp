@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Layer.h"
 #include "moc_Layer.cpp"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Viewport2d.h"
 #include "Viewport3d.h"
 #include "clients_kernel/Controllers.h"
@@ -22,9 +22,9 @@ using namespace gui;
 // Name: Layer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Layer::Layer( kernel::Controllers& controllers, GlTools_ABC& tools, E_LayerTypes type )
+Layer::Layer( kernel::Controllers& controllers, GLView_ABC& view, E_LayerTypes type )
     : controllers_( controllers )
-    , tools_( tools )
+    , view_( view )
     , descriptor_( layers::GetDescriptor( type ) )
     , alpha_( 1 )
     , enabled_( true )
@@ -100,10 +100,10 @@ float Layer::GetAlpha() const
 // -----------------------------------------------------------------------------
 bool Layer::ShouldDrawPass() const
 {
-    const auto currentPass = tools_.GetCurrentPass();
+    const auto currentPass = view_.GetCurrentPass();
     return IsEnabled()
         && ( descriptor_.passes_.empty() || currentPass.empty() || descriptor_.passes_.find( currentPass ) != std::string::npos )
-        && ( !tools_.IsPickingMode() || IsPickable() );
+        && ( !view_.IsPickingMode() || IsPickable() );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +236,7 @@ void Layer::FillContextMenu( unsigned int /*id*/, kernel::ContextMenu& /*menu*/ 
 // Name: Layer::ExtractElements
 // Created: ABR 2013-01-25
 // -----------------------------------------------------------------------------
-void Layer::ExtractElements( T_LayerElements&, const GlTools_ABC::T_ObjectsPicking& )
+void Layer::ExtractElements( T_LayerElements&, const GLView_ABC::T_ObjectsPicking& )
 {
     // NOTHING
 }

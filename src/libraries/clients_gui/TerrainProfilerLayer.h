@@ -19,7 +19,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  TerrainProfilerLayer
@@ -32,7 +32,7 @@ class TerrainProfilerLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainProfilerLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
+    explicit TerrainProfilerLayer( kernel::Controllers& controllers, GLView_ABC& tools );
     virtual ~TerrainProfilerLayer();
     //@}
 

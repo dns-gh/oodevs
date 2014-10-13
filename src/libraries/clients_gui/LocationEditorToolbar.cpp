@@ -12,7 +12,7 @@
 #include "moc_LocationEditorToolbar.cpp"
 
 #include "ParametersLayer.h"
-#include "View_ABC.h"
+#include "GLView_ABC.h"
 #include "FeatureNameParser.h"
 #include "LocationsLayer.h"
 #include "LocationEditorBox.h"
@@ -35,7 +35,7 @@ using namespace gui;
 LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent,
                                               kernel::Controllers& controllers,
                                               const kernel::CoordinateConverter_ABC& converter,
-                                              View_ABC& view,
+                                              GLView_ABC& view,
                                               const std::shared_ptr< LocationsLayer >& layer )
     : RichToolBar( controllers, parent, "locationeditor", tr( "Location editor" ) )
     , controllers_( controllers )

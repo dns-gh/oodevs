@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SvgLocationDrawer.h"
 #include "DrawingTemplate.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Tools.h"
 #include "clients_kernel/Location_ABC.h"
 #include <boost/assign.hpp>
@@ -99,7 +99,7 @@ void SvgLocationDrawer::SetColor( const QColor& color )
 // Name: SvgLocationDrawer::Draw
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools,
+void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GLView_ABC& tools,
                               const QColor& color, bool overlined, E_Dash_style dashStyle, float zoom )
 {
     glPushAttrib( GL_CURRENT_BIT );

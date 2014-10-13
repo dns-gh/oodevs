@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Attributes.h"
 #include "clients_gui/DictionaryUpdated.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -332,7 +332,7 @@ void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
 // Name: Attributes::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     const bool bEmptyGasTank = entity_.Get< kernel::Dotations_ABC >().IsEmptyGasTank();
     if( entity_.IsAggregated()
@@ -342,17 +342,17 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
     glPushAttrib( GL_CURRENT_BIT );
     glColor3f( 1, 1, 1 );
     if( bDead_ )
-        tools.DrawIcon( xpm_skull, where, 150.f, gui::GlTools_ABC::pixels );
+        tools.DrawIcon( xpm_skull, where, 150.f, gui::GLView_ABC::pixels );
     if( bRadioEmitterSilence_ )
-        tools.DrawIcon( xpm_silence_radio_outgoing, where, 150.f, gui::GlTools_ABC::pixels );
+        tools.DrawIcon( xpm_silence_radio_outgoing, where, 150.f, gui::GLView_ABC::pixels );
     if( bRadarEnabled_ )
-        tools.DrawIcon( xpm_radars_on, where, 150.f, gui::GlTools_ABC::pixels );
+        tools.DrawIcon( xpm_radars_on, where, 150.f, gui::GLView_ABC::pixels );
     if( bCommJammed_ )
-        tools.DrawIcon( xpm_brouillage, where, 150.f, gui::GlTools_ABC::pixels );
+        tools.DrawIcon( xpm_brouillage, where, 150.f, gui::GLView_ABC::pixels );
     if( bUnderground_ )
-        tools.DrawIcon( xpm_underground, where, 150.f, gui::GlTools_ABC::pixels );
+        tools.DrawIcon( xpm_underground, where, 150.f, gui::GLView_ABC::pixels );
     if( bEmptyGasTank )
-        tools.DrawIcon( xpm_gas, where, 150.f, gui::GlTools_ABC::pixels );
+        tools.DrawIcon( xpm_gas, where, 150.f, gui::GLView_ABC::pixels );
     glPopAttrib();
 }
 

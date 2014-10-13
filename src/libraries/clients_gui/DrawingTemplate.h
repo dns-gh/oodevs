@@ -26,7 +26,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace svg
@@ -84,10 +84,10 @@ public:
     Unit    GetUnit() const;
     const QPixmap& GetPixmap() const;
     const QPixmap& GetSamplePixmap() const;
-    void GenerateSamplePixmap( const GlTools_ABC& tools, float r = -1, float g = -1, float b = -1, float sampleMarkerRatio = 1.f );
+    void GenerateSamplePixmap( const GLView_ABC& tools, float r = -1, float g = -1, float b = -1, float sampleMarkerRatio = 1.f );
 
-    void Draw( const T_PointVector& points, svg::RenderingContext_ABC& context, const GlTools_ABC& tools, float zoom = 1.f ) const;
-    void Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context, const GlTools_ABC& tools, float zoom = 1.f ) const;
+    void Draw( const T_PointVector& points, svg::RenderingContext_ABC& context, const GLView_ABC& tools, float zoom = 1.f ) const;
+    void Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context, const GLView_ABC& tools, float zoom = 1.f ) const;
     void Serialize( xml::xostream& xos ) const;
     kernel::Location_ABC* CreateLocation() const;
     //@}
@@ -95,26 +95,26 @@ public:
 private:
     //! @name Helpers
     //@{
-    void DrawSegment     ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& from, const geometry::Point2f& to ) const;
-    void DrawStartMarker ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& towards, float zoom ) const;
-    void DrawMiddleMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom, const svg::Node_ABC& marker, const Unit& unit ) const;
-    void DrawEndMarker   ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, float zoom ) const;
-    void DrawMarker      ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const;
+    void DrawSegment     ( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const geometry::Point2f& from, const geometry::Point2f& to ) const;
+    void DrawStartMarker ( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& towards, float zoom ) const;
+    void DrawMiddleMarker( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom, const svg::Node_ABC& marker, const Unit& unit ) const;
+    void DrawEndMarker   ( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, float zoom ) const;
+    void DrawMarker      ( svg::RenderingContext_ABC& context, const GLView_ABC& tools, const svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const;
     void Align           ( geometry::Vector2f u ) const;
     void ReadMarker      ( xml::xistream& input, svg::Node_ABC*& node, Unit& unit );
     Unit ReadUnit        ( xml::xistream& input );
-    float ComputeFactor  ( Unit, float base, const GlTools_ABC& tools ) const;
+    float ComputeFactor  ( Unit, float base, const GLView_ABC& tools ) const;
     //@}
 
     //! @name Sample helper
     //@{
-    void DrawSample( const GlTools_ABC& tools );
-    void DrawOnPoint( const GlTools_ABC& tools );
-    void DrawOnLine( const GlTools_ABC& tools );
-    void DrawOnPolygon( const GlTools_ABC& tools );
-    void DrawOnCircle( const GlTools_ABC& tools );
-    void DrawOnCurve( const GlTools_ABC& tools );
-    void DrawItem( const T_PointVector& points, const GlTools_ABC& tools );
+    void DrawSample( const GLView_ABC& tools );
+    void DrawOnPoint( const GLView_ABC& tools );
+    void DrawOnLine( const GLView_ABC& tools );
+    void DrawOnPolygon( const GLView_ABC& tools );
+    void DrawOnCircle( const GLView_ABC& tools );
+    void DrawOnCurve( const GLView_ABC& tools );
+    void DrawItem( const T_PointVector& points, const GLView_ABC& tools );
     //@}
 
 private:

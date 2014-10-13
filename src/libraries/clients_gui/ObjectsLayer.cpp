@@ -22,9 +22,12 @@ using namespace gui;
 // Name: ObjectsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
-                            const Profile_ABC& profile, TerrainPicker& picker )
-    : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Objects )
+ObjectsLayer::ObjectsLayer( Controllers& controllers,
+                            GLView_ABC& view,
+                            ColorStrategy_ABC& strategy,
+                            const Profile_ABC& profile,
+                            TerrainPicker& picker )
+    : EntityLayer< Object_ABC >( controllers, view, strategy, profile, eLayerTypes_Objects )
     , picker_( picker )
 {
     picker_.RegisterLayer( *this );

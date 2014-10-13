@@ -15,10 +15,12 @@
 // Name: EntityLayerBase::InhabitantLayer
 // Created: LGY 2012-01-10
 // -----------------------------------------------------------------------------
-InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                                  gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile,
+InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers,
+                                  gui::GLView_ABC& view,
+                                  gui::ColorStrategy_ABC& strategy,
+                                  const kernel::Profile_ABC& profile,
                                   LivingAreaEditor_ABC& editor )
-    : gui::InhabitantLayer( controllers, tools, strategy, view, profile )
+    : gui::InhabitantLayer( controllers, view, strategy, profile )
     , editor_( editor )
 {
     // NOTHING

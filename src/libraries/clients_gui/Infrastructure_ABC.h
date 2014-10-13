@@ -20,7 +20,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 }
 

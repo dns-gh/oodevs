@@ -22,7 +22,7 @@
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
 CommandFacade::CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config,
-                              CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view,
+                              CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::GLView_ABC& view,
                               ProfileFilter& profile, const kernel::CoordinateConverter_ABC& converter )
     : QObject( parent )
 {

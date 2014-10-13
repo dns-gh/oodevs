@@ -96,7 +96,7 @@ void LimaList::CommitTo( sword::MissionParameter_Value& message ) const
 // Name: LimaList::DisplayTooltip
 // Created: AGE 2007-07-10
 // -----------------------------------------------------------------------------
-void LimaList::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void LimaList::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
     Parameter< QString >::DisplayTooltip( viewport, tools );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )

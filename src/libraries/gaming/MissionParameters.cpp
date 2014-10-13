@@ -15,7 +15,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/ActionError.h"
 #include "actions/ActionTasker.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Tools.h"
@@ -123,7 +123,7 @@ void MissionParameters::DoUpdate( const sword::FragOrder& message )
 // Name: MissionParameters::Draw
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-void MissionParameters::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void MissionParameters::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !elements_.empty() && tools.ShouldDisplay( "MissionParameters" ) )
         BOOST_REVERSE_FOREACH( const auto& content, elements_ )

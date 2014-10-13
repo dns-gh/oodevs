@@ -23,8 +23,13 @@
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
-    : gui::EntityLayer< kernel::Agent_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Agents )
+AgentsLayer::AgentsLayer( kernel::Controllers& controllers,
+                          gui::GLView_ABC& view,
+                          gui::ColorStrategy_ABC& strategy,
+                          const kernel::Profile_ABC& profile,
+                          actions::ActionsModel& actionsModel,
+                          const kernel::Time_ABC& simulation )
+    : gui::EntityLayer< kernel::Agent_ABC >( controllers, view, strategy, profile, eLayerTypes_Agents )
     , selected_( controllers )
     , actionsModel_( actionsModel )
     , simulation_( simulation )

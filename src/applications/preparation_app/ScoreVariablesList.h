@@ -20,7 +20,7 @@ namespace actions
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
     class MgrsParser;
     class Viewport_ABC;
@@ -56,7 +56,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreVariablesList( kernel::Controllers& controllers, const StaticModel& staticModel,
-                                 gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+                                 gui::GLView_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariablesList();
     //@}
 
@@ -95,7 +95,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    const gui::GlTools_ABC& tools_;
+    const gui::GLView_ABC& tools_;
     ScoreVariableCreationWizard* wizard_;
     gui::RichWidget< QTreeWidget >* list_;
     std::unique_ptr< kernel::Location_ABC > location_;

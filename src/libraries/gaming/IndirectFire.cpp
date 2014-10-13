@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "IndirectFire.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -50,7 +50,7 @@ IndirectFire::~IndirectFire()
 // Name: IndirectFire::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void IndirectFire::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void IndirectFire::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     const geometry::Point2f origin = GetOrigin().Get< Positions >().GetPosition();
     if( viewport.IsVisible( geometry::Rectangle2f( origin, target_ ) ) )

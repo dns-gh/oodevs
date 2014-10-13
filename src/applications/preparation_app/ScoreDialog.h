@@ -31,7 +31,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
     class Viewport_ABC;
     class RichPushButton;
@@ -68,7 +68,7 @@ public:
                           const std::shared_ptr< gui::ParametersLayer >& layer,
                           const StaticModel& staticModel,
                           const tools::ExerciseConfig& config,
-                          gui::GlTools_ABC& tools );
+                          gui::GLView_ABC& tools );
     virtual ~ScoreDialog();
     //@}
 
@@ -107,7 +107,7 @@ private:
     ScoreList* scores_;
     gui::RichLineEdit* editor_;
     gui::RichPushButton* createButton_;
-    const gui::GlTools_ABC& tools_;
+    const gui::GLView_ABC& tools_;
     //@}
 };
 

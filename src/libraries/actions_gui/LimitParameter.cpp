@@ -14,7 +14,7 @@
 #include "ParamInterface_ABC.h"
 #include "actions/Limit.h"
 #include "actions/Action_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Lines.h"
@@ -142,7 +142,7 @@ void LimitParameter::Display( const QString& what )
 // Name: LimitParameter::Draw
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void LimitParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void LimitParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( HasTacticalLine() )
     {

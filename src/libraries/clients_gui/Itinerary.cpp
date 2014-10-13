@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Itinerary.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -111,7 +111,7 @@ namespace
     }
 }
 
-void Itinerary::Draw( GlTools_ABC& tools, const boost::optional< Hover >& hover, bool picking ) const
+void Itinerary::Draw( GLView_ABC& tools, const boost::optional< Hover >& hover, bool picking ) const
 {
     const QColor current = GetCurrent();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
@@ -126,20 +126,20 @@ void Itinerary::Draw( GlTools_ABC& tools, const boost::optional< Hover >& hover,
     glPopAttrib();
 }
 
-void Itinerary::DrawLines( GlTools_ABC& tools, float width ) const
+void Itinerary::DrawLines( GLView_ABC& tools, float width ) const
 {
     if( path_.empty() )
         return;
     auto last = path_.begin();
-    tools.DrawDisc( last->where, width / 2, GlTools_ABC::pixels );
+    tools.DrawDisc( last->where, width / 2, GLView_ABC::pixels );
     for( auto it = last + 1; it != path_.end(); last = it++ )
     {
         tools.DrawLine( last->where, it->where, width );
-        tools.DrawDisc( it->where, width / 2, GlTools_ABC::pixels );
+        tools.DrawDisc( it->where, width / 2, GLView_ABC::pixels );
     }
 }
 
-void Itinerary::DrawPoints( GlTools_ABC& tools, const QColor& current, const boost::optional< Hover >& hover, bool picking ) const
+void Itinerary::DrawPoints( GLView_ABC& tools, const QColor& current, const boost::optional< Hover >& hover, bool picking ) const
 {
     const bool selected = tools.ShouldDisplay();
     const auto& waypoints = waypoints_.empty() ? path_ : waypoints_;
@@ -156,7 +156,7 @@ void Itinerary::DrawPoints( GlTools_ABC& tools, const QColor& current, const boo
         DrawPoint( tools, *hover->coordinate_, current, false, true );
 }
 
-void Itinerary::DrawPoint( GlTools_ABC& tools, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const
+void Itinerary::DrawPoint( GLView_ABC& tools, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const
 {
     static const QImage normal = MakeBitmap( Qt::white, Qt::black );
     static const QImage highlighted = MakeBitmap( Qt::black, Qt::white );
@@ -216,7 +216,7 @@ std::vector< geometry::Point2f > Itinerary::GetDots() const
 
 namespace
 {
-    bool IsNear( const GlTools_ABC& tools, float squareDistance, const geometry::Point2f& point )
+    bool IsNear( const GLView_ABC& tools, float squareDistance, const geometry::Point2f& point )
     {
         const auto pixels = tools.Pixels( point );
         static const auto threshold = 200; // pixels
@@ -224,7 +224,7 @@ namespace
     }
 }
 
-boost::optional< Itinerary::Hover > Itinerary::PickWaypoint( const GlTools_ABC& tools, const geometry::Point2f& where ) const
+boost::optional< Itinerary::Hover > Itinerary::PickWaypoint( const GLView_ABC& tools, const geometry::Point2f& where ) const
 {
     // path iterated backwards to select the waypoint on top
     // when several of them overlap
@@ -244,7 +244,7 @@ boost::optional< Itinerary::Hover > Itinerary::PickWaypoint( const GlTools_ABC& 
     return boost::none;
 }
 
-boost::optional< Itinerary::Hover > Itinerary::PickSegment( const GlTools_ABC& tools, const geometry::Point2f& where ) const
+boost::optional< Itinerary::Hover > Itinerary::PickSegment( const GLView_ABC& tools, const geometry::Point2f& where ) const
 {
     size_t waypoint = 0;
     float distance = std::numeric_limits< float >::infinity();

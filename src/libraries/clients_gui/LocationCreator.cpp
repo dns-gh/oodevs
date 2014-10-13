@@ -11,7 +11,7 @@
 #include "LocationCreator.h"
 #include "moc_LocationCreator.cpp"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "ParametersLayer.h"
 #include "ShapeHandler_ABC.h"
 

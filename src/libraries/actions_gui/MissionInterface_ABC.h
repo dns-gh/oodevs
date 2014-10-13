@@ -15,7 +15,7 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 }
 
@@ -60,7 +60,7 @@ public:
     //@{
     virtual bool IsFilling() const = 0;
     virtual bool HasParameter( const Param_ABC& parameter ) const = 0;
-    virtual void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const = 0;
+    virtual void Draw( ::gui::GLView_ABC& tools, ::gui::Viewport_ABC& extent ) const = 0;
     virtual bool CheckValidity() = 0;
     virtual void Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type ) = 0;
     virtual void Rebuild( InterfaceBuilder_ABC& builder ) = 0;

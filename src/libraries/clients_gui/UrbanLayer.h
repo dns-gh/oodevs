@@ -20,8 +20,8 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
-    class View_ABC;
+    class GLView_ABC;
+    class GLView_ABC;
 }
 
 namespace gui
@@ -37,8 +37,10 @@ class UrbanLayer : public EntityLayer< kernel::UrbanObject_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                         View_ABC& view, const kernel::Profile_ABC& profile );
+             UrbanLayer( kernel::Controllers& controllers,
+                         GLView_ABC& view,
+                         ColorStrategy_ABC& strategy,
+                         const kernel::Profile_ABC& profile );
     virtual ~UrbanLayer();
     //@}
 
@@ -60,12 +62,6 @@ private:
     //@{
     void DeselectAll();
     void DoSelect( const kernel::Entity_ABC* urbanObject );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    View_ABC& view_;
     //@}
 
 protected:

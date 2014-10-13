@@ -290,7 +290,7 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
 // Name: Population::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void Population::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Population::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( viewport.IsVisible( boundingBox_ ) )
     {
@@ -309,7 +309,7 @@ void Population::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
 // Name: Population::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Population::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Population::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

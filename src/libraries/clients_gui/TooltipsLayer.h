@@ -19,7 +19,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  TooltipsLayer
@@ -32,7 +32,7 @@ class TooltipsLayer : public TooltipsLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TooltipsLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
+    explicit TooltipsLayer( kernel::Controllers& controllers, GLView_ABC& tools );
     virtual ~TooltipsLayer();
     //@}
 

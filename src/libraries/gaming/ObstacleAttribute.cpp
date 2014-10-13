@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ObstacleAttribute.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -107,7 +107,7 @@ void ObstacleAttribute::UpdateData( const T& message )
 // Name: ObstacleAttribute::Draw
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( obstacleActivated_.IsSet() && viewport.IsVisible( where ) )
     {
@@ -118,7 +118,7 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewpor
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
             tools.DrawIcon( obstacleActivated_ ? xpm_activated : xpm_not_activated
-                          , offsetPoint, 150.f, hasSinglePointPos_? gui::GlTools_ABC::pixels : gui::GlTools_ABC::meters );
+                          , offsetPoint, 150.f, hasSinglePointPos_? gui::GLView_ABC::pixels : gui::GLView_ABC::meters );
         glPopAttrib();
     }
 }
