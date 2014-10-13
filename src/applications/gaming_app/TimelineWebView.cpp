@@ -63,10 +63,6 @@ TimelineWebView::TimelineWebView( QWidget* parent,
     int timelineDebugPort = config.GetTimelineDebugPort();
     if( timelineDebugPort != 0 )
         cfg_->debug_port = timelineDebugPort;
-    cfg_->rundir = "cef";
-    cfg_->binary = "cef/timeline_client.exe";
-    if( !cfg_->binary.IsRegularFile() )
-        MT_LOG_ERROR_MSG( tr( "Invalid timeline binary '%1'" ).arg( QString::fromStdWString( cfg_->binary.ToUnicode() ) ).toStdString() );
     cfg_->client_log = config.GetTimelineClientLogFile();
     cfg_->cef_log = config.GetCefLogFile();
 

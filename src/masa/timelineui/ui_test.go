@@ -36,7 +36,6 @@ var (
 	Port           = flag.Int("port", 35000, "base port for spawned processes")
 	RunDir         = flag.String("rundir", ".", "run directory")
 	OutDir         = flag.String("outdir", ".", "output directory")
-	ClientBinary   = flag.String("client", "", "timeline client binary")
 	DefaultTimeout = 30 * time.Second
 	TempDir        string
 )
@@ -150,14 +149,12 @@ func StartServer(c *C, cfg string) *exec.Cmd {
 }
 
 func StartClient(c *C, command string, args ...string) *exec.Cmd {
-	client := filepath.Join(*RunDir, "cef", "timeline_app.exe")
+	client := filepath.Join(*RunDir, "timeline_app.exe")
 	_, err := os.Stat(client)
 	c.Assert(err, IsNil)
 	cmd := exec.Command(client, append(
 		[]string{
-			"--binary", *ClientBinary,
 			"--url", "http://localhost:" + strconv.Itoa(*Port+ServerWeb),
-			"--rundir", filepath.Join(*RunDir, "cef"),
 			"--command", command,
 		}, args...)...)
 	cmd.Dir = *RunDir

@@ -3653,10 +3653,6 @@ Los datos no pueden ser proyectados.</translation>
         <translation>Se ha producido un error durante la solicitud de apos;SaveEvents&apos;:%1</translation>
     </message>
     <message>
-        <source>Invalid timeline binary &apos;%1&apos;</source>
-        <translation>Cronología binaria no válida  &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Unable to create order &apos;%1&apos; on target &apos;%2&apos;, planned for &apos;%3&apos;</source>
         <translation type="unfinished"></translation>
     </message>
