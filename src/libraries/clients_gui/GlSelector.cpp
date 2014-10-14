@@ -32,7 +32,14 @@ using namespace kernel;
 // Name: GlSelector constructor
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy, kernel::Logger_ABC& logger )
+GlSelector::GlSelector( QWidget* parent,
+                        GlProxy& proxy,
+                        Controllers& controllers,
+                        const tools::ExerciseConfig& config,
+                        DetectionMap& map,
+                        EventStrategy_ABC& strategy,
+                        kernel::Logger_ABC& logger,
+                        const DrawingTypes& drawingTypes )
     : QStackedWidget( parent )
     , proxy_       ( proxy )
     , controllers_ ( controllers )
@@ -40,6 +47,7 @@ GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controller
     , map_         ( map )
     , strategy_    ( strategy )
     , logger_      ( logger )
+    , drawingTypes_( drawingTypes )
     , iconLayout_  ( new IconLayout() )
     , displayTimer_( new QTimer( this ) )
 {
@@ -73,8 +81,8 @@ void GlSelector::Load()
         return;
     }
 
-    widget2d_ = std::make_shared< GlWidget >( this, controllers_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_ );
-    widget3d_ = std::make_shared< Gl3dWidget >( this, controllers_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_ );
+    widget2d_ = std::make_shared< GlWidget >( this, controllers_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_, drawingTypes_ );
+    widget3d_ = std::make_shared< Gl3dWidget >( this, controllers_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_ );
 
     widget2d_->Load( config_ );
     widget2d_->Configure( strategy_ );

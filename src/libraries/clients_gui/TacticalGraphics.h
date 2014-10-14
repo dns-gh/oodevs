@@ -12,10 +12,10 @@
 
 #include <tools/ElementObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
-    class Controllers;
     class Location_ABC;
 }
 
@@ -23,25 +23,22 @@ namespace gui
 {
     class DrawingCategory;
     class DrawingTemplate;
+    class DrawingTypes;
     class GlTools_ABC;
     class SvgLocationDrawer;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  TacticalGraphics
     @brief  TacticalGraphics
 */
 // Created: SBO 2009-05-29
 // =============================================================================
-class TacticalGraphics : public tools::Observer_ABC
-                       , public tools::ElementObserver_ABC< DrawingCategory >
+class TacticalGraphics : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TacticalGraphics( kernel::Controllers& controllers );
+    explicit TacticalGraphics( const DrawingTypes& drawingTypes );
     virtual ~TacticalGraphics();
     //@}
 
@@ -53,16 +50,8 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TacticalGraphics( const TacticalGraphics& );            //!< Copy constructor
-    TacticalGraphics& operator=( const TacticalGraphics& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const DrawingCategory& category );
-    virtual void NotifyDeleted( const DrawingCategory& category );
     boost::shared_ptr< SvgLocationDrawer > FindRenderer( const std::string symbol );
     //@}
 
@@ -75,7 +64,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     T_Templates templates_;
     T_Renderers renderers_;
     QColor color_;

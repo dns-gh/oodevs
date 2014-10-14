@@ -34,11 +34,16 @@ using namespace gui;
 // Name: Gl3dWidget constructor
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, float width, float height,
-                        DetectionMap& elevation, EventStrategy_ABC& strategy )
+Gl3dWidget::Gl3dWidget( QWidget* pParent,
+                        Controllers& controllers,
+                        float width,
+                        float height,
+                        DetectionMap& elevation,
+                        EventStrategy_ABC& strategy,
+                        const DrawingTypes& drawingTypes )
     : SetGlOptions   ()
     , Widget3D       ( context_, pParent, 0 )
-    , GlToolsBase    ( controllers )
+    , GlToolsBase    ( controllers, drawingTypes )
     , width_         ( width )
     , height_        ( height )
     , elevation_     ( elevation )

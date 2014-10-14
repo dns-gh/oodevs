@@ -31,12 +31,13 @@ class QStackedWidget;
 
 namespace gui
 {
-    class GlProxy;
     class CircularEventStrategy;
+    class DrawingTypes;
     class ExclusiveEventStrategy;
-    class GlWidget;
     class Gl3dWidget;
     class GlPlaceHolder;
+    class GlProxy;
+    class GlWidget;
     class IconLayout;
     class Layer;
 
@@ -66,7 +67,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             GlSelector( QWidget* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy, kernel::Logger_ABC& logger );
+             GlSelector( QWidget* parent,
+                         GlProxy& proxy,
+                         kernel::Controllers& controllers,
+                         const tools::ExerciseConfig& config,
+                         kernel::DetectionMap& map,
+                         EventStrategy_ABC& strategy,
+                         kernel::Logger_ABC& logger,
+                         const DrawingTypes& drawingTypes );
     virtual ~GlSelector();
     //@}
 
@@ -114,6 +122,7 @@ private:
     EventStrategy_ABC& strategy_;
     kernel::Logger_ABC& logger_;
     std::unique_ptr< IconLayout > iconLayout_;
+    const DrawingTypes& drawingTypes_;
 
     QTimer* displayTimer_;
     std::shared_ptr< GlWidget > widget2d_;

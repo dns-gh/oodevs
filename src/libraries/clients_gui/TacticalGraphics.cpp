@@ -12,11 +12,11 @@
 
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
+#include "DrawingTypes.h"
 #include "SimpleLocationDrawer.h"
 #include "SvgLocationDrawer.h"
 #include "GlTools_ABC.h"
 
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
 #include <boost/assign.hpp>
 
@@ -26,10 +26,16 @@ using namespace gui;
 // Name: TacticalGraphics constructor
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-TacticalGraphics::TacticalGraphics( kernel::Controllers& controllers )
-    : controllers_( controllers )
+TacticalGraphics::TacticalGraphics( const DrawingTypes& drawingTypes )
 {
-    controllers_.Register( *this );
+    drawingTypes.Apply( [&]( const DrawingCategory& category ){
+        tools::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const DrawingTemplate& drawing = it.NextElement();
+            templates_[ drawing.GetCode().toStdString() ] = &drawing;
+        }
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,44 +44,7 @@ TacticalGraphics::TacticalGraphics( kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 TacticalGraphics::~TacticalGraphics()
 {
-    controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalGraphics::NotifyCreated
-// Created: SBO 2009-05-29
-// -----------------------------------------------------------------------------
-void TacticalGraphics::NotifyCreated( const DrawingCategory& category )
-{
-    tools::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const DrawingTemplate& drawing = it.NextElement();
-        templates_[ drawing.GetCode().toStdString() ] = &drawing;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalGraphics::NotifyDeleted
-// Created: SBO 2009-05-29
-// -----------------------------------------------------------------------------
-void TacticalGraphics::NotifyDeleted( const DrawingCategory& category )
-{
-    tools::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const DrawingTemplate& drawing = it.NextElement();
-        {
-            T_Renderers::iterator itD = renderers_.find( drawing.GetCode().toStdString() );
-            if( itD != renderers_.end() )
-                renderers_.erase( itD );
-        }
-        {
-            T_Templates::iterator itD = templates_.find( drawing.GetCode().toStdString() );
-            if( itD != templates_.end() )
-                templates_.erase( itD );
-        }
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

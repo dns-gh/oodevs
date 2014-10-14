@@ -23,6 +23,7 @@ namespace kernel
     class DetectionMap;
     class Controllers;
 }
+
 namespace tools
 {
     class ExerciseConfig;
@@ -30,6 +31,7 @@ namespace tools
 
 namespace gui
 {
+    class DrawingTypes;
     class Layer;
     class PickingSelector;
 
@@ -47,8 +49,13 @@ class Gl3dWidget : private SetGlOptions
 public:
     //! @name Constructors/Destructor
     //@{
-             Gl3dWidget( QWidget* pParent, kernel::Controllers& controllers, float width, float height,
-                         kernel::DetectionMap& elevation, EventStrategy_ABC& strategy );
+             Gl3dWidget( QWidget* pParent,
+                         kernel::Controllers& controllers,
+                         float width,
+                         float height,
+                         kernel::DetectionMap& elevation,
+                         EventStrategy_ABC& strategy,
+                         const DrawingTypes& drawingTypes );
     virtual ~Gl3dWidget();
     //@}
 

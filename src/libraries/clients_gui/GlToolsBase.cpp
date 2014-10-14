@@ -27,7 +27,7 @@ using namespace gui;
 // Name: GlToolsBase constructor
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-GlToolsBase::GlToolsBase( Controllers& controllers )
+GlToolsBase::GlToolsBase( Controllers& controllers, const DrawingTypes& drawingTypes )
     : controllers_( controllers )
     , selected_   ( false )
     , superiorSelected_( false )
@@ -35,7 +35,7 @@ GlToolsBase::GlToolsBase( Controllers& controllers )
     , renderer_   ( new SvglRenderer() )
     , symbols_    ( new GLSymbols( *renderer_ ) )
     , svgl_       ( new SvglProxy( *renderer_ ) )
-    , graphics_   ( new TacticalGraphics( controllers ) )
+    , graphics_   ( new TacticalGraphics( drawingTypes ) )
     , billboard_  ( 0 )
 {
     controllers_.Register( *this );
