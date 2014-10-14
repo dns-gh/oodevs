@@ -82,26 +82,30 @@ class MaintenanceTransportVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MaintenanceTransportVisitor( const PHY_ComposantePion& composante )
-            : score_     ( std::numeric_limits< int >::min() )
-            , selected_  ( 0 )
+            : score_( std::numeric_limits< int >::min() )
+            , selected_( 0 )
+            , firstAvailable_( 0 )
             , composante_( composante )
         {}
 
         virtual void Visit( const MIL_AgentPion& tmp )
         {
-            const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
+            PHY_RoleInterface_Maintenance* candidate = const_cast< PHY_RoleInterface_Maintenance* >( tmp.RetrieveRole< PHY_RoleInterface_Maintenance >() );
             const int score = candidate != 0 ? candidate->GetAvailabilityScoreForTransport( composante_ ) : std::numeric_limits< int >::min();
             if( score > score_ )
             {
                 score_    = score;
-                selected_ = const_cast<PHY_RoleInterface_Maintenance*>( candidate );
+                selected_ = candidate;
             }
+            if( !firstAvailable_ && !tmp.IsDead() )
+                firstAvailable_ = candidate;
         }
 
     public:
-                int                            score_;
-                PHY_RoleInterface_Maintenance* selected_;
-        const PHY_ComposantePion&              composante_;
+        int score_;
+        PHY_RoleInterface_Maintenance* selected_;
+        PHY_RoleInterface_Maintenance* firstAvailable_;
+        const PHY_ComposantePion& composante_;
 };
 
 class MaintenanceDiagnosisVisitor : public MIL_LogisticEntitiesVisitor
