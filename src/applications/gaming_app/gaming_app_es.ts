@@ -522,7 +522,7 @@ Motivo: %3</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Borrar</translation>
     </message>
     <message>
         <source>Delete &apos;%1&apos;?</source>
@@ -2871,7 +2871,7 @@ Los datos no pueden ser proyectados.</translation>
     <name>PathfindLayer</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Borrar</translation>
     </message>
     <message>
         <source>Edit</source>
