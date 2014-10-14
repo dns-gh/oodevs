@@ -110,7 +110,7 @@ void BypassAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_
     {
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
-            glColor3f( 1, 1, 1 );
+            glColor4f( 1, 1, 1, tools.GetCurrentAlpha() );
             tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor( !hasSinglePointPos_ ) * 200.f ), nBypassConstructionPercentage_ / 100.f, hasSinglePointPos_ );
         glPopAttrib();
     }

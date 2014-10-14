@@ -56,7 +56,7 @@ TacticalLine_ABC::~TacticalLine_ABC()
 void TacticalLine_ABC::Draw( const geometry::Point2f&, const gui::Viewport_ABC&, gui::GLView_ABC& tools ) const
 {
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glColor3f( 0.f, 0.f, 0.f );
+        glColor4f( 0, 0, 0, tools.GetCurrentAlpha() );
         if( !name_.isEmpty() )
             tools.Print( name_.toStdString(), Get< kernel::Positions >().GetPosition() );
     glPopAttrib();

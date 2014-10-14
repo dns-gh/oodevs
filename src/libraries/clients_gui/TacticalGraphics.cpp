@@ -108,16 +108,15 @@ void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_A
         if( overlined )
         {
             glPushAttrib( GL_CURRENT_BIT );
-                glColor4f( 0, 0, 0, 0.5f );
-                glLineWidth( 6.f );
-                location.Accept( drawer );
+            glColor4f( 0, 0, 0, 0.5f * tools.GetCurrentAlpha() );
+            glLineWidth( 6.f );
+            location.Accept( drawer );
             glPopAttrib();
         }
         glLineWidth( tools.LineWidth( 2.f ) );
         location.Accept( drawer );
         glPopAttrib();
     }
-
     AreaEffect visitor( tools, pointSize );
     location.Accept( visitor );
 }
