@@ -23,7 +23,7 @@
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
-    : gui::AgentsLayer( controllers, tools, strategy, view, profile )
+    : gui::EntityLayer< kernel::Agent_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Agent )
     , selected_( controllers )
     , actionsModel_( actionsModel )
     , simulation_( simulation )
@@ -73,7 +73,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
 void AgentsLayer::NotifySelectionChanged( const std::vector< const kernel::Agent_ABC* >& elements )
 {
     selected_ = elements.size() == 1 ? elements.front() : 0;
-    gui::AgentsLayer::NotifySelectionChanged( elements );
+    gui::EntityLayer< kernel::Agent_ABC >::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,12 +95,12 @@ void AgentsLayer::RequestCreation( const geometry::Point2f& point, const kernel:
 void AgentsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode )
 {
     if( displayDestroyedUnits_ )
-        gui::AgentsLayer::Draw( entity, viewport, pickingMode );
+        gui::EntityLayer< kernel::Agent_ABC >::Draw( entity, viewport, pickingMode );
     else
     {
         const Attributes* attributes = entity.Retrieve< Attributes >();
         if( attributes && !attributes->bDead_ )
-            gui::AgentsLayer::Draw( entity, viewport, pickingMode );
+            gui::EntityLayer< kernel::Agent_ABC >::Draw( entity, viewport, pickingMode );
     }
 }
 

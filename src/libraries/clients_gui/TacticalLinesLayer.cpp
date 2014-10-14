@@ -92,17 +92,6 @@ void TacticalLinesLayer::ContextMenu( const GraphicalEntity_ABC& selectable, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLinesLayer::FillContextMenu
-// Created: LGY 2013-04-05
-// -----------------------------------------------------------------------------
-void TacticalLinesLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
-{
-    const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
-    const TacticalLine_ABC& line = static_cast< const TacticalLine_ABC& >( entity );
-    controllers_.actions_.ContextMenu( this, entity, line, menu );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalLinesLayer::CanCreateLine
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------

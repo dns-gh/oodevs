@@ -41,7 +41,6 @@ private:
     //! @name Helpers
     //@{
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
-    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:

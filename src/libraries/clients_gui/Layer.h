@@ -92,11 +92,11 @@ public:
     //! @name Layer_ABC implementation
     //@{
     virtual QString GetName() const;
-    virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
+    virtual void Select( unsigned int id, bool control );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >&, const geometry::Point2f&, const QPoint& );
     virtual void FillContextMenu( QMouseEvent* mouse, kernel::ContextMenu& menu, const geometry::Point2f& point );
-    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void FillContextMenu( unsigned int id, kernel::ContextMenu& menu );
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection );
     virtual bool ShowTooltip( const T_ObjectPicking& selection );
     virtual void HideTooltip();
