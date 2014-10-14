@@ -12,10 +12,6 @@ enum ClientType
 {
     CLIENT_INVALID              = 0x000;
     // commands
-    CLIENT_RESIZE               = 0x100;
-    CLIENT_QUIT                 = 0x101;
-    CLIENT_RELOAD               = 0x102;
-    CLIENT_LOAD                 = 0x103;
     CLIENT_CENTER               = 0x104;
     CLIENT_QUERY_UPDATE         = 0x105;
     // event commands

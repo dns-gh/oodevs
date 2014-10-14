@@ -9,12 +9,17 @@
 #ifndef CLIENT_H__
 #define CLIENT_H__
 
-#include <timeline_core/api.h>
+#include <timeline/api.h>
 #include <controls/controls.h>
 #pragma warning( push, 0 )
-#include <cef_base.h>
+#include <internal/cef_ptr.h>
 #pragma warning( pop )
-#include <functional>
+
+namespace timeline
+{
+    class ClientApp;
+    class Engine;
+}
 
 namespace boost
 {
@@ -23,45 +28,22 @@ namespace boost
 
 namespace tools
 {
-namespace ipc
-{
-    class Device;
-}
+    class Ofstream;
 }
 
 namespace timeline
 {
-namespace core
-{
-    class App;
-    class Browser;
-    class Engine;
-}
-}
-
-namespace timeline
-{
-namespace core
-{
-class Client : public Client_ABC
-             , public controls::ClientHandler_ABC
+class Client : public controls::ClientHandler_ABC
 {
 public:
-    typedef std::function< void( const std::string& ) > T_Logger;
-
-    // logger is a thread-safe logging callback or an empty functor.
-             Client( const Configuration& cfg, const T_Logger& logger );
+             Client( int argc, const char* argv[] );
     virtual ~Client();
 
-    /// Client_ABC methods
-    virtual int Run();
+    /// public methods
+    bool Start();
 
-    /// controls::Handler_ABC methods
-    virtual void OnResizeClient();
-    virtual void OnQuitClient();
-    virtual void OnReloadClient();
+    /// controls::ClientHandler_ABC methods
     virtual void OnCenterClient();
-    virtual void OnLoadClient( const std::string& url );
     virtual void OnUpdateQuery( const std::map< std::string, std::string >& query );
     virtual void OnCreateEvents( const Events& events );
     virtual void OnSelectEvent( const std::string& uuid );
@@ -73,20 +55,16 @@ public:
     virtual void OnSaveEvents();
 
 private:
-    virtual void Log( const std::string& msg, bool read );
-
+    virtual void Log( const std::string& msg );
+    
 private:
-    const Configuration cfg_;
-    T_Logger logger_;
-    std::unique_ptr< tools::ipc::Device > read_;
-    std::unique_ptr< tools::ipc::Device > write_;
+    const tools::Path client_log_;
+    const controls::T_Logger logger_;
+    std::unique_ptr< boost::mutex > lock_;
+    std::unique_ptr< tools::Ofstream > log_;
     CefRefPtr< Engine > engine_;
-    CefRefPtr< App > app_;
-    CefRefPtr< Browser > browser_;
-    bool quit_;
-    bool logEvents_;
+    CefRefPtr< ClientApp > app_;
 };
-}
 }
 
 #endif//CLIENT_H__

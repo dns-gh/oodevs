@@ -19,14 +19,6 @@
 #include <boost/noncopyable.hpp>
 #include <functional>
 
-namespace tools
-{
-namespace ipc
-{
-    class Device;
-}
-}
-
 namespace timeline
 {
     struct Event;
@@ -36,17 +28,15 @@ namespace timeline
 
 namespace timeline
 {
-namespace core
-{
 class Engine : public boost::noncopyable
 {
 public:
     typedef std::function< void( const std::string& ) > T_Logger;
-             Engine( tools::ipc::Device& device, const T_Logger& log );
+             Engine( const T_Logger& log );
     virtual ~Engine();
 
     /// Public methods
-    void Register   ( CefRefPtr< CefV8Context > context );
+    void Register   ( CefRefPtr< CefBrowser > browser, CefRefPtr< CefV8Context > context );
     void Unregister ();
     void CenterClient();
     void UpdateQuery( const std::map< std::string, std::string >& query );
@@ -92,10 +82,9 @@ protected:
 
 private:
     const T_Logger log_;
+    CefRefPtr< CefBrowser > browser_;
     CefRefPtr< CefV8Context > ctx_;
-    tools::ipc::Device& device_;
 };
-}
 }
 
 #endif//ENGINE_H__

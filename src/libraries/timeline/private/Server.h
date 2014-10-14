@@ -11,26 +11,29 @@
 
 #include "timeline/api.h"
 #include "controls/controls.h"
-#include <QProcess>
+
+#ifdef _MSC_VER
+#pragma warning( push, 0 )
+#endif
+#include <internal/cef_ptr.h>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 namespace boost
 {
-    class thread;
     class mutex;
 }
 
 namespace tools
 {
     class Ofstream;
-namespace ipc
-{
-    class Device;
-}
 }
 
 namespace timeline
 {
-    class Embedded_ABC;
+    class Browser;
+    class ServerApp;
 }
 
 namespace timeline
@@ -50,9 +53,10 @@ private:
 class Server : public Server_ABC
              , public controls::ServerHandler_ABC
 {
-    Q_OBJECT
 public:
-             Server( const Configuration& cfg );
+    typedef std::function< void( const std::string& ) > T_Logger;
+
+    explicit Server( const Configuration& cfg );
     virtual ~Server();
 
     /// Server_ABC methods
@@ -61,12 +65,12 @@ public:
     virtual void Load( const std::string& url );
     virtual void UpdateQuery( const std::map< std::string, std::string >& parameters );
     virtual void Center();
-    virtual bool CreateEvents( const Events& events );
-    virtual bool SelectEvent( const std::string& uuid );
-    virtual bool ReadEvents();
-    virtual bool ReadEvent( const std::string& uuid );
-    virtual bool UpdateEvent( const Event& event );
-    virtual bool DeleteEvents( const std::vector< std::string >& uuids );
+    virtual void CreateEvents( const Events& events );
+    virtual void SelectEvent( const std::string& uuid );
+    virtual void ReadEvents();
+    virtual void ReadEvent( const std::string& uuid );
+    virtual void UpdateEvent( const Event& event );
+    virtual void DeleteEvents( const std::vector< std::string >& uuids );
     virtual void LoadEvents( const std::string& events );
     virtual void SaveEvents() const;
 
@@ -88,25 +92,21 @@ public:
     virtual void OnKeyPress( int key );
     virtual void OnKeyUp( int key );
 
-private:
-    void Run();
-    void StartProcess();
-    void Log( const std::string& msg );
-    void Log( const std::string& msg, bool read );
+    /// public methods
+    virtual void Resize();
+    virtual void Quit();
 
-private slots:
-    void OnError( QProcess::ProcessError error );
+private:
+    void Log( const std::string& msg );
 
 private:
     const Configuration cfg_;
-    const std::string uuid_;
-    const std::function< void( const std::string& msg ) > logger_;
+    const T_Logger logger_;
+    QWidget* frame_;
+    CefRefPtr< ServerApp > app_;
+    CefRefPtr< Browser > browser_;
     std::unique_ptr< boost::mutex > lock_;
     std::unique_ptr< tools::Ofstream > log_;
-    std::unique_ptr< tools::ipc::Device > write_;
-    std::unique_ptr< tools::ipc::Device > read_;
-    std::unique_ptr< Embedded_ABC > embedded_;
-    std::unique_ptr< boost::thread > thread_;
 };
 }
 

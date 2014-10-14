@@ -8,23 +8,18 @@
 // *****************************************************************************
 
 #include "Browser.h"
-#include "Engine.h"
-#include <timeline/api.h>
+#include "Server.h"
 
-using namespace timeline::core;
+#include "controls/controls.h"
 
-Browser::Browser( HWND hwnd, const std::string& url )
+using namespace timeline;
+
+Browser::Browser( Server& server, HWND hwnd, const std::string& url )
     : hwnd_  ( hwnd )
-    , width_ ( 0 )
-    , height_( 0 )
+    , server_( server )
     , url_   ( url )
 {
     // NOTHING
-}
-
-CefRefPtr< Browser > Browser::Factory( HWND hwnd, const std::string& url )
-{
-    return new Browser( hwnd, url );
 }
 
 void Browser::Start()
@@ -33,7 +28,7 @@ void Browser::Start()
     info.SetAsChild( hwnd_, RECT() );
     CefBrowserHost::CreateBrowser( info,
         static_cast< CefRefPtr< CefClient > >( this ),
-        std::string(), CefBrowserSettings() );
+        std::string(), CefBrowserSettings(), nullptr );
 }
 
 Browser::~Browser()
@@ -54,7 +49,7 @@ void Browser::OnAfterCreated( CefRefPtr< CefBrowser > cef )
         cef_ = cef;
         url = url_;
     }
-    UpdateSize();
+    Resize();
     Load( url );
 }
 
@@ -62,27 +57,23 @@ void Browser::OnBeforeClose( CefRefPtr< CefBrowser > )
 {
     AutoLock lock( this );
     cef_ = 0;
+    server_.Quit();
 }
 
-void Browser::Resize( int width, int height )
-{
-    AutoLock lock( this );
-    width_ = width;
-    height_ = height;
-    if( !cef_ )
-        return;
-    auto host = cef_->GetHost();
-    HDWP hdwp = BeginDeferWindowPos( 1 );
-    hdwp = DeferWindowPos( hdwp, host->GetWindowHandle(), NULL, 0, 0, width_, height_, SWP_NOZORDER );
-    EndDeferWindowPos( hdwp );
-}
-
-void Browser::UpdateSize()
+void Browser::Resize()
 {
     RECT rect;
     const bool valid = !!GetClientRect( hwnd_, &rect );
-    if( valid )
-        Resize( rect.right - rect.left, rect.bottom - rect.top );
+    if( !valid )
+        return;
+    AutoLock lock( this );
+    if( !cef_ )
+        return;
+    auto hwnd = cef_->GetHost()->GetWindowHandle();
+    HDWP hdwp = BeginDeferWindowPos( 1 );
+    hdwp = DeferWindowPos( hdwp, hwnd, NULL, rect.left, rect.top,
+        rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER );
+    EndDeferWindowPos( hdwp );
 }
 
 void Browser::Load( const std::string& url )
@@ -99,5 +90,24 @@ void Browser::Load( const std::string& url )
 
 void Browser::Reload()
 {
-    cef_->Reload();
+    AutoLock lock( this );
+    if( cef_ )
+        cef_->Reload();
+}
+
+void Browser::Post( CefRefPtr< CefProcessMessage > msg )
+{
+    AutoLock lock( this );
+    if( cef_ )
+        cef_->SendProcessMessage( PID_RENDERER, msg );
+}
+
+bool Browser::OnProcessMessageReceived( CefRefPtr< CefBrowser >,
+                                        CefProcessId,
+                                        CefRefPtr< CefProcessMessage > message )
+{
+    if( message->GetName() != controls::GetClientToServerMessage() )
+        return false;
+    ParseServer( server_, message, controls::T_Logger() );
+    return true;
 }

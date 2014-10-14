@@ -8,22 +8,17 @@
 // *****************************************************************************
 
 #include "Server.h"
+#include "moc_Server.cpp"
 
-#include "Embedded_ABC.h"
-#include "controls/controls.h"
+#include "Browser.h"
+#include "ServerApp.h"
 
-#include <tools/IpcDevice.h>
 #include <tools/StdFileWrapper.h>
 
-#include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/uuid/random_generator.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/lexical_cast.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/lock_guard.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/thread.hpp>
-
-#include "moc_Server.cpp"
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
@@ -35,49 +30,38 @@
 
 using namespace timeline;
 namespace bpt = boost::posix_time;
-namespace ipc = tools::ipc;
 
 namespace
 {
     class Widget : public QWidget
     {
     public:
-        Widget( ipc::Device& device, const controls::T_Logger& log, QWidget* parent )
+        Widget( Server& server, QWidget* parent )
             : QWidget( parent )
-            , device_( device )
-            , log_   ( log )
+            , server_( server )
         {
-            controls::TryResizeClient( device_, log_ );
+            // NOTHING
         }
 
     protected:
         virtual void resizeEvent( QResizeEvent* event )
         {
-            try
-            {
-                controls::TryResizeClient( device_, log_ );
-            }
-            catch( ... )
-            {
-                // NOTHING
-            }
+            server_.Resize();
             QWidget::resizeEvent( event );
         }
 
     private:
-        ipc::Device& device_;
-        const controls::T_Logger log_;
+        Server& server_;
     };
 }
 
 Server::Server( const Configuration& cfg )
-    : cfg_     ( cfg )
-    , uuid_    ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
-    , logger_  ( cfg.server_log.IsEmpty() ? controls::T_Logger() : [&]( const std::string& msg ){ Log( msg, false ); } )
-    , lock_    ( new boost::mutex() )
-    , write_   ( new ipc::Device( uuid_ + "_write", true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , read_    ( new ipc::Device( uuid_ + "_read",  true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , embedded_( Embedded_ABC::Factory( *write_, logger_ ).release() )
+    : cfg_    ( cfg )
+    , logger_ ( cfg.server_log.IsEmpty() ? T_Logger() : [&]( const std::string& msg ){ Log( msg ); } )
+    , frame_  ( new Widget( *this, cfg.widget ) )
+    , app_    ( new ServerApp( cfg.debug_port, cfg.client_log, cfg.cef_log ) )
+    , browser_( new Browser( *this, frame_->winId(), cfg.url ) )
+    , lock_   ( new boost::mutex() )
 {
     if( !cfg_.server_log.IsEmpty() )
         log_.reset( new tools::Ofstream( cfg_.server_log, std::ios::out | std::ios::binary ) );
@@ -88,45 +72,26 @@ Server::Server( const Configuration& cfg )
     qRegisterMetaType< Events >( "timeline::Events" );
     qRegisterMetaType< Error >( "timeline::Error" );
     auto layout = new QVBoxLayout( cfg.widget );
-    auto widget = new Widget( *write_, logger_, cfg.widget );
-    layout->addWidget( widget );
+    layout->addWidget( frame_ );
     layout->setContentsMargins( 0, 0, 0, 0 );
 }
 
 Server::~Server()
 {
-    embedded_.reset();
     SignalWaiter waiter;
     connect( this, SIGNAL( Done() ), &waiter, SLOT( Signal() ) );
-    thread_->interrupt();
-    thread_->join();
+    browser_ = nullptr;
+    delete frame_;
     // wait for all queued signals to be processed from current Qt event-loop
     // we do that by using a last signal from our thread
     while( !waiter.IsSignaled() )
         QCoreApplication::processEvents( QEventLoop::WaitForMoreEvents );
+    CefShutdown();
 }
 
 void Server::Start()
 {
-    thread_.reset( new boost::thread( &Server::Run, this ) );
-    embedded_->Start( cfg_, uuid_ );
-}
-
-namespace
-{
-    const char* GetError( QProcess::ProcessError error )
-    {
-        switch( error )
-        {
-            case QProcess::FailedToStart: return "QProcess::FailedToStart";
-            case QProcess::Crashed:       return "QProcess::Crashed";
-            case QProcess::Timedout:      return "QProcess::Timedout";
-            case QProcess::WriteError:    return "QProcess::WriteError";
-            case QProcess::ReadError:     return "QProcess::ReadError";
-            case QProcess::UnknownError:  return "QProcess::UnknownError";
-        }
-        return "Unknown process error";
-    }
+    browser_->Start();
 }
 
 void Server::Log( const std::string& msg )
@@ -134,119 +99,77 @@ void Server::Log( const std::string& msg )
     boost::lock_guard< boost::mutex > lock( *lock_ );
     if( log_ )
         *log_ << bpt::to_simple_string( bpt::second_clock::local_time() )
-              << msg << std::endl;
-}
-
-void Server::Log( const std::string& msg, bool read )
-{
-    Log( ( read ? " read:  " : " write: " ) + msg );
-}
-
-void Server::OnError( QProcess::ProcessError error )
-{
-    const auto err = GetError( error );
-    qDebug() << err;
-    Log( std::string( "error: " ) + err );
+              << " " << msg << std::endl;
 }
 
 void Server::Reload()
 {
-    controls::ReloadClient( *write_, logger_ );
+    browser_->Reload();
 }
 
 void Server::Load( const std::string& url )
 {
-    controls::LoadClient( *write_, logger_, url );
+    browser_->Load( url );
+}
+
+void Server::Resize()
+{
+    browser_->Resize();
+}
+
+void Server::Quit()
+{
+    emit Done();
 }
 
 void Server::Center()
 {
-    controls::CenterClient( *write_, logger_ );
+    browser_->Post( controls::CenterClient( logger_ ) );
 }
 
 void Server::UpdateQuery( const std::map< std::string, std::string >& parameters )
 {
-    controls::UpdateQuery( *write_, logger_, parameters );
+    browser_->Post( controls::UpdateQuery( logger_, parameters ) );
 }
 
-bool Server::CreateEvents( const Events& events )
+void Server::CreateEvents( const Events& events )
 {
-    for( auto it = events.begin(); it != events.end(); ++it )
-        if( !it->IsValid() )
-            return false;
-    return controls::CreateEvents( *write_, logger_, events );
+    browser_->Post( controls::CreateEvents( logger_, events ) );
 }
 
-bool Server::SelectEvent( const std::string& uuid )
+void Server::SelectEvent( const std::string& uuid )
 {
-    return controls::SelectEvent( *write_, logger_, uuid );
+    browser_->Post( controls::SelectEvent( logger_, uuid ) );
 }
 
-bool Server::ReadEvents()
+void Server::ReadEvents()
 {
-    return controls::ReadEvents( *write_, logger_ );
+    browser_->Post( controls::ReadEvents( logger_ ) );
 }
 
-bool Server::ReadEvent( const std::string& uuid )
+void Server::ReadEvent( const std::string& uuid )
 {
-    return controls::ReadEvent( *write_, logger_, uuid );
+    browser_->Post( controls::ReadEvent( logger_, uuid ) );
 }
 
-bool Server::UpdateEvent( const Event& event )
+void Server::UpdateEvent( const Event& event )
 {
-    if( !event.IsValid() )
-        return false;
-    return controls::UpdateEvent( *write_, logger_, event );
+    browser_->Post( controls::UpdateEvent( logger_, event ) );
 }
 
-bool Server::DeleteEvents( const std::vector< std::string >& uuids )
+void Server::DeleteEvents( const std::vector< std::string >& uuids )
 {
-    return controls::DeleteEvents( *write_, logger_, uuids );
+    browser_->Post( controls::DeleteEvents( logger_, uuids ) );
 }
 
 void Server::LoadEvents( const std::string& events )
 {
-    controls::LoadEvents( *write_, logger_, events );
+    browser_->Post( controls::LoadEvents( logger_, events ) );
 }
 
 void Server::SaveEvents() const
 {
-    controls::SaveEvents( *write_, logger_ );
-}
-
-void Server::Run()
-{
-    try
-    {
-        controls::T_Logger logger;
-        if( log_ )
-            logger = [&]( const std::string& msg ){ Log( msg, true ); };
-        std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
-        while( !thread_->interruption_requested() )
-            if( const size_t read = read_->TimedRead( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
-            {
-                if( read > buffer.size() )
-                    buffer.resize( read );
-                else
-                {
-                    controls::ParseServer( *this, &buffer[0], read, logger );
-                    buffer.resize( ipc::DEFAULT_MAX_PACKET_SIZE );
-                }
-            }
-    }
-    catch( const boost::thread_interrupted& )
-    {
-        // NOTHING
-    }
-    catch( const std::exception& err )
-    {
-        qDebug() << err.what();
-    }
-    catch( ... )
-    {
-        qDebug() << "unexpected exception";
-    }
-    emit Done();
+    browser_->Post( controls::SaveEvents( logger_ ) );
 }
 
 void Server::OnReadyServer()

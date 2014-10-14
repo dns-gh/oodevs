@@ -46,8 +46,7 @@ struct Action
 struct Event
 {
     Event()
-        : sizeof_   ( sizeof( Event ) )
-        , error_code( 0 )
+        : error_code( 0 )
         , read_only ( false )
         , done      ( false )
     {
@@ -60,8 +59,7 @@ struct Event
            const std::string& end,
            bool done,
            const Action& action )
-        : sizeof_   ( sizeof( Event ) )
-        , uuid      ( uuid )
+        : uuid      ( uuid )
         , name      ( name )
         , info      ( info )
         , begin     ( begin )
@@ -72,10 +70,6 @@ struct Event
         , action    ( action )
     {
         // NOTHING
-    }
-    bool IsValid() const
-    {
-        return sizeof_ == sizeof *this;
     }
     std::string uuid;
     std::string name;
@@ -89,8 +83,6 @@ struct Event
     bool        read_only;
     bool        done;
     Action      action;
-private:
-    size_t      sizeof_;
 };
 
 typedef std::vector< Event > Events;
@@ -127,20 +119,19 @@ public:
              Server_ABC() {}
     virtual ~Server_ABC() {}
 
-    virtual void Start() = 0;
-
     // Public slots
 public slots:
+    virtual void Start() = 0;
     virtual void Reload() = 0;
     virtual void Load( const std::string& url ) = 0;
     virtual void Center() = 0;
     virtual void UpdateQuery( const std::map< std::string, std::string >& parameters ) = 0;
-    virtual bool CreateEvents( const Events& events ) = 0;
-    virtual bool SelectEvent( const std::string& uuid ) = 0;
-    virtual bool ReadEvents() = 0;
-    virtual bool ReadEvent( const std::string& uuid ) = 0;
-    virtual bool UpdateEvent( const timeline::Event& event ) = 0;
-    virtual bool DeleteEvents( const std::vector< std::string >& uuids ) = 0;
+    virtual void CreateEvents( const Events& events ) = 0;
+    virtual void SelectEvent( const std::string& uuid ) = 0;
+    virtual void ReadEvents() = 0;
+    virtual void ReadEvent( const std::string& uuid ) = 0;
+    virtual void UpdateEvent( const timeline::Event& event ) = 0;
+    virtual void DeleteEvents( const std::vector< std::string >& uuids ) = 0;
     virtual void LoadEvents( const std::string& events ) = 0;
     virtual void SaveEvents() const = 0;
 
@@ -166,30 +157,23 @@ signals:
 struct Configuration
 {
     Configuration()
-        : sizeof_   ( sizeof( Configuration ) )
-        , widget    ( 0 )
+        : widget    ( nullptr )
         , debug_port( 0 )
     {
         // NOTHING
     }
-    bool IsValid() const
-    {
-        return sizeof_ == sizeof *this;
-    }
-    tools::Path rundir;
-    tools::Path binary;
     tools::Path server_log;
     tools::Path client_log;
     tools::Path cef_log;
     QWidget*    widget;
     std::string url;
-    int         debug_port; ///< optional remove debug port
-private:
-    size_t      sizeof_;
+    int         debug_port;
 };
 
-bool SpawnServer();
 std::auto_ptr< Server_ABC > MakeServer( const Configuration& cfg );
+
+// Returns false if this process is not a chrome sub-process
+bool RunClient( int argc, const char* argv[] );
 }
 
 #endif//TIMELINE_API_H__
