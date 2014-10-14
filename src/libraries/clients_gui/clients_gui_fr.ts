@@ -316,45 +316,6 @@
     </message>
 </context>
 <context>
-    <name>PreferencesDialog</name>
-    <message>
-        <source>Coordinate System</source>
-        <translation>Système de coordonnées</translation>
-    </message>
-    <message>
-        <source>Visualisation Scales</source>
-        <translation>Echelles de Visualisation</translation>
-    </message>
-    <message>
-        <source>2D</source>
-        <translation>2D</translation>
-    </message>
-    <message>
-        <source>2D/Terrain</source>
-        <translation>2D/Terrain</translation>
-    </message>
-    <message>
-        <source>2D/Population</source>
-        <translation>2D/Population couvrante</translation>
-    </message>
-    <message>
-        <source>2D/Elevation</source>
-        <translation>2D/Elevation</translation>
-    </message>
-    <message>
-        <source>3D</source>
-        <translation>3D</translation>
-    </message>
-    <message>
-        <source>Refresh rate</source>
-        <translation>Période de rafraîchissement</translation>
-    </message>
-    <message>
-        <source>Replay</source>
-        <translation>Rejeu</translation>
-    </message>
-</context>
-<context>
     <name>RenameDialog</name>
     <message>
         <source>Rename</source>
@@ -374,45 +335,6 @@
         <translation>&gt;2D: %L1m
 3D: %L2m
 %L3°</translation>
-    </message>
-</context>
-<context>
-    <name>SoundPanel</name>
-    <message>
-        <source>Sound control</source>
-        <translation>Contrôle du son</translation>
-    </message>
-    <message>
-        <source>Sound directory :</source>
-        <translation>Répertoire du son :</translation>
-    </message>
-    <message>
-        <source>Ajust all sound volumes</source>
-        <translation>Ajuster tous les sons</translation>
-    </message>
-    <message>
-        <source>Direct fires</source>
-        <translation>Tirs directs</translation>
-    </message>
-    <message>
-        <source>Fumigen fires</source>
-        <translation>Tirs fumigènes</translation>
-    </message>
-    <message>
-        <source>Explosive fires</source>
-        <translation>Tirs explosifs</translation>
-    </message>
-    <message>
-        <source>Illumination fires</source>
-        <translation>Tirs d&apos;illumination</translation>
-    </message>
-    <message>
-        <source>Neutralisation fires</source>
-        <translation>Tirs de neutralisation</translation>
-    </message>
-    <message>
-        <source>Mute sounds</source>
-        <translation>Désactiver les sons</translation>
     </message>
 </context>
 <context>
@@ -695,10 +617,6 @@
 <context>
     <name>gui::CoordinateSystemsPanel</name>
     <message>
-        <source>Coordinate System</source>
-        <translation>Système de coordonnées</translation>
-    </message>
-    <message>
         <source>Select current coordinate system:</source>
         <translation>Sélectionner un système de coordonnées:</translation>
     </message>
@@ -761,6 +679,14 @@
     <message>
         <source>Unoccupied:</source>
         <translation>Inoccupé</translation>
+    </message>
+    <message>
+        <source>Min:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -934,14 +860,6 @@ Please check access permissions or write protection.</source>
         <translation>Couleurs de l&apos;hypsométrie</translation>
     </message>
     <message>
-        <source>Fit color gradient to viewport</source>
-        <translation>Adapter le dégradé à la zone affichée</translation>
-    </message>
-    <message>
-        <source>Gradient map</source>
-        <translation>Dégradé</translation>
-    </message>
-    <message>
         <source>Hillshade</source>
         <translation>Ombrage du relief</translation>
     </message>
@@ -999,25 +917,6 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::FixedLightWidget</name>
-    <message>
-        <source>Light direction</source>
-        <translation>Direction de la lumière</translation>
-    </message>
-    <message>
-        <source>Light colors</source>
-        <translation>Couleurs</translation>
-    </message>
-    <message>
-        <source>Ambient</source>
-        <translation>Ambiante</translation>
-    </message>
-    <message>
-        <source>Diffuse</source>
-        <translation>Diffuse</translation>
-    </message>
-</context>
-<context>
     <name>gui::FloodPrototype_ABC</name>
     <message>
         <source>Depth:</source>
@@ -1044,80 +943,81 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::GisToolBar</name>
+    <name>gui::GisToolbar</name>
     <message>
         <source>GIS tools</source>
-        <translation>Outils cartographiques</translation>
+        <translation type="unfinished">Outils cartographiques</translation>
     </message>
     <message>
         <source>Watershed</source>
-        <translation>Montée des eaux</translation>
+        <translation type="unfinished">Montée des eaux</translation>
     </message>
     <message>
         <source>Enable/disable watershed display</source>
-        <translation>Active/désactive la montée des eaux</translation>
+        <translation type="unfinished">Active/désactive la montée des eaux</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation>&lt;</translation>
+        <translation type="unfinished">&lt;</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation>&gt;</translation>
+        <translation type="unfinished">&gt;</translation>
     </message>
     <message>
         <source>Display water below or above specified height</source>
-        <translation>Affiche l&apos;eau au dessous ou au dessus de l&apos;altitude spécifiée</translation>
+        <translation type="unfinished">Affiche l&apos;eau au dessous ou au dessus de l&apos;altitude spécifiée</translation>
     </message>
     <message>
         <source>Set water height limit</source>
-        <translation>Définit l&apos;altitude limite de l&apos;eau</translation>
+        <translation type="unfinished">Définit l&apos;altitude limite de l&apos;eau</translation>
     </message>
     <message>
         <source>Change watershed color</source>
-        <translation>Change la couleur de l&apos;eau</translation>
+        <translation type="unfinished">Change la couleur de l&apos;eau</translation>
     </message>
     <message>
         <source>Show terrain profiler tool</source>
-        <translation>Affiche l&apos;outil de coupe de terrain</translation>
+        <translation type="unfinished">Affiche l&apos;outil de coupe de terrain</translation>
     </message>
     <message>
         <source>Contour lines</source>
-        <translation>Lignes de niveau</translation>
+        <translation type="unfinished">Lignes de niveau</translation>
     </message>
     <message>
         <source>Enable/disable contour lines display</source>
-        <translation>Activer/Désactiver l&apos;afficher des lignes de niveau</translation>
-    </message>
-    <message>
-        <source>Change contour lines color</source>
-        <translation>Changer la couleur des lignes de niveau</translation>
+        <translation type="unfinished">Activer/Désactiver l&apos;afficher des lignes de niveau</translation>
     </message>
     <message>
         <source>Set contour lines height</source>
-        <translation>Définir la hauteur des lignes de niveau</translation>
+        <translation type="unfinished">Définir la hauteur des lignes de niveau</translation>
+    </message>
+    <message>
+        <source>Change contour lines color</source>
+        <translation type="unfinished">Changer la couleur des lignes de niveau</translation>
     </message>
 </context>
 <context>
-    <name>gui::GradientWidget</name>
+    <name>gui::GradientPreferencesEditor</name>
     <message>
         <source>Copy preset</source>
-        <translation>Copier le dégradé</translation>
-    </message>
-    <message>
-        <source>Delete preset</source>
-        <translation>Supprimer le dégradé</translation>
+        <translation type="unfinished">Copier le dégradé</translation>
     </message>
     <message>
         <source>Rename preset</source>
-        <translation>Renommer le dégradé</translation>
+        <translation type="unfinished">Renommer le dégradé</translation>
     </message>
-</context>
-<context>
-    <name>gui::GraphicPreferences</name>
     <message>
-        <source>Colors and line thickness</source>
-        <translation>Couleurs et épaisseurs de trait</translation>
+        <source>Delete preset</source>
+        <translation type="unfinished">Supprimer le dégradé</translation>
+    </message>
+    <message>
+        <source>Fit color gradient to viewport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gradient map</source>
+        <translation type="unfinished">Dégradé</translation>
     </message>
 </context>
 <context>
@@ -1156,10 +1056,6 @@ Please check access permissions or write protection.</source>
 </context>
 <context>
     <name>gui::InhabitantPanel</name>
-    <message>
-        <source>Colors</source>
-        <translation>Couleurs</translation>
-    </message>
     <message>
         <source>Density Gradient map</source>
         <translation>Gradient de densité</translation>
@@ -1783,16 +1679,48 @@ Voulez-vous le supprimer?</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished">Système de coordonnées</translation>
+    </message>
+    <message>
+        <source>Visualisation Scales</source>
+        <translation type="unfinished">Echelles de Visualisation</translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished">2D</translation>
+    </message>
+    <message>
+        <source>2D/Terrain</source>
+        <translation type="unfinished">2D/Terrain</translation>
+    </message>
+    <message>
+        <source>2D/Population</source>
+        <translation type="unfinished">2D/Population couvrante</translation>
+    </message>
+    <message>
+        <source>2D/Elevation</source>
+        <translation type="unfinished">2D/Elevation</translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished">3D</translation>
+    </message>
+    <message>
+        <source>Refresh rate</source>
+        <translation type="unfinished">Période de rafraîchissement</translation>
+    </message>
+    <message>
+        <source>Replay</source>
+        <translation type="unfinished">Rejeu</translation>
+    </message>
 </context>
 <context>
     <name>gui::PresetDialog</name>
     <message>
         <source>Rename preset</source>
         <translation>Renommer le dégradé</translation>
-    </message>
-    <message>
-        <source>New Name:</source>
-        <translation>Nouveau nom :</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1814,6 +1742,10 @@ Voulez-vous le supprimer?</translation>
         <source>Preset name already exists.</source>
         <translation>Le nom du dégradé existe déjà.</translation>
     </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished">Nouveau nom :</translation>
+    </message>
 </context>
 <context>
     <name>gui::ProfileDialog</name>
@@ -1833,10 +1765,6 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::RefreshRatePanel</name>
     <message>
-        <source>Refresh rate</source>
-        <translation>Période de rafraîchissement</translation>
-    </message>
-    <message>
         <source>Select refresh rate (in ms):</source>
         <translation>Sélectionner la période de rafraîchissement (en ms):</translation>
     </message>
@@ -1850,10 +1778,6 @@ Voulez-vous le supprimer?</translation>
 </context>
 <context>
     <name>gui::ReplayPanel</name>
-    <message>
-        <source>Replay</source>
-        <translation>Rejeu</translation>
-    </message>
     <message>
         <source>Set smooth movement</source>
         <translation>Active le mouvement continu</translation>
@@ -1979,6 +1903,38 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Select sounds directory</source>
         <translation>Chosir le répertoire de sons</translation>
+    </message>
+    <message>
+        <source>Direct fires</source>
+        <translation type="unfinished">Tirs directs</translation>
+    </message>
+    <message>
+        <source>Fumigen fires</source>
+        <translation type="unfinished">Tirs fumigènes</translation>
+    </message>
+    <message>
+        <source>Explosive fires</source>
+        <translation type="unfinished">Tirs explosifs</translation>
+    </message>
+    <message>
+        <source>Illumination fires</source>
+        <translation type="unfinished">Tirs d&apos;illumination</translation>
+    </message>
+    <message>
+        <source>Neutralisation fires</source>
+        <translation type="unfinished">Tirs de neutralisation</translation>
+    </message>
+    <message>
+        <source>Mute sounds</source>
+        <translation type="unfinished">Désactiver les sons</translation>
+    </message>
+    <message>
+        <source>Ajust all sound volumes</source>
+        <translation type="unfinished">Ajuster tous les sons</translation>
+    </message>
+    <message>
+        <source>Sound directory :</source>
+        <translation type="unfinished">Répertoire du son :</translation>
     </message>
 </context>
 <context>
@@ -2442,10 +2398,6 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::VisualisationScalesPanel</name>
     <message>
-        <source>Visualisation scales</source>
-        <translation>Echelles de visualisation</translation>
-    </message>
-    <message>
         <source>Min Scale</source>
         <translation>Ech. min</translation>
     </message>
@@ -2460,10 +2412,6 @@ Voulez-vous le supprimer?</translation>
 </context>
 <context>
     <name>gui::WeaponRangesPanel</name>
-    <message>
-        <source>Weapon ranges</source>
-        <translation>Portées des armes</translation>
-    </message>
     <message>
         <source>Percentage (PH):</source>
         <translation>Pourcentage (PH):</translation>

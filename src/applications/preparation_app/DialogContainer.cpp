@@ -66,11 +66,11 @@ DialogContainer::DialogContainer( QWidget* parent,
                                   const tools::ExerciseConfig& config,
                                   gui::SymbolIcons& icons,
                                   gui::LightingProxy& lighting,
-                                  const gui::Painter_ABC& painter,
                                   const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                   const std::shared_ptr< gui::Elevation2dLayer >& elevation2dLayer,
                                   gui::GlProxy& proxy,
-                                  gui::GraphicPreferences& preferences )
+                                  const std::shared_ptr< gui::TerrainSettings >& settings,
+                                  const std::shared_ptr< gui::GradientPreferences >& preferences )
     : QObject( parent )
 {
     displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
@@ -90,8 +90,8 @@ DialogContainer::DialogContainer( QWidget* parent,
     new LogisticStocksDialog( parent, controllers, staticModel );
 
     std::vector< std::string > sounds;
-    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateConverter_, painter, proxy, elevation2dLayer, preferences );
-    prefDialog_->AddPage( tools::translate( "DialogContainer", "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers ) );
+    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel, proxy, elevation2dLayer, settings, preferences );
+    prefDialog_->AddPage( tools::translate( "DialogContainer", "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers.options_ ) );
     profileDialog_ = new gui::ProfileDialog( parent, controllers, PreparationProfile::GetProfile(), symbols, model, *model.profiles_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
     scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, proxy );

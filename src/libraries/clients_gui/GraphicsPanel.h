@@ -12,9 +12,15 @@
 
 #include "PreferencePanel_ABC.h"
 
+namespace kernel
+{
+    class OptionsController;
+}
+
 namespace gui
 {
     class GraphicPreferences;
+    class TerrainSettings;
 
 // =============================================================================
 /** @class  GraphicsPanel
@@ -27,30 +33,26 @@ class GraphicsPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GraphicsPanel( QWidget* parent, GraphicPreferences& preferences );
+             GraphicsPanel( QWidget* parent,
+                            kernel::OptionsController& options,
+                            const std::shared_ptr< TerrainSettings >& settings );
     virtual ~GraphicsPanel();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Commit();
-    virtual void Reset();
-    //@}
-
 private:
-    //! @name Copy/Assignment
+    //! @name PreferencePanel_ABC implementation
     //@{
-    GraphicsPanel( const GraphicsPanel& );            //!< Copy constructor
-    GraphicsPanel& operator=( const GraphicsPanel& ); //!< Assignment operator
+    virtual void Load( const GlProxy& );
     //@}
 
 private:
     //! @name Member data
     //@{
-    GraphicPreferences& preferences_;
+    kernel::OptionsController& options_;
+    GraphicPreferences* preferences_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GraphicsPanel_h_

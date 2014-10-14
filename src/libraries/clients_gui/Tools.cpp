@@ -138,32 +138,29 @@ void tools::DrawPickingText( const QString& text, const QFont& font, const geome
     tools.DrawPolygon( polygon );
 }
 
-namespace
+QWidget* tools::AddGroupBoxWidget( const QString& title,
+                                   const QString& objectName,
+                                   QWidget* widget,
+                                   QWidget* parent /* = 0 */ )
 {
-    void ConnectColorOption( kernel::OptionsController& options,
-                             const std::string& optionsName,
-                             gui::ColorButton& colorButton )
-    {
-        if( options.GetOption( optionsName ).To< QString >() == "" )
-            options.Change( optionsName, colorButton.GetColor().name() );
-        gui::connect( &colorButton, SIGNAL( ColorChanged( const QColor& ) ), [=,&options,&colorButton]{
-            options.Change( optionsName, colorButton.GetColor().name() );
-        } );
-    }
+    QGroupBox* result = new QGroupBox( parent );
+    result->setObjectName( objectName );
+    result->setTitle( title );
+    QVBoxLayout* layout = new QVBoxLayout( result );
+    layout->addWidget( widget );
+    return result;
 }
 
-gui::ColorButton* tools::AddColorButton( QVBoxLayout* mainLayout,
-                                         kernel::OptionsController& options,
-                                         const QString& objectName,
-                                         const QString& name,
-                                         const std::string& optionName,
-                                         const QColor& defaultColor )
+QWidget* tools::AddLabeledWidget( const QString& label,
+                                  QWidget* widget,
+                                  int stretch /* = 0 */,
+                                  Qt::Alignment alignment /* = Qt::AlignLeft */,
+                                  QWidget* parent /* = 0 */ )
 {
-    auto* button = new gui::ColorButton( objectName, 0, "", defaultColor );
-    QHBoxLayout* layout = new QHBoxLayout();
-    layout->addWidget( new QLabel( name ) );
-    layout->addWidget( button );
-    mainLayout->addLayout( layout );
-    ConnectColorOption( options, optionName, *button );
-    return button;
+    QWidget* result = new QWidget( parent );
+    QHBoxLayout* layout = new QHBoxLayout( result );
+    layout->setMargin( 0 );
+    layout->addWidget( new QLabel( label ), 0, Qt::AlignLeft );
+    layout->addWidget( widget, stretch, alignment );
+    return result;
 }

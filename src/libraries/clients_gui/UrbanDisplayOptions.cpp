@@ -29,8 +29,8 @@ using namespace gui;
 UrbanDisplayOptions::UrbanDisplayOptions( Controllers& controllers, const AccommodationTypes& accommodationTypes )
     : controllers_            ( controllers )
     , accommodationTypes_     ( accommodationTypes )
-    , densityColor_           ( false )
-    , accommodationColor_     ( false )
+    , densityEnabled_           ( false )
+    , accommodationEnabled_     ( false )
     , accommodationDisplayed_ ( "" )
     , unoccupiedDensity_      ( 0, 0, 0, 180 )
     , minDensity_             ( 0.f ) // $$$$ LDC RC FIXME All these are common to all urban blocks and must therefore get out of this class.
@@ -60,8 +60,8 @@ UrbanDisplayOptions::~UrbanDisplayOptions()
 
 void UrbanDisplayOptions::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    if( name == "Density/Color" )
-        densityColor_ = value.To< bool >();
+    if( name == "Density/Enabled" )
+        densityEnabled_ = value.To< bool >();
     else if( name == "Density/Gradient" )
     {
         pGradient_.reset( new Gradient() );
@@ -80,8 +80,8 @@ void UrbanDisplayOptions::OptionChanged( const std::string& name, const OptionVa
         minAccommodationDensity_ = value.To< float >();
     else if( name == "Accommodation/Max" )
         maxAccommodationDensity_ = value.To< float >();
-    else if( name == "Accommodation/Color" )
-        accommodationColor_ = value.To< bool >();
+    else if( name == "Accommodation/Enabled" )
+        accommodationEnabled_ = value.To< bool >();
     else if( name == "Accommodation/Displayed" )
         accommodationDisplayed_ = value.To< QString >();
     else if( name == "Accommodation/Unoccupied" )
@@ -107,7 +107,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const Usages_ABC& usages, unsigned int structuralState )
 {
-    if( densityColor_ )
+    if( densityEnabled_ )
     {
         unsigned int nbrHumans = 0;
         for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
@@ -123,7 +123,7 @@ bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, co
         }
         return true;
     }
-    else if( accommodationColor_ )
+    else if( accommodationEnabled_ )
     {
         unsigned int nbrHumans = 0;
         for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )

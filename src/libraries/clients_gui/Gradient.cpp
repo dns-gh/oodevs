@@ -11,6 +11,7 @@
 #include "Gradient.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Tools.h"
 #include <graphics/extensions.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
@@ -35,6 +36,17 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: Gradient constructor
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+Gradient::Gradient( const QString& name /* = "" */ )
+    : usedRatio_  ( 1 )
+    , textureSize_( 0 )
+{
+    SetName( name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient constructor
 // Created: AGE 2007-07-02
 // -----------------------------------------------------------------------------
 Gradient::Gradient( xml::xistream& xis )
@@ -44,7 +56,7 @@ Gradient::Gradient( xml::xistream& xis )
     std::string name;
     xis >> xml::attribute( "name", name )
         >> xml::list( "color", *this, &Gradient::LoadValue );
-    name_ = name.c_str();
+    SetName( QString::fromStdString( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,24 +64,13 @@ Gradient::Gradient( xml::xistream& xis )
 // Created: SBO 2008-08-18
 // -----------------------------------------------------------------------------
 Gradient::Gradient( const QString& name, const QString& colors )
-    : name_       ( name )
-    , usedRatio_  ( 1 )
+    : usedRatio_  ( 1 )
     , textureSize_( 0 )
 {
+    SetName( name );
     LoadValues( colors );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Gradient constructor
-// Created: AGE 2007-07-03
-// -----------------------------------------------------------------------------
-Gradient::Gradient()
-    : name_       ( "" )
-    , usedRatio_  ( 1 )
-    , textureSize_( 0 )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: Gradient destructor
@@ -87,6 +88,7 @@ Gradient::~Gradient()
 void Gradient::SetName( const QString& name )
 {
     name_ = name;
+    displayName_ = tools::translate( "gradients", name );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,6 +98,15 @@ void Gradient::SetName( const QString& name )
 QString Gradient::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient::GetDisplayName
+// Created: ABR 2014-07-31
+// -----------------------------------------------------------------------------
+QString Gradient::GetDisplayName() const
+{
+    return displayName_;
 }
 
 namespace
@@ -323,10 +334,7 @@ unsigned Gradient::FindBaseDistance() const
 // -----------------------------------------------------------------------------
 void Gradient::Save( kernel::OptionsController& options, const std::string& group ) const
 {
-    QStringList colors;
-    for( auto it = colors_.begin(); it != colors_.end(); ++it )
-        colors.append( QString::number( it->first ) + "," + it->second.name() );
-    options.Change( group + name_.toStdString(), colors.join( ";" ) );
+    options.Change( group + name_.toStdString(), GetValues() );
 }
 
 // -----------------------------------------------------------------------------
@@ -351,3 +359,14 @@ Gradient& Gradient::operator=( const Gradient& rhs )
     return *this;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Gradient::GetValues
+// Created: ABR 2014-07-28
+// -----------------------------------------------------------------------------
+QString Gradient::GetValues() const
+{
+    QStringList colors;
+    for( auto it = colors_.begin(); it != colors_.end(); ++it )
+        colors.append( QString::number( it->first ) + "," + it->second.name() );
+    return colors.join( ";" );
+}

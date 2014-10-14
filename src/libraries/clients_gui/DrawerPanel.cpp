@@ -102,7 +102,7 @@ DrawerPanel::DrawerPanel( QWidget* parent,
     QToolTip::add( btn, tr( "Clear drawings" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( Clear() ) );
 
-    color_ = new ColorButton( "color", box, "" );
+    color_ = new ColorButton( "color", box );
     toolBox_ = new QToolBox();
     toolBox_->setMargin( 0 );
     toolBox_->setBackgroundColor( Qt::white );
@@ -282,7 +282,6 @@ void DrawerPanel::Select( const kernel::Formation_ABC& element )
 // -----------------------------------------------------------------------------
 void DrawerPanel::OnSelect( const DrawingTemplate& style )
 {
-    color_->Commit();
     selectedStyle_ = &style;
 }
 
@@ -328,7 +327,6 @@ void DrawerPanel::StartTextEdition()
     for( auto it = categories_.begin(); it != categories_.end(); ++it )
         it->second->ClearSelection();
 
-    color_->Commit();
     selectedStyle_ = &types_.Get( "Internal" ).GetTemplate( "Text" );
     layer_->StartText( *this, color_->GetColor() );
 }

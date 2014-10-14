@@ -992,51 +992,74 @@
     </message>
     <message>
         <source>User layer [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Calque utilisateur [%1]</translation>
     </message>
     <message>
         <source>Event creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Création d&apos;évenement</translation>
     </message>
     <message>
         <source>Heading</source>
-        <translation>Direction</translation>
+        <translation type="unfinished">Direction</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation>Vitesse</translation>
+        <translation type="unfinished">Vitesse</translation>
     </message>
     <message>
         <source>Operational State</source>
-        <translation>Etat opérationnel</translation>
+        <translation type="unfinished">Etat opérationnel</translation>
     </message>
     <message>
         <source>Side</source>
-        <translation>Camp</translation>
+        <translation type="unfinished">Camp</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>Niveau</translation>
+        <translation type="unfinished">Niveau</translation>
     </message>
     <message>
         <source>Nature (partial)</source>
-        <translation>Nature (partielle)</translation>
+        <translation type="unfinished">Nature (partielle)</translation>
     </message>
     <message>
         <source>Nature (full)</source>
-        <translation>Nature (complète)</translation>
+        <translation type="unfinished">Nature (complète)</translation>
     </message>
     <message>
         <source>Surrendered</source>
-        <translation>Rendu</translation>
+        <translation type="unfinished">Rendu</translation>
     </message>
     <message>
         <source>Refugees picked up</source>
-        <translation>Réfugiés pris en compte</translation>
+        <translation type="unfinished">Réfugiés pris en compte</translation>
     </message>
     <message>
         <source>Command Post</source>
-        <translation>Poste de Commande</translation>
+        <translation type="unfinished">Poste de Commande</translation>
+    </message>
+</context>
+<context>
+    <name>LocationCategory</name>
+    <message>
+        <source>Hydrography</source>
+        <translation>Hydrographie</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Réseau</translation>
+    </message>
+    <message>
+        <source>Physiography</source>
+        <translation>Physiographie</translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation>Urbain</translation>
+    </message>
+    <message>
+        <source>Vegetation</source>
+        <translation>Végétation</translation>
     </message>
 </context>
 <context>

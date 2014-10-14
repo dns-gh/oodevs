@@ -59,8 +59,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::AccommodationTypes& accommodationTypes_;
-    bool densityColor_;
-    bool accommodationColor_;
+    bool densityEnabled_;
+    bool accommodationEnabled_;
     QString accommodationDisplayed_;
     QColor unoccupiedDensity_;
     float minDensity_;

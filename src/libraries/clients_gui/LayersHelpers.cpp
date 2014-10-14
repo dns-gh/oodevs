@@ -65,6 +65,7 @@ const T_LayerTypesVector eventOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_ObjectsComposite )
     ( eLayerTypes_ResourceNetworks )
     ( eLayerTypes_Urban)
+    ( eLayerTypes_Selection)
     ( eLayerTypes_TacticalLinesComposite )
     ( eLayerTypes_Metric )
     ( eLayerTypes_Elevation3d )
@@ -105,7 +106,7 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_Default,                "main",                             false,  false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
-    { eLayerTypes_Drawings,               "main,miniview",                    false,  false,
+    { eLayerTypes_Drawings,               "main,miniview",                    true,   false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
     { eLayerTypes_Elevation2d,            "main,composition,miniviews",       false,  true,
@@ -183,7 +184,7 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_Selection,              "main",                             false,  false,
       eModes_AllPrepare,                  eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
-    { eLayerTypes_TacticalLines,          "main,miniview",                    false,  false,
+    { eLayerTypes_TacticalLines,          "main,miniview",                    true,   false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_LivingArea,
       T_LayerTypesVector() },
     { eLayerTypes_TacticalLinesComposite, "main,miniview",                    true,   true,

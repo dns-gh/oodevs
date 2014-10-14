@@ -11,14 +11,16 @@
 #include "TerrainLayer.h"
 
 #include "GlTools_ABC.h"
-#include "GraphicPreferences.h"
+#include "TerrainSettings.h"
 #include "TerrainPicker.h"
 
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/OptionsController.h"
 #include "tools/ExerciseConfig.h"
+#include "ENT/ENT_Tr.h"
 
 #include <graphics/extensions.h>
 #include <graphics/NoVBOShapeLayer.h>
@@ -34,12 +36,12 @@ using namespace gui;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 TerrainLayer::TerrainLayer( Controllers& controllers,
+                            const std::shared_ptr< TerrainSettings >& settings,
                             GlTools_ABC& tools,
-                            GraphicPreferences& setup,
                             TerrainPicker& picker )
     : Layer2D( controllers, tools, eLayerTypes_Terrain )
-    , setup_      ( setup )
-    , picker_     ( picker )
+    , settings_( settings )
+    , picker_( picker )
     , pickingEnabled_( true )
 {
     picker_.RegisterLayer( *this );
@@ -73,7 +75,7 @@ void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 // -----------------------------------------------------------------------------
 void TerrainLayer::SetAlpha( float alpha )
 {
-    setup_.SetAlpha( alpha );
+    settings_->SetAlpha( alpha );
     Layer2D::SetAlpha( alpha );
 }
 
@@ -83,59 +85,38 @@ void TerrainLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !layer_.get() && !noVBOlayer_.get() && !graphicsDirectory_.IsEmpty() )
-        LoadGraphics();
-
     if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;
+    if( !layer_.get() && !noVBOlayer_.get() && !graphicsDirectory_.IsEmpty() )
+        LoadGraphics();
+    if( !layer_ && !noVBOlayer_ )
+        return;
 
-    if( layer_.get() || noVBOlayer_.get() )
+    const auto& options = controllers_.options_;
+    //const auto& options = view_.GetCurrentOptions();
+    smallNames_ = options.GetOption( "SmallText" ).To< TristateOption >();
+    bigNames_ = options.GetOption( "BigText" ).To< TristateOption >();
+    pickingEnabled_ = !options.GetOption( "3D" ).To< bool >();
+    for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
-        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
-            glBindTexture( GL_TEXTURE_2D, 0 );
-            glDisable( GL_TEXTURE_GEN_S );
-            glDisable( GL_TEXTURE_GEN_T );
-            if( layer_.get() )
-                layer_->Paint( viewport );
-            else
-                noVBOlayer_->Paint( viewport );
-        glPopAttrib();
+        const auto name = "VisualisationScales/" + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
+        minVisuScale_[ i ] = options.GetOption( name + "/Min" ).To< int >();
+        maxVisuScale_[ i ] = options.GetOption( name + "/Max" ).To< int >();
     }
-}
+    //if( layer_ )
+    //    layer_->SetGraphicSetup( setup_ );
+    //else
+    //    noVBOlayer_->SetGraphicSetup( setup_ );
 
-// -----------------------------------------------------------------------------
-// Name: TerrainLayer::OptionChanged
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-void TerrainLayer::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    if( name == "SmallText" )
-        smallNames_ = value.To< TristateOption >();
-    if( name == "BigText" )
-        bigNames_ = value.To< TristateOption >();
-    if( name == "3D" )
-        pickingEnabled_ = ! value.To< bool >();
-
-    const std::string strMinScale( "VisuScaleMin" );
-    const std::string strMaxScale( "VisuScaleMax" );
-
-    if( name.size() > strMinScale.size() && name.substr( 0, strMinScale.size() ) == strMinScale )
-    {
-        std::stringstream stream( name.substr( strMinScale.size() ) );
-        int index = -1;
-        stream >> index;
-        if( index >= 0 && index < 13 )
-            minVisuScale_[ index ] = value.To< int >();
-    }
-
-    if( name.size() > strMaxScale.size() && name.substr( 0, strMaxScale.size() ) == strMaxScale )
-    {
-        std::stringstream stream( name.substr( strMaxScale.size() ) );
-        int index = -1;
-        stream >> index;
-        if( index >= 0 && index < 13 )
-            maxVisuScale_[ index ] = value.To< int >();
-    }
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
+        glBindTexture( GL_TEXTURE_2D, 0 );
+        glDisable( GL_TEXTURE_GEN_S );
+        glDisable( GL_TEXTURE_GEN_T );
+        if( layer_.get() )
+            layer_->Paint( viewport );
+        else
+            noVBOlayer_->Paint( viewport );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +153,7 @@ class TerrainLayer::MyLayer : public Base
 {
 public:
     MyLayer( TerrainLayer& parent, const tools::Path& filename )
-        : Base( parent.setup_, filename )
+        : Base( *parent.settings_, filename )
         , parent_( parent ) {}
 
     virtual bool ShouldDisplay( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )

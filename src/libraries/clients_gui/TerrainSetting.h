@@ -3,49 +3,44 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2013 MASA Group
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __RichSlider_h_
-#define __RichSlider_h_
-
-#include "RichWidget.h"
-#include "QtGui/qslider.h"
+#ifndef TerrainSetting_h
+#define TerrainSetting_h
 
 namespace gui
 {
-// =============================================================================
-/** @class  RichSlider
-    @brief  RichSlider
-*/
-// Created: NPT 2013-07-05
-// =============================================================================
-class RichSlider : public RichWidget< QSlider >
-{
 
-public:
+// =============================================================================
+/** @class  TerrainSetting
+    @brief  TerrainSetting
+*/
+// Created: ABR 2014-07-07
+// =============================================================================
+struct TerrainSetting
+{
     //! @name Constructors/Destructor
     //@{
-             RichSlider( const QString& objectName, QWidget* parent = 0 );
-    virtual ~RichSlider();
+    explicit TerrainSetting( const std::string& type )
+        : type_( type )
+    {
+        // NOTHING
+    }
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
+    std::string type_;
+    QString name_;
+    QString category_;
+    bool shown_;
+    float lineWidth_;
+    QColor color_;
     //@}
 };
 
 } //! namespace gui
 
-#endif // __RichSlider_h_
+#endif // TerrainSetting_h

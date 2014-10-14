@@ -521,4 +521,14 @@ enum E_PerceptionType
     eNbrPerceptionType
 };
 
+enum E_LocationCategory
+{
+    eLocationCategory_Hydrography,
+    eLocationCategory_Network,
+    eLocationCategory_Physiography,
+    eLocationCategory_Urban,
+    eLocationCategory_Vegetation,
+    eNbrLocationCategory
+};
+
 #endif __ENT_Enums_h_

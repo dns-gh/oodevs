@@ -11,21 +11,15 @@
 #define __OrbatPanel_h_
 
 #include "clients_gui/PreferencePanel_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
-    class OptionVariant;
-}
-
-namespace gui
-{
-    class ColorButton;
+    class OptionsController;
 }
 
 namespace preparation
 {
+
 // =============================================================================
 /** @class  OrbatPanel
     @brief  Orbat panel
@@ -33,38 +27,17 @@ namespace preparation
 // Created: LGY 2012-03-22
 // =============================================================================
 class OrbatPanel : public gui::PreferencePanel_ABC
-                 , public tools::Observer_ABC
-                 , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatPanel( QWidget* parent, kernel::Controllers& controllers );
+             OrbatPanel( QWidget* parent, kernel::OptionsController& options );
     virtual ~OrbatPanel();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Commit();
-    virtual void Reset();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Controllers& controllers_;
-    gui::ColorButton* pGhostColor_;
     //@}
 };
 
-}
+} //! namespace preparation
 
 #endif // __OrbatPanel_h_

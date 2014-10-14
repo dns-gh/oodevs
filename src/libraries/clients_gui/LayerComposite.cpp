@@ -44,26 +44,6 @@ LayerComposite::~LayerComposite()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: LayerComposite::SetAlpha
-// Created: SLI 2014-06-25
-// -----------------------------------------------------------------------------
-void LayerComposite::SetAlpha( float alpha )
-{
-    std::for_each( layers_.begin(), layers_.end(), [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->SetAlpha( alpha ); } );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LayerComposite::Paint
-// Created: SLI 2014-06-25
-// -----------------------------------------------------------------------------
-void LayerComposite::Paint( gui::Viewport_ABC& viewport )
-{
-    if( !ShouldDrawPass() )
-        return;
-    std::for_each( layers_.begin(), layers_.end(), [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->Paint( viewport ); } );
-}
-
 namespace
 {
     template< typename Layers, typename Functor >
@@ -74,12 +54,43 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: LayerComposite::SetAlpha
+// Created: SLI 2014-06-25
+// -----------------------------------------------------------------------------
+void LayerComposite::SetAlpha( float alpha )
+{
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->SetAlpha( alpha ); } );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayerComposite::Paint
+// Created: SLI 2014-06-25
+// -----------------------------------------------------------------------------
+void LayerComposite::Paint( gui::Viewport_ABC& viewport )
+{
+    if( !ShouldDrawPass() )
+        return;
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->Paint( viewport ); } );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayerComposite::Paint
+// Created: ABR 2014-10-14
+// -----------------------------------------------------------------------------
+void LayerComposite::Paint( const geometry::Rectangle2f& viewport )
+{
+    if( !ShouldDrawPass() )
+        return;
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->Paint( viewport ); } );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LayerComposite::Reset
 // Created: SLI 2014-06-27
 // -----------------------------------------------------------------------------
 void LayerComposite::Reset()
 {
-    Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->Reset(); } );
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->Reset(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +99,7 @@ void LayerComposite::Reset()
 // -----------------------------------------------------------------------------
 void LayerComposite::Select( unsigned int id, bool control )
 {
-    Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->Select( id, control ); } );
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->Select( id, control ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +108,7 @@ void LayerComposite::Select( unsigned int id, bool control )
 // -----------------------------------------------------------------------------
 void LayerComposite::ContextMenu( const kernel::GraphicalEntity_ABC& entity, const geometry::Point2f& point, const QPoint& qpoint )
 {
-    Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->ContextMenu( entity, point, qpoint ); } );
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->ContextMenu( entity, point, qpoint ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +117,7 @@ void LayerComposite::ContextMenu( const kernel::GraphicalEntity_ABC& entity, con
 // -----------------------------------------------------------------------------
 void LayerComposite::ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection )
 {
-    Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->ExtractElements( extractedElement, selection ); } );
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->ExtractElements( extractedElement, selection ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +126,7 @@ void LayerComposite::ExtractElements( T_LayerElements& extractedElement, const T
 // -----------------------------------------------------------------------------
 void LayerComposite::Initialize( const geometry::Rectangle2f& extent )
 {
-    Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ){ layer->Initialize( extent ); } );
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->Initialize( extent ); } );
 }
 
 namespace
@@ -136,7 +147,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool LayerComposite::CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->CanDrop( event, point ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->CanDrop( event, point ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +156,7 @@ bool LayerComposite::CanDrop( QDragMoveEvent* event, const geometry::Point2f& po
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleKeyPress( QKeyEvent* key )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleKeyPress( key ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleKeyPress( key ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +165,7 @@ bool LayerComposite::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleEnterDragEvent( event, point ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleEnterDragEvent( event, point ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +174,7 @@ bool LayerComposite::HandleEnterDragEvent( QDragEnterEvent* event, const geometr
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleDropEvent( event, point ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleDropEvent( event, point ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +183,7 @@ bool LayerComposite::HandleDropEvent( QDropEvent* event, const geometry::Point2f
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleMoveDragEvent( event, point ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleMoveDragEvent( event, point ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +192,7 @@ bool LayerComposite::HandleMoveDragEvent( QDragMoveEvent* event, const geometry:
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleLeaveDragEvent( QDragLeaveEvent* event )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleLeaveDragEvent( event ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleLeaveDragEvent( event ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +201,7 @@ bool LayerComposite::HandleLeaveDragEvent( QDragLeaveEvent* event )
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleKeyRelease( QKeyEvent* key )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleKeyRelease( key ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleKeyRelease( key ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +210,7 @@ bool LayerComposite::HandleKeyRelease( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleMousePress( mouse, point ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleMousePress( mouse, point ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +219,7 @@ bool LayerComposite::HandleMousePress( QMouseEvent* mouse, const geometry::Point
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleMouseDoubleClick( mouse, point ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleMouseDoubleClick( mouse, point ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +228,7 @@ bool LayerComposite::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry:
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleMouseMove( mouse, point ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleMouseMove( mouse, point ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +237,7 @@ bool LayerComposite::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2
 // -----------------------------------------------------------------------------
 bool LayerComposite::HandleMouseWheel( QWheelEvent* event, const geometry::Point2f& point )
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->HandleMouseWheel( event, point ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->HandleMouseWheel( event, point ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +246,7 @@ bool LayerComposite::HandleMouseWheel( QWheelEvent* event, const geometry::Point
 // -----------------------------------------------------------------------------
 bool LayerComposite::IsReadOnly() const
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->IsReadOnly(); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->IsReadOnly(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +255,7 @@ bool LayerComposite::IsReadOnly() const
 // -----------------------------------------------------------------------------
 bool LayerComposite::IsIn( const kernel::GraphicalEntity_ABC& entity ) const
 {
-    return ForwardResult( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { return layer->IsIn( entity ); } );
+    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->IsIn( entity ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +264,7 @@ bool LayerComposite::IsIn( const kernel::GraphicalEntity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void LayerComposite::SetReadOnlyModes( int modes )
 {
-     Forward( layers_, [&]( const std::shared_ptr< Layer_ABC >& layer ) { layer->SetReadOnlyModes( modes ); } );
+     Forward( layers_, [&]( const T_Layer& layer ) { layer->SetReadOnlyModes( modes ); } );
 }
 
 // -----------------------------------------------------------------------------

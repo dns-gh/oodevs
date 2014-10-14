@@ -11,7 +11,6 @@
 #define __TerrainLayer_h_
 
 #include "Layer.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
 #include <tools/ElementObserver_ABC.h>
 
@@ -28,8 +27,8 @@ namespace kernel
 namespace gui
 {
     class GlTools_ABC;
-    class GraphicPreferences;
     class TerrainPicker;
+    class TerrainSettings;
 
 // =============================================================================
 /** @class  TerrainLayer
@@ -38,15 +37,14 @@ namespace gui
 // Created: AGE 2006-03-15
 // =============================================================================
 class TerrainLayer : public Layer2D
-                   , public kernel::OptionsObserver_ABC
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              TerrainLayer( kernel::Controllers& controllers,
+                           const std::shared_ptr< TerrainSettings >& settings,
                            GlTools_ABC& tools,
-                           GraphicPreferences& setup,
                            TerrainPicker& picker );
     virtual ~TerrainLayer();
     //@}
@@ -64,7 +62,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     void LoadGraphics();
     //@}
 
@@ -77,7 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
-    GraphicPreferences& setup_;
+    std::shared_ptr< TerrainSettings > settings_;
     TerrainPicker& picker_;
     bool pickingEnabled_;
     int minVisuScale_[ 13 ];

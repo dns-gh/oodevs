@@ -19,7 +19,7 @@ using namespace gui;
 // Name: PreferencesList constructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-PreferencesList::PreferencesList( const QString& objectName, QWidget* parent, QStackedWidget& pages )
+PreferencesList::PreferencesList( const QString& objectName, QStackedWidget& pages, QWidget* parent /* = 0 */ )
     : RichTreeView( objectName, parent )
     , pages_( pages )
     , model_( new KeyModel() )
@@ -65,29 +65,16 @@ void PreferencesList::AddPage( const QString& name, QWidget* widget )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PreferencesList::Purge
-// Created: NPT 2013-07-15
-// -----------------------------------------------------------------------------
-void PreferencesList::Purge()
-{
-    for( int i = 0; i < pages_.count(); ++i )
-        pages_.removeWidget( pages_.widget( i ) );
-    widgets_.clear();
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: PreferencesList::OnSelect
 // Created: LGY 2012-09-25
 // -----------------------------------------------------------------------------
 void PreferencesList::OnSelect( const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/ )
 {
     QModelIndexList indexes = selectedIndexes();
-    for( QModelIndexList::const_iterator it = indexes.constBegin(); it != indexes.constEnd(); ++it )
+    for( auto it = indexes.constBegin(); it != indexes.constEnd(); ++it )
     {
-        CIT_Widgets widget = widgets_.find( (*it).data( Qt::UserRole ).toString() );
+        auto widget = widgets_.find( (*it).data( Qt::UserRole ).toString() );
         if( widget != widgets_.end() )
             pages_.setCurrentWidget( widget->second );
     }
 }
-

@@ -24,6 +24,7 @@ namespace kernel
 
 namespace gui
 {
+    class DrawingTypes;
     class IconLayout;
     class GlRenderPass_ABC;
     class PickingSelector;
@@ -43,7 +44,12 @@ class GlWidget : private SetGlOptions
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, kernel::Controllers& controllers, float width, float height, IconLayout& iconLayout );
+             GlWidget( QWidget* pParent,
+                       kernel::Controllers& controllers,
+                       float width,
+                       float height,
+                       IconLayout& iconLayout,
+                       const DrawingTypes& drawingTypes );
     virtual ~GlWidget();
     //@}
 

@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
-#include "SubObjectName.h"
+#include "clients_kernel/OptionsController.h"
 
 using namespace gui;
 
@@ -18,14 +18,17 @@ using namespace gui;
 // Name: GraphicsPanel constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-GraphicsPanel::GraphicsPanel( QWidget* parent, GraphicPreferences& preferences )
+GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::OptionsController& options,
+                              const std::shared_ptr< TerrainSettings >& settings )
     : PreferencePanel_ABC( parent, "GraphicsPanel" )
-    , preferences_( preferences )
+    , options_( options )
+    , preferences_( new GraphicPreferences( options, settings ) )
 {
-    SubObjectName subObject( "GraphicsPanel" );
-    Q3VBox* container = new Q3VBox( this );
-    preferences_.Display( container );
-    setWidget( container );
+    QWidget* widget = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout( widget );
+    layout->addWidget( preferences_ );
+    layout->addStretch( 1 );
+    setWidget( widget );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,19 +41,11 @@ GraphicsPanel::~GraphicsPanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GraphicsPanel::Commit
-// Created: SBO 2007-01-03
+// Name: GraphicsPanel::ActiveOptionsChanged
+// Created: ABR 2014-08-01
 // -----------------------------------------------------------------------------
-void GraphicsPanel::Commit()
+void GraphicsPanel::Load( const GlProxy& )
 {
-    preferences_.Commit();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicsPanel::Reset
-// Created: SBO 2007-01-03
-// -----------------------------------------------------------------------------
-void GraphicsPanel::Reset()
-{
-    preferences_.Revert();
+    //preferences_->Load( view.GetActiveOptions() );
+    preferences_->Load( *options_.GetViewOptions() );
 }

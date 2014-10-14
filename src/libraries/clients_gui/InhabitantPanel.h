@@ -14,14 +14,13 @@
 
 namespace kernel
 {
-    class Controllers;
+    class OptionsController;
 }
 
 namespace gui
 {
-    class DensityWidget;
 
-// =============================================================================
+    // =============================================================================
 /** @class  InhabitantPanel
     @brief  Inhabitant panel
 */
@@ -34,17 +33,11 @@ class InhabitantPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantPanel( QWidget* parent, kernel::Controllers& controllers );
+             InhabitantPanel( QWidget* parent, kernel::OptionsController& options );
     virtual ~InhabitantPanel();
-    //@}
-
-private:
-    //! @name Member Data
-    //@{
-    DensityWidget* widget_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // gui_InhabitantPanel_h

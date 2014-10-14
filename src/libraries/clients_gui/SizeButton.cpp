@@ -10,35 +10,34 @@
 #include "clients_gui_pch.h"
 #include "SizeButton.h"
 #include "moc_SizeButton.cpp"
-#include "ObjectNameManager.h"
-#include <math.h>
+#include "SignalAdapter.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: SizeButton constructor
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-SizeButton::SizeButton( const QString& objectName, QWidget* parent /* = 0*/, const char* name /* = 0*/, float value /* = 1*/ )
-    : QSlider( parent )
-    , label_( parent )
-    , size_( value )
-    , prefix_()
-    , changed_( false )
-    , previous_( value )
-    , text_ ( name )
+SizeButton::SizeButton( kernel::OptionsController& options,
+                        const QString& objectName,
+                        const std::string& optionName,
+                        float min,
+                        float max,
+                        float value,
+                        QWidget* parent /* = 0 */ )
+    : OptionWidget< RichWidget< QSlider > >( options, objectName, optionName, parent )
 {
     setTickPosition( QSlider::Below );
-    setRange( 0, 20 );
+    setRange( static_cast< int >( 2 * min ), static_cast< int >( 2 * max ) );
     setTickInterval( 2 );
     setPageStep( 1 );
     setOrientation( Qt::Horizontal );
-    label_.setText( QString( text_ ).append( locale().toString( 1 ) ).append( prefix_ ) );
-    label_.setFixedWidth( 50 );
     setFixedWidth( 130 );
-
-    connect( this, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
-    setValue( int( 2 * value ) );
-    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
+    gui::connect( this, SIGNAL( valueChanged( int ) ), [=,&options](){
+        options.Change( optionName, GetSize() );
+    } );
+    setValue( static_cast< int >( 2 * value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,33 +46,7 @@ SizeButton::SizeButton( const QString& objectName, QWidget* parent /* = 0*/, con
 // -----------------------------------------------------------------------------
 SizeButton::~SizeButton()
 {
-    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SizeButton::OnValueChanged
-// Created: SBO 2006-04-05
-// -----------------------------------------------------------------------------
-void SizeButton::OnValueChanged( int value )
-{
-    if( ! changed_ )
-        previous_ = size_;
-    size_ = value * 0.5f;
-    changed_ = true;
-    if( valueLabel_ )
-        label_.setText( QString( text_ ).append( locale().toString( size_ ) ).append( prefix_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SizeButton::EnableValueLabel
-// Created: SBO 2006-04-05
-// -----------------------------------------------------------------------------
-void SizeButton::EnableValueLabel( const QString& prefix /*= ""*/ )
-{
-    if( !prefix.isEmpty() )
-        prefix_ = prefix;
-    valueLabel_ = true;
-    OnValueChanged( value() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +55,7 @@ void SizeButton::EnableValueLabel( const QString& prefix /*= ""*/ )
 // -----------------------------------------------------------------------------
 void SizeButton::SetSize( float value )
 {
-    setValue( int( value * 2.f ) );
+    setValue( static_cast< int >( value * 2.f ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,28 +64,5 @@ void SizeButton::SetSize( float value )
 // -----------------------------------------------------------------------------
 float SizeButton::GetSize() const
 {
-    return size_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SizeButton::Revert
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-void SizeButton::Revert()
-{
-    changed_ = false;
-    size_ = previous_;
-    SetSize( size_ );
-    if( valueLabel_ )
-        label_.setText( QString( text_ ).append( "" ).append( locale().toString( size_ ) ).append( prefix_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SizeButton::Commit
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-void SizeButton::Commit()
-{
-    changed_ = false;
-    previous_ = size_;
+    return value() * 0.5f;
 }

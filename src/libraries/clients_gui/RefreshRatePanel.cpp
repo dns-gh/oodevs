@@ -10,12 +10,8 @@
 #include "clients_gui_pch.h"
 #include "RefreshRatePanel.h"
 #include "moc_RefreshRatePanel.cpp"
-#include "GlSelector.h"
-#include "RichSpinBox.h"
-#include "SignalAdapter.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/OptionsController.h"
-#include "clients_kernel/OptionVariant.h"
+#include "OptionWidgets.h"
+#include "Tools.h"
 
 using namespace gui;
 
@@ -23,19 +19,14 @@ using namespace gui;
 // Name: RefreshRatePanel constructor
 // Created: LDC 2014-02-21
 // -----------------------------------------------------------------------------
-RefreshRatePanel::RefreshRatePanel( QWidget* parent, kernel::Controllers& controllers )
+RefreshRatePanel::RefreshRatePanel( QWidget* parent, kernel::OptionsController& options )
     : PreferencePanel_ABC( parent, "RefreshRatePanel" )
-    , controllers_( controllers )
-    , options_( controllers.options_ )
 {
-    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Vertical, tr( "Refresh rate" ), this );
-    new QLabel( tr( "Select refresh rate (in ms):" ), box );
-    spinBox_ = new RichSpinBox( "RefreshRateSpinBox", box, 10 );
-    gui::connect( spinBox_, SIGNAL( valueChanged( int ) ), [&]{
-        options_.Change( "RefreshRate", spinBox_->value() );
-    } );
-    setWidget( box );
-    controllers_.Register( *this );
+    auto spinbox = new OptionSpinBox( options, "RefreshRateSpinBox", "RefreshRate", 10, 1000 );
+    QVBoxLayout* layout = new QVBoxLayout();
+    layout->addWidget( tools::AddLabeledWidget( tr( "Select refresh rate (in ms):" ), spinbox, 0, 0 ) );
+    layout->addStretch( 1 );
+    setLayout( layout );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,24 +35,5 @@ RefreshRatePanel::RefreshRatePanel( QWidget* parent, kernel::Controllers& contro
 // -----------------------------------------------------------------------------
 RefreshRatePanel::~RefreshRatePanel()
 {
-     controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RefreshRatePanel::Reset
-// Created: LDC 2014-02-21
-// -----------------------------------------------------------------------------
-void RefreshRatePanel::Reset()
-{
-    spinBox_->setValue( 50 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RefreshRatePanel::OptionChanged
-// Created: LDC 2014-02-21
-// -----------------------------------------------------------------------------
-void RefreshRatePanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "RefreshRate" )
-        spinBox_->setValue( value.To< int >() );
+    // NOTHING
 }

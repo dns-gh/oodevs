@@ -12,18 +12,14 @@
 
 #include "PreferencePanel_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "SoundManager.h"
 
 namespace kernel
 {
-    class Controllers;
+    class OptionsController;
 }
 
 namespace gui
 {
-    class RichSlider;
-    class RichLineEdit;
-    class CheckBox;
 
 class SoundPlayer
 {
@@ -44,47 +40,37 @@ class SoundPanel : public PreferencePanel_ABC
                  , public tools::Observer_ABC
                  , public kernel::OptionsObserver_ABC
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    SoundPanel( QWidget* parent, kernel::Controllers& controllers, SoundPlayer& soundPlayer );
+             SoundPanel( QWidget* parent,
+                         kernel::OptionsController& options,
+                         SoundPlayer& soundPlayer );
     virtual ~SoundPanel();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Reset();
-    virtual void Commit();
-    std::map< std::string, RichSlider*>& GetSoundSliders();
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+     void SetSoundDirectory( const tools::Path& path );
     //@}
 
-signals:
-    void soundSliderUpdated( const std::string name, int val );
-
 public slots:
-    void OnSliderChanged( int value );
-    void OnChangeVolume( const std::string& name, int value );
+    //! @name Slots
+    //@{
     void OnChooseSoundsDirectory();
-    void OnStateChanged( bool );
+    void OnSoundsDirectoryChanged( const QString& );
+    //@}
 
 private:
     //! @name Member data
     //@{
-    std::map< std::string, RichSlider*> soundSliders_;
-    RichLineEdit* soundDirectoryEditor_;
-    CheckBox* activated_;
-    std::map< std::string, int > soundValues_;
-    tools::Path soundDirectory_;
-    kernel::Controllers& controllers_;
+    kernel::OptionsController& options_;
     SoundPlayer& soundPlayer_;
+    QLineEdit* soundDirectoryEditor_;
     //@}
 };
 

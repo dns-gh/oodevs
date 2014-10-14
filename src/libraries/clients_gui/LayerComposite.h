@@ -39,6 +39,7 @@ public:
     //@{
     virtual void SetAlpha( float alpha );
     virtual void Paint( gui::Viewport_ABC& viewport );
+    virtual void Paint( const geometry::Rectangle2f& viewport );
 
     virtual void Reset();
     virtual void Select( unsigned int id, bool control );

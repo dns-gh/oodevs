@@ -15,16 +15,13 @@
 
 namespace kernel
 {
-    class Controllers;
     class CoordinateConverter_ABC;
     class OptionsController;
 }
 
-enum E_CoordinateSystem;
-
 namespace gui
 {
-    template< typename T > class RichWidget;
+
 // =============================================================================
 /** @class  CoordinateSystemsPanel
     @brief  CoordinateSystemsPanel
@@ -36,32 +33,30 @@ class CoordinateSystemsPanel : public PreferencePanel_ABC
                              , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
              CoordinateSystemsPanel( QWidget* parent,
-                                     kernel::Controllers& controllers,
+                                     kernel::OptionsController& options,
                                      kernel::CoordinateConverter_ABC& coordConverter );
     virtual ~CoordinateSystemsPanel();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Commit();
-    virtual void Reset();
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-     kernel::Controllers& controllers_;
-     kernel::CoordinateConverter_ABC& coordConverter_;
-     kernel::OptionsController& options_;
-     RichWidget< QComboBox >* coordSysComboBox_;
-     E_CoordinateSystem previousCoordinateSystem_;
+    kernel::OptionsController& options_;
+    kernel::CoordinateConverter_ABC& coordConverter_;
+    QComboBox* coordSysComboBox_;
     //@}
 };
 
-}
+} //! namespace gui
+
 #endif // __CoordinateSystemsPanel_h_

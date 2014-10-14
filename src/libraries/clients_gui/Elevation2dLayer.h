@@ -28,11 +28,8 @@ namespace kernel
 namespace gui
 {
     class ElevationExtrema;
-}
-
-namespace gui
-{
     class GlTools_ABC;
+    class GradientPreferences;
 
 // =============================================================================
 /** @class  Elevation2dLayer
@@ -46,7 +43,10 @@ class Elevation2dLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation2dLayer( kernel::Controllers& controllers, GlTools_ABC& tools, const kernel::DetectionMap& elevation );
+             Elevation2dLayer( kernel::Controllers& controllers,
+                               GlTools_ABC& tools,
+                               const kernel::DetectionMap& elevation,
+                               const std::shared_ptr< GradientPreferences >& preferences );
     virtual ~Elevation2dLayer();
     //@}
 
@@ -56,9 +56,10 @@ public:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
 
-    void SetGradient( const Gradient& gradient );
+    void UpdateGradient();
     void SetHillShadeDirection( int angle );
     void EnableVariableGradient( bool enable );
+    void EnableHillShade( bool enable );
     void SetHillShadeStrength( float strength );
 
     virtual void Reset();
@@ -78,18 +79,19 @@ private:
     //! @name Member data
     //@{
     const kernel::DetectionMap& elevation_;
+    std::shared_ptr< GradientPreferences > preferences_;
     std::unique_ptr< ElevationExtrema > extrema_;
     std::unique_ptr< ElevationShader > shader_;
     std::unique_ptr< TextureSet > layer_;
     bool reset_;
     bool modelLoaded_;
     bool ignore_;
-    Gradient gradient_;
     bool updateGradient_;
     unsigned gradientTexture_;
     float hsx_, hsy_;
     float hsStrength_;
     bool enabled_;
+    bool hillShade_;
     short minElevation_, maxElevation_;
     geometry::Rectangle2f lastViewport_;
     //@}

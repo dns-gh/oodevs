@@ -2854,10 +2854,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>preparation::OrbatPanel</name>
     <message>
-        <source>Edition</source>
-        <translation>الطبعة</translation>
-    </message>
-    <message>
         <source>Ghost:</source>
         <translation type="unfinished"></translation>
     </message>

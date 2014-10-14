@@ -17,12 +17,14 @@ using namespace gui;
 // Name: ButtonGroup constructor
 // Created: RPD 2008-08-21
 // -----------------------------------------------------------------------------
-ButtonGroup::ButtonGroup ( int columns, Qt::Orientation o, const QString &title, QWidget* parent /* = 0*/, const char* name /* = 0*/ )
-    : Q3ButtonGroup( columns, o, title, parent, name )
-    , previousId_( 0 )
-    , currentId_( 0 )
+ButtonGroup::ButtonGroup ( const QString& objectName, QWidget* parent /* = 0*/ )
+    : RichWidget< QGroupBox >( objectName, parent )
+    , buttonGroup_( new QButtonGroup( this ) )
+    , layout_( new QHBoxLayout( this ) )
 {
-    // NOTHING
+    buttonGroup_->setObjectName( objectName + "-buttongroup" );
+    connect( buttonGroup_, SIGNAL( buttonClicked( int ) ), this, SIGNAL( ButtonClicked( int ) ) );
+    connect( buttonGroup_, SIGNAL( buttonClicked( QAbstractButton* ) ), this, SIGNAL( ButtonClicked( QAbstractButton* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,29 +37,40 @@ ButtonGroup::~ButtonGroup()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ButtonGroup::setButton
-// Created: RPD 2008-08-21
+// Name: ButtonGroup::AddButton
+// Created: ABR 2014-10-03
 // -----------------------------------------------------------------------------
-void ButtonGroup::setButton( int id )
+void ButtonGroup::AddButton( int id, QAbstractButton* button )
 {
-    Q3ButtonGroup::setButton( id );
-    currentId_ = id;
+    buttonGroup_->addButton( button, id );
+    layout_->addWidget( button );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ButtonGroup::Revert
-// Created: RPD 2008-08-21
+// Name: ButtonGroup::SelectId
+// Created: ABR 2014-10-03
 // -----------------------------------------------------------------------------
-void ButtonGroup::Revert()
+void ButtonGroup::SetChecked( int id )
 {
-    setButton( previousId_ );
+    if( auto* button = buttonGroup_->button( id ) )
+        if( !button->isChecked())
+            button->click();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ButtonGroup::Commit
-// Created: RPD 2008-08-21
+// Name: ButtonGroup::SelectedId
+// Created: ABR 2014-10-03
 // -----------------------------------------------------------------------------
-void ButtonGroup::Commit()
+int ButtonGroup::CheckedId() const
 {
-    previousId_ = currentId_;
+    return buttonGroup_->checkedId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ButtonGroup::SelectedButton
+// Created: ABR 2014-10-03
+// -----------------------------------------------------------------------------
+QAbstractButton* ButtonGroup::CheckedButton() const
+{
+    return buttonGroup_->checkedButton();
 }

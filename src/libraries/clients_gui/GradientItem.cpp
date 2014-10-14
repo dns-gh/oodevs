@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "GradientItem.h"
-#include "Painter_ABC.h"
 
 using namespace gui;
 
@@ -17,10 +16,13 @@ using namespace gui;
 // Name: GradientItem constructor
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientItem::GradientItem( Q3Canvas* canvas, const Painter_ABC& painter,
-                            unsigned short percentage, const QColor& color, bool disableState )
+GradientItem::GradientItem( Q3Canvas* canvas,
+                            const T_Drawer& drawer,
+                            unsigned short percentage,
+                            const QColor& color,
+                            bool disableState )
     : Q3CanvasLine( canvas )
-    , painter_     ( painter )
+    , drawer_      ( drawer )
     , percentage_  ( percentage )
     , color_       ( color )
     , disableState_( disableState )
@@ -97,8 +99,8 @@ void GradientItem::draw( QPainter& painter )
         setPen( QColor( Qt::black ) );
     Q3CanvasLine::draw( painter );
     painter.fillRect( startPoint().x() - 3, startPoint().y(), 7, 7, pen().color() );
-    if( ! disableState_ )
-        painter_.Draw( painter, percentage_, GetX(), canvas()->rect().height() - 20 );
+    if( !disableState_ && drawer_ )
+        drawer_( painter, percentage_, GetX(), canvas()->rect().height() - 20 );
 }
 
 // -----------------------------------------------------------------------------

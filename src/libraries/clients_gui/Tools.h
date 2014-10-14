@@ -21,7 +21,7 @@ namespace kernel
 
 namespace gui
 {
-    class ColorButton;
+    class OptionColorButton;
     class GlTools_ABC;
 }
 
@@ -45,12 +45,8 @@ namespace tools
     QImage DrawText( const QString& text, const QFont& font, const QColor& color );
     void DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GlTools_ABC& tools );
 
-    gui::ColorButton* AddColorButton( QVBoxLayout* mainLayout,
-                                      kernel::OptionsController& options,
-                                      const QString& objectName,
-                                      const QString& name,
-                                      const std::string& optionName,
-                                      const QColor& defaultColor );
+    QWidget* AddGroupBoxWidget( const QString& title, const QString& objectName, QWidget* widget, QWidget* parent = 0 );
+    QWidget* AddLabeledWidget( const QString& label, QWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::AlignLeft, QWidget* parent = 0 );
 
     template< typename T >
     void UpdateEntityNameInModel( QStandardItemModel& model,

@@ -256,7 +256,7 @@ Menu::Menu( QMainWindow* pParent,
     menu->insertSeparator();
 
     {
-        OptionMenu< bool >* boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D", false );
+        OptionMenu< bool >* boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D" );
         boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
         boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
         menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );

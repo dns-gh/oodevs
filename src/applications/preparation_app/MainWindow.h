@@ -10,7 +10,6 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include "clients_gui/LayersHelpers.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/ControllerObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
@@ -28,13 +27,14 @@ namespace gui
     class ExclusiveEventStrategy;
     class GlProxy;
     class GlSelector;
-    class GraphicPreferences;
+    class GradientPreferences;
     class HelpSystem;
     class Layer_ABC;
     class LightingProxy;
     class Painter_ABC;
     class ParametersLayer;
     class TerrainPicker;
+    class TerrainSettings;
     class TextEditor;
 }
 
@@ -51,12 +51,6 @@ class ToolbarContainer;
 // =============================================================================
 /** @class  MainWindow
     @brief  Main window of the application.
-
-    The main window serves as a transit point for nearly all GUI QT signals, whether
-    they are inter-GUI (ie. one GUI element signaling the others) or GUI-data.
-    This allows GUI objects to be independant: The only other element they know of
-    is the main window, and thus they can be moved around in the class hierachy
-    without having to redo the connexions every time.
 */
 // Created: APE 2004-03-01
 // =============================================================================
@@ -143,25 +137,27 @@ private:
     bool                 loading_;
     bool                 needsSaving_;
 
-    std::unique_ptr< gui::GraphicPreferences >     graphicPreferences_;
+    // the following will move to GLOptions or GLMainProxy
+    std::shared_ptr< gui::GradientPreferences >    gradientPreferences_;
+    std::shared_ptr< gui::TerrainSettings >        terrainSettings_;
+    std::unique_ptr< gui::LightingProxy >          lighting_;
+    std::unique_ptr< gui::GlSelector >             selector_;
+    std::unique_ptr< gui::GlProxy >                glProxy_;
+
+    std::unique_ptr< gui::TextEditor >             textEditor_; // should move in parameter layers
+
     std::unique_ptr< ModelBuilder >                modelBuilder_;
     std::unique_ptr< gui::CircularEventStrategy >  forward_;
     std::unique_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    std::unique_ptr< gui::Painter_ABC >            pPainter_;
     std::unique_ptr< ColorController >             colorController_;
     std::unique_ptr< DockContainer >               dockContainer_;
     std::unique_ptr< DialogContainer >             dialogContainer_;
     std::unique_ptr< ToolbarContainer >            toolbarContainer_;
-    std::unique_ptr< gui::GlProxy >                glProxy_;
-    std::unique_ptr< gui::LightingProxy >          lighting_;
     std::unique_ptr< gui::ColorStrategy >          strategy_;
     std::unique_ptr< Menu >                        menu_;
-    std::unique_ptr< gui::GlSelector >             selector_;
     std::unique_ptr< QProgressDialog >             progressDialog_;
     boost::shared_ptr< QProcess >                  process_;
     std::unique_ptr< gui::EntitySymbols >          icons_;
-    std::unique_ptr< gui::TextEditor >             textEditor_;
-    gui::T_LayersMap                               layers_;
     //@}
 };
 

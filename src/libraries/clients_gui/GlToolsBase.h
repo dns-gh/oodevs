@@ -27,6 +27,7 @@ namespace tools
 
 namespace gui
 {
+    class DrawingTypes;
     class GLSymbols;
     class SvglRenderer;
     class SvglProxy;
@@ -45,7 +46,7 @@ class GlToolsBase : public gui::GlTools_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GlToolsBase( kernel::Controllers& controllers );
+    explicit GlToolsBase( kernel::Controllers& controllers, const DrawingTypes& drawingTypes );
     virtual ~GlToolsBase();
     //@}
 

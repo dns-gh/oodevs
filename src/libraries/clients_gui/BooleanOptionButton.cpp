@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "BooleanOptionButton.h"
 #include "moc_BooleanOptionButton.cpp"
+#include "SignalAdapter.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
@@ -19,19 +20,20 @@ using namespace gui;
 // Name: BooleanOptionButton constructor
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-BooleanOptionButton::BooleanOptionButton( const QString& objectName, const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::OptionsController& options,
-                                          const std::string& option, bool savable )
-    : RichWidget< QToolButton >( objectName, parent )
-    , options_( options )
-    , option_( option )
-    , toolTip_( toolTip )
-    , savable_( savable )
+BooleanOptionButton::BooleanOptionButton( kernel::OptionsController& options,
+                                          const QString& objectName,
+                                          const std::string& optionName,
+                                          const QIcon& iconSet,
+                                          const QString& toolTip,
+                                          QWidget* parent /* = 0 */ )
+    : OptionWidget< RichWidget< QToolButton > >( options, objectName, optionName, parent )
 {
     setIconSet( iconSet );
-    QToolTip::add( this, toolTip_ );
-    setToggleButton( true );
-    connect( this, SIGNAL( toggled( bool ) ), this, SLOT( OnToggled( bool ) ) );
-    options_.Register( *this );
+    QToolTip::add( this, toolTip );
+    setCheckable( true );
+    gui::connect( this, SIGNAL( clicked() ), [=,&options]{
+        options.Change( optionName, isChecked() );
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,24 +42,14 @@ BooleanOptionButton::BooleanOptionButton( const QString& objectName, const QIcon
 // -----------------------------------------------------------------------------
 BooleanOptionButton::~BooleanOptionButton()
 {
-    options_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: BooleanOptionButton::OnToggled
-// Created: AGE 2006-03-30
+// Name: BooleanOptionButton::OnOptionChanged
+// Created: ABR 2014-10-10
 // -----------------------------------------------------------------------------
-void BooleanOptionButton::OnToggled( bool on )
+void BooleanOptionButton::OnOptionChanged( const kernel::OptionVariant& value )
 {
-    options_.Change( option_, on, savable_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BooleanOptionButton::OptionChanged
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-void BooleanOptionButton::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == option_ && isOn() != value.To< bool >() )
-        setOn( value.To< bool >() );
+    setChecked( value.To< bool >() );
 }

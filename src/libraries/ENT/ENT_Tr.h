@@ -61,6 +61,7 @@ namespace ENT_Tr
     const std::string& ConvertFromLayerTypes( E_LayerTypes, E_Conversion = eToTr );
     const std::string& ConvertFromLightingType( E_LightingType, E_Conversion = eToSim );
     const std::string& ConvertFromLocation( E_Location, E_Conversion = eToSim );
+    const std::string& ConvertFromLocationCategory( E_LocationCategory, E_Conversion = eToSim );
     const std::string& ConvertFromLocationType( E_LocationType, E_Conversion = eToSim );
     const std::string& ConvertFromMeetingEngagementStatus( E_MeetingEngagementStatus, E_Conversion = eToSim );
     const std::string& ConvertFromMissionType( E_MissionType, E_Conversion = eToTr );
@@ -116,6 +117,7 @@ namespace ENT_Tr
     E_LayerTypes ConvertToLayerTypes( const std::string&, E_Conversion = eToSim );
     E_LightingType ConvertToLightingType( const std::string&, E_Conversion = eToSim );
     E_Location ConvertToLocation( const std::string&, E_Conversion = eToSim );
+    E_LocationCategory ConvertToLocationCategory( const std::string&, E_Conversion = eToSim );
     E_LocationType ConvertToLocationType( const std::string&, E_Conversion = eToSim );
     E_MeetingEngagementStatus ConvertToMeetingEngagementStatus( const std::string&, E_Conversion = eToSim );
     E_MissionType ConvertToMissionType( const std::string&, E_Conversion = eToTr );

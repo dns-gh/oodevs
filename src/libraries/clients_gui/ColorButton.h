@@ -29,8 +29,10 @@ class ColorButton : public RichWidget< QToolButton >
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorButton( const QString& objectName, QWidget* parent, const std::string& color );
-    explicit ColorButton( const QString& objectName, QWidget* parent = 0, const char* text = 0, QColor color = Qt::black );
+    explicit ColorButton( const QString& objectName,
+                          QWidget* parent = 0,
+                          QColor color = Qt::black,
+                          bool hasAlpha = false );
     virtual ~ColorButton();
     //@}
 
@@ -38,9 +40,6 @@ public:
     //@{
     void SetColor( const QColor& rgb );
     QColor GetColor() const;
-
-    void Revert();
-    void Commit();
     //@}
 
 signals:
@@ -54,18 +53,12 @@ protected:
     //@{
     virtual void drawButton( QPainter* painter );
     virtual void paintEvent( QPaintEvent* = 0);
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnClick();
+    void Initialize();
     //@}
 
 private:
     //! @name Member data
     //@{
-    QColor previous_;
     QColor current_;
     QColorDialog::ColorDialogOption options_;
     //@}

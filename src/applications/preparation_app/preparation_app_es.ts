@@ -2856,10 +2856,6 @@ Este dato no puede ser proyectado.</translation>
 <context>
     <name>preparation::OrbatPanel</name>
     <message>
-        <source>Edition</source>
-        <translation>Edición</translation>
-    </message>
-    <message>
         <source>Ghost:</source>
         <translation>Fantasma:</translation>
     </message>

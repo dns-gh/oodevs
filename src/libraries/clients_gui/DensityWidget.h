@@ -11,32 +11,24 @@
 #define gui_DensityWidget_h
 
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include <tools/Observer_ABC.h>
 
 namespace kernel
 {
-    class Controllers;
     class OptionsController;
 }
 
 namespace gui
 {
-    class ColorButton;
     class Gradient;
-    class GradientButton;
-    class Painter_ABC;
-    class RichLineEdit;
-}
+    class GradientWidget;
 
-namespace gui
-{
 // =============================================================================
 /** @class  DensityWidget
     @brief  Density widget
 */
 // Created: LGY 2011-06-01
 // =============================================================================
-class DensityWidget : public Q3VBox
+class DensityWidget : public QWidget
                     , public tools::Observer_ABC
                     , public kernel::OptionsObserver_ABC
 {
@@ -45,7 +37,10 @@ class DensityWidget : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             DensityWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const std::string& category );
+             DensityWidget( kernel::OptionsController& options,
+                            const QString& objectName,
+                            const std::string& optionName,
+                            QWidget* parent = 0 );
     virtual ~DensityWidget();
     //@}
 
@@ -57,30 +52,16 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( const QColor& color );
-    void OnColorChanged( const QColor& color );
-    void OnUnoccupiedColorChanged( const QColor& color );
-    void OnGradientEdited( Gradient& gradient );
-    void Reset();
-    void OnMinChanged( const QString& value );
-    void OnMaxChanged( const QString& value );
+    void OnGradientEdited();
     //@}
 
 private:
     //! @name Member Data
     //@{
-    const std::string category_;
-    std::unique_ptr< Painter_ABC > pPainter_;
-    kernel::Controllers& controllers_;
     kernel::OptionsController& options_;
-    RichLineEdit* max_;
-    RichLineEdit* min_;
-    GradientButton* densityEditor_;
-    ColorButton* color_;
-    ColorButton* unoccupiedColor_;
-    bool blockLoaded_;
-    bool minLoaded_;
-    bool maxLoaded_;
+    const std::string optionName_;
+    std::shared_ptr< Gradient > gradient_;
+    GradientWidget* gradientWidget_;
     //@}
 };
 

@@ -10,6 +10,13 @@
 #ifndef __SizeButton_h_
 #define __SizeButton_h_
 
+#include "OptionWidgets.h"
+
+namespace kernel
+{
+    class OptionsController;
+}
+
 namespace gui
 {
 
@@ -19,14 +26,20 @@ namespace gui
 */
 // Created: SBO 2006-04-05
 // =============================================================================
-class SizeButton : public QSlider
+class SizeButton : public OptionWidget< RichWidget< QSlider > >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SizeButton( const QString& objectName, QWidget* parent = 0, const char* name = 0, float value = 1 );
+             SizeButton( kernel::OptionsController& options,
+                         const QString& objectName,
+                         const std::string& optionName,
+                         float min,
+                         float max,
+                         float value,
+                         QWidget* parent = 0 );
     virtual ~SizeButton();
     //@}
 
@@ -34,37 +47,9 @@ public:
     //@{
     void SetSize( float value );
     float GetSize() const;
-    void EnableValueLabel( const QString& prefix = "" );
-    void Revert();
-    void Commit();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnValueChanged( int value );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    SizeButton( const SizeButton& );            //!< Copy constructor
-    SizeButton& operator=( const SizeButton& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    float   size_;
-    QString prefix_;
-    QLabel  label_;
-    bool    changed_;
-    float   previous_;
-    bool    valueLabel_;
-    QString text_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __SizeButton_h_

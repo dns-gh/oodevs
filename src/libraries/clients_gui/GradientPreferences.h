@@ -10,65 +10,61 @@
 #ifndef __GradientPreferences_h_
 #define __GradientPreferences_h_
 
-#include "clients_kernel/OptionsObserver_ABC.h"
-#include <tools/Resolver.h>
-#include <boost/noncopyable.hpp>
-
-namespace xml
-{
-    class xistream;
-}
-
 namespace kernel
 {
-    class OptionsController;
+    class Options;
 }
 
 namespace gui
 {
     class Gradient;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  GradientPreferences
     @brief  GradientPreferences
 */
 // Created: SBO 2007-07-03
 // =============================================================================
-class GradientPreferences : public tools::Resolver< Gradient, QString >
-                          , private boost::noncopyable
+class GradientPreferences
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::shared_ptr< Gradient > T_Gradient;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GradientPreferences( kernel::OptionsController& options );
+             GradientPreferences();
+    explicit GradientPreferences( const GradientPreferences& other );
     virtual ~GradientPreferences();
     //@}
 
     //! @name Operations
     //@{
-    void Commit( const std::vector< Gradient* >& presets );
-    void Reset();
-    void SetGradient( const QString& name, const QString& values );
-    //@}
+    void Load( const kernel::Options& options );
 
-private:
-    //! @name Helpers
-    //@{
-    void ReadGradient( xml::xistream& xis );
-    void Load( xml::xistream& xis );
-    void Save() const;
+    void Add( const T_Gradient& gradient );
+    void Remove( const T_Gradient& gradient );
+    size_t Count() const;
+
+    void Apply( const std::function< void( const T_Gradient ) >& functor ) const;
+
+    T_Gradient GetByName( const QString& name ) const;
+    T_Gradient GetByDisplayName( const QString& name ) const;
+    T_Gradient GetCurrent() const;
+    void SetCurrent( const T_Gradient& );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::OptionsController& options_;
+    std::vector< T_Gradient > gradients_;
+    T_Gradient current_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GradientPreferences_h_

@@ -10,9 +10,11 @@
 #ifndef __GradientItem_h_
 #define __GradientItem_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
-    class Painter_ABC;
+
 // =============================================================================
 /** @class  GradientItem
     @brief  GradientItem
@@ -20,12 +22,22 @@ namespace gui
 // Created: SBO 2007-07-02
 // =============================================================================
 class GradientItem : public Q3CanvasLine
+                   , private boost::noncopyable
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::function< void ( QPainter&, unsigned int, int, int ) > T_Drawer;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
-             GradientItem( Q3Canvas* canvas, const Painter_ABC& painter,
-                           unsigned short percentage, const QColor& color, bool disableState );
+             GradientItem( Q3Canvas* canvas,
+                           const T_Drawer& drawFunctor,
+                           unsigned short percentage,
+                           const QColor& color,
+                           bool disableState );
     virtual ~GradientItem();
     //@}
 
@@ -41,12 +53,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GradientItem( const GradientItem& );            //!< Copy constructor
-    GradientItem& operator=( const GradientItem& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void UpdatePosition();
@@ -56,13 +62,13 @@ private:
 private:
     //! @name Member data
     //@{
+    const T_Drawer drawer_;
     unsigned short percentage_;
-    const Painter_ABC& painter_;
     QColor color_;
     bool disableState_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GradientItem_h_

@@ -12,10 +12,12 @@
 
 #include "GLTools_ABC.h"
 #include "Gradient.h"
+#include "GradientPreferences.h"
 #include "ElevationExtrema.h"
-
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/OptionsController.h"
 
 #include <graphics/ElevationShader.h>
 #include <graphics/ElevationTextureSet.h>
@@ -30,9 +32,13 @@ using namespace gui;
 // Name: Elevation2dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation2dLayer::Elevation2dLayer( Controllers& controllers, GlTools_ABC& tools, const DetectionMap& elevation )
+Elevation2dLayer::Elevation2dLayer( Controllers& controllers,
+                                    GlTools_ABC& tools,
+                                    const DetectionMap& elevation,
+                                    const std::shared_ptr< GradientPreferences >& preferences )
     : Layer2D( controllers, tools, eLayerTypes_Elevation2d )
     , elevation_      ( elevation )
+    , preferences_    ( preferences )
     , reset_          ( false )
     , modelLoaded_    ( false )
     , ignore_         ( false )
@@ -45,8 +51,6 @@ Elevation2dLayer::Elevation2dLayer( Controllers& controllers, GlTools_ABC& tools
     , hsy_            ( 1 )
     , hsStrength_     ( 1 )
 {
-    gradient_.AddColor( 0, Qt::white );
-    gradient_.AddColor( 1, Qt::black );
     controllers_.Update( *this );
 }
 
@@ -60,12 +64,11 @@ Elevation2dLayer::~Elevation2dLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetGradient
+// Name: Elevation2dLayer::UpdateGradient
 // Created: AGE 2007-07-03
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::SetGradient( const Gradient& gradient )
+void Elevation2dLayer::UpdateGradient()
 {
-    gradient_ = gradient;
     updateGradient_ = true;
 }
 
@@ -91,6 +94,15 @@ void Elevation2dLayer::EnableVariableGradient( bool enable )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::EnableHillShade
+// Created: ABR 2014-10-03
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::EnableHillShade( bool enable )
+{
+    hillShade_ = enable;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Elevation2dLayer::SetHillShadeStrength
 // Created: AGE 2007-07-02
 // -----------------------------------------------------------------------------
@@ -111,7 +123,8 @@ void Elevation2dLayer::SetElevations()
         shader_->SetMinimumElevation( minElevation_ );
         shader_->SetMaximumElevation( maxElevation_ );
         float delta = std::min( 1.f, 100.f / float( maxElevation_ - minElevation_ ) );
-        shader_->SetHillShade( hsx_, hsy_, delta * hsStrength_ );
+        float hillShade = hillShade_ ? delta * hsStrength_ : 0.f;
+        shader_->SetHillShade( hsx_, hsy_, hillShade );
         shader_->Use();
     }
 }
@@ -211,13 +224,15 @@ void Elevation2dLayer::SetGradient()
     glDisable( GL_TEXTURE_2D );
     glEnable( GL_TEXTURE_1D );
     if( updateGradient_ )
-    {
-        glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
-        gradient_.MakeGlTexture( GetAlpha() );
-        if( shader_.get() )
-            shader_->SetGradientSize( unsigned short( gradient_.Length() ), gradient_.UsedRatio() );
-        updateGradient_ = false;
-    }
+        if( auto gradient = preferences_->GetCurrent() )
+        {
+            EnableVariableGradient( controllers_.options_.GetOption( "Elevation/FitToViewPort" ).To< bool >() );
+            glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
+            gradient->MakeGlTexture( GetAlpha() );
+            if( shader_.get() )
+                shader_->SetGradientSize( unsigned short( gradient->Length() ), gradient->UsedRatio() );
+            updateGradient_ = false;
+        }
     glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
     gl::glActiveTexture( gl::GL_TEXTURE0 );
     glEnable( GL_TEXTURE_2D );

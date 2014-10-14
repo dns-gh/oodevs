@@ -12,23 +12,24 @@
 #include "moc_PreferencesDialog.cpp"
 #include "CoordinateSystemsPanel.h"
 #include "ElevationPanel.h"
-#include "Elevation2dLayer.h"
 #include "RefreshRatePanel.h"
 #include "ReplayPanel.h"
 #include "GlProxy.h"
+#include "GradientPreferences.h"
 #include "GraphicsPanel.h"
-#include "GraphicPreferences.h"
 #include "InhabitantPanel.h"
 #include "LayersPanel.h"
 #include "LightingPanel.h"
 #include "PreferencesList.h"
-#include "PreferencePanel_ABC.h"
 #include "resources.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
+#include "TerrainSettings.h"
 #include "VisualisationScalesPanel.h"
-#include "clients_kernel/ModeController.h"
-#include "clients_kernel/Tools.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/StaticModel.h"
+#include "clients_kernel/Options.h"
 
 using namespace kernel;
 using namespace gui;
@@ -40,69 +41,78 @@ using namespace gui;
 PreferencesDialog::PreferencesDialog( QWidget* parent,
                                       Controllers& controllers,
                                       LightingProxy& lighting,
-                                      kernel::CoordinateConverter_ABC& coordConverter,
-                                      const Painter_ABC& painter,
+                                      const kernel::StaticModel& staticModel,
                                       GlProxy& proxy,
                                       const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
-                                      GraphicPreferences& preferences )
+                                      const std::shared_ptr< TerrainSettings >& settings,
+                                      const std::shared_ptr< GradientPreferences >& preferences )
     : ModalDialog( parent, "PreferencesDialog", false )
-    , controllers_      ( controllers )
-    , painter_          ( painter )
-    , proxy_            ( proxy )
-    , pGraphicPrefPanel_( 0 )
-    , lighting_         ( lighting )
-    , elevation2dLayer_ ( elevation2dLayer )
+    , controllers_( controllers )
+    , proxy_( proxy )
+    , settings_( settings )
+    , preferences_( preferences )
 {
     SubObjectName subObject( "PreferencesDialog" );
     setCaption( tr( "Preferences" ) );
-    QGridLayout* grid = new QGridLayout( this );
-    grid->setColumnStretch( 0, 1 );
-    grid->setColumnStretch( 1, 3 );
-    grid->setRowStretch( 0, 1 );
-    grid->setRowStretch( 1, 6 );
-    grid->setRowStretch( 2, 1 );
+    setMinimumSize( 600, 600 );
+    hide();
 
-    Q3HBox* box = new Q3HBox( this );
-    QLabel* title = new QLabel( caption(), box );
+    QLabel* title = new QLabel( caption() );
     QFont font;
     font.setBold( true );
     font.setPointSize( 16 );
     title->setFont( font );
     title->setMargin( 10 );
     title->setBackgroundColor( Qt::white );
-    QLabel* icon = new QLabel( box );
+
+    QLabel* icon = new QLabel();
     icon->setPixmap( MAKE_PIXMAP( option_general ) );
     icon->setMaximumWidth( 64 );
     icon->setBackgroundColor( Qt::white );
-    box->setMaximumHeight( 64 );
-    grid->addMultiCellWidget( box, 0, 0, 0, 1 );
 
-    QStackedWidget* pages = new QStackedWidget( this );
+    stack_ = new QStackedWidget();
+    list_ = new PreferencesList( "preferencesList", *stack_ );
 
-    grid->addWidget( pages, 1, 1 );
-    box = new Q3HBox( this );
-    box->setMargin( 5 );
-    list_ = new PreferencesList( "preferencesList", box, *pages );
-    grid->addWidget( box, 1, 0 );
+    RichPushButton* okButton = new RichPushButton( "ok", tr( "Ok" ) );
+    RichPushButton* cancelButton = new RichPushButton( "cancel", tr( "Cancel" ) );
+    okButton->setDefault( true );
 
-    pGraphicPrefPanel_       = new GraphicsPanel( this, preferences );
-    layersPanel_             = new LayersPanel( this, controllers, proxy );
-    pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordConverter );
+    QHBoxLayout* topLayout = new QHBoxLayout();
+    topLayout->setMargin( 0 );
+    topLayout->addWidget( title );
+    topLayout->addStretch( 1 );
+    topLayout->addWidget( icon );
 
-    box = new Q3HBox( this );
-    box->setMargin( 5 );
-    box->setMaximumHeight( 40 );
-    RichPushButton* okBtn = new RichPushButton( "ok", tr( "Ok" ), box );
-    RichPushButton* cancelBtn = new RichPushButton( "cancel", tr( "Cancel" ), box );
-    okBtn->setDefault( true );
-    grid->addWidget( box, 2, 1, Qt::AlignRight );
+    QHBoxLayout* contentLayout = new QHBoxLayout();
+    contentLayout->addWidget( list_, 1 );
+    contentLayout->addWidget( stack_, 3 );
 
-    connect( okBtn, SIGNAL( clicked() ), SLOT( OnOk() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnCancel() ) );
+    QHBoxLayout* bottomLayout = new QHBoxLayout();
+    bottomLayout->setMargin( 0 );
+    bottomLayout->addStretch( 1 );
+    bottomLayout->addWidget( okButton );
+    bottomLayout->addWidget( cancelButton );
+
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->addLayout( topLayout );
+    layout->addLayout( contentLayout, 1 );
+    layout->addLayout( bottomLayout );
+
+    auto& options = controllers.options_;
+    AddPage( tr( "2D" ),                   *new LayersPanel( this, options, proxy ) );
+    AddPage( tr( "2D/Terrain" ),           *new GraphicsPanel( this, options, settings ) );
+    AddPage( tr( "2D/Population" ),        *new InhabitantPanel( this, options ) );
+    AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, staticModel.detection_, elevation2dLayer, preferences_ ) );
+    AddPage( tr( "3D" ),                   *new LightingPanel( this, options, lighting ) );
+    AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, staticModel.coordinateConverter_ ) );
+    AddPage( tr( "Refresh rate" ),         *new RefreshRatePanel( this, options ) );
+    AddPage( tr( "Replay" ),               *new ReplayPanel( this, options ) );
+    AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, options ) );
+
+    connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
+    connect( cancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
     connect( this, SIGNAL( OnAddRaster() ), parent, SLOT( OnAddRaster() ) );
 
-    BuildSettings();
-    hide();
     controllers_.Register( *this );
 }
 
@@ -122,17 +132,8 @@ PreferencesDialog::~PreferencesDialog()
 void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page )
 {
     list_->AddPage( name, &page );
-    page.setFrameStyle( QFrame::NoFrame );
-    pages_.push_back( &page );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::sizeHint
-// Created: SBO 2006-05-03
-// -----------------------------------------------------------------------------
-QSize PreferencesDialog::sizeHint() const
-{
-    return QSize( 750, 550 );
+    stack_->addWidget( &page );
+    panels_.push_back( &page );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,9 +142,29 @@ QSize PreferencesDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void PreferencesDialog::showEvent( QShowEvent * event )
 {
-    for( auto it = pages_.begin(); it != pages_.end(); ++it )
-        ( *it )->Load( proxy_ );
+    previousGeneralOptions_ = std::make_shared< kernel::Options >( *controllers_.options_.GetGeneralOptions() );
+    previousViewOptions_ = std::make_shared< kernel::Options >( *controllers_.options_.GetViewOptions() );
+    Load( proxy_ );
     QDialog::showEvent( event );
+}
+
+namespace
+{
+    void RestoreOptions( kernel::OptionsController& optionsController,
+                         const kernel::Options& previousOptions,
+                         kernel::Options& currentOptions )
+    {
+        std::vector< std::string > toDelete;
+        currentOptions.Apply( [&]( const std::string& name, const OptionVariant&, bool ) {
+            if( !previousOptions.Has( name ) )
+                toDelete.push_back( name );
+        } );
+        std::for_each( toDelete.begin(), toDelete.end(), [&]( const std::string& name ){ currentOptions.Remove( name ); } );
+        previousOptions.Apply( [&]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
+            if( isInPreferencePanel )
+                optionsController.Change( name, value );
+        } );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -152,56 +173,16 @@ void PreferencesDialog::showEvent( QShowEvent * event )
 // -----------------------------------------------------------------------------
 void PreferencesDialog::reject()
 {
-    OnCancel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::OnOk
-// Created: SBO 2007-01-03
-// -----------------------------------------------------------------------------
-void PreferencesDialog::OnOk()
-{
-    for( auto it = pages_.begin(); it != pages_.end(); ++it )
-        (*it)->Commit();
-    hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::OnCancel
-// Created: SBO 2007-01-03
-// -----------------------------------------------------------------------------
-void PreferencesDialog::OnCancel()
-{
-    for( auto it = pages_.begin(); it != pages_.end(); ++it )
-        (*it)->Reset();
-    hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::PurgeDialog
-// Created: NPT 2013-07-15
-// -----------------------------------------------------------------------------
-void PreferencesDialog::PurgeDialog()
-{
-    list_->Purge();
-    pages_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::BuildSettings
-// Created: NPT 2013-07-15
-// -----------------------------------------------------------------------------
-void PreferencesDialog::BuildSettings()
-{
-    AddPage( tools::translate( "PreferencesDialog", "Coordinate System" ), *pCoordinateSystemsPanel_ );
-    AddPage( tools::translate( "PreferencesDialog", "Visualisation Scales" ), *new VisualisationScalesPanel( this, controllers_ ) );
-    AddPage( tools::translate( "PreferencesDialog", "2D" ), *layersPanel_ );
-    AddPage( tools::translate( "PreferencesDialog", "2D/Terrain" ), *pGraphicPrefPanel_ );
-    AddPage( tools::translate( "PreferencesDialog", "2D/Population" ), *new InhabitantPanel( this, controllers_ ) );
-    AddPage( tools::translate( "PreferencesDialog", "2D/Elevation" ), *new ElevationPanel( this, elevation2dLayer_, controllers_, painter_ ) );
-    AddPage( tools::translate( "PreferencesDialog", "3D" ), *new LightingPanel( this, lighting_, controllers_ ) );
-    AddPage( tools::translate( "PreferencesDialog", "Refresh rate" ), *new RefreshRatePanel( this, controllers_ ) );
-    AddPage( tools::translate( "PreferencesDialog", "Replay" ), *new ReplayPanel( this, controllers_ ) );
+    auto& options = controllers_.options_;
+    auto& viewOptions = *options.GetViewOptions();
+    RestoreOptions( options, *previousViewOptions_, viewOptions );
+    RestoreOptions( options, *previousGeneralOptions_, *options.GetGeneralOptions() );
+    previousViewOptions_.reset();
+    previousGeneralOptions_.reset();
+    proxy_.UpdateLayerOrder( viewOptions );
+    settings_->Load( viewOptions );
+    preferences_->Load( viewOptions );
+    ModalDialog::reject();
 }
 
 // -----------------------------------------------------------------------------
@@ -211,5 +192,23 @@ void PreferencesDialog::BuildSettings()
 void PreferencesDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     if( isVisible() )
-        OnCancel();
+        reject();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::Load
+// Created: ABR 2014-10-01
+// -----------------------------------------------------------------------------
+void PreferencesDialog::Load( const GlProxy& )
+{
+    try
+    {
+        for( auto it = panels_.begin(); it != panels_.end(); ++it )
+            ( *it )->Load( proxy_ );
+    }
+    catch( std::exception& )
+    {
+        setVisible( false );
+        throw;
+    }
 }

@@ -10,6 +10,8 @@
 #ifndef __Options_h_
 #define __Options_h_
 
+#include "ENT/ENT_Enums.h"
+
 namespace kernel
 {
     class OptionVariant;
@@ -42,7 +44,7 @@ public:
     void InitializeGeneral();
     void InitializeView();
     void InitializeLayers( const std::vector< E_LayerTypes >& types );
-    void Set( const std::string& name, const OptionVariant& value, bool savable = true );
+    void Set( const std::string& name, const OptionVariant& value );
     const OptionVariant& Get( const std::string& name ) const;
     bool Has( const std::string& name ) const;
 
@@ -58,12 +60,13 @@ private:
     //@{
     void Create( Settings_ABC& settings, const std::string& name, char type );
     void ReadGradient( xml::xistream& xis );
+    void Set( const std::string& name, const OptionVariant& value, bool isInPreferencePanel );
     //@}
 
     //! @name Types
     //@{
-    typedef std::pair< OptionVariant, bool >    T_Savable;
-    typedef std::map< std::string, T_Savable >  T_Options;
+    // map< OptionName, pair< OptionValue, IsInPreferencePanel >
+    typedef std::map< std::string, std::pair< OptionVariant, bool > >  T_Options;
     //@}
 
 private:

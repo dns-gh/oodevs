@@ -43,10 +43,15 @@ namespace
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, float height, IconLayout& iconLayout )
+GlWidget::GlWidget( QWidget* pParent,
+                    Controllers& controllers,
+                    float width,
+                    float height,
+                    IconLayout& iconLayout,
+                    const DrawingTypes& drawingTypes )
     : SetGlOptions()
     , MapWidget( context_, pParent, width, height, 0 )
-    , GlToolsBase( controllers )
+    , GlToolsBase( controllers, drawingTypes )
     , baseWidth_( 600.f )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )

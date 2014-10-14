@@ -11,71 +11,114 @@
 #include "LightingPanel.h"
 #include "moc_LightingPanel.cpp"
 #include "ButtonGroup.h"
-#include "ColorButton.h"
 #include "DirectionWidget.h"
 #include "LightingProxy.h"
+#include "OptionWidgets.h"
 #include "RichGroupBox.h"
 #include "RichRadioButton.h"
+#include "SignalAdapter.h"
 #include "SubObjectName.h"
+#include "Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
 
+namespace
+{
+    enum E_3DLightingType
+    {
+        eFixed,
+        eCameraFixed,
+        eSimulationTime
+    };
+    class OptionDirection : public OptionWidget< DirectionWidget >
+    {
+    public:
+        OptionDirection( kernel::OptionsController& options,
+                         const QString& objectName,
+                         const std::string& optionName,
+                         QWidget* parent = 0 )
+            : OptionWidget< DirectionWidget >( options, objectName, optionName, parent )
+        {
+            gui::connect( this, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), [=,&options]{
+                options.Change( optionName, GetValue() );
+            } );
+        }
+    private:
+        virtual void OnOptionChanged( const kernel::OptionVariant& value )
+        {
+            SetValue( value.To< QString >() );
+        }
+    };
+    class OptionButtonGroup : public OptionWidget< ButtonGroup >
+    {
+    public:
+        OptionButtonGroup( kernel::OptionsController& options,
+                           const QString& objectName,
+                           const std::string& optionName,
+                           QWidget* parent = 0 )
+            : OptionWidget< ButtonGroup >( options, objectName, optionName, parent )
+        {
+            gui::connect( this, SIGNAL( ButtonClicked( int ) ), [=,&options]{
+                options.Change( optionName, CheckedId() );
+            } );
+        }
+    private:
+        virtual void OnOptionChanged( const kernel::OptionVariant& value )
+        {
+            SetChecked( value.To< int >() );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: LightingPanel constructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::Controllers& controllers )
+LightingPanel::LightingPanel( QWidget* parent,
+                              kernel::OptionsController& options,
+                              LightingProxy& lighting )
     : PreferencePanel_ABC( parent, "LightingPanel" )
-    , controllers_( controllers )
-    , options_( controllers.options_ )
     , lighting_( lighting )
 {
     SubObjectName subObject( "LightingPanel" );
-    QVBoxLayout* container = new QVBoxLayout( this );
-    container->setSizeConstraint( QLayout::SetMinimumSize );
 
     lighting_.SetAmbient( 0.2f, 0.2f, 0.2f );
     lighting_.SetDiffuse( 0.8f, 0.8f, 0.8f );
     lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
 
-    // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
-    lightingType_ = new ButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ) );
-    lightingType_->resize( this->size() );
-    lightingType_->insert( new RichRadioButton( "fixed", tr( "Fixed" ), lightingType_ ) );
-    lightingType_->insert( new RichRadioButton( "cameraFixed", tr( "Camera fixed" ), lightingType_ ) );
-    lightingType_->insert( new RichRadioButton( "simulationTime", tr( "Simulation time" ), lightingType_ ) );
-    lightingType_->setButton( 0 );
-    container->addWidget( lightingType_ );
+    auto lightingType = new OptionButtonGroup( options, "type_box", "Lighting/Type" );
+    lightingType->setTitle( tr( "Lighting type" ) );
+    lightingType->AddButton( eFixed, new RichRadioButton( "fixed", tr( "Fixed" ), lightingType ) ); // only this one works well...
+    lightingType->AddButton( eCameraFixed, new RichRadioButton( "cameraFixed", tr( "Camera fixed" ), lightingType ) );
+    lightingType->AddButton( eSimulationTime, new RichRadioButton( "simulationTime", tr( "Simulation time" ), lightingType ) );
+    lightingType->SetChecked( eFixed );
 
-    connect( lightingType_, SIGNAL( clicked( int ) ), this, SLOT( OnLightingType( int ) ) );
+    auto direction = new OptionDirection( options, "direction", "Lighting/Direction" );
+    auto ambient = new OptionColorButton( options, "ambient", "Lighting/Ambient" );
+    auto diffuse = new OptionColorButton( options, "diffuse", "Lighting/Diffuse" );
 
-    QLabel* sourceLabel = new QLabel( tr( "Source position" ) );
-    direction_ = new DirectionWidget( 0 );
-    QLabel* ambientLabel = new QLabel( tr( "Ambient color" ) );
-    ambient_ = new ColorButton( "ambient", 0, "", QColor( 52, 52, 52 ) );
-    QLabel* diffuseLabel = new QLabel( tr( "Diffuse color" ) );
-    diffuse_ = new ColorButton( "diffuse", 0, "", QColor( 204, 204, 204 ) );
+    fixedBox_ = new RichGroupBox( "fixedLightBox", tr( "Parameters" ) );
+    QVBoxLayout* fixedLayout = new QVBoxLayout( fixedBox_ );
+    fixedLayout->addWidget( tools::AddLabeledWidget( tr( "Source position" ), direction ) );
+    fixedLayout->addWidget( tools::AddLabeledWidget( tr( "Ambient color" ), ambient ) );
+    fixedLayout->addWidget( tools::AddLabeledWidget( tr( "Diffuse color" ), diffuse ) );
 
-    fixedLightBox_ = new RichGroupBox( "fixedLightBox", tr( "Parameters" ) );
-    QGridLayout* fixedLightBoxLayout = new QGridLayout( fixedLightBox_ );
-    fixedLightBoxLayout->addWidget( sourceLabel, 0, 0 );
-    fixedLightBoxLayout->addWidget( direction_, 0 ,1 );
-    fixedLightBoxLayout->addWidget( ambientLabel, 1, 0 );
-    fixedLightBoxLayout->addWidget( ambient_, 1, 1 );
-    fixedLightBoxLayout->addWidget( diffuseLabel, 2, 0) ;
-    fixedLightBoxLayout->addWidget( diffuse_, 2, 1 );
-    container->addWidget( fixedLightBox_ );
+    QVBoxLayout* container = new QVBoxLayout( this );
+    container->setSizeConstraint( QLayout::SetMinimumSize );
+    container->addWidget( lightingType );
+    container->addWidget( fixedBox_ );
     container->addStretch( 1 );
 
-    connect( direction_, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
-    connect( ambient_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
-    connect( diffuse_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( DiffuseChanged( const QColor& ) ) );
+    connect( lightingType, SIGNAL( ButtonClicked( int ) ), this, SLOT( OnTypeChanged( int ) ) );
+    connect( direction, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ),
+             this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
+    connect( ambient, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
+    connect( diffuse, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( DiffuseChanged( const QColor& ) ) );
 
     setLayout( container );
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,51 +127,21 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
 // -----------------------------------------------------------------------------
 LightingPanel::~LightingPanel()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LightingPanel::Commit
-// Created: SBO 2007-01-03
-// -----------------------------------------------------------------------------
-void LightingPanel::Commit()
-{
-    lightingType_->Commit();
-    direction_->Commit();
-    ambient_  ->Commit();
-    diffuse_  ->Commit();
-
-    options_.Change( "Lighting/Type", lightingType_->selectedId() );
-    options_.Change( "Lighting/Ambient", ambient_->GetColor().name() );
-    options_.Change( "Lighting/Diffuse", diffuse_->GetColor().name() );
-    options_.Change( "Lighting/Direction", direction_->GetValue() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LightingPanel::Reset
-// Created: SBO 2007-01-03
-// -----------------------------------------------------------------------------
-void LightingPanel::Reset()
-{
-    lightingType_->Revert();
-    OnLightingType(lightingType_->selectedId());
-    direction_->Revert();
-    ambient_  ->Revert();
-    diffuse_  ->Revert();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LightingPanel::OnLightingType
+// Name: LightingPanel::OnTypeChanged
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void LightingPanel::OnLightingType( int type )
+void LightingPanel::OnTypeChanged( int type )
 {
-    fixedLightBox_->setVisible( type == 0 || type == 1 );
-    if( type == 0 )
+    fixedBox_->setVisible( type == eFixed || type == eCameraFixed );
+    if( type == eFixed )
         lighting_.SwitchToFixed();
-    else if( type == 1 )
+    else if( type == eCameraFixed )
         lighting_.SwitchToCameraFixed();
-    else if( type == 2 )
+    else if( type == eSimulationTime )
         lighting_.SwitchToSimulationTime();
 }
 
@@ -157,35 +170,4 @@ void LightingPanel::AmbientChanged( const QColor& color )
 void LightingPanel::DiffuseChanged( const QColor& color )
 {
     lighting_.SetDiffuse( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LightingPanel::OptionChanged
-// Created: SBO 2007-03-27
-// -----------------------------------------------------------------------------
-void LightingPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    const QStringList option = QStringList::split( "/", name.c_str() );
-    if( !( option[0] == "Lighting" ) )
-        return;
-    if( option[1] == "Type" )
-    {
-        lightingType_->setButton( value.To< int >());
-        lightingType_->Commit();
-    }
-    else if( option[1] == "Ambient" )
-    {
-        ambient_->SetColor( QColor( value.To< QString >() ) );
-        ambient_->Commit();
-    }
-    else if( option[1] == "Diffuse" )
-    {
-        diffuse_->SetColor( QColor( value.To< QString >() ) );
-        diffuse_->Commit();
-    }
-    else if( option[1] == "Direction" )
-    {
-        direction_->SetValue( value.To< QString >() );
-        direction_->Commit();
-    }
 }

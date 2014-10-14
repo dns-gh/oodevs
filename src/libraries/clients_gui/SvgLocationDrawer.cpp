@@ -89,6 +89,10 @@ void SvgLocationDrawer::SetColor( const QColor& color )
     colorChanged_ = color_ != color;
     color_ = color;
     complement_ = Complement( color );
+    // TMP, use tools_.GetCurrentAlpha() when it will be merged
+    float glColor[4];
+    glGetFloatv( GL_CURRENT_COLOR, glColor );
+    color_.setAlphaF( glColor[3] );
 }
 
 // -----------------------------------------------------------------------------
