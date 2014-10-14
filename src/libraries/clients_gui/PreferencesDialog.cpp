@@ -148,25 +148,40 @@ void PreferencesDialog::showEvent( QShowEvent * event )
     QDialog::showEvent( event );
 }
 
+namespace
+{
+    void RestoreOptions( kernel::OptionsController& optionsController,
+                         const kernel::Options& previousOptions,
+                         kernel::Options& currentOptions )
+    {
+        std::vector< std::string > toDelete;
+        currentOptions.Apply( [&]( const std::string& name, const OptionVariant&, bool ) {
+            if( !previousOptions.Has( name ) )
+                toDelete.push_back( name );
+        } );
+        std::for_each( toDelete.begin(), toDelete.end(), [&]( const std::string& name ){ currentOptions.Remove( name ); } );
+        previousOptions.Apply( [&]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
+            if( isInPreferencePanel )
+                optionsController.Change( name, value );
+        } );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PreferencesDialog::reject
 // Created: RPD 2008-08-22
 // -----------------------------------------------------------------------------
 void PreferencesDialog::reject()
 {
-    previousViewOptions_->Apply( [&]( const std::string& name, const OptionVariant& option, bool isInPreferencePanel ) {
-        if( isInPreferencePanel )
-            controllers_.options_.Change( name, option );
-    } );
-    previousGeneralOptions_->Apply( [&]( const std::string& name, const OptionVariant& option, bool isInPreferencePanel ) {
-        if( isInPreferencePanel )
-            controllers_.options_.Change( name, option );
-    } );
+    auto& options = controllers_.options_;
+    auto& viewOptions = *options.GetViewOptions();
+    RestoreOptions( options, *previousViewOptions_, viewOptions );
+    RestoreOptions( options, *previousGeneralOptions_, *options.GetGeneralOptions() );
     previousViewOptions_.reset();
     previousGeneralOptions_.reset();
-    proxy_.UpdateLayerOrder( *controllers_.options_.GetViewOptions() );
-    settings_->Load( *controllers_.options_.GetViewOptions() );
-    preferences_->Load( *controllers_.options_.GetViewOptions() );
+    proxy_.UpdateLayerOrder( viewOptions );
+    settings_->Load( viewOptions );
+    preferences_->Load( viewOptions );
     ModalDialog::reject();
 }
 
