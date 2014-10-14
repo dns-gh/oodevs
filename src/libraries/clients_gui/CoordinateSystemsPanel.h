@@ -11,6 +11,7 @@
 #define __CoordinateSystemsPanel_h_
 
 #include "PreferencePanel_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
@@ -28,6 +29,8 @@ namespace gui
 // Created: AME 2010-03-15
 // =============================================================================
 class CoordinateSystemsPanel : public PreferencePanel_ABC
+                             , public tools::Observer_ABC
+                             , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 
@@ -42,14 +45,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( const GlProxy& );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-     kernel::CoordinateConverter_ABC& coordConverter_;
-     QComboBox* coordSysComboBox_;
+    kernel::OptionsController& options_;
+    kernel::CoordinateConverter_ABC& coordConverter_;
+    QComboBox* coordSysComboBox_;
     //@}
 };
 

@@ -30,6 +30,7 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent,
                                                 kernel::OptionsController& options,
                                                 kernel::CoordinateConverter_ABC& coordConverter )
     : PreferencePanel_ABC( parent, "CoordinateSystemsPanel" )
+    , options_( options )
     , coordConverter_( coordConverter )
 {
     QLabel* coordinateLabel = new QLabel( tr( "Select current coordinate system:" ) );
@@ -50,6 +51,8 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent,
     layout->addStretch( 1 );
 
     setLayout( layout );
+
+    options_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,14 +61,16 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent,
 // -----------------------------------------------------------------------------
 CoordinateSystemsPanel::~CoordinateSystemsPanel()
 {
-     // NOTHING
+    options_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CoordinateSystemsPanel::Load
-// Created: ABR 2014-10-01
+// Name: CoordinateSystemsPanel::OptionChanged
+// Created: ABR 2014-10-14
 // -----------------------------------------------------------------------------
-void CoordinateSystemsPanel::Load( const GlProxy& )
+void CoordinateSystemsPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    coordSysComboBox_->setCurrentIndex( static_cast< int >( coordConverter_.GetDefaultCoordinateSystem() ) );
+    if( name != "CoordSystem" )
+        return;
+    coordSysComboBox_->setCurrentIndex( value.To< int >() );
 }
