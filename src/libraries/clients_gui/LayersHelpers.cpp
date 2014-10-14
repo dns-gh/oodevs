@@ -65,6 +65,7 @@ const T_LayerTypesVector eventOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_ObjectsComposite )
     ( eLayerTypes_ResourceNetworks )
     ( eLayerTypes_Urban)
+    ( eLayerTypes_Selection)
     ( eLayerTypes_TacticalLinesComposite )
     ( eLayerTypes_Metric )
     ( eLayerTypes_Elevation3d )
