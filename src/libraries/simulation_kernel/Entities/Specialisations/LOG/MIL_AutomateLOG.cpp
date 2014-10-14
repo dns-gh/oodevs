@@ -187,7 +187,10 @@ boost::shared_ptr< PHY_MaintenanceComposanteState > MIL_AutomateLOG::Maintenance
 {
     MaintenanceTransportVisitor visitor( composante );
     Visit( visitor );
-    return visitor.selected_ ? visitor.selected_->HandleComposanteForTransport( pion, composante ) : boost::shared_ptr< PHY_MaintenanceComposanteState >();
+    PHY_RoleInterface_Maintenance* candidate = visitor.selected_;
+    if( !candidate )
+        candidate = visitor.firstAvailable_;
+    return candidate ? candidate->HandleComposanteForTransport( pion, composante ) : boost::shared_ptr< PHY_MaintenanceComposanteState >();
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +201,10 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( const boost::shar
 {
     MaintenanceTransportVisitor visitor( state->GetComposante() );
     Visit( visitor );
-    return visitor.selected_ ? visitor.selected_->HandleComposanteForTransport( state ) : false;
+    PHY_RoleInterface_Maintenance* candidate = visitor.selected_;
+    if( !candidate )
+        candidate = visitor.firstAvailable_;
+    return candidate ? candidate->HandleComposanteForTransport( state ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -263,7 +269,7 @@ PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransp
 {
     MaintenanceTransportVisitor visitor( state->GetComposante() );
     Visit( visitor );
-    return visitor.selected_;
+    return visitor.selected_ ? visitor.selected_ : visitor.firstAvailable_;
 }
 
 // -----------------------------------------------------------------------------
