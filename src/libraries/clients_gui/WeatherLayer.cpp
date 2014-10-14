@@ -96,17 +96,11 @@ bool WeatherLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
 // Name: WeatherLayer::HandleMouseMove
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
-bool WeatherLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
+bool WeatherLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& point )
 {
-    if( mouse->button() == Qt::LeftButton && isEditing_ )
+    if( isEditing_ && firstPointSet_ )
     {
-        if( !firstPointSet_ )
-        {
-            topLeft_ = point;
-            firstPointSet_ = true;
-        }
-        else
-            bottomRight_ = point;
+        bottomRight_ = point;
         return true;
     }
     return false;

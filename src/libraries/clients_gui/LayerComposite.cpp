@@ -74,6 +74,17 @@ void LayerComposite::Paint( gui::Viewport_ABC& viewport )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LayerComposite::Paint
+// Created: ABR 2014-10-14
+// -----------------------------------------------------------------------------
+void LayerComposite::Paint( const geometry::Rectangle2f& viewport )
+{
+    if( !ShouldDrawPass() )
+        return;
+    Forward( layers_, [&]( const T_Layer& layer ){ layer->Paint( viewport ); } );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LayerComposite::Reset
 // Created: SLI 2014-06-27
 // -----------------------------------------------------------------------------
