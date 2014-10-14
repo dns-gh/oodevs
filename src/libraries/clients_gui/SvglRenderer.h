@@ -81,19 +81,14 @@ private:
     std::unique_ptr< svg::References >        references_;
     std::unique_ptr< svg::RenderingContext >  renderingContext_;
     std::unique_ptr< svg::ListLengthFactory > listLenghts_;
-
+    std::unique_ptr< svg::TextRenderer > renderer_;
     T_Lists lists_;
     geometry::Rectangle2f previousViewport_;
     unsigned int previousWidth_;
     unsigned int previousHeight_;
+    unsigned int colorList_;
     float r_, g_, b_, a_;
     bool colorDirty_;
-    //@}
-
-    //! @name Static data
-    //@{
-    static std::unique_ptr< svg::TextRenderer > renderer_;
-    static unsigned int colorList_;
     //@}
 };
 

@@ -22,9 +22,6 @@ using namespace geometry;
 using namespace gui;
 using namespace svg;
 
-std::unique_ptr< TextRenderer > SvglRenderer::renderer_( new TextRenderer() );
-unsigned int SvglRenderer::colorList_ = 0;
-
 // -----------------------------------------------------------------------------
 // Name: SvglRenderer constructor
 // Created: AGE 2007-05-31
@@ -33,9 +30,16 @@ SvglRenderer::SvglRenderer()
     : references_      ( new References() )
     , renderingContext_( new RenderingContext() )
     , listLenghts_     ( new ListLengthFactory() )
+    , previousWidth_   ( 0 )
+    , previousHeight_  ( 0 )
+    , colorList_       ( 0 )
+    , r_               ( 1 )
+    , g_               ( 1 )
+    , b_               ( 1 )
+    , a_               ( 1 )
     , colorDirty_      ( true )
 {
-    r_ = g_ = b_ = a_ = 1;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,12 +50,7 @@ SvglRenderer::~SvglRenderer()
 {
     for( auto it = lists_.begin(); it != lists_.end(); ++it )
         glDeleteLists( it->second, 1 );
-    if( colorList_ )
-    {
-        glDeleteLists( colorList_, 1 );
-        colorList_ = 0;
-        renderer_.reset( new TextRenderer() );
-    }
+    glDeleteLists( colorList_, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +99,7 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
 void SvglRenderer::Render( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                            unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     CreateStaticLists();
     if( pickingMode )
     {
@@ -187,7 +186,7 @@ void SvglRenderer::ConfigureColorList()
 // -----------------------------------------------------------------------------
 void SvglRenderer::ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
 {
-    if( viewport != previousViewport_ || vWidth   != previousWidth_ || vHeight  != previousHeight_ )
+    if( viewport != previousViewport_ || vWidth != previousWidth_ || vHeight  != previousHeight_ )
     {
         const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
         listLenghts_->SetViewport( box, vWidth, vHeight );
@@ -214,9 +213,11 @@ std::unique_ptr< Style > SvglRenderer::CreateStyle( const std::string& style )
 // -----------------------------------------------------------------------------
 void SvglRenderer::CreateStaticLists()
 {
-    if( ! colorList_ )
+    if( !renderer_ )
     {
+        renderer_.reset( new TextRenderer() );
         renderer_->InitializeFont( "Arial", 700 );
-        colorList_ = glGenLists( 1 );
     }
+    if( !colorList_ )
+        colorList_ = glGenLists( 1 );
 }
