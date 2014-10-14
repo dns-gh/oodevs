@@ -29,12 +29,15 @@ namespace timeline
 {
 namespace controls
 {
+    // Name for client to server messages
     const std::string& GetClientToServerMessage();
+    // Name for server to client messages
     const std::string& GetServerToClientMessage();
 
     typedef std::function< void( const std::string& msg ) > T_Logger;
     typedef CefRefPtr< CefProcessMessage > T_Msg;
 
+    // Server commands
     T_Msg UpdateQuery    ( const T_Logger& log, const std::map< std::string, std::string >& query );
     T_Msg CenterClient   ( const T_Logger& log );
     T_Msg CreateEvents   ( const T_Logger& log, const Events& events );
@@ -46,6 +49,7 @@ namespace controls
     T_Msg LoadEvents     ( const T_Logger& log, const std::string& events );
     T_Msg SaveEvents     ( const T_Logger& log );
 
+    // ClientHandler_ABC lists commands that every client must implement
     struct ClientHandler_ABC : public boost::noncopyable
     {
                  ClientHandler_ABC() {}
@@ -63,8 +67,10 @@ namespace controls
         virtual void OnSaveEvents   () = 0;
     };
 
+    // Parse a server to client message and potentially call relevant ClientHandler_ABC method
     void ParseClient( ClientHandler_ABC& client, const T_Msg& msg, const T_Logger& log );
 
+    // Client events
     T_Msg ReadyServer           ( const T_Logger& log );
     T_Msg CreatedEvents         ( const T_Logger& log, const Events& events, const Error& error );
     T_Msg ReadEvents            ( const T_Logger& log, const Events& events, const Error& error );
@@ -82,6 +88,7 @@ namespace controls
     T_Msg KeyPress              ( const T_Logger& log, int key );
     T_Msg KeyUp                 ( const T_Logger& log, int key );
 
+    // ServerHandler_ABC lists events that every server must implement
     struct ServerHandler_ABC : public boost::noncopyable
     {
                  ServerHandler_ABC() {}
@@ -105,6 +112,7 @@ namespace controls
         virtual void OnKeyUp                ( int key ) = 0;
     };
 
+    // Parse a client to server message and potentially call relevant ServerHandler_ABC method
     void ParseServer( ServerHandler_ABC& server, const T_Msg& msg, const T_Logger& log );
 }
 }

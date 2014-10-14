@@ -25,6 +25,10 @@ namespace timeline
 
 namespace timeline
 {
+// Browser wraps a CEF browser object, and manage its life span through the
+// CefLifeSpanHandler. This class is responsible for creating a cef browser
+// window, resizing this window, and pumping messages to/from the renderer
+// process
 class Browser : public boost::noncopyable
               , public CefClient
               , public CefLifeSpanHandler

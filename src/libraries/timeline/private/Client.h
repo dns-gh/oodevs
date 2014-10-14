@@ -33,6 +33,9 @@ namespace tools
 
 namespace timeline
 {
+// Client manages the renderer process. It maintains two things:
+// ClientApp: Wrapper around CefClient for CEF initialization & message pump
+// Engine: Wrapper around CefV8Context for javascript bindings
 class Client : public controls::ClientHandler_ABC
 {
 public:
