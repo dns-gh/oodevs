@@ -28,4 +28,5 @@ tags
 /src/masa/timeline/www/js/*.js
 /src/masa/timeline/www/lib/*.min.js
 /src/masa/timeline/www/tests/*.js
+/src/masa/sword/sword/
 sessions/
