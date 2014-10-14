@@ -253,17 +253,39 @@ func DecCreateBreakdown(c *C, client *swapi.Client, unitId, equipmentType uint32
 }
 
 func (s *TestSuite) TestDecCreateBreakdown(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
 	defer stopSim(c, sim, DisableLuaChecks())
 	defer client.Close()
-	automat := createAutomat(c, client)
-	// ARMOR.MBT platoon
-	unit := CreateUnit(c, client, automat.Id)
-	// ARMOR.Main Battle Tank
-	equipmentType := uint32(11)
-	// MOB Breakdown 3 EB Evac
-	breakdownType := int32(15)
+	phydb := loadPhysicalData(c, "test")
+
+	party := &Party{
+		Name: "party1",
+		Formations: []*Formation{
+			&Formation{
+				Name: "formation",
+				Automats: []*Automat{
+					&Automat{
+						Name: "automat",
+						Type: "VW Combi Rally",
+						Units: []*Unit{
+							&Unit{
+								Name: "unit",
+								Type: "VW Combi",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+	err := FindOrCreateEntities(client, phydb, party)
+	c.Assert(err, IsNil)
+	unit := party.Formations[0].Automats[0].Units[0].Entity
+
+	// VW Combi
+	equipmentType := uint32(2)
+	// breakdown
+	breakdownType := int32(107)
 
 	// Invalid equipment type
 	DecCreateBreakdown(c, client, unit.Id, 12345, 12345, "false")
@@ -272,7 +294,7 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 
 	// Check initial state
 	equipment := swapi.Equipment{
-		Available:     4,
+		Available:     1,
 		Unavailable:   0,
 		Repairable:    0,
 		OnSiteFixable: 0,
@@ -285,7 +307,7 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 
 	// Check breakdown
 	equipment = swapi.Equipment{
-		Available:     3,
+		Available:     0,
 		Unavailable:   0,
 		Repairable:    1,
 		OnSiteFixable: 0,

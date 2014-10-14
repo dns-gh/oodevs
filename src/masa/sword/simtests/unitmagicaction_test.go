@@ -1603,17 +1603,23 @@ func (s *TestSuite) TestUnitChangeResource(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	phydb := loadPhysicalData(c, "test")
 
-	f1 := CreateFormation(c, client, 1)
-	a1 := CreateAutomat(c, client, f1.Id, 0)
-	u1 := CreateUnit(c, client, a1.Id)
-	equipmentId := uint32(11)
+	u1 := getSomeUnitByName(c, client.Model.GetData(), "Maintenance Mobile Infantry 2")
+	citroen, err := phydb.Components.Find("Citroën 2CV")
+	c.Assert(err, IsNil)
+	equipmentId := citroen.Id
 	equipment := swapi.Equipment{
-		Available: 4,
+		Available: 5,
 	}
+	unusedBreakdown, err := phydb.Breakdowns.Find("unused breakdown")
+	c.Assert(err, IsNil)
+	mobility1, err := phydb.Breakdowns.Find("mobility 1")
+	c.Assert(err, IsNil)
+	mobility2, err := phydb.Breakdowns.Find("mobility 2")
+	c.Assert(err, IsNil)
 
 	// Check initial state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -1623,7 +1629,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	swtest.DeepEquals(c, *client.Model.GetUnit(u1.Id).Equipments[equipmentId], equipment)
 
 	// Error: Invalid parameters count
-	err := client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
 
 	// Error: Invalid negative parameters
@@ -1636,11 +1642,11 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		Unavailable: 10,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: number of equipment states \\(10\\) different from number of existing equipments \\(4\\)")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: number of equipment states \\(10\\) different from number of existing equipments \\(5\\)")
 
 	// Error: Cannot change to repairing
 	equipment = swapi.Equipment{
-		Available:   1,
+		Available:   2,
 		Unavailable: 1,
 		Repairing:   1,
 		Captured:    1,
@@ -1650,10 +1656,9 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 
 	// Change equipments
 	equipment = swapi.Equipment{
-		Available:     1,
-		Unavailable:   1,
-		OnSiteFixable: 1,
-		Captured:      1,
+		Available:   3,
+		Unavailable: 1,
+		Captured:    1,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
@@ -1664,10 +1669,10 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 
 	// Error: breakdown missing
 	equipment = swapi.Equipment{
-		Available:     1,
+		Available:     3,
 		Unavailable:   1,
 		Repairable:    1,
-		OnSiteFixable: 1,
+		OnSiteFixable: 0,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] size must be equal to parameters\[0\]\[0\]\[3\]`)
@@ -1678,12 +1683,12 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] must be a breakdown identifier`)
 
 	// Error: invalid breakdown for the composante
-	equipment.Breakdowns = []int32{1}
+	equipment.Breakdowns = []int32{int32(unusedBreakdown.Id)}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] invalid breakdown identifier for the equipment`)
 
 	// Change equipments
-	equipment.Breakdowns = []int32{82}
+	equipment.Breakdowns = []int32{int32(mobility1.Id)}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
@@ -1692,7 +1697,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	})
 
 	// Change breakdown
-	equipment.Breakdowns = []int32{83}
+	equipment.Breakdowns = []int32{int32(mobility2.Id)}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
@@ -1702,26 +1707,28 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 }
 
 func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	phydb := loadPhysicalData(c, "test")
 
-	f1 := CreateFormation(c, client, 1)
-	a1 := CreateAutomat(c, client, f1.Id, 0)
-	u1 := CreateUnit(c, client, a1.Id)
-	equipmentId := uint32(11)
-
+	u1 := getSomeUnitByName(c, client.Model.GetData(), "Maintenance Mobile Infantry 2")
+	citroen, err := phydb.Components.Find("Citroën 2CV")
+	c.Assert(err, IsNil)
+	equipmentId := citroen.Id
 	initial := swapi.Equipment{
-		Available: 4,
+		Available: 5,
 	}
+	mobility1, err := phydb.Breakdowns.Find("mobility 1")
+	c.Assert(err, IsNil)
+	breakdownId := int32(mobility1.Id)
 
 	// Error: Invalid parameters count
-	err := client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{})
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	equipment := swapi.Equipment{
 		Repairable: 1,
-		Breakdowns: []int32{82},
+		Breakdowns: []int32{breakdownId},
 	}
 
 	// Error: Invalid equipment type
@@ -1743,31 +1750,28 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Create breakdown
-	equipment.Breakdowns = []int32{82}
+	equipment.Breakdowns = []int32{breakdownId}
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
 	initial.Repairable = 1
-	initial.Available = 3
-	initial.Breakdowns = []int32{82}
-	// Check breakdown
+	initial.Available = 4
 	initial.Breakdowns = equipment.Breakdowns
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &initial)
 	})
 
-	// Create 5 breakdowns but 3 available
+	// Create 7 breakdowns but 5 available
 	equipment = swapi.Equipment{
-		Repairable: 5,
-		Breakdowns: []int32{82},
+		Repairable: 7,
+		Breakdowns: []int32{breakdownId},
 	}
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
-	// Check breakdown
-	initial.Repairable = 4
+	initial.Repairable = 5
 	initial.Available = 0
-	initial.Breakdowns = []int32{82, 82, 82, 82}
+	initial.Breakdowns = []int32{breakdownId, breakdownId, breakdownId, breakdownId, breakdownId}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &initial)
 	})
@@ -2511,52 +2515,67 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 }
 
 func testSetManualLog(c *C,
+	formationName string,
+	automatName string,
 	set func(*swapi.Client, uint32, bool) error,
 	setTest func(*swapi.Client, uint32, *sword.MissionParameters) error,
 	getFromFormation func(*swapi.Formation) bool,
 	getFromAutomat func(*swapi.Automat) bool) {
 	// user without supervision rights can send log maintenance magic action
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
-	const formation = 13
+	data := client.Model.GetData()
+	formation := getSomeFormationByName(c, data, formationName)
+	automat := getSomeAutomatByName(c, data, automatName)
+
+	// Find a formation which is not a logistic base
+	var invalidFormation *swapi.Formation
+	for _, f := range data.Formations {
+		if f.LogLevel != "logistic_base" {
+			invalidFormation = f
+			break
+		}
+	}
+	c.Assert(invalidFormation, NotNil)
+
 	// invalid unit
 	err := set(client, 1000, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// invalid formation without logistic base
-	err = set(client, 5, true)
+	err = set(client, invalidFormation.Id, true)
 	c.Assert(err, ErrorMatches, "error_invalid_unit: formation must be a logistic base")
 
 	// invalid empty parameter
-	err = setTest(client, formation, swapi.MakeParameters())
+	err = setTest(client, formation.Id, swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// invalid parameter
-	err = setTest(client, formation, swapi.MakeParameters(swapi.MakeInt(1337)))
+	err = setTest(client, formation.Id, swapi.MakeParameters(swapi.MakeInt(1337)))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// setting manual mode updates formation model
-	c.Assert(getFromFormation(client.Model.GetFormation(formation)), Equals, false)
-	err = set(client, formation, true)
+	c.Assert(getFromFormation(client.Model.GetFormation(formation.Id)), Equals, false)
+	err = set(client, formation.Id, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return getFromFormation(data.Formations[formation])
+		return getFromFormation(data.Formations[formation.Id])
 	})
 
-	const automat = 14
 	// setting manual mode updates automat model
-	c.Assert(getFromAutomat(client.Model.GetAutomat(automat)), Equals, false)
-	err = set(client, automat, true)
+	c.Assert(getFromAutomat(client.Model.GetAutomat(automat.Id)), Equals, false)
+	err = set(client, automat.Id, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return getFromAutomat(data.Automats[automat])
+		return getFromAutomat(data.Automats[automat.Id])
 	})
 }
 
 func (s *TestSuite) TestSetManualMaintenance(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
 	testSetManualLog(c,
+		"Maintenance BLT",
+		"Maintenance Automat 1",
 		(*swapi.Client).SetManualMaintenance,
 		(*swapi.Client).SetManualMaintenanceTest,
 		func(f *swapi.Formation) bool { return f.LogMaintenanceManual },
@@ -2565,8 +2584,9 @@ func (s *TestSuite) TestSetManualMaintenance(c *C) {
 }
 
 func (s *TestSuite) TestSetManualSupply(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
 	testSetManualLog(c,
+		"Supply F2",
+		"Supply Log Automat 1c",
 		(*swapi.Client).SetManualSupply,
 		(*swapi.Client).SetManualSupplyTest,
 		func(f *swapi.Formation) bool { return f.LogSupplyManual },

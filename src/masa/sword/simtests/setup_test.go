@@ -25,18 +25,27 @@ import (
 	"time"
 )
 
-const (
-	ConnectTimeout = 40 * time.Second
-	PostTimeout    = 40 * time.Second
-	WaitTimeout    = 60 * time.Second
-)
-
 var (
-	Cfg *swtest.Config
+	Cfg            *swtest.Config
+	ConnectTimeout time.Duration
+	PostTimeout    time.Duration
+	WaitTimeout    time.Duration
 )
 
 func init() {
 	Cfg = swtest.ParseFlags()
+
+	timeout := 5 * time.Second
+	timeoutStr := os.Getenv("MASA_TIMEOUT")
+	if timeoutStr != "" {
+		t, err := time.ParseDuration(timeoutStr)
+		if err == nil {
+			timeout = t
+		}
+	}
+	ConnectTimeout = timeout
+	PostTimeout = timeout
+	WaitTimeout = timeout
 }
 
 const (
@@ -423,6 +432,15 @@ func loadPhysical(c *C, name string) *phy.PhysicalFile {
 	phydb, err := phy.ReadPhysical(path)
 	c.Assert(err, IsNil)
 	return phydb
+}
+
+func loadPhysicalData(c *C, name string) *phy.PhysicalData {
+	wd, err := os.Getwd()
+	c.Assert(err, IsNil)
+	path := filepath.Join(wd, "../../../../data/data/models/ada/physical", name)
+	data, err := phy.ReadPhysicalData(path)
+	c.Assert(err, IsNil)
+	return data
 }
 
 func Test(t *testing.T) { TestingT(t) }

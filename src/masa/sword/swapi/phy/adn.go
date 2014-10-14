@@ -24,6 +24,7 @@ type FileHolder struct {
 type PhysicalFile struct {
 	XMLName    xml.Name   `xml:"physical"`
 	Automats   FileHolder `xml:"automats"`
+	Breakdowns FileHolder `xml:"breakdowns"`
 	Components FileHolder `xml:"components"`
 	Objects    FileHolder `xml:"objects"`
 	Reports    FileHolder `xml:"reports"`
@@ -127,6 +128,15 @@ func ReadAutomats(physical PhysicalFile) (*Automats, error) {
 	return &automats, err
 }
 
+func (automats *Automats) GetType(typeName string) (uint32, error) {
+	for _, automat := range automats.Automats {
+		if automat.Name == typeName {
+			return automat.Id, nil
+		}
+	}
+	return 0, fmt.Errorf("cannot find automat type named '%s'", typeName)
+}
+
 type Unit struct {
 	Equipments []Equipment `xml:"equipments>equipment"`
 	Id         uint32      `xml:"id,attr"`
@@ -140,6 +150,15 @@ func (units *Units) GetName(id uint32) (string, error) {
 		}
 	}
 	return "", errors.New("Unknown unit " + fmt.Sprintf("%d", id))
+}
+
+func (units *Units) GetType(typeName string) (uint32, error) {
+	for _, unit := range units.Units {
+		if unit.Name == typeName {
+			return unit.Id, nil
+		}
+	}
+	return 0, fmt.Errorf("cannot find unit named '%s'", typeName)
 }
 
 type Units struct {
@@ -301,4 +320,91 @@ func (r *Objects) GetObject(t string) *Object {
 		}
 	}
 	return nil
+}
+
+type Breakdown struct {
+	Id   uint32 `xml:"id,attr"`
+	Name string `xml:"name,attr"`
+}
+
+type BreakdownCategory struct {
+	Name       string       `xml:"name,attr"`
+	Breakdowns []*Breakdown `xml:"breakdown"`
+}
+
+type Breakdowns struct {
+	XmlName    xml.Name             `xml:"breakdowns"`
+	Categories []*BreakdownCategory `xml:"category"`
+}
+
+func ReadBreakdowns(physical *PhysicalFile) (*Breakdowns, error) {
+	breakdowns := &Breakdowns{}
+	err := readXml(physical.BaseDir, physical.Breakdowns.File, &breakdowns)
+	return breakdowns, err
+}
+
+func (breakdowns *Breakdowns) Find(typeName string) (*Breakdown, error) {
+	for _, category := range breakdowns.Categories {
+		for _, breakdown := range category.Breakdowns {
+			if breakdown.Name == typeName {
+				return breakdown, nil
+			}
+		}
+	}
+	return nil, fmt.Errorf("cannot find breakdown: %s", typeName)
+}
+
+type PhysicalData struct {
+	Automats   *Automats
+	Breakdowns *Breakdowns
+	Components *Components
+	Objects    *Objects
+	Reports    Reports
+	Resources  *Resources
+	Units      *Units
+}
+
+// Load all physical information at once and return it.
+func ReadPhysicalData(path string) (*PhysicalData, error) {
+	phydb, err := ReadPhysical(path)
+	if err != nil {
+		return nil, err
+	}
+	automats, err := ReadAutomats(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	breakdowns, err := ReadBreakdowns(phydb)
+	if err != nil {
+		return nil, err
+	}
+	components, err := ReadEquipments(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	objects, err := ReadObjects(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	reports, err := ReadReports(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	resources, err := ReadResources(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	units, err := ReadUnits(*phydb)
+	if err != nil {
+		return nil, err
+	}
+	return &PhysicalData{
+		Automats:   automats,
+		Breakdowns: breakdowns,
+		Components: components,
+		Objects:    objects,
+		Resources:  resources,
+		Reports:    reports,
+		Units:      units,
+	}, nil
 }
