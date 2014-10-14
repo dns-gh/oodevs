@@ -170,7 +170,15 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
     // This is due to the fact that the options were added before the xml was filled with the category information,
     // so right now the registry may be dirty with an empty value in that field.
     // Uninstalling and reinstalling will also fix that problem.
-    if( Has( "Terrains/Order" ) && !Get( "Terrains/Order" ).To< QString >().isEmpty() )
+    bool hasEmptyCategory = false;
+    Apply( [&hasEmptyCategory]( const std::string& name, const OptionVariant& value, bool ){
+        if( name.find( "Terrains/" ) != 0 ||
+            name.find( "/Category" ) == std::string::npos )
+            return;
+        if( value.To< QString >().isEmpty() )
+            hasEmptyCategory = true;
+    } );
+    if( !hasEmptyCategory )
         return;
     QStringList order;
     tools::Xifstream xisPreferences( "preferences.xml" );
