@@ -3501,10 +3501,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Une erreur s&apos;est produite pendant la requete &apos;Enregistrer la session courante de la timeline dans un fichier&apos;: %1</translation>
     </message>
     <message>
-        <source>Invalid timeline binary &apos;%1&apos;</source>
-        <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>The following errors occurred:</source>
         <translation>Les erreurs suivantes se sont produites:</translation>
     </message>

@@ -32,9 +32,6 @@
     <!-- admin properties -->
     <property name="admin.dir" location="${root.dir}/src/masa/admin"/>
     <property name="admin.run.dir" location="${root.dir}/out/admin"/>
-    <propertyregex property="sub_platform" input="${platform}" regexp="(\w+)_x64" select="\1"/>
-    <propertyregex property="platform32"   input="${platform}" regexp="(\w+)_x64" select="\1" defaultvalue="${platform}"/>
-    <property name="platform64" value="${platform32}_x64"/>
 
     <math result="test.port2">
         <op op="+" datatype="int">
@@ -697,7 +694,8 @@
                 <fileset dir="${run.dir}">
                     <exclude name="Debug/**"/>
                     <exclude name="resources/integration tests/**"/>
-                    <exclude name="cef/timeline_app.exe"/>
+                    <exclude name="timeline_app.exe"/>
+                    <exclude name="timeline_client_d.*"/>
                 </fileset>
             </zip>
             <check-depends file="@{file}"/>
@@ -708,20 +706,29 @@
         <fileset dir="${out.dir}/release" includes="gaming_app.exe"/>
         <fileset dir="${run.dir}"
                 includes="*.qm,
+                          *.pak,
                           *.qss,
                           *.xml,
+                          d3d*.dll,
+                          d3dcompiler_46.dll,
+                          ffmpegsumo.dll,
                           gdal19.dll,
                           geos.dll,
                           geos_c.dll,
+                          icudt.dll,
                           icudt52.dll,
                           icuuc52.dll,
+                          libcef.dll,
                           libeay32.dll,
+                          libEGL.dll,
                           libexpat.dll,
+                          libGLESv2.dll,
                           libiconv.dll,
-                          libpq.dll,
                           libpng16.dll,
-                          mapnikgen.exe,
+                          libpq.dll,
+                          locales/*,
                           mapnik*-mt.dll,
+                          mapnikgen.exe,
                           phonon4.dll,
                           proj.dll,
                           Qt3Support4.dll,
@@ -734,6 +741,7 @@
                           QtXml4.dll,
                           spatialite.dll,
                           ssleay32.dll,
+                          timeline_client.exe,
                           Xalan-C_1_11.dll,
                           XalanMessages_1_11.dll,
                           xerces-c_3_1.dll,
@@ -1138,7 +1146,6 @@
             <env key="TIMELINE_DISABLE_PROXY" value=""/>
             <arg value="--rundir=${run.dir}"/>
             <arg value="--outdir=${out.dir}"/>
-            <arg value="--client=${run.dir}/cef/timeline_client.exe"/>
             <arg value="--port=${test.port}"/>
             <arg value="--test.v"/>
             <arg value="--gocheck.v"/>
@@ -1277,9 +1284,6 @@
         <copy todir="${admin.run.dir}/client/bin${current_platform}">
             <resources refid="gaming_app_binaries"/>
         </copy>
-        <copy todir="${admin.run.dir}/client/bin${current_platform}/cef">
-            <fileset dir="${run.dir}/cef"/>
-        </copy>
     </target>
 
     <target name="admin.run">
@@ -1332,9 +1336,11 @@
         <update name="bcrypt" version="2.2ccc049ff4f2"/>
         <update name="boost" version="1.55.r717"/>
         <update name="buildtools"/>
+        <update name="cef" version="3.1750.1738"/>
         <update name="cmake" version="3.0"/>
         <update name="cpp-netlib" version="0.9.3.r721"/>
         <update name="depends" version="2.2.6000"/>
+        <update name="DIA"/>
         <update name="elevate" version="1.0"/>
         <update name="flexlm" version="11.8"/>
         <update name="gdal" version="1.9.1.r671"/>
@@ -1351,7 +1357,6 @@
         <update name="libarchive" version="3.0.4.r691"/>
         <update name="libpng" version="1.6.6"/>
         <update name="mapnik" version="2.2.0.r735"/>
-        <update name="DIA"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
         <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
@@ -1368,18 +1373,13 @@
         <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
+        <update name="timeline_ui"/>
         <update name="tools"/>
         <update name="turtle" version="1.723"/>
         <update name="xalan-c" version="svn rev 990605 + patch"/>
         <update name="xerces-c" version="3.1.1"/>
         <update name="xeumeuleu" version="1.750-2"/>
         <update name="zlib" version="1.2.6.r167"/>
-        <!-- timeline_ui dependencies -->
-        <update name="cef" version="1.1364.1123" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline_ui" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline_ui" package="test_${platform}" todir="${run.dir}/cef"/>
-        <update name="timeline_ui" package="include"           todir="${include.dir}"/>
-        <update name="timeline_ui" package="lib/${platform}"   todir="${lib.dir}"/>
     </target>
 
     <target name="deploy" description="configure without package updates"

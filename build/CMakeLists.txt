@@ -45,15 +45,8 @@ masa_set_library( OPENSSL_LIBRARIES
     ssleay32
 )
 
-masa_set_library( TIMELINE_LIBRARIES
-   debug:timeline-${platform}-mt-gd
-   release:timeline-${platform}-mt
-   debug:timeline_controls-${platform}-mt-gd
-   release:timeline_controls-${platform}-mt
-)
-
-
 masa_set_external_library( ARCHIVE_LIBRARIES            archive_static_d archive_static )
+masa_set_external_library( CEF_LIBRARIES                libcef_d libcef )
 masa_set_external_library( CPP_NETLIB_CLIENT_LIBRARIES  cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
 masa_set_external_library( CPP_NETLIB_URI_LIBRARIES     cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
 masa_set_external_library( DIRECTIA_LIBRARIES           directia-${platform}-mt-gd-4_6 directia-${platform}-mt-4_6 )
@@ -72,21 +65,24 @@ masa_set_external_library( TOOLS_LIBRARIES              tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES              Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES             xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZLIB_LIBRARIES               zlibd zlib )
-masa_set_internal_library( BCRYPT_LIBRARIES             bcrypt )
-masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
 
-masa_set_internal_library( ANALYSYS_LIBRARIES         libanalysis )
-masa_set_internal_library( EXTRACTOR_LIBRARIES        libextractor )
-masa_set_internal_library( GDAL_OGR_LIBRARIES         libgdal_ogr )
-masa_set_internal_library( GEOCOORD_LIBRARIES         libgeocoord )
-masa_set_internal_library( GEODATA_LIBRARIES          libgeodata )
-masa_set_internal_library( GLEW_LIBRARIES             glew )
-masa_set_internal_library( GRAPHICS_LIBRARIES         libgraphics )
-masa_set_internal_library( MAPNIK_LIBRARIES           mapnik )
-masa_set_internal_library( PATHFIND_LIBRARIES         libpathfind )
-masa_set_internal_library( SPATIALCONTAINER_LIBRARIES libspatialcontainer )
-masa_set_internal_library( SQLITE3_LIBRARIES          sqlite3 )
-masa_set_internal_library( TERRAIN_LIBRARIES          libterrain )
+masa_set_internal_library( ANALYSYS_LIBRARIES           libanalysis )
+masa_set_internal_library( BCRYPT_LIBRARIES             bcrypt )
+masa_set_internal_library( CEF_WRAPPER_LIBRARIES        libcef_dll_wrapper )
+masa_set_internal_library( EXTRACTOR_LIBRARIES          libextractor )
+masa_set_internal_library( GDAL_OGR_LIBRARIES           libgdal_ogr )
+masa_set_internal_library( GEOCOORD_LIBRARIES           libgeocoord )
+masa_set_internal_library( GEODATA_LIBRARIES            libgeodata )
+masa_set_internal_library( GLEW_LIBRARIES               glew )
+masa_set_internal_library( GRAPHICS_LIBRARIES           libgraphics )
+masa_set_internal_library( MAPNIK_LIBRARIES             mapnik )
+masa_set_internal_library( PATHFIND_LIBRARIES           libpathfind )
+masa_set_internal_library( SPATIALCONTAINER_LIBRARIES   libspatialcontainer )
+masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
+masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
+masa_set_internal_library( TERRAIN_LIBRARIES            libterrain )
+masa_set_internal_library( TIMELINE_CONTROLS_LIBRARIES  libtimeline_controls )
+masa_set_internal_library( TIMELINE_LIBRARIES           libtimeline )
 
 
 macro( grab_item output name items )
@@ -565,14 +561,17 @@ add_target( gaming_app clients "applications/gaming_app" OPTIONS qt3 qt protocol
 target_link_libraries( gaming_app
     actions_gui
     gaming
-    ${TIMELINE_LIBRARIES}
+    ${CEF_LIBRARIES}
+    ${CEF_WRAPPER_LIBRARIES}
     ${EXCEL_LIBRARIES}
     ${EXTRACTOR_LIBRARIES}
-    ${TERRAIN_LIBRARIES}
     ${GEODATA_LIBRARIES}
+    ${GEOS_I_LIBRARIES}
     ${GRAPHICS_LIBRARIES}
     ${MAPNIK_LIBRARIES}
-    ${GEOS_I_LIBRARIES}
+    ${TERRAIN_LIBRARIES}
+    ${TIMELINE_CONTROLS_LIBRARIES}
+    ${TIMELINE_LIBRARIES}
 )
 
 # launcher_test
