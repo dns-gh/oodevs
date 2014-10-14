@@ -5,6 +5,9 @@ actions =
 {
     IssueOrder    = function( self, strOrderName ) end,
     IssueXmlOrder = function( self, strXml ) end,
+    IssueOrderFromFile = function( self, strName, strFilename ) end,
+    StartScheduler = function( self, strFilename ) end,
+    StopSchedulaer = function( self ) end,
 }
 
 clients =
@@ -29,6 +32,7 @@ coord =
     ToUtm = function( self, position ) return strPosition end,
     UtmPosition = function( self, strUtm ) return position end
 }
+-- actually plugin = coord and methods defined in one are available in the other
 
 sim =
 {
@@ -55,6 +59,7 @@ events =
          KnowledgeCreatedIn      = function( self, zone ) return condition( knowledge, agent ) end,
          KnowledgeEnters         = function( self, zone ) return condition( knowledge, agent ) end,
          PerceptionChanged       = function( self ) return condition( knowledge, agent ) end,
+         MountedStateChanged     = function( self ) return condition( agent ) end,
     },
 
     automats =
@@ -65,6 +70,7 @@ events =
     populations =
     {
          PopulationEnters        = function( self, zone ) return condition( population ) end,
+         PopulationKnowledgeCreated = function( self ) return condition( population ) end,
     },
 
     client =
@@ -89,8 +95,15 @@ events =
 
     indicators =
     {
-        IndicatorChanged = function( self ) return condition( strName, nValue ) end
-    }
+        IndicatorChanged = function( self ) return condition( strName, nValue ) end,
+        PrependSessionPath = function( self, strFilename ) end,
+    },
+
+    objects = 
+    {
+        ObjectDestroyed = function() return condition( object ) end,
+        ObjectKnowledgeCreated = function() return condition( knowledge ) end,
+    },
 }
 
 fsm =
@@ -118,6 +131,7 @@ agent =
     GetMission            = function( self ) return nMissionId end,
     Teleport            = function( self, position ) end, -- teleports unit to new position (type Position)
     RecoverAll          = function( self ) end, -- recovers unit (equipments, humans and resources)
+    Wound               = function( self, injury, type ) end,
 }
 
 automat =
@@ -138,17 +152,27 @@ knowledge =
     GetOwnerTeam        = function( self ) return strTeam end,
 }
 
+object =
+{
+    GetIdentifier       = function( self ) return nId end,
+    GetName             = function( self ) return strName end,
+    GetTeam             = function( self ) return strTeam end,
+}
+
+--drawings
 drawings =
 {
     Create  = function( self, strName ) return drawing end,
 }
 
+--drawing
 drawing =
 {
     Publish        = function( self ) end,
     GetCoordinates = function( self ) return zone end
 }
 
+--profiles
 profiles =
 {
     SetAutomatRight = function( profile, automat, readOnly, readWrite ) end
@@ -183,6 +207,14 @@ Recorder =
     Record = function( ticks, next_state ) end, -- creates fsm recording states, goto "next_state" after "ticks" simulation ticks
     Save   = function( filename ) end,          -- saves recorded data to filename
     Track  = function( indicatorName ) end,     -- add indicator to be recorded (used by Indicator:Record() )
+}
+
+model =
+{
+    orbat = 
+    {
+        FindAgent = function( self, id ) return agent end,
+    }
 }
 
 -- tParameters: { profile = "my profile" } [optional] --> limits diffusion of message to specified profile (from sim:ClientConnected)
