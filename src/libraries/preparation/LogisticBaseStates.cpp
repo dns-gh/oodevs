@@ -59,10 +59,10 @@ void LogisticBaseStates::Draw( const geometry::Point2f& , const gui::Viewport_AB
     const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
     if( ! displayLinks && ! displayMissing )
         return;
-
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
-    glColor4f( COLOR_YELLOW );
+    static const float color[4] = { COLOR_YELLOW };
+    glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
     DrawLink( logistic_helpers::GetLogisticPosition( entity_ ), tools, 0.5f, displayLinks, displayMissing );
     glPopAttrib();
 }

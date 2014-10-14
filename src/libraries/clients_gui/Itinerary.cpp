@@ -76,10 +76,10 @@ namespace
 {
     const int size = 20;
 
-    void SetColor( QColor color, bool picking )
+    void SetColor( QColor color, bool picking, const GLView_ABC& view )
     {
         if( !picking )
-            glColor3d( color.redF(), color.greenF(), color.blueF() );
+            glColor4d( color.redF(), color.greenF(), color.blueF(), view.GetCurrentAlpha() );
     }
 
     void DrawDisc( QPainter& p, QColor contour, QColor inside, float radius )
@@ -111,58 +111,58 @@ namespace
     }
 }
 
-void Itinerary::Draw( GLView_ABC& tools, const boost::optional< Hover >& hover, bool picking ) const
+void Itinerary::Draw( GLView_ABC& view, const boost::optional< Hover >& hover, bool picking ) const
 {
     const QColor current = GetCurrent();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
     glEnable( GL_ALPHA_TEST );
     glAlphaFunc( GL_GREATER, 0.1f );
-    SetColor( current.darker(), picking );
-    DrawLines( tools, 5 );
-    SetColor( current, picking );
-    DrawLines( tools, 3 );
-    DrawPoints( tools, current, hover, picking );
+    SetColor( current.darker(), picking, view );
+    DrawLines( view, 5 );
+    SetColor( current, picking, view );
+    DrawLines( view, 3 );
+    DrawPoints( view, current, hover, picking );
     glDisable( GL_ALPHA_TEST );
     glPopAttrib();
 }
 
-void Itinerary::DrawLines( GLView_ABC& tools, float width ) const
+void Itinerary::DrawLines( GLView_ABC& view, float width ) const
 {
     if( path_.empty() )
         return;
     auto last = path_.begin();
-    tools.DrawDisc( last->where, width / 2, GLView_ABC::pixels );
+    view.DrawDisc( last->where, width / 2, GLView_ABC::pixels );
     for( auto it = last + 1; it != path_.end(); last = it++ )
     {
-        tools.DrawLine( last->where, it->where, width );
-        tools.DrawDisc( it->where, width / 2, GLView_ABC::pixels );
+        view.DrawLine( last->where, it->where, width );
+        view.DrawDisc( it->where, width / 2, GLView_ABC::pixels );
     }
 }
 
-void Itinerary::DrawPoints( GLView_ABC& tools, const QColor& current, const boost::optional< Hover >& hover, bool picking ) const
+void Itinerary::DrawPoints( GLView_ABC& view, const QColor& current, const boost::optional< Hover >& hover, bool picking ) const
 {
-    const bool selected = tools.ShouldDisplay();
+    const bool selected = view.ShouldDisplay();
     const auto& waypoints = waypoints_.empty() ? path_ : waypoints_;
     std::size_t i = 0;
     for( auto it = waypoints.begin(); it != waypoints.end(); ++it )
     {
         if( !it->waypoint )
             continue;
-        DrawPoint( tools, it->where, current, picking, selected ||
+        DrawPoint( view, it->where, current, picking, selected ||
                  ( hover && hover->onWaypoint_ && hover->lastWaypoint_ == i ) );
         ++i;
     }
     if( hover && !hover->onWaypoint_ && hover->coordinate_ )
-        DrawPoint( tools, *hover->coordinate_, current, false, true );
+        DrawPoint( view, *hover->coordinate_, current, false, true );
 }
 
-void Itinerary::DrawPoint( GLView_ABC& tools, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const
+void Itinerary::DrawPoint( GLView_ABC& view, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const
 {
     static const QImage normal = MakeBitmap( Qt::white, Qt::black );
     static const QImage highlighted = MakeBitmap( Qt::black, Qt::white );
     const QImage image = picking ? MakeBitmap( current, current ) : highlight ? highlighted : normal;
-    const float offset = size * tools.Pixels( p ) / 2;
-    tools.DrawImage( image, geometry::Point2f( p.X() - offset, p.Y() - offset ) );
+    const float offset = size * view.Pixels( p ) / 2;
+    view.DrawImage( image, geometry::Point2f( p.X() - offset, p.Y() - offset ) );
 }
 
 void Itinerary::LoadPoints( const sword::PathResult& path )
@@ -216,22 +216,22 @@ std::vector< geometry::Point2f > Itinerary::GetDots() const
 
 namespace
 {
-    bool IsNear( const GLView_ABC& tools, float squareDistance, const geometry::Point2f& point )
+    bool IsNear( const GLView_ABC& view, float squareDistance, const geometry::Point2f& point )
     {
-        const auto pixels = tools.Pixels( point );
+        const auto pixels = view.Pixels( point );
         static const auto threshold = 200; // pixels
         return squareDistance < threshold * pixels * pixels;
     }
 }
 
-boost::optional< Itinerary::Hover > Itinerary::PickWaypoint( const GLView_ABC& tools, const geometry::Point2f& where ) const
+boost::optional< Itinerary::Hover > Itinerary::PickWaypoint( const GLView_ABC& view, const geometry::Point2f& where ) const
 {
     // path iterated backwards to select the waypoint on top
     // when several of them overlap
     for( auto i = waypoints_.size(); i > 0; --i )
     {
         const auto& position = waypoints_[ i - 1 ];
-        if( !IsNear( tools, where.SquareDistance( position.where ), where ) )
+        if( !IsNear( view, where.SquareDistance( position.where ), where ) )
             continue;
         const Hover hover = {
             where,
@@ -244,7 +244,7 @@ boost::optional< Itinerary::Hover > Itinerary::PickWaypoint( const GLView_ABC& t
     return boost::none;
 }
 
-boost::optional< Itinerary::Hover > Itinerary::PickSegment( const GLView_ABC& tools, const geometry::Point2f& where ) const
+boost::optional< Itinerary::Hover > Itinerary::PickSegment( const GLView_ABC& view, const geometry::Point2f& where ) const
 {
     size_t waypoint = 0;
     float distance = std::numeric_limits< float >::infinity();
@@ -256,7 +256,7 @@ boost::optional< Itinerary::Hover > Itinerary::PickSegment( const GLView_ABC& to
             waypoint = *last->waypoint;
         const auto projection = geometry::Segment2f( it->where, last->where ).Project( where );
         const auto d = where.SquareDistance( projection );
-        if( d >= distance || !IsNear( tools, d, where ) )
+        if( d >= distance || !IsNear( view, d, where ) )
             continue;
         distance = d;
         const Hover hover = {

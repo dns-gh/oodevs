@@ -224,8 +224,9 @@ void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , 
     if( displayPath )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+            static const float color[4] = { COLOR_PATH };
             if( drawingMode )
-                glColor4f( COLOR_PATH );
+                glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
             glLineWidth( 3 );
             glEnable( GL_LINE_STIPPLE );
             glLineStipple( 1, tools.StipplePattern() );

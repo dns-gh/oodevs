@@ -120,7 +120,7 @@ void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::P
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glLineWidth( 2.0 );
     glEnable( GL_LINE_STIPPLE );
-    glColor4fv( &r_ );
+    glColor4f( r_, g_, b_, tools.GetCurrentAlpha() );
     for( T_Consigns::const_iterator it = handled_.begin(); it != handled_.end(); ++it )
             (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )

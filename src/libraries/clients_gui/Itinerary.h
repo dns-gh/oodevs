@@ -61,13 +61,13 @@ public:
     void StartOn( const geometry::Point2f& where );
     void StopOn( const geometry::Point2f& where );
     void Clear();
-    void Draw( gui::GLView_ABC& tools, const boost::optional< Hover >& hover, bool picking ) const;
+    void Draw( gui::GLView_ABC& view, const boost::optional< Hover >& hover, bool picking ) const;
 
     bool HasPath() const;
     bool HasWaypoints() const;
 
-    boost::optional< Hover > PickWaypoint( const gui::GLView_ABC& tools, const geometry::Point2f& where ) const;
-    boost::optional< Hover > PickSegment( const gui::GLView_ABC& tools, const geometry::Point2f& where ) const;
+    boost::optional< Hover > PickWaypoint( const gui::GLView_ABC& view, const geometry::Point2f& where ) const;
+    boost::optional< Hover > PickSegment( const gui::GLView_ABC& view, const geometry::Point2f& where ) const;
 
     void InsertWaypoint( size_t idx, const geometry::Point2f where );
     void EraseWaypoint( size_t idx );
@@ -86,9 +86,9 @@ public:
     typedef std::deque< Point > T_Points;
 
 private:
-    void DrawLines( gui::GLView_ABC& tools, float width ) const;
-    void DrawPoints( gui::GLView_ABC& tools, const QColor& current, const boost::optional< Hover >& hover, bool picking ) const;
-    void DrawPoint( gui::GLView_ABC& tools, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const;
+    void DrawLines( gui::GLView_ABC& view, float width ) const;
+    void DrawPoints( gui::GLView_ABC& view, const QColor& current, const boost::optional< Hover >& hover, bool picking ) const;
+    void DrawPoint( gui::GLView_ABC& view, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const;
 
 private:
     const kernel::CoordinateConverter_ABC& converter_;

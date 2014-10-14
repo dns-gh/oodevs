@@ -184,7 +184,8 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const gui::Viewport_AB
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
-    glColor4f( COLOR_YELLOW );
+    static const float color[4] = { COLOR_YELLOW };
+    glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
 
     if( superiorLinks_.empty() )
     {
@@ -198,7 +199,8 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const gui::Viewport_AB
             geometry::Point2f pos = logistic_helpers::GetLogisticPosition( entity_ );
             if( !pos.IsZero() )
                 link->Draw( pos, viewport, tools );
-            glColor4f( COLOR_LIGHT_YELLOW );
+            static const float color[4] = { COLOR_LIGHT_YELLOW };
+            glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
         }
     }
     glPopAttrib();

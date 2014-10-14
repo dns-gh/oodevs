@@ -105,7 +105,8 @@ void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
     const geometry::Point2f arrowEnd = tail + direction_ * arrowSize;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( width );
-        glColor4f( COLOR_BLACK );
+        static const float color[4] = { COLOR_BLACK };
+        glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
         tools.DrawLine( where, tail, width );
         tools.DrawLine( tail, arrowEnd, width );
         DrawArrowhead( tools, arrowEnd, arrowCross + arrowWidth, arrowCross - arrowWidth );
