@@ -41,12 +41,13 @@ private slots:
     void OnBrowse();
     void OnFileChanged( const QString& text );
     void OnAccept();
+    void OnReject();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const IndicatorRequest* request_;
+    std::vector< const IndicatorRequest* > requests_;
     QLineEdit* file_;
     QLineEdit* separator_;
     QCheckBox* header_;
