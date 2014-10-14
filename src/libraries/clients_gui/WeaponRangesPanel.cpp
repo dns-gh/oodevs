@@ -74,6 +74,8 @@ WeaponRangesPanel::~WeaponRangesPanel()
 
 void WeaponRangesPanel::Load( const GlProxy& )
 {
+    volumeCombo_->blockSignals( true );
+    indirectWeaponCombo_->blockSignals( true );
     volumeCombo_->clear();
     indirectWeaponCombo_->clear();
     auto itVolume = model_.objectTypes_.tools::Resolver< kernel::VolumeType >::CreateIterator();
@@ -91,4 +93,6 @@ void WeaponRangesPanel::Load( const GlProxy& )
     volumeCombo_->setCurrentItem( volume < volumeCombo_->count() ? volume : 0 );
     const auto indirectWeapon = options_.GetOption( "EfficientRange/IndirectWeapon" ).To< QString >();
     indirectWeaponCombo_->setCurrentIndex( indirectWeaponCombo_->findText( indirectWeapon ) );
+    volumeCombo_->blockSignals( false );
+    indirectWeaponCombo_->blockSignals( false );
 }
