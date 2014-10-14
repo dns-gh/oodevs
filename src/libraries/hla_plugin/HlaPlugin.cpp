@@ -49,6 +49,7 @@
 #include "SimulationTimeManager.h"
 #include "ExternalOwnershipPolicy.h"
 #include "MRMController.h"
+#include "UnitModelReloader.h"
 #include "tools/FileWrapper.h"
 #include "tools/MessageController.h"
 #include "tools/XmlStreamOperators.h"
@@ -298,6 +299,8 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                     logger_, *pInteractionBuilder_, *pFederate_, *pLocalAgentResolver_, *pCallsignResolver_, *pMessengerMessageController_, ReadDivestitureZone( *pXisConfiguration_ ) ) ),
             pMrmController.reset( new MRMController( pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_,  *pFederate_, logger_,
                     *pLocalAgentResolver_, *pCallsignResolver_ ) );
+            pUnitModelReloader_.reset( new UnitModelReloader( *pSimulationFacade_, simulationPublisher_, *pContextFactory_, staticModel_.types_, *pFederate_,
+                    *pLocalAgentResolver_ ) );
             // must be last action
             pSubject_->Visit( dynamicModel_ );
             pTacticalObjectSubject_->Visit( dynamicModel_ );

@@ -12,6 +12,7 @@
 
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/optional/optional_fwd.hpp>
 #include <deque>
 #include <vector>
 
@@ -58,12 +59,12 @@ public:
     //! @name Accessors
     //@{
     std::size_t Size() const;
-    float GetValue( std::size_t index ) const;
+    boost::optional< float > GetValue( std::size_t index ) const;
     //@}
 
     //! @name Operations
     //@{
-    void Update( const sword::Indicator& message );
+    void Update( unsigned int currentTick, const sword::Indicator& message );
     void Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const;
     void Serialize( xml::xostream& xos ) const;
     void Accept( ScoreAnnouncer& visitor );
@@ -79,6 +80,7 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< xml::xibufferstream > xml_;
+    unsigned int beginTick_;
     std::deque< float > values_;
     std::vector< std::string > profiles_;
     //@}

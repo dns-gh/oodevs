@@ -90,7 +90,7 @@ MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( unsigned int n
 // Name: PHY_RoleAction_DirectFiring::FirePion
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
+int PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
 {
     // Pour chaque cible, choix de la meilleure arme
     unsigned int nNbrWeaponsUsed = 0;
@@ -132,6 +132,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
         }
         firerWeapons.ReleaseWeapon( *pUnusedFirer, *pUnusedFirerWeapon );
     }
+    return !nNbrWeaponsUsed ? eNoCapacity : eRunning;
 }
 
 // -----------------------------------------------------------------------------
@@ -171,8 +172,7 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
     assert( targets.size() == nNbrWeaponsUsable );
     if( !pFireResult )
         pFireResult = new PHY_FireResults_Pion( *owner_, *pTarget );
-    FirePion( firerWeapons, *pTarget, targets, *pFireResult );
-    return eRunning;
+    return FirePion( firerWeapons, *pTarget, targets, *pFireResult );
 }
 
 // -----------------------------------------------------------------------------

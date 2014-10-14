@@ -1973,10 +1973,18 @@ void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
         return MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( model );
     } );
     auto& role = GetRole< DEC_RolePion_Decision >();
-    const bool modified = model && model != &role.GetModel();
-    if( modified )
-        role.SetModel( *model );
-    GetDecision().Reload( true, !modified );
+    if( !model )
+    {
+        role.DeleteBrain();
+    }
+    else
+    {
+        const bool modified = model && model != &role.GetModel();
+        bool hadBrain = !role.IsDeleted();
+        if( modified || !hadBrain )
+            role.SetModel( *model );
+        role.Reload( hadBrain, !modified );
+    }
     pOrderManager_->CancelMission();
 }
 

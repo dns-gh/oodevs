@@ -15,6 +15,7 @@
 #include "RemoteTacticalObjectSubject_ABC.h"
 #include "PropagationManager_ABC.h"
 #include "ContextHandler_ABC.h"
+#include "SimulationTimeManager_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Logger_ABC.h"
@@ -38,7 +39,7 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 RemoteTacticalObjectController::RemoteTacticalObjectController( const ExtentResolver_ABC& extent, const SideResolver_ABC& sideResolver,
     const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler,
-    RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr )
+    RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr, const SimulationTimeManager_ABC& timeManager )
     : extent_( extent )
     , sideResolver_( sideResolver )
     , objectEntityTypeResolver_( objectEntityTypeResolver )
@@ -46,6 +47,7 @@ RemoteTacticalObjectController::RemoteTacticalObjectController( const ExtentReso
     , subject_( subject )
     , logger_( logger )
     , propagationManager_( propMgr )
+    , timeManager_( timeManager )
 {
     subject_.RegisterTactical( *this );
 }
@@ -368,11 +370,12 @@ void RemoteTacticalObjectController::PropagationChanged( const std::string& iden
     elem->set_latitude( data[0].latitude );
     elem->set_longitude( data[0].longitude );
     // side
-    message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( 1 );
+    message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( 0 );
     // attributes
     sword::MissionParameter_Value* value = message().mutable_parameters()->mutable_elem( 4 )->add_value();
     value->add_list()->set_identifier( sword::ObjectMagicAction::disaster );
     value->add_list()->set_acharstr( identifier );
+    value->add_list()->set_acharstr( timeManager_.getSimulationTime() );
 
     // FIXME save data locally
     propagationManager_.saveDataFile( identifier, data, col, lig, xll, yll, std::max( dx, dy ) );

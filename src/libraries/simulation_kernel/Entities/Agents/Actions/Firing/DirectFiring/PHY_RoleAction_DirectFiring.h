@@ -91,7 +91,7 @@ private:
     //! @name Tools
     //@{
     MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
-    void FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
+    int FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
     //@}
 
 private:

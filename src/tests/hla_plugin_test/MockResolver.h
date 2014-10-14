@@ -20,11 +20,11 @@ namespace tools
 */
 // Created: VPR 2011-09-06
 // =============================================================================
-template< typename T >
-MOCK_BASE_CLASS( MockResolver, Resolver_ABC< T > )
+template< typename T, typename Identifier = unsigned long >
+MOCK_BASE_CLASS( MockResolver, Resolver_ABC< T, Identifier > )
 {
-    MOCK_METHOD_TPL( Find, 1, T*( const unsigned long& ) );
-    MOCK_METHOD_TPL( Get, 1, T&( const unsigned long& ) );
+    MOCK_METHOD_TPL( Find, 1, T*( const Identifier& ) );
+    MOCK_METHOD_TPL( Get, 1, T&( const Identifier& ) );
     MOCK_METHOD_TPL( CreateIterator, 0, Iterator< const T& >() );
 };
 

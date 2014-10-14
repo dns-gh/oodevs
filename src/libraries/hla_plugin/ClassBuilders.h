@@ -378,9 +378,10 @@ namespace hla
         RawDataHazardContourGroupBuilder( bool isHla13 = false )
             : ClassBuilder( "RawDataHazardContourGroup", true, true
             , details::BuildAttributeList( isHla13, boost::assign::list_of( "Time" )
-                                                                          ( "Material" )
+                                                                          ( "Agent" )
                                                                           ( "HazardType" )
-                                                                          ( "Contours" ) ) )
+                                                                          ( "Contours" )
+                                                                          ( "UniqueID" ) ) )
         {}
     };
     class ATP45HazardAreaBuilder : public ClassBuilder
@@ -390,7 +391,10 @@ namespace hla
             : ClassBuilder( "ATP45HazardArea", true, true
             , details::BuildAttributeList( isHla13, boost::assign::list_of( "Locations" )
                                                                           ( "ATP45HazardAreaType" )
-                                                                          ( "AgentClass" ) ) )
+                                                                          ( "AgentClass" )
+                                                                          ( "Time" )
+                                                                          ( "ValidityTime" )
+                                                                          ( "UniqueID" ) ) )
         {}
     };
 }

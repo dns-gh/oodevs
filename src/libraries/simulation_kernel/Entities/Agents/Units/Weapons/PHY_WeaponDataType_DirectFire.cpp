@@ -284,7 +284,7 @@ double PHY_WeaponDataType_DirectFire::GetDangerosity( const MIL_Agent_ABC& firer
     const MT_Vector3D vTargetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
 
     double rDangerosity  = bUsePH ? GetPH( firer, target, targetVolume, vFirerPosition, vTargetPosition ) : 1.;
-             rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
+    rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
     return rDangerosity;
 }
 

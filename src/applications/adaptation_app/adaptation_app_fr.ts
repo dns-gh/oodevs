@@ -5104,7 +5104,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Maintenance system, division level</source>
-        <translation>Chaîne Médicale, niveau division</translation>
+        <translation>Chaîne Maintenance, niveau division</translation>
     </message>
     <message>
         <source>Supply system, division level</source>

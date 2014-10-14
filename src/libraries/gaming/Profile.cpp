@@ -132,6 +132,9 @@ void Profile::Update( const sword::AuthenticationToClient& wrapper )
 // -----------------------------------------------------------------------------
 void Profile::Update( const sword::ConnectedProfileList& message )
 {
+    if( message.elem_size() == 0 )
+        return;
+
     profiles_.clear();
     for( int i = 0; i < message.elem_size(); ++i )
     {

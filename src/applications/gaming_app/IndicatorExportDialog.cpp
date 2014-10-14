@@ -13,7 +13,6 @@
 #include "gaming/IndicatorRequest.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
-#include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorExportDialog constructor
@@ -46,7 +45,7 @@ IndicatorExportDialog::IndicatorExportDialog( QWidget* parent )
         QPushButton* cancel = new QPushButton( tools::translate( "Scores", "Cancel" ), box );
         grid->addWidget( box, 1, 1 );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
-        connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
+        connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     }
 }
 
@@ -74,7 +73,7 @@ void IndicatorExportDialog::Add( const IndicatorRequest& request )
 // -----------------------------------------------------------------------------
 void IndicatorExportDialog::Export()
 {
-    if( ! requests_.empty() )
+    if( !requests_.empty() )
         show();
 }
 
@@ -109,6 +108,8 @@ void IndicatorExportDialog::OnAccept()
 {
     try
     {
+        if( requests_.empty() )
+            return;
         const tools::Path filepath( file_->text().toStdString().c_str() );
         if( filepath.Exists() )
             if( QMessageBox::warning( QApplication::activeWindow(), tools::translate( "IndicatorExportDialog", "Confirm file replace" ),
@@ -122,26 +123,33 @@ void IndicatorExportDialog::OnAccept()
         if( header_->isChecked() )
         {
             file << tools::translate( "Indicators", "Time" );
-            BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
-                file << sep << request->GetDisplayName();
+            for( auto request = requests_.begin(); request != requests_.end(); ++request )
+                file << sep << (*request)->GetDisplayName();
             file << std::endl;
         }
-        std::size_t hasData = requests_.size();
-        std::size_t index = 0;
-        while( hasData )
+        std::size_t startIndex = static_cast< size_t >( -1 );
+        std::size_t endIndex = 0;
+        for( auto request = requests_.begin(); request != requests_.end(); ++request )
+        {
+            size_t firstTick = static_cast< size_t >( (*request)->GetFirstTick() );
+            startIndex = std::min( startIndex, firstTick );
+            endIndex = std::max( endIndex, firstTick + (*request)->Result().size() );
+        }
+        for( size_t index = startIndex; index < endIndex; ++index )
         {
             file << index;
-            BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
+            for( auto request = requests_.begin(); request != requests_.end(); ++request )
             {
-                const std::size_t size = request->Result().size();
                 file << sep;
-                if( index < size )
-                    file << request->Result()[ index ];
-                else if( index == size )
-                    --hasData;
+                int firstTick = (*request)->GetFirstTick();
+                if( index < firstTick )
+                    continue;
+                size_t i = index - firstTick; 
+                auto requestResult = (*request)->Result();
+                if( requestResult.size() > i )
+                    file << requestResult[i];
             }
             file << std::endl;
-            ++index;
         }
         file.close();
         requests_.clear();
@@ -151,4 +159,14 @@ void IndicatorExportDialog::OnAccept()
     {
         QMessageBox::critical( this, tr( "Can not save indicator file :" ), tools::GetExceptionMsg( e ).c_str() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorExportDialog::OnReject
+// Created: LDC 2014-10-13
+// -----------------------------------------------------------------------------
+void IndicatorExportDialog::OnReject()
+{
+    requests_.clear();
+    reject();
 }
