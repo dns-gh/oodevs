@@ -79,9 +79,9 @@ LayersPanel::LayersPanel( QWidget* parent,
     layout->setSizeConstraint( QLayout::SetMinimumSize );
 
     // checkboxes
-    layout->addWidget( tools::AddGroupBoxWidget( "fog-groupbox", tr( "Fog of war" ),
+    layout->addWidget( tools::AddGroupBoxWidget( tr( "Fog of war" ), "fog-groupbox",
         new OptionCheckBox( options, "fog-checkbox", "FogOfWar", tr( "Display fog of war" ) ) ) );
-    layout->addWidget( tools::AddGroupBoxWidget( "infra-groupbox", tr( "Infrastructures" ),
+    layout->addWidget( tools::AddGroupBoxWidget( tr( "Infrastructures" ), "infra-groupbox",
         new OptionCheckBox( options, "infra-checkbox", "Infra", tr( "Display Infrastructures" ) ) ) );
 
     // listview

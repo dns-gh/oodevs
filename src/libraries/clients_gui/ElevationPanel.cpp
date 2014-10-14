@@ -45,7 +45,7 @@ ElevationPanel::ElevationPanel( QWidget* parent,
     hsLayout->addWidget( tools::AddLabeledWidget( tr( "Strength" ), hsSlider ) );
 
     QVBoxLayout* container = new QVBoxLayout( this );
-    container->addWidget( tools::AddGroupBoxWidget( "elevation-groupbox", tr( "Elevation colors" ), gradient_ ) );
+    container->addWidget( tools::AddGroupBoxWidget( tr( "Elevation colors" ), "elevation-groupbox", gradient_ ) );
     container->addWidget( hsBox );
     container->addStretch( 1 );
     setLayout( container );

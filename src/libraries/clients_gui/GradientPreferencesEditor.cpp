@@ -99,7 +99,7 @@ GradientPreferencesEditor::GradientPreferencesEditor( kernel::OptionsController&
     QVBoxLayout* container = new QVBoxLayout( this );
     container->setMargin( 0 );
     container->addWidget( fitToViewPort );
-    container->addWidget( tools::AddGroupBoxWidget( "gradient-groupbox", tr( "Gradient map" ), gradientWidget ) );
+    container->addWidget( tools::AddGroupBoxWidget( tr( "Gradient map" ), "gradient-groupbox", gradientWidget ) );
     container->addStretch();
 
     connect( fitToViewPort, SIGNAL( stateChanged( int ) ), SIGNAL( FitToViewportChanged( int ) ) );
