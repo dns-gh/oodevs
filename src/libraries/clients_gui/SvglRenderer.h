@@ -61,7 +61,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::shared_ptr< svg::Node_ABC >, unsigned int > T_Lists;
-    typedef T_Lists::const_iterator                CIT_Lists;
     //@}
 
     //! @name Helpers
@@ -70,8 +69,9 @@ private:
     void         ConfigureColorList();
     void         ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
     void         CreateStaticLists();
-    unsigned int RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
-                                 unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists );
+    unsigned int RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node,
+                                 const std::string& style, const geometry::Rectangle2f& viewport,
+                                 unsigned vWidth, unsigned vHeight, T_Lists& lists );
     std::unique_ptr< svg::Style > CreateStyle( const std::string& style );
     //@}
 

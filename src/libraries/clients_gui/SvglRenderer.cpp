@@ -100,37 +100,40 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
 void SvglRenderer::Render( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                            unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
     CreateStaticLists();
     if( pickingMode )
     {
         ConfigureColorList();
         ConfigureWidthList( viewport, vWidth, vHeight );
-        Draw( node, style, viewport, vWidth, vHeight, pickingMode );
+        Draw( node, style, viewport, vWidth, vHeight, true );
         return;
     }
-    unsigned int listId = RetrieveListId( node, style, viewport, vWidth, vHeight, pickingMode, lists_ );
+    unsigned int listId = RetrieveListId( node, style, viewport, vWidth, vHeight, lists_ );
     if( !listId )
         return;
     ConfigureColorList();
     ConfigureWidthList( viewport, vWidth, vHeight );
     glCallList( listId );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
 // Name: SvglRenderer::RetrieveListId
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
-                                           unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists )
+unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node,
+    const std::string& style, const geometry::Rectangle2f& viewport,
+    unsigned vWidth, unsigned vHeight, T_Lists& lists )
 {
-    CIT_Lists it = lists.find( node );
+    auto it = lists.find( node );
     if( it != lists.end() && !colorDirty_ )
         return it->second;
     const auto listId = it == lists.end() ? glGenLists( 1 ) : it->second;
     if( listId )
     {
         glNewList( listId, GL_COMPILE );
-        Draw( node, style, viewport, vWidth, vHeight, pickingMode );
+        Draw( node, style, viewport, vWidth, vHeight, false );
         glEndList();
         lists[ node ] = listId;
     }
@@ -143,7 +146,7 @@ unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC 
 // -----------------------------------------------------------------------------
 void SvglRenderer::Draw( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
-    glPushAttrib( GL_CURRENT_BIT );
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
     ListPaint color( colorList_ );
     if( pickingMode )

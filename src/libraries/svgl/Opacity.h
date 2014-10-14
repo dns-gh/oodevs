@@ -34,7 +34,6 @@ public:
 
     //! @name Operations
     //@{
-    void Set( float value );
     float GetValue() const;
     virtual Opacity& Clone() const;
     //@}

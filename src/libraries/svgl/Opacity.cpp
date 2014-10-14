@@ -9,7 +9,7 @@
 
 #include "svgl_pch.h"
 #include "Opacity.h"
-#include <sstream>
+#include <boost/lexical_cast.hpp>
 
 using namespace svg;
 
@@ -28,14 +28,9 @@ Opacity::Opacity( float value /*= 1.f*/ )
 // Created: AGE 2006-08-23
 // -----------------------------------------------------------------------------
 Opacity::Opacity( const std::string& content )
-    : opacity_( 1 )
+    : opacity_( std::min( 1.f, std::max( 0.f, boost::lexical_cast< float >( content ) ) ) )
 {
-    std::stringstream str( content );
-    str >> opacity_;
-    if( opacity_ > 1 )
-        opacity_ = 1;
-    if( opacity_ < 0 )
-        opacity_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,15 +43,6 @@ Opacity::~Opacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Opacity::Set
-// Created: AGE 2007-05-25
-// -----------------------------------------------------------------------------
-void Opacity::Set( float value )
-{
-    opacity_ = value;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Opacity::GetValue
 // Created: ZEBRE 2007-05-24
 // -----------------------------------------------------------------------------
@@ -64,7 +50,7 @@ float Opacity::GetValue() const
 {
     return opacity_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Opacity::Clone
 // Created: AGE 2006-08-23
