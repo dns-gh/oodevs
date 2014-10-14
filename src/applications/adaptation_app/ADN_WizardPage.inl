@@ -24,8 +24,8 @@ ADN_WizardPage< T >::ADN_WizardPage( const T_ItemVector& existingItems, const QS
     , nameEdit_     ( 0 )
 {
     setTitle( pageTitle );
-    setPixmap( QWizard::WatermarkPixmap, "resources/images/gui/wizard.png" );
-    setPixmap( QWizard::LogoPixmap, "resources/images/gui/logo32x32.png" );
+    setPixmap( QWizard::WatermarkPixmap, QPixmap( "resources/images/gui/wizard.png" ) );
+    setPixmap( QWizard::LogoPixmap, QPixmap( "resources/images/gui/logo32x32.png" ) );
 }
 
 // -----------------------------------------------------------------------------
