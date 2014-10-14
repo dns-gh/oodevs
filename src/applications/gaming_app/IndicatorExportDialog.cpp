@@ -142,7 +142,7 @@ void IndicatorExportDialog::OnAccept()
             {
                 file << sep;
                 int firstTick = (*request)->GetFirstTick();
-                if( index < firstTick )
+                if( firstTick < 0 || index < static_cast< std::size_t >( firstTick ) )
                     continue;
                 size_t i = index - firstTick; 
                 auto requestResult = (*request)->Result();
