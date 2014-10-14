@@ -100,7 +100,8 @@ void Options::Set( const std::string& name, const OptionVariant& value, bool isI
 // -----------------------------------------------------------------------------
 const OptionVariant& Options::Get( const std::string& name ) const
 {
-    assert( options_.count( name ) != 0 );
+    if( options_.count( name ) == 0 )
+        throw MASA_EXCEPTION( "Option not initialized: " + name );
     return options_.at( name ).first;
 }
 

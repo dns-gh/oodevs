@@ -186,6 +186,14 @@ void PreferencesDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void PreferencesDialog::Load( const GlProxy& )
 {
-    for( auto it = panels_.begin(); it != panels_.end(); ++it )
-        ( *it )->Load( proxy_ );
+    try
+    {
+        for( auto it = panels_.begin(); it != panels_.end(); ++it )
+            ( *it )->Load( proxy_ );
+    }
+    catch( std::exception& )
+    {
+        reject();
+        throw;
+    }
 }
