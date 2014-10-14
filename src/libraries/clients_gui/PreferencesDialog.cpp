@@ -193,7 +193,7 @@ void PreferencesDialog::Load( const GlProxy& )
     }
     catch( std::exception& )
     {
-        reject();
+        setVisible( false );
         throw;
     }
 }

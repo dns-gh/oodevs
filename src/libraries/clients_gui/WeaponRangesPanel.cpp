@@ -42,7 +42,7 @@ WeaponRangesPanel::WeaponRangesPanel( QWidget* parent,
 
     QHBoxLayout* colorLayout = new QHBoxLayout();
     colorLayout->addWidget( new OptionCheckBox( options, "toggleUseCustomColor", "EfficientRange/UseCustomColor", tr( "Use custom color:" ) ) );
-    colorLayout->addWidget( new OptionColorButton( options, "weaponRangesColor", "EfficientRange/CustomColor" ) );
+    colorLayout->addWidget( new OptionColorButton( options, "weaponRangesColor", "EfficientRange/CustomColor" ), 0, Qt::AlignLeft );
 
     RichGroupBox* indirectFire = new RichGroupBox( "indirectFireRange", tr( "Indirect fire range" ) );
     QVBoxLayout* indirectFireLayout = new QVBoxLayout( indirectFire );
