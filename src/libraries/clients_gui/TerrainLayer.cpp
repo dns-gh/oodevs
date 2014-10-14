@@ -75,8 +75,7 @@ void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 // -----------------------------------------------------------------------------
 void TerrainLayer::SetAlpha( float alpha )
 {
-    // alpha is temporary disabled for this layer.
-    // view_.GetCurrentOptions().GetTerrainSettings()->SetAlpha( alpha );
+    settings_->SetAlpha( alpha );
     Layer2D::SetAlpha( alpha );
 }
 
