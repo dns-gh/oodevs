@@ -20,14 +20,12 @@ template< typename T >
 ADN_WizardPage< T >::ADN_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* parent /* = 0 */ )
     : QWizardPage( parent )
     , existingItems_( existingItems )
-    , csword_       ( "resources/images/gui/logo32x32.png" )
-    , watermark_    ( "resources/images/gui/wizard.png" )
     , element_      ( 0 )
     , nameEdit_     ( 0 )
 {
     setTitle( pageTitle );
-    setPixmap( QWizard::WatermarkPixmap, watermark_ );
-    setPixmap( QWizard::LogoPixmap, csword_ );
+    setPixmap( QWizard::WatermarkPixmap, QPixmap( "resources/images/gui/wizard.png" ) );
+    setPixmap( QWizard::LogoPixmap, QPixmap( "resources/images/gui/logo32x32.png" ) );
 }
 
 // -----------------------------------------------------------------------------

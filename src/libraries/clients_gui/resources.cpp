@@ -21,7 +21,6 @@
 // instead of resources.h
 #define static
 
-#include "res/csword.xpm"
 #include "res/connected.xpm"
 #include "res/connecting.xpm"
 #include "res/notconnected.xpm"

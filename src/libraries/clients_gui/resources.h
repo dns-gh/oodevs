@@ -17,7 +17,6 @@ class QIcon;
 QIcon MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] );
 
 // Declare the icon here and include the xpm file in resources.cpp
-DECLARE_ICON( csword );
 DECLARE_ICON( connected );
 DECLARE_ICON( connecting );
 DECLARE_ICON( notconnected );

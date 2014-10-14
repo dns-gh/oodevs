@@ -52,10 +52,6 @@
         <translation>www.masagroup.net</translation>
     </message>
     <message>
-        <source>images/gui/splash_swordot.png</source>
-        <translation>images/gui/splash_swordot.png</translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation type="unfinished">تحذير</translation>
     </message>

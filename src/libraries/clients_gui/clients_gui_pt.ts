@@ -39,10 +39,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>images/gui/splash_swordot.png</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SWORD</source>
         <translation type="unfinished"></translation>
     </message>

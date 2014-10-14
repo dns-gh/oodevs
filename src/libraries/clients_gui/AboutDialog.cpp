@@ -35,18 +35,12 @@ AboutDialog::AboutDialog( QWidget* parent, const QString& license )
     SubObjectName subObject( "AboutDialog" );
     setCaption( tools::translate( "Application", "About" ) );
 
-    QPixmap pixmap;
-    const tools::Path filename = tools::Path::FromUnicode( tools::translate( "Application", "images/gui/splash_swordot.png" ).toStdWString() );
-    pixmap = gui::Pixmap( filename.IsEmpty()
-        ? tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.png" )
-        : tools::GeneralConfig::BuildResourceChildFile( filename ) );
-
     QVBoxLayout* vbox = new QVBoxLayout( this );
     vbox->setMargin( 0 );
     vbox->setContentsMargins( 0, 0, 0, 8 );
 
     QLabel* pixLabel = new QLabel();
-    pixLabel->setPixmap( pixmap );
+    pixLabel->setPixmap( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash.png" ) ) );
 
     QString message;
     message = QString( "%1 - %2<br/> [%3] <br/> %4 <br/> <a href=\"http://%5\">%6</a>" )

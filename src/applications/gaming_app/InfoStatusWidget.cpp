@@ -128,7 +128,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     , profile_    ( profile )
     , icons_      ( icons )
     , selected_   ( controllers )
-    , csword_     ( "resources/images/gui/logo32x32.png" )
+    , logo_       ( "resources/images/gui/logo32x32.png" )
     , background_ ( "resources/images/gaming/status_background.png" )
     , boost_      ( "resources/images/gaming/status_boost.png" )
     , warning_    ( "resources/images/gaming/status_warning.png" )
@@ -166,7 +166,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
         reinforcing_->setBackgroundOrigin( QWidget::AncestorOrigin );
         icon_ = new QLabel( box );
         icon_->setFixedSize( 90, 65 );
-        icon_->setPixmap( csword_ );
+        icon_->setPixmap( logo_ );
         icon_->setAlignment( Qt::AlignCenter );
         icon_->setBackgroundOrigin( QWidget::AncestorOrigin );
         experience_ = new QLabel( box );
@@ -220,9 +220,9 @@ InfoStatusWidget::~InfoStatusWidget()
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::resizeEvent( QResizeEvent* ev )
 {
-    QImage img( background_.smoothScale( ev->size() ) );
-    setPaletteBackgroundPixmap( QPixmap::fromImage( img ) );
-    name_->setBackgroundPixmap( QPixmap::fromImage( img ) );
+    const QPixmap pixmap = QPixmap::fromImage( background_.smoothScale( ev->size() ) );
+    setPaletteBackgroundPixmap( pixmap );
+    name_->setBackgroundPixmap( pixmap );
     Q3VBox::resizeEvent( ev );
 }
 
@@ -260,7 +260,7 @@ void InfoStatusWidget::NotifySelected( const kernel::Entity_ABC* entity )
 void InfoStatusWidget::SetDefault()
 {
     SetName( 0 );
-    icon_->setPixmap( csword_ );
+    icon_->setPixmap( logo_ );
     reinforced_->hide();
     reinforcing_->hide();
     experience_->setPixmap( QPixmap() );
@@ -400,9 +400,9 @@ void InfoStatusWidget::SetExperience( const HumanFactors& humans )
 {
     const E_UnitExperience experience = humans.GetExperience();
     if( experience == eUnitExperience_Experimente )
-        experience_->setPixmap( QPixmap::fromImage( experienced_ ) );
+        experience_->setPixmap( experienced_ );
     else if( experience == eUnitExperience_Veteran )
-        experience_->setPixmap( QPixmap::fromImage( veteran_ ) );
+        experience_->setPixmap( veteran_ );
     else
         experience_->setPixmap( QPixmap() );
     QToolTip::add( experience_, tr( "Experience: " ) + tools::ToString( experience ) );
@@ -417,11 +417,11 @@ void InfoStatusWidget::SetMorale( const HumanFactors& humans )
     const E_UnitMorale morale = humans.GetMorale();
     morale_->setVisible( morale != eUnitMorale_Bon );
     if( morale == eUnitMorale_Fanatique )
-        morale_->setPixmap( QPixmap::fromImage( boost_ ) );
+        morale_->setPixmap( boost_ );
     else if( morale == eUnitMorale_Moyen )
-        morale_->setPixmap( QPixmap::fromImage( warning_ ) );
+        morale_->setPixmap( warning_ );
     else if( morale == eUnitMorale_Mauvais )
-        morale_->setPixmap( QPixmap::fromImage( error_ ) );
+        morale_->setPixmap( error_ );
     QToolTip::add( morale_, tr( "Morale: " ) + tools::ToString( morale ) );
 }
 
@@ -434,9 +434,9 @@ void InfoStatusWidget::SetTiredness( const HumanFactors& humans )
     const E_UnitTiredness tiredness = humans.GetTiredness();
     tiredness_->setVisible( tiredness != eUnitTiredness_Normal );
     if( tiredness == eUnitTiredness_Fatigue )
-        tiredness_->setPixmap( QPixmap::fromImage( warning_ ) );
+        tiredness_->setPixmap( warning_ );
     else if( tiredness == eUnitTiredness_Epuise )
-        tiredness_->setPixmap( QPixmap::fromImage( error_ ) );
+        tiredness_->setPixmap( error_ );
     QToolTip::add( tiredness_, tr( "Tiredness: " ) + tools::ToString( tiredness ) );
 }
 

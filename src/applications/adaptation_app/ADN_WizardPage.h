@@ -84,9 +84,6 @@ protected:
     T*                      element_;
     std::string             copyName_;
 
-    QPixmap                 watermark_;
-    QPixmap                 csword_;
-
     QLabel*                 nameLabel_;
     QLineEdit*              nameEdit_;
     QButtonGroup*           buttonGroup_;
