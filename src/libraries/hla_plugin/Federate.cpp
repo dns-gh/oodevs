@@ -18,7 +18,7 @@ using namespace plugins::hla;
 // Created: SLI 2011-06-10
 // -----------------------------------------------------------------------------
 Federate::Federate( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, const ::hla::Time_ABC& time, const ::hla::TimeInterval_ABC& lookAhead )
-    : federate_( new ::hla::Federate( ambassador, name, "SWORD", time, lookAhead ) )
+    : federate_( new ::hla::Federate( ambassador, name, "MASA SWORD", time, lookAhead ) )
 {
     // NOTHING
 }

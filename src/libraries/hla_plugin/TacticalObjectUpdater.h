@@ -39,6 +39,7 @@ namespace hla
     template< typename ResponseMessage > class ContextHandler_ABC;
     class PropagationManager_ABC;
     class RemoteTacticalObjectSubject_ABC;
+    class SimulationTimeManager_ABC;
 
 // =============================================================================
 /** @class  TacticalObjectUpdater
@@ -54,7 +55,7 @@ public:
     //! @name Constructors/Destructor
     //@{
             TacticalObjectUpdater( dispatcher::SimulationPublisher_ABC& publisher, ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler, dispatcher::Logger_ABC& logger,
-                    PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject );
+                    PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject, const SimulationTimeManager_ABC& timeManager );
     virtual ~TacticalObjectUpdater();
     //@}
 
@@ -108,6 +109,7 @@ private:
     dispatcher::Logger_ABC& logger_;
     PropagationManager_ABC& propagationManager_;
     RemoteTacticalObjectSubject_ABC& subject_;
+    const SimulationTimeManager_ABC& timeManager_;
     T_Identifiers identifiers_;
     //@}
 };
