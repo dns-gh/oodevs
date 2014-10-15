@@ -103,11 +103,29 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
             right = std::max( right, bbox.Right());
         }
     }
-    geometry::Rectangle2d box(left,bottom,right,top);
-    const double incx = 0.005;
-    const double incy = 0.005;
-    const uint32_t mx= static_cast< uint32_t >( ( box.Right() - box.Left() ) / incx ) +1;
-    const uint32_t my= static_cast< uint32_t >( ( box.Top() - box.Bottom() ) / incy ) +1;
+    const geometry::Rectangle2d box(left,bottom,right,top);
+    const double width = box.Right() - box.Left();
+    const double height = box.Top() - box.Bottom();
+    double incx = 0.005;
+    double incy = 0.005;
+    uint32_t mx = static_cast< uint32_t >( ( width ) / incx ) +1;
+    uint32_t my = static_cast< uint32_t >( ( height ) / incy ) +1;
+    const uint32_t MIN_SIZE = 10;
+    if( mx < MIN_SIZE || my < MIN_SIZE )
+    {
+        if( width < height )
+        {
+            mx = MIN_SIZE;
+            incy = incx = width / mx;
+            my = static_cast< uint32_t >( ( height ) / incy );
+        }
+        else
+        {
+            my = MIN_SIZE;
+            incy = incx = height / my;
+            mx = static_cast< uint32_t >( ( width ) / incx );
+        }
+    }
 
     std::vector< ObjectListener_ABC::PropagationData > data;
     for( uint32_t i=0; i<my; ++i )
