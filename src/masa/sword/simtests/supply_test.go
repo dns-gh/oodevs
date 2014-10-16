@@ -152,7 +152,7 @@ func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, callb
 	client.Resume(0)
 	select {
 	case <-quit:
-	case <-time.After(Timeout):
+	case <-time.After(Cfg.Timeout):
 		c.Error("timeout")
 	}
 	go func() {

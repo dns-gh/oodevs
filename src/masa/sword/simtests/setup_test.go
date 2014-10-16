@@ -26,22 +26,11 @@ import (
 )
 
 var (
-	Cfg     *swtest.Config
-	Timeout time.Duration
+	Cfg *swtest.Config
 )
 
 func init() {
 	Cfg = swtest.ParseFlags()
-
-	timeout := 5 * time.Second
-	timeoutStr := os.Getenv("MASA_TIMEOUT")
-	if timeoutStr != "" {
-		t, err := time.ParseDuration(timeoutStr)
-		if err == nil {
-			timeout = t
-		}
-	}
-	Timeout = timeout
 }
 
 const (
@@ -88,7 +77,7 @@ func MakeOpts() *simu.SimOpts {
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+6)
 	opts.EnableTailing = Cfg.ShowLog
-	opts.ConnectTimeout = Timeout
+	opts.ConnectTimeout = Cfg.Timeout
 	return &opts
 }
 
@@ -164,7 +153,7 @@ func MakeReplayOpts() *simu.ReplayOpts {
 	}
 	opts.ExerciseName = "crossroad-small-empty"
 	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
-	opts.ConnectTimeout = Timeout
+	opts.ConnectTimeout = Cfg.Timeout
 	return &opts
 }
 
@@ -291,8 +280,8 @@ func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	client, err := swapi.NewClient(sim.GetClientAddr())
 	c.Assert(err, IsNil)
 	client.Logger = opts.Logger
-	client.PostTimeout = Timeout
-	client.Model.WaitTimeout = Timeout
+	client.PostTimeout = Cfg.Timeout
+	client.Model.WaitTimeout = Cfg.Timeout
 	if opts.WaitTimeout != 0 {
 		timeout := opts.WaitTimeout
 		if timeout < 0 {
