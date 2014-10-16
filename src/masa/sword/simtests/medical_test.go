@@ -190,7 +190,7 @@ func checkMedical(c *C, admin, client *swapi.Client, unit *swapi.Unit, offset in
 	c.Assert(err, IsNil)
 	select {
 	case <-quit:
-	case <-time.After(WaitTimeout):
+	case <-time.After(Timeout):
 		c.Error("timeout")
 	}
 	go func() {

@@ -26,10 +26,8 @@ import (
 )
 
 var (
-	Cfg            *swtest.Config
-	ConnectTimeout time.Duration
-	PostTimeout    time.Duration
-	WaitTimeout    time.Duration
+	Cfg     *swtest.Config
+	Timeout time.Duration
 )
 
 func init() {
@@ -43,9 +41,7 @@ func init() {
 			timeout = t
 		}
 	}
-	ConnectTimeout = timeout
-	PostTimeout = timeout
-	WaitTimeout = timeout
+	Timeout = timeout
 }
 
 const (
@@ -92,7 +88,7 @@ func MakeOpts() *simu.SimOpts {
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+6)
 	opts.EnableTailing = Cfg.ShowLog
-	opts.ConnectTimeout = ConnectTimeout
+	opts.ConnectTimeout = Timeout
 	return &opts
 }
 
@@ -168,7 +164,7 @@ func MakeReplayOpts() *simu.ReplayOpts {
 	}
 	opts.ExerciseName = "crossroad-small-empty"
 	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
-	opts.ConnectTimeout = ConnectTimeout
+	opts.ConnectTimeout = Timeout
 	return &opts
 }
 
@@ -295,8 +291,8 @@ func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	client, err := swapi.NewClient(sim.GetClientAddr())
 	c.Assert(err, IsNil)
 	client.Logger = opts.Logger
-	client.PostTimeout = PostTimeout
-	client.Model.WaitTimeout = WaitTimeout
+	client.PostTimeout = Timeout
+	client.Model.WaitTimeout = Timeout
 	if opts.WaitTimeout != 0 {
 		timeout := opts.WaitTimeout
 		if timeout < 0 {
