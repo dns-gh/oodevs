@@ -12,6 +12,7 @@
 #include "GlRenderPass_ABC.h"
 #include "IconLayout.h"
 #include "PickingSelector.h"
+#include "FrameCounter.h"
 #include "clients_kernel/OptionVariant.h"
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
@@ -133,6 +134,8 @@ void GlWidget::paintGL()
         setAutoUpdate( false );
         for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
             RenderPass( **it );
+        if( fps_ )
+            fps_->Update();
         Scale().Draw( 20, 20, *this );
         setAutoUpdate( true );
     }
@@ -1311,4 +1314,12 @@ void GlWidget::DrawShapeText( const QImage& image, const geometry::Point2f& wher
 
         glDeleteTextures( 1, &texture );
     }
+}
+
+void GlWidget::keyPressEvent( QKeyEvent* event )
+{
+    if( event->key() == Qt::Key_F )
+        fps_.reset( fps_ ? 0 : new FrameCounter( *this, 20, -20 ) );
+    else
+        MapWidget::keyPressEvent( event );
 }

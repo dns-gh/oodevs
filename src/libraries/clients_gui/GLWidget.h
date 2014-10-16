@@ -28,6 +28,7 @@ namespace gui
     class IconLayout;
     class GlRenderPass_ABC;
     class PickingSelector;
+    class FrameCounter;
 
 // =============================================================================
 /** @class  GlWidget
@@ -180,6 +181,8 @@ private:
     void RenderPass( GlRenderPass_ABC& pass );
     void PickingPass( GlRenderPass_ABC& pass );
     bool IsInSelectionViewport( const geometry::Point2f& point ) const;
+
+    virtual void keyPressEvent( QKeyEvent* );
     //@}
 
 private:
@@ -201,6 +204,7 @@ private:
     bool bMulti_;
     float SymbolSize_;
     std::unique_ptr< PickingSelector > pPickingSelector_;
+    std::unique_ptr< FrameCounter > fps_;
     QPoint point_;
     //@}
 };
