@@ -26,7 +26,6 @@ namespace kernel
 
 namespace gui
 {
-    class GLView_ABC;
     class TerrainPicker;
     class TerrainSettings;
 

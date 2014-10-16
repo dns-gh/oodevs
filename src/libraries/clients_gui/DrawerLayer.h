@@ -22,13 +22,9 @@ namespace kernel
 
 namespace gui
 {
-    class GLView_ABC;
     class ParametersLayer;
-}
-
-namespace gui
-{
     class ModelObserver_ABC;
+
 // =============================================================================
 /** @class  DrawerLayer
     @brief  DrawerLayer

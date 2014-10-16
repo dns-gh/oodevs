@@ -20,12 +20,6 @@ namespace kernel
 
 namespace gui
 {
-    class GLView_ABC;
-    class GLView_ABC;
-}
-
-namespace gui
-{
 // =============================================================================
 /** @class  UrbanLayer
     @brief  UrbanLayer

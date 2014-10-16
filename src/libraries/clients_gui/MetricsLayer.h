@@ -20,7 +20,6 @@ namespace kernel
 
 namespace gui
 {
-    class GLView_ABC;
     class GlTooltip_ABC;
 
 // =============================================================================

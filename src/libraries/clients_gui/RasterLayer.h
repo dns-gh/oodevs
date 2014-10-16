@@ -23,8 +23,6 @@ class TextureSet;
 
 namespace gui
 {
-    class GLView_ABC;
-
 // =============================================================================
 /** @class  RasterLayer
     @brief  RasterLayer

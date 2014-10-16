@@ -21,7 +21,6 @@ namespace kernel
 namespace gui
 {
     class CursorStrategy_ABC;
-    class GLView_ABC;
     class LocationEditor_ABC;
     class ShapeHandler_ABC;
     class TextEditor;

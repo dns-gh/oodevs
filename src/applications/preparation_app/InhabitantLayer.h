@@ -24,7 +24,6 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class GLView_ABC;
-    class GLView_ABC;
 }
 
 class LivingAreaEditor_ABC;

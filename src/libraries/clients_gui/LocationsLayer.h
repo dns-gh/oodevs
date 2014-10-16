@@ -19,8 +19,6 @@ namespace gui
 
 namespace gui
 {
-    class GLView_ABC;
-
 // =============================================================================
 /** @class  LocationsLayer
     @brief  LocationsLayer

@@ -32,9 +32,7 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class GlProxy;
-    class GLView_ABC;
     class LayerFilter_ABC;
-    class GLView_ABC;
     class InformationToolTip;
 }
 

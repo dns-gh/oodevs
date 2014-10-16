@@ -28,8 +28,6 @@ namespace graphics
 
 namespace gui
 {
-    class GLView_ABC;
-
 // =============================================================================
 /** @class  MapnikLayer
     @brief  Mapnik layer

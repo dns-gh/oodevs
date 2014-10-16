@@ -22,9 +22,7 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class GLView_ABC;
     class Viewport_ABC;
-    class GLView_ABC;
 
 // =============================================================================
 /** @class  InhabitantLayer

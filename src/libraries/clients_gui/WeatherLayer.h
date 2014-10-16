@@ -26,7 +26,6 @@ namespace weather
 namespace gui
 {
     class ExclusiveEventStrategy;
-    class GLView_ABC;
 
 // =============================================================================
 /** @class  WeatherLayer

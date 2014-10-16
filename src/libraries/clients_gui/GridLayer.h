@@ -25,11 +25,6 @@ namespace kernel
 
 namespace gui
 {
-    class GLView_ABC;
-}
-
-namespace gui
-{
 // =============================================================================
 /** @class  GridLayer
     @brief  GridLayer
