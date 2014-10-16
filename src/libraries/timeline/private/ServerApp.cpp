@@ -27,6 +27,7 @@ ServerApp::ServerApp( int debug_port,
     : client_log_( client_log )
 {
     CefSettings settings;
+    settings.no_sandbox = true;
     settings.multi_threaded_message_loop = true;
     settings.single_process = false;
     settings.remote_debugging_port = debug_port;

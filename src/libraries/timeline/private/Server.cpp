@@ -11,7 +11,6 @@
 #include "moc_Server.cpp"
 
 #include "Browser.h"
-#include "ServerApp.h"
 
 #include <tools/StdFileWrapper.h>
 
@@ -59,7 +58,6 @@ Server::Server( const Configuration& cfg )
     : cfg_    ( cfg )
     , logger_ ( cfg.server_log.IsEmpty() ? T_Logger() : [&]( const std::string& msg ){ Log( msg ); } )
     , frame_  ( new Widget( *this, cfg.widget ) )
-    , app_    ( new ServerApp( cfg.debug_port, cfg.client_log, cfg.cef_log ) )
     , browser_( new Browser( *this, frame_->winId(), cfg.url ) )
     , lock_   ( new boost::mutex() )
 {
@@ -86,7 +84,6 @@ Server::~Server()
     // we do that by using a last signal from our thread
     while( !waiter.IsSignaled() )
         QCoreApplication::processEvents( QEventLoop::WaitForMoreEvents );
-    CefShutdown();
 }
 
 void Server::Start()

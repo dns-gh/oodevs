@@ -31,6 +31,7 @@ int main( int argc, char* argv[] )
     QObject::connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
     try
     {
+        timeline::LibraryConfiguration libcfg;
         std::string command;
         std::vector< std::string > cmdargs;
         timeline::Configuration cfg;
@@ -43,8 +44,8 @@ int main( int argc, char* argv[] )
             ( "command",    bpo::value( &command )->default_value( std::string() ), "execute optional command and return" )
             ( "cmdargs",    bpo::value( &cmdargs ), "optional command arguments" )
             ( "server_log", bpo::value( &cfg.server_log ), "output server log filename" )
-            ( "client_log", bpo::value( &cfg.client_log ), "output client log filename" )
-            ( "debug_port", bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
+            ( "client_log", bpo::value( &libcfg.client_log ), "output client log filename" )
+            ( "debug_port", bpo::value( &libcfg.debug_port )->default_value( 0 ), "set remote debug port" );
         bpo::variables_map vmap;
         bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), vmap );
         if( vmap.count( "help" ) )
@@ -56,6 +57,7 @@ int main( int argc, char* argv[] )
             return 0;
         }
         bpo::notify( vmap );
+        const auto lib = timeline::Initialize( libcfg );
         Controller controller( cfg );
         if( !command.empty() )
             return controller.Execute( command, cmdargs );

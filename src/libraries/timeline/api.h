@@ -154,20 +154,32 @@ signals:
     void Done();
 };
 
-struct Configuration
+struct LibraryConfiguration
 {
-    Configuration()
-        : widget    ( nullptr )
-        , debug_port( 0 )
+    LibraryConfiguration()
+        : debug_port( 0 )
     {
         // NOTHING
     }
-    tools::Path server_log;
     tools::Path client_log;
     tools::Path cef_log;
+    int         debug_port;
+};
+
+// Initializes timeline library. Only one call per process is supported
+struct Library;
+std::shared_ptr< Library > Initialize( const LibraryConfiguration& cfg );
+
+struct Configuration
+{
+    Configuration()
+        : widget( nullptr )
+    {
+        // NOTHING
+    }
     QWidget*    widget;
     std::string url;
-    int         debug_port;
+    tools::Path server_log;
 };
 
 // Starts timeline rendering inside the widget given in the configuration
