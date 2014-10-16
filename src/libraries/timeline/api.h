@@ -170,6 +170,7 @@ struct Configuration
     int         debug_port;
 };
 
+// Starts timeline rendering inside the widget given in the configuration
 std::auto_ptr< Server_ABC > MakeServer( const Configuration& cfg );
 
 // Returns false if this process is not a chrome sub-process

@@ -38,6 +38,7 @@ namespace timeline
 
 namespace timeline
 {
+// SignalWaiter allows waiting synchronously on any signal
 class SignalWaiter : public QObject
 {
     Q_OBJECT
@@ -50,6 +51,19 @@ private:
     bool signaled_;
 };
 
+// Server implements a timeline view which can be modified, rendered and
+// listened to. CEF is roughly separated in two parts:
+// * The browser: A browser window, attached to a widget and urls, see
+// cef_browser.h. This part runs in the main process
+// * The renderer: A renderer, with a javascript vm, see cef_v8.h. This part
+// runs in a separate process
+// This class maintains two things:
+// * ServerApp: Wrapper around CefClient for CEF initialization & customization
+// * Browser: Wrapper around CefBrowser. Creating a browser object will also
+// create the renderer process in the background
+// The rendered process is customized with the Client object, see Client.h
+// Server & Client communicate using CEF message pumps
+// Deleting a server object also delete its render process
 class Server : public Server_ABC
              , public controls::ServerHandler_ABC
 {

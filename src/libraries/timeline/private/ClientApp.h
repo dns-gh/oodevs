@@ -26,6 +26,11 @@ namespace controls
 
 namespace timeline
 {
+// ClientApp wraps:
+// * CefApp: CEF entry point, given to CefExecute. Allow access to capability
+// queries, like CefRenderProcessHandler
+// * CefRenderProcessHandler: Allow pumping messages to/from the browser, and
+// attaching our javascript bindings to the current v8 context
 class ClientApp : public CefApp
                 , public CefRenderProcessHandler
                 , public boost::noncopyable

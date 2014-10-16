@@ -28,6 +28,9 @@ namespace timeline
 
 namespace timeline
 {
+// Engine implements javascript bindings between native code and javascript in
+// both directions. You can call javascript functions, and expose native code
+// to the javascript engine
 class Engine : public boost::noncopyable
 {
 public:

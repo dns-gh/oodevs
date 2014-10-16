@@ -23,6 +23,14 @@
 
 namespace timeline
 {
+// ServerApp wraps:
+// * CefApp: CEF entry point, given to CefInitialize. Allows access to
+//   capability queries, like GetBrowserProcessHandler(), which enable us to
+//   return our custom CefBrowserProcessHandler
+// * CefBrowserProcessHandler: Allow customizing the command line arguments
+//   given to CEF sub-processes
+//   Note that this is a common pattern, the CefApp returns itself on
+//   capabilities, like CefBrowserProcessHandler or CefRenderProcessHandler
 class ServerApp : public CefApp
                 , public CefBrowserProcessHandler
                 , public boost::noncopyable
