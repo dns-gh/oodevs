@@ -52,7 +52,7 @@ public:
     void Remove( const std::string& name );
 
     void Load( Settings_ABC& settings, const std::string& path = "" );
-    void Save( Settings_ABC& settings, bool all );
+    void Save( Settings_ABC& settings );
     //@}
 
 private:

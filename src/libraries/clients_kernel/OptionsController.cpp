@@ -113,7 +113,7 @@ void OptionsController::LoadGeneralOptions( Settings_ABC& settings )
 // -----------------------------------------------------------------------------
 void OptionsController::SaveGeneralOptions( Settings_ABC& settings )
 {
-    generalOptions_->Save( settings, false );
+    generalOptions_->Save( settings );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +132,7 @@ void OptionsController::LoadViewOptions( Settings_ABC& settings )
 // -----------------------------------------------------------------------------
 void OptionsController::SaveViewOptions( Settings_ABC& settings )
 {
-    viewOptions_->Save( settings, false );
+    viewOptions_->Save( settings );
 }
 
 namespace
