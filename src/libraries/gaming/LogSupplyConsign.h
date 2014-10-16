@@ -63,7 +63,7 @@ public:
     //@{
     bool Update( const sword::LogSupplyHandlingUpdate& message, kernel::Agent_ABC* pionLogConvoying );
     void Update( const sword::SupplyRecipientResourceRequests& message );
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual bool RefersToAgent( unsigned long id ) const;
     virtual bool RefersToAgent( const std::set< unsigned long >& id ) const;
     virtual bool UpdateHistoryState( const sword::LogHistoryEntry& entry, HistoryState& state );

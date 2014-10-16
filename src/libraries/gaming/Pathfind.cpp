@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Pathfind.h"
 #include "actions/ActionsModel.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Equipments_ABC.h"
 #include "clients_kernel/EquipmentType.h"
@@ -101,12 +101,12 @@ Pathfind::~Pathfind()
     Destroy();
 }
 
-void Pathfind::Pick( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, GlTools_ABC& tools ) const
+void Pathfind::Pick( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, GLView_ABC& tools ) const
 {
     itinerary_.Draw( tools, hover_, true );
 }
 
-void Pathfind::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, GlTools_ABC& tools ) const
+void Pathfind::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, GLView_ABC& tools ) const
 {
     itinerary_.Draw( tools, hover_, false );
 }
@@ -146,12 +146,12 @@ std::vector< geometry::Point2f > Pathfind::GetDots() const
     return itinerary_.GetDots();
 }
 
-boost::optional< Itinerary::Hover > Pathfind::PickWaypoint( const GlTools_ABC& tools, const geometry::Point2f& where ) const
+boost::optional< Itinerary::Hover > Pathfind::PickWaypoint( const GLView_ABC& tools, const geometry::Point2f& where ) const
 {
     return itinerary_.PickWaypoint( tools, where );
 }
 
-boost::optional< Itinerary::Hover > Pathfind::PickSegment( const GlTools_ABC& tools, const geometry::Point2f& where ) const
+boost::optional< Itinerary::Hover > Pathfind::PickSegment( const GLView_ABC& tools, const geometry::Point2f& where ) const
 {
     return itinerary_.PickSegment( tools, where );
 }

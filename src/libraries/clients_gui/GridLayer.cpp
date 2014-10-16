@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "GridLayer.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/OptionVariant.h"
@@ -23,7 +23,7 @@ using namespace gui;
 // Name: GridLayer constructor
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-GridLayer::GridLayer( Controllers& controllers, GlTools_ABC& tools, const CoordinateConverter_ABC& converter )
+GridLayer::GridLayer( Controllers& controllers, GLView_ABC& tools, const CoordinateConverter_ABC& converter )
     : Layer2D( controllers, tools, eLayerTypes_Grid )
     , converter_( converter )
     , gridType_( eCoordinateSystem_Local )
@@ -61,10 +61,10 @@ void GridLayer::Paint( const geometry::Rectangle2f& v )
         {
             const int size = GetSize();
             for( float x = Snap( viewport.Left() ); x < viewport.Right(); x += size )
-                tools_.DrawLine( geometry::Point2f( x, viewport.Top() ),
+                view_.DrawLine( geometry::Point2f( x, viewport.Top() ),
                                  geometry::Point2f( x, viewport.Bottom() ) );
             for( float y = Snap( viewport.Bottom() ); y < viewport.Top(); y += size )
-                tools_.DrawLine( geometry::Point2f( viewport.Left(), y ),
+                view_.DrawLine( geometry::Point2f( viewport.Left(), y ),
                                  geometry::Point2f( viewport.Right(), y ) );
         }
         else
@@ -83,7 +83,7 @@ void GridLayer::Paint( Viewport_ABC& )
 
 int GridLayer::GetSize() const
 {
-    return static_cast< int >( std::max( gridSize_, 2 * tools_.Pixels() ) );
+    return static_cast< int >( std::max( gridSize_, 2 * view_.Pixels() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,16 +149,16 @@ void GridLayer::DrawLine( const geometry::Rectangle2f& viewport,
     const bool fromOutside = viewport.IsOutside( from );
     const bool toOutside = viewport.IsOutside( to );
     if( !fromOutside && !toOutside )
-        tools_.DrawLine( from, to );
+        view_.DrawLine( from, to );
     else if( !fromOutside && toOutside )
-        tools_.DrawLine( from, Intersect( viewport, from, to )[ 0 ] );
+        view_.DrawLine( from, Intersect( viewport, from, to )[ 0 ] );
     else if( fromOutside && !toOutside )
-        tools_.DrawLine( Intersect( viewport, to, from )[ 0 ], to );
+        view_.DrawLine( Intersect( viewport, to, from )[ 0 ], to );
     else
     {
         const auto points = Intersect( viewport, to, from );
         if( points.size() > 1 )
-            tools_.DrawLine( points[ 0 ], points[ 1 ] );
+            view_.DrawLine( points[ 0 ], points[ 1 ] );
     }
 }
 

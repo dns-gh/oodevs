@@ -19,10 +19,12 @@
 // Name: AutomatsLayer constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
-                              const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel )
-    : gui::AutomatsLayer( controllers, tools, strategy, view, profile )
-    , tools_       ( tools )
+AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers,
+                              gui::GLView_ABC& view,
+                              gui::ColorStrategy_ABC& strategy,
+                              const kernel::Profile_ABC& profile,
+                              actions::ActionsModel& actionsModel )
+    : gui::AutomatsLayer( controllers, view, strategy, profile )
     , actionsModel_( actionsModel )
     , selected_    ( controllers )
 {
@@ -51,8 +53,8 @@ void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& v
         const kernel::Positions& positions = entity.Get< kernel::Positions >();
         const geometry::Point2f position = positions.GetPosition();
         viewport.SetHotpoint( position );
-        selected_->Get< MissionParameters >().Draw( position, viewport, tools_ );
-        selected_->Get< ConvexHulls >().Draw( position, viewport, tools_ );
+        selected_->Get< MissionParameters >().Draw( position, viewport, view_ );
+        selected_->Get< ConvexHulls >().Draw( position, viewport, view_ );
     }
 }
 

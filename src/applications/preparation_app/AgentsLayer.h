@@ -37,7 +37,12 @@ class AgentsLayer : public gui::EntityLayer< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile );
+             AgentsLayer( kernel::Controllers& controllers,
+                          gui::GLView_ABC& view,
+                          gui::ColorStrategy_ABC& strategy,
+                          Model& model,
+                          ModelBuilder& modelBuilder,
+                          const kernel::Profile_ABC& profile );
     virtual ~AgentsLayer();
     //@}
 

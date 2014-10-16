@@ -126,7 +126,7 @@ void TacticalLinePositions::Handle( kernel::Location_ABC& location )
 // Name: TacticalLinePositions::Draw
 // Created: ABR 2013-02-04
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void TacticalLinePositions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( isEditing_ )
         return;

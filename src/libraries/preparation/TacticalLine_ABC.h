@@ -29,7 +29,7 @@ namespace xml
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace tools
@@ -65,7 +65,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyDestruction();
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 };

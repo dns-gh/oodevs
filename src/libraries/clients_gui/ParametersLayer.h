@@ -21,7 +21,7 @@ namespace kernel
 namespace gui
 {
     class CursorStrategy_ABC;
-    class GlTools_ABC;
+    class GLView_ABC;
     class LocationEditor_ABC;
     class ShapeHandler_ABC;
     class TextEditor;
@@ -40,7 +40,7 @@ class ParametersLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             ParametersLayer( kernel::Controllers& controllers, GlTools_ABC& tools, TextEditor& textEditor );
+             ParametersLayer( kernel::Controllers& controllers, GLView_ABC& tools, TextEditor& textEditor );
     virtual ~ParametersLayer();
     //@}
 

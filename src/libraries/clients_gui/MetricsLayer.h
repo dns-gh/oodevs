@@ -20,7 +20,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class GlTooltip_ABC;
 
 // =============================================================================
@@ -36,7 +36,7 @@ public:
     //@{
     explicit MetricsLayer( kernel::Controllers& controllers,
                            const kernel::DetectionMap& elevation,
-                           gui::GlTools_ABC& tools );
+                           gui::GLView_ABC& tools );
     virtual ~MetricsLayer();
     //@}
 

@@ -49,7 +49,7 @@ ScoreDialog::ScoreDialog( const QString& objectName,
                           const std::shared_ptr< gui::ParametersLayer >& layer,
                           const ::StaticModel& staticModel,
                           const tools::ExerciseConfig& config,
-                          gui::GlTools_ABC& tools)
+                          gui::GLView_ABC& tools)
     : QDialog( parent, "ScoreDialog" )
     , builder_( new actions::gui::InterfaceBuilder( controllers, config, layer, staticModel ) )
     , model_  ( model )

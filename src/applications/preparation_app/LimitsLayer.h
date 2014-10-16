@@ -35,11 +35,10 @@ public:
     //! @name Constructors/Destructor
     //@{
              LimitsLayer( kernel::Controllers& controllers,
-                          gui::GlTools_ABC& tools,
+                          gui::GLView_ABC& view,
                           gui::ColorStrategy_ABC& strategy,
                           const std::shared_ptr< gui::ParametersLayer >& parameters,
                           ModelBuilder& modelBuilder,
-                          gui::View_ABC& view,
                           const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
     //@}
@@ -73,7 +72,6 @@ private:
     //! @name Member data
     //@{
     ModelBuilder& modelBuilder_;
-    const gui::GlTools_ABC& tools_;
     geometry::Point2f dragPoint_;
     geometry::Point2f oldPosition_;
     kernel::FourStateOption drawLines_;

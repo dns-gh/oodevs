@@ -27,7 +27,7 @@ Q_DECLARE_METATYPE( const Score_ABC* )
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 ScoreList::ScoreList( kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
-                      const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder, const QString& objectName )
+                      const StaticModel& staticModel, gui::GLView_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder, const QString& objectName )
     : controllers_( controllers )
     , model_      ( model )
     , scores_     ( new gui::RichWidget< QTreeWidget >( "scores", this ) )

@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "ResourceNetworkAttribute.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -103,7 +103,7 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
 // Name: ResourceNetworkAttribute::Draw
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, const geometry::Point2f& from, float alpha ) const
+void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools, const geometry::Point2f& from, float alpha ) const
 {
     int filter = controllers_.options_.GetOption( "ResourceNetworks" ).To< int >();
     if( filter == 1 )// off

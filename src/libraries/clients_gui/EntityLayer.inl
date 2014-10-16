@@ -9,7 +9,7 @@
 
 #include "ColorStrategy_ABC.h"
 #include "Drawable_ABC.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Positions.h"
@@ -23,12 +23,11 @@ namespace gui
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers,
-                                            GlTools_ABC& tools,
+                                            GLView_ABC& view,
                                             ColorStrategy_ABC& strategy,
-                                            View_ABC& view,
                                             const kernel::Profile_ABC& profile,
                                             E_LayerTypes type )
-    : EntityLayerBase( controllers, tools, strategy, view, profile, type )
+    : EntityLayerBase( controllers, view, strategy, profile, type )
     , strategy_( strategy )
 {
     controllers_.Update( *this );

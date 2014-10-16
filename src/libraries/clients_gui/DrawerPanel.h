@@ -102,7 +102,7 @@ private:
     virtual void Select( const kernel::Formation_ABC& element );
 
     virtual void Handle( kernel::Location_ABC& location );
-    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GLView_ABC& tools ) const;
     //@}
 
     //! @name Types

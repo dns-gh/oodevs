@@ -29,7 +29,7 @@ namespace gui
     class LocationEditorBox;
     class LocationsLayer;
     template< typename T > class RichWidget;
-    class View_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  LocationEditorToolbar
@@ -49,7 +49,7 @@ public:
              LocationEditorToolbar( QMainWindow* parent,
                                     kernel::Controllers& controllers,
                                     const kernel::CoordinateConverter_ABC& converter,
-                                    View_ABC& view,
+                                    GLView_ABC& view,
                                     const std::shared_ptr< LocationsLayer >& layer );
     virtual ~LocationEditorToolbar();
     //@}
@@ -102,7 +102,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
-    View_ABC& view_;
+    GLView_ABC& view_;
     std::shared_ptr< LocationsLayer > layer_;
     gui::RichWidget< QToolButton >* paramsButton_;
     kernel::ContextMenu* bookmarksMenu_;

@@ -24,15 +24,13 @@ using namespace gui;
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
 LimitsLayer::LimitsLayer( Controllers& controllers,
-                          GlTools_ABC& tools,
+                          GLView_ABC& view,
                           ColorStrategy_ABC& strategy,
                           const std::shared_ptr< ParametersLayer >& parameters,
                           ModelBuilder& modelBuilder,
-                          gui::View_ABC& view,
                           const kernel::Profile_ABC& profile )
-    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, modelBuilder )
+    : TacticalLinesLayer( controllers, view, strategy, parameters, profile, modelBuilder )
     , modelBuilder_( modelBuilder )
-    , tools_( tools )
     , dummy_( new QWidget() )
 {
     controllers.Update( *this );
@@ -82,7 +80,7 @@ void LimitsLayer::CreateLima( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 float LimitsLayer::Precision( const geometry::Point2f& point ) const
 {
-    return 5.f * tools_.Pixels( point );
+    return 5.f * view_.Pixels( point );
 }
 
 // -----------------------------------------------------------------------------

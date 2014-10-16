@@ -50,10 +50,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLinesLayer( kernel::Controllers& controllers,
-                                 GlTools_ABC& tools,
+                                 GLView_ABC& view,
                                  ColorStrategy_ABC& strategy,
                                  const std::shared_ptr< ParametersLayer >& parameters,
-                                 View_ABC& view,
                                  const kernel::Profile_ABC& profile,
                                  ModelObserver_ABC& model );
     virtual ~TacticalLinesLayer();
@@ -95,7 +94,6 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const GlTools_ABC& tools_;
     gui::ColorStrategy_ABC& strategy_;
     std::shared_ptr< gui::ParametersLayer > parameters_;
     ModelObserver_ABC& model_;

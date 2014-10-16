@@ -11,7 +11,7 @@
 #include "ZoomViewCommand.h"
 #include "gaming/Command.h"
 #include "gaming/CommandHandler.h"
-#include "clients_gui/View_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/XyParser.h"
 #pragma warning( push )
 #pragma warning( disable : 4702 )
@@ -23,7 +23,7 @@
 // Name: ZoomViewCommand constructor
 // Created: SBO 2008-07-07
 // -----------------------------------------------------------------------------
-ZoomViewCommand::ZoomViewCommand( CommandHandler& handler, gui::View_ABC& view,
+ZoomViewCommand::ZoomViewCommand( CommandHandler& handler, gui::GLView_ABC& view,
                                   const kernel::CoordinateConverter_ABC& converter )
     : handler_( handler )
     , view_( view )

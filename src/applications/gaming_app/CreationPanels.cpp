@@ -41,7 +41,7 @@ CreationPanels::CreationPanels( QWidget* parent,
                                 const Time_ABC& simulation,
                                 const std::shared_ptr< ParametersLayer >& paramLayer,
                                 const std::shared_ptr< ::WeatherLayer >& weatherLayer,
-                                GlTools_ABC& tools,
+                                GLView_ABC& tools,
                                 SymbolIcons& icons,
                                 ColorStrategy_ABC& colorStrategy,
                                 const tools::ExerciseConfig& config )

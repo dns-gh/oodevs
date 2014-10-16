@@ -22,9 +22,11 @@ using namespace gui;
 // Name: ResourceNetworksLayer::ResourceNetworksLayer
 // Created: LGY 2013-05-15
 // -----------------------------------------------------------------------------
-ResourceNetworksLayer::ResourceNetworksLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                        View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Entity_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_ResourceNetworks )
+ResourceNetworksLayer::ResourceNetworksLayer( kernel::Controllers& controllers,
+                                              GLView_ABC& view,
+                                              ColorStrategy_ABC& strategy,
+                                              const kernel::Profile_ABC& profile )
+    : EntityLayer< kernel::Entity_ABC >( controllers, view, strategy, profile, eLayerTypes_ResourceNetworks )
 {
     // NOTHING
 }
@@ -76,12 +78,12 @@ void ResourceNetworksLayer::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void ResourceNetworksLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool /*pickingMode*/ )
 {
-    if( ShouldDisplay( entity ) && tools_.ShouldDisplay( GetType() ) )
+    if( ShouldDisplay( entity ) && view_.ShouldDisplay( GetType() ) )
         if( const ResourceNetwork_ABC* attribute = entity.Retrieve< ResourceNetwork_ABC >() )
         {
             const geometry::Point2f position = GetPosition( entity );
             viewport.SetHotpoint( position );
-            attribute->Draw( viewport, tools_, position, GetAlpha() );
+            attribute->Draw( viewport, view_, position, GetAlpha() );
         }
 }
 

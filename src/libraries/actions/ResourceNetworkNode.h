@@ -49,7 +49,7 @@ public:
     //@{
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GLView_ABC& tools ) const;
     virtual geometry::Point2f GetPosition() const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;

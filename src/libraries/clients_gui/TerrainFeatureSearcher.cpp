@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainFeatureSearcher.h"
-#include "View_ABC.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ApproximativeMap.h"
@@ -54,10 +54,18 @@ namespace
         return name;
     }
 
-    struct NameShapeLayer : public GraphicSetup_ABC, public NoVBOShapeLayer
+    struct DummySetup : public GraphicSetup_ABC
+    {
+        virtual void SetupLineGraphics( const Data_ABC* ){}
+        virtual void SetupLineGraphics( unsigned int ){}
+        virtual void SetupBorderGraphics( const Data_ABC* ){}
+        virtual void SetupAreaGraphics( const Data_ABC* ){}
+    };
+
+    struct NameShapeLayer : public NoVBOShapeLayer
     {
         NameShapeLayer( const tools::Path& filename )
-            : NoVBOShapeLayer( *this, filename )
+            : NoVBOShapeLayer( std::make_shared< DummySetup >(), filename )
         {}
         virtual void DrawName( const geometry::Point2f& at, const std::string& name )
         {
@@ -67,10 +75,6 @@ namespace
         virtual bool ShouldDisplay      ( const TerrainData& , const geometry::Rectangle2f& ) { return false; }
         virtual bool ShouldDisplayBorder( const TerrainData& , const geometry::Rectangle2f& ) { return false; }
         virtual bool ShouldDisplayNames ( const TerrainData& , const geometry::Rectangle2f& ) { return true; }
-        virtual void SetupLineGraphics  ( const Data_ABC* ) {}
-        virtual void SetupLineGraphics  ( unsigned int ) {}
-        virtual void SetupBorderGraphics( const Data_ABC* ) {}
-        virtual void SetupAreaGraphics  ( const Data_ABC* ) {}
         std::map< std::string, T_PointVector > names_;
     };
 }

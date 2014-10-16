@@ -13,7 +13,6 @@
 #include "DrawVisitor.h"
 #include "GlProxy.h"
 #include "InformationToolTip.h"
-#include "View_ABC.h"
 #include "Viewport_ABC.h"
 #include "Viewport2d.h"
 
@@ -37,15 +36,13 @@ using namespace gui;
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 EntityLayerBase::EntityLayerBase( Controllers& controllers,
-                                  GlTools_ABC& tools,
+                                  GLView_ABC& view,
                                   ColorStrategy_ABC& strategy,
-                                  View_ABC& view,
                                   const Profile_ABC& profile,
                                   E_LayerTypes type )
-    : Layer( controllers, tools, type )
+    : Layer( controllers, view, type )
     , profile_    ( profile )
     , strategy_   ( strategy )
-    , view_       ( view )
     , infoTooltip_( new InformationToolTip() )
     , selected_   ( controllers )
 {
@@ -77,7 +74,7 @@ void EntityLayerBase::Initialize( const geometry::Rectangle2f& extent )
 void EntityLayerBase::Paint( Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );
-    bool pickingMode = tools_.IsPickingMode();
+    bool pickingMode = view_.IsPickingMode();
 
     // Draw the entities
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
@@ -115,7 +112,7 @@ void EntityLayerBase::SetHotpoint( const kernel::Entity_ABC& /*entity*/, Viewpor
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode )
 {
-    if( ShouldDisplay( entity ) && tools_.ShouldDisplay( GetType() ) )
+    if( ShouldDisplay( entity ) && view_.ShouldDisplay( GetType() ) )
     {
         SelectColor( entity );
         const geometry::Point2f position = GetPosition( entity );
@@ -126,12 +123,12 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bo
 
         if( pickingMode )
         {
-            tools_.RenderPicking( std::make_pair( entity.GetId(), GetType() ) );
-            drawer.Pick( position, viewport, tools_ );
-            tools_.Picking();
+            view_.RenderPicking( std::make_pair( entity.GetId(), GetType() ) );
+            drawer.Pick( position, viewport, view_ );
+            view_.Picking();
         }
         else
-            drawer.Draw( position, viewport, tools_ );
+            drawer.Draw( position, viewport, view_ );
     }
 }
 
@@ -312,12 +309,12 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
 
 namespace
 {
-    bool IsValid( const kernel::Entity_ABC& entity, const GlTools_ABC::T_ObjectPicking& selection, E_LayerTypes type )
+    bool IsValid( const kernel::Entity_ABC& entity, const GLView_ABC::T_ObjectPicking& selection, E_LayerTypes type )
     {
         return entity.GetId() == selection.first && type == selection.second;
     }
 
-    bool IsInLayerSelection(  const kernel::Entity_ABC& entity, const GlTools_ABC::T_ObjectsPicking& selection, E_LayerTypes type )
+    bool IsInLayerSelection(  const kernel::Entity_ABC& entity, const GLView_ABC::T_ObjectsPicking& selection, E_LayerTypes type )
     {
         for( auto it = selection.begin(); it != selection.end(); ++it )
             if( IsValid( entity, *it, type ) )
@@ -379,8 +376,8 @@ void EntityLayerBase::HideTooltip()
 void EntityLayerBase::Pick( const geometry::Point2f& point )
 {
     selection_.clear();
-    GlTools_ABC::T_ObjectsPicking selection;
-    tools_.FillSelection( point, selection, GetType() );
+    GLView_ABC::T_ObjectsPicking selection;
+    view_.FillSelection( point, selection, GetType() );
     if( !selection.empty() )
         for( auto it = entities_.begin(); it != entities_.end(); ++it )
         {

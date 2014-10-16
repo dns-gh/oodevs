@@ -26,8 +26,11 @@ class KnowledgeLayer : public gui::EntityLayer< KnowledgeType >
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                             gui::View_ABC& view, const kernel::Profile_ABC& profile, E_LayerTypes type );
+             KnowledgeLayer( kernel::Controllers& controllers,
+                             gui::GLView_ABC& view,
+                             gui::ColorStrategy_ABC& strategy,
+                             const kernel::Profile_ABC& profile,
+                             E_LayerTypes type );
     virtual ~KnowledgeLayer();
     //@}
 
@@ -43,9 +46,12 @@ private:
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
 template< typename KnowledgeType >
-KnowledgeLayer< KnowledgeType >::KnowledgeLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                                                 gui::View_ABC& view, const kernel::Profile_ABC& profile, E_LayerTypes type )
-    : gui::EntityLayer< KnowledgeType >( controllers, tools, strategy, view, profile, type )
+KnowledgeLayer< KnowledgeType >::KnowledgeLayer( kernel::Controllers& controllers,
+                                                 gui::GLView_ABC& view,
+                                                 gui::ColorStrategy_ABC& strategy,
+                                                 const kernel::Profile_ABC& profile,
+                                                 E_LayerTypes type )
+    : gui::EntityLayer< KnowledgeType >( controllers, view, strategy, profile, type )
 {
     // NOTHING
 }

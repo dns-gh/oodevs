@@ -9,14 +9,14 @@
 
 #include "gaming_app_pch.h"
 #include "ActionsLayer.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionsLayer constructor
 // Created: SBO 2010-04-30
 // -----------------------------------------------------------------------------
-ActionsLayer::ActionsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools )
+ActionsLayer::ActionsLayer( kernel::Controllers& controllers, gui::GLView_ABC& tools )
     : gui::Layer( controllers, tools, eLayerTypes_Actions )
     , current_( controllers )
 {
@@ -39,7 +39,7 @@ ActionsLayer::~ActionsLayer()
 void ActionsLayer::Paint( gui::Viewport_ABC& viewport )
 {
     if( current_ != 0 )
-        current_->Draw( viewport, tools_ );
+        current_->Draw( viewport, view_ );
 }
 
 // -----------------------------------------------------------------------------

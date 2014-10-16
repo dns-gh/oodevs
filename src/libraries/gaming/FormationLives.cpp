@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "FormationLives.h"
 #include "Lives.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -41,7 +41,7 @@ FormationLives::~FormationLives()
 // Name: FormationLives::Draw
 // Created: LGY 2011-03-09
 // -----------------------------------------------------------------------------
-void FormationLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void FormationLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !formation_.IsAggregated() && HasAggregatedSubordinate( formation_ ) && viewport.IsHotpointVisible() )
         tools.DrawLife( where, GetLife(), 4.f );

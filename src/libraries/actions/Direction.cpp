@@ -10,7 +10,7 @@
 #include "actions_pch.h"
 #include "Direction.h"
 #include "ParameterVisitor_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -63,13 +63,13 @@ Direction::~Direction()
 // Name: Direction::Draw
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
     {
         glPushAttrib( GL_LINE_BIT );
             glLineWidth( 3.f );
-            tools.DrawArrow( where, where + direction_ * 50.f * tools.Pixels(), -1.f, gui::GlTools_ABC::pixels );
+            tools.DrawArrow( where, where + direction_ * 50.f * tools.Pixels(), -1.f, gui::GLView_ABC::pixels );
         glPopAttrib();
     }
 }

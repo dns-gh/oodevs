@@ -12,7 +12,7 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class GlTooltip;
 }
 
@@ -27,7 +27,7 @@ class GlButton
 public:
     //! @name Constructors/Destructor
     //@{
-             GlButton( const QString& label, const gui::GlTools_ABC& tools );
+             GlButton( const QString& label, const gui::GLView_ABC& tools );
     virtual ~GlButton();
     //@}
 
@@ -62,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const gui::GlTools_ABC& tools_;
+    const gui::GLView_ABC& tools_;
     QString label_;
     std::unique_ptr< gui::GlTooltip > default_;
     std::unique_ptr< gui::GlTooltip > hover_;

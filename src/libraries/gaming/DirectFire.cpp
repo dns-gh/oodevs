@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "DirectFire.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/SoundEvent.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -73,7 +73,7 @@ DirectFire::~DirectFire()
 
 namespace
 {
-    void DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools )
+    void DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools )
     {
         if( viewport.IsVisible( geometry::Rectangle2f( from, to ) ) )
             tools.DrawArrow( from, to );
@@ -84,7 +84,7 @@ namespace
 // Name: DirectFire::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( isTarget_ )
         DrawArrow( ComputePosition( GetOrigin() ), where, viewport, tools );

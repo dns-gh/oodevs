@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "CommandPostAttributes.h"
 #include "LogisticBaseStates.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -64,7 +64,7 @@ void CommandPostAttributes::CreateDictionary( gui::PropertiesDictionary& diction
 // Name: CommandPostAttributes::Draw
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
-void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( commandPost_ && !entity_.IsAggregated() )
     {

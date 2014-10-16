@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "VisionMap.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/DetectionMap.h"
 
@@ -44,7 +44,7 @@ VisionMap::~VisionMap()
 // Name: VisionMap::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionMap::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void VisionMap::Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
     static const float colors[3][4] =
     {

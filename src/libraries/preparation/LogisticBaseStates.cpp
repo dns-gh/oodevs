@@ -11,7 +11,7 @@
 #include "LogisticBaseStates.h"
 #include "clients_kernel/Tools.h"
 #include "Dotation.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -53,7 +53,7 @@ LogisticBaseStates::~LogisticBaseStates()
 // Name: LogisticBaseStates::Draw
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void LogisticBaseStates::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
     const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
@@ -165,7 +165,7 @@ bool LogisticBaseStates::HasMissingLogisticLinks() const
 // Name: LogisticBaseStates::DrawLink
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const gui::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
+void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const gui::GLView_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
 {
     if( superior_ && displayLinks )
     {

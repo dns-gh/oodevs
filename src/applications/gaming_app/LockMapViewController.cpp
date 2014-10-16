@@ -19,7 +19,7 @@
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/View_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 
 using namespace kernel;
 
@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: LockMapViewController constructor
 // Created: MMC 2013-09-05
 // -----------------------------------------------------------------------------
-LockMapViewController::LockMapViewController( Controllers& controllers, gui::View_ABC& view )
+LockMapViewController::LockMapViewController( Controllers& controllers, gui::GLView_ABC& view )
     : controllers_( controllers )
     , view_( view )
     , locked_( controllers )

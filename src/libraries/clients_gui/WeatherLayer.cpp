@@ -11,7 +11,7 @@
 #include "WeatherLayer.h"
 
 #include "ExclusiveEventStrategy.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "meteo/MeteoLocal.h"
 
 using namespace gui;
@@ -21,7 +21,7 @@ using namespace gui;
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
 WeatherLayer::WeatherLayer( kernel::Controllers& controllers,
-                            GlTools_ABC& tools,
+                            GLView_ABC& tools,
                             ExclusiveEventStrategy& eventStrategy )
     : Layer( controllers, tools, eLayerTypes_Weather )
     , eventStrategy_( eventStrategy )
@@ -59,10 +59,10 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glColor4f( 1, 0, 0, 0.5f );
     glLineWidth( 5.f );
-    tools_.DrawLine( topLeft_, topRight );
-    tools_.DrawLine( topRight, bottomRight_ );
-    tools_.DrawLine( bottomRight_, bottomLeft );
-    tools_.DrawLine( bottomLeft, topLeft_ );
+    view_.DrawLine( topLeft_, topRight );
+    view_.DrawLine( topRight, bottomRight_ );
+    view_.DrawLine( bottomRight_, bottomLeft );
+    view_.DrawLine( bottomLeft, topLeft_ );
     glPopAttrib();
 }
 

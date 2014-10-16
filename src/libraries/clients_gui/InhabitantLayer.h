@@ -22,13 +22,10 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
-    class View_ABC;
-}
+    class GLView_ABC;
 
-namespace gui
-{
 // =============================================================================
 /** @class  InhabitantLayer
     @brief  Inhabitant layer
@@ -40,8 +37,10 @@ class InhabitantLayer : public EntityLayer< kernel::Inhabitant_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantLayer( kernel::Controllers& controllers, GlTools_ABC& tools,
-                              ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             InhabitantLayer( kernel::Controllers& controllers,
+                              GLView_ABC& view,
+                              ColorStrategy_ABC& strategy,
+                              const kernel::Profile_ABC& profile );
     virtual ~InhabitantLayer();
     //@}
 };

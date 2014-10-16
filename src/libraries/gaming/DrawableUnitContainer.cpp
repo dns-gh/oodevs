@@ -3,7 +3,7 @@
 #include "Attributes.h"
 #include "Agent.h"
 #include "Diplomacies.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -108,7 +108,7 @@ namespace
 // Name: DrawableUnitContainer::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools, float factor ) const
+void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools, float factor ) const
 {
     if( viewport.IsHotpointVisible() )
     {

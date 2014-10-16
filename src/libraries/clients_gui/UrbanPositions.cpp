@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "UrbanPositions.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Tesselator.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
@@ -169,7 +169,7 @@ bool UrbanPositions::IsSelected() const
 // Name: UrbanPositions::Draw
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
-void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& viewport, GlTools_ABC& tools ) const
+void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& viewport, GLView_ABC& tools ) const
 {
     if( !viewport.IsHotpointVisible() && ( level_ == eUrbanLevelBlock || !polygon_.IsEmpty() ) )
         return;
@@ -194,7 +194,7 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
 // Name: UrbanPositions::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void UrbanPositions::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools ) const
+void UrbanPositions::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

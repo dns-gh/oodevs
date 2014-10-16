@@ -28,7 +28,7 @@ bool ContourLinesLayer::valid_ =  true;
 // Name: ContourLinesLayer constructor
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-ContourLinesLayer::ContourLinesLayer( Controllers& controllers, GlTools_ABC& tools, DetectionMap& map )
+ContourLinesLayer::ContourLinesLayer( Controllers& controllers, GLView_ABC& tools, DetectionMap& map )
     : Layer2D( controllers, tools, eLayerTypes_ContourLines )
     , map_          ( map )
     , modelLoaded_  ( false )

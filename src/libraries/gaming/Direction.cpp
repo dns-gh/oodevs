@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Direction.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -73,7 +73,7 @@ namespace
     const float arrowheadHeightPercent = 0.35f;
     const float arrowheadWidthPercent = 0.3f;
 
-    void DrawArrowhead( gui::GlTools_ABC& tools,
+    void DrawArrowhead( gui::GLView_ABC& tools,
                         const geometry::Point2f& end,
                         const geometry::Point2f& left,
                         const geometry::Point2f& right )
@@ -93,7 +93,7 @@ namespace
 // Name: Direction::Draw
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------
-void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !viewport.IsHotpointVisible() || !tools.ShouldDisplay( "Direction" ) || entity_.IsAggregated() )
         return;

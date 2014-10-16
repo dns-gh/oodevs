@@ -39,7 +39,7 @@ InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent,
                                                   const AgentTypes& types,
                                                   AgentsModel& agentsModel,
                                                   const std::shared_ptr< gui::ParametersLayer >& layer,
-                                                  const gui::GlTools_ABC& tools )
+                                                  const gui::GLView_ABC& tools )
     : InfoPanel_ABC( parent, panel, tr( "Populations" ), "InhabitantCreationPanel" )
     , controllers_( controllers )
     , tools_      ( tools )

@@ -24,7 +24,7 @@ namespace gui
 {
     class ColorStrategy;
     class DrawingTypes;
-    class GlTools_ABC;
+    class GLView_ABC;
     class GlWidget;
     class Gl3dWidget;
     class EntitySymbols;
@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SelectionMenu( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
-                            DrawingTypes& drawingTypes, GlTools_ABC& tools );
+                            DrawingTypes& drawingTypes, GLView_ABC& tools );
     virtual ~SelectionMenu();
     //@}
 
@@ -88,7 +88,7 @@ private:
     EntitySymbols& entitySymbols_;
     ColorStrategy& colorStrategy_;
     DrawingTypes& drawingTypes_;
-    GlTools_ABC& tools_;
+    GLView_ABC& tools_;
     geometry::Point2f point_;
     Layer_ABC::T_LayerElements extractedElements_;
     std::map< unsigned int, QPixmap > icons_;

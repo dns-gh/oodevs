@@ -13,7 +13,7 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 // =============================================================================
@@ -31,7 +31,7 @@ public:
     //@{
     bool IsInCone  ( const geometry::Point2f& vPos, float rRadius ) const;
     bool IsInSector( const geometry::Point2f& vPos ) const;
-    void Draw( const gui::GlTools_ABC& tools, float radius ) const;
+    void Draw( const gui::GLView_ABC& tools, float radius ) const;
     void DrawFill( float radius ) const;
     //@}
 

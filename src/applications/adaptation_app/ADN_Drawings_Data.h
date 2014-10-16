@@ -22,7 +22,7 @@ namespace svg
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 // =============================================================================
@@ -86,7 +86,7 @@ private:
     T_DrawingsMap categoryMap_;
     T_DrawingInfoVector drawings_;
     std::unique_ptr< svg::TextRenderer > renderer_;
-    std::unique_ptr< gui::GlTools_ABC > tools_;
+    std::unique_ptr< gui::GLView_ABC > tools_;
     //@}
 };
 

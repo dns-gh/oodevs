@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationFlow.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -199,7 +199,7 @@ namespace
 // Name: PopulationFlow::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
+void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
 {
     const bool drawingMode = !tools.IsPickingMode();
     glPushAttrib( GL_LINE_BIT );

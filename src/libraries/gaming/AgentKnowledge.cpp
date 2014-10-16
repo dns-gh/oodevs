@@ -11,7 +11,7 @@
 #include "AgentKnowledge.h"
 #include "Diplomacies.h"
 #include "PointingKnowledges.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Controller.h"
@@ -313,7 +313,7 @@ void AgentKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // Name: AgentKnowledge::Draw
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
     {
@@ -338,7 +338,7 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_A
 // Name: AgentKnowledge::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void AgentKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

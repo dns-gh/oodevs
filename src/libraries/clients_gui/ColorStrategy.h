@@ -24,7 +24,7 @@ namespace kernel
 namespace gui
 {
     class ColorModifier_ABC;
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace gui
@@ -42,7 +42,7 @@ class ColorStrategy : public ColorStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorStrategy( kernel::Controllers& controllers, GlTools_ABC& tools, ColorModifier_ABC& colorController );
+             ColorStrategy( kernel::Controllers& controllers, GLView_ABC& tools, ColorModifier_ABC& colorController );
     virtual ~ColorStrategy();
     //@}
 
@@ -111,7 +111,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    GlTools_ABC& tools_;
+    GLView_ABC& tools_;
     ColorModifier_ABC& colorController_;
     T_Modifiers modifiers_;
     T_TeamColors teamColors_;

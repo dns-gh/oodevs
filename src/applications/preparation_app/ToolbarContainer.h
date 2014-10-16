@@ -24,7 +24,7 @@ namespace gui
     class LocationsLayer;
     class ParametersLayer;
     class TerrainProfiler;
-    class View_ABC;
+    class GLView_ABC;
 }
 
 class FileToolbar;
@@ -48,7 +48,7 @@ public:
              ToolbarContainer( QMainWindow* parent,
                                kernel::Controllers& controllers,
                                const StaticModel& staticModel,
-                               gui::View_ABC& view,
+                               gui::GLView_ABC& view,
                                const std::shared_ptr< gui::LocationsLayer >& layer,
                                const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                gui::ExclusiveEventStrategy& eventStrategy,

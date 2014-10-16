@@ -109,7 +109,7 @@ void Lima::Serialize( xml::xostream& xos ) const
 // Name: Lima::DisplayTooltip
 // Created: SBO 2008-04-16
 // -----------------------------------------------------------------------------
-void Lima::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Lima::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
     Parameter< QString >::DisplayTooltip( viewport, tools );
 }

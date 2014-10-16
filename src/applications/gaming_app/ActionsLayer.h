@@ -23,7 +23,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 // =============================================================================
@@ -38,7 +38,7 @@ class ActionsLayer : public gui::Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools );
+             ActionsLayer( kernel::Controllers& controllers, gui::GLView_ABC& tools );
     virtual ~ActionsLayer();
     //@}
 

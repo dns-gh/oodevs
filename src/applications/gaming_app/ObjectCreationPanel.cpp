@@ -28,7 +28,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent,
                                           const kernel::Time_ABC& simulation,
                                           const kernel::Team_ABC& noSideTeam,
                                           const std::shared_ptr< gui::ParametersLayer >& layer,
-                                          const gui::GlTools_ABC& tools,
+                                          const gui::GLView_ABC& tools,
                                           const tools::GeneralConfig& config )
     : gui::InfoPanel_ABC( parent, panel, tools::translate( "ObjectCreationPanel", "Objects" ), "ObjectCreationPanel" )
     , controllers_ ( controllers )

@@ -11,7 +11,7 @@
 #include "AutomatPositions.h"
 #include "AgentPositions.h"
 #include "clients_gui/AggregatedTools.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -119,10 +119,10 @@ void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: AutomatPositions::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void AutomatPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !automat_.IsAggregated() && HasAggregatedSubordinate( automat_ ) && viewport.IsVisible( where ) )
-        tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
+        tools.DrawCross( where, GL_CROSSSIZE, gui::GLView_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

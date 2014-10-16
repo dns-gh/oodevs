@@ -89,7 +89,7 @@ std::string Drawer::Strip( const std::string& name )
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
 void Drawer::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
-                   GlTools_ABC& tools ) const
+                   GLView_ABC& tools ) const
 {
     for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
         (*it)->Draw( where, viewport, tools );
@@ -100,7 +100,7 @@ void Drawer::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
 void Drawer::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport,
-                   GlTools_ABC& tools ) const
+                   GLView_ABC& tools ) const
 {
     for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
         (*it)->Pick( where, viewport, tools );

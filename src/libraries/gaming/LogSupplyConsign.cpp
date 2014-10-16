@@ -13,7 +13,7 @@
 #include "Simulation.h"
 #include "SupplyRecipientResourcesRequest.h"
 #include "clients_gui/DisplayExtractor.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -100,7 +100,7 @@ void LogSupplyConsign::Update( const sword::SupplyRecipientResourceRequests& mes
 // Name: LogSupplyConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !pLogHandlingEntity_ || !tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;

@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "CircularEventStrategy.h"
 #include "moc_CircularEventStrategy.cpp"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "SelectionMenu.h"
 #include "Selection.h"
 #include "clients_kernel/ContextMenu.h"
@@ -24,7 +24,7 @@ using namespace gui;
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
 CircularEventStrategy::CircularEventStrategy( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
-                                              DrawingTypes& drawingTypes, GlTools_ABC& tools )
+                                              DrawingTypes& drawingTypes, GLView_ABC& tools )
     : QObject()
     , menu_( new SelectionMenu( controllers, entitySymbols, colorStrategy, drawingTypes, tools ) )
     , selection_( new Selection( controllers ) )
@@ -238,7 +238,7 @@ void CircularEventStrategy::RetrieveEntities( QMouseEvent* mouse, const geometry
 {
     if( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton )
         return;
-    GlTools_ABC::T_ObjectsPicking selection;
+    GLView_ABC::T_ObjectsPicking selection;
     tools_.FillSelection( point, selection, boost::none );
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
         if( !( *it )->IsReadOnly() )
@@ -395,7 +395,7 @@ void CircularEventStrategy::OnDisplayToolTip()
     {
         if( !tooltiped_ && tools_.HasFocus() )
         {
-            GlTools_ABC::T_ObjectsPicking selection;
+            GLView_ABC::T_ObjectsPicking selection;
             geometry::Point2f point = tools_.MapToterrainCoordinates( QCursor::pos().x(), QCursor::pos().y() );
             tools_.FillSelection( point, selection, boost::none );
             if( !selection.empty() )

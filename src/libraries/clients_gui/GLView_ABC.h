@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef CLIENTS_GUI_GLTOOLS_ABC_H__
-#define CLIENTS_GUI_GLTOOLS_ABC_H__
+#ifndef __GUI_GLVIEW_ABC_H__
+#define __GUI_GLVIEW_ABC_H__
 
 #include "GLToolColors.h"
 #include "Layer_ABC.h"
@@ -32,12 +32,12 @@ namespace gui
     class GlTooltip_ABC;
 
 // =============================================================================
-/** @class  GlTools_ABC
-    @brief  GlTools definition
+/** @class  GLView_ABC
+    @brief  GLView_ABC definition
 */
 // Created: AGE 2006-03-16
 // =============================================================================
-class GlTools_ABC : private boost::noncopyable
+class GLView_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -55,14 +55,16 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             GlTools_ABC() {}
-    virtual ~GlTools_ABC() {}
+             GLView_ABC() {}
+    virtual ~GLView_ABC() {}
     //@}
 
     //! @name Options
-    // $$$$ AGE 2006-05-19: Sortir de GlTools_ABC ?
-    // $$$$ AGE 2006-05-19: et trouver mieux
     //@{
+    virtual void CenterOn( const geometry::Point2f& point ) = 0;
+    virtual void Zoom( float width ) = 0;
+    virtual geometry::Point2f GetCenter() const = 0;
+
     virtual boost::tuple< bool, bool, bool > UnSelect() const = 0;
     virtual void Select( bool, bool, bool ) const = 0;  //!< Returns the previous selection state
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const = 0;
@@ -132,6 +134,6 @@ public:
     //@}
 };
 
-}
+} //! namespace gui
 
-#endif // CLIENTS_GUI_GLTOOLS_ABC_H__
+#endif // __GUI_GLVIEW_ABC_H__

@@ -31,7 +31,8 @@ class LightingProxy : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LightingProxy( QObject* parent );
+             LightingProxy();
+    explicit LightingProxy( const LightingProxy& other );
     virtual ~LightingProxy();
     //@}
 
@@ -41,6 +42,7 @@ public:
     void SwitchToCameraFixed();
     void SwitchToSimulationTime();
     virtual void Set();
+    virtual std::shared_ptr< Lighting_ABC > Clone() const;
     //@}
 
     //! @name Fixed lighting
@@ -60,9 +62,9 @@ private:
     //! @name Member data
     //@{
     bool camera_;
-    std::unique_ptr< FixedLighting > fixed_;
-    std::unique_ptr< TimeLighting > time_;
-    Lighting_ABC* current_;
+    std::shared_ptr< FixedLighting > fixed_;
+    std::shared_ptr< TimeLighting > time_;
+    std::shared_ptr< Lighting_ABC > current_;
     //@}
 };
 

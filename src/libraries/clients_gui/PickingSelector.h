@@ -11,7 +11,7 @@
 #define PickingSelector_h
 
 #include "Layer_ABC.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 #include <boost/optional/optional_fwd.hpp>
@@ -37,10 +37,10 @@ public:
 
     //! @name Operations
     //@{
-    void FillSelection( GlTools_ABC::T_ObjectsPicking& selection,
+    void FillSelection( GLView_ABC::T_ObjectsPicking& selection,
             const boost::optional< E_LayerTypes >& type, const std::function< void() >& paint );
     void Picking( QPoint point, unsigned int windowHeight );
-    void RenderPicking( const GlTools_ABC::T_ObjectPicking& object, std::function< void( float, float, float, float ) > setCurrentColor );
+    void RenderPicking( const GLView_ABC::T_ObjectPicking& object, std::function< void( float, float, float, float ) > setCurrentColor );
     bool IsPickingMode() const;
     bool ShouldDisplay( E_LayerTypes type ) const;
     QColor GetColor() const;
@@ -65,7 +65,7 @@ private:
     bool pickingMode_;
     std::set< E_LayerTypes > pickingLayers_;
     T_RenderObjects renderObjects_;
-    GlTools_ABC::T_ObjectsPicking pickObjects_;
+    GLView_ABC::T_ObjectsPicking pickObjects_;
     QColor color_;
     //@}
 };

@@ -51,7 +51,7 @@ public:
     //@{
     virtual void DoUpdate( const sword::DecisionalState& message );
     virtual void DoUpdate( const sword::UnitAttributes& message );
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     //@}
 

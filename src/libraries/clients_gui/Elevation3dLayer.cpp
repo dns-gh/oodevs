@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Elevation3dLayer.h"
 
-#include "GLTools_ABC.h"
+#include "GLView_ABC.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
@@ -34,7 +34,7 @@ using namespace gui;
 // Name: Elevation3dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation3dLayer::Elevation3dLayer( Controllers& controllers, GlTools_ABC& tools, const DetectionMap& elevation, Lighting_ABC& lighting )
+Elevation3dLayer::Elevation3dLayer( Controllers& controllers, GLView_ABC& tools, const DetectionMap& elevation, Lighting_ABC& lighting )
     : Layer3D( controllers, tools, eLayerTypes_Elevation3d )
     , elevation_     ( elevation )
     , lighting_      ( lighting )

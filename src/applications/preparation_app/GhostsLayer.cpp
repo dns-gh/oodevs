@@ -28,9 +28,12 @@
 // Name: GhostsLayer constructor
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-GhostsLayer::GhostsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                          gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile )
-    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Ghosts )
+GhostsLayer::GhostsLayer( kernel::Controllers& controllers,
+                          gui::GLView_ABC& view,
+                          gui::ColorStrategy_ABC& strategy,
+                          Model& model,
+                          const kernel::Profile_ABC& profile )
+    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, view, strategy, profile, eLayerTypes_Ghosts )
     , model_            ( model )
     , selectedGhost_    ( controllers )
     , selectedAutomat_  ( controllers )
@@ -85,7 +88,7 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
     {
         if( !selectedGhost_ )
             return false;
-        if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+        if( draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
         {
             const geometry::Point2f newPosition =  point + draggingOffset_.ToVector();
             if( world_.IsInside( newPosition) )

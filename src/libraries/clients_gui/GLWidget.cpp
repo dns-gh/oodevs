@@ -655,7 +655,7 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* 
 {
     Point2f end = to;
     float tipFactor = 1.f;
-    if( unit == gui::GlTools_ABC::pixels )
+    if( unit == gui::GLView_ABC::pixels )
     {
         tipFactor = 0.4f;
         size = 900.f * GetAdaptiveZoomFactor( false );
@@ -771,7 +771,7 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
     glPopAttrib();
 }
 
-void GlWidget::DrawDiscPart( const geometry::Point2f& center, int glList, float angleDegrees, float radius, GlTools_ABC::E_Unit unit ) const
+void GlWidget::DrawDiscPart( const geometry::Point2f& center, int glList, float angleDegrees, float radius, GLView_ABC::E_Unit unit ) const
 {
     radius = Radius( radius, unit );
     glPushAttrib( GL_LINE_BIT );
@@ -1072,7 +1072,7 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /* =
     if( size < 0 )
         size = 32 * Pixels();
 
-    float factor = GetAdaptiveZoomFactor( unit != GlTools_ABC::pixels );
+    float factor = GetAdaptiveZoomFactor( unit != GLView_ABC::pixels );
     size *= 0.7f * factor;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );

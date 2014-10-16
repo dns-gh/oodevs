@@ -9,7 +9,7 @@
 
 #include "actions_pch.h"
 #include "LocationBase.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -204,7 +204,7 @@ geometry::Point2f LocationBase::GetPosition() const
 // Name: LocationBase::Draw
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     const bool isPoint = !points_.empty() && boundingBox_.IsEmpty();
     if( points_.empty() || ( ! viewport.IsVisible( boundingBox_ ) && !isPoint ) )
@@ -231,12 +231,12 @@ void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& vi
 // Name: LocationBase::Draw
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LocationBase::Draw( const gui::GlTools_ABC& tools ) const
+void LocationBase::Draw( const gui::GLView_ABC& tools ) const
 {
     if( points_.size() > 1 )
         tools.DrawLines( points_ );
     else
-        tools.DrawCross( points_.front(), GL_CROSSSIZE, gui::GlTools_ABC::pixels );
+        tools.DrawCross( points_.front(), GL_CROSSSIZE, gui::GLView_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

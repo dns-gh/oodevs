@@ -19,7 +19,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  DefaultLayer
@@ -32,7 +32,7 @@ class DefaultLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
+             DefaultLayer( kernel::Controllers& controllers, GLView_ABC& tools );
     virtual ~DefaultLayer();
     //@}
 

@@ -47,7 +47,7 @@ public:
              ItineraryParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ItineraryParameter();
 
-    virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GLView_ABC& tools ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void Visit( const actions::parameters::Itinerary& param );

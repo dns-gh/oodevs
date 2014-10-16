@@ -32,7 +32,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class GlTooltip_ABC;
     class Viewport_ABC;
 }
@@ -78,9 +78,9 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DisplayTooltip( const ::gui::Viewport_ABC& viewport, const ::gui::GlTools_ABC& tools ) const;
+    virtual void DisplayTooltip( const ::gui::Viewport_ABC& viewport, const ::gui::GLView_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GLView_ABC& tools ) const;
 
     virtual void Serialize( xml::xostream& xos ) const;
 
@@ -99,7 +99,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void DrawToolTip( const ::gui::Viewport_ABC& viewport, const ::gui::GlTools_ABC& tools ) const;
+    void DrawToolTip( const ::gui::Viewport_ABC& viewport, const ::gui::GLView_ABC& tools ) const;
     //@}
 
 private:

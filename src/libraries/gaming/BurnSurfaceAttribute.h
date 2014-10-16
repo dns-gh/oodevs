@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void TerrainPicked( const geometry::Point2f& terrainCoordinates, QStringList& outputInfos );
     virtual void Display( kernel::Displayer_ABC& ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& ) const;

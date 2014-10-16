@@ -156,7 +156,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , modelBuilder_      ( new ModelBuilder( controllers, model ) )
     , colorController_   ( new ColorController( controllers_ ) )
     , glProxy_           ( new gui::GlProxy( logger ) )
-    , lighting_          ( new gui::LightingProxy( this ) )
+    , lighting_          ( new gui::LightingProxy() )
     , strategy_          ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
 {
     gui::SubObjectName subObject( "MainWindow" );
@@ -203,8 +203,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Layer 1
     auto locationsLayer = std::make_shared< gui::LocationsLayer >( controllers_, *glProxy_ );
     auto paramLayer = std::make_shared< gui::ParametersLayer >( controllers_, *glProxy_, *textEditor_ );
-    auto automats = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
-    auto formation = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
+    auto automats = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, PreparationProfile::GetProfile() );
+    auto formation = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, PreparationProfile::GetProfile() );
     auto weatherLayer = std::make_shared< gui::WeatherLayer >( controllers_, *glProxy_, *eventStrategy_ );
     auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( controllers_, *glProxy_ );
     auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_, gradientPreferences_ );
@@ -302,35 +302,35 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     const auto& profile = PreparationProfile::GetProfile();
     auto tooltips = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
     gui::T_LayersMap layers;
-    layers[ eLayerTypes_Agents ]             = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
+    layers[ eLayerTypes_Agents ]             = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
     layers[ eLayerTypes_Automats ]           = automats;
     layers[ eLayerTypes_ContourLines ]       = std::make_shared< gui::ContourLinesLayer >( controllers_, *glProxy_, staticModel_.detection_ );
-    layers[ eLayerTypes_Crowds ]             = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    layers[ eLayerTypes_Crowds ]             = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, model_, profile );
     layers[ eLayerTypes_Default ]            = std::make_shared< gui::DefaultLayer >( controllers_, *glProxy_ );
-    layers[ eLayerTypes_Drawings ]           = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *modelBuilder_ );
+    layers[ eLayerTypes_Drawings ]           = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, profile, *modelBuilder_ );
     layers[ eLayerTypes_Elevation2d ]        = elevation2d;
     layers[ eLayerTypes_Elevation3d ]        = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
     layers[ eLayerTypes_Formations ]         = formations;
-    layers[ eLayerTypes_Ghosts ]             = std::make_shared< GhostsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    layers[ eLayerTypes_Ghosts ]             = std::make_shared< GhostsLayer >( controllers_, *glProxy_, *strategy_, model_, profile );
     layers[ eLayerTypes_Grid ]               = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
     layers[ eLayerTypes_IndicatorCreation ]  = std::make_shared< gui::MiscLayer< ScoreDialog > >( controllers_, *glProxy_, eLayerTypes_IndicatorCreation, dialogContainer_->GetScoreDialog() );
     layers[ eLayerTypes_InhabitantCreation ] = std::make_shared< gui::MiscLayer< InhabitantCreationPanel > >( controllers_, *glProxy_, eLayerTypes_InhabitantCreation, dockContainer_->GetInhabitantCreationPanel() );
-    layers[ eLayerTypes_Inhabitants ]        = std::make_shared< InhabitantLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
+    layers[ eLayerTypes_Inhabitants ]        = std::make_shared< InhabitantLayer >( controllers_, *glProxy_, *strategy_, profile, dockContainer_->GetLivingAreaPanel() );
     layers[ eLayerTypes_Locations ]          = locations;
     if( config_.HasMapnik() )
         layers[ eLayerTypes_Mapnik ]         = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_, config_.GetMapnikThreads() );
     layers[ eLayerTypes_Metric ]             = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
     layers[ eLayerTypes_ObjectCreation ]     = std::make_shared< gui::MiscLayer< ObjectCreationPanel > >( controllers_, *glProxy_, eLayerTypes_ObjectCreation, dockContainer_->GetObjectCreationPanel() );
-    layers[ eLayerTypes_Objects ]            = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
+    layers[ eLayerTypes_Objects ]            = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, profile, picker );
     layers[ eLayerTypes_Parameters ]         = parameters;
     layers[ eLayerTypes_Raster ]             = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_ );
-    layers[ eLayerTypes_ResourceNetworks ]   = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    layers[ eLayerTypes_ResourceNetworks ]   = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, profile );
     layers[ eLayerTypes_Selection ]          = std::make_shared< gui::SelectionLayer >( controllers_, *glProxy_ );
-    layers[ eLayerTypes_TacticalLines ]      = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
+    layers[ eLayerTypes_TacticalLines ]      = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, profile );
     layers[ eLayerTypes_Terrain ]            = std::make_shared< gui::TerrainLayer >( controllers_, terrainSettings_, *glProxy_, picker );
     layers[ eLayerTypes_TerrainProfiler ]    = profiler;
     layers[ eLayerTypes_Tooltips ]           = tooltips;
-    layers[ eLayerTypes_Urban ]              = std::make_shared< UrbanLayer >( controllers_, *glProxy_, *strategy_, *glProxy_, *model_.urban_, profile );
+    layers[ eLayerTypes_Urban ]              = std::make_shared< UrbanLayer >( controllers_, *glProxy_, *strategy_, *model_.urban_, profile );
     layers[ eLayerTypes_Watershed ]          = std::make_shared< gui::WatershedLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers[ eLayerTypes_Weather ]            = weather;
     // composites, need others to be created

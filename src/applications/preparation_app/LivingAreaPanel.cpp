@@ -40,7 +40,7 @@ namespace
 LivingAreaPanel::LivingAreaPanel( QMainWindow* parent,
                                   kernel::Controllers& controllers,
                                   const std::shared_ptr< gui::ParametersLayer >& paramLayer,
-                                  const gui::GlTools_ABC& tools )
+                                  const gui::GLView_ABC& tools )
     : gui::RichDockWidget( controllers, parent, "livingArea", tools::translate( "LivingAreaPanel", "Living Area" ) )
     , controllers_  ( controllers )
     , selected_     ( controllers )

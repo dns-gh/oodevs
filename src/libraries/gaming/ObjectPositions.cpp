@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ObjectPositions.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -71,7 +71,7 @@ void ObjectPositions::DoUpdate( const sword::ObjectCreation& message )
 // Name: ObjectPositions::Draw
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
     {
@@ -85,7 +85,7 @@ void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewp
 // Name: ObjectPositions::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void ObjectPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void ObjectPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

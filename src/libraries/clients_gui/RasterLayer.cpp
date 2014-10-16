@@ -22,7 +22,7 @@ using namespace gui;
 // Name: RasterLayer constructor
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-RasterLayer::RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools )
+RasterLayer::RasterLayer( kernel::Controllers& controllers, GLView_ABC& tools )
     : Layer2D( controllers, tools, eLayerTypes_Raster )
     , ignore_( false )
     , texture_( "usrp.texture" )
@@ -31,7 +31,7 @@ RasterLayer::RasterLayer( kernel::Controllers& controllers, GlTools_ABC& tools )
 }
 
 RasterLayer::RasterLayer( kernel::Controllers& controllers,
-                          GlTools_ABC& tools,
+                          GLView_ABC& tools,
                           const tools::Path& texture,
                           const QString& userName )
     : Layer2D( controllers, tools, eLayerTypes_RasterDynamic )

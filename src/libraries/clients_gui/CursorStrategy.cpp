@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "CursorStrategy.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 
 using namespace gui;
 
@@ -18,7 +18,7 @@ using namespace gui;
 // Name: CursorStrategy constructor
 // Created: SBO 2008-02-12
 // -----------------------------------------------------------------------------
-CursorStrategy::CursorStrategy( GlTools_ABC& tools )
+CursorStrategy::CursorStrategy( GLView_ABC& tools )
     : tools_          ( tools )
     , selectedTool_   ( Qt::ArrowCursor )
     , selectedContext_( Qt::ArrowCursor )

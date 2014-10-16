@@ -101,7 +101,7 @@ void BurnSurfaceAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // Name: BurnSurfaceAttribute::Draw
 // Created: BCI 2010-12-21
 // -----------------------------------------------------------------------------
-void BurnSurfaceAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& /*tools*/ ) const
+void BurnSurfaceAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& /*tools*/ ) const
 {
     // $$$$ BCI 2011-01-07: todo ne dessiner que ce qui est visible
     for( BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.begin(); it != burningCellsByCoordinates_.end(); ++it )

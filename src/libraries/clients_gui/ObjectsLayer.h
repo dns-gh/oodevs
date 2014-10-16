@@ -27,8 +27,11 @@ class ObjectsLayer : public EntityLayer< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                           View_ABC& view, const kernel::Profile_ABC& profile, TerrainPicker& picker );
+             ObjectsLayer( kernel::Controllers& controllers,
+                           GLView_ABC& view,
+                           ColorStrategy_ABC& strategy,
+                           const kernel::Profile_ABC& profile,
+                           TerrainPicker& picker );
     virtual ~ObjectsLayer();
     //@}
 

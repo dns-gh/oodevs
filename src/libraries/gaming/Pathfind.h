@@ -60,8 +60,8 @@ public:
 
     //! @name gui::Drawable_ABC methods
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
+    virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void NotifyDestruction() const;
     //@}
 
@@ -85,8 +85,8 @@ public:
     std::vector< geometry::Point2f > GetDots() const;
     void InsertWaypoint( size_t idx, const geometry::Point2f where );
     void EraseWaypoint( size_t idx );
-    boost::optional< Itinerary::Hover > PickWaypoint( const gui::GlTools_ABC& tools, const geometry::Point2f& where ) const;
-    boost::optional< Itinerary::Hover > PickSegment( const gui::GlTools_ABC& tools, const geometry::Point2f& where ) const;
+    boost::optional< Itinerary::Hover > PickWaypoint( const gui::GLView_ABC& tools, const geometry::Point2f& where ) const;
+    boost::optional< Itinerary::Hover > PickSegment( const gui::GLView_ABC& tools, const geometry::Point2f& where ) const;
     void SetHover( const boost::optional< Itinerary::Hover >& hover );
     //@}
 

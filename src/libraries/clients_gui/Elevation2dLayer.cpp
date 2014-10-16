@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Elevation2dLayer.h"
 
-#include "GLTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Gradient.h"
 #include "GradientPreferences.h"
 #include "ElevationExtrema.h"
@@ -33,7 +33,7 @@ using namespace gui;
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
 Elevation2dLayer::Elevation2dLayer( Controllers& controllers,
-                                    GlTools_ABC& tools,
+                                    GLView_ABC& tools,
                                     const DetectionMap& elevation,
                                     const std::shared_ptr< GradientPreferences >& preferences )
     : Layer2D( controllers, tools, eLayerTypes_Elevation2d )

@@ -26,7 +26,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class TerrainPicker;
     class TerrainSettings;
 
@@ -44,7 +44,7 @@ public:
     //@{
              TerrainLayer( kernel::Controllers& controllers,
                            const std::shared_ptr< TerrainSettings >& settings,
-                           GlTools_ABC& tools,
+                           GLView_ABC& tools,
                            TerrainPicker& picker );
     virtual ~TerrainLayer();
     //@}

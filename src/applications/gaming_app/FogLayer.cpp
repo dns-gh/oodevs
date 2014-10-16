@@ -18,9 +18,11 @@
 // Name: FogLayer constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-FogLayer::FogLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                    gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : gui::EntityLayerBase( controllers, tools, strategy, view, profile, eLayerTypes_Fog )
+FogLayer::FogLayer( kernel::Controllers& controllers,
+                    gui::GLView_ABC& view,
+                    gui::ColorStrategy_ABC& strategy,
+                    const kernel::Profile_ABC& profile )
+    : gui::EntityLayerBase( controllers, view, strategy, profile, eLayerTypes_Fog )
     , controllers_( controllers )
     , texture_( 0 )
 {

@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "WatershedLayer.h"
-#include "GLTools_ABC.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/OptionVariant.h"
@@ -27,7 +27,7 @@ using namespace gui;
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 WatershedLayer::WatershedLayer( Controllers& controllers,
-                                GlTools_ABC& tools,
+                                GLView_ABC& tools,
                                 const DetectionMap& elevation )
     : Layer2D( controllers, tools, eLayerTypes_Watershed )
     , elevation_      ( elevation )

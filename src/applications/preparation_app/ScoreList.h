@@ -38,7 +38,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
     template< typename T > class RichWidget;
 }
@@ -69,7 +69,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreList( kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
-                        const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder, const QString& objectName );
+                        const StaticModel& staticModel, gui::GLView_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder, const QString& objectName );
     virtual ~ScoreList();
     //@}
 

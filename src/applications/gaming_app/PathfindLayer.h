@@ -41,7 +41,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ModelObserver_ABC;
 }
 
@@ -74,9 +74,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              PathfindLayer( kernel::Controllers& controllers,
-                            gui::GlTools_ABC& tools,
+                            gui::GLView_ABC& view,
                             gui::ColorStrategy_ABC& strategy,
-                            gui::View_ABC& view,
                             const kernel::Profile_ABC& profile,
                             Model& model,
                             gui::ModelObserver_ABC& modelObserver );
@@ -145,9 +144,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::GlTools_ABC& tools_;
     gui::ModelObserver_ABC& modelObserver_;
-    gui::View_ABC& view_;
     Publisher_ABC& publisher_;
     actions::ActionsModel& actions_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;

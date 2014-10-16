@@ -32,7 +32,7 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class DrawerPanel;
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
     class PopulationsPanel;
     class SymbolIcons;
@@ -68,7 +68,7 @@ public:
                     const kernel::Time_ABC& simulation,
                     const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                     const std::shared_ptr< ::WeatherLayer >& weatherLayer,
-                    gui::GlTools_ABC& tools,
+                    gui::GLView_ABC& tools,
                     gui::SymbolIcons& icons,
                     gui::ColorStrategy_ABC& colorStrategy,
                     const tools::ExerciseConfig& config );

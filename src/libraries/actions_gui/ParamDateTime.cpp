@@ -12,7 +12,7 @@
 #include "moc_ParamDateTime.cpp"
 #include "InterfaceBuilder_ABC.h"
 #include "actions/DateTime.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include <QtGui/qdatetimeedit.h>
 
 using namespace actions::gui;
@@ -87,7 +87,7 @@ void ParamDateTime::OnChanged( const QDateTime& date )
 // Name: ParamDateTime::Draw
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-void ParamDateTime::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC&, gui::GlTools_ABC& tools ) const
+void ParamDateTime::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC&, gui::GLView_ABC& tools ) const
 {
     if( date_.isValid() )
         tools.Print( date_.toString( "dd-MM-yy hh:mm:ss" ).toStdString(), point, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere

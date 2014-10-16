@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "InfrastructureAttribute.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
@@ -109,7 +109,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
 // Name: InfrastructureAttribute::Draw
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() && controllers_.options_.GetOption( "Infra" ).To< bool >() )
     {

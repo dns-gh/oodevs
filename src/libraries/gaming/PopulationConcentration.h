@@ -54,7 +54,7 @@ public:
     virtual float GetDensity() const;
     virtual QString GetAttitude() const;
     virtual float GetHeight( bool aggregated ) const;
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "DebugPoints.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
@@ -50,7 +50,7 @@ void DebugPoints::DoUpdate( const sword::DebugPoints& message )
 // Name: DebugPoints::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void DebugPoints::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void DebugPoints::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     GLfloat color[4];
     glGetFloatv( GL_CURRENT_COLOR, color );

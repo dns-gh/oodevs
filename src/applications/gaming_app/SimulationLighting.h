@@ -34,21 +34,17 @@ class SimulationLighting : public gui::LightingProxy
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationLighting( kernel::Controllers& controller, QObject* parent );
+    explicit SimulationLighting( kernel::Controllers& controller );
+    explicit SimulationLighting( const SimulationLighting& other );
     virtual ~SimulationLighting();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SimulationLighting( const SimulationLighting& );            //!< Copy constructor
-    SimulationLighting& operator=( const SimulationLighting& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
+    virtual std::shared_ptr< Lighting_ABC > Clone() const;
     //@}
 
 private:

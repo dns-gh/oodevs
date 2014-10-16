@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "TerrainProfilerLayer.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 
 using namespace gui;
@@ -44,7 +44,7 @@ namespace
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
 TerrainProfilerLayer::TerrainProfilerLayer( kernel::Controllers& controllers,
-                                            GlTools_ABC& tools )
+                                            GLView_ABC& tools )
     : Layer( controllers, tools, eLayerTypes_TerrainProfiler )
     , from_( notSet )
     , to_( notSet )
@@ -76,29 +76,29 @@ void TerrainProfilerLayer::Paint( Viewport_ABC& viewport )
             if( from_ != notSet && viewport.IsVisible( from_ ) )
             {
                 glColor4f( 0, 1, 0, 1 );
-                tools_.DrawCross( from_ );
-                tools_.DrawSvg( "flag.svg", from_, tools_.GetAdaptiveZoomFactor( false ) );
+                view_.DrawCross( from_ );
+                view_.DrawSvg( "flag.svg", from_, view_.GetAdaptiveZoomFactor( false ) );
             }
             if( from_ != notSet && to_ != notSet )
             {
                 glColor4f( 1, 1, 1, 1 );
                 glLineWidth( 3.f );
-                tools_.DrawLine( from_, to_ );
+                view_.DrawLine( from_, to_ );
                 glColor4f( 0, 0, 1, 1 );
                 glLineWidth( 1.f );
-                tools_.DrawLine( from_, to_ );
+                view_.DrawLine( from_, to_ );
             }
             if( to_ != notSet && viewport.IsVisible( to_ ) )
             {
                 glColor4f( 0, 0, 1, 1 );
-                tools_.DrawCross( to_ );
-                tools_.DrawSvg( "flag.svg", to_, tools_.GetAdaptiveZoomFactor( false ) );
+                view_.DrawCross( to_ );
+                view_.DrawSvg( "flag.svg", to_, view_.GetAdaptiveZoomFactor( false ) );
             }
             if( current_ != notSet && viewport.IsVisible( current_ ) )
             {
                 static const QImage normal = MakeBitmap( Qt::yellow, Qt::magenta );
-                const float factor = tools_.Pixels( current_ );
-                tools_.DrawImage( normal,
+                const float factor = view_.Pixels( current_ );
+                view_.DrawImage( normal,
                     geometry::Point2f( current_.X() - half * factor, current_.Y() - half * factor ) );
             }
         glPopAttrib();

@@ -11,7 +11,7 @@
 #define __GlWidget_h_
 
 #include "SetGlOptions.h"
-#include "View_ABC.h"
+#include "GLView_ABC.h"
 #include "GlToolsBase.h"
 #include "MapWidget_ABC.h"
 #include "MT_Tools/MT_Profiler.h"
@@ -39,7 +39,6 @@ class GlWidget : private SetGlOptions
                , public MapWidget
                , public MapWidget_ABC
                , public GlToolsBase
-               , public View_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -138,7 +137,7 @@ private:
         float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight,
         unsigned int angle, float xFactor, float yFactor, float svgDeltaX = -20, float svgDeltaY = -80, bool checkAlpha = true ) const;
     void DrawTail( const T_PointVector& points, float width ) const;
-    void DrawDiscPart( const geometry::Point2f& center, int glList, float angleDegrees, float radius, GlTools_ABC::E_Unit unit ) const;
+    void DrawDiscPart( const geometry::Point2f& center, int glList, float angleDegrees, float radius, GLView_ABC::E_Unit unit ) const;
     float Radius( float radius, E_Unit unit ) const;
     //@}
 

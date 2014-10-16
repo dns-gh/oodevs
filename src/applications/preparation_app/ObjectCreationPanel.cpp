@@ -30,7 +30,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent,
                                           const WeatherModel& weatherModel,
                                           const kernel::Team_ABC& noSideTeam,
                                           const std::shared_ptr< gui::ParametersLayer >& layer,
-                                          const gui::GlTools_ABC& tools,
+                                          const gui::GLView_ABC& tools,
                                           const tools::GeneralConfig& config )
     : InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )

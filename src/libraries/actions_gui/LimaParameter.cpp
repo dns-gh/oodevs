@@ -18,7 +18,7 @@
 #include "actions/DateTime.h"
 #include "actions/Lima.h"
 #include "actions/Location.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Lines.h"
@@ -110,7 +110,7 @@ QWidget* LimaParameter::BuildInterface( const QString& objectName, QWidget* pare
 // Created: SBO 2007-05-02
 // Modified: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-void LimaParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void LimaParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !HasTacticalLine() && !HasNewLima() )
         return;

@@ -15,7 +15,7 @@
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class IconHandler_ABC;
 }
 
@@ -32,7 +32,7 @@ class IconsRenderPass : public GlRenderPass_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IconsRenderPass( GlTools_ABC& tools );
+    explicit IconsRenderPass( GLView_ABC& tools );
     virtual ~IconsRenderPass();
     //@}
 
@@ -74,7 +74,7 @@ private:
 
     //! @name Member data
     //@{
-    GlTools_ABC& tools_;
+    GLView_ABC& tools_;
     const geometry::Rectangle2f viewport_;
     T_IconTasks tasks_;
     //@}

@@ -20,7 +20,7 @@
 LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent,
                                               kernel::Controllers& controllers,
                                               const kernel::CoordinateConverter_ABC& converter,
-                                              gui::View_ABC& view,
+                                              gui::GLView_ABC& view,
                                               const std::shared_ptr< gui::LocationsLayer >& layer )
     : gui::LocationEditorToolbar( parent, controllers, converter, view, layer )
     , controllers_( controllers )

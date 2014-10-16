@@ -407,7 +407,7 @@ void DrawerPanel::Handle( kernel::Location_ABC& location )
 // Name: DrawerPanel::Draw
 // Created: LGY 2014-05-14
 // -----------------------------------------------------------------------------
-void DrawerPanel::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GlTools_ABC& tools ) const
+void DrawerPanel::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GLView_ABC& tools ) const
 {
     gui::SimpleLocationDrawer drawer( tools, color_->GetColor() );
     location.Accept( drawer );

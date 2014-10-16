@@ -12,7 +12,7 @@
 #include "moc_ParamQuantity.cpp"
 #include "InterfaceBuilder_ABC.h"
 #include "actions/Quantity.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Units.h"
 #include <QtGui/QSpinBox.h>
 

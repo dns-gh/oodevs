@@ -15,7 +15,7 @@
 #include "DrawingTypes.h"
 #include "SimpleLocationDrawer.h"
 #include "SvgLocationDrawer.h"
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 
 #include "clients_kernel/Location_ABC.h"
 #include <boost/assign.hpp>
@@ -63,7 +63,7 @@ namespace
     class AreaEffect : public kernel::LocationVisitor_ABC
     {
     public:
-        AreaEffect( const GlTools_ABC& tools, float pointSize )
+        AreaEffect( const GLView_ABC& tools, float pointSize )
             : tools_( tools )
             , pointSize_( pointSize > 0.f ? pointSize : 250.f )
         {}
@@ -87,7 +87,7 @@ namespace
         }
 
     private:
-        const GlTools_ABC& tools_;
+        const GLView_ABC& tools_;
         const float pointSize_;
     };
 }
@@ -97,7 +97,7 @@ namespace
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
 void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport,
-                             const GlTools_ABC& tools, bool overlined, float pointSize, float zoom )
+                             const GLView_ABC& tools, bool overlined, float pointSize, float zoom )
 {
     if( boost::shared_ptr< SvgLocationDrawer > renderer = FindRenderer( symbol ) )
         renderer->Draw( location, viewport, tools, color_, overlined, eSolid, zoom );

@@ -26,7 +26,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  WatershedLayer
@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              WatershedLayer( kernel::Controllers& controllers,
-                             GlTools_ABC& tools,
+                             GLView_ABC& tools,
                              const kernel::DetectionMap& elevation );
     virtual ~WatershedLayer();
     //@}

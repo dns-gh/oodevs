@@ -10,7 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Project_Data.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/GlTooltip.h"
 #include "svgl/Color.h"
 #include "svgl/RenderingContext.h"
@@ -20,17 +20,21 @@
 
 namespace
 {
-    class GlToolsSymbols : public gui::GlTools_ABC
+    class GlToolsSymbols : public gui::GLView_ABC
     {
     public:
         //! @name Constructors/Destructor
         //@{
-                 GlToolsSymbols() : GlTools_ABC() {}
+                 GlToolsSymbols() : GLView_ABC() {}
         virtual ~GlToolsSymbols() {}
         //@}
 
         //! @name Options
         //@{
+        virtual void CenterOn( const geometry::Point2f& ) {}
+        virtual void Zoom( float ) {}
+        virtual geometry::Point2f GetCenter() const { return geometry::Point2f(); }
+
         virtual boost::tuple< bool, bool, bool > UnSelect() const { return boost::tuple< bool, bool, bool >( false, false, false ); }
         virtual void Select( bool, bool, bool ) const {}
         virtual bool ShouldDisplay( const std::string& ) const { return true; }

@@ -25,7 +25,7 @@ namespace actions
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
     class Viewport_ABC;
     class RichPushButton;
@@ -59,7 +59,7 @@ class ScoreVariableCreationWizard : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::GLView_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariableCreationWizard();
     //@}
 
@@ -102,7 +102,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::GlTools_ABC& tools_;
+    gui::GLView_ABC& tools_;
     actions::gui::InterfaceBuilder_ABC& builder_;
     gui::RichLineEdit* name_;
     gui::RichPushButton* ok_;

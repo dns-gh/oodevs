@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AggregatedPositions.h"
 #include "clients_gui/AggregatedTools.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -157,10 +157,10 @@ void AggregatedPositions::Accept( LocationVisitor_ABC& visitor ) const
 // Name: AggregatedPositions::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() && !entity_.IsAggregated() && HasSubordinate( entity_, &::IsAggregated ) )
-        tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
+        tools.DrawCross( where, GL_CROSSSIZE, gui::GLView_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

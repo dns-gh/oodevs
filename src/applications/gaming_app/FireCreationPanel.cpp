@@ -17,7 +17,7 @@
 #include "actions/Identifier.h"
 #include "actions/Numeric.h"
 #include "actions/UnitMagicAction.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
@@ -44,7 +44,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent,
                                       const kernel::Time_ABC& simulation,
                                       const StaticModel& staticModel,
                                       const std::shared_ptr< ::gui::ParametersLayer >& paramLayer,
-                                      const gui::GlTools_ABC& tools )
+                                      const gui::GLView_ABC& tools )
     : ::gui::InfoPanel_ABC( parent, panel, tools::translate( "FireCreationPanel", "Strike" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )

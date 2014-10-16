@@ -47,7 +47,7 @@ Automat::~Automat()
 // Name: Automat::Draw
 // Created: LDC 2013-04-15
 // -----------------------------------------------------------------------------
-void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !IsAggregated() && HasAggregatedSubordinate( *this ) && viewport.IsHotpointVisible() )
         drawable_.Draw( *this, where, viewport, tools, -1.5f );
@@ -57,7 +57,7 @@ void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 // Name: Automat::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Automat::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Automat::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

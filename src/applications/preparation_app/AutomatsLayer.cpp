@@ -16,8 +16,11 @@
 // Name: AutomatsLayer constructor
 // Created: JSR 2013-05-29
 // -----------------------------------------------------------------------------
-AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : gui::AutomatsLayer( controllers, tools, strategy, view, profile )
+AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers,
+                              gui::GLView_ABC& view,
+                              gui::ColorStrategy_ABC& strategy,
+                              const kernel::Profile_ABC& profile )
+    : gui::AutomatsLayer( controllers, view, strategy, profile )
     , selectedAutomat_( controllers )
     , dummy_( new QWidget() )
 {
@@ -87,7 +90,7 @@ bool AutomatsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
     AutomatPositions* positions = dnd::FindData< AutomatPositions >( event );
     if( positions )
     {
-        if( selectedAutomat_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+        if( selectedAutomat_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
         {
             positions->Move( point + draggingOffset_.ToVector() );
             draggingPoint_ = point;

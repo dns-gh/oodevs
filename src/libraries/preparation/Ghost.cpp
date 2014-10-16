@@ -19,7 +19,7 @@
 #include "ProfilesModel.h"
 #include "StaticModel.h"
 
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -144,7 +144,7 @@ void Ghost::InitializeSymbol() const
 // Name: Ghost::Draw
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {
@@ -158,7 +158,7 @@ void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 // Name: Ghost::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Ghost::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Ghost::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

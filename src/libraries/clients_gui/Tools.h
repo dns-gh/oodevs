@@ -22,7 +22,7 @@ namespace kernel
 namespace gui
 {
     class OptionColorButton;
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 class QVBoxLayout;
@@ -43,7 +43,7 @@ namespace tools
     void SetKarma( const kernel::Entity_ABC& entity, std::string& symbol );
     void SetLevel( const kernel::Entity_ABC& entity, std::string& level );
     QImage DrawText( const QString& text, const QFont& font, const QColor& color );
-    void DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GlTools_ABC& tools );
+    void DrawPickingText( const QString& text, const QFont& font, const geometry::Point2f& point, const gui::GLView_ABC& tools );
 
     QWidget* AddGroupBoxWidget( const QString& title, const QString& objectName, QWidget* widget, QWidget* parent = 0 );
     QWidget* AddLabeledWidget( const QString& label, QWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::AlignLeft, QWidget* parent = 0 );

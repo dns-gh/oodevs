@@ -29,7 +29,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 }
 
@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
+    void Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const;
     void DrawFill( const gui::Viewport_ABC& viewport ) const;
     void Initialize( VisionMap& map );
     void Update( VisionMap& map );

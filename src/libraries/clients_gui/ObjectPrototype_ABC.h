@@ -34,7 +34,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class LoadableLineEdit;
     class LocationCreator;
     class ObjectAttributePrototype_ABC;
@@ -81,8 +81,8 @@ public:
     virtual bool CheckValidity() const;
     virtual void Clean();
     virtual void Handle( kernel::Location_ABC& location );
-    void Draw( const GlTools_ABC& tools ) const;
-    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Draw( const GLView_ABC& tools ) const;
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GLView_ABC& tools ) const;
     //@}
 
 public slots:

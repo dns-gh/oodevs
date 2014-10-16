@@ -59,7 +59,7 @@ namespace
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
 SelectionMenu::SelectionMenu( Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
-                              DrawingTypes& drawingTypes, GlTools_ABC& tools )
+                              DrawingTypes& drawingTypes, GLView_ABC& tools )
     : controllers_( controllers )
     , entitySymbols_( entitySymbols )
     , colorStrategy_( colorStrategy )

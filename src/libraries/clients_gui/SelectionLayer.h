@@ -19,7 +19,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 namespace gui
@@ -35,7 +35,7 @@ class SelectionLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionLayer( kernel::Controllers& controllers, GlTools_ABC& tools );
+             SelectionLayer( kernel::Controllers& controllers, GLView_ABC& tools );
     virtual ~SelectionLayer();
     //@}
 

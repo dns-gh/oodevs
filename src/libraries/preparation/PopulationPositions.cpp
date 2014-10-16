@@ -11,7 +11,7 @@
 #include "PopulationPositions.h"
 #include "Population.h"
 #include "MoveableProxy.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PopulationType.h"
@@ -157,7 +157,7 @@ void PopulationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: PopulationPositions::Draw
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-void PopulationPositions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void PopulationPositions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     const_cast< PopulationPositions* >( this )->UpdatePosition(); // $$$$ SBO 2006-11-09:
     if( viewport.IsVisible( where ) )
@@ -168,7 +168,7 @@ void PopulationPositions::Draw( const geometry::Point2f& where, const gui::Viewp
 // Name: PopulationPositions::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void PopulationPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void PopulationPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

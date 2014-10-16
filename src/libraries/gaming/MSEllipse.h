@@ -22,7 +22,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 }
 
 // =============================================================================
@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const gui::GLView_ABC& tools ) const;
     virtual bool IsInside( geometry::Point2f point ) const;
     //@}
 

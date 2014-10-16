@@ -54,11 +54,13 @@ namespace
 // Name: ObjectsLayer constructor
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                            gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker )
-    : gui::ObjectsLayer( controllers, tools, strategy, view, profile, picker )
+ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers,
+                            gui::GLView_ABC& view,
+                            gui::ColorStrategy_ABC& strategy,
+                            const kernel::Profile_ABC& profile,
+                            gui::TerrainPicker& picker )
+    : gui::ObjectsLayer( controllers, view, strategy, profile, picker )
     , selected_( controllers )
-    , tools_   ( tools )
     , dummy_( new QWidget() )
 {
     // NOTHING
@@ -123,13 +125,13 @@ bool ObjectsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::P
     {
         if( ObjectPositions* position = static_cast< ObjectPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
         {
-            if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+            if( draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
             {
                 const geometry::Vector2f translation( draggingPoint_, point );
                 const geometry::Rectangle2f boundingBox = position->GetBoundingBox() + translation;
                 if( boundingBox.Intersect( world_ ) == boundingBox )
                 {
-                    position->Translate( draggingPoint_, translation, 5.f * tools_.Pixels( point ) );
+                    position->Translate( draggingPoint_, translation, 5.f * view_.Pixels( point ) );
                     draggingPoint_ = point;
                 }
             }

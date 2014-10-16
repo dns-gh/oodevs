@@ -32,12 +32,12 @@ public:
         drawer.Register( extension );
     }
 
-    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools )
+    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, GLView_ABC& tools )
     {
         drawer.Draw( where, viewport, tools );
     }
 
-    void Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools )
+    void Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GLView_ABC& tools )
     {
         drawer.Pick( where, viewport, tools );
     }

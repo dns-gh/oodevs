@@ -39,8 +39,13 @@ class TeamLayer : public gui::EntityLayer< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
-                        const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
+             TeamLayer( kernel::Controllers& controllers,
+                        gui::GLView_ABC& view,
+                        gui::ColorStrategy_ABC& strategy,
+                        const kernel::Profile_ABC& profile,
+                        actions::ActionsModel& actionsModel,
+                        const StaticModel& staticModel,
+                        const kernel::Time_ABC& simulation,
                         AgentServerMsgMgr& messageManager );
     virtual ~TeamLayer();
     //@}

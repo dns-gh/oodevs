@@ -19,7 +19,7 @@ namespace kernel
 
 namespace gui
 {
-    class View_ABC;
+    class GLView_ABC;
 }
 
 class CommandHandler;
@@ -35,7 +35,7 @@ class ZoomViewCommand : public CommandHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ZoomViewCommand( CommandHandler& handler, gui::View_ABC& view,
+             ZoomViewCommand( CommandHandler& handler, gui::GLView_ABC& view,
                               const kernel::CoordinateConverter_ABC& converter );
     virtual ~ZoomViewCommand();
     //@}
@@ -61,7 +61,7 @@ private:
     //! @name Member data
     //@{
     CommandHandler& handler_;
-    gui::View_ABC& view_;
+    gui::GLView_ABC& view_;
     const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };

@@ -25,7 +25,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 }
 
@@ -58,7 +58,7 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     geometry::Point2f GetPosition() const;
-    void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GLView_ABC& tools ) const;
 
     void CommitTo( std::string& content ) const;
     void CommitTo( sword::Location& message ) const;
@@ -87,7 +87,7 @@ private:
     virtual void VisitCurve     ( const T_PointVector& points );
     virtual void VisitText      ( const QString& text, const QFont& font, const geometry::Point2f& point );
 
-    void Draw( const ::gui::GlTools_ABC& tools ) const;
+    void Draw( const ::gui::GLView_ABC& tools ) const;
     bool CheckValidity() const;
     //@}
 

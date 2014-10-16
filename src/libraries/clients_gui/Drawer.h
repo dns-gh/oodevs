@@ -20,7 +20,7 @@ namespace kernel
 namespace gui
 {
     class Drawable_ABC;
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 }
 
@@ -44,8 +44,8 @@ public:
     //! @name Operations
     //@{
     void Register( const kernel::Extension_ABC& extension );
-    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools ) const;
-    void Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, GLView_ABC& tools ) const;
+    void Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GLView_ABC& tools ) const;
     //@}
 
 private:

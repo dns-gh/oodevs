@@ -33,7 +33,7 @@ namespace simulation
 
 namespace gui
 {
-    class View_ABC;
+    class GLView_ABC;
 }
 
 // =============================================================================
@@ -56,7 +56,7 @@ class LockMapViewController : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LockMapViewController( kernel::Controllers& controllers, gui::View_ABC& view );
+             LockMapViewController( kernel::Controllers& controllers, gui::GLView_ABC& view );
     virtual ~LockMapViewController();
     //@}
 
@@ -88,7 +88,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::View_ABC& view_;
+    gui::GLView_ABC& view_;
     kernel::SafePointer< kernel::Entity_ABC > locked_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     geometry::Point2f center_;

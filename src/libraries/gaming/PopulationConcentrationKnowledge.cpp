@@ -12,7 +12,7 @@
 #include "gaming_pch.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationConcentration.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
@@ -132,7 +132,7 @@ namespace
 // Name: PopulationConcentrationKnowledge::Draw
 // Created: SBO 2007-02-27
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !viewport.IsVisible( position_ ) )
         return;
@@ -157,7 +157,7 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui
 // Name: PopulationConcentrationKnowledge::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Pick( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
+void PopulationConcentrationKnowledge::Pick( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& tools ) const
 {
     tools.DrawDisc( position_, GetRadius() );
 }

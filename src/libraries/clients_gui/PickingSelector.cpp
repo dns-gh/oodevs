@@ -36,7 +36,7 @@ PickingSelector::~PickingSelector()
 // Name: PickingSelector::FillSelection
 // Created: LGY 2013-03-14
 // -----------------------------------------------------------------------------
-void PickingSelector::FillSelection( GlTools_ABC::T_ObjectsPicking& selection,
+void PickingSelector::FillSelection( GLView_ABC::T_ObjectsPicking& selection,
         const boost::optional< E_LayerTypes >& types, const std::function< void() >& paint )
 {
     if( types )
@@ -74,7 +74,7 @@ void PickingSelector::Picking( QPoint point, unsigned int windowHeight )
 // Name: PickingSelector::RenderPicking
 // Created: LGY 2013-03-14
 // -----------------------------------------------------------------------------
-void PickingSelector::RenderPicking( const GlTools_ABC::T_ObjectPicking& object, std::function< void( float, float, float, float ) > setCurrentColor )
+void PickingSelector::RenderPicking( const GLView_ABC::T_ObjectPicking& object, std::function< void( float, float, float, float ) > setCurrentColor )
 {
     int red = std::rand() % 256;
     int green = std::rand() % 256;

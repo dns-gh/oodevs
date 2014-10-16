@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LayerComposite( kernel::Controllers& controllers,
-                             GlTools_ABC& tools,
+                             GLView_ABC& tools,
                              const T_LayersMap& layersMap,
                              E_LayerTypes type );
     virtual ~LayerComposite();

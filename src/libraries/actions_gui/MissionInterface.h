@@ -60,7 +60,7 @@ public:
     //@{
     virtual bool IsFilling() const;
     virtual bool HasParameter( const Param_ABC& parameter ) const;
-    virtual void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
+    virtual void Draw( ::gui::GLView_ABC& tools, ::gui::Viewport_ABC& extent ) const;
     virtual bool CheckValidity();
     virtual void Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type );
     virtual void Rebuild( InterfaceBuilder_ABC& builder );

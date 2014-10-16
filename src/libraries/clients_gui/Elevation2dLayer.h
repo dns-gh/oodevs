@@ -28,7 +28,7 @@ namespace kernel
 namespace gui
 {
     class ElevationExtrema;
-    class GlTools_ABC;
+    class GLView_ABC;
     class GradientPreferences;
 
 // =============================================================================
@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Elevation2dLayer( kernel::Controllers& controllers,
-                               GlTools_ABC& tools,
+                               GLView_ABC& tools,
                                const kernel::DetectionMap& elevation,
                                const std::shared_ptr< GradientPreferences >& preferences );
     virtual ~Elevation2dLayer();

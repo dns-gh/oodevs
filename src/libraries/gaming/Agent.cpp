@@ -12,7 +12,7 @@
 #include "Attributes.h"
 #include "Diplomacies.h"
 #include "equipments.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_gui/PropertiesDictionary.h"
@@ -69,7 +69,7 @@ Agent::~Agent()
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !initialized_ )
     {
@@ -144,7 +144,7 @@ float Agent::GetSymbolDepth() const
 // Name: Agent::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Agent::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Agent::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

@@ -97,7 +97,7 @@ void ItineraryParameter::Display( const QString& what )
     entityLabel_->setText( what );
 }
 
-void ItineraryParameter::Draw( const geometry::Point2f& /*point*/, const ::gui::Viewport_ABC& /*viewport*/, ::gui::GlTools_ABC& tools ) const
+void ItineraryParameter::Draw( const geometry::Point2f& /*point*/, const ::gui::Viewport_ABC& /*viewport*/, ::gui::GLView_ABC& tools ) const
 {
     Itinerary( converter_, GetPathfind(), false ).Draw( tools, boost::none, false );
 }

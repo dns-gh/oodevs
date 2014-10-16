@@ -32,9 +32,9 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class GlProxy;
-    class GlTools_ABC;
+    class GLView_ABC;
     class LayerFilter_ABC;
-    class View_ABC;
+    class GLView_ABC;
     class InformationToolTip;
 }
 
@@ -52,9 +52,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityLayerBase( kernel::Controllers& controllers,
-                              GlTools_ABC& tools,
+                              GLView_ABC& view,
                               ColorStrategy_ABC& strategy,
-                              View_ABC& view,
                               const kernel::Profile_ABC& profile,
                               E_LayerTypes type );
     virtual ~EntityLayerBase();
@@ -133,7 +132,6 @@ private:
     //! @name Private Member data
     //@{
     ColorStrategy_ABC&                        strategy_;
-    View_ABC&                                 view_;
     std::unique_ptr< InformationToolTip >     infoTooltip_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     std::set< unsigned int >                  selection_;
@@ -157,9 +155,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityLayer( kernel::Controllers& controllers,
-                          GlTools_ABC& tools,
+                          GLView_ABC& view,
                           ColorStrategy_ABC& strategy,
-                          View_ABC& view,
                           const kernel::Profile_ABC& profile,
                           E_LayerTypes type );
     virtual ~EntityLayer();

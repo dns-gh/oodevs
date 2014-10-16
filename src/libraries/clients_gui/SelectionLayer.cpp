@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SelectionLayer.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -21,7 +21,7 @@ using namespace gui;
 // Name: SelectionLayer constructor
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-SelectionLayer::SelectionLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools )
+SelectionLayer::SelectionLayer( kernel::Controllers& controllers, gui::GLView_ABC& tools )
     : Layer2D( controllers, tools, eLayerTypes_Selection )
     , displaying_   ( false )
     , firstPointSet_( false )
@@ -50,10 +50,10 @@ void SelectionLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
     const geometry::Point2f bottomLeft( topLeft_.X(), bottomRight_.Y() );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glLineWidth( 2.f );
-    tools_.DrawStippledLine( topLeft_, topRight );
-    tools_.DrawStippledLine( topRight, bottomRight_ );
-    tools_.DrawStippledLine( bottomRight_, bottomLeft );
-    tools_.DrawStippledLine( bottomLeft, topLeft_ );
+    view_.DrawStippledLine( topLeft_, topRight );
+    view_.DrawStippledLine( topRight, bottomRight_ );
+    view_.DrawStippledLine( bottomRight_, bottomLeft );
+    view_.DrawStippledLine( bottomLeft, topLeft_ );
     glPopAttrib();
 }
 

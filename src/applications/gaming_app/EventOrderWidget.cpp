@@ -64,7 +64,7 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
                                     const tools::ExerciseConfig& config,
                                     actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                     const kernel::Profile_ABC& profile,
-                                    gui::GlTools_ABC& tools,
+                                    gui::GLView_ABC& tools,
                                     const kernel::Time_ABC& simulation,
                                     const gui::EntitySymbols& entitySymbols )
     : EventOrderWidget_ABC( presenter )

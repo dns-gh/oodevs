@@ -17,9 +17,11 @@ using namespace gui;
 // Name: AgentKnowledgesLayer constructor
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-AgentKnowledgesLayer::AgentKnowledgesLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                            View_ABC& view, const Profile_ABC& profile )
-    : KnowledgeLayer< AgentKnowledge_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_AgentKnowledges )
+AgentKnowledgesLayer::AgentKnowledgesLayer( Controllers& controllers,
+                                            GLView_ABC& view,
+                                            ColorStrategy_ABC& strategy,
+                                            const Profile_ABC& profile )
+    : KnowledgeLayer< AgentKnowledge_ABC >( controllers, view, strategy, profile, eLayerTypes_AgentKnowledges )
 {
     // NOTHING
 }

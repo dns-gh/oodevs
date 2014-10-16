@@ -39,7 +39,7 @@ namespace gui
     class EventFactory;
     class EventPresenter;
     struct EventViewState;
-    class GlTools_ABC;
+    class GLView_ABC;
     class Viewport_ABC;
 }
 
@@ -89,7 +89,7 @@ public:
                               const kernel::Time_ABC& simulation,
                               actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                               const kernel::Profile_ABC& profile,
-                              gui::GlTools_ABC& tools,
+                              gui::GLView_ABC& tools,
                               const gui::EntitySymbols& entitySymbols );
     virtual ~EventDockWidget();
     //@}

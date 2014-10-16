@@ -230,7 +230,7 @@ const kernel::KnowledgeGroup_ABC& PopulationKnowledge::GetOwner() const
 // Name: PopulationKnowledge::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void PopulationKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     const kernel::Positions& positions = Get< kernel::Positions >();
     if( viewport.IsVisible( positions.GetBoundingBox() ) )
@@ -248,7 +248,7 @@ void PopulationKnowledge::Draw( const geometry::Point2f& where, const gui::Viewp
     }
 }
 
-void PopulationKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void PopulationKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

@@ -19,7 +19,7 @@ using namespace gui;
 // Name: SymbolIcons constructor
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-SymbolIcons::SymbolIcons( QObject* parent, gui::GlTools_ABC& tools )
+SymbolIcons::SymbolIcons( QObject* parent, gui::GLView_ABC& tools )
     : QObject( parent )
     , widget_       ( 0 )
     , defaultSymbol_( 1, 1 )

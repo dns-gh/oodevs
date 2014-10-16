@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AmmoEffect.h"
 #include "Simulation.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/SoundEvent.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -87,7 +87,7 @@ bool AmmoEffect::IsVisible( const kernel::Profile_ABC& profile ) const
 // Name: AmmoEffect::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void AmmoEffect::Draw( const gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile ) const
+void AmmoEffect::Draw( const gui::GLView_ABC& tools, const kernel::Profile_ABC& profile ) const
 {
     if( IsVisible( profile ) )
     {

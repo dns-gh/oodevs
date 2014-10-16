@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SimpleLocationDrawer.h"
 
-#include "GlTools_ABC.h"
+#include "GLView_ABC.h"
 #include "Tools.h"
 
 using namespace gui;
@@ -19,7 +19,7 @@ using namespace gui;
 // Name: SimpleLocationDrawer constructor
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-SimpleLocationDrawer::SimpleLocationDrawer( const GlTools_ABC& tools )
+SimpleLocationDrawer::SimpleLocationDrawer( const GLView_ABC& tools )
     : tools_( tools )
 {
     // NOTHING
@@ -29,7 +29,7 @@ SimpleLocationDrawer::SimpleLocationDrawer( const GlTools_ABC& tools )
 // Name: SimpleLocationDrawer constructor
 // Created: LGY 2014-07-22
 // -----------------------------------------------------------------------------
-SimpleLocationDrawer::SimpleLocationDrawer( const GlTools_ABC& tools, const QColor& color )
+SimpleLocationDrawer::SimpleLocationDrawer( const GLView_ABC& tools, const QColor& color )
     : tools_( tools )
     , color_( color )
 {
@@ -149,7 +149,7 @@ void SimpleLocationDrawer::VisitCurve( const T_PointVector& points )
 void SimpleLocationDrawer::VisitPoint( const geometry::Point2f& point )
 {
     if( !point.IsZero() )
-        tools_.DrawCross( point, -1.f, GlTools_ABC::pixels );
+        tools_.DrawCross( point, -1.f, GLView_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

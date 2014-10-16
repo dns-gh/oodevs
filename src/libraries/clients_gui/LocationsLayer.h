@@ -19,7 +19,7 @@ namespace gui
 
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  LocationsLayer
@@ -32,7 +32,7 @@ class LocationsLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LocationsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools );
+    explicit LocationsLayer( kernel::Controllers& controllers, gui::GLView_ABC& tools );
     virtual ~LocationsLayer();
     //@}
 

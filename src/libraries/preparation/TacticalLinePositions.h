@@ -25,7 +25,7 @@ namespace xml
 }
 namespace gui
 {
-    class GlTools_ABC;
+    class GLView_ABC;
     class ParametersLayer;
     class Viewport_ABC;
 }
@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     void Edit( gui::ParametersLayer& parameters );
     void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
     void InsertPoint( const geometry::Point2f& point, float precision );

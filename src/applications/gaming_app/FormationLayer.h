@@ -38,8 +38,12 @@ class FormationLayer : public gui::FormationLayer
 public:
     //! @name Constructors/Destructor
     //@{
-    FormationLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                    gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel );
+    FormationLayer( kernel::Controllers& controllers,
+                    gui::GLView_ABC& view,
+                    gui::ColorStrategy_ABC& strategy,
+                    const kernel::Profile_ABC& profile,
+                    actions::ActionsModel& actionsModel,
+                    const StaticModel& staticModel );
     virtual ~FormationLayer();
     //@}
 
