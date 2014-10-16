@@ -7,50 +7,47 @@
 //
 // *****************************************************************************
 
-#ifndef __SimulationDispatcher_h_
-#define __SimulationDispatcher_h_
+#ifndef __ReplaySynchronizer_h_
+#define __ReplaySynchronizer_h_
 
-#include "MessageHandler_ABC.h"
+#include "ReplayModel_ABC.h"
 
 namespace dispatcher
 {
     class ClientPublisher_ABC;
-    class ReplayModel_ABC;
+    class Model;
 
 // =============================================================================
-/** @class  SimulationDispatcher
-    @brief  Simulation dispatcher
+/** @class  ReplaySynchronizer
+    @brief  replay synchronizer
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class SimulationDispatcher : public MessageHandler_ABC
+class ReplaySynchronizer : public ReplayModel_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationDispatcher( ClientPublisher_ABC& publisher, const ReplayModel_ABC& synchronizer );
-    virtual ~SimulationDispatcher();
+             ReplaySynchronizer( ClientPublisher_ABC& publisher, Model& model );
+    virtual ~ReplaySynchronizer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Receive( const sword::SimToClient& asnMsg );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    bool IsDestruction( const sword::SimToClient& asnMsg ) const;
+    virtual void StartSynchronisation();
+    virtual void EndSynchronisation();
+    virtual bool IsSynching() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     ClientPublisher_ABC& publisher_;
-    const ReplayModel_ABC& synchronizer_;
+    Model&               model_;
+    bool                 synching_;
     //@}
 };
 
 }
 
-#endif // __SimulationDispatcher_h_
+#endif // __ReplaySynchronizer_h_

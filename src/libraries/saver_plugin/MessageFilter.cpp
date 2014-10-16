@@ -79,7 +79,6 @@ bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
     if( wrapper.message().has_decisional_state() )
         return true;
     if( wrapper.message().has_debug_points() ||
-        wrapper.message().has_unit_vision_cones() ||
         wrapper.message().has_object_detection() ||
         wrapper.message().has_crowd_concentration_detection() ||
         wrapper.message().has_crowd_flow_detection() )
@@ -116,6 +115,7 @@ bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
         wrapper.message().has_unit_knowledge_creation() ||
         wrapper.message().has_unit_knowledge_destruction() ||
         wrapper.message().has_unit_detection() ||
+        wrapper.message().has_unit_vision_cones() ||
         wrapper.message().has_start_unit_fire() ||
         wrapper.message().has_stop_unit_fire() ||
         wrapper.message().has_start_crowd_fire() ||

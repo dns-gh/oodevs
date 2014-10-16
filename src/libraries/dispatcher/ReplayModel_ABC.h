@@ -10,6 +10,8 @@
 #ifndef __ReplayModel_ABC_h_
 #define __ReplayModel_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace dispatcher
 {
 // =============================================================================
@@ -18,7 +20,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-07-05
 // =============================================================================
-class ReplayModel_ABC
+class ReplayModel_ABC : public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

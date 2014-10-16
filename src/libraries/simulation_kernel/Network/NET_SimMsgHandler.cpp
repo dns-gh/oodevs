@@ -99,8 +99,6 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
     else if( msg.has_control_checkpoint_set_frequency() )
         server.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency(
             msg.control_checkpoint_set_frequency(), clientId, nCtx );
-    else if( msg.has_control_toggle_vision_cones() )
-        manager.OnReceiveControlToggleVisionCones( msg.control_toggle_vision_cones() );
     else if( msg.has_unit_order() )
         manager.OnReceiveUnitOrder( msg.unit_order(), nCtx, clientId );
     else if( msg.has_automat_order() )

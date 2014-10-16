@@ -155,11 +155,8 @@ void DetectionMapIterator::Increment()
         rAlreadyUsedDX_ = vOutPoint_.X() - static_cast< int >( vOutPoint_.X() );
         rLength_        = rDl_ * rAlreadyUsedDX_;
         rNextY          = rAlreadyUsedDX_;
-
-        assert( rAlreadyUsedDX_ > 0. && rAlreadyUsedDX_ < 1. );
     }
 
-    assert( rLength_ > 0. );
     assert( rNextY >= 0. );
     assert( rNextY < 1. );
 
@@ -177,8 +174,6 @@ void DetectionMapIterator::Increment()
                 rLength_       += rRemainingLength_;
 
                 eIteratorState_ = eLastPoint;
-
-                assert ( rLength_ > 0. );
             }
             else
             { // fin de validité de l'itérateur

@@ -273,6 +273,12 @@ void SimulationController::SendEnableVisionCones( bool value ) const
         msg().set_vision_cones( value );
         msg.Send( publisher_ );
     }
+    else if( hasReplay_ )
+    {
+        replay::ControlEnableVisionCones msg;
+        msg().set_vision_cones( value );
+        msg.Send( publisher_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

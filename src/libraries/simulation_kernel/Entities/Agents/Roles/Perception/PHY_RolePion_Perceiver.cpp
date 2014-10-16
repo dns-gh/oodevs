@@ -848,8 +848,6 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
             owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
-    if( bExternalMustUpdateVisionCones_ && MIL_AgentServer::GetWorkspace().GetEntityManager().SendVisionCones() )
-        SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -1055,10 +1053,7 @@ void PHY_RolePion_Perceiver::SendVisionCones() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_radar_active( IsUsingActiveRadar() );
-    MT_Vector2D direction;
-    GetMainPerceptionDirection( direction );
-    NET_ASN_Tools::WriteDirection( direction, *msg().mutable_sensors_direction() );
+    SendState( msg, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1067,7 +1062,21 @@ void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendChangedState( client::UnitAttributes& msg ) const
 {
-    SendFullState( msg );
+    SendState( msg, bExternalMustUpdateVisionCones_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::SendState
+// Created: SLI 2014-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::SendState( client::UnitAttributes& msg, bool sendVisionCones ) const
+{
+    msg().set_radar_active( IsUsingActiveRadar() );
+    MT_Vector2D direction;
+    GetMainPerceptionDirection( direction );
+    NET_ASN_Tools::WriteDirection( direction, *msg().mutable_sensors_direction() );
+    if( sendVisionCones )
+        SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
