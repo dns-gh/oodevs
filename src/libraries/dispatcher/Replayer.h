@@ -79,7 +79,6 @@ public:
 private:
     void ReceiveClientToReplay( const std::string& link, sword::ClientToReplay& );
     void ReceiveClientToSim( const std::string& link, sword::ClientToSim& );
-    void ConfigureModelHandler();
 
 private:
     //! @name Member data
