@@ -127,7 +127,7 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Opt
     }
     RichPushButton* button = new RichPushButton( "reset", tr( "Reset" ) );
     gui::connect( button, SIGNAL( clicked() ), [&](){
-        for( int i = 0; i < kernel::DefaultVisualisationScales::size_; ++i )
+        for( size_t i = 0; i < kernel::DefaultVisualisationScales::size_; ++i )
         {
             const auto& scale = kernel::DefaultVisualisationScales::data_[i];
             const auto name = strScale + ENT_Tr::ConvertFromVisualisationScale( scale.type_ );
