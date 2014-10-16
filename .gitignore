@@ -31,6 +31,7 @@ tags
 /src/masa/timeline/www/js/*.js
 /src/masa/timeline/www/lib/*.min.js
 /src/masa/timeline/www/tests/*.js
+/src/masa/sword/sword/
 /src/masa/admin/www/js/*.js
 /src/masa/admin/www/about.ttml
 /src/masa/admin/www/css/iexplore.css
