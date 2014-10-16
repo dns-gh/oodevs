@@ -21,8 +21,6 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class GLView_ABC;
-    class GLView_ABC;
     class LayerFilter_ABC;
 }
 

@@ -19,8 +19,6 @@ namespace kernel
 
 namespace gui
 {
-    class GLView_ABC;
-
 // =============================================================================
 /** @class  TerrainProfilerLayer
     @brief  TerrainProfilerLayer

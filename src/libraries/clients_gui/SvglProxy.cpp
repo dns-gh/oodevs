@@ -32,8 +32,7 @@ SvglProxy::SvglProxy( SvglRenderer& renderer )
 // -----------------------------------------------------------------------------
 SvglProxy::~SvglProxy()
 {
-    for( auto it = symbols_.begin(); it != symbols_.end(); ++it )
-        delete it->second;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,11 +42,11 @@ SvglProxy::~SvglProxy()
 void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/,
                       unsigned vHeight /* = 480*/, bool pickingMode /* = false*/ )
 {
-    svg::Node_ABC*& node = symbols_[ name ];
-    if( ! node )
+    auto& node = symbols_[ name ];
+    if( !node )
     {
         tools::Xifstream input( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images" ) / tools::Path::FromUTF8( name ) ) );
-        node = renderer_.Compile( input, 100 ); // $$$$ AGE 2007-05-31:
+        node.reset( renderer_.Compile( input, 100 ) ); // $$$$ AGE 2007-05-31:
     }
     if( node )
         renderer_.Render( node, SvglRenderer::DefaultStyle(), viewport, vWidth, vHeight, pickingMode );

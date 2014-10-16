@@ -28,7 +28,6 @@ namespace kernel
 namespace gui
 {
     class ElevationExtrema;
-    class GLView_ABC;
     class GradientPreferences;
 
 // =============================================================================

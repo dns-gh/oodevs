@@ -31,6 +31,7 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_ContourLines )
     ( eLayerTypes_Urban )
     ( eLayerTypes_WeatherComposite )
+    ( eLayerTypes_VisionCones )
     ( eLayerTypes_ObjectsComposite )
     ( eLayerTypes_CrowdsComposite )
     ( eLayerTypes_InhabitantsComposite )
@@ -204,6 +205,9 @@ const layers::Descriptor descriptors_[] = {
       ba::list_of< E_LayerTypes >( eLayerTypes_Parties )( eLayerTypes_Formations )( eLayerTypes_Automats )( eLayerTypes_Ghosts )( eLayerTypes_Agents )( eLayerTypes_AgentKnowledges ) },
     { eLayerTypes_Urban,                  "main,miniviews",                   true,  true,
       eModes_All,                         eModes_Itinerary,                   eModes_None,
+      T_LayerTypesVector() },
+    { eLayerTypes_VisionCones,            "main,miniviews",                   false,  true,
+      eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
     { eLayerTypes_Watershed,              "main,miniview",                    false,  false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,

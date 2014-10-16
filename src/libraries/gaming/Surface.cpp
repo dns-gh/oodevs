@@ -66,10 +66,10 @@ Surface::~Surface()
 // -----------------------------------------------------------------------------
 void Surface::Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
-    if( ! viewport.IsVisible( Extent() ) )
+    if( !viewport.IsVisible( Extent() ) )
         return;
-    for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
-        itSector->Draw( tools, maxRadius_ );
+    for( auto it = sectors_.begin(); it != sectors_.end(); ++it )
+        it->Draw( tools, maxRadius_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,10 +78,10 @@ void Surface::Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& to
 // -----------------------------------------------------------------------------
 void Surface::DrawFill( const gui::Viewport_ABC& viewport ) const
 {
-    if( ! viewport.IsVisible( Extent() ) )
+    if( !viewport.IsVisible( Extent() ) )
         return;
-    for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
-        itSector->DrawFill( maxRadius_ );
+    for( auto it = sectors_.begin(); it != sectors_.end(); ++it )
+        it->DrawFill( maxRadius_ );
 }
 
 // -----------------------------------------------------------------------------

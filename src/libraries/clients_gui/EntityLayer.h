@@ -32,9 +32,7 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class GlProxy;
-    class GLView_ABC;
     class LayerFilter_ABC;
-    class GLView_ABC;
     class InformationToolTip;
 }
 
@@ -126,12 +124,12 @@ protected:
     const kernel::Profile_ABC& profile_;
     T_Entities                 entities_;
     geometry::Rectangle2f      world_;
+    ColorStrategy_ABC&         strategy_;
     //@}
 
 private:
     //! @name Private Member data
     //@{
-    ColorStrategy_ABC&                        strategy_;
     std::unique_ptr< InformationToolTip >     infoTooltip_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     std::set< unsigned int >                  selection_;
@@ -174,12 +172,6 @@ protected:
     virtual void FillContextMenu( unsigned int id, kernel::ContextMenu& menu );
     virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& selectable ) const;
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    ColorStrategy_ABC& strategy_;
     //@}
 };
 

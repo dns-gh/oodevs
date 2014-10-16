@@ -65,7 +65,7 @@ private:
     //! @name Types
     //@{
     typedef std::pair< std::string, std::string >       T_SymbolKey;
-    typedef std::pair< svg::Node_ABC*, svg::Node_ABC* > T_LodSymbol;
+    typedef std::pair< std::shared_ptr< svg::Node_ABC >, std::shared_ptr< svg::Node_ABC > > T_LodSymbol;
     typedef std::map< T_SymbolKey, T_LodSymbol >        T_Symbols;
     typedef std::map< T_SymbolKey, float >              T_AlphaSymbols;
     //@}

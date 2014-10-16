@@ -92,6 +92,7 @@ public:
     virtual unsigned short  StipplePattern( int factor = 1 ) const = 0;
     virtual float           Zoom() const = 0;
     virtual float           GetAdaptiveZoomFactor( bool bVariableSize = true ) const = 0;
+    virtual float           GetCurrentAlpha() const = 0;
     //@}
 
     //! @name Operations

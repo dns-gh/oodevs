@@ -53,6 +53,7 @@
 #include "WeatherLayer.h"
 #include "PathfindLayer.h"
 #include "UnitStateDialog.h"
+#include "VisionConesLayer.h"
 #include "WeaponRangeLayer.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -354,6 +355,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_TerrainProfiler ]        = profiler;
     layers[ eLayerTypes_Tooltips ]               = tooltips;
     layers[ eLayerTypes_Urban ]                  = std::make_shared< gui::UrbanLayer >( controllers_, *glProxy_, *strategy_, profile_ );
+    layers[ eLayerTypes_VisionCones ]            = std::make_shared< VisionConesLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Watershed ]              = std::make_shared< gui::WatershedLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers[ eLayerTypes_WeaponRanges ]           = std::make_shared< WeaponRangeLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Weather ]                = weather;

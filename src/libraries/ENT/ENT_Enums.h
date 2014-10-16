@@ -55,6 +55,7 @@ enum E_LayerTypes
     eLayerTypes_Tooltips,
     eLayerTypes_UnitsComposite,
     eLayerTypes_Urban,
+    eLayerTypes_VisionCones,
     eLayerTypes_Watershed,
     eLayerTypes_WeaponRanges,
     eLayerTypes_Weather,

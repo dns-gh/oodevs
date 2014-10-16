@@ -1038,6 +1038,10 @@
         <source>Command Post</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Vision surfaces</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LocationCategory</name>

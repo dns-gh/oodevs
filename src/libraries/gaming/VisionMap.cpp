@@ -65,7 +65,7 @@ void VisionMap::Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& 
     glBegin( GL_POINTS );
     for( char color = 1; color <= 3; ++color )
     {
-        glColor4fv( colors[ color-1 ] );
+        glColor4f( colors[ color-1 ][0], colors[ color-1 ][1], colors[ color-1 ][2], tools.GetCurrentAlpha() );
         for( int y = 0; y < height_; ++y )
             for( int x = 0; x < width_; ++x )
                 if( vision_[ y * width_ + x ] == color )

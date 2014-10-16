@@ -96,7 +96,7 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
 // Name: SvglRenderer::Render
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
+void SvglRenderer::Render( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                            unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
     CreateStaticLists();
@@ -119,7 +119,7 @@ void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const 
 // Name: SvglRenderer::RetrieveListId
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-unsigned int SvglRenderer::RetrieveListId( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
+unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                                            unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists )
 {
     unsigned int listId = 0;
@@ -143,7 +143,7 @@ unsigned int SvglRenderer::RetrieveListId( svg::Node_ABC* node, const std::strin
 // Name: SvglRenderer::Draw
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void SvglRenderer::Draw( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
+void SvglRenderer::Draw( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
     glPushAttrib( GL_CURRENT_BIT );
     const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );

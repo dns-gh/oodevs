@@ -67,12 +67,6 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< Sector >            T_SectorVector;
-    typedef T_SectorVector::const_iterator CIT_SectorVector;
-    //@}
-
     //! @name Helpers
     //@{
     geometry::Rectangle2f          Extent() const;
@@ -88,7 +82,7 @@ private:
     geometry::Point2f origin_;
     float height_;
     const kernel::SensorType& sensorType_;
-    T_SectorVector sectors_;
+    std::vector< Sector > sectors_;
 
     mutable float maxRadius_;
     mutable float distanceModificator_;

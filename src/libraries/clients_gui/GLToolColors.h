@@ -12,7 +12,7 @@
 #define COLOR_UNDERCONST    0.0f, 0.8f, 0.8f, 1.0f
 
 #define COLOR_IDENTIFIED    0.5f, 0.0f, 0.5f, 1.0f  // purple
-#define COLOR_RECO          0.9f, 0.0f, 0.9f, 1.0f  // light purple
+#define COLOR_RECOGNIZED    0.9f, 0.0f, 0.9f, 1.0f  // light purple
 #define COLOR_DETECTED      0.0f, 0.5f, 1.0f, 1.0f  // blue
 #define COLOR_RECORDED      0.0f, 0.8f, 0.8f, 1.0f  // cyan
 

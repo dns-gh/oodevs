@@ -397,4 +397,5 @@ void Options::InitializeLayers( const std::vector< E_LayerTypes >& types )
         Set( name + "/Alpha", 1.f, true );
         Set( name + "/Position", i, true );
     }
+    Set( "Layers/vision_cones/Alpha", 0.5f, true );
 }

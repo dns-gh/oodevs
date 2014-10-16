@@ -19,8 +19,6 @@ namespace kernel
 
 namespace gui
 {
-    class GLView_ABC;
-
 // =============================================================================
 /** @class  TooltipsLayer
     @brief  TooltipsLayer

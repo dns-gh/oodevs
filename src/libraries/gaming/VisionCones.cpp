@@ -162,11 +162,7 @@ void VisionCones::Update() const
             new Updater( *const_cast< VisionCones* >( this ) ) ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: VisionCones::Draw
-// Created: AGE 2006-04-04
-// -----------------------------------------------------------------------------
-void VisionCones::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void VisionCones::DrawMap( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
     if( agent_.IsAggregated() )
         return;

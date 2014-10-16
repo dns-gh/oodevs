@@ -285,6 +285,11 @@ float GlProxy::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
     return view_->GetAdaptiveZoomFactor( bVariableSize );
 }
 
+float GlProxy::GetCurrentAlpha() const
+{
+    return view_->GetCurrentAlpha();
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlProxy::StipplePattern
 // Created: AGE 2006-03-29

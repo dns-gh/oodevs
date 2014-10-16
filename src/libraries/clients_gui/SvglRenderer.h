@@ -49,7 +49,7 @@ public:
     static std::string DefaultStyle();
     void SetCurrentColor( float r, float g, float b, float a );
     svg::Node_ABC* Compile( xml::xistream& input, float lod);
-    void Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
+    void Render( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                  unsigned vWidth, unsigned vHeight, bool pickingMode );
     //@}
 
@@ -62,17 +62,17 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< svg::Node_ABC*, unsigned int > T_Lists;
+    typedef std::map< std::shared_ptr< svg::Node_ABC >, unsigned int > T_Lists;
     typedef T_Lists::const_iterator                CIT_Lists;
     //@}
 
     //! @name Helpers
     //@{
-    void         Draw( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode );
+    void         Draw( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode );
     void         ConfigureColorList();
     void         ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
     void         CreateStaticLists();
-    unsigned int RetrieveListId( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
+    unsigned int RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                                  unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists );
     std::unique_ptr< svg::Style > CreateStyle( const std::string& style );
     //@}
