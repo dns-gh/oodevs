@@ -2,9 +2,9 @@
 // Microsoft Visual C++ generated include file.
 // Used by replayer_app.rc
 //
-#define IDI_ICON1                       101
-#define IDI_ICON2                       102
-#define IDR_MENU1                       103
+#define IDI_ICON1                       113
+#define IDI_ICON2                       115
+#define IDR_MENU1                       107
 #define ID_TRAYMENU_QUITTER             40001
 #define IDM_QUIT                        40002
 
