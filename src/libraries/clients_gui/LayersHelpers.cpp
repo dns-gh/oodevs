@@ -57,6 +57,7 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_Fog )
     ( eLayerTypes_Tooltips );
 
+// TODO: it's actually the inverse order, inverse it and inverse the loop algorithm in CircularEventStrategy
 const T_LayerTypesVector eventOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_Terrain )
     ( eLayerTypes_Parameters )
