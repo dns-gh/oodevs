@@ -104,6 +104,11 @@ geometry::Point2f EntityLayerBase::GetPosition( const Entity_ABC& entity ) const
     return geometry::Point2f();
 }
 
+void EntityLayerBase::SetHotpoint( const kernel::Entity_ABC& /*entity*/, Viewport_ABC& viewport, const geometry::Point2f& where ) const
+{
+    viewport.SetHotpoint( where );
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::Draw
 // Created: AGE 2006-03-23
@@ -114,7 +119,8 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bo
     {
         SelectColor( entity );
         const geometry::Point2f position = GetPosition( entity );
-        viewport.SetHotpoint( position );
+        SetHotpoint( entity, viewport, position );
+
         DrawVisitor drawer;
         entity.Apply( drawer );
 

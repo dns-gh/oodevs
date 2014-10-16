@@ -48,3 +48,8 @@ void Viewport_ABC::SetHotpoint( const geometry::Point2f& point )
 {
     hotIsVisible_ = IsVisible( point );
 }
+
+void Viewport_ABC::SetHotpoint( const geometry::Rectangle2f& rectangle )
+{
+    hotIsVisible_ = IsVisible( rectangle );
+}
