@@ -852,7 +852,9 @@ class Timeline
         lanes
             .classed("selected", (d) -> d.selected)
             .attr(@layout.lane_attributes())
-        lanes.exit().remove()
+        lanes.exit()
+            .remove()
+            .each((d) -> $(this).popover "destroy")
 
     get_range_zone: (el) ->
         return @range_zone if @range_zone?
@@ -1103,7 +1105,9 @@ class Timeline
         nodes.classed "selected", (d) -> d.selected
         nodes.exit()
             .remove()
-            .each((d) -> d.view.remove())
+            .each((d) ->
+                $(this).popover "destroy"
+                d.view.remove())
         animated = if root? then selector root else nodes
         win = w: @w
         animated
