@@ -52,16 +52,13 @@ void VisionMap::Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& 
         { COLOR_VISION_RECO      },
         { COLOR_VISION_IDENTIED  }
     };
-
-    if( !vision_ || ! viewport.IsVisible( boundingBox_ ) )
+    if( !vision_ || !viewport.IsVisible( boundingBox_ ) )
         return;
-
     const double translation = map_.GetCellSize() * 0.5;
     glPushMatrix();
     glTranslated( translation, translation, 0 );
     glPushAttrib( GL_CURRENT_BIT );
     glPointSize( std::ceil( map_.GetCellSize() / tools.Pixels() ) );
-
     glBegin( GL_POINTS );
     for( char color = 1; color <= 3; ++color )
     {
@@ -69,12 +66,7 @@ void VisionMap::Draw( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& 
         for( int y = 0; y < height_; ++y )
             for( int x = 0; x < width_; ++x )
                 if( vision_[ y * width_ + x ] == color )
-                {
-                    const unsigned realX = left_   + x;
-                    const unsigned realY = bottom_ + y;
-                    const geometry::Point2f p = map_.Map( realX, realY );
-                    tools.DrawCell( p );
-                }
+                    tools.DrawCell( map_.Map( left_ + x, bottom_ + y ) );
     }
     glEnd();
     glPopAttrib();
