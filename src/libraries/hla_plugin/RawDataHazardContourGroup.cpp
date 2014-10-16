@@ -110,7 +110,7 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
     double incy = 0.005;
     uint32_t mx = static_cast< uint32_t >( ( width ) / incx ) +1;
     uint32_t my = static_cast< uint32_t >( ( height ) / incy ) +1;
-    const uint32_t MIN_SIZE = 10;
+    static const uint32_t MIN_SIZE = 10;
     if( mx < MIN_SIZE || my < MIN_SIZE )
     {
         if( width < height )
