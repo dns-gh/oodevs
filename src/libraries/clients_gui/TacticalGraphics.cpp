@@ -125,7 +125,7 @@ void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_A
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< SvgLocationDrawer >& TacticalGraphics::FindRenderer( const std::string& symbol )
 {
-    boost::shared_ptr< SvgLocationDrawer > renderer = renderers_[ symbol ];
+    auto& renderer = renderers_[ symbol ];
     if( !renderer )
     {
         auto it = templates_.find( symbol );
