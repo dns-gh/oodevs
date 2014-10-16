@@ -30,12 +30,27 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Workers.h"
 #include "ENT/ENT_Tr.h"
+
+#include <timeline/api.h>
+
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
 using namespace kernel;
+
+namespace
+{
+    timeline::LibraryConfiguration MakeConfiguration( const GamingConfig& config )
+    {
+        timeline::LibraryConfiguration cfg;
+        cfg.debug_port = config.GetTimelineDebugPort();
+        cfg.client_log = config.GetTimelineClientLogFile();
+        cfg.cef_log = config.GetCefLogFile();
+        return cfg;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Application::Application
@@ -49,6 +64,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
 
     // Data
     config_.reset( new GamingConfig( argc, argv ) );
+    timeline_ = timeline::Initialize( MakeConfiguration( *config_ ) );
     LoadCommandLineLanguage( config_->GetLanguages(), config_->GetCommandLineLanguage() );
     controllers_.reset( new Controllers() );
     logger_.reset( new LoggerProxy() );
