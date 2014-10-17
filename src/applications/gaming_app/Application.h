@@ -24,6 +24,11 @@ namespace kernel
     class Workers;
 }
 
+namespace timeline
+{
+    struct Library;
+}
+
 class Network;
 class MainWindow;
 class StaticModel;
@@ -70,6 +75,7 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< GamingConfig >                      config_;
+    std::shared_ptr< timeline::Library >                 timeline_;
     std::unique_ptr< kernel::Controllers >               controllers_;
     std::unique_ptr< kernel::KnowledgeConverter_ABC >    knowledgeConverter_;
     std::unique_ptr< RcEntityResolver_ABC >              rcResolver_;

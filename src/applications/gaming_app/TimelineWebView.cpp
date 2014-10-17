@@ -55,17 +55,9 @@ TimelineWebView::TimelineWebView( QWidget* parent,
     , controllers_( controllers )
     , model_( model )
     , server_( 0 )
-    , cfg_( new timeline::Configuration() )
     , creationSignalMapper_( 0 )
     , horizontal_( false )
 {
-    cfg_->url = "http://" + config.GetTimelineUrl();
-    int timelineDebugPort = config.GetTimelineDebugPort();
-    if( timelineDebugPort != 0 )
-        cfg_->debug_port = timelineDebugPort;
-    cfg_->client_log = config.GetTimelineClientLogFile();
-    cfg_->cef_log = config.GetCefLogFile();
-
     setObjectName( "timeline-webview" );
 
     mainLayout_ = new QVBoxLayout( this );
@@ -113,8 +105,9 @@ void TimelineWebView::Connect()
 {
     timelineWidget_.reset( new QWidget() );
     mainLayout_->addWidget( timelineWidget_.get() );
-    timeline::Configuration next = *cfg_;
-    next.widget = timelineWidget_.get();
+    timeline::Configuration cfg;
+    cfg.url = "http://" + config_.GetTimelineUrl();
+    cfg.widget = timelineWidget_.get();
     horizontal_ = false;
     auto query = boost::assign::map_list_of
         ( "lang",                 tools::Language::Current() )
@@ -123,8 +116,8 @@ void TimelineWebView::Connect()
         ( "sword_filter_engaged", "true" )
         ( "filter_service",       "sword:true,none:true" )
         ( "horizontal",           "false" );
-    next.url += MakeQuery( query );
-    server_.reset( MakeServer( next ).release() );
+    cfg.url += MakeQuery( query );
+    server_.reset( MakeServer( cfg ).release() );
 
     connect( server_.get(), SIGNAL( CreatedEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnCreatedEvents( const timeline::Events&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );

@@ -31,7 +31,6 @@ namespace kernel
 
 namespace timeline
 {
-    struct Configuration;
     struct Error;
     struct Event;
     typedef std::vector< Event > Events;
@@ -155,12 +154,11 @@ private:
     boost::scoped_ptr< QWidget > timelineWidget_;
     QVBoxLayout* mainLayout_;
 
-    const tools::ExerciseConfig& config_;
+    const GamingConfig& config_;
     kernel::Controllers& controllers_;
     Model& model_;
 
     boost::scoped_ptr< timeline::Server_ABC > server_;
-    boost::scoped_ptr< timeline::Configuration > cfg_;
     boost::shared_ptr< timeline::Event > selected_;
     QDateTime selectedDateTime_;
     boost::scoped_ptr< QSignalMapper > creationSignalMapper_;

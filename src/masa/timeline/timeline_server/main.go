@@ -31,7 +31,7 @@ func main() {
 	pak := flag.String("pak", "timeline.pak", "web server package")
 	logto := flag.String("log", "", "optional log filename")
 	run := flag.String("run", "", "optional run script")
-	sword := flag.String("sword", "localhost:10001", "sword address")
+	sword := flag.String("sword", "", "sword address")
 	flag.Parse()
 
 	logger := log.New(os.Stderr, "", log.LstdFlags)
@@ -68,7 +68,7 @@ func main() {
 		logger.Fatalln("unable to start web server", err)
 	}
 	if len(*run) > 0 {
-		runScript(controller, *run, sword, logger)
+		runScript(controller, *run, *sword, logger)
 	}
 	err = web.ListenAndServe()
 	if err != nil {
@@ -76,7 +76,7 @@ func main() {
 	}
 }
 
-func runScript(controller server.SdkController, file string, sword *string, logger *log.Logger) {
+func runScript(controller server.SdkController, file string, sword string, logger *log.Logger) {
 	handler := client.MakeHandler(controller, sword)
 	commands, err := client.ParseFile(file)
 	if err != nil {
