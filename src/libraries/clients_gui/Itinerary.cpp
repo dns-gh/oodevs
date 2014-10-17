@@ -76,30 +76,6 @@ namespace
 {
     const int size = 20;
 
-    void SetColor( QColor color, bool picking, const GLView_ABC& view )
-    {
-        if( !picking )
-            glColor4d( color.redF(), color.greenF(), color.blueF(), view.GetCurrentAlpha() );
-    }
-
-    void DrawDisc( QPainter& p, QColor contour, QColor inside, float radius )
-    {
-        p.setPen( QPen( contour, 2 ) );
-        p.setBrush( QBrush( inside ) );
-        p.drawEllipse( QPointF( size / 2.f, size / 2.f ), radius, radius );
-    }
-
-    QImage MakeBitmap( QColor disc, QColor circle )
-    {
-        QPixmap pm( size, size );
-        pm.fill( Qt::transparent );
-        QPainter p( &pm );
-        p.setRenderHint( QPainter::Antialiasing, true );
-        DrawDisc( p, disc, disc, 5 );
-        DrawDisc( p, circle, disc, 4 );
-        return pm.convertToImage().mirror();
-    }
-
     QColor GetCurrent()
     {
         GLfloat rgba[ 4 ];
@@ -114,32 +90,37 @@ namespace
 void Itinerary::Draw( GLView_ABC& view, const boost::optional< Hover >& hover, bool picking ) const
 {
     const QColor current = GetCurrent();
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-    glEnable( GL_ALPHA_TEST );
-    glAlphaFunc( GL_GREATER, 0.1f );
-    SetColor( current.darker(), picking, view );
-    DrawLines( view, 5 );
-    SetColor( current, picking, view );
-    DrawLines( view, 3 );
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    DrawLines( view, current.darker(), 5, picking );
+    DrawLines( view, current, 3, picking );
     DrawPoints( view, current, hover, picking );
-    glDisable( GL_ALPHA_TEST );
     glPopAttrib();
 }
 
-void Itinerary::DrawLines( GLView_ABC& view, float width ) const
+void Itinerary::DrawLines( GLView_ABC& view, const QColor& color, float width, bool picking ) const
 {
     if( path_.empty() )
         return;
+    if( !picking )
+        glColor4d( color.redF(), color.greenF(), color.blueF(), view.GetCurrentAlpha() );
     auto last = path_.begin();
-    view.DrawDisc( last->where, width / 2, GLView_ABC::pixels );
+    // The stencil buffer prevents from overlapping the different parts
+    // of the itinerary (lines and disks added to round the ends).
+    glEnable( GL_STENCIL_TEST );
+    glStencilMask( 0xFF );
+    glStencilFunc( GL_EQUAL, 0x0, 0x1 );
+    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
+    glClear( GL_STENCIL_BUFFER_BIT );
     for( auto it = last + 1; it != path_.end(); last = it++ )
     {
         view.DrawLine( last->where, it->where, width );
         view.DrawDisc( it->where, width / 2, GLView_ABC::pixels );
     }
+    glStencilMask( 0x0 );
+    glDisable( GL_STENCIL_TEST );
 }
 
-void Itinerary::DrawPoints( GLView_ABC& view, const QColor& current, const boost::optional< Hover >& hover, bool picking ) const
+void Itinerary::DrawPoints( GLView_ABC& view, const QColor& color, const boost::optional< Hover >& hover, bool picking ) const
 {
     const bool selected = view.ShouldDisplay();
     const auto& waypoints = waypoints_.empty() ? path_ : waypoints_;
@@ -148,12 +129,43 @@ void Itinerary::DrawPoints( GLView_ABC& view, const QColor& current, const boost
     {
         if( !it->waypoint )
             continue;
-        DrawPoint( view, it->where, current, picking, selected ||
+        DrawPoint( view, it->where, color, picking, selected ||
                  ( hover && hover->onWaypoint_ && hover->lastWaypoint_ == i ) );
         ++i;
     }
     if( hover && !hover->onWaypoint_ && hover->coordinate_ )
-        DrawPoint( view, *hover->coordinate_, current, false, true );
+        DrawPoint( view, *hover->coordinate_, color, false, true );
+}
+
+namespace
+{
+    void DrawDisc( QPainter& p, QColor contour, QColor inside, float radius )
+    {
+        p.setPen( QPen( contour, 2 ) );
+        p.setBrush( QBrush( inside ) );
+        p.drawEllipse( QPointF( size / 2.f, size / 2.f ), radius, radius );
+    }
+
+    QImage MakeBitmap( QColor disc, QColor circle )
+    {
+        QImage image( size, size, QImage::Format_ARGB32_Premultiplied );
+        image.fill( Qt::transparent );
+        QPainter p( &image );
+        p.setRenderHint( QPainter::Antialiasing, true );
+        DrawDisc( p, disc, disc, 5 );
+        DrawDisc( p, circle, disc, 4 );
+        return image;
+    }
+
+    QImage ApplyAlpha( const QImage& image, float alpha )
+    {
+        QImage result( size, size, QImage::Format_ARGB32_Premultiplied );
+        result.fill( Qt::transparent );
+        QPainter painter( &result );
+        painter.setOpacity( alpha );
+        painter.drawImage( image.rect(), image );
+        return result;
+    }
 }
 
 void Itinerary::DrawPoint( GLView_ABC& view, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const
@@ -162,7 +174,9 @@ void Itinerary::DrawPoint( GLView_ABC& view, geometry::Point2f p, const QColor& 
     static const QImage highlighted = MakeBitmap( Qt::black, Qt::white );
     const QImage image = picking ? MakeBitmap( current, current ) : highlight ? highlighted : normal;
     const float offset = size * view.Pixels( p ) / 2;
-    view.DrawImage( image, geometry::Point2f( p.X() - offset, p.Y() - offset ) );
+    view.DrawImage(
+        ApplyAlpha( image, view.GetCurrentAlpha() ),
+        geometry::Point2f( p.X() - offset, p.Y() - offset ) );
 }
 
 void Itinerary::LoadPoints( const sword::PathResult& path )

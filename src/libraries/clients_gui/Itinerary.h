@@ -86,8 +86,8 @@ public:
     typedef std::deque< Point > T_Points;
 
 private:
-    void DrawLines( gui::GLView_ABC& view, float width ) const;
-    void DrawPoints( gui::GLView_ABC& view, const QColor& current, const boost::optional< Hover >& hover, bool picking ) const;
+    void DrawLines( gui::GLView_ABC& view, const QColor& color, float width, bool picking ) const;
+    void DrawPoints( gui::GLView_ABC& view, const QColor& color, const boost::optional< Hover >& hover, bool picking ) const;
     void DrawPoint( gui::GLView_ABC& view, geometry::Point2f p, const QColor& current, bool picking, bool highlight ) const;
 
 private:
