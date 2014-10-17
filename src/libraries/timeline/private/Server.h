@@ -57,8 +57,7 @@ private:
 // cef_browser.h. This part runs in the main process
 // * The renderer: A renderer, with a javascript vm, see cef_v8.h. This part
 // runs in a separate process
-// This class maintains two things:
-// * ServerApp: Wrapper around CefClient for CEF initialization & customization
+// This class maintains:
 // * Browser: Wrapper around CefBrowser. Creating a browser object will also
 // create the renderer process in the background
 // The rendered process is customized with the Client object, see Client.h
@@ -117,7 +116,6 @@ private:
     const Configuration cfg_;
     const T_Logger logger_;
     QWidget* frame_;
-    CefRefPtr< ServerApp > app_;
     CefRefPtr< Browser > browser_;
     std::unique_ptr< boost::mutex > lock_;
     std::unique_ptr< tools::Ofstream > log_;
