@@ -328,6 +328,11 @@ const DEC_Model_ABC& MIL_AutomateType::GetModel() const
     return *pModel_;
 }
 
+std::string MIL_AutomateType::GetArchetypeName() const
+{
+    return "MIL_AutomateType";
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::GetID
 // Created: NLD 2005-02-11

@@ -66,6 +66,11 @@ unsigned int MIL_Entity_ABC::GetID() const
     return id_;
 }
 
+const MIL_EntityType& MIL_Entity_ABC::GetType() const
+{
+    throw MASA_EXCEPTION( "unsupported method 'MIL_Entity_ABC::GetType()'" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Entity_ABC::WriteODB
 // Created: RDS 2008-05-09

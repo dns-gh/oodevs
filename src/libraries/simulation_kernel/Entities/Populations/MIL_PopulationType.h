@@ -12,6 +12,7 @@
 #ifndef __MIL_PopulationType_h_
 #define __MIL_PopulationType_h_
 
+#include "Entities/MIL_EntityType.h"
 #include "MIL_PopulationPionAttritionData.h"
 
 namespace xml
@@ -33,7 +34,7 @@ class TerrainData;
 // @class  MIL_PopulationType
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_PopulationType : private boost::noncopyable
+class MIL_PopulationType : public MIL_EntityType
 {
 public:
     //! @name Accessors
@@ -51,8 +52,8 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& GetName() const;
-    unsigned int GetID() const;
+    virtual const std::string& GetName() const;
+    virtual unsigned int GetID() const;
     double GetArmedIndividuals() const;
     double GetMale() const;
     double GetFemale() const;
@@ -63,7 +64,8 @@ public:
     double GetMaxSpeed( const TerrainData& data ) const;
     double GetDelay() const;
     bool CanCollideWithFlow() const;
-    const DEC_Model_ABC& GetModel() const;
+    virtual const DEC_Model_ABC& GetModel() const;
+    virtual std::string GetArchetypeName() const;
     //@}
 
     //! @name Effects

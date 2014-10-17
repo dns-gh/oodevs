@@ -84,6 +84,7 @@ include "integration/Commander.lua"
 
 
 masalife.brain.core.options.feedbacks.checkParamDeclaration = false
+masalife.brain.core.setDebugMode( { checkTaskParameters = true } )
 
 -- Allow devtools plugin to output traces:
 TraceGraph = function( trace ) DEC_Trace( trace ) end

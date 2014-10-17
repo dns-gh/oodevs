@@ -13,6 +13,7 @@
 #define __MIL_AutomateType_h_
 
 #include "MIL.h"
+#include "Entities/MIL_EntityType.h"
 
 namespace xml
 {
@@ -36,7 +37,7 @@ class MissionController_ABC;
 // @class  MIL_AutomateType
 // Created: JVT 2004-08-03
 // ============================================================================
-class MIL_AutomateType : private boost::noncopyable
+class MIL_AutomateType : public MIL_EntityType
 {
 public:
              MIL_AutomateType( const std::string& strName, xml::xistream& xis );
@@ -74,10 +75,11 @@ public:
 
     //! @name Accessors
     //@{
-          unsigned int                       GetID                            () const;
+    virtual unsigned int                     GetID                            () const;
     const MIL_AgentType_ABC&                 GetTypePionPC                    () const;
-    const DEC_Model_ABC&                     GetModel                         () const;
-    const std::string&                       GetName                          () const;
+    virtual const DEC_Model_ABC&             GetModel                         () const;
+    virtual std::string                      GetArchetypeName                 () const;
+    virtual const std::string&               GetName                          () const;
     // Pc is the first element
     const T_CompositionMap&                  GetComposition                   () const;
     //@}

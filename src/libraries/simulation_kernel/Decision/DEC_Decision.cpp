@@ -1883,19 +1883,27 @@ namespace
 
 bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain,
                   const tools::Path& includePath, const tools::Path& brainFile, bool isMasalife,
-                  const std::string& type, bool reload, const tools::Path& integrationDir, sword::DEC_Logger* logger )
+                  const std::string& type, const std::string& archetype, bool reload, const tools::Path& integrationDir, sword::DEC_Logger* logger )
 {
-    const std::string& idx = isMasalife ? type : brainFile.ToUTF8();
-    pArchetypeBrain = brainTable[idx];
-    if( reload )
-        pArchetypeBrain.reset();
-    if( pArchetypeBrain )
+    // If this is not a reloading (i.e., 'reload' is false), we create a brain that shares an archetype brain.
+    // The archetypes are saved in 'brainTable' for later reuse. We create an archetype brain if there is not
+    // already an archetype in the table.
+    // If this is a reloading, we do not reuse an existing archetype, but create a new archetype brain and return
+    // this archetype as the brain to use.
+    // Each time we create a new archetype, we return true, to tell the caller that the archetype must be initialized.
+    const std::string& idx = isMasalife ? ( archetype + "," + brainFile.ToUTF8() ) : brainFile.ToUTF8();
+    if( !reload )
     {
-        pBrain.reset( new sword::Brain( *pArchetypeBrain, logger ) );
-        return false;
+        pArchetypeBrain = brainTable[idx];
+        if( pArchetypeBrain )
+        {
+            pBrain.reset( new sword::Brain( *pArchetypeBrain, logger ) );
+            if( isMasalife )
+                pBrain->GetScriptRef( "masalife.brain.core.setRole" )( type );
+            return false;
+        }
     }
     if( isMasalife )
-    {
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
             + PLUGIN( "masalife_brain" )
@@ -1903,11 +1911,6 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN46( "errorhandler" )
             + PLUGIN46( "devtools" )
             + "} cwd='" + includePath.ToUTF8() + "'", logger ) );
-        // Activate mission (task) parameter type checking
-        directia::tools::binders::ScriptRef debugOptions = pArchetypeBrain->GetScriptRef();
-        debugOptions["checkTaskParameters"] = true;
-        pArchetypeBrain->GetScriptRef( "masalife.brain.core.setDebugMode" )( debugOptions );
-    }
     else
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
@@ -1920,11 +1923,14 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
         boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
     pArchetypeBrain->GetScriptRef( "include" )( brainFile, includePath, type );
     if( !reload )
+    {
         brainTable[idx] = pArchetypeBrain;
-    if( reload )
-        pBrain = pArchetypeBrain;
-    else
         pBrain.reset( new sword::Brain( *pArchetypeBrain, logger ) );
+    }
+    else
+        pBrain = pArchetypeBrain;
+    if( isMasalife )
+        pBrain->GetScriptRef( "masalife.brain.core.setRole" )( type );
     return true;
 }
 

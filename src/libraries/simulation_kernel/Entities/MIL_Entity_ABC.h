@@ -24,6 +24,7 @@ namespace xml
 }
 
 class MIL_Army_ABC;
+class MIL_EntityType;
 
 // =============================================================================
 /** @class  MIL_Entity_ABC
@@ -49,6 +50,7 @@ public:
     void SetName( const std::string& name );
     virtual MIL_Army_ABC& GetArmy() const = 0;
     virtual bool CanEmitReports() const = 0;
+    virtual const MIL_EntityType& GetType() const;
     //@}
 
     //! @name CheckPoints

@@ -10,6 +10,8 @@
 #ifndef __MIL_AgentType_ABC_h_
 #define __MIL_AgentType_ABC_h_
 
+#include "Entities/MIL_EntityType.h"
+
 namespace xml
 {
     class xistream;
@@ -31,7 +33,7 @@ namespace sword
 // @class  MIL_AgentType_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_AgentType_ABC : private boost::noncopyable
+class MIL_AgentType_ABC : public MIL_EntityType
 {
 public:
     //! @name Constructors/Desctructor
@@ -42,8 +44,8 @@ public:
 
     //! @name Getters/Setters
     //@{
-    unsigned int GetID() const;
-    const std::string& GetName() const;
+    virtual unsigned int GetID() const;
+    virtual const std::string& GetName() const;
     const std::string& GetMilPionType() const;
     const PHY_NatureLevel& GetNatureLevel() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
@@ -55,6 +57,7 @@ public:
     virtual double GetFeedbackTime() const = 0;
     virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
     virtual const DEC_Model_ABC& GetModel() const = 0;
+    virtual std::string GetArchetypeName() const;
     virtual double GetDistanceAvantPoint ( const TerrainData& nType ) const = 0;
     virtual double GetDistanceAvantLima () const = 0;
     // Custom finalizer invoked by MIL_AgentPion::DeleteUnit.

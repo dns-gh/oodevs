@@ -11,6 +11,7 @@
 #define __MIL_Automate_h_
 
 #include "MIL.h"
+#include "MIL_AutomateType.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
@@ -45,7 +46,6 @@ class DEC_Decision_ABC;
 class DEC_KnowledgeBlackBoard_Automate;
 class DEC_Knowledge_Object;
 class MIL_Formation;
-class MIL_AutomateType;
 class MIL_AgentPion;
 class MIL_Army_ABC;
 class MIL_DictionaryExtensions;
@@ -103,7 +103,7 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_AutomateType& GetType() const;
+    virtual const MIL_AutomateType& GetType() const;
     MIL_Army_ABC& GetArmy() const;
     boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     const MIL_AutomateOrderManager& GetOrderManager() const;

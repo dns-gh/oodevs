@@ -82,13 +82,14 @@ public:
         : DEC_Decision( population, 100, 100, false )
         , pOther_( pOther )
     {
-        const DEC_Model_ABC& model = population.GetType().GetModel();
-        SetModel( model );
+        const MIL_PopulationType& type = population.GetType();
+        const DEC_Model_ABC& model = type.GetModel();
+        SetModel( model, type.GetArchetypeName() );
         StartDefaultBehavior();
     }
-    void SetModel( const DEC_Model_ABC& model )
+    void SetModel( const DEC_Model_ABC& model, const std::string& archetype )
     {
-        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation", false, false, model.GetIntegrationDir() );
+        InitBrain( model.GetScriptFile(), model.GetName(), archetype, model.GetIncludePath(), "stubPopulation", false, false, model.GetIntegrationDir() );
     }
     void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
     {

@@ -10,6 +10,7 @@
 #ifndef __MIL_Population_h_
 #define __MIL_Population_h_
 
+#include "MIL_PopulationType.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include <tools/Set.h>
@@ -33,7 +34,6 @@ class MIL_Army_ABC;
 class MIL_Color;
 class MIL_DictionaryExtensions;
 class MIL_KnowledgeGroup;
-class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class MIL_PopulationElement_ABC;
@@ -61,7 +61,7 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_PopulationType& GetType() const;
+    virtual const MIL_PopulationType& GetType() const;
     const DEC_PopulationDecision& GetDecision() const;
     DEC_PopulationDecision& GetDecision();
     const MIL_PopulationOrderManager& GetOrderManager() const;

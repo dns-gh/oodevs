@@ -91,7 +91,9 @@ void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const unsigne
 void DEC_PopulationDecision::SetModel( const DEC_Model_ABC& model )
 {
     model_ = &model;
-    InitBrain( model.GetScriptFile(), model.GetDIAType(), model.GetIncludePath(),
+    assert( pEntity_ );
+    auto archetype = pEntity_->GetType().GetArchetypeName();
+    InitBrain( model.GetScriptFile(), model.GetDIAType(), archetype, model.GetIncludePath(),
                GetGroupName(), model.IsMasalife(), false, model.GetIntegrationDir() );
 }
 

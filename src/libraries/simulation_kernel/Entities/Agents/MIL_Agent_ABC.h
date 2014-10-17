@@ -13,13 +13,13 @@
 #define __MIL_Agent_ABC_h_
 
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
+#include "MIL_AgentType_ABC.h"
 
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_Agent_Path;
 class MIL_AgentPion;
-class MIL_AgentType_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
 class MIL_KnowledgeGroup;
