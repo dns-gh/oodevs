@@ -12,6 +12,7 @@
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include "ENT/ENT_Tr.h"
 #include <graphics/extensions.h>
 
 using namespace gui;
@@ -47,10 +48,13 @@ WatershedTexture::~WatershedTexture()
 // -----------------------------------------------------------------------------
 void WatershedTexture::Load( const kernel::Options& options )
 {
-    unsigned short height = static_cast< unsigned short >( options.Get( "Watershed/Height" ).To< int >() );
-    bool inverse = options.Get( "Watershed/Inverse" ).To< bool >();
-    QColor color = QColor( options.Get( "Watershed/Color" ).To< QString >() );
-    float alpha = 1.f; //options.Get( "Layers/Watershed/Alpha" ).To< float >();
+    const auto alphaOptionName = "Layers/" + ENT_Tr::ConvertFromLayerTypes( eLayerTypes_WeatherComposite, ENT_Tr::eToSim ) + "/Alpha";
+    if( !options.Has( alphaOptionName ) )
+        return;
+    const unsigned short height = static_cast< unsigned short >( options.Get( "Watershed/Height" ).To< int >() );
+    const bool inverse = options.Get( "Watershed/Inverse" ).To< bool >();
+    const QColor color = QColor( options.Get( "Watershed/Color" ).To< QString >() );
+    const float alpha = options.Get( alphaOptionName ).To< float >();
     if( height == height_ && inverse == inverse_ && color == color_ && alpha == alpha_ )
         return;
     Reset();

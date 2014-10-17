@@ -16,6 +16,7 @@
 #include "Layer.h"
 #include "TooltipsLayer_ABC.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
 using namespace kernel;
@@ -31,8 +32,9 @@ GlProxy::GlProxy( kernel::Controllers& controllers,
                   const kernel::EntityResolver_ABC& model,
                   const std::shared_ptr< Lighting_ABC >& lighting )
     : options_( new GLOptions( controllers, profile, staticModel, model, lighting ) )
+    , optionsController_( controllers.options_ )
 {
-    // NOTHING
+    optionsController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +43,7 @@ GlProxy::GlProxy( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 GlProxy::~GlProxy()
 {
-    layers_.clear();
+    optionsController_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +160,7 @@ void GlProxy::UpdateLayerOrder( kernel::Options& options )
     {
         const auto& layer = orderedLayers[ i ];
         layer->SetAlpha( options.Get( "Layers/" + layer->GetOptionName() + "/Alpha" ).To< float >() );
-        options.Set( "Layers/" + layer->GetOptionName() + "/Position", i );
+        optionsController_.Change( "Layers/" + layer->GetOptionName() + "/Position", i );
     }
 }
 
@@ -712,4 +714,15 @@ void GlProxy::Purge()
 std::string GlProxy::GetCurrentPass() const
 {
     return view_ ? view_->GetCurrentPass() : "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::OptionChanged
+// Created: ABR 2014-10-17
+// -----------------------------------------------------------------------------
+void GlProxy::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    // will move in the GL widgets manager when multi view will be present
+    if( !optionsController_.GetGeneralOptions()->Has( name ) )
+        GetOptions().Set( name, value );
 }

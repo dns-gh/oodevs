@@ -116,7 +116,6 @@ public:
     const std::shared_ptr< ContourLinesComputer >& GetContourLinesComputer() const;
 
     WatershedTexture& GetWatershedTexture();
-    const WatershedTexture& GetWatershedTexture() const;
     const std::shared_ptr< Elevation2dTexture >& GetElevation2dTexture() const;
     const std::shared_ptr< TerrainSettings >& GetTerrainSettings() const;
     const std::shared_ptr< Lighting_ABC >& GetLighting() const;

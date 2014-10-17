@@ -28,6 +28,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Settings.h"
 #include "clients_kernel/StaticModel.h"
+#include "ENT/ENT_Tr.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/assign/list_of.hpp>
@@ -64,7 +65,6 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , urbanSetup_( new UrbanDisplayOptions( controllers, accommodationTypes_ ) )
     , watershedTexture_( new WatershedTexture( map_ ) )
 {
-    Load();
     controllers_.Register( *this );
 }
 
@@ -258,14 +258,12 @@ const kernel::OptionVariant& GLOptions::Get( const std::string& name ) const
 
 namespace
 {
-    const std::vector< std::string > watershedOptions =boost::assign::list_of< std::string>( "Layers/Watershed/Alpha" )
-                                                                                           ( "Watershed/Height" )
+    const std::vector< std::string > watershedOptions =boost::assign::list_of< std::string>( "Watershed/Height" )
                                                                                            ( "Watershed/Color" )
                                                                                            ( "Watershed/Inverse" );
     const std::vector< std::string > elevationOptions = boost::assign::list_of< std::string>( "HillShade/Direction" )
                                                                                             ( "HillShade/Enabled" )
-                                                                                            ( "HillShade/Strength" )
-                                                                                            ( "Layers/Elevation/Alpha" );
+                                                                                            ( "HillShade/Strength" );
     const std::vector< std::string > urbanOptions = boost::assign::list_of< std::string>( "Accommodation/Enabled" )
                                                                                         ( "Accommodation/Min" )
                                                                                         ( "Accommodation/Max" )
@@ -289,12 +287,14 @@ namespace
 // Created: ABR 2014-06-20
 // -----------------------------------------------------------------------------
 void GLOptions::Set( const std::string& name,
-                     const kernel::OptionVariant& value )
+                     const kernel::OptionVariant& /*value*/ )
 {
-    options_->Set( name, value );
-    if( std::find( watershedOptions.begin(), watershedOptions.end(), name ) != watershedOptions.end() )
+    //options_->Set( name, value ); // will be needed when multi view will be present
+    if( std::find( watershedOptions.begin(), watershedOptions.end(), name ) != watershedOptions.end() ||
+        name == "Layers/" + ENT_Tr::ConvertFromLayerTypes( eLayerTypes_WeatherComposite, ENT_Tr::eToSim ) + "/Alpha" )
         watershedTexture_->Load( *options_ );
     else if( std::find( elevationOptions.begin(), elevationOptions.end(), name ) != elevationOptions.end() ||
+             name == "Layers/" + ENT_Tr::ConvertFromLayerTypes( eLayerTypes_Elevation2d, ENT_Tr::eToSim ) + "/Alpha" ||
              name.find( "Elevation/" ) == 0 )
         elevation2dTexture_->Load( *options_ );
     //else if( std::find( urbanOptions.begin(), urbanOptions.end(), name ) != urbanOptions.end() )
@@ -470,15 +470,6 @@ void GLOptions::SetContourLinesComputer( const std::shared_ptr< ContourLinesComp
 // Created: ABR 2014-07-02
 // -----------------------------------------------------------------------------
 WatershedTexture& GLOptions::GetWatershedTexture()
-{
-    return *watershedTexture_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GLOptions::GetWatershedTexture
-// Created: ABR 2014-07-03
-// -----------------------------------------------------------------------------
-const WatershedTexture& GLOptions::GetWatershedTexture() const
 {
     return *watershedTexture_;
 }

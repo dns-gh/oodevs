@@ -13,6 +13,7 @@
 #include "GLView_ABC.h"
 #include "GLView_ABC.h"
 #include "LayersHelpers.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
@@ -21,6 +22,7 @@ namespace kernel
     class GraphicalEntity_ABC;
     class StaticModel;
     class Options;
+    class OptionsController;
     class Profile_ABC;
 }
 
@@ -41,6 +43,8 @@ namespace gui
 // Created: AGE 2006-03-29
 // =============================================================================
 class GlProxy : public GLView_ABC
+              , public tools::Observer_ABC
+              , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -51,6 +55,11 @@ public:
                       const kernel::EntityResolver_ABC& model,
                       const std::shared_ptr< Lighting_ABC >& lighting );
     virtual ~GlProxy();
+    //@}
+
+    //! @name OptionsObserver implementation
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
     //! @name Proxy
@@ -157,6 +166,7 @@ public:
 private:
     //! @name Member data
     //@{
+    kernel::OptionsController& optionsController_;
     T_LayersVector layers_;
     std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
     std::shared_ptr< GLView_ABC > view_;
