@@ -1266,7 +1266,12 @@
                                  ,go.build
                                  ,admin.versions"/>
 
-    <target name="admin.deploy">
+    <target name="admin.deploy" depends="deploy
+                                        ,cmake.configure
+                                        ,admin.web
+                                        ,admin.externals
+                                        ,admin.plugins
+                                        ,admin.versions">
         <cmake_build target="cloud_server"/>
         <cmake_build target="gaming_app"/>
         <cmake_build target="replayer_app"/>
@@ -1318,13 +1323,7 @@
         </exec>
     </target>
 
-    <target name="admin.all" depends="configure
-                                     ,cmake.configure
-                                     ,admin.web
-                                     ,admin.externals
-                                     ,admin.plugins
-                                     ,admin.versions
-                                     ,admin.deploy"/>
+    <target name="admin.all" depends="update,admin.deploy"/>
 
     <!--
     ============================================================================
