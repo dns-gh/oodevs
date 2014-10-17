@@ -562,6 +562,8 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Update( const DEC_Knowledge_Object& knowledge, int currentTimeStep )
 {
+    if( &knowledge == this )
+        return;
     nTimeLastUpdate_ = currentTimeStep;
 
     for( auto it = knowledge.perceptionPerAutomateSet_.begin(); it != knowledge.perceptionPerAutomateSet_.end(); ++it )

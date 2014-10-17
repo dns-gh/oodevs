@@ -153,12 +153,15 @@ template< typename T >
 void DEC_KnowledgeFunctions::ShareKnowledgesWith( const T& caller, DEC_Decision_ABC* receiver, float minutes )
 {
     if( !receiver )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    auto bbKg = receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge();
+        throw MASA_EXCEPTION( "invalid parameter." );        
+    auto receiverKg = receiver->GetAutomate().GetKnowledgeGroup();
+    auto bbKg = receiverKg->GetKnowledge();
     if( !bbKg )
         return;
-    const unsigned int sharingTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
     boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller.GetKnowledgeGroup();
+    if( receiverKg == callerKnowledgeGroup )
+        return;
+    const unsigned int sharingTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
     bbKg->GetKsSharing().ShareFromSource( callerKnowledgeGroup, sharingTimeStep );
 }
 
@@ -171,10 +174,13 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Dec
 {
     if( !receiver )
         throw MASA_EXCEPTION( "invalid parameter." );
-    auto bbKg = receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge();
+    auto receiverKg = receiver->GetAutomate().GetKnowledgeGroup();
+    auto bbKg = receiverKg->GetKnowledge();
     if( !bbKg )
         return;
     boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller.GetKnowledgeGroup();
+    if( receiverKg == callerKnowledgeGroup )
+        return;
     bbKg->GetKsSharing().ShareFromSource( callerKnowledgeGroup, MIL_Time_ABC::GetTime().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
 }
 
