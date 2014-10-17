@@ -98,7 +98,7 @@ void GlSelector::Load()
     connect( displayTimer_, SIGNAL( timeout() ), this, SIGNAL( UpdateGL() ) );
 
     InitializePasses();
-    controllers_.options_.Change( "RefreshRate", static_cast< int >( 50 ) ); // TMP, default value
+    displayTimer_->start( controllers_.options_.GetOption( "RefreshRate" ).To< int >() );
     ChangeTo( eWidget_2D );
 }
 
