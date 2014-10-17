@@ -22,8 +22,9 @@ import (
 
 type Config struct {
 	Application  string
+	BaseDir      string // base directory from which all other may be deduced
 	Platform     string
-	RootDir      string
+	RootDir      string // simulation --root-dir, usually "data/"
 	RunDir       string
 	ExercisesDir string
 	ShowLog      bool

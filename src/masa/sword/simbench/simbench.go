@@ -43,13 +43,21 @@ func BenchmarkEmptyRoute() ([]float64, error) {
 }
 
 func benchmark() error {
+	Cfg = swtest.ParseFlags()
+
+	// Assume benchmarks are run from sword project root directory
+	cwd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+	Cfg.BaseDir = cwd
+
 	res, err := BenchmarkEmptyRoute()
 	fmt.Println(res)
 	return err
 }
 
 func main() {
-	Cfg = swtest.ParseFlags()
 	err := benchmark()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: %s\n", err)

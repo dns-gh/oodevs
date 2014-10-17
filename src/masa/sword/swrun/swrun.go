@@ -23,10 +23,12 @@ import (
 // arguments.
 func MakeOpts(cfg *swtest.Config) *simu.SimOpts {
 	opts := simu.SimOpts{}
-	projectRoot := ""
-    if cwd, err := os.Getwd(); err == nil {
-        projectRoot, _ = filepath.Abs(filepath.Join(cwd, "../../../.."))
-    }
+	projectRoot := cfg.BaseDir
+	if len(projectRoot) == 0 {
+		if cwd, err := os.Getwd(); err == nil {
+			projectRoot, _ = filepath.Abs(filepath.Join(cwd, "../../../.."))
+		}
+	}
 
 	if len(cfg.Application) > 0 {
 		opts.Executable = cfg.Application
