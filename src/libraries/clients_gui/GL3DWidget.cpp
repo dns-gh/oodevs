@@ -156,6 +156,13 @@ float Gl3dWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
     return 1.f;
 }
 
+void Gl3dWidget::SetCurrentColor( float r, float g, float b, float /*a*/ )
+{
+    // $$$$ MCO 2014-10-17: de-activating alpha in 3D for now
+    // $$$$ MCO 2014-10-17: see http://jira.masagroup.net/browse/SWBUG-13308
+    GlToolsBase::SetCurrentColor( r, g, b, 1 );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::Zoom
 // Created: RPD 2009-12-14

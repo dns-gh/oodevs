@@ -101,6 +101,7 @@ public:
     virtual void DrawUnitSymbolAndTail( const std::string& symbol, const std::string& level, const T_PointVector& points ) const;
     virtual void DrawShapeText( const QImage& image, const geometry::Point2f& where ) const;
 
+    virtual void SetCurrentColor( float r, float g, float b, float a = 1 );
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void Zoom( float width );
     virtual void CenterView();
