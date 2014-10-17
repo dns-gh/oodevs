@@ -14,6 +14,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/sword"
+	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"math"
 	"reflect"
@@ -151,7 +152,7 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 }
 
 func (s *TestSuite) TestCreateUnit(c *C) {
-	opts := ClientOpts{
+	opts := swrun.ClientOpts{
 		User:     "user",
 		Password: "user",
 		Exercise: ExCrossroadSmallOrbat,
@@ -267,7 +268,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Read-only user can create unit (wut?)
 	client.Close()
-	opts = ClientOpts{
+	opts = swrun.ClientOpts{
 		User:     "user-readonly",
 		Password: "user-readonly",
 	}

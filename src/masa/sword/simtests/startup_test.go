@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi/simu"
+	"masa/sword/swrun"
 	"regexp"
 	"strings"
 	"time"
@@ -43,7 +44,7 @@ func (s *TestSuite) TestDispatcherMisconfiguration(c *C) {
 	session := simu.CreateDefaultSession()
 	session.EndTick = 3
 
-	opts := MakeOpts()
+	opts := swrun.MakeOpts(Cfg)
 	opts.ConnectTimeout = 600 * time.Second
 	WriteSession(c, opts, session)
 
@@ -77,7 +78,7 @@ func (s *TestSuite) TestDispatcherAddressCollision(c *C) {
 	startSim := func(simOffset int) (*simu.SimProcess, error) {
 		session := simu.CreateDefaultSession()
 
-		opts := MakeOpts()
+		opts := swrun.MakeOpts(Cfg)
 		WriteSession(c, opts, session)
 		opts.SimulationAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+simOffset+6)
 		opts.TailPrefix = fmt.Sprintf("sim+%v", simOffset)
@@ -148,7 +149,7 @@ func (s *TestSuite) TestLowEndTickValues(c *C) {
 	runSim := func(c *C, endTick int) bool {
 		session := simu.CreateDefaultSession()
 		session.EndTick = endTick
-		opts := MakeOpts()
+		opts := swrun.MakeOpts(Cfg)
 		WriteSession(c, opts, session)
 		sim, err := simu.StartSim(opts)
 		c.Assert(err, IsNil)  // simulation failed to start"
@@ -182,7 +183,7 @@ func (s *TestSuite) TestLowEndTickValues(c *C) {
 // Test stopping the simulation through protobuf API
 func (s *TestSuite) TestStoppingSimProcess(c *C) {
 	session := simu.CreateDefaultSession()
-	opts := MakeOpts()
+	opts := swrun.MakeOpts(Cfg)
 	WriteSession(c, opts, session)
 	sim, err := simu.StartSim(opts)
 	c.Assert(err, IsNil)

@@ -9,7 +9,6 @@
 package simtests
 
 import (
-	"code.google.com/p/goprotobuf/proto"
 	"fmt"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
@@ -17,12 +16,12 @@ import (
 	"masa/sword/swapi"
 	"masa/sword/swapi/phy"
 	"masa/sword/swapi/simu"
+	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"os"
 	"path/filepath"
 	"runtime"
 	"testing"
-	"time"
 )
 
 var (
@@ -45,51 +44,8 @@ const (
 	ExParisEstKnowledgeGroups = "Paris_Est-knowledge-groups"
 )
 
-func MakeOpts() *simu.SimOpts {
-	opts := simu.SimOpts{}
-	projectRoot := ""
-	if cwd, err := os.Getwd(); err == nil {
-		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "../../../.."))
-	}
-
-	if len(Cfg.Application) > 0 {
-		opts.Executable = Cfg.Application
-	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(
-			projectRoot, "out", Cfg.Platform, "release/simulation_app.exe")
-		runDir := filepath.Join(projectRoot, "run", Cfg.Platform)
-		opts.RunDir = &runDir
-	}
-	if len(Cfg.RootDir) > 0 {
-		opts.RootDir = Cfg.RootDir
-	} else if len(projectRoot) > 0 {
-		opts.RootDir = filepath.Join(projectRoot, "data")
-		opts.ExercisesDir = filepath.Join(projectRoot, "data/tests/gosword")
-	}
-	opts.DataDir = opts.RootDir
-	if len(Cfg.RunDir) > 0 {
-		opts.RunDir = &Cfg.RunDir
-	}
-	if len(Cfg.ExercisesDir) > 0 {
-		opts.ExercisesDir = Cfg.ExercisesDir
-	}
-	opts.ExerciseName = "crossroad-small-empty"
-	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
-	opts.SimulationAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+6)
-	opts.EnableTailing = Cfg.ShowLog
-	opts.ConnectTimeout = Cfg.Timeout
-	return &opts
-}
-
-func makeOptsAndSession() (*simu.SimOpts, *simu.Session) {
-	opts := MakeOpts()
-	session := simu.CreateDefaultSession()
-	session.GamingServer = opts.DispatcherAddr
-	return opts, session
-}
-
-func startSimOnExercise(c *C, cfg *ClientOpts) *simu.SimProcess {
-	opts, session := makeOptsAndSession()
+func startSimOnExercise(c *C, cfg *swrun.ClientOpts) *simu.SimProcess {
+	opts, session := swrun.MakeOptsAndSession(Cfg)
 	opts.ExerciseName = cfg.Exercise
 	opts.PathfindDir = cfg.PathfindDir
 	opts.PathfindFilter = cfg.PathfindFilter
@@ -97,16 +53,18 @@ func startSimOnExercise(c *C, cfg *ClientOpts) *simu.SimProcess {
 	if cfg.Step > 0 {
 		session.TimeStep = cfg.Step
 	}
+	err := opts.WriteSession(session)
+	c.Assert(err, IsNil)
 	WriteSession(c, opts, session)
 	sim, err := simu.StartSim(opts)
-	c.Assert(err, IsNil) // failed to start the simulation
+	c.Assert(err, IsNil)
 	return sim
 }
 
 func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick int,
 	paused bool) *simu.SimProcess {
 
-	opts := MakeOpts()
+	opts := swrun.MakeOpts(Cfg)
 	opts.ExerciseName = exercise
 	opts.SessionName = session
 	opts.CheckpointName = checkpoint
@@ -158,7 +116,6 @@ func MakeReplayOpts() *simu.ReplayOpts {
 }
 
 func startReplay(c *C, simOpts *simu.SimOpts) *simu.ReplayProcess {
-
 	opts := MakeReplayOpts()
 	opts.ExerciseName = simOpts.ExerciseName
 	opts.SessionName = simOpts.SessionName
@@ -195,101 +152,35 @@ func checkOrderAckSequences(c *C, client *swapi.Client) {
 		})
 }
 
-type ClientOpts struct {
-	Exercise       string
-	User           string
-	Password       string
-	Step           int
-	Paused         bool
-	Logger         swapi.MessageLogger
-	WaitTimeout    time.Duration
-	StartGaming    bool
-	Seed           int
-	PathfindDir    string
-	PathfindFilter string
+func StartSimOnExercise(c *C, clientOpts *swrun.ClientOpts) *simu.SimProcess {
+	sim, err := swrun.StartSimOnExercise(clientOpts, Cfg)
+	c.Assert(err, IsNil)
+	return sim
 }
 
-func NewAllUserOpts(exercise string) *ClientOpts {
-	return &ClientOpts{
+func NewAllUserOpts(exercise string) *swrun.ClientOpts {
+	return &swrun.ClientOpts{
 		Exercise: exercise,
 		User:     "alluser",
 		Password: "alluser",
 	}
 }
 
-func NewAdminOpts(exercise string) *ClientOpts {
-	return &ClientOpts{
+func NewAdminOpts(exercise string) *swrun.ClientOpts {
+	return &swrun.ClientOpts{
 		Exercise: exercise,
 		User:     "admin",
 		Password: "",
 	}
 }
 
-// Prints input and output client messages to stderr.
-func (opts *ClientOpts) AddLogger() *ClientOpts {
-	opts.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
-		prefix := "in "
-		if !in {
-			prefix = "out"
-		}
-		fmt.Fprintf(os.Stderr, "%s %v\n", prefix,
-			proto.CompactTextString(msg.GetMessage()))
-	}
-	return opts
-}
-
-// Start a gaming_app after starting the simulation and before connecting the
-// test client. First the simulation will be paused (if not already), then
-// gaming will be started and call will wait for the simulation to be unpaused
-// before moving on.
-func (opts *ClientOpts) AddGaming() *ClientOpts {
-	opts.StartGaming = true
-	return opts
-}
-
-// Fix simulation seed, might help with tests with random events like weapon
-// fires.
-func (opts *ClientOpts) FixSeed() *ClientOpts {
-	opts.Seed = 1
-	return opts
-}
-
-func (opts *ClientOpts) DumpPathfinds(path string) *ClientOpts {
-	opts.PathfindDir = path
-	return opts
-}
-
-func (opts *ClientOpts) FilterPathfinds(filter string) *ClientOpts {
-	opts.PathfindFilter = filter
-	return opts
-}
-
-func (opts *ClientOpts) StartPaused() *ClientOpts {
-	opts.Paused = true
-	return opts
-}
-
 type Simulator interface {
 	GetClientAddr() string
 }
 
-func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
-	if opts == nil {
-		opts = &ClientOpts{}
-	}
-	client, err := swapi.NewClient(sim.GetClientAddr())
+func connectClient(c *C, sim Simulator, opts *swrun.ClientOpts) *swapi.Client {
+	client, err := swrun.ConnectClient(sim, opts, Cfg)
 	c.Assert(err, IsNil)
-	client.Logger = opts.Logger
-	client.PostTimeout = Cfg.Timeout
-	client.Model.WaitTimeout = Cfg.Timeout
-	if opts.WaitTimeout != 0 {
-		timeout := opts.WaitTimeout
-		if timeout < 0 {
-			timeout = 0
-		}
-		client.Model.WaitTimeout = timeout
-	}
-	swapi.ConnectClient(client)
 	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
 		err error) error {
 		if !c.Failed() {
@@ -301,43 +192,17 @@ func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	return client
 }
 
-func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
-	client := connectClient(c, sim, opts)
-	err := client.Login(opts.User, opts.Password)
+func loginAndWaitModel(c *C, sim Simulator, opts *swrun.ClientOpts) *swapi.Client {
+	client, err := swrun.LoginAndWaitModel(sim, opts, Cfg)
 	c.Assert(err, IsNil)
-	ok := client.Model.WaitReady(10 * time.Second)
-	c.Assert(ok, Equals, true)
 	return client
 }
 
-func startGaming(c *C, sim *simu.SimProcess) {
-	admin := connectClient(c, sim, &ClientOpts{WaitTimeout: -1})
-	defer admin.Close()
-	key, err := admin.GetAuthenticationKey()
-	c.Assert(err, IsNil)
-	err = admin.LoginWithAuthenticationKey("", "", key)
-	c.Assert(err, IsNil)
-	_, err = admin.Pause()
-	c.Assert(err, IsNil)
-	_, err = simu.StartGamingFromSim(sim.Opts)
-	c.Assert(err, IsNil)
-	admin.Model.WaitTicks(1)
-}
-
-func connectAndWaitModel(c *C, opts *ClientOpts) (
+func connectAndWaitModel(c *C, opts *swrun.ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
-	sim := startSimOnExercise(c, opts)
-	ok := false
-	defer func() {
-		if !ok {
-			sim.Stop()
-		}
-	}()
-	if opts.StartGaming {
-		startGaming(c, sim)
-	}
-	client := loginAndWaitModel(c, sim, opts)
-	ok = true
+
+	sim, client, err := swrun.ConnectAndWaitModel(opts, Cfg)
+	c.Assert(err, IsNil)
 	return sim, client
 }
 
@@ -397,17 +262,17 @@ func readFileAsString(c *C, path string) string {
 }
 
 func stopSim(c *C, sim *simu.SimProcess, opts *simu.SessionErrorsOpts) {
-	sim.Stop()
-	session := sim.Opts.GetSessionDir()
-	err := simu.CheckSessionErrors(session, opts)
+	err := swrun.StopSim(sim, opts)
 	if err != nil {
-		c.Fatalf("errors found in session %s:\n%s", session, err)
+		c.Fatal(err)
 	}
 }
 
 func stopSimAndClient(c *C, sim *simu.SimProcess, client *swapi.Client) {
-	client.Close()
-	stopSim(c, sim, nil)
+	err := swrun.StopSimAndClient(sim, client)
+	if err != nil {
+		c.Fatal(err)
+	}
 }
 
 func loadPhysical(c *C, name string) *phy.PhysicalFile {

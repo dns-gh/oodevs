@@ -14,13 +14,14 @@ import (
 	"masa/sword/swapi/replay"
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
+	"masa/sword/swrun"
 	"math/rand"
 )
 
 // Mask used to check whether replayer client ids have highest bit set
 const mask int32 = -1 << 31
 
-func replayAndWaitModel(c *C, simOpts *simu.SimOpts, clientOpts *ClientOpts) (
+func replayAndWaitModel(c *C, simOpts *simu.SimOpts, clientOpts *swrun.ClientOpts) (
 	*simu.ReplayProcess, *swapi.Client) {
 
 	replay := startReplay(c, simOpts)

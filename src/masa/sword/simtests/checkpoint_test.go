@@ -13,6 +13,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/simu"
+	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"path/filepath"
 	"strings"
@@ -186,7 +187,7 @@ func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
 	*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, true)
-	opts := ClientOpts{
+	opts := swrun.ClientOpts{
 		User:     user,
 		Password: password,
 	}
