@@ -130,6 +130,8 @@
 #include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
+
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -340,7 +342,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Elevation3d ]            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
     layers[ eLayerTypes_Grid ]                   = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
     layers[ eLayerTypes_Locations ]              = locations;
-    if( config_.HasMapnik() )                     
+    if( config_.HasMapnik() )
         layers[ eLayerTypes_Mapnik ]             = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_, config_.GetMapnikThreads() );
     layers[ eLayerTypes_Metric ]                 = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
     layers[ eLayerTypes_ObjectKnowledges ]       = std::make_shared< ObjectKnowledgesLayer >( controllers_, *glProxy_, *strategy_, profile_ );
@@ -524,11 +526,15 @@ void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const ::Services& services )
 {
-    Load();
+    boost::optional< E_Modes > mode;
     if( services.HasService( sword::service_simulation ) )
-        controllers_.ChangeMode( eModes_Gaming );
+        mode = eModes_Gaming;
     else if( services.HasService( sword::service_replay ) )
-        controllers_.ChangeMode( eModes_Replay );
+        mode = eModes_Replay;
+    if( !mode )
+        return;
+    Load();
+    controllers_.ChangeMode( *mode );
 }
 
 // -----------------------------------------------------------------------------
