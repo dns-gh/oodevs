@@ -53,6 +53,7 @@ namespace
         {}
     };
 
+    // Forwards all SimToClient messages it receives to ClientPublisher
     struct ReceiverToSender : public PluginContainer
     {
         explicit ReceiverToSender( ClientPublisher_ABC& publisher )
@@ -67,6 +68,8 @@ namespace
     };
 }
 
+// Forwards all messages to ClientPublisher, excepting SimToClient messages
+// forwarded to its children, as a PluginContainer.
 struct Replayer::SenderToReceiver : public ClientPublisher_ABC
                                   , public PluginContainer
 {
@@ -111,9 +114,15 @@ Replayer::Replayer( const Config& config )
 {
     clientsNetworker_->RegisterMessage( MakeLogger( log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToReplay ) );
     clientsNetworker_->RegisterMessage( MakeLogger( log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToSim ) );
-    ConfigureModelHandler();
-    handler_.AddHandler( model_ );
+
+    // Model synchronization pipeline configuration, with a first vision plugin to filter vision cones messages
     auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
+    vision->AddHandler( boost::make_shared< ReceiverToSender >( *clientsNetworker_ ) );
+    modelHandler_->Add( vision );
+
+    // Message loader pipeline configuration, with a second vision plugin to also filter vision cones messages
+    handler_.AddHandler( model_ );
+    vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
     vision->AddHandler( clientsNetworker_ );
     vision->AddHandler( boost::make_shared< SimulationDispatcher >( *clientsNetworker_, *synchronizer_ ) );
     handler_.Add( vision );
@@ -142,17 +151,6 @@ Replayer::Replayer( const Config& config )
 Replayer::~Replayer()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Replayer::ConfigureModelHandler
-// Created: SLI 2014-10-14
-// -----------------------------------------------------------------------------
-void Replayer::ConfigureModelHandler()
-{
-    auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
-    vision->AddHandler( boost::make_shared< ReceiverToSender >( *clientsNetworker_ ) );
-    modelHandler_->Add( vision );
 }
 
 // -----------------------------------------------------------------------------
