@@ -13,6 +13,7 @@
 #include "ContextHandler_ABC.h"
 #include "PropagationManager_ABC.h"
 #include "RemoteTacticalObjectSubject_ABC.h"
+#include "SimulationTimeManager_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Logger_ABC.h"
@@ -26,12 +27,13 @@ using namespace plugins::hla;
 // Created: AHC 2013-09-09
 // -----------------------------------------------------------------------------
 TacticalObjectUpdater::TacticalObjectUpdater( dispatcher::SimulationPublisher_ABC& publisher, ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler,
-        dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject )
+        dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject, const SimulationTimeManager_ABC& timeManager )
     : publisher_( publisher )
     , contextHandler_( contextHandler )
     , logger_( logger )
     , propagationManager_( propMgr )
     , subject_( subject )
+    , timeManager_( timeManager )
 {
     subject_.RegisterTactical( *this );
     contextHandler_.Register( *this );
@@ -231,6 +233,8 @@ void TacticalObjectUpdater::PropagationChanged( const std::string& rtiIdentifier
     message().set_type( static_cast< sword::ObjectMagicAction_Type >( sword::ObjectMagicAction::update ) );
     sword::MissionParameter_Value* value = message().mutable_parameters()->add_elem()->add_value();
     value->add_list()->set_identifier( sword::ObjectMagicAction::disaster );
+    value->add_list()->set_acharstr( rtiIdentifier );
+    value->add_list()->set_acharstr( timeManager_.getSimulationTime() );
     message.Send( publisher_ );
 }
 
