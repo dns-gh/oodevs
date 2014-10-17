@@ -7,7 +7,7 @@ actions =
     IssueXmlOrder = function( self, strXml ) end,
     IssueOrderFromFile = function( self, strName, strFilename ) end,
     StartScheduler = function( self, strFilename ) end,
-    StopSchedulaer = function( self ) end,
+    StopScheduler = function( self ) end,
 }
 
 clients =
