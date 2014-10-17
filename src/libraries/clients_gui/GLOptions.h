@@ -39,6 +39,7 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class ContourLinesComputer;
+    class ContourLinesObserver;
     class Elevation2dTexture;
     class TerrainSettings;
     class UrbanDisplayOptions;
@@ -149,6 +150,7 @@ private:
     std::shared_ptr< kernel::Options > options_;
     //std::vector< T_FireOptions > fires_;
     std::shared_ptr< ContourLinesComputer > contourLinesComputer_;
+    std::shared_ptr< ContourLinesObserver > contourLinesObserver_;
     std::shared_ptr< Elevation2dTexture > elevation2dTexture_;
     std::shared_ptr< TerrainSettings > graphicSetup_;
     std::shared_ptr< Lighting_ABC > lighting_;

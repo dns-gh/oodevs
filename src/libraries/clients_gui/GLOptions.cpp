@@ -11,6 +11,7 @@
 #include "GLOptions.h"
 
 #include "ContourLinesComputer.h"
+#include "ContourLinesObserver.h"
 #include "Elevation2dTexture.h"
 #include "TerrainSettings.h"
 #include "UrbanDisplayOptions.h"
@@ -58,6 +59,7 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , controlled_( false )
     , filterEntity_( controllers )
     , lockedEntity_( controllers )
+    , contourLinesObserver_( new ContourLinesObserver() )
     , contourLinesComputer_( std::make_shared< ContourLinesComputer >( controllers.controller_, staticModel.detection_ ) )
     , elevation2dTexture_( std::make_shared< Elevation2dTexture >( map_ ) )
     , graphicSetup_( std::make_shared< TerrainSettings >() )
@@ -65,6 +67,7 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , urbanSetup_( new UrbanDisplayOptions( controllers, accommodationTypes_ ) )
     , watershedTexture_( new WatershedTexture( map_ ) )
 {
+    contourLinesComputer_->SetContourLinesObserver( contourLinesObserver_ );
     controllers_.Register( *this );
 }
 
@@ -296,7 +299,7 @@ namespace
 // Created: ABR 2014-06-20
 // -----------------------------------------------------------------------------
 void GLOptions::Set( const std::string& name,
-                     const kernel::OptionVariant& /*value*/ )
+                     const kernel::OptionVariant& value )
 {
     //options_->Set( name, value ); // will be needed when multi view will be present
     if( std::find( watershedOptions.begin(), watershedOptions.end(), name ) != watershedOptions.end() ||
@@ -308,6 +311,8 @@ void GLOptions::Set( const std::string& name,
     //    urbanSetup_->Load( *options_ );
     else if( name.find( "Terrains/" ) == 0 )
         graphicSetup_->Load( *options_ );
+    else if( name == "ContourLines/Height" )
+        contourLinesComputer_->SetHeight( value.To< int >() );
     //else if( name.find( "FireRules/" ) == 0 )
     //{
     //    for( int i = 0; i < FIRE_GROUP_COUNT; ++i )
