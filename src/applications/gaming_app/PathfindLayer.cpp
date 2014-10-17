@@ -459,19 +459,12 @@ void PathfindLayer::OnOpenEditingMode()
 
 bool PathfindLayer::HandleKeyPress( QKeyEvent* keyEvent )
 {
-    const auto mode = controllers_.GetCurrentMode();
     const auto key = keyEvent->key();
-    if( key == Qt::Key_Escape && mode == eModes_Itinerary )
-    {
-        OnRejectEdit();
-        return false;
-    }
-    if( key == Qt::Key_Delete && mode == eModes_Gaming )
-    {
-        OnDeletePathfind();
-        return false;
-    }
-    return true;
+    if( key == Qt::Key_Escape )
+        return OnRejectEdit();
+    if( key == Qt::Key_Delete )
+        return OnDeletePathfind();
+    return false;
 }
 
 bool PathfindLayer::HandleEvent( const std::function< void() >& event, bool replaceable )
@@ -519,22 +512,26 @@ void PathfindLayer::OnAcceptEdit()
     StopEdition();
 }
 
-void PathfindLayer::OnRejectEdit()
+bool PathfindLayer::OnRejectEdit()
 {
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        return false;
     ClearPositions();
     if( selectedPathfind_ )
         selectedPathfind_.ConstCast()->SetVisible( true );
     edited_.reset();
     StopEdition();
+    return true;
 }
 
-void PathfindLayer::OnDeletePathfind()
+bool PathfindLayer::OnDeletePathfind()
 {
-    if( !selectedPathfind_ )
-        return;
-    if( !profile_.CanBeOrdered( *selectedPathfind_ ) )
-        return;
+    if( controllers_.GetCurrentMode() != eModes_Gaming ||
+        !selectedPathfind_ ||
+        !profile_.CanBeOrdered( *selectedPathfind_ ) )
+        return false;
     modelObserver_.DeleteEntity( *selectedPathfind_ );
+    return true;
 }
 
 void PathfindLayer::OnEditPathfind()

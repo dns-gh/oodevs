@@ -119,7 +119,7 @@ private:
 
 public slots:
     void OnAcceptEdit();
-    void OnRejectEdit();
+    bool OnRejectEdit();
 
 private slots:
     void ClearPositions();
@@ -127,7 +127,7 @@ private slots:
     void SetEndPosition();
     void SendRequest();
     void OnOpenEditingMode();
-    void OnDeletePathfind();
+    bool OnDeletePathfind();
     void OnEditPathfind();
 
 private:

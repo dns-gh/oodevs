@@ -197,11 +197,10 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
 // Name: Options::Save
 // Created: ABR 2014-07-16
 // -----------------------------------------------------------------------------
-void Options::Save( Settings_ABC& settings, bool all )
+void Options::Save( Settings_ABC& settings )
 {
-    Apply( [&]( const std::string& name, const OptionVariant& option, bool savable ) {
-        if( all || savable )
-            option.Save( settings, name );
+    Apply( [&]( const std::string& name, const OptionVariant& option, bool ) {
+        option.Save( settings, name );
     } );
 }
 
