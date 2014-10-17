@@ -14,8 +14,8 @@
 #include "ElevationPanel.h"
 #include "RefreshRatePanel.h"
 #include "ReplayPanel.h"
+#include "GLOptions.h"
 #include "GlProxy.h"
-#include "GradientPreferences.h"
 #include "GraphicsPanel.h"
 #include "InhabitantPanel.h"
 #include "LayersPanel.h"
@@ -43,14 +43,11 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
                                       LightingProxy& lighting,
                                       const kernel::StaticModel& staticModel,
                                       GlProxy& proxy,
-                                      const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
-                                      const std::shared_ptr< TerrainSettings >& settings,
-                                      const std::shared_ptr< GradientPreferences >& preferences )
+                                      const std::shared_ptr< TerrainSettings >& settings )
     : ModalDialog( parent, "PreferencesDialog", false )
     , controllers_( controllers )
     , proxy_( proxy )
     , settings_( settings )
-    , preferences_( preferences )
 {
     SubObjectName subObject( "PreferencesDialog" );
     setCaption( tr( "Preferences" ) );
@@ -102,7 +99,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     AddPage( tr( "2D" ),                   *new LayersPanel( this, options, proxy ) );
     AddPage( tr( "2D/Terrain" ),           *new GraphicsPanel( this, options, settings ) );
     AddPage( tr( "2D/Population" ),        *new InhabitantPanel( this, options ) );
-    AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, staticModel.detection_, elevation2dLayer, preferences_ ) );
+    AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, staticModel.detection_ ) );
     AddPage( tr( "3D" ),                   *new LightingPanel( this, options, lighting ) );
     AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, staticModel.coordinateConverter_ ) );
     AddPage( tr( "Refresh rate" ),         *new RefreshRatePanel( this, options ) );
@@ -143,7 +140,7 @@ void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page 
 void PreferencesDialog::showEvent( QShowEvent * event )
 {
     previousGeneralOptions_ = std::make_shared< kernel::Options >( *controllers_.options_.GetGeneralOptions() );
-    previousViewOptions_ = std::make_shared< kernel::Options >( *controllers_.options_.GetViewOptions() );
+    previousViewOptions_.reset( new GLOptions( proxy_.GetOptions() ) );
     Load( proxy_ );
     QDialog::showEvent( event );
 }
@@ -175,13 +172,14 @@ void PreferencesDialog::reject()
 {
     auto& options = controllers_.options_;
     auto& viewOptions = *options.GetViewOptions();
-    RestoreOptions( options, *previousViewOptions_, viewOptions );
+    proxy_.GetOptions() = *previousViewOptions_;
+    options.UpdateViewOptions();
     RestoreOptions( options, *previousGeneralOptions_, *options.GetGeneralOptions() );
     previousViewOptions_.reset();
     previousGeneralOptions_.reset();
     proxy_.UpdateLayerOrder( viewOptions );
+    proxy_.GetOptions().Load();
     settings_->Load( viewOptions );
-    preferences_->Load( viewOptions );
     ModalDialog::reject();
 }
 

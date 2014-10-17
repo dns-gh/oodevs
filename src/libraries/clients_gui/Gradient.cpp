@@ -286,8 +286,7 @@ void Gradient::LoadValues( const QString& values )
             result.push_back( T_Color( ratio, color ) );
         }
     }
-    if( !result.empty() )
-        std::swap( colors_, result );
+    std::swap( colors_, result );
 }
 
 namespace

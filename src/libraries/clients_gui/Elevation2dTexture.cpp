@@ -53,6 +53,17 @@ Elevation2dTexture::~Elevation2dTexture()
 // -----------------------------------------------------------------------------
 void Elevation2dTexture::Load( const kernel::Options& options )
 {
+    UpdateHillShadeValues( options );
+    gradientPreferences_->Load( options );
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dTexture::UpdateHillShadeValues
+// Created: ABR 2014-10-17
+// -----------------------------------------------------------------------------
+void Elevation2dTexture::UpdateHillShadeValues( const kernel::Options& options )
+{
     hsEnabled_ = options.Get( "HillShade/Enabled" ).To< bool >();
     hsAngle_ = options.Get( "HillShade/Direction" ).To< int >();
     const float convert = std::acos( -1.f ) / 180.f;
@@ -61,10 +72,6 @@ void Elevation2dTexture::Load( const kernel::Options& options )
     hsStrength_ = pow( 1.1f, options.Get( "HillShade/Strength" ).To< int >() );
     minElevation_ = 0;
     maxElevation_ = map_.MaximumElevation();
-    //auto alphaOptionName = ENT_Tr::ConvertFromLayerTypes( eLayerTypes_Elevation2d, ENT_Tr::eToSim );
-    alpha_ = 1.f;//options.Get( "Layers/" + alphaOptionName + "/Alpha" ).To< float >();
-    gradientPreferences_->Load( options );
-    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +84,7 @@ void Elevation2dTexture::ConfigureShader( ElevationShader& shader )
     shader.SetGradientSize( unsigned short( gradient->Length() ), gradient->UsedRatio() );
     shader.SetMinimumElevation( minElevation_ );
     shader.SetMaximumElevation( maxElevation_ );
-    float delta = std::min( 1.f, 100.f / float( maxElevation_ - minElevation_ ) );
+    const float delta = std::min( 1.f, 100.f / float( maxElevation_ - minElevation_ ) );
     shader.SetHillShade( hsx_, hsy_, delta * ( hsEnabled_ ? hsStrength_ : 0 ) );
     shader.Use();
 }
@@ -97,15 +104,17 @@ void Elevation2dTexture::Purge()
 // Name: Elevation2dTexture::CreateTexture
 // Created: ABR 2014-07-03
 // -----------------------------------------------------------------------------
-unsigned int Elevation2dTexture::CreateTexture()
+unsigned int Elevation2dTexture::CreateTexture( float alpha )
 {
-    if( texture_ )
+    if( texture_ && alpha_ == alpha )
         return texture_;
-    if( map_.MaximumElevation() == 0 )
+    alpha_ = alpha;
+    auto gradient = gradientPreferences_->GetCurrent();
+    if( map_.MaximumElevation() == 0 || !gradient )
         return 0;
     glGenTextures( 1, &texture_ );
     glBindTexture( GL_TEXTURE_1D, texture_ );
-    gradientPreferences_->GetCurrent()->MakeGlTexture( alpha_ );
+    gradient->MakeGlTexture( alpha );
     return texture_;
 }
 

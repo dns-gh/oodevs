@@ -48,7 +48,8 @@ public:
     void Purge();
 
     void ConfigureShader( ElevationShader& shader );
-    unsigned int CreateTexture();
+    void UpdateHillShadeValues( const kernel::Options& options );
+    unsigned int CreateTexture( float alpha );
 
     const geometry::Rectangle2f& GetViewport() const;
     void SetViewport( const geometry::Rectangle2f& viewport,
@@ -56,6 +57,11 @@ public:
 
     std::shared_ptr< GradientPreferences > GetPreferences();
     std::shared_ptr< Gradient > GetGradient() const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
     //@}
 
 private:

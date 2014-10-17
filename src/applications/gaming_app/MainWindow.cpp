@@ -162,7 +162,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , profile_           ( filter )
     , workers_           ( workers )
     , terrainSettings_   ( new gui::TerrainSettings() )
-    , gradientPreferences_( new gui::GradientPreferences() )
     , pColorController_  ( new ColorController( controllers_ ) )
     , connected_         ( false )
     , onPlanif_          ( false )
@@ -221,8 +220,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
-    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_, gradientPreferences_ );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel, *glProxy_, elevation2d, terrainSettings_, gradientPreferences_ ) );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel, *glProxy_, terrainSettings_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers.options_ ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers.options_, *firePlayer_ ) );
     preferenceDialog_->AddPage( tr( "Weapon Ranges" ), *new gui::WeaponRangesPanel( preferenceDialog_.get(), controllers.options_, staticModel_ ) );
@@ -275,7 +273,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
     // Last layers
-    CreateLayers( parameters, locationsLayer, meteoLayer, profilerLayer, automatsLayer, formationLayer, elevation2d, simulation, *picker );
+    CreateLayers( parameters, locationsLayer, meteoLayer, profilerLayer, automatsLayer, formationLayer, simulation, *picker );
 
     // Menu bar & status bar
     setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, network_, logger ) );
@@ -319,7 +317,6 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
                                const std::shared_ptr< gui::Layer_ABC >& profiler,
                                const std::shared_ptr< gui::Layer_ABC >& automats,
                                const std::shared_ptr< gui::Layer_ABC >& formations,
-                               const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                                const Simulation& simulation,
                                gui::TerrainPicker& picker )
 {
@@ -339,7 +336,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Fog ]                    = std::make_shared< FogLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Formations ]             = formations;
     layers[ eLayerTypes_Inhabitants ]            = std::make_shared< gui::InhabitantLayer >( controllers_, *glProxy_, *strategy_, profile_ );
-    layers[ eLayerTypes_Elevation2d ]            = elevation2d;
+    layers[ eLayerTypes_Elevation2d ]            = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers[ eLayerTypes_Elevation3d ]            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
     layers[ eLayerTypes_Grid ]                   = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
     layers[ eLayerTypes_Locations ]              = locations;
@@ -406,7 +403,6 @@ void MainWindow::Load()
         auto& options = *controllers_.options_.GetViewOptions();
         glProxy_->UpdateLayerOrder( options );
         terrainSettings_->Load( options );
-        gradientPreferences_->Load( options );
         selector_->Load();
     }
     catch( const xml::exception& e )

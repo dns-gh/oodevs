@@ -13,6 +13,7 @@
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
+#include "GLOptions.h"
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
 #include "GlTooltip.h"
@@ -189,6 +190,7 @@ std::unique_ptr< GlTooltip_ABC > GlToolsBase::CreateTooltip() const
 void GlToolsBase::Load( const tools::ExerciseConfig& config )
 {
     symbols_->Load( config );
+    GetOptions().Load();
 }
 
 // -----------------------------------------------------------------------------

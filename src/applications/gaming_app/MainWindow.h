@@ -144,7 +144,6 @@ private:
                        const std::shared_ptr< gui::Layer_ABC >& profiler,
                        const std::shared_ptr< gui::Layer_ABC >& automats,
                        const std::shared_ptr< gui::Layer_ABC >& formations,
-                       const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                        const Simulation& simulation,
                        gui::TerrainPicker& picker );
 
@@ -171,7 +170,6 @@ private:
 
     // the following will move to GLOptions or GLMainProxy
     std::shared_ptr< gui::TerrainSettings > terrainSettings_;
-    std::shared_ptr< gui::GradientPreferences > gradientPreferences_;
     std::unique_ptr< gui::GlProxy > glProxy_;
     std::shared_ptr< gui::LightingProxy > lighting_;
     std::unique_ptr< gui::GlSelector > selector_;

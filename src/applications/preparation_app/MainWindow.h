@@ -27,7 +27,6 @@ namespace gui
     class ExclusiveEventStrategy;
     class GlProxy;
     class GlSelector;
-    class GradientPreferences;
     class HelpSystem;
     class Layer_ABC;
     class LightingProxy;
@@ -110,7 +109,6 @@ private:
                        const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
                        const std::shared_ptr< gui::Layer_ABC >& automats,
                        const std::shared_ptr< gui::Layer_ABC >& formation,
-                       const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                        gui::TerrainPicker& picker );
     void closeEvent( QCloseEvent* pEvent );
     void DoClose();
@@ -138,7 +136,6 @@ private:
     bool                 needsSaving_;
 
     // the following will move to GLOptions or GLMainProxy
-    std::shared_ptr< gui::GradientPreferences >    gradientPreferences_;
     std::shared_ptr< gui::TerrainSettings >        terrainSettings_;
     std::shared_ptr< gui::LightingProxy >          lighting_;
     std::unique_ptr< gui::GlSelector >             selector_;

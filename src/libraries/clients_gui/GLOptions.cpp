@@ -208,6 +208,15 @@ void GLOptions::Save( kernel::Settings& settings )
 }
 
 // -----------------------------------------------------------------------------
+// Name: std::shared_ptr< kernel::Options >& GLOptions::GetOptions
+// Created: ABR 2014-07-28
+// -----------------------------------------------------------------------------
+std::shared_ptr< kernel::Options >& GLOptions::GetOptions()
+{
+    return options_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GLOptions::Select
 // Created: ABR 2014-06-20
 // -----------------------------------------------------------------------------
@@ -261,7 +270,7 @@ namespace
     const std::vector< std::string > watershedOptions =boost::assign::list_of< std::string>( "Watershed/Height" )
                                                                                            ( "Watershed/Color" )
                                                                                            ( "Watershed/Inverse" );
-    const std::vector< std::string > elevationOptions = boost::assign::list_of< std::string>( "HillShade/Direction" )
+    const std::vector< std::string > hillShadeOptions = boost::assign::list_of< std::string>( "HillShade/Direction" )
                                                                                             ( "HillShade/Enabled" )
                                                                                             ( "HillShade/Strength" );
     const std::vector< std::string > urbanOptions = boost::assign::list_of< std::string>( "Accommodation/Enabled" )
@@ -293,10 +302,8 @@ void GLOptions::Set( const std::string& name,
     if( std::find( watershedOptions.begin(), watershedOptions.end(), name ) != watershedOptions.end() ||
         name == "Layers/" + ENT_Tr::ConvertFromLayerTypes( eLayerTypes_WeatherComposite, ENT_Tr::eToSim ) + "/Alpha" )
         watershedTexture_->Load( *options_ );
-    else if( std::find( elevationOptions.begin(), elevationOptions.end(), name ) != elevationOptions.end() ||
-             name == "Layers/" + ENT_Tr::ConvertFromLayerTypes( eLayerTypes_Elevation2d, ENT_Tr::eToSim ) + "/Alpha" ||
-             name.find( "Elevation/" ) == 0 )
-        elevation2dTexture_->Load( *options_ );
+    else if( std::find( hillShadeOptions.begin(), hillShadeOptions.end(), name ) != hillShadeOptions.end() )
+        elevation2dTexture_->UpdateHillShadeValues( *options_ );
     //else if( std::find( urbanOptions.begin(), urbanOptions.end(), name ) != urbanOptions.end() )
     //    urbanSetup_->Load( *options_ );
     else if( name.find( "Terrains/" ) == 0 )

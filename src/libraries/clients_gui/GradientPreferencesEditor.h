@@ -20,6 +20,7 @@ namespace kernel
 
 namespace gui
 {
+    class Elevation2dTexture;
     class Gradient;
     class GradientWidget;
     class GradientPreferences;
@@ -35,32 +36,24 @@ class GradientPreferencesEditor : public QWidget
     Q_OBJECT;
 
 public:
-    //! @name Types
-    //@{
-    typedef std::shared_ptr< Gradient > T_Gradient;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              GradientPreferencesEditor( kernel::OptionsController& options,
-                                     const kernel::DetectionMap& detection,
-                                     const std::shared_ptr< GradientPreferences >& preferences,
-                                     const QString& gradientWidgetObjectName,
-                                     QWidget* parent = 0 );
+                                        const kernel::DetectionMap& detection,
+                                        const QString& gradientWidgetObjectName,
+                                        QWidget* parent = 0 );
     virtual ~GradientPreferencesEditor();
     //@}
 
     //! @name Operations
     //@{
-    void Load();
+    void SetElevation2dTexture( const std::shared_ptr< Elevation2dTexture >& texture );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void FitToViewportChanged( int state );
-    void UpdateGradient();
     //@}
 
 private slots:
@@ -76,7 +69,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void AddGradient( const T_Gradient& gradient );
+    void AddGradient( const std::shared_ptr< Gradient >& gradient );
     void SetCurrent();
     //@}
 
@@ -84,9 +77,9 @@ private:
     //! @name Member data
     //@{
     kernel::OptionsController& options_;
+    std::shared_ptr< Elevation2dTexture > elevationTexture_;
     std::shared_ptr< GradientPreferences > preferences_;
 
-    std::map< QString, QString > gradientTranslations_;
     GradientWidget* gradientWidget_;
     QComboBox* combo_;
     //@}

@@ -88,6 +88,8 @@ public:
 
     //! @name Operations
     //@{
+    std::shared_ptr< kernel::Options >& GetOptions();
+
     bool Has( const std::string& name ) const;
     const kernel::OptionVariant& Get( const std::string& name ) const;
     void Set( const std::string& name, const kernel::OptionVariant& value );
