@@ -31,16 +31,17 @@ void FrameCounter::Update()
 
 void FrameCounter::Compute()
 {
-    if( time_.isNull() )
+    if( !timer_ )
     {
-        time_.start();
+        timer_.reset( new QElapsedTimer() );
+        timer_->start();
         return;
     }
-    const int span = 100;
+    const int span = 50;
     if( ++frames_ == span )
     {
         frames_ = 0;
-        fps_ =  static_cast< int >( 1000.0 * span / time_.restart() );
+        fps_ =  static_cast< int >( 1000.0 * span / timer_->restart() );
     }
 }
 
@@ -52,13 +53,13 @@ void FrameCounter::Draw() const
     glGetDoublev( GL_PROJECTION_MATRIX, projectionMatrix );
     int viewport[4];
     glGetIntegerv( GL_VIEWPORT, viewport );
-    double rX, rY, rZ;
+    double x, y, z;
     gluUnProject(
         x_ + ( x_ < 0 ? viewport[2] : 0 ),
         y_ + ( y_ < 0 ? viewport[3] : 0 ),
         0,
         modelViewMatrix, projectionMatrix,
         viewport,
-        &rX, &rY, &rZ );
-    widget_.renderText( rX, rY, 0, QString( "%1 FPS" ).arg( fps_ ) );
+        &x, &y, &z );
+    widget_.renderText( x, y, 0, QString( "%1 FPS" ).arg( fps_ ) );
 }

@@ -30,9 +30,9 @@ private:
 
 private:
     QGLWidget& widget_;
+    std::unique_ptr< QElapsedTimer > timer_;
     int x_;
     int y_;
-    QTime time_;
     int frames_;
     int fps_;
 };
