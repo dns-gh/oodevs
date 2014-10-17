@@ -201,9 +201,9 @@ integration.getIdentificationDistance = function()
     return DEC_Identification_DistanceMaxCompMajeure()
 end
 
----Returns true if the perception level of the given DirectIA agent knowledge is the maximum.
--- @param knowledge DirectIA agent knowledge.
--- @return true if the perception level of the given DirectIA agent knowledge is the maximum , false otherwise.
-integration.isPerceptionLevelMaxForUnit = function( knowledge )
-    return DEC_KnowledgeAgent_IsPerceptionLevelMax( knowledge )
+--- Returns true if the perception level of the given simulation agent knowledge is the maximum, false otherwise.
+-- @param agentKnowledge Simulation agent knowledge.
+-- @return Boolean
+integration.isPerceptionLevelMaxForUnit = function( agentKnowledge )
+    return DEC_KnowledgeAgent_IsPerceptionLevelMax( agentKnowledge )
 end
