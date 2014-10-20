@@ -49,7 +49,7 @@ SvglRenderer::SvglRenderer()
 SvglRenderer::~SvglRenderer()
 {
     for( auto it = lists_.begin(); it != lists_.end(); ++it )
-        glDeleteLists( it->second, 1 );
+        glDeleteLists( it->second.first, 1 );
     glDeleteLists( colorList_, 1 );
 }
 
@@ -59,14 +59,15 @@ SvglRenderer::~SvglRenderer()
 // -----------------------------------------------------------------------------
 void SvglRenderer::SetCurrentColor( float r, float g, float b, float a )
 {
-    if( r != r_ || g_ != g || b_ != b || a_ != a )
+    // This stands for the 'currentColor' of SVG
+    if( r != r_ || g_ != g || b_ != b )
     {
         r_ = r;
         g_ = g;
         b_ = b;
-        a_ = a;
         colorDirty_ = true;
     }
+    a_ = a;
 }
 
 // -----------------------------------------------------------------------------
@@ -122,18 +123,20 @@ void SvglRenderer::Render( const std::shared_ptr< svg::Node_ABC >& node, const s
 // -----------------------------------------------------------------------------
 unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node,
     const std::string& style, const geometry::Rectangle2f& viewport,
-    unsigned vWidth, unsigned vHeight, T_Lists& lists )
+    unsigned vWidth, unsigned vHeight )
 {
-    auto it = lists.find( node );
-    if( it != lists.end() && !colorDirty_ )
-        return it->second;
-    const auto listId = it == lists.end() ? glGenLists( 1 ) : it->second;
+    auto it = lists_.find( node );
+    // Alpha cannot simply be injected into the compiled display lists
+    // so just rebuild them whenever it changes.
+    if( it != lists_.end() && it->second.second == a_ )
+        return it->second.first;
+    const auto listId = it == lists_.end() ? glGenLists( 1 ) : it->second.first;
     if( listId )
     {
         glNewList( listId, GL_COMPILE );
         Draw( node, style, viewport, vWidth, vHeight, false );
         glEndList();
-        lists[ node ] = listId;
+        lists_[ node ] = std::make_pair( listId, a_ );
     }
     return listId;
 }
@@ -173,7 +176,7 @@ void SvglRenderer::ConfigureColorList()
     if( colorDirty_ )
     {
         glNewList( colorList_, GL_COMPILE );
-        glColor4fv( &r_ );
+        glColor4f( r_, g_, b_, a_ );
         glEndList();
         colorDirty_ = false;
     }

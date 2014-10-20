@@ -60,7 +60,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::shared_ptr< svg::Node_ABC >, unsigned int > T_Lists;
+    typedef std::map< std::shared_ptr< svg::Node_ABC >, std::pair< unsigned int, float > > T_Lists;
     //@}
 
     //! @name Helpers
@@ -71,7 +71,7 @@ private:
     void         CreateStaticLists();
     unsigned int RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node,
                                  const std::string& style, const geometry::Rectangle2f& viewport,
-                                 unsigned vWidth, unsigned vHeight, T_Lists& lists );
+                                 unsigned vWidth, unsigned vHeight );
     std::unique_ptr< svg::Style > CreateStyle( const std::string& style );
     //@}
 
