@@ -152,10 +152,6 @@ namespace
         {
             id_ = id;
         }
-        virtual void SetCallback( pathfind::AStarManagementCallback_ABC* pCallback )
-        {
-            root_.SetCallback( pCallback );
-        }
         virtual void SetChoiceRatio( float ratio )
         {
             root_.SetChoiceRatio( ratio );
@@ -166,15 +162,16 @@ namespace
         }
         virtual bool ComputePath( const geometry::Point2f& from, const geometry::Point2f& to,
                                   TerrainRule_ABC& rule,
+                                  AStarManagementCallback_ABC* callback,
                                   tools::thread::Handler_ABC< TerrainPathPoint >& handler )
         {
             const bool dump = !dump_.IsEmpty() && ( filter_.empty() || filter_.count( id_ ) );
             if( dump )
             {
                 PathfindFileDumper dumper( GetFilename() );
-                return root_.ComputePath( from, to, rule, handler, &dumper );
+                return root_.ComputePath( from, to, rule, callback, handler, &dumper );
             }
-            return root_.ComputePath( from, to, rule, handler );
+            return root_.ComputePath( from, to, rule, callback, handler );
         }
     private:
         tools::Path GetFilename() const

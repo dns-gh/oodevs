@@ -84,11 +84,6 @@ namespace
             pathfinder_.SetId( id );
         }
         
-        virtual void SetCallback( pathfind::AStarManagementCallback_ABC* callback )
-        {
-            pathfinder_.SetCallback( callback );
-        }
-        
         virtual void SetChoiceRatio( float ratio )
         {
             pathfinder_.SetChoiceRatio( ratio );
@@ -125,6 +120,7 @@ namespace
 
         virtual bool ComputePath( const geometry::Point2f& from, const geometry::Point2f& to,
                                   TerrainRule_ABC& rule,
+                                  pathfind::AStarManagementCallback_ABC* callback,
                                   tools::thread::Handler_ABC< TerrainPathPoint >& handler )
         {
             const T_PathPoints points = ReadPathPoints( pathfind_.result() );
@@ -133,7 +129,7 @@ namespace
             if( segment.first < 0 || segment.second < 0 )
             {
                 MT_LOG_INFO_MSG( "Segment [" << from << "] -> [" << to << "] not found in itinerary id='" << pathfind_.id() << "', computing a new path." );
-                return pathfinder_.ComputePath( from, to, rule, handler );
+                return pathfinder_.ComputePath( from, to, rule, callback, handler );
             }
             bool reached = false;
             for( int i = segment.first; i <= segment.second; ++i )
