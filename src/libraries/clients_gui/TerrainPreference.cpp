@@ -34,9 +34,9 @@ TerrainPreference::TerrainPreference( kernel::OptionsController& options,
     const auto name = QString::fromStdString( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( setting->name_.toStdString() ), ENT_Tr::eToTr ) );
     const auto type = QString::fromStdString( setting->type_ );
 
-    showCheckbox_ = new OptionCheckBox(   options_, type + "-shown", "Terrains/" + setting->type_ + "/Shown", name );
+    showCheckbox_ = new OptionCheckBox( options_, type + "-shown", "Terrains/" + setting->type_ + "/Shown", name );
     showCheckbox_->setChecked( setting->shown_ );
-    sizeButton_  = new SizeButton(        options_, type + "-size",  "Terrains/" + setting->type_ + "/Width", 0, 10, setting->lineWidth_ );
+    sizeButton_  = new SizeButton( options_, type + "-size",  "Terrains/" + setting->type_ + "/Width", 0, 10, setting->lineWidth_ );
     auto label = new QLabel( locale().toString( setting->lineWidth_ ) +  tr( " px" ) );
     label->setFixedWidth( 35 );
     colorButton_ = new OptionColorButton( options_, type + "-color", "Terrains/" + setting->type_ + "/Color", setting->color_ );

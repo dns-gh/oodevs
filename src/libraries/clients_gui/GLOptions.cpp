@@ -309,8 +309,6 @@ void GLOptions::Set( const std::string& name,
         elevation2dTexture_->UpdateHillShadeValues( *options_ );
     //else if( std::find( urbanOptions.begin(), urbanOptions.end(), name ) != urbanOptions.end() )
     //    urbanSetup_->Load( *options_ );
-    else if( name.find( "Terrains/" ) == 0 )
-        graphicSetup_->Load( *options_ );
     else if( name == "ContourLines/Height" )
         contourLinesComputer_->SetHeight( value.To< int >() );
     //else if( name.find( "FireRules/" ) == 0 )

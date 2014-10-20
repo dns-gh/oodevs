@@ -52,8 +52,7 @@ public:
                                 kernel::Controllers& controllers,
                                 LightingProxy& lighting,
                                 const kernel::StaticModel& staticModel,
-                                GlProxy& proxy,
-                                const std::shared_ptr< TerrainSettings >& settings );
+                                GlProxy& proxy );
     virtual ~PreferencesDialog();
     //@}
 
@@ -83,7 +82,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     GlProxy& proxy_;
-    std::shared_ptr< TerrainSettings > settings_;
     std::shared_ptr< kernel::Options > previousGeneralOptions_;
     std::unique_ptr< GLOptions > previousViewOptions_;
     //std::vector< std::unique_ptr< GLOptions > > previousViewsOptions_;

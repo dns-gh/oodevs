@@ -78,7 +78,6 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/TerrainProfilerLayer.h"
-#include "clients_gui/TerrainSettings.h"
 #include "clients_gui/TextEditor.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/UrbanLayer.h"
@@ -130,7 +129,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , config_            ( config )
     , loading_           ( false )
     , needsSaving_       ( false )
-    , terrainSettings_   ( new gui::TerrainSettings() )
     , modelBuilder_      ( new ModelBuilder( controllers, model ) )
     , colorController_   ( new ColorController( controllers_ ) )
     , lighting_          ( new gui::LightingProxy() )
@@ -191,7 +189,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 
     // Dialogs
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, profile, *strategy_, *colorController_,
-                                                 *icons_, config, *symbols, *lighting_, paramLayer, *glProxy_, terrainSettings_ ) );
+                                                 *icons_, config, *symbols, *lighting_, paramLayer, *glProxy_ ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, paramLayer, weatherLayer, profilerLayer, *icons_, *modelBuilder_, model_,
@@ -305,7 +303,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_ResourceNetworks ]   = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, profile );
     layers[ eLayerTypes_Selection ]          = std::make_shared< gui::SelectionLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_TacticalLines ]      = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, profile );
-    layers[ eLayerTypes_Terrain ]            = std::make_shared< gui::TerrainLayer >( controllers_, terrainSettings_, *glProxy_, picker );
+    layers[ eLayerTypes_Terrain ]            = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, picker );
     layers[ eLayerTypes_TerrainProfiler ]    = profiler;
     layers[ eLayerTypes_Tooltips ]           = tooltips;
     layers[ eLayerTypes_Urban ]              = std::make_shared< UrbanLayer >( controllers_, *glProxy_, *strategy_, *model_.urban_, profile );
@@ -513,7 +511,6 @@ void MainWindow::LoadExercise()
         // will move to GLMainProxy
         auto& options = *controllers_.options_.GetViewOptions();
         glProxy_->UpdateLayerOrder( options );
-        terrainSettings_->Load( options );
         selector_->Load();
     }
     catch( const std::exception& e )

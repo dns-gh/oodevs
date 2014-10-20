@@ -32,7 +32,6 @@ namespace gui
     class DisplayExtractor;
     class LinkInterpreter;
     class ProfileDialog;
-    class TerrainSettings;
     class UnitStateDialog;
 }
 
@@ -75,8 +74,7 @@ public:
                               gui::SymbolIcons& icons,
                               gui::LightingProxy& lighting,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
-                              gui::GlProxy& proxy,
-                              const std::shared_ptr< gui::TerrainSettings >& settings );
+                              gui::GlProxy& proxy );
     virtual ~DialogContainer();
     //@}
 

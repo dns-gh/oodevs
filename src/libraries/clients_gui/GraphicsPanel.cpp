@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
+#include "GlProxy.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
 #include "clients_kernel/OptionsController.h"
@@ -18,11 +19,10 @@ using namespace gui;
 // Name: GraphicsPanel constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::OptionsController& options,
-                              const std::shared_ptr< TerrainSettings >& settings )
+GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::OptionsController& options )
     : PreferencePanel_ABC( parent, "GraphicsPanel" )
     , options_( options )
-    , preferences_( new GraphicPreferences( options, settings ) )
+    , preferences_( new GraphicPreferences( options ) )
 {
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout( widget );
@@ -44,8 +44,7 @@ GraphicsPanel::~GraphicsPanel()
 // Name: GraphicsPanel::ActiveOptionsChanged
 // Created: ABR 2014-08-01
 // -----------------------------------------------------------------------------
-void GraphicsPanel::Load( const GlProxy& )
+void GraphicsPanel::Load( const GlProxy& view )
 {
-    //preferences_->Load( view.GetOptions() );
-    preferences_->Load( *options_.GetViewOptions() );
+    preferences_->Load( view.GetOptions() );
 }

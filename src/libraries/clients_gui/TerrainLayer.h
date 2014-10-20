@@ -42,7 +42,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              TerrainLayer( kernel::Controllers& controllers,
-                           const std::shared_ptr< TerrainSettings >& settings,
                            GLView_ABC& tools,
                            TerrainPicker& picker );
     virtual ~TerrainLayer();

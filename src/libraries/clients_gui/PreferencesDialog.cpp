@@ -42,12 +42,10 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
                                       Controllers& controllers,
                                       LightingProxy& lighting,
                                       const kernel::StaticModel& staticModel,
-                                      GlProxy& proxy,
-                                      const std::shared_ptr< TerrainSettings >& settings )
+                                      GlProxy& proxy )
     : ModalDialog( parent, "PreferencesDialog", false )
     , controllers_( controllers )
     , proxy_( proxy )
-    , settings_( settings )
 {
     SubObjectName subObject( "PreferencesDialog" );
     setCaption( tr( "Preferences" ) );
@@ -97,7 +95,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
 
     auto& options = controllers.options_;
     AddPage( tr( "2D" ),                   *new LayersPanel( this, options, proxy ) );
-    AddPage( tr( "2D/Terrain" ),           *new GraphicsPanel( this, options, settings ) );
+    AddPage( tr( "2D/Terrain" ),           *new GraphicsPanel( this, options ) );
     AddPage( tr( "2D/Population" ),        *new InhabitantPanel( this, options ) );
     AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, staticModel.detection_ ) );
     AddPage( tr( "3D" ),                   *new LightingPanel( this, options, lighting ) );
@@ -179,7 +177,6 @@ void PreferencesDialog::reject()
     previousGeneralOptions_.reset();
     proxy_.UpdateLayerOrder( viewOptions );
     proxy_.GetOptions().Load();
-    settings_->Load( viewOptions );
     ModalDialog::reject();
 }
 

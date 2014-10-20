@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "TerrainLayer.h"
 
+#include "GLOptions.h"
 #include "GLView_ABC.h"
 #include "TerrainSettings.h"
 #include "TerrainPicker.h"
@@ -36,11 +37,9 @@ using namespace gui;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 TerrainLayer::TerrainLayer( Controllers& controllers,
-                            const std::shared_ptr< TerrainSettings >& settings,
                             GLView_ABC& tools,
                             TerrainPicker& picker )
     : Layer2D( controllers, tools, eLayerTypes_Terrain )
-    , settings_( settings )
     , picker_( picker )
     , pickingEnabled_( true )
 {
@@ -75,7 +74,7 @@ void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 // -----------------------------------------------------------------------------
 void TerrainLayer::SetAlpha( float alpha )
 {
-    settings_->SetAlpha( alpha );
+    view_.GetOptions().GetTerrainSettings()->SetAlpha( alpha );
     Layer2D::SetAlpha( alpha );
 }
 
@@ -85,28 +84,28 @@ void TerrainLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !ShouldDrawPass() || GetAlpha() == 0 )
+    const auto& options = view_.GetOptions();
+    settings_ = options.GetTerrainSettings();
+    if( !ShouldDrawPass() || GetAlpha() == 0 || !settings_ )
         return;
     if( !layer_.get() && !noVBOlayer_.get() && !graphicsDirectory_.IsEmpty() )
         LoadGraphics();
     if( !layer_ && !noVBOlayer_ )
         return;
 
-    const auto& options = controllers_.options_;
-    //const auto& options = view_.GetCurrentOptions();
-    smallNames_ = options.GetOption( "SmallText" ).To< TristateOption >();
-    bigNames_ = options.GetOption( "BigText" ).To< TristateOption >();
-    pickingEnabled_ = !options.GetOption( "3D" ).To< bool >();
+    smallNames_ = options.Get( "SmallText" ).To< TristateOption >();
+    bigNames_ = options.Get( "BigText" ).To< TristateOption >();
+    pickingEnabled_ = !options.Get( "3D" ).To< bool >();
     for( int i = 0; i < eNbrVisualisationScale; ++i )
     {
         const auto name = "VisualisationScales/" + ENT_Tr::ConvertFromVisualisationScale( static_cast< E_VisualisationScale >( i ) );
-        minVisuScale_[ i ] = options.GetOption( name + "/Min" ).To< int >();
-        maxVisuScale_[ i ] = options.GetOption( name + "/Max" ).To< int >();
+        minVisuScale_[ i ] = options.Get( name + "/Min" ).To< int >();
+        maxVisuScale_[ i ] = options.Get( name + "/Max" ).To< int >();
     }
-    //if( layer_ )
-    //    layer_->SetGraphicSetup( setup_ );
-    //else
-    //    noVBOlayer_->SetGraphicSetup( setup_ );
+    if( layer_ )
+        layer_->SetGraphicSetup( settings_ );
+    else
+        noVBOlayer_->SetGraphicSetup( settings_ );
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
         glBindTexture( GL_TEXTURE_2D, 0 );
