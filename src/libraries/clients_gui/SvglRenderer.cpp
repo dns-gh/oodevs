@@ -106,14 +106,13 @@ void SvglRenderer::Render( const std::shared_ptr< svg::Node_ABC >& node, const s
         ConfigureColorList();
         ConfigureWidthList( viewport, vWidth, vHeight );
         Draw( node, style, viewport, vWidth, vHeight, true );
-        return;
     }
-    unsigned int listId = RetrieveListId( node, style, viewport, vWidth, vHeight, lists_ );
-    if( !listId )
-        return;
-    ConfigureColorList();
-    ConfigureWidthList( viewport, vWidth, vHeight );
-    glCallList( listId );
+    else if( auto listId = RetrieveListId( node, style, viewport, vWidth, vHeight ) )
+    {
+        ConfigureColorList();
+        ConfigureWidthList( viewport, vWidth, vHeight );
+        glCallList( listId );
+    }
     glPopAttrib();
 }
 
