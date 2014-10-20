@@ -258,17 +258,17 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 	defer client.Close()
 	phydb := loadPhysicalData(c, "test")
 
-	party := &Party{
+	party := &swtest.Party{
 		Name: "party1",
-		Formations: []*Formation{
-			&Formation{
+		Formations: []*swtest.Formation{
+			&swtest.Formation{
 				Name: "formation",
-				Automats: []*Automat{
-					&Automat{
+				Automats: []*swtest.Automat{
+					&swtest.Automat{
 						Name: "automat",
 						Type: "VW Combi Rally",
-						Units: []*Unit{
-							&Unit{
+						Units: []*swtest.Unit{
+							&swtest.Unit{
 								Name: "unit",
 								Type: "VW Combi",
 							},
@@ -278,7 +278,7 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 			},
 		},
 	}
-	err := FindOrCreateEntities(client, phydb, party)
+	err := swtest.FindOrCreateEntities(client, phydb, party)
 	c.Assert(err, IsNil)
 	unit := party.Formations[0].Automats[0].Units[0].Entity
 

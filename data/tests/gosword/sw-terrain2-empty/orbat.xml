@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/6.0.0/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="party1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="5" level="xxxxx" name="formation1" symbol="symbols/sfgpu"/>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [2]" type="knowledge group"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="3" name="party2" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="6" level="xxxxx" name="formation2" symbol="symbols/sfgpu"/>
+      </tactical>
+      <communication>
+        <knowledge-group id="4" name="Groupe de connaissance [4]" type="knowledge group"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="neutral" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="neutral" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>

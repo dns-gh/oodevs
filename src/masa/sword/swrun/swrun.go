@@ -70,17 +70,18 @@ func MakeOptsAndSession(cfg *swtest.Config) (*simu.SimOpts, *simu.Session) {
 }
 
 type ClientOpts struct {
-	Exercise       string
-	User           string
-	Password       string
-	Step           int
-	Paused         bool
-	Logger         swapi.MessageLogger
-	WaitTimeout    time.Duration
-	StartGaming    bool
-	Seed           int
-	PathfindDir    string
-	PathfindFilter string
+	Exercise        string
+	User            string
+	Password        string
+	Step            int
+	Paused          bool
+	Logger          swapi.MessageLogger
+	WaitTimeout     time.Duration
+	StartGaming     bool
+	Seed            int
+	PathfindDir     string
+	PathfindFilter  string
+	PathfindThreads int
 }
 
 // Prints input and output client messages to stderr.
@@ -134,6 +135,7 @@ func StartSimOnExercise(clientOpts *ClientOpts, cfg *swtest.Config) (*simu.SimPr
 	opts.PathfindDir = clientOpts.PathfindDir
 	opts.PathfindFilter = clientOpts.PathfindFilter
 	session.Paused = clientOpts.Paused
+	session.PathfindThreads = clientOpts.PathfindThreads
 	if clientOpts.Step > 0 {
 		session.TimeStep = clientOpts.Step
 	}
