@@ -54,10 +54,8 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
         return;
     const geometry::Point2f topRight( bottomRight_.X(), topLeft_.Y() );
     const geometry::Point2f bottomLeft( topLeft_.X(), bottomRight_.Y() );
-
-    // $$$$ SBO 2006-12-21: viewport
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glColor4f( 1, 0, 0, 0.5f );
+    glColor4f( 1, 0, 0, GetAlpha() );
     glLineWidth( 5.f );
     view_.DrawLine( topLeft_, topRight );
     view_.DrawLine( topRight, bottomRight_ );
