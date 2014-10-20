@@ -27,6 +27,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     , async_     ( new runtime::Async( pool ) )
 {
     qRegisterMetaType< size_t >( "size_t" );
+    qRegisterMetaType< int64_t >( "int64_t" );
     qRegisterMetaType< HttpCommand >( "HttpCommand" );
 
     ui_->setupUi( this );
