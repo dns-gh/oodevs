@@ -34,6 +34,7 @@ RenderingContext::RenderingContext()
     , expectedPrecision_( 10 )
     , pickingMode_( false )
     , lineWithFactor_( 1.f )
+    , opacity_( 1 )
 {
     PushDefaultValues();
 }
@@ -184,7 +185,9 @@ float RenderingContext::LineWidthFactor() const
 // -----------------------------------------------------------------------------
 bool RenderingContext::SetupFill( References_ABC& references ) const
 {
-    return GetProperty< Paint_ABC >( fill ).Setup( references, GetProperty< Opacity >( fillOpacity ).GetValue() );
+    return GetProperty< Paint_ABC >( fill ).Setup(
+        references,
+        opacity_ * GetProperty< Opacity >( fillOpacity ).GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +196,9 @@ bool RenderingContext::SetupFill( References_ABC& references ) const
 // -----------------------------------------------------------------------------
 bool RenderingContext::SetupStroke( References_ABC& references ) const
 {
-    const bool result = GetProperty< Paint_ABC >( stroke ).Setup( references, GetProperty< Opacity >( strokeOpacity ).GetValue() );
+    const bool result = GetProperty< Paint_ABC >( stroke ).Setup(
+        references,
+        opacity_ * GetProperty< Opacity >( strokeOpacity ).GetValue() );
     if( result )
         GetProperty< Length >( strokeWidth ).SetupLineWidth();
     return result;
@@ -226,4 +231,9 @@ void RenderingContext::DisablePickingMode()
 {
     pickingMode_ = false;
     lineWithFactor_ = 1.f;
+}
+
+void RenderingContext::SetOpacity( float opacity )
+{
+    opacity_ = opacity;
 }

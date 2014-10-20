@@ -242,14 +242,11 @@ void SvgLocationDrawer::DrawShape( const T& shape )
 {
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( 1 );
-
         const geometry::BoundingBox box( viewport_.Left(), viewport_.Bottom(), viewport_.Right(), viewport_.Top() );
         context_->SetViewport( box, 320, 200 );
-        svg::Color svgColor( color_.name().toStdString() );
-        svg::Opacity opacity( static_cast< float >( color_.alphaF() ) );
-        context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
-        context_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
-        context_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
+        svg::Color color( color_.name().toStdString() );
+        context_->PushProperty( svg::RenderingContext_ABC::color, color );
+        context_->SetOpacity( static_cast< float >( color_.alphaF() ) );
         if( dashStyle_ != eSolid )
             context_->PushProperty( svg::RenderingContext_ABC::strokeDasharray, dashStyle_ == eDashed ? dashed_ : dashDot_ );
         if( tools_->IsPickingMode() )
@@ -258,10 +255,7 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         if( dashStyle_ != eSolid )
             context_->PopProperty( svg::RenderingContext_ABC::strokeDasharray );
         context_->DisablePickingMode();
-        context_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
-        context_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
         context_->PopProperty( svg::RenderingContext_ABC::color );
-
         if( overlined_ && !tools_->IsPickingMode() )
         {
             glLineWidth( 1 );

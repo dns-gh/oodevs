@@ -45,16 +45,17 @@ namespace
         }
         virtual float ExpectedPrecision() const { return expectedPrecision_; }
         virtual float Pixels() const            { return pixels_; }
-        virtual float LineWidthFactor() const { return 1.f;}
+        virtual float LineWidthFactor() const { return 1.f; }
 
-        virtual bool SetupFill( References_ABC& ) const { return false; };
-        virtual bool SetupStroke( References_ABC& ) const { return false; };
-        virtual void PushProperty( E_Properties , Property_ABC& ) {};
-        virtual void PopProperty ( E_Properties ) {};
+        virtual bool SetupFill( References_ABC& ) const { return false; }
+        virtual bool SetupStroke( References_ABC& ) const { return false; }
+        virtual void PushProperty( E_Properties , Property_ABC& ) {}
+        virtual void PopProperty ( E_Properties ) {}
         virtual const Property_ABC* FindProperty( E_Properties ) const { return 0; }
-        virtual bool IsPickingMode() const { return false; };
-        virtual void EnablePickingMode( float /*lineWithFactor*/ ) {};
-        virtual void DisablePickingMode() {};
+        virtual bool IsPickingMode() const { return false; }
+        virtual void EnablePickingMode( float ) {}
+        virtual void DisablePickingMode() {}
+        virtual void SetOpacity( float ) {}
 
     private:
         float pixels_, expectedPrecision_;

@@ -12,12 +12,10 @@
 
 #include "RenderingContext_ABC.h"
 #include "BoundingBox.h"
-#include <map>
 #include <vector>
 
 namespace svg
 {
-
 // =============================================================================
 /** @class  RenderingContext
     @brief  RenderingContext
@@ -26,7 +24,6 @@ namespace svg
 // =============================================================================
 class RenderingContext : public RenderingContext_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -55,6 +52,8 @@ public:
     virtual void PushProperty( E_Properties name, Property_ABC& value );
     virtual void PopProperty ( E_Properties name );
     virtual const Property_ABC* FindProperty( E_Properties name ) const;
+
+    virtual void SetOpacity( float opacity );
     //@}
 
 private:
@@ -68,7 +67,6 @@ private:
     //@{
     typedef std::vector< Property_ABC* >     T_Properties;
     typedef std::vector< T_Properties >      T_PropertyMap;
-    typedef T_PropertyMap::const_iterator  CIT_PropertyMap;
     //@}
 
     //! @name Helpers
@@ -85,6 +83,7 @@ private:
     T_PropertyMap properties_;
     bool pickingMode_;
     float lineWithFactor_;
+    float opacity_;
     //@}
 };
 
