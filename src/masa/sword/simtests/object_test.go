@@ -499,28 +499,33 @@ func (s *TestSuite) TestDeleteSpawnedObject(c *C) {
 }
 
 func (s *TestSuite) TestTrafficabilityAttribute(c *C) {
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
 	model := client.Model
 	data := model.GetData()
-	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
+	location := swapi.MakePolygonLocation(
+		swapi.Point{X: -15.785794, Y: 28.371330},
+		swapi.Point{X: -15.785794, Y: 28.430141},
+		swapi.Point{X: -15.713773, Y: 28.430141},
+		swapi.Point{X: -15.713773, Y: 28.371330},
+	)
 
 	// Get a party identifier
-	party := data.FindPartyByName("party")
+	party := data.FindPartyByName("party2")
 	c.Assert(party, NotNil)
 
 	// Error: parameters count
-	object, err := client.CreateObject("landslide",
+	object, err := client.CreateObject("slightly trafficable object",
 		party.Id, location, swapi.MakeList(
 			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_trafficability))))
 	c.Assert(err, IsSwordError, "error_invalid_object")
 
-	// Create landslide by default
-	object, err = client.CreateObject("landslide", party.Id, location)
+	// Create default object
+	object, err = client.CreateObject("slightly trafficable object", party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Objects[object.Id].Trafficability == 0.1
+		return data.Objects[object.Id].Trafficability > 0
 	})
 
 	// Change trafficability
@@ -529,7 +534,7 @@ func (s *TestSuite) TestTrafficabilityAttribute(c *C) {
 		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_trafficability)), // attribute type
 		swapi.MakeFloat(trafficability),                                      // trafficability
 	)
-	object, err = client.CreateObject("landslide", party.Id, location, params)
+	object, err = client.CreateObject("slightly trafficable object", party.Id, location, params)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 
