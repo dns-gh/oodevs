@@ -14,7 +14,6 @@
 #include "clients_gui/GlTooltip.h"
 #include "svgl/TextRenderer.h"
 #include "tools/Loader_ABC.h"
-#include <boost/bind.hpp>
 
 namespace
 {
