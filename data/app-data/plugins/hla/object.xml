@@ -1,81 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<dis-mapping default-type="2 0 225 3 7" default-name="mined area (scattered)" threshold="0 0 9 1 1 9 9">
+<dis-mapping default-type="2 0 225 3 7" default-name="mined area (linear and destructible)" threshold="0 0 9 1 1 9 9">
     <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
     <!-- aggregates -->
-    <entry name="mined area (scattered)" dis="2 0 225 3 7"/>
+    <entry name="mined area (linear and destructible)" dis="2 0 225 3 7"/>
     <entry name="mines" dis="4 0 225 1 1"/>
-    <entry name="safe zone" dis="4 0 225 1 2"/>
     <entry name="jamming area" dis="4 0 225 1 3"/>
     <entry name="full jamming area" dis="4 0 225 1 4"/>
-    <entry name="nbc zone (external model)" dis="4 0 225 1 5"/>
     <entry name="nbc cloud (external model)" dis="4 0 225 1 6"/>
     <entry name="nbc zone" dis="4 0 225 1 7"/>
     <entry name="nbc cloud" dis="4 0 225 1 8"/>
-    <entry name="fire" dis="4 0 225 1 9"/>
     <entry name="surface fire" dis="4 0 225 1 10"/>
     <entry name="decontamination site" dis="4 0 225 1 11"/>
-    <entry name="logistic route" dis="4 0 225 1 12"/>
     <entry name="crossing site" dis="4 0 225 1 13"/>
-    <entry name="rota area" dis="4 0 225 1 14"/>
     <entry name="abattis" dis="4 0 225 1 15"/>
     <entry name="anti tank obstacle" dis="4 0 225 1 16"/>
     <entry name="barricade" dis="4 0 225 1 17"/>
-    <entry name="mined area (linear)" dis="4 0 225 1 18"/>
-    <entry name="landslide" dis="4 0 225 1 19"/>
     <entry name="road destruction" dis="4 0 225 1 20"/>
-    <entry name="bridge destruction" dis="4 0 225 1 21"/>
     <entry name="continuous pontoon bridge" dis="4 0 225 1 22"/>
-    <entry name="discontinuous pontoon bridge" dis="4 0 225 1 23"/>
     <entry name="firing post" dis="4 0 225 1 24"/>
-    <entry name="gun artillery deployment area" dis="4 0 225 1 25"/>
-    <entry name="cobra deployment area" dis="4 0 225 1 26"/>
-    <entry name="mrls deployment area" dis="4 0 225 1 27"/>
-    <entry name="mortar deployment area" dis="4 0 225 1 28"/>
     <entry name="logistic support area" dis="4 0 225 1 29"/>
-    <entry name="landing area" dis="4 0 225 1 30"/>
-    <entry name="trail" dis="4 0 225 1 31"/>
-    <entry name="platform" dis="4 0 225 1 32"/>
     <entry name="mobility enhanced area" dis="4 0 225 1 33"/>
-    <entry name="landing area (helicopter)" dis="4 0 225 1 34"/>
-    <entry name="logistic area" dis="4 0 225 1 35"/>
-    <entry name="prisoners camp" dis="4 0 225 1 36"/>
     <entry name="refugees camp" dis="4 0 225 1 37"/>
     <entry name="checkpoint" dis="4 0 225 1 38"/>
-    <entry name="dropping area" dis="4 0 225 1 39"/>
     <entry name="fire forbidden area" dis="4 0 225 1 40"/>
-    <entry name="movement forbidden area" dis="4 0 225 1 41"/>
     <entry name="installation" dis="4 0 225 1 42"/>
-    <entry name="distribution point" dis="4 0 225 1 43"/>
     <entry name="sensorsDetectionZone" dis="4 0 225 1 44"/>
     <entry name="sensors" dis="4 0 225 1 45"/>
-    <entry name="supply point" dis="4 0 225 1 46"/>
     <entry name="urban block" dis="4 0 225 1 47"/>
-    <entry name="dirty bomb" dis="4 0 225 1 48"/>
-    <entry name="hospital" dis="4 0 225 1 49"/>
-    <entry name="weapon cache" dis="4 0 225 1 50"/>
-    <entry name="emergency shelter" dis="4 0 225 1 51"/>
-    <entry name="emergency meeting place" dis="4 0 225 1 52"/>
-    <entry name="victim discovery zone" dis="4 0 225 1 53"/>
-    <entry name="stock" dis="4 0 225 1 54"/>
     <entry name="flood" dis="4 0 225 1 55"/>
     <entry name="population moving" dis="4 0 225 1 56"/>
     <entry name="secured area" dis="4 0 225 1 57"/>
     <entry name="firebreak area" dis="4 0 225 1 58"/>
-    <entry name="mined area (linear and destructible)" dis="4 0 225 1 59"/>
     <entry name="dyke" dis="4 0 225 1 60"/>
-    <entry name="underground exit" dis="4 0 225 1 61"/>
     <entry name="Country road" dis="4 0 225 1 62"/>
-    <entry name="Highway" dis="4 0 225 1 63"/>
-    <entry name="Main road" dis="4 0 225 1 64"/>
-    <entry name="Secondary road" dis="4 0 225 1 65"/>
-    <entry name="Wet terrain" dis="4 0 225 1 66"/>
+    <entry name="underground exit" dis="4 0 225 1 61"/>
     <entry name="Snowed terrain" dis="4 0 225 1 67"/>
-    <entry name="Iced terrain" dis="4 0 225 1 68"/>
     <entry name="Border" dis="4 0 225 1 69"/>
     <entry name="ressource node" dis="4 0 225 1 70"/>
     <entry name="Arson" dis="4 0 225 1 71"/>
-    <entry name="Destruction Bomb" dis="4 0 225 1 72"/>
-    <entry name="Medical camp" dis="4 0 225 1 73"/>
-    <entry name="Emergency services HQ" dis="4 0 225 1 74"/>
     <entry name="Scaterring grenade" dis="4 0 225 1 75"/>
+    <entry name="movement forbidden area" dis="4 0 225 1 41"/>
 </dis-mapping>
