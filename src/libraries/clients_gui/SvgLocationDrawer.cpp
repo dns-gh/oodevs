@@ -20,22 +20,6 @@
 
 using namespace gui;
 
-namespace
-{
-    QColor Complement( const QColor& color )
-    {
-        int h, s, v, a;
-        color.getHsv( &h, &s, &v, &a );
-        if( h == -1 )
-            v = 255 - v;
-        else
-            h += 180;
-        QColor complement;
-        complement.setHsv( h, s, v, a );
-        return complement;
-    }
-}
-
 std::vector< geometry::Vector2f > SvgLocationDrawer::circle_;
 
 // -----------------------------------------------------------------------------
@@ -80,19 +64,19 @@ void SvgLocationDrawer::GenerateCircle()
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: SvgLocationDrawer::SetColor
-// Created: SBO 2008-05-30
-// -----------------------------------------------------------------------------
-void SvgLocationDrawer::SetColor( const QColor& color )
+namespace
 {
-    colorChanged_ = color_ != color;
-    color_ = color;
-    complement_ = Complement( color );
-    // TMP, use tools_.GetCurrentAlpha() when it will be merged
-    float glColor[4];
-    glGetFloatv( GL_CURRENT_COLOR, glColor );
-    color_.setAlphaF( glColor[3] );
+    QColor Complement( QColor color )
+    {
+        int h, s, v, a;
+        color.getHsv( &h, &s, &v, &a );
+        if( h == -1 )
+            v = 255 - v;
+        else
+            h += 180;
+        color.setHsv( h, s, v, a );
+        return color;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -102,13 +86,17 @@ void SvgLocationDrawer::SetColor( const QColor& color )
 void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GLView_ABC& tools,
                               const QColor& color, bool overlined, E_Dash_style dashStyle, float zoom )
 {
-    glPushAttrib( GL_CURRENT_BIT );
-    SetColor( color );
     viewport_ = viewport;
     overlined_ = overlined;
     tools_ = &tools;
     zoom_ = zoom;
     dashStyle_ = dashStyle;
+    colorChanged_ = color_ != color;
+    color_ = color;
+    if( !tools.IsPickingMode() )
+        color_.setAlphaF( tools.GetCurrentAlpha() );
+    complement_ = Complement( color_ );
+    glPushAttrib( GL_CURRENT_BIT );
     location.Accept( *this );
     glPopAttrib();
 }
