@@ -28,7 +28,6 @@ namespace gui
     class Elevation2dLayer;
     class GLOptions;
     class GlProxy;
-    class LightingProxy;
     class PreferencesList;
     class PreferencePanel_ABC;
     class TerrainSettings;
@@ -50,7 +49,6 @@ public:
     //@{
              PreferencesDialog( QWidget* parent,
                                 kernel::Controllers& controllers,
-                                LightingProxy& lighting,
                                 const kernel::StaticModel& staticModel,
                                 GlProxy& proxy );
     virtual ~PreferencesDialog();

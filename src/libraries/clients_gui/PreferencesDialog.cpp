@@ -40,7 +40,6 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent,
                                       Controllers& controllers,
-                                      LightingProxy& lighting,
                                       const kernel::StaticModel& staticModel,
                                       GlProxy& proxy )
     : ModalDialog( parent, "PreferencesDialog", false )
@@ -98,7 +97,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     AddPage( tr( "2D/Terrain" ),           *new GraphicsPanel( this, options ) );
     AddPage( tr( "2D/Population" ),        *new InhabitantPanel( this, options ) );
     AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, staticModel.detection_ ) );
-    AddPage( tr( "3D" ),                   *new LightingPanel( this, options, lighting ) );
+    AddPage( tr( "3D" ),                   *new LightingPanel( this, options ) );
     AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, staticModel.coordinateConverter_ ) );
     AddPage( tr( "Refresh rate" ),         *new RefreshRatePanel( this, options ) );
     AddPage( tr( "Replay" ),               *new ReplayPanel( this, options ) );

@@ -93,10 +93,17 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel,
-                 Model& model, const Simulation& simulation, SimulationController& simulationController,
-                 Network& network, ProfileFilter& profile, GamingConfig& config, LoggerProxy& logger,
-                 const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers );
+             MainWindow( kernel::Controllers& controllers,
+                         StaticModel& staticModel,
+                         Model& model,
+                         const Simulation& simulation,
+                         SimulationController& simulationController,
+                         Network& network,
+                         ProfileFilter& profile,
+                         GamingConfig& config,
+                         LoggerProxy& logger,
+                         const kernel::KnowledgeConverter_ABC& converter,
+                         kernel::Workers& workers );
     virtual ~MainWindow();
     //@}
 
@@ -168,7 +175,6 @@ private:
 
     // the following will move to GLOptions or GLMainProxy
     std::unique_ptr< gui::GlProxy > glProxy_;
-    std::shared_ptr< gui::LightingProxy > lighting_;
     std::unique_ptr< gui::GlSelector > selector_;
 
     std::unique_ptr< gui::CircularEventStrategy > forward_;

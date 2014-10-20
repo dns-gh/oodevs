@@ -121,7 +121,11 @@ namespace ba = boost::assign;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, PrepaConfig& config, const QString& expiration )
+MainWindow::MainWindow( kernel::Controllers& controllers,
+                        StaticModel& staticModel,
+                        Model& model,
+                        PrepaConfig& config,
+                        const QString& expiration )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
@@ -131,7 +135,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , needsSaving_       ( false )
     , modelBuilder_      ( new ModelBuilder( controllers, model ) )
     , colorController_   ( new ColorController( controllers_ ) )
-    , lighting_          ( new gui::LightingProxy() )
 {
     const auto& profile = PreparationProfile::GetProfile();
     gui::SubObjectName subObject( "MainWindow" );
@@ -153,7 +156,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
         return;
     }
 
-    glProxy_.reset( new gui::GlProxy( controllers, profile, staticModel_, model_, lighting_ ) );
+    glProxy_.reset( new gui::GlProxy( controllers, profile, staticModel_, model_, std::make_shared< gui::LightingProxy >() ) );
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) );
 
     // Text editor
@@ -189,7 +192,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 
     // Dialogs
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, profile, *strategy_, *colorController_,
-                                                 *icons_, config, *symbols, *lighting_, paramLayer, *glProxy_ ) );
+                                                 *icons_, config, *symbols, paramLayer, *glProxy_ ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, paramLayer, weatherLayer, profilerLayer, *icons_, *modelBuilder_, model_,
@@ -285,7 +288,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Default ]            = std::make_shared< gui::DefaultLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_Drawings ]           = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, profile, *modelBuilder_ );
     layers[ eLayerTypes_Elevation2d ]        = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
-    layers[ eLayerTypes_Elevation3d ]        = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
+    layers[ eLayerTypes_Elevation3d ]        = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers[ eLayerTypes_Formations ]         = formations;
     layers[ eLayerTypes_Ghosts ]             = std::make_shared< GhostsLayer >( controllers_, *glProxy_, *strategy_, model_, profile );
     layers[ eLayerTypes_Grid ]               = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );

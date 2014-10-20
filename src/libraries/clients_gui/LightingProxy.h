@@ -15,6 +15,11 @@
 class FixedLighting;
 class TimeLighting;
 
+namespace kernel
+{
+    class Options;
+}
+
 namespace gui
 {
 
@@ -26,7 +31,6 @@ namespace gui
 // =============================================================================
 class LightingProxy : public QObject
                     , public Lighting_ABC
-
 {
 public:
     //! @name Constructors/Destructor
@@ -38,6 +42,8 @@ public:
 
     //! @name Operations
     //@{
+    void Load( const kernel::Options& options );
+
     void SwitchToFixed();
     void SwitchToCameraFixed();
     void SwitchToSimulationTime();
@@ -48,8 +54,8 @@ public:
     //! @name Fixed lighting
     //@{
     void SetLightDirection( const geometry::Vector3f& direction );
-    void SetAmbient       ( float r, float g, float b );
-    void SetDiffuse       ( float r, float g, float b );
+    void SetAmbient       ( const QColor& color );
+    void SetDiffuse       ( const QColor& color );
     //@}
 
     //! @name Time lighting
@@ -68,6 +74,6 @@ private:
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __LightingProxy_h_

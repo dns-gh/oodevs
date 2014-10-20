@@ -35,9 +35,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              LightingPanel( QWidget* parent,
-                            kernel::OptionsController& options,
-                            LightingProxy& lighting );
+                            kernel::OptionsController& options );
     virtual ~LightingPanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Load( const GlProxy& view );
     //@}
 
 private slots:
@@ -52,7 +56,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    LightingProxy& lighting_;
+    std::shared_ptr< LightingProxy > lighting_;
     QGroupBox* fixedBox_;
     //@}
 };

@@ -13,6 +13,7 @@
 #include "ContourLinesComputer.h"
 #include "ContourLinesObserver.h"
 #include "Elevation2dTexture.h"
+#include "LightingProxy.h"
 #include "TerrainSettings.h"
 #include "UrbanDisplayOptions.h"
 #include "WatershedTexture.h"
@@ -136,6 +137,8 @@ void GLOptions::Load()
     graphicSetup_->Load( *options_ );
     //urbanSetup_->Load( *options_ );
     watershedTexture_->Load( *options_ );
+    if( auto lighting = std::dynamic_pointer_cast< LightingProxy >( lighting_ ) )
+        lighting->Load( *options_ );
 }
 
 namespace

@@ -25,7 +25,6 @@ namespace gui
     class ConsistencyDialog_ABC;
     class EntitySymbols;
     class GlProxy;
-    class LightingProxy;
     class ParametersLayer;
     class PreferencesDialog;
     class SymbolIcons;
@@ -72,7 +71,6 @@ public:
                               const gui::EntitySymbols& symbols,
                               const tools::ExerciseConfig& config,
                               gui::SymbolIcons& icons,
-                              gui::LightingProxy& lighting,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               gui::GlProxy& proxy );
     virtual ~DialogContainer();

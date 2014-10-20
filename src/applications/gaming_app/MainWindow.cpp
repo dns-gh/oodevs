@@ -148,10 +148,17 @@ namespace
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model,
-    const Simulation& simulation, SimulationController& simulationController,
-    Network& network, ProfileFilter& filter, GamingConfig& config, LoggerProxy& logger,
-    const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers )
+MainWindow::MainWindow( Controllers& controllers,
+                        ::StaticModel& staticModel,
+                        Model& model,
+                        const Simulation& simulation,
+                        SimulationController& simulationController,
+                        Network& network,
+                        ProfileFilter& filter,
+                        GamingConfig& config,
+                        LoggerProxy& logger,
+                        const kernel::KnowledgeConverter_ABC& converter,
+                        kernel::Workers& workers )
     : QMainWindow()
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
@@ -172,8 +179,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     controllers_.eventActions_.AddSelectionner( new Selectionner< gui::Event >() );
     gui::layers::CheckConsistency();
 
-    lighting_.reset( new SimulationLighting( controllers ) );
-    glProxy_.reset( new gui::GlProxy( controllers, profile_, staticModel, model, lighting_ ) );
+    glProxy_.reset( new gui::GlProxy( controllers, profile_, staticModel, model, std::make_shared< SimulationLighting >( controllers ) ) );
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );
@@ -218,7 +224,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel, *glProxy_ ) );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, staticModel, *glProxy_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers.options_ ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers.options_, *firePlayer_ ) );
     preferenceDialog_->AddPage( tr( "Weapon Ranges" ), *new gui::WeaponRangesPanel( preferenceDialog_.get(), controllers.options_, staticModel_ ) );
@@ -335,7 +341,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Formations ]             = formations;
     layers[ eLayerTypes_Inhabitants ]            = std::make_shared< gui::InhabitantLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Elevation2d ]            = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
-    layers[ eLayerTypes_Elevation3d ]            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
+    layers[ eLayerTypes_Elevation3d ]            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers[ eLayerTypes_Grid ]                   = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
     layers[ eLayerTypes_Locations ]              = locations;
     if( config_.HasMapnik() )

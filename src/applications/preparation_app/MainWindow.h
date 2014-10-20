@@ -29,7 +29,6 @@ namespace gui
     class GlSelector;
     class HelpSystem;
     class Layer_ABC;
-    class LightingProxy;
     class Painter_ABC;
     class ParametersLayer;
     class TerrainPicker;
@@ -62,7 +61,11 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, PrepaConfig& config, const QString& expiration );
+             MainWindow( kernel::Controllers& controllers,
+                         StaticModel& staticModel,
+                         Model& model,
+                         PrepaConfig& config,
+                         const QString& expiration );
     virtual ~MainWindow();
     //@}
 
@@ -135,7 +138,6 @@ private:
     bool                 needsSaving_;
 
     // the following will move to GLOptions or GLMainProxy
-    std::shared_ptr< gui::LightingProxy >          lighting_;
     std::unique_ptr< gui::GlSelector >             selector_;
     std::unique_ptr< gui::GlProxy >                glProxy_;
 
