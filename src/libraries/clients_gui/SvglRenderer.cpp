@@ -22,22 +22,24 @@ using namespace geometry;
 using namespace gui;
 using namespace svg;
 
-std::unique_ptr< TextRenderer > SvglRenderer::renderer_( new TextRenderer() );
-unsigned int SvglRenderer::colorList_ = 0;
-
 // -----------------------------------------------------------------------------
 // Name: SvglRenderer constructor
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
 SvglRenderer::SvglRenderer()
-    : current_         ( new Color( "black" ) )
-    , opacity_         ( new Opacity() )
-    , references_      ( new References() )
+    : references_      ( new References() )
     , renderingContext_( new RenderingContext() )
     , listLenghts_     ( new ListLengthFactory() )
+    , previousWidth_   ( 0 )
+    , previousHeight_  ( 0 )
+    , colorList_       ( 0 )
+    , r_               ( 1 )
+    , g_               ( 1 )
+    , b_               ( 1 )
+    , a_               ( 1 )
     , colorDirty_      ( true )
 {
-    r_ = g_ = b_ = a_ = 1;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,13 +49,8 @@ SvglRenderer::SvglRenderer()
 SvglRenderer::~SvglRenderer()
 {
     for( auto it = lists_.begin(); it != lists_.end(); ++it )
-        glDeleteLists( it->second, 1 );
-    if( colorList_ )
-    {
-        glDeleteLists( colorList_, 1 );
-        colorList_ = 0;
-        renderer_.reset( new TextRenderer() );
-    }
+        glDeleteLists( it->second.first, 1 );
+    glDeleteLists( colorList_, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,11 +59,15 @@ SvglRenderer::~SvglRenderer()
 // -----------------------------------------------------------------------------
 void SvglRenderer::SetCurrentColor( float r, float g, float b, float a )
 {
-    if( r!=r_ || g_!=g || b_!=b || a_!=a )
+    // This stands for the 'currentColor' of SVG
+    if( r != r_ || g_ != g || b_ != b )
     {
-        r_ = r; g_ = g; b_ = b; a_ = a;
+        r_ = r;
+        g_ = g;
+        b_ = b;
         colorDirty_ = true;
     }
+    a_ = a;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,43 +100,44 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
 void SvglRenderer::Render( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                            unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     CreateStaticLists();
     if( pickingMode )
     {
         ConfigureColorList();
         ConfigureWidthList( viewport, vWidth, vHeight );
-        Draw( node, style, viewport, vWidth, vHeight, pickingMode );
-        return;
+        Draw( node, style, viewport, vWidth, vHeight, true );
     }
-    unsigned int listId = RetrieveListId( node, style, viewport, vWidth, vHeight, pickingMode, lists_ );
-    if( !listId )
-        return;
-    ConfigureColorList();
-    ConfigureWidthList( viewport, vWidth, vHeight );
-    glCallList( listId );
+    else if( auto listId = RetrieveListId( node, style, viewport, vWidth, vHeight ) )
+    {
+        ConfigureColorList();
+        ConfigureWidthList( viewport, vWidth, vHeight );
+        glCallList( listId );
+    }
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
 // Name: SvglRenderer::RetrieveListId
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
-                                           unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists )
+unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node,
+    const std::string& style, const geometry::Rectangle2f& viewport,
+    unsigned vWidth, unsigned vHeight )
 {
-    unsigned int listId = 0;
-    CIT_Lists it = lists.find( node );
-    if( it == lists.end() )
+    auto it = lists_.find( node );
+    // Alpha cannot simply be injected into the compiled display lists
+    // so just rebuild them whenever it changes.
+    if( it != lists_.end() && it->second.second == a_ )
+        return it->second.first;
+    const auto listId = it == lists_.end() ? glGenLists( 1 ) : it->second.first;
+    if( listId )
     {
-        listId = glGenLists( 1 );
-        if( !listId )
-            return 0;
         glNewList( listId, GL_COMPILE );
-        Draw( node, style, viewport, vWidth, vHeight, pickingMode );
+        Draw( node, style, viewport, vWidth, vHeight, false );
         glEndList();
-        lists[ node ] = listId;
+        lists_[ node ] = std::make_pair( listId, a_ );
     }
-    else
-        listId = it->second;
     return listId;
 }
 
@@ -145,7 +147,7 @@ unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC 
 // -----------------------------------------------------------------------------
 void SvglRenderer::Draw( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
-    glPushAttrib( GL_CURRENT_BIT );
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
     ListPaint color( colorList_ );
     if( pickingMode )
@@ -174,7 +176,7 @@ void SvglRenderer::ConfigureColorList()
     if( colorDirty_ )
     {
         glNewList( colorList_, GL_COMPILE );
-        glColor4fv( &r_ );
+        glColor4f( r_, g_, b_, a_ );
         glEndList();
         colorDirty_ = false;
     }
@@ -186,7 +188,7 @@ void SvglRenderer::ConfigureColorList()
 // -----------------------------------------------------------------------------
 void SvglRenderer::ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
 {
-    if( viewport != previousViewport_ || vWidth   != previousWidth_ || vHeight  != previousHeight_ )
+    if( viewport != previousViewport_ || vWidth != previousWidth_ || vHeight  != previousHeight_ )
     {
         const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
         listLenghts_->SetViewport( box, vWidth, vHeight );
@@ -213,9 +215,11 @@ std::unique_ptr< Style > SvglRenderer::CreateStyle( const std::string& style )
 // -----------------------------------------------------------------------------
 void SvglRenderer::CreateStaticLists()
 {
-    if( ! colorList_ )
+    if( !renderer_ )
     {
+        renderer_.reset( new TextRenderer() );
         renderer_->InitializeFont( "Arial", 700 );
-        colorList_ = glGenLists( 1 );
     }
+    if( !colorList_ )
+        colorList_ = glGenLists( 1 );
 }

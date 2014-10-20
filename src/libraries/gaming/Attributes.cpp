@@ -340,7 +340,7 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
     || ! viewport.IsHotpointVisible() || ! tools.ShouldDisplay( "UnitDetails" ) )
         return;
     glPushAttrib( GL_CURRENT_BIT );
-    glColor3f( 1, 1, 1 );
+    glColor4f( 1, 1, 1, tools.GetCurrentAlpha() );
     if( bDead_ )
         tools.DrawIcon( xpm_skull, where, 150.f, gui::GLView_ABC::pixels );
     if( bRadioEmitterSilence_ )

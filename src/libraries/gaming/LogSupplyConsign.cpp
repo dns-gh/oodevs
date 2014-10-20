@@ -115,7 +115,8 @@ void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport,
             return;
         if( viewport.IsVisible( Rectangle2f( from, to ) ) )
         {
-            glColor4f( COLOR_ORANGE );
+            static const float color[4] = { COLOR_ORANGE };
+            glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
             switch( nState_ )
             {
                 case sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point:

@@ -285,10 +285,8 @@ void Color::Set( float r, float g, float b )
 // -----------------------------------------------------------------------------
 bool Color::Setup( References_ABC&, float opacity ) const
 {
-     if( pickingMode_ )
-        return true;
-
-    glColor4f( r_, g_, b_, opacity );
+    if( !pickingMode_ )
+        glColor4f( r_, g_, b_, opacity );
     return true;
 }
 

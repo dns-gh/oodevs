@@ -91,7 +91,8 @@ void LogMedicalConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport
     const Point2f to   = consumer_.Get< Positions >().GetPosition();
     if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
-    glColor4f( COLOR_PINK );
+    static const float color[4] = { COLOR_PINK };
+    glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
     switch( nState_ )
     {
     case sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in:

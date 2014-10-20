@@ -9,16 +9,15 @@
 
 #include "clients_gui_pch.h"
 #include "TacticalGraphics.h"
-
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "DrawingTypes.h"
 #include "SimpleLocationDrawer.h"
 #include "SvgLocationDrawer.h"
 #include "GLView_ABC.h"
-
 #include "clients_kernel/Location_ABC.h"
 #include <boost/assign.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace gui;
 
@@ -28,14 +27,16 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 TacticalGraphics::TacticalGraphics( const DrawingTypes& drawingTypes )
 {
-    drawingTypes.Apply( [&]( const DrawingCategory& category ){
-        tools::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
-        while( it.HasMoreElements() )
+    drawingTypes.Apply(
+        [&]( const DrawingCategory& category )
         {
-            const DrawingTemplate& drawing = it.NextElement();
-            templates_[ drawing.GetCode().toStdString() ] = &drawing;
-        }
-    } );
+            auto it = category.CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const DrawingTemplate& drawing = it.NextElement();
+                templates_[ drawing.GetCode().toStdString() ] = &drawing;
+            }
+        } );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +54,7 @@ TacticalGraphics::~TacticalGraphics()
 // -----------------------------------------------------------------------------
 void TacticalGraphics::SetCurrentColor( float r, float g, float b, float a )
 {
-    color_.setRgb( static_cast< int >( r * 255.f ), static_cast< int >( g * 255.f ), int( b * 255.f ), static_cast< int >( a * 255.f ) );
+    color_.setRgbF( r, g, b, a );
 }
 
 namespace
@@ -66,8 +67,6 @@ namespace
         AreaEffect( const GLView_ABC& tools, float pointSize )
             : tools_( tools )
             , pointSize_( pointSize > 0.f ? pointSize : 250.f )
-        {}
-        ~AreaEffect()
         {}
     private:
         virtual void VisitLines    ( const T_PointVector& ) {}
@@ -85,7 +84,6 @@ namespace
                 ( geometry::Point2f( point.X() - pointSize_, point.Y() + pointSize_ ) )
                 ( geometry::Point2f( point.X() - pointSize_, point.Y() - pointSize_ ) ) );
         }
-
     private:
         const GLView_ABC& tools_;
         const float pointSize_;
@@ -99,7 +97,7 @@ namespace
 void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport,
                              const GLView_ABC& tools, bool overlined, float pointSize, float zoom )
 {
-    if( boost::shared_ptr< SvgLocationDrawer > renderer = FindRenderer( symbol ) )
+    if( auto renderer = FindRenderer( symbol ) )
         renderer->Draw( location, viewport, tools, color_, overlined, eSolid, zoom );
     else
     {
@@ -108,16 +106,15 @@ void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_A
         if( overlined )
         {
             glPushAttrib( GL_CURRENT_BIT );
-                glColor4f( 0, 0, 0, 0.5f );
-                glLineWidth( 6.f );
-                location.Accept( drawer );
+            glColor4f( 0, 0, 0, 0.5f * tools.GetCurrentAlpha() );
+            glLineWidth( 6.f );
+            location.Accept( drawer );
             glPopAttrib();
         }
         glLineWidth( tools.LineWidth( 2.f ) );
         location.Accept( drawer );
         glPopAttrib();
     }
-
     AreaEffect visitor( tools, pointSize );
     location.Accept( visitor );
 }
@@ -126,14 +123,14 @@ void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_A
 // Name: TacticalGraphics::FindRenderer
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-boost::shared_ptr< SvgLocationDrawer > TacticalGraphics::FindRenderer( const std::string symbol )
+const boost::shared_ptr< SvgLocationDrawer >& TacticalGraphics::FindRenderer( const std::string& symbol )
 {
-    boost::shared_ptr< SvgLocationDrawer > renderer = renderers_[ symbol ];
-    if( ! renderer.get() )
+    auto& renderer = renderers_[ symbol ];
+    if( !renderer )
     {
-        T_Templates::const_iterator it = templates_.find( symbol );
+        auto it = templates_.find( symbol );
         if( it != templates_.end() )
-            renderer.reset( new gui::SvgLocationDrawer( *it->second ) );
+            renderer = boost::make_shared< gui::SvgLocationDrawer >( *it->second );
     }
     return renderer;
 }

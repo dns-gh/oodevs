@@ -99,6 +99,13 @@ void AgentDetections::NotifyDeleted( const kernel::Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
 {
+    static const float colors[4][4] =
+    {
+        { COLOR_RECOGNIZED },
+        { COLOR_IDENTIFIED },
+        { COLOR_RECORDED },
+        { COLOR_DETECTED }
+    };
     if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() || holder_.IsAggregated() )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
@@ -108,13 +115,13 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
         if( ! CanShareKnowledge( holder_, agent ) && it->second != sword::UnitVisibility::invisible )
         {
             if( it->second == sword::UnitVisibility::recognized )
-                glColor4f( COLOR_RECOGNIZED );
+                glColor4f( colors[0][0], colors[0][1], colors[0][2], tools.GetCurrentAlpha() );
             else if( it->second == sword::UnitVisibility::identified )
-                glColor4f( COLOR_IDENTIFIED );
+                glColor4f( colors[1][0], colors[1][1], colors[1][2], tools.GetCurrentAlpha() );
             else if( it->second == sword::UnitVisibility::recorded )
-                glColor4f( COLOR_RECORDED );
+                glColor4f( colors[2][0], colors[2][1], colors[2][2], tools.GetCurrentAlpha() );
             else
-                glColor4f( COLOR_DETECTED );
+                glColor4f( colors[3][0], colors[3][1], colors[3][2], tools.GetCurrentAlpha() );
             tools.DrawLine( where, it->first->Get< Positions >().GetPosition(), 1.f );
         }
     }

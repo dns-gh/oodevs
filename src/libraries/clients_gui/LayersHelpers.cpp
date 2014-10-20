@@ -49,7 +49,6 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_ObjectCreation )
     ( eLayerTypes_IndicatorCreation )
     ( eLayerTypes_InhabitantCreation )
-    ( eLayerTypes_Pathfinds )
     ( eLayerTypes_ResourceNetworks )
     ( eLayerTypes_Locations )
     ( eLayerTypes_TerrainProfiler )
@@ -191,7 +190,7 @@ const layers::Descriptor descriptors_[] = {
       T_LayerTypesVector() },
     { eLayerTypes_TacticalLinesComposite, "main,miniview",                    true,   true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
-      ba::list_of< E_LayerTypes >( eLayerTypes_TacticalLines )( eLayerTypes_Drawings ) },
+      ba::list_of< E_LayerTypes >( eLayerTypes_TacticalLines )( eLayerTypes_Drawings )( eLayerTypes_Pathfinds ) },
     { eLayerTypes_Terrain,                "main,composition,miniviews",       false,  true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },

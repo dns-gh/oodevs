@@ -13,8 +13,6 @@
 namespace svg
 {
     class Node_ABC;
-    class Color;
-    class Opacity;
     class TextRenderer;
     class References;
     class RenderingContext;
@@ -62,8 +60,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::shared_ptr< svg::Node_ABC >, unsigned int > T_Lists;
-    typedef T_Lists::const_iterator                CIT_Lists;
+    typedef std::map< std::shared_ptr< svg::Node_ABC >, std::pair< unsigned int, float > > T_Lists;
     //@}
 
     //! @name Helpers
@@ -72,32 +69,26 @@ private:
     void         ConfigureColorList();
     void         ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
     void         CreateStaticLists();
-    unsigned int RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
-                                 unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists );
+    unsigned int RetrieveListId( const std::shared_ptr< svg::Node_ABC >& node,
+                                 const std::string& style, const geometry::Rectangle2f& viewport,
+                                 unsigned vWidth, unsigned vHeight );
     std::unique_ptr< svg::Style > CreateStyle( const std::string& style );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::unique_ptr< svg::Color >             current_;
-    std::unique_ptr< svg::Opacity >           opacity_;
     std::unique_ptr< svg::References >        references_;
     std::unique_ptr< svg::RenderingContext >  renderingContext_;
     std::unique_ptr< svg::ListLengthFactory > listLenghts_;
-
+    std::unique_ptr< svg::TextRenderer > renderer_;
     T_Lists lists_;
     geometry::Rectangle2f previousViewport_;
     unsigned int previousWidth_;
     unsigned int previousHeight_;
+    unsigned int colorList_;
     float r_, g_, b_, a_;
     bool colorDirty_;
-    //@}
-
-    //! @name Static data
-    //@{
-    static std::unique_ptr< svg::TextRenderer > renderer_;
-    static unsigned int colorList_;
     //@}
 };
 

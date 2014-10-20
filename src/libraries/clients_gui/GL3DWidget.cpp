@@ -156,6 +156,13 @@ float Gl3dWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
     return 1.f;
 }
 
+void Gl3dWidget::SetCurrentColor( float r, float g, float b, float /*a*/ )
+{
+    // $$$$ MCO 2014-10-17: de-activating alpha in 3D for now
+    // $$$$ MCO 2014-10-17: see http://jira.masagroup.net/browse/SWBUG-13308
+    GlToolsBase::SetCurrentColor( r, g, b, 1 );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::Zoom
 // Created: RPD 2009-12-14
@@ -455,12 +462,13 @@ void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /* = 1.f
     const float deltaHeight = factor * 600.f * 0.04f;
     const float xdelta = ( 1 + h ) * halfWidth;
     const float barHeight = 60 * GetAdaptiveZoomFactor( false );
+    const float alpha = GetCurrentAlpha();
     glPushMatrix();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glTranslatef( center.X(), center.Y(), ElevationAt( center ) + 100.f );
         UndoRotations();
         glTranslatef( - halfWidth, - 35.f, 1 );
-        glColor3f( 0.6f, 0.6f, 0.6f );
+        glColor4f( 0.6f, 0.6f, 0.6f, alpha );
         glBegin( GL_QUADS );
             glVertex2f( 0.f, deltaHeight );
             glVertex2f( halfWidth * 2.f, deltaHeight );
@@ -468,14 +476,14 @@ void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /* = 1.f
             glVertex2f( 0.f, deltaHeight - barHeight );
         glEnd();
         glBegin( GL_QUADS );
-            glColor3f( 1 - h, h * h * h, 0.f );
+            glColor4f( 1 - h, h * h * h, 0.f, alpha );
             glVertex2f( 0.f, deltaHeight );
             glVertex2f( xdelta, deltaHeight );
-            glColor3f( 0.8f * ( 1 - h ), 0.8f * h * h * h, 0.f );
+            glColor4f( 0.8f * ( 1 - h ), 0.8f * h * h * h, 0.f, alpha );
             glVertex2f( xdelta, deltaHeight - barHeight );
             glVertex2f( 0.f, deltaHeight - barHeight );
         glEnd();
-        glColor3f( 0.f, 0.f, 0.f );
+        glColor4f( 0.f, 0.f, 0.f, alpha );
         glBegin( GL_LINE_LOOP );
             glVertex2f( 0, deltaHeight );
             glVertex2f( halfWidth * 2.f, deltaHeight );

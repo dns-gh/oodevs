@@ -116,7 +116,7 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewpor
 
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
-            glColor3f( 1, 1, 1 );
+        glColor4f( 1, 1, 1, tools.GetCurrentAlpha() );
             tools.DrawIcon( obstacleActivated_ ? xpm_activated : xpm_not_activated
                           , offsetPoint, 150.f, hasSinglePointPos_? gui::GLView_ABC::pixels : gui::GLView_ABC::meters );
         glPopAttrib();

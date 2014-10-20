@@ -52,7 +52,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    boost::shared_ptr< SvgLocationDrawer > FindRenderer( const std::string symbol );
+    const boost::shared_ptr< SvgLocationDrawer >& FindRenderer( const std::string& symbol );
     //@}
 
     //! @name Types

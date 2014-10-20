@@ -89,7 +89,8 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
         return;
     if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
-    glColor4f( COLOR_MAROON );
+    static const float color[4] = { COLOR_MAROON };
+    glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
     switch( nState_ )
     {
     case sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply:

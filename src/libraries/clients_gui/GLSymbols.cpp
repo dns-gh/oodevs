@@ -47,7 +47,7 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
 {
     const T_SymbolKey key( symbol, style );
     auto it = alphaSymbols_.find( key );
-    const bool create = ( !symbol.empty() && ( symbols_.find( key ) == symbols_.end() ) ) ||
+    const bool create = ( !symbol.empty() && symbols_.find( key ) == symbols_.end() ) ||
                         ( !pickingMode && it != alphaSymbols_.end() && it->second != alpha_ && checkAlpha );
     T_LodSymbol& node = symbols_[ key ];
     if( create )

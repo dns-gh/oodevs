@@ -92,7 +92,8 @@ void PopulationDetections::Draw( const geometry::Point2f&, const gui::Viewport_A
         if( !viewport.IsVisible( center ) )
             return;
         glPushAttrib( GL_CURRENT_BIT );
-        glColor4f( COLOR_DETECTED );
+        static const float color[4] = { COLOR_DETECTED };
+        glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
         for( auto it = perceived_.begin(); it != perceived_.end(); ++it )
             tools.DrawLine( center, ( *it )->Get< Positions >().GetPosition() );
         glPopAttrib();
