@@ -515,44 +515,12 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawApp6Symbol
-// Created: AGE 2008-05-07
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/, unsigned int direction /*= 0*/ ) const
-{
-    if( factor < 0 )
-        factor = GetAdaptiveZoomFactor( false );
-    else
-        factor *= GetAdaptiveZoomFactor( false );
-    const float svgDeltaX = -20;
-    const float svgDeltaY = -80;
-    const float svgWidth = 360;
-    const float expectedWidth  = 600.f * factor;
-    const float expectedHeight = expectedWidth * 0.660f;
-    const float scaleRatio = expectedWidth / svgWidth;
-
-    glPushMatrix();
-        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-            glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
-            UndoRotations();
-            glRotatef( - (GLfloat)direction, 0, 0, 1 );
-            glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0 );
-            glScalef( scaleRatio, - scaleRatio, scaleRatio );
-            glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-            const Rectangle2f bbox( -10000, -10000, 10000, 10000 ); // $$$$ AGE 2006-09-11:
-            Base().PrintApp6( symbol, style, bbox, 640, 480 );
-        glPopAttrib();
-    glPopMatrix();
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: GL3DWidget::DrawInfrastructureSymbol
 // Created: LGY 2013-06-12
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float /*thickness*/ ) const
 {
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, 1.f, 0u );
+    DrawApp6Symbol( symbol, where, factor, 1.f, 0u );
 }
 
 // -----------------------------------------------------------------------------
@@ -561,7 +529,7 @@ void Gl3dWidget::DrawInfrastructureSymbol( const std::string& symbol, const geom
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
 {
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, 1.f, direction );
+    DrawApp6Symbol( symbol, where, factor, 1.f, direction );
 }
 
 // -----------------------------------------------------------------------------
@@ -586,9 +554,31 @@ void Gl3dWidget::DrawUnitSymbolAndTail( const std::string&, const std::string&, 
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /* = 0 */ ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/, unsigned int direction /* = 0 */ ) const
 {
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness, direction );
+    if( factor < 0 )
+        factor = GetAdaptiveZoomFactor( false );
+    else
+        factor *= GetAdaptiveZoomFactor( false );
+    const float svgDeltaX = -20;
+    const float svgDeltaY = -80;
+    const float svgWidth = 360;
+    const float expectedWidth  = 600.f * factor;
+    const float expectedHeight = expectedWidth * 0.660f;
+    const float scaleRatio = expectedWidth / svgWidth;
+
+    glPushMatrix();
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+            glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
+            UndoRotations();
+            glRotatef( - (GLfloat)direction, 0, 0, 1 );
+            glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0 );
+            glScalef( scaleRatio, - scaleRatio, scaleRatio );
+            glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
+            const Rectangle2f bbox( -10000, -10000, 10000, 10000 ); // $$$$ AGE 2006-09-11:
+            Base().PrintApp6( symbol, DefaultStyle(), bbox, 640, 480 );
+        glPopAttrib();
+    glPopMatrix();
 }
 
 // -----------------------------------------------------------------------------
