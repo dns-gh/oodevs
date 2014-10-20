@@ -10,25 +10,20 @@
 #ifndef __TooltipsLayer_ABC_h_
 #define __TooltipsLayer_ABC_h_
 
-#include "Layer.h"
-
 namespace gui
 {
-
 // =============================================================================
 /** @class  TooltipsLayer_ABC
     @brief  TooltipsLayer_ABC
 */
 // Created: SBO 2008-04-11
 // =============================================================================
-class TooltipsLayer_ABC : public Layer
+class TooltipsLayer_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TooltipsLayer_ABC( kernel::Controllers& controllers, GLView_ABC& tools )
-                 : Layer( controllers, tools, eLayerTypes_Tooltips )
-             {}
+             TooltipsLayer_ABC() {}
     virtual ~TooltipsLayer_ABC() {}
     //@}
 

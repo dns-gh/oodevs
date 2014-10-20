@@ -20,7 +20,7 @@ using namespace gui;
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
 TooltipsLayer::TooltipsLayer( kernel::Controllers& controllers, GLView_ABC& tools )
-    : TooltipsLayer_ABC( controllers, tools )
+    : Layer( controllers, tools, eLayerTypes_Tooltips )
 {
     // NOTHING
 }

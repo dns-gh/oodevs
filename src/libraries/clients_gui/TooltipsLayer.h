@@ -11,6 +11,7 @@
 #define __TooltipsLayer_h_
 
 #include "TooltipsLayer_ABC.h"
+#include "Layer.h"
 
 namespace kernel
 {
@@ -25,7 +26,7 @@ namespace gui
 */
 // Created: SBO 2008-04-11
 // =============================================================================
-class TooltipsLayer : public TooltipsLayer_ABC
+class TooltipsLayer : public TooltipsLayer_ABC, public Layer
 {
 public:
     //! @name Constructors/Destructor
