@@ -295,6 +295,15 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetPosition( const MIL_Agen
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetAltitude
+// Created: JSR 2014-10-20
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetAltitude( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< PHY_RoleInterface_Location >().GetAltitude();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetNbcSuitLevel
 // Created: LGY 2012-11-27
 // -----------------------------------------------------------------------------

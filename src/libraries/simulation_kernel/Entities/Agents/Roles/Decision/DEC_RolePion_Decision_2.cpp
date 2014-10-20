@@ -261,6 +261,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Agent_EstCibleTirIndirect", boost::bind( &DEC_AgentFunctions::UpdateUnderIndirectFire, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_AutomateEstEmbraye", boost::bind( &DEC_AgentFunctions::IsAutomateEngaged, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_Position", boost::bind( &DEC_AgentFunctions::GetPosition, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Agent_Altitude", boost::bind( &DEC_AgentFunctions::GetAltitude, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_Direction", boost::bind( &DEC_AgentFunctions::GetDirection, boost::cref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_EstMort", boost::bind( &DEC_AgentFunctions::IsDead, boost::cref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_NiveauInstallation", boost::bind( &DEC_AgentFunctions::GetPosture, boost::cref( GetPion() ) ) );
