@@ -73,7 +73,7 @@ public:
     GLOptions& operator=( const GLOptions& other ); //!< Assignment operator, same shared pointers with updated values
     //@}
 
-    //! @name Serialisation
+    //! @name Serialization
     //@{
     void Load();
     void Load( kernel::Settings& settings );
@@ -90,6 +90,7 @@ public:
     //! @name Operations
     //@{
     std::shared_ptr< kernel::Options >& GetOptions();
+    const std::shared_ptr< kernel::Options >& GetOptions() const;
 
     bool Has( const std::string& name ) const;
     const kernel::OptionVariant& Get( const std::string& name ) const;
@@ -122,6 +123,7 @@ public:
     const std::shared_ptr< Elevation2dTexture >& GetElevation2dTexture() const;
     const std::shared_ptr< TerrainSettings >& GetTerrainSettings() const;
     const std::shared_ptr< Lighting_ABC >& GetLighting() const;
+    const std::shared_ptr< UrbanDisplayOptions >& GetUrbanDisplayOptions() const;
 
     void SetLighting();
     QColor ComputeUrbanColor( const kernel::UrbanObject_ABC& object ) const;
@@ -154,7 +156,7 @@ private:
     std::shared_ptr< Elevation2dTexture > elevation2dTexture_;
     std::shared_ptr< TerrainSettings > graphicSetup_;
     std::shared_ptr< Lighting_ABC > lighting_;
-    std::unique_ptr< UrbanDisplayOptions > urbanSetup_;
+    std::shared_ptr< UrbanDisplayOptions > urbanSetup_;
     std::unique_ptr< WatershedTexture > watershedTexture_;
 
     // Exercise options

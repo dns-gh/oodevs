@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Options;
     class OptionsController;
 }
 
@@ -29,8 +30,6 @@ namespace gui
 // Created: LGY 2011-06-01
 // =============================================================================
 class DensityWidget : public QWidget
-                    , public tools::Observer_ABC
-                    , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 
@@ -46,7 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual void Load( const kernel::Options& options,
+                       const std::shared_ptr< Gradient >& gradient );
     //@}
 
 private slots:
@@ -62,9 +62,11 @@ private:
     const std::string optionName_;
     std::shared_ptr< Gradient > gradient_;
     GradientWidget* gradientWidget_;
+    QDoubleSpinBox* min_;
+    QDoubleSpinBox* max_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // gui_DensityWidget_h

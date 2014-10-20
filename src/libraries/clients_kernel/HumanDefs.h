@@ -10,14 +10,14 @@
 #ifndef __HumanDefs_h_
 #define __HumanDefs_h_
 
+#include <map>
+#include <string>
+#include <QtCore/QString>
+
 namespace kernel
 {
     typedef std::map< std::string, unsigned int > T_Usages;
-    typedef T_Usages::const_iterator            CIT_Usages;
-
-    typedef std::map< QString, std::pair< unsigned int, unsigned int > >   T_BlockOccupation; // pair< occupation, taux d'occupation >
-    typedef T_BlockOccupation::iterator                                   IT_BlockOccupation;
-    typedef T_BlockOccupation::const_iterator                            CIT_BlockOccupation;
+    typedef std::map< QString, std::pair< unsigned int, unsigned int > > T_BlockOccupation; // pair< occupation, taux d'occupation >
 
     struct T_Human
     {

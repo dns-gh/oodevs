@@ -139,7 +139,7 @@ bool UrbanTemplateType::Matches( const kernel::UrbanObject_ABC& urbanObject ) co
     const kernel::T_Usages& usages = physical.GetUsages().GetUsages();
     for( auto it = usages_.begin(); it != usages_.end(); ++it )
     {
-        kernel::CIT_Usages found = usages.find( it->first );
+        auto found = usages.find( it->first );
         if( found == usages.end() || found->second != static_cast< unsigned int >( 100.f * it->second + 0.5f ) )
             return false;
     }

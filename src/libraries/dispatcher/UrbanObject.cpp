@@ -230,3 +230,21 @@ bool UrbanObject::IsUpdatingTemplate() const
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::GetLivingSpace
+// Created: ABR 2014-10-21
+// -----------------------------------------------------------------------------
+float UrbanObject::GetLivingSpace( bool ) const
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::GetHumansMap
+// Created: ABR 2014-10-21
+// -----------------------------------------------------------------------------
+const kernel::T_HumansStrMap& UrbanObject::GetHumansMap() const
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}

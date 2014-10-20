@@ -13,6 +13,7 @@
 #include "tools/IdManager.h"
 #include "UrbanHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/ModeController.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject constructor
@@ -23,7 +24,7 @@ UrbanObject::UrbanObject( kernel::Controllers& controllers, tools::IdManager& id
     : gui::UrbanObject( controllers, name, idManager.GetNextId(), type, accommodations, options )
 {
     name_ = QString( "%1 [%2]" ).arg( name.c_str() ).arg( id_ );
-    controllers_.Update( *this );
+    controllers_.modes_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +35,7 @@ UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, 
                           const kernel::AccommodationTypes& accommodations, gui::UrbanDisplayOptions& options )
     : gui::UrbanObject( xis, controllers, type, accommodations, options )
 {
-    controllers_.Update( *this );
+    controllers_.modes_.Register( *this );
     idManager.Lock( id_, true );
 }
 
@@ -44,7 +45,7 @@ UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, 
 // -----------------------------------------------------------------------------
 UrbanObject::~UrbanObject()
 {
-    controllers_.Unregister( *this );
+    controllers_.modes_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

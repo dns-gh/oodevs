@@ -64,6 +64,8 @@ public:
     virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate );
     virtual void UpdateTemplate( const kernel::ObjectTypes& objectTypes );
     virtual bool IsUpdatingTemplate() const;
+    virtual float GetLivingSpace( bool forceUpdate = false ) const;
+    virtual const kernel::T_HumansStrMap& GetHumansMap() const;
     //@}
 
 private:

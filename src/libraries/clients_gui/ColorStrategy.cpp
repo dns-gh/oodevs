@@ -11,6 +11,7 @@
 #include "ColorStrategy.h"
 
 #include "ColorModifier_ABC.h"
+#include "GLOptions.h"
 #include "GLView_ABC.h"
 
 #include "clients_kernel/Agent_ABC.h"
@@ -312,8 +313,9 @@ void ColorStrategy::SelectColor( const UrbanObject_ABC& object )
 {
     if( const kernel::UrbanColor_ABC* attribute = object.Retrieve< kernel::UrbanColor_ABC >() )
     {
-        const float alpha = ApplyModifiers( object, attribute->Alpha() );
-        ApplyColor( QColor( attribute->Red(), attribute->Green(), attribute->Blue() ), alpha_ * alpha );
+        auto urbanColor = tools_.GetOptions().ComputeUrbanColor( object );
+        const float alpha = ApplyModifiers( object, static_cast< float >( urbanColor.alphaF() ) );
+        ApplyColor( urbanColor, alpha_ * alpha );
     }
 }
 

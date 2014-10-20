@@ -65,7 +65,7 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , elevation2dTexture_( std::make_shared< Elevation2dTexture >( map_ ) )
     , graphicSetup_( std::make_shared< TerrainSettings >() )
     , lighting_( lighting )
-    , urbanSetup_( new UrbanDisplayOptions( controllers, accommodationTypes_ ) )
+    , urbanSetup_( std::make_shared< UrbanDisplayOptions >( controllers, accommodationTypes_ ) )
     , watershedTexture_( new WatershedTexture( map_ ) )
 {
     contourLinesComputer_->SetContourLinesObserver( contourLinesObserver_ );
@@ -135,7 +135,7 @@ void GLOptions::Load()
     //gui::LoadFromOptions( fires_, *options_ );
     elevation2dTexture_->Load( *options_ );
     graphicSetup_->Load( *options_ );
-    //urbanSetup_->Load( *options_ );
+    urbanSetup_->Load( *options_ );
     watershedTexture_->Load( *options_ );
     if( auto lighting = std::dynamic_pointer_cast< LightingProxy >( lighting_ ) )
         lighting->Load( *options_ );
@@ -218,6 +218,15 @@ void GLOptions::Save( kernel::Settings& settings )
 // Created: ABR 2014-07-28
 // -----------------------------------------------------------------------------
 std::shared_ptr< kernel::Options >& GLOptions::GetOptions()
+{
+    return options_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::shared_ptr< kernel::Options >& GLOptions::GetOptions
+// Created: ABR 2014-10-20
+// -----------------------------------------------------------------------------
+const std::shared_ptr< kernel::Options >& GLOptions::GetOptions() const
 {
     return options_;
 }
@@ -310,8 +319,8 @@ void GLOptions::Set( const std::string& name,
         watershedTexture_->Load( *options_ );
     else if( std::find( hillShadeOptions.begin(), hillShadeOptions.end(), name ) != hillShadeOptions.end() )
         elevation2dTexture_->UpdateHillShadeValues( *options_ );
-    //else if( std::find( urbanOptions.begin(), urbanOptions.end(), name ) != urbanOptions.end() )
-    //    urbanSetup_->Load( *options_ );
+    else if( std::find( urbanOptions.begin(), urbanOptions.end(), name ) != urbanOptions.end() )
+        urbanSetup_->Load( *options_ );
     else if( name == "ContourLines/Height" )
         contourLinesComputer_->SetHeight( value.To< int >() );
     //else if( name.find( "FireRules/" ) == 0 )
@@ -528,9 +537,18 @@ const std::shared_ptr< TerrainSettings >& GLOptions::GetTerrainSettings() const
 // Name: GLOptions::ComputeUrbanColor
 // Created: ABR 2014-07-08
 // -----------------------------------------------------------------------------
-QColor GLOptions::ComputeUrbanColor( const kernel::UrbanObject_ABC& /*object*/ ) const
+QColor GLOptions::ComputeUrbanColor( const kernel::UrbanObject_ABC& object ) const
 {
-    return QColor();// TODO: urbanSetup_->ComputeUrbanColor( object );
+    return urbanSetup_->ComputeUrbanColor( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::shared_ptr< UrbanDisplayOptions >& GLOptions::GetUrbanDisplayOptions
+// Created: ABR 2014-10-20
+// -----------------------------------------------------------------------------
+const std::shared_ptr< UrbanDisplayOptions >& GLOptions::GetUrbanDisplayOptions() const
+{
+    return urbanSetup_;
 }
 
 // -----------------------------------------------------------------------------

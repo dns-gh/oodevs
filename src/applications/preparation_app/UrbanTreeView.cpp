@@ -233,7 +233,7 @@ namespace
             const kernel::PhysicalAttribute_ABC& physical = object.Get< kernel::PhysicalAttribute_ABC >();
             const kernel::Usages_ABC& usagesExtension = physical.GetUsages();
             const kernel::T_Usages& usages = usagesExtension.GetUsages();
-            for( kernel::CIT_Usages it = usages.begin(); it != usages.end(); ++it )
+            for( auto it = usages.begin(); it != usages.end(); ++it )
             {
                 if( it->second == 0 )
                     continue;

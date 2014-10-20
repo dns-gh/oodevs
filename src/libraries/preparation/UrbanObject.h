@@ -42,6 +42,7 @@ namespace tools
 // Created: ABR 2012-05-23
 // =============================================================================
 class UrbanObject : public gui::UrbanObject
+                  , public tools::Observer_ABC
                   , public kernel::ModesObserver_ABC
 {
 

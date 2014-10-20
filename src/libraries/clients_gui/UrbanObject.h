@@ -13,7 +13,6 @@
 #include "EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/HumanDefs.h"
 #include "clients_kernel/StructuralStateAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include <tools/ElementObserver_ABC.h>
@@ -53,9 +52,6 @@ class UrbanObject : public gui::EntityImplementation< kernel::UrbanObject_ABC >
                   , public kernel::Extension_ABC
                   , public kernel::Displayable_ABC
                   , public kernel::Updatable_ABC< sword::UrbanUpdate >
-                  , public tools::Observer_ABC
-                  , public tools::ElementObserver_ABC< UrbanDisplayOptions >
-                  , public tools::ElementObserver_ABC< kernel::StructuralStateAttribute_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -85,15 +81,12 @@ public:
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Display( kernel::Displayer_ABC& ) const {}
     void UpdateHumans( const std::string& inhabitant, const sword::PopulationUpdate_BlockOccupation& occupation );
-    float GetLivingSpace( bool forceUpdate = false ) const;
+    virtual float GetLivingSpace( bool forceUpdate = false ) const;
     float GetLivingSpace( unsigned int floorNumber, unsigned int occupation ) const;
     double GetNominalCapacity() const;
     double GetNominalCapacity( const std::string& motivation ) const;
     const kernel::AccommodationTypes& GetAccommodations() const;
-    const T_Humans& GetHumansMap() const { return humans_; }
-    virtual void UpdateColor();
-    virtual void NotifyUpdated( const UrbanDisplayOptions& );
-    virtual void NotifyUpdated( const kernel::StructuralStateAttribute_ABC& );
+    virtual const T_Humans& GetHumansMap() const { return humans_; }
     void CreateDictionary( bool readOnly );
     virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate );
     virtual void UpdateTemplate( const kernel::ObjectTypes& objectTypes );
