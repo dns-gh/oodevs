@@ -76,7 +76,7 @@ public:
         return *static_cast< const T* >( FindProperty( name ) );
     }
 
-    // A global opacity by which to be multiply the local node opacity
+    // A global opacity by which to multiply the local node opacity
     virtual void SetOpacity( float opacity ) = 0;
     //@}
 };
