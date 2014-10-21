@@ -48,7 +48,7 @@ public:
     static double GetMajorOperationalState( const MIL_Agent_ABC& callerAgent );
     static boost::shared_ptr< MT_Vector2D > GetPosition( const MIL_Agent_ABC& callerAgent );
     static boost::shared_ptr< MT_Vector2D > GetAgentPositionPtr( DEC_Decision_ABC* brain );
-    static double GetAltitude( const MIL_Agent_ABC& callerAgent );
+    static double GetHeight( DEC_Decision_ABC* brain );
     static const MT_Vector2D* GetDirection( const MIL_Agent_ABC& callerAgent );
     static float GetIdentificationDistance( MIL_Agent_ABC& callerAgent );
     static float GetReconnoissanceDistance( MIL_Agent_ABC& callerAgent );

@@ -319,6 +319,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
 {
     brain.RegisterFunction( "DEC_Automate_Position", &DEC_AutomateFunctions::GetBarycenter );
     brain.RegisterFunction( "DEC_Agent_PositionPtr", &DEC_AgentFunctions::GetAgentPositionPtr );
+    brain.RegisterFunction( "DEC_Agent_Height", &DEC_AgentFunctions::GetHeight );
     brain.RegisterFunction( "DEC_Geometrie_DecouperListePoints", &DEC_GeometryFunctions::SplitListPoints );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionCouverture", &DEC_GeometryFunctions::ComputeCoverPosition );
     brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreAgents", &DEC_GeometryFunctions::ComputeAgentsBarycenter );
