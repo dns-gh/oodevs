@@ -19,7 +19,6 @@
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -80,12 +79,14 @@ void GlProxy::SetTooltipsLayer( const std::shared_ptr< TooltipsLayer_ABC >& laye
 void GlProxy::AddLayers( const T_LayersVector& layers )
 {
     layers_.insert( layers_.end(), layers.begin(), layers.end() );
-    std::for_each( layers.begin(), layers.end(), [&]( const T_Layer& layer ){
-        if( widget2d_ )
-            widget2d_->Register( layer );
-        if( widget3d_ )
-            widget3d_->Register( layer );
-    } );
+    std::for_each( layers.begin(), layers.end(),
+        [&]( const T_Layer& layer )
+        {
+            if( widget2d_ )
+                widget2d_->Register( layer );
+            if( widget3d_ )
+                widget3d_->Register( layer );
+        } );
 }
 
 // -----------------------------------------------------------------------------

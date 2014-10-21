@@ -167,14 +167,12 @@ private:
     //! @name Member data
     //@{
     kernel::OptionsController& optionsController_;
-    T_LayersVector layers_;
     std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
     std::shared_ptr< GLView_ABC > view_;
-
     std::shared_ptr< GlWidget > widget2d_;
     std::shared_ptr< Gl3dWidget > widget3d_;
-
     std::unique_ptr< GLOptions > options_;
+    T_LayersVector layers_;
     //@}
 };
 
