@@ -148,4 +148,5 @@ void ADN_Connector_Table_ABC::AddSubItems( int nRow, void* pObj )
 {
     assert( pObj );
     tab_.AddRow( nRow, pObj );
+    tab_.CheckValidity( nRow );
 }

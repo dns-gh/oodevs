@@ -130,9 +130,9 @@ void ADN_Table::setNumRows( int numRows )
 // Name: ADN_Table::AddRow
 // Created: ABR 2012-10-19
 // -----------------------------------------------------------------------------
-void ADN_Table::AddRow( int row, void* /* data */ )
+void ADN_Table::AddRow( int /*row*/, void* /* data */ )
 {
-    CheckValidity( row );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

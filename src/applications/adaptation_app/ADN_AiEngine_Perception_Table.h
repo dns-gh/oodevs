@@ -34,6 +34,7 @@ private:
     virtual void setNumRows( int rows );
     virtual void RemoveItem( void* item );
     virtual void AddRow( int nRow, void* pObj );
+    virtual void CheckValidity( int row = -1, int col = -1 );
 };
 
 #endif // __ADN_AiEngine_Perception_Table_h_
