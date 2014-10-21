@@ -95,8 +95,11 @@ void TerrainsWidget::OnUpdate()
 
         model_->appendRow( items );
     }
-    terrains_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
-    terrains_->horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    if( !paths.empty() )
+    {
+        terrains_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+        terrains_->horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    }
     OnButtonChanged( QModelIndex() );
 }
 
