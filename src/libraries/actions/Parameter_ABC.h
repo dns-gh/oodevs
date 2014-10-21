@@ -96,18 +96,12 @@ public:
     virtual void RetrieveKnowledgeIfPossible();
     //@}
 
-protected:
-    //! @name Helpers
-    //@{
-    void DrawToolTip( const ::gui::Viewport_ABC& viewport, const ::gui::GLView_ABC& tools ) const;
-    //@}
-
 private:
     //! @name Member data
     //@{
     QString name_;
     geometry::Point2f position_;
-    std::unique_ptr< ::gui::GlTooltip_ABC > toolTip_;
+    mutable std::unique_ptr< ::gui::GlTooltip_ABC > tooltip_;
     bool isSet_;
     //@}
 };
