@@ -483,7 +483,7 @@ func (s *Server) importEvents(session string, data []byte) ([]*sdk.Event, error)
 	if err != nil {
 		return nil, err
 	}
-	for _, it := range events {
+	apply := func(it *sdk.Event) {
 		event, err := s.controller.UpdateEvent(session, it.GetUuid(), it)
 		if err != nil {
 			code, text := util.ConvertError(err)
@@ -491,6 +491,17 @@ func (s *Server) importEvents(session string, data []byte) ([]*sdk.Event, error)
 			event.ErrorText = &text
 		}
 		*it = *event
+	}
+	// import root events first
+	for _, event := range events {
+		if len(event.GetParent()) == 0 {
+			apply(event)
+		}
+	}
+	for _, event := range events {
+		if len(event.GetParent()) > 0 {
+			apply(event)
+		}
 	}
 	return events, nil
 }
