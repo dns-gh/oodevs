@@ -9,10 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
-
 #include "GLView_ABC.h"
-#include "GlTooltip_ABC.h"
-
+#include "InformationToolTip.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Styles.h"
@@ -29,8 +27,9 @@ MetricsLayer::MetricsLayer( kernel::Controllers& controllers,
                             const kernel::DetectionMap& elevation,
                             GLView_ABC& tools )
     : Layer( controllers, tools, eLayerTypes_Metric )
-    , elevation_        ( elevation )
-    , multiRulingMode_  ( false )
+    , elevation_( elevation )
+    , multiRulingMode_( false )
+    , tooltip_( new InformationToolTip() )
 {
     // NOTHING
 }
@@ -50,43 +49,43 @@ MetricsLayer::~MetricsLayer()
 // -----------------------------------------------------------------------------
 void MetricsLayer::Paint( Viewport_ABC& )
 {
-    if( multiRulingMode_ && !metricPoints_.empty() )
+    if( !multiRulingMode_ || metricPoints_.empty() )
     {
-        for( auto it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
-        {
-            if( metricPoints_.size() > 1 )
-            {
-                geometry::Point2f start = *(it - 1 );
-                geometry::Point2f end = *it ;
-                glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-                    glLineWidth( 4 );
-                    glColor4f( COLOR_WHITE );
-                    view_.DrawLine( start, end );
-                    glLineWidth( 2 );
-                    glColor4f( COLOR_BLACK );
-                    view_.DrawLine( start, end );
-                glPopAttrib();
-            }
-        }
-        start_ =  metricPoints_.front();
-        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-            glColor4f( COLOR_WHITE );
-            glLineWidth( 2 );
-            DrawAngle();
-            glLineWidth( 4 );
-            view_.DrawLine( metricPoints_.back(), end_ );
-            glLineWidth( 2 );
-            glColor4f( COLOR_BLACK );
-
-            const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
-            const QString message = tools::translate( "Règle GL", "2D: %L1m\n3D: %L2m\n%L3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
-            if( !tooltip_ )
-                tooltip_ = view_.CreateTooltip();
-            // $$$$ SBO 2008-03-19: GlTooltip_ABC maybe should be a Displayer_ABC...
-            static_cast< kernel::Displayer_ABC& >( *tooltip_ ).Start( Styles::bold ).Add( message.toStdString() ).End();
-            tooltip_->Draw( middle );
-        glPopAttrib();
+        tooltip_->Hide();
+        return;
     }
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    for( auto it = metricPoints_.begin() + 1; it != metricPoints_.end(); ++it )
+    {
+        if( metricPoints_.size() > 1 )
+        {
+            geometry::Point2f start = *(it - 1 );
+            geometry::Point2f end = *it ;
+                glLineWidth( 4 );
+                glColor4f( COLOR_WHITE );
+                view_.DrawLine( start, end );
+                glLineWidth( 2 );
+                glColor4f( COLOR_BLACK );
+                view_.DrawLine( start, end );
+        }
+    }
+    start_ =  metricPoints_.front();
+    glColor4f( COLOR_WHITE );
+    glLineWidth( 2 );
+    DrawAngle();
+    glLineWidth( 4 );
+    view_.DrawLine( metricPoints_.back(), end_ );
+    glLineWidth( 2 );
+    glColor4f( COLOR_BLACK );
+    const QString message =
+        tools::translate( "Règle GL", "2D: %L1m\n3D: %L2m\n%L3°" )
+            .arg( ComputeRuleDistance( false ), 0, 'f', 1 )
+            .arg( ComputeRuleDistance( true ), 0, 'f', 1 )
+            .arg( ComputeAngle(), 0, 'f', 1 );
+    tooltip_->Start( Styles::bold ).Add( message.toStdString() ).End();
+    const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
+    tooltip_->Draw();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +136,7 @@ bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f
 // -----------------------------------------------------------------------------
 bool MetricsLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->modifiers() == Qt::ShiftModifier  )
+    if( event->modifiers() == Qt::ShiftModifier )
     {
         multiRulingMode_ = true;
         end_ = point;
