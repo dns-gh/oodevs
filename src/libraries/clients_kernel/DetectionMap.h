@@ -10,8 +10,9 @@
 #ifndef __DetectionMap_h_
 #define __DetectionMap_h_
 
-#include <graphics/ElevationMap.h>
 #include <boost/noncopyable.hpp>
+
+class ElevationMap;
 
 namespace tools
 {
@@ -91,87 +92,6 @@ private:
     float cellsize_;
     //@}
 };
-
-inline
-geometry::Rectangle2f DetectionMap::SubExtent( unsigned int x, unsigned int y, unsigned int width, unsigned int height ) const
-{
-    return map_ ? map_->SubExtent( x, y, width, height ) : geometry::Rectangle2f();
-}
-
-inline
-geometry::Point2f DetectionMap::Map( unsigned int x, unsigned int y ) const
-{
-    return map_ ? map_->Map( x, y ) : geometry::Point2f();
-}
-
-inline
-std::pair< unsigned int, unsigned int > DetectionMap::Unmap( const geometry::Point2f& point ) const
-{
-    return map_ ? map_->Unmap( point ) : std::pair< unsigned int, unsigned int >();
-}
-
-inline
-const short* DetectionMap::Data( unsigned int x, unsigned int y ) const
-{
-    return map_ ? map_->Data( x, y ) : 0;
-}
-
-inline
-unsigned int DetectionMap::Unmap( float distance ) const
-{
-    return map_ ? map_->Unmap( distance ) : 0;
-}
-
-inline
-double DetectionMap::ElevationAt( const geometry::Point2f& point, bool applyOffsetOnCell /*= false*/ ) const
-{
-    return map_ ? map_->ElevationAt( point, applyOffsetOnCell ) : 0;
-}
-
-inline
-void DetectionMap::SetAltitudeOffset( unsigned int id, const geometry::Polygon2f::T_Vertices& points, bool isPolygon, short offset )
-{
-    if( map_ )
-        map_->SetAltitudeOffset( id, points, isPolygon, offset );
-}
-
-inline
-short DetectionMap::MaximumElevation() const
-{
-    return map_ ? map_->MaximumElevation() : 0;
-}
-
-inline
-const short* DetectionMap::Data() const
-{
-    return map_ ? map_->Data() : 0;
-}
-
-inline
-unsigned int DetectionMap::Width() const
-{
-    return map_ ? map_->Width() : 0;
-}
-
-inline
-unsigned int DetectionMap::Height() const
-{
-    return map_ ? map_->Height() : 0;
-}
-
-inline
-geometry::Rectangle2f DetectionMap::Extent() const
-{
-    return map_ ? map_->Extent() : geometry::Rectangle2f();
-}
-
-inline
-const ElevationMap& DetectionMap::GetMap() const// $$$$ AGE 2006-04-28: prolly tmp
-{
-    if( ! map_ )
-    throw MASA_EXCEPTION( "Map not initialized" );
-    return *map_;
-}
 
 }
 
