@@ -1,4 +1,25 @@
-integration = {}
+-- By default, we let 'integration.ontology.types' equivalent to 
+-- 'masalife.brain.core.getRoleProperties().ontology.types', that will return
+-- the ontology type map appropriate for the role of the current brain
+integration = {
+    ontology = (function ()
+        local getRoleProperties = masalife.brain.core.getRoleProperties
+        local typeMaps = {} -- in order to memoize each ontology type map
+        return setmetatable( {}, {
+            __index = function( _, key )
+                if key == "types" then
+                    local types = typeMaps[ myself ]
+                    if not types then
+                        types = getRoleProperties().ontology.types
+                        typeMaps[ myself ] = types
+                    end
+                    return types 
+                end
+            end
+        })
+    end)()
+}
+
 utilities = {}
 
 -- Load pre-requisite Lua modules
