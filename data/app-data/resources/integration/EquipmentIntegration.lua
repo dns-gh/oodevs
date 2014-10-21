@@ -906,6 +906,13 @@ integration.changeHeight = function( height )
     DEC_Agent_HauteurDeVol( height )
 end
 
+--- Returns the flying height of the caller entity.
+-- @param agent Simulation agent
+-- @return height Float, the flying height (in meters)
+integration.getHeight = function( agent )
+    return DEC_Agent_Height( agent )
+end
+
 --- Returns true if this entity is flying, false otherwise.
 -- This method can only be called by an agent.
 -- @return Boolean
