@@ -89,11 +89,12 @@ void DetectionMap::Load( const tools::ExerciseConfig& config )
 // Name: DetectionMap::EnvironmentData
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-const DetectionMap::Environment* DetectionMap::EnvironmentData( unsigned x, unsigned y ) const
+DetectionMap::Environment DetectionMap::EnvironmentData( unsigned x, unsigned y ) const
 {
-    if( ! environment_ )
-        return 0;
-    return environment_ + y * Width() + x;
+    static const Environment nullEnv;
+    if( ! environment_ || y >= Height() || x >= Width() )
+        return nullEnv;
+    return *(environment_ + y * Width() + x);
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +104,7 @@ const DetectionMap::Environment* DetectionMap::EnvironmentData( unsigned x, unsi
 DetectionMap::Environment DetectionMap::EnvironmentAt( const geometry::Point2f& point ) const
 {
     const std::pair< unsigned, unsigned > p = Unmap( point );
-    return *EnvironmentData( p.first, p.second );
+    return EnvironmentData( p.first, p.second );
 }
 
 // -----------------------------------------------------------------------------

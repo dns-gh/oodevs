@@ -35,6 +35,7 @@ public:
     //@{
     struct Environment
     {
+        Environment() : data_( 0 ) {}
         bool IsInTown() const { return ( data_ & town_ ) != 0; }
         bool IsInForest() const { return ( data_ & forest_ ) != 0; }
         unsigned char MeteoEffect() const { return ( data_ & meteoMask_ ) != 0; }
@@ -58,7 +59,9 @@ public:
     //@{
     void Load( const tools::ExerciseConfig& config );
 
-    const Environment* EnvironmentData( unsigned int x, unsigned int y ) const;
+    // Returns the environment data for (x, y) cell if it is within terrain
+    // boundaries, a valid but zero environment otherwise.
+    Environment EnvironmentData( unsigned int x, unsigned int y ) const;
     Environment EnvironmentAt( const geometry::Point2f& point ) const;
     float GetCellSize() const;
     //@}

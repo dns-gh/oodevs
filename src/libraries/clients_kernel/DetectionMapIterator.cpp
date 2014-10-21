@@ -85,7 +85,7 @@ DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const geome
 
     currentCell_ = map_.Unmap( vBeginPos2D );
     // rDy est utilisé ici pour stocker le rEnvCoeff initial
-    rDy = rDx - map_.EnvironmentData( currentCell_.first, currentCell_.second )->ElevationDelta();
+    rDy = rDx - map_.EnvironmentData( currentCell_.first, currentCell_.second ).ElevationDelta();
 
     // Calcul des informations sur le point "sortant"
     AlignFirstPointOnGrid();
@@ -163,6 +163,11 @@ void DetectionMapIterator::Increment()
     rRemainingLength_ -= rLength_;
 
     // condition de fin
+    // $$$ PMD 2014: using floating point comparison to terminate a walk on
+    // an integer grid is fishy at best and broken in practice. Here it led
+    // to integer overflow when fetching environment data and out of bound
+    // indexing. See http://jira.masagroup.net/browse/SWBUG-13322 for details.
+    // All this code probably needs to be rewritten.
     if( rRemainingLength_ < rIteratorEpsilon )
     {
         if( rRemainingLength_ < 0. )
@@ -213,7 +218,7 @@ void DetectionMapIterator::Increment()
     rGroundCoeff_ = vOutPoint_.Z() - rGroundHeight;
 
     float rOldEnvCoeff = rEnvCoeff_;
-    rEnvCoeff_ = rGroundCoeff_ - map_.EnvironmentData( currentCell_.first, currentCell_.second )->ElevationDelta();
+    rEnvCoeff_ = rGroundCoeff_ - map_.EnvironmentData( currentCell_.first, currentCell_.second ).ElevationDelta();
 
     bIsInGround_ = ( rGroundCoeff_ < 0. ) || ( ( rGroundCoeff_ * rOldGroundCoeff ) < 0. );
     bIsInEnv_ = ( rEnvCoeff_ < 0. ) || ( rEnvCoeff_ * rOldEnvCoeff < 0. );
