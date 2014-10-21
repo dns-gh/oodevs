@@ -10,19 +10,11 @@
 #include "clients_gui_pch.h"
 #include "Tooltip.h"
 #include "TooltipsLayer_ABC.h"
-#include "clients_kernel/Styles.h"
-#include <boost/bind.hpp>
 
 using namespace gui;
 using namespace kernel;
 
 Tooltip::Tooltip()
-    : frameDrawer_(
-        []( QPainter& painter, const QRect& rect )
-        {
-            painter.setPen( Qt::black );
-            painter.drawRect( rect.adjusted( 0, 0, -1, -1 ) );
-        } )
 {
     // NOTHING
 }
@@ -157,17 +149,18 @@ void Tooltip::EndDisplay()
     DirtyImage();
 }
 
-QImage Tooltip::GenerateImage( unsigned int width, unsigned int height )
+QImage Tooltip::GenerateImage()
 {
     if( new_.empty() )
         return QImage();
-    QPixmap pixmap( CreatePixmap( width, height ) );
+    QPixmap pixmap( CreatePixmap() );
     pixmap.fill( Qt::magenta );
     QPainter p;
     p.begin( &pixmap );
     QFontMetrics metrics( p.font() );
     int fontHeight = metrics.height();
-    frameDrawer_( p, pixmap.rect() );
+    p.setPen( Qt::black );
+    p.drawRect( pixmap.rect().adjusted( 0, 0, -1, -1 ) );
     int x = 4;
     int y = fontHeight;
     for( auto it = new_.begin(); it != new_.end(); ++it )
@@ -231,7 +224,7 @@ void Tooltip::RestoreAlpha( QImage& image ) const
     }
 }
 
-QPixmap Tooltip::CreatePixmap( unsigned int width, unsigned int height ) const
+QPixmap Tooltip::CreatePixmap() const
 {
     int w = 0;
     int h = 0;
@@ -257,12 +250,7 @@ QPixmap Tooltip::CreatePixmap( unsigned int width, unsigned int height ) const
             }
         }
     }
-    w = std::max< int >( w + 8, width );
-    h = std::max< int >( h + 4, height );
+    w = std::max< int >( w + 8, 0 );
+    h = std::max< int >( h + 4, 0 );
     return QPixmap( w, h );
-}
-
-void Tooltip::SetFrameDrawer( const FrameDrawer& frameDrawer )
-{
-    frameDrawer_ = frameDrawer;
 }

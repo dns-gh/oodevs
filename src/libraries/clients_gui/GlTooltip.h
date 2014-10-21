@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual operator kernel::Displayer_ABC&();
-    virtual void Draw( const geometry::Point2f& position, int width = 0, int height = 0, float factor = 1.f );
+    virtual void Draw( const geometry::Point2f& position );
     //@}
 
 private:

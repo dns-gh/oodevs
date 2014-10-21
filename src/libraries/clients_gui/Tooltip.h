@@ -33,11 +33,8 @@ public:
              Tooltip();
     virtual ~Tooltip();
 
-    typedef std::function< void ( QPainter&, const QRect& ) > FrameDrawer;
-    void SetFrameDrawer( const FrameDrawer& frameDrawer );
-
 protected:
-    QImage GenerateImage( unsigned int width, unsigned int height );
+    QImage GenerateImage();
 
 private:
     virtual void Call( const QColor& value );
@@ -52,7 +49,7 @@ private:
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
 
-    QPixmap CreatePixmap( unsigned int width, unsigned int height ) const;
+    QPixmap CreatePixmap() const;
     void RestoreAlpha( QImage& image ) const;
     virtual void DirtyImage() = 0;
 
@@ -67,7 +64,6 @@ private:
     QFont font_;
     QString message_;
     T_Messages current_, new_;
-    FrameDrawer frameDrawer_;
 };
 
 }

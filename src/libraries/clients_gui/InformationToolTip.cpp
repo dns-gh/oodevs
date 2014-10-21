@@ -27,7 +27,7 @@ InformationToolTip::~InformationToolTip()
 void InformationToolTip::Draw()
 {
     if( image_.isNull() )
-        image_ = GenerateImage( 0, 0 );
+        image_ = GenerateImage();
     if( !isVisible() && !image_.isNull() && !QApplication::activePopupWidget() )
         show();
 }
