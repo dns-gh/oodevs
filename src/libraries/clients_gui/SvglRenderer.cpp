@@ -154,15 +154,11 @@ void SvglRenderer::Draw( const std::shared_ptr< svg::Node_ABC >& node, const std
         renderingContext_->EnablePickingMode( 5.f );
     renderingContext_->SetViewport( box, vWidth, vHeight );
     renderingContext_->PushProperty( RenderingContext::color, color );
-    svg::Opacity opacity( a_ );
-    renderingContext_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
-    renderingContext_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
+    renderingContext_->SetOpacity( a_ );
     std::unique_ptr< Style > border( CreateStyle( style ) );
     references_->Register( "border", *border );
     node->Draw( *renderingContext_, *references_ );
     renderingContext_->DisablePickingMode();
-    renderingContext_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
-    renderingContext_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
     renderingContext_->PopProperty( RenderingContext::color );
     glPopAttrib();
 }

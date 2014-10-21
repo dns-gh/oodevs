@@ -25,15 +25,13 @@ namespace svg
 // =============================================================================
 class RenderingContext_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             RenderingContext_ABC() {};
-    virtual ~RenderingContext_ABC() {};
+             RenderingContext_ABC() {}
+    virtual ~RenderingContext_ABC() {}
     //@}
 
-    // $$$$ AGE 2006-09-11: Perf issues with std::map< std::string >...
     //! @name Types
     //@{
     enum E_Properties
@@ -50,7 +48,6 @@ public:
         fontWeight,
         fontSize,
         textAnchor,
-
         nbrProperty
     };
 
@@ -72,22 +69,17 @@ public:
     virtual void PushProperty( E_Properties name, Property_ABC& value ) = 0;
     virtual void PopProperty ( E_Properties name ) = 0;
 
-    template< typename T >
-    const T& GetProperty( E_Properties name ) const;
     virtual const Property_ABC* FindProperty( E_Properties name ) const = 0;
+    template< typename T >
+    const T& GetProperty( E_Properties name ) const
+    {
+        return *static_cast< const T* >( FindProperty( name ) );
+    }
+
+    // A global opacity by which to be multiply the local node opacity
+    virtual void SetOpacity( float opacity ) = 0;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: RenderingContext_ABC::GetProperty
-// Created: AGE 2006-08-14
-// -----------------------------------------------------------------------------
-template< typename T >
-const T& RenderingContext_ABC::GetProperty( E_Properties name ) const
-{
-    const T* property = static_cast< const T* >( FindProperty( name ) );
-    return *property;
-}
 
 }
 

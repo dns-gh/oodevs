@@ -72,7 +72,6 @@ private:
     //! @name Helpers
     //@{
     static void GenerateCircle();
-    void SetColor( const QColor& color );
     template< typename T > void DrawShape( const T& shape );
     void DrawOverlined( const T_PointVector& points );
     void DrawOverlined( const geometry::Point2f& point );
