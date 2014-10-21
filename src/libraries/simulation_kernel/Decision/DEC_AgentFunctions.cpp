@@ -295,12 +295,14 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetPosition( const MIL_Agen
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetAltitude
-// Created: JSR 2014-10-20
+// Name: DEC_AgentFunctions::GetHeight
+// Created: JSR 2014-10-21
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetAltitude( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetHeight( DEC_Decision_ABC* brain )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Location >().GetAltitude();
+    if( !brain )
+        throw MASA_EXCEPTION( "Invalid parameter passed to DEC_AgentFunctions::GetHeight" );
+    return brain->GetPion().GetRole< PHY_RoleInterface_Location >().GetHeight();
 }
 
 // -----------------------------------------------------------------------------
