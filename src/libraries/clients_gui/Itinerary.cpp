@@ -91,7 +91,7 @@ namespace
 void Itinerary::Draw( GLView_ABC& view, const boost::optional< Hover >& hover, bool picking ) const
 {
     const QColor current = GetCurrent();
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
     DrawLines( view, current.darker(), 5, picking );
     DrawLines( view, current, 3, picking );
     DrawPoints( view, current, hover, picking );

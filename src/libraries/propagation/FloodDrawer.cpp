@@ -83,13 +83,6 @@ namespace
             {
                 const GLsizei size = static_cast< GLsizei >( it->Vertices().size() );
                 glVertexPointer( 2, GL_FLOAT, 0, &it->Vertices().front() );
-                glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE ); // disable writing to color buffer
-                glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
-                glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-                glDrawArrays( GL_TRIANGLE_FAN, 0, size );
-                glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );    // enable writing to color buffer
-                glStencilFunc( GL_EQUAL, 0x1, 0x1 );                  // test if it is odd(1)
-                glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
                 glDrawArrays( GL_TRIANGLE_FAN, 0, size );
             }
     }
@@ -107,6 +100,10 @@ void FloodDrawer::RenderTexture() const
     glEnableClientState( GL_VERTEX_ARRAY );
     glDisable( GL_LIGHTING );
     glEnable( GL_STENCIL_TEST );
+    glStencilMask( 0xFF );
+    glStencilFunc( GL_EQUAL, 0x0, 0x1 );
+    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
+    glClear( GL_STENCIL_BUFFER_BIT );
     glColor4f( 0, 0, 1.f, 0.5f );
     DrawPolygons( deepAreas_ );
     glColor4f( 0.3f, 0.3f, 1.f, 0.5f );
