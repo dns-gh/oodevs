@@ -176,6 +176,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& brain )
         std::function< boost::shared_ptr<MIL_MissionParameter_ABC>( int ) >( boost::bind( &MIL_MissionParameterFactory::CreatePopulationKnowledge, this, _1 ) ) );
 
     // Knowledge agents
+    brain.RegisterFunction( "DEC_Connaissance_EnAgent", &DEC_KnowledgeAgentFunctions::GetAgent );
     brain.RegisterFunction( "DEC_Connaissances_PionsPrenantAPartie",
             std::function< std::vector<unsigned int>() >(boost::bind(&DEC_PopulationKnowledge::GetPionsAttacking, boost::cref( GetPopulation().GetKnowledge() ) ) ) );
     brain.RegisterFunction( "DEC_Connaissances_PionsSecurisant",
