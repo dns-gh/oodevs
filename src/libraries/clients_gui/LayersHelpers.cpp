@@ -70,8 +70,7 @@ const T_LayerTypesVector eventOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_TacticalLinesComposite )
     ( eLayerTypes_Metric )
     ( eLayerTypes_Elevation3d )
-    ( eLayerTypes_Weather )
-    ( eLayerTypes_Pathfinds );
+    ( eLayerTypes_Weather );
 
 const layers::Descriptor descriptors_[] = {
     // type                               // passes                           // pick // config
