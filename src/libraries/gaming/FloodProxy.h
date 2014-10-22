@@ -15,8 +15,12 @@
 
 namespace propagation
 {
-    class FloodDrawer;
     class FloodModel_ABC;
+}
+
+namespace gui
+{
+    class FloodDrawer;
 }
 
 namespace kernel
@@ -52,9 +56,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::shared_ptr< propagation::FloodDrawer > T_Flood;
-    typedef std::map< unsigned int, T_Flood >             T_Floods;
-    typedef T_Floods::const_iterator                    CIT_Floods;
+    typedef boost::shared_ptr< gui::FloodDrawer > T_Flood;
+    typedef std::map< unsigned int, T_Flood > T_Floods;
     //@}
 
 private:

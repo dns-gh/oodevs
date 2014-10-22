@@ -17,7 +17,10 @@
 namespace propagation
 {
     class FloodModel_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  FloodDrawer
     @brief  Flood drawer

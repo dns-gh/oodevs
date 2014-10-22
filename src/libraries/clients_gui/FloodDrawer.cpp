@@ -7,12 +7,13 @@
 //
 // *****************************************************************************
 
+#include "clients_gui_pch.h"
 #include "FloodDrawer.h"
-#include "FloodModel_ABC.h"
+#include "propagation/FloodModel_ABC.h"
 #include <windows.h>
 #include <gl/gl.h>
 
-using namespace propagation;
+using namespace gui;
 using namespace geometry;
 
 // -----------------------------------------------------------------------------
