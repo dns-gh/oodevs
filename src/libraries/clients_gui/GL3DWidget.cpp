@@ -41,9 +41,10 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent,
                         float height,
                         DetectionMap& elevation,
                         EventStrategy_ABC& strategy,
-                        const DrawingTypes& drawingTypes )
+                        const DrawingTypes& drawingTypes,
+                        QGLWidget* shareWidget /* = 0 */ )
     : SetGlOptions   ()
-    , Widget3D       ( context_, pParent, 0 )
+    , Widget3D       ( context_, pParent, shareWidget )
     , GlToolsBase    ( parent, drawingTypes )
     , width_         ( width )
     , height_        ( height )
