@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "DetectionMap.h"
 #include "tools/ExerciseConfig.h"
+#include <graphics/ElevationMap.h>
 #include <tools/InputBinaryStream.h>
 
 using namespace kernel;
@@ -88,11 +89,11 @@ void DetectionMap::Load( const tools::ExerciseConfig& config )
 // Name: DetectionMap::EnvironmentData
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-const DetectionMap::Environment* DetectionMap::EnvironmentData( unsigned x, unsigned y ) const
+DetectionMap::Environment DetectionMap::EnvironmentData( unsigned x, unsigned y ) const
 {
-    if( ! environment_ )
-        return 0;
-    return environment_ + y * Width() + x;
+    if( ! environment_ || y >= Height() || x >= Width() )
+        return Environment();
+    return *(environment_ + y * Width() + x);
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +103,7 @@ const DetectionMap::Environment* DetectionMap::EnvironmentData( unsigned x, unsi
 DetectionMap::Environment DetectionMap::EnvironmentAt( const geometry::Point2f& point ) const
 {
     const std::pair< unsigned, unsigned > p = Unmap( point );
-    return *EnvironmentData( p.first, p.second );
+    return EnvironmentData( p.first, p.second );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,4 +113,72 @@ DetectionMap::Environment DetectionMap::EnvironmentAt( const geometry::Point2f& 
 float DetectionMap::GetCellSize() const
 {
     return cellsize_;
+}
+
+geometry::Rectangle2f DetectionMap::SubExtent( unsigned int x, unsigned int y, unsigned int width, unsigned int height ) const
+{
+    return map_ ? map_->SubExtent( x, y, width, height ) : geometry::Rectangle2f();
+}
+
+geometry::Point2f DetectionMap::Map( unsigned int x, unsigned int y ) const
+{
+    return map_ ? map_->Map( x, y ) : geometry::Point2f();
+}
+
+std::pair< unsigned int, unsigned int > DetectionMap::Unmap( const geometry::Point2f& point ) const
+{
+    return map_ ? map_->Unmap( point ) : std::pair< unsigned int, unsigned int >();
+}
+
+const short* DetectionMap::Data( unsigned int x, unsigned int y ) const
+{
+    return map_ ? map_->Data( x, y ) : 0;
+}
+
+unsigned int DetectionMap::Unmap( float distance ) const
+{
+    return map_ ? map_->Unmap( distance ) : 0;
+}
+
+double DetectionMap::ElevationAt( const geometry::Point2f& point, bool applyOffsetOnCell /*= false*/ ) const
+{
+    return map_ ? map_->ElevationAt( point, applyOffsetOnCell ) : 0;
+}
+
+void DetectionMap::SetAltitudeOffset( unsigned int id, const geometry::Polygon2f::T_Vertices& points, bool isPolygon, short offset )
+{
+    if( map_ )
+        map_->SetAltitudeOffset( id, points, isPolygon, offset );
+}
+
+short DetectionMap::MaximumElevation() const
+{
+    return map_ ? map_->MaximumElevation() : 0;
+}
+
+const short* DetectionMap::Data() const
+{
+    return map_ ? map_->Data() : 0;
+}
+
+unsigned int DetectionMap::Width() const
+{
+    return map_ ? map_->Width() : 0;
+}
+
+unsigned int DetectionMap::Height() const
+{
+    return map_ ? map_->Height() : 0;
+}
+
+geometry::Rectangle2f DetectionMap::Extent() const
+{
+    return map_ ? map_->Extent() : geometry::Rectangle2f();
+}
+
+const ElevationMap& DetectionMap::GetMap() const// $$$$ AGE 2006-04-28: prolly tmp
+{
+    if( ! map_ )
+        throw MASA_EXCEPTION( "Map not initialized" );
+    return *map_;
 }

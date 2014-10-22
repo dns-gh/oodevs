@@ -14,6 +14,7 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/DetectionMap.h"
 #include "tools/ContourComputer.h"
+#include <graphics/ElevationMap.h>
 #include <boost/bind.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #include <deque>
