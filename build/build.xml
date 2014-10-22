@@ -681,12 +681,15 @@
         <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
+                    <!-- timeline_client.exe is deployed in run.dir too, exclude it -->
                     <fileset dir="${out.dir}/release" includes="**/*.exe"
                         excludes="**/*_test.exe,
                                   **/client_sample_app.exe,
                                   **/svgl_app.exe,
                                   **/casava_odb_gen_app.exe,
-                                  **/migratexml.exe"/>
+                                  **/migratexml.exe,
+                                  **/timeline_app.exe,
+                                  **/timeline_client*.*"/>
                     <flattenmapper/>
                 </mappedresources>
                 <fileset dir="${bin.dir}" includes="csvclient.exe,
@@ -1374,7 +1377,6 @@
         <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
-        <update name="timeline_ui"/>
         <update name="tools"/>
         <update name="turtle" version="1.723"/>
         <update name="xalan-c" version="svn rev 990605 + patch"/>
