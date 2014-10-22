@@ -421,6 +421,8 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int currentTimeStep )
 {
+    if( &knowledge == this )
+        return;
     nTimeLastUpdate_ = currentTimeStep;
     dataDetection_.Update( knowledge.dataDetection_ );
     dataRecognition_.Update( knowledge.dataRecognition_ );

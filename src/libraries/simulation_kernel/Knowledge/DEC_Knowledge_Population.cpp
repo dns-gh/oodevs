@@ -640,6 +640,8 @@ void DEC_Knowledge_Population::SetCriticalIntelligenceFromPopulationKnown()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowledge )
 {
+    if( &knowledge == this )
+        return;
     for( auto it = knowledge.concentrations_.begin(); it != knowledge.concentrations_.end(); ++it )
         concentrations_[ it->first ] = new DEC_Knowledge_PopulationConcentration( *this, *it->second );
     for( auto it = knowledge.flows_.begin(); it != knowledge.flows_.end(); ++it )
