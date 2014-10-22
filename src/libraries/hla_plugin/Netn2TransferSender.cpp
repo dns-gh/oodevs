@@ -136,6 +136,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     reply.requestFederate = request.requestFederate;
     reply.responseFederate = UnicodeString( federateName_ );
     reply.respondent = UnicodeString( federateName_ );
+    reply.reason = static_cast< uint32_t >( interactions::TMR::Reason_Other );
 
     if( request.instances.list.empty() )
     {
