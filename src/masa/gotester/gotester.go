@@ -19,6 +19,7 @@ import (
 	"regexp"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 )
 
@@ -267,6 +268,8 @@ func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
 	close(results)
 
 	reports := []*swtest.TestReport{}
+	otherErrors := []RunResult{}
+	failures := 0
 	configDisplayed := false
 	for result := range results {
 		report := swtest.ProcessReport(result.Output)
@@ -275,7 +278,13 @@ func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
 			configDisplayed = true
 		}
 		if result.Err != nil {
-			err = fmt.Errorf("test failed: %s", result.Err)
+			failures += 1
+			// Convoluted way to check exit status != 1 (non-test failure)
+			if err, ok := result.Err.(*exec.ExitError); ok {
+				if s, ok := err.Sys().(syscall.WaitStatus); ok && s.ExitCode != 1 {
+					otherErrors = append(otherErrors, result)
+				}
+			}
 		}
 		reports = append(reports, report)
 	}
@@ -284,7 +293,14 @@ func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
 			fmt.Printf("%s\n", output)
 		}
 	}
-	return err
+	for _, result := range otherErrors {
+		fmt.Printf("test %s/%s failed: %s:\n%s\n", result.Test.Package,
+			result.Test.Name, result.Err, result.Output)
+	}
+	if failures > 0 {
+		return fmt.Errorf("%d tests failed", failures)
+	}
+	return nil
 }
 
 func run(args []string) error {
