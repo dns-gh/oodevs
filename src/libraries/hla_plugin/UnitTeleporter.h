@@ -13,6 +13,7 @@
 #include "CLassListener_ABC.h"
 #include "ObjectListener_ABC.h"
 #include "ResponseObserver_ABC.h"
+#include "tools/MessageObserver.h"
 #include <map>
 
 namespace xml
@@ -22,6 +23,8 @@ namespace xml
 
 namespace sword
 {
+    class SimToClient_Content;
+    class ControlEndTick;
     class UnitCreation;
     class FormationCreation;
     class AutomatCreation;
@@ -55,6 +58,7 @@ class UnitTeleporter : private ResponseObserver_ABC< sword::UnitCreation >
                      , private ResponseObserver_ABC< sword::AutomatCreation >
                      , private ClassListener_ABC
                      , private ObjectListener_ABC
+                     , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
@@ -63,7 +67,8 @@ public:
                              ContextHandler_ABC< sword::UnitCreation >& contextHandler, dispatcher::SimulationPublisher_ABC& publisher,
                              const ContextFactory_ABC& contextFactory, const LocalAgentResolver_ABC& localResolver,
                              const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger,
-                             ContextHandler_ABC< sword::FormationCreation >& formationContextHandler, ContextHandler_ABC< sword::AutomatCreation >& automatContextHandler  );
+                             ContextHandler_ABC< sword::FormationCreation >& formationContextHandler, ContextHandler_ABC< sword::AutomatCreation >& automatContextHandler,
+                             tools::MessageController_ABC< sword::SimToClient_Content >& messageController );
     virtual ~UnitTeleporter();
     //@}
 
@@ -98,6 +103,7 @@ private:
     virtual void Notify( const sword::UnitCreation& message, const std::string& identifier );
     virtual void Notify( const sword::FormationCreation& message, const std::string& identifier );
     virtual void Notify( const sword::AutomatCreation& message, const std::string& identifier );
+    virtual void Notify( const sword::ControlEndTick& message, int context );
     //@}
 
 private:
@@ -106,6 +112,7 @@ private:
     typedef std::map< std::string, unsigned long > T_Identifiers;
     typedef std::map< std::string, HlaObject_ABC* > T_Objects;
     typedef std::map< std::string, std::vector< T_UniqueId > > T_EmbeddedUnitsMap;
+    typedef std::map< std::string, std::pair< double, double > > T_Coordinates;
     //@}
 
 private:
@@ -121,10 +128,12 @@ private:
     const LocalAgentResolver_ABC& localResolver_;
     const CallsignResolver_ABC& callsignResolver_;
     dispatcher::Logger_ABC& logger_;
+    tools::MessageController_ABC< sword::SimToClient_Content >& messageController_;
     T_Identifiers identifiers_;
     T_Identifiers automatIds_;
     T_Objects objects_;
     T_EmbeddedUnitsMap pendingLoaded_;
+    T_Coordinates coordinates_;
     //@}
 };
 

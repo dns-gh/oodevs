@@ -95,7 +95,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pFormationCreater_          ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, automatTypeResolver, dynamicModel.KnowledgeGroups() ) )
     , pUnitTeleporter_            ( new UnitTeleporter( xis, missionResolver, remoteAgentSubject, *pUnitHandler_, publisher, contextFactory,
-                                        localResolver, callsignResolver, logger, *pFormationHandler_, *pAutomatHandler_ ) )
+                                        localResolver, callsignResolver, logger, *pFormationHandler_, *pAutomatHandler_, messageController ) )
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController, logger, localResolver ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
