@@ -12,8 +12,6 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "gaming/Simulation.h"
-#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
@@ -26,14 +24,14 @@ namespace kernel
     class Population_ABC;
 }
 
-namespace simulation
-{
-    class sEndTick;
-}
-
 namespace gui
 {
     class GLView_ABC;
+}
+
+namespace simulation
+{
+    class sEndTick;
 }
 
 // =============================================================================
@@ -49,39 +47,34 @@ class LockMapViewController : public QObject
                             , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
-                            , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
     Q_OBJECT
-
+    
 public:
     //! @name Constructors/Destructor
     //@{
-             LockMapViewController( kernel::Controllers& controllers, gui::GLView_ABC& view );
+             LockMapViewController( kernel::Controllers& controllers, gui::GLView_ABC& proxy );
     virtual ~LockMapViewController();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Clear();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void LockViewOnEntity();
-    void UnlockViewOnEntity();
+    void OnLockViewOnEntity();
+    void OnUnlockViewOnEntity();
     //@}
 
-protected:
+private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
     virtual void UpdateContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
+
+    void LockViewOnEntity( const kernel::Entity_ABC* entity );
     //@}
 
 private:
@@ -89,9 +82,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::GLView_ABC& view_;
-    kernel::SafePointer< kernel::Entity_ABC > locked_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
-    geometry::Point2f center_;
+    kernel::SafePointer< const kernel::Entity_ABC > selected_;
     //@}
 };
 

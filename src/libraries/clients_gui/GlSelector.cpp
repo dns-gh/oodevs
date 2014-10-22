@@ -13,6 +13,7 @@
 #include "GlPlaceHolder.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
+#include "GLOptions.h"
 #include "GlProxy.h"
 #include "IconLayout.h"
 #include "Layer.h"
@@ -84,7 +85,9 @@ void GlSelector::Load()
 
     widget2d_->Load( config_ );
     widget2d_->Configure( strategy_ );
-    widget2d_->Configure( std::make_shared< DragMovementLayer >( *widget2d_ ) );
+    auto movementLayer = std::make_shared< DragMovementLayer >( *widget2d_ );
+    connect( movementLayer.get(), SIGNAL( Translated() ), this, SLOT( OnTranslated() ) );
+    widget2d_->Configure( movementLayer );
     widget3d_->Load( config_ );
 
     proxy_.SetWidget2D( widget2d_ );
@@ -198,4 +201,13 @@ void GlSelector::SetFocus()
         widget2d_->setFocus();
     else if( widget3d_ )
         widget3d_->setFocus();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlSelector::OnTranslated
+// Created: ABR 2014-08-01
+// -----------------------------------------------------------------------------
+void GlSelector::OnTranslated()
+{
+    proxy_.GetOptions().SetLockedEntity( 0 );
 }

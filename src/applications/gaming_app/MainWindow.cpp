@@ -393,8 +393,6 @@ void MainWindow::Load()
         controllers_.SaveOptions( eModes_Gaming );
         unitStateDialog_->Purge();
         dockContainer_->Purge();
-        if( lockMapViewController_.get() )
-            lockMapViewController_->Clear();
         workers_.Terminate();
         model_.Purge();
         selector_->Close();
@@ -427,8 +425,6 @@ void MainWindow::Close()
     glProxy_->Purge();
     unitStateDialog_->Purge();
     dockContainer_->Purge();
-    if( lockMapViewController_.get() )
-        lockMapViewController_->Clear();
     workers_.Terminate();
     model_.Purge();
     staticModel_.Purge();

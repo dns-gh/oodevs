@@ -110,7 +110,6 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_Logger.h"
-#include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/assign.hpp>
 #include <boost/bind.hpp>

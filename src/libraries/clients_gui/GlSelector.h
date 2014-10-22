@@ -97,6 +97,12 @@ signals:
     void UpdateGL();
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void OnTranslated();
+    //@}
+
 protected:
     //! @name Operations
     //@{
