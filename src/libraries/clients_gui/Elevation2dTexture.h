@@ -60,11 +60,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     const std::shared_ptr< kernel::Options > options_;

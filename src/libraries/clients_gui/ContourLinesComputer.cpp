@@ -12,6 +12,7 @@
 #include "ContourLinesObserver.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
+#include <graphics/ElevationMap.h>
 
 using namespace gui;
 
