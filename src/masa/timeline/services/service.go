@@ -39,8 +39,8 @@ type Service interface {
 }
 
 type EventListener interface {
-	Update(events ...*sdk.Event) // create & update are merged
-	Delete(events ...string)
+	UpdateEvents(events ...*sdk.Event) // create & update are merged
+	DeleteEvents(events ...string)
 }
 
 type EventFilter func(event *sdk.Event) bool

@@ -400,14 +400,14 @@ func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage
 	return &msg
 }
 
-func (s *Sword) Update(events ...*sdk.Event) {
+func (s *Sword) UpdateEvents(events ...*sdk.Event) {
 	for _, event := range events {
 		s.cacheEvent(event, true)
 		s.cacheMetadata(event, true)
 	}
 }
 
-func (s *Sword) Delete(events ...string) {
+func (s *Sword) DeleteEvents(events ...string) {
 	for _, uuid := range events {
 		delete(s.events, uuid)
 		delete(s.metadata, uuid)

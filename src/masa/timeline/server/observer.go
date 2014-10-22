@@ -58,10 +58,10 @@ func (o *Observer) UpdateTick(tick time.Time) {
 	o.output <- makeUpdateTick(tick)
 }
 
-func (o *Observer) Update(events ...*sdk.Event) {
+func (o *Observer) UpdateEvents(events ...*sdk.Event) {
 	o.output <- makeUpdateEvents(events)
 }
 
-func (o *Observer) Delete(events ...string) {
+func (o *Observer) DeleteEvents(events ...string) {
 	o.output <- makeDeleteEvents(events)
 }

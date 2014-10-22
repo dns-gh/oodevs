@@ -491,13 +491,13 @@ func (f *FakeService) Start() error                        { return nil }
 func (f *FakeService) Stop() error                         { return nil }
 func (f *FakeService) Apply(string, url.URL, []byte) error { return nil }
 
-func (f *FakeService) Update(events ...*sdk.Event) {
+func (f *FakeService) UpdateEvents(events ...*sdk.Event) {
 	f.lock.Lock()
 	defer f.lock.Unlock()
 	f.events = events
 }
 
-func (f *FakeService) Delete(uuids ...string) {
+func (f *FakeService) DeleteEvents(uuids ...string) {
 	f.lock.Lock()
 	defer f.lock.Unlock()
 	f.uuids = uuids
@@ -534,7 +534,12 @@ func (t *TestSuite) TestListeners(c *C) {
 
 	faker := FakeService{}
 	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
-		return nil, session.Attach("faker", &faker)
+		err := session.AttachService("faker", &faker)
+		if err != nil {
+			return nil, err
+		}
+		session.AttachListener(&faker)
+		return nil, nil
 	})
 	c.Assert(err, IsNil)
 
@@ -624,9 +629,9 @@ func (t *TestSuite) TestFiltering(c *C) {
 	defer f.Close()
 
 	faker := FakeFilterer{FakeService: FakeService{}, filter: false}
-	_ = services.EventFilterer(&faker)
 	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
-		return nil, session.Attach("faker", &faker)
+		session.AttachFilterer(&faker)
+		return nil, nil
 	})
 	c.Assert(err, IsNil)
 
@@ -1513,9 +1518,9 @@ func (t *TestSuite) TestKnownEventsAreDeletedWhenBeingFiltered(c *C) {
 	defer f.Close()
 	event := f.addTaskEvent(c, "event", f.begin, f.begin.Add(1*time.Hour), "")
 	faker := FakeFilterer{FakeService: FakeService{}, filter: false}
-	_ = services.EventFilterer(&faker)
 	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
-		return nil, session.Attach("faker", &faker)
+		session.AttachFilterer(&faker)
+		return nil, nil
 	})
 	c.Assert(err, IsNil)
 	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
