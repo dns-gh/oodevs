@@ -10,19 +10,21 @@
 #ifndef __FloodDrawer_h_
 #define __FloodDrawer_h_
 
-#include <vector>
 #include <geometry/types.h>
+#include <boost/noncopyable.hpp>
+#include <vector>
 
 namespace propagation
 {
     class FloodModel_ABC;
+
 // =============================================================================
 /** @class  FloodDrawer
-    @brief  FloodDrawer
+    @brief  Flood drawer
 */
 // Created: JSR 2010-12-21
 // =============================================================================
-class FloodDrawer
+class FloodDrawer : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -40,23 +42,15 @@ public:
 
     //! @name Accessors
     //@{
-    const geometry::Point2f& GetCenter() const { return point_; }
-    int GetReferenceDistance() const { return refDist_; }
-    int GetDepth() const { return depth_; }
+    const geometry::Point2f& GetCenter() const;
+    int GetReferenceDistance() const;
+    int GetDepth() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FloodDrawer( const FloodDrawer& );            //!< Copy constructor
-    FloodDrawer& operator=( const FloodDrawer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void RenderTexture( const std::vector< geometry::Polygon2f >& deepAreas, const std::vector< geometry::Polygon2f >& lowAreas );
-    void ResetTexture();
-    void DrawPolygons( const std::vector< geometry::Polygon2f >& polygons ) const;
+    void RenderTexture() const;
     //@}
 
 private:
