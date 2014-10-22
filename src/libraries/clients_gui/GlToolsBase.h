@@ -12,14 +12,6 @@
 
 #include "GLView_ABC.h"
 
-#include "clients_kernel/FourStateOption.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
-
-namespace kernel
-{
-    class Controllers;
-}
-
 namespace tools
 {
     class ExerciseConfig;
@@ -40,27 +32,20 @@ namespace gui
 // Created: AGE 2006-04-07
 // =============================================================================
 class GlToolsBase : public gui::GLView_ABC
-                  , public tools::Observer_ABC
-                  , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GlToolsBase( kernel::Controllers& controllers, const DrawingTypes& drawingTypes );
+             GlToolsBase( GLView_ABC& parent, const DrawingTypes& drawingTypes );
     virtual ~GlToolsBase();
     //@}
 
     //! @name Operations
     //@{
     virtual void Load( const tools::ExerciseConfig& config );
-    virtual boost::tuple< bool, bool, bool > UnSelect() const;
-    virtual void Select( bool, bool, bool ) const;
 
-    virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
-    virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
-    virtual bool ShouldDisplay( const std::string& name, bool b1, bool b2, bool b3 ) const;
-    virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
     virtual float GetCurrentAlpha() const;
+    virtual void SetCurrentColor( float r, float g, float b, float a = 1 );
     virtual std::unique_ptr< GlTooltip_ABC > CreateTooltip() const;
 
     GlToolsBase& Base() const;
@@ -73,30 +58,22 @@ public:
     void DrawBillboardRect();
     //@}
 
-protected:
-    //! @name Operations
+    //! @name Options
     //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual GLOptions& GetOptions();
+    virtual const GLOptions& GetOptions() const;
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< const char**, unsigned int > T_Icons;
-    typedef T_Icons::const_iterator              CIT_Icons;
-
-    typedef std::map< std::string, kernel::FourStateOption > T_Options;
-    typedef T_Options::iterator                             IT_Options;
-    typedef T_Options::const_iterator                      CIT_Options;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    mutable bool selected_;
-    mutable bool superiorSelected_;
-    mutable bool controlled_;
+    gui::GLView_ABC& parent_;
     T_Icons icons_;
     std::unique_ptr< SvglRenderer > renderer_;
     std::unique_ptr< GLSymbols > symbols_;
@@ -104,7 +81,6 @@ private:
     std::unique_ptr< TacticalGraphics > graphics_;
     unsigned int billboard_;
     float alpha_;
-    mutable T_Options options_;
     //@}
 };
 

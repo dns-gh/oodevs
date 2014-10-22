@@ -15,12 +15,12 @@
 
 namespace kernel
 {
-    class Options;
     class OptionsController;
 }
 
 namespace gui
 {
+    class GLOptions;
     class TerrainPreference;
     class TerrainSettings;
     class TerrainPreferenceWidget;
@@ -39,7 +39,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit GraphicPreferences( kernel::OptionsController& options,
-                                 const std::shared_ptr< TerrainSettings >& settings,
                                  QWidget* parent = 0 );
     virtual ~GraphicPreferences();
     //@}
@@ -47,7 +46,7 @@ public:
     //! @name Operations
     //@{
     void Display( QVBoxLayout* parent );
-    void Load( const kernel::Options& options );
+    void Load( const GLOptions& options );
     //@}
 
 private:
@@ -70,7 +69,6 @@ private:
     //! @name Member data
     //@{
     kernel::OptionsController& options_;
-    std::shared_ptr< TerrainSettings > settings_;
     std::map< QString, TerrainPreferenceWidget* > widgets_;
     QStringList orders_;
 

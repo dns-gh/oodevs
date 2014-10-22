@@ -12,6 +12,9 @@
 #include "moc_LightingPanel.cpp"
 #include "ButtonGroup.h"
 #include "DirectionWidget.h"
+#include "GLOptions.h"
+#include "GlProxy.h"
+#include "LightingHelpers.h"
 #include "LightingProxy.h"
 #include "OptionWidgets.h"
 #include "RichGroupBox.h"
@@ -27,12 +30,6 @@ using namespace gui;
 
 namespace
 {
-    enum E_3DLightingType
-    {
-        eFixed,
-        eCameraFixed,
-        eSimulationTime
-    };
     class OptionDirection : public OptionWidget< DirectionWidget >
     {
     public:
@@ -78,23 +75,17 @@ namespace
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
 LightingPanel::LightingPanel( QWidget* parent,
-                              kernel::OptionsController& options,
-                              LightingProxy& lighting )
+                              kernel::OptionsController& options )
     : PreferencePanel_ABC( parent, "LightingPanel" )
-    , lighting_( lighting )
 {
     SubObjectName subObject( "LightingPanel" );
 
-    lighting_.SetAmbient( 0.2f, 0.2f, 0.2f );
-    lighting_.SetDiffuse( 0.8f, 0.8f, 0.8f );
-    lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
-
     auto lightingType = new OptionButtonGroup( options, "type_box", "Lighting/Type" );
     lightingType->setTitle( tr( "Lighting type" ) );
-    lightingType->AddButton( eFixed, new RichRadioButton( "fixed", tr( "Fixed" ), lightingType ) ); // only this one works well...
-    lightingType->AddButton( eCameraFixed, new RichRadioButton( "cameraFixed", tr( "Camera fixed" ), lightingType ) );
-    lightingType->AddButton( eSimulationTime, new RichRadioButton( "simulationTime", tr( "Simulation time" ), lightingType ) );
-    lightingType->SetChecked( eFixed );
+    lightingType->AddButton( lighting::eFixed, new RichRadioButton( "fixed", tr( "Fixed" ), lightingType ) ); // only this one works well...
+    lightingType->AddButton( lighting::eCameraFixed, new RichRadioButton( "cameraFixed", tr( "Camera fixed" ), lightingType ) );
+    lightingType->AddButton( lighting::eSimulationTime, new RichRadioButton( "simulationTime", tr( "Simulation time" ), lightingType ) );
+    lightingType->SetChecked( lighting::eFixed );
 
     auto direction = new OptionDirection( options, "direction", "Lighting/Direction" );
     auto ambient = new OptionColorButton( options, "ambient", "Lighting/Ambient" );
@@ -131,18 +122,30 @@ LightingPanel::~LightingPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LightingPanel::Load
+// Created: ABR 2014-10-20
+// -----------------------------------------------------------------------------
+void LightingPanel::Load( const GlProxy& view )
+{
+    const auto& options = view.GetOptions();
+    lighting_ = std::dynamic_pointer_cast< LightingProxy >( options.GetLighting() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LightingPanel::OnTypeChanged
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
 void LightingPanel::OnTypeChanged( int type )
 {
-    fixedBox_->setVisible( type == eFixed || type == eCameraFixed );
-    if( type == eFixed )
-        lighting_.SwitchToFixed();
-    else if( type == eCameraFixed )
-        lighting_.SwitchToCameraFixed();
-    else if( type == eSimulationTime )
-        lighting_.SwitchToSimulationTime();
+    fixedBox_->setVisible( type == lighting::eFixed || type == lighting::eCameraFixed );
+    if( !lighting_ )
+        return;
+    if( type == lighting::eFixed )
+        lighting_->SwitchToFixed();
+    else if( type == lighting::eCameraFixed )
+        lighting_->SwitchToCameraFixed();
+    else if( type == lighting::eSimulationTime )
+        lighting_->SwitchToSimulationTime();
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +154,8 @@ void LightingPanel::OnTypeChanged( int type )
 // -----------------------------------------------------------------------------
 void LightingPanel::DirectionChanged( const geometry::Vector3f& direction )
 {
-    lighting_.SetLightDirection( direction );
+    if( lighting_ )
+        lighting_->SetLightDirection( direction );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +164,8 @@ void LightingPanel::DirectionChanged( const geometry::Vector3f& direction )
 // -----------------------------------------------------------------------------
 void LightingPanel::AmbientChanged( const QColor& color )
 {
-    lighting_.SetAmbient( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f );
+    if( lighting_ )
+        lighting_->SetAmbient( color );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,5 +174,6 @@ void LightingPanel::AmbientChanged( const QColor& color )
 // -----------------------------------------------------------------------------
 void LightingPanel::DiffuseChanged( const QColor& color )
 {
-    lighting_.SetDiffuse( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f );
+    if( lighting_ )
+        lighting_->SetDiffuse( color );
 }

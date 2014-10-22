@@ -85,7 +85,7 @@ bool LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message, 
 // -----------------------------------------------------------------------------
 void LogMedicalConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+    if( ! pPionLogHandling_ || !tools.GetOptions().ShouldDisplay( "RealTimeLogistic" ) )
         return;
     const Point2f from = pPionLogHandling_->Get< Positions >().GetPosition();
     const Point2f to   = consumer_.Get< Positions >().GetPosition();

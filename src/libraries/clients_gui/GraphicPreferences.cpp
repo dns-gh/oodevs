@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GraphicPreferences.h"
 #include "moc_GraphicPreferences.cpp"
+#include "GLOptions.h"
 #include "TerrainPreference.h"
 #include "TerrainPreferenceWidget.h"
 #include "TerrainSetting.h"
@@ -34,11 +35,9 @@ using namespace gui;
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
 GraphicPreferences::GraphicPreferences( kernel::OptionsController& options,
-                                        const std::shared_ptr< TerrainSettings >& settings,
                                         QWidget* parent /* = 0 */ )
     : QWidget( parent )
     , options_         ( options )
-    , settings_        ( settings )
     , upIcon_          ( "resources/images/gui/up.png" )
     , downIcon_        ( "resources/images/gui/down.png" )
     , upSignalMapper_  ( new QSignalMapper( this ) )
@@ -125,17 +124,18 @@ void GraphicPreferences::Build()
 // Name: GraphicPreferences::Load
 // Created: ABR 2014-08-01
 // -----------------------------------------------------------------------------
-void GraphicPreferences::Load( const kernel::Options& options )
+void GraphicPreferences::Load( const GLOptions& options )
 {
     orders_ = options.Get( "Terrains/Order" ).To< QString >().split( ";" );
-    std::map< QString, std::vector< TerrainPreference* > > categories;
     for( auto it = widgets_.begin(); it != widgets_.end(); ++it )
         delete it->second;
     widgets_.clear();
-    
-    settings_->Apply( [&]( const std::shared_ptr< TerrainSetting >& setting ){
+
+    std::map< QString, std::vector< TerrainPreference* > > categories;
+    options.GetTerrainSettings()->Apply( [&]( const std::shared_ptr< TerrainSetting >& setting ){
         categories[ setting->category_ ].push_back( new TerrainPreference( options_, setting ) );
     } );
+
     for( int i = 0; i < orders_.size(); ++i )
     {
         const auto category = orders_.at( i );

@@ -9,7 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "Itinerary.h"
-#include "clients_gui/GLView_ABC.h"
+#include "GLOptions.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -122,7 +123,7 @@ void Itinerary::DrawLines( GLView_ABC& view, const QColor& color, float width, b
 
 void Itinerary::DrawPoints( GLView_ABC& view, const QColor& color, const boost::optional< Hover >& hover, bool picking ) const
 {
-    const bool selected = view.ShouldDisplay();
+    const bool selected = view.GetOptions().IsDrawingSelection();
     const auto& waypoints = waypoints_.empty() ? path_ : waypoints_;
     std::size_t i = 0;
     for( auto it = waypoints.begin(); it != waypoints.end(); ++it )

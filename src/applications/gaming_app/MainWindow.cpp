@@ -120,7 +120,6 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/TerrainProfilerLayer.h"
-#include "clients_gui/TerrainSettings.h"
 #include "clients_gui/TextEditor.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/UrbanLayer.h"
@@ -149,10 +148,17 @@ namespace
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model,
-    const Simulation& simulation, SimulationController& simulationController,
-    Network& network, ProfileFilter& filter, GamingConfig& config, LoggerProxy& logger,
-    const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers )
+MainWindow::MainWindow( Controllers& controllers,
+                        ::StaticModel& staticModel,
+                        Model& model,
+                        const Simulation& simulation,
+                        SimulationController& simulationController,
+                        Network& network,
+                        ProfileFilter& filter,
+                        GamingConfig& config,
+                        LoggerProxy& logger,
+                        const kernel::KnowledgeConverter_ABC& converter,
+                        kernel::Workers& workers )
     : QMainWindow()
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
@@ -161,10 +167,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , config_            ( config )
     , profile_           ( filter )
     , workers_           ( workers )
-    , terrainSettings_   ( new gui::TerrainSettings() )
-    , gradientPreferences_( new gui::GradientPreferences() )
     , pColorController_  ( new ColorController( controllers_ ) )
-    , glProxy_           ( new gui::GlProxy( logger ) )
     , connected_         ( false )
     , onPlanif_          ( false )
     , drawingsBuilder_   ( new DrawingsBuilder( controllers_, profile_ ) )
@@ -175,6 +178,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     controllers_.actions_.AddSelectionner( new Selectionner< actions::Action_ABC >() );
     controllers_.eventActions_.AddSelectionner( new Selectionner< gui::Event >() );
     gui::layers::CheckConsistency();
+
+    glProxy_.reset( new gui::GlProxy( controllers, profile_, staticModel, model, std::make_shared< SimulationLighting >( controllers ) ) );
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );
@@ -193,7 +198,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
     // Main widget
-    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, logger, staticModel_.drawings_ ) );
+    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, staticModel_.drawings_ ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );
@@ -214,14 +219,12 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     firePlayer_.reset( new FirePlayer( controllers, profile_, simulation ) );
 
     // Misc
-    lighting_.reset( new SimulationLighting( controllers ) );
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, filter );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
-    auto elevation2d = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_, gradientPreferences_ );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel, *glProxy_, elevation2d, terrainSettings_, gradientPreferences_ ) );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, staticModel, *glProxy_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers.options_ ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers.options_, *firePlayer_ ) );
     preferenceDialog_->AddPage( tr( "Weapon Ranges" ), *new gui::WeaponRangesPanel( preferenceDialog_.get(), controllers.options_, staticModel_ ) );
@@ -274,7 +277,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
     // Last layers
-    CreateLayers( parameters, locationsLayer, meteoLayer, profilerLayer, automatsLayer, formationLayer, elevation2d, simulation, *picker );
+    CreateLayers( parameters, locationsLayer, meteoLayer, profilerLayer, automatsLayer, formationLayer, simulation, *picker );
 
     // Menu bar & status bar
     setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, network_, logger ) );
@@ -318,7 +321,6 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
                                const std::shared_ptr< gui::Layer_ABC >& profiler,
                                const std::shared_ptr< gui::Layer_ABC >& automats,
                                const std::shared_ptr< gui::Layer_ABC >& formations,
-                               const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                                const Simulation& simulation,
                                gui::TerrainPicker& picker )
 {
@@ -328,7 +330,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_AgentKnowledges ]        = std::make_shared< AgentKnowledgesLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Agents ]                 = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, profile_, model_.actions_, simulation );
     layers[ eLayerTypes_Automats ]               = automats;
-    layers[ eLayerTypes_ContourLines ]           = std::make_shared< gui::ContourLinesLayer >( controllers_, *glProxy_, staticModel_.detection_ );
+    layers[ eLayerTypes_ContourLines ]           = std::make_shared< gui::ContourLinesLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_CrowdKnowledges ]        = std::make_shared< PopulationKnowledgesLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Creations ]              = std::make_shared< gui::MiscLayer< CreationPanels > >( controllers_, *glProxy_, eLayerTypes_Creations, dockContainer_->GetCreationPanel() );
     layers[ eLayerTypes_Crowds ]                 = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, profile_ );
@@ -338,8 +340,8 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Fog ]                    = std::make_shared< FogLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Formations ]             = formations;
     layers[ eLayerTypes_Inhabitants ]            = std::make_shared< gui::InhabitantLayer >( controllers_, *glProxy_, *strategy_, profile_ );
-    layers[ eLayerTypes_Elevation2d ]            = elevation2d;
-    layers[ eLayerTypes_Elevation3d ]            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_, *lighting_ );
+    layers[ eLayerTypes_Elevation2d ]            = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
+    layers[ eLayerTypes_Elevation3d ]            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers[ eLayerTypes_Grid ]                   = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
     layers[ eLayerTypes_Locations ]              = locations;
     if( config_.HasMapnik() )
@@ -353,7 +355,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Raster ]                 = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_ResourceNetworks ]       = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_TacticalLines ]          = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, profile_, *drawingsBuilder_ );
-    layers[ eLayerTypes_Terrain ]                = std::make_shared< gui::TerrainLayer >( controllers_, terrainSettings_, *glProxy_, picker );
+    layers[ eLayerTypes_Terrain ]                = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, picker );
     layers[ eLayerTypes_TerrainProfiler ]        = profiler;
     layers[ eLayerTypes_Tooltips ]               = tooltips;
     layers[ eLayerTypes_Urban ]                  = std::make_shared< gui::UrbanLayer >( controllers_, *glProxy_, *strategy_, profile_ );
@@ -404,8 +406,6 @@ void MainWindow::Load()
         // will move to GLMainProxy
         auto& options = *controllers_.options_.GetViewOptions();
         glProxy_->UpdateLayerOrder( options );
-        terrainSettings_->Load( options );
-        gradientPreferences_->Load( options );
         selector_->Load();
     }
     catch( const xml::exception& e )

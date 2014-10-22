@@ -54,7 +54,6 @@ private:
     //! @name Helpers
     //@{
     void Move( const QPoint& pos );
-    void Move( float theta, float phy );
     //@}
 
 private:

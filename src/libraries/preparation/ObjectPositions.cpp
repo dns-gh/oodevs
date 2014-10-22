@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "ObjectPositions.h"
 #include "LocationSerializer.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Circle.h"
@@ -288,7 +289,7 @@ void ObjectPositions::Draw( const geometry::Point2f&, const gui::Viewport_ABC& v
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
-    tools.DrawTacticalGraphics( symbol_, *location_, tools.ShouldDisplay(), type_.GetPointSize(), dynamic_cast< const kernel::Point* >( location_ ) != nullptr );
+    tools.DrawTacticalGraphics( symbol_, *location_, tools.GetOptions().IsDrawingSelection(), type_.GetPointSize(), dynamic_cast< const kernel::Point* >( location_ ) != nullptr );
 }
 
 // -----------------------------------------------------------------------------

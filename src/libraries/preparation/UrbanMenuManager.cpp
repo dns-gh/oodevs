@@ -348,7 +348,7 @@ void UrbanMenuManager::DoApplyToChildren( kernel::Entity_ABC& object ) const
     const kernel::T_Usages& usagesSrc = physicalSrc.GetUsages().GetUsages();
     kernel::Usages_ABC& usagesDst = physicalDst.GetUsages();
     usagesDst.ClearAll();
-    for( kernel::CIT_Usages it = usagesSrc.begin(); it != usagesSrc.end(); ++it )
+    for( auto it = usagesSrc.begin(); it != usagesSrc.end(); ++it )
         usagesDst.Add( it->first, it->second );
 
     // Color

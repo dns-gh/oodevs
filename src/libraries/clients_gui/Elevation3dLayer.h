@@ -49,9 +49,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Elevation3dLayer( kernel::Controllers& controllers,
-                               GLView_ABC& tools,
-                               const kernel::DetectionMap& elevation,
-                               Lighting_ABC& lighting );
+                               GLView_ABC& view,
+                               const kernel::DetectionMap& elevation );
     virtual ~Elevation3dLayer();
     //@}
 
@@ -74,7 +73,6 @@ private:
     //! @name Member data
     //@{
     const kernel::DetectionMap& elevation_;
-    Lighting_ABC& lighting_;
     ViewFrustum lastFrustum_;
     std::unique_ptr< TextureSet >         usrp_;
     std::unique_ptr< TextureSet >         normals_;

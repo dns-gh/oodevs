@@ -159,7 +159,7 @@ void Usages::ClearAll()
 {
     while( usages_.size() > 1 )
     {
-        CIT_Usages it = usages_.begin();
+        auto it = usages_.begin();
         const std::string usage = it->first;
         if( usage == defaultStr_ )
             ++it;
@@ -173,7 +173,7 @@ void Usages::ClearAll()
 // -----------------------------------------------------------------------------
 unsigned int Usages::Find( const std::string& usage ) const
 {
-    CIT_Usages it = usages_.find( usage );
+    auto it = usages_.find( usage );
     if( it != usages_.end() )
         return it->second;
     return 0u;

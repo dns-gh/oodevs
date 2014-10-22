@@ -10,6 +10,9 @@
 #include "clients_gui_pch.h"
 #include "LightingProxy.h"
 
+#include "LightingHelpers.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionVariant.h"
 #include <graphics/FixedLighting.h>
 #include <graphics/TimeLighting.h>
 #pragma warning( push )
@@ -54,6 +57,30 @@ LightingProxy::LightingProxy( const LightingProxy& other )
 LightingProxy::~LightingProxy()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LightingProxy::Load
+// Created: ABR 2014-10-20
+// -----------------------------------------------------------------------------
+void LightingProxy::Load( const kernel::Options& options )
+{
+    SetAmbient( QColor( options.Get( "Lighting/Ambient" ).To< QString >() ) );
+    SetDiffuse( QColor( options.Get( "Lighting/Diffuse" ).To< QString >() ) );
+    const auto directionList = QStringList::split( ":", options.Get( "Lighting/Direction" ).To< QString >() );
+    if( directionList.size() != 2 )
+        throw MASA_EXCEPTION( "Invalid lighting direction:" + directionList.join( ":" ).toStdString() );
+    QPoint directionPoint( directionList[ 0 ].toInt(), directionList[ 1 ].toInt() );
+    SetLightDirection( lighting::PointToDirectionVector( directionPoint ) );
+    int type = options.Get( "Lighting/Type" ).To< int >();
+    if( type == lighting::eFixed )
+        SwitchToFixed();
+    else if( type == lighting::eCameraFixed )
+        SwitchToCameraFixed();
+    else if( type == lighting::eSimulationTime )
+        SwitchToSimulationTime();
+    else
+        throw MASA_EXCEPTION( "Invalid lighting type: " + type );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,18 +142,18 @@ void LightingProxy::SetLightDirection( const geometry::Vector3f& direction )
 // Name: LightingProxy::SetAmbient
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void LightingProxy::SetAmbient( float r, float g, float b )
+void LightingProxy::SetAmbient( const QColor& color )
 {
-    fixed_->SetAmbient( r, g, b );
+    fixed_->SetAmbient( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LightingProxy::SetDiffuse
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void LightingProxy::SetDiffuse( float r, float g, float b )
+void LightingProxy::SetDiffuse( const QColor& color )
 {
-    fixed_->SetDiffuse( r, g, b );
+    fixed_->SetDiffuse( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f );
 }
 
 // -----------------------------------------------------------------------------

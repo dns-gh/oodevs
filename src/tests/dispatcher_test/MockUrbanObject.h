@@ -39,6 +39,9 @@ MOCK_BASE_CLASS( MockUrbanObject, dispatcher::UrbanObject_ABC )
     MOCK_METHOD( ApplyTemplate, 1 );
     MOCK_METHOD( UpdateTemplate, 1 );
     MOCK_METHOD( IsUpdatingTemplate, 0 );
+
+    MOCK_METHOD( GetLivingSpace, 1);
+    MOCK_METHOD( GetHumansMap, 0 );
 };
 
 #endif // __MockUrbanObject_h_

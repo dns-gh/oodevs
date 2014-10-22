@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "LogisticLinks.h"
 #include "LogisticLink.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -177,8 +178,8 @@ const kernel::Entity_ABC& LogisticLinks::GetEntity() const
 // -----------------------------------------------------------------------------
 void LogisticLinks::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
-    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
+    const bool displayLinks   = tools.GetOptions().ShouldDisplay( "LogisticLinks" );
+    const bool displayMissing = tools.GetOptions().ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
     if( !displayLinks && !displayMissing )
         return;
 

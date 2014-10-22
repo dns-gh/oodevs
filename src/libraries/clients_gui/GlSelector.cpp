@@ -38,7 +38,6 @@ GlSelector::GlSelector( QWidget* parent,
                         const tools::ExerciseConfig& config,
                         DetectionMap& map,
                         EventStrategy_ABC& strategy,
-                        kernel::Logger_ABC& logger,
                         const DrawingTypes& drawingTypes )
     : QStackedWidget( parent )
     , proxy_       ( proxy )
@@ -46,7 +45,6 @@ GlSelector::GlSelector( QWidget* parent,
     , config_      ( config )
     , map_         ( map )
     , strategy_    ( strategy )
-    , logger_      ( logger )
     , drawingTypes_( drawingTypes )
     , iconLayout_  ( new IconLayout() )
     , displayTimer_( new QTimer( this ) )
@@ -81,8 +79,8 @@ void GlSelector::Load()
         return;
     }
 
-    widget2d_ = std::make_shared< GlWidget >( this, controllers_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_, drawingTypes_ );
-    widget3d_ = std::make_shared< Gl3dWidget >( this, controllers_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_ );
+    widget2d_ = std::make_shared< GlWidget >( this, proxy_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_, drawingTypes_ );
+    widget3d_ = std::make_shared< Gl3dWidget >( this, proxy_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_ );
 
     widget2d_->Load( config_ );
     widget2d_->Configure( strategy_ );
@@ -100,7 +98,7 @@ void GlSelector::Load()
     connect( displayTimer_, SIGNAL( timeout() ), this, SIGNAL( UpdateGL() ) );
 
     InitializePasses();
-    controllers_.options_.Change( "RefreshRate", static_cast< int >( 50 ) ); // TMP, default value
+    displayTimer_->start( controllers_.options_.GetOption( "RefreshRate" ).To< int >() );
     ChangeTo( eWidget_2D );
 }
 

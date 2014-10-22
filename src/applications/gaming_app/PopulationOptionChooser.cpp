@@ -83,8 +83,8 @@ PopulationOptionChooser::~PopulationOptionChooser()
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::OnDisplayChanged( int index )
 {
-    controllers_.options_.Change( "Density/Color", index  == 1 );
-    controllers_.options_.Change( "Accommodation/Color", index  == 2 );
+    controllers_.options_.Change( "Density/Enabled", index  == 1 );
+    controllers_.options_.Change( "Accommodation/Enabled", index  == 2 );
     activityCombo_->setEnabled( index  == 2 );
     occupationList_->setEnabled( index  == 2  );
 }
@@ -167,10 +167,10 @@ void PopulationOptionChooser::NotifyCreated( const kernel::Inhabitant_ABC& inhab
 void PopulationOptionChooser::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
     if( displayCombo_ )
-        if( name == "Density/Color" )
+        if( name == "Density/Enabled" )
             if( value.To< bool >() )
                 displayCombo_->setCurrentIndex( 1 );
-        else if( name == "Accommodation/Color" )
+        else if( name == "Accommodation/Enabled" )
             if( value.To< bool >() )
                 displayCombo_->setCurrentIndex( 2 );
 }

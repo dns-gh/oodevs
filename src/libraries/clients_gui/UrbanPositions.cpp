@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "UrbanPositions.h"
 
+#include "GLOptions.h"
 #include "GLView_ABC.h"
 #include "Tesselator.h"
 #include "Viewport_ABC.h"

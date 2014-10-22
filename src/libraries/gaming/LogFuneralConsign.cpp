@@ -12,6 +12,7 @@
 #include "LogisticConsigns.h"
 #include "Simulation.h"
 #include "clients_gui/DisplayExtractor.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -85,7 +86,7 @@ bool LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message, 
 // -----------------------------------------------------------------------------
 void LogFuneralConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( ! handler_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+    if( ! handler_ || !tools.GetOptions().ShouldDisplay( "RealTimeLogistic" ) )
         return;
     const Point2f from = handler_->Get< Positions >().GetPosition();
     const Point2f to   = consumer_.Get< Positions >().GetPosition();

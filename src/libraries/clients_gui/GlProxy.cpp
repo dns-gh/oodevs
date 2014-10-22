@@ -9,12 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "Gl3dWidget.h"
+#include "GLOptions.h"
 #include "GlProxy.h"
 #include "GlTooltip.h"
 #include "GlWidget.h"
 #include "Layer.h"
 #include "TooltipsLayer_ABC.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
 using namespace kernel;
@@ -24,12 +26,15 @@ using namespace gui;
 // Name: GlProxy constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-GlProxy::GlProxy( kernel::Logger_ABC& logger )
-    : logger_      ( logger )
-    , view_        ( 0 )
-    , tooltipLayer_( 0 )
+GlProxy::GlProxy( kernel::Controllers& controllers,
+                  const kernel::Profile_ABC& profile,
+                  const kernel::StaticModel& staticModel,
+                  const kernel::EntityResolver_ABC& model,
+                  const std::shared_ptr< Lighting_ABC >& lighting )
+    : options_( new GLOptions( controllers, profile, staticModel, model, lighting ) )
+    , optionsController_( controllers.options_ )
 {
-    // NOTHING
+    optionsController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +43,25 @@ GlProxy::GlProxy( kernel::Logger_ABC& logger )
 // -----------------------------------------------------------------------------
 GlProxy::~GlProxy()
 {
-    layers_.clear();
+    optionsController_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::GetOptions
+// Created: ABR 2014-10-16
+// -----------------------------------------------------------------------------
+GLOptions& GlProxy::GetOptions()
+{
+    return *options_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::GetOptions
+// Created: ABR 2014-10-16
+// -----------------------------------------------------------------------------
+const GLOptions& GlProxy::GetOptions() const
+{
+    return *options_;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +160,7 @@ void GlProxy::UpdateLayerOrder( kernel::Options& options )
     {
         const auto& layer = orderedLayers[ i ];
         layer->SetAlpha( options.Get( "Layers/" + layer->GetOptionName() + "/Alpha" ).To< float >() );
-        options.Set( "Layers/" + layer->GetOptionName() + "/Position", i );
+        optionsController_.Change( "Layers/" + layer->GetOptionName() + "/Position", i );
     }
 }
 
@@ -210,43 +233,6 @@ geometry::Point2f GlProxy::GetCenter() const
 void GlProxy::Zoom( float width )
 {
     view_->Zoom( width );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::UnSelect
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-boost::tuple< bool, bool, bool > GlProxy::UnSelect() const
-{
-    return view_->UnSelect();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::Select
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void GlProxy::Select( bool b1, bool b2, bool b3 ) const
-{
-    if( view_ )
-        view_->Select( b1, b2, b3 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::ShouldDisplay
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-bool GlProxy::ShouldDisplay( const std::string& name ) const
-{
-    return view_ && view_->ShouldDisplay( name );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::ShouldDisplay
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
-{
-    return view_ && view_->ShouldDisplay( name, autoCondition );
 }
 
 // -----------------------------------------------------------------------------
@@ -728,4 +714,15 @@ void GlProxy::Purge()
 std::string GlProxy::GetCurrentPass() const
 {
     return view_ ? view_->GetCurrentPass() : "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::OptionChanged
+// Created: ABR 2014-10-17
+// -----------------------------------------------------------------------------
+void GlProxy::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    // will move in the GL widgets manager when multi view will be present
+    if( !optionsController_.GetGeneralOptions()->Has( name ) )
+        GetOptions().Set( name, value );
 }

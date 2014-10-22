@@ -81,6 +81,8 @@ namespace
         MOCK_METHOD( ApplyTemplate, 1 );
         MOCK_METHOD( UpdateTemplate, 1 );
         MOCK_METHOD( IsUpdatingTemplate, 0);
+        MOCK_METHOD( GetLivingSpace, 1);
+        MOCK_METHOD( GetHumansMap, 0 );
     };
 
     const std::string point1 = "35RPQ8487711651";

@@ -34,8 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GraphicsPanel( QWidget* parent,
-                            kernel::OptionsController& options,
-                            const std::shared_ptr< TerrainSettings >& settings );
+                            kernel::OptionsController& options );
     virtual ~GraphicsPanel();
     //@}
 

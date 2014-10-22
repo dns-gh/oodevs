@@ -21,7 +21,6 @@ namespace kernel
 {
     class Controllers;
     class DetectionMap;
-    class Logger_ABC;
 }
 
 class QGLWidget;
@@ -73,7 +72,6 @@ public:
                          const tools::ExerciseConfig& config,
                          kernel::DetectionMap& map,
                          EventStrategy_ABC& strategy,
-                         kernel::Logger_ABC& logger,
                          const DrawingTypes& drawingTypes );
     virtual ~GlSelector();
     //@}
@@ -120,7 +118,6 @@ private:
     const tools::ExerciseConfig& config_;
     kernel::DetectionMap& map_;
     EventStrategy_ABC& strategy_;
-    kernel::Logger_ABC& logger_;
     std::unique_ptr< IconLayout > iconLayout_;
     const DrawingTypes& drawingTypes_;
 

@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ObjectKnowledgePositions.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -54,7 +55,7 @@ void ObjectKnowledgePositions::DoUpdate( const sword::ObjectKnowledgeUpdate& mes
 void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
-        tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay(), type_.GetPointSize(),
+        tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.GetOptions().IsDrawingSelection(), type_.GetPointSize(),
             dynamic_cast< const kernel::Point* >( location ) != nullptr );
 }
 

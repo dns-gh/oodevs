@@ -55,12 +55,10 @@ UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, uns
     , updatingTemplate_( false )
     , fillingTemplate_ ( false )
     , controllers_     ( controllers )
-    , options_        ( options )
+    , options_         ( options )
 {
     AddExtension( *this );
-    UpdateColor();
     CreateDictionary( false );
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,9 +84,7 @@ UrbanObject::UrbanObject( xml::xistream& xis, Controllers& controllers, const Ob
     , options_         ( options )
 {
     AddExtension( *this );
-    UpdateColor();
     CreateDictionary( true );
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +100,6 @@ UrbanObject::~UrbanObject()
         if( superior )
             superior->Get< kernel::Hierarchies >().RemoveSubordinate( *this );
     }
-    controllers_.Unregister( *this );
     if( UrbanColor_ABC* pColor = Retrieve< UrbanColor_ABC >() )
         pColor->Restore();
     Destroy();
@@ -249,12 +244,12 @@ void UrbanObject::UpdateHumans( const std::string& inhabitant, const sword::Popu
     RegisterValue( *this, keyBase + tools::translate( "Block", "Confined" ), human.confined_ );
     RegisterValue( *this, keyBase + tools::translate( "Block", "Evacuated" ), human.evacuated_ );
     RegisterValue( *this, keyBase + tools::translate( "Block", "Angriness" ), human.angriness_ );
-    for( IT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++it )
+    for( auto it = motivations_.begin(); it != motivations_.end(); ++it )
         it->second.first = 0;
-    for( T_Humans::const_iterator h = humans_.begin(); h != humans_.end(); ++h )
+    for( auto h = humans_.begin(); h != humans_.end(); ++h )
         for( auto it = h->second.persons_.begin(); it != h->second.persons_.end(); ++it )
             motivations_[ it->first ].first += it->second.first;
-    for( IT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++ it )
+    for( auto it = motivations_.begin(); it != motivations_.end(); ++ it )
     {
         double nominalCapacity = GetNominalCapacity( it->first.toStdString() );
         it->second.second = nominalCapacity ?  static_cast< unsigned int >( 100 * it->second.first / nominalCapacity ) : 0;
@@ -263,7 +258,6 @@ void UrbanObject::UpdateHumans( const std::string& inhabitant, const sword::Popu
         RegisterValue( *this, keyOccupation + tools::translate( "Block", "Occupation rate" ), it->second.second );
     }
     UpdateDensity();
-    UpdateColor();
 }
 
 // -----------------------------------------------------------------------------
@@ -357,41 +351,5 @@ double UrbanObject::GetNominalCapacity( const std::string& motivation ) const
 // -----------------------------------------------------------------------------
 const kernel::AccommodationTypes& UrbanObject::GetAccommodations() const
 {
-    return accommodations_; // $$$$ ABR 2012-05-25: WTF !!! C'est deja dans staticModel...
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObject::UpdateColor
-// Created: LDC 2011-03-25
-// -----------------------------------------------------------------------------
-void UrbanObject::UpdateColor()
-{
-    PhysicalAttribute_ABC* pPhysical = Retrieve< PhysicalAttribute_ABC >();
-    if( !pPhysical )
-        return;
-    const StructuralStateAttribute_ABC* pStructuralStateAttribute = Retrieve< StructuralStateAttribute_ABC >();
-    if( !pStructuralStateAttribute )
-        return;
-    const Usages_ABC& pUsages = pPhysical->GetUsages();
-    UrbanColor_ABC& pColor = Get< UrbanColor_ABC >();
-    if( !options_.SetColor( pColor, GetLivingSpace(), GetHumansMap(), pUsages, pStructuralStateAttribute->GetValue() ) )
-        pColor.Restore();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObject::NotifyUpdated
-// Created: LDC 2011-03-25
-// -----------------------------------------------------------------------------
-void UrbanObject::NotifyUpdated( const UrbanDisplayOptions& )
-{
-    UpdateColor();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObject::NotifyUpdated
-// Created: LGY 2012-06-15
-// -----------------------------------------------------------------------------
-void UrbanObject::NotifyUpdated( const StructuralStateAttribute_ABC& )
-{
-    UpdateColor();
+    return accommodations_;
 }

@@ -45,9 +45,7 @@ namespace gui
     class ParametersLayer;
     class PreferencesDialog;
     class RichToolBar;
-    class TerrainLayer;
     class TerrainPicker;
-    class TerrainSettings;
     class TextEditor;
 }
 
@@ -95,10 +93,17 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel,
-                 Model& model, const Simulation& simulation, SimulationController& simulationController,
-                 Network& network, ProfileFilter& profile, GamingConfig& config, LoggerProxy& logger,
-                 const kernel::KnowledgeConverter_ABC& converter, kernel::Workers& workers );
+             MainWindow( kernel::Controllers& controllers,
+                         StaticModel& staticModel,
+                         Model& model,
+                         const Simulation& simulation,
+                         SimulationController& simulationController,
+                         Network& network,
+                         ProfileFilter& profile,
+                         GamingConfig& config,
+                         LoggerProxy& logger,
+                         const kernel::KnowledgeConverter_ABC& converter,
+                         kernel::Workers& workers );
     virtual ~MainWindow();
     //@}
 
@@ -144,7 +149,6 @@ private:
                        const std::shared_ptr< gui::Layer_ABC >& profiler,
                        const std::shared_ptr< gui::Layer_ABC >& automats,
                        const std::shared_ptr< gui::Layer_ABC >& formations,
-                       const std::shared_ptr< gui::Layer_ABC >& elevation2d,
                        const Simulation& simulation,
                        gui::TerrainPicker& picker );
 
@@ -170,10 +174,7 @@ private:
     std::unique_ptr< gui::TextEditor > textEditor_; // should move in parameter layer
 
     // the following will move to GLOptions or GLMainProxy
-    std::shared_ptr< gui::TerrainSettings > terrainSettings_;
-    std::shared_ptr< gui::GradientPreferences > gradientPreferences_;
     std::unique_ptr< gui::GlProxy > glProxy_;
-    std::unique_ptr< gui::LightingProxy > lighting_;
     std::unique_ptr< gui::GlSelector > selector_;
 
     std::unique_ptr< gui::CircularEventStrategy > forward_;

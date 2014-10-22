@@ -26,9 +26,8 @@ namespace kernel
 namespace gui
 {
     class Elevation2dLayer;
+    class GLOptions;
     class GlProxy;
-    class GradientPreferences;
-    class LightingProxy;
     class PreferencesList;
     class PreferencePanel_ABC;
     class TerrainSettings;
@@ -50,12 +49,8 @@ public:
     //@{
              PreferencesDialog( QWidget* parent,
                                 kernel::Controllers& controllers,
-                                LightingProxy& lighting,
                                 const kernel::StaticModel& staticModel,
-                                GlProxy& proxy,
-                                const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
-                                const std::shared_ptr< TerrainSettings >& settings,
-                                const std::shared_ptr< GradientPreferences >& preferences );
+                                GlProxy& proxy );
     virtual ~PreferencesDialog();
     //@}
 
@@ -85,10 +80,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     GlProxy& proxy_;
-    std::shared_ptr< TerrainSettings > settings_;
-    std::shared_ptr< GradientPreferences > preferences_;
     std::shared_ptr< kernel::Options > previousGeneralOptions_;
-    std::shared_ptr< kernel::Options > previousViewOptions_;
+    std::unique_ptr< GLOptions > previousViewOptions_;
     //std::vector< std::unique_ptr< GLOptions > > previousViewsOptions_;
     PreferencesList* list_;
     QStackedWidget* stack_;

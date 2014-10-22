@@ -11,8 +11,11 @@
 #include "InhabitantPanel.h"
 #include "moc_InhabitantPanel.cpp"
 #include "DensityWidget.h"
+#include "GlProxy.h"
+#include "GLOptions.h"
 #include "RichGroupBox.h"
 #include "SubObjectName.h"
+#include "UrbanDisplayOptions.h"
 
 using namespace gui;
 
@@ -26,11 +29,13 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::OptionsController& op
     SubObjectName subObject( "InhabitantPanel" );
     RichGroupBox* densityGroup = new RichGroupBox( "densityGroup", tr( "Density Gradient map" ) );
     QHBoxLayout* densityLayout = new QHBoxLayout( densityGroup );
-    densityLayout->addWidget( new DensityWidget( options, "densityGroup", "Density" ) );
+    density_ = new DensityWidget( options, "densityGroup", "Density" );
+    densityLayout->addWidget( density_ );
 
     RichGroupBox* occupationGroup = new RichGroupBox( "occupationGroup", tr( "Occupation Gradient map" ) );
     QHBoxLayout* occupationLayout = new QHBoxLayout( occupationGroup );
-    occupationLayout->addWidget( new DensityWidget( options, "occupationWidget", "Accommodation" ) );
+    accommodation_ = new DensityWidget( options, "occupationWidget", "Accommodation" );
+    occupationLayout->addWidget( accommodation_ );
 
     QVBoxLayout* layout = new QVBoxLayout();
     layout->addWidget( densityGroup );
@@ -46,4 +51,19 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::OptionsController& op
 InhabitantPanel::~InhabitantPanel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPanel::Load
+// Created: ABR 2014-08-06
+// -----------------------------------------------------------------------------
+void InhabitantPanel::Load( const GlProxy& view )
+{
+    const auto& glOptions = view.GetOptions();
+    const auto& urbanOptions = glOptions.GetUrbanDisplayOptions();
+    const auto& options = glOptions.GetOptions();
+    if( !urbanOptions || !options )
+        throw MASA_EXCEPTION( "Invalid urban options" );
+    density_->Load( *options, urbanOptions->GetDensityGradient() );
+    accommodation_->Load( *options, urbanOptions->GetAccommodationGradient() );
 }

@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "DecisionalStates.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -80,7 +81,7 @@ void DecisionalStates::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "DecisionalState" ) && !entity_.IsAggregated() )
+    if( viewport.IsHotpointVisible() && tools.GetOptions().ShouldDisplay( "DecisionalState" ) && !entity_.IsAggregated() )
     {
         if( drawSauvegarde_ )
             tools.DrawSvg( "sauvegarde.svg", where, tools.GetAdaptiveZoomFactor( false ) );

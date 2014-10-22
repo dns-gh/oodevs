@@ -99,7 +99,7 @@ size_t GradientPreferences::Count() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GradientPreferences::function< void
+// Name: GradientPreferences::Apply
 // Created: ABR 2014-10-09
 // -----------------------------------------------------------------------------
 void GradientPreferences::Apply( const std::function< void( const T_Gradient ) >& functor ) const
@@ -117,7 +117,7 @@ GradientPreferences::T_Gradient GradientPreferences::GetByName( const QString& n
         return gradient->GetName() == name;
     } );
     if( it == gradients_.end() )
-        return T_Gradient();
+        return gradients_.empty() ? T_Gradient() : gradients_.at( 0 );
     return *it;
 }
 
@@ -131,7 +131,7 @@ GradientPreferences::T_Gradient GradientPreferences::GetByDisplayName( const QSt
         return gradient->GetDisplayName() == name;
     } );
     if( it == gradients_.end() )
-        return T_Gradient();
+        return gradients_.empty() ? T_Gradient() : gradients_.at( 0 );
     return *it;
 }
 

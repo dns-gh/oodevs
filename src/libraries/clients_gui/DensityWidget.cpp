@@ -17,11 +17,13 @@
 #include "OptionWidgets.h"
 #include "RichPushButton.h"
 #include "RichWidget.h"
+#include "RichSpinBox.h"
 #include "SignalAdapter.h"
 #include "SubObjectName.h"
 #include "Tools.h"
 
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
@@ -31,24 +33,26 @@ using namespace gui;
 
 namespace
 {
-    class OptionDoubleLineEdit : public OptionWidget< RichWidget< QLineEdit > >
+    class OptionDoubleSpinBox : public OptionWidget< RichDoubleSpinBox >
     {
     public:
-        OptionDoubleLineEdit( kernel::OptionsController& options,
+        OptionDoubleSpinBox( kernel::OptionsController& options,
                               const QString& objectName,
                               const std::string& optionName,
                               QWidget* parent = 0 )
-            : OptionWidget< RichWidget< QLineEdit > >( options, objectName, optionName, parent )
+            : OptionWidget< RichDoubleSpinBox >( options, objectName, optionName, parent )
         {
-            setValidator( new QDoubleValidator( 0., 100.f, 2, this ) );
-            gui::connect( this, SIGNAL( textChanged( const QString& ) ), [=,&options]{
-                options.Change( optionName, text().toFloat() );
+            setRange( 0.f, 100.f );
+            setSingleStep( 0.1f );
+            setDecimals( 5 );
+            gui::connect( this, SIGNAL( valueChanged( double ) ), [=,&options]{
+                options.Change( optionName, static_cast< float >( this->value() ) );
             } );
         }
     private:
         virtual void OnOptionChanged( const kernel::OptionVariant& value )
         {
-            setText( QString::number( value.To< float >() ) );
+            setValue( value.To< float >() );
         }
     };
 }
@@ -64,13 +68,12 @@ DensityWidget::DensityWidget( kernel::OptionsController& options,
     : QWidget( parent )
     , options_( options )
     , optionName_( category )
-    , gradient_( std::make_shared< Gradient >( "Gradient" ) )
 {
     SubObjectName subObject( objectName );
     setMaximumHeight( 170 );
 
-    auto min = new OptionDoubleLineEdit( options, "min", category + "/Min" );
-    auto max = new OptionDoubleLineEdit( options, "max", category + "/Max" );
+    min_ = new OptionDoubleSpinBox( options, "min", category + "/Min" );
+    max_ = new OptionDoubleSpinBox( options, "max", category + "/Max" );
 
     const auto itemDrawer = []( QPainter& painter, unsigned int pourcentage, int x, int y ) {
             QFont font( "Normal", 7, QFont::Light );
@@ -87,9 +90,9 @@ DensityWidget::DensityWidget( kernel::OptionsController& options,
     QHBoxLayout* headerLayout = new QHBoxLayout();
     headerLayout->setMargin( 0 );
     headerLayout->addWidget( new QLabel( tr( "Min:" ) ) );
-    headerLayout->addWidget( min );
+    headerLayout->addWidget( min_ );
     headerLayout->addWidget( new QLabel( tr( "Max:" ) ) );
-    headerLayout->addWidget( max );
+    headerLayout->addWidget( max_ );
 
     QVBoxLayout* layout  = new QVBoxLayout( this );
     layout->setMargin( 0 );
@@ -104,10 +107,9 @@ DensityWidget::DensityWidget( kernel::OptionsController& options,
         gradient_->AddColor( 0, Qt::green );
         gradient_->AddColor( 1, Qt::red );
         gradientWidget_->LoadGradient( gradient_ );
-        min->setText( "0" );
-        max->setText( "1" );
+        min_->setValue( 0.f );
+        max_->setValue( 1.f );
     } );
-    options_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +118,7 @@ DensityWidget::DensityWidget( kernel::OptionsController& options,
 // -----------------------------------------------------------------------------
 DensityWidget::~DensityWidget()
 {
-    options_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -125,18 +127,19 @@ DensityWidget::~DensityWidget()
 // -----------------------------------------------------------------------------
 void DensityWidget::OnGradientEdited()
 {
-    gradient_->Save( options_, optionName_ + "/" );
+    if( gradient_ )
+        gradient_->Save( options_, optionName_ + "/" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DensityWidget::OptionChanged
-// Created: LGY 2011-01-07
+// Name: DensityWidget::Load
+// Created: ABR 2014-08-06
 // -----------------------------------------------------------------------------
-void DensityWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+void DensityWidget::Load( const kernel::Options& options,
+                          const std::shared_ptr< Gradient >& gradient )
 {
-    if( name == optionName_ + "/Gradient" )
-    {
-        gradient_->LoadValues( value.To< QString >() );
-        gradientWidget_->LoadGradient( gradient_ );
-    }
+    max_->setValue( options.Get( optionName_ + "/Max" ).To< float >() );
+    min_->setValue( options.Get( optionName_ + "/Min" ).To< float >() );
+    gradient_ = gradient;
+    gradientWidget_->LoadGradient( gradient_ );
 }

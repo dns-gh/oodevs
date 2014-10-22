@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GlWidget( QWidget* pParent,
-                       kernel::Controllers& controllers,
+                       GLView_ABC& parent,
                        float width,
                        float height,
                        IconLayout& iconLayout,
@@ -122,12 +122,6 @@ public:
     virtual geometry::Point2f GetCenter() const;
     virtual geometry::Point2f MapToterrainCoordinates( int x, int y );
     virtual bool HasFocus();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:

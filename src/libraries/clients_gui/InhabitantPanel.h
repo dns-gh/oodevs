@@ -19,8 +19,9 @@ namespace kernel
 
 namespace gui
 {
+    class DensityWidget;
 
-    // =============================================================================
+// =============================================================================
 /** @class  InhabitantPanel
     @brief  Inhabitant panel
 */
@@ -35,6 +36,18 @@ public:
     //@{
              InhabitantPanel( QWidget* parent, kernel::OptionsController& options );
     virtual ~InhabitantPanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Load( const GlProxy& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    DensityWidget* density_;
+    DensityWidget* accommodation_;
     //@}
 };
 

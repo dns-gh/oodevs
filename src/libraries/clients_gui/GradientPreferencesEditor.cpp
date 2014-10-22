@@ -12,6 +12,7 @@
 #include "moc_GradientPreferencesEditor.cpp"
 
 #include "ColorButton.h"
+#include "Elevation2dTexture.h"
 #include "Gradient.h"
 #include "GradientPreferences.h"
 #include "GradientWidget.h"
@@ -30,8 +31,6 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
-Q_DECLARE_METATYPE( gui::GradientPreferencesEditor::T_Gradient );
-
 using namespace gui;
 
 namespace
@@ -49,7 +48,10 @@ namespace
         QObject::connect( button, SIGNAL( clicked() ), receiver, slot );
         return button;
     }
+    typedef std::shared_ptr< Gradient > T_Gradient;
 }
+
+Q_DECLARE_METATYPE( T_Gradient );
 
 // -----------------------------------------------------------------------------
 // Name: GradientPreferencesEditor constructor
@@ -57,12 +59,10 @@ namespace
 // -----------------------------------------------------------------------------
 GradientPreferencesEditor::GradientPreferencesEditor( kernel::OptionsController& options,
                                                       const kernel::DetectionMap& detection,
-                                                      const std::shared_ptr< GradientPreferences >& preferences,
                                                       const QString& gradientWidgetObjectName,
                                                       QWidget* parent /* = 0 */ )
     : QWidget( parent )
     , options_( options )
-    , preferences_( preferences )
 {
     SubObjectName subObject( "gradient-preferences-editor" );
     setMaximumHeight( 170 );
@@ -118,12 +118,14 @@ GradientPreferencesEditor::~GradientPreferencesEditor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GradientPreferencesEditor::Load
-// Created: ABR 2014-10-06
+// Name: GradientPreferencesEditor::SetElevation2dTexture
+// Created: ABR 2014-10-17
 // -----------------------------------------------------------------------------
-void GradientPreferencesEditor::Load()
+void GradientPreferencesEditor::SetElevation2dTexture( const std::shared_ptr< Elevation2dTexture >& texture )
 {
     combo_->clear();
+    elevationTexture_ = texture;
+    preferences_ = texture->GetPreferences();
     preferences_->Apply( [&]( const T_Gradient& gradient ) {
         AddGradient( gradient );
     } );
@@ -151,7 +153,7 @@ void GradientPreferencesEditor::OnGradientEdited()
 {
     auto current = preferences_->GetCurrent();
     options_.Change( "Elevation/Gradients/" + current->GetName().toStdString(), current->GetValues() );
-    emit UpdateGradient();
+    elevationTexture_->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +166,7 @@ void GradientPreferencesEditor::OnSelectionChanged()
     preferences_->SetCurrent( current );
     options_.Change( "Elevation/Gradient", current->GetName() );
     gradientWidget_->LoadGradient( current );
-    emit UpdateGradient();
+    elevationTexture_->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +205,7 @@ void GradientPreferencesEditor::OnPresetRenamed()
     auto current = preferences_->GetCurrent();
     PresetDialog* pDialog = new PresetDialog( this, options_, current, *preferences_ );
     if( pDialog->exec() == QDialog::Accepted )
-        Load();
+        SetElevation2dTexture( elevationTexture_ );
 }
 
 // -----------------------------------------------------------------------------

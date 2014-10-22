@@ -237,12 +237,10 @@ void GradientButton::LoadGradient( const T_Gradient& gradient )
             delete *it;
         }
     colors_.clear();
-
     gradient_ = gradient;
     GradientBuilder builder( *this );
     gradient_->Accept( builder );
     Update( false );
-    //canvas()->update();
 }
 
 // -----------------------------------------------------------------------------
@@ -302,7 +300,7 @@ void GradientButton::Update( bool emitSignal /* = true */ )
     if( !gradient_ )
         return;
     canvas()->setAllChanged();
-    *gradient_ = Gradient( gradient_->GetName() );
+    gradient_->LoadValues( "" );
     Q3CanvasItemList list = canvas()->allItems();
     for( Q3CanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
     {

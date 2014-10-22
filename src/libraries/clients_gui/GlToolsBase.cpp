@@ -13,6 +13,7 @@
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
+#include "GLOptions.h"
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
 #include "GlTooltip.h"
@@ -27,11 +28,8 @@ using namespace gui;
 // Name: GlToolsBase constructor
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-GlToolsBase::GlToolsBase( Controllers& controllers, const DrawingTypes& drawingTypes )
-    : controllers_( controllers )
-    , selected_   ( false )
-    , superiorSelected_( false )
-    , controlled_( false )
+GlToolsBase::GlToolsBase( GLView_ABC& parent, const DrawingTypes& drawingTypes )
+    : parent_     ( parent )
     , renderer_   ( new SvglRenderer() )
     , symbols_    ( new GLSymbols( *renderer_ ) )
     , svgl_       ( new SvglProxy( *renderer_ ) )
@@ -39,7 +37,7 @@ GlToolsBase::GlToolsBase( Controllers& controllers, const DrawingTypes& drawingT
     , billboard_  ( 0 )
     , alpha_      ( 1 )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,67 +46,9 @@ GlToolsBase::GlToolsBase( Controllers& controllers, const DrawingTypes& drawingT
 // -----------------------------------------------------------------------------
 GlToolsBase::~GlToolsBase()
 {
-    controllers_.Unregister( *this );
     for( auto it = icons_.begin(); it != icons_.end(); ++it )
         glDeleteTextures( 1, & it->second );
     glDeleteLists( billboard_, 1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlToolsBase::UnSelect
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-boost::tuple< bool, bool, bool > GlToolsBase::UnSelect() const
-{
-    boost::tuple< bool, bool, bool > result( selected_, superiorSelected_, controlled_ );
-    selected_ = superiorSelected_ = controlled_ = false;
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlToolsBase::Select
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void GlToolsBase::Select( bool b1, bool b2, bool b3 ) const
-{
-    selected_ = b1;
-    superiorSelected_ = b2;
-    controlled_ = b3;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlToolsBase::ShouldDisplay
-// Created: AGE 2006-04-07
-// -----------------------------------------------------------------------------
-bool GlToolsBase::ShouldDisplay( const std::string& name /* = std::string()*/ ) const
-{
-    return ShouldDisplay( name, selected_, superiorSelected_, controlled_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlToolsBase::ShouldDisplay
-// Created: AGE 2006-04-07
-// -----------------------------------------------------------------------------
-bool GlToolsBase::ShouldDisplay( const std::string& name, bool autoCondition ) const
-{
-    return ShouldDisplay( name, autoCondition, false, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlToolsBase::ShouldDisplay
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-bool GlToolsBase::ShouldDisplay( const std::string& name, bool b1, bool b2, bool b3 ) const
-{
-    if( name.empty() )
-        return b1;
-    IT_Options it = options_.find( name );
-    if( it == options_.end() )
-    {
-        const FourStateOption& option = controllers_.options_.GetOption( name ).To< FourStateOption >();
-        it = options_.insert( std::make_pair( name, option ) ).first;
-    }
-    return it->second.IsSet( b1, b2, b3 );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,17 +175,6 @@ void GlToolsBase::DrawBillboardRect()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlToolsBase::OptionChanged
-// Created: AGE 2007-04-20
-// -----------------------------------------------------------------------------
-void GlToolsBase::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    IT_Options it = options_.find( name );
-    if( it != options_.end() )
-        it->second = value.To< FourStateOption >();
-}
-
-// -----------------------------------------------------------------------------
 // Name: GlToolsBase::CreateTooltip
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
@@ -261,4 +190,23 @@ std::unique_ptr< GlTooltip_ABC > GlToolsBase::CreateTooltip() const
 void GlToolsBase::Load( const tools::ExerciseConfig& config )
 {
     symbols_->Load( config );
+    GetOptions().Load();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::GetOptions
+// Created: ABR 2014-10-16
+// -----------------------------------------------------------------------------
+GLOptions& GlToolsBase::GetOptions()
+{
+    return parent_.GetOptions();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::GetOptions
+// Created: ABR 2014-10-16
+// -----------------------------------------------------------------------------
+const GLOptions& GlToolsBase::GetOptions() const
+{
+    return parent_.GetOptions();
 }

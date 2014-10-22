@@ -11,6 +11,7 @@
 #define __UrbanObject_ABC_h_
 
 #include "Entity_ABC.h"
+#include "HumanDefs.h"
 
 namespace kernel
 {
@@ -50,9 +51,11 @@ public:
     virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate ) = 0;
     virtual void UpdateTemplate( const kernel::ObjectTypes& objectTypes ) = 0;
     virtual bool IsUpdatingTemplate() const = 0;
+    virtual float GetLivingSpace( bool forceUpdate = false ) const = 0;
+    virtual const T_HumansStrMap& GetHumansMap() const = 0;
     //@}
 };
 
-}
+} //! namespace kernel
 
 #endif // __UrbanObject_ABC_h_

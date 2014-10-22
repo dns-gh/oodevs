@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationFlow.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -220,7 +221,7 @@ void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , 
         }
     glPopAttrib();
 
-    const bool displayPath = /*viewport.IsVisible( plannedBox_ )  && */tools.ShouldDisplay( "Paths" );
+    const bool displayPath = tools.GetOptions().ShouldDisplay( "Paths" );
     if( displayPath )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );

@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AgentDetections.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Positions.h"
@@ -106,7 +107,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
         { COLOR_RECORDED },
         { COLOR_DETECTED }
     };
-    if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() || holder_.IsAggregated() )
+    if( !tools.GetOptions().ShouldDisplay( "VisionLines" ) || detections_.empty() || holder_.IsAggregated() )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     for( auto it = detections_.begin(); it != detections_.end(); ++it )

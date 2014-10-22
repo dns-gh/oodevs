@@ -25,16 +25,12 @@ namespace gui
     class ConsistencyDialog_ABC;
     class EntitySymbols;
     class GlProxy;
-    class GradientPreferences;
-    class LightingProxy;
     class ParametersLayer;
     class PreferencesDialog;
     class SymbolIcons;
-    class Elevation2dLayer;
     class DisplayExtractor;
     class LinkInterpreter;
     class ProfileDialog;
-    class TerrainSettings;
     class UnitStateDialog;
 }
 
@@ -75,12 +71,8 @@ public:
                               const gui::EntitySymbols& symbols,
                               const tools::ExerciseConfig& config,
                               gui::SymbolIcons& icons,
-                              gui::LightingProxy& lighting,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
-                              const std::shared_ptr< gui::Elevation2dLayer >& elevation2dLayer,
-                              gui::GlProxy& proxy,
-                              const std::shared_ptr< gui::TerrainSettings >& settings,
-                              const std::shared_ptr< gui::GradientPreferences >& preferences );
+                              gui::GlProxy& proxy );
     virtual ~DialogContainer();
     //@}
 
@@ -110,7 +102,7 @@ private:
     //! @name Member data
     //@{
     gui::PreferencesDialog*     prefDialog_;
-    gui::ProfileDialog*              profileDialog_;
+    gui::ProfileDialog*         profileDialog_;
     ProfileWizardDialog*        profileWizardDialog_;
     ScoreDialog*                scoreDialog_;
     SuccessFactorDialog*        successFactorDialog_;

@@ -27,7 +27,7 @@ Usages::Usages( const kernel::Entity_ABC* parent, gui::PropertiesDictionary& dic
         const kernel::PhysicalAttribute_ABC& parentPhysicalAttribute = parent->Get< kernel::PhysicalAttribute_ABC >();
         const kernel::Usages_ABC& parentUsage = parentPhysicalAttribute.GetUsages();
         const kernel::T_Usages& usages = parentUsage.GetUsages();
-        for( kernel::CIT_Usages it = usages.begin(); it != usages.end(); ++it )
+        for( auto it = usages.begin(); it != usages.end(); ++it )
             if( it->first != gui::Usages::defaultStr_ )
                 Add( it->first, it->second );
     }
@@ -70,7 +70,7 @@ void Usages::ReadUsages( xml::xistream& xis )
 void Usages::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "usages" );
-    for( kernel::CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
+    for( auto it = usages_.begin(); it != usages_.end(); ++it )
     {
         if( it->first == defaultStr_ )
             continue;

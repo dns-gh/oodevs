@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Paths.h"
+#include "GLOptions.h"
 #include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -130,8 +131,8 @@ void Paths::UpdatePathfind()
 // -----------------------------------------------------------------------------
 void Paths::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    const bool displayPath    = viewport.IsVisible( plannedBox_ )  && tools.ShouldDisplay( "Paths" );
-    const bool displayOldPath = viewport.IsVisible( previousBox_ ) && tools.ShouldDisplay( "OldPaths" );
+    const bool displayPath    = viewport.IsVisible( plannedBox_ )  && tools.GetOptions().ShouldDisplay( "Paths" );
+    const bool displayOldPath = viewport.IsVisible( previousBox_ ) && tools.GetOptions().ShouldDisplay( "OldPaths" );
 
     if( displayPath || displayOldPath )
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );

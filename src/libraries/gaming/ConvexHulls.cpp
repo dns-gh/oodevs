@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ConvexHulls.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -44,7 +45,7 @@ ConvexHulls::~ConvexHulls()
 // -----------------------------------------------------------------------------
 void ConvexHulls::Draw( const Point2f& , const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
 {
-    if( tools.ShouldDisplay( "ConvexHulls" ) )
+    if( tools.GetOptions().ShouldDisplay( "ConvexHulls" ) )
     {
         Update();
         tools.DrawPolygon( hull_ );

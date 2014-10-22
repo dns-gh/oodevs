@@ -20,9 +20,6 @@ namespace kernel
 
 namespace gui
 {
-    class Gradient;
-    class Elevation2dLayer;
-    class GradientPreferences;
     class GradientPreferencesEditor;
 
 // =============================================================================
@@ -40,9 +37,7 @@ public:
     //@{
              ElevationPanel( QWidget* parent,
                              kernel::OptionsController& options,
-                             const kernel::DetectionMap& detection,
-                             const std::shared_ptr< Elevation2dLayer >& elevation2dLayer,
-                             const std::shared_ptr< GradientPreferences >& preferences );
+                             const kernel::DetectionMap& detection );
     virtual ~ElevationPanel();
     //@}
 
@@ -51,19 +46,10 @@ public:
     virtual void Load( const GlProxy& );
     //@}
 
-private slots:
-    void OnFitToViewPortChanged( int );
-    void OnGradientUpdated();
-    void OnEnableHillshade( bool );
-    void OnHillShadeDirection( int );
-    void OnStrengthChanged( int value );
-
 private:
     //! @name Member data
     //@{
-    kernel::OptionsController& options_;
-    GradientPreferencesEditor* gradient_;
-    std::shared_ptr< Elevation2dLayer > layer_;
+    GradientPreferencesEditor* gradientEditor_;
     //@}
 };
 

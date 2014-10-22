@@ -11,8 +11,7 @@
 #define __WatershedLayer_h_
 
 #include "Layer.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
-#include <tools/ElementObserver_ABC.h>
+#include "tools/ElementObserver_ABC.h"
 
 class TextureSet;
 class ElevationShader;
@@ -22,10 +21,13 @@ namespace kernel
     class Controllers;
     class DetectionMap;
     class ModelLoaded;
+    class ModelUnLoaded;
 }
 
 namespace gui
 {
+    class GLView_ABC;
+
 // =============================================================================
 /** @class  WatershedLayer
     @brief  WatershedLayer
@@ -34,39 +36,28 @@ namespace gui
 // =============================================================================
 class WatershedLayer : public Layer2D
                      , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                     , public kernel::OptionsObserver_ABC
+                     , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              WatershedLayer( kernel::Controllers& controllers,
-                             GLView_ABC& tools,
+                             GLView_ABC& view,
                              const kernel::DetectionMap& elevation );
     virtual ~WatershedLayer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void SetAlpha( float alpha );
     virtual void Paint( const geometry::Rectangle2f& viewport );
-    virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    virtual void Reset();
-    //@}
-
-    //! @name Accessors
-    //@{
-    void SetHeight( unsigned short height );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void CreateShader();
-    void CreateTextures();
-    void Cleanup();
-    void SetGradient();
-    void MakeGlTexture();
+    void CreateLayer();
     //@}
 
 private:
@@ -75,19 +66,10 @@ private:
     const kernel::DetectionMap& elevation_;
     std::unique_ptr< ElevationShader > shader_;
     std::unique_ptr< TextureSet > layer_;
-    bool reset_;
     bool modelLoaded_;
-    bool ignore_;
-    bool updateGradient_;
-    unsigned gradientTexture_;
-    unsigned short gradientSize_;
-    unsigned short height_;
-    bool enabled_;
-    bool inverted_;
-    QColor color_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __WatershedLayer_h_

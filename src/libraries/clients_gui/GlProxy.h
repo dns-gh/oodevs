@@ -13,16 +13,24 @@
 #include "GLView_ABC.h"
 #include "GLView_ABC.h"
 #include "LayersHelpers.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
+    class Controllers;
+    class EntityResolver_ABC;
     class GraphicalEntity_ABC;
-    class Logger_ABC;
+    class StaticModel;
     class Options;
+    class OptionsController;
+    class Profile_ABC;
 }
+
+class Lighting_ABC;
 
 namespace gui
 {
+    class ColorStrategy_ABC;
     class GlWidget;
     class Gl3dWidget;
     class Layer;
@@ -35,15 +43,26 @@ namespace gui
 // Created: AGE 2006-03-29
 // =============================================================================
 class GlProxy : public GLView_ABC
+              , public tools::Observer_ABC
+              , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GlProxy( kernel::Logger_ABC& logger );
+             GlProxy( kernel::Controllers& controllers,
+                      const kernel::Profile_ABC& profile,
+                      const kernel::StaticModel& staticModel,
+                      const kernel::EntityResolver_ABC& model,
+                      const std::shared_ptr< Lighting_ABC >& lighting );
     virtual ~GlProxy();
     //@}
 
-    //! @name Operations
+    //! @name OptionsObserver implementation
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
+    //! @name Proxy
     //@{
     void Purge();
     void UpdateLayerOrder( kernel::Options& options );
@@ -53,36 +72,65 @@ public:
 
     void ChangeTo( const std::shared_ptr< GlWidget >& newWidget );
     void ChangeTo( const std::shared_ptr< Gl3dWidget >& newWidget );
+    //@}
 
+    //! @name Layers
+    //@{
     void SetTooltipsLayer( const std::shared_ptr< TooltipsLayer_ABC >& layer );
     void AddLayers( const T_LayersVector& layers );
     void RemoveLayer( const T_Layer& layer );
     void ApplyToLayers( const T_LayerFunctor& functor ) const;
 
-    virtual bool MoveBelow( const T_Layer& lhs, const T_Layer& rhs );
+    bool MoveBelow( const T_Layer& lhs, const T_Layer& rhs );
+    bool ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const; // layer related, could be rename IsInAReadOnlyLayer
+    //@}
 
-    virtual void    CenterOn( const geometry::Point2f& point );
-    virtual void    Zoom( float width );
-    virtual float   GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
-    virtual float   GetCurrentAlpha() const;
+    //! @name Options
+    //@{
+    virtual GLOptions& GetOptions();
+    virtual const GLOptions& GetOptions() const;
+    //@}
+
+    //! @name Viewport
+    //@{
+    virtual void CenterOn( const geometry::Point2f& point );
     virtual geometry::Point2f GetCenter() const;
 
-    virtual boost::tuple< bool, bool, bool > UnSelect() const;
-    virtual void Select( bool, bool, bool ) const;
+    virtual void Zoom( float width );
+    virtual float Zoom() const;
+    virtual float GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
+    //@}
 
-    virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
-    virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
-    virtual bool ShouldDisplay( E_LayerTypes type ) const;
-    virtual bool ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const;
+    //! @name Picking
+    //@{
+    virtual bool ShouldDisplay( E_LayerTypes type ) const; // picking related
+    virtual void FillSelection( const geometry::Point2f& point,
+                                T_ObjectsPicking& selection,
+                                const boost::optional< E_LayerTypes >& type );
+    virtual void Picking();
+    virtual void RenderPicking( const T_ObjectPicking& object );
+    virtual bool IsPickingMode() const;
+    virtual QColor GetPickingColor() const;
+    //@}
 
+    //! @name Tooltip
+    //@{
+    virtual std::unique_ptr< GlTooltip_ABC > CreateTooltip() const;
+    virtual geometry::Point2f MapToterrainCoordinates( int x, int y );
+    virtual bool HasFocus();
+    //@}
+
+    //! @name Drawing
+    //@{
     virtual std::string GetCurrentPass() const;
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
     virtual float LineWidth( float base ) const;
-    virtual float Zoom() const;
+
+    virtual float GetCurrentAlpha () const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
     virtual void SetCurrentCursor ( const QCursor& cursor );
-    virtual std::unique_ptr< GlTooltip_ABC > CreateTooltip() const;
+
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to, float width = 1. ) const;
     virtual void DrawStippledLine ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
@@ -113,27 +161,20 @@ public:
     virtual void DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, const std::string& level, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const;
     virtual void DrawUnitSymbolAndTail( const std::string& symbol, const std::string& level, const T_PointVector& points ) const;
     virtual void DrawShapeText( const QImage& image, const geometry::Point2f& where ) const;
-
-    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection,
-            const boost::optional< E_LayerTypes >& type );
-    virtual void Picking();
-    virtual void RenderPicking( const T_ObjectPicking& object );
-    virtual bool IsPickingMode() const;
-    virtual QColor GetPickingColor() const;
-    virtual geometry::Point2f MapToterrainCoordinates( int x, int y );
-    virtual bool HasFocus();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Logger_ABC& logger_;
+    kernel::OptionsController& optionsController_;
     T_LayersVector layers_;
     std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
     std::shared_ptr< GLView_ABC > view_;
 
     std::shared_ptr< GlWidget > widget2d_;
     std::shared_ptr< Gl3dWidget > widget3d_;
+
+    std::unique_ptr< GLOptions > options_;
     //@}
 };
 
