@@ -91,9 +91,8 @@ void DetectionMap::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 DetectionMap::Environment DetectionMap::EnvironmentData( unsigned x, unsigned y ) const
 {
-    static const Environment nullEnv;
     if( ! environment_ || y >= Height() || x >= Width() )
-        return nullEnv;
+        return Environment();
     return *(environment_ + y * Width() + x);
 }
 

@@ -163,7 +163,7 @@ void DetectionMapIterator::Increment()
     rRemainingLength_ -= rLength_;
 
     // condition de fin
-    // $$$ PMD 2014: using floating point comparison to terminate a walk on
+    // $$$$ PMD 2014: using floating point comparison to terminate a walk on
     // an integer grid is fishy at best and broken in practice. Here it led
     // to integer overflow when fetching environment data and out of bound
     // indexing. See http://jira.masagroup.net/browse/SWBUG-13322 for details.
