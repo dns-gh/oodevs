@@ -25,6 +25,7 @@ public:
     virtual void setNumRows( int rows ) = 0;
     virtual void RemoveItem( void* item ) = 0;
     virtual void AddRow( int nRow, void* pObj ) = 0;
+    virtual void CheckValidity( int row = -1, int col = -1 ) = 0;
 };
 
 #endif // __ADN_Table_ABC_h_

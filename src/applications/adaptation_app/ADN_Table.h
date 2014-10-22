@@ -60,7 +60,7 @@ public:
     template< typename T >
     T* CreateNewElement();
 
-    void CheckValidity( int row = -1, int col = -1 );
+    virtual void CheckValidity( int row = -1, int col = -1 );
 
     QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     QStandardItem* AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );

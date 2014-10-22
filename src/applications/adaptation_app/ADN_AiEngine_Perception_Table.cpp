@@ -55,6 +55,11 @@ void ADN_AiEngine_Perception_Table::RemoveItem( void* /*item*/ )
     // NOTHING
 }
 
+void ADN_AiEngine_Perception_Table::CheckValidity( int /*row = -1*/, int /*col = -1*/ )
+{
+    // NOTHING
+}
+
 void ADN_AiEngine_Perception_Table::AddRow( int row, void* data )
 {
     if( row >= eNbrPerceptionType )
