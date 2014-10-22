@@ -322,3 +322,9 @@ func (c *ControllerObserver) InvalidateFilters() {
 		session.InvalidateFilters()
 	})
 }
+
+func (c *ControllerObserver) UpdateServices() {
+	c.controller.post(c.session, func(session *Session) {
+		session.UpdateServices()
+	})
+}

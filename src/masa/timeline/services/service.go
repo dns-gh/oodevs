@@ -23,6 +23,7 @@ type Observer interface {
 	CloseEvent(uuid string, err error, lock bool)
 	// update event <uuid> with <event> data
 	UpdateEvent(uuid string, event *sdk.Event)
+	UpdateServices()
 	// invalid all active filters
 	InvalidateFilters()
 	// post command to observer loop

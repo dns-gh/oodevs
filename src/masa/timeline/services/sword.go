@@ -75,6 +75,7 @@ type Sword struct {
 	status    SwordStatus                   // current status
 	orders    Ids                           // known order ids
 	actions   Ids                           // known action ids
+	services  SwordServices                 // published sword services (like replay/simulation/aar)
 }
 
 func NewSword(log util.Logger, observer Observer, clock bool, name, address string) *Sword {
@@ -89,7 +90,13 @@ func NewSword(log util.Logger, observer Observer, clock bool, name, address stri
 		pending:  map[string]*Action{},
 		orders:   Ids{},
 		actions:  Ids{},
+		services: SwordServices{},
 	}
+}
+
+func (s *Sword) HasReplay() bool {
+	_, ok := s.services[sword.EnumService_service_replay]
+	return ok
 }
 
 func (s *Sword) Proto(name string) *sdk.Service {
@@ -97,7 +104,8 @@ func (s *Sword) Proto(name string) *sdk.Service {
 		Name:  proto.String(name),
 		Clock: proto.Bool(s.clock),
 		Sword: &sdk.Sword{
-			Address: proto.String(s.address),
+			Address:   proto.String(s.address),
+			HasReplay: proto.Bool(s.HasReplay()),
 		},
 	}
 }
@@ -117,15 +125,6 @@ func (s *Sword) Log(format string, args ...interface{}) {
 
 // Sword is managed as a state machine with three states as in SwordStatus
 // There are four possible transitions, Start, Stop, Attach
-
-type SwordHandler interface {
-	PostAttach(link *SwordLink)
-	PostLog(link *SwordLink, format string, args ...interface{})
-	PostRestart(link *SwordLink, err error)
-	PostCloseAction(link *SwordLink, action string, err error)
-	PostCloseWriter(link *SwordLink, writer *SwordWriter)
-	PostInvalidateFilters(link *SwordLink)
-}
 
 func (s *Sword) PostRestart(link *SwordLink, err error) {
 	s.observer.Post(func() {
@@ -165,6 +164,12 @@ func (s *Sword) PostCloseWriter(link *SwordLink, writer *SwordWriter) {
 func (s *Sword) PostInvalidateFilters(link *SwordLink) {
 	s.observer.Post(func() {
 		s.invalidateFilters(link)
+	})
+}
+
+func (s *Sword) PostServices(link *SwordLink, services SwordServices) {
+	s.observer.Post(func() {
+		s.setServices(link, services)
 	})
 }
 
@@ -236,7 +241,7 @@ func (s *Sword) start() error {
 	return nil
 }
 
-func logConnect(handler SwordHandler, err error) {
+func logConnect(handler SwordLinkObserver, err error) {
 	if err != nil {
 		handler.PostLog(nil, "connection failed: %s", err)
 	} else {
@@ -244,7 +249,7 @@ func logConnect(handler SwordHandler, err error) {
 	}
 }
 
-func asyncConnect(handler SwordHandler, address, name string, clock bool) {
+func asyncConnect(handler SwordLinkObserver, address, name string, clock bool) {
 	link, err := NewSwordLink(handler, address, name, clock)
 	if err != nil {
 		logConnect(handler, err)
@@ -417,6 +422,13 @@ func (s *Sword) DeleteEvents(events ...string) {
 func (s *Sword) invalidateFilters(link *SwordLink) {
 	if link == s.link {
 		s.observer.InvalidateFilters()
+	}
+}
+
+func (s *Sword) setServices(link *SwordLink, services SwordServices) {
+	if link == s.link {
+		s.services = services
+		s.observer.UpdateServices()
 	}
 }
 

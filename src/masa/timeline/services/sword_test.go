@@ -67,6 +67,7 @@ func (Fixture) Abort(err error)                              {}
 func (Fixture) CloseEvent(uuid string, err error, lock bool) {}
 func (Fixture) UpdateEvent(uuid string, event *sdk.Event)    {}
 func (Fixture) InvalidateFilters()                           {}
+func (Fixture) UpdateServices()                              {}
 
 func (f *Fixture) Tick(tick time.Time) {
 	if f.tick != nil {

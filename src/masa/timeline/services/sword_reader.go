@@ -19,6 +19,9 @@ import (
 	"time"
 )
 
+type none struct{}
+type SwordServices map[sword.EnumService]none
+
 // Those functions WILL be called in *some* thread
 // so the receiver MUST NOT block on those calls
 // and MUST pay attention to synchronisation
@@ -27,6 +30,7 @@ type SwordReaderObserver interface {
 	UpdateEvent(uuid string, event *sdk.Event)
 	Restart(err error)
 	Log(format string, args ...interface{})
+	SetServices(services SwordServices)
 }
 
 type SwordReader struct {
@@ -62,14 +66,7 @@ func (s *SwordReader) Close() {
 	s.async.Close()
 }
 
-func (s *SwordReader) readMessage(msg *swapi.SwordMessage, clientId, ctx int32, err error) bool {
-	if err != nil {
-		s.poster.Restart(err)
-		return true
-	}
-	if msg.SimulationToClient == nil {
-		return false
-	}
+func (s *SwordReader) readSimToClient(msg *swapi.SwordMessage, clientId, ctx int32, err error) bool {
 	content := msg.SimulationToClient.GetMessage()
 	if info := content.ControlInformation; info != nil {
 		s.last = s.tick(s.last, info.GetDateTime().GetData())
@@ -99,6 +96,53 @@ func (s *SwordReader) readMessage(msg *swapi.SwordMessage, clientId, ctx int32, 
 			event := readReport(s.last, report)
 			s.postEvent(event)
 		}
+	}
+	return false
+}
+
+func ConvertToEnumServices(service string) (sword.EnumService, error) {
+	switch service {
+	case "struct aar::Service":
+		return sword.EnumService_service_aar, nil
+	case "struct authentication::Service":
+		return sword.EnumService_service_authentication, nil
+	case "struct plugins::messenger::Service":
+		return sword.EnumService_service_messenger, nil
+	case "struct simulation::Service":
+		return sword.EnumService_service_simulation, nil
+	case "struct replay::Service":
+		return sword.EnumService_service_replay, nil
+	}
+	return sword.EnumService_service_simulation, fmt.Errorf("invalid service value %v", service)
+}
+
+func (s *SwordReader) readDispatcherToClient(msg *swapi.SwordMessage, clientId, ctx int32, err error) bool {
+	content := msg.DispatcherToClient.GetMessage()
+	if description := content.ServicesDescription; description != nil {
+		services := SwordServices{}
+		for _, value := range description.Services {
+			service, err := ConvertToEnumServices(value)
+			if err != nil {
+				s.poster.Log("%v", err)
+				continue
+			}
+			services[service] = none{}
+		}
+		s.poster.SetServices(services)
+	}
+	return false
+}
+
+func (s *SwordReader) readMessage(msg *swapi.SwordMessage, clientId, ctx int32, err error) bool {
+	if err != nil {
+		s.poster.Restart(err)
+		return true
+	}
+	if msg.SimulationToClient != nil {
+		return s.readSimToClient(msg, clientId, ctx, err)
+	}
+	if msg.DispatcherToClient != nil {
+		return s.readDispatcherToClient(msg, clientId, ctx, err)
 	}
 	return false
 }

@@ -473,9 +473,10 @@ func waitBroadcastTag(messages <-chan interface{}, tag sdk.MessageTag) *sdk.Mess
 }
 
 type FakeService struct {
-	lock   sync.Mutex
-	events []*sdk.Event
-	uuids  []string
+	lock     sync.Mutex
+	events   []*sdk.Event
+	uuids    []string
+	services []*sdk.Service
 }
 
 func (f *FakeService) Proto(name string) *sdk.Service {
@@ -501,6 +502,12 @@ func (f *FakeService) DeleteEvents(uuids ...string) {
 	f.lock.Lock()
 	defer f.lock.Unlock()
 	f.uuids = uuids
+}
+
+func (f *FakeService) UpdateServices(services ...*sdk.Service) {
+	f.lock.Lock()
+	defer f.lock.Unlock()
+	f.services = services
 }
 
 func (f *FakeService) GetAndClear() ([]*sdk.Event, []string) {
@@ -588,6 +595,42 @@ func (t *TestSuite) TestListeners(c *C) {
 	f.checkBroadcastEvents(c, messages, "another_name")
 	_, fakerUuids = faker.GetAndClear()
 	c.Assert(fakerUuids, IsNil)
+}
+
+func (t *TestSuite) TestObservers(c *C) {
+	f := t.MakeFixture(c, true)
+	defer f.Close()
+
+	f.sword.WaitForStatus(services.SwordStatusConnected)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
+	messages := make(chan interface{})
+	go func() {
+		for msg := range link.Listen() {
+			messages <- msg
+		}
+	}()
+	msg := waitBroadcastTag(messages, sdk.MessageTag_update_services)
+	c.Assert(msg, NotNil)
+	expected := f.sword.Proto("some_name")
+	c.Assert(expected.Sword.GetHasReplay(), Equals, false)
+	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
+
+	detached := f.server.GetLinks()
+	defer detached.Close()
+	for slink := range detached {
+		f.server.WriteDispatcherToClient(slink, 1, 0,
+			&sword.DispatcherToClient_Content{
+				ServicesDescription: &sword.ServicesDescription{
+					Services: []string{"struct replay::Service"},
+				},
+			})
+	}
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_services)
+	c.Assert(msg, NotNil)
+	expected.Sword.HasReplay = proto.Bool(true)
+	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
 }
 
 type FakeFilterer struct {
@@ -1529,6 +1572,8 @@ func (t *TestSuite) TestKnownEventsAreDeletedWhenBeingFiltered(c *C) {
 	input := link.Listen()
 	msg := (<-input).(*sdk.Message)
 	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_tick)
+	msg = (<-input).(*sdk.Message)
+	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_services)
 	swtest.DeepEquals(c, <-input, &sdk.Message{
 		Tag:    sdk.MessageTag_update_events.Enum(),
 		Events: []*sdk.Event{event},

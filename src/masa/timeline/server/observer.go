@@ -54,6 +54,13 @@ func makeDeleteEvents(events []string) *sdk.Message {
 	}
 }
 
+func makeUpdateServices(services []*sdk.Service) *sdk.Message {
+	return &sdk.Message{
+		Tag:      sdk.MessageTag_update_services.Enum(),
+		Services: services,
+	}
+}
+
 func (o *Observer) UpdateTick(tick time.Time) {
 	o.output <- makeUpdateTick(tick)
 }
@@ -64,4 +71,8 @@ func (o *Observer) UpdateEvents(events ...*sdk.Event) {
 
 func (o *Observer) DeleteEvents(events ...string) {
 	o.output <- makeDeleteEvents(events)
+}
+
+func (o *Observer) UpdateServices(services ...*sdk.Service) {
+	o.output <- makeUpdateServices(services)
 }

@@ -459,6 +459,10 @@ type FilteredObserver struct {
 	known    map[string]struct{}
 }
 
+func (f *FilteredObserver) UpdateServices(encoded ...*sdk.Service) {
+	f.observer.UpdateServices(encoded...)
+}
+
 func (f *FilteredObserver) update(events EventSlice, encoded []*sdk.Event, reset bool) {
 	// maintain a set of known events so we can send
 	// delete notifications on events that become filtered
@@ -510,6 +514,13 @@ func (s *Session) InvalidateFilters() {
 	}
 }
 
+func (s *Session) UpdateServices() {
+	encoded := s.getServices()
+	for _, observer := range s.observers {
+		observer.UpdateServices(encoded...)
+	}
+}
+
 func (f *FilteredObserver) DeleteEvents(events ...string) {
 	deleted := []string{}
 	for _, event := range events {
@@ -524,6 +535,14 @@ func (f *FilteredObserver) DeleteEvents(events ...string) {
 	}
 }
 
+func (s *Session) getServices() []*sdk.Service {
+	services := []*sdk.Service{}
+	for name, service := range s.services {
+		services = append(services, service.Proto(name))
+	}
+	return services
+}
+
 func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserver {
 	observer := NewObserver()
 	filtered := &FilteredObserver{
@@ -535,11 +554,12 @@ func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserve
 	}
 	s.observers[filtered] = filtered
 	s.listeners[filtered] = filtered
-	// beware, as we haven't returned the output channel yet,
+	// FIXME: beware, as we haven't returned the output channel yet,
 	// nobody listens on output messages. Make sure the output
-	// channel contain at least 2 buffers or it will deadlock
+	// channel contain at least 3 buffers or it will deadlock
 	// fix the api so it doesn't use channels later
 	observer.UpdateTick(s.tick)
+	observer.UpdateServices(s.getServices()...)
 	filtered.UpdateEvents(s.events, s.events.Proto())
 	return filtered
 }

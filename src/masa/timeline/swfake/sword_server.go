@@ -586,6 +586,15 @@ func (s *SwordServer) WriteToClient(slink *SwordLink, ctx, client int32, msg *sw
 	})
 }
 
+func (s *SwordServer) WriteDispatcherToClient(slink *SwordLink, ctx, client int32, msg *sword.DispatcherToClient_Content) {
+	slink.write(SwordOutput{
+		swapi.DispatcherToClientTag,
+		&sword.DispatcherToClient{
+			Message: msg,
+		},
+	})
+}
+
 func (s *SwordServer) SetLastError(err *Error) {
 	s.mutex.Lock()
 	s.lastError = err
