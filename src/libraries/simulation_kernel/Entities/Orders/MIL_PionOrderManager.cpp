@@ -102,8 +102,6 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn, cons
 {
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw MASA_ORDER_EXCEPTION( error_unit_surrendered );
-    if( pion_.GetAutomate().IsEngaged() )
-        throw MASA_ORDER_EXCEPTION_MSG( error_unit_cannot_receive_order, "automat is engaged" );
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
         throw MASA_ORDER_EXCEPTION( error_invalid_frag_order );
