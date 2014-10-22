@@ -424,7 +424,6 @@ void DrawingTemplate::GenerateSamplePixmap( const GLView_ABC& tools, float r /*=
         sampleColor_->Set( r, g, b );
 
     // Initialize gl
-    glShadeModel( GL_SMOOTH );
     glEnable( GL_TEXTURE_2D );
     glEnable( GL_BLEND );
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );

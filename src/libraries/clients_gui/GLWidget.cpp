@@ -90,13 +90,10 @@ void GlWidget::initializeGL()
 {
     glEnable( GL_TEXTURE_2D );
     MapWidget::initializeGL();
-    //glDisable( GL_DEPTH_TEST );
-    //glShadeModel( GL_FLAT );
     circle_ = GenerateCircle();
     halfCircle_ = GenerateHalfCircle();
     glEnableClientState( GL_VERTEX_ARRAY );
     gl::Initialize();
-    glShadeModel( GL_SMOOTH );
     glEnable( GL_LINE_SMOOTH );
     glEnable( GL_BLEND );
     bMulti_ = gl::HasMultiTexturing();
