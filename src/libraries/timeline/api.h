@@ -15,7 +15,9 @@
 #include <vector>
 #include <boost/noncopyable.hpp>
 #include <tools/Path.h>
+#pragma warning( push, 0 )
 #include <QtCore/QObject>
+#pragma warning( pop )
 #include <boost/shared_ptr.hpp>
 
 class QWidget;

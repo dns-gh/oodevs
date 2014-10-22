@@ -27,6 +27,9 @@
 #pragma warning( pop )
 #endif
 
+// 'this' : used in base member initializer list
+#pragma warning( disable: 4355 )
+
 using namespace timeline;
 namespace bpt = boost::posix_time;
 

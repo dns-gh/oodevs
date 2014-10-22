@@ -25,6 +25,9 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/lock_guard.hpp>
 
+// 'this' : used in base member initializer list
+#pragma warning( disable: 4355 )
+
 using namespace timeline;
 namespace bpt = boost::posix_time;
 

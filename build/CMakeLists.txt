@@ -13,9 +13,6 @@ add_definitions(
     -DPLATFORM=${platform}
 )
 if( MSVC )
-    # 4127 conditional expression is constant
-    add_flag( CMAKE_CXX_FLAGS "/wd4127" )
-
     add_definitions(
         # disable msvc non-portable warnings
         -D_CRT_SECURE_NO_WARNINGS
