@@ -100,15 +100,14 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
         Reset();
         reset_ = false;
     }
-
-    if( !program_.get() && ! ignoreShader_ )
+    if( !program_ && !ignoreShader_ )
         CreateShaders();
-    if( ! textures_.get() && !graphicsDirectory_.IsEmpty() && !ignoreTextures_ )
+    if( !textures_ && !graphicsDirectory_.IsEmpty() && !ignoreTextures_ )
         CreateTextures();
-    if( ! visitor_.get() && !graphicsDirectory_.IsEmpty() && elevation_.Data() )
+    if( !visitor_ && !graphicsDirectory_.IsEmpty() && elevation_.Data() )
         visitor_.reset( new CompiledVisitor3d( elevation_.GetMap() ) );
 
-    if( !textures_.get() || !visitor_.get() )
+    if( !textures_ || !visitor_ )
         return;
 
     if( frustum != lastFrustum_ )
@@ -120,7 +119,7 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 
     view_.GetOptions().SetLighting();
 
-    if( program_.get() )
+    if( program_ )
     {
         program_->Use();
         program_->SetUniformValue( "tex0", 0 );
@@ -135,7 +134,7 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
         glPopMatrix();
     glPopAttrib();
 
-    if( program_.get() )
+    if( program_ )
         program_->Unuse();
     glDisable( GL_LIGHTING );
 
@@ -195,11 +194,11 @@ void Elevation3dLayer::CreateTextures()
     try
     {
         textures_.reset( new MultiTextureLayer() );
-        usrp_.   reset( new TextureSet( graphicsDirectory_ / "usrp.texture" ) );
-        if( ! ignoreShader_ )
+        usrp_.reset( new TextureSet( graphicsDirectory_ / "usrp.texture" ) );
+        if( !ignoreShader_ )
             normals_.reset( new TextureSet( graphicsDirectory_ / "normals.texture" ) );
         textures_->SetLayer( 0, *usrp_ );
-        if( ! ignoreShader_ )
+        if( !ignoreShader_ )
             textures_->SetLayer( 1, *normals_ );
     }
     catch( ... )
