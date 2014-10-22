@@ -52,7 +52,7 @@ public:
     virtual bool IsPerceived( const kernel::Entity_ABC& ) const;
     virtual bool IsFiltered() const;
     virtual QString GetFilter() const;
-    virtual void SetFilter( const kernel::Entity_ABC& entity );
+    virtual void SetFilter( const kernel::Entity_ABC& entity, bool update = true );
     virtual void SetFilter( const kernel::Profile_ABC& profile );
     virtual void RemoveFilter();
     const kernel::Entity_ABC* GetFilteredEntity() const;

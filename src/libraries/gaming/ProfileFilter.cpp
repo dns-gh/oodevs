@@ -127,9 +127,9 @@ QString ProfileFilter::GetFilter() const
 // Name: ProfileFilter::SetFilter
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
-void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity )
+void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity, bool update /* = true */ )
 {
-    pUnitFilter_->SetFilter( entity );
+    pUnitFilter_->SetFilter( entity, update );
 }
 
 // -----------------------------------------------------------------------------

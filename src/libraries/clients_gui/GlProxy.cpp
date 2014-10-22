@@ -15,6 +15,7 @@
 #include "GlWidget.h"
 #include "Layer.h"
 #include "TooltipsLayer_ABC.h"
+#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
@@ -725,4 +726,13 @@ void GlProxy::OptionChanged( const std::string& name, const kernel::OptionVarian
     // will move in the GL widgets manager when multi view will be present
     if( !optionsController_.GetGeneralOptions()->Has( name ) )
         GetOptions().Set( name, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::OptionChanged
+// Created: ABR 2014-10-17
+// -----------------------------------------------------------------------------
+void GlProxy::NotifyUpdated( const kernel::Filter_ABC& filter )
+{
+    GetOptions().SetFilterEntity( filter.GetFilteredEntity() );
 }
