@@ -149,7 +149,7 @@
       <comment lang="ar"></comment>
     </comments>
     <parameters>
-      <parameter name="resources" type="list(resource-type)" attribute="types" />
+      <parameter name="resources" type="list(resource-type)" attribute="resources" />
     </parameters>
   </primitive>
   <primitive category="extract" name="population-in-selected-blocks" type="list(key,populations)">
