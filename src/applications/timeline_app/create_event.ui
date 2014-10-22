@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CreateEvent</class>
+ <widget class="QDialog" name="CreateEvent">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>331</width>
+    <height>332</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QLabel" name="uuidLabel">
+     <property name="text">
+      <string>Uuid</string>
+     </property>
+    </widget>
+   </item>
+    <item row="0" column="1">
+        <widget class="QLineEdit" name="uuid"/>
+    </item>
+    <item row="1" column="0">
+    <widget class="QLabel" name="nameLabel">
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="name"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="infoLabel">
+     <property name="text">
+      <string>Info</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="info"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="beginlabel">
+     <property name="text">
+      <string>Begin</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QDateTimeEdit" name="begin">
+     <property name="displayFormat">
+      <string>yyyy-MM-dd HH:mm:ss</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="endLabel">
+     <property name="text">
+      <string>End</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QDateTimeEdit" name="end">
+     <property name="displayFormat">
+      <string>yyyy-MM-dd HH:mm:ss</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+    <item row="5" column="0">
+       <widget class="QLabel" name="parent_label">
+            <property name="text">
+                <string>Parent</string>
+            </property>
+        </widget>
+    </item>
+    <item row="5" column="1">
+        <widget class="QLineEdit" name="parent"/>
+    </item>
+    <item row="6" column="0">
+      <widget class="QLabel" name="error_code_label">
+          <property name="text">
+              <string>Error Code</string>
+          </property>
+      </widget>
+    </item>
+    <item row="6" column="1">
+        <widget class="QSpinBox" name="error_code"/>
+    </item>
+    <item row="7" column="0">
+        <widget class="QLabel" name="error_text_label">
+            <property name="text">
+                <string>Error Text</string>
+            </property>
+        </widget>
+    </item>
+    <item row="7" column="1">
+        <widget class="QLineEdit" name="error_text"/>
+    </item>
+    <item row="8" column="0">
+        <widget class="QLabel" name="metadata_label">
+            <property name="text">
+                <string>Metadata</string>
+            </property>
+        </widget>
+    </item>
+    <item row="8" column="1">
+        <widget class="QLineEdit" name="metadata"/>
+    </item>
+      <item row="9" column="0">
+        <widget class="QCheckBox" name="read_only">
+            <property name="text">
+                <string>Read only</string>
+            </property>
+        </widget>
+    </item>
+    <item row="10" column="0">
+    <widget class="QCheckBox" name="done">
+     <property name="text">
+      <string>Done</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Action</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="targetLabel">
+        <property name="text">
+         <string>Target</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="target"/>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QCheckBox" name="apply">
+        <property name="text">
+         <string>Apply</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="payloadLabel">
+        <property name="text">
+         <string>Payload</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="payload"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>256</width>
+       <height>21</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="13" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

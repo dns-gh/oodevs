@@ -1,0 +1,113 @@
+// ****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2013 MASA Group
+//
+// ****************************************************************************
+package sdk;
+
+enum ClientType
+{
+    CLIENT_INVALID              = 0x000;
+    // commands
+    CLIENT_CENTER               = 0x104;
+    CLIENT_QUERY_UPDATE         = 0x105;
+    // event commands
+    CLIENT_EVENT_CREATE         = 0x200;
+    CLIENT_EVENT_READ_ALL       = 0x201;
+    CLIENT_EVENT_READ_ONE       = 0x202;
+    CLIENT_EVENT_UPDATE         = 0x203;
+    CLIENT_EVENT_DELETE         = 0x204;
+    CLIENT_EVENT_SELECT         = 0x205;
+    // serialization commands
+    CLIENT_EVENTS_LOAD          = 0x300;
+    CLIENT_EVENTS_SAVE          = 0x301;
+}
+
+enum ServerType
+{
+    SERVER_INVALID                     = 0x000;
+    // commands
+    SERVER_READY                       = 0x100;
+    // event commands
+    SERVER_EVENT_CREATED               = 0x200;
+    SERVER_EVENT_READ_ALL              = 0x201;
+    SERVER_EVENT_READ_ONE              = 0x202;
+    SERVER_EVENT_UPDATED               = 0x203;
+    SERVER_EVENT_DELETED               = 0x204;
+    SERVER_EVENT_SELECTED              = 0x205;
+    SERVER_EVENT_DESELECTED            = 0x206;
+    SERVER_EVENT_ACTIVATED             = 0x207;
+    SERVER_EVENT_CONTEXTMENU           = 0x208;
+    SERVER_EVENT_CONTEXTMENUBACKGROUND = 0x209;
+    // keyboard event
+    SERVER_KEYBOARD_KEYDOWN            = 0x300;
+    SERVER_KEYBOARD_KEYPRESS           = 0x301;
+    SERVER_KEYBOARD_KEYUP              = 0x302;
+    // serialization command
+    SERVER_EVENTS_LOADED               = 0x400;
+    SERVER_EVENTS_SAVED                = 0x401;
+}
+
+message Action
+{
+    required string target  = 1;
+    optional bool   apply   = 2;
+    optional bytes  payload = 3;
+}
+
+message Event
+{
+    optional string uuid   = 1;
+    optional string name   = 2;
+    optional string info   = 3;
+    optional string begin  = 4;
+    optional string end    = 5;
+    optional Action action = 6;
+    optional bool   done   = 7;
+    optional bool   read_only  = 8;
+    optional int32  error_code = 9;
+    optional string error_text = 10;
+    optional string parent     = 11;
+    optional string metadata   = 12;
+}
+
+message Error
+{
+    optional int32  code = 1;
+    optional string text = 2;
+}
+
+message KeyBoardEvent
+{
+    optional int32 keydown  = 1;
+    optional int32 keypress = 2;
+    optional int32 keyup    = 3;
+}
+
+message QueryParameter
+{
+    required string key = 1;
+    required string value = 2;
+}
+
+message ClientCommand
+{
+    optional ClientType     type   = 1;
+    repeated Event          events = 2;
+    optional string         url    = 3;
+    optional string         data   = 4;
+    repeated QueryParameter query  = 5;
+}
+
+message ServerCommand
+{
+    optional ServerType    type          = 1;
+    repeated Event         events        = 2;
+    optional Error         error         = 3;
+    optional KeyBoardEvent keyboardevent = 4;
+    optional string        time          = 5;
+    optional string        data          = 6;
+}
