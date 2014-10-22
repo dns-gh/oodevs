@@ -66,17 +66,17 @@ func benchmarkPathfind(from, to swapi.Point) ([]float64, error) {
 	}
 
 	// Create a single VW Combi unit
-	party := &swtest.Party{
+	party := &swrun.Party{
 		Name: "party1",
-		Formations: []*swtest.Formation{
-			&swtest.Formation{
+		Formations: []*swrun.Formation{
+			&swrun.Formation{
 				Name: "formation1",
-				Automats: []*swtest.Automat{
-					&swtest.Automat{
+				Automats: []*swrun.Automat{
+					&swrun.Automat{
 						Name: "automat",
 						Type: "VW Combi Rally",
-						Units: []*swtest.Unit{
-							&swtest.Unit{
+						Units: []*swrun.Unit{
+							&swrun.Unit{
 								Name: "unit",
 								Type: "VW Combi",
 							},
@@ -86,7 +86,7 @@ func benchmarkPathfind(from, to swapi.Point) ([]float64, error) {
 			},
 		},
 	}
-	err = swtest.FindOrCreateEntities(client, phydb, party)
+	err = swrun.FindOrCreateEntities(client, phydb, party)
 	if err != nil {
 		return nil, err
 	}

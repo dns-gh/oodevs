@@ -6,7 +6,7 @@
 // Copyright (c) 2014 MASA Group
 //
 // ****************************************************************************
-package swtest
+package swrun
 
 import (
 	"fmt"

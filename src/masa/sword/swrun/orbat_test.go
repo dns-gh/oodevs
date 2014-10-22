@@ -6,14 +6,30 @@
 // Copyright (c) 2013 MASA Group
 //
 // ****************************************************************************
-package swtest
+package swrun
 
 import (
 	"launchpad.net/gocheck"
 	"masa/sword/swapi/phy"
+	"masa/sword/swtest"
 	"os"
 	"path/filepath"
+	"testing"
 )
+
+var (
+	Cfg *swtest.Config
+)
+
+func init() {
+	Cfg = swtest.ParseFlags()
+}
+
+func Test(t *testing.T) { gocheck.TestingT(t) }
+
+type TestSuite struct{}
+
+var _ = gocheck.Suite(&TestSuite{})
 
 const (
 	ExCrossroadSmallTest = "crossroad-small-test"
