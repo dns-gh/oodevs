@@ -389,20 +389,27 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
     const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
     std::for_each( units.list.begin(), units.list.end(), [&](const NetnObjectDefinitionStruct& unit)
     {
-        const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId );
+        try
+        {
+            const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId );
 
-        simulation::UnitMagicAction message;
-        message().mutable_tasker()->mutable_unit()->set_id( transporterId );
-        message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
-        message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( id );
-        message.Send( publisher_ );
-        if( teleport )
-            if( contextRequest.transportData.convoyType == NetnTransportStruct::E_Transport )
-                TeleportToDestination( id, contextRequest.transportData.dataTransport.finalAppointment.location.Latitude(),
-                                       contextRequest.transportData.dataTransport.finalAppointment.location.Longitude(), publisher_ );
-            else
-                TeleportToDestination( id, contextRequest.transportData.dataDisembarkment.appointment.location.Latitude(),
-                                       contextRequest.transportData.dataDisembarkment.appointment.location.Longitude(), publisher_ );
+            simulation::UnitMagicAction message;
+            message().mutable_tasker()->mutable_unit()->set_id( transporterId );
+            message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
+            message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( id );
+            message.Send( publisher_ );
+            if( teleport )
+                if( contextRequest.transportData.convoyType == NetnTransportStruct::E_Transport )
+                    TeleportToDestination( id, contextRequest.transportData.dataTransport.finalAppointment.location.Latitude(),
+                                           contextRequest.transportData.dataTransport.finalAppointment.location.Longitude(), publisher_ );
+                else
+                    TeleportToDestination( id, contextRequest.transportData.dataDisembarkment.appointment.location.Latitude(),
+                                           contextRequest.transportData.dataDisembarkment.appointment.location.Longitude(), publisher_ );
+        }
+        catch( const std::exception& )
+        {
+            // NOTHING
+        }
     });
 }
 
