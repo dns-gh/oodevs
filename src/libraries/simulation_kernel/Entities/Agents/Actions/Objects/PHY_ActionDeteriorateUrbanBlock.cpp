@@ -22,7 +22,7 @@ PHY_ActionDeteriorateUrbanBlock::PHY_ActionDeteriorateUrbanBlock( MIL_AgentPion&
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_       ( pion.GetRole< PHY_RoleAction_Objects >() )
     , pUrbanBlock_( pUrbanBlock )
-    , percentage_ ( percentage )
+    , percentage_ ( std::max( 1., percentage ) )
 {
     // NOTHING
 }
