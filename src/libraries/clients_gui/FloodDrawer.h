@@ -21,6 +21,8 @@ namespace propagation
 
 namespace gui
 {
+    class GLView_ABC;
+
 // =============================================================================
 /** @class  FloodDrawer
     @brief  Flood drawer
@@ -39,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw() const;
+    void Draw( GLView_ABC& view );
     void Reset( const propagation::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist );
     //@}
 
@@ -53,7 +55,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void RenderTexture() const;
+    void Render() const;
     //@}
 
 private:
@@ -62,9 +64,10 @@ private:
     std::vector< geometry::Polygon2f > deepAreas_;
     std::vector< geometry::Polygon2f > lowAreas_;
     const geometry::Point2f point_;
+    unsigned int callListId_;
+    float alpha_;
     int depth_;
     int refDist_;
-    mutable unsigned int callListId_;
     //@}
 };
 

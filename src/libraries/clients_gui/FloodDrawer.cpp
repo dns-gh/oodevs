@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "FloodDrawer.h"
+#include "GLView_ABC.h"
 #include "propagation/FloodModel_ABC.h"
 #include <windows.h>
 #include <gl/gl.h>
@@ -22,6 +23,7 @@ using namespace geometry;
 // -----------------------------------------------------------------------------
 FloodDrawer::FloodDrawer()
     : callListId_( 0 )
+    , alpha_( 1 )
     , depth_( 0 )
     , refDist_( 0 )
 {
@@ -34,7 +36,7 @@ FloodDrawer::FloodDrawer()
 // -----------------------------------------------------------------------------
 FloodDrawer::FloodDrawer( const propagation::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist )
     : callListId_( 0 )
-    , point_( point )
+    , alpha_( 1 )
     , depth_( depth )
     , refDist_( refDist )
 {
@@ -54,18 +56,26 @@ FloodDrawer::~FloodDrawer()
 // Name: FloodDrawer::Draw
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodDrawer::Draw() const
+void FloodDrawer::Draw( GLView_ABC& view )
 {
-    if( callListId_ == 0 )
+    if( !callListId_ )
     {
         callListId_ = glGenLists( 1 );
-        RenderTexture();
+        if( !callListId_ )
+            return;
+        alpha_ = view.GetCurrentAlpha();
+        Render();
+    }
+    if( alpha_ != view.GetCurrentAlpha() )
+    {
+        alpha_ = view.GetCurrentAlpha();
+        Render();
     }
     glCallList( callListId_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodDrawer::RenderTexture
+// Name: FloodDrawer::Reset
 // Created: LGY 2012-06-29
 // -----------------------------------------------------------------------------
 void FloodDrawer::Reset( const propagation::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist )
@@ -82,7 +92,7 @@ namespace
         for( auto it = polygons.begin(); it != polygons.end(); ++it )
             if( !it->Vertices().empty() )
             {
-                const GLsizei size = static_cast< GLsizei >( it->Vertices().size() );
+                const auto size = static_cast< GLsizei >( it->Vertices().size() );
                 glVertexPointer( 2, GL_FLOAT, 0, &it->Vertices().front() );
                 glDrawArrays( GL_TRIANGLE_FAN, 0, size );
             }
@@ -90,26 +100,23 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodDrawer::RenderTexture
+// Name: FloodDrawer::Render
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodDrawer::RenderTexture() const
+void FloodDrawer::Render() const
 {
     glNewList( callListId_, GL_COMPILE );
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT | GL_LIGHTING_BIT );
-    glColor4f( 1, 1, 1, 1 );
-    glEnableClientState( GL_VERTEX_ARRAY );
+    glPushAttrib( GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT | GL_LIGHTING_BIT );
     glDisable( GL_LIGHTING );
     glEnable( GL_STENCIL_TEST );
     glStencilMask( 0xFF );
     glStencilFunc( GL_EQUAL, 0x0, 0x1 );
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
     glClear( GL_STENCIL_BUFFER_BIT );
-    glColor4f( 0, 0, 1.f, 0.5f );
+    glColor4f( 0, 0, 1.f, 0.5f * alpha_ );
     DrawPolygons( deepAreas_ );
-    glColor4f( 0.3f, 0.3f, 1.f, 0.5f );
+    glColor4f( 0.3f, 0.3f, 1.f, 0.5f * alpha_ );
     DrawPolygons( lowAreas_ );
-    glDisableClientState( GL_VERTEX_ARRAY );
     glPopAttrib();
     glEndList();
 }

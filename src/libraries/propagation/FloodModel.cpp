@@ -36,7 +36,7 @@ FloodModel::~FloodModel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodModel::ComputePolygons
+// Name: FloodModel::GenerateFlood
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
 void FloodModel::GenerateFlood( const Point2f& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDist ) const

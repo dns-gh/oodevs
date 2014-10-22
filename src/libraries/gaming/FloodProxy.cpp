@@ -60,11 +60,11 @@ float FloodProxy::GetCellSize() const
 // Name: FloodProxy::Draw
 // Created: JSR 2011-10-07
 // -----------------------------------------------------------------------------
-void FloodProxy::Draw( unsigned int floodId ) const
+void FloodProxy::Draw( unsigned int floodId, gui::GLView_ABC& view ) const
 {
     auto it = floods_.find( floodId );
     if( it != floods_.end() )
-        it->second->Draw();
+        it->second->Draw( view );
 }
 
 // -----------------------------------------------------------------------------

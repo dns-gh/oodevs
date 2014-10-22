@@ -13,6 +13,11 @@
 #include "propagation/ElevationGetter_ABC.h"
 #include <boost/shared_ptr.hpp>
 
+namespace gui
+{
+    class GLView_ABC;
+}
+
 namespace propagation
 {
     class FloodModel_ABC;
@@ -47,7 +52,7 @@ public:
     //@{
     virtual double GetElevationAt( const geometry::Point2f& point ) const;
     virtual float GetCellSize() const;
-    void Draw( unsigned int floodId ) const;
+    void Draw( unsigned int floodId, gui::GLView_ABC& view ) const;
     void Remove( unsigned int floodId );
     unsigned int GenerateFlood( unsigned int floodId, const geometry::Point2f& point, int depth, int refDist );
     unsigned int FindFlood( const geometry::Point2f& point, int depth, int refDist ) const;
