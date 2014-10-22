@@ -562,28 +562,21 @@ void GlWidget::DrawPolygon( const T_PointVector& points ) const
 {
     if( points.empty() )
         return;
+    glPushAttrib( GL_CURRENT_BIT | GL_POLYGON_BIT | GL_STENCIL_BUFFER_BIT );
     glEnable( GL_STENCIL_TEST );
+    glStencilMask( 0xFF );
+    glStencilFunc( GL_EQUAL, 0x0, 0x1 );
+    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
+    glClear( GL_STENCIL_BUFFER_BIT );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-    glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );
-    glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
-    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
+    float color[4];
+    glGetFloatv( GL_CURRENT_COLOR, color );
+    if( !pPickingSelector_->IsPickingMode() )
+        color[3] *= 0.5;
+    glColor4fv( color );
+    glEnable( GL_POLYGON_SMOOTH );
     glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
-    glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
-    glStencilFunc( GL_EQUAL, 0x1, 0x1 );
-    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-    glPushAttrib( GL_CURRENT_BIT );
-        float color[4];
-        glGetFloatv( GL_CURRENT_COLOR, color );
-        if( !pPickingSelector_->IsPickingMode() )
-            color[3] *= 0.5;
-        glColor4fv( color );
-        glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
     glPopAttrib();
-    glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
-    glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( points.size() ) );
-    glPopAttrib();
-    glDisable( GL_STENCIL_TEST );
 }
 
 // -----------------------------------------------------------------------------
