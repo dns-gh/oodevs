@@ -158,7 +158,7 @@ boost::optional< bool > EventOrderPresenter::IsMisengaged() const
         return boost::none;
     if( entity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
         return tools::IsEngaged( *entity_ ) ? boost::none : boost::make_optional( false );
-    else if( entity_->GetTypeName() == kernel::Agent_ABC::typeName_ )
+    else if( state_->currentType_ != eMissionType_FragOrder && entity_->GetTypeName() == kernel::Agent_ABC::typeName_ )
         if( auto hierarchy = entity_->Retrieve< kernel::TacticalHierarchies >() )
             if( auto superior = hierarchy->GetSuperior() )
                 return tools::IsEngaged( *superior ) ? boost::make_optional( true ) : boost::none;
