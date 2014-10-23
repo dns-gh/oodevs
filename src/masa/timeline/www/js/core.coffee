@@ -11,7 +11,6 @@ tick_template = null
 event_settings_template = null
 # event triggers
 triggers = null
-timeline = null
 # gaming object, only defined when used inside gaming
 gaming = window.gaming
 lang = "en"
@@ -125,7 +124,7 @@ class Event extends Backbone.Model
 class Events extends Backbone.Collection
     model: Event
 
-    initialize: (models, options) ->
+    initialize: (attributes, options) ->
         @sorted = false
         @url = "/api/sessions/#{options.id}/events"
         @on "add change:begin", @on_timestamp
@@ -325,11 +324,12 @@ post_ajax = (url, params, body, success, error) ->
 # collects various events, and apply those at a
 # specified minimal interval
 class EventThrottler
-    constructor: (@session, @events) ->
+    constructor: (@session, @events, @timeline) ->
         @reset = false
         @skip = 0
         @updates = {}
         @deletes = {}
+        @services = {}
         _.extend @, Backbone.Events
         @listenTo triggers, "create_events", @on_create
         # cap rendering
@@ -359,6 +359,10 @@ class EventThrottler
             @deletes[it] = {}
         @sync()
 
+    update_services: (services) ->
+        for it in services
+            @services[it.name] = it
+
     # do apply collected updated/deleted events
     # and update session time
     sync_models: ->
@@ -378,6 +382,7 @@ class EventThrottler
             @events.resync()
         @session.set time: @time if @time?
         delete @time
+        @update_replay()
 
     on_create: (enabled) ->
         if enabled
@@ -386,12 +391,20 @@ class EventThrottler
             @skip--
         @sync()
 
+    update_replay: ->
+        for _, service of @services
+            sw = service.sword
+            if sw?
+                @timeline.set_replay sw.has_replay
+        @services = {}
+
 # a backbone view for all events
 class EventsView extends Backbone.View
 
     initialize: (options) ->
-        @model = new Events [], options
+        @model = options.model
         @listenTo @model, "resync", @on_resync
+        @timeline = options.timeline
         if gaming?
             gaming.create_events = @create_events
             gaming.select_event  = @select_event
@@ -412,7 +425,7 @@ class EventsView extends Backbone.View
             @listenTo     @model, "add",         @on_create
 
     on_resync: =>
-        timeline.render()
+        @timeline.render()
 
     on_select: (model) =>
         if model?
@@ -428,8 +441,8 @@ class EventsView extends Backbone.View
 
     on_contextmenu_background: (event) =>
         dom_stop_event event
-        offset = timeline.layout.select event.pageX, event.pageY
-        timestamp = timeline.scale.invert offset
+        offset = @timeline.layout.select event.pageX, event.pageY
+        timestamp = @timeline.scale.invert offset
         gaming.contextmenu_background format timestamp
 
     on_create: (event) =>
@@ -522,7 +535,7 @@ class EventsView extends Backbone.View
                     text: xhr.statusText
 
     center_view: =>
-        timeline.center()
+        @timeline.center()
 
     update_query: (query) =>
         params = _.extend parse_parameters(), query
@@ -564,17 +577,18 @@ class SessionView extends Backbone.View
 
     initialize: (options) ->
         @id = options.id
-        @model = new Session [], id: options.id
-        @events_view = new EventsView id: options.id
-        @throttler = new EventThrottler @model, @events_view.model
-        timeline = new Timeline vertical, @events_view.model
-        @listenTo     @model,   "change:time",        @on_time
-        @listenToOnce @model,   "sync",               @on_first_sync
-        @listenTo     timeline, "range",              @on_range
-        @listenTo     timeline, "current_edit_start", @on_current_edit_start
-        @listenTo     timeline, "current_edit_end",   @on_current_edit_end
-        @listenTo     triggers, "lock_updates",       @on_lock
-        @listenTo     triggers, "unlock_updates",     @on_unlock
+        @model = new Session {}, id: options.id
+        events = new Events {}, id: options.id
+        @timeline = new Timeline vertical, events
+        @throttler = new EventThrottler @model, events, @timeline
+        @events_view = new EventsView id: options.id, timeline: @timeline, model: events
+        @listenTo     @model,    "change:time",        @on_time
+        @listenToOnce @model,    "sync",               @on_first_sync
+        @listenTo     @timeline, "range",              @on_range
+        @listenTo     @timeline, "current_edit_start", @on_current_edit_start
+        @listenTo     @timeline, "current_edit_end",   @on_current_edit_end
+        @listenTo     triggers,  "lock_updates",       @on_lock
+        @listenTo     triggers,  "unlock_updates",     @on_unlock
         @model.fetch()
         @observe()
         return
@@ -598,11 +612,11 @@ class SessionView extends Backbone.View
             hash.end = @get_timestamp hash.end
             left = hash.start if hash.start?
             right = hash.end if hash.end?
-            timeline.set_domain left.toDate(), right.toDate()
-        timeline.set_current time.toDate()
+            @timeline.set_domain left.toDate(), right.toDate()
+        @timeline.set_current time.toDate()
 
     on_first_sync: =>
-        timeline.edit_current !@model.get "locked"
+        @timeline.edit_current !@model.get "locked"
 
     on_current_edit_start: =>
         @busy = true
@@ -649,6 +663,8 @@ class SessionView extends Backbone.View
                 @first_update = false
             when "delete_events"
                 @throttler.delete_events msg.uuids
+            when "update_services"
+                @throttler.update_services msg.services
 
 # a backbone collection for every sessions
 class Sessions extends Backbone.Collection
