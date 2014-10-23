@@ -83,7 +83,6 @@ void MetricsLayer::Paint( Viewport_ABC& )
             .arg( ComputeRuleDistance( true ), 0, 'f', 1 )
             .arg( ComputeAngle(), 0, 'f', 1 );
     tooltip_->Start( Styles::bold ).Add( message.toStdString() ).End();
-    const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
     tooltip_->Draw();
     glPopAttrib();
 }

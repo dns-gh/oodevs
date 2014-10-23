@@ -10,7 +10,7 @@
 #ifndef __gui_InformationToolTip_h_
 #define __gui_InformationToolTip_h_
 
-#include "Tooltip.h"
+#include "TooltipDisplayer.h"
 
 namespace gui
 {
@@ -21,7 +21,7 @@ namespace gui
 // Created: NPT 2013-02-11
 // =============================================================================
 class InformationToolTip : public QDialog
-                         , public Tooltip
+                         , public TooltipDisplayer
 {
     Q_OBJECT
 
@@ -35,6 +35,8 @@ public:
 private:
     virtual void paintEvent( QPaintEvent * event );
     virtual void DirtyImage();
+
+    QPoint ComputePosition() const;
 
 private:
     QImage image_;

@@ -26,19 +26,17 @@ GlTooltip::~GlTooltip()
 
 void GlTooltip::DirtyImage()
 {
-    image_ = QImage();
+    // NOTHING
 }
 
 void GlTooltip::Draw( const geometry::Point2f& position )
 {
-    if( image_.isNull() )
-        image_ = GenerateImage().mirror();
-    layer_.Draw( position, image_ );
+    layer_.Draw( position, GetTooltip() );
 }
 
 void GlTooltip::Hide()
 {
-    image_ = QImage();
+    // NOTHING
 }
 
 GlTooltip::operator kernel::Displayer_ABC&()

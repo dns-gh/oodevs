@@ -160,7 +160,7 @@ namespace
 
     QImage ApplyAlpha( const QImage& image, float alpha )
     {
-        QImage result( size, size, QImage::Format_ARGB32_Premultiplied );
+        QImage result( image.width(), image.height(), QImage::Format_ARGB32_Premultiplied );
         result.fill( Qt::transparent );
         QPainter painter( &result );
         painter.setOpacity( alpha );

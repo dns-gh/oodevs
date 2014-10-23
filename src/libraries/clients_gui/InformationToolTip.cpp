@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "InformationToolTip.h"
 #include "moc_InformationToolTip.cpp"
+#include "Tooltip.h"
 
 using namespace gui;
 
@@ -27,9 +28,11 @@ InformationToolTip::~InformationToolTip()
 void InformationToolTip::Draw()
 {
     if( image_.isNull() )
-        image_ = GenerateImage();
+        image_ = GetTooltip().GenerateImage();
     if( !image_.isNull() && !QApplication::activePopupWidget() )
     {
+        move( ComputePosition() );
+        setFixedSize( image_.width(), image_.height() );
         show();
         update();
     }
@@ -51,13 +54,16 @@ void InformationToolTip::paintEvent( QPaintEvent* /*event*/ )
     if( image_.isNull() || !QApplication::activeWindow() )
         return;
     QPainter p( this );
+    p.drawImage( 0, 0, image_ );
+}
+
+QPoint InformationToolTip::ComputePosition() const
+{
     QPoint pos = QCursor::pos() + QPoint( 0, 20 ); // mouse shape default size
     const QRect screen = QApplication::desktop()->screenGeometry( QApplication::desktop()->screenNumber( pos ) );
     if( screen.left() + screen.width() < pos.x() + image_.width() )
         pos.setX( pos.x() - image_.width() );
     if( screen.top() + screen.height() < pos.y() + image_.height() )
         pos.setY( pos.y() - image_.height() );
-    move( pos );
-    p.drawImage( 0, 0, image_ );
-    setFixedSize( image_.width(), image_.height() );
+    return pos;
 }

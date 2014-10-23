@@ -68,12 +68,10 @@ void Mission::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Mission::Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( !tooltip_.get() )
-    {
+    if( !tooltip_ )
         tooltip_ = tools.CreateTooltip();
-        kernel::Displayer_ABC& displayer = *tooltip_;
-        displayer.Display( "", GetName() );
-    }
+    kernel::Displayer_ABC& displayer = *tooltip_;
+    displayer.Display( "", GetName() );
     tooltip_->Draw( where );
     Action_ABC::Draw( where, viewport, tools );
 }

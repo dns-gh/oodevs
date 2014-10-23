@@ -11,7 +11,7 @@
 #define __GlTooltip_h_
 
 #include "GlTooltip_ABC.h"
-#include "Tooltip.h"
+#include "TooltipDisplayer.h"
 
 namespace gui
 {
@@ -24,31 +24,21 @@ namespace gui
 // Created: AGE 2006-06-29
 // =============================================================================
 class GlTooltip : public GlTooltip_ABC
-                , public Tooltip
+                , public TooltipDisplayer
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     explicit GlTooltip( TooltipsLayer_ABC& layer );
     virtual ~GlTooltip();
-    //@}
 
-    //! @name Operations
-    //@{
     virtual operator kernel::Displayer_ABC&();
     virtual void Draw( const geometry::Point2f& position );
-    //@}
 
 private:
     virtual void DirtyImage();
     virtual void Hide();
 
 private:
-    //! @name Member data
-    //@{
     TooltipsLayer_ABC& layer_;
-    QImage image_;
-    //@}
 };
 
 }

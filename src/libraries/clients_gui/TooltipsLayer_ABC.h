@@ -12,6 +12,8 @@
 
 namespace gui
 {
+    class Tooltip;
+
 // =============================================================================
 /** @class  TooltipsLayer_ABC
     @brief  TooltipsLayer_ABC
@@ -29,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& position, const QImage& image ) = 0;
+    virtual void Draw( const geometry::Point2f& position, const Tooltip& tooltip ) = 0;
     //@}
 };
 
