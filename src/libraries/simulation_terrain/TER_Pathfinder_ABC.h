@@ -48,11 +48,11 @@ public:
     //! @name Operations
     //@{
     virtual void SetId( size_t id ) = 0;
-    virtual void SetCallback( pathfind::AStarManagementCallback_ABC* pCallback ) = 0;
     virtual void SetChoiceRatio( float ratio ) = 0;
     virtual void SetConfiguration( unsigned nRefining, unsigned int nSubdivisions ) = 0;
     virtual bool ComputePath( const geometry::Point2f& from, const geometry::Point2f& to,
                               TerrainRule_ABC& rule,
+                              pathfind::AStarManagementCallback_ABC* callback,
                               tools::thread::Handler_ABC< TerrainPathPoint >& handler ) = 0;
     //@}
 };

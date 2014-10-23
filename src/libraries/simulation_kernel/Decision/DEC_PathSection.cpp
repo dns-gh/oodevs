@@ -56,10 +56,8 @@ bool DEC_PathSection::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nCompu
     if( needRefine_ )
         pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
     pathfind.SetChoiceRatio( useStrictClosest_ ? 0.f : 0.1f );
-    pathfind.SetCallback( this );
-    const bool bResult = pathfind.ComputePath( from, to, *rule_, *this );
+    const bool bResult = pathfind.ComputePath( from, to, *rule_, this, *this );
     pathfind.SetConfiguration( 0, 0 );
-    pathfind.SetCallback( 0 );
     return bResult;
 }
 
