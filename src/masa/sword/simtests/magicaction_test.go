@@ -14,6 +14,7 @@ import (
 	"masa/sword/swapi/phy"
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
+	"masa/sword/swrun"
 	"os"
 	"regexp"
 )
@@ -170,7 +171,7 @@ func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 
 func (s *TestSuite) TestTriggerError(c *C) {
 	triggerError := func(kind string) {
-		opts, session := makeOptsAndSession()
+		opts, session := swrun.MakeOptsAndSession(Cfg)
 		opts.TestCommands = true
 		opts.ExerciseName = ExCrossroadSmallEmpty
 		WriteSession(c, opts, session)

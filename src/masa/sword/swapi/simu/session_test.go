@@ -54,6 +54,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
 	session.GamingServer = "masagroup.net"
 	session.EndTick = 42
 	session.Paused = true
+	session.PathfindThreads = 2
 	session.RandomBreakdowns = true
 	session.Seed = 1
 	session.TimeFactor = 999
@@ -80,7 +81,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
       <dispatcher embedded="true"></dispatcher>
       <network port="10000"></network>
       <orbat checkcomposition="false"></orbat>
-      <pathfinder threads="1" max-calculation-time="12h"></pathfinder>
+      <pathfinder threads="2" max-calculation-time="12h"></pathfinder>
       <profiling enabled="false" command="false" hook="false"></profiling>
       <random seed="1"></random>
       <random0 deviation="0.5" distribution="0" mean="0.5"></random0>

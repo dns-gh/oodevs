@@ -13,6 +13,7 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/pmezard/go-difflib/difflib"
 	"launchpad.net/gocheck"
+	"os"
 	"regexp"
 	"runtime"
 	"strings"
@@ -21,12 +22,14 @@ import (
 
 type Config struct {
 	Application  string
+	BaseDir      string // base directory from which all other may be deduced
 	Platform     string
-	RootDir      string
+	RootDir      string // simulation --root-dir, usually "data/"
 	RunDir       string
 	ExercisesDir string
 	ShowLog      bool
 	TestPort     int
+	Timeout      time.Duration
 }
 
 func ParseFlags() *Config {
@@ -46,6 +49,15 @@ func ParseFlags() *Config {
 	cfg.Platform = "vc100_x64"
 	if runtime.GOARCH == "386" {
 		cfg.Platform = "vc100"
+	}
+
+	cfg.Timeout = 5 * time.Second
+	timeoutStr := os.Getenv("MASA_TIMEOUT")
+	if timeoutStr != "" {
+		t, err := time.ParseDuration(timeoutStr)
+		if err == nil {
+			cfg.Timeout = t
+		}
 	}
 	return &cfg
 }

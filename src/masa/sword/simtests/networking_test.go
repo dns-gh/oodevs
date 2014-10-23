@@ -12,6 +12,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/simu"
+	"masa/sword/swrun"
 	"strings"
 )
 
@@ -22,7 +23,7 @@ func checkEcho(c *C, client *swapi.Client, s string) {
 }
 
 func (s *TestSuite) TestEcho(c *C) {
-	opts, session := makeOptsAndSession()
+	opts, session := swrun.MakeOptsAndSession(Cfg)
 	opts.TestCommands = true
 	opts.ExerciseName = ExCrossroadSmallEmpty
 	WriteSession(c, opts, session)

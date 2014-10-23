@@ -46,6 +46,7 @@ type Session struct {
 	TimeStep         int
 	RandomBreakdowns bool
 	Seed             int
+	PathfindThreads  int
 }
 
 func ReadBool(value string) bool {
@@ -66,6 +67,7 @@ func (s *Session) syncSession(x *xmlSession) error {
 	s.GamingServer = x.GamingNetwork.Server
 	s.EndTick = x.Sim.Time.EndTick
 	s.Paused = ReadBool(x.Sim.Time.Paused)
+	s.PathfindThreads = x.Sim.Pathfinder.Threads
 	s.RandomBreakdowns = x.Sim.Debug.RandomBreakdowns
 	s.Recorder = nil
 	if p := x.Dispatcher.Plugins.Recorder; p != nil {
@@ -97,6 +99,10 @@ func (s *Session) syncXml(x *xmlSession) error {
 	x.Sim.Debug.LogSize = s.SimLog.Size
 	x.Sim.Debug.RandomBreakdowns = s.RandomBreakdowns
 	x.Sim.Debug.SizeUnit = s.SimLog.Unit
+	x.Sim.Pathfinder.Threads = s.PathfindThreads
+	if x.Sim.Pathfinder.Threads <= 0 {
+		x.Sim.Pathfinder.Threads = 1
+	}
 	x.Sim.Random.Seed = s.Seed
 	x.Sim.Time.EndTick = s.EndTick
 	x.Sim.Time.Factor = s.TimeFactor
@@ -164,7 +170,7 @@ type xmlOrbat struct {
 }
 
 type xmlPathfinder struct {
-	Threads            string `xml:"threads,attr"`
+	Threads            int    `xml:"threads,attr"`
 	MaxCalculationTime string `xml:"max-calculation-time,attr"`
 }
 

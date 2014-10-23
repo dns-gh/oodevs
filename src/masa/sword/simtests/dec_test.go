@@ -16,6 +16,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/simu"
+	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"os"
 	"path/filepath"
@@ -258,17 +259,17 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 	defer client.Close()
 	phydb := loadPhysicalData(c, "test")
 
-	party := &Party{
+	party := &swrun.Party{
 		Name: "party1",
-		Formations: []*Formation{
-			&Formation{
+		Formations: []*swrun.Formation{
+			&swrun.Formation{
 				Name: "formation",
-				Automats: []*Automat{
-					&Automat{
+				Automats: []*swrun.Automat{
+					&swrun.Automat{
 						Name: "automat",
 						Type: "VW Combi Rally",
-						Units: []*Unit{
-							&Unit{
+						Units: []*swrun.Unit{
+							&swrun.Unit{
 								Name: "unit",
 								Type: "VW Combi",
 							},
@@ -278,7 +279,7 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 			},
 		},
 	}
-	err := FindOrCreateEntities(client, phydb, party)
+	err := swrun.FindOrCreateEntities(client, phydb, party)
 	c.Assert(err, IsNil)
 	unit := party.Formations[0].Automats[0].Units[0].Entity
 

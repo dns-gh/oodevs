@@ -235,7 +235,7 @@ func checkMaintenance(c *C, admin, client *swapi.Client, unit *swapi.Unit,
 	c.Assert(err, IsNil)
 	select {
 	case <-quit:
-	case <-time.After(WaitTimeout):
+	case <-time.After(Cfg.Timeout):
 		c.Error("timeout")
 	}
 	go func() {

@@ -6,15 +6,63 @@
 // Copyright (c) 2013 MASA Group
 //
 // ****************************************************************************
-package simtests
+package swrun
 
 import (
-	. "launchpad.net/gocheck"
+	"launchpad.net/gocheck"
+	"masa/sword/swapi/phy"
+	"masa/sword/swtest"
+	"os"
+	"path/filepath"
+	"testing"
 )
 
-func (s *TestSuite) TestCreateOrbat(c *C) {
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
-	defer stopSimAndClient(c, sim, client)
+var (
+	Cfg *swtest.Config
+)
+
+func init() {
+	Cfg = swtest.ParseFlags()
+}
+
+func Test(t *testing.T) { gocheck.TestingT(t) }
+
+type TestSuite struct{}
+
+var _ = gocheck.Suite(&TestSuite{})
+
+const (
+	ExCrossroadSmallTest = "crossroad-small-test"
+)
+
+var (
+	Equals  = gocheck.Equals
+	Greater = gocheck.Greater
+	IsNil   = gocheck.IsNil
+	NotNil  = gocheck.NotNil
+)
+
+func loadPhysicalData(c *gocheck.C, name string) *phy.PhysicalData {
+	wd, err := os.Getwd()
+	c.Assert(err, IsNil)
+	path := filepath.Join(wd, "../../../../data/data/models/ada/physical", name)
+	data, err := phy.ReadPhysicalData(path)
+	c.Assert(err, IsNil)
+	return data
+}
+
+func NewAllUserOpts(exercise string) *ClientOpts {
+	return &ClientOpts{
+		Exercise: exercise,
+		User:     "alluser",
+		Password: "alluser",
+	}
+}
+
+func (s *TestSuite) TestCreateOrbat(c *gocheck.C) {
+	sim, client, err := ConnectAndWaitModel(NewAllUserOpts(ExCrossroadSmallTest), Cfg)
+	c.Assert(err, IsNil)
+	defer StopSimAndClient(sim, client)
 	phydb := loadPhysicalData(c, "test")
 
 	party := &Party{
@@ -43,7 +91,7 @@ func (s *TestSuite) TestCreateOrbat(c *C) {
 		},
 	}
 	// First run should create everything which can be created
-	err := FindOrCreateEntities(client, phydb, party)
+	err = FindOrCreateEntities(client, phydb, party)
 	c.Assert(err, IsNil)
 	c.Assert(party.Entity, NotNil)
 	c.Assert(len(party.Formations), Greater, 0)
