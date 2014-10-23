@@ -22,7 +22,9 @@ namespace
 {
 
 const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of
+    // always on bottom layers
     ( eLayerTypes_Default )
+    ( eLayerTypes_Elevation3d )
     // configurable layers
     ( eLayerTypes_Elevation2d )
     ( eLayerTypes_Raster )
@@ -38,7 +40,6 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of
     ( eLayerTypes_TacticalLinesComposite )
     ( eLayerTypes_UnitsComposite )
     // always on top layers
-    ( eLayerTypes_Elevation3d )
     ( eLayerTypes_Grid )
     ( eLayerTypes_WeaponRanges )
     ( eLayerTypes_Actions )
