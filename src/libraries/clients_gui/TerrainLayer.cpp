@@ -86,7 +86,7 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     const auto& options = view_.GetOptions();
     settings_ = options.GetTerrainSettings();
-    if( !ShouldDrawPass() || GetAlpha() == 0 || !settings_ )
+    if( !ShouldDrawPass() || !settings_ )
         return;
     if( !layer_ && !noVBOlayer_ && !graphicsDirectory_.IsEmpty() )
         LoadGraphics();

@@ -68,7 +68,7 @@ TerrainProfilerLayer::~TerrainProfilerLayer()
 // -----------------------------------------------------------------------------
 void TerrainProfilerLayer::Paint( Viewport_ABC& viewport )
 {
-    if( !ShouldDrawPass() || GetAlpha() == 0 )
+    if( !ShouldDrawPass() )
         return;
     if( viewport.IsVisible( geometry::Rectangle2f( from_, to_ ) ) )
     {

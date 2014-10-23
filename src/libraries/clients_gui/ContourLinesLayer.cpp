@@ -65,7 +65,6 @@ void ContourLinesLayer::Paint( const geometry::Rectangle2f& )
     auto& options = view_.GetOptions();
     if( !modelLoaded_ ||
         !ShouldDrawPass() ||
-        GetAlpha() == 0 ||
         !options.Get( "ContourLines/Enabled" ).To< bool >() )
         return;
     auto& computer = options.GetContourLinesComputer();

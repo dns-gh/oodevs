@@ -59,6 +59,7 @@ namespace
 // -----------------------------------------------------------------------------
 void LayerComposite::SetAlpha( float alpha )
 {
+    Layer::SetAlpha( alpha );
     Forward( layers_, [&]( const T_Layer& layer ){ layer->SetAlpha( alpha ); } );
 }
 
@@ -68,9 +69,8 @@ void LayerComposite::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void LayerComposite::Paint( gui::Viewport_ABC& viewport )
 {
-    if( !ShouldDrawPass() )
-        return;
-    Forward( layers_, [&]( const T_Layer& layer ){ layer->Paint( viewport ); } );
+    if( ShouldDrawPass() )
+        Forward( layers_, [&]( const T_Layer& layer ){ layer->Paint( viewport ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,9 +79,8 @@ void LayerComposite::Paint( gui::Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 void LayerComposite::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !ShouldDrawPass() )
-        return;
-    Forward( layers_, [&]( const T_Layer& layer ){ layer->Paint( viewport ); } );
+    if( ShouldDrawPass() )
+        Forward( layers_, [&]( const T_Layer& layer ){ layer->Paint( viewport ); } );
 }
 
 // -----------------------------------------------------------------------------

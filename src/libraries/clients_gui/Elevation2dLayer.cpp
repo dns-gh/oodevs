@@ -79,7 +79,6 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( !modelLoaded_ ||
         !ShouldDrawPass() ||
-        GetAlpha() == 0 ||
         !gl::HasMultiTexturing() )
         return;
 
