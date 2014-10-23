@@ -114,9 +114,9 @@ func (s *TestSuite) TestUnitFragOrder(c *C) {
 
 	params := swapi.MakeParameters()
 
-	// Cannot send frag order to an engaged unit
-	_, err = client.SendUnitFragOrder(unit.Id, MissionMoveId, params)
-	c.Assert(err, IsSwordError, "error_unit_cannot_receive_order")
+	// Can send frag order to an engaged unit
+	_, err = client.SendUnitFragOrder(unit.Id, FragOrderNbcSuitOn, params)
+	c.Assert(err, IsNil)
 
 	// Disengage automat
 	err = client.SetAutomatMode(automat.Id, false)
