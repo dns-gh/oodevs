@@ -106,11 +106,11 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
     const geometry::Rectangle2d box(left,bottom,right,top);
     const double width = box.Right() - box.Left();
     const double height = box.Top() - box.Bottom();
-    double incx = 0.005;
-    double incy = 0.005;
+    double incx = 0.002;
+    double incy = 0.002;
     uint32_t mx = static_cast< uint32_t >( ( width ) / incx ) +1;
     uint32_t my = static_cast< uint32_t >( ( height ) / incy ) +1;
-    static const uint32_t MIN_SIZE = 10;
+    static const uint32_t MIN_SIZE = 100;
     if( mx < MIN_SIZE || my < MIN_SIZE )
     {
         if( width < height )
