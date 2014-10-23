@@ -1028,6 +1028,34 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::GlProxy</name>
+    <message>
+        <source>config.ini</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration file (*.ini)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load configuration file &apos;%1&apos;.
+These settings are defined for the application &apos;%2&apos;, on the base &apos;%3&apos; and the exercise &apos;%4&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::GradientPreferencesEditor</name>
     <message>
         <source>Copy preset</source>

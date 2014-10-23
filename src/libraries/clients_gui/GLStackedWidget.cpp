@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "GlSelector.h"
-#include "moc_GlSelector.cpp"
+#include "GLStackedWidget.h"
+#include "moc_GLStackedWidget.cpp"
 
 #include "CompositionPass.h"
 #include "GlPlaceHolder.h"
@@ -32,48 +32,43 @@ using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: GlSelector constructor
+// Name: GLStackedWidget constructor
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-GlSelector::GlSelector( QWidget* parent,
-                        GlProxy& proxy,
-                        Controllers& controllers,
-                        const tools::ExerciseConfig& config,
-                        DetectionMap& map,
-                        EventStrategy_ABC& strategy,
-                        const DrawingTypes& drawingTypes )
+GLStackedWidget::GLStackedWidget( QWidget* parent,
+                                  GlProxy& proxy,
+                                  const tools::ExerciseConfig& config,
+                                  DetectionMap& map,
+                                  EventStrategy_ABC& strategy,
+                                  const DrawingTypes& drawingTypes,
+                                  const IconLayout& iconLayout )
     : QStackedWidget( parent )
     , proxy_       ( proxy )
-    , controllers_ ( controllers )
     , config_      ( config )
     , map_         ( map )
     , strategy_    ( strategy )
     , drawingTypes_( drawingTypes )
-    , iconLayout_  ( new IconLayout() )
-    , displayTimer_( new QTimer( this ) )
+    , iconLayout_  ( iconLayout )
 {
-    setObjectName( "GlSelector" );
+    setObjectName( "GLStackedWidget" );
     insertWidget( eWidget_Empty, new GlPlaceHolder( this ) );
     ChangeTo( eWidget_Empty );
-    controllers_.options_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlSelector destructor
+// Name: GLStackedWidget destructor
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-GlSelector::~GlSelector()
+GLStackedWidget::~GLStackedWidget()
 {
-    emit Widget3dChanged( 0 );
-    emit Widget2dChanged( 0 );
-    controllers_.options_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlSelector::Load
+// Name: GLStackedWidget::Load
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-void GlSelector::Load()
+void GLStackedWidget::Load()
 {
     if( widget2d_ && widget3d_ )
     {
@@ -82,8 +77,8 @@ void GlSelector::Load()
         return;
     }
 
-    widget2d_ = std::make_shared< GlWidget >( this, proxy_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_, drawingTypes_ );
-    widget3d_ = std::make_shared< Gl3dWidget >( this, proxy_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_, widget2d_.get() );
+    widget2d_ = std::make_shared< GlWidget >( this, proxy_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), iconLayout_, drawingTypes_ );
+    widget3d_ = std::make_shared< Gl3dWidget >(this, proxy_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_, widget2d_.get() );
 
     widget2d_->Load( config_ );
     widget2d_->Configure( strategy_ );
@@ -96,57 +91,40 @@ void GlSelector::Load()
 
     proxy_.SetWidget2D( widget2d_ );
     proxy_.SetWidget3D( widget3d_ );
-
+    
     insertWidget( eWidget_2D, widget2d_.get() );
     insertWidget( eWidget_3D, widget3d_.get() );
 
     connect( widget2d_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
     connect( widget3d_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
-    connect( displayTimer_, SIGNAL( timeout() ), this, SIGNAL( UpdateGL() ) );
 
     InitializePasses();
-    displayTimer_->start( controllers_.options_.GetOption( "RefreshRate" ).To< int >() );
     ChangeTo( controllers_.options_.GetOption( "3D" ).To< bool >() ? eWidget_3D : eWidget_2D );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlSelector::ChangeTo
+// Name: GLStackedWidget::ChangeTo
 // Created: ABR 2014-09-24
 // -----------------------------------------------------------------------------
-void GlSelector::ChangeTo( E_Widget type )
+void GLStackedWidget::ChangeTo( E_Widget type )
 {
     auto currentType = static_cast< E_Widget >( currentIndex() );
     if( type == currentType )
         return;
 
-    if( currentType == eWidget_2D )
-        disconnect( displayTimer_, SIGNAL( timeout() ), widget2d_.get(), SLOT( updateGL() ) );
-    else if( currentType == eWidget_3D )
-        disconnect( displayTimer_, SIGNAL( timeout() ), widget3d_.get(), SLOT( updateGL() ) );
-
     if( type == eWidget_2D )
-    {
         proxy_.ChangeTo( widget2d_ );
-        emit Widget2dChanged( widget2d_.get() );
-        emit Widget3dChanged( 0 );
-        connect( displayTimer_, SIGNAL( timeout() ), widget2d_.get(), SLOT( updateGL() ) );
-    }
     else if( type == eWidget_3D )
-    {
         proxy_.ChangeTo( widget3d_ );
-        emit Widget2dChanged( 0 );
-        emit Widget3dChanged( widget3d_.get() );
-        connect( displayTimer_, SIGNAL( timeout() ), widget3d_.get(), SLOT( updateGL() ) );
-    }
 
     setCurrentIndex( type );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlSelector::Close
+// Name: GLStackedWidget::Close
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-void GlSelector::Close()
+void GLStackedWidget::Close()
 {
     ChangeTo( eWidget_Empty );
     removeWidget( widget2d_.get() );
@@ -156,39 +134,18 @@ void GlSelector::Close()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlSelector::OptionChanged
-// Created: AGE 2007-03-09
-// -----------------------------------------------------------------------------
-void GlSelector::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    if( name == "3D" && widget2d_ && widget3d_ )
-        ChangeTo( value.To< bool >() ? eWidget_3D : eWidget_2D );
-    else if( name == "RefreshRate" )
-        displayTimer_->start( value.To< int >() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlSelector::AddIcon
-// Created: AGE 2007-03-09
-// -----------------------------------------------------------------------------
-void GlSelector::AddIcon( const char** xpm, int x, int y )
-{
-    iconLayout_->AddIcon( xpm, x, y );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlSelector::InitializePasses
+// Name: GLStackedWidget::InitializePasses
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-void GlSelector::InitializePasses()
+void GLStackedWidget::InitializePasses()
 {
     if( !widget2d_ )
         return;
-    widget2d_->SetPassOrder( "icons,main,fog,composition,tooltip" );
+    widget2d_->SetPassOrder( "main,fog,composition,tooltip" );
     LayersRenderPass*  tooltip     = new LayersRenderPass ( *widget2d_, "tooltip", false );
-    TextureRenderPass* main        = new TextureRenderPass( *widget2d_, "main", controllers_ );
-    TextureRenderPass* fog         = new TextureRenderPass( *widget2d_, "fog", controllers_, "FogOfWar" );
-    GlRenderPass_ABC*  composition = new CompositionPass  ( *main, *fog, controllers_, "FogOfWar" );
+    TextureRenderPass* main        = new TextureRenderPass( *widget2d_, "main", proxy_ );
+    TextureRenderPass* fog         = new TextureRenderPass( *widget2d_, "fog", proxy_, "FogOfWar" );
+    GlRenderPass_ABC*  composition = new CompositionPass  ( *main, *fog, proxy_, "FogOfWar" );
     widget2d_->AddPass( *tooltip );
     widget2d_->AddPass( *composition );
     widget2d_->AddPass( *fog );
@@ -196,10 +153,10 @@ void GlSelector::InitializePasses()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlSelector::SetFocus
+// Name: GLStackedWidget::SetFocus
 // Created: ABR 2012-07-10
 // -----------------------------------------------------------------------------
-void GlSelector::SetFocus()
+void GLStackedWidget::SetFocus()
 {
     if( widget2d_ )
         widget2d_->setFocus();
@@ -207,7 +164,11 @@ void GlSelector::SetFocus()
         widget3d_->setFocus();
 }
 
-GlWidget* GlSelector::GetWidget2d() const
+// -----------------------------------------------------------------------------
+// Name: GLStackedWidget::GetView
+// Created: ABR 2012-07-10
+// -----------------------------------------------------------------------------
+std::shared_ptr< GlWidget > GLStackedWidget::GetWidget2d()
 {
-    return widget2d_.get();
+    return widget2d_;
 }

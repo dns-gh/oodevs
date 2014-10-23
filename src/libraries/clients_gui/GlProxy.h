@@ -26,14 +26,25 @@ namespace kernel
     class Options;
     class OptionsController;
     class Profile_ABC;
+    class Settings;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
 }
 
 class Lighting_ABC;
+class EventStrategy_ABC;
 
 namespace gui
 {
+    class DrawingTypes;
+    class GLStackedWidget;
+    class GlRenderPass_ABC;
     class GlWidget;
     class Gl3dWidget;
+    class IconLayout;
     class Layer;
     class TooltipsLayer_ABC;
 
@@ -43,18 +54,26 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class GlProxy : public GLView_ABC
+class GlProxy : public QObject
+              , public GLView_ABC
               , public tools::Observer_ABC
               , public kernel::OptionsObserver_ABC
               , public tools::ElementObserver_ABC< kernel::Filter_ABC >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             GlProxy( kernel::Controllers& controllers,
+             GlProxy( QMainWindow& mainWindow,
+                      kernel::Controllers& controllers,
+                      const tools::ExerciseConfig& config,
                       const kernel::Profile_ABC& profile,
                       const kernel::StaticModel& staticModel,
                       const kernel::EntityResolver_ABC& model,
+                      EventStrategy_ABC& strategy,
+                      const DrawingTypes& drawingTypes,
+                      const std::shared_ptr< IconLayout >& iconLayout,
                       const std::shared_ptr< Lighting_ABC >& lighting );
     virtual ~GlProxy();
     //@}
@@ -67,11 +86,19 @@ public:
 
     //! @name Proxy
     //@{
+    void ApplyOptions();
+    void Load( GlRenderPass_ABC& iconRenderPass,
+               const tools::Path& settingsDirectory );
+    void LoadDisplaySettings( const tools::Path& filename );
+    void SetFocus();
+
     void Purge();
     void UpdateLayerOrder( kernel::Options& options );
 
     void SetWidget3D( const std::shared_ptr< Gl3dWidget >& newWidget );
     void SetWidget2D( const std::shared_ptr< GlWidget >& newWidget );
+
+    std::shared_ptr< GLStackedWidget > GetOverflewWidget();
 
     void ChangeTo( const std::shared_ptr< GlWidget >& newWidget );
     void ChangeTo( const std::shared_ptr< Gl3dWidget >& newWidget );
@@ -80,7 +107,7 @@ public:
     //! @name Layers
     //@{
     void SetTooltipsLayer( const std::shared_ptr< TooltipsLayer_ABC >& layer );
-    void AddLayers( const T_LayersVector& layers );
+    void SetLayers( const T_LayersVector& layers );
     void RemoveLayer( const T_Layer& layer );
     void ApplyToLayers( const T_LayerFunctor& functor ) const;
 
@@ -94,13 +121,17 @@ public:
     virtual const GLOptions& GetOptions() const;
     //@}
 
-    //! @name Viewport
+    //! @name Frustum
     //@{
+    virtual FrustumInfos SaveFrustum() const;
+    virtual void LoadFrustum( const FrustumInfos& infos );
+
     virtual void CenterOn( const geometry::Point2f& point );
     virtual geometry::Point2f GetCenter() const;
 
     virtual void Zoom( float width );
     virtual float Zoom() const;
+    virtual void SetZoom( float zoom );
     virtual float GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
     //@}
 
@@ -125,6 +156,8 @@ public:
 
     //! @name Drawing
     //@{
+    virtual void UpdateGL();
+
     virtual std::string GetCurrentPass() const;
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
@@ -165,19 +198,47 @@ public:
     virtual void DrawShapeText( const QImage& image, const geometry::Point2f& where ) const;
     //@}
 
+signals:
+    //! @name Slots
+    //@{
+    void MouseMove( const geometry::Point2f& );
+    void MouseMove( const geometry::Point3f& );
+    void OnUpdateGL();
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnSaveDisplaySettings();
+    void OnLoadDisplaySettings();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void SaveView( kernel::Settings& settings, int id, const QString& name, const std::shared_ptr< GLStackedWidget >& view );
+    void LoadView( kernel::Settings& settings, const QString& name, const std::shared_ptr< GLStackedWidget >& view );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    kernel::OptionsController& optionsController_;
+    QMainWindow& mainWindow_;
+    const tools::ExerciseConfig& config_;
+    kernel::Controllers& controllers_;
+    std::shared_ptr< IconLayout > iconLayout_;
+    tools::Path settingsFilename_;
+    T_LayersVector layers_;
+    std::unique_ptr< QTimer > displayTimer_;
+    std::shared_ptr< GLStackedWidget > mainWidget_;
     std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
     std::shared_ptr< GLView_ABC > view_;
     std::shared_ptr< GlWidget > widget2d_;
     std::shared_ptr< Gl3dWidget > widget3d_;
     std::unique_ptr< GLOptions > options_;
-    T_LayersVector layers_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GlProxy_h_

@@ -9,7 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "TextureRenderPass.h"
-#include "clients_kernel/Controllers.h"
+#include "GLOptions.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include <graphics/extensions.h>
 
@@ -19,14 +20,16 @@ using namespace gui;
 // Name: TextureRenderPass constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-TextureRenderPass::TextureRenderPass( MapWidget_ABC& widget, const std::string& name, kernel::Controllers& controllers, const std::string& option /* = ""*/ )
+TextureRenderPass::TextureRenderPass( MapWidget_ABC& widget,
+                                      const std::string& name,
+                                      const GLView_ABC& view,
+                                      const std::string& option /* = ""*/ )
     : LayersRenderPass( widget, name, true )
-    , controllers_( controllers )
-    , texture_    ( 0 )
-    , option_     ( option )
-    , enabled_    ( option.empty() )
+    , view_( view )
+    , texture_( 0 )
+    , option_( option )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +38,7 @@ TextureRenderPass::TextureRenderPass( MapWidget_ABC& widget, const std::string& 
 // -----------------------------------------------------------------------------
 TextureRenderPass::~TextureRenderPass()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +47,7 @@ TextureRenderPass::~TextureRenderPass()
 // -----------------------------------------------------------------------------
 void TextureRenderPass::Render( MapWidget_ABC& widget )
 {
-    if( !enabled_ )
+    if( !option_.empty() && !view_.GetOptions().Get( option_ ).To< bool >() )
         return;
     if( !texture_ )
         CreateTexture();
@@ -79,14 +82,4 @@ void TextureRenderPass::CreateTexture()
 void TextureRenderPass::BindTexture() const
 {
     glBindTexture( GL_TEXTURE_2D, texture_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TextureRenderPass::OptionChanged
-// Created: SBO 2008-04-15
-// -----------------------------------------------------------------------------
-void TextureRenderPass::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == option_ )
-        enabled_ = value.To< bool >();
 }

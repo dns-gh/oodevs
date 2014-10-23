@@ -23,7 +23,7 @@ namespace gui
 {
     class ColorStrategy;
     class DrawingTypes;
-    class GLView_ABC;
+    class GlProxy;
     class GlWidget;
     class Gl3dWidget;
     class EntitySymbols;
@@ -41,8 +41,11 @@ class SelectionMenu : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionMenu( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
-                            DrawingTypes& drawingTypes, GLView_ABC& tools );
+             SelectionMenu( kernel::Controllers& controllers,
+                            EntitySymbols& entitySymbols,
+                            ColorStrategy& colorStrategy,
+                            DrawingTypes& drawingTypes,
+                            GlProxy& proxy );
     virtual ~SelectionMenu();
     //@}
 
@@ -55,8 +58,6 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnWidget2dChanged( gui::GlWidget* );
-    void OnWidget3dChanged( gui::Gl3dWidget* );
     void OnSelectionChanged( QAction* action );
     //@}
 
@@ -83,14 +84,12 @@ private:
     EntitySymbols& entitySymbols_;
     ColorStrategy& colorStrategy_;
     DrawingTypes& drawingTypes_;
-    GLView_ABC& tools_;
+    GlProxy& proxy_;
     geometry::Point2f point_;
     Layer_ABC::T_LayerElements extractedElements_;
     std::map< unsigned int, QPixmap > icons_;
     std::map< unsigned int, Layer_ABC* > entityLayer_;
     std::unique_ptr< QMouseEvent > mouseEvent_;
-    gui::GlWidget* parent2d_;
-    gui::Gl3dWidget* parent3d_;
     unsigned int moreElements_;
     QAction* current_;
     //@}

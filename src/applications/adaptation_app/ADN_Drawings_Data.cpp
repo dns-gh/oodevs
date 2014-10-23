@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Project_Data.h"
+#include "clients_gui/FrustumInfos.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/GlTooltip_ABC.h"
 #include "svgl/TextRenderer.h"
@@ -31,8 +32,12 @@ namespace
         virtual gui::GLOptions& GetOptions() { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
         virtual const gui::GLOptions& GetOptions() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
 
+        virtual gui::FrustumInfos SaveFrustum() const { return gui::FrustumInfos( geometry::Point2f(), 0.f ); }
+        virtual void LoadFrustum( const gui::FrustumInfos& ) {}
+
         virtual void CenterOn( const geometry::Point2f& ) {}
         virtual void Zoom( float ) {}
+        virtual void SetZoom( float ) {}
         virtual geometry::Point2f GetCenter() const { return geometry::Point2f(); }
 
         virtual geometry::Point2f MapToterrainCoordinates( int x, int y ){ return geometry::Point2f( ( float )x, ( float )y ); };
@@ -54,6 +59,8 @@ namespace
 
         //! @name Operations
         //@{
+        virtual void UpdateGL() {}
+
         virtual std::unique_ptr< gui::GlTooltip_ABC > CreateTooltip() const { return 0; }
         virtual void SetCurrentColor  ( float, float, float, float ) {}
         virtual void SetCurrentCursor ( const QCursor& ) {}

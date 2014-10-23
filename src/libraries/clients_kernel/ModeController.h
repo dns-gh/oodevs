@@ -14,6 +14,7 @@
 #include "Controllers.h"
 #include <tools/SortedInterfaceContainer.h>
 #include <tools/Observer_ABC.h>
+#include <tools/Path.h>
 
 class QMainWindow;
 
@@ -34,50 +35,42 @@ class ModeController : public tools::SortedInterfaceContainer< tools::Observer_A
 public:
     //! @name Constructors/Destructor
     //@{
-             ModeController();
+             ModeController( OptionsController& options );
     virtual ~ModeController();
     //@}
 
     //! @name Accessors
     //@{
-    void AddRegistryEntry( E_Modes mode, const QString& registryEntry );
     void SetMainWindow( QMainWindow* parent );
     E_Modes GetCurrentMode() const;
     //@}
 
-    //! @name Registry operations
+    //! @name Serialization
     //@{
     void LoadGeometry( E_Modes mode );
     void SaveGeometry( E_Modes mode );
 
-    void LoadOptions( E_Modes mode, OptionsController& options );
-    void SaveOptions( E_Modes mode, OptionsController& options );
+    void LoadState( E_Modes mode );
+    void SaveState( E_Modes mode );
+
+    void LoadOptions( E_Modes mode );
+    void SaveOptions( E_Modes mode );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void LoadState( E_Modes mode );
-    void SaveState( E_Modes mode );
-
     void ChangeMode( E_Modes newMode );
-
-    void EnsureModeIsAvailableForRegistry( E_Modes mode );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< E_Modes, QString > T_RegistryModes;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QMainWindow*     parent_;
-    E_Modes          currentMode_;
-    T_RegistryModes  registryModes_;
-    bool             firstChangeToSavedMode_;
-    bool             useDefault_;
+    OptionsController& options_;
+    QMainWindow* parent_;
+    E_Modes currentMode_;
+    bool firstChangeToSavedMode_;
+    bool useDefault_;
     //@}
 };
 

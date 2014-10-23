@@ -14,6 +14,7 @@
 #include "OptionsController.h"
 #include "Settings.h"
 #include "Tools.h"
+#include <boost/assign.hpp>
 #pragma warning( push, 0 )
 #pragma warning( disable : 4127 )
 #include <QtCore/qsettings.h>
@@ -22,14 +23,30 @@
 
 using namespace kernel;
 
+namespace
+{
+    const std::vector< E_Modes > registryModes = boost::assign::list_of( eModes_Gaming )( eModes_Prepare )( eModes_Replay );
+
+    bool IsRegistryMode( E_Modes mode )
+    {
+        return std::find( registryModes.begin(), registryModes.end(), mode ) != registryModes.end();
+    }
+    void EnsureModeIsAvailableForRegistry( E_Modes mode )
+    {
+        if( !IsRegistryMode( mode ) )
+            throw MASA_EXCEPTION( "This mode is not allowed in the registry: " + ENT_Tr::ConvertFromModes( mode ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModeController constructor
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
-ModeController::ModeController()
-    : parent_                ( 0 )
-    , currentMode_           ( eModes_None )
-    , useDefault_            ( true )
+ModeController::ModeController( OptionsController& options )
+    : options_( options )
+    , parent_( 0 )
+    , currentMode_( eModes_None )
+    , useDefault_( true )
     , firstChangeToSavedMode_( true )
 {
     // NOTHING
@@ -45,19 +62,6 @@ ModeController::~ModeController()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModeController::AddRegistryEntry
-// Created: ABR 2013-02-15
-// -----------------------------------------------------------------------------
-void ModeController::AddRegistryEntry( E_Modes mode, const QString& registryEntry )
-{
-    if( registryModes_.find( mode ) != registryModes_.end() )
-        throw MASA_EXCEPTION( QString( "The mode '%1' already have a registry entry: '%2'." )
-                              .arg( ENT_Tr::ConvertFromModes( mode ).c_str() )
-                              .arg( registryModes_[ mode ] ).toStdString() );
-    registryModes_[ mode ] = registryEntry;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ModeController::ChangeMode
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
@@ -66,9 +70,9 @@ void ModeController::ChangeMode( E_Modes newMode )
     if( newMode == currentMode_ )
         return;
 
-    if( firstChangeToSavedMode_ && registryModes_.find( newMode ) != registryModes_.end() )
+    if( firstChangeToSavedMode_ && IsRegistryMode( newMode ) )
         LoadState( newMode );
-    if( registryModes_.find( currentMode_ ) != registryModes_.end() )
+    if( IsRegistryMode( currentMode_ ) )
         SaveState( currentMode_ );
 
     currentMode_ = newMode;
@@ -77,18 +81,8 @@ void ModeController::ChangeMode( E_Modes newMode )
     Apply( &DisplayableModesObserver_ABC::NotifyModeChanged, currentMode_, useDefault_, firstChangeToSavedMode_ );
     Apply( &ModesObserver_ABC::NotifyModeChanged, currentMode_ );
 
-    if( firstChangeToSavedMode_ && registryModes_.find( newMode ) != registryModes_.end() )
+    if( firstChangeToSavedMode_ && IsRegistryMode( newMode ) )
         firstChangeToSavedMode_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModeController::EnsureModeIsAvailableForRegistry
-// Created: ABR 2013-02-15
-// -----------------------------------------------------------------------------
-void ModeController::EnsureModeIsAvailableForRegistry( E_Modes mode )
-{
-    if( registryModes_.find( mode ) == registryModes_.end() )
-        throw MASA_EXCEPTION( QString( "The mode '%1' doesn't have any registry entry." ).arg( ENT_Tr::ConvertFromModes( mode ).c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,8 +92,8 @@ void ModeController::EnsureModeIsAvailableForRegistry( E_Modes mode )
 void ModeController::LoadState( E_Modes mode )
 {
     EnsureModeIsAvailableForRegistry( mode );
-    QSettings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + registryModes_[ mode ] );
+    QSettings settings;
+    settings.beginGroup( "/" + QString::fromStdString( ENT_Tr::ConvertFromModes( mode ) ) );
     if( !settings.contains( "mainWindowState" ) )
         return;
     assert( parent_ );
@@ -114,8 +108,8 @@ void ModeController::LoadState( E_Modes mode )
 void ModeController::SaveState( E_Modes mode )
 {
     EnsureModeIsAvailableForRegistry( mode );
-    QSettings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + registryModes_[ mode ] );
+    QSettings settings;
+    settings.beginGroup( "/" + QString::fromStdString( ENT_Tr::ConvertFromModes( mode ) ) );
     assert( parent_ );
     settings.setValue( "mainWindowState", parent_->saveState() );
     useDefault_ = false;
@@ -128,8 +122,8 @@ void ModeController::SaveState( E_Modes mode )
 void ModeController::LoadGeometry( E_Modes mode )
 {
     EnsureModeIsAvailableForRegistry( mode );
-    QSettings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + registryModes_[ mode ] );
+    QSettings settings;
+    settings.beginGroup( "/" + QString::fromStdString( ENT_Tr::ConvertFromModes( mode ) ) );
     assert( parent_ );
     parent_->restoreGeometry( settings.value( "mainWindowGeometry").toByteArray() );
 }
@@ -141,8 +135,8 @@ void ModeController::LoadGeometry( E_Modes mode )
 void ModeController::SaveGeometry( E_Modes mode )
 {
     EnsureModeIsAvailableForRegistry( mode );
-    QSettings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + registryModes_[ mode ] );
+    QSettings settings;
+    settings.beginGroup( "/" + QString::fromStdString( ENT_Tr::ConvertFromModes( mode ) ) );
     assert( parent_ );
     settings.setValue( "mainWindowGeometry", parent_->saveGeometry() );
 }
@@ -151,12 +145,12 @@ void ModeController::SaveGeometry( E_Modes mode )
 // Name: ModeController::LoadOptions
 // Created: ABR 2013-02-15
 // -----------------------------------------------------------------------------
-void ModeController::LoadOptions( E_Modes mode, OptionsController& options )
+void ModeController::LoadOptions( E_Modes mode )
 {
     EnsureModeIsAvailableForRegistry( mode );
-    Settings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + registryModes_[ mode ] );
-    options.Load( settings );
+    Settings settings;
+    settings.beginGroup( "/" + QString::fromStdString( ENT_Tr::ConvertFromModes( mode ) ) );
+    options_.Load( settings );
     settings.endGroup();
 }
 
@@ -164,12 +158,12 @@ void ModeController::LoadOptions( E_Modes mode, OptionsController& options )
 // Name: ModeController::SaveOptions
 // Created: ABR 2013-02-15
 // -----------------------------------------------------------------------------
-void ModeController::SaveOptions( E_Modes mode, OptionsController& options )
+void ModeController::SaveOptions( E_Modes mode )
 {
     EnsureModeIsAvailableForRegistry( mode );
-    Settings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + registryModes_[ mode ] );
-    options.Save( settings );
+    Settings settings;
+    settings.beginGroup( "/" + QString::fromStdString( ENT_Tr::ConvertFromModes( mode ) ) );
+    options_.Save( settings );
     settings.endGroup();
 }
 

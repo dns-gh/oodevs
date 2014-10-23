@@ -10,6 +10,8 @@
 #ifndef __GlRenderPass_ABC_h_
 #define __GlRenderPass_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
     class MapWidget_ABC;
@@ -20,7 +22,7 @@ namespace gui
 */
 // Created: SBO 2008-04-11
 // =============================================================================
-class GlRenderPass_ABC
+class GlRenderPass_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -39,6 +41,6 @@ public:
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GlRenderPass_ABC_h_

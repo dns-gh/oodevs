@@ -26,8 +26,9 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
+    class GlProxy;
     class HelpSystem;
+    class ItemFactory_ABC;
     class RichAction;
     class RichMenu;
 }
@@ -47,7 +48,12 @@ class Menu : public gui::RichWidget< QMenuBar >
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, const QString& license );
+             Menu( const QString& objectName,
+                   QMainWindow* pParent,
+                   kernel::Controllers& controllers,
+                   gui::GlProxy& proxy,
+                   const DialogContainer& dialogs,
+                   const QString& license );
     virtual ~Menu();
     //@}
 

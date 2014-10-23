@@ -7,10 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __GlSelector_h_
-#define __GlSelector_h_
-
-#include "clients_kernel/OptionsObserver_ABC.h"
+#ifndef __GLStackedWidget_h_
+#define __GLStackedWidget_h_
 
 namespace tools
 {
@@ -19,36 +17,28 @@ namespace tools
 
 namespace kernel
 {
-    class Controllers;
     class DetectionMap;
 }
 
-class QGLWidget;
-class MapLayer_ABC;
 class EventStrategy_ABC;
 class QStackedWidget;
 
 namespace gui
 {
-    class CircularEventStrategy;
     class DrawingTypes;
-    class ExclusiveEventStrategy;
     class Gl3dWidget;
-    class GlPlaceHolder;
     class GlProxy;
     class GlWidget;
     class IconLayout;
     class Layer;
 
 // =============================================================================
-/** @class  GlSelector
-    @brief  GlSelector
+/** @class  GLStackedWidget
+    @brief  GLStackedWidget
 */
 // Created: AGE 2007-03-09
 // =============================================================================
-class GlSelector : public QStackedWidget
-                 , public tools::Observer_ABC
-                 , public kernel::OptionsObserver_ABC
+class GLStackedWidget : public QStackedWidget
 {
     Q_OBJECT
 
@@ -66,25 +56,23 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             GlSelector( QWidget* parent,
-                         GlProxy& proxy,
-                         kernel::Controllers& controllers,
-                         const tools::ExerciseConfig& config,
-                         kernel::DetectionMap& map,
-                         EventStrategy_ABC& strategy,
-                         const DrawingTypes& drawingTypes );
-    virtual ~GlSelector();
+             GLStackedWidget( QWidget* parent,
+                              GlProxy& proxy,
+                              const tools::ExerciseConfig& config,
+                              kernel::DetectionMap& map,
+                              EventStrategy_ABC& strategy,
+                              const DrawingTypes& drawingTypes,
+                              const IconLayout& iconLayout );
+    virtual ~GLStackedWidget();
     //@}
 
     //! @name Operations
     //@{
     void Load();
     void Close();
-
     void ChangeTo( E_Widget type );
-
-    void AddIcon( const char** xpm, int x, int y );
     void SetFocus();
+    std::shared_ptr< GlWidget > GetWidget2d();
     //@}
 
     GlWidget* GetWidget2d() const;
@@ -92,17 +80,9 @@ public:
 signals:
     //! @name Signals
     //@{
-    void Widget2dChanged( gui::GlWidget* );
-    void Widget3dChanged( gui::Gl3dWidget* );
     void MouseMove( const geometry::Point2f& );
     void MouseMove( const geometry::Point3f& );
     void UpdateGL();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
@@ -116,19 +96,17 @@ private:
     //! @name Member data
     //@{
     GlProxy& proxy_;
-    kernel::Controllers& controllers_;
     const tools::ExerciseConfig& config_;
     kernel::DetectionMap& map_;
     EventStrategy_ABC& strategy_;
-    std::unique_ptr< IconLayout > iconLayout_;
     const DrawingTypes& drawingTypes_;
+    const IconLayout& iconLayout_;
 
-    QTimer* displayTimer_;
     std::shared_ptr< GlWidget > widget2d_;
     std::shared_ptr< Gl3dWidget > widget3d_;
     //@}
 };
 
-}
+} //! namespace gui
 
-#endif // __GlSelector_h_
+#endif // __GLStackedWidget_h_

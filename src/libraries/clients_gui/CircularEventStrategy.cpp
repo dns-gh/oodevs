@@ -23,18 +23,15 @@ using namespace gui;
 // Name: CircularEventStrategy constructor
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-CircularEventStrategy::CircularEventStrategy( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
-                                              DrawingTypes& drawingTypes, GLView_ABC& tools )
+CircularEventStrategy::CircularEventStrategy( kernel::Controllers& controllers )
     : QObject()
-    , menu_( new SelectionMenu( controllers, entitySymbols, colorStrategy, drawingTypes, tools ) )
     , selection_( new Selection( controllers ) )
     , default_( 0 )
     , exclusive_( true )
-    , tools_( tools )
     , timer_( new QTimer( this ) )
     , tooltiped_( false )
 {
-    connect( timer_, SIGNAL( timeout() ), SLOT( OnDisplayToolTip() ) );
+    connect( timer_.get(), SIGNAL( timeout() ), SLOT( OnDisplayToolTip() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,31 +53,39 @@ void CircularEventStrategy::SetExclusive( bool b )
 }
 
 // -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::SetDefault
+// Name: CircularEventStrategy::SetDefaultLayer
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::SetDefault( const T_Layer& layer )
+void CircularEventStrategy::SetDefaultLayer( const T_Layer& layer )
 {
     default_ = layer;
 }
 
 // -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::GetSelectionMenu
+// Name: CircularEventStrategy::SetSelectionMenu
 // Created: ABR 2013-02-21
 // -----------------------------------------------------------------------------
-const SelectionMenu* CircularEventStrategy::GetSelectionMenu() const
+void CircularEventStrategy::SetSelectionMenu( const std::shared_ptr< SelectionMenu >& menu )
 {
-    return menu_.get();
+    menu_ = menu;
 }
 
 // -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::AddLayers
+// Name: CircularEventStrategy::SetView
+// Created: ABR 2013-02-21
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::SetView( const std::shared_ptr< GLView_ABC >& view )
+{
+    view_ = view;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::SetLayers
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::AddLayers( const T_LayersVector& layers )
+void CircularEventStrategy::SetLayers( const T_LayersVector& layers )
 {
-    layers_.insert( layers_.end(), layers.begin(), layers.end() );
-    rlast_ = layers_.rbegin();
+    layers_ = layers;
 }
 
 namespace
@@ -147,37 +152,17 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::Loop
-// Created: AGE 2006-03-17
-// -----------------------------------------------------------------------------
-template< typename It, typename Functor >
-bool CircularEventStrategy::Loop( It& use, It first, It begin, It end, Functor functor )
-{
-    use = first;
-    while( use != end )
-        if( functor( **use ) )
-            return true;
-        else
-            ++use;
-    use = begin;
-    while( use != first )
-        if( functor( **use ) )
-            return true;
-        else
-            ++use;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::Apply
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 template< typename Functor >
 bool CircularEventStrategy::Apply( Functor functor )
 {
-    const auto& layers = layers_;
     functor.SetExclusive( exclusive_ );
-    return Loop( rlast_, rlast_, layers.rbegin(), layers.rend(), functor );
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
+        if( functor( **it ) )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +208,8 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
     if( DisplaySelectedMenu( mouse, point, extractedElements ) )                                           // Show context menu on selected unit
         return;
 
-    menu_->ExecMenu( extractedElements, point, mouse->globalPos(), mouse->button(), mouse->modifiers() );   // Elements extracted, let the menu handle it
+    if( menu_ )
+        menu_->ExecMenu( extractedElements, point, mouse->globalPos(), mouse->button(), mouse->modifiers() );   // Elements extracted, let the menu handle it
 }
 
 // -----------------------------------------------------------------------------
@@ -232,10 +218,11 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::RetrieveEntities( QMouseEvent* mouse, const geometry::Point2f& point, Layer_ABC::T_LayerElements& extractedElements )
 {
-    if( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton )
+    if( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ||
+        !view_ )
         return;
     GLView_ABC::T_ObjectsPicking selection;
-    tools_.FillSelection( point, selection, boost::none );
+    view_->FillSelection( point, selection, boost::none );
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
         if( !( *it )->IsReadOnly() )
             ( *it )->ExtractElements( extractedElements, selection );
@@ -357,7 +344,6 @@ void CircularEventStrategy::HandleEnterDragEvent( QDragEnterEvent* event, const 
 void CircularEventStrategy::HandleMoveDragEvent( QDragMoveEvent*  event, const geometry::Point2f& point )
 {
     bool accept = false;
-    rlast_ = layers_.rbegin();
     accept = Apply( DragMoveFunctor( event, point, &Layer_ABC::HandleMoveDragEvent ) );
     if( !accept && default_ )
         accept = default_->HandleMoveDragEvent( event, point );
@@ -371,7 +357,6 @@ void CircularEventStrategy::HandleMoveDragEvent( QDragMoveEvent*  event, const g
 void CircularEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
 {
     bool accept = false;
-    rlast_ = layers_.rbegin();
     accept = Apply( DragLeaveFunctor( event, &Layer_ABC::HandleLeaveDragEvent ) );
     if( !accept && default_ )
         accept = default_->HandleLeaveDragEvent( event );
@@ -387,13 +372,13 @@ void CircularEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::OnDisplayToolTip()
 {
-    if( QApplication::activeWindow() && !QApplication::activePopupWidget() )
+    if( QApplication::activeWindow() && !QApplication::activePopupWidget() && view_ )
     {
-        if( !tooltiped_ && tools_.HasFocus() )
+        if( !tooltiped_ && view_->HasFocus() )
         {
             GLView_ABC::T_ObjectsPicking selection;
-            geometry::Point2f point = tools_.MapToterrainCoordinates( QCursor::pos().x(), QCursor::pos().y() );
-            tools_.FillSelection( point, selection, boost::none );
+            geometry::Point2f point = view_->MapToterrainCoordinates( QCursor::pos().x(), QCursor::pos().y() );
+            view_->FillSelection( point, selection, boost::none );
             if( !selection.empty() )
                 for( auto it = layers_.begin(); it != layers_.end(); ++it )
                      if( ( *it )->ShowTooltip( selection.back() ) )

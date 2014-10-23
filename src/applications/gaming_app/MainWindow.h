@@ -36,7 +36,6 @@ namespace gui
     class ExclusiveEventStrategy;
     class FormationLayer;
     class GlProxy;
-    class GlSelector;
     class HelpSystem;
     class Layer_ABC;
     class LightingProxy;
@@ -44,6 +43,7 @@ namespace gui
     class ParametersLayer;
     class PreferencesDialog;
     class RichToolBar;
+    class SelectionMenu;
     class SymbolIcons;
     class TerrainPicker;
     class TextEditor;
@@ -120,7 +120,6 @@ public slots:
     void ToggleDocks();
     void OnAddRaster();
     void PlayPauseSoundControl( bool play );
-    void OnUpdateGL();
     //@}
 
 signals:
@@ -167,18 +166,15 @@ private:
     QString planifName_;
     QString savedState_;
 
-    std::unique_ptr< gui::AddRasterDialog > addRasterDialog_; // should move in layers panel
     std::unique_ptr< gui::TextEditor > textEditor_; // should move in parameter layer
+    boost::shared_ptr< QProcess > process_; // should move in layers panel
 
-    // the following will move to GLOptions or GLMainProxy
-    std::unique_ptr< gui::GlProxy > glProxy_;
-    std::unique_ptr< gui::GlSelector > selector_;
-
+    std::shared_ptr< gui::GlProxy > glProxy_;
+    std::shared_ptr< gui::SelectionMenu > selectionMenu_;
     std::unique_ptr< gui::CircularEventStrategy > forward_;
     std::unique_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::unique_ptr< ColorController > pColorController_;
     std::unique_ptr< DockContainer > dockContainer_;
-    boost::shared_ptr< QProcess > process_;
     std::unique_ptr< gui::PreferencesDialog > preferenceDialog_;
     std::unique_ptr< gui::EntitySymbols > icons_;
     std::unique_ptr< gui::ColorStrategy > strategy_;
@@ -189,7 +185,7 @@ private:
     std::unique_ptr< DrawingsBuilder > drawingsBuilder_;
     std::unique_ptr< UnitStateDialog > unitStateDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
-    std::unique_ptr< gui::SymbolIcons > symbols_;
+    std::unique_ptr< gui::SymbolIcons > symbolIcons_;
     //@}
 };
 

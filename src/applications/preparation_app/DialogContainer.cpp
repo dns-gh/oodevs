@@ -96,7 +96,6 @@ DialogContainer::DialogContainer( QWidget* parent,
     consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, const_cast< tools::RealFileLoaderObserver_ABC& >( static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() ) );
     performanceDialog_ = new PerformanceDialog( parent, model, staticModel );
     filtersDialog_ = new FilterDialogs( parent, config, model, staticModel.coordinateConverter_ );
-    addRasterDialog_ = new gui::AddRasterDialog( parent );
     removeBlocksDialog_ = new RemoveBlocksDialog( parent, controllers, *model.urban_ );
     terrainExportDialog_ = new TerrainExportDialog( parent, config, *model.urban_ );
     unitStateDialog_ = new UnitStateDialog( parent, controllers, staticModel, *displayExtractor_ );
@@ -211,15 +210,6 @@ PerformanceDialog& DialogContainer::GetPerformanceDialog() const
 FilterDialogs& DialogContainer::GetFiltersDialog() const
 {
     return *filtersDialog_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DialogContainer::GetAddRasterDialog
-// Created: ABR 2012-06-12
-// -----------------------------------------------------------------------------
-gui::AddRasterDialog& DialogContainer::GetAddRasterDialog() const
-{
-    return *addRasterDialog_;
 }
 
 // -----------------------------------------------------------------------------

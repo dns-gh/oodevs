@@ -967,8 +967,8 @@ This data can&apos;t be projected.</translation>
         <translation>Error while loading Raster source.</translation>
     </message>
     <message>
-        <source>Generate symbols</source>
-        <translation>Generate symbols</translation>
+        <source>Generate symbolIcons_</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1207,6 +1207,14 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Grid type</source>
         <translation>Grid type</translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

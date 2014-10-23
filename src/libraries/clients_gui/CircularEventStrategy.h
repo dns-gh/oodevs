@@ -42,22 +42,21 @@ class CircularEventStrategy : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             CircularEventStrategy( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
-                                    DrawingTypes& drawingTypes, GLView_ABC& tools );
+             CircularEventStrategy( kernel::Controllers& controllers );
     virtual ~CircularEventStrategy();
     //@}
 
     //! @name Settings
     //@{
     void SetExclusive( bool );
-    const SelectionMenu* GetSelectionMenu() const;
+    void SetSelectionMenu( const std::shared_ptr< SelectionMenu >& menu );
+    void SetView( const std::shared_ptr< GLView_ABC >& menu );
+    void SetDefaultLayer( const T_Layer& layer );
+    void SetLayers( const T_LayersVector& layers );
     //@}
 
     //! @name Operations
     //@{
-    void SetDefault( const T_Layer& layer );
-    void AddLayers( const T_LayersVector& layers );
-
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
     virtual void HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
@@ -96,18 +95,17 @@ private slots:
 private:
     //! @name Member data
     //@{
+    std::unique_ptr< Selection > selection_;
+    std::unique_ptr< QTimer > timer_;
     T_LayersVector layers_;
     T_Layer default_;
+    std::shared_ptr< SelectionMenu > menu_;
+    std::shared_ptr< GLView_ABC > view_;
     bool exclusive_;
-    T_LayersVector::const_reverse_iterator rlast_;
-    std::unique_ptr< SelectionMenu > menu_;
-    std::unique_ptr< Selection > selection_;
-    GLView_ABC& tools_;
-    QTimer* timer_;
     bool tooltiped_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __CircularEventStrategy_h_

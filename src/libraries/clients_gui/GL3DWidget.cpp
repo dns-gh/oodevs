@@ -11,6 +11,7 @@
 #include "Gl3dWidget.h"
 
 #include "EntityLayer.h"
+#include "FrustumInfos.h"
 #include "GLOptions.h"
 #include "PickingSelector.h"
 #include "SimpleLocationDrawer.h"
@@ -65,6 +66,16 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent,
 Gl3dWidget::~Gl3dWidget()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::UpdateGL
+// Created: AGE 2006-12-13
+// -----------------------------------------------------------------------------
+void Gl3dWidget::UpdateGL()
+{
+    if( isVisible() )
+       Widget3D::updateGL();
 }
 
 // -----------------------------------------------------------------------------
@@ -984,4 +995,24 @@ void Gl3dWidget::DrawShapeText( const QImage& image, const geometry::Point2f& wh
 std::string Gl3dWidget::GetCurrentPass() const
 {
     return "";
+}
+
+void Gl3dWidget::SetZoom( float )
+{
+    // NOTHING
+}
+
+FrustumInfos Gl3dWidget::SaveFrustum() const
+{
+    return FrustumInfos( center_, front_, right_, top_ );
+}
+
+void Gl3dWidget::LoadFrustum( const FrustumInfos& infos )
+{
+    if( !infos.infos3D_ )
+        return;
+    center_ = infos.infos3D_->center_;
+    front_ = infos.infos3D_->front_;
+    right_ = infos.infos3D_->right_;
+    top_ = infos.infos3D_->top_;
 }

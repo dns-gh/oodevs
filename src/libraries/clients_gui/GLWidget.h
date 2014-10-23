@@ -48,13 +48,15 @@ public:
                        GLView_ABC& parent,
                        float width,
                        float height,
-                       IconLayout& iconLayout,
+                       const IconLayout& iconLayout,
                        const DrawingTypes& drawingTypes );
     virtual ~GlWidget();
     //@}
 
     //! @name Operations
     //@{
+    virtual void UpdateGL();
+
     void SetPassOrder( const std::string& names );
     void AddPass( GlRenderPass_ABC& pass );
     void RemovePass( GlRenderPass_ABC& pass );
@@ -65,6 +67,9 @@ public:
     virtual unsigned int Height() const;
     virtual void wheelEvent( QWheelEvent* event );
     virtual geometry::Rectangle2f Viewport() const;
+
+    virtual FrustumInfos SaveFrustum() const;
+    virtual void LoadFrustum( const FrustumInfos& infos );
     //@}
 
     //! @name Operations
@@ -73,6 +78,7 @@ public:
     virtual float LineWidth( float base ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
     virtual float Zoom() const;
+    virtual void SetZoom( float zoom );
     virtual float GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
     virtual float GetActualZoomFactor() const;
 
@@ -166,7 +172,6 @@ private:
     virtual void PickGL();
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
-    virtual void updateGL();
     unsigned int GenerateCircle();
     unsigned int GenerateHalfCircle();
     void UpdateStipple() const;
@@ -190,7 +195,7 @@ private:
     int maxVisuScale_;
     geometry::Rectangle2f viewport_;
     unsigned int frame_;
-    IconLayout& iconLayout_;
+    const IconLayout& iconLayout_;
     T_RenderPasses passes_;
     std::string currentPass_;
     QFont currentFont_;

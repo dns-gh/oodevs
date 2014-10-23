@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "Menu.h"
+#include "moc_Menu.cpp"
 #include "ExerciseMenu.h"
 #include "ConnectionMenu.h"
 #include "PopulationOptionChooser.h"
@@ -17,13 +18,14 @@
 #include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/OptionMenu.h"
-#include "clients_gui/resources.h"
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/FireOption.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
+#include "clients_gui/GlProxy.h"
+#include "clients_gui/OptionMenu.h"
 #include "clients_gui/ProfileDialog.h"
+#include "clients_gui/resources.h"
 #include "clients_gui/RichAction.h"
 #include "clients_gui/RichToolBar.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
@@ -147,6 +149,7 @@ namespace
 Menu::Menu( QMainWindow* pParent,
             kernel::Controllers& controllers,
             StaticModel& staticModel,
+            gui::GlProxy& proxy,
             QDialog& prefDialog,
             gui::ProfileDialog& profileDialog,
             Network& network,
@@ -156,27 +159,28 @@ Menu::Menu( QMainWindow* pParent,
     , profileDialog_( profileDialog )
 {
     // File
-    gui::RichMenu* menu = new gui::RichMenu( "file", this, controllers_, tools::translate( "Menu", "&File" ) );
+    gui::RichMenu* menu = new gui::RichMenu( "file", this, controllers_, tr( "&File" ) );
     menu->SetModes( eModes_None, eModes_All, true );
     new ConnectionMenu( menu, controllers, network, logger );
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
+    menu->insertItem( tr( "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
     addMenu( menu );
 
     // Display
-    menu = new gui::RichMenu( "Settings", this, controllers_, tools::translate( "Menu", "&Settings" ) );
+    menu = new gui::RichMenu( "Settings", this, controllers_, tr( "&Settings" ) );
     menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
     kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
     gui::RichToolBar* toolBar = new gui::RichToolBar( controllers, pParent, "units toolbar" );
     toolBar->SetModes( eModes_Default, eModes_None, true );
     pParent->addToolBar( toolBar );
-    toolBar->setLabel( tools::translate( "Menu", "Units toolbar" ) );
+    toolBar->setLabel( tr( "Units toolbar" ) );
 
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision lines" )   , MakePixmap( "vision_lines" )   , controllers.options_, "VisionLines", kernel::FourStateOption::Selected() );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision cones" )   , MakePixmap( "vision_cones" )   , controllers.options_, "VisionCones" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
+    AddSubMenu4( toolBar, subMenu, tr( "Vision lines" )   , MakePixmap( "vision_lines" )   , controllers.options_, "VisionLines", kernel::FourStateOption::Selected() );
+    AddSubMenu4( toolBar, subMenu, tr( "Vision cones" )   , MakePixmap( "vision_cones" )   , controllers.options_, "VisionCones" );
+    AddSubMenu4( toolBar, subMenu, tr( "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
+    AddSubMenu4( toolBar, subMenu, tr( "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
     {
         CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Fire indicator colors" ), MAKE_PNG_ICON( "fire" ), controllers.options_, GetFireIndicatorsOptionName() );
         composite.AddItem( tools::translate( "Menu", "Default" ), FIRE_INDICATORS_DEFAULT );
@@ -185,70 +189,70 @@ Menu::Menu( QMainWindow* pParent,
         composite.AddItem( tools::translate( "Menu", "Rules" ), FIRE_INDICATORS_RULE );
     }
     subMenu->insertSeparator();
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths", kernel::FourStateOption::Selected() );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Direction" )     , MakePixmap( "direction" )  , controllers.options_, "Direction" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Unit detail" )   , MakePixmap( "unit_detail" ), controllers.options_, "UnitDetails", kernel::FourStateOption::On() );
+    AddSubMenu4( toolBar, subMenu, tr( "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths", kernel::FourStateOption::Selected() );
+    AddSubMenu4( toolBar, subMenu, tr( "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );
+    AddSubMenu4( toolBar, subMenu, tr( "Direction" )     , MakePixmap( "direction" )  , controllers.options_, "Direction" );
+    AddSubMenu4( toolBar, subMenu, tr( "Unit detail" )   , MakePixmap( "unit_detail" ), controllers.options_, "UnitDetails", kernel::FourStateOption::On() );
     subMenu->insertSeparator();
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters", kernel::FourStateOption::Selected() );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState", kernel::FourStateOption::Selected() );
+    AddSubMenu4( toolBar, subMenu, tr( "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls" );
+    AddSubMenu4( toolBar, subMenu, tr( "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters", kernel::FourStateOption::Selected() );
+    AddSubMenu4( toolBar, subMenu, tr( "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState", kernel::FourStateOption::Selected() );
     {
-        CompositeMenu< bool > composite( subMenu, toolBar, tools::translate( "Menu", "Destroyed units" ), MAKE_ICON( skull ), controllers.options_, "DisplayDestroyedUnits" );
-        composite.AddItem( tools::translate( "Menu", "On" ), true );
-        composite.AddItem( tools::translate( "Menu", "Off" ), false );
+        CompositeMenu< bool > composite( subMenu, toolBar, tr( "Destroyed units" ), MAKE_ICON( skull ), controllers.options_, "DisplayDestroyedUnits" );
+        composite.AddItem( tr( "On" ), true );
+        composite.AddItem( tr( "Off" ), false );
         composite.menu_->OnSelected( 0 );
     }
-    menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
+    menu->insertItem( tr( "Units..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
     toolBar = new gui::RichToolBar( controllers, pParent, "logistics toolbar" );
     toolBar->SetModes( eModes_Default, eModes_None, true );
     pParent->addToolBar( toolBar );
-    toolBar->setLabel( tools::translate( "Menu", "Logistics toolbar" ) );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" )        , controllers.options_, "LogisticLinks" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Real time actions" ), MAKE_ICON( realtimelog )              , controllers.options_, "RealTimeLogistic" );
+    toolBar->setLabel( tr( "Logistics toolbar" ) );
+    AddSubMenu4( toolBar, subMenu, tr( "Links" )            , MakePixmap( "logistic_links" )        , controllers.options_, "LogisticLinks" );
+    AddSubMenu4( toolBar, subMenu, tr( "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
+    AddSubMenu4( toolBar, subMenu, tr( "Real time actions" ), MAKE_ICON( realtimelog )              , controllers.options_, "RealTimeLogistic" );
     {
-        CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Resource networks" ), MakePixmap( "resource_networks" ), controllers.options_, "ResourceNetworks" );
-        composite.AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );
-        composite.AddItem( tools::translate( "Menu", "Selected: outgoing links" ), 3 );
-        composite.AddItem( tools::translate( "Menu", "On" ), 0 );
-        composite.AddItem( tools::translate( "Menu", "Off" ), 1 );
+        CompositeMenu< int > composite( subMenu, toolBar, tr( "Resource networks" ), MakePixmap( "resource_networks" ), controllers.options_, "ResourceNetworks" );
+        composite.AddItem( tr( "Selected: all links" ), 2 );
+        composite.AddItem( tr( "Selected: outgoing links" ), 3 );
+        composite.AddItem( tr( "On" ), 0 );
+        composite.AddItem( tr( "Off" ), 1 );
     }
-    menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
+    menu->insertItem( tr( "Logistic..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
     toolBar = new gui::RichToolBar( controllers, pParent, "terrain toolbar" );
     toolBar->SetModes( eModes_Default, eModes_None, true );
     pParent->addToolBar( toolBar );
-    toolBar->setLabel( tools::translate( "Menu", "Terrain toolbar" ) );
-    AddSubMenu3( toolBar, subMenu, tools::translate( "Menu", "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
-    AddSubMenu3( toolBar, subMenu, tools::translate( "Menu", "Large texts" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Tactical lines" ), MakePixmap( "tacticallines" ), controllers.options_, "TacticalLines", kernel::FourStateOption::On() );
+    toolBar->setLabel( tr( "Terrain toolbar" ) );
+    AddSubMenu3( toolBar, subMenu, tr( "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
+    AddSubMenu3( toolBar, subMenu, tr( "Large texts" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
+    AddSubMenu4( toolBar, subMenu, tr( "Tactical lines" ), MakePixmap( "tacticallines" ), controllers.options_, "TacticalLines", kernel::FourStateOption::On() );
 
     {
-        CompositeMenu< float > composite( subMenu, toolBar, tools::translate( "Menu", "Grid" ), MakePixmap( "grid" ), controllers.options_, "GridSize" );
-        composite.AddItem( tools::translate( "Menu", "100m"  ),  0.1f );
-        composite.AddItem( tools::translate( "Menu", "250m" ),  0.25f );
-        composite.AddItem( tools::translate( "Menu", "500m"  ),  0.5f );
-        composite.AddItem( tools::translate( "Menu", "1km"  ),  1.0f );
-        composite.AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
-        composite.AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
-        composite.AddItem( tools::translate( "Menu", "10km" ), 10.0f );
-        composite.AddItem( tools::translate( "Menu", "100km" ), 100.0f );
-        composite.AddItem( tools::translate( "Menu", "Off"    ),  -1 );
+        CompositeMenu< float > composite( subMenu, toolBar, tr( "Grid" ), MakePixmap( "grid" ), controllers.options_, "GridSize" );
+        composite.AddItem( tr( "100m" ), 0.1f );
+        composite.AddItem( tr( "250m" ), 0.25f );
+        composite.AddItem( tr( "500m" ), 0.5f );
+        composite.AddItem( tr( "1km" ), 1.0f );
+        composite.AddItem( tr( "2.5km" ), 2.5f );
+        composite.AddItem( tr( "5km" ), 5.0f );
+        composite.AddItem( tr( "10km" ), 10.0f );
+        composite.AddItem( tr( "100km" ), 100.0f );
+        composite.AddItem( tr( "Off" ), -1 );
     }
     {
-        CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Grid type" ), MakePixmap( "grid_type" ), controllers.options_, "GridType" );
-        composite.AddItem( tools::translate( "Menu", "Local" ), eCoordinateSystem_Local );
-        composite.AddItem( tools::translate( "Menu", "MGRS"  ), eCoordinateSystem_Mgrs );
+        CompositeMenu< int > composite( subMenu, toolBar, tr( "Grid type" ), MakePixmap( "grid_type" ), controllers.options_, "GridType" );
+        composite.AddItem( tr( "Local" ), eCoordinateSystem_Local );
+        composite.AddItem( tr( "MGRS" ), eCoordinateSystem_Mgrs );
     }
 
     {
         Q3HBox* populationBox = new Q3HBox( toolBar );
-        QPushButton* populationEnabled = new QPushButton( tools::translate( "Menu", "Population" ), populationBox );
-        populationEnabled->setToolTip( tools::translate( "Menu", "Show population display tool" ) );
+        QPushButton* populationEnabled = new QPushButton( tr( "Population" ), populationBox );
+        populationEnabled->setToolTip( tr( "Show population display tool" ) );
         PopulationOptionChooser* populationOptions = new PopulationOptionChooser( pParent, controllers, staticModel );
         toolBar->addWidget( populationBox );
         toolBar->addWidget( populationEnabled );
@@ -260,33 +264,38 @@ Menu::Menu( QMainWindow* pParent,
         new SymbolSizeOptionChooser( pParent, toolBar, MakePixmap( "symbol_increase" ), MakePixmap( "symbol_decrease" ), controllers );
     }
 
-    menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );
+    menu->insertItem( tr( "Terrain..." ), subMenu );
     menu->insertSeparator();
 
     {
         OptionMenu< bool >* boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D" );
-        boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
-        boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
-        menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );
-        menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
-        menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
+        boolMenu->AddItem( tr( "2D" ), false );
+        boolMenu->AddItem( tr( "3D" ), true );
+        menu->insertItem( MAKE_ICON( threed ), tr( "Display mode" ), boolMenu );
+        menu->insertItem( tr( "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
+        menu->insertItem( tr( "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
     }
 
     menu->insertSeparator();
-    QAction* action = menu->addAction( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( show() ), QKeySequence( Qt::CTRL + Qt::Key_P ) );
+    QAction* action = menu->addAction( tr( "Save configuration" ), &proxy, SLOT( OnSaveDisplaySettings() ), Qt::CTRL + Qt::Key_S );
+    AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
+    action = menu->addAction( tr( "Load configuration" ), &proxy, SLOT( OnLoadDisplaySettings() ), Qt::CTRL + Qt::Key_O );
+    AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
+    menu->insertSeparator();
+    action = menu->addAction( tr( "&Preferences..." ), &prefDialog, SLOT( show() ), QKeySequence( Qt::CTRL + Qt::Key_P ) );
     AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
     addMenu( menu );
 
     // Profiles
-    menu = new gui::RichMenu( "profiles", this, controllers_, tools::translate( "Menu", "Profiles..." ) );
+    menu = new gui::RichMenu( "profiles", this, controllers_, tr( "Profiles..." ) );
     menu->SetModes( eModes_Default | eModes_Replay, eModes_All ^ ( eModes_Default | eModes_Replay ), true );
-    menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "Profiles..." ), &profileDialog_, SLOT( exec() ) );
-    profileMenu_ = insertItem( tools::translate( "Menu", "Profi&les" ), menu );
+    menu->insertItem( MAKE_ICON( profile ), tr( "Profiles..." ), &profileDialog_, SLOT( exec() ) );
+    profileMenu_ = insertItem( tr( "Profi&les" ), menu );
     setItemVisible( profileMenu_, false );
     addMenu( menu );
 
     // Exercise
-    menu = new ExerciseMenu( this, controllers, tools::translate( "Menu", "&Exercise" ) );
+    menu = new ExerciseMenu( this, controllers, tr( "&Exercise" ) );
     menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
     addMenu( menu );
 
@@ -295,18 +304,18 @@ Menu::Menu( QMainWindow* pParent,
     {
         if( QAction* action = addMenu( menu ) )
         {
-            action->setText( tools::translate( "Menu", "&Windows" ) );
+            action->setText( tr( "&Windows" ) );
             windowAction_ = new gui::RichAction( action, controllers_ );
             windowAction_->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
         }
     }
 
     // Help
-    menu = new gui::RichMenu( "help", this, controllers, tools::translate( "Menu", "&?" ) );
+    menu = new gui::RichMenu( "help", this, controllers, tr( "&?" ) );
     menu->SetModes( eModes_None, eModes_All, true );
-    menu->insertItem( tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
+    menu->insertItem( tr( "Help" ), pParent, SIGNAL( ShowHelp() ) );
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, "" ), SLOT( exec() ) );
+    menu->insertItem( tr( "About" ), new AboutDialog( this, "" ), SLOT( exec() ) );
     addMenu( menu );
 
     controllers_.Register( *this );

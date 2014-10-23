@@ -32,7 +32,7 @@ namespace actions
 
 namespace gui
 {
-    class GlSelector;
+    class GlProxy;
     class LocationCreator;
     class ParametersLayer;
 }
@@ -62,7 +62,7 @@ public:
                                              const kernel::Time_ABC& simulation,
                                              const std::shared_ptr< gui::ParametersLayer >& layer,
                                              const kernel::Profile_ABC& profile,
-                                             gui::GlSelector& selector );
+                                             gui::GlProxy& proxy );
     virtual ~PopulationMagicOrdersInterface();
     //@}
 
@@ -101,7 +101,7 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
-    gui::GlSelector& selector_;
+    gui::GlProxy& proxy_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;
     gui::LocationCreator* magicMoveLocation_;

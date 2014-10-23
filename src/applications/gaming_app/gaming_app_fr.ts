@@ -2638,6 +2638,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Rules</source>
         <translation>Règles</translation>
     </message>
+    <message>
+        <source>Save configuration</source>
+        <translation>Sauvegarder configuration</translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation>Charger configuration</translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>

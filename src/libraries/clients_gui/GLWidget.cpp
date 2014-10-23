@@ -9,14 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "GlWidget.h"
+
+#include "FrustumInfos.h"
 #include "GLOptions.h"
 #include "GlRenderPass_ABC.h"
 #include "IconLayout.h"
 #include "PickingSelector.h"
 #include "FrameCounter.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Positions.h"
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
 #include <boost/assign/list_of.hpp>
@@ -46,7 +46,7 @@ GlWidget::GlWidget( QWidget* pParent,
                     GLView_ABC& parent,
                     float width,
                     float height,
-                    IconLayout& iconLayout,
+                    const IconLayout& iconLayout,
                     const DrawingTypes& drawingTypes )
     : SetGlOptions()
     , MapWidget( context_, pParent, width, height, 0 )
@@ -107,19 +107,13 @@ void GlWidget::resizeGL( int w, int h )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::updateGL
+// Name: GlWidget::UpdateGL
 // Created: AGE 2006-12-13
 // -----------------------------------------------------------------------------
-void GlWidget::updateGL()
+void GlWidget::UpdateGL()
 {
     if( isVisible() )
-    {
-        // TMP: Will move to GLMainProxy::ApplyOptions soon
-        if( auto entity = GetOptions().GetLockedEntity() )
-            if( const auto* position = entity->Retrieve< kernel::Positions >() )
-                CenterOn( position->GetPosition( false ) );
         MapWidget::updateGL();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1320,4 +1314,23 @@ void GlWidget::keyPressEvent( QKeyEvent* event )
         fps_.reset( fps_ ? 0 : new FrameCounter( *this, 20, -20 ) );
     else
         MapWidget::keyPressEvent( event );
+}
+
+void GlWidget::SetZoom( float zoom )
+{
+    rZoom_ = zoom;
+    UpdateViewport();
+}
+
+FrustumInfos GlWidget::SaveFrustum() const
+{
+    return FrustumInfos( center_, Zoom() );
+}
+
+void GlWidget::LoadFrustum( const FrustumInfos& infos )
+{
+    if( !infos.infos2D_ )
+        return;
+    SetZoom( infos.infos2D_->zoom_ );
+    CenterOn( infos.infos2D_->center_ );
 }

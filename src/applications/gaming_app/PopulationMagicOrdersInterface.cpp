@@ -19,7 +19,7 @@
 #include "actions/String.h"
 #include "actions/Bool.h"
 #include "actions/UnitMagicAction.h"
-#include "clients_gui/GlSelector.h"
+#include "clients_gui/GlProxy.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DecisionalModel.h"
@@ -85,14 +85,14 @@ PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent,
                                                                 const Time_ABC& simulation,
                                                                 const std::shared_ptr< gui::ParametersLayer >& layer,
                                                                 const Profile_ABC& profile,
-                                                                gui::GlSelector& selector )
+                                                                gui::GlProxy& proxy )
     : QObject( parent )
     , controllers_   ( controllers )
     , actionsModel_  ( actionsModel )
     , static_        ( staticModel )
     , simulation_    ( simulation )
     , profile_       ( profile )
-    , selector_      ( selector )
+    , proxy_         ( proxy )
     , selectedEntity_( controllers )
     , magicMove_     ( false )
 {
@@ -172,7 +172,7 @@ void PopulationMagicOrdersInterface::Move()
         controllers_.Register( *magicMoveLocation_ );
     magicMove_ = true;
     magicMoveLocation_->StartPoint();
-    selector_.SetFocus();
+    proxy_.SetFocus();
 }
 
 // -----------------------------------------------------------------------------

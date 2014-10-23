@@ -40,13 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LayersRenderPass( const LayersRenderPass& );            //!< Copy constructor
-    LayersRenderPass& operator=( const LayersRenderPass& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     MapWidget_ABC& widget_;
@@ -55,6 +48,6 @@ private:
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __LayersRenderPass_h_

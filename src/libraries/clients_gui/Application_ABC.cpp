@@ -31,6 +31,9 @@ Application_ABC::Application_ABC( ApplicationMonitor& monitor )
     : app_           ( monitor )
     , invalidLicense_( true )
 {
+    QCoreApplication::setOrganizationName( "MASA Group" );
+    QCoreApplication::setApplicationName( "SWORD" );
+
     connect( &app_, SIGNAL( Error( const QString& ) ), SLOT( DisplayError( const QString& ) ) );
     QLocale::setDefault( QLocale::system() );
     tools::SetCodec();

@@ -61,6 +61,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void UpdateGL();
+
     void Register( const std::shared_ptr< Layer_ABC >& layer );
     void Unregister( const std::shared_ptr< Layer_ABC >& layer );
 
@@ -70,6 +72,9 @@ public:
     virtual float           LineWidth( float base ) const;
     virtual float           Zoom() const;
     virtual float           GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
+
+    virtual FrustumInfos SaveFrustum() const;
+    virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to, float width = 1. ) const;
@@ -104,6 +109,7 @@ public:
     virtual void SetCurrentColor( float r, float g, float b, float a = 1 );
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void Zoom( float width );
+    virtual void SetZoom( float zoom );
     virtual void CenterView();
     virtual void SetCurrentCursor( const QCursor& cursor );
     virtual geometry::Point2f GetCenter() const;

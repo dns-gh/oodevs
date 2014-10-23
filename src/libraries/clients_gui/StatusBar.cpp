@@ -51,7 +51,11 @@ namespace
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
-StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter, QObject& selector )
+StatusBar::StatusBar( kernel::Controllers& controllers,
+                      QStatusBar* parent,
+                      TerrainPicker& picker,
+                      const DetectionMap& detection,
+                      const CoordinateConverter_ABC& converter )
     : controllers_  ( controllers )
     , detection_    ( detection )
     , converter_    ( converter )
@@ -87,8 +91,6 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
     connect( pMenu_, SIGNAL( activated( int ) ), this, SLOT( ParameterSelected( int ) ) );
     connect( &terrainPicker_, SIGNAL( TerrainPicked( const QString& ) ), SLOT( TerrainPicked( const QString& ) ) );
     connect( &terrainPicker_, SIGNAL( ObjectPicked( const QStringList& ) ), SLOT( ObjectPicked( const QStringList& ) ) );
-    connect( &selector, SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-    connect( &selector, SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
 
     controllers_.Register( *this );
 }

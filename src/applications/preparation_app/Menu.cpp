@@ -28,6 +28,7 @@
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
+#include "clients_gui/GlProxy.h"
 #include "clients_gui/ObjectNameManager.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/ProfileDialog.h"
@@ -76,7 +77,12 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, const QString& license )
+Menu::Menu( const QString& objectName,
+            QMainWindow* pParent,
+            kernel::Controllers& controllers,
+            gui::GlProxy& proxy,
+            const DialogContainer& dialogs,
+            const QString& license )
     : RichWidget< QMenuBar >( objectName, pParent )
     , controllers_( controllers )
 {
@@ -166,7 +172,10 @@ Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers
         menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
         menu->insertSeparator();
 
-        QAction* action = menu->addAction( tools::translate( "Menu", "&Preferences..." ), &dialogs.GetPrefDialog(), SLOT( show() ), QKeySequence( Qt::CTRL + Qt::Key_P ) );
+        menu->insertSeparator();
+        menu->addAction( tr( "Save configuration" ), &proxy, SLOT( OnSaveDisplaySettings() ) );
+        menu->addAction( tr( "Load configuration" ), &proxy, SLOT( OnLoadDisplaySettings() ) );
+        QAction* action = action = menu->addAction( tools::translate( "Menu", "&Preferences..." ), &dialogs.GetPrefDialog(), SLOT( show() ), QKeySequence( Qt::CTRL + Qt::Key_P ) );
         AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
         addMenu( menu );
     }

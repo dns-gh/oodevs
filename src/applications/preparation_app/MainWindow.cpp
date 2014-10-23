@@ -49,11 +49,13 @@
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/GlProxy.h"
-#include "clients_gui/GlOptions.h"
-#include "clients_gui/GlSelector.h"
+#include "clients_gui/GLOptions.h"
+#include "clients_gui/GLStackedWidget.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
+#include "clients_gui/IconLayout.h"
+#include "clients_gui/IconsRenderPass.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/LayerComposite.h"
@@ -139,7 +141,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
     const auto& profile = PreparationProfile::GetProfile();
     gui::SubObjectName subObject( "MainWindow" );
     controllers_.modes_.SetMainWindow( this );
-    controllers_.modes_.AddRegistryEntry( eModes_Prepare, "Preparation" );
     controllers_.actions_.AllowMultipleSelection< kernel::UrbanObject_ABC >( eModes_Terrain );
     gui::layers::CheckConsistency();
 
@@ -156,7 +157,21 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
         return;
     }
 
-    glProxy_.reset( new gui::GlProxy( controllers, profile, staticModel_, model_, std::make_shared< gui::LightingProxy >() ) );
+    // Event strategy
+    forward_.reset( new gui::CircularEventStrategy( controllers ) );
+    eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
+
+    // GLProxy
+    glProxy_ = std::make_shared< gui::GlProxy >( *this,
+                                                 controllers,
+                                                 config,
+                                                 profile,
+                                                 staticModel_,
+                                                 model_,
+                                                 *eventStrategy_,
+                                                 staticModel_.drawings_,
+                                                 std::make_shared< gui::IconLayout >(),
+                                                 std::make_shared< gui::LightingProxy >() );
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) );
     glProxy_->GetOptions().SetColorStrategy( *strategy_ ); // $$$$ MCO 2014-10-27: not that great...
 
@@ -164,17 +179,12 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
     textEditor_.reset( new gui::TextEditor( this ) );
 
     // Symbols
-    symbols_.reset( new gui::SymbolIcons() );
-    icons_.reset( new gui::EntitySymbols( *symbols_, *strategy_ ) );
+    symbolIcons_.reset( new gui::SymbolIcons() );
+    icons_.reset( new gui::EntitySymbols( *symbolIcons_, *strategy_ ) );
 
-    // Event strategy
-    forward_.reset( new gui::CircularEventStrategy( controllers, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
-    eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
-
-    // Main widget
-    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, staticModel_.drawings_ ) );
-    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
-    connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );
+    // Selection Menu
+    selectionMenu_ = std::make_shared< gui::SelectionMenu >( controllers, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ );
+    forward_->SetSelectionMenu( selectionMenu_ );
 
     // Strategy
     strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, profile ) ) );
@@ -190,11 +200,11 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
 
     // Dialogs
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, profile, *strategy_, *colorController_,
-                                                 *icons_, config, *symbols_, paramLayer, *glProxy_ ) );
+                                                 *icons_, config, *symbolIcons_, paramLayer, *glProxy_ ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, paramLayer, weatherLayer, profilerLayer, *icons_, *modelBuilder_, model_,
-                                             staticModel_, config_, *symbols_, *strategy_, *glProxy_, *colorController_, profile ) );
+                                             staticModel_, config_, *symbolIcons_, *strategy_, *glProxy_, *colorController_, profile ) );
 
     // ToolBars
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, locationsLayer, paramLayer, *eventStrategy_, *model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
@@ -207,13 +217,15 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
     connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
     // Menu (must be created after DockWidgets and ToolBars for 'Windows' menu)
-    menu_.reset( new Menu( "mainMenu", this, controllers, *dialogContainer_, expiration ) );
+    menu_.reset( new Menu( "mainMenu", this, controllers, *glProxy_, *dialogContainer_, expiration ) );
     toolbarContainer_->GetFileToolbar().Fill( *menu_ );
     setMenuBar( menu_.get() );
 
     // Status bar
-    gui::StatusBar* pStatus = new gui::StatusBar( controllers_, statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, *selector_ );
+    gui::StatusBar* pStatus = new gui::StatusBar( controllers_, statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
     pStatus->SetModes( eModes_Default, 0, true );
+    connect( glProxy_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+    connect( glProxy_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
 
     // Progress dialog
     progressDialog_.reset( new QProgressDialog( "", "", 0, 100, this, Qt::SplashScreen ) );
@@ -223,11 +235,10 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
     progressDialog_->setCancelButton( 0 );
 
     // Read settings
-    controllers_.LoadOptions( eModes_Prepare );
+    controllers_.modes_.LoadOptions( eModes_Prepare );
     controllers_.modes_.LoadGeometry( eModes_Prepare );
 
     // Initialize
-    setCentralWidget( selector_.get() );
     SetWindowTitle( false );
     setLocale( QLocale() );
     setMinimumSize( 800, 600 );
@@ -314,10 +325,11 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_TacticalLinesComposite ] = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers, eLayerTypes_TacticalLinesComposite );
     layers[ eLayerTypes_UnitsComposite ]         = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers, eLayerTypes_UnitsComposite );
     layers[ eLayerTypes_WeatherComposite ]       = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers, eLayerTypes_WeatherComposite );
-    // init orders
-    glProxy_->AddLayers( gui::layers::GetDefaultDrawingOrder( layers, eModes_AllPrepare ) );
-    forward_->AddLayers( gui::layers::GetEventOrder( layers, eModes_AllPrepare ) );
-    forward_->SetDefault( layers.at( eLayerTypes_Default ) );
+    // init proxy et circular strategy
+    glProxy_->SetLayers( gui::layers::GetDefaultDrawingOrder( layers, eModes_AllPrepare ) );
+    forward_->SetLayers( gui::layers::GetEventOrder( layers, eModes_AllPrepare ) );
+    forward_->SetDefaultLayer( layers.at( eLayerTypes_Default ) );
+    forward_->SetView( glProxy_ );
     // init options
     controllers_.options_.InitializeLayers( gui::layers::GetDefaultConfigurableOrder( layers, eModes_AllPrepare ) );
     // other init
@@ -425,11 +437,10 @@ bool MainWindow::DoLoad()
     try
     {
         SetProgression( 10, tools::translate( "MainWindow", "Loading configuration ..." ) );
-        controllers_.SaveOptions( eModes_Prepare );
+        controllers_.modes_.SaveOptions( eModes_Prepare );
         dockContainer_->Purge();
         model_.Purge();
         glProxy_->Purge();
-        selector_->Close();
         SetProgression( 20, tools::translate( "MainWindow", "Loading physical model ..." ) );
         staticModel_.Load( config_ );
         SetProgression( 50, tools::translate( "MainWindow", "Loading graphical interface ..." ) );
@@ -446,7 +457,7 @@ bool MainWindow::DoLoad()
                                    , tools::translate( "tools", "Error reading xml file: " ) + tools::GetExceptionMsg( e ).c_str() );
         return false;
     }
-    controllers_.LoadOptions( eModes_Prepare );
+    controllers_.modes_.LoadOptions( eModes_Prepare );
     return true;
 }
 
@@ -474,7 +485,6 @@ void MainWindow::DoClose()
     model_.Purge();
     staticModel_.Purge();
     glProxy_->Purge();
-    selector_->Close();
     dialogContainer_->Purge();
     SetWindowTitle( false );
 }
@@ -499,17 +509,15 @@ void MainWindow::LoadExercise()
                 model_.scores_->Serialize( config_.GetScoresFile(), schemaWriter );
             return;
         }
-
         loading_ = false;
         controllers_.ChangeMode( eModes_Prepare );
         emit CheckConsistency();
-        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_->NeedSaving() || model_.HasConsistencyErrorsOnLoad() || model_.OldUrbanMode() );
-
-        // will move to GLMainProxy
-        auto& options = *controllers_.options_.GetViewOptions();
-        glProxy_->UpdateLayerOrder( options );
-        selector_->Load();
-        symbols_->Initialize( selector_->GetWidget2d() );
+        SetWindowTitle( !model_.GetLoadingErrors().empty() ||
+                        model_.ghosts_->NeedSaving() ||
+                        model_.HasConsistencyErrorsOnLoad() ||
+                        model_.OldUrbanMode() );
+        glProxy_->Load( symbolIcons_->GetIconRenderPass(), config_.GetExerciseDir( config_.GetExerciseName() ) );
+        symbolIcons_->Initialize( selector_->GetWidget2d() );
         SetProgression( 90, tools::translate( "MainWindow", "Generate symbols" ) );
         icons_->GenerateSymbols( *model_.teams_ );
     }
@@ -602,7 +610,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
         return;
     }
     controllers_.modes_.SaveGeometry( eModes_Prepare );
-    controllers_.SaveOptions( eModes_Prepare );
+    controllers_.modes_.SaveOptions( eModes_Prepare );
     QMainWindow::closeEvent( pEvent );
 }
 
@@ -798,16 +806,16 @@ void MainWindow::OnAddRaster()
     }
     try
     {
-        auto& dialog = dialogContainer_->GetAddRasterDialog();
-        auto result = static_cast< QDialog::DialogCode >( dialog.exec() );
+        auto dialog = new gui::AddRasterDialog( this );
+        auto result = static_cast< QDialog::DialogCode >( dialog->exec() );
         if( result == QDialog::Accepted )
         {
-            const auto input = tools::Path::FromUnicode( dialog.GetFiles().toStdWString() );
-            process_ = RunRasterApp( input, dialog.GetPixelSize(), config_,
+            const auto input = tools::Path::FromUnicode( dialog->GetFiles().toStdWString() );
+            process_ = RunRasterApp( input, dialog->GetPixelSize(), config_,
                 [&]( int exitCode, const tools::Path& output, const std::string& error )
                 {
                     if( !exitCode )
-                        glProxy_->AddLayers( gui::T_LayersVector( 1, std::make_shared< gui::RasterLayer >( controllers_, *glProxy_, output, dialog.GetName() ) ) );
+                        glProxy_->SetLayers( gui::T_LayersVector( 1, std::make_shared< gui::RasterLayer >( controllers_, *glProxy_, output, dialog->GetName() ) ) );
                     else
                         QMessageBox::warning( this, tools::translate( "MainWindow", "Error loading image file" ),
                             error.empty() ? tools::translate( "MainWindow", "Error while loading Raster source." ) : error.c_str() );

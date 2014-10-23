@@ -71,6 +71,14 @@ namespace tools
                     if( itemEntity->GetEntity() == &entity )
                         item->setText( itemEntity->GetName() );
     }
+
+    QString Point2fToString( const geometry::Point2f& point );
+    QString Point3fToString( const geometry::Point3f& point );
+    QString Vector3fToString( const geometry::Vector3f& vector );
+    geometry::Point2f StringToPoint2f( const QString& point );
+    geometry::Point3f StringToPoint3f( const QString& point );
+    geometry::Vector3f StringToVector3f( const QString& vector );
+
 }  //! namespace tools
 
 #endif  // CLIENTS_GUI_TOOLS_H

@@ -906,10 +906,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Generate symbols</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save exercise as ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -964,6 +960,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Error while loading Raster source.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate symbolIcons_</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1202,6 +1202,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Grid type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

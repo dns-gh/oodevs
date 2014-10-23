@@ -2635,6 +2635,14 @@ This data can&apos;t be projected.</source>
         <source>Rules</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>

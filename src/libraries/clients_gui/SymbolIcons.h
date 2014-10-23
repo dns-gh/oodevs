@@ -22,7 +22,7 @@ namespace gui
 */
 // Created: AGE 2006-11-22
 // =============================================================================
-class SymbolIcons : QObject
+class SymbolIcons : public QObject
 {
     Q_OBJECT
 
@@ -50,6 +50,6 @@ private:
     gui::GlWidget* widget_;
 };
 
-}
+} //! namespace gui
 
 #endif // __SymbolIcons_h_

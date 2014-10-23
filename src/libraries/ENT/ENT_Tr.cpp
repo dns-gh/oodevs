@@ -416,17 +416,17 @@ T_ConverterNbcState NbcStateConverter_ [] =
 
 T_ConverterModes ModesConverter_ [] =
 {
-    T_ConverterModes( "none",        QT_TRANSLATE_NOOP( "ENT_Tr", "None" ),        eModes_None          ),
-    T_ConverterModes( "default",     QT_TRANSLATE_NOOP( "ENT_Tr", "Default" ),     eModes_Default       ),
-    T_ConverterModes( "prepare",     QT_TRANSLATE_NOOP( "ENT_Tr", "Prepare" ),     eModes_Prepare       ),
-    T_ConverterModes( "terrain",     QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),     eModes_Terrain       ),
-    T_ConverterModes( "living_area", QT_TRANSLATE_NOOP( "ENT_Tr", "Living Area" ), eModes_LivingArea    ),
-    T_ConverterModes( "game",        QT_TRANSLATE_NOOP( "ENT_Tr", "Game" ),        eModes_Gaming        ),
-    T_ConverterModes( "planning",    QT_TRANSLATE_NOOP( "ENT_Tr", "Planning" ),    eModes_Planning      ),
-    T_ConverterModes( "replay",      QT_TRANSLATE_NOOP( "ENT_Tr", "Replay" ),      eModes_Replay        ),
-    T_ConverterModes( "itinerary",   QT_TRANSLATE_NOOP( "ENT_Tr", "Itinerary" ),   eModes_Itinerary     ),
-    T_ConverterModes( "all_gaming",  QT_TRANSLATE_NOOP( "ENT_Tr", "All Gaming" ),  eModes_AllGaming     ),
-    T_ConverterModes( "all",         QT_TRANSLATE_NOOP( "ENT_Tr", "All" ),         eModes_All           ),
+    T_ConverterModes( "None",        QT_TRANSLATE_NOOP( "ENT_Tr", "None" ),        eModes_None        ),
+    T_ConverterModes( "Default",     QT_TRANSLATE_NOOP( "ENT_Tr", "Default" ),     eModes_Default     ),
+    T_ConverterModes( "Preparation", QT_TRANSLATE_NOOP( "ENT_Tr", "Prepare" ),     eModes_Prepare     ),
+    T_ConverterModes( "Terrain",     QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),     eModes_Terrain     ),
+    T_ConverterModes( "Living_area", QT_TRANSLATE_NOOP( "ENT_Tr", "Living Area" ), eModes_LivingArea  ),
+    T_ConverterModes( "Game",        QT_TRANSLATE_NOOP( "ENT_Tr", "Game" ),        eModes_Gaming      ),
+    T_ConverterModes( "Planning",    QT_TRANSLATE_NOOP( "ENT_Tr", "Planning" ),    eModes_Planning    ),
+    T_ConverterModes( "Replay",      QT_TRANSLATE_NOOP( "ENT_Tr", "Replay" ),      eModes_Replay      ),
+    T_ConverterModes( "Itinerary",   QT_TRANSLATE_NOOP( "ENT_Tr", "Itinerary" ),   eModes_Itinerary   ),
+    T_ConverterModes( "All_gaming",  QT_TRANSLATE_NOOP( "ENT_Tr", "All Gaming" ),  eModes_AllGaming   ),
+    T_ConverterModes( "All",         QT_TRANSLATE_NOOP( "ENT_Tr", "All" ),         eModes_All         ),
     T_ConverterModes( "", "", ( E_Modes ) - 1 )
 };
 

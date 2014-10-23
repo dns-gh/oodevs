@@ -47,8 +47,7 @@ public:
                         QStatusBar* bar,
                         TerrainPicker& picker,
                         const kernel::DetectionMap& detection,
-                        const kernel::CoordinateConverter_ABC& converter,
-                        QObject& selector );
+                        const kernel::CoordinateConverter_ABC& converter );
     virtual ~StatusBar();
     //@}
 

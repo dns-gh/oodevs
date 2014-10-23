@@ -178,3 +178,42 @@ bool tools::HasSubordinate( const kernel::Entity_ABC& entity, const std::functio
     }
     return children;
 }
+
+QString tools::Point2fToString( const geometry::Point2f& point )
+{
+    return QString( "%1;%2" ).arg( point.X() ).arg( point.Y() );
+}
+
+QString tools::Point3fToString( const geometry::Point3f& point )
+{
+    return QString( "%1;%2;%3" ).arg( point.X() ).arg( point.Y() ).arg( point.Z() );
+}
+
+QString tools::Vector3fToString( const geometry::Vector3f& vector )
+{
+    return QString( "%1;%2;%3" ).arg( vector.X() ).arg( vector.Y() ).arg( vector.Z() );
+}
+
+geometry::Point2f tools::StringToPoint2f( const QString& point )
+{
+    const QStringList coords = point.split( ";" );
+    if( coords.size() != 2 )
+        return geometry::Point2f();
+    return geometry::Point2f( coords.at( 0 ).toFloat(), coords.at( 1 ).toFloat() );
+}
+
+geometry::Point3f tools::StringToPoint3f( const QString& point )
+{
+    const QStringList coords = point.split( ";" );
+    if( coords.size() != 3 )
+        return geometry::Point3f();
+    return geometry::Point3f( coords.at( 0 ).toFloat(), coords.at( 1 ).toFloat(), coords.at( 2 ).toFloat() );
+}
+
+geometry::Vector3f tools::StringToVector3f( const QString& vector )
+{
+    const QStringList coords = vector.split( ";" );
+    if( coords.size() != 3 )
+        return geometry::Vector3f();
+    return geometry::Vector3f( coords.at( 0 ).toFloat(), coords.at( 1 ).toFloat(), coords.at( 2 ).toFloat() );
+}

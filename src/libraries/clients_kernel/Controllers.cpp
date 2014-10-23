@@ -28,7 +28,7 @@ Controllers::Controllers()
     , controller_  ( *new Controller() )
     , actions_     ( *new ActionController() )
     , eventActions_( *new ActionController() )
-    , modes_       ( *new ModeController() )
+    , modes_       ( *new ModeController( options_ ) )
     , languages_   ( *new LanguageController() )
 {
     // NOTHING
@@ -93,24 +93,6 @@ void Controllers::ChangeMode( E_Modes newMode )
     modes_.ChangeMode( newMode );
     actions_.ChangeMode( newMode );
     actions_.DeselectAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Controllers::LoadOptions
-// Created: ABR 2013-02-15
-// -----------------------------------------------------------------------------
-void Controllers::LoadOptions( E_Modes mode )
-{
-    modes_.LoadOptions( mode, options_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Controllers::SaveOptions
-// Created: ABR 2013-02-15
-// -----------------------------------------------------------------------------
-void Controllers::SaveOptions( E_Modes mode )
-{
-    modes_.SaveOptions( mode, options_ );
 }
 
 // -----------------------------------------------------------------------------

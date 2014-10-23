@@ -22,6 +22,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlProxy;
     class ItemFactory_ABC;
     class HelpSystem;
     class ProfileDialog;
@@ -43,12 +44,15 @@ class Menu : public QMenuBar
            , public tools::Observer_ABC
            , public tools::ElementObserver_ABC< Profile >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
              Menu( QMainWindow* parent,
                    kernel::Controllers& controllers,
                    StaticModel& staticModel,
+                   gui::GlProxy& proxy,
                    QDialog& prefDialog,
                    gui::ProfileDialog& profileDialog,
                    Network& network,

@@ -93,7 +93,6 @@ public:
     gui::ConsistencyDialog_ABC& GetConsistencyDialog() const;
     PerformanceDialog& GetPerformanceDialog() const;
     FilterDialogs& GetFiltersDialog() const;
-    gui::AddRasterDialog& GetAddRasterDialog() const;
     RemoveBlocksDialog& GetRemoveBlocksDialog() const;
     TerrainExportDialog& GetTerrainExportDialog() const;
     //@}
@@ -110,7 +109,6 @@ private:
     gui::ConsistencyDialog_ABC* consistencyDialog_;
     PerformanceDialog*          performanceDialog_;
     FilterDialogs*              filtersDialog_;
-    gui::AddRasterDialog*       addRasterDialog_;
     RemoveBlocksDialog*         removeBlocksDialog_;
     TerrainExportDialog*        terrainExportDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;

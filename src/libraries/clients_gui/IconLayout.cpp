@@ -43,7 +43,7 @@ void IconLayout::AddIcon( const char** xpm, int x, int y )
 // Name: IconLayout::IconLocation
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-const geometry::Point2f& IconLayout::IconLocation( const char** xpm )
+const geometry::Point2f& IconLayout::IconLocation( const char** xpm ) const
 {
-    return iconLocations_[ xpm ];
+    return iconLocations_.at( xpm );
 }

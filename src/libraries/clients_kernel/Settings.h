@@ -16,6 +16,11 @@
 #include <QtCore/qsettings.h>
 #pragma warning( pop )
 
+namespace tools
+{
+    class Path;
+}
+
 namespace kernel
 {
     class TristateOption;
@@ -30,7 +35,12 @@ class Settings : public QSettings
 public:
     //! @name Constructors/Destructor
     //@{
-             Settings( const QString & organization, const QString & application );
+    explicit Settings();
+             Settings( const QString& organization,
+                       const QString & application,
+                       QObject* parent = 0 );
+             Settings( const tools::Path& filename,
+                       QObject* parent = 0 );
     virtual ~Settings();
     //@}
 

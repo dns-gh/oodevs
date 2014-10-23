@@ -29,6 +29,7 @@ namespace kernel
 
 namespace gui
 {
+    struct FrustumInfos;
     class GLOptions;
     class GlTooltip_ABC;
 
@@ -62,17 +63,23 @@ public:
 
     //! @name Options
     //@{
+    virtual void UpdateGL() = 0;
+
     virtual GLOptions& GetOptions() = 0;
     virtual const GLOptions& GetOptions() const = 0;
     //@}
 
-    //! @name Viewport
+    //! @name Frustrum
     //@{
+    virtual FrustumInfos SaveFrustum() const = 0;
+    virtual void LoadFrustum( const FrustumInfos& infos ) = 0;
+
     virtual void CenterOn( const geometry::Point2f& point ) = 0;
     virtual geometry::Point2f GetCenter() const = 0;
 
     virtual void Zoom( float width ) = 0;
     virtual float Zoom() const = 0;
+    virtual void SetZoom( float zoom ) = 0;
     virtual float GetAdaptiveZoomFactor( bool bVariableSize = true ) const = 0;
     //@}
 

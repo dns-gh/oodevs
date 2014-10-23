@@ -965,8 +965,8 @@ This data can&apos;t be projected.</source>
 Este dato no puede ser proyectado.</translation>
     </message>
     <message>
-        <source>Generate symbols</source>
-        <translation>Generar símbolos</translation>
+        <source>Generate symbolIcons_</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1204,6 +1204,14 @@ Este dato no puede ser proyectado.</translation>
     </message>
     <message>
         <source>Grid type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
