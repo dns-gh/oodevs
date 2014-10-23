@@ -336,8 +336,8 @@ class EventThrottler
         @sync = _.throttle @sync_models, 100
 
     # collect updated session time
-    tick: (time) ->
-        @time = time
+    update_session: (session) ->
+        @time = session.time
         @sync()
 
     # collect updated events and eventually call sync()
@@ -656,8 +656,8 @@ class SessionView extends Backbone.View
     on_ws_message: (event) =>
         msg = JSON.parse event.data
         switch msg.tag
-            when "update_tick"
-                @throttler.tick msg.tick
+            when "update_session"
+                @throttler.update_session msg.session
             when "update_events"
                 @throttler.update_events msg.events, @first_update
                 @first_update = false

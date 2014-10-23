@@ -268,12 +268,19 @@ func (s EventListeners) DeleteEvents(events ...string) {
 	}
 }
 
+func (s *Session) UpdateSession() {
+	for _, observer := range s.observers {
+		observer.UpdateSession(s.Proto())
+	}
+}
+
 func (s *Session) setTick(tick time.Time) {
 	modified := s.tick != tick
 	s.tick = tick
 	if !modified {
 		return
 	}
+	s.UpdateSession()
 	for _, observer := range s.observers {
 		observer.UpdateTick(tick)
 	}
@@ -505,6 +512,10 @@ func (f *FilteredObserver) UpdateEvents(events EventSlice, encoded []*sdk.Event)
 
 func (f *FilteredObserver) UpdateTick(tick time.Time) {
 	f.observer.UpdateTick(tick)
+}
+
+func (f *FilteredObserver) UpdateSession(session *sdk.Session) {
+	f.observer.UpdateSession(session)
 }
 
 func (s *Session) InvalidateFilters() {

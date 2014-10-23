@@ -78,20 +78,22 @@ message Event
 
 enum MessageTag
 {
-    update_tick     = 1;
+    update_tick     = 1; ///< DEPRECATED
     update_events   = 2;
     delete_events   = 3;
     update_services = 4;
+    update_session  = 5;
 }
 
 // Message applies to one session
 message Message
 {
     required MessageTag tag      = 1;
-    optional string     tick     = 2;
+    optional string     tick     = 2; ///< DEPRECATED
     repeated Event      events   = 3;
     repeated string     uuids    = 4;
     repeated Service    services = 5;
+    optional Session    session  = 6;
 }
 
 message Metadata

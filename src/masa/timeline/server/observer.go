@@ -33,6 +33,13 @@ func (o *Observer) Close() {
 	close(o.output)
 }
 
+func makeUpdateSession(session *sdk.Session) *sdk.Message {
+	return &sdk.Message{
+		Tag:     sdk.MessageTag_update_session.Enum(),
+		Session: session,
+	}
+}
+
 func makeUpdateTick(tick time.Time) *sdk.Message {
 	return &sdk.Message{
 		Tag:  sdk.MessageTag_update_tick.Enum(),
@@ -63,6 +70,10 @@ func makeUpdateServices(services []*sdk.Service) *sdk.Message {
 
 func (o *Observer) UpdateTick(tick time.Time) {
 	o.output <- makeUpdateTick(tick)
+}
+
+func (o *Observer) UpdateSession(session *sdk.Session) {
+	o.output <- makeUpdateSession(session)
 }
 
 func (o *Observer) UpdateEvents(events ...*sdk.Event) {
