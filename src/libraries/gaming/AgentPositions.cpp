@@ -52,7 +52,7 @@ AgentPositions::~AgentPositions()
 // -----------------------------------------------------------------------------
 Point2f AgentPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !agent_.IsAggregated() )
+    if( !aggregated || !agent_.IsAnAggregatedSubordinate() )
         return position_;
     return agent_.Get< TacticalHierarchies >().GetUp().Get< Positions >().GetPosition();
 }
@@ -63,7 +63,7 @@ Point2f AgentPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float AgentPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !agent_.IsAggregated() )
+    if( !aggregated || !agent_.IsAnAggregatedSubordinate() )
         return height_;
     return agent_.Get< TacticalHierarchies >().GetUp().Get< Positions >().GetHeight();
 }
@@ -118,7 +118,7 @@ void AgentPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void AgentPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && tools.GetOptions().ShouldDisplay( "UnitDetails" ) && !agent_.IsAggregated() )
+    if( viewport.IsHotpointVisible() && tools.GetOptions().ShouldDisplay( "UnitDetails" ) && !agent_.IsAnAggregatedSubordinate() )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GLView_ABC::pixels );
 }
 

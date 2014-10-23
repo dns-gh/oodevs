@@ -37,12 +37,6 @@ public:
     virtual ~AutomatsLayer();
     //@}
 
-    //! @name Operations
-    //@{
-    void Aggregate( const kernel::Entity_ABC& automat );
-    void Disaggregate( const kernel::Entity_ABC& automat );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
@@ -62,8 +56,6 @@ private:
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
-    void Toggle( const kernel::Entity_ABC& entity, bool aggregate );
-    bool HasSubordinate( const kernel::Entity_ABC& entity, std::function< bool( const kernel::Entity_ABC& ) > fun ) const;
     //@}
 
 protected:
@@ -73,6 +65,6 @@ protected:
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __gui_AutomatsLayer_h_

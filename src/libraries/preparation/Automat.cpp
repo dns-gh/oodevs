@@ -10,9 +10,9 @@
 #include "preparation_pch.h"
 #include "Automat.h"
 #include "tools/IdManager.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -63,13 +63,13 @@ Automat::~Automat()
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
 {
-    if( !IsAggregated() && ::HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
+    if( !IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( *this ) && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
-        tools.DrawApp6SymbolFixedSize( symbol_, where, -1.5f, 0 );
-        tools.DrawApp6SymbolFixedSize( level_, where, -1.5f, 0 );
+        view.DrawApp6SymbolFixedSize( symbol_, where, -1.5f, 0 );
+        view.DrawApp6SymbolFixedSize( level_, where, -1.5f, 0 );
     }
 }
 

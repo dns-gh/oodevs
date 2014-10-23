@@ -107,7 +107,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
         { COLOR_RECORDED },
         { COLOR_DETECTED }
     };
-    if( !tools.GetOptions().ShouldDisplay( "VisionLines" ) || detections_.empty() || holder_.IsAggregated() )
+    if( !tools.GetOptions().ShouldDisplay( "VisionLines" ) || detections_.empty() || holder_.IsAnAggregatedSubordinate() )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     for( auto it = detections_.begin(); it != detections_.end(); ++it )

@@ -24,18 +24,17 @@
 #include "clients_gui/ObjectTreeView.h"
 #include "clients_gui/RenameInterface.h"
 #include "clients_gui/RichView.h"
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/Tools.h"
-#include "gaming/ProfileFilter.h"
-
 #include "gaming/Agent.h"
 #include "gaming/Automat.h"
 #include "gaming/Formation.h"
 #include "gaming/KnowledgeGroup.h"
+#include "gaming/Model.h"
 #include "gaming/Object.h"
-#include "clients_gui/UrbanObject.h"
 #include "gaming/Population.h"
+#include "gaming/ProfileFilter.h"
 #include "gaming/Team.h"
-#include "clients_gui/DummyModelObserver.h"
 
 namespace
 {
@@ -66,10 +65,9 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   QWidget* parent,
                                   const QString& objectName,
                                   ProfileFilter& filter,
-                                  const std::shared_ptr< gui::AutomatsLayer >& automats,
-                                  const std::shared_ptr< gui::FormationLayer >& formations,
+                                  gui::GLView_ABC& view,
                                   const std::shared_ptr< gui::ParametersLayer >& paramLayer,
-                                  actions::ActionsModel& actionsModel,
+                                  Model& model,
                                   const StaticModel& staticModel,
                                   const kernel::Time_ABC& simulation,
                                   const gui::EntitySymbols& icons,
@@ -84,7 +82,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
 
     Q3VBox* box = new Q3VBox( this );
     setWidget( box );
-    OrbatToolbar* orbatToolbar = new OrbatToolbar( box, controllers, filter, automats, formations );
+    OrbatToolbar* orbatToolbar = new OrbatToolbar( box, controllers, view, model, filter );
     const gui::AggregateToolbar* toolbar = orbatToolbar->GetToolbar();
     QTabWidget* mainTab = new QTabWidget( box );
     QTabWidget* unitTab = new QTabWidget();
@@ -100,7 +98,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                                       icons,
                                                                       staticModel,
                                                                       simulation,
-                                                                      actionsModel,
+                                                                      model.actions_,
                                                                       *changeSuperiorDialog_ ) );
     connect( toolbar, SIGNAL( ChangeDisplay( int ) ), tactical->GetView(), SLOT( ChangeDisplay( int ) ) );
     // Communication
@@ -114,7 +112,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                            icons,
                                                            staticModel,
                                                            simulation,
-                                                           actionsModel,
+                                                           model.actions_,
                                                            *changeSuperiorDialog_ ) );
     // Logistic
     auto logistic = Configure( views_, unitTab, toolbar, tools::translate( "OrbatDockWidget", "Logistic" ), *renameInterface_,
@@ -127,7 +125,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                                       icons,
                                                                       staticModel,
                                                                       simulation,
-                                                                      actionsModel,
+                                                                      model.actions_,
                                                                       *changeSuperiorDialog_ ) );
     logisticListView_ = logistic->GetView();
     // Object

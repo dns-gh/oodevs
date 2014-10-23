@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "AggregatedPositions.h"
-#include "AggregatedTools.h"
+#include "GLOptions.h"
 #include "GLView_ABC.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -67,7 +67,7 @@ namespace
 // -----------------------------------------------------------------------------
 Point2f AggregatedPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !entity_.IsAggregated() )
+    if( !aggregated || !entity_.IsAnAggregatedSubordinate() )
     {
         Point2f aggregatedPosition;
         unsigned int count = 0;
@@ -96,7 +96,7 @@ Point2f AggregatedPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float AggregatedPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !entity_.IsAggregated() )
+    if( !aggregated || !entity_.IsAnAggregatedSubordinate() )
     {
         float height = 0;
         unsigned int count = 0;
@@ -167,10 +167,10 @@ bool AggregatedPositions::CanAggregate() const
 // Name: AggregatedPositions::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
 {
-    if( viewport.IsHotpointVisible() && !entity_.IsAggregated() && HasSubordinate( entity_, &::IsAggregated ) )
-        tools.DrawCross( where, GL_CROSSSIZE, gui::GLView_ABC::pixels );
+    if( viewport.IsHotpointVisible() && !entity_.IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( entity_ ) )
+        view.DrawCross( where, GL_CROSSSIZE, gui::GLView_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

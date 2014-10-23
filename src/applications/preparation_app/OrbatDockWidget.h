@@ -19,9 +19,8 @@ namespace kernel
 
 namespace gui
 {
-    class AutomatsLayer;
     class EntitySymbols;
-    class FormationLayer;
+    class GLView_ABC;
     class ParametersLayer;
     class RichView_ABC;
     class SymbolIcons;
@@ -50,8 +49,7 @@ public:
                               QWidget* parent,
                               const QString& objectName,
                               const QString& windowTitle,
-                              const std::shared_ptr< gui::AutomatsLayer >& automats,
-                              const std::shared_ptr< gui::FormationLayer >& formation,
+                              gui::GLView_ABC& view,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               gui::EntitySymbols& icons,
                               ModelBuilder& modelBuilder,

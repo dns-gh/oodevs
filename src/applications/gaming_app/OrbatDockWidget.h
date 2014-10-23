@@ -12,18 +12,12 @@
 
 #include "clients_gui/RichDockWidget.h"
 
-namespace actions
-{
-    class ActionsModel;
-}
-
 namespace gui
 {
-    class AutomatsLayer;
     class ChangeSuperiorDialog;
     class EntitySymbols;
+    class GLView_ABC;
     class ModelObserver_ABC;
-    class FormationLayer;
     class ParametersLayer;
     class RenameInterface;
     class RichView_ABC;
@@ -37,6 +31,7 @@ namespace kernel
 
 class DrawingsBuilder;
 class LogisticTreeView;
+class Model;
 class ProfileFilter;
 class StaticModel;
 
@@ -56,10 +51,9 @@ public:
                      QWidget* parent,
                      const QString& objectName,
                      ProfileFilter& filter,
-                     const std::shared_ptr< gui::AutomatsLayer >& automats,
-                     const std::shared_ptr< gui::FormationLayer >& formations,
+                     gui::GLView_ABC& view,
                      const std::shared_ptr< gui::ParametersLayer >& paramLayer,
-                     actions::ActionsModel& actionsModel,
+                     Model& model,
                      const StaticModel& staticModel,
                      const kernel::Time_ABC& simulation,
                      const gui::EntitySymbols& icons,

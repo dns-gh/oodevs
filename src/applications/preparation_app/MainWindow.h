@@ -109,8 +109,6 @@ private:
                        const std::shared_ptr< gui::Layer_ABC >& locations,
                        const std::shared_ptr< gui::Layer_ABC >& weather,
                        const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
-                       const std::shared_ptr< gui::Layer_ABC >& automats,
-                       const std::shared_ptr< gui::Layer_ABC >& formation,
                        gui::TerrainPicker& picker );
     void closeEvent( QCloseEvent* pEvent );
     void DoClose();

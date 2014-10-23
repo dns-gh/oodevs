@@ -81,7 +81,7 @@ void DecisionalStates::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && tools.GetOptions().ShouldDisplay( "DecisionalState" ) && !entity_.IsAggregated() )
+    if( viewport.IsHotpointVisible() && tools.GetOptions().ShouldDisplay( "DecisionalState" ) && !entity_.IsAnAggregatedSubordinate() )
     {
         if( drawSauvegarde_ )
             tools.DrawSvg( "sauvegarde.svg", where, tools.GetAdaptiveZoomFactor( false ) );

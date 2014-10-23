@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Lives.h"
-#include "clients_gui/AggregatedTools.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -44,7 +43,7 @@ Lives::~Lives()
 // -----------------------------------------------------------------------------
 void Lives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && !entity_.IsAggregated() )
+    if( viewport.IsHotpointVisible() && !entity_.IsAnAggregatedSubordinate() )
         tools.DrawLife( where, life_ );
 }
 

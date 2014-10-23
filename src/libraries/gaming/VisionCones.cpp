@@ -165,7 +165,7 @@ void VisionCones::Update() const
 
 void VisionCones::DrawMap( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
-    if( agent_.IsAggregated() )
+    if( agent_.IsAnAggregatedSubordinate() )
         return;
     if( tools.GetOptions().ShouldDisplay( "VisionCones" ) )
         for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )

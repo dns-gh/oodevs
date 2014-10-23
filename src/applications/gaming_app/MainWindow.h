@@ -147,8 +147,6 @@ private:
                        const std::shared_ptr< gui::Layer_ABC >& locations,
                        const std::shared_ptr< gui::Layer_ABC >& weather,
                        const std::shared_ptr< gui::Layer_ABC >& profiler,
-                       const std::shared_ptr< gui::Layer_ABC >& automats,
-                       const std::shared_ptr< gui::Layer_ABC >& formations,
                        const Simulation& simulation,
                        gui::TerrainPicker& picker );
 

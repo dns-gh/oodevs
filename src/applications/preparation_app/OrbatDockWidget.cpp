@@ -17,6 +17,9 @@
 #include "clients_gui/RichWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Enums.h"
+#include "preparation/AgentsModel.h"
+#include "preparation/FormationModel.h"
+#include "preparation/Model.h"
 
 #define ICON_RIGHT gui::Icon( "resources/images/preparation/double_arrow_right.png" )
 #define ICON_LEFT  gui::Icon( "resources/images/preparation/double_arrow_left.png" )
@@ -29,8 +32,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   QWidget* parent,
                                   const QString& objectName,
                                   const QString& windowTitle,
-                                  const std::shared_ptr< gui::AutomatsLayer >& automats,
-                                  const std::shared_ptr< gui::FormationLayer >& formation,
+                                  gui::GLView_ABC& view,
                                   const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                   gui::EntitySymbols& icons,
                                   ModelBuilder& modelBuilder,
@@ -47,7 +49,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
 {
     gui::SubObjectName subObject( "OrbatDockWidget" );
     QGridLayout* toolbarBox = new QGridLayout();
-    gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( controllers.controller_, automats, formation, false );
+    gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( view, *model.formations_, *model.agents_, false );
     toolbarBox->addLayout( aggregateToolbar, 0, 0, 1, 1, Qt::AlignLeft );
 
     expandButton_ = new gui::RichWidget< QToolButton >( "expandButton" );

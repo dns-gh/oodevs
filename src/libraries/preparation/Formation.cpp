@@ -12,8 +12,8 @@
 #include "FormationHierarchies.h"
 #include "tools/IdManager.h"
 #include "LogisticBaseStates.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
-#include "clients_gui/AggregatedTools.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -111,13 +111,13 @@ void Formation::InitializeSymbol() const
 // Name: Formation::Draw
 // Created: LGY 2011-03-04
 // -----------------------------------------------------------------------------
-void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
 {
-    if( !IsAggregated() && HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
+    if( !IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( *this ) && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
-        tools.DrawApp6SymbolFixedSize( symbolPath_, where, -2.f, 0 );
-        tools.DrawApp6SymbolFixedSize( levelPath_, where, -2.f, 0 );
+        view.DrawApp6SymbolFixedSize( symbolPath_, where, -2.f, 0 );
+        view.DrawApp6SymbolFixedSize( levelPath_, where, -2.f, 0 );
     }
 }
 

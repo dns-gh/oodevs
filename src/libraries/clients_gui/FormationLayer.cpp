@@ -10,7 +10,8 @@
 #include "clients_gui_pch.h"
 #include "FormationLayer.h"
 #include "moc_FormationLayer.cpp"
-#include "AggregatedTools.h"
+#include "GLOptions.h"
+#include "Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -48,28 +49,10 @@ FormationLayer::~FormationLayer()
 // Name: FormationLayer::Aggregate
 // Created: LGY 2011-03-03
 // -----------------------------------------------------------------------------
-void FormationLayer::Aggregate( const kernel::Entity_ABC& formation )
-{
-    Toggle( formation, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::Disaggregate
-// Created: LGY 2011-03-03
-// -----------------------------------------------------------------------------
-void FormationLayer::Disaggregate( const kernel::Entity_ABC& formation )
-{
-    Toggle( formation, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::Aggregate
-// Created: LGY 2011-03-03
-// -----------------------------------------------------------------------------
 void FormationLayer::Aggregate()
 {
     if( selected_ )
-        Aggregate( *selected_ );
+        view_.GetOptions().Aggregate( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +62,7 @@ void FormationLayer::Aggregate()
 void FormationLayer::Disaggregate()
 {
     if( selected_ )
-        Disaggregate( *selected_ );
+        view_.GetOptions().Disaggregate( selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,9 +74,9 @@ void FormationLayer::NotifyContextMenu( const kernel::Formation_ABC& formation, 
     if( !profile_.IsVisible( formation ) )
         return;
     selected_ = &formation;
-    if( !formation.IsAggregated() )
+    if( !formation.IsAnAggregatedSubordinate() )
     {
-        if( !HasAggregatedSubordinate( formation )  )
+        if( !view_.GetOptions().IsAggregated( formation )  )
             menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
         else
             menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
@@ -106,7 +89,7 @@ void FormationLayer::NotifyContextMenu( const kernel::Formation_ABC& formation, 
 // -----------------------------------------------------------------------------
 void FormationLayer::NotifyActivated( const kernel::Formation_ABC& formation )
 {
-    if( HasAggregatedSubordinate( formation, boost::bind( &FormationLayer::IsAgent, this, _1 ) ) )
+    if( tools::HasSubordinate( formation, []( const kernel::Entity_ABC& entity ){ return entity.GetTypeName() == kernel::Agent_ABC::typeName_; } ) )
         EntityLayer< kernel::Formation_ABC >::NotifyActivated( formation );
 }
 
@@ -118,23 +101,8 @@ void FormationLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const g
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Formation_ABC& formation = static_cast< const Formation_ABC& >( entity );
-    if( !formation.IsAggregated() && HasAggregatedSubordinate( formation ) )
+    if( !formation.IsAnAggregatedSubordinate() && view_.GetOptions().IsAggregated( formation ) )
         controllers_.actions_.ContextMenu( this, formation, entity, point, where );
-}
-
-// ----------------------------------------------------------------------------
-// Name: FormationLayer::Toggle
-// Created: LGY 2011-03-03
-// -----------------------------------------------------------------------------
-void FormationLayer::Toggle( const kernel::Entity_ABC& entity, bool aggregate )
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        auto& child = const_cast< kernel::Entity_ABC& >( it.NextElement() );
-        child.Aggregate( aggregate );
-        Toggle( child, aggregate );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -145,15 +113,4 @@ void FormationLayer::NotifySelectionChanged( const std::vector< const kernel::Fo
 {
     EntityLayer< kernel::Formation_ABC >::NotifySelectionChanged( elements );
     selected_ = elements.size() == 1 ? elements.front() : 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::IsAgent
-// Created: LGY 2011-07-18
-// -----------------------------------------------------------------------------
-bool FormationLayer::IsAgent( const kernel::Entity_ABC& entity ) const
-{
-    if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
-        return true;
-    return HasAggregatedSubordinate( entity, boost::bind( &FormationLayer::IsAgent, this, _1 ) );
 }

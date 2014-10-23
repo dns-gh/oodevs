@@ -42,11 +42,9 @@ namespace kernel
 }
 
 class AfterAction;
-class AutomatsLayer;
 class CreationPanels;
 class DrawingsBuilder;
 class EventDockWidget;
-class FormationLayer;
 class GamingConfig;
 class IndicatorExportDialog;
 class IndicatorPlotFactory;
@@ -85,8 +83,6 @@ public:
                    ProfileFilter& profile,
                    const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                    const std::shared_ptr< gui::TerrainProfilerLayer >& profilerLayer,
-                   const std::shared_ptr< AutomatsLayer >& automatsLayer,
-                   const std::shared_ptr< FormationLayer >& formationLayer,
                    const std::shared_ptr< ::WeatherLayer >& weatherLayer,
                    gui::GlProxy& proxy,
                    gui::RichItemFactory& factory,

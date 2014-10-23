@@ -237,8 +237,6 @@ MainWindow::MainWindow( Controllers& controllers,
     auto parameters = std::make_shared< gui::ParametersLayer >( controllers_, *glProxy_, *textEditor_ );
     auto locationsLayer = std::make_shared< gui::LocationsLayer >( controllers_, *glProxy_ );
     auto meteoLayer = std::make_shared< WeatherLayer >( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, profile_ );
-    auto automatsLayer = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, profile_, model_.actions_ );
-    auto formationLayer = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, profile_, model_.actions_, staticModel_ );
     auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( controllers_, *glProxy_ );
 
     // Misc
@@ -256,7 +254,7 @@ MainWindow::MainWindow( Controllers& controllers,
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
-                                             parameters, profilerLayer, automatsLayer, formationLayer, meteoLayer,
+                                             parameters, profilerLayer, meteoLayer,
                                              *glProxy_, *factory, *strategy_, *symbols, *icons_, *indicatorExportDialog,
                                              simulationController, *drawingsBuilder_, *displayExtractor_, converter, *unitStateDialog_ ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
@@ -277,7 +275,7 @@ MainWindow::MainWindow( Controllers& controllers,
     connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
     // Last layers
-    CreateLayers( parameters, locationsLayer, meteoLayer, profilerLayer, automatsLayer, formationLayer, simulation, *picker );
+    CreateLayers( parameters, locationsLayer, meteoLayer, profilerLayer, simulation, *picker );
 
     // Menu bar & status bar
     setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, network_, logger ) );
@@ -319,8 +317,6 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
                                const std::shared_ptr< gui::Layer_ABC >& locations,
                                const std::shared_ptr< gui::Layer_ABC >& weather,
                                const std::shared_ptr< gui::Layer_ABC >& profiler,
-                               const std::shared_ptr< gui::Layer_ABC >& automats,
-                               const std::shared_ptr< gui::Layer_ABC >& formations,
                                const Simulation& simulation,
                                gui::TerrainPicker& picker )
 {
@@ -329,7 +325,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Actions ]                = std::make_shared< ActionsLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_AgentKnowledges ]        = std::make_shared< AgentKnowledgesLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Agents ]                 = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, profile_, model_.actions_, simulation );
-    layers[ eLayerTypes_Automats ]               = automats;
+    layers[ eLayerTypes_Automats ]               = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, profile_, model_.actions_ );
     layers[ eLayerTypes_ContourLines ]           = std::make_shared< gui::ContourLinesLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_CrowdKnowledges ]        = std::make_shared< PopulationKnowledgesLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Creations ]              = std::make_shared< gui::MiscLayer< CreationPanels > >( controllers_, *glProxy_, eLayerTypes_Creations, dockContainer_->GetCreationPanel() );
@@ -338,7 +334,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Drawings ]               = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, profile_, *drawingsBuilder_ );
     layers[ eLayerTypes_EventCreation ]          = std::make_shared< gui::MiscLayer< EventDockWidget > >( controllers_, *glProxy_, eLayerTypes_EventCreation, dockContainer_->GetEventDockWidget() );
     layers[ eLayerTypes_Fog ]                    = std::make_shared< FogLayer >( controllers_, *glProxy_, *strategy_, profile_ );
-    layers[ eLayerTypes_Formations ]             = formations;
+    layers[ eLayerTypes_Formations ]             = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, profile_, model_.actions_, staticModel_ );
     layers[ eLayerTypes_Inhabitants ]            = std::make_shared< gui::InhabitantLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Elevation2d ]            = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers[ eLayerTypes_Elevation3d ]            = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_ );

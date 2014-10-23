@@ -46,13 +46,6 @@ public:
     virtual ~FormationLayer();
     //@}
 
-public:
-    //! @name Operations
-    //@{
-    void Aggregate( const kernel::Entity_ABC& formation );
-    void Disaggregate( const kernel::Entity_ABC& formation );
-    //@}
-
 protected:
     //! @name Operations
     //@{
@@ -72,8 +65,6 @@ private:
     //@{
     virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
-    void Toggle( const kernel::Entity_ABC& entity, bool aggregate );
-    bool IsAgent( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -84,6 +75,6 @@ private:
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __gui_FormationLayer_h_

@@ -10,13 +10,15 @@
 #include "clients_gui_pch.h"
 #include "AggregateToolbar.h"
 #include "moc_AggregateToolbar.cpp"
-#include "AutomatsLayer.h"
-#include "FormationLayer.h"
+#include "GLOptions.h"
+#include "GLView_ABC.h"
 #include "resources.h"
 #include "RichWidget.h"
 #include "SubObjectName.h"
 #include "ImageWrapper.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
@@ -31,20 +33,27 @@ namespace
     static const std::vector< std::string > LEVELS = boost::assign::list_of( "o" )( "oo" )( "ooo" )
                                                                            ( "i" )( "ii" )( "iii" )
                                                                            ( "x" )( "xx" )( "xxx" )( "xxxx" );
+    bool IsLess( const std::string& level, const std::string& maxLevel )
+    {
+        if( std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), level ) ) <=
+            std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), maxLevel ) ) )
+            return true;
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: AggregateToolbar constructor
 // Created: LGY 2011-10-14
 // -----------------------------------------------------------------------------
-AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
-                                    const std::shared_ptr< AutomatsLayer >& automatsLayer,
-                                    const std::shared_ptr< FormationLayer >& formationsLayer,
+AggregateToolbar::AggregateToolbar( GLView_ABC& view,
+                                    const tools::Resolver< kernel::Formation_ABC >& formations,
+                                    const tools::Resolver< kernel::Automat_ABC >& automats,
                                     bool showDisplayModes )
     : QHBoxLayout()
-    , controller_     ( controller )
-    , automatsLayer_  ( automatsLayer )
-    , formationsLayer_( formationsLayer )
+    , view_( view )
+    , automats_( automats )
+    , formations_( formations )
     , displayMenu_( 0 )
 {
     SubObjectName subObject( "AggregateToolbar" );
@@ -98,8 +107,6 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
         btn->setPopup( displayMenu_ );
         connect( displayMenu_, SIGNAL( activated( int ) ), SLOT( OnChangeDisplay( int ) ) );
     }
-
-    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +115,7 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
 // -----------------------------------------------------------------------------
 AggregateToolbar::~AggregateToolbar()
 {
-    controller_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -117,9 +124,10 @@ AggregateToolbar::~AggregateToolbar()
 // -----------------------------------------------------------------------------
 void AggregateToolbar::Aggregate()
 {
-    DisaggregateAll();
-    for( auto it = automats_.begin(); it != automats_.end(); ++it )
-        automatsLayer_->Aggregate( **it );
+    auto& options = view_.GetOptions();
+    automats_.Apply( [&]( const kernel::Automat_ABC& automat ) {
+        options.Aggregate( automat );
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,22 +136,11 @@ void AggregateToolbar::Aggregate()
 // -----------------------------------------------------------------------------
 void AggregateToolbar::DisaggregateAll()
 {
+    view_.GetOptions().Disaggregate();
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
         levelMenu_->setItemChecked( i, false );
-    for( auto it = formations_.begin(); it != formations_.end(); ++it )
-        formationsLayer_->Disaggregate( **it );
 }
 
-namespace
-{
-    bool IsValid( const std::string& level, const std::string& maxLevel )
-    {
-        if( std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), level ) ) <=
-            std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), maxLevel ) ) )
-            return true;
-        return false;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: AggregateToolbar::Aggregate
@@ -151,18 +148,18 @@ namespace
 // -----------------------------------------------------------------------------
 void AggregateToolbar::Aggregate( int id )
 {
-    DisaggregateAll();
-    const std::string level = LEVELS[ id ];
-    for( IT_Formations it = formations_.begin(); it != formations_.end(); ++it )
-        if( IsValid( ENT_Tr::ConvertFromNatureLevel( (*it)->GetLevel() ), level ) )
-            formationsLayer_->Aggregate( **it );
-    for( IT_Automats it = automats_.begin(); it != automats_.end(); ++it )
-    {
-        const std::string path = (*it)->Get< kernel::TacticalHierarchies >().GetLevel();
-        if( path != "" && IsValid( path.substr( 7, path.length() ), level ) )
-            automatsLayer_->Aggregate( **it );
-    }
+    const auto& level = LEVELS[ id ];
     levelMenu_->setItemChecked( id, true );
+    auto& options = view_.GetOptions();
+    formations_.Apply( [&]( const kernel::Formation_ABC& formation ) {
+        if( IsLess( ENT_Tr::ConvertFromNatureLevel( formation.GetLevel() ), level ) )
+            options.Aggregate( formation );
+    } );
+    automats_.Apply( [&]( const kernel::Automat_ABC& automat ) {
+        const auto automatLevel = automat.Get< kernel::TacticalHierarchies >().GetLevel();
+        if( automatLevel.size() >= 7 && IsLess( automatLevel.substr( 7, automatLevel.length() ), level ) )
+            options.Aggregate( automat );
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,52 +181,4 @@ void AggregateToolbar::OnChangeDisplay( int id )
     displayMenu_->setItemChecked( 0, 0 == id );
     displayMenu_->setItemChecked( 1, 1 == id );
     displayMenu_->setItemChecked( 2, 2 == id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::NotifyCreated
-// Created: LGY 2011-10-14
-// -----------------------------------------------------------------------------
-void AggregateToolbar::NotifyCreated( const kernel::Automat_ABC& automat )
-{
-    if( std::find( automats_.begin(), automats_.end(), &automat ) == automats_.end() )
-        automats_.push_back( &automat );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::NotifyDeleted
-// Created: LGY 2011-10-14
-// -----------------------------------------------------------------------------
-void AggregateToolbar::NotifyDeleted( const kernel::Automat_ABC& automat )
-{
-    IT_Automats it = std::find( automats_.begin(), automats_.end(), &automat );
-    if( it != automats_.end() )
-    {
-        std::swap( *it, automats_.back() );
-        automats_.pop_back();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::NotifyCreated
-// Created: LGY 2011-10-14
-// -----------------------------------------------------------------------------
-void AggregateToolbar::NotifyCreated( const kernel::Formation_ABC& formation )
-{
-    if( std::find( formations_.begin(), formations_.end(), &formation ) == formations_.end() )
-        formations_.push_back( &formation );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::NotifyDeleted
-// Created: LGY 2011-10-14
-// -----------------------------------------------------------------------------
-void AggregateToolbar::NotifyDeleted( const kernel::Formation_ABC& formation )
-{
-    IT_Formations it = std::find( formations_.begin(), formations_.end(), &formation );
-    if( it != formations_.end() )
-    {
-        std::swap( *it, formations_.back() );
-        formations_.pop_back();
-    }
 }

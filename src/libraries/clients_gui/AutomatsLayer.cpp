@@ -10,7 +10,8 @@
 #include "clients_gui_pch.h"
 #include "AutomatsLayer.h"
 #include "moc_AutomatsLayer.cpp"
-#include "AggregatedTools.h"
+#include "GLOptions.h"
+#include "Tools.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -47,28 +48,10 @@ AutomatsLayer::~AutomatsLayer()
 // Name: AutomatsLayer::Aggregate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void AutomatsLayer::Aggregate( const Entity_ABC& automat )
-{
-    Toggle( automat, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::Disaggregate
-// Created: SBO 2007-04-12
-// -----------------------------------------------------------------------------
-void AutomatsLayer::Disaggregate( const Entity_ABC& automat )
-{
-     Toggle( automat, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::Aggregate
-// Created: SBO 2007-04-12
-// -----------------------------------------------------------------------------
 void AutomatsLayer::Aggregate()
 {
     if( selected_ )
-        Aggregate( *selected_ );
+        view_.GetOptions().Aggregate( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +61,7 @@ void AutomatsLayer::Aggregate()
 void AutomatsLayer::Disaggregate()
 {
     if( selected_ )
-        Disaggregate( *selected_ );
+        view_.GetOptions().Disaggregate( selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,9 +73,9 @@ void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::Conte
     if( !profile_.IsVisible( automat ) )
         return;
     selected_ = &automat;
-    if( !automat.IsAggregated() )
+    if( !automat.IsAnAggregatedSubordinate() )
     {
-        if( !HasSubordinate( automat, &IsAggregated ) )
+        if( !view_.GetOptions().IsAggregated( automat ) )
             menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
         else
             menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
@@ -105,23 +88,8 @@ void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::Conte
 // -----------------------------------------------------------------------------
 void AutomatsLayer::NotifyActivated( const kernel::Automat_ABC& automat )
 {
-    if( HasSubordinate( automat, []( const kernel::Entity_ABC& ){ return true; } ) )
+    if( tools::HasSubordinate( automat, []( const kernel::Entity_ABC& ){ return true; } ) )
         EntityLayer< kernel::Automat_ABC >::NotifyActivated( automat );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::Toggle
-// Created: SBO 2007-04-12
-// -----------------------------------------------------------------------------
-void AutomatsLayer::Toggle( const Entity_ABC& entity, bool aggregate )
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        auto& child = const_cast< kernel::Entity_ABC& >( it.NextElement() );
-        child.Aggregate( aggregate );
-        Toggle( child, aggregate );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +100,7 @@ void AutomatsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const ge
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Automat_ABC& automat = static_cast< const Automat_ABC& >( selectable );
-    if( !entity.IsAggregated() && HasSubordinate( entity, &IsAggregated ) )
+    if( !entity.IsAnAggregatedSubordinate() && view_.GetOptions().IsAggregated( entity ) )
         controllers_.actions_.ContextMenu( this, automat, entity, point, where );
 }
 
@@ -145,22 +113,4 @@ void AutomatsLayer::NotifySelectionChanged( const std::vector< const kernel::Aut
 {
     EntityLayer< Automat_ABC >::NotifySelectionChanged( elements );
     selected_ = elements.size() == 1 ? elements.front() : 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::HasSubordinate
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-bool AutomatsLayer::HasSubordinate( const kernel::Entity_ABC& entity, std::function< bool( const kernel::Entity_ABC& ) > fun ) const
-{
-    bool children = false;
-    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& child = it.NextElement();
-        if( !fun( child ) )
-            return false;
-        children = true;
-    }
-    return children;
 }

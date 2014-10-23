@@ -20,10 +20,8 @@ namespace kernel
 
 namespace gui
 {
-    class AutomatsLayer;
     class ColorStrategy_ABC;
     class EntitySymbols;
-    class FormationLayer;
     class GlProxy;
     class ParametersLayer;
     class RichView_ABC;
@@ -62,8 +60,6 @@ public:
     //@{
              DockContainer( QMainWindow* parent,
                             kernel::Controllers& controllers,
-                            const std::shared_ptr< gui::AutomatsLayer >& automats,
-                            const std::shared_ptr< gui::FormationLayer >& formation,
                             const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                             const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
                             const std::shared_ptr< gui::TerrainProfilerLayer >& terrainProfilerLayer,
