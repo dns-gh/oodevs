@@ -155,7 +155,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, type->IsTC2(), message.logistic_level() == sword::logistic_base, true ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, dictionary, *result ) );
     result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( controllers_.controller_, *result, static_.types_.automatModels_ ) );
-    result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
+    result->Attach< kernel::Positions >( *new AggregatedPositions( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );

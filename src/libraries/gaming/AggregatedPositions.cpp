@@ -26,9 +26,8 @@ using namespace geometry;
 // Name: AggregatedPositions constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-AggregatedPositions::AggregatedPositions( const Entity_ABC& entity, float factor )
+AggregatedPositions::AggregatedPositions( const Entity_ABC& entity )
     : entity_( entity )
-    , factor_( factor )
 {
     // NOTHING
 }

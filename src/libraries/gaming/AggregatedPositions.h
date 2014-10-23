@@ -30,7 +30,7 @@ class AggregatedPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregatedPositions( const kernel::Entity_ABC& automat, float factor );
+             AggregatedPositions( const kernel::Entity_ABC& automat );
     virtual ~AggregatedPositions();
     //@}
 
@@ -62,7 +62,6 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& entity_;
-    float factor_;
     mutable T_PointVector children_;
     //@}
 };
