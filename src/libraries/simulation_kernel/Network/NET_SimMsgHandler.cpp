@@ -257,7 +257,7 @@ int RecursionOfDeath( int count, char* data )
 void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& params,
         sword::MagicActionAck& ack )
 {
-    protocol::CheckCount( params, 2 );
+    protocol::Check( params.elem_size() > 1, "invalid number of parameters" );
     const std::string& command = protocol::GetString( params, 0 );
     if( command == "trigger_error" )
     {
@@ -274,6 +274,8 @@ void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& par
         const std::string& input = protocol::GetString( params, 1 );
         ack.mutable_result()->add_elem()->add_value()->set_acharstr( input );
     }
+    else if( command == "create_report" )
+        MIL_AgentServer::GetWorkspace().GetEntityManager().OnReceiveReportCreation( params );
     else
         throw MASA_BADPARAM_MAGICACTION( "unknown command: " << command );
 }

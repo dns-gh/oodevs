@@ -526,3 +526,44 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 	err = client.SelectRepairTeam(handlingId, MobilityRepairsTeam)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: repair consign not in a waiting for repair team selection state")
 }
+
+func (s *TestSuite) TestReportCreation(c *C) {
+	phydb := loadPhysical(c, "test")
+	opts, session := makeOptsAndSession()
+	opts.TestCommands = true
+	opts.ExerciseName = ExCrossroadLog
+	WriteSession(c, opts, session)
+	sim, err := simu.StartSim(opts)
+	c.Assert(err, IsNil)
+	defer stopSim(c, sim, nil)
+	client := connectAndWait(c, sim, "admin", "")
+	defer client.Close()
+	data := client.Model.GetData()
+
+	// Invalid report identifier
+	err = client.CreateReport(InvalidIdentifier, InvalidIdentifier)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid source identifier
+	startMissionId := uint32(79)
+	err = client.CreateReport(startMissionId, InvalidIdentifier)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	unitId := getSomeUnit(c, data).Id
+	reporter, _ := newReporter(c, unitId, phydb,
+		"^work just started",
+		"^Level %1 of CBRN protection put on",
+	)
+	reporter.Start(client.Model)
+
+	err = client.CreateReport(startMissionId, unitId)
+	c.Assert(err, IsNil)
+
+	CBRNProtectionId := uint32(525)
+	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeIdentifier(345))
+	c.Assert(err, IsNil)
+
+	client.Model.WaitTicks(1)
+	reports := reporter.Stop()
+	c.Assert(len(reports), Equals, 2)
+}

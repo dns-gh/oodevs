@@ -209,6 +209,19 @@ void MIL_Report::Send< DEC_Decision_ABC >( const DEC_Decision_ABC& sender, E_Typ
     }
 }
 
+void MIL_Report::Send( const sword::Tasker& tasker, const sword::MissionParameters& parameters ) const
+{
+    client::Report message;
+    message().mutable_report()->set_id( nextMessageId_-- );
+    message().mutable_type()->set_id( nID_ );
+    message().set_category( sword::Report::EnumReportType( category_ ) );
+    NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_time() );
+    *message().mutable_source() = tasker;
+    if( parameters.elem_size() > 0 )
+        *message().mutable_parameters() = parameters;
+    message.Send( NET_Publisher_ABC::Publisher() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::Find
 // Created: NLD 2006-12-06
