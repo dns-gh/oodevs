@@ -289,7 +289,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& m
     result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
-    AddPositions( *result, controllers_, simulation_, isInReplay_, *new InhabitantPositions( *result ) );
+    AddPositions( *result, controllers_, simulation_, isInReplay_, *new InhabitantPositions( message, model_.urbanObjects_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     result->Attach< kernel::LivingArea_ABC >( *new LivingArea( message, result->GetId(), controllers_.controller_, model_.urbanObjects_ ) );

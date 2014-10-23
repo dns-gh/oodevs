@@ -24,9 +24,7 @@
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
-#include <boost/foreach.hpp>
 
-using namespace geometry;
 using namespace kernel;
 
 namespace
@@ -59,20 +57,11 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message,
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type.GetName().c_str() ).arg( message.id().id() );
-    Polygon2f polygon;
     for( int i = 0; i < message.objects_size(); ++i )
     {
-        int id = message.objects( i ).id();
-        kernel::UrbanObject_ABC& object = model.GetObject( id );
-        livingUrbanObject_[ id ] = &object;
-        if( const UrbanPositions_ABC* positions = object.Retrieve< UrbanPositions_ABC >() )
-        {
-            polygon.Add( positions->Barycenter() );
-            BOOST_FOREACH( const Polygon2f::T_Vertices::value_type& point, positions->Vertices() )
-                boundingBox_.Incorporate( point );
-        }
+        const int id = message.objects( i ).id();
+        livingUrbanObject_[ id ] = &model.GetObject( id );
     }
-    position_ = polygon.Barycenter();
     CreateDictionary();
     AddExtension( *this );
     controller_.Register( *this );
@@ -172,56 +161,11 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 // Name: Inhabitant::Draw
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& tools ) const
+void Inhabitant::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& tools ) const
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )
             tools.DrawPolygon( positions->Vertices() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::GetPosition
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-Point2f Inhabitant::GetPosition( bool ) const
-{
-    return position_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::GetHeight
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-float Inhabitant::GetHeight( bool ) const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::IsIn
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-bool Inhabitant::IsIn( const Rectangle2f& /*rectangle*/ ) const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::GetBoundingBox
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-Rectangle2f Inhabitant::GetBoundingBox() const
-{
-    return boundingBox_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::Accept
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-void Inhabitant::Accept( LocationVisitor_ABC& /*visitor*/ ) const
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -254,15 +198,6 @@ void Inhabitant::DisplayInSummary( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
              .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
              .Display( tools::translate( "Inhabitant", "Motivation:" ), motivation_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::CanAggregate
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-bool Inhabitant::CanAggregate() const
-{
-    return false;
 }
 
 // -----------------------------------------------------------------------------
