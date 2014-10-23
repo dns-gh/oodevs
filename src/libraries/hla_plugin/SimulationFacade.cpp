@@ -103,7 +103,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, *pObjectHandler_, remoteTacticalSubject, logger, *pPropagationManager_, timeManager ) )
     , pRemoteOrbatShaper_         ( xis.attribute< bool >( "send-full-orbat", false ) ?
                                     new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher, automatTypeResolver ) : 0 )
-    , pTacticalObjectUpdater_     ( new TacticalObjectUpdater( publisher, *pObjectHandler_, logger, *pPropagationManager_, remoteTacticalSubject, timeManager ) )
+    , pTacticalObjectUpdater_     ( new TacticalObjectUpdater( publisher, *pObjectHandler_, logger, *pPropagationManager_, remoteTacticalSubject, timeManager, messageController ) )
 
 {
     // NOTHING

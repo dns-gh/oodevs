@@ -22,6 +22,7 @@ namespace tools
 
 namespace sword
 {
+    class ControlEndTick;
     class ObjectMagicActionAck;
     class SimToClient_Content;
 }
@@ -50,12 +51,13 @@ namespace hla
 class TacticalObjectUpdater : private ResponseObserver_ABC< sword::ObjectMagicActionAck >
                             , private ClassListener_ABC
                             , private ObjectListener_ABC
+                            , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
     //@{
             TacticalObjectUpdater( dispatcher::SimulationPublisher_ABC& publisher, ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler, dispatcher::Logger_ABC& logger,
-                    PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject, const SimulationTimeManager_ABC& timeManager );
+                    PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject, const SimulationTimeManager_ABC& timeManager, tools::MessageController_ABC< sword::SimToClient_Content >& messageController );
     virtual ~TacticalObjectUpdater();
     //@}
 
@@ -88,6 +90,7 @@ private:
     //! @name Operations
     //@{
     virtual void Notify( const sword::ObjectMagicActionAck& message, const std::string& identifier );
+    virtual void Notify( const sword::ControlEndTick& message, int context );
     //@}
 
 private:
@@ -99,6 +102,18 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, unsigned long > T_Identifiers;
+    struct PropagationData
+    {
+        std::string rtiIdentifier;
+        std::vector< ObjectListener_ABC::PropagationData > data;
+        int col;
+        int lig;
+        double xll;
+        double yll;
+        double dx;
+        double dy;
+    };
+    typedef std::map< unsigned int, PropagationData > T_PropagationDataMap;
     //@}
 
 private:
@@ -110,7 +125,9 @@ private:
     PropagationManager_ABC& propagationManager_;
     RemoteTacticalObjectSubject_ABC& subject_;
     const SimulationTimeManager_ABC& timeManager_;
+    tools::MessageController_ABC< sword::SimToClient_Content >& messageController_;
     T_Identifiers identifiers_;
+    T_PropagationDataMap propagationData_;
     //@}
 };
 
