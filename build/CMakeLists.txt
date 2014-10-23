@@ -81,8 +81,6 @@ masa_set_internal_library( SPATIALCONTAINER_LIBRARIES   libspatialcontainer )
 masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
 masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
 masa_set_internal_library( TERRAIN_LIBRARIES            libterrain )
-masa_set_internal_library( TIMELINE_CONTROLS_LIBRARIES  libtimeline_controls )
-masa_set_internal_library( TIMELINE_LIBRARIES           libtimeline )
 
 
 macro( grab_item output name items )
@@ -104,6 +102,7 @@ function( add_target target group dir )
     masa_has_item( shared "shared" ${options} )
     masa_has_item( test "test" ${options} )
     masa_has_item( vista "vista" ${options} )
+    masa_has_item( copyrun "copyrun" ${options} )
     masa_add_target( ${target} ${group} ${dir} OPTIONS ${options} )
     masa_set_output_directory( ${target}
         "${root_dir}/out/${platform}/release"
@@ -138,6 +137,15 @@ function( add_target target group dir )
         masa_get_library_full_name( lib${target} debug release )
         masa_set_target_output_name( ${target} ${debug} ${release} )
     endif()
+
+    if( copyrun )
+        # force copy on run directory so we don't get run directory
+        # issues on processes started by chrome embedded
+        set( rundir "${MASA_RUN}" )
+        add_custom_command( TARGET ${target} POST_BUILD COMMAND
+            ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${target}> "${rundir}" )
+    endif()
+
     if( has_protocol )
         masa_add_target_include( ${target} "${CMAKE_CURRENT_BINARY_DIR}/protocol.out" )
         target_link_libraries( ${target} protocol )
@@ -155,6 +163,40 @@ function( add_target target group dir )
         endif()
     endif()
 endfunction()
+
+# timeline_controls
+add_target( timeline_controls libraries "libraries/controls" OPTIONS protobuf )
+masa_add_target_include( timeline_controls "${MASA_INCLUDE}/cef" )
+masa_add_target_include( timeline_controls "${MASA_INCLUDE}/cef/include" )
+target_link_libraries( timeline_controls
+    ${CEF_WRAPPER_LIBRARIES}
+    ${CEF_LIBRARIES}
+    ${PROTOBUF_LIBRARIES}
+)
+
+# timeline
+add_target( timeline libraries "libraries/timeline" OPTIONS qt recurse )
+masa_add_target_include( timeline "${MASA_INCLUDE}/cef" )
+masa_add_target_include( timeline "${MASA_INCLUDE}/cef/include" )
+target_link_libraries( timeline
+    timeline_controls
+    ${QT_LIBRARIES}
+    ${TOOLS_LIBRARIES}
+)
+
+# timeline_client
+add_target( timeline_client applications "applications/timeline_client"
+    OPTIONS executable win32 copyrun )
+target_link_libraries( timeline_client timeline )
+
+# timeline_app
+add_target( timeline_app applications "applications/timeline_app" OPTIONS qt executable copyrun )
+target_link_libraries( timeline_app
+    timeline
+)
+add_dependencies( timeline_app
+    timeline_client
+)
 
 # protocol
 add_target( protocol common "libraries/protocol" OPTIONS protobuf )
@@ -561,6 +603,7 @@ add_target( gaming_app clients "applications/gaming_app" OPTIONS qt3 qt protocol
 target_link_libraries( gaming_app
     actions_gui
     gaming
+    timeline
     ${CEF_LIBRARIES}
     ${CEF_WRAPPER_LIBRARIES}
     ${EXCEL_LIBRARIES}
@@ -570,8 +613,6 @@ target_link_libraries( gaming_app
     ${GRAPHICS_LIBRARIES}
     ${MAPNIK_LIBRARIES}
     ${TERRAIN_LIBRARIES}
-    ${TIMELINE_CONTROLS_LIBRARIES}
-    ${TIMELINE_LIBRARIES}
 )
 
 # launcher_test
