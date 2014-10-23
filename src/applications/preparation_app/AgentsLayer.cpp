@@ -13,10 +13,10 @@
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/AgentPositions.h"
-#include "preparation/AutomatPositions.h"
 #include "preparation/GhostModel.h"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/StandardModel.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -26,7 +26,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/StandardModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor

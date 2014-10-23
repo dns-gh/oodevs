@@ -18,7 +18,6 @@
 #include "Automat.h"
 #include "AutomatCommunications.h"
 #include "AutomatHierarchies.h"
-#include "AutomatPositions.h"
 #include "CommandPostAttributes.h"
 #include "Dotation.h"
 #include "InitialState.h"
@@ -43,6 +42,7 @@
 #include "Symbol.h"
 #include "AgentAffinities.h"
 
+#include "clients_gui/AggregatedPositions.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
@@ -125,7 +125,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     Automat* result = new Automat( type, controllers_.controller_, idManager_, name );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::AutomatType >( *result, type, dictionary ) );
-    result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
+    result->Attach< kernel::Positions >( *new gui::AggregatedPositions( *result ) );
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ), symbolsFactory_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
@@ -260,7 +260,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     Automat* result = new Automat( xis, controllers_.controller_, idManager_, *type );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
-    result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
+    result->Attach< kernel::Positions >( *new gui::AggregatedPositions( *result ) );
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, std::string(), symbolsFactory_ ) );
     result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( xis, controllers_.controller_, *result, static_.types_.automatModels_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
@@ -362,7 +362,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     Automat* result = new Automat( type, controllers_.controller_, idManager_, ghost.GetName() );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::AutomatType >( *result, type, dictionary ) );
-    result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
+    result->Attach< kernel::Positions >( *new gui::AggregatedPositions( *result ) );
     const kernel::Karma& karma = ghost.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ), symbolsFactory_ ) );
     result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( controllers_.controller_, *result, static_.types_.automatModels_ ) );

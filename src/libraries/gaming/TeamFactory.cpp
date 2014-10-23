@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "TeamFactory.h"
 #include "AgentsModel.h"
-#include "AggregatedPositions.h"
 #include "ConvexHulls.h"
 #include "DictionaryExtensions.h"
 #include "Diplomacies.h"
@@ -35,6 +34,7 @@
 #include "Symbol.h"
 #include "UrbanKnowledges.h"
 #include "actions/ActionsModel.h"
+#include "clients_gui/AggregatedPositions.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Color_ABC.h"
@@ -166,7 +166,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach< kernel::Dotations_ABC >( *new Dotations( *result, controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new ConvexHulls( *result ) );
-    result->Attach< kernel::Positions >( *new AggregatedPositions( *result ) );
+    result->Attach< kernel::Positions >( *new gui::AggregatedPositions( *result ) );
     result->Attach< kernel::DictionaryExtensions >( *new ::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< gui::LogisticHierarchiesBase >( *new kernel::LogisticHierarchies( controllers_.controller_, *result, model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     if( message.has_color() )
