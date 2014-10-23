@@ -11,13 +11,18 @@ package web
 import (
 	"archive/zip"
 	"bytes"
+	"code.google.com/p/go-uuid/uuid"
+	"code.google.com/p/goprotobuf/proto"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"masa/sword/swtest"
 	"masa/timeline/i18n"
+	"masa/timeline/sdk"
 	"masa/timeline/server"
+	"masa/timeline/util"
 	"os"
 	"testing"
+	"time"
 )
 
 func Test(t *testing.T) { TestingT(t) }
@@ -82,4 +87,63 @@ func (TestSuite) TestServerLoadTranslations(c *C) {
 	serv, err := NewServer(log, false, 8081, zipFile, "", controller)
 	c.Assert(err, IsNil)
 	swtest.DeepEquals(c, *serv.Handler.(*Server).translations, expectedTranslations)
+}
+
+func (TestSuite) TestPanicWhenImportingChildrenEvents(c *C) {
+	log := swtest.MakeGocheckLogger(c)
+	controller := server.MakeController(log)
+	raw, err := NewServer(log, false, 8081, "", "", controller)
+	c.Assert(err, IsNil)
+	handler, ok := raw.Handler.(*Server)
+	c.Assert(ok, DeepEquals, true)
+	id := uuid.New()
+	_, err = handler.controller.CreateSession(id, "some_name", true)
+	c.Assert(err, IsNil)
+	begin := util.FormatTime(time.Now())
+	end := util.FormatTime(time.Now().Add(1 * time.Minute))
+	// import the child before the parent
+	input := `
+[
+    {
+        "uuid": "A",
+        "begin": "` + begin + `",
+        "parent": "B"
+    },
+    {
+        "uuid": "B",
+        "begin": "` + begin + `",
+        "end": "` + end + `"
+    }
+]
+`
+	events, err := handler.importEvents(id, []byte(input))
+	c.Assert(err, IsNil)
+	swtest.DeepEquals(c, events, []*sdk.Event{
+		{
+			Uuid:      proto.String("A"),
+			Name:      proto.String(""),
+			Info:      proto.String(""),
+			Begin:     proto.String(begin),
+			End:       proto.String(""),
+			Done:      proto.Bool(false),
+			ErrorCode: proto.Int32(0),
+			ErrorText: proto.String(""),
+			ReadOnly:  proto.Bool(false),
+			Parent:    proto.String("B"),
+			Metadata:  proto.String(""),
+		},
+		{
+			Uuid:      proto.String("B"),
+			Name:      proto.String(""),
+			Info:      proto.String(""),
+			Begin:     proto.String(begin),
+			End:       proto.String(end),
+			Done:      proto.Bool(false),
+			ErrorCode: proto.Int32(0),
+			ErrorText: proto.String(""),
+			ReadOnly:  proto.Bool(false),
+			Parent:    proto.String(""),
+			Metadata:  proto.String(""),
+		},
+	})
 }
