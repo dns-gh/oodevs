@@ -603,8 +603,6 @@ target_link_libraries( gaming_app
     actions_gui
     gaming
     timeline
-    ${CEF_LIBRARIES}
-    ${CEF_WRAPPER_LIBRARIES}
     ${EXCEL_LIBRARIES}
     ${EXTRACTOR_LIBRARIES}
     ${GEODATA_LIBRARIES}
