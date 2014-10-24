@@ -164,7 +164,7 @@ function( add_target target group dir )
 endfunction()
 
 # timeline_controls
-add_target( timeline_controls libraries "libraries/controls" OPTIONS protobuf )
+add_target( timeline_controls timeline "libraries/controls" OPTIONS protobuf )
 masa_add_target_include( timeline_controls "${MASA_INCLUDE}/cef" )
 masa_add_target_include( timeline_controls "${MASA_INCLUDE}/cef/include" )
 target_link_libraries( timeline_controls
@@ -174,7 +174,7 @@ target_link_libraries( timeline_controls
 )
 
 # timeline
-add_target( timeline libraries "libraries/timeline" OPTIONS qt recurse )
+add_target( timeline timeline "libraries/timeline" OPTIONS qt recurse )
 masa_add_target_include( timeline "${MASA_INCLUDE}/cef" )
 masa_add_target_include( timeline "${MASA_INCLUDE}/cef/include" )
 target_link_libraries( timeline
@@ -184,12 +184,12 @@ target_link_libraries( timeline
 )
 
 # timeline_client
-add_target( timeline_client applications "applications/timeline_client"
+add_target( timeline_client timeline "applications/timeline_client"
     OPTIONS executable win32 copyrun )
 target_link_libraries( timeline_client timeline )
 
 # timeline_app
-add_target( timeline_app applications "applications/timeline_app" OPTIONS qt executable copyrun )
+add_target( timeline_app timeline "applications/timeline_app" OPTIONS qt executable copyrun )
 target_link_libraries( timeline_app
     timeline
 )
@@ -603,8 +603,6 @@ target_link_libraries( gaming_app
     actions_gui
     gaming
     timeline
-    ${CEF_LIBRARIES}
-    ${CEF_WRAPPER_LIBRARIES}
     ${EXCEL_LIBRARIES}
     ${EXTRACTOR_LIBRARIES}
     ${GEODATA_LIBRARIES}
