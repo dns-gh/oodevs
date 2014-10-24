@@ -116,7 +116,9 @@ void LayerComposite::ContextMenu( const kernel::GraphicalEntity_ABC& entity, con
 // -----------------------------------------------------------------------------
 void LayerComposite::ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection )
 {
-    Forward( layers_, [&]( const T_Layer& layer ){ layer->ExtractElements( extractedElement, selection ); } );
+    Forward( layers_, [&]( const T_Layer& layer ){
+        if( !layer->IsReadOnly() )
+            layer->ExtractElements( extractedElement, selection ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +136,7 @@ namespace
     bool ForwardResult( const Layers& layers, const Functor& functor )
     {
         for( auto it = layers.begin(); it != layers.end(); ++it )
-            if( functor( *it ) )
+            if( !(*it)->IsReadOnly() && functor( *it ) )
                 return true;
         return false;
     }
@@ -245,7 +247,7 @@ bool LayerComposite::HandleMouseWheel( QWheelEvent* event, const geometry::Point
 // -----------------------------------------------------------------------------
 bool LayerComposite::IsReadOnly() const
 {
-    return ForwardResult( layers_, [&]( const T_Layer& layer ) { return layer->IsReadOnly(); } );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

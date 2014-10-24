@@ -188,7 +188,7 @@ const layers::Descriptor descriptors_[] = {
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_LivingArea,
       T_LayerTypesVector() },
     { eLayerTypes_TacticalLinesComposite, "main,miniview",                    true,   true,
-      eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
+      eModes_All,                         eModes_Terrain,                     eModes_None,
       ba::list_of( eLayerTypes_TacticalLines )( eLayerTypes_Drawings )( eLayerTypes_Pathfinds ) },
     { eLayerTypes_Terrain,                "main,composition,miniviews",       false,  true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
