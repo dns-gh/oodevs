@@ -53,7 +53,7 @@ class LockMapViewController : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LockMapViewController( kernel::Controllers& controllers, gui::GLView_ABC& proxy );
+             LockMapViewController( kernel::Controllers& controllers, gui::GLView_ABC& view );
     virtual ~LockMapViewController();
     //@}
 

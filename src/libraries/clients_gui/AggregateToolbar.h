@@ -13,7 +13,6 @@
 #include <tools/Resolver.h>
 #include <vector>
 
-
 namespace kernel
 {
     class Automat_ABC;
@@ -66,7 +65,6 @@ private:
     GLView_ABC& view_;
     const tools::Resolver< kernel::Formation_ABC >& formations_;
     const tools::Resolver< kernel::Automat_ABC >& automats_;
-
     kernel::ContextMenu* levelMenu_;
     kernel::ContextMenu* displayMenu_;
     //@}

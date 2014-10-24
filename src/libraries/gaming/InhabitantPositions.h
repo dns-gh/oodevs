@@ -26,7 +26,7 @@ class InhabitantPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InhabitantPositions( const sword::PopulationCreation& message,
+             InhabitantPositions( const sword::PopulationCreation& message,
                                   const UrbanModel& model,
                                   const Inhabitant& inhabitant );
     virtual ~InhabitantPositions();

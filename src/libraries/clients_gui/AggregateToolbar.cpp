@@ -35,10 +35,8 @@ namespace
                                                                            ( "x" )( "xx" )( "xxx" )( "xxxx" );
     bool IsLess( const std::string& level, const std::string& maxLevel )
     {
-        if( std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), level ) ) <=
-            std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), maxLevel ) ) )
-            return true;
-        return false;
+        return std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), level ) ) <=
+               std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), maxLevel ) );
     }
 }
 

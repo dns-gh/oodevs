@@ -32,7 +32,7 @@ InhabitantPositions::InhabitantPositions( const sword::PopulationCreation& messa
     {
         int id = message.objects( i ).id();
         kernel::UrbanObject_ABC& object = model.GetObject( id );
-        if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+        if( const auto positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
         {
             polygon.Add( positions->Barycenter() );
             const auto& vertices = positions->Vertices();

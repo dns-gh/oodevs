@@ -71,7 +71,7 @@ bool AutomatsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*p
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& /*point*/ )
 {
-    gui::AggregatedPositions* positions = dnd::FindData< gui::AggregatedPositions >( event );
+    auto positions = dnd::FindData< gui::AggregatedPositions >( event );
     if( positions && selectedAutomat_ )
     {
         draggingPoint_.Set( 0, 0 );
@@ -87,8 +87,7 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    gui::AggregatedPositions* positions = dnd::FindData< gui::AggregatedPositions >( event );
-    if( positions )
+    if( auto positions = dnd::FindData< gui::AggregatedPositions >( event ) )
     {
         if( selectedAutomat_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
         {

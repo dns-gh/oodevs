@@ -71,7 +71,7 @@ bool FormationLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*
 // -----------------------------------------------------------------------------
 bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& /*point*/ )
 {
-    gui::AggregatedPositions* positions = dnd::FindData< gui::AggregatedPositions >( event );
+    auto positions = dnd::FindData< gui::AggregatedPositions >( event );
     if( positions && selectedFormation_ )
     {
         draggingPoint_.Set( 0, 0 );
@@ -87,8 +87,7 @@ bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f
 // -----------------------------------------------------------------------------
 bool FormationLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    gui::AggregatedPositions* positions = dnd::FindData< gui::AggregatedPositions >( event );
-    if( positions )
+    if( auto positions = dnd::FindData< gui::AggregatedPositions >( event ) )
     {
         if( selectedFormation_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
         {
@@ -108,7 +107,7 @@ bool FormationLayer::HandleMousePress( QMouseEvent* event, const geometry::Point
 {
     if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag() )
     {
-        if( const gui::AggregatedPositions* pos = static_cast< const gui::AggregatedPositions* >( selectedFormation_->Retrieve< kernel::Positions >() ) )
+        if( const auto* pos = static_cast< const gui::AggregatedPositions* >( selectedFormation_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
             draggingOffset_ = pos->GetPosition( true ) - point.ToVector();

@@ -165,7 +165,7 @@ QWidget* tools::AddLabeledWidget( const QString& label,
     return result;
 }
 
-bool tools::HasSubordinate( const kernel::Entity_ABC& entity, std::function< bool( const kernel::Entity_ABC& ) > fun )
+bool tools::HasSubordinate( const kernel::Entity_ABC& entity, const std::function< bool( const kernel::Entity_ABC& ) >& fun )
 {
     bool children = false;
     auto it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();

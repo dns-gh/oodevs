@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "GlSelector.h"
 #include "moc_GlSelector.cpp"
+
+#include "CompositionPass.h"
 #include "GlPlaceHolder.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
@@ -18,8 +20,8 @@
 #include "IconLayout.h"
 #include "Layer.h"
 #include "LayersRenderPass.h"
+#include "SignalAdapter.h"
 #include "TextureRenderPass.h"
-#include "CompositionPass.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
@@ -86,7 +88,9 @@ void GlSelector::Load()
     widget2d_->Load( config_ );
     widget2d_->Configure( strategy_ );
     auto movementLayer = std::make_shared< DragMovementLayer >( *widget2d_ );
-    connect( movementLayer.get(), SIGNAL( Translated() ), this, SLOT( OnTranslated() ) );
+    gui::connect( movementLayer.get(), SIGNAL( Translated() ), [&]() {
+        proxy_.GetOptions().SetLockedEntity( 0 );
+    } );
     widget2d_->Configure( movementLayer );
     widget3d_->Load( config_ );
 
@@ -201,13 +205,4 @@ void GlSelector::SetFocus()
         widget2d_->setFocus();
     else if( widget3d_ )
         widget3d_->setFocus();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlSelector::OnTranslated
-// Created: ABR 2014-08-01
-// -----------------------------------------------------------------------------
-void GlSelector::OnTranslated()
-{
-    proxy_.GetOptions().SetLockedEntity( 0 );
 }

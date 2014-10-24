@@ -36,7 +36,7 @@ class AggregatedPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregatedPositions( const kernel::Entity_ABC& automat );
+    explicit AggregatedPositions( const kernel::Entity_ABC& automat );
     virtual ~AggregatedPositions();
     //@}
 
