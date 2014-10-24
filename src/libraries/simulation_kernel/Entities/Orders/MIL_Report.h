@@ -113,7 +113,8 @@ private:
     //@{
     template< typename T >
     static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
-    bool DoSend( client::Report& message, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
+    bool ConvertParameters( sword::MissionParameters& parameters, const std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
+    void Send( const sword::Tasker& tasker, E_Type nType, const sword::MissionParameters& parameters ) const;
     //@}
 
     //! @name Helpers

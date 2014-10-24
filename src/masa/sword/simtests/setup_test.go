@@ -49,6 +49,7 @@ func startSimOnExercise(c *C, cfg *swrun.ClientOpts) *simu.SimProcess {
 	opts.ExerciseName = cfg.Exercise
 	opts.PathfindDir = cfg.PathfindDir
 	opts.PathfindFilter = cfg.PathfindFilter
+	opts.TestCommands = cfg.TestCommands
 	session.Paused = cfg.Paused
 	if cfg.Step > 0 {
 		session.TimeStep = cfg.Step

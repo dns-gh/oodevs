@@ -108,11 +108,7 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
     parameters_.push_back( pParameter );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Report::DoSend
-// Created: LDC 2009-06-16
-// -----------------------------------------------------------------------------
-bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
+bool MIL_Report::ConvertParameters( sword::MissionParameters& parameters, const std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
     const std::size_t expectedSize = parameters_.size();
     const std::size_t receivedSize = params.size();
@@ -121,11 +117,6 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
         MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (parameters missing)" );
         return false;
     }
-
-    message().mutable_report()->set_id( nextMessageId_-- ); // descending order
-    message().mutable_type()->set_id( nID_ );
-    message().set_category( sword::Report::EnumReportType( nType ) );
-    NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_time() );
     for( std::size_t i = 0; i < expectedSize; ++i )
     {
         if( !params[ i ]->IsOfType( parameters_[i]->GetType() ) )
@@ -133,7 +124,7 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
             MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' parameter " << i << " does not match report type" );
             return false;
         }
-        sword::MissionParameter& paramProtobuff = *message().mutable_parameters()->add_elem();
+        sword::MissionParameter& paramProtobuff = *parameters.add_elem();
         if( !params[ i ]->ToElement( *paramProtobuff.add_value() ) )
         {
             MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' parameter " << i << " could not be converted to protobuf" );
@@ -151,33 +142,36 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
 template<>
 void MIL_Report::Send< MIL_Automate >( const MIL_Automate& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
 {
-    client::Report message;
-    if( DoSend( message, nType, diaParameters ) )
+    sword::MissionParameters parameters;
+    if( ConvertParameters( parameters, diaParameters ) )
     {
-        message().mutable_source()->mutable_automat()->set_id( sender.GetID() );
-        message.Send( NET_Publisher_ABC::Publisher() );
+        sword::Tasker tasker;
+        tasker.mutable_automat()->set_id( sender.GetID() );
+        Send( tasker, nType, parameters );
     }
 }
 
 template<>
 void MIL_Report::Send< MIL_Population >( const MIL_Population& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
 {
-    client::Report message;
-    if( DoSend( message, nType, diaParameters ) )
+    sword::MissionParameters parameters;
+    if( ConvertParameters( parameters, diaParameters ) )
     {
-        message().mutable_source()->mutable_crowd()->set_id( sender.GetID() );
-        message.Send( NET_Publisher_ABC::Publisher() );
+        sword::Tasker tasker;
+        tasker.mutable_crowd()->set_id( sender.GetID() );
+        Send( tasker, nType, parameters );
     }
 }
 
 template<>
 void MIL_Report::Send<  MIL_Agent_ABC >( const MIL_Agent_ABC& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
 {
-    client::Report message;
-    if( DoSend( message, nType, diaParameters ) )
+    sword::MissionParameters parameters;
+    if( ConvertParameters( parameters, diaParameters ) )
     {
-        message().mutable_source()->mutable_unit()->set_id( sender.GetID() );
-        message.Send( NET_Publisher_ABC::Publisher() );
+        sword::Tasker tasker;
+        tasker.mutable_unit()->set_id( sender.GetID() );
+        Send( tasker, nType, parameters );
     }
 }
 
@@ -190,36 +184,43 @@ void MIL_Report::Send<  MIL_AgentPion >( const MIL_AgentPion& sender, E_Type nTy
 template<>
 void MIL_Report::Send< MIL_Formation >( const MIL_Formation& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
 {
-    client::Report message;
-    if( DoSend( message, nType, diaParameters ) )
+    sword::MissionParameters parameters;
+    if( ConvertParameters( parameters, diaParameters ) )
     {
-        message().mutable_source()->mutable_formation()->set_id( sender.GetID() );
-        message.Send( NET_Publisher_ABC::Publisher() );
+        sword::Tasker tasker;
+        tasker.mutable_formation()->set_id( sender.GetID() );
+        Send( tasker, nType, parameters );
     }
 }
 
 template<>
 void MIL_Report::Send< DEC_Decision_ABC >( const DEC_Decision_ABC& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
 {
-    client::Report message;
-    if( DoSend( message, nType, diaParameters ) )
+    sword::MissionParameters parameters;
+    if( ConvertParameters( parameters, diaParameters ) )
     {
-        MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), sender.GetID() );
-        message.Send( NET_Publisher_ABC::Publisher() );
-    }
+        sword::Tasker tasker;
+        MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( tasker, sender.GetID() );
+        Send( tasker, nType, parameters );
+    } 
 }
 
-void MIL_Report::Send( const sword::Tasker& tasker, const sword::MissionParameters& parameters ) const
+void MIL_Report::Send( const sword::Tasker& tasker, E_Type nType, const sword::MissionParameters& parameters ) const
 {
     client::Report message;
     message().mutable_report()->set_id( nextMessageId_-- );
     message().mutable_type()->set_id( nID_ );
-    message().set_category( sword::Report::EnumReportType( category_ ) );
+    message().set_category( sword::Report::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_time() );
     *message().mutable_source() = tasker;
     if( parameters.elem_size() > 0 )
         *message().mutable_parameters() = parameters;
     message.Send( NET_Publisher_ABC::Publisher() );
+}
+
+void MIL_Report::Send( const sword::Tasker& tasker, const sword::MissionParameters& parameters ) const
+{
+    Send( tasker, category_, parameters );
 }
 
 // -----------------------------------------------------------------------------

@@ -528,20 +528,14 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 }
 
 func (s *TestSuite) TestReportCreation(c *C) {
+	sim, client := connectAndWaitModel(c,
+		NewAllUserOpts(ExCrossroadLog).EnableTestCommands())
+	defer stopSimAndClient(c, sim, client)
 	phydb := loadPhysical(c, "test")
-	opts, session := makeOptsAndSession()
-	opts.TestCommands = true
-	opts.ExerciseName = ExCrossroadLog
-	WriteSession(c, opts, session)
-	sim, err := simu.StartSim(opts)
-	c.Assert(err, IsNil)
-	defer stopSim(c, sim, nil)
-	client := connectAndWait(c, sim, "admin", "")
-	defer client.Close()
 	data := client.Model.GetData()
 
 	// Invalid report identifier
-	err = client.CreateReport(InvalidIdentifier, InvalidIdentifier)
+	err := client.CreateReport(InvalidIdentifier, InvalidIdentifier)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid source identifier

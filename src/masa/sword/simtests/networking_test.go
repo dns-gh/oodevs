@@ -11,8 +11,6 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
-	"masa/sword/swapi/simu"
-	"masa/sword/swrun"
 	"strings"
 )
 
@@ -23,15 +21,9 @@ func checkEcho(c *C, client *swapi.Client, s string) {
 }
 
 func (s *TestSuite) TestEcho(c *C) {
-	opts, session := swrun.MakeOptsAndSession(Cfg)
-	opts.TestCommands = true
-	opts.ExerciseName = ExCrossroadSmallEmpty
-	WriteSession(c, opts, session)
-	sim, err := simu.StartSim(opts)
-	c.Assert(err, IsNil)
-	defer stopSim(c, sim, nil)
-	client := connectAndWait(c, sim, "admin", "")
-	defer client.Close()
+	sim, client := connectAndWaitModel(c,
+		NewAllUserOpts(ExCrossroadSmallEmpty).EnableTestCommands())
+	defer stopSimAndClient(c, sim, client)
 
 	checkEcho(c, client, "")
 	checkEcho(c, client, "something")

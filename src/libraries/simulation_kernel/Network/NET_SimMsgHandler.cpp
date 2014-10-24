@@ -275,7 +275,11 @@ void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& par
         ack.mutable_result()->add_elem()->add_value()->set_acharstr( input );
     }
     else if( command == "create_report" )
+    {
+        // create_report is a command of the debug_internal magic action because
+        // procotol actions can't manage an undefined number of parameters.
         MIL_AgentServer::GetWorkspace().GetEntityManager().OnReceiveReportCreation( params );
+    }
     else
         throw MASA_BADPARAM_MAGICACTION( "unknown command: " << command );
 }
