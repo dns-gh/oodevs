@@ -182,7 +182,7 @@ const layers::Descriptor descriptors_[] = {
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
     { eLayerTypes_Selection,              "main",                             false,  false,
-      eModes_AllPrepare,                  eModes_Terrain | eModes_Itinerary,  eModes_None,
+      eModes_AllPrepare,                  eModes_Itinerary,                   eModes_None,
       T_LayerTypesVector() },
     { eLayerTypes_TacticalLines,          "main,miniview",                    true,   false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_LivingArea,
