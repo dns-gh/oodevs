@@ -15,7 +15,7 @@
     <entry name="abattis" dis="4 0 225 1 15"/>
     <entry name="anti tank obstacle" dis="4 0 225 1 16"/>
     <entry name="barricade" dis="4 0 225 1 17"/>
-    <entry name="road destruction" dis="4 0 225 1 20"/>
+    <entry name="obstacle" dis="4 0 225 1 20"/>
     <entry name="continuous pontoon bridge" dis="4 0 225 1 22"/>
     <entry name="firing post" dis="4 0 225 1 24"/>
     <entry name="logistic support area" dis="4 0 225 1 29"/>
