@@ -60,13 +60,13 @@ void MetricsLayer::Paint( Viewport_ABC& )
         if( metricPoints_.size() > 1 )
         {
             geometry::Point2f start = *(it - 1 );
-            geometry::Point2f end = *it ;
-                glLineWidth( 4 );
-                glColor4f( COLOR_WHITE );
-                view_.DrawLine( start, end );
-                glLineWidth( 2 );
-                glColor4f( COLOR_BLACK );
-                view_.DrawLine( start, end );
+            geometry::Point2f end = *it;
+            glLineWidth( 4 );
+            glColor4f( COLOR_WHITE );
+            view_.DrawLine( start, end );
+            glLineWidth( 2 );
+            glColor4f( COLOR_BLACK );
+            view_.DrawLine( start, end );
         }
     }
     start_ =  metricPoints_.front();
