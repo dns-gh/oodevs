@@ -141,9 +141,8 @@ function( add_target target group dir )
     if( copyrun )
         # force copy on run directory so we don't get run directory
         # issues on processes started by chrome embedded
-        set( rundir "${MASA_RUN}" )
         add_custom_command( TARGET ${target} POST_BUILD COMMAND
-            ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${target}> "${rundir}" )
+            ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${target}> "${MASA_RUN}" )
     endif()
 
     if( has_protocol )
