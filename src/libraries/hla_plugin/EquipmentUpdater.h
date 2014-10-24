@@ -121,13 +121,21 @@ public:
         unsigned int lightDamages_;
         unsigned int heavyDamages_;
     };
+    struct T_StaticComponent
+    {
+        unsigned int typeIdentifier;
+        unsigned int count;
+        unsigned int crew;
+        std::vector< unsigned long > breakdowns;
+    };
     typedef std::map< std::string, T_Component > T_Components;
     typedef std::map< std::string, T_Components > T_Agents;
-    typedef std::pair< unsigned int, unsigned int > T_StaticComponent;
+    //typedef std::pair< unsigned int, unsigned int > T_StaticComponent;
     typedef std::map< std::string, T_StaticComponent > T_StaticComponents;
     typedef std::map< std::string, T_StaticComponents > T_AgentsTypes;
     typedef boost::bimap< std::string, unsigned int > T_Identifiers;
     typedef std::map< std::string, HlaObject_ABC* > T_HLAObjects;
+    typedef std::set< std::string > T_RemoteNames;
     //@}
 
 private:
@@ -145,6 +153,7 @@ private:
     T_Agents remoteAgents_;
     T_AgentsTypes agentTypes_;
     T_HLAObjects hlaObjects_;
+    T_RemoteNames remoteNames_;
     //@}
 };
 
