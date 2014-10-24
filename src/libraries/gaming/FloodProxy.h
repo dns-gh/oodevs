@@ -13,10 +13,19 @@
 #include "propagation/ElevationGetter_ABC.h"
 #include <boost/shared_ptr.hpp>
 
+namespace gui
+{
+    class GLView_ABC;
+}
+
 namespace propagation
 {
-    class FloodDrawer;
     class FloodModel_ABC;
+}
+
+namespace gui
+{
+    class FloodDrawer;
 }
 
 namespace kernel
@@ -43,7 +52,7 @@ public:
     //@{
     virtual double GetElevationAt( const geometry::Point2f& point ) const;
     virtual float GetCellSize() const;
-    void Draw( unsigned int floodId ) const;
+    void Draw( unsigned int floodId, gui::GLView_ABC& view ) const;
     void Remove( unsigned int floodId );
     unsigned int GenerateFlood( unsigned int floodId, const geometry::Point2f& point, int depth, int refDist );
     unsigned int FindFlood( const geometry::Point2f& point, int depth, int refDist ) const;
@@ -52,9 +61,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::shared_ptr< propagation::FloodDrawer > T_Flood;
-    typedef std::map< unsigned int, T_Flood >             T_Floods;
-    typedef T_Floods::const_iterator                    CIT_Floods;
+    typedef boost::shared_ptr< gui::FloodDrawer > T_Flood;
+    typedef std::map< unsigned int, T_Flood > T_Floods;
     //@}
 
 private:

@@ -42,7 +42,7 @@ DrawerLayer::DrawerLayer( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 DrawerLayer::~DrawerLayer()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

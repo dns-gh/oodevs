@@ -81,7 +81,6 @@ void WatershedLayer::Paint( const geometry::Rectangle2f& viewport )
     if( !modelLoaded_ ||
         !ShouldDrawPass() ||
         !view_.GetOptions().Get( "Watershed/Enabled" ).To< bool >() ||
-        GetAlpha() == 0 ||
         !gl::HasMultiTexturing() )
         return;
 

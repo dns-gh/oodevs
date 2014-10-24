@@ -11,6 +11,7 @@
 #define __TooltipsLayer_h_
 
 #include "TooltipsLayer_ABC.h"
+#include "Layer.h"
 
 namespace kernel
 {
@@ -21,36 +22,23 @@ namespace gui
 {
 // =============================================================================
 /** @class  TooltipsLayer
-    @brief  TooltipsLayer
+    @brief  Tooltips layer
 */
 // Created: SBO 2008-04-11
 // =============================================================================
-class TooltipsLayer : public TooltipsLayer_ABC
+class TooltipsLayer : public TooltipsLayer_ABC, public Layer
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     explicit TooltipsLayer( kernel::Controllers& controllers, GLView_ABC& tools );
     virtual ~TooltipsLayer();
-    //@}
 
-    //! @name Operations
-    //@{
     virtual void Paint( Viewport_ABC& viewport );
-    virtual void Draw( const geometry::Point2f& position, const QImage& image );
-    //@}
+    virtual void Draw( const geometry::Point2f& position, const Tooltip& tooltip );
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< geometry::Point2f, QImage > > T_Tooltips;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_Tooltips tooltips_;
-    //@}
+    std::set< std::pair< geometry::Point2f, Tooltip > > tooltips_;
+    std::map< Tooltip, QImage > cache_;
+    float alpha_;
 };
 
 }

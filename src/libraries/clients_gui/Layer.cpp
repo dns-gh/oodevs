@@ -100,6 +100,8 @@ float Layer::GetAlpha() const
 // -----------------------------------------------------------------------------
 bool Layer::ShouldDrawPass() const
 {
+    if( alpha_ <= 0 )
+        return false;
     const auto currentPass = view_.GetCurrentPass();
     return IsEnabled()
         && ( descriptor_.passes_.empty() || currentPass.empty() || descriptor_.passes_.find( currentPass ) != std::string::npos )

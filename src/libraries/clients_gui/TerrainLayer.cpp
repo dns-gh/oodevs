@@ -86,13 +86,12 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     const auto& options = view_.GetOptions();
     settings_ = options.GetTerrainSettings();
-    if( !ShouldDrawPass() || GetAlpha() == 0 || !settings_ )
+    if( !ShouldDrawPass() || !settings_ )
         return;
-    if( !layer_.get() && !noVBOlayer_.get() && !graphicsDirectory_.IsEmpty() )
+    if( !layer_ && !noVBOlayer_ && !graphicsDirectory_.IsEmpty() )
         LoadGraphics();
     if( !layer_ && !noVBOlayer_ )
         return;
-
     smallNames_ = options.Get( "SmallText" ).To< TristateOption >();
     bigNames_ = options.Get( "BigText" ).To< TristateOption >();
     pickingEnabled_ = !options.Get( "3D" ).To< bool >();
@@ -106,15 +105,14 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
         layer_->SetGraphicSetup( settings_ );
     else
         noVBOlayer_->SetGraphicSetup( settings_ );
-
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
-        glBindTexture( GL_TEXTURE_2D, 0 );
-        glDisable( GL_TEXTURE_GEN_S );
-        glDisable( GL_TEXTURE_GEN_T );
-        if( layer_.get() )
-            layer_->Paint( viewport );
-        else
-            noVBOlayer_->Paint( viewport );
+    glBindTexture( GL_TEXTURE_2D, 0 );
+    glDisable( GL_TEXTURE_GEN_S );
+    glDisable( GL_TEXTURE_GEN_T );
+    if( layer_ )
+        layer_->Paint( viewport );
+    else
+        noVBOlayer_->Paint( viewport );
     glPopAttrib();
 }
 
@@ -269,9 +267,9 @@ TerrainData TerrainLayer::Pick( int x, int y )
 {
     if( !pickingEnabled_ )
         return TerrainData();
-    if( layer_.get() )
+    if( layer_ )
         return layer_->PickTerrain( x, y );
-    else if( noVBOlayer_.get() )
+    else if( noVBOlayer_ )
         return noVBOlayer_->PickTerrain( x, y );
     return TerrainData();
 }

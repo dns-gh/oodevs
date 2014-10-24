@@ -49,7 +49,7 @@ TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 TacticalLinesLayer::~TacticalLinesLayer()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

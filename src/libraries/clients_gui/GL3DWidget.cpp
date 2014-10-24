@@ -622,10 +622,8 @@ void Gl3dWidget::DrawImage( const QImage& image, const Point2f& where ) const
 {
     if( image.bits() )
     {
-        glDisable( GL_DEPTH_TEST );
-        glRasterPos3f( where.X(), where.Y(), ElevationAt( where ) + 100.f );
+        glRasterPos3f( where.X(), where.Y(), ElevationAt( where ) );
         glDrawPixels( image.width(), image.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
-        glEnable( GL_DEPTH_TEST );
     }
 }
 
@@ -849,9 +847,7 @@ void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking
     if( !IsInSelectionViewport( point ) )
         return;
     glDisable( GL_DEPTH_TEST );
-
     pPickingSelector_->FillSelection( selection, type, boost::bind( &Gl3dWidget::paintGL, this ) );
-
     glEnable( GL_DEPTH_TEST );
 }
 

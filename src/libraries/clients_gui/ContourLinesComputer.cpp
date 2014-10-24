@@ -103,7 +103,6 @@ unsigned int ContourLinesComputer::CreateCallList()
 {
     if( callList_ )
         return callList_;
-
     {
         boost::mutex::scoped_lock locker( mutex_ );
         if( !computed_ )
@@ -120,9 +119,10 @@ unsigned int ContourLinesComputer::CreateCallList()
             return 0;
         }
     }
-
     callList_ = glGenLists( 1 );
     glNewList( callList_, GL_COMPILE );
+    glPushAttrib( GL_LINE_BIT );
+    glEnable( GL_LINE_SMOOTH );
     glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
     glEnableClientState( GL_VERTEX_ARRAY );
     glLineWidth( 2.f );
@@ -132,6 +132,7 @@ unsigned int ContourLinesComputer::CreateCallList()
     CreateGLArrays( GL_LINE_LOOP, loops_[ 2 ] );
     CreateGLArrays( GL_LINE_STRIP, loops_[ 3 ] );
     glDisableClientState( GL_VERTEX_ARRAY );
+    glPopAttrib();
     glEndList();
     loops_[ 0 ].clear();
     loops_[ 1 ].clear();

@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "FloodProxy.h"
 #include "clients_kernel/DetectionMap.h"
-#include "propagation/FloodDrawer.h"
+#include "clients_gui/FloodDrawer.h"
 #include "propagation/FloodModel.h"
 
 using namespace propagation;
@@ -60,11 +60,11 @@ float FloodProxy::GetCellSize() const
 // Name: FloodProxy::Draw
 // Created: JSR 2011-10-07
 // -----------------------------------------------------------------------------
-void FloodProxy::Draw( unsigned int floodId ) const
+void FloodProxy::Draw( unsigned int floodId, gui::GLView_ABC& view ) const
 {
-    CIT_Floods it = floods_.find( floodId );
+    auto it = floods_.find( floodId );
     if( it != floods_.end() )
-        it->second->Draw();
+        it->second->Draw( view );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,12 +82,10 @@ void FloodProxy::Remove( unsigned int floodId )
 // -----------------------------------------------------------------------------
 unsigned int FloodProxy::GenerateFlood( unsigned int floodId, const geometry::Point2f& point, int depth, int refDist )
 {
-    CIT_Floods it = floods_.find( floodId );
+    auto it = floods_.find( floodId );
     if( it == floods_.end() )
     {
-        FloodDrawer* floodDrawer = new FloodDrawer( *pFloodModel_, point, depth, refDist );
-        ++idManager_;
-        floods_[ idManager_ ].reset( floodDrawer );
+        floods_[ ++idManager_ ].reset( new gui::FloodDrawer( *pFloodModel_, point, depth, refDist ) );
         it = floods_.find( idManager_ );
     }
     it->second->Reset( *pFloodModel_, point, depth, refDist );
@@ -102,7 +100,7 @@ unsigned int FloodProxy::FindFlood( const geometry::Point2f& point, int depth, i
 {
     for( auto it = floods_.begin(); it != floods_.end(); ++it )
     {
-        const FloodDrawer& drawer = *it->second;
+        auto& drawer = *it->second;
         if( drawer.GetCenter() == point && drawer.GetDepth() == depth && drawer.GetReferenceDistance() == refDist )
             return it->first;
     }

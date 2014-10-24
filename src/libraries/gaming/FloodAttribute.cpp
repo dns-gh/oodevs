@@ -75,9 +75,9 @@ void FloodAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // Name: FloodAttribute::Draw
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
-void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& /*tools*/ ) const
+void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& view ) const
 {
-    proxy_.Draw( floodId_ );
+    proxy_.Draw( floodId_, view );
 }
 
 // -----------------------------------------------------------------------------

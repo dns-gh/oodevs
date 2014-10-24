@@ -105,7 +105,6 @@ void GLWidget::keyPressEvent( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void GLWidget::initializeGL()
 {
-    glShadeModel( GL_SMOOTH );
     glEnable( GL_TEXTURE_2D );
     glEnable( GL_BLEND );
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -154,7 +153,6 @@ void GLWidget::paintGL()
     glBindTexture( GL_TEXTURE_2D, 0 );
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-    
     glMultMatrixf( (const float*)symetryMatrix );
     if( root_ && references_ )
     {

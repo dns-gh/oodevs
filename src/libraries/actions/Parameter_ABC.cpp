@@ -122,23 +122,12 @@ void Parameter_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_AB
 // -----------------------------------------------------------------------------
 void Parameter_ABC::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
 {
-    if( !toolTip_ )
-        const_cast< Parameter_ABC* >( this )->toolTip_ = tools.CreateTooltip();
-    DrawToolTip( viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Parameter_ABC::DrawToolTip
-// Created: SBO 2007-06-25
-// -----------------------------------------------------------------------------
-void Parameter_ABC::DrawToolTip( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
-{
     if( !viewport.IsVisible( GetPosition() ) )
         return;
-    if( !toolTip_ )
-        const_cast< Parameter_ABC* >( this )->toolTip_ = tools.CreateTooltip();
-    DisplayInToolTip( *toolTip_ );
-    toolTip_->Draw( GetPosition() );
+    if( !tooltip_ )
+        tooltip_ = tools.CreateTooltip();
+    DisplayInToolTip( *tooltip_ );
+    tooltip_->Draw( GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

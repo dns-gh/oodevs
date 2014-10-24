@@ -65,7 +65,6 @@ void ContourLinesLayer::Paint( const geometry::Rectangle2f& )
     auto& options = view_.GetOptions();
     if( !modelLoaded_ ||
         !ShouldDrawPass() ||
-        GetAlpha() == 0 ||
         !options.Get( "ContourLines/Enabled" ).To< bool >() )
         return;
     auto& computer = options.GetContourLinesComputer();
@@ -75,9 +74,8 @@ void ContourLinesLayer::Paint( const geometry::Rectangle2f& )
     if( callList == 0 )
         return;
     const QColor color( options.Get( "ContourLines/Color" ).To< QString >() );
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
+    glPushAttrib( GL_CURRENT_BIT );
         glColor4f( color.red() / 256.f, color.green() / 256.f, color.blue() / 256.f, GetAlpha() );
-        glEnable( GL_LINE_SMOOTH );
         glCallList( callList );
     glPopAttrib();
 }

@@ -17,7 +17,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_gui/PropertiesDictionary.h"
-#include "propagation/FloodDrawer.h"
+#include "clients_gui/FloodDrawer.h"
 #include "propagation/FloodModel.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -35,7 +35,7 @@ FloodAttribute::FloodAttribute( gui::PropertiesDictionary& dictionary, const ker
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
     , floodModel_ ( new propagation::FloodModel( *this ) )
-    , floodDrawer_( new propagation::FloodDrawer() )
+    , floodDrawer_( new gui::FloodDrawer() )
 {
     CreateDictionary( dictionary, entity );
     controllers_.Register( *this );
@@ -57,7 +57,7 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
     xis >> xml::attribute( "depth", depth_.value_ )
         >> xml::attribute( "reference-distance", refDist_.value_ );
     CreateDictionary( dictionary, entity );
-    floodDrawer_.reset( new propagation::FloodDrawer( *floodModel_, positions.GetPosition(), depth_.value_, refDist_.value_ ) );
+    floodDrawer_.reset( new gui::FloodDrawer( *floodModel_, positions.GetPosition(), depth_.value_, refDist_.value_ ) );
     controllers_.Register( *this );
 }
 
@@ -97,9 +97,9 @@ void FloodAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: FloodAttribute::Draw
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
-void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& /*tools*/ ) const
+void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& view ) const
 {
-    floodDrawer_->Draw();
+    floodDrawer_->Draw( view );
 }
 
 // -----------------------------------------------------------------------------

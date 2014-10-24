@@ -21,8 +21,10 @@ namespace ba = boost::assign;
 namespace
 {
 
-const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of< E_LayerTypes >
+const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of
+    // always on bottom layers
     ( eLayerTypes_Default )
+    ( eLayerTypes_Elevation3d )
     // configurable layers
     ( eLayerTypes_Elevation2d )
     ( eLayerTypes_Raster )
@@ -38,7 +40,6 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_TacticalLinesComposite )
     ( eLayerTypes_UnitsComposite )
     // always on top layers
-    ( eLayerTypes_Elevation3d )
     ( eLayerTypes_Grid )
     ( eLayerTypes_WeaponRanges )
     ( eLayerTypes_Actions )
@@ -53,11 +54,10 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of< E_LayerTypes >
     ( eLayerTypes_Locations )
     ( eLayerTypes_TerrainProfiler )
     ( eLayerTypes_Selection )
-    ( eLayerTypes_Fog )
-    ( eLayerTypes_Tooltips );
+    ( eLayerTypes_Fog );
 
 // TODO: it's actually the inverse order, inverse it and inverse the loop algorithm in CircularEventStrategy
-const T_LayerTypesVector eventOrder_ = ba::list_of< E_LayerTypes >
+const T_LayerTypesVector eventOrder_ = ba::list_of
     ( eLayerTypes_Terrain )
     ( eLayerTypes_Parameters )
     ( eLayerTypes_UnitsComposite )
@@ -102,7 +102,7 @@ const layers::Descriptor descriptors_[] = {
       T_LayerTypesVector() },
     { eLayerTypes_CrowdsComposite,        "main,miniviews",                   true,   true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_LivingArea,
-      ba::list_of< E_LayerTypes >( eLayerTypes_Crowds )( eLayerTypes_CrowdKnowledges ) },
+      ba::list_of( eLayerTypes_Crowds )( eLayerTypes_CrowdKnowledges ) },
     { eLayerTypes_Default,                "main",                             false,  false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
@@ -141,7 +141,7 @@ const layers::Descriptor descriptors_[] = {
       T_LayerTypesVector() },
     { eLayerTypes_InhabitantsComposite,   "main,miniviews",                   true,   true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
-      ba::list_of< E_LayerTypes >( eLayerTypes_Inhabitants )( eLayerTypes_InhabitantCreation ) },
+      ba::list_of( eLayerTypes_Inhabitants )( eLayerTypes_InhabitantCreation ) },
     { eLayerTypes_Locations,              "main",                             false,  false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
@@ -162,7 +162,7 @@ const layers::Descriptor descriptors_[] = {
       T_LayerTypesVector() },
     { eLayerTypes_ObjectsComposite,       "main,miniviews",                   true,   true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
-    ba::list_of< E_LayerTypes >( eLayerTypes_Objects )( eLayerTypes_ObjectKnowledges )( eLayerTypes_ObjectCreation ) },
+      ba::list_of( eLayerTypes_Objects )( eLayerTypes_ObjectKnowledges )( eLayerTypes_ObjectCreation ) },
     { eLayerTypes_Parameters,             "main",                             false,  false,
       eModes_All,                         eModes_Itinerary,                   eModes_None,
       T_LayerTypesVector() },
@@ -189,7 +189,7 @@ const layers::Descriptor descriptors_[] = {
       T_LayerTypesVector() },
     { eLayerTypes_TacticalLinesComposite, "main,miniview",                    true,   true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
-      ba::list_of< E_LayerTypes >( eLayerTypes_TacticalLines )( eLayerTypes_Drawings )( eLayerTypes_Pathfinds ) },
+      ba::list_of( eLayerTypes_TacticalLines )( eLayerTypes_Drawings )( eLayerTypes_Pathfinds ) },
     { eLayerTypes_Terrain,                "main,composition,miniviews",       false,  true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
@@ -199,9 +199,11 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_Tooltips,               "tooltip",                          false,  false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
-    { eLayerTypes_UnitsComposite,         "main,miniviews",                   true,   true,
+    { eLayerTypes_UnitsComposite,         "main,miniviews,tooltip",           true,   true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
-      ba::list_of< E_LayerTypes >( eLayerTypes_Parties )( eLayerTypes_Formations )( eLayerTypes_Automats )( eLayerTypes_Ghosts )( eLayerTypes_Agents )( eLayerTypes_AgentKnowledges ) },
+      ba::list_of( eLayerTypes_Parties )( eLayerTypes_Formations )( eLayerTypes_Automats )
+                 ( eLayerTypes_Ghosts )( eLayerTypes_Agents )( eLayerTypes_AgentKnowledges )
+                 ( eLayerTypes_Tooltips ) },
     { eLayerTypes_Urban,                  "main,miniviews",                   true,  true,
       eModes_All,                         eModes_Itinerary,                   eModes_None,
       T_LayerTypesVector() },
@@ -219,7 +221,7 @@ const layers::Descriptor descriptors_[] = {
       T_LayerTypesVector() },
     { eLayerTypes_WeatherComposite,       "main,composition,miniviews",       false,  true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
-      ba::list_of< E_LayerTypes >( eLayerTypes_Watershed )( eLayerTypes_Weather ) },
+      ba::list_of( eLayerTypes_Watershed )( eLayerTypes_Weather ) },
 };
 const size_t descriptorsSize_ = COUNT_OF( descriptors_ );
 static_assert( eNbrLayerTypes == descriptorsSize_, "missing layer descriptors" );

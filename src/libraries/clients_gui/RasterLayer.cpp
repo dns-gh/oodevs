@@ -57,7 +57,7 @@ RasterLayer::~RasterLayer()
 // -----------------------------------------------------------------------------
 void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !ShouldDrawPass() || GetAlpha() == 0 )
+    if( !ShouldDrawPass() )
         return;
     if( !ignore_ && !textures_.get() && !directory_.IsEmpty() )
         GenerateTexture( directory_ / texture_ );

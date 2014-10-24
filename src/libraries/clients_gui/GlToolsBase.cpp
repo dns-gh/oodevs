@@ -16,7 +16,6 @@
 #include "GLOptions.h"
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
-#include "GlTooltip.h"
 #include "SvglProxy.h"
 #include "TacticalGraphics.h"
 

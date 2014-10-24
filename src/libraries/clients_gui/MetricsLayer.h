@@ -20,7 +20,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlTooltip_ABC;
+    class InformationToolTip;
 
 // =============================================================================
 /** @class  MetricsLayer
@@ -63,7 +63,7 @@ private:
     //! @name Member data
     //@{
     const kernel::DetectionMap& elevation_;
-    std::unique_ptr< GlTooltip_ABC > tooltip_;
+    std::unique_ptr< InformationToolTip > tooltip_;
     bool multiRulingMode_;
     geometry::Point2f start_;
     geometry::Point2f end_;

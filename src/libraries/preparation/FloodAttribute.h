@@ -19,7 +19,6 @@
 
 namespace propagation
 {
-    class FloodDrawer;
     class FloodModel_ABC;
 }
 
@@ -34,6 +33,7 @@ namespace kernel
 
 namespace gui
 {
+    class FloodDrawer;
     class PropertiesDictionary;
 }
 
@@ -96,7 +96,7 @@ private:
     kernel::UnitedValue< int > depth_;
     kernel::UnitedValue< int > refDist_;
     std::unique_ptr< propagation::FloodModel_ABC > floodModel_;
-    std::unique_ptr< propagation::FloodDrawer > floodDrawer_;
+    std::unique_ptr< gui::FloodDrawer > floodDrawer_;
     //@}
 };
 
