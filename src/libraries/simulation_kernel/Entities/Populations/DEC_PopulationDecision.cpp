@@ -92,8 +92,7 @@ void DEC_PopulationDecision::SetModel( const DEC_Model_ABC& model )
 {
     model_ = &model;
     assert( pEntity_ );
-    auto archetype = pEntity_->GetType().GetArchetypeName();
-    InitBrain( model.GetScriptFile(), model.GetDIAType(), archetype, model.GetIncludePath(),
+    InitBrain( model.GetScriptFile(), model.GetDIAType(), model.GetIncludePath(),
                GetGroupName(), model.IsMasalife(), false, model.GetIntegrationDir() );
 }
 
@@ -113,14 +112,6 @@ void DEC_PopulationDecision::EndCleanStateAfterCrash()
 std::string DEC_PopulationDecision::GetGroupName()
 {
     return "none";
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::RegisterUserArchetypeFunctions
-// -----------------------------------------------------------------------------
-void DEC_PopulationDecision::RegisterUserArchetypeFunctions ( sword::Brain& brain )
-{
-    brain.RegisterFunction( "DEC_GetSzName", &DEC_PopulationFunctions::GetSzName );
 }
 
 // -----------------------------------------------------------------------------

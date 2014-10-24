@@ -369,11 +369,6 @@ const DEC_Model_ABC& MIL_PopulationType::GetModel() const
     return *pModel_;
 }
 
-std::string MIL_PopulationType::GetArchetypeName() const
-{
-    return "MIL_PopulationType";
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::GetConcentrationDensity
 // Created: NLD 2005-09-28

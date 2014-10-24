@@ -875,6 +875,11 @@ void RegisterTransportFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_RoundTripsLeftToTransportAgent", &DEC_ActionFunctions::GetNumberOfRoundTripsLeftToTransportPion );
 }
 
+void RegisterMiscellaneousFunctions( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterCommonUserFunctions
 // Created: LDC 2009-04-22
@@ -907,6 +912,7 @@ void RegisterCommonUserFunctions( sword::Brain& brain, bool isMasalife )
     RegisterItineraryFunctions( brain );
     RegisterToolsFunctions( brain );
     RegisterTransportFunctions( brain );
+    RegisterMiscellaneousFunctions( brain );
     DEC_CommunicationFunctions::Register( brain );
     DEC_TelepathyFunctions::Register( brain );
     MIL_FragOrder::Register( brain );
@@ -1884,7 +1890,7 @@ namespace
 
 bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain,
                   const tools::Path& includePath, const tools::Path& brainFile, bool isMasalife,
-                  const std::string& type, const std::string& archetype, bool reload, const tools::Path& integrationDir, sword::DEC_Logger* logger )
+                  const std::string& type, bool reload, const tools::Path& integrationDir, sword::DEC_Logger* logger )
 {
     // If this is not a reloading (i.e., 'reload' is false), we create a brain that shares an archetype brain.
     // The archetypes are saved in 'brainTable' for later reuse. We create an archetype brain if there is not
@@ -1892,7 +1898,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
     // If this is a reloading, we do not reuse an existing archetype, but create a new archetype brain and return
     // this archetype as the brain to use.
     // Each time we create a new archetype, we return true, to tell the caller that the archetype must be initialized.
-    const std::string& idx = isMasalife ? ( archetype + "," + brainFile.ToUTF8() ) : brainFile.ToUTF8();
+    const std::string& idx = brainFile.ToUTF8();
     if( !reload )
     {
         pArchetypeBrain = brainTable[idx];

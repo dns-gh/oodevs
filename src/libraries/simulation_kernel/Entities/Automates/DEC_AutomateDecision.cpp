@@ -154,20 +154,12 @@ std::string DEC_AutomateDecision::GetGroupName()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Automate_Decision::RegisterUserArchetypeFunctions
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( sword::Brain& brain )
-{
-    brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::RegisterUserFunctions
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
 {
-// Accessors
+    // Accessors
     brain.RegisterFunction( "DEC_Automate_PionsAvecPC", boost::bind( &DEC_AutomateFunctions::GetPionsWithPC, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Automate_PionsSansPC", boost::bind( &DEC_AutomateFunctions::GetPionsWithoutPC, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Automate_PionPC", boost::bind( &DEC_AutomateFunctions::GetPionPC, boost::ref( GetAutomate() ) ) );
@@ -364,7 +356,51 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
     
     brain.RegisterFunction( "DEC_KnowledgeAgent_IsPerceptionLevelMax", std::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax, boost::cref( GetAutomate() ), _1 ) ) );
 
-    pEntity_->GetType().RegisterFunctions( brain, GetAutomate() );
+    brain.RegisterFunction( "DEC_Geometrie_PosDeploiementASAOmni",
+        std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASAOmni, boost::cref( GetAutomate() ), _1, _2, _3 ) ) );
+
+    brain.RegisterFunction( "DEC_Maintenance_ActiverChaine",
+        boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceEnableSystem, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_DesactiverChaine",
+        boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceDisableSystem, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_ChangerPriorites",
+        std::function< void( const std::vector< const PHY_ComposanteTypePion* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangePriorities, boost::ref( GetAutomate() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_Priorites",
+        std::function< std::vector< const PHY_ComposanteTypePion* >() >( boost::bind( &DEC_LogisticFunctions::GetAutomateMaintenancePriorities, boost::ref( GetAutomate() ) ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_ChangerPrioritesTactiques",
+        std::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities, boost::ref( GetAutomate() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_PrioritesTactiques",
+        std::function< std::vector< const DEC_Decision_ABC* >() >( boost::bind( &DEC_LogisticFunctions::GetAutomateMaintenanceTacticalPriorities, boost::ref( GetAutomate() ) ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_ChangerRegimeTravail",
+        std::function< void( int ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate, boost::ref( GetAutomate() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_RegimeTravail",
+        std::function< int() >( boost::bind( &DEC_LogisticFunctions::GetAutomateMaintenanceWorkRate, boost::ref( GetAutomate() ) ) ) );
+
+    brain.RegisterFunction( "DEC_Sante_ActiverChaine",
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableSystem, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Sante_DesactiverChaine",
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableSystem, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Sante_ActiverFonctionTri",
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Sante_DesactiverFonctionTri",
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Sante_ActiverFonctionSoin",
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Sante_DesactiverFonctionSoin",
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Sante_ChangerPriorites",
+        std::function< void( const std::vector< const PHY_HumanWound* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMedicalChangePriorities, boost::ref( GetAutomate() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Sante_Priorites",
+        std::function< std::vector< const PHY_HumanWound* >() >( boost::bind( &DEC_LogisticFunctions::GetAutomateMedicalPriorities, boost::ref( GetAutomate() ) ) ) );
+    brain.RegisterFunction( "DEC_Sante_ChangerPrioritesTactiques",
+        std::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities, boost::ref( GetAutomate() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Sante_PrioritesTactiques",
+        std::function< std::vector< const DEC_Decision_ABC* >() >( boost::bind( &DEC_LogisticFunctions::GetAutomateMedicalTacticalPriorities, boost::ref( GetAutomate() ) ) ) );
+
+    brain.RegisterFunction( "DEC_Ravitaillement_ActiverChaine",
+        boost::bind( &DEC_LogisticFunctions::AutomateSupplyEnableSystem, boost::ref( GetAutomate() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_DesactiverChaine",
+        boost::bind( &DEC_LogisticFunctions::AutomateSupplyDisableSystem, boost::ref( GetAutomate() ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -84,12 +84,12 @@ public:
     {
         const MIL_PopulationType& type = population.GetType();
         const DEC_Model_ABC& model = type.GetModel();
-        SetModel( model, type.GetArchetypeName() );
+        SetModel( model );
         StartDefaultBehavior();
     }
-    void SetModel( const DEC_Model_ABC& model, const std::string& archetype )
+    void SetModel( const DEC_Model_ABC& model )
     {
-        InitBrain( model.GetScriptFile(), model.GetName(), archetype, model.GetIncludePath(), "stubPopulation", false, false, model.GetIntegrationDir() );
+        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation", false, false, model.GetIntegrationDir() );
     }
     void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
     {
@@ -123,7 +123,6 @@ protected:
         if( pOther_ )
             brain.GetScriptRef( "other" ) = pOther_;
     }
-    virtual void RegisterUserArchetypeFunctions( sword::Brain& ) {}
     virtual void PostStartMission() {}
     virtual void PostStopMission() {}
 

@@ -55,9 +55,7 @@ public:
     bool IsNBC() const;
     virtual const PHY_UnitType& GetUnitType() const = 0;
     virtual double GetFeedbackTime() const = 0;
-    virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
     virtual const DEC_Model_ABC& GetModel() const = 0;
-    virtual std::string GetArchetypeName() const;
     virtual double GetDistanceAvantPoint ( const TerrainData& nType ) const = 0;
     virtual double GetDistanceAvantLima () const = 0;
     // Custom finalizer invoked by MIL_AgentPion::DeleteUnit.

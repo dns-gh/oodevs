@@ -78,7 +78,6 @@ public:
     virtual unsigned int                     GetID                            () const;
     const MIL_AgentType_ABC&                 GetTypePionPC                    () const;
     virtual const DEC_Model_ABC&             GetModel                         () const;
-    virtual std::string                      GetArchetypeName                 () const;
     virtual const std::string&               GetName                          () const;
     // Pc is the first element
     const T_CompositionMap&                  GetComposition                   () const;
@@ -95,11 +94,6 @@ public:
     virtual bool IsLogisticBase() const;
     virtual bool IsRefugee () const;
     virtual bool IsInjuredHuman() const;
-    //@}
-
-    //! @name Logistic
-    //@{
-    virtual void RegisterFunctions( sword::Brain& brain, MIL_Automate& automat ) const;
     //@}
 
 protected:

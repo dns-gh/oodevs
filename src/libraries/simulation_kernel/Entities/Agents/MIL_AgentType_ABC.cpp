@@ -175,11 +175,6 @@ void MIL_AgentType_ABC::SetNBC( bool isNBC )
     isNBC_ = isNBC;
 }
 
-std::string MIL_AgentType_ABC::GetArchetypeName() const
-{
-    return "MIL_AgentType_ABC";
-}
-
 void MIL_AgentType_ABC::DeleteUnit( MIL_Agent_ABC& ) const
 {
 }
