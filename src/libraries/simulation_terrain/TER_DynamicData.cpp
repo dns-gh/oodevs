@@ -55,29 +55,6 @@ private:
     const TerrainData terrainData_;
 };
 
-struct DynamicDataDeleter
-{
-    DynamicDataDeleter( TER_PathFindManager* m, const DynamicDataPtr& data )
-        : manager_( m )
-        , data_( data )
-    {}
-
-    void operator()( TER_DynamicData* p )
-    {
-        if( p && manager_ && data_ )
-        {
-            if( p != data_.get() )
-                throw std::logic_error( "original and dynamic data to destroy mismatch" );
-            manager_->RemoveDynamicData( data_ );
-            data_.reset();
-        }
-    }
-
-private:
-    TER_PathFindManager* manager_;
-    DynamicDataPtr data_;
-};
-
 }  // namespace
 
 DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
@@ -86,10 +63,19 @@ DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
     // This is ugly but let us run tests creating TER_LimitData
     // without having to instanciante all the TER_World machinery.
     auto w = TER_World::GetWorldPtr();
-    TER_PathFindManager* m = w ? &w->GetPathFindManager() : 0;
-    auto p = boost::make_shared< DynamicData >( points, type );
-    if( !m )
-        return p;
-    m->AddDynamicData( p );
-    return DynamicDataPtr( p.get(), DynamicDataDeleter( m, p ));
+    TER_PathFindManager* manager = w ? &w->GetPathFindManager() : 0;
+    auto data = boost::make_shared< DynamicData >( points, type );
+    if( !manager )
+        return data;
+    manager->AddDynamicData( data );
+    return DynamicDataPtr( data.get(), [manager,data]( TER_DynamicData* p ) mutable
+    {
+        if( p && manager && data )
+        {
+            if( p != data.get() )
+                throw std::logic_error( "original and dynamic data to destroy mismatch" );
+            manager->RemoveDynamicData( data );
+            data.reset();
+        }
+    });
 }
