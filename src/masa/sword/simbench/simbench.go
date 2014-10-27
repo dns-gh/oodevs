@@ -11,6 +11,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/xml"
 	"flag"
 	"fmt"
@@ -51,6 +52,41 @@ func loadPhysicalData(dataDir, name string) (*phy.PhysicalData, error) {
 	phyDir := filepath.Join(dataDir, "data/models/ada/physical")
 	path := filepath.Join(phyDir, name)
 	return phy.ReadPhysicalData(path)
+}
+
+func getVersionAndDate() (string, time.Time, error) {
+	date := time.Unix(0, 0)
+	// Start and stop the simulation
+	sim, client, err := connectAndWaitModel(NewAdminOpts(ExSwTerrain2Empty))
+	if err != nil {
+		return "", date, err
+	}
+	swrun.StopSimAndClient(sim, client)
+
+	// Extract date and version from sim.log
+	// [2014-10-27 13:59:10] <Simulation> <info> Sword Simulation - Version 6.0.0.0.abab - Release
+	reStartup := regexp.MustCompile(`^\[([^\]]+).*Sword Simulation - Version\s+(\S+)`)
+	path := sim.Opts.GetSimLogPath()
+	fp, err := os.Open(path)
+	if err != nil {
+		return "", date, fmt.Errorf("cannot open sim.log: %s", err)
+	}
+	defer fp.Close()
+	scanner := bufio.NewScanner(fp)
+	for scanner.Scan() {
+		m := reStartup.FindStringSubmatch(scanner.Text())
+		if m == nil {
+			continue
+		}
+		d, err := time.Parse("2006-01-02 15:04:06", m[1])
+		if err != nil {
+			return "", date, fmt.Errorf("unexpected date: %s", m[1])
+		}
+		version := m[2]
+		return version, d, nil
+	}
+	return "", date, fmt.Errorf("could not find date or version in sim.log: %s",
+		filepath.ToSlash(path))
 }
 
 // Repeatedly computes a single path, sequentially.
@@ -136,7 +172,7 @@ type BenchmarkResult struct {
 	Name     string  `xml:"name,attr"`     // Measure identifier
 	Time     int64   `xml:"time,attr"`     // Date as number of seconds since 1970-01-01
 	Value    float64 `xml:"value,attr"`    // Measure value
-	Version  string  `xml:"version,attr"`  // Sword version as X.Y
+	Version  string  `xml:"version,attr"`  // Sword version as X.Y.*
 	Exercise string  `xml:"exercise,attr"` // Source exercise, usually ignored
 	Comment  string  `xml:"comment,attr"`
 }
@@ -237,6 +273,13 @@ various flags shared with the testing framework.
 	}
 	sort.Strings(sorted)
 
+	version, date, err := getVersionAndDate()
+	if err != nil {
+		return err
+	}
+	refDate := time.Unix(0, 0)
+	seconds := date.Sub(refDate) / time.Second
+
 	results := []*BenchmarkResult{}
 	for _, name := range sorted {
 		fn := benchmarks[name]
@@ -251,6 +294,8 @@ various flags shared with the testing framework.
 			Name:     name,
 			Value:    value,
 			Exercise: "swbench",
+			Version:  version,
+			Time:     int64(seconds),
 		})
 	}
 	if len(*output) > 0 {
