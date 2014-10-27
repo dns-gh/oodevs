@@ -45,19 +45,7 @@ const (
 )
 
 func startSimOnExercise(c *C, cfg *swrun.ClientOpts) *simu.SimProcess {
-	opts, session := swrun.MakeOptsAndSession(Cfg)
-	opts.ExerciseName = cfg.Exercise
-	opts.PathfindDir = cfg.PathfindDir
-	opts.PathfindFilter = cfg.PathfindFilter
-	opts.TestCommands = cfg.TestCommands
-	session.Paused = cfg.Paused
-	if cfg.Step > 0 {
-		session.TimeStep = cfg.Step
-	}
-	err := opts.WriteSession(session)
-	c.Assert(err, IsNil)
-	WriteSession(c, opts, session)
-	sim, err := simu.StartSim(opts)
+	sim, err := swrun.StartSimOnExercise(cfg, Cfg)
 	c.Assert(err, IsNil)
 	return sim
 }
