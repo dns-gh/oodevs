@@ -526,3 +526,38 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 	err = client.SelectRepairTeam(handlingId, MobilityRepairsTeam)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: repair consign not in a waiting for repair team selection state")
 }
+
+func (s *TestSuite) TestReportCreation(c *C) {
+	sim, client := connectAndWaitModel(c,
+		NewAllUserOpts(ExCrossroadLog).EnableTestCommands())
+	defer stopSimAndClient(c, sim, client)
+	phydb := loadPhysical(c, "test")
+	data := client.Model.GetData()
+
+	// Invalid report identifier
+	err := client.CreateReport(InvalidIdentifier, InvalidIdentifier)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid source identifier
+	startMissionId := uint32(79)
+	err = client.CreateReport(startMissionId, InvalidIdentifier)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	unitId := getSomeUnit(c, data).Id
+	reporter, _ := newReporter(c, unitId, phydb,
+		"^work just started",
+		"^Level %1 of CBRN protection put on",
+	)
+	reporter.Start(client.Model)
+
+	err = client.CreateReport(startMissionId, unitId)
+	c.Assert(err, IsNil)
+
+	CBRNProtectionId := uint32(525)
+	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeIdentifier(345))
+	c.Assert(err, IsNil)
+
+	client.Model.WaitTicks(1)
+	reports := reporter.Stop()
+	c.Assert(len(reports), Equals, 2)
+}

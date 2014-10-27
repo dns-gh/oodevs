@@ -82,6 +82,7 @@ type ClientOpts struct {
 	PathfindDir     string
 	PathfindFilter  string
 	PathfindThreads int
+	TestCommands    bool
 }
 
 // Prints input and output client messages to stderr.
@@ -128,12 +129,18 @@ func (opts *ClientOpts) StartPaused() *ClientOpts {
 	return opts
 }
 
+func (opts *ClientOpts) EnableTestCommands() *ClientOpts {
+	opts.TestCommands = true
+	return opts
+}
+
 // Starts a simulation with supplied options.
 func StartSimOnExercise(clientOpts *ClientOpts, cfg *swtest.Config) (*simu.SimProcess, error) {
 	opts, session := MakeOptsAndSession(cfg)
 	opts.ExerciseName = clientOpts.Exercise
 	opts.PathfindDir = clientOpts.PathfindDir
 	opts.PathfindFilter = clientOpts.PathfindFilter
+	opts.TestCommands = clientOpts.TestCommands
 	session.Paused = clientOpts.Paused
 	session.PathfindThreads = clientOpts.PathfindThreads
 	if clientOpts.Step > 0 {

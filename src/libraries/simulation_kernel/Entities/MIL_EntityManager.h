@@ -215,6 +215,7 @@ public:
     void OnReceiveTransferToLogisticSuperior  ( const sword::MagicAction&          message, client::MagicActionAck& ack );
     void OnReceiveBurningCellRequest          ( const sword::BurningCellRequest&   message, unsigned int nCtx );
     void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
+    void OnReceiveReportCreation              ( const sword::MissionParameters&    params );
     //@}
 
     //! @name Population channeling

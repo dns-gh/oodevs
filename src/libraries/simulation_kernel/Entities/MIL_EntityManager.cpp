@@ -89,6 +89,7 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/MIL_FlowCollisionManager.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
@@ -2201,6 +2202,25 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
             blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
     }
     ack.mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+}
+
+void MIL_EntityManager::OnReceiveReportCreation( const sword::MissionParameters& params )
+{
+    protocol::CheckCount( params, 3, 4 );
+    const auto reportId = protocol::GetIdentifier( params, 1 );
+    const MIL_Report* pReport = MIL_Report::Find( reportId );
+    protocol::Check( pReport, "invalid report identifier" );
+    const auto sourceId = protocol::GetIdentifier( params, 2 );
+    Tasker tasker;
+    SetToTasker( tasker, sourceId );
+    sword::MissionParameters reportParams;
+    if( params.elem_size() > 3 )
+    {
+        const auto& param = params.elem( 3 ).value( 0 );
+        for( int i = 0; i < param.list_size(); ++i )
+            *reportParams.add_elem()->add_value() = param.list( i );
+    }
+    pReport->Send( tasker, reportParams );
 }
 
 // -----------------------------------------------------------------------------

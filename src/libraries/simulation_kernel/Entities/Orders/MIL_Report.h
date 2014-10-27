@@ -64,11 +64,13 @@ public:
     //@{
     static void Initialize( xml::xistream& xis );
     static const MIL_Report* Find( const std::string& key );
+    static const MIL_Report* Find( unsigned int nID );
     //@}
 
     //! @name Operations
     //@{
     template< typename T > void Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const;
+    void Send( const sword::Tasker& tasker, const sword::MissionParameters& parameters ) const;
     //@}
 
     //! @name $$ BOF
@@ -109,10 +111,10 @@ private:
 
     //! @name Tools
     //@{
-    static const MIL_Report* Find( unsigned int nID );
     template< typename T >
     static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
-    bool DoSend( client::Report& message, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
+    bool ConvertParameters( sword::MissionParameters& parameters, const std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
+    void Send( const sword::Tasker& tasker, E_Type nType, const sword::MissionParameters& parameters ) const;
     //@}
 
     //! @name Helpers
