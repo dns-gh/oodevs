@@ -165,7 +165,7 @@ class VerticalLayout
 
     get_lane_x: -> @get_replay_x() + @t.replay.size()
 
-    get_link_x: -> @get_lane_x() + @t.lane_w
+    get_link_x: -> @get_lane_x() + @t.lane_size
 
     axis_attributes: ->
         transform: "translate(#{snap_to_grid @get_replay_x()}, 0)"
@@ -206,7 +206,7 @@ class VerticalLayout
     select: (w, h) -> h
 
     lane_attributes: ->
-        w = @t.lane_w - 1
+        w = @t.lane_size - 1
         get_y = (y) => imax 0, snap_to_grid @t.scale y
         get_x = (x) => snap_to_grid @get_lane_x() + x.value() * w + 1
         x:      (d) -> get_x d.x
@@ -452,7 +452,7 @@ class HorizontalLayout
 
     get_lane_y: -> @get_replay_y() + @t.replay.size()
 
-    get_link_y: -> @get_lane_y() + @t.lane_w
+    get_link_y: -> @get_lane_y() + @t.lane_size
 
     axis_attributes: ->
         transform: "translate(0, #{snap_to_grid @top_y @get_replay_y()})"
@@ -494,8 +494,8 @@ class HorizontalLayout
     select: (w, h) -> w
 
     lane_attributes: ->
-        h = @t.lane_w - 1
-        offset = @top_y @get_lane_y() + @iftop 0, @t.lane_w
+        h = @t.lane_size - 1
+        offset = @top_y @get_lane_y() + @iftop 0, @t.lane_size
         get_y = (y) -> snap_to_grid offset + y.value() * h + 1
         get_x = (x) => imax 0, snap_to_grid @t.scale x
         y:      (d) -> get_y d.x
@@ -748,9 +748,9 @@ class Timeline
 
     constructor: (vertical, model) ->
         @h = 0
-        @lane_w = 88
+        @lane_size = 88
         lane = history_get().lane
-        @lane_w = 0 | lane if lane?
+        @lane_size = 0 | lane if lane?
         if vertical
             @layout = new VerticalLayout this
         else
@@ -874,12 +874,12 @@ class Timeline
         offset = @layout.select((=> @layout.top_y d3.event.y), -> d3.event.x)()
         unless @split_size?
             offset -= @layout.select d3.event.dy, d3.event.dx
-            @split_size = @lane_w - offset
-        @lane_w = @split_size + offset
+            @split_size = @lane_size - offset
+        @lane_size = @split_size + offset
         @render()
 
     lane_split_edit_end: =>
-        history_set lane: @lane_w
+        history_set lane: @lane_size
 
     # render event ranges as colored lanes
     render_lanes: ->
@@ -1283,9 +1283,9 @@ class Timeline
 
     # main render callback
     render: ->
-        @lane_w = @clip_lane @lane_w
+        @lane_size = @clip_lane @lane_size
         @render_ticks()
-        @grid.tickSize snap_to_grid @replay.size() + @lane_w - 1
+        @grid.tickSize snap_to_grid @replay.size() + @lane_size - 1
         grid = @svg.select("#grid")
         grid.call @grid
         grid.attr @layout.grid_attributes()

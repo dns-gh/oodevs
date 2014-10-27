@@ -76,8 +76,8 @@ type Sword struct {
 	orders    Ids                           // known order ids
 	actions   Ids                           // known action ids
 	services  SwordServices                 // published sword services (like replay/simulation/aar)
-	startDate time.Time                     // exercise start date
-	endDate   time.Time                     // exercise end date
+	startTime time.Time                     // exercise start date
+	endTime   time.Time                     // exercise end date
 }
 
 func NewSword(log util.Logger, observer Observer, clock bool, name, address string) *Sword {
@@ -441,10 +441,9 @@ func (s *Sword) setServices(link *SwordLink, services SwordServices) {
 }
 
 func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
-	s.Log("Sword.setReplayRangeDates")
 	if link == s.link {
-		s.startDate = start
-		s.endDate = end
+		s.startTime = start
+		s.endTime = end
 		s.observer.UpdateRangeDates(start, end)
 	}
 }
