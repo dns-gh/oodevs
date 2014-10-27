@@ -73,13 +73,18 @@ end
 -- @return Boolean, false if a current attacking action involving this crowd
 -- and the given agent is currently occurring, true otherwise.
 integration.startAttackingIt = function( target )
-    target[myself] = target[myself] or {}
-    if target[myself].actionTir then
-        DEC_ReprendAction( target[myself].actionTir )
+    target[ myself ] = target[ myself ] or {}
+    if target[ myself ].actionTir then
+        DEC_ReprendAction( target[ myself ].actionTir )
         return false
     end
-    target[myself].intensity = coeffAgressionForCurrentAttitude()
-    target[myself].actionTir = DEC_StartTirSurPion( target[myself].intensity, target.source )
+    target[ myself ].intensity = coeffAgressionForCurrentAttitude()
+    if masalife.brain.core.class.isOfType( target, integration.ontology.types.agentKnowledge) then
+        local agent = DEC_Connaissance_EnAgent( target.source )
+        target[ myself ].actionTir = DEC_StartTirSurPion( target[ myself ].intensity, agent )
+    else
+        target[ myself ].actionTir = DEC_StartTirSurPion( target[ myself ].intensity, target.source )
+    end
     return true
 end
 
