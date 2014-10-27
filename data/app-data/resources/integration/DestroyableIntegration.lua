@@ -296,11 +296,7 @@ end
 -- @return numeric the distance in meters.
 integration.getMaxRangeToFireForPH = function( pH )
     if not pH then -- Scipio compatibility
-        if integration.isAgentInsideTown() then
-            pH = PH_TIR_ZURB
-        else
-            pH = PH_TIR_ZO
-        end
+        pH = integration.getDefaultPH()
     end
     return DEC_Tir_PorteeMaxPourTirer( pH )
 end
@@ -315,11 +311,7 @@ end
 integration.getMaxRangeToFireAgentForPH = function( agent, pH )
     if not pH then -- Scipio compatibility
         local unit = CreateKnowledge(integration.ontology.types.agent, agent)
-        if integration.AgentIsInTown( unit ) then
-            pH = PH_TIR_ZURB
-        else
-            pH = PH_TIR_ZO
-        end
+        pH = integration.getDefaultPH( unit )
     end
     return DEC_Tir_PorteeMaxPourTirer( agent, pH )
 end
@@ -374,11 +366,7 @@ end
 -- @return numeric returns the maximum range distance (in meters).
 integration.getMaxRangeToFireOnAgent = function( agent, pH )
     if not pH then -- Scipio compatibility
-        if integration.isAgentInsideTown() then
-            pH = PH_TIR_ZURB
-        else
-            pH = PH_TIR_ZO
-        end
+        pH = integration.getDefaultPH()
     end
     return DEC_Tir_PorteeMaxPourTirerSurUnite( agent, pH )
 end
@@ -417,4 +405,22 @@ integration.canBeDestroyedWithMissiles = function( targetUnit, ph, projectileSpe
             end
         end
     return false
+end
+
+--- Returns the default ph of the agent knowledge if one is given or of myself
+-- This method can only be called by an automat.
+-- @param agent a simulation agent knowledge, can be null.
+-- @return ph the probability to hit.
+integration.getDefaultPH = function ( unit )
+    local isInTown
+    if unit then
+        isInTown = integration.AgentIsInTown( unit )
+    else
+        isInTown = integration.isAgentInsideTown()
+    end
+    if isInTown then
+        return PH_TIR_ZURB
+    else
+       return PH_TIR_ZO
+    end
 end
