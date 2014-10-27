@@ -75,6 +75,9 @@ bool TacticalLinesLayer::HandleKeyPress( QKeyEvent* k )
 // -----------------------------------------------------------------------------
 void TacticalLinesLayer::NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& menu )
 {
+    if( controllers_.GetCurrentMode() == eModes_Itinerary )
+        return;
+
     if( CanCreateLine() )
     {
         menu.InsertItem( "Creation", tools::translate( "gui::TacticalLinesLayer", "Create limit" ),       this, SLOT( OnCreateLimit() ) );
