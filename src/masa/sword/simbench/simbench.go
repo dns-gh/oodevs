@@ -90,7 +90,7 @@ func getVersionAndDate() (string, time.Time, error) {
 }
 
 // Repeatedly computes a single path, sequentially.
-func benchmarkPathfind(from, to swapi.Point) ([]float64, error) {
+func benchmarkPathfind(from, to swapi.Point, quick bool) ([]float64, error) {
 	sim, client, err := connectAndWaitModel(NewAdminOpts(ExSwTerrain2Empty))
 	if err != nil {
 		return nil, err
@@ -129,8 +129,12 @@ func benchmarkPathfind(from, to swapi.Point) ([]float64, error) {
 
 	unit := party.Formations[0].Automats[0].Units[0].Entity
 
+	loops := 10
+	if quick {
+		loops = 1
+	}
 	durations := []float64{}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < loops; i++ {
 		start := time.Now()
 		points, err := client.UnitPathfindRequest(unit.Id, from, to)
 		if err != nil {
@@ -147,24 +151,24 @@ func benchmarkPathfind(from, to swapi.Point) ([]float64, error) {
 }
 
 // Short pathfind to measure call overhead.
-func BenchmarkPathfindShort() ([]float64, error) {
+func BenchmarkPathfindShort(quick bool) ([]float64, error) {
 	from := swapi.Point{X: 14.9611, Y: 58.6744}
 	to := swapi.Point{X: 14.9585, Y: 58.6753}
-	return benchmarkPathfind(from, to)
+	return benchmarkPathfind(from, to, quick)
 }
 
 // Pathfind across the map.
-func BenchmarkPathfindLong() ([]float64, error) {
+func BenchmarkPathfindLong(quick bool) ([]float64, error) {
 	from := swapi.Point{X: 14.7215, Y: 58.2794}
 	to := swapi.Point{X: 16.4767, Y: 58.7091}
-	return benchmarkPathfind(from, to)
+	return benchmarkPathfind(from, to, quick)
 }
 
 // Impossible pathfind request, from mainland to an island.
-func BenchmarkPathfindImpossible() ([]float64, error) {
+func BenchmarkPathfindImpossible(quick bool) ([]float64, error) {
 	from := swapi.Point{X: 14.9611, Y: 58.6744}
 	to := swapi.Point{X: 15.0367, Y: 58.6495}
-	return benchmarkPathfind(from, to)
+	return benchmarkPathfind(from, to, quick)
 }
 
 // A single measure
@@ -183,11 +187,11 @@ type BenchmarkResults struct {
 }
 
 // Benchmarking functions return an array of measures or an error.
-type BenchFunc func() ([]float64, error)
+type BenchFunc func(quick bool) ([]float64, error)
 
 // Runs a single benchmark and synthetizes the results.
-func benchmarkOne(fn BenchFunc) (float64, error) {
-	values, err := fn()
+func benchmarkOne(fn BenchFunc, quick bool) (float64, error) {
+	values, err := fn(quick)
 	if err != nil {
 		return 0, err
 	}
@@ -245,6 +249,7 @@ various flags shared with the testing framework.
 	}
 	output := flag.String("output", "", "benchmark results XML file")
 	filter := flag.String("f", ".*", "regular expression to filter tests")
+	quick := flag.Bool("quick", false, "check benchmark execution but do not loop")
 	Cfg = swtest.ParseFlags()
 	flag.Parse()
 	matcher, err := regexp.Compile(*filter)
@@ -283,13 +288,16 @@ various flags shared with the testing framework.
 	results := []*BenchmarkResult{}
 	for _, name := range sorted {
 		fn := benchmarks[name]
-		value, err := benchmarkOne(fn)
+		start := time.Now()
+		value, err := benchmarkOne(fn, *quick)
+		end := time.Now()
+		duration := float64(end.Sub(start)/time.Millisecond) / 1000.0
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "FAILED %s: %s\n", name, err)
+			fmt.Fprintf(os.Stderr, "FAILED %s: %s in %.1fs\n", name, err, duration)
 			failed += 1
 			continue
 		}
-		fmt.Printf("OK: %s: %f\n", name, value)
+		fmt.Printf("OK: %s: %f in %.1fs\n", name, value, duration)
 		results = append(results, &BenchmarkResult{
 			Name:     name,
 			Value:    value,

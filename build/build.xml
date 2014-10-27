@@ -1079,6 +1079,21 @@
         <runtests/>
     </target>
 
+    <target name="go.benchmark" description="check benchmarks">
+        <!-- benchmarks are run by QA projects, here we just check they still work -->
+        <exec_goenv name="simbench" executable="${bin.dir}/simbench">
+            <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
+            <env key="MASA_TIMEOUT" value="60s"/>
+            <env key="GOMAXPROCS" value="4"/>
+            <arg value="--quick"/>
+            <arg value="--test-port=${test.port}"/>
+            <arg value="--application=${application}"/>
+            <arg value="--run-dir=${run.dir}"/>
+            <arg value="--root-dir=${data.dir}"/>
+            <arg value="--exercises-dir=${data.dir}/tests/gosword"/>
+        </exec_goenv>
+    </target>
+
     <target name="go.package">
         <go_zip subdir="lib" output="${platform}">
             <zipfileset dir="${src.dir}/masa/sword/swapi"
@@ -1090,7 +1105,7 @@
         </go_zip>
     </target>
 
-    <target name="go" depends="go.proto,go.build,go.test,go.package"/>
+    <target name="go" depends="go.proto,go.build,go.test,go.benchmark,go.package"/>
 
     <!--
     ============================================================================
