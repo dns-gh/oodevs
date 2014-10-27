@@ -408,8 +408,8 @@ integration.canBeDestroyedWithMissiles = function( targetUnit, ph, projectileSpe
 end
 
 --- Returns the default ph of the agent knowledge if one is given or of myself
--- This method can only be called by an automat.
--- @param agent a simulation agent knowledge, can be null.
+-- This method can only be called by an agent.
+-- @param agent a simulation agent knowledge, can be nil.
 -- @return ph the probability to hit.
 integration.getDefaultPH = function ( unit )
     local isInTown
