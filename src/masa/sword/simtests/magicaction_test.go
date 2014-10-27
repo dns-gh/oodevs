@@ -554,7 +554,7 @@ func (s *TestSuite) TestReportCreation(c *C) {
 	c.Assert(err, IsNil)
 
 	CBRNProtectionId := uint32(525)
-	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeIdentifier(345))
+	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeInt(345))
 	c.Assert(err, IsNil)
 
 	client.Model.WaitTicks(1)
