@@ -58,7 +58,6 @@ private:
     bool        jammed_;
     bool        radioReceiverDisabled_;
     bool        radioEmitterDisabled_;
-    kernel::Automat_ABC* superior_;
     const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_;
     kernel::Controllers& controllers_;
 };
