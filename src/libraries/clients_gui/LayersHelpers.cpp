@@ -41,7 +41,6 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of
     ( eLayerTypes_UnitsComposite )
     // always on top layers
     ( eLayerTypes_Grid )
-    ( eLayerTypes_WeaponRanges )
     ( eLayerTypes_Actions )
     ( eLayerTypes_Parameters )
     ( eLayerTypes_Metric )
@@ -203,7 +202,7 @@ const layers::Descriptor descriptors_[] = {
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       ba::list_of( eLayerTypes_Parties )( eLayerTypes_Formations )( eLayerTypes_Automats )
                  ( eLayerTypes_Ghosts )( eLayerTypes_Agents )( eLayerTypes_AgentKnowledges )
-                 ( eLayerTypes_Tooltips ) },
+                 ( eLayerTypes_WeaponRanges )( eLayerTypes_Tooltips ) },
     { eLayerTypes_Urban,                  "main,miniviews",                   true,  true,
       eModes_All,                         eModes_Itinerary,                   eModes_None,
       T_LayerTypesVector() },
