@@ -632,7 +632,7 @@ func (t *TestSuite) TestObservers(c *C) {
 	expected.Sword.HasReplay = proto.Bool(true)
 	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
 
-	expectedStart := time.Now()
+	expectedStart := time.Now().Truncate(time.Second).UTC()
 	expectedEnd := expectedStart.Add(60 * time.Second)
 	for slink := range detached {
 		f.server.WriteReplayToClient(slink, 1, 0,
@@ -653,10 +653,10 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(msg, NotNil)
 	start, err := util.ParseTime(msg.Session.GetStartTime())
 	c.Assert(err, IsNil)
-	c.Assert(start.IsZero(), Equals, false)
+	c.Assert(start, Equals, expectedStart)
 	end, err := util.ParseTime(msg.Session.GetEndTime())
 	c.Assert(err, IsNil)
-	c.Assert(end.IsZero(), Equals, false)
+	c.Assert(end, Equals, expectedEnd)
 	c.Assert(start.Before(end), Equals, true)
 }
 
