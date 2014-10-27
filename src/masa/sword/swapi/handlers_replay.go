@@ -23,9 +23,19 @@ func (model *ModelData) handleControlReplayInformation(
 	if mm.FirstTick != nil {
 		firstTick = *mm.FirstTick
 	}
+	startDate, err := GetTime(mm.GetInitialDateTime().GetData())
+	if err != nil {
+		return err
+	}
+	endDate, err := GetTime(mm.GetEndDateTime().GetData())
+	if err != nil {
+		return err
+	}
 	model.Replay = &ReplayInfo{
 		FirstTick: firstTick,
 		TickCount: mm.GetTickCount(),
+		StartDate: startDate,
+		EndDate:   endDate,
 	}
 	return nil
 }

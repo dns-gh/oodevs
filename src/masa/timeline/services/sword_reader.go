@@ -31,6 +31,7 @@ type SwordReaderObserver interface {
 	Restart(err error)
 	Log(format string, args ...interface{})
 	SetServices(services SwordServices)
+	SetReplayRangeDates(start, end time.Time)
 }
 
 type SwordReader struct {
@@ -133,6 +134,22 @@ func (s *SwordReader) readDispatcherToClient(msg *swapi.SwordMessage, clientId, 
 	return false
 }
 
+func (s *SwordReader) readReplayToClient(msg *swapi.SwordMessage, clientId, ctx int32, err error) bool {
+	content := msg.ReplayToClient.GetMessage()
+	if control := content.ControlReplayInformation; control != nil {
+		startDate, err := swapi.GetTime(control.GetInitialDateTime().GetData())
+		if err != nil {
+			s.poster.Log("%v", err)
+		}
+		endDate, err := swapi.GetTime(control.GetEndDateTime().GetData())
+		if err != nil {
+			s.poster.Log("%v", err)
+		}
+		s.poster.SetReplayRangeDates(startDate, endDate)
+	}
+	return false
+}
+
 func (s *SwordReader) readMessage(msg *swapi.SwordMessage, clientId, ctx int32, err error) bool {
 	if err != nil {
 		s.poster.Restart(err)
@@ -143,6 +160,9 @@ func (s *SwordReader) readMessage(msg *swapi.SwordMessage, clientId, ctx int32, 
 	}
 	if msg.DispatcherToClient != nil {
 		return s.readDispatcherToClient(msg, clientId, ctx, err)
+	}
+	if msg.ReplayToClient != nil {
+		return s.readReplayToClient(msg, clientId, ctx, err)
 	}
 	return false
 }

@@ -279,6 +279,7 @@ func (s *TestSuite) TestReplayerTimetable(c *C) {
 	c.Assert(info, NotNil)
 	c.Assert(info.FirstTick, Greater, int32(0))
 	c.Assert(info.TickCount, Greater, int32(2))
+	c.Assert(info.StartDate.Before(info.EndDate), Equals, true)
 
 	// Request all ticks
 	checkTimetable(c, client, info.FirstTick, info.FirstTick+info.TickCount-1, false)

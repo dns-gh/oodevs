@@ -47,10 +47,12 @@ message Session
     required Status status       = 2; ///< current status
     required string name         = 3;
     optional string time         = 4; ///< current time
-    optional bool   locked       = 5; ///< true if time is locked
-    optional int64  offset       = 6; ///< optional time offset applied on time
-    required int32  num_services = 7;
-    required int32  num_events   = 8;
+    optional string start_time   = 5; ///< start exercise time
+    optional string end_time     = 6; ///< end exercise time
+    optional bool   locked       = 7; ///< true if time is locked
+    optional int64  offset       = 8; ///< optional time offset applied on time
+    required int32  num_services = 9;
+    required int32  num_events   = 10;
 }
 
 message Action
@@ -93,7 +95,7 @@ message Message
     repeated Event      events   = 3;
     repeated string     uuids    = 4;
     repeated Service    services = 5;
-    optional Session    session  = 6;
+    optional Session    session  = 6; ///< sent only on time, start_time and end_time updates
 }
 
 message Metadata

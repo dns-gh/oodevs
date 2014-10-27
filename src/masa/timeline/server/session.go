@@ -65,6 +65,8 @@ type Session struct {
 	observers Observers
 	filterers EventFilterers
 	events    EventSlice
+	start     time.Time // session start time
+	end       time.Time // session end time
 }
 
 func NewSession(log util.Logger, observer services.Observer, uuid, name string, autostart bool) *Session {
@@ -114,6 +116,12 @@ func (s *Session) Proto() *sdk.Session {
 	if !s.tick.IsZero() {
 		session.Time = proto.String(util.FormatTime(s.tick))
 		session.Locked = proto.Bool(s.locked)
+	}
+	if !s.start.IsZero() {
+		session.StartTime = proto.String(util.FormatTime(s.start))
+	}
+	if !s.end.IsZero() {
+		session.EndTime = proto.String(util.FormatTime(s.end))
 	}
 	if s.offset != 0 {
 		session.Offset = proto.Int64(int64(s.offset))
@@ -532,6 +540,12 @@ func (s *Session) UpdateServices() {
 	}
 }
 
+func (s *Session) UpdateRangeDates(start, end time.Time) {
+	s.start = start
+	s.end = end
+	s.UpdateSession()
+}
+
 func (f *FilteredObserver) DeleteEvents(events ...string) {
 	deleted := []string{}
 	for _, event := range events {
@@ -570,6 +584,7 @@ func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserve
 	// channel contain at least 3 buffers or it will deadlock
 	// fix the api so it doesn't use channels later
 	observer.UpdateTick(s.tick)
+	observer.UpdateSession(s.Proto())
 	observer.UpdateServices(s.getServices()...)
 	filtered.UpdateEvents(s.events, s.events.Proto())
 	return filtered

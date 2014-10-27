@@ -217,6 +217,15 @@ class VerticalLayout
             h = get_y(d.max) - y - 1
             return imax 0, imin h, @t.h - y
 
+    replay_range_attributes: (start, end) ->
+        get_y = (y) => snap_to_grid @t.scale y
+        y0 = get_y start
+        y1 = get_y end
+        x:      @get_replay_x() + 1
+        width:  @t.replay.size() - 1
+        y:      y0
+        height: y1 - y0 - 1
+
     lane_size: (el) ->
         y = parseFloat el.attr "y"
         h = parseFloat el.attr "height"
@@ -497,6 +506,15 @@ class HorizontalLayout
             w = get_x(d.max) - x - 1
             return imax 0, imin w, @t.w - x
 
+    replay_range_attributes: (start, end) ->
+        get_x = (x) => snap_to_grid @t.scale x
+        x0 = get_x start
+        x1 = get_x end
+        x:      x0
+        y:      snap_to_grid @top_y @get_replay_y() + @iftop 0, @t.replay.size()
+        width:  x1 - x0 - 1
+        height: @t.replay.size() - 1
+
     lane_size: (el) ->
         x = parseFloat el.attr "x"
         w = parseFloat el.attr "width"
@@ -694,19 +712,32 @@ class Replay
         @replay_split = svg.append("line")
             .attr(id: "replay_splitter")
             .classed("splitter", true)
+        @replay_range = svg.append("rect")
+            .attr(id: "replay_range")
+            .classed("range", true)
 
     size: -> if @has_replay then 88 else 0
 
     resize: (w, h) ->
         @replay_split.attr @layout.split_size w, h
+        @replay_range.attr @layout.split_size w, h
 
     set_replay: (enabled) ->
         @has_replay = enabled
 
+    set_replay_range: (start, end) ->
+        @start = start
+        @end = end
+
     render: ->
-        attributes = @layout.replay_split_attributes()
-        attributes.visibility = @has_replay
-        @replay_split.attr attributes
+        split_attributes = @layout.replay_split_attributes()
+        split_attributes.visibility = @has_replay
+        @replay_split.attr split_attributes
+        range_attributes = {}
+        if @start? and @end? and @has_replay
+            range_attributes = @layout.replay_range_attributes @start, @end
+        range_attributes.visibility = @has_replay
+        @replay_range.attr range_attributes
 
 class Timeline
     id:      "#session"
@@ -1337,6 +1368,11 @@ class Timeline
         data = if @selected.length == 1 then _.first d.data else null
         triggers.trigger "select", data
 
+    # enable replay area
     set_replay: (enabled) ->
         @replay.set_replay enabled
+        @render()
+
+    set_replay_range: (start, end) ->
+        @replay.set_replay_range(start, end)
         @render()

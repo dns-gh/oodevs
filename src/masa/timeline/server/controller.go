@@ -328,3 +328,9 @@ func (c *ControllerObserver) UpdateServices() {
 		session.UpdateServices()
 	})
 }
+
+func (c *ControllerObserver) UpdateRangeDates(start, end time.Time) {
+	c.controller.post(c.session, func(session *Session) {
+		session.UpdateRangeDates(start, end)
+	})
+}

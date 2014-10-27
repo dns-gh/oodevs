@@ -338,6 +338,8 @@ class EventThrottler
     # collect updated session time
     update_session: (session) ->
         @time = session.time
+        @replay_start = session.start_time
+        @replay_end = session.end_time
         @sync()
 
     # collect updated events and eventually call sync()
@@ -397,6 +399,12 @@ class EventThrottler
             if sw?
                 @timeline.set_replay sw.has_replay
         @services = {}
+        if @replay_start? and @replay_end?
+            @session.set
+                replay_start: @replay_start
+                replay_end:   @replay_end
+        delete @replay_start
+        delete @replay_end
 
 # a backbone view for all events
 class EventsView extends Backbone.View
@@ -583,6 +591,7 @@ class SessionView extends Backbone.View
         @throttler = new EventThrottler @model, events, @timeline
         @events_view = new EventsView id: options.id, timeline: @timeline, model: events
         @listenTo     @model,    "change:time",        @on_time
+        @listenTo     @model,    "change:replay_start change:replay_end",@on_replay_range
         @listenToOnce @model,    "sync",               @on_first_sync
         @listenTo     @timeline, "range",              @on_range
         @listenTo     @timeline, "current_edit_start", @on_current_edit_start
@@ -614,6 +623,11 @@ class SessionView extends Backbone.View
             right = hash.end if hash.end?
             @timeline.set_domain left.toDate(), right.toDate()
         @timeline.set_current time.toDate()
+
+    on_replay_range: =>
+        start = moment @model.get "replay_start"
+        end = moment @model.get "replay_end"
+        @timeline.set_replay_range start.toDate(), end.toDate()
 
     on_first_sync: =>
         @timeline.edit_current !@model.get "locked"

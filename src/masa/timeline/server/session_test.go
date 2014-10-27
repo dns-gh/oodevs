@@ -631,6 +631,33 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(msg, NotNil)
 	expected.Sword.HasReplay = proto.Bool(true)
 	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
+
+	expectedStart := time.Now()
+	expectedEnd := expectedStart.Add(60 * time.Second)
+	for slink := range detached {
+		f.server.WriteReplayToClient(slink, 1, 0,
+			&sword.ReplayToClient_Content{
+				ControlReplayInformation: &sword.ControlReplayInformation{
+					CurrentTick:     proto.Int32(0),
+					InitialDateTime: swapi.MakeDateTime(expectedStart),
+					EndDateTime:     swapi.MakeDateTime(expectedEnd),
+					DateTime:        swapi.MakeDateTime(expectedStart),
+					TickDuration:    proto.Int32(10),
+					TimeFactor:      proto.Int32(1),
+					Status:          sword.EnumSimulationState_running.Enum(),
+					TickCount:       proto.Int32(6),
+				},
+			})
+	}
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_session)
+	c.Assert(msg, NotNil)
+	start, err := util.ParseTime(msg.Session.GetStartTime())
+	c.Assert(err, IsNil)
+	c.Assert(start.IsZero(), Equals, false)
+	end, err := util.ParseTime(msg.Session.GetEndTime())
+	c.Assert(err, IsNil)
+	c.Assert(end.IsZero(), Equals, false)
+	c.Assert(start.Before(end), Equals, true)
 }
 
 type FakeFilterer struct {
@@ -1572,6 +1599,10 @@ func (t *TestSuite) TestKnownEventsAreDeletedWhenBeingFiltered(c *C) {
 	input := link.Listen()
 	msg := (<-input).(*sdk.Message)
 	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_tick)
+	msg = (<-input).(*sdk.Message)
+	//c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_tick)
+	//msg = (<-input).(*sdk.Message)
+	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_session)
 	msg = (<-input).(*sdk.Message)
 	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_services)
 	swtest.DeepEquals(c, <-input, &sdk.Message{

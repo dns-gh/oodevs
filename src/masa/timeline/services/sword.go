@@ -76,6 +76,8 @@ type Sword struct {
 	orders    Ids                           // known order ids
 	actions   Ids                           // known action ids
 	services  SwordServices                 // published sword services (like replay/simulation/aar)
+	startDate time.Time                     // exercise start date
+	endDate   time.Time                     // exercise end date
 }
 
 func NewSword(log util.Logger, observer Observer, clock bool, name, address string) *Sword {
@@ -170,6 +172,12 @@ func (s *Sword) PostInvalidateFilters(link *SwordLink) {
 func (s *Sword) PostServices(link *SwordLink, services SwordServices) {
 	s.observer.Post(func() {
 		s.setServices(link, services)
+	})
+}
+
+func (s *Sword) PostReplayRangeDates(link *SwordLink, start, end time.Time) {
+	s.observer.Post(func() {
+		s.setReplayRangeDates(link, start, end)
 	})
 }
 
@@ -429,6 +437,15 @@ func (s *Sword) setServices(link *SwordLink, services SwordServices) {
 	if link == s.link {
 		s.services = services
 		s.observer.UpdateServices()
+	}
+}
+
+func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
+	s.Log("Sword.setReplayRangeDates")
+	if link == s.link {
+		s.startDate = start
+		s.endDate = end
+		s.observer.UpdateRangeDates(start, end)
 	}
 }
 
