@@ -139,11 +139,11 @@ func (s *SwordReader) readReplayToClient(msg *swapi.SwordMessage, clientId, ctx 
 	if control := content.ControlReplayInformation; control != nil {
 		startDate, err := swapi.GetTime(control.GetInitialDateTime().GetData())
 		if err != nil {
-			s.poster.Log("%v", err, control.GetInitialDateTime().GetData())
+			s.poster.Log("replay start time %v", err)
 		}
 		endDate, err := swapi.GetTime(control.GetEndDateTime().GetData())
 		if err != nil {
-			s.poster.Log("%v", err, control.GetEndDateTime().GetData())
+			s.poster.Log("replay end time %v", err)
 		}
 		s.poster.SetReplayRangeDates(startDate, endDate)
 	}
