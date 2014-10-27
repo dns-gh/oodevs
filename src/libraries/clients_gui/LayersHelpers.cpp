@@ -121,7 +121,7 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_Fog,                    "fog",                              false,  false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },                                        
-    { eLayerTypes_Formations,             "main,miniview",                    false,  false,
+    { eLayerTypes_Formations,             "main,miniview",                    true,   false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },                                        
     { eLayerTypes_Ghosts,                 "main,miniview",                    false,  false,
