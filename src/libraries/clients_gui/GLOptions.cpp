@@ -30,6 +30,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Settings.h"
 #include "clients_kernel/StaticModel.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
 
 #include <boost/algorithm/string.hpp>
@@ -395,6 +396,24 @@ void GLOptions::SetLockedEntity( const kernel::Entity_ABC* lockedEntity )
     lockedEntity_ = lockedEntity;
 }
 
+namespace
+{
+    // this will move in the GLMainProxy::ApplyOptions soon
+    void Toggle( const kernel::Entity_ABC& entity, bool aggregate )
+    {
+        auto hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !hierarchy )
+            return;
+        auto it = hierarchy->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            auto& child = const_cast< kernel::Entity_ABC& >( it.NextElement() );
+            child.SetAggregatedSubordinate( aggregate );
+            Toggle( child, aggregate );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GLOptions::Aggregate
 // Created: ABR 2014-07-08
@@ -405,6 +424,7 @@ void GLOptions::Aggregate( const kernel::Entity_ABC& entity )
         aggregatedAutomats_.push_back( &entity );
     else if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
         aggregatedFormations_.push_back( &entity );
+    Toggle( entity, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -413,14 +433,19 @@ void GLOptions::Aggregate( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void GLOptions::Disaggregate( const kernel::Entity_ABC* entity /* = 0 */ )
 {
-    if( !entity )
+    if( !entity ) // disagregate all
     {
+        for( auto it = aggregatedAutomats_.begin(); it != aggregatedAutomats_.end(); ++it )
+            Toggle( **it, false );
+        for( auto it = aggregatedFormations_.begin(); it != aggregatedFormations_.end(); ++it )
+            Toggle( **it, false );
         aggregatedAutomats_.clear();
         aggregatedFormations_.clear();
         return;
     }
     aggregatedAutomats_.erase( std::remove( aggregatedAutomats_.begin(), aggregatedAutomats_.end(), entity ), aggregatedAutomats_.end() );
     aggregatedFormations_.erase( std::remove( aggregatedFormations_.begin(), aggregatedFormations_.end(), entity ), aggregatedFormations_.end() );
+    Toggle( *entity, false );
 }
 
 // -----------------------------------------------------------------------------

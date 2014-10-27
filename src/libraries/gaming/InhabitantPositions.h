@@ -13,6 +13,7 @@
 #include "clients_kernel/Positions.h"
 
 class Inhabitant;
+class UrbanModel;
 
 // =============================================================================
 /** @class  InhabitantPositions
@@ -25,7 +26,9 @@ class InhabitantPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InhabitantPositions( const Inhabitant& inhabitant ); // $$$$ AGE 2006-04-10:
+             InhabitantPositions( const sword::PopulationCreation& message,
+                                  const UrbanModel& model,
+                                  const Inhabitant& inhabitant );
     virtual ~InhabitantPositions();
     //@}
 
@@ -50,6 +53,8 @@ private:
     //! @name Member data
     //@{
     const Inhabitant& inhabitant_;
+    geometry::Rectangle2f boundingBox_;
+    geometry::Point2f position_;
     //@}
 };
 

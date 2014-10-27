@@ -336,7 +336,7 @@ void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
 void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     const bool bEmptyGasTank = entity_.Get< kernel::Dotations_ABC >().IsEmptyGasTank();
-    if( entity_.IsAggregated()
+    if( entity_.IsAnAggregatedSubordinate()
     || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ || bEmptyGasTank )
     || ! viewport.IsHotpointVisible() || !tools.GetOptions().ShouldDisplay( "UnitDetails" ) )
         return;

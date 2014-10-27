@@ -17,7 +17,6 @@
 #include "AgentHierarchiesCommunication.h"
 #include "AgentPositions.h"
 #include "AgentsModel.h"
-#include "AggregatedPositions.h"
 #include "Attributes.h"
 #include "Automat.h"
 #include "AutomatHierarchies.h"
@@ -73,6 +72,7 @@
 #include "CommandPostAttributes.h"
 
 #include "actions/ActionsModel.h"
+#include "clients_gui/AggregatedPositions.h"
 #include "clients_gui/AutomatDecisions.h"
 #include "clients_gui/CriticalIntelligence.h"
 #include "clients_gui/EntityType.h"
@@ -155,7 +155,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, type->IsTC2(), message.logistic_level() == sword::logistic_base, true ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, dictionary, *result ) );
     result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( controllers_.controller_, *result, static_.types_.automatModels_ ) );
-    result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
+    result->Attach< kernel::Positions >( *new gui::AggregatedPositions( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
@@ -289,7 +289,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& m
     result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
-    AddPositions( *result, controllers_, simulation_, isInReplay_, *new InhabitantPositions( *result ) );
+    AddPositions( *result, controllers_, simulation_, isInReplay_, *new InhabitantPositions( message, model_.urbanObjects_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     result->Attach< kernel::LivingArea_ABC >( *new LivingArea( message, result->GetId(), controllers_.controller_, model_.urbanObjects_ ) );

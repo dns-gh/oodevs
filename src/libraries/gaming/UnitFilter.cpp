@@ -182,7 +182,7 @@ bool UnitFilter::IsPerceived( const kernel::Entity_ABC& entity ) const
 // Name: UnitFilter::SetFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-void UnitFilter::SetFilter( const Entity_ABC& entity )
+void UnitFilter::SetFilter( const Entity_ABC& entity, bool update /* = true */ )
 {
     const auto tactical = entity.Retrieve< TacticalHierarchies >();
     const auto comms = entity.Retrieve< CommunicationHierarchies >();
@@ -192,6 +192,8 @@ void UnitFilter::SetFilter( const Entity_ABC& entity )
     tHierarchies_ = tactical;
     cHierarchies_ = comms;
     entity_ = cHierarchies_ ? &entity : &tHierarchies_->GetTop();
+    if( !update )
+        return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
     controller_.Update( *static_cast< Filter_ABC* >( this ) );
 }

@@ -141,7 +141,7 @@ void InhabitantExtractCrowdDialog::Validate()
     {
         const Inhabitant& entity = static_cast< const Inhabitant& > ( *( selected_.ConstCast() ) );
         const kernel::Entity_ABC& top = entity.Get< kernel::TacticalHierarchies >().GetTop();
-        actionsModel_.PublishCrowdCreationAction( entity.Get< gui::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType(), healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(), entity.GetPosition(), top );
+        actionsModel_.PublishCrowdCreationAction( entity.Get< gui::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType(), healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(), entity.Get< kernel::Positions >().GetPosition(), top );
     }
     selected_ = 0;
 }

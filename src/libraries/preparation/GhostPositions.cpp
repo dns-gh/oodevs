@@ -83,7 +83,7 @@ GhostPositions::~GhostPositions()
 // -----------------------------------------------------------------------------
 geometry::Point2f GhostPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !entity_.IsAggregated() )
+    if( !aggregated || !entity_.IsAnAggregatedSubordinate() )
         return position_;
     const kernel::Entity_ABC* superior = ghost_.Get< TacticalHierarchies >().GetSuperior();
     return superior->Get< Positions >().GetPosition();
@@ -95,7 +95,7 @@ geometry::Point2f GhostPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float GhostPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !entity_.IsAggregated() )
+    if( !aggregated || !entity_.IsAnAggregatedSubordinate() )
         return height_;
     const kernel::Entity_ABC* superior = ghost_.Get< TacticalHierarchies >().GetSuperior();
     return superior->Get< Positions >().GetHeight();

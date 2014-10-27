@@ -9,8 +9,8 @@
 
 #include "preparation_app_pch.h"
 #include "FormationLayer.h"
+#include "clients_gui/AggregatedPositions.h"
 #include "clients_gui/DragAndDropHelpers.h"
-#include "preparation/FormationPositions.h"
 
 // -----------------------------------------------------------------------------
 // Name: FormationLayer constructor
@@ -62,7 +62,7 @@ void FormationLayer::MultipleSelect( const std::vector< const kernel::Formation_
 // -----------------------------------------------------------------------------
 bool FormationLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
 {
-    return dnd::HasData< FormationPositions >( event ) && selectedFormation_;
+    return dnd::HasData< gui::AggregatedPositions >( event ) && selectedFormation_;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ bool FormationLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*
 // -----------------------------------------------------------------------------
 bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& /*point*/ )
 {
-    FormationPositions* positions = dnd::FindData< FormationPositions >( event );
+    auto positions = dnd::FindData< gui::AggregatedPositions >( event );
     if( positions && selectedFormation_ )
     {
         draggingPoint_.Set( 0, 0 );
@@ -87,8 +87,7 @@ bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f
 // -----------------------------------------------------------------------------
 bool FormationLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    FormationPositions* positions = dnd::FindData< FormationPositions >( event );
-    if( positions )
+    if( auto positions = dnd::FindData< gui::AggregatedPositions >( event ) )
     {
         if( selectedFormation_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
         {
@@ -108,7 +107,7 @@ bool FormationLayer::HandleMousePress( QMouseEvent* event, const geometry::Point
 {
     if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag() )
     {
-        if( const FormationPositions* pos = static_cast< const FormationPositions* >( selectedFormation_->Retrieve< kernel::Positions >() ) )
+        if( const auto* pos = static_cast< const gui::AggregatedPositions* >( selectedFormation_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
             draggingOffset_ = pos->GetPosition( true ) - point.ToVector();

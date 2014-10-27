@@ -43,8 +43,8 @@ class UrbanModel;
 // Created: HME 2005-09-29
 // =============================================================================
 class Inhabitant : public gui::EntityImplementation< kernel::Inhabitant_ABC >
+                 , public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< sword::PopulationUpdate >
-                 , public kernel::Positions
                  , public tools::Observer_ABC
                  , public gui::Drawable_ABC
 {
@@ -65,13 +65,6 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
-
-    virtual geometry::Point2f GetPosition( bool aggregated = false ) const;
-    virtual float GetHeight( bool aggregated ) const;
-    virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
-    virtual geometry::Rectangle2f GetBoundingBox() const;
-    virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
-    virtual bool CanAggregate() const;
     //@}
 
 private:
@@ -104,8 +97,6 @@ private:
     T_MotivationSatisfactions motivationSatisfactions_;
     T_ResourceSatisfactions resourceSatisfactions_;
     T_UrbanObjectVector livingUrbanObject_;
-    geometry::Rectangle2f boundingBox_;
-    geometry::Point2f position_;
     std::string motivation_;
     unsigned int livingUrbanObjects_;
     unsigned int nominalCapacity_;

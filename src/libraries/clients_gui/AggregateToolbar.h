@@ -10,8 +10,7 @@
 #ifndef gui_AggregateToolbar_h
 #define gui_AggregateToolbar_h
 
-#include <tools/Observer_ABC.h>
-#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver.h>
 #include <vector>
 
 namespace kernel
@@ -24,8 +23,7 @@ namespace kernel
 
 namespace gui
 {
-    class AutomatsLayer;
-    class FormationLayer;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  AggregateToolbar
@@ -34,35 +32,17 @@ namespace gui
 // Created: LGY 2011-10-14
 // =============================================================================
 class AggregateToolbar : public QHBoxLayout
-                       , public tools::Observer_ABC
-                       , public tools::ElementObserver_ABC< kernel::Automat_ABC >
-                       , public tools::ElementObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateToolbar( kernel::Controller& controller,
-                               const std::shared_ptr< AutomatsLayer >& automatsLayer,
-                               const std::shared_ptr< FormationLayer >& formationsLayer,
+             AggregateToolbar( GLView_ABC& view,
+                               const tools::Resolver< kernel::Formation_ABC >& formations,
+                               const tools::Resolver< kernel::Automat_ABC >& automats,
                                bool showDisplayModes );
     virtual ~AggregateToolbar();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void NotifyCreated( const kernel::Automat_ABC& automat );
-    virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
-    virtual void NotifyCreated( const kernel::Formation_ABC& formation );
-    virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AggregateToolbar( const AggregateToolbar& );            //!< Copy constructor
-    AggregateToolbar& operator=( const AggregateToolbar& ); //!< Assignment operator
     //@}
 
 signals:
@@ -80,29 +60,16 @@ private slots:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< const kernel::Automat_ABC* > T_Automats;
-    typedef T_Automats::iterator                     IT_Automats;
-    typedef T_Automats::const_iterator              CIT_Automats;
-
-    typedef std::vector< const kernel::Formation_ABC* > T_Formations;
-    typedef T_Formations::iterator                     IT_Formations;
-    typedef T_Formations::const_iterator              CIT_Formations;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    const std::shared_ptr< AutomatsLayer >& automatsLayer_;
-    const std::shared_ptr< FormationLayer >& formationsLayer_;
-    T_Automats automats_;
-    T_Formations formations_;
+    GLView_ABC& view_;
+    const tools::Resolver< kernel::Formation_ABC >& formations_;
+    const tools::Resolver< kernel::Automat_ABC >& automats_;
     kernel::ContextMenu* levelMenu_;
     kernel::ContextMenu* displayMenu_;
     //@}
 };
-}
+
+} //! namespace gui
 
 #endif // gui_AggregateToolbar_h

@@ -54,7 +54,8 @@ public:
                          float height,
                          kernel::DetectionMap& elevation,
                          EventStrategy_ABC& strategy,
-                         const DrawingTypes& drawingTypes );
+                         const DrawingTypes& drawingTypes,
+                         QGLWidget* shareWidget = 0 );
     virtual ~Gl3dWidget();
     //@}
 

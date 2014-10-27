@@ -10,9 +10,9 @@
 #include "gaming_pch.h"
 #include "AutomatLives.h"
 #include "Lives.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "tools/Iterator.h"
 
@@ -41,10 +41,10 @@ AutomatLives::~AutomatLives()
 // Name: AutomatLives::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void AutomatLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
 {
-    if( !IsAggregated( automat_ ) && HasAggregatedSubordinate( automat_ ) && viewport.IsHotpointVisible() )
-        tools.DrawLife( where, GetLife(), 2.f );
+    if( !automat_.IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( automat_ ) && viewport.IsHotpointVisible() )
+        view.DrawLife( where, GetLife(), 2.f );
 }
 
 // -----------------------------------------------------------------------------

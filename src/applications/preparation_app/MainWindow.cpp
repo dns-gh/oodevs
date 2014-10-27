@@ -110,7 +110,6 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_Logger.h"
-#include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/assign.hpp>
 #include <boost/bind.hpp>
@@ -184,8 +183,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
     // Layer 1
     auto locationsLayer = std::make_shared< gui::LocationsLayer >( controllers_, *glProxy_ );
     auto paramLayer = std::make_shared< gui::ParametersLayer >( controllers_, *glProxy_, *textEditor_ );
-    auto automats = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, profile );
-    auto formation = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, profile );
     auto weatherLayer = std::make_shared< gui::WeatherLayer >( controllers_, *glProxy_, *eventStrategy_ );
     auto profilerLayer = std::make_shared< gui::TerrainProfilerLayer >( controllers_, *glProxy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
@@ -195,14 +192,14 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
                                                  *icons_, config, *symbols, paramLayer, *glProxy_ ) );
 
     // Dock widgets
-    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, paramLayer, weatherLayer, profilerLayer, *icons_, *modelBuilder_, model_,
+    dockContainer_.reset( new DockContainer( this, controllers_, paramLayer, weatherLayer, profilerLayer, *icons_, *modelBuilder_, model_,
                                              staticModel_, config_, *symbols, *strategy_, *glProxy_, *colorController_, profile ) );
 
     // ToolBars
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, locationsLayer, paramLayer, *eventStrategy_, *model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
 
     // Layers 2
-    CreateLayers( paramLayer, locationsLayer, weatherLayer, profilerLayer, automats, formation, *picker );
+    CreateLayers( paramLayer, locationsLayer, weatherLayer, profilerLayer, *picker );
 
     // Help
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ), &controllers_.modes_ );
@@ -273,8 +270,6 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
                                const std::shared_ptr< gui::Layer_ABC >& locations,
                                const std::shared_ptr< gui::Layer_ABC >& weather,
                                const std::shared_ptr< gui::Layer_ABC >& profiler,
-                               const std::shared_ptr< gui::Layer_ABC >& automats,
-                               const std::shared_ptr< gui::Layer_ABC >& formations,
                                gui::TerrainPicker& picker )
 {
     assert( dialogContainer_.get() && dockContainer_.get() );
@@ -282,14 +277,14 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     auto tooltips = std::make_shared< gui::TooltipsLayer >( controllers_, *glProxy_ );
     gui::T_LayersMap layers;
     layers[ eLayerTypes_Agents ]             = std::make_shared< AgentsLayer >( controllers_, *glProxy_, *strategy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
-    layers[ eLayerTypes_Automats ]           = automats;
+    layers[ eLayerTypes_Automats ]           = std::make_shared< AutomatsLayer >( controllers_, *glProxy_, *strategy_, profile );
     layers[ eLayerTypes_ContourLines ]       = std::make_shared< gui::ContourLinesLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_Crowds ]             = std::make_shared< PopulationsLayer >( controllers_, *glProxy_, *strategy_, model_, profile );
     layers[ eLayerTypes_Default ]            = std::make_shared< gui::DefaultLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_Drawings ]           = std::make_shared< gui::DrawerLayer >( controllers_, *glProxy_, *strategy_, parameters, profile, *modelBuilder_ );
     layers[ eLayerTypes_Elevation2d ]        = std::make_shared< gui::Elevation2dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
     layers[ eLayerTypes_Elevation3d ]        = std::make_shared< gui::Elevation3dLayer >( controllers_, *glProxy_, staticModel_.detection_ );
-    layers[ eLayerTypes_Formations ]         = formations;
+    layers[ eLayerTypes_Formations ]         = std::make_shared< FormationLayer >( controllers_, *glProxy_, *strategy_, profile );
     layers[ eLayerTypes_Ghosts ]             = std::make_shared< GhostsLayer >( controllers_, *glProxy_, *strategy_, model_, profile );
     layers[ eLayerTypes_Grid ]               = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
     layers[ eLayerTypes_IndicatorCreation ]  = std::make_shared< gui::MiscLayer< ScoreDialog > >( controllers_, *glProxy_, eLayerTypes_IndicatorCreation, dialogContainer_->GetScoreDialog() );

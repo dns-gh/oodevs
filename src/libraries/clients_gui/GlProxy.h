@@ -14,11 +14,13 @@
 #include "GLView_ABC.h"
 #include "LayersHelpers.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
     class Controllers;
     class EntityResolver_ABC;
+    class Filter_ABC;
     class GraphicalEntity_ABC;
     class StaticModel;
     class Options;
@@ -45,6 +47,7 @@ namespace gui
 class GlProxy : public GLView_ABC
               , public tools::Observer_ABC
               , public kernel::OptionsObserver_ABC
+              , public tools::ElementObserver_ABC< kernel::Filter_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,9 +60,10 @@ public:
     virtual ~GlProxy();
     //@}
 
-    //! @name OptionsObserver implementation
+    //! @name Observer implementation
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
     //@}
 
     //! @name Proxy

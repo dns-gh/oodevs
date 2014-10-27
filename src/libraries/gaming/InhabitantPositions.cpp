@@ -10,15 +10,37 @@
 #include "gaming_pch.h"
 #include "InhabitantPositions.h"
 #include "Inhabitant.h"
+#include "UrbanModel.h"
+#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
+#include "protocol/SimulationSenders.h"
+#include <boost/foreach.hpp>
+
+using namespace geometry;
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( const Inhabitant& inhabitant )
+InhabitantPositions::InhabitantPositions( const sword::PopulationCreation& message,
+                                          const UrbanModel& model,
+                                          const Inhabitant& inhabitant )
     : inhabitant_( inhabitant )
 {
-    // NOTHING
+    Polygon2f polygon;
+    for( int i = 0; i < message.objects_size(); ++i )
+    {
+        int id = message.objects( i ).id();
+        kernel::UrbanObject_ABC& object = model.GetObject( id );
+        if( const auto positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+        {
+            polygon.Add( positions->Barycenter() );
+            const auto& vertices = positions->Vertices();
+            for( auto it = vertices.begin(); it != vertices.end(); ++it )
+                boundingBox_.Incorporate( *it );
+        }
+    }
+    position_ = polygon.Barycenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -34,16 +56,16 @@ InhabitantPositions::~InhabitantPositions()
 // Name: InhabitantPositions::GetPosition
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-geometry::Point2f InhabitantPositions::GetPosition( bool aggregated ) const
+geometry::Point2f InhabitantPositions::GetPosition( bool ) const
 {
-    return inhabitant_.GetPosition( aggregated );
+    return position_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::IsIn
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-bool InhabitantPositions::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
+bool InhabitantPositions::IsIn( const geometry::Rectangle2f& ) const
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
@@ -52,7 +74,7 @@ bool InhabitantPositions::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) con
 // Name: InhabitantPositions::GetHeight
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-float InhabitantPositions::GetHeight( bool /*aggregated*/ ) const
+float InhabitantPositions::GetHeight( bool ) const
 {
     return 0;
 }
@@ -63,7 +85,7 @@ float InhabitantPositions::GetHeight( bool /*aggregated*/ ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f InhabitantPositions::GetBoundingBox() const
 {
-    return inhabitant_.GetBoundingBox();
+    return boundingBox_;
 }
 
 // -----------------------------------------------------------------------------

@@ -80,7 +80,7 @@ AgentPositions::~AgentPositions()
 // -----------------------------------------------------------------------------
 Point2f AgentPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !agent_.IsAggregated() )
+    if( !aggregated || !agent_.IsAnAggregatedSubordinate() )
         return position_;
     const kernel::Entity_ABC* superior = agent_.Get< TacticalHierarchies >().GetSuperior();
     return superior->Get< Positions >().GetPosition();
@@ -92,7 +92,7 @@ Point2f AgentPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float AgentPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !agent_.IsAggregated() )
+    if( !aggregated || !agent_.IsAnAggregatedSubordinate() )
         return height_;
     const kernel::Entity_ABC* superior = agent_.Get< TacticalHierarchies >().GetSuperior();
     return superior->Get< Positions >().GetHeight();

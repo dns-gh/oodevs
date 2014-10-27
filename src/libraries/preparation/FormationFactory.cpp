@@ -12,13 +12,12 @@
 #include "Color.h"
 #include "Formation.h"
 #include "FormationHierarchies.h"
-#include "FormationPositions.h"
 #include "LogisticBaseStates.h"
-#include "FormationPositions.h"
 #include "StaticModel.h"
 #include "Symbol.h"
 #include "TacticalLines.h"
 
+#include "clients_gui/AggregatedPositions.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -63,7 +62,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, E_N
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ), symbolsFactory_ ) );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
-    formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
+    formation->Attach< kernel::Positions >( *new gui::AggregatedPositions( *formation ) );
     formation->Attach< gui::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
@@ -84,7 +83,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, symbolsFactory_.GetSymbolBase( karma ), symbolsFactory_ ) );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
-    formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
+    formation->Attach< kernel::Positions >( *new gui::AggregatedPositions( *formation ) );
     formation->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( xis ) );

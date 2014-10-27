@@ -92,4 +92,3 @@ bool PreparationProfile::HasTimeControl() const
 {
     return true;
 }
-

@@ -31,15 +31,15 @@ namespace kernel
 
 namespace gui
 {
-    class AutomatsLayer;
-    class FormationLayer;
     class AggregateToolbar;
+    class GLView_ABC;
 }
 
-class Simulation;
-class ProfileFilter;
 class Filter_ABC;
+class Model;
 class Profile;
+class ProfileFilter;
+class Simulation;
 
 // =============================================================================
 /** @class  OrbatToolbar
@@ -68,9 +68,9 @@ public:
     //@{
              OrbatToolbar( QWidget* parent,
                            kernel::Controllers& controllers,
-                           ProfileFilter& filter,
-                           const std::shared_ptr< gui::AutomatsLayer >& automats,
-                           const std::shared_ptr< gui::FormationLayer >& formations );
+                           gui::GLView_ABC& view,
+                           const Model& model,
+                           ProfileFilter& filter );
     virtual ~OrbatToolbar();
     //@}
 

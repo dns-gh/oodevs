@@ -14,7 +14,9 @@
 #include "IconLayout.h"
 #include "PickingSelector.h"
 #include "FrameCounter.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Positions.h"
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
 #include <boost/assign/list_of.hpp>
@@ -117,7 +119,13 @@ void GlWidget::resizeGL( int w, int h )
 void GlWidget::updateGL()
 {
     if( isVisible() )
+    {
+        // TMP: Will move to GLMainProxy::ApplyOptions soon
+        if( auto entity = GetOptions().GetLockedEntity() )
+            if( const auto* position = entity->Retrieve< kernel::Positions >() )
+                CenterOn( position->GetPosition( false ) );
         MapWidget::updateGL();
+    }
 }
 
 // -----------------------------------------------------------------------------

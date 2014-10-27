@@ -27,7 +27,7 @@ void EntityBase_ABC::AddExtension( Extension_ABC& ext )
 // Created: AGE 2006-02-07
 // -----------------------------------------------------------------------------
 Entity_ABC::Entity_ABC()
-    : aggregated_( false )
+    : aggregatedSubordinate_( false )
     , highlighted_( false )
 {
     // NOTHING
@@ -91,14 +91,14 @@ void Entity_ABC::OverFly( ActionController& /*controller*/ ) const
     // NOTHING
 }
 
-void Entity_ABC::Aggregate( bool aggregate )
+void Entity_ABC::SetAggregatedSubordinate( bool aggregate )
 {
-    aggregated_ = aggregate;
+    aggregatedSubordinate_ = aggregate;
 }
 
-bool Entity_ABC::IsAggregated() const
+bool Entity_ABC::IsAnAggregatedSubordinate() const
 {
-    return aggregated_;
+    return aggregatedSubordinate_;
 }
 
 void Entity_ABC::ToggleHighlight()

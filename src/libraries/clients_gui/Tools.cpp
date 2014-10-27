@@ -164,3 +164,17 @@ QWidget* tools::AddLabeledWidget( const QString& label,
     layout->addWidget( widget, stretch, alignment );
     return result;
 }
+
+bool tools::HasSubordinate( const kernel::Entity_ABC& entity, const std::function< bool( const kernel::Entity_ABC& ) >& fun )
+{
+    bool children = false;
+    auto it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& child = it.NextElement();
+        if( !fun( child ) )
+            return false;
+        children = true;
+    }
+    return children;
+}

@@ -9,8 +9,8 @@
 
 #include "preparation_app_pch.h"
 #include "AutomatsLayer.h"
+#include "clients_gui/AggregatedPositions.h"
 #include "clients_gui/DragAndDropHelpers.h"
-#include "preparation/AutomatPositions.h"
 
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer constructor
@@ -62,7 +62,7 @@ void AutomatsLayer::MultipleSelect( const std::vector< const kernel::Automat_ABC
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
 {
-    return dnd::HasData< AutomatPositions >( event ) && selectedAutomat_;
+    return dnd::HasData< gui::AggregatedPositions >( event ) && selectedAutomat_;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ bool AutomatsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*p
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& /*point*/ )
 {
-    AutomatPositions* positions = dnd::FindData< AutomatPositions >( event );
+    auto positions = dnd::FindData< gui::AggregatedPositions >( event );
     if( positions && selectedAutomat_ )
     {
         draggingPoint_.Set( 0, 0 );
@@ -87,8 +87,7 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    AutomatPositions* positions = dnd::FindData< AutomatPositions >( event );
-    if( positions )
+    if( auto positions = dnd::FindData< gui::AggregatedPositions >( event ) )
     {
         if( selectedAutomat_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * view_.Pixels( point ) )
         {
@@ -108,7 +107,7 @@ bool AutomatsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
 {
     if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag() )
     {
-        if( const AutomatPositions* pos = static_cast< const AutomatPositions* >( selectedAutomat_->Retrieve< kernel::Positions >() ) )
+        if( const gui::AggregatedPositions* pos = static_cast< const gui::AggregatedPositions* >( selectedAutomat_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
             draggingOffset_ = pos->GetPosition( true ) - point.ToVector();

@@ -111,7 +111,7 @@ public:
     const std::vector< const kernel::Entity_ABC* >& GetAggregatedAutomats() const;
     const std::vector< const kernel::Entity_ABC* >& GetAggregatedFormations() const;
     void Aggregate( const kernel::Entity_ABC& entity );
-    void Disaggregate( const kernel::Entity_ABC* entity = 0 );
+    void Disaggregate( const kernel::Entity_ABC* entity = 0 ); // if entity == 0, disagregate all
 
     //const T_FireOptions& GetFireOptions( FireGroup group ) const;
 

@@ -10,15 +10,18 @@
 #include "clients_gui_pch.h"
 #include "GlSelector.h"
 #include "moc_GlSelector.cpp"
+
+#include "CompositionPass.h"
 #include "GlPlaceHolder.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
+#include "GLOptions.h"
 #include "GlProxy.h"
 #include "IconLayout.h"
 #include "Layer.h"
 #include "LayersRenderPass.h"
+#include "SignalAdapter.h"
 #include "TextureRenderPass.h"
-#include "CompositionPass.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
@@ -80,11 +83,15 @@ void GlSelector::Load()
     }
 
     widget2d_ = std::make_shared< GlWidget >( this, proxy_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_, drawingTypes_ );
-    widget3d_ = std::make_shared< Gl3dWidget >( this, proxy_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_ );
+    widget3d_ = std::make_shared< Gl3dWidget >(this, proxy_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_, widget2d_.get() );
 
     widget2d_->Load( config_ );
     widget2d_->Configure( strategy_ );
-    widget2d_->Configure( std::make_shared< DragMovementLayer >( *widget2d_ ) );
+    auto movementLayer = std::make_shared< DragMovementLayer >( *widget2d_ );
+    gui::connect( movementLayer.get(), SIGNAL( Translated() ), [&]() {
+        proxy_.GetOptions().SetLockedEntity( 0 );
+    } );
+    widget2d_->Configure( movementLayer );
     widget3d_->Load( config_ );
 
     proxy_.SetWidget2D( widget2d_ );

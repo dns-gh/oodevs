@@ -23,10 +23,13 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/AggregateToolbar.h"
+#include "gaming/AgentsModel.h"
+#include "gaming/Model.h"
 #include "gaming/ProfileFilter.h"
 #include "gaming/Profile.h"
-#include "gaming/UnitFilter.h"
 #include "gaming/Simulation.h"
+#include "gaming/TeamsModel.h"
+#include "gaming/UnitFilter.h"
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar constructor
@@ -34,13 +37,13 @@
 // -----------------------------------------------------------------------------
 OrbatToolbar::OrbatToolbar( QWidget* parent,
                             kernel::Controllers& controllers,
-                            ProfileFilter& filter,
-                            const std::shared_ptr< gui::AutomatsLayer >& automats,
-                            const std::shared_ptr< gui::FormationLayer >& formations )
+                            gui::GLView_ABC& view,
+                            const Model& model,
+                            ProfileFilter& filter )
     : QFrame( parent )
     , controllers_( controllers )
-    , filter_     ( filter )
-    , entity_     ( controllers_ )
+    , filter_( filter )
+    , entity_( controllers_ )
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
@@ -49,7 +52,7 @@ OrbatToolbar::OrbatToolbar( QWidget* parent,
     setMaximumWidth( 440 );
 
     QGridLayout* toolbarBox = new QGridLayout( this );
-    pAggregateToolbar_ = new gui::AggregateToolbar( controllers.controller_, automats, formations, true );
+    pAggregateToolbar_ = new gui::AggregateToolbar( view, model.teams_, model.agents_, true );
     toolbarBox->addLayout( pAggregateToolbar_, 0, 0, 1, 1, Qt::AlignLeft );
 
     filterBtn_ = new QToolButton();

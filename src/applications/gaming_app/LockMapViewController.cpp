@@ -18,7 +18,7 @@
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Tools.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 
 using namespace kernel;
@@ -27,10 +27,10 @@ using namespace kernel;
 // Name: LockMapViewController constructor
 // Created: MMC 2013-09-05
 // -----------------------------------------------------------------------------
-LockMapViewController::LockMapViewController( Controllers& controllers, gui::GLView_ABC& view )
+LockMapViewController::LockMapViewController( Controllers& controllers,
+                                              gui::GLView_ABC& view )
     : controllers_( controllers )
     , view_( view )
-    , locked_( controllers )
     , selected_( controllers )
 {
     controllers_.Register( *this );
@@ -46,51 +46,31 @@ LockMapViewController::~LockMapViewController()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LockMapViewController Clear
-// Created: MMC 2013-09-05
-// -----------------------------------------------------------------------------
-void LockMapViewController::Clear()
-{
-    locked_ = 0;
-    selected_ = 0;
-    center_ = geometry::Point2f();
-}
-
-// -----------------------------------------------------------------------------
 // Name: LockMapViewController::LockViewOnEntity
 // Created: MMC 2013-09-05
 // -----------------------------------------------------------------------------
-void LockMapViewController::LockViewOnEntity()
+void LockMapViewController::OnLockViewOnEntity()
 {
-    locked_ = selected_;
-    view_.CenterOn( locked_->Get< kernel::Positions >().GetPosition() );
-    center_ = view_.GetCenter();
+    LockViewOnEntity( selected_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LockMapViewController::UnlockViewOnEntity
 // Created: MMC 2013-09-05
 // -----------------------------------------------------------------------------
-void LockMapViewController::UnlockViewOnEntity()
+void LockMapViewController::OnUnlockViewOnEntity()
 {
-    Clear();
+    LockViewOnEntity( 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LockMapViewController::NotifyUpdated
-// Created: MMC 2013-09-05
+// Name: LockMapViewController::LockViewOnEntity
+// Created: ABR 2014-07-25
 // -----------------------------------------------------------------------------
-void LockMapViewController::NotifyUpdated( const Simulation::sEndTick& /*endTick*/ )
+void LockMapViewController::LockViewOnEntity( const kernel::Entity_ABC* entity )
 {
-    if( !locked_ )
-        return;
-    if( view_.GetCenter().SquareDistance( center_ ) < 1.f )
-    {
-        view_.CenterOn( locked_->Get< kernel::Positions >().GetPosition() );
-        center_ = view_.GetCenter();
-        return;
-    }
-    Clear();
+    selected_ = 0;
+    view_.GetOptions().SetLockedEntity( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,10 +80,10 @@ void LockMapViewController::NotifyUpdated( const Simulation::sEndTick& /*endTick
 void LockMapViewController::UpdateContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = &entity;
-    if( locked_ && locked_ == selected_ )
-        menu.InsertItem( "Interface", tools::translate( "LockMapViewController", "Unlock view on entity" ), this, SLOT( UnlockViewOnEntity() ) );
+    if( view_.GetOptions().GetLockedEntity() == &entity )
+        menu.InsertItem( "Interface", tr( "Unlock view on entity" ), this, SLOT( OnUnlockViewOnEntity() ) );
     else
-        menu.InsertItem( "Interface", tools::translate( "LockMapViewController", "Lock view on entity" ), this, SLOT( LockViewOnEntity() ) );
+        menu.InsertItem( "Interface", tr( "Lock view on entity" ), this, SLOT( OnLockViewOnEntity() ) );
 }
 
 // -----------------------------------------------------------------------------

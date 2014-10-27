@@ -104,8 +104,8 @@ public:
 
     //! @name Graphics
     //@{
-    void Aggregate( bool aggregate );
-    bool IsAggregated() const;
+    void SetAggregatedSubordinate( bool aggregate );
+    bool IsAnAggregatedSubordinate() const;
     void ToggleHighlight();
     bool IsHighlighted() const;
     //@}
@@ -114,7 +114,7 @@ private:
     //! @name Member data
     //@{
     std::vector< Extension_ABC* > extensions_;
-    bool aggregated_;
+    bool aggregatedSubordinate_;
     bool highlighted_;
     //@}
 };

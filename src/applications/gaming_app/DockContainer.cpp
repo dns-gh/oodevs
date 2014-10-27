@@ -69,8 +69,6 @@ DockContainer::DockContainer( QMainWindow* parent,
                               ProfileFilter& profile,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               const std::shared_ptr< gui::TerrainProfilerLayer >& profilerLayer,
-                              const std::shared_ptr< AutomatsLayer >& automatsLayer,
-                              const std::shared_ptr< FormationLayer >& formationLayer,
                               const std::shared_ptr< ::WeatherLayer >& weatherLayer,
                               gui::GlProxy& proxy,
                               gui::RichItemFactory& factory,
@@ -137,8 +135,8 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Orbat panel
     {
-        orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, automatsLayer, formationLayer, paramLayer,
-                                                model.actions_, staticModel, simulation, entitySymbols, drawingsBuilder );
+        orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, proxy, paramLayer,
+                                                model, staticModel, simulation, entitySymbols, drawingsBuilder );
         orbatDockWidget_->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
     }
