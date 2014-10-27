@@ -25,8 +25,8 @@
 #include "simulation_kernel/Tools/MIL_Config.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/IpcWatch.h"
-#include "tools/VersionHelper.h"
 #include "tools/WinArguments.h"
+#include <tools/Version.h>
 #include <tools/WaitEvent.h>
 
 #include <boost/bind.hpp>
@@ -74,7 +74,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpC
         MT_Logger_ABC::eSimulation, exerciceConfig->IsSimLogInBytes() ) );
     MT_LOG_REGISTER_LOGGER( *logger_ );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( ( "Sword Simulation - Version " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE ).c_str() );
+    MT_LOG_STARTUP_MESSAGE( ( "Sword Simulation - Version " + tools::GetFullVersion( "0.0.0.0.00000000" ) + " - " MT_COMPILE_TYPE ).c_str() );
     MT_LOG_STARTUP_MESSAGE( ( "Starting simulation - " + boost::posix_time::to_simple_string( boost::posix_time::second_clock::local_time() ) ).c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_INFO_MSG( "Command line: " << winArguments_->GetCommandLine() );
