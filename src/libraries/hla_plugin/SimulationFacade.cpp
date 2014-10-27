@@ -95,7 +95,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pFormationCreater_          ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, automatTypeResolver, dynamicModel.KnowledgeGroups() ) )
     , pUnitTeleporter_            ( new UnitTeleporter( xis, missionResolver, remoteAgentSubject, *pUnitHandler_, publisher, contextFactory,
-                                        localResolver, callsignResolver, logger, *pFormationHandler_, *pAutomatHandler_ ) )
+                                        localResolver, callsignResolver, logger, *pFormationHandler_, *pAutomatHandler_, messageController ) )
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController, logger, localResolver ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
@@ -103,7 +103,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, *pObjectHandler_, remoteTacticalSubject, logger, *pPropagationManager_, timeManager ) )
     , pRemoteOrbatShaper_         ( xis.attribute< bool >( "send-full-orbat", false ) ?
                                     new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher, automatTypeResolver ) : 0 )
-    , pTacticalObjectUpdater_     ( new TacticalObjectUpdater( publisher, *pObjectHandler_, logger, *pPropagationManager_, remoteTacticalSubject, timeManager ) )
+    , pTacticalObjectUpdater_     ( new TacticalObjectUpdater( publisher, *pObjectHandler_, logger, *pPropagationManager_, remoteTacticalSubject, timeManager, messageController ) )
 
 {
     // NOTHING

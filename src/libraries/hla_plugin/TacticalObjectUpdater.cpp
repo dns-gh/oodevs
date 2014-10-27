@@ -27,16 +27,19 @@ using namespace plugins::hla;
 // Created: AHC 2013-09-09
 // -----------------------------------------------------------------------------
 TacticalObjectUpdater::TacticalObjectUpdater( dispatcher::SimulationPublisher_ABC& publisher, ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler,
-        dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject, const SimulationTimeManager_ABC& timeManager )
+        dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject, const SimulationTimeManager_ABC& timeManager,
+        tools::MessageController_ABC< sword::SimToClient_Content >& messageController)
     : publisher_( publisher )
     , contextHandler_( contextHandler )
     , logger_( logger )
     , propagationManager_( propMgr )
     , subject_( subject )
     , timeManager_( timeManager )
+    , messageController_ ( messageController )
 {
     subject_.RegisterTactical( *this );
     contextHandler_.Register( *this );
+    CONNECT( messageController_, *this, control_end_tick );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +48,7 @@ TacticalObjectUpdater::TacticalObjectUpdater( dispatcher::SimulationPublisher_AB
 // -----------------------------------------------------------------------------
 TacticalObjectUpdater::~TacticalObjectUpdater()
 {
+    DISCONNECT( messageController_, *this, control_end_tick );
     subject_.UnregisterTactical( *this );
     contextHandler_.Register( *this );
 }
@@ -227,15 +231,8 @@ void TacticalObjectUpdater::PropagationChanged( const std::string& rtiIdentifier
     if( idIt == identifiers_.end() )
         return;
     const unsigned int objectId( idIt->second );
-    propagationManager_.saveDataFile( rtiIdentifier, data, col, lig, xll, yll, std::max( dx, dy ) );
-    simulation::ObjectMagicAction message;
-    message().mutable_object()->set_id( objectId );
-    message().set_type( static_cast< sword::ObjectMagicAction_Type >( sword::ObjectMagicAction::update ) );
-    sword::MissionParameter_Value* value = message().mutable_parameters()->add_elem()->add_value();
-    value->add_list()->set_identifier( sword::ObjectMagicAction::disaster );
-    value->add_list()->set_acharstr( rtiIdentifier );
-    value->add_list()->set_acharstr( timeManager_.getSimulationTime() );
-    message.Send( publisher_ );
+    const PropagationData pData = { rtiIdentifier, data, col, lig, xll, yll, dx, dy };
+    propagationData_[ objectId ] = pData;
 }
 
 // -----------------------------------------------------------------------------
@@ -246,5 +243,25 @@ void TacticalObjectUpdater::Notify( const sword::ObjectMagicActionAck& message, 
 {
     if( message.error_code() == sword::UnitActionAck::no_error )
         identifiers_[ identifier ] = message.object().id();
+}
+
+
+void TacticalObjectUpdater::Notify( const sword::ControlEndTick& /*message*/, int /*context*/ )
+{
+    std::for_each( propagationData_.begin(), propagationData_.end(), [&]( T_PropagationDataMap::const_reference it )
+        {
+            const unsigned int objectId( it.first );
+            const PropagationData& pData = it.second;
+            propagationManager_.saveDataFile( pData.rtiIdentifier, pData.data, pData.col, pData.lig, pData.xll, pData.yll, std::max( pData.dx, pData.dy ) );
+            simulation::ObjectMagicAction message;
+            message().mutable_object()->set_id( objectId );
+            message().set_type( static_cast< sword::ObjectMagicAction_Type >( sword::ObjectMagicAction::update ) );
+            sword::MissionParameter_Value* value = message().mutable_parameters()->add_elem()->add_value();
+            value->add_list()->set_identifier( sword::ObjectMagicAction::disaster );
+            value->add_list()->set_acharstr( pData.rtiIdentifier );
+            value->add_list()->set_acharstr( timeManager_.getSimulationTime() );
+            message.Send( publisher_ );
+        });
+    propagationData_.clear();
 }
 

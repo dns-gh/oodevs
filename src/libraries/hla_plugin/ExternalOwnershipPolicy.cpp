@@ -171,6 +171,7 @@ void ExternalOwnershipPolicy::Receive( interactions::TMR_InitiateTransferModelli
     reply.responseFederate = interaction.responseFederate;
     reply.transactionID = interaction.transactionID;
     reply.respondent = UnicodeString( federateName_ );
+    reply.reason = static_cast< uint32_t >( interactions::TMR::Reason_Other );
     const interactions::TMR::TransferTypeEnum32 type = static_cast< interactions::TMR::TransferTypeEnum32 >( interaction.transferType );
     if( interaction.instances.list.empty() )
     {
