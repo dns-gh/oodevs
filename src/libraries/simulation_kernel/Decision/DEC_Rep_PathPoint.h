@@ -26,11 +26,11 @@ public:
     virtual ~DEC_DIA_PathPoint() {}
 
     void SendToDIA( DEC_Representations& agent,
-            boost::shared_ptr< DEC_DIA_PathPoint > point ) const;
+            boost::shared_ptr< DEC_DIA_PathPoint > point );
     void RemoveFromDIA( boost::shared_ptr< DEC_DIA_PathPoint > self );
 
 private:
-    mutable DEC_Representations* pSentToDiaAgent_;
+    DEC_Representations* pSentToDiaAgent_;
 };
 
 class DEC_Rep_PathPoint : public DEC_DIA_PathPoint
