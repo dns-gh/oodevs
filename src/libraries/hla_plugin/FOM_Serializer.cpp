@@ -45,6 +45,8 @@ FOM_Serializer::~FOM_Serializer()
     // NOTHING
 }
 
+#define ISNAN(x) ( (x) != (x) )
+
 // -----------------------------------------------------------------------------
 // Name: FOM_Serializer::ReadSpatial
 // Created: AHC 2012-09-03
@@ -52,7 +54,10 @@ FOM_Serializer::~FOM_Serializer()
 void FOM_Serializer::ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, Spatial& spatial )
 {
     spatial.Deserialize( deserializer );
-    listener.Moved( identifier, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
+    const double latitude = spatial.worldLocation_.Latitude();
+    const double longitude = spatial.worldLocation_.Longitude();
+    if( !ISNAN( latitude ) && !ISNAN( longitude ) )
+        listener.Moved( identifier, latitude, longitude );
 }
 
 // -----------------------------------------------------------------------------

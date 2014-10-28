@@ -49,7 +49,8 @@ namespace
 UnitTeleporter::UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC& resolver, RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& unitContextHandler,
                                 dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
                                 const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger,
-                                ContextHandler_ABC< sword::FormationCreation >& formationContextHandler, ContextHandler_ABC< sword::AutomatCreation >& automatContextHandler )
+                                ContextHandler_ABC< sword::FormationCreation >& formationContextHandler, ContextHandler_ABC< sword::AutomatCreation >& automatContextHandler,
+                                tools::MessageController_ABC< sword::SimToClient_Content >& messageController )
     : cancelId_               ( resolver.ResolveUnit( GetName( xis, "fragOrders", "cancel" ) ) )
     , agentSubject_           ( agentSubject )
     , unitContextHandler_     ( unitContextHandler )
@@ -60,11 +61,13 @@ UnitTeleporter::UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC&
     , localResolver_          ( localResolver )
     , callsignResolver_       ( callsignResolver )
     , logger_                 ( logger )
+    , messageController_      ( messageController )
 {
     agentSubject_.Register( *this );
     unitContextHandler_.Register( *this );
     formationContextHandler_.Register( *this );
     automatContextHandler_.Register( *this );
+    CONNECT( messageController_, *this, control_end_tick );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,6 +76,7 @@ UnitTeleporter::UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC&
 // -----------------------------------------------------------------------------
 UnitTeleporter::~UnitTeleporter()
 {
+    DISCONNECT( messageController_, *this, control_end_tick );
     unitContextHandler_.Unregister( *this );
     formationContextHandler_.Unregister( *this );
     automatContextHandler_.Unregister( *this );
@@ -99,6 +103,8 @@ void UnitTeleporter::RemoteDestroyed( const std::string& identifier )
     if( objects_.end() == it)
         return;
     it->second->Unregister( *this );
+
+    coordinates_.erase( identifier );
 
     T_Identifiers::iterator idIt( identifiers_.find( identifier ) );
     if(  idIt != identifiers_.end() )
@@ -131,17 +137,8 @@ void UnitTeleporter::Moved( const std::string& identifier, double latitude, doub
 {
     if( identifiers_.find( identifier ) == identifiers_.end() )
         return;
-    simulation::UnitMagicAction message;
-    message().mutable_tasker()->mutable_unit()->set_id( identifiers_[ identifier ] );
-    message().set_type( sword::UnitMagicAction::move_to );
-    sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
-    parameter.set_null_value( false );
-    sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();
-    location.set_type( sword::Location::point );
-    sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
-    coordinates.set_latitude( latitude );
-    coordinates.set_longitude( longitude );
-    message.Send( publisher_, contextFactory_.Create() );
+
+    coordinates_[ identifier ] = std::make_pair( latitude, longitude );
 }
 
 // -----------------------------------------------------------------------------
@@ -401,4 +398,24 @@ void UnitTeleporter::Notify( const sword::AutomatCreation& /*message*/, const st
         it->second->Unregister(*this);
         objects_.erase( it );
     }
+}
+
+void UnitTeleporter::Notify( const sword::ControlEndTick& /*message*/, int /*context*/ )
+{
+    std::for_each( coordinates_.begin(), coordinates_.end(), [&]( T_Coordinates::const_reference it ) {
+        const std::string& identifier = it.first;
+        const std::pair< double, double >& loc = it.second;
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( identifiers_[ identifier ] );
+        message().set_type( sword::UnitMagicAction::move_to );
+        sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+        parameter.set_null_value( false );
+        sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();
+        location.set_type( sword::Location::point );
+        sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
+        coordinates.set_latitude( loc.first );
+        coordinates.set_longitude( loc.second );
+        message.Send( publisher_, contextFactory_.Create() );
+    });
+    coordinates_.clear();
 }
