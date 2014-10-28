@@ -14,7 +14,9 @@
 #include "GLOptions.h"
 #include "GLProxy.h"
 #include "resources.h"
+#include "RichPushButton.h"
 #include "SignalAdapter.h"
+#include "SubObjectName.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Controllers.h"
@@ -259,7 +261,6 @@ void FireColorPanel::FillGrid()
             return true;
         };
     int row = 1;
-    static const auto trash = MAKE_PNG_ICON( "trash" );
     for( auto it = fires->begin(); it != fires->end(); ++it, ++row )
     {
         FireOption* fire = &*it;
@@ -309,10 +310,10 @@ void FireColorPanel::FillGrid()
                 Save();
             } );
 
-        auto remove = new QPushButton();
-        SetHorizontalPolicy( remove, QSizePolicy::Maximum );
-        remove->setIcon( trash );
+        static const auto trash = MAKE_PNG_ICON( "trash" );
+        auto remove = new RichPushButton( "remove-" + QString::number( row ), trash, QString::null );
         remove->setIconSize( QSize( 14, 14 ) );
+        SetHorizontalPolicy( remove, QSizePolicy::Maximum );
         layout->addWidget( remove );
         gui::connect( remove, SIGNAL( clicked() ),
             [=]
@@ -332,6 +333,7 @@ void FireColorPanel::FillGrid()
 void FireColorPanel::SetupGroup( QLayout* root,
                                  const QString& name )
 {
+    SubObjectName subObject( name );
     auto frame = new QWidget();
     root->addWidget( frame );
     auto nameLabel = new QLabel();
@@ -339,13 +341,11 @@ void FireColorPanel::SetupGroup( QLayout* root,
     auto karmaLabel = new QLabel();
     karmaLabel->setText( "Karma" );
 
-    auto clear = new QPushButton();
-    clear->setText( tr( "Clear All" ) );
+    auto clear = new RichPushButton( "remove", tr( "Clear All" ) );
     SetHorizontalPolicy( clear, QSizePolicy::Maximum );
     QObject::connect( clear, SIGNAL( clicked() ), this, SLOT( ClearAll() ) );
 
-    auto add = new QPushButton();
-    add->setText( tr( "Add Rule" ) );
+    auto add = new RichPushButton( "add", tr( "Add Rule" ) );
     SetHorizontalPolicy( add, QSizePolicy::Maximum );
     QObject::connect( add, SIGNAL( clicked() ), this, SLOT( AddRule() ) );
 
