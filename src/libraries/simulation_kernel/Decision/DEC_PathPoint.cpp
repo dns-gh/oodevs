@@ -69,24 +69,6 @@ bool DEC_PathPoint::WillBeInObject( const TerrainData& data ) const
     return nObjectTypesToNextPoint_.ContainsAll( data );
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_PathPoint::SendToDIA
-// Created: JVT 02-12-09
-//-----------------------------------------------------------------------------
-void DEC_PathPoint::SendToDIA( DEC_Representations& /*agent*/, boost::shared_ptr< DEC_PathPoint > /*point*/ ) const
-{
-    throw MASA_EXCEPTION( "SendToDIA cannot be called for this Point class" );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_PathPoint::SendToDIA
-// Created: MGD 10-03-11
-//-----------------------------------------------------------------------------
-void DEC_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
-{
-    throw MASA_EXCEPTION( "RemoveFromDIA cannot be called for this Point class" );
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathPoint::GetDIAType
 // Created: LDC 2009-07-09

@@ -15,9 +15,6 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/optional.hpp>
 
-class DEC_PathPoint;
-class DEC_Representations;
-
 //*****************************************************************************
 // Created: JVT 02-12-04
 //*****************************************************************************
@@ -80,8 +77,6 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
-    virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
     const std::string& GetDIAType() const;
     //@}
 

@@ -15,7 +15,6 @@
 #include "MIL_FlowCollisionManager.h"
 #include "Decision/DEC_Population_Path.h"
 #include "Decision/DEC_PathFind_Manager.h"
-#include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_Population_PathClass.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathWalker.h"
@@ -1070,7 +1069,7 @@ double MIL_PopulationFlow::GetSpeed( const TerrainData& environment ) const
 // Name: MIL_PopulationFlow::NotifyMovingOnSpecialPoint
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point /*point*/ )
+void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_DIA_PathPoint > point /*point*/ )
 {
     // NOTHING
 }

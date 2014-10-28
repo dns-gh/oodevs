@@ -14,14 +14,36 @@
 #include "Decision/DEC_Representations.h"
 #include <boost/make_shared.hpp>
 
+DEC_DIA_PathPoint::DEC_DIA_PathPoint( const MT_Vector2D& vPos, E_Type type,
+        E_TypePoint nTypePoint, const char* szDIARepType )
+    : DEC_PathPoint     ( vPos, type, nTypePoint, szDIARepType )
+    , pSentToDiaAgent_  ( 0 )
+{
+    // NOTHING
+}
+
+void DEC_DIA_PathPoint::SendToDIA( DEC_Representations& agent,
+        boost::shared_ptr< DEC_DIA_PathPoint > point ) const
+{
+    if( pSentToDiaAgent_ )
+        return;
+    agent.AddToPointsCategory( point );
+    pSentToDiaAgent_ = &agent;
+}
+
+void DEC_DIA_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_DIA_PathPoint > self )
+{
+    if( pSentToDiaAgent_ )
+        pSentToDiaAgent_->RemoveFromPointsCategory( self );
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint constructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
-    : DEC_PathPoint     ( vPos, eTypePointSpecial, nTypePoint, szDIARepType )
-    , nTypeTerrain_     ( nTypeTerrain )
-    , pSentToDiaAgent_  ( 0 )
+    : DEC_DIA_PathPoint( vPos, eTypePointSpecial, nTypePoint, szDIARepType )
+    , nTypeTerrain_( nTypeTerrain )
 {
     // NOTHING
 }
@@ -33,29 +55,6 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
 DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 {
     // NOTHING
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint::SendToDIA
-// Created: JVT 02-12-09
-//-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const
-{
-    if( pSentToDiaAgent_ )
-        return;
-    // ATTENTION, si cette fonction est appelée, alors l'agent physique s'est automatiquement arrêté sur la position du point...
-    agent.AddToPointsCategory( point );
-    pSentToDiaAgent_ = &agent;
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint::SendToDIA
-// Created: MGD 10-03-11
-//-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
-{
-    if( pSentToDiaAgent_ )
-        pSentToDiaAgent_->RemoveFromPointsCategory( self );
 }
 
 //-----------------------------------------------------------------------------

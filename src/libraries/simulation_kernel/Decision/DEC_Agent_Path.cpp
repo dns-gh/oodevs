@@ -64,8 +64,8 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
 DEC_Agent_Path::~DEC_Agent_Path()
 {
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
-        if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
-            ( *it )->RemoveFromDIA( *it );
+        if( auto p = boost::dynamic_pointer_cast< DEC_DIA_PathPoint >( *it ) )
+            p->RemoveFromDIA( p );
     queryMaker_.UnregisterPath( *this );
 }
 

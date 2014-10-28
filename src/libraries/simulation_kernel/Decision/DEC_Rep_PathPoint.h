@@ -17,10 +17,23 @@
 
 class DEC_Representations;
 
-//*****************************************************************************
-// Created: JDY 03-05-05
-//*****************************************************************************
-class DEC_Rep_PathPoint : public DEC_PathPoint
+// Base class for path points returned to DIA.
+class DEC_DIA_PathPoint : public DEC_PathPoint
+{
+public:
+             DEC_DIA_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nTypePoint,
+                     const char* szDIARepType );
+    virtual ~DEC_DIA_PathPoint() {}
+
+    void SendToDIA( DEC_Representations& agent,
+            boost::shared_ptr< DEC_DIA_PathPoint > point ) const;
+    void RemoveFromDIA( boost::shared_ptr< DEC_DIA_PathPoint > self );
+
+private:
+    mutable DEC_Representations* pSentToDiaAgent_;
+};
+
+class DEC_Rep_PathPoint : public DEC_DIA_PathPoint
 {
 public:
              DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
@@ -31,15 +44,8 @@ public:
     const TerrainData& GetTypeTerrain() const;
     //@}
 
-    //! @name DIA
-    //@{
-    virtual void SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
-    virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
-    //@}
-
 private:
     TerrainData nTypeTerrain_;
-    mutable DEC_Representations* pSentToDiaAgent_;
 };
 
 boost::shared_ptr< DEC_Rep_PathPoint > CreateSpecialPoint(
