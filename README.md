@@ -121,6 +121,14 @@ is to adjust the resources, mostly simulation port, so *they can run in
 parallel*. That is why simtests and swapi/simu tests do not share the same
 port range, based on --test-port.
 
+### Benchmarks
+
+Benchmarks are implemented by src/masa/sword/simbench. Assuming simbench is
+built, run it with:
+```sh
+ant go.benchmark
+```
+
 ## How to use the admin server
 It is possible to run an admin server from freshly compiled sources
 ```sh

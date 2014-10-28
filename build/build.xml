@@ -1076,19 +1076,31 @@
         <runtests/>
     </target>
 
-    <target name="go.benchmark" description="check benchmarks">
+    <macrodef name="benchmark">
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <exec_goenv name="simbench" executable="${bin.dir}/simbench">
+                <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
+                <env key="MASA_TIMEOUT" value="60s"/>
+                <arg value="--test-port=${test.port}"/>
+                <arg value="--application=${application}"/>
+                <arg value="--run-dir=${run.dir}"/>
+                <arg value="--root-dir=${data.dir}"/>
+                <arg value="--exercises-dir=${data.dir}/tests/gosword"/>
+                <args/>
+            </exec_goenv>
+        </sequential>
+    </macrodef>
+
+    <target name="go.checkbenchmark" description="check benchmarks">
         <!-- benchmarks are run by QA projects, here we just check they still work -->
-        <exec_goenv name="simbench" executable="${bin.dir}/simbench">
-            <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
-            <env key="MASA_TIMEOUT" value="60s"/>
-            <env key="GOMAXPROCS" value="4"/>
+        <benchmark>
             <arg value="--quick"/>
-            <arg value="--test-port=${test.port}"/>
-            <arg value="--application=${application}"/>
-            <arg value="--run-dir=${run.dir}"/>
-            <arg value="--root-dir=${data.dir}"/>
-            <arg value="--exercises-dir=${data.dir}/tests/gosword"/>
-        </exec_goenv>
+        </benchmark>
+    </target>
+
+    <target name="go.benchmark" description="run benchmarks">
+        <benchmark/>
     </target>
 
     <target name="go.package">
@@ -1102,7 +1114,7 @@
         </go_zip>
     </target>
 
-    <target name="go" depends="go.proto,go.build,go.test,go.benchmark,go.package"/>
+    <target name="go" depends="go.proto,go.build,go.test,go.checkbenchmark,go.package"/>
 
     <!--
     ============================================================================
