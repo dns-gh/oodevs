@@ -55,7 +55,7 @@ func loadPhysicalData(dataDir, name string) (*phy.PhysicalData, error) {
 }
 
 func getVersionAndDate() (string, time.Time, error) {
-	date := time.Unix(0, 0)
+	date := time.Time{}
 	// Start and stop the simulation
 	sim, client, err := connectAndWaitModel(NewAdminOpts(ExSwTerrain2Empty))
 	if err != nil {
@@ -84,6 +84,9 @@ func getVersionAndDate() (string, time.Time, error) {
 		}
 		version := m[2]
 		return version, d, nil
+	}
+	if scanner.Err() != nil {
+		return "", date, scanner.Err()
 	}
 	return "", date, fmt.Errorf("could not find date or version in sim.log: %s",
 		filepath.ToSlash(path))
@@ -282,8 +285,6 @@ various flags shared with the testing framework.
 	if err != nil {
 		return err
 	}
-	refDate := time.Unix(0, 0)
-	seconds := date.Sub(refDate) / time.Second
 
 	results := []*BenchmarkResult{}
 	for _, name := range sorted {
@@ -303,7 +304,7 @@ various flags shared with the testing framework.
 			Value:    value,
 			Exercise: "swbench",
 			Version:  version,
-			Time:     int64(seconds),
+			Time:     date.Unix(),
 		})
 	}
 	if len(*output) > 0 {
