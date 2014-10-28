@@ -126,7 +126,7 @@ DEC_Agent_Path::T_PathPoints::iterator DEC_Agent_Path::GetPreviousPathPointOnDif
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: NLD 2005-08-11
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent )
 {
     double rDistanceLeft = spottedPathPoint->GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
@@ -189,7 +189,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: JVT 02-12-04
 //----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPointAvant )
 {
     static const double rDist = 2000.;
     if( rDistSinceLastPointAvant > rDist )
@@ -219,7 +219,7 @@ bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPath
 // Name: DEC_Agent_Path::InsertPointAndPointAvant
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant )
 {
     if( InsertPoint( spottedPathPoint, itCurrent, rDistSinceLastPoint ) )
         InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );

@@ -27,7 +27,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const TerrainData& GetTypeTerrain() const;
+    const TerrainData& GetTypeTerrain() const;
     //@}
 
     //! @name DIA

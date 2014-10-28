@@ -106,15 +106,6 @@ DEC_PathPoint::E_TypePoint DEC_PathPoint::GetTypePoint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathPoint::GetTypeTerrain
-// Created: MGD 2010-03-10
-// -----------------------------------------------------------------------------
-const TerrainData& DEC_PathPoint::GetTypeTerrain() const
-{
-    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathPoint::IsSlopeValid
 // Created: JSR 2013-11-12
 // -----------------------------------------------------------------------------
