@@ -22,6 +22,7 @@
 #include "resources.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
+#include "SymbolSizePanel.h"
 #include "TerrainSettings.h"
 #include "VisualisationScalesPanel.h"
 #include "clients_kernel/Options.h"
@@ -98,6 +99,11 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     AddPage( tr( "3D" ),                   *new LightingPanel( this, options ) );
     AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, model.coordinateConverter_ ) );
     AddPage( tr( "Refresh rate" ),         *new RefreshRatePanel( this, options ) );
+<<<<<<< HEAD
+=======
+    AddPage( tr( "Replay" ),               *new ReplayPanel( this, options ) );
+    AddPage( tr( "Symbols size" ),         *new SymbolSizePanel( this, options ) );
+>>>>>>> [clients_gui] Add Symbol size options panel
     AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, options ) );
 
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );

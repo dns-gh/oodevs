@@ -69,8 +69,7 @@ private:
 
     //! @name Types
     //@{
-    // map< OptionName, pair< OptionValue, IsInPreferencePanel >
-    typedef std::map< std::string, std::pair< OptionVariant, bool > >  T_Options;
+    typedef std::map< std::string, std::pair< OptionVariant, bool > > T_Options;
     //@}
 
 private:

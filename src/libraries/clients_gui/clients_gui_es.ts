@@ -1736,6 +1736,11 @@ Desea eliminarlo?</translation>
         <source>Refresh rate</source>
         <translation type="unfinished"></translation>
     </message>
+    </message>
+    <message>
+        <source>Symbols size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::PresetDialog</name>
@@ -2029,6 +2034,13 @@ Desea eliminarlo?</translation>
     <message>
         <source>Equipped:</source>
         <translation>Equipo:</translation>
+    </message>
+</context>
+<context>
+    <name>gui::SymbolSizePanel</name>
+    <message>
+        <source>Hierarchical levels relative sizes</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

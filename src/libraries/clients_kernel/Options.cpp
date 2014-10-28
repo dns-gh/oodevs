@@ -366,7 +366,7 @@ void Options::InitializeView()
     // symbol size
     Create( "SymbolSize", 3.f, false ); // move this one under SymbolSize/ when the report will be done
     for( int i = eNatureLevel_c; i < eNbrNatureLevel; ++i )
-        Create( "SymbolSize/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ), 1.f, true ); // not used yet
+        Create( "SymbolSize/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ), 1.f, true );
 
     // terrain
     QStringList order;
