@@ -147,20 +147,20 @@ void PreferencesDialog::showEvent( QShowEvent * event )
 
 namespace
 {
-    void RestoreOptions( kernel::OptionsController& optionsController,
-                         const kernel::Options& previousOptions,
+    void RestoreOptions( kernel::Options& previousOptions,
                          kernel::Options& currentOptions )
     {
         std::vector< std::string > toDelete;
-        currentOptions.Apply( [&]( const std::string& name, const OptionVariant&, bool ) {
+        // Update our previous values with changes done outside the preferences panel
+        // and remove the current values that were added.
+        currentOptions.Apply( [ &]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
             if( !previousOptions.Has( name ) )
                 toDelete.push_back( name );
+            else if( !isInPreferencePanel )
+                previousOptions.Set( name, value );
+
         } );
-        std::for_each( toDelete.begin(), toDelete.end(), [&]( const std::string& name ){ currentOptions.Remove( name ); } );
-        previousOptions.Apply( [&]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
-            if( isInPreferencePanel )
-                optionsController.Change( name, value );
-        } );
+        std::for_each( toDelete.begin(), toDelete.end(), [ &]( const std::string& name ) { currentOptions.Remove( name ); } );
     }
 }
 
@@ -170,13 +170,20 @@ namespace
 // -----------------------------------------------------------------------------
 void PreferencesDialog::reject()
 {
-    auto& options = controllers_.options_;
-    auto& viewOptions = *options.GetViewOptions();
+    auto& optionsController = controllers_.options_;
+    auto& generalOptions = *optionsController.GetGeneralOptions();
+    auto& viewOptions = *optionsController.GetViewOptions();
+
+    RestoreOptions( *previousViewOptions_->GetOptions(), viewOptions );
     proxy_.GetOptions() = *previousViewOptions_;
-    options.UpdateViewOptions();
-    RestoreOptions( options, *previousGeneralOptions_, *options.GetGeneralOptions() );
+    optionsController.UpdateViewOptions();
     previousViewOptions_.reset();
+
+    RestoreOptions( *previousGeneralOptions_, generalOptions );
+    generalOptions = *previousGeneralOptions_;
+    optionsController.UpdateGeneralOptions();
     previousGeneralOptions_.reset();
+
     proxy_.UpdateLayerOrder( viewOptions );
     proxy_.GetOptions().Load();
     ModalDialog::reject();

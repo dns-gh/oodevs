@@ -44,9 +44,14 @@ public:
     void InitializeGeneral();
     void InitializeView();
     void InitializeLayers( const std::vector< E_LayerTypes >& types );
-    void Set( const std::string& name, const OptionVariant& value );
-    const OptionVariant& Get( const std::string& name ) const;
     bool Has( const std::string& name ) const;
+
+    // throw if name is already initialized
+    void Create( const std::string& name, const OptionVariant& value, bool isInPreferencePanel );
+    // throw if name is not already initialized
+    void Set( const std::string& name, const OptionVariant& value );
+    // throw if name is not already initialized
+    const OptionVariant& Get( const std::string& name ) const;
 
     void Apply( const std::function< void ( const std::string&, const OptionVariant&, bool ) >& functor ) const;
     void Remove( const std::string& name );
@@ -58,9 +63,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    void Create( Settings_ABC& settings, const std::string& name, char type );
+    OptionVariant CreateVariant( Settings_ABC& settings, const std::string& name, char type );
     void ReadGradient( xml::xistream& xis );
-    void Set( const std::string& name, const OptionVariant& value, bool isInPreferencePanel );
     //@}
 
     //! @name Types

@@ -37,7 +37,6 @@ namespace gui
     class FormationLayer;
     class GlProxy;
     class GlSelector;
-    class GradientPreferences;
     class HelpSystem;
     class Layer_ABC;
     class LightingProxy;

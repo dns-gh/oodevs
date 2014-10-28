@@ -24,6 +24,7 @@
 #include "Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
@@ -193,7 +194,7 @@ void GradientPreferencesEditor::OnPresetCopied()
     preferences_->Add( copy );
     preferences_->SetCurrent( copy );
     SetCurrent();
-    options_.Change( "Elevation/Gradients/" + newName.toStdString(), copy->GetValues() );
+    options_.GetViewOptions()->Create( "Elevation/Gradients/" + newName.toStdString(), copy->GetValues(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +204,7 @@ void GradientPreferencesEditor::OnPresetCopied()
 void GradientPreferencesEditor::OnPresetRenamed()
 {
     auto current = preferences_->GetCurrent();
-    PresetDialog* pDialog = new PresetDialog( this, options_, current, *preferences_ );
+    PresetDialog* pDialog = new PresetDialog( this, *options_.GetViewOptions(), current, *preferences_ );
     if( pDialog->exec() == QDialog::Accepted )
         SetElevation2dTexture( elevationTexture_ );
 }

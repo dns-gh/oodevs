@@ -82,15 +82,19 @@ void Options::Apply( const std::function< void ( const std::string&, const Optio
 // -----------------------------------------------------------------------------
 void Options::Set( const std::string& name, const OptionVariant& value )
 {
+    if( options_.count( name ) == 0 )
+        throw MASA_EXCEPTION( "Option not initialized: " + name );
     options_[ name ].first = value;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::Initialize
+// Name: Options::Create
 // Created: ABR 2014-10-10
 // -----------------------------------------------------------------------------
-void Options::Set( const std::string& name, const OptionVariant& value, bool isInPreferencePanel )
+void Options::Create( const std::string& name, const OptionVariant& value, bool isInPreferencePanel )
 {
+    if( options_.count( name ) != 0 )
+        throw MASA_EXCEPTION( "Option already initialized: " + name );
     options_[ name ] = std::make_pair( value, isInPreferencePanel );
 }
 
@@ -124,23 +128,24 @@ bool Options::Has( const std::string& name ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::Create
+// Name: Options::InternalCreate
 // Created: AGE 2008-06-25
 // -----------------------------------------------------------------------------
-void Options::Create( Settings_ABC& settings, const std::string& name, char type )
+OptionVariant Options::CreateVariant( Settings_ABC& settings, const std::string& name, char type )
 {
     if( type == Settings_ABC::intPrefix )
-        Set( name, OptionVariant( settings, name, 1 ) );
+        return OptionVariant( settings, name, 1 );
     else if( type == Settings_ABC::boolPrefix )
-        Set( name, OptionVariant( settings, name, false ) );
+        return OptionVariant( settings, name, false );
     else if( type == Settings_ABC::floatPrefix )
-        Set( name, OptionVariant( settings, name, 1.f ) );
+        return OptionVariant( settings, name, 1.f );
     else if( type == Settings_ABC::tristatePrefix )
-        Set( name, OptionVariant( settings, name, TristateOption::Auto() ) );
+        return OptionVariant( settings, name, TristateOption::Auto() );
     else if( type == Settings_ABC::fourstatePrefix )
-        Set( name, OptionVariant( settings, name, FourStateOption::Selected() ) );
+        return OptionVariant( settings, name, FourStateOption::Selected() );
     else if( type == Settings_ABC::stringPrefix )
-        Set( name, OptionVariant( settings, name, QString( "" ) ) );
+        return OptionVariant( settings, name, QString( "" ) );
+    throw MASA_EXCEPTION( "Invalid option type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +164,17 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
             char type = typedName[0];
             std::string name = root + typedName.substr( 1 );
             name = name[0] == '/' ? name.substr( 1 ) : name;
-            Create( settings, name, type );
+            auto variant = CreateVariant( settings, name, type );
+            if( !Has( name ) )
+                // At this point, if we dont have 'name' already, it's either an
+                // old registry entry, either a user-created option.
+                // Since the only way to add options is by using the
+                // preferences panel (elevation gradients), we force
+                // IsInPreferencePanel parameter to true here, but we should
+                // fix that someday.
+                Create( name, variant, true );
+            else
+                Set( name, variant );
         }
     }
     list = settings.SubEntriesList( root.c_str() );
@@ -186,21 +201,21 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
                    >> xml::list( "terrain", [&]( xml::xistream& x ) {
                        const auto type = x.attribute< std::string >( "type" );
                        const QString category = x.attribute< QString >( "category" );
-                       Set( "Terrains/" + type + "/Category", category, true );
+                       Create( "Terrains/" + type + "/Category", category, true );
                        if( !category.isEmpty() && !order.contains( category ) )
                            order << category;
                        } );
-    Set( "Terrains/Order", order.join( ";" ), true );
+    Create( "Terrains/Order", order.join( ";" ), true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Options::Save
 // Created: ABR 2014-07-16
 // -----------------------------------------------------------------------------
-void Options::Save( Settings_ABC& settings )
+void Options::Save( Settings_ABC& Createtings )
 {
     Apply( [&]( const std::string& name, const OptionVariant& option, bool ) {
-        option.Save( settings, name );
+        option.Save( Createtings, name );
     } );
 }
 
@@ -215,7 +230,7 @@ void Options::ReadGradient( xml::xistream& xis )
         values << QString( "%1,%2" ).arg( xisColor.attribute< QString >( "position" ) )
                                     .arg( xisColor.attribute< QString >( "color" ) );
     } );
-    Set( "Elevation/Gradients/" + xis.attribute< std::string >( "name" ), values.join( ";" ), true );
+    Create( "Elevation/Gradients/" + xis.attribute< std::string >( "name" ), values.join( ";" ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,35 +240,35 @@ void Options::ReadGradient( xml::xistream& xis )
 void Options::InitializeGeneral()
 {
     // int
-    Set( "BookmarkCoordSystem",  static_cast< int >( eCoordinateSystem_Mgrs ), false );
-    Set( "CoordSystem",          static_cast< int >( eCoordinateSystem_Mgrs ), true );
-    Set( "RefreshRate",          50,                                           true );
+    Create( "BookmarkCoordSystem",  static_cast< int >( eCoordinateSystem_Mgrs ), false );
+    Create( "CoordSystem",          static_cast< int >( eCoordinateSystem_Mgrs ), true );
+    Create( "RefreshRate",          50,                                           true );
 
     // replay
-    Set( "Replay/SmoothPositions", true, true );
+    Create( "Replay/SmoothPositions", true, true );
 
     // color
-    Set( "Color/ActiveViewFrame",     QString( "#f00f0f" ), true ); // not used yet
-    Set( "Color/Contaminated",        QString( "#00ff00" ), true );
-    Set( "Color/Dead",                QString( "#000000" ), true );
-    Set( "Color/Healthy",             QString( "#2180ff" ), true );
-    Set( "Color/MostlyHealthy",       QString( "#ffff00" ), true );
-    Set( "Color/Neutralized",         QString( "#ebe665" ), true );
-    Set( "Color/Phantom",             QString( "#3cb45a" ), true );
-    Set( "Color/TacticallyDestroyed", QString( "#ebb965" ), true );
-    Set( "Color/TotallyDestroyed",    QString( "#eb6a65" ), true );
-    Set( "Color/Wounded",             QString( "#ff0000" ), true );
+    Create( "Color/ActiveViewFrame",     QString( "#f00f0f" ), true ); // not used yet
+    Create( "Color/Contaminated",        QString( "#00ff00" ), true );
+    Create( "Color/Dead",                QString( "#000000" ), true );
+    Create( "Color/Healthy",             QString( "#2180ff" ), true );
+    Create( "Color/MostlyHealthy",       QString( "#ffff00" ), true );
+    Create( "Color/Neutralized",         QString( "#ebe665" ), true );
+    Create( "Color/Phantom",             QString( "#3cb45a" ), true );
+    Create( "Color/TacticallyDestroyed", QString( "#ebb965" ), true );
+    Create( "Color/TotallyDestroyed",    QString( "#eb6a65" ), true );
+    Create( "Color/Wounded",             QString( "#ff0000" ), true );
 
     // sound
     tools::Path soundPath;
     soundPath = soundPath.Absolute( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) );
-    Set( "Sound/Directory",                   QString( soundPath.Normalize().ToUTF8().c_str() ), true );
-    Set( "Sound/Mute",                        false, true );
-    Set( "Sound/Volume/directfire",           50,    true );
-    Set( "Sound/Volume/indirectsmoke",        50,    true );
-    Set( "Sound/Volume/indirectexplosive",    50,    true );
-    Set( "Sound/Volume/indirectillumination", 50,    true );
-    Set( "Sound/Volume/indirecteffect",       50,    true );
+    Create( "Sound/Directory",                   QString( soundPath.Normalize().ToUTF8().c_str() ), true );
+    Create( "Sound/Mute",                        false, true );
+    Create( "Sound/Volume/directfire",           50,    true );
+    Create( "Sound/Volume/indirectsmoke",        50,    true );
+    Create( "Sound/Volume/indirectexplosive",    50,    true );
+    Create( "Sound/Volume/indirectillumination", 50,    true );
+    Create( "Sound/Volume/indirecteffect",       50,    true );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,92 +278,93 @@ void Options::InitializeGeneral()
 void Options::InitializeView()
 {
     // bool
-    Set( "3D",                    false, false );
-    Set( "DisplayDestroyedUnits", true,  false );
-    Set( "FogOfWar",              false, true );
-    Set( "Infra",                 true,  true );
+    Create( "3D",                    false, false );
+    Create( "DisplayDestroyedUnits", true,  false );
+    Create( "FogOfWar",              false, true );
+    Create( "Infra",                 true,  true );
 
     // float
-    Set( "GridSize", -1.f, false );
+    Create( "GridSize", -1.f, false );
 
     // int
-    Set( "GridType",             static_cast< int >( eCoordinateSystem_Local ), false );
-    Set( "ResourceNetworks",     0,                                             false );
+    Create( "GridType",             static_cast< int >( eCoordinateSystem_Local ), false );
+    Create( "ResourceNetworks",     0,                                             false );
 
     // tri state
-    Set( "BigText",   TristateOption::Auto(), false );
-    Set( "SmallText", TristateOption::Auto(), false );
+    Create( "BigText",   TristateOption::Auto(), false );
+    Create( "SmallText", TristateOption::Auto(), false );
 
     // four state
-    Set( "ConvexHulls",          FourStateOption::Selected(), false );
-    Set( "DecisionalState",      FourStateOption::Selected(), false );
-    Set( "Direction",            FourStateOption::Selected(), false );
-    Set( "LogisticLinks",        FourStateOption::Selected(), false );
-    Set( "MissingLogisticLinks", FourStateOption::Selected(), false );
-    Set( "MissionParameters",    FourStateOption::Selected(), false );
-    Set( "OldPaths",             FourStateOption::Selected(), false );
-    Set( "Paths",                FourStateOption::Selected(), false );
-    Set( "RealTimeLogistic",     FourStateOption::Selected(), false );
-    Set( "TacticalLines",        FourStateOption::Selected(), false );
-    Set( "UnitDetails",          FourStateOption::On()      , false );
-    Set( "VisionCones",          FourStateOption::Selected(), false );
-    Set( "VisionLines",          FourStateOption::Selected(), false );
-    Set( "VisionSurfaces",       FourStateOption::Selected(), false );
-    Set( "WeaponRanges",         FourStateOption::Selected(), false );
+    Create( "ConvexHulls",          FourStateOption::Selected(), false );
+    Create( "DecisionalState",      FourStateOption::Selected(), false );
+    Create( "Direction",            FourStateOption::Selected(), false );
+    Create( "LogisticLinks",        FourStateOption::Selected(), false );
+    Create( "MissingLogisticLinks", FourStateOption::Selected(), false );
+    Create( "MissionParameters",    FourStateOption::Selected(), false );
+    Create( "OldPaths",             FourStateOption::Selected(), false );
+    Create( "Paths",                FourStateOption::Selected(), false );
+    Create( "RealTimeLogistic",     FourStateOption::Selected(), false );
+    Create( "TacticalLines",        FourStateOption::Selected(), false );
+    Create( "UnitDetails",          FourStateOption::On()      , false );
+    Create( "VisionCones",          FourStateOption::Selected(), false );
+    Create( "VisionLines",          FourStateOption::Selected(), false );
+    Create( "VisionSurfaces",       FourStateOption::Selected(), false );
+    Create( "WeaponRanges",         FourStateOption::Selected(), false );
 
     // Accommodation
-    Set( "Accommodation/Enabled",    false,                            true );
-    Set( "Accommodation/Displayed",  QString( "" ),                    true );
-    Set( "Accommodation/Gradient",   QString( "0,#00ff00;1,#ff0000" ), true );
-    Set( "Accommodation/Max",        1.f,                              true );
-    Set( "Accommodation/Min",        0.f,                              true );
-    Set( "Accommodation/Unoccupied", QString( "#000000" ),             true );
+    Create( "Accommodation/Enabled",    false,                            true );
+    Create( "Accommodation/Displayed",  QString( "" ),                    true );
+    Create( "Accommodation/Gradient",   QString( "0,#00ff00;1,#ff0000" ), true );
+    Create( "Accommodation/Max",        1.f,                              true );
+    Create( "Accommodation/Min",        0.f,                              true );
+    Create( "Accommodation/Unoccupied", QString( "#000000" ),             true );
 
     // Contour lines
-    Set( "ContourLines/Color",   QString( "#f5f5dc" ), false );
-    Set( "ContourLines/Enabled", false,                false );
-    Set( "ContourLines/Height",  100,                  false );
+    Create( "ContourLines/Color",   QString( "#f5f5dc" ), false );
+    Create( "ContourLines/Enabled", false,                false );
+    Create( "ContourLines/Height",  100,                  false );
 
     // Density
-    Set( "Density/Enabled",    false,                            true );
-    Set( "Density/Gradient",   QString( "0,#00ff00;1,#ff0000" ), true );
-    Set( "Density/Max",        1.f,                              true );
-    Set( "Density/Min",        0.f,                              true );
-    Set( "Density/Unoccupied", QString( "#000000" ),             true );
+    Create( "Density/Enabled",    false,                            true );
+    Create( "Density/Gradient",   QString( "0,#00ff00;1,#ff0000" ), true );
+    Create( "Density/Max",        1.f,                              true );
+    Create( "Density/Min",        0.f,                              true );
+    Create( "Density/Unoccupied", QString( "#000000" ),             true );
 
     // Efficient range
-    Set( "EfficientRange/Ph",                   50,                   true );
-    Set( "EfficientRange/Volume",               0,                    true );
-    Set( "EfficientRange/FilterIndirectWeapon", false,                true );
-    Set( "EfficientRange/IndirectWeapon",       QString( "" ),        true );
-    Set( "EfficientRange/UseCustomColor",       false,                true );
-    Set( "EfficientRange/CustomColor",          QString( "#ffffff" ), true );
+    Create( "EfficientRange/Ph",                   50,                   true );
+    Create( "EfficientRange/Volume",               0,                    true );
+    Create( "EfficientRange/FilterIndirectWeapon", false,                true );
+    Create( "EfficientRange/IndirectWeapon",       QString( "" ),        true );
+    Create( "EfficientRange/UseCustomColor",       false,                true );
+    Create( "EfficientRange/CustomColor",          QString( "#ffffff" ), true );
 
     // Elevation
-    Set( "Elevation/FitToViewPort", false,                true );
-    Set( "Elevation/Gradient",      QString( "default" ), true );
+    Create( "Elevation/FitToViewPort", false,                true );
+    Create( "Elevation/Gradient",      QString( "default" ), true );
     tools::Xifstream xisGradients( "gradients.xml" );
     xisGradients >> xml::start( "gradients" )
                  >> xml::list( "gradient", *this, &Options::ReadGradient );
 
     // Fires
-    Set( "FireIndicators", 0, true ); // FIRE_INDICATORS_DEFAULT
+    // FireRules are empty by default
+    Create( "FireIndicators", 0, true );
 
     // HillShade
-    Set( "HillShade/Enabled",   false, true );
-    Set( "HillShade/Direction", 335,   true );
-    Set( "HillShade/Strength",  1,     true );
+    Create( "HillShade/Enabled",   false, true );
+    Create( "HillShade/Direction", 335,   true );
+    Create( "HillShade/Strength",  1,     true );
 
     // lighting
-    Set( "Lighting/Type",      0,                    true );
-    Set( "Lighting/Direction", QString( "23:23" ),   true );
-    Set( "Lighting/Ambient",   QString( "#323232" ), true );
-    Set( "Lighting/Diffuse",   QString( "#c8c8c8" ), true );
+    Create( "Lighting/Type",      0,                    true );
+    Create( "Lighting/Direction", QString( "23:23" ),   true );
+    Create( "Lighting/Ambient",   QString( "#323232" ), true );
+    Create( "Lighting/Diffuse",   QString( "#c8c8c8" ), true );
 
     // symbol size
-    Set( "SymbolSize", 3.f, false ); // move this one under SymbolSize/ when the report will be done
+    Create( "SymbolSize", 3.f, false ); // move this one under SymbolSize/ when the report will be done
     for( int i = eNatureLevel_c; i < eNbrNatureLevel; ++i )
-        Set( "SymbolSize/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ), 1.f, true ); // not used yet
+        Create( "SymbolSize/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ), 1.f, true ); // not used yet
 
     // terrain
     QStringList order;
@@ -357,30 +373,30 @@ void Options::InitializeView()
                    >> xml::list( "terrain", [&]( xml::xistream& x ) {
                        const auto type = x.attribute< std::string >( "type" );
                        const QString category = x.attribute< QString >( "category" );
-                       Set( "Terrains/" + type + "/Category", category,                                       true );
-                       Set( "Terrains/" + type + "/Name",     x.attribute< QString >( "name", type.c_str() ), true );
-                       Set( "Terrains/" + type + "/Shown",    true,                                           true );
-                       Set( "Terrains/" + type + "/Width",    x.content< float >( "width", 1.f ),             true );
-                       Set( "Terrains/" + type + "/Color",    x.content< QString >( "color", "#000000" ),     true );
+                       Create( "Terrains/" + type + "/Category", category,                                       true );
+                       Create( "Terrains/" + type + "/Name",     x.attribute< QString >( "name", type.c_str() ), true );
+                       Create( "Terrains/" + type + "/Shown",    true,                                           true );
+                       Create( "Terrains/" + type + "/Width",    x.content< float >( "width", 1.f ),             true );
+                       Create( "Terrains/" + type + "/Color",    x.content< QString >( "color", "#000000" ),     true );
                        if( !category.isEmpty() && !order.contains( category ) )
                            order << category;
                        } );
-    Set( "Terrains/Order", order.join( ";" ), true );
+    Create( "Terrains/Order", order.join( ";" ), true );
 
     // visualisation scales
     for( size_t i = 0; i < DefaultVisualisationScales::size_; ++i )
     {
         const auto& scale = DefaultVisualisationScales::data_[i];
         const auto name = "VisualisationScales/" + ENT_Tr::ConvertFromVisualisationScale( scale.type_ );
-        Set( name + "/Min", scale.min_, true );
-        Set( name + "/Max", scale.max_, true );
+        Create( name + "/Min", scale.min_, true );
+        Create( name + "/Max", scale.max_, true );
     }
 
     // watershed
-    Set( "Watershed/Color",   QString( "#14a4da" ), false );
-    Set( "Watershed/Enabled", false,                false );
-    Set( "Watershed/Height",  0,                    false );
-    Set( "Watershed/Inverse", false,                false );
+    Create( "Watershed/Color",   QString( "#14a4da" ), false );
+    Create( "Watershed/Enabled", false,                false );
+    Create( "Watershed/Height",  0,                    false );
+    Create( "Watershed/Inverse", false,                false );
 }
 
 // -----------------------------------------------------------------------------
@@ -392,9 +408,12 @@ void Options::InitializeLayers( const std::vector< E_LayerTypes >& types )
     for( int i = 0; i < static_cast< int >( types.size() ); ++i )
     {
         const auto name = "Layers/" + ENT_Tr::ConvertFromLayerTypes( types[ i ], ENT_Tr::eToSim );
-        Set( name + "/Alpha", 1.f, true );
-        Set( name + "/Position", i, true );
+        float alpha = 1.f;
+        if( types[ i ] == eLayerTypes_Grid )
+            alpha = 0.3f;
+        else if( types[ i ] == eLayerTypes_VisionCones )
+            alpha = 0.5f;
+        Create( name + "/Alpha", alpha, true );
+        Create( name + "/Position", i, true );
     }
-    Set( "Layers/vision_cones/Alpha", 0.5f, true );
-    Set( "Layers/grid/Alpha", 0.3f, true );
 }

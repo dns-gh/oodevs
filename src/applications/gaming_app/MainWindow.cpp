@@ -89,7 +89,6 @@
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GlOptions.h"
 #include "clients_gui/GlSelector.h"
-#include "clients_gui/GradientPreferences.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
