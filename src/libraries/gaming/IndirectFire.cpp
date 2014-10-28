@@ -69,7 +69,7 @@ IndirectFire::~IndirectFire()
 // -----------------------------------------------------------------------------
 void IndirectFire::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
 {
-    const geometry::Point2f origin = GetOrigin().Get< Positions >().GetPosition();
+    const geometry::Point2f origin = origin_.Get< Positions >().GetPosition();
     if( viewport.IsVisible( geometry::Rectangle2f( origin, target_ ) ) )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
