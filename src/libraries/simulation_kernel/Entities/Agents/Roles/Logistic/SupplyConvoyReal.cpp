@@ -326,6 +326,20 @@ void SupplyConvoyReal::serialize( Archive& archive, const unsigned int )
 }
 
 // -----------------------------------------------------------------------------
+// Name: template<class Archive> friend void SupplyConvoyReal::load_construct_data
+// Created: LDC 2014-10-28
+// -----------------------------------------------------------------------------
+namespace logistic
+{
+    template<class Archive> void load_construct_data( Archive& ar, SupplyConvoyReal* obj, const unsigned int )
+    {
+        boost::shared_ptr< SupplyConvoyReal > sharedPtr;
+        ::new( obj )SupplyConvoyReal();
+        ar.reset( sharedPtr, obj );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal::GetReporter
 // Created: LDC 2013-07-04
 // -----------------------------------------------------------------------------

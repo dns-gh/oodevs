@@ -330,6 +330,17 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned in
 }
 
 // -----------------------------------------------------------------------------
+// Name: template<class Archive> friend void MIL_KnowledgeGroup::load_construct_data
+// Created: LDC 2014-10-28
+// -----------------------------------------------------------------------------
+template<class Archive> void load_construct_data( Archive& ar, MIL_KnowledgeGroup* obj, const unsigned int )
+{
+    boost::shared_ptr< MIL_KnowledgeGroup > sharedPtr;
+    ::new( obj )MIL_KnowledgeGroup();
+    ar.reset( sharedPtr, obj );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------

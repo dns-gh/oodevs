@@ -85,6 +85,7 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    template<class Archive> friend void load_construct_data( Archive& ar, MIL_KnowledgeGroup* obj, const unsigned int );
 
     void WriteODB( xml::xostream& xos ) const;
     void WriteKnowledges( xml::xostream& xos ) const;

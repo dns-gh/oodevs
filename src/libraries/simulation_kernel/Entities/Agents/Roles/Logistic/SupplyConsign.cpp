@@ -779,3 +779,17 @@ void SupplyConsign::save( MIL_CheckPointOutArchive& archive, const unsigned int 
     archive << requestsQueued_;
     archive << currentRecipient_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: template<class Archive> friend void SupplyConsign::load_construct_data
+// Created: LDC 2014-10-28
+// -----------------------------------------------------------------------------
+namespace logistic
+{
+    template<class Archive> void load_construct_data( Archive& ar, SupplyConsign* obj, const unsigned int )
+    {
+        boost::shared_ptr< SupplyConsign > sharedPtr;
+        ::new( obj )SupplyConsign();
+        ar.reset( sharedPtr, obj );
+    }
+}
