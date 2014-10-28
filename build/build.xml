@@ -709,12 +709,9 @@
     <target name="package.benchmark" description="package benchmark exercises">
         <safe-move file="${out.dir}/benchmark.otpak">
             <zip destfile="@{file}" duplicate="fail">
-                <zipfileset dir="${data.dir}">
-                    <include name="data/models/ada/physical/test/**"/>
-                </zipfileset>
-                <zipfileset dir="${data.dir}/tests/gosword" prefix="exercises">
-                    <exclude name="**/sessions/**"/>
-                </zipfileset>
+                <zipfileset dir="${data.dir}" includes="data/models/ada/physical/test/**"/>
+                <zipfileset dir="${data.dir}/tests/gosword" prefix="exercises"
+                    excludes="**/sessions/**"/>
             </zip>
         </safe-move>
     </target>
