@@ -15,8 +15,11 @@ import (
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
 	"masa/sword/swrun"
+	"masa/sword/swtest"
+	"math"
 	"os"
 	"regexp"
+	"time"
 )
 
 const (
@@ -527,9 +530,15 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: repair consign not in a waiting for repair team selection state")
 }
 
+func ParseTime(c *C, value *sword.DateTime) time.Time {
+	t, err := swapi.GetTime(value.GetData())
+	c.Assert(err, IsNil)
+	return t
+}
+
 func (s *TestSuite) TestReportCreation(c *C) {
 	sim, client := connectAndWaitModel(c,
-		NewAllUserOpts(ExCrossroadLog).EnableTestCommands())
+		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
 	defer stopSimAndClient(c, sim, client)
 	phydb := loadPhysical(c, "test")
 	data := client.Model.GetData()
@@ -560,4 +569,44 @@ func (s *TestSuite) TestReportCreation(c *C) {
 	client.Model.WaitTicks(1)
 	reports := reporter.Stop()
 	c.Assert(len(reports), Equals, 2)
+
+	_, err = client.Pause()
+	c.Assert(err, IsNil)
+
+	// Check the size of reports
+	reports, _, err = client.GetReports(0)
+	c.Assert(err, IsNil)
+	c.Assert(len(reports), Equals, 0)
+
+	reports, _, err = client.GetReports(12)
+	c.Assert(err, IsNil)
+	c.Assert(len(reports), Equals, 12)
+
+	// Get all reports
+	allReports, next, err := client.GetReports(math.MaxInt32)
+	c.Assert(err, IsNil)
+	c.Assert(len(allReports), Lesser, math.MaxInt32)
+	c.Assert(next, Equals, uint32(0))
+
+	// Get reports by package of two reports
+	reports = []*sword.Report{}
+	part, next, err := client.GetReports(2)
+	c.Assert(len(part), Equals, 2)
+	c.Assert(next, Not(Equals), 0)
+	reports = append(reports, part...)
+	for next != 0 {
+		part, next, err = client.GetReportsPart(2, next)
+		c.Assert(len(part), LesserOrEquals, 2)
+		c.Assert(next, Not(Equals), 0)
+		reports = append(reports, part...)
+	}
+	// Check equality between 'allReports' and 'reports'
+	swtest.DeepEquals(c, allReports, reports)
+
+	// Check chronological order
+	for i := 0; i < len(reports)-1; i++ {
+		first := ParseTime(c, reports[i].GetTime())
+		second := ParseTime(c, reports[i+1].GetTime())
+		c.Assert(first.Equal(second) || first.After(second), Equals, true)
+	}
 }

@@ -1808,6 +1808,18 @@ message Report {
     optional MissionParameters parameters = 6;
 }
 
+/** @struct ListReportsAck
+    @brief Acknowledges a request to list the reports
+    @see ListReports
+*/
+message ListReportsAck {
+    //! List of reports
+    repeated Report reports     = 1;
+    //! Returns the next report identifier if
+    //! the list of reports is partial
+    optional uint32 next_report = 2;
+}
+
 /** @struct InvalidateReport
     @brief Notifies a report has become invalid
 */
@@ -3546,6 +3558,7 @@ message SimToClient {
         optional Pathfind pathfind_update = 163;
         //! @copybrief PartyUpdate
         optional PartyUpdate party_update = 164;
+        optional ListReportsAck list_reports_ack = 165;
     }
     /** @property context
         @brief Identifies the request matching the response.

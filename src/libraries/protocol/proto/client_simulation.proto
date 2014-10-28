@@ -178,6 +178,14 @@ message SegmentRequest {
     optional float        radius    = 4;
 }
 
+//! Returns the list of reports in the reverse chronological order.
+message ListReports {
+    //! Maximum number of reports to send
+    required uint32 max_count = 1;
+    //! Report identifier to start enumeration
+    optional uint32 report    = 2;
+}
+
 /** @struct ClientToSim
     @brief Wraps messages from clients to the simulation
 */
@@ -245,6 +253,7 @@ message ClientToSim {
         optional ListLogisticRequests     list_logistic_requests          = 27;
         optional ComputePathfind          compute_pathfind                = 28;
         optional SegmentRequest           segment_request                 = 29;
+        optional ListReports              list_reports                    = 30;
     }
     /** @property context
         @brief Identifies the request matching the response.

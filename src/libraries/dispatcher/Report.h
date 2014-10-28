@@ -48,6 +48,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    void Fill( sword::Report& report ) const;
     unsigned long GetId() const;
 //@}
 

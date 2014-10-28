@@ -83,3 +83,8 @@ unsigned long Report::GetId() const
 {
     return message_->report().id();
 }
+
+void Report::Fill( sword::Report& report ) const
+{
+    report = *message_;
+}

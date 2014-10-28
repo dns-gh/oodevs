@@ -39,6 +39,7 @@ namespace dispatcher
     class Team_ABC;
     class Factory_ABC;
     class ClientPublisher_ABC;
+    class Report;
 
 // =============================================================================
 /** @class  Model
@@ -81,6 +82,7 @@ public:
     virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&  AgentKnowledges() const = 0;
     virtual const tools::Resolver_ABC< ObjectKnowledge_ABC >& ObjectKnowledges() const = 0;
     virtual const tools::Resolver_ABC< PopulationKnowledge >& PopulationKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< Report >&              Reports() const = 0;
 
     virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const = 0;
     //@}
