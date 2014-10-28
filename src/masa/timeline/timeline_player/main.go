@@ -206,9 +206,9 @@ func listenEvents(host, player, id string, check, tls bool) error {
 
 var (
 	handlers = map[sdk.MessageTag]func(*Context, *sdk.Message) error{
-		sdk.MessageTag_update_tick:   (*Context).UpdateTick,
-		sdk.MessageTag_update_events: (*Context).UpdateEvents,
-		sdk.MessageTag_delete_events: (*Context).DeleteEvents,
+		sdk.MessageTag_update_session: (*Context).UpdateSession,
+		sdk.MessageTag_update_events:  (*Context).UpdateEvents,
+		sdk.MessageTag_delete_events:  (*Context).DeleteEvents,
 	}
 )
 
@@ -230,9 +230,9 @@ func (c *Context) readEvents() error {
 	}
 }
 
-func (c *Context) UpdateTick(msg *sdk.Message) error {
+func (c *Context) UpdateSession(msg *sdk.Message) error {
 	last := c.current
-	now, err := time.Parse(time.RFC3339Nano, msg.GetTick())
+	now, err := time.Parse(time.RFC3339Nano, msg.GetSession().GetTime())
 	if err != nil {
 		return err
 	}

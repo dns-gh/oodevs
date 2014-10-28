@@ -23,6 +23,8 @@ type Observer interface {
 	CloseEvent(uuid string, err error, lock bool)
 	// update event <uuid> with <event> data
 	UpdateEvent(uuid string, event *sdk.Event)
+	UpdateServices()
+	UpdateRangeDates(start, end time.Time)
 	// invalid all active filters
 	InvalidateFilters()
 	// post command to observer loop
@@ -39,8 +41,8 @@ type Service interface {
 }
 
 type EventListener interface {
-	Update(events ...*sdk.Event) // create & update are merged
-	Delete(events ...string)
+	UpdateEvents(events ...*sdk.Event) // create & update are merged
+	DeleteEvents(events ...string)
 }
 
 type EventFilter func(event *sdk.Event) bool

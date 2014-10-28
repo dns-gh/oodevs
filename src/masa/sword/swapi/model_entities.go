@@ -586,6 +586,8 @@ type FireDetection struct {
 type ReplayInfo struct {
 	FirstTick int32
 	TickCount int32
+	StartDate time.Time
+	EndDate   time.Time
 }
 
 type SupplyRequest struct {

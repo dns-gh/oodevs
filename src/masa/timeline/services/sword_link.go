@@ -11,14 +11,18 @@ package services
 import (
 	"masa/sword/swapi"
 	"sync"
+	"time"
 )
 
 type SwordLinkObserver interface {
+	PostAttach(link *SwordLink)
 	PostRestart(link *SwordLink, err error)
 	PostLog(link *SwordLink, format string, args ...interface{})
 	PostCloseAction(link *SwordLink, action string, err error)
 	PostCloseWriter(link *SwordLink, writer *SwordWriter)
 	PostInvalidateFilters(link *SwordLink)
+	PostServices(link *SwordLink, services SwordServices)
+	PostReplayRangeDates(link *SwordLink, start, end time.Time)
 }
 
 type SwordLink struct {
@@ -79,6 +83,14 @@ func (s *SwordReaderHandler) Restart(err error) {
 
 func (s *SwordReaderHandler) Log(format string, args ...interface{}) {
 	s.SwordLinkObserver.PostLog(s.link, format, args)
+}
+
+func (s *SwordReaderHandler) SetServices(services SwordServices) {
+	s.SwordLinkObserver.PostServices(s.link, services)
+}
+
+func (s *SwordReaderHandler) SetReplayRangeDates(start, end time.Time) {
+	s.SwordLinkObserver.PostReplayRangeDates(s.link, start, end)
 }
 
 func (s *SwordLink) Attach(observer Observer, orders Ids, actions Ids) {

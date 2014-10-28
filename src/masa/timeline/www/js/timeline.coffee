@@ -161,11 +161,17 @@ class VerticalLayout
         @axis = 80
         @init_linker()
 
+    get_replay_x: -> @axis
+
+    get_lane_x: -> @get_replay_x() + @t.replay.size()
+
+    get_link_x: -> @get_lane_x() + @t.lane_size
+
     axis_attributes: ->
-        transform: "translate(#{snap_to_grid @axis}, 0)"
+        transform: "translate(#{snap_to_grid @get_replay_x()}, 0)"
 
     grid_attributes: ->
-        transform: "translate(#{snap_to_grid @axis + @t.lane_w}, 0)"
+        transform: "translate(#{snap_to_grid @get_link_x()}, 0)"
 
     #                x2.y1
     # x0.y0__x1.y0__/
@@ -183,22 +189,26 @@ class VerticalLayout
         return path + "Z"
 
     current_attributes: (offset) ->
-        x2 = @axis + @t.lane_w + 1
-        x1 = imin @axis + 1, x2
+        x2 = @get_link_x() + 1
+        x1 = imin @get_replay_x() + 1, x2
         return @render_current x1, offset, x2
 
-    hsplit_attributes: ->
-        offset = snap_to_grid @axis + @t.lane_w
+    split_attributes: (end) ->
+        offset = snap_to_grid end
         return x1: offset, x2: offset
 
-    hsplit_offset: (w, h) -> y2: h
+    lane_split_attributes: -> @split_attributes @get_link_x()
+
+    replay_split_attributes: -> @split_attributes @get_lane_x()
+
+    split_size: (w, h) -> y2: h
 
     select: (w, h) -> h
 
     lane_attributes: ->
-        w = @t.lane_w - 1
+        w = @t.lane_size - 1
         get_y = (y) => imax 0, snap_to_grid @t.scale y
-        get_x = (x) => snap_to_grid @axis + x.value() * w + 1
+        get_x = (x) => snap_to_grid @get_lane_x() + x.value() * w + 1
         x:      (d) -> get_x d.x
         width:  (d) -> imax 0, get_x(d.x.add d.w) - get_x(d.x) - 1
         y:      (d) -> get_y d.min
@@ -206,6 +216,15 @@ class VerticalLayout
             y = get_y d.min
             h = get_y(d.max) - y - 1
             return imax 0, imin h, @t.h - y
+
+    replay_range_attributes: (start, end) ->
+        get_y = (y) => snap_to_grid @t.scale y
+        y0 = get_y start
+        y1 = get_y end
+        x:      @get_replay_x() + 1
+        width:  @t.replay.size() - 1
+        y:      y0
+        height: y1 - y0 - 1
 
     lane_size: (el) ->
         y = parseFloat el.attr "y"
@@ -338,8 +357,8 @@ class VerticalLayout
         return left
 
     start_offsets: ->
-        x0 = @axis + 1
-        x1 = @axis + @t.lane_w + 8
+        x0 = @get_replay_x() + 1
+        x1 = @get_link_x() + 8
         return [x0: x0, x1: x1, first: true]
 
     stop_offsets: (offsets) ->
@@ -404,7 +423,7 @@ class VerticalLayout
     get_ticks: -> @t.scale.ticks 10
 
     tick_attributes: ->
-        left: (d) => to_pixel @axis - d.width - 12
+        left: (d) => to_pixel @get_replay_x() - d.width - 12
         top:  (d) =>
             h = d.height
             y = -h/2 + @t.scale d.get "date"
@@ -429,11 +448,17 @@ class HorizontalLayout
     top_y: (y) -> if @bottom then @t.h - y else y
     iftop: (a, b) -> if @bottom then b else a
 
+    get_replay_y: -> @axis
+
+    get_lane_y: -> @get_replay_y() + @t.replay.size()
+
+    get_link_y: -> @get_lane_y() + @t.lane_size
+
     axis_attributes: ->
-        transform: "translate(0, #{snap_to_grid @top_y @axis})"
+        transform: "translate(0, #{snap_to_grid @top_y @get_replay_y()})"
 
     grid_attributes: ->
-        transform: "translate(0, #{snap_to_grid @top_y @axis + @t.lane_w})"
+        transform: "translate(0, #{snap_to_grid @top_y @get_link_y()})"
 
     # x1,y2  x2,y2
     #  \    /
@@ -452,21 +477,25 @@ class HorizontalLayout
         return path + "Z"
 
     current_attributes: (offset) ->
-        y1 = @top_y @axis + @t.lane_w + 1 - @iftop 0, 1
-        y2 = imax y1, @top_y @axis + @iftop 1, 0
+        y1 = @top_y @get_link_y() + 1 - @iftop 0, 1
+        y2 = imax y1, @top_y @get_replay_y() + @iftop 1, 0
         return @render_current offset, y1, y2
 
-    hsplit_attributes: ->
-        offset = snap_to_grid @top_y @axis + @t.lane_w
+    split_attributes: (end) ->
+        offset = snap_to_grid @top_y end
         return y1: offset, y2: offset
 
-    hsplit_offset: (w, h) -> x2: w
+    lane_split_attributes: -> @split_attributes @get_link_y()
+
+    replay_split_attributes: -> @split_attributes @get_lane_y()
+
+    split_size: (w, h) -> x2: w
 
     select: (w, h) -> w
 
     lane_attributes: ->
-        h = @t.lane_w - 1
-        offset = @top_y @axis + @iftop 0, @t.lane_w
+        h = @t.lane_size - 1
+        offset = @top_y @get_lane_y() + @iftop 0, @t.lane_size
         get_y = (y) -> snap_to_grid offset + y.value() * h + 1
         get_x = (x) => imax 0, snap_to_grid @t.scale x
         y:      (d) -> get_y d.x
@@ -476,6 +505,15 @@ class HorizontalLayout
             x = get_x d.min
             w = get_x(d.max) - x - 1
             return imax 0, imin w, @t.w - x
+
+    replay_range_attributes: (start, end) ->
+        get_x = (x) => snap_to_grid @t.scale x
+        x0 = get_x start
+        x1 = get_x end
+        x:      x0
+        y:      snap_to_grid @top_y @get_replay_y() + @iftop 0, @t.replay.size()
+        width:  x1 - x0 - 1
+        height: @t.replay.size() - 1
 
     lane_size: (el) ->
         x = parseFloat el.attr "x"
@@ -492,7 +530,7 @@ class HorizontalLayout
     lane_move: (d, zone, pos, offsets, children) ->
         lane_move "left", "right", zone, d, @t.scale.invert, pos, offsets, children
 
-    height_offset: -> @axis + @t.lane_w
+    height_offset: -> @get_link_y()
 
     node_y: (offset, idx) ->
         offset -= @height_offset() if @bottom
@@ -544,8 +582,8 @@ class HorizontalLayout
         return clip x, 0, max
 
     start_offsets: ->
-        y0 = @top_y @axis + @iftop 1, 0
-        y1 = @top_y @axis + @t.lane_w - @iftop 0, 1
+        y0 = @top_y @get_replay_y() + @iftop 1, 0
+        y1 = @top_y @get_link_y() - @iftop 0, 1
         return [y0: y0, y1: y1, first: true]
 
     stop_offsets: ->
@@ -666,18 +704,53 @@ class TickView extends Backbone.View
             top:    top
             bottom: bottom if bottom?
 
+class Replay
+
+    constructor: (layout, svg) ->
+        @has_replay = false
+        @layout = layout
+        @replay_split = svg.append("line")
+            .attr(id: "replay_splitter")
+            .classed("splitter", true)
+        @replay_range = svg.append("rect")
+            .attr(id: "replay_range")
+            .classed("range", true)
+
+    size: -> if @has_replay then 88 else 0
+
+    resize: (w, h) ->
+        @replay_split.attr @layout.split_size w, h
+        @replay_range.attr @layout.split_size w, h
+
+    set_replay: (enabled) ->
+        @has_replay = enabled
+
+    set_replay_range: (start, end) ->
+        @start = start
+        @end = end
+
+    render: ->
+        split_attributes = @layout.replay_split_attributes()
+        split_attributes.visibility = @has_replay
+        @replay_split.attr split_attributes
+        range_attributes = {}
+        if @start? and @end? and @has_replay
+            range_attributes = @layout.replay_range_attributes @start, @end
+        range_attributes.visibility = @has_replay
+        @replay_range.attr range_attributes
+
 class Timeline
     id:      "#session"
-    h:       0 # height
     link_w:  88
     node_h:  28
     node_y:  11
     current: moment()
 
     constructor: (vertical, model) ->
-        @lane_w = 88
+        @h = 0
+        @lane_size = 88
         lane = history_get().lane
-        @lane_w = 0 | lane if lane?
+        @lane_size = 0 | lane if lane?
         if vertical
             @layout = new VerticalLayout this
         else
@@ -710,13 +783,15 @@ class Timeline
         @svg.append("path").attr class: "current"
         @svg.append("g").attr id: "links"
         @svg.append("g").attr id: "lanes"
-        @svg.append("line").attr id: "hsplit"
-        hsplit = @svg.select("#hsplit")
-        hsplit.style cursor: @layout.select "ns-resize", "ew-resize"
-        hsplit.call d3.behavior.drag()
-            .on("dragstart", @hsplit_edit_start)
-            .on("drag",      @hsplit_edit_move)
-            .on("dragend",   @hsplit_edit_end)
+        @replay = new Replay @layout, @svg
+        @lane_split = @svg.append("line")
+            .attr(id: "lane_splitter")
+            .classed("splitter", true)
+            .style(cursor: @layout.select "ns-resize", "ew-resize")
+            .call(d3.behavior.drag()
+                .on("dragstart", @lane_split_edit_start)
+                .on("drag",      @lane_split_edit_move)
+                .on("dragend",   @lane_split_edit_end))
         @lane_colors = d3.scale.category20()
         @curline = @svg.selectAll ".current"
         d3.select(@id).append("div").attr id: "nodes"
@@ -730,7 +805,8 @@ class Timeline
         @set_width @w
         @svg.attr height: @h
         @scale.range [0, @layout.select @w, @h]
-        d3.select("#hsplit").attr @layout.hsplit_offset @w, @h
+        @lane_split.attr @layout.split_size @w, @h
+        @replay.resize @w, @h
         @rescale()
 
     # set svg area width
@@ -789,21 +865,21 @@ class Timeline
         @trigger "current_edit_end", @scale.invert @curline.attr "data-offset"
         @curline.attr "data-offset", null
 
-    hsplit_edit_start: =>
+    lane_split_edit_start: =>
         dom_stop_event d3.event.sourceEvent
-        delete @hsplit_offset
+        delete @split_size
 
-    hsplit_edit_move: =>
+    lane_split_edit_move: =>
         return unless @layout.select d3.event.dy,  d3.event.dx
         offset = @layout.select((=> @layout.top_y d3.event.y), -> d3.event.x)()
-        unless @hsplit_offset?
+        unless @split_size?
             offset -= @layout.select d3.event.dy, d3.event.dx
-            @hsplit_offset = @lane_w - offset
-        @lane_w = @hsplit_offset + offset
+            @split_size = @lane_size - offset
+        @lane_size = @split_size + offset
         @render()
 
-    hsplit_edit_end: =>
-        history_set lane: @lane_w
+    lane_split_edit_end: =>
+        history_set lane: @lane_size
 
     # render event ranges as colored lanes
     render_lanes: ->
@@ -1207,15 +1283,16 @@ class Timeline
 
     # main render callback
     render: ->
-        @lane_w = @clip_lane @lane_w
+        @lane_size = @clip_lane @lane_size
         @render_ticks()
-        @grid.tickSize snap_to_grid @lane_w - 1
+        @grid.tickSize snap_to_grid @replay.size() + @lane_size - 1
         grid = @svg.select("#grid")
         grid.call @grid
         grid.attr @layout.grid_attributes()
-        @svg.select("#hsplit").attr @layout.hsplit_attributes()
+        @lane_split.attr @layout.lane_split_attributes()
         zoom = @svg.call @zoom
         zoom.on "dblclick.zoom", null
+        @replay.render()
         @render_lanes()
         @render_events()
         @render_current()
@@ -1290,3 +1367,12 @@ class Timeline
         @render() unless skip?
         data = if @selected.length == 1 then _.first d.data else null
         triggers.trigger "select", data
+
+    # enable replay area
+    set_replay: (enabled) ->
+        @replay.set_replay enabled
+        @render()
+
+    set_replay_range: (start, end) ->
+        @replay.set_replay_range(start, end)
+        @render()

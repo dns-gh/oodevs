@@ -178,14 +178,20 @@ func (c *Controller) AttachTimerService(uuid, name string, base string) (*sdk.Se
 	}
 	return c.applySession(uuid, func(session *Session) error {
 		timer := services.NewTimer(&ControllerObserver{uuid, c}, begin)
-		return session.Attach(name, timer)
+		return session.AttachService(name, timer)
 	})
 }
 
 func (c *Controller) AttachSwordService(uuid, name string, clock bool, address string) (*sdk.Session, error) {
 	return c.applySession(uuid, func(session *Session) error {
 		sword := services.NewSword(c.log, &ControllerObserver{uuid, c}, clock, name, address)
-		return session.Attach(name, sword)
+		err := session.AttachService(name, sword)
+		if err != nil {
+			return err
+		}
+		session.AttachListener(sword)
+		session.AttachFilterer(sword)
+		return nil
 	})
 }
 
@@ -314,5 +320,17 @@ func (c *ControllerObserver) Post(operand func()) {
 func (c *ControllerObserver) InvalidateFilters() {
 	c.controller.post(c.session, func(session *Session) {
 		session.InvalidateFilters()
+	})
+}
+
+func (c *ControllerObserver) UpdateServices() {
+	c.controller.post(c.session, func(session *Session) {
+		session.UpdateServices()
+	})
+}
+
+func (c *ControllerObserver) UpdateRangeDates(start, end time.Time) {
+	c.controller.post(c.session, func(session *Session) {
+		session.UpdateRangeDates(start, end)
 	})
 }

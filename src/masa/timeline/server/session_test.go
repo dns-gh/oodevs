@@ -473,9 +473,10 @@ func waitBroadcastTag(messages <-chan interface{}, tag sdk.MessageTag) *sdk.Mess
 }
 
 type FakeService struct {
-	lock   sync.Mutex
-	events []*sdk.Event
-	uuids  []string
+	lock     sync.Mutex
+	events   []*sdk.Event
+	uuids    []string
+	services []*sdk.Service
 }
 
 func (f *FakeService) Proto(name string) *sdk.Service {
@@ -491,16 +492,22 @@ func (f *FakeService) Start() error                        { return nil }
 func (f *FakeService) Stop() error                         { return nil }
 func (f *FakeService) Apply(string, url.URL, []byte) error { return nil }
 
-func (f *FakeService) Update(events ...*sdk.Event) {
+func (f *FakeService) UpdateEvents(events ...*sdk.Event) {
 	f.lock.Lock()
 	defer f.lock.Unlock()
 	f.events = events
 }
 
-func (f *FakeService) Delete(uuids ...string) {
+func (f *FakeService) DeleteEvents(uuids ...string) {
 	f.lock.Lock()
 	defer f.lock.Unlock()
 	f.uuids = uuids
+}
+
+func (f *FakeService) UpdateServices(services ...*sdk.Service) {
+	f.lock.Lock()
+	defer f.lock.Unlock()
+	f.services = services
 }
 
 func (f *FakeService) GetAndClear() ([]*sdk.Event, []string) {
@@ -534,7 +541,12 @@ func (t *TestSuite) TestListeners(c *C) {
 
 	faker := FakeService{}
 	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
-		return nil, session.Attach("faker", &faker)
+		err := session.AttachService("faker", &faker)
+		if err != nil {
+			return nil, err
+		}
+		session.AttachListener(&faker)
+		return nil, nil
 	})
 	c.Assert(err, IsNil)
 
@@ -585,6 +597,69 @@ func (t *TestSuite) TestListeners(c *C) {
 	c.Assert(fakerUuids, IsNil)
 }
 
+func (t *TestSuite) TestObservers(c *C) {
+	f := t.MakeFixture(c, true)
+	defer f.Close()
+
+	f.sword.WaitForStatus(services.SwordStatusConnected)
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
+	messages := make(chan interface{})
+	go func() {
+		for msg := range link.Listen() {
+			messages <- msg
+		}
+	}()
+	msg := waitBroadcastTag(messages, sdk.MessageTag_update_services)
+	c.Assert(msg, NotNil)
+	expected := f.sword.Proto("some_name")
+	c.Assert(expected.Sword.GetHasReplay(), Equals, false)
+	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
+
+	detached := f.server.GetLinks()
+	defer detached.Close()
+	for slink := range detached {
+		f.server.WriteDispatcherToClient(slink, 1, 0,
+			&sword.DispatcherToClient_Content{
+				ServicesDescription: &sword.ServicesDescription{
+					Services: []string{"struct replay::Service"},
+				},
+			})
+	}
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_services)
+	c.Assert(msg, NotNil)
+	expected.Sword.HasReplay = proto.Bool(true)
+	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
+
+	expectedStart := time.Now().Truncate(time.Second).UTC()
+	expectedEnd := expectedStart.Add(60 * time.Second)
+	for slink := range detached {
+		f.server.WriteReplayToClient(slink, 1, 0,
+			&sword.ReplayToClient_Content{
+				ControlReplayInformation: &sword.ControlReplayInformation{
+					CurrentTick:     proto.Int32(0),
+					InitialDateTime: swapi.MakeDateTime(expectedStart),
+					EndDateTime:     swapi.MakeDateTime(expectedEnd),
+					DateTime:        swapi.MakeDateTime(expectedStart),
+					TickDuration:    proto.Int32(10),
+					TimeFactor:      proto.Int32(1),
+					Status:          sword.EnumSimulationState_running.Enum(),
+					TickCount:       proto.Int32(6),
+				},
+			})
+	}
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_session)
+	c.Assert(msg, NotNil)
+	start, err := util.ParseTime(msg.Session.GetStartTime())
+	c.Assert(err, IsNil)
+	c.Assert(start, Equals, expectedStart)
+	end, err := util.ParseTime(msg.Session.GetEndTime())
+	c.Assert(err, IsNil)
+	c.Assert(end, Equals, expectedEnd)
+	c.Assert(start.Before(end), Equals, true)
+}
+
 type FakeFilterer struct {
 	FakeService
 	filter bool
@@ -624,9 +699,9 @@ func (t *TestSuite) TestFiltering(c *C) {
 	defer f.Close()
 
 	faker := FakeFilterer{FakeService: FakeService{}, filter: false}
-	_ = services.EventFilterer(&faker)
 	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
-		return nil, session.Attach("faker", &faker)
+		session.AttachFilterer(&faker)
+		return nil, nil
 	})
 	c.Assert(err, IsNil)
 
@@ -1513,9 +1588,9 @@ func (t *TestSuite) TestKnownEventsAreDeletedWhenBeingFiltered(c *C) {
 	defer f.Close()
 	event := f.addTaskEvent(c, "event", f.begin, f.begin.Add(1*time.Hour), "")
 	faker := FakeFilterer{FakeService: FakeService{}, filter: false}
-	_ = services.EventFilterer(&faker)
 	_, err := f.controller.apply(f.session, func(session *Session) (interface{}, error) {
-		return nil, session.Attach("faker", &faker)
+		session.AttachFilterer(&faker)
+		return nil, nil
 	})
 	c.Assert(err, IsNil)
 	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
@@ -1524,6 +1599,12 @@ func (t *TestSuite) TestKnownEventsAreDeletedWhenBeingFiltered(c *C) {
 	input := link.Listen()
 	msg := (<-input).(*sdk.Message)
 	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_tick)
+	msg = (<-input).(*sdk.Message)
+	//c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_tick)
+	//msg = (<-input).(*sdk.Message)
+	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_session)
+	msg = (<-input).(*sdk.Message)
+	c.Assert(msg.GetTag(), Equals, sdk.MessageTag_update_services)
 	swtest.DeepEquals(c, <-input, &sdk.Message{
 		Tag:    sdk.MessageTag_update_events.Enum(),
 		Events: []*sdk.Event{event},
