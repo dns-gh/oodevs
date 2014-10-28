@@ -34,7 +34,6 @@ public:
     //! @name Operations
     //@{
     bool IsMissionRequired() const;
-    bool IsAvailableFor( const kernel::Entity_ABC& entity ) const;
     virtual E_MissionType GetType() const;
     //@}
 
