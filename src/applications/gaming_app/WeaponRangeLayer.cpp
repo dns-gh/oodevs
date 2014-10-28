@@ -149,7 +149,7 @@ void WeaponRangeLayer::Paint( const geometry::Rectangle2f& extent )
     {
         const QColor color( it->first );
         glPushAttrib( GL_CURRENT_BIT );
-        glColor4d( color.redF(), color.greenF(), color.blueF(), 0.5 );
+        glColor4d( color.redF(), color.greenF(), color.blueF(), 0.5f * GetAlpha() );
         for( auto is = it->second.begin(); is != it->second.end(); ++is )
             (*is)->Draw( extent );
         glPopAttrib();
