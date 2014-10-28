@@ -17,7 +17,6 @@
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
-#include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -263,7 +262,7 @@ void DEC_Agent_Path::InsertPointAvants()
 
         // Village
         if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *it )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( CreateSpecialPoint( ( *it )->GetPos(), TerrainData::Urban() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Urban
         else if( IsPointAvantOut( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
@@ -275,13 +274,13 @@ void DEC_Agent_Path::InsertPointAvants()
 
         // Cross roads
         else if( current.GetObjectTypes().ContainsOne( TerrainData::Crossroad() ) )
-            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *it )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( CreateSpecialPoint( ( *it )->GetPos(), TerrainData::Crossroad() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Pont
         else if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Bridge() )
                 || ( !current.GetObjectTypes().ContainsOne( TerrainData::SmallRiver() ) && current.GetObjectTypes().ContainsOne( TerrainData::Bridge() ) && !nObjectTypesBefore.ContainsOne( TerrainData::Bridge() ) && !nObjectTypesToNextPoint.ContainsOne( TerrainData::Bridge() ) )
                 )
-            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *it )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( CreateSpecialPoint( ( *it )->GetPos(), TerrainData::Bridge() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         nObjectTypesBefore = nObjectTypesToNextPoint;
         pPrevPoint = &current;

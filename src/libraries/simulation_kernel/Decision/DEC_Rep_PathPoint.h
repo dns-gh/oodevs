@@ -13,6 +13,7 @@
 #define __DEC_Rep_PathPoint_h_
 
 #include "Decision/DEC_PathPoint.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Representations;
 
@@ -40,5 +41,8 @@ private:
     TerrainData nTypeTerrain_;
     mutable DEC_Representations* pSentToDiaAgent_;
 };
+
+boost::shared_ptr< DEC_Rep_PathPoint > CreateSpecialPoint(
+        const MT_Vector2D& pos, const TerrainData& terrain );
 
 #endif // __DEC_Rep_PathPoint_h_

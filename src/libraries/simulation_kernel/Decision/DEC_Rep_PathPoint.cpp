@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint.h"
 #include "Decision/DEC_Representations.h"
+#include <boost/make_shared.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint constructor
@@ -64,4 +65,11 @@ void DEC_Rep_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 const TerrainData& DEC_Rep_PathPoint::GetTypeTerrain() const
 {
     return nTypeTerrain_;
+}
+
+boost::shared_ptr< DEC_Rep_PathPoint > CreateSpecialPoint(
+        const MT_Vector2D& pos, const TerrainData& terrain )
+{
+    return boost::make_shared< DEC_Rep_PathPoint >( pos,
+        DEC_Rep_PathPoint::eTypePointParticulier, terrain, "Rep_PointParticulier" );
 }
