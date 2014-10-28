@@ -59,7 +59,8 @@ private slots:
 private:
     //! @name Member data
     //@{
-    UserProfileList* list_;    //@}
+    UserProfileList* list_;
+    //@}
 };
 
 }

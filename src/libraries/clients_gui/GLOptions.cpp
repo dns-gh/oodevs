@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "GLOptions.h"
-
 #include "ContourLinesComputer.h"
 #include "ContourLinesObserver.h"
 #include "Elevation2dTexture.h"
@@ -17,7 +16,6 @@
 #include "TerrainSettings.h"
 #include "UrbanDisplayOptions.h"
 #include "WatershedTexture.h"
-
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -32,7 +30,6 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
-
 #include <boost/algorithm/string.hpp>
 #include <boost/assign/list_of.hpp>
 #include <graphics/Lighting_ABC.h>
@@ -54,8 +51,9 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , map_( staticModel.detection_ )
     , model_( model )
     , accommodationTypes_( staticModel.accommodationTypes_ )
+    , colors_( 0 )
     , options_( controllers.options_.GetViewOptions() )
-    //, fires_( FIRE_GROUP_COUNT )
+    , fires_( FIRE_GROUP_COUNT )
     , selected_( false )
     , superiorSelected_( false )
     , controlled_( false )
@@ -79,6 +77,7 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 GLOptions::GLOptions( const GLOptions& other )
     : controllers_( other.controllers_ )
+    , colors_( other.colors_ )
     , profile_( other.profile_ )
     , map_( other.map_ )
     , model_( other.model_ )
@@ -112,7 +111,7 @@ GLOptions& GLOptions::operator=( const GLOptions& other )
 {
     if( !options_ || !other.options_ )
         throw std::exception( "GLOptions operator= failed, no kernel::Options set." );
-    //fires_ = other.fires_;
+    fires_ = other.fires_;
     *options_ = *other.options_;
     selected_ = other.selected_;
     superiorSelected_ = other.superiorSelected_;
@@ -133,7 +132,7 @@ GLOptions& GLOptions::operator=( const GLOptions& other )
 // -----------------------------------------------------------------------------
 void GLOptions::Load()
 {
-    //gui::LoadFromOptions( fires_, *options_ );
+    gui::LoadFromOptions( fires_, *options_ );
     elevation2dTexture_->Load( *options_ );
     graphicSetup_->Load( *options_ );
     urbanSetup_->Load( *options_ );
@@ -283,9 +282,9 @@ const kernel::OptionVariant& GLOptions::Get( const std::string& name ) const
 
 namespace
 {
-    const std::vector< std::string > watershedOptions =boost::assign::list_of< std::string>( "Watershed/Height" )
-                                                                                           ( "Watershed/Color" )
-                                                                                           ( "Watershed/Inverse" );
+    const std::vector< std::string > watershedOptions = boost::assign::list_of< std::string>( "Watershed/Height" )
+                                                                                            ( "Watershed/Color" )
+                                                                                            ( "Watershed/Inverse" );
     const std::vector< std::string > hillShadeOptions = boost::assign::list_of< std::string>( "HillShade/Direction" )
                                                                                             ( "HillShade/Enabled" )
                                                                                             ( "HillShade/Strength" );
@@ -300,11 +299,6 @@ namespace
                                                                                         ( "Density/Max" )
                                                                                         ( "Density/Min" )
                                                                                         ( "Density/Unoccupied" );
-    //void LoadFromXml( T_FireOptions& dst, const kernel::OptionVariant& option )
-    //{
-    //    xml::xistringstream xis( option.To< QString >().toStdString() );
-    //    LoadFromXml( dst, xis );
-    //}
 }
 
 // -----------------------------------------------------------------------------
@@ -324,12 +318,10 @@ void GLOptions::Set( const std::string& name,
         urbanSetup_->Load( *options_ );
     else if( name == "ContourLines/Height" )
         contourLinesComputer_->SetHeight( value.To< int >() );
-    //else if( name.find( "FireRules/" ) == 0 )
-    //{
-    //    for( int i = 0; i < FIRE_GROUP_COUNT; ++i )
-    //        if( name == FireOption::GetOptionName( static_cast< FireGroup >( i ) ) )
-    //            ::LoadFromXml( fires_[i], value );
-    //}
+    else if( name.find( "FireRules/" ) == 0 )
+        for( int i = 0; i < FIRE_GROUP_COUNT; ++i )
+            if( name == FireOption::GetOptionName( static_cast< FireGroup >( i ) ) )
+                fires_[i] = gui::LoadFireOptions( value.To< QString >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -576,11 +568,19 @@ const std::shared_ptr< UrbanDisplayOptions >& GLOptions::GetUrbanDisplayOptions(
     return urbanSetup_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: GLOptions::Save
-// Created: BAX 2014-06-25
-// -----------------------------------------------------------------------------
-//const T_FireOptions& GLOptions::GetFireOptions( FireGroup group ) const
-//{
-//    return fires_[group];
-//}
+const T_FireOptions& GLOptions::GetFireOptions( FireGroup group ) const
+{
+    return fires_[group];
+}
+
+void GLOptions::SetColorStrategy( ColorStrategy_ABC& strategy )
+{
+    colors_ = &strategy;
+}
+
+ColorStrategy_ABC& GLOptions::GetColorStrategy() const
+{
+    if( colors_ )
+        return *colors_;
+    throw MASA_EXCEPTION( "no color strategy" );
+}

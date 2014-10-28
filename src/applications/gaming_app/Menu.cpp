@@ -20,6 +20,7 @@
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/AboutDialog.h"
+#include "clients_gui/FireOption.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/ProfileDialog.h"
@@ -176,6 +177,13 @@ Menu::Menu( QMainWindow* pParent,
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
+    {
+        CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Fire indicator colors" ), MAKE_PNG_ICON( "fire" ), controllers.options_, GetFireIndicatorsOptionName() );
+        composite.AddItem( tools::translate( "Menu", "Default" ), FIRE_INDICATORS_DEFAULT );
+        composite.AddItem( tools::translate( "Menu", "Sides" ), FIRE_INDICATORS_SIDE );
+        composite.AddItem( tools::translate( "Menu", "Units" ), FIRE_INDICATORS_UNIT );
+        composite.AddItem( tools::translate( "Menu", "Rules" ), FIRE_INDICATORS_RULE );
+    }
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths", kernel::FourStateOption::Selected() );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );

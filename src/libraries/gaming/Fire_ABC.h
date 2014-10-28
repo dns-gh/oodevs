@@ -33,38 +33,17 @@ namespace sword
 class Fire_ABC : public kernel::Updatable_ABC< sword::StopUnitFire >
                , public kernel::Updatable_ABC< sword::StopCrowdFire >
                , public gui::Drawable_ABC
+               , boost::noncopyable
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     explicit Fire_ABC( kernel::Entity_ABC& origin );
     virtual ~Fire_ABC();
-    //@}
 
-    //! @name Operations
-    //@{
     virtual void DoUpdate( const sword::StopUnitFire& message );
     virtual void DoUpdate( const sword::StopCrowdFire& message );
-    //@}
 
 protected:
-    //! @name accessors
-    //@{
-    const kernel::Entity_ABC& GetOrigin() const;
-    //@}
-
-private:
-    //! @name Copy / Assignment
-    //@{
-    Fire_ABC( const Fire_ABC& );
-    Fire_ABC& operator=( const Fire_ABC& );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     kernel::Entity_ABC& origin_;
-    //@}
 };
 
 #endif // __Fire_ABC_h_

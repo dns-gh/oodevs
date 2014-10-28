@@ -2562,6 +2562,26 @@ Los datos no pueden ser proyectados.</translation>
         <source>MGRS</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fire indicator colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">Unidades</translation>
+    </message>
+    <message>
+        <source>Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>

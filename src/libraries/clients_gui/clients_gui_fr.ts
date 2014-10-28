@@ -272,6 +272,13 @@
     </message>
 </context>
 <context>
+    <name>FireOption</name>
+    <message>
+        <source>Any</source>
+        <translation>Tous</translation>
+    </message>
+</context>
+<context>
     <name>Info</name>
     <message>
         <source>Info/Template</source>
@@ -892,6 +899,25 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Enabled</source>
         <translation>Activé</translation>
+    </message>
+</context>
+<context>
+    <name>gui::FireColorPanel</name>
+    <message>
+        <source>Clear All</source>
+        <translation>Supprimer tout</translation>
+    </message>
+    <message>
+        <source>Add Rule</source>
+        <translation>Ajouter règle</translation>
+    </message>
+    <message>
+        <source>Shooter</source>
+        <translation>Tireurs</translation>
+    </message>
+    <message>
+        <source>Ammunition</source>
+        <translation>Munitions</translation>
     </message>
 </context>
 <context>
@@ -1714,6 +1740,14 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Replay</source>
         <translation type="unfinished">Rejeu</translation>
+    </message>
+    <message>
+        <source>Direct fire colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire colors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

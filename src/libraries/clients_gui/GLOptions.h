@@ -13,6 +13,7 @@
 //#include "FireOption.h"
 #include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_gui/FireOption.h"
 #include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 
@@ -35,7 +36,7 @@ namespace kernel
 class QColor;
 class Lighting_ABC;
 
-namespace gui 
+namespace gui
 {
     class ColorStrategy_ABC;
     class ContourLinesComputer;
@@ -64,13 +65,13 @@ public:
                         const kernel::StaticModel& staticModel,
                         const kernel::EntityResolver_ABC& model,
                         const std::shared_ptr< Lighting_ABC >& lighting );
+             GLOptions( const GLOptions& other );
     virtual ~GLOptions();
     //@}
 
     //! @name Copy/Assignment
     //@{
-    explicit GLOptions( const GLOptions& other );   //!< Copy constructor, new shared pointers
-    GLOptions& operator=( const GLOptions& other ); //!< Assignment operator, same shared pointers with updated values
+    GLOptions& operator=( const GLOptions& other ); //!< Assignment operator
     //@}
 
     //! @name Serialization
@@ -113,8 +114,6 @@ public:
     void Aggregate( const kernel::Entity_ABC& entity );
     void Disaggregate( const kernel::Entity_ABC* entity = 0 ); // if entity == 0, disagregate all
 
-    //const T_FireOptions& GetFireOptions( FireGroup group ) const;
-
     void SetContourLinesComputer( const std::shared_ptr< ContourLinesComputer >& computer );
     std::shared_ptr< ContourLinesComputer >& GetContourLinesComputer();
     const std::shared_ptr< ContourLinesComputer >& GetContourLinesComputer() const;
@@ -127,6 +126,10 @@ public:
 
     void SetLighting();
     QColor ComputeUrbanColor( const kernel::UrbanObject_ABC& object ) const;
+
+    const T_FireOptions& GetFireOptions( FireGroup group ) const;
+    void SetColorStrategy( ColorStrategy_ABC& strategy );
+    ColorStrategy_ABC& GetColorStrategy() const;
     //@}
 
 private:
@@ -144,13 +147,14 @@ private:
     const kernel::DetectionMap& map_;
     const kernel::EntityResolver_ABC& model_;
     const kernel::AccommodationTypes& accommodationTypes_;
+    ColorStrategy_ABC* colors_;
 
     // View options
     bool selected_;
     bool superiorSelected_;
     bool controlled_;
     std::shared_ptr< kernel::Options > options_;
-    //std::vector< T_FireOptions > fires_;
+    std::vector< T_FireOptions > fires_;
     std::shared_ptr< ContourLinesComputer > contourLinesComputer_;
     std::shared_ptr< ContourLinesObserver > contourLinesObserver_;
     std::shared_ptr< Elevation2dTexture > elevation2dTexture_;

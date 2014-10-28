@@ -32,7 +32,6 @@ class Lighting_ABC;
 
 namespace gui
 {
-    class ColorStrategy_ABC;
     class GlWidget;
     class Gl3dWidget;
     class Layer;

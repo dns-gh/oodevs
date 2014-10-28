@@ -49,7 +49,7 @@ Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFire& message, unsigned
     if( message.target().has_unit() || message.target().has_crowd() )
         return new DirectFire( message, controller_, profile_, model_.agents_, model_.agents_, id );
     if( message.target().has_position() )
-        return new IndirectFire( message, model_.agents_, model_.static_.coordinateConverter_ );
+        return new IndirectFire( message, model_.agents_, model_.static_ );
     throw MASA_EXCEPTION( "Invalid target type" );
 }
 

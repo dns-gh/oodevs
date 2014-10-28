@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "DirectFire.h"
+#include "clients_gui/FireOption.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/SoundEvent.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -21,6 +22,7 @@
 #include "protocol/Protocol.h"
 
 using namespace kernel;
+using namespace gui;
 
 namespace
 {
@@ -57,9 +59,9 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller&
     , profile_( profile )
     , target_( GetTarget( message, agentResolver, populationResolver ) )
     , isTarget_( target_.GetId() == entityId )
-    , position_( isTarget_ ? GetPosition( GetOrigin() ) : GetPosition( target_, GetOrigin() ) )
+    , position_( isTarget_ ? GetPosition( origin_ ) : GetPosition( target_, origin_ ) )
 {
-    controller_.Update( gui::SoundEvent( &GetOrigin(), "directfire", gui::SoundEvent::eStart ) );
+    controller_.Update( gui::SoundEvent( &origin_, "directfire", gui::SoundEvent::eStart ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +70,7 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller&
 // -----------------------------------------------------------------------------
 DirectFire::~DirectFire()
 {
-    controller_.Update( gui::SoundEvent( &GetOrigin(), "directfire", gui::SoundEvent::eStop ) );
+    controller_.Update( gui::SoundEvent( &origin_, "directfire", gui::SoundEvent::eStop ) );
 }
 
 namespace
@@ -84,12 +86,13 @@ namespace
 // Name: DirectFire::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
 {
+    auto color = GetDirectFireColor( view, origin_ );
     if( isTarget_ )
-        DrawArrow( ComputePosition( GetOrigin() ), where, viewport, tools );
+        DrawArrow( ComputePosition( origin_ ), where, viewport, view );
     else
-        DrawArrow( where, ComputePosition( target_ ), viewport, tools );
+        DrawArrow( where, ComputePosition( target_ ), viewport, view );
 }
 
 // -----------------------------------------------------------------------------

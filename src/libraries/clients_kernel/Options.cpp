@@ -332,8 +332,7 @@ void Options::InitializeView()
                  >> xml::list( "gradient", *this, &Options::ReadGradient );
 
     // Fires
-    // FireRules are empty by default
-    Set( "FireIndicators", 0, true ); // FIRE_INDICATORS_DEFAULT // not used yet
+    Set( "FireIndicators", 0, true ); // FIRE_INDICATORS_DEFAULT
 
     // HillShade
     Set( "HillShade/Enabled",   false, true );

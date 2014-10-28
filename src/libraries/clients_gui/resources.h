@@ -12,6 +12,8 @@
 #define MAKE_ICON( name )   QIcon( QPixmap( xpm_##name ) )
 #define MAKE_ICON_X( name, name_disabled ) MakeExtendedIcon( xpm_##name, xpm_##name_disabled )
 
+#define MAKE_PNG_ICON( name ) QIcon( QPixmap( "resources/images/gui/" name ".png" ) )
+
 class QIcon;
 
 QIcon MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] );
