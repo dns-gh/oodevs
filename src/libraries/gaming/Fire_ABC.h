@@ -60,7 +60,7 @@ private:
     Fire_ABC& operator=( const Fire_ABC& );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Entity_ABC& origin_;

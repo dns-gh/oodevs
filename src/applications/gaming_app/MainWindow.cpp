@@ -87,6 +87,7 @@
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/GlProxy.h"
+#include "clients_gui/GlOptions.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GradientPreferences.h"
 #include "clients_gui/GridLayer.h"
@@ -188,6 +189,7 @@ MainWindow::MainWindow( Controllers& controllers,
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
     strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, profile_ ) ) );
     strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, profile_ ) ) );
+    glProxy_->GetOptions().SetColorStrategy( *strategy_ ); // $$$$ MCO 2014-10-27: not that great...
 
     // Symbols
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );

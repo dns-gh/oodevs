@@ -122,13 +122,11 @@ void Fires::DoUpdate( const sword::StopUnitFireDetection& message )
 // -----------------------------------------------------------------------------
 void Fires::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( ! elements_.empty() )
-    {
-        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-            glLineWidth( 3.f );
-            glColor4f( COLOR_RED );
-            for( auto it = elements_.begin(); it != elements_.end(); ++it )
-                it->second->Draw( where, viewport, tools );
-        glPopAttrib();
-    }
+    if( elements_.empty() )
+        return;
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glLineWidth( 3.f );
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Draw( where, viewport, tools );
+    glPopAttrib();
 }

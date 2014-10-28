@@ -49,6 +49,7 @@
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/GlProxy.h"
+#include "clients_gui/GlOptions.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/HelpSystem.h"
@@ -157,6 +158,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
 
     glProxy_.reset( new gui::GlProxy( controllers, profile, staticModel_, model_, std::make_shared< gui::LightingProxy >() ) );
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) );
+    glProxy_->GetOptions().SetColorStrategy( *strategy_ ); // $$$$ MCO 2014-10-27: not that great...
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );

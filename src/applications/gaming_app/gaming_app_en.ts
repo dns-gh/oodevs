@@ -2560,6 +2560,26 @@ This data can&apos;t be projected.</source>
         <source>MGRS</source>
         <translation>MGRS</translation>
     </message>
+    <message>
+        <source>Fire indicator colors</source>
+        <translation>Fire indicator colors</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Default</translation>
+    </message>
+    <message>
+        <source>Sides</source>
+        <translation>Sides</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Units</translation>
+    </message>
+    <message>
+        <source>Rules</source>
+        <translation>Rules</translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>

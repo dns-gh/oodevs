@@ -2563,6 +2563,26 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>MGRS</source>
         <translation>UTM</translation>
     </message>
+    <message>
+        <source>Fire indicator colors</source>
+        <translation>Couleur des indicateurs de tirs</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Défaut</translation>
+    </message>
+    <message>
+        <source>Sides</source>
+        <translation>Camps</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Rules</source>
+        <translation>Règles</translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>
