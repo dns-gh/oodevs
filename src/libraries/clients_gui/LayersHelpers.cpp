@@ -39,9 +39,8 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of
     ( eLayerTypes_InhabitantsComposite )
     ( eLayerTypes_TacticalLinesComposite )
     ( eLayerTypes_UnitsComposite )
-    // always on top layers
     ( eLayerTypes_Grid )
-    ( eLayerTypes_WeaponRanges )
+    // always on top layers
     ( eLayerTypes_Actions )
     ( eLayerTypes_Parameters )
     ( eLayerTypes_Metric )
@@ -127,7 +126,7 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_Ghosts,                 "main,miniview",                    false,  false,
       eModes_AllPrepare,                  eModes_Terrain | eModes_Itinerary,  eModes_LivingArea,
       T_LayerTypesVector() },
-    { eLayerTypes_Grid,                   "main,miniviews",                   false,  false,
+    { eLayerTypes_Grid,                   "main,miniviews",                   false,  true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
     { eLayerTypes_IndicatorCreation,      "main",                             false,  false,
@@ -203,7 +202,7 @@ const layers::Descriptor descriptors_[] = {
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       ba::list_of( eLayerTypes_Parties )( eLayerTypes_Formations )( eLayerTypes_Automats )
                  ( eLayerTypes_Ghosts )( eLayerTypes_Agents )( eLayerTypes_AgentKnowledges )
-                 ( eLayerTypes_Tooltips ) },
+                 ( eLayerTypes_WeaponRanges )( eLayerTypes_Tooltips ) },
     { eLayerTypes_Urban,                  "main,miniviews",                   true,  true,
       eModes_All,                         eModes_Itinerary,                   eModes_None,
       T_LayerTypesVector() },

@@ -55,7 +55,7 @@ void GridLayer::Paint( const geometry::Rectangle2f& v )
     if( viewport.IsEmpty() )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-        glColor4f( 1.0f, 1.0f, 1.0f, 0.3f );
+        glColor4f( 1.0f, 1.0f, 1.0f, GetAlpha() );
         glLineWidth( 1.0 );
         if( gridType_ != eCoordinateSystem_Mgrs )
         {
