@@ -34,6 +34,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
@@ -335,9 +336,10 @@ int DEC_PathFunctions::GetTypePoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_PathPoint > DEC_PathFunctions::GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
-    if( !pPoint )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    return pPoint->GetDestPoint();
+    const auto* front = dynamic_cast< const DEC_Rep_PathPoint_Front* >( pPoint.get() );
+    if( !front )
+        throw MASA_EXCEPTION( "invalid front path point" );
+    return front->GetDestPoint();
 }
 
 // -----------------------------------------------------------------------------

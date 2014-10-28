@@ -63,7 +63,6 @@ public:
     E_TypePoint GetTypePoint() const;
     const TerrainData& GetObjectTypes() const;
     const TerrainData& GetObjectTypesToNextPoint() const;
-    virtual boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
     virtual const TerrainData& GetTypeTerrain() const;
     bool IsSlopeValid() const;
     bool IsWaypoint() const;

@@ -106,15 +106,6 @@ DEC_PathPoint::E_TypePoint DEC_PathPoint::GetTypePoint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathPoint::GetDestPoint
-// Created: MGD 2010-03-10 @TODO MGD Refactor PathPoint hierarchy to avoid this ugly
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_PathPoint > DEC_PathPoint::GetDestPoint() const
-{
-    throw MASA_EXCEPTION( "GetDestPoint cannot be called for this Point class" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathPoint::GetTypeTerrain
 // Created: MGD 2010-03-10
 // -----------------------------------------------------------------------------
