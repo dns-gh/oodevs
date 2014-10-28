@@ -64,8 +64,6 @@ public:
     const TerrainData& GetObjectTypes() const;
     const TerrainData& GetObjectTypesToNextPoint() const;
     virtual boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
-    virtual int GetTypeLima();
-    virtual unsigned int GetLimaID();
     virtual const TerrainData& GetTypeTerrain() const;
     bool IsSlopeValid() const;
     bool IsWaypoint() const;
@@ -90,8 +88,6 @@ public:
     //@}
 
 protected:
-    //! @name Member data
-    //@{
     MT_Vector2D vPos_;
     E_Type nType_;
     E_TypePoint nPointType_;
@@ -101,7 +97,6 @@ protected:
     boost::optional< double > slope_;
     bool waypoint_;
     bool partial_;
-    //@}
 };
 
 #endif // __DEC_PathPoint_h_

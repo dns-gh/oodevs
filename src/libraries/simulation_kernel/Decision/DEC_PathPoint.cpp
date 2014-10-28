@@ -115,24 +115,6 @@ boost::shared_ptr< DEC_PathPoint > DEC_PathPoint::GetDestPoint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathPoint::GetTypeLima
-// Created: MGD 2010-03-10
-// -----------------------------------------------------------------------------
-int DEC_PathPoint::GetTypeLima()
-{
-    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathPoint::GetLimaID
-// Created: MGD 2010-03-10
-// -----------------------------------------------------------------------------
-unsigned int DEC_PathPoint::GetLimaID()
-{
-    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathPoint::GetTypeTerrain
 // Created: MGD 2010-03-10
 // -----------------------------------------------------------------------------

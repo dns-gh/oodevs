@@ -346,9 +346,10 @@ boost::shared_ptr< DEC_PathPoint > DEC_PathFunctions::GetDestPoint( boost::share
 // -----------------------------------------------------------------------------
 int DEC_PathFunctions::GetTypeLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
-    if( !pPoint )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    return pPoint->GetTypeLima();
+    const auto* lima = dynamic_cast< const DEC_Rep_PathPoint_Lima* >( pPoint.get() );
+    if( !lima )
+        throw MASA_EXCEPTION( "invalid lima path point" );
+    return lima->GetTypeLima();
 }
 
 // -----------------------------------------------------------------------------
@@ -357,9 +358,10 @@ int DEC_PathFunctions::GetTypeLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoi
 // -----------------------------------------------------------------------------
 unsigned int DEC_PathFunctions::GetLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
-    if( !pPoint )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    return pPoint->GetLimaID();
+    const auto* lima = dynamic_cast< const DEC_Rep_PathPoint_Lima* >( pPoint.get() );
+    if( !lima )
+        throw MASA_EXCEPTION( "invalid lima path point" );
+    return lima->GetLimaID();
 }
 
 // -----------------------------------------------------------------------------
