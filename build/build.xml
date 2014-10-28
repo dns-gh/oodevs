@@ -693,7 +693,8 @@
                     <flattenmapper/>
                 </mappedresources>
                 <fileset dir="${bin.dir}" includes="csvclient.exe,
-                                                    replay.exe"/>
+                                                    replay.exe,
+                                                    simbench.exe"/>
                 <fileset dir="${run.dir}">
                     <exclude name="Debug/**"/>
                     <exclude name="resources/integration tests/**"/>
@@ -702,6 +703,16 @@
                 </fileset>
             </zip>
             <check-depends file="@{file}"/>
+        </safe-move>
+    </target>
+
+    <target name="package.benchmark" description="package benchmark exercises">
+        <safe-move file="${out.dir}/benchmark.otpak">
+            <zip destfile="@{file}" duplicate="fail">
+                <zipfileset dir="${data.dir}" includes="data/models/ada/physical/test/**"/>
+                <zipfileset dir="${data.dir}/tests/gosword" prefix="exercises"
+                    excludes="**/sessions/**"/>
+            </zip>
         </safe-move>
     </target>
 
@@ -1065,6 +1076,33 @@
         <runtests/>
     </target>
 
+    <macrodef name="benchmark">
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <exec_goenv name="simbench" executable="${bin.dir}/simbench">
+                <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
+                <env key="MASA_TIMEOUT" value="60s"/>
+                <arg value="--test-port=${test.port}"/>
+                <arg value="--application=${application}"/>
+                <arg value="--run-dir=${run.dir}"/>
+                <arg value="--root-dir=${data.dir}"/>
+                <arg value="--exercises-dir=${data.dir}/tests/gosword"/>
+                <args/>
+            </exec_goenv>
+        </sequential>
+    </macrodef>
+
+    <target name="go.checkbenchmark" description="check benchmarks">
+        <!-- benchmarks are run by QA projects, here we just check they still work -->
+        <benchmark>
+            <arg value="--quick"/>
+        </benchmark>
+    </target>
+
+    <target name="go.benchmark" description="run benchmarks">
+        <benchmark/>
+    </target>
+
     <target name="go.package">
         <go_zip subdir="lib" output="${platform}">
             <zipfileset dir="${src.dir}/masa/sword/swapi"
@@ -1076,7 +1114,7 @@
         </go_zip>
     </target>
 
-    <target name="go" depends="go.proto,go.build,go.test,go.package"/>
+    <target name="go" depends="go.proto,go.build,go.test,go.checkbenchmark,go.package"/>
 
     <!--
     ============================================================================
