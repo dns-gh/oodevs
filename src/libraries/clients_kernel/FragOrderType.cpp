@@ -58,25 +58,6 @@ void FragOrderType::ReadParameter( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FragOrderType::IsAvailableFor
-// Created: SBO 2010-06-23
-// -----------------------------------------------------------------------------
-bool FragOrderType::IsAvailableFor( const kernel::Entity_ABC& entity ) const
-{
-    const std::string& typeName = entity.GetTypeName();
-    std::string repOrderPion ( "Rep_OrderConduite_Pion_" );
-    std::string repOrderAutomat ( "Rep_OrderConduite_Automate_"  );
-    std::string repOrderPopulation ( "Rep_OrderConduite_Population_"  );
-    if( 0 == diaType_.compare( 0, repOrderPion.size() ,repOrderPion ) )
-        return typeName == "agent";
-    if( 0 == diaType_.compare( 0, repOrderAutomat.size(), repOrderAutomat ) )
-        return typeName == "automat";
-    if( 0 == diaType_.compare( 0, repOrderPopulation.size(), repOrderPopulation) )
-        return typeName == "crowd";
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: FragOrderType::GetType
 // Created: ABR 2013-06-07
 // -----------------------------------------------------------------------------
