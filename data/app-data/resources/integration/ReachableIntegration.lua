@@ -708,7 +708,8 @@ integration.updateMoveToItArea = function( objective, pathType )
                 end
             end
             if not DEC_Geometrie_PositionsEgales( objective.initialeDestination, objective:getPosition() ) -- specific case, itinerary computed on my own poition.
-            and distance > 0 and objective.destination == objective.initialeDestination then -- mean objective is accessible, no sub-objective to dismount
+               and distance > 0 
+               and DEC_IsPointInUrbanBlockTrafficable( objective:getPosition() ) then -- update movement computation once the objective is out from non trafficable urban block.
                 integration.stopMoveToIt( objective )
                 return integration.startMoveToItArea( objective, pathType )
            end
