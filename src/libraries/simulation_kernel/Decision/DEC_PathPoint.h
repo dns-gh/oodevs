@@ -10,10 +10,11 @@
 #ifndef __DEC_PathPoint_h_
 #define __DEC_PathPoint_h_
 
-#include "MIL.h"
+#include "MT_Tools/MT_Vector2D.h"
 #include <spatialcontainer/TerrainData.h>
-#include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
+#include <boost/shared_ptr.hpp>
 
 //*****************************************************************************
 // Created: JVT 02-12-04
