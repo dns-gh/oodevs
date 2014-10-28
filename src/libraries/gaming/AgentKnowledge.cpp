@@ -315,21 +315,16 @@ void AgentKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( viewport.IsVisible( where ) )
-    {
-        unsigned int direction = nDirection_.IsSet() ? (uint) nDirection_ : 0;
-        bool isMoving = ( posture_ <= eUnitPosture_PostureArret );
-        float width = isMoving? 0.f : realAgent_.GetType().GetWidth();
-        float depth = isMoving? realAgent_.GetType().GetLength() : realAgent_.GetType().GetDepth();
-        tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, realAgent_.GetType().GetLevelSymbol(), isMoving, where, -1, direction, width, depth );
-        bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
-        if( app6 && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
-        {
-            tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetLevelSymbol(), where, -1, 0 );
-            if( bIsPC_.IsSet() && bIsPC_ )
-                tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -1, 0 );
-        }
-    }
+    if( !viewport.IsVisible( where ) )
+        return;
+    const unsigned int direction = nDirection_.IsSet() ? (uint) nDirection_ : 0;
+    const bool isMoving = ( posture_ <= eUnitPosture_PostureArret );
+    const float width = isMoving? 0.f : realAgent_.GetType().GetWidth();
+    const float depth = isMoving? realAgent_.GetType().GetLength() : realAgent_.GetType().GetDepth();
+    tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, realAgent_.GetType().GetLevelSymbol(), isMoving, where, -1, direction, width, depth );
+    bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
+    if( app6 && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
+        tools.DrawHQSymbol( realAgent_.GetType().GetHQSymbol(), where, -1, 0 );
 }
 
 // -----------------------------------------------------------------------------

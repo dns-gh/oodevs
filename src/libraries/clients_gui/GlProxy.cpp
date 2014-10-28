@@ -499,13 +499,13 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::DrawApp6SymbolFixedSize
+// Name: GlProxy::DrawHQSymbol
 // Created: MMC 2013-02-05
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
+void GlProxy::DrawHQSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
 {
     if( view_ )
-        view_->DrawApp6SymbolFixedSize( symbol, where, factor, direction );
+        view_->DrawHQSymbol( symbol, where, factor, direction );
 }
 
 // -----------------------------------------------------------------------------

@@ -55,15 +55,12 @@ Agent::Agent( xml::xistream& xis, Controller& controller, tools::IdManager& idMa
     : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , type_           ( type )
     , symbolPath_     ( type_.GetSymbol() )
-    , moveSymbol_          ( type_.GetMoveSymbol() )
-    , staticSymbol_        ( type_.GetStaticSymbol() )
+    , moveSymbol_     ( type_.GetMoveSymbol() )
+    , staticSymbol_   ( type_.GetStaticSymbol() )
     , overridenSymbol_( xis.attribute< bool >( "overridden-symbol", false ) )
     , nature_         ( type.GetNature().GetNature() )
     , weight_         ( type.GetComposantesWeight() )
 {
-    std::string level = "";
-    xis >> xml::optional
-            >> xml::attribute( "level", level );
     if( overridenSymbol_ && xis.has_attribute( "nature" ) )
     {
         xis >> xml::attribute( "nature", nature_ );
@@ -73,7 +70,7 @@ Agent::Agent( xml::xistream& xis, Controller& controller, tools::IdManager& idMa
             symbolPath_ = nature_;
         nature_ = symbolFactory.GetNatureFromSymbol( nature_ );
     }
-
+    const std::string level = xis.attribute< std::string >( "level", "" );
     level_ = ENT_Tr::ConvertToNatureLevel( ( level.empty() ) ? type.GetNature().GetLevel() : level );
     idManager.Lock( id_ );
     AddExtension( *this );
@@ -121,7 +118,6 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
         float width = type_.GetWidth();
         float depth = type_.GetDepth();
         tools.DrawUnitSymbol( symbolPath_, moveSymbol_, staticSymbol_, levelPath_, false, where, -1.f, 0, width, depth );
-        tools.DrawApp6SymbolFixedSize( levelPath_, where, -1.f, 0 );
     }
 }
 

@@ -524,10 +524,10 @@ void Gl3dWidget::DrawInfrastructureSymbol( const std::string& symbol, const geom
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget::DrawApp6SymbolFixedSize
+// Name: GL3DWidget::DrawHQSymbol
 // Created: LGY 2013-03-12
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
+void Gl3dWidget::DrawHQSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
 {
     DrawApp6Symbol( symbol, where, factor, 1.f, direction );
 }
@@ -538,7 +538,7 @@ void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geome
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& /*moveSymbol*/, const std::string& /*staticSymbol*/, const std::string& /*level*/, bool /*isMoving*/, const geometry::Point2f& where, float factor, unsigned int /*direction*/, float /*width*/, float /*depth*/ ) const
 {
-    DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
+    DrawApp6Symbol( symbol, where, factor, 1.f, 0 );
 }
 
 // -----------------------------------------------------------------------------

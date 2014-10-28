@@ -68,8 +68,7 @@ void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
     if( !IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( *this ) && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
-        view.DrawApp6SymbolFixedSize( symbol_, where, -1.5f, 0 );
-        view.DrawApp6SymbolFixedSize( level_, where, -1.5f, 0 );
+        view.DrawUnitSymbol( symbol_, "", "", level_, false, where, -1.5f, 0, 0, 0 );
     }
 }
 

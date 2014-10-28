@@ -37,7 +37,7 @@ namespace
     // Returns true if there is at least one agent inside the automat that must be drawn with a static symbol.
     bool HasStaticChild( const kernel::TacticalHierarchies& hierarchies )
     {
-        tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
+        auto children = hierarchies.CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
             const Entity_ABC* entity = &children.NextElement();
@@ -64,7 +64,7 @@ namespace
 
     geometry::Vector2f ComputeDirection( const kernel::TacticalHierarchies& hierarchies )
     {
-        tools::Iterator< const Entity_ABC& > children =hierarchies.CreateSubordinateIterator();
+        auto children = hierarchies.CreateSubordinateIterator();
         geometry::Vector2f direction( 0., 0. );
         while( children.HasMoreElements() )
         {
@@ -116,15 +116,14 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
         InitializeSymbol( hierarchies );
         if( HasStaticChild( hierarchies ) )
         {
-            geometry::Vector2f directionVector = ComputeDirection( hierarchies );
-            directionVector.Normalize();
-            geometry::Vector2f vertical( 0., 1. );
-            float radians = geometry::Angle( vertical, directionVector );
+            const geometry::Vector2f directionVector = ComputeDirection( hierarchies ).Normalized();
+            const geometry::Vector2f vertical( 0., 1. );
+            const float radians = geometry::Angle( vertical, directionVector );
             int direction = static_cast< int >( radians * 180 / 3.14f );
             if( direction < 0 )
                 direction = 360 + direction;
-            unsigned int udirection = 360 - static_cast< unsigned int >( direction );
-            tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
+            const unsigned int udirection = 360 - static_cast< unsigned int >( direction );
+            auto children = hierarchies.CreateSubordinateIterator();
             bool isMoving = false;
             bool hasLiveChildren = false;
             float minProjection = std::numeric_limits< float >::max();
@@ -178,10 +177,7 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
                 tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, -1.f, udirection, isMoving ? 0 : minWidth * std::abs( factor ), isMoving ? depth : minDepth * std::abs( factor ) );
         }
         else
-        {
-            tools.DrawApp6SymbolFixedSize( symbol_, where, factor, 0 );
-            tools.DrawApp6SymbolFixedSize( level_, where, factor, 0 );
-        }
+            tools.DrawUnitSymbol( symbol_, "", "", level_, false, where, factor, 0, 0, 0 );
     }
 }
 

@@ -69,7 +69,7 @@ void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Vie
     if( commandPost_ && !entity_.IsAnAggregatedSubordinate() )
     {
         if( viewport.IsHotpointVisible() )
-            tools.DrawApp6SymbolFixedSize( type_.GetHQSymbol(), where, -1.f, 0 );
+            tools.DrawHQSymbol( type_.GetHQSymbol(), where, -1.f, 0 );
 
         const kernel::Entity_ABC& superior = entity_.Get< kernel::TacticalHierarchies >().GetUp();
         if( const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( superior.Retrieve< gui::LogisticHierarchiesBase >() ) )
