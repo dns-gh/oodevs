@@ -300,13 +300,10 @@ func WaitStateLeft(c *C, client *swapi.Client, handlingId uint32,
 
 const (
 	automatLog = 14
-	repairTeam = 19
 )
 
 func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
-	opts := NewAllUserOpts(ExCrossroadLog)
-	opts.Step = 300
-	sim, client := connectAndWaitModel(c, opts)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
 	// Map transporting equipements
@@ -376,29 +373,33 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 }
 
 func (s *TestSuite) TestSelectMaintenanceTransporterWithAgentAsDestination(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	opts := NewAllUserOpts(ExCrossroadSmallLog)
-	opts.Step = 300
-	sim, client := connectAndWaitModel(c, opts)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
-	const TRANSHeavyEquipmentTransporterSystem = 24
+
+	// Map transporting equipements
+	phydb := loadPhysicalData(c, "test")
+	towTruck, err := phydb.Components.Find("Tow Truck")
+	c.Assert(err, IsNil)
+
+	data := client.Model.GetData()
+	maintenanceAutomat := getSomeAutomatByName(c, data, "Maintenance Automat 1")
+	repairTeam := getSomeUnitByName(c, data, "Maintenance Log Unit 1")
 
 	// Teleport repair team away
-	err := client.SetAutomatMode(16, false)
-	c.Assert(err, IsNil)
-	to := swapi.Point{X: -15.6967, Y: 28.2224}
-	err = client.Teleport(swapi.MakeUnitTasker(repairTeam), to)
+	to := swapi.Point{X: -15.8501, Y: 28.3248}
+	err = client.Teleport(swapi.MakeUnitTasker(repairTeam.Id), to)
 	c.Assert(err, IsNil)
 
-	SetManualMaintenance(c, client, automatLog)
-	handlingId := TriggerBreakdown(c, client)
+	SetManualMaintenance(c, client, maintenanceAutomat.Id)
+	handlingId := TriggerBreakdownTest(c, client, phydb)
 
 	WaitStateEntered(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
 
 	// error: third parameter is an invalid agent identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(handlingId),
-		swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(
+		swapi.MakeIdentifier(handlingId),
+		swapi.MakeIdentifier(towTruck.Id),
 		swapi.MakeAgent(0)))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid destination agent identifier")
 
@@ -406,9 +407,10 @@ func (s *TestSuite) TestSelectMaintenanceTransporterWithAgentAsDestination(c *C)
 	endTick := client.Model.GetData().MaintenanceHandlings[handlingId].Provider.EndTick
 	c.Assert(endTick, Equals, int32(0))
 
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(handlingId),
-		swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),
-		swapi.MakeAgent(repairTeam)))
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(
+		swapi.MakeIdentifier(handlingId),
+		swapi.MakeIdentifier(towTruck.Id),
+		swapi.MakeAgent(repairTeam.Id)))
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
