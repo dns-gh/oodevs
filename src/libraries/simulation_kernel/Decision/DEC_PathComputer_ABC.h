@@ -11,7 +11,7 @@
 #define __DEC_PathComputer_ABC_h_
 
 #include "DEC_Path_ABC.h"
-#include "DEC_PathResult_ABC.h"
+#include "simulation_terrain/TER_PathResult_ABC.h"
 #include <boost/noncopyable.hpp>
 
 class DEC_PathSection;
@@ -25,7 +25,7 @@ class TER_Pathfinder_ABC;
 */
 // Created: MCO 2014-05-15
 // =============================================================================
-class DEC_PathComputer_ABC : public DEC_PathResult_ABC
+class DEC_PathComputer_ABC : public TER_PathResult_ABC
 {
 public:
              DEC_PathComputer_ABC() {}

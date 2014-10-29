@@ -11,16 +11,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathSection.h"
-#include "DEC_PathResult_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
+#include "simulation_terrain/TER_PathResult_ABC.h"
 #include <ctime>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathSection constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-DEC_PathSection::DEC_PathSection( DEC_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
+DEC_PathSection::DEC_PathSection( TER_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
     const MT_Vector2D& startPoint, const MT_Vector2D& endPoint, bool needRefine, bool useStrictClosest )
     : result_             ( result  )
     , rule_               ( std::move( rule ) )

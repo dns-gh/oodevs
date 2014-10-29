@@ -19,7 +19,7 @@
 #include <tools/thread/Handler_ABC.h>
 
 class TER_Pathfinder_ABC;
-class DEC_PathResult_ABC;
+class TER_PathResult_ABC;
 
 // =============================================================================
 // @class  DEC_Tools
@@ -31,7 +31,7 @@ class DEC_PathSection : private tools::thread::Handler_ABC< TerrainPathPoint >
 {
 public:
              DEC_PathSection(
-                    DEC_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
+                    TER_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
                     const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint,
                     bool needRefine, bool useStrictClosest );
     virtual ~DEC_PathSection();
@@ -60,7 +60,7 @@ private:
     //@}
 
 private:
-    DEC_PathResult_ABC& result_;
+    TER_PathResult_ABC& result_;
     std::unique_ptr< TerrainRule_ABC > rule_;
     MT_Vector2D startPoint_;
     const MT_Vector2D endPoint_;
