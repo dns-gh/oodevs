@@ -16,7 +16,7 @@
 // Name: DEC_Rep_PathPoint_Front constructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< DEC_PathPoint > dest )
+DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< TER_PathPoint > dest )
     : DEC_DIA_PathPoint ( vPos, eTypePointFront, eTypePointNormal, "Rep_AvantPoint" )
     , destPoint_        ( dest )
 {
@@ -36,7 +36,7 @@ DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 // Name: DEC_Rep_PathPoint_Front::GetDestPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_PathPoint > DEC_Rep_PathPoint_Front::GetDestPoint() const
+boost::shared_ptr< TER_PathPoint > DEC_Rep_PathPoint_Front::GetDestPoint() const
 {
     return destPoint_;
 }

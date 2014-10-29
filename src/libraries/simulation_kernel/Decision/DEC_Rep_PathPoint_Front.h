@@ -17,13 +17,13 @@
 class DEC_Rep_PathPoint_Front : public DEC_DIA_PathPoint
 {
 public:
-             DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< DEC_PathPoint > dest );
+             DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< TER_PathPoint > dest );
     virtual ~DEC_Rep_PathPoint_Front();
 
-    boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
+    boost::shared_ptr< TER_PathPoint > GetDestPoint() const;
 
 private:
-    boost::shared_ptr< DEC_PathPoint > destPoint_;
+    boost::shared_ptr< TER_PathPoint > destPoint_;
 };
 
 #endif // __DEC_Rep_PathPoint_Front_h_

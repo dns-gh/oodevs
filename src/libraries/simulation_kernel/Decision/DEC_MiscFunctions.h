@@ -20,14 +20,14 @@
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
-class DEC_PathPoint;
 class MIL_AgentPion;
 class MIL_Entity_ABC;
 class MIL_FragOrder;
 class MIL_Mission_ABC;
 class MT_Vector2D;
-class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
+class PHY_DotationCategory;
+class TER_PathPoint;
 
 namespace sword
 {
@@ -94,10 +94,10 @@ public:
 
     // Representations
     static std::vector< boost::shared_ptr< MIL_FragOrder > > GetOrdersCategory ( MIL_Entity_ABC& callerAgent );
-    static std::vector< boost::shared_ptr< DEC_PathPoint > > GetPointsCategory ( MIL_Entity_ABC& callerAgent );
+    static std::vector< boost::shared_ptr< TER_PathPoint > > GetPointsCategory ( MIL_Entity_ABC& callerAgent );
     static void RemoveFromOrdersCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
     static void DeleteOrderRepresentation                ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
-    static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_PathPoint > pPoint );
+    static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< TER_PathPoint > pPoint );
 
     static void AddEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );
     static void RemoveEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );

@@ -16,7 +16,7 @@
 
 DEC_DIA_PathPoint::DEC_DIA_PathPoint( const MT_Vector2D& vPos, E_Type type,
         E_TypePoint nTypePoint, const char* szDIARepType )
-    : DEC_PathPoint     ( vPos, type, nTypePoint, szDIARepType )
+    : TER_PathPoint     ( vPos, type, nTypePoint, szDIARepType )
     , pSentToDiaAgent_  ( 0 )
 {
     // NOTHING

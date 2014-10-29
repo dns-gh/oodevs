@@ -106,8 +106,8 @@ MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, co
 // -----------------------------------------------------------------------------
 void DEC_PathWalker::ComputeCurrentSpeed()
 {
-    const DEC_PathPoint& curPathPoint = **itCurrentPathPoint_;
-    if( curPathPoint.GetType() == DEC_PathPoint::eTypePointPath )
+    const TER_PathPoint& curPathPoint = **itCurrentPathPoint_;
+    if( curPathPoint.GetType() == TER_PathPoint::eTypePointPath )
     {
         TerrainData tmpEnvironment = curPathPoint.GetObjectTypesToNextPoint();
         if( !( environment_ == tmpEnvironment ) ) //$$$
@@ -137,7 +137,7 @@ void DEC_PathWalker::ComputeCurrentSpeed()
 void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 {
     DEC_PathResult::T_PathPoints::const_iterator itPathPointTmp = itCurrentPathPoint_;
-    while( itPathPointTmp != path.GetResult().end() && ( *itPathPointTmp )->GetType() != DEC_PathPoint::eTypePointPath )
+    while( itPathPointTmp != path.GetResult().end() && ( *itPathPointTmp )->GetType() != TER_PathPoint::eTypePointPath )
         ++itPathPointTmp;
     if( itPathPointTmp == path.GetResult().end() )
         MT_LOG_ERROR_MSG( "Path point is invalid" );

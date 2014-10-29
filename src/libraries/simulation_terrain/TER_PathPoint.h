@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DEC_PathPoint_h_
-#define __DEC_PathPoint_h_
+#ifndef SIMULATION_TERRAIN_PATHPOINT_H
+#define SIMULATION_TERRAIN_PATHPOINT_H
 
 #include "MT_Tools/MT_Vector2D.h"
 #include <spatialcontainer/TerrainData.h>
@@ -16,10 +16,9 @@
 #include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 
-//*****************************************************************************
-// Created: JVT 02-12-04
-//*****************************************************************************
-class DEC_PathPoint : private boost::noncopyable
+// Base class for points composing pathfinder result paths. Caller may inherit
+// it to add specific annotations
+class TER_PathPoint : private boost::noncopyable
 {
 public:
     //-------------------------------------------------------------------------
@@ -47,10 +46,10 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint );
-    virtual ~DEC_PathPoint();
+             TER_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint );
+    virtual ~TER_PathPoint();
 protected:
-             DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType);
+             TER_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType);
     //@}
 
 public:
@@ -76,10 +75,10 @@ public:
     void NotifyWaypoint();
     //@}
 
-    //! @name DIA
-    //@{
+    // This bit is required for DIA wrapping. It is ugly to keep it in
+    // TER_PathPoint, it belongs to a subclass but the situation is not
+    // clear enough yet to do that easily.
     const std::string& GetDIAType() const;
-    //@}
 
 protected:
     MT_Vector2D vPos_;
@@ -93,4 +92,4 @@ protected:
     bool partial_;
 };
 
-#endif // __DEC_PathPoint_h_
+#endif // SIMULATION_TERRAIN_PATHPOINT_H

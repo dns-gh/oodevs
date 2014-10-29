@@ -12,13 +12,13 @@
 #ifndef __DEC_Rep_PathPoint_h_
 #define __DEC_Rep_PathPoint_h_
 
-#include "Decision/DEC_PathPoint.h"
+#include "simulation_terrain/TER_PathPoint.h"
 #include <boost/shared_ptr.hpp>
 
 class DEC_Representations;
 
 // Base class for path points returned to DIA.
-class DEC_DIA_PathPoint : public DEC_PathPoint
+class DEC_DIA_PathPoint : public TER_PathPoint
 {
 public:
              DEC_DIA_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nTypePoint,

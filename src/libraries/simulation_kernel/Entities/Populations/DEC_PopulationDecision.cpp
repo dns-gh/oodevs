@@ -245,7 +245,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_DeleteRepresentation",
         std::function< void ( boost::shared_ptr< MIL_FragOrder > ) > ( boost::bind( &DEC_MiscFunctions::DeleteOrderRepresentation , boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_RemoveFromPointsCategory",
-        std::function< void( boost::shared_ptr< DEC_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetPopulation() ), _1 ) ) );
+        std::function< void( boost::shared_ptr< TER_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetPopulation() ), _1 ) ) );
 
     // Former szName_, mission_, automate_:
     brain.RegisterFunction( "DEC_FinMission", boost::bind( &DEC_OrdersFunctions::FinishMission< MIL_Population >, boost::ref( GetPopulation() ) ) );

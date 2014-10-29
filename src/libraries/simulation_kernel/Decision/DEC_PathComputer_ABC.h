@@ -14,10 +14,10 @@
 #include "DEC_PathResult_ABC.h"
 #include <boost/noncopyable.hpp>
 
-class TER_Pathfinder_ABC;
 class DEC_PathSection;
-class DEC_PathPoint;
 class MT_Vector2D;
+class TER_PathPoint;
+class TER_Pathfinder_ABC;
 
 // =============================================================================
 /** @class  DEC_PathComputer_ABC
@@ -41,7 +41,7 @@ public:
     virtual const std::vector< MT_Vector2D >& GetComputedWaypoints() const = 0;
     virtual void RemoveComputedWaypoint() = 0;
 
-    typedef std::list< boost::shared_ptr< DEC_PathPoint > > T_PathPoints;
+    typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
     virtual T_PathPoints GetResult() const = 0;
 
 };

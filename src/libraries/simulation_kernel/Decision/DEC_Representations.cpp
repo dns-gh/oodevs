@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Representations.h"
 #include "Entities/Orders/MIL_FragOrder.h"
-#include "Decision/DEC_PathPoint.h"
+#include "simulation_terrain/TER_PathPoint.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Representations )
 
@@ -45,7 +45,7 @@ const std::vector< boost::shared_ptr< MIL_FragOrder > >& DEC_Representations::Ge
 // Name: DEC_Representations::GetPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-const std::vector< boost::shared_ptr< DEC_PathPoint > >& DEC_Representations::GetPointsCategory()
+const std::vector< boost::shared_ptr< TER_PathPoint > >& DEC_Representations::GetPointsCategory()
 {
     return pointRepresentations_;
 }
@@ -63,7 +63,7 @@ void DEC_Representations::AddToOrdersCategory( boost::shared_ptr< MIL_FragOrder 
 // Name: DEC_Representations::AddToPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::AddToPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject )
+void DEC_Representations::AddToPointsCategory( boost::shared_ptr< TER_PathPoint > pObject )
 {
     pointRepresentations_.push_back( pObject );
 }
@@ -82,7 +82,7 @@ void DEC_Representations::RemoveFromOrdersCategory( boost::shared_ptr< MIL_FragO
 // Name: DEC_Representations::RemoveFromPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject )
+void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< TER_PathPoint > pObject )
 {
     if( !pointRepresentations_.empty() )
         pointRepresentations_.erase( std::remove( pointRepresentations_.begin(), pointRepresentations_.end(), pObject ), pointRepresentations_.end() );

@@ -20,7 +20,6 @@ class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
 class DEC_Objective;
 class DEC_Path_ABC;
-class DEC_PathPoint;
 class MIL_FragOrder;
 class MIL_Fuseau;
 class MIL_LimaOrder;
@@ -36,6 +35,7 @@ class PHY_Population_ActionFireOnPions;
 class PHY_Population_ActionMove;
 class PHY_ResourceNetworkType;
 class TER_Localisation;
+class TER_PathPoint;
 class MIL_UrbanObject_ABC;
 
 namespace directia
@@ -58,8 +58,8 @@ namespace directia
     void ReleasedByDIA( DEC_Objective* );
     void UsedByDIA( DEC_Path_ABC* );
     void ReleasedByDIA( DEC_Path_ABC* );
-    void UsedByDIA( DEC_PathPoint* );
-    void ReleasedByDIA( DEC_PathPoint* );
+    void UsedByDIA( TER_PathPoint* );
+    void ReleasedByDIA( TER_PathPoint* );
     void UsedByDIA( MIL_FragOrder* );
     void ReleasedByDIA( MIL_FragOrder* );
     void UsedByDIA( MIL_Fuseau* );

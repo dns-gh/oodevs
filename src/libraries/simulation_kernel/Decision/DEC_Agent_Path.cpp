@@ -202,7 +202,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_Rep_PathPoin
 // Name: DEC_Agent_Path::InsertPoint
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint )
+bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< TER_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint )
 {
     static double rDist = 500.;
     if( rDistSinceLastPoint > rDist )
@@ -233,10 +233,10 @@ void DEC_Agent_Path::InsertPointAvants()
     double rDistSinceLastPointAvant = std::numeric_limits< double >::max();
     double rDistSinceLastPoint = std::numeric_limits< double >::max();
     TerrainData nObjectTypesBefore;
-    DEC_PathPoint* pPrevPoint = 0;
+    TER_PathPoint* pPrevPoint = 0;
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
     {
-        DEC_PathPoint& current = **it;
+        TER_PathPoint& current = **it;
         if( pPrevPoint )
         {
             if( rDistSinceLastPointAvant != std::numeric_limits< double >::max() )
@@ -246,7 +246,7 @@ void DEC_Agent_Path::InsertPointAvants()
         }
 
         // On ne teste les points avants que sur les points du path find original
-        if( current.GetType() != DEC_PathPoint::eTypePointPath )
+        if( current.GetType() != TER_PathPoint::eTypePointPath )
         {
             pPrevPoint = &current;
             continue;
@@ -293,10 +293,10 @@ void DEC_Agent_Path::InsertPointAvants()
 //-----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
 {
-    boost::shared_ptr< DEC_PathPoint > pLastPoint;
+    boost::shared_ptr< TER_PathPoint > pLastPoint;
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
     {
-        boost::shared_ptr< DEC_PathPoint > pCurrentPoint = *it;
+        boost::shared_ptr< TER_PathPoint > pCurrentPoint = *it;
         if( !pCurrentPoint )
         {
             MT_LOG_ERROR_MSG( "Current point is invalid" );
