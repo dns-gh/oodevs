@@ -425,7 +425,7 @@ integration.isKnowledgesAgentsInArea = integration.getAgentKnowledgesInArea
 -- Tests if the calling agent is inside a "landing area" type of object of a friendly side.
 -- This method can only be called by an agent.
 -- @return a boolean 'true' if the calling agent is located inside a "landing area" type of object, 'false' otherwise.
-integration.inLandingArea = function()
+integration.isInLandingArea = function()
      local friendly = 1 -- tristate: 0 = enemy, 1 = friendly, 2 = unknown
      return DEC_IsPointInObject( myself, meKnowledge:getPosition(), eTypeObjectLandingArea, friendly )
 end
