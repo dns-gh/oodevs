@@ -79,6 +79,7 @@ public:
     //! @name Serialization
     //@{
     template< typename Archive > void serialize( Archive& archive, const unsigned int );
+    template<class Archive> friend void load_construct_data( Archive& ar, SupplyConvoyReal* obj, const unsigned int );
     //@}
 
 private:
