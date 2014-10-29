@@ -17,6 +17,7 @@
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include <tools/Set.h>
 
+class DEC_Decision_ABC;
 class MIL_Agent_ABC;
 class MIL_Population;
 class TER_Localisation;
@@ -78,6 +79,12 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@}
+
+    //! @name DEC Functions
+    //@{
+	static std::vector< unsigned int > GetPionsAttacking( const DEC_Decision_ABC* agent );
+	static std::vector< unsigned int > GetPionsSecuring( const DEC_Decision_ABC* agent );
     //@}
 
 private:

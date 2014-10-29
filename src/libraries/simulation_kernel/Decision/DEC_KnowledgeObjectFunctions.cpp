@@ -79,20 +79,17 @@ namespace
             return pObject->RetrieveAttribute< Attribute >();
         return 0;
     }
-}
 
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeObjectFunctions::QueueForDecontamination
-// Created: NLD 2004-11-02
-// -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-{
-    if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
-    {
-        pCapacity->QueueForDecontamination( callerAgent );
-        return static_cast< int >( eQueryValid );
-    }
-    return static_cast< int >( eQueryInvalid );
+	template< typename Entity >
+	int QueueForDecontamination( Entity& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+	{
+		if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
+		{
+			pCapacity->QueueForDecontamination( callerAgent );
+			return static_cast< int >( eQueryValid );
+		}
+		return static_cast< int >( eQueryInvalid );
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +99,17 @@ int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_Agent_ABC& caller
 int DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination( DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( agent )
-        return QueueForDecontamination( agent->GetPion(), pKnowledge );
+	{
+		switch( agent->GetEntity().GetKind() )
+		{
+			case MIL_Entity_ABC::ePion:
+				return QueueForDecontamination( agent->GetPion(), pKnowledge );
+			case MIL_Entity_ABC::ePopulation:
+				return QueueForDecontamination( agent->GetPopulation(), pKnowledge );
+			default:
+				throw MASA_EXCEPTION( "DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination(): cannot be called for this agent" );
+		}
+	}
     return static_cast< int >( eQueryInvalid );
 }
 
@@ -114,20 +121,6 @@ int DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination( boost::share
 {
     if( pAgent && pAgent->IsValid() )
         return QueueForDecontamination( pAgent->GetAgentKnown(), pObject );
-    return static_cast< int >( eQueryInvalid );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeObjectFunctions::PopulationQueueForDecontamination
-// Created: LGY 2011-11-18
-// -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::PopulationQueueForDecontamination( MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-{
-    if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
-    {
-        pCapacity->QueueForDecontamination( callerPopulation );
-        return static_cast< int >( eQueryValid );
-    }
     return static_cast< int >( eQueryInvalid );
 }
 

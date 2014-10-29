@@ -328,6 +328,11 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
     }
 }
 
+MIL_Entity_ABC::E_Kind MIL_Formation::GetKind() const
+{
+	return eFormation;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::GetArmy
 // Created: NLD 2006-10-11

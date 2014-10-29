@@ -1352,12 +1352,17 @@ const MIL_Army_ABC* MIL_Automate::GetArmySurrenderedTo() const
     return pArmySurrenderedTo_;
 }
 
-// -----------------------------------------------------------------------------
 unsigned int MIL_Automate::GetLogisticId() const
 {
     return GetID();
 }
 
+MIL_Entity_ABC::E_Kind MIL_Automate::GetKind() const
+{
+	return eAutomate;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetType
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------

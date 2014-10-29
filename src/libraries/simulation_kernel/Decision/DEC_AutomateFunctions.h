@@ -52,9 +52,6 @@ public:
     static void NotifyRulesOfEngagementStateChanged( MIL_Automate& callerAutomate, int state );
     static void NotifyRulesOfEngagementPopulationStateChanged( MIL_Automate& callerAutomate, int state );
 
-    // Test / debug
-    static void DecisionalState( const MIL_Automate& callerAutomate, const std::string& key, const std::string& value );
-
     // Pion management
     static bool PionChangeAutomate( DEC_Decision_ABC* pion, const DEC_Decision_ABC* superior );
 

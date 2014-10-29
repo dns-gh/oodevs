@@ -25,6 +25,7 @@ namespace xml
 
 class MIL_Army_ABC;
 class MIL_EntityType;
+class MIL_OrderManager_ABC;
 
 // =============================================================================
 /** @class  MIL_Entity_ABC
@@ -36,6 +37,15 @@ class MIL_Entity_ABC : public tools::RoleContainer
                      , public PHY_Actor // $$$$ LDC: That should be a role.
 {
 public:
+	enum E_Kind 
+	{
+		ePion,
+		eAutomate,
+		ePopulation,
+		eFormation,
+		eInhabitant
+	};
+
     //! @name Constructors/Destructor
     //@{
              MIL_Entity_ABC( const std::string& name, unsigned int id );
@@ -45,12 +55,15 @@ public:
 
     //! @name Accessors
     //@{
+	virtual E_Kind GetKind() const = 0;
     unsigned int GetID() const;
     const std::string& GetName() const;
     void SetName( const std::string& name );
     virtual MIL_Army_ABC& GetArmy() const = 0;
     virtual bool CanEmitReports() const = 0;
     virtual const MIL_EntityType& GetType() const;
+	virtual const MIL_OrderManager_ABC& GetOrderManager() const;
+    virtual MIL_OrderManager_ABC& GetOrderManager();
     //@}
 
     //! @name CheckPoints

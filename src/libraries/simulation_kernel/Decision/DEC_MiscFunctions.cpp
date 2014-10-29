@@ -126,9 +126,9 @@ void DEC_MiscFunctions::CancelReinforcement( MIL_AgentPion& callerAgent )
 // Name: DEC_MiscFunctions::GetOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MIL_FragOrder > > DEC_MiscFunctions::GetOrdersCategory( MIL_Entity_ABC& callerAgent )
+std::vector< boost::shared_ptr< MIL_FragOrder > > DEC_MiscFunctions::GetOrdersCategory( const DEC_Decision_ABC* callerAgent )
 {
-    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    DEC_Representations& role = callerAgent->GetEntity().GetRole< DEC_Representations >();
     return role.GetOrdersCategory();
 }
 
@@ -136,9 +136,9 @@ std::vector< boost::shared_ptr< MIL_FragOrder > > DEC_MiscFunctions::GetOrdersCa
 // Name: DEC_MiscFunctions::GetPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< TER_PathPoint > > DEC_MiscFunctions::GetPointsCategory( MIL_Entity_ABC& callerAgent )
+std::vector< boost::shared_ptr< TER_PathPoint > > DEC_MiscFunctions::GetPointsCategory( const DEC_Decision_ABC* callerAgent )
 {
-    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    DEC_Representations& role = callerAgent->GetEntity().GetRole< DEC_Representations >();
     return role.GetPointsCategory();
 }
 
@@ -146,9 +146,9 @@ std::vector< boost::shared_ptr< TER_PathPoint > > DEC_MiscFunctions::GetPointsCa
 // Name: DEC_MiscFunctions::RemoveFromOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::RemoveFromOrdersCategory( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder )
+void DEC_MiscFunctions::RemoveFromOrdersCategory( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder )
 {
-    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    DEC_Representations& role = callerAgent->GetEntity().GetRole< DEC_Representations >();
     role.RemoveFromOrdersCategory( pOrder );
 }
 
@@ -156,9 +156,9 @@ void DEC_MiscFunctions::RemoveFromOrdersCategory( MIL_Entity_ABC& callerAgent, b
 // Name: DEC_MiscFunctions::RemoveFromPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::RemoveFromPointsCategory( MIL_Entity_ABC& callerAgent, boost::shared_ptr< TER_PathPoint > pPoint )
+void DEC_MiscFunctions::RemoveFromPointsCategory( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< TER_PathPoint > pPoint )
 {
-    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    DEC_Representations& role = callerAgent->GetEntity().GetRole< DEC_Representations >();
     role.RemoveFromPointsCategory( pPoint );
 }
 
@@ -166,9 +166,9 @@ void DEC_MiscFunctions::RemoveFromPointsCategory( MIL_Entity_ABC& callerAgent, b
 // Name: DEC_MiscFunctions::DeleteOrderRepresentation
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::DeleteOrderRepresentation( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder )
+void DEC_MiscFunctions::DeleteOrderRepresentation( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder )
 {
-    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    DEC_Representations& role = callerAgent->GetEntity().GetRole< DEC_Representations >();
     role.DeleteOrderRepresentation( pOrder );
 }
 
@@ -574,13 +574,13 @@ void DEC_MiscFunctions::ReportStage( DEC_Decision_ABC& caller, int type, const s
 // Name: DEC_PopulationFunctions::Trace
 // Created: AHC 2009-07-30
 //-----------------------------------------------------------------------------
-void DEC_MiscFunctions::Trace( const MIL_Entity_ABC& caller, const std::string& message )
+void DEC_MiscFunctions::Trace( const DEC_Decision_ABC* caller, const std::string& message )
 {
     try
     {
         client::Trace msg;
         MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *msg().mutable_source(),
-               caller.GetID() );
+            caller->GetEntity().GetID() );
         *msg().mutable_message() = message.c_str();
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
@@ -591,24 +591,24 @@ void DEC_MiscFunctions::Trace( const MIL_Entity_ABC& caller, const std::string& 
 // Name: DEC_MiscFunctions::Debug
 // Created: AHC 2009-07-30
 //-----------------------------------------------------------------------------
-void DEC_MiscFunctions::Debug( const MIL_Entity_ABC& caller, const std::string& callerType,
-        const std::string& message )
+void DEC_MiscFunctions::Debug( const DEC_Decision_ABC* caller, const std::string& message )
 {
     if( !MIL_AgentServer::GetWorkspace().GetConfig().UseDecDebug() )
         return;
-    MT_LOG_INFO_MSG( callerType << " " << caller.GetID() << " says : [" << message << "]" );
+    MIL_Entity_ABC& entity = caller->GetEntity();
+    MT_LOG_INFO_MSG( entity.GetType().GetName() << " " << entity.GetID() << " says : [" << message << "]" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::DebugDrawPoints
 // Created: AHC 2009-07-30
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::DebugDrawPoints( const MIL_Entity_ABC& caller,
+void DEC_MiscFunctions::DebugDrawPoints( const DEC_Decision_ABC* caller,
         std::vector< boost::shared_ptr< MT_Vector2D > > points )
 {
     client::DebugPoints message;
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(),
-           caller.GetID() );
+           caller->GetEntity().GetID() );
     NET_ASN_Tools::WriteCoordinates( points, *message().mutable_coordinates() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -618,12 +618,12 @@ void DEC_MiscFunctions::DebugDrawPoints( const MIL_Entity_ABC& caller,
 // Name: DEC_MiscFunctions::DebugDrawPoint
 // Created: NLD 2005-03-22
 // Created: AHC 2009-07-30-----------------------------------------------
-void DEC_MiscFunctions::DebugDrawPoint( const MIL_Entity_ABC& caller, const MT_Vector2D* pPoint )
+void DEC_MiscFunctions::DebugDrawPoint( const DEC_Decision_ABC* caller, const MT_Vector2D* pPoint )
 {
     assert( pPoint );
     client::DebugPoints message;
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(),
-           caller.GetID() );
+        caller->GetEntity().GetID() );
     NET_ASN_Tools::WritePoint( *pPoint, *message().mutable_coordinates()->add_elem() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }

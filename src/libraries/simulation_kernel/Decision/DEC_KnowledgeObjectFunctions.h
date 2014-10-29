@@ -45,10 +45,8 @@ public:
     static bool IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool MustBeMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-    static int QueueForDecontamination( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int QueueUnitForDecontamination( DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int QueueKnowledgeForDecontamination(  boost::shared_ptr< DEC_Knowledge_Agent > pAgent, boost::shared_ptr< DEC_Knowledge_Object > pObject );
-    static int PopulationQueueForDecontamination( MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeAnimated( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static float GetConstructionLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetBurningLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);

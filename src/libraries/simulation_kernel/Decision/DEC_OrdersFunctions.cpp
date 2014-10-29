@@ -21,6 +21,15 @@
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
 
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::FinishMission
+// Created: NLD 2005-09-13
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::FinishMission( DEC_Decision_ABC* caller )
+{
+	caller->GetEntity().GetOrderManager().CancelMission();
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::MRT_CreatePionMission
 // Created: NLD 2003-04-14

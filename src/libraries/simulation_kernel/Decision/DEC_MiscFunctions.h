@@ -20,14 +20,14 @@
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
+class TER_PathPoint;
 class MIL_AgentPion;
 class MIL_Entity_ABC;
 class MIL_FragOrder;
 class MIL_Mission_ABC;
 class MT_Vector2D;
-class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
-class TER_PathPoint;
+class PHY_ComposanteTypePion;
 
 namespace sword
 {
@@ -71,12 +71,11 @@ public:
     static void ReportString             ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
     static void ReportStage              ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
 
-    static void Trace( const MIL_Entity_ABC& caller, const std::string& message );
-    static void Debug( const MIL_Entity_ABC& caller, const std::string& callerType,
-            const std::string& message );
-    static void DebugDrawPoints( const MIL_Entity_ABC& caller,
+    static void Trace( const DEC_Decision_ABC* caller, const std::string& message );
+    static void Debug( const DEC_Decision_ABC* caller, const std::string& message );
+    static void DebugDrawPoints( const DEC_Decision_ABC* caller,
             std::vector< boost::shared_ptr< MT_Vector2D > > points );
-    static void DebugDrawPoint ( const MIL_Entity_ABC& caller, const MT_Vector2D* pPoint  );
+    static void DebugDrawPoint ( const DEC_Decision_ABC* caller, const MT_Vector2D* pPoint  );
     static std::string                 GetPointXY     ( boost::shared_ptr< MT_Vector2D > point );
 
     // Reinforcement
@@ -93,11 +92,11 @@ public:
     static unsigned int GetTimeInSeconds();
 
     // Representations
-    static std::vector< boost::shared_ptr< MIL_FragOrder > > GetOrdersCategory ( MIL_Entity_ABC& callerAgent );
-    static std::vector< boost::shared_ptr< TER_PathPoint > > GetPointsCategory ( MIL_Entity_ABC& callerAgent );
-    static void RemoveFromOrdersCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
-    static void DeleteOrderRepresentation                ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
-    static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< TER_PathPoint > pPoint );
+    static std::vector< boost::shared_ptr< MIL_FragOrder > > GetOrdersCategory ( const DEC_Decision_ABC* callerAgent );
+    static std::vector< boost::shared_ptr< TER_PathPoint > > GetPointsCategory ( const DEC_Decision_ABC* callerAgent );
+    static void RemoveFromOrdersCategory                 ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
+    static void DeleteOrderRepresentation                ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
+    static void RemoveFromPointsCategory                 ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< TER_PathPoint > pPoint );
 
     static void AddEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );
     static void RemoveEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );

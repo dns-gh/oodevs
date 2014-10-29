@@ -28,6 +28,7 @@ require "math"
 require "string"
 require "table"
 
+include "integration/DECFunctionWrappers.lua"
 include "integration/Reports.lua"
 include "integration/SimulationIntegration.lua"
 include "integration/KnowledgeManager.lua"

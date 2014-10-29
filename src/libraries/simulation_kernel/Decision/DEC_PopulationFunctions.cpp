@@ -10,6 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "DEC_KnowledgeFunctions.h"
 #include "DEC_PopulationFunctions.h"
 #include "DEC_FunctionsTools.h"
 #include "Entities/MIL_Army.h"
@@ -40,73 +41,70 @@
 #include "simulation_terrain/TER_World.h"
 
 
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::DecisionalState
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::DecisionalState( const MIL_Population& callerPopulation, const std::string& key, const std::string& value )
+void DEC_PopulationFunctions::ResetPionMaxSpeed( DEC_Decision_ABC* callerPopulation )
 {
-    client::DecisionalState msg;
-    msg().mutable_source()->mutable_crowd()->set_id( callerPopulation.GetID() );
-    msg().set_key( key.c_str() );
-    msg().set_value( value.c_str() );
-    msg.Send( NET_Publisher_ABC::Publisher() );
+	callerPopulation->GetPopulation().ResetPionMaxSpeed();
+}
+
+void DEC_PopulationFunctions::SetPionMaxSpeed( DEC_Decision_ABC* callerPopulation, double speed )
+{
+	callerPopulation->GetPopulation().SetPionMaxSpeed( speed );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::SetAttitude
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::SetAttitude( MIL_Population& callerPopulation, unsigned int attitudeId )
+void DEC_PopulationFunctions::SetAttitude( DEC_Decision_ABC* callerPopulation, unsigned int attitudeId )
 {
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( attitudeId );
     assert( pAttitude );
-    callerPopulation.SetAttitude( *pAttitude );
+    callerPopulation->GetPopulation().SetAttitude( *pAttitude );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetAttitude
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
-unsigned int DEC_PopulationFunctions::GetAttitude( const MIL_Population& callerPopulation )
+unsigned int DEC_PopulationFunctions::GetAttitude( const DEC_Decision_ABC* callerPopulation )
 {
-    return callerPopulation.GetAttitude().GetID() ;
+    return callerPopulation->GetPopulation().GetAttitude().GetID() ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::SetUrbanDestructionState
 // Created: NPT 2013-06-05
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::SetUrbanDestructionState( MIL_Population& callerPopulation, bool state )
+void DEC_PopulationFunctions::SetUrbanDestructionState( DEC_Decision_ABC* callerPopulation, bool state )
 {
-    callerPopulation.SetUrbanDestructionState( state );
+    callerPopulation->GetPopulation().SetUrbanDestructionState( state );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetUrbanDestructionState
 // Created: NPT 2013-06-05
 // -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::GetUrbanDestructionState( MIL_Population& callerPopulation )
+bool DEC_PopulationFunctions::GetUrbanDestructionState( DEC_Decision_ABC* callerPopulation )
 {
-    return callerPopulation.GetUrbanDestructionState();
+    return callerPopulation->GetPopulation().GetUrbanDestructionState();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::SetDemonstrationState
 // Created: NPT 2013-06-05
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::SetDemonstrationState( MIL_Population& callerPopulation, bool state )
+void DEC_PopulationFunctions::SetDemonstrationState( DEC_Decision_ABC* callerPopulation, bool state )
 {
-    callerPopulation.SetDemonstrationState( state );
+    callerPopulation->GetPopulation().SetDemonstrationState( state );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetDemonstrationState
 // Created: NPT 2013-06-05
 // -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::GetDemonstrationState( MIL_Population& callerPopulation )
+bool DEC_PopulationFunctions::GetDemonstrationState( DEC_Decision_ABC* callerPopulation )
 {
-    return callerPopulation.GetDemonstrationState();
+    return callerPopulation->GetPopulation().GetDemonstrationState();
 }
 
 namespace
@@ -134,12 +132,12 @@ namespace
 // Name: DEC_PopulationFunctions::GetCurrentLocations
 // Created: JCR 2010-09-15
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< TER_Localisation > > DEC_PopulationFunctions::GetCurrentLocations( const MIL_Population& callerPopulation )
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_PopulationFunctions::GetCurrentLocations( const DEC_Decision_ABC* callerPopulation )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > locations;
     PopulationVisitor visitor( locations );
 
-    callerPopulation.Apply( visitor );
+    callerPopulation->GetPopulation().Apply( visitor );
     return locations;
 }
 
@@ -156,56 +154,13 @@ int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentI
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::IsAgentInside
-// Created: DDA 2011-05-17
-// -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::IsAgentInside( const MIL_Population& caller, DEC_Decision_ABC* pAgent )
-{
-    if( !pAgent )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    MIL_AgentPion& pion = pAgent->GetPion() ;
-    return pion.Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( caller );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::GetObjectsInZone
-// Created: NLD 2005-12-05
-// -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions::GetObjectsInZone( const MIL_Population& caller, const TER_Localisation* pZone, const std::vector< std::string >& parameters )
-{
-    typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > >::iterator IT_KnowledgeObject;
-
-    if( !pZone )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    MIL_ObjectFilter filter( parameters );
-    std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges; //T_KnowledgeObjectDiaIDVector
-
-    auto knowledgeGroups = caller.GetArmy().GetKnowledgeGroups();
-    for( auto it = knowledgeGroups.begin(); it != knowledgeGroups.end(); ++it )
-    {
-        if( it->second->IsJammed() )
-            continue;
-        auto bbKg = it->second->GetKnowledge();
-        if( bbKg )
-        {
-            std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledgesTmp; //T_KnowledgeObjectDiaIDVector
-            bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, *pZone );
-            for( auto it = knowledgesTmp.begin(); it != knowledgesTmp.end(); ++it )
-                if( *it && (*it)->IsValid() )
-                    knowledges.push_back( *it );
-        }
-    }
-    return knowledges;
-}
-
-// -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions::GetObjectsInCircle
 // Created: BCI 2011-03-18
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions::GetObjectsInCircle( const MIL_Population& caller, double radius, const std::vector< std::string >& parameters )
+std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions::GetObjectsInCircle( const DEC_Decision_ABC* caller, double radius, const std::vector< std::string >& parameters )
 {
-    TER_Localisation circle( *caller.GetBarycenter(), radius );
-    return GetObjectsInZone( caller, &circle, parameters );
+    TER_Localisation circle( *caller->GetPopulation().GetBarycenter(), radius );
+    return DEC_KnowledgeFunctions::GetObjectsInZone( caller, &circle, parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,18 +178,9 @@ const TER_Localisation* DEC_PopulationFunctions::GetKnowledgeObjectLocalisation(
 // Name: DEC_PopulationFunctions::HasFlow
 // Created: LGY 2010-12-27
 // -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::HasFlow( MIL_Population& population )
+bool DEC_PopulationFunctions::HasFlow( const DEC_Decision_ABC* population )
 {
-    return population.HasFlow();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::GetMovingState
-// Created: LGY 2010-12-27
-// -----------------------------------------------------------------------------
-int DEC_PopulationFunctions::GetMovingState( MIL_Population& population )
-{
-    return HasFlow( population ) ? PHY_Posture::mouvement_.GetID() : PHY_Posture::poste_.GetID();
+    return population->GetPopulation().HasFlow();
 }
 
 // -----------------------------------------------------------------------------
@@ -256,24 +202,24 @@ int DEC_PopulationFunctions::DamageObject( boost::shared_ptr< DEC_Knowledge_Obje
 // Name: DEC_PopulationFunctions::GetKnowledgeObjectDistance
 // Created: SBO 2005-12-13
 // -----------------------------------------------------------------------------
-float DEC_PopulationFunctions::GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+float DEC_PopulationFunctions::GetKnowledgeObjectDistance( const DEC_Decision_ABC* callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !( pKnowledge && pKnowledge->IsValid() ) )
         return std::numeric_limits< float >::max();
-    return (float)callerPopulation.GetDistanceTo( pKnowledge->GetLocalisation() ) ;
+    return (float)callerPopulation->GetPopulation().GetDistanceTo( pKnowledge->GetLocalisation() ) ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint
 // Created: SBO 2005-12-13
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+boost::shared_ptr< MT_Vector2D > DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint( const DEC_Decision_ABC* callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !( pKnowledge && pKnowledge->IsValid() ) )
         return boost::shared_ptr<MT_Vector2D>();
     else
     {
-        MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation.GetClosestPoint( pKnowledge->GetLocalisation() ) );
+        MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation->GetPopulation().GetClosestPoint( pKnowledge->GetLocalisation() ) );
         return boost::shared_ptr<MT_Vector2D>( pPoint );
     }
 }
@@ -282,20 +228,25 @@ boost::shared_ptr< MT_Vector2D > DEC_PopulationFunctions::GetKnowledgeObjectClos
 // Name: DEC_PopulationFunctions::IsEnemy
 // Created: HME 2005-12-29
 // -----------------------------------------------------------------------------
-int DEC_PopulationFunctions::IsEnemy( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_PopulationFunctions::IsEnemy( const DEC_Decision_ABC* callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !( pKnowledge && pKnowledge->IsValid() ) )
         return int( eTristate_DontKnow );
-    return int( pKnowledge->IsAnEnemy( callerPopulation.GetArmy() ) );
+	return int( pKnowledge->IsAnEnemy( callerPopulation->GetPopulation().GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::NotifyDominationStateChanged
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState )
+void DEC_PopulationFunctions::NotifyDominationStateChanged( DEC_Decision_ABC* callerPopulation, double dominationState )
 {
-    callerPopulation.GetDecision().NotifyDominationStateChanged( dominationState );
+	callerPopulation->GetPopulation().GetDecision().NotifyDominationStateChanged( dominationState );
+}
+
+unsigned int DEC_PopulationFunctions::GetDeadHumans( const DEC_Decision_ABC* callerPopulation )
+{
+	return callerPopulation->GetPopulation().GetDeadHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -332,75 +283,82 @@ void DEC_PopulationFunctions::SetMission( DEC_Decision_ABC* object, boost::share
 // Name: DEC_PopulationFunctions::GetBarycenter
 // Created: MGD 2010-09-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_PopulationFunctions::GetBarycenter( const MIL_Population& callerPopulation )
+boost::shared_ptr< MT_Vector2D > DEC_PopulationFunctions::GetBarycenter( const DEC_Decision_ABC* callerPopulation )
 {
-    return callerPopulation.GetBarycenter();
+    return callerPopulation->GetPopulation().GetBarycenter();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetPopulationAngriness
 // Created: BCI 2011-03-18
 // -----------------------------------------------------------------------------
-double DEC_PopulationFunctions::GetUrbanBlockAngriness( const MIL_Population& callerPopulation )
+double DEC_PopulationFunctions::GetUrbanBlockAngriness( const DEC_Decision_ABC* callerPopulation )
 {
-    return callerPopulation.GetUrbanBlockAngriness();
+    return callerPopulation->GetPopulation().GetUrbanBlockAngriness();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::ReintegrateUrbanBlock
 // Created: BCI 2011-03-21
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::ReintegrateUrbanBlock( MIL_Population& callerPopulation )
+void DEC_PopulationFunctions::ReintegrateUrbanBlock( DEC_Decision_ABC* callerPopulation )
 {
-    callerPopulation.GetOrderManager().CancelMission();
-    callerPopulation.ChangeComposition( 0, 0, 0, 0 );
+	MIL_Population& population = callerPopulation->GetPopulation();
+    population.GetOrderManager().CancelMission();
+    population.ChangeComposition( 0, 0, 0, 0 );
+}
+
+void DEC_PopulationFunctions::HealWounded( DEC_Decision_ABC* callerPopulation )
+{
+	callerPopulation->GetPopulation().HealWounded();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::HasReachedDestination
 // Created: NLD 2011-03-21
 // -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::HasReachedDestination( const MIL_Population& callerPopulation, const MT_Vector2D* destination )
+bool DEC_PopulationFunctions::HasReachedDestination( const DEC_Decision_ABC* callerPopulation, const MT_Vector2D* destination )
 {
     if( !destination )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return callerPopulation.HasReachedDestination( *destination );
+	return callerPopulation->GetPopulation().HasReachedDestination( *destination );
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::HasReachedBlockBorder
 // Created: DDA 2011-04-04
 // -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::HasReachedBlockBorder( const MIL_Population& callerPopulation, const MIL_UrbanObject_ABC* pUrbanKnowledge )
+bool DEC_PopulationFunctions::HasReachedBlockBorder( const DEC_Decision_ABC* callerPopulation, const MIL_UrbanObject_ABC* pUrbanKnowledge )
 {
     if( !pUrbanKnowledge )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return callerPopulation.HasReachedBlockBorder( pUrbanKnowledge );
+    return callerPopulation->GetPopulation().HasReachedBlockBorder( pUrbanKnowledge );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::HasReachedDestinationCompletely
 // Created: NLD 2011-03-21
 // -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::HasReachedDestinationCompletely( const MIL_Population& callerPopulation, const MT_Vector2D* destination )
+bool DEC_PopulationFunctions::HasReachedDestinationCompletely( const DEC_Decision_ABC* callerPopulation, const MT_Vector2D* destination )
 {
     if( !destination )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return callerPopulation.HasReachedDestinationCompletely( *destination );
+    return callerPopulation->GetPopulation().HasReachedDestinationCompletely( *destination );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::GetActualNumber
+// Name: DEC_PopulationFunctions::GetHealthyHumans
 // Created: LMT 2011-05-27
 // -----------------------------------------------------------------------------
-int DEC_PopulationFunctions::GetActualNumber( const MIL_Population& callerPopulation )
+int DEC_PopulationFunctions::GetHealthyHumans( const DEC_Decision_ABC* callerPopulation )
 {
-    return callerPopulation.GetHealthyHumans();
+    return callerPopulation->GetPopulation().GetHealthyHumans();
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetContaminatedHumans
 // Created: LMT 2011-11-18
 // -----------------------------------------------------------------------------
-int DEC_PopulationFunctions::GetContaminatedHumans( const MIL_Population& callerPopulation )
+int DEC_PopulationFunctions::GetContaminatedHumans( const DEC_Decision_ABC* callerPopulation )
 {
-    return callerPopulation.GetContaminatedHumans();
+	return callerPopulation->GetPopulation().GetContaminatedHumans();
 }

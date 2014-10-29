@@ -12,10 +12,12 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeFunctions.h"
 #include "Brain.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -578,6 +580,40 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetDisasters( const MIL_Age
                 disasters.push_back( *it );
         }
     return disasters;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetObjectsInZone
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const DEC_Decision_ABC* caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters )
+{
+    if( !pLoc )
+        throw MASA_EXCEPTION( "invalid parameter." );
+    MIL_ObjectFilter filter( parameters );
+    T_KnowledgeObjectDiaIDVector knowledges;
+	const DEC_KnowledgeBlackBoard_KnowledgeGroup* bbKg = 0;
+	switch( caller->GetEntity().GetKind() )
+	{
+		case MIL_Entity_ABC::ePion:
+			bbKg = caller->GetPion().GetKnowledgeGroup()->GetKnowledge();
+			break;
+		case MIL_Entity_ABC::eAutomate:
+			bbKg = caller->GetAutomate().GetKnowledgeGroup()->GetKnowledge();
+			break;
+		case MIL_Entity_ABC::ePopulation:
+			bbKg = caller->GetPopulation().GetKnowledgeGroup()->GetKnowledge();
+			break;
+		default:
+			throw MASA_EXCEPTION( "DEC_KnowledgeFunctions::GetObjectsInZone(): cannot be called for this agent" );
+	}
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, *pLoc );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------

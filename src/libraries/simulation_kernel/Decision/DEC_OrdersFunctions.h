@@ -33,7 +33,7 @@ class DEC_OrdersFunctions
 {
 public:
     // Mission
-    template< typename T > static void FinishMission      ( T& caller );
+    static void FinishMission( DEC_Decision_ABC* caller );
     template< typename T > static bool IsNewMissionStarted( T& caller );
 
     // Limas
@@ -136,16 +136,6 @@ template< typename T >
 MIL_LimaOrder* DEC_OrdersFunctions::GetNextScheduledLima( const T& caller )
 {
     return caller.GetOrderManager().FindNextScheduledLima();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::FinishMission
-// Created: NLD 2005-09-13
-// -----------------------------------------------------------------------------
-template< typename T >
-void DEC_OrdersFunctions::FinishMission( T& caller )
-{
-    caller.GetOrderManager().CancelMission();
 }
 
 // -----------------------------------------------------------------------------

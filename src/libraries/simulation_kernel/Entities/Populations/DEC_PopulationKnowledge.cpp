@@ -11,7 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PopulationKnowledge.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
@@ -110,6 +112,11 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsAttacking() const
     return container;
 }
 
+std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsAttacking( const DEC_Decision_ABC* agent )
+{
+	return agent->GetPopulation().GetKnowledge().GetPionsAttacking();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::GetPionsSecuring
 // Created: NLD 2005-12-02
@@ -121,6 +128,11 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring() const
     for( auto it = securers_.begin(); it != securers_.end(); ++it )
         container.push_back( (*it)->GetID() );
     return container;
+}
+
+std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring( const DEC_Decision_ABC* agent )
+{
+	return agent->GetPopulation().GetKnowledge().GetPionsSecuring();
 }
 
 // -----------------------------------------------------------------------------

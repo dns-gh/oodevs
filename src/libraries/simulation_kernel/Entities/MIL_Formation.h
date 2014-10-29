@@ -78,6 +78,7 @@ public:
 
     //! @name Accessors
     //@{
+	virtual E_Kind GetKind() const;
     virtual MIL_Army_ABC& GetArmy() const;
     MIL_AutomateLOG* GetBrainLogistic() const;
     MIL_AutomateLOG* FindLogisticManager() const;

@@ -17,12 +17,6 @@
 #include "Decision/DEC_PerceptionFunctions.h"
 #include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
-#include "Entities/Agents/Actions/Moving/PHY_ActionMove.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePion.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePionUsingOnlyLoadable.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePionUsingOnlyCarrier.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePionOnMajorComposantes.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePopulation.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::legacy::RolePion_Decision )
 
@@ -108,43 +102,13 @@ void RolePion_Decision::save( Archive& archive, const unsigned int ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Decision::RegisterControlActions
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-void RolePion_Decision::RegisterControlActions()
-{
-    RegisterFunction( "DEC__StopAction",
-        std::function< unsigned int( unsigned int) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_PauseAction",
-        std::function< void( unsigned int ) >( boost::bind( &DEC_ActionFunctions::SuspendAction< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_ReprendAction",
-        std::function< void( unsigned int ) >( boost::bind( &DEC_ActionFunctions::ResumeAction < MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_EtatAction",
-        std::function< unsigned int( unsigned int ) >( boost::bind( &DEC_ActionFunctions::GetActionState < MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RolePion_Decision::RegisterActions
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
 void RolePion_Decision::RegisterActions()
 {
-    RegisterFunction( "DEC_StartDeplacement",
-        std::function< unsigned int( boost::shared_ptr< TER_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< TER_Path_ABC > >, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_StartMovementSuspended",
-        std::function< unsigned int( boost::shared_ptr< TER_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< TER_Path_ABC >, bool >, boost::ref( GetPion() ), _1, true ) ) );
     RegisterFunction( "DEC_Orientate",
         std::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_ActionFunctions::Orientate, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_StartTirDirect",
-        std::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePion, boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
-    RegisterFunction( "DEC_StartTirDirectDebarques",
-        std::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionUsingOnlyLoadable, boost::shared_ptr< DEC_Knowledge_Agent >, double, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
-    RegisterFunction( "DEC_StartTirDirectTransporteurs",
-        std::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionUsingOnlyCarrier, boost::shared_ptr< DEC_Knowledge_Agent >, double, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
-    RegisterFunction( "DEC__StartTirDirectSurComposantesMajeures",
-        std::function< unsigned int( int, boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionOnMajorComposantes, int, boost::shared_ptr< DEC_Knowledge_Agent >, double, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
-    RegisterFunction( "DEC__StartTirSurPopulation",
-        std::function< unsigned int( unsigned int, const std::string& ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePopulation, unsigned int, const std::string& >, boost::ref( GetPion() ), _1, _2 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,9 +145,6 @@ void RolePion_Decision::RegisterPath()
 // -----------------------------------------------------------------------------
 void RolePion_Decision::RegisterRepresentations()
 {
-    RegisterFunction( "DEC_GetPointsCategory", boost::bind( &DEC_MiscFunctions::GetPointsCategory , boost::ref( GetPion() ) ) );
-    RegisterFunction( "DEC_RemoveFromPointsCategory",
-        std::function< void( boost::shared_ptr< TER_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetPion() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +272,6 @@ void RolePion_Decision::RegisterAgentKnowledgeFunctions()
 // -----------------------------------------------------------------------------
 void RolePion_Decision::RegisterFunctions()
 {
-    RegisterControlActions();
     RegisterActions();
     RegisterPath();
     RegisterRepresentations();
