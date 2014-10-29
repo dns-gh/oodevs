@@ -1808,12 +1808,8 @@ message Report {
     optional MissionParameters parameters = 6;
 }
 
-/** @struct ListReportsAck
-    @brief Acknowledges a request to list the reports
-    @see ListReports
-*/
+// Reports list returned for a ListReports request.
 message ListReportsAck {
-    //! List of reports
     repeated Report reports     = 1;
     //! Returns the next report identifier if
     //! the list of reports is partial

@@ -154,7 +154,8 @@ bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
         wrapper.message().has_crowd_flow_knowledge_destruction() ||
         wrapper.message().has_automat_attributes() ||
         wrapper.message().has_list_logistic_requests_ack() ||
-        wrapper.message().has_logistic_history_ack() )
+        wrapper.message().has_logistic_history_ack() ||
+        wrapper.message().has_list_reports_ack() )
         return true;
     if( wrapper.message().has_unit_attributes() )
         return IsRelevant( wrapper.message().unit_attributes() );

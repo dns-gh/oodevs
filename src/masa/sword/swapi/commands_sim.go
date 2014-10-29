@@ -2064,7 +2064,7 @@ func (c *Client) CreateReport(report, source uint32, reportParams ...*sword.Miss
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
-func (c *Client) GetReportsPart(maxCount, start uint32) ([]*sword.Report, uint32, error) {
+func (c *Client) ListReports(maxCount, start uint32) ([]*sword.Report, uint32, error) {
 	param := sword.ListReports{
 		MaxCount: proto.Uint32(maxCount),
 	}
@@ -2091,8 +2091,4 @@ func (c *Client) GetReportsPart(maxCount, start uint32) ([]*sword.Report, uint32
 	}
 	err := <-c.postSimRequest(msg, handler)
 	return reports, nextReport, err
-}
-
-func (c *Client) GetReports(maxCount uint32) ([]*sword.Report, uint32, error) {
-	return c.GetReportsPart(maxCount, 0)
 }

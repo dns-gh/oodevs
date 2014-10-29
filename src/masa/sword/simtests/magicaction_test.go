@@ -530,12 +530,6 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: repair consign not in a waiting for repair team selection state")
 }
 
-func ParseTime(c *C, value *sword.DateTime) time.Time {
-	t, err := swapi.GetTime(value.GetData())
-	c.Assert(err, IsNil)
-	return t
-}
-
 func (s *TestSuite) TestReportCreation(c *C) {
 	sim, client := connectAndWaitModel(c,
 		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
@@ -569,35 +563,46 @@ func (s *TestSuite) TestReportCreation(c *C) {
 	client.Model.WaitTicks(1)
 	reports := reporter.Stop()
 	c.Assert(len(reports), Equals, 2)
+}
 
-	_, err = client.Pause()
+func ParseTime(c *C, value *sword.DateTime) time.Time {
+	t, err := swapi.GetTime(value.GetData())
 	c.Assert(err, IsNil)
+	return t
+}
+
+func CheckReportOrder(c *C, first, second *sword.Report) {
+	firstTime := ParseTime(c, first.GetTime())
+	secondTime := ParseTime(c, second.GetTime())
+	c.Assert(firstTime.Equal(secondTime) || firstTime.After(secondTime), Equals, true)
+	c.Assert(first.GetReport().GetId(), Lesser, second.GetReport().GetId())
+}
+
+func (s *TestSuite) TestListReports(c *C) {
+	sim, client := connectAndWaitModel(c,
+		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
+	defer stopSimAndClient(c, sim, client)
 
 	// Check the size of reports
-	reports, _, err = client.GetReports(0)
+	reports, _, err := client.ListReports(0, 0)
 	c.Assert(err, IsNil)
 	c.Assert(len(reports), Equals, 0)
 
-	reports, _, err = client.GetReports(12)
-	c.Assert(err, IsNil)
-	c.Assert(len(reports), Equals, 12)
-
 	// Get all reports
-	allReports, next, err := client.GetReports(math.MaxInt32)
+	allReports, next, err := client.ListReports(math.MaxInt32, 0)
 	c.Assert(err, IsNil)
 	c.Assert(len(allReports), Lesser, math.MaxInt32)
 	c.Assert(next, Equals, uint32(0))
 
 	// Get reports by package of two reports
 	reports = []*sword.Report{}
-	part, next, err := client.GetReports(2)
+	part, next, err := client.ListReports(2, 0)
 	c.Assert(len(part), Equals, 2)
-	c.Assert(next, Not(Equals), 0)
+	c.Assert(next, Greater, uint32(0))
 	reports = append(reports, part...)
 	for next != 0 {
-		part, next, err = client.GetReportsPart(2, next)
-		c.Assert(len(part), LesserOrEquals, 2)
-		c.Assert(next, Not(Equals), 0)
+		part, next, err = client.ListReports(2, next)
+		c.Assert(len(part) == 2 && next != 0 || len(part) <= 2 && next == 0, Equals, true)
 		reports = append(reports, part...)
 	}
 	// Check equality between 'allReports' and 'reports'
@@ -605,8 +610,9 @@ func (s *TestSuite) TestReportCreation(c *C) {
 
 	// Check chronological order
 	for i := 0; i < len(reports)-1; i++ {
-		first := ParseTime(c, reports[i].GetTime())
-		second := ParseTime(c, reports[i+1].GetTime())
-		c.Assert(first.Equal(second) || first.After(second), Equals, true)
+		CheckReportOrder(c, reports[i], reports[i+1])
+	}
+	if len(reports) != 0 {
+		CheckReportOrder(c, reports[0], reports[len(reports)-1])
 	}
 }
