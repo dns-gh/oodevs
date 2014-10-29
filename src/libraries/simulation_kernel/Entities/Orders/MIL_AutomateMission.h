@@ -25,9 +25,20 @@ class MIL_AutomateMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, uint32_t id, const boost::shared_ptr< MIL_Mission_ABC >& parent );
-             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, uint32_t id, const sword::MissionParameters& parameters );
-             MIL_AutomateMission( MIL_Automate& automate, const MIL_AutomateMission& rhs, uint32_t id );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type,
+                                  MIL_Automate& automate,
+                                  uint32_t id,
+                                  uint32_t clientId,
+                                  const boost::shared_ptr< MIL_Mission_ABC >& parent );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type,
+                                  MIL_Automate& automate,
+                                  uint32_t id,
+                                  uint32_t clientId,
+                                  const sword::MissionParameters& parameters );
+             MIL_AutomateMission( MIL_Automate& automate,
+                                  const MIL_AutomateMission& rhs,
+                                  uint32_t id,
+                                  uint32_t clientId );
     virtual ~MIL_AutomateMission();
     //@}
 

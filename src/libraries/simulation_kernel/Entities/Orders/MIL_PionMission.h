@@ -27,9 +27,20 @@ class MIL_PionMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, uint32_t id, const boost::shared_ptr< MIL_Mission_ABC >& parent );
-             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, uint32_t id, const sword::MissionParameters& parameters );
-             MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs, uint32_t id );
+             MIL_PionMission( const MIL_MissionType_ABC& type,
+                              MIL_AgentPion& pion,
+                              uint32_t id,
+                              uint32_t clientId,
+                              const boost::shared_ptr< MIL_Mission_ABC >& parent );
+             MIL_PionMission( const MIL_MissionType_ABC& type,
+                              MIL_AgentPion& pion,
+                              uint32_t id,
+                              uint32_t clientId,
+                              const sword::MissionParameters& parameters );
+             MIL_PionMission( MIL_AgentPion& pion,
+                              const MIL_PionMission& rhs,
+                              uint32_t id,
+                              uint32_t clientId );
     virtual ~MIL_PionMission();
     //@}
 
@@ -52,9 +63,8 @@ public:
 
     //! @name Serialization
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive& file, const unsigned int );
-    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
+    template< typename Archive >
+    void serialize( Archive& file, const unsigned int );
     //@}
 
 private:

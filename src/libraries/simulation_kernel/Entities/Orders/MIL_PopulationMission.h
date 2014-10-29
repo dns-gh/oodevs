@@ -25,7 +25,11 @@ class MIL_PopulationMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, uint32_t id, const sword::MissionParameters& parameters );
+             MIL_PopulationMission( const MIL_MissionType_ABC& type,
+                                    MIL_Population& population,
+                                    uint32_t id,
+                                    uint32_t clientId,
+                                    const sword::MissionParameters& parameters );
     virtual ~MIL_PopulationMission();
     //@}
 
@@ -44,9 +48,8 @@ public:
 
     //! @name Serialization
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive& file, const unsigned int );
-    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
+    template< typename Archive >
+    void serialize( Archive& file, const unsigned int );
     //@}
 
 private:
@@ -54,7 +57,10 @@ private:
     //@{
     // This constructor is reserved for deserialization purpose, we need to
     // recreate a MIL_Mission_ABC without its parameters.
-             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, uint32_t id );
+    MIL_PopulationMission( const MIL_MissionType_ABC& type,
+                           MIL_Population& population,
+                           uint32_t id,
+                           uint32_t client );
     template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_PopulationMission* mission, const unsigned int version );
     template< typename Archive > friend void load_construct_data( Archive& archive, MIL_PopulationMission* mission, const unsigned int version );
     //@}

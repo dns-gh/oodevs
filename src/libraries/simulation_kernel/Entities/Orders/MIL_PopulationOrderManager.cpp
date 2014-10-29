@@ -47,13 +47,13 @@ MIL_PopulationOrderManager::~MIL_PopulationOrderManager()
 // Name: MIL_PopulationOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-uint32_t MIL_PopulationOrderManager::OnReceiveMission( const sword::CrowdOrder& asnMsg )
+uint32_t MIL_PopulationOrderManager::OnReceiveMission( uint32_t clientId, const sword::CrowdOrder& asnMsg )
 {
     const MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( asnMsg.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_mission );
     uint32_t id = AcquireId();
-    auto mission = boost::make_shared< MIL_PopulationMission >( *pMissionType, population_, id, asnMsg.parameters() );
+    auto mission = boost::make_shared< MIL_PopulationMission >( *pMissionType, population_, id, clientId, asnMsg.parameters() );
     MIL_OrderManager_ABC::ReplaceMission( mission );
     return id;
 }
@@ -62,7 +62,7 @@ uint32_t MIL_PopulationOrderManager::OnReceiveMission( const sword::CrowdOrder& 
 // Name: MIL_PopulationOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn, const std::function< void( uint32_t ) >& sendAck )
+void MIL_PopulationOrderManager::OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& asn, const std::function< void( uint32_t ) >& sendAck )
 {
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
@@ -71,7 +71,7 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
     const uint32_t id = AcquireId();
     DEC_Representations& representation = population_.GetRole<DEC_Representations>();
-    auto frag = boost::make_shared< MIL_FragOrder >( *pType, id );
+    auto frag = boost::make_shared< MIL_FragOrder >( *pType, id, clientId );
     frag->SetParameters( population_.GetKnowledge(), asn.parameters() );
     representation.AddToOrdersCategory( frag );
     sendAck( id );

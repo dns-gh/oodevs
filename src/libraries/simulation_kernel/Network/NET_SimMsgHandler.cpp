@@ -165,7 +165,7 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
     auto& pathfinds = server.GetPathfindComputer();
     client::MagicActionAck ack;
     ack().set_error_code( sword::MagicActionAck::no_error );
-    const auto actionId = actions_.Register( msg );
+    const auto actionId = actions_.Register( clientId, msg );
     ack().set_id( actionId );
     bool delayed = false;
     try
@@ -207,6 +207,9 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
             case sword::MagicAction::debug_internal:
                 if( enableTestCommands_ )
                     OnReceiveDebugError( msg.parameters(), ack() );
+                break;
+            case sword::MagicAction::hide_actions:
+                actions_.Hide( clientId, actionId );
                 break;
             case sword::MagicAction::pathfind_creation:
                 delayed = pathfinds.OnReceivePathfindCreation( msg, ctx, clientId, actionId );

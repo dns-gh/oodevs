@@ -953,6 +953,7 @@ const Action actions[] =
     ACTION( select_repair_team ),
     ACTION( transfer_to_logistic_superior ),
     ACTION_EMPTY( debug_internal ),
+    ACTION_EMPTY( hide_actions ),
 };
 const size_t actionsCount = COUNT_OF( actions );
 static_assert( actionsCount ==

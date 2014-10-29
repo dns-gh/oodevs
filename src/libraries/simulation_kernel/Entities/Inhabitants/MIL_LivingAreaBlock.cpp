@@ -444,7 +444,7 @@ void MIL_LivingAreaBlock::ManageAngryCrowd( const MIL_InhabitantType& type, MIL_
             msg.mutable_tasker()->set_id( pAngryCrowd->GetID() );
             msg.mutable_type()->set_id( pMissionType->GetID() );
             msg.mutable_parameters();
-            pAngryCrowd->OnReceiveOrder( msg );
+            pAngryCrowd->OnReceiveOrder( 0, msg );
         }
     }
 }

@@ -1198,18 +1198,18 @@ bool MIL_Automate::OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& 
 // Name: MIL_Automate::OnReceiveOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-uint32_t MIL_Automate::OnReceiveOrder( const sword::AutomatOrder& msg )
+uint32_t MIL_Automate::OnReceiveOrder( uint32_t clientId, const sword::AutomatOrder& msg )
 {
-    return pOrderManager_->OnReceiveMission( msg );
+    return pOrderManager_->OnReceiveMission( clientId, msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveFragOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
+void MIL_Automate::OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
 {
-    pOrderManager_->OnReceiveFragOrder( msg, sendAck );
+    pOrderManager_->OnReceiveFragOrder( clientId, msg, sendAck );
 }
 
 // -----------------------------------------------------------------------------

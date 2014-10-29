@@ -31,9 +31,11 @@
 MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
                                   const DEC_KnowledgeResolver_ABC& knowledgeResolver,
                                   uint32_t id,
+                                  uint32_t clientId,
                                   const boost::shared_ptr< MIL_Mission_ABC >& parent )
     : type_             ( type )
     , id_               ( id )
+    , clientId_         ( clientId )
     , parentId_         ( parent ? parent->GetId() : 0 )
     , context_          ( parent ? parent->context_ : MIL_OrderContext( true ) )
     , knowledgeResolver_( knowledgeResolver )
@@ -52,10 +54,12 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
 MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
                                   const DEC_KnowledgeResolver_ABC& knowledgeResolver,
                                   uint32_t id,
+                                  uint32_t clientId,
                                   const sword::MissionParameters& parameters,
                                   const boost::optional< MT_Vector2D >& orientation )
     : type_             ( type )
     , id_               ( id )
+    , clientId_         ( clientId )
     , parentId_         ( 0 )
     , orientation_      ( orientation )
     , context_          ( orientation ? MIL_OrderContext( parameters, *orientation, knowledgeResolver ) : MIL_OrderContext( false ) )
@@ -70,9 +74,11 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
 // -----------------------------------------------------------------------------
 MIL_Mission_ABC::MIL_Mission_ABC( const MIL_Mission_ABC& rhs,
                                   const DEC_KnowledgeResolver_ABC& knowledgeResolver,
-                                  uint32_t id )
+                                  uint32_t id,
+                                  uint32_t clientId )
     : type_             ( rhs.type_ )
     , id_               ( id )
+    , clientId_         ( clientId )
     , parentId_         ( 0 )
     , context_          ( rhs.context_ )
     , knowledgeResolver_( knowledgeResolver )
@@ -397,6 +403,11 @@ uint32_t MIL_Mission_ABC::GetId() const
     return id_;
 }
 
+uint32_t MIL_Mission_ABC::GetClientId() const
+{
+    return clientId_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::GetParentId
 // Created: SLI 2013-11-06
@@ -415,6 +426,7 @@ void MIL_Mission_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> context_;
     file >> parameters_;
     file >> const_cast< uint32_t& >( id_ );
+    file >> const_cast< uint32_t& >( clientId_ );
     file >> const_cast< uint32_t& >( parentId_ );
 }
 
@@ -427,5 +439,6 @@ void MIL_Mission_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int )
     file << context_;
     file << parameters_;
     file << id_;
+    file << clientId_;
     file << parentId_;
 }

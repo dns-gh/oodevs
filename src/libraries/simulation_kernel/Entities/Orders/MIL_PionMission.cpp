@@ -38,8 +38,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PionMission )
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type,
                                   MIL_AgentPion& pion,
                                   uint32_t id,
+                                  uint32_t clientId,
                                   const boost::shared_ptr< MIL_Mission_ABC >& parent )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), id, parent )
+    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), id, clientId, parent )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -53,8 +54,9 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type,
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type,
                                   MIL_AgentPion& pion,
                                   uint32_t id,
+                                  uint32_t clientId,
                                   const sword::MissionParameters& parameters )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), id, parameters,
+    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), id, clientId, parameters,
                               pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
@@ -67,9 +69,10 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type,
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion,
-                                 const MIL_PionMission& rhs,
-                                 uint32_t id )
-    : MIL_Mission_ABC       ( rhs, pion.GetKnowledge(), id )
+                                  const MIL_PionMission& rhs,
+                                  uint32_t id,
+                                  uint32_t clientId )
+    : MIL_Mission_ABC       ( rhs, pion.GetKnowledge(), id, clientId )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -91,7 +94,7 @@ MIL_PionMission::~MIL_PionMission()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_Mission_ABC > MIL_PionMission::CreateCopy( MIL_AgentPion& target, uint32_t id ) const
 {
-    return boost::make_shared< MIL_PionMission >( target, *this, id );
+    return boost::make_shared< MIL_PionMission >( target, *this, id, GetClientId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +166,7 @@ void MIL_PionMission::Send( ActionManager& actions ) const
     asn().set_id( GetId() );
     asn().set_parent( GetParentId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    const auto action = actions.Register( asn() );
+    const auto action = actions.Register( GetClientId(), asn() );
     if( action.created )
         actions.Send( action.id, 0, "" );
 }
@@ -190,11 +193,13 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PionMission* mission, const unsigned int /*version*/ )
 {
     const MIL_AgentPion* const pion = &mission->pion_;
-    unsigned int idType = mission->type_.GetID();
-    uint32_t id = mission->GetId();
+    const unsigned int idType = mission->type_.GetID();
+    const uint32_t id = mission->GetId();
+    const uint32_t client = mission->GetClientId();
     archive << pion;
     archive << idType;
     archive << id;
+    archive << client;
 }
 
 template< typename Archive >
@@ -205,14 +210,16 @@ void load_construct_data( Archive& archive, MIL_PionMission* mission, const unsi
         MIL_AgentPion* pion = 0;
         unsigned int idType = 0;
         uint32_t id = 0;
+        uint32_t client = 0;
         archive >> pion;
         archive >> idType;
         archive >> id;
+        archive >> client;
         const MIL_MissionType_ABC* type = MIL_PionMissionType::Find( idType );
         if( !type )
             throw MASA_EXCEPTION( "unknown unit mission type: "
                     + boost::lexical_cast< std::string >( idType ));
-        ::new( mission ) MIL_PionMission( *type, *pion, id, boost::shared_ptr< MIL_Mission_ABC >() );
+        ::new( mission ) MIL_PionMission( *type, *pion, id, client, boost::shared_ptr< MIL_Mission_ABC >() );
     }
     catch( const std::exception& e )
     {
@@ -220,20 +227,8 @@ void load_construct_data( Archive& archive, MIL_PionMission* mission, const unsi
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_PionMission::load
-// Created: LGY 2011-06-06
-// -----------------------------------------------------------------------------
-void MIL_PionMission::load( MIL_CheckPointInArchive& file, const unsigned int )
+template< typename Archive >
+void MIL_PionMission::serialize( Archive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_Mission_ABC >( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PionMission::save
-// Created: LGY 2011-06-06
-// -----------------------------------------------------------------------------
-void MIL_PionMission::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    file << boost::serialization::base_object< MIL_Mission_ABC >( *this );
+    file & boost::serialization::base_object< MIL_Mission_ABC >( *this );
 }

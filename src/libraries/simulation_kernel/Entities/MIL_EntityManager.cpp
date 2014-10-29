@@ -1016,7 +1016,7 @@ void MIL_EntityManager::OnReceiveUnitOrder( const UnitOrder& message, unsigned i
         MIL_AgentPion* pPion = FindAgentPion( message.tasker().id() );
         if( !pPion )
             throw MASA_BADUNIT_ORDER( "invalid unit: " << message.tasker().id() );
-        ack().set_id( pPion->OnReceiveOrder( message ) );
+        ack().set_id( pPion->OnReceiveOrder( clientId, message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
@@ -1040,7 +1040,7 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
         MIL_Automate* pAutomate = FindAutomate( message.tasker().id() );
         if( !pAutomate )
             throw MASA_BADUNIT_ORDER( "invalid automat: " << message.tasker().id() );
-        ack().set_id( pAutomate->OnReceiveOrder( message ) );
+        ack().set_id( pAutomate->OnReceiveOrder( clientId, message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
@@ -1057,7 +1057,7 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
 void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::UnitMagicActionAck ack;
-    const auto actionId = actions_.Register( message );
+    const auto actionId = actions_.Register( clientId, message );
     ack().set_id( actionId );
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
@@ -1440,7 +1440,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    const auto actionId = actions_.Register( message );
+    const auto actionId = actions_.Register( clientId, message );
     client::KnowledgeGroupMagicActionAck ack;
     ack().set_id( actionId );
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
@@ -1480,7 +1480,7 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned
         MIL_Population* pPopulation = populationFactory_->Find( message.tasker().id() );
         if( !pPopulation )
             throw MASA_BADUNIT_ORDER( "invalid crowd: " << message.tasker().id() );
-        ack().set_id( pPopulation->OnReceiveOrder( message ) );
+        ack().set_id( pPopulation->OnReceiveOrder( clientId, message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
@@ -1512,17 +1512,17 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
         if( MIL_Automate* pAutomate = FindAutomate( *taskerId ) )
         {
             ack().mutable_tasker()->mutable_automat()->set_id( *taskerId );
-            pAutomate->OnReceiveFragOrder( message, sendAck );
+            pAutomate->OnReceiveFragOrder( clientId, message, sendAck );
         }
         else if( MIL_Population* pPopulation = FindPopulation( *taskerId ) )
         {
             ack().mutable_tasker()->mutable_crowd()->set_id( *taskerId );
-            pPopulation->OnReceiveFragOrder( message, sendAck );
+            pPopulation->OnReceiveFragOrder( clientId, message, sendAck );
         }
         else if( MIL_AgentPion* pPion = FindAgentPion( *taskerId ) )
         {
             ack().mutable_tasker()->mutable_unit()->set_id( *taskerId );
-            pPion->OnReceiveFragOrder( message, sendAck );
+            pPion->OnReceiveFragOrder( clientId, message, sendAck );
         }
         else
             throw MASA_BADUNIT_ORDER( "invalid automat, crowd or unit: " << *taskerId );
@@ -1554,7 +1554,7 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message, unsigned int nCtx, unsigned int clientId )
 {
-    const auto actionId = actions_.Register( message );
+    const auto actionId = actions_.Register( clientId, message );
     client::SetAutomatModeAck ack;
     ack().set_id( actionId );
     ack().mutable_automate()->set_id( message.automate().id() );
@@ -1602,7 +1602,7 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    const auto actionId = actions_.Register( message );
+    const auto actionId = actions_.Register( clientId, message );
     client::ObjectMagicActionAck ack;
     ack().set_id( actionId );
     pObjectManager_->OnReceiveObjectMagicAction( message, ack(), *armyFactory_, *pFloodModel_ );

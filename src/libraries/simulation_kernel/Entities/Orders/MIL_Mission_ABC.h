@@ -60,6 +60,7 @@ public:
     virtual MIL_AgentPion& GetPion() const;
     virtual MIL_Automate&  GetAutomate() const;
     virtual unsigned int GetOwnerId() const;
+    virtual uint32_t GetClientId() const;
 
     virtual void Send( ActionManager& actions ) const = 0;
 
@@ -94,10 +95,21 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, uint32_t id, const boost::shared_ptr< MIL_Mission_ABC >& parent );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, uint32_t id, const sword::MissionParameters& parameters,
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type,
+                     const DEC_KnowledgeResolver_ABC& knowledgeResolver,
+                     uint32_t id,
+                     uint32_t clientId,
+                     const boost::shared_ptr< MIL_Mission_ABC >& parent );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type,
+                     const DEC_KnowledgeResolver_ABC& knowledgeResolver,
+                     uint32_t id,
+                     uint32_t clientId,
+                     const sword::MissionParameters& parameters,
                      const boost::optional< MT_Vector2D >& orientation );
-    MIL_Mission_ABC( const MIL_Mission_ABC& rhs, const DEC_KnowledgeResolver_ABC& knowledgeResolver, uint32_t id );
+    MIL_Mission_ABC( const MIL_Mission_ABC& rhs,
+                     const DEC_KnowledgeResolver_ABC& knowledgeResolver,
+                     uint32_t id,
+                     uint32_t clientId );
     //@}
 
     //! @name Helpers
@@ -124,6 +136,7 @@ private:
     //@{
     const DEC_KnowledgeResolver_ABC& knowledgeResolver_;
     const uint32_t id_;
+    const uint32_t clientId_;
     const uint32_t parentId_;
     boost::optional< MT_Vector2D > orientation_;
     MIL_OrderContext context_;

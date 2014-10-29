@@ -1262,18 +1262,18 @@ double MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, 
 // Name: MIL_Population::OnReceiveOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-uint32_t MIL_Population::OnReceiveOrder( const sword::CrowdOrder& msg )
+uint32_t MIL_Population::OnReceiveOrder( uint32_t clientId, const sword::CrowdOrder& msg )
 {
-    return orderManager_->OnReceiveMission( msg );
+    return orderManager_->OnReceiveMission( clientId, msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveFragOrder
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
+void MIL_Population::OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
 {
-    orderManager_->OnReceiveFragOrder( msg, sendAck );
+    orderManager_->OnReceiveFragOrder( clientId, msg, sendAck );
 }
 
 // -----------------------------------------------------------------------------

@@ -37,9 +37,8 @@ public:
 
     // @name Events
     //@{
-    void     OnReceiveFragOrder( const sword::FragOrder& asn, const std::function< void( uint32_t ) >& sendAck );
-    uint32_t OnReceiveMission  ( const sword::AutomatOrder& asn );
-    void     OnReceiveMission  ( const MIL_MissionType_ABC& type );
+    void     OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& asn, const std::function< void( uint32_t ) >& sendAck );
+    uint32_t OnReceiveMission  ( uint32_t clientId, const sword::AutomatOrder& asn );
     //@}
 
     //! @name Operations

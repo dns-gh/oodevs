@@ -3203,6 +3203,8 @@ message Action {
     optional AutomatOrder         automat_order          = 11;
     optional CrowdOrder           crowd_order            = 12;
     optional FragOrder            frag_order             = 13;
+    //! Hide this action on clients
+    optional bool                 hidden                 = 14;
 }
 
 message ActionDestruction {

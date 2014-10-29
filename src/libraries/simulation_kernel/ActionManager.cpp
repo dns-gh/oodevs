@@ -61,6 +61,17 @@ void ActionManager::serialize( Archive& ar, const unsigned int )
     ar & ids_;
     ar & actions_;
     ar & orders_;
+    // hidden client ids stay hidden after checkpoints
+    ar & hidden_;
+}
+
+void ActionManager::Hide( uint32_t client, uint32_t id )
+{
+    hidden_.insert( client );
+    auto it = actions_.find( id );
+    if( it == actions_.end() )
+        return;
+    it->second.set_hidden( true );
 }
 
 namespace
@@ -83,6 +94,8 @@ namespace
 
     void Send( const sword::Action& src )
     {
+        if( src.hidden() )
+            return;
         client::Action action;
         action() = src;
         action.Send( NET_Publisher_ABC::Publisher() );
@@ -100,38 +113,39 @@ void ActionManager::Send( uint32_t id, int32_t code, const std::string& msg )
     ::Send( it->second );
 }
 
-uint32_t ActionManager::Register( const sword::Action& msg )
+uint32_t ActionManager::Register( uint32_t client, const sword::Action& msg )
 {
     ++ids_;
     auto it = actions_.insert( std::make_pair( ids_, msg ) );
     auto& action = it.first->second;
     action.set_id( ids_ );
+    action.set_hidden( hidden_.count( client ) != 0 );
     return ids_;
 }
 
-uint32_t ActionManager::Register( const sword::MagicAction& msg )
+uint32_t ActionManager::Register( uint32_t client, const sword::MagicAction& msg )
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_magic_action ) );
+    return Register( client, MakeAction( msg, &sword::Action::mutable_magic_action ) );
 }
 
-uint32_t ActionManager::Register( const sword::UnitMagicAction& msg )
+uint32_t ActionManager::Register( uint32_t client, const sword::UnitMagicAction& msg )
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_unit_magic_action ) );
+    return Register( client, MakeAction( msg, &sword::Action::mutable_unit_magic_action ) );
 }
 
-uint32_t ActionManager::Register( const sword::ObjectMagicAction& msg )
+uint32_t ActionManager::Register( uint32_t client, const sword::ObjectMagicAction& msg )
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_object_magic_action ) );
+    return Register( client, MakeAction( msg, &sword::Action::mutable_object_magic_action ) );
 }
 
-uint32_t ActionManager::Register( const sword::KnowledgeMagicAction& msg )
+uint32_t ActionManager::Register( uint32_t client, const sword::KnowledgeMagicAction& msg )
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_knowledge_magic_action ) );
+    return Register( client, MakeAction( msg, &sword::Action::mutable_knowledge_magic_action ) );
 }
 
-uint32_t ActionManager::Register( const sword::SetAutomatMode& msg )
+uint32_t ActionManager::Register( uint32_t client, const sword::SetAutomatMode& msg )
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_set_automat_mode ) );
+    return Register( client, MakeAction( msg, &sword::Action::mutable_set_automat_mode ) );
 }
 
 namespace
@@ -143,34 +157,34 @@ namespace
     }
 }
 
-ActionManager::Order ActionManager::RegisterOrder( uint32_t order, const sword::Action& msg )
+ActionManager::Order ActionManager::RegisterOrder( uint32_t client, uint32_t order, const sword::Action& msg )
 {
     auto it = orders_.find( order );
     if( it != orders_.end() )
         return MakeOrder( false, it->second );
-    const uint32_t id = Register( msg );
+    const uint32_t id = Register( client, msg );
     orders_.insert( std::make_pair( order, id ) );
     return MakeOrder( true, id );
 }
 
-ActionManager::Order ActionManager::Register( const sword::UnitOrder& msg )
+ActionManager::Order ActionManager::Register( uint32_t client, const sword::UnitOrder& msg )
 {
-    return RegisterOrder( msg.id(), MakeAction( msg, &sword::Action::mutable_unit_order ) );
+    return RegisterOrder( client, msg.id(), MakeAction( msg, &sword::Action::mutable_unit_order ) );
 }
 
-ActionManager::Order ActionManager::Register( const sword::AutomatOrder& msg )
+ActionManager::Order ActionManager::Register( uint32_t client, const sword::AutomatOrder& msg )
 {
-    return RegisterOrder( msg.id(), MakeAction( msg, &sword::Action::mutable_automat_order ) );
+    return RegisterOrder( client, msg.id(), MakeAction( msg, &sword::Action::mutable_automat_order ) );
 }
 
-ActionManager::Order ActionManager::Register( const sword::CrowdOrder& msg )
+ActionManager::Order ActionManager::Register( uint32_t client, const sword::CrowdOrder& msg )
 {
-    return RegisterOrder( msg.id(), MakeAction( msg, &sword::Action::mutable_crowd_order ) );
+    return RegisterOrder( client, msg.id(), MakeAction( msg, &sword::Action::mutable_crowd_order ) );
 }
 
-uint32_t ActionManager::Register( const sword::FragOrder& msg )
+uint32_t ActionManager::Register( uint32_t client, const sword::FragOrder& msg )
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_frag_order ) );
+    return Register( client, MakeAction( msg, &sword::Action::mutable_frag_order ) );
 }
 
 void ActionManager::Unregister( uint32_t id )
