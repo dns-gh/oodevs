@@ -121,15 +121,15 @@ const std::string& gui::GetFireIndicatorsOptionName()
 
 struct gui::FireColor
 {
-    explicit FireColor( QColor color )
+    explicit FireColor( QColor color, const GLView_ABC& view )
     {
-        qreal r, g, b, a;
-        color.getRgbF( &r, &g, &b, &a );
+        qreal r, g, b;
+        color.getRgbF( &r, &g, &b );
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glColor4f( static_cast< float >( r ),
                    static_cast< float >( g ),
                    static_cast< float >( b ),
-                   static_cast< float >( a ) );
+                   view.GetCurrentAlpha() );
     }
 
     ~FireColor()
@@ -169,7 +169,7 @@ namespace
         for( auto it = data.begin(); it != data.end(); ++it )
             if( it->isValid() )
                 return *it;
-        return QColor( Qt::red );
+        return Qt::red;
     }
 
     boost::optional< QColor > GetFireColor( const GLOptions& opts, const kernel::Entity_ABC& entity )
@@ -194,10 +194,10 @@ namespace
     {
         const auto& gl = view.GetOptions();
         if( const auto color = GetFireColor( gl, entity ) )
-            return std::make_shared< FireColor >( *color );
+            return std::make_shared< FireColor >( *color, view );
         const auto opts = gl.GetFireOptions( group );
         const auto color = SelectColor( opts, name, GetKarma( entity ) );
-        return std::make_shared< FireColor >( color );
+        return std::make_shared< FireColor >( color, view );
     }
 
     QString GetAgentType( const kernel::Entity_ABC& entity )
