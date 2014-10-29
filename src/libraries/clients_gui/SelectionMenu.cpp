@@ -20,6 +20,7 @@
 #include "ImageWrapper.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
+#include "GLOptions.h"
 #include "StandardIconProxyStyle.h"
 
 #include "clients_kernel/App6Symbol.h"
@@ -68,10 +69,9 @@ SelectionMenu::SelectionMenu( Controllers& controllers, EntitySymbols& entitySym
     , parent2d_( 0 )
     , parent3d_( 0 )
     , moreElements_( 0u )
-    , mode3d_( false )
     , current_( 0 )
 {
-    controllers_.options_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ SelectionMenu::SelectionMenu( Controllers& controllers, EntitySymbols& entitySym
 // -----------------------------------------------------------------------------
 SelectionMenu::~SelectionMenu()
 {
-    controllers_.options_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -174,6 +174,7 @@ QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, f
 // -----------------------------------------------------------------------------
 bool SelectionMenu::GenerateIcons()
 {
+    bool mode3d = tools_.GetOptions().Get( "3D" ).To< bool >();
     bool allIconsGenerated = true;
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
     {
@@ -264,7 +265,7 @@ bool SelectionMenu::GenerateIcons()
                         const std::string levelName  = symbol->GetLevel();
                         pixmap = entitySymbols_.GetSymbol( *entity, symbolName, levelName, QSize( 64, 64 ), EntitySymbols::eColorWithModifier );
                     }
-                    if( allIconsGenerated && ( !mode3d_ && pixmap.isNull() ) )
+                    if( allIconsGenerated && ( !mode3d && pixmap.isNull() ) )
                         allIconsGenerated = false;
                 }
             }
@@ -301,7 +302,8 @@ namespace
         }
         virtual void wheelEvent( QWheelEvent* event )
         {
-            parent_->wheelEvent( event );
+            if( parent_ )
+                parent_->wheelEvent( event );
         }
 
     private:
@@ -335,7 +337,7 @@ void SelectionMenu::GenerateMenu()
     }
 
     std::unique_ptr< Menu_ABC > menu;
-    if( mode3d_ )
+    if( tools_.GetOptions().Get( "3D" ).To< bool >() )
         menu.reset( new RichMenu< gui::Gl3dWidget >( parent3d_ ) );
     else
         menu.reset( new RichMenu< gui::GlWidget >( parent2d_ ) );
@@ -468,16 +470,6 @@ void SelectionMenu::FilterElement( const Layer_ABC::T_LayerElements& extractedEl
         extractedElements_ = filteredElements;
         moreElements_ = static_cast< unsigned int > ( total ) - MAX_ELEMENT;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: SelectionMenu::OptionChanged
-// Created: LGY 2013-03-13
-// -----------------------------------------------------------------------------
-void SelectionMenu::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "3D" )
-        mode3d_ = value.To< bool >();
 }
 
 // -----------------------------------------------------------------------------

@@ -83,7 +83,7 @@ void GlSelector::Load()
     }
 
     widget2d_ = std::make_shared< GlWidget >( this, proxy_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_, drawingTypes_ );
-    widget3d_ = std::make_shared< Gl3dWidget >(this, proxy_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_, widget2d_.get() );
+    widget3d_ = std::make_shared< Gl3dWidget >( this, proxy_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_, widget2d_.get() );
 
     widget2d_->Load( config_ );
     widget2d_->Configure( strategy_ );
@@ -106,7 +106,7 @@ void GlSelector::Load()
 
     InitializePasses();
     displayTimer_->start( controllers_.options_.GetOption( "RefreshRate" ).To< int >() );
-    ChangeTo( eWidget_2D );
+    ChangeTo( controllers_.options_.GetOption( "3D" ).To< bool >() ? eWidget_3D : eWidget_2D );
 }
 
 // -----------------------------------------------------------------------------
