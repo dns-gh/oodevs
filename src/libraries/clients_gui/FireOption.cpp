@@ -148,10 +148,10 @@ namespace
         return kernel::Karma::unknown_;
     }
 
-    QColor SelectColor( const T_FireOptions& opts, const QString& name, kernel::Karma karma )
+    QColor SelectColor( const T_FireOptions& options, const QString& name, kernel::Karma karma )
     {
         std::vector< QColor > data( 3 );
-        for( auto it = opts.begin(); it != opts.end(); ++it )
+        for( auto it = options.begin(); it != options.end(); ++it )
             if( it->name == name )
             {
                 if( it->karma == karma )
@@ -172,13 +172,13 @@ namespace
         return Qt::red;
     }
 
-    boost::optional< QColor > GetFireColor( const GLOptions& opts, const kernel::Entity_ABC& entity )
+    boost::optional< QColor > GetFireColor( const GLOptions& options, const kernel::Entity_ABC& entity )
     {
-        FireIndicators opt = FIRE_INDICATORS_DEFAULT;
-        if( opts.Has( GetFireIndicatorsOptionName() ) )
-            opt = static_cast< FireIndicators >( opts.Get( GetFireIndicatorsOptionName() ).To< int >() );
-        auto& strategy = opts.GetColorStrategy();
-        switch( opt )
+        auto& strategy = options.GetColorStrategy();
+        const auto option = options.Has( GetFireIndicatorsOptionName() )
+            ? static_cast< FireIndicators >( options.Get( GetFireIndicatorsOptionName() ).To< int >() )
+            : FIRE_INDICATORS_DEFAULT;
+        switch( option )
         {
             case FIRE_INDICATORS_SIDE: return strategy.FindBaseColor( entity );
             case FIRE_INDICATORS_UNIT: return strategy.FindColorWithModifiers( entity );
@@ -195,17 +195,15 @@ namespace
         const auto& gl = view.GetOptions();
         if( const auto color = GetFireColor( gl, entity ) )
             return std::make_shared< FireColor >( *color, view );
-        const auto opts = gl.GetFireOptions( group );
-        const auto color = SelectColor( opts, name, GetKarma( entity ) );
+        const auto color = SelectColor( gl.GetFireOptions( group ), name, GetKarma( entity ) );
         return std::make_shared< FireColor >( color, view );
     }
 
     QString GetAgentType( const kernel::Entity_ABC& entity )
     {
-        const auto* agent = dynamic_cast< const kernel::Agent_ABC* >( &entity );
-        if( !agent )
-            return QString();
-        return QString::fromStdString( agent->GetType().GetLocalizedName() );
+        if( const auto* agent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+            return QString::fromStdString( agent->GetType().GetLocalizedName() );
+        return QString();
     }
 }
 
@@ -217,8 +215,8 @@ std::shared_ptr< FireColor > gui::GetDirectFireColor( const GLView_ABC& view,
 
 std::shared_ptr< FireColor > gui::GetIndirectFireColor( const GLView_ABC& view,
                                                         const kernel::Entity_ABC& entity,
-                                                        const kernel::DotationType* dot )
+                                                        const kernel::DotationType* dotation )
 {
-    const QString name = dot ? QString::fromStdString( dot->GetName() ) : QString();
+    const QString name = dotation ? QString::fromStdString( dotation->GetName() ) : QString();
     return GetColor( view, FIRE_GROUP_INDIRECT, entity, name );
 }
