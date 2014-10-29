@@ -41,7 +41,6 @@ namespace
         MOCK_METHOD( IsNBC, 0 )
         MOCK_METHOD( GetUnitType, 0 )
         MOCK_METHOD( GetFeedbackTime, 0 )
-        MOCK_METHOD( RegisterFunctions, 2 )
         MOCK_METHOD( GetModel, 0 )
         MOCK_METHOD( GetDistanceAvantPoint, 1 )
         MOCK_METHOD( GetDistanceAvantLima, 0 )
