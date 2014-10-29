@@ -11,10 +11,10 @@
 #include "DEC_Population_Path.h"
 #include "DEC_Population_PathClass.h"
 #include "DEC_Population_PathfinderRule.h"
-#include "DEC_PathSection.h"
 #include "DEC_PathComputer_ABC.h"
 #include "DEC_PopulationContext.h"
 #include "Decision/DEC_PathType.h"
+#include "simulation_terrain/TER_PathSection.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Population_Path constructor
@@ -31,7 +31,7 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( context_ ) );
-        computer_->RegisterPathSection( *new DEC_PathSection( *computer_, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer_->RegisterPathSection( *new TER_PathSection( *computer_, std::move( rule ), *it, *(it + 1), false, false ) );
     }
 }
 

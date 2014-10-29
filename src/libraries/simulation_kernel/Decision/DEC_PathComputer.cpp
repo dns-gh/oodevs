@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathComputer.h"
 #include "DEC_PathFind_Manager.h"
-#include "DEC_PathSection.h"
 #include "MIL_AgentServer.h"
 #include "SlopeSpeedModifier.h"
 #include "Network/NET_ASN_Tools.h"
@@ -22,6 +21,7 @@
 #include "MT_Tools/MT_Line.h"
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_PathPoint.h"
+#include "simulation_terrain/TER_PathSection.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/make_shared.hpp>
 
@@ -107,7 +107,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
             nState_ = DEC_Path_ABC::eCanceled;
             return;
         }
-        DEC_PathSection& pathSection = **it;
+        TER_PathSection& pathSection = **it;
         NotifySectionStarted();
         if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
@@ -214,7 +214,7 @@ std::string DEC_PathComputer::GetPathAsString() const
     return strTmp.str();
 }
 
-void DEC_PathComputer::RegisterPathSection( DEC_PathSection& section )
+void DEC_PathComputer::RegisterPathSection( TER_PathSection& section )
 {
     pathSections_.push_back( &section );
 }

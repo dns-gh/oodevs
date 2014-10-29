@@ -33,7 +33,7 @@ public:
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void Cancel();
     virtual DEC_Path_ABC::E_State GetState() const;
-    virtual void RegisterPathSection( DEC_PathSection& section );
+    virtual void RegisterPathSection( TER_PathSection& section );
 
     virtual const MT_Vector2D& GetLastWaypoint() const;
     virtual const std::vector< MT_Vector2D >& GetComputedWaypoints() const;
@@ -55,7 +55,7 @@ private:
     std::string DEC_PathComputer::GetStateAsString() const;
 
 private:
-    typedef std::vector< DEC_PathSection* > T_PathSectionVector;
+    typedef std::vector< TER_PathSection* > T_PathSectionVector;
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 
 private:

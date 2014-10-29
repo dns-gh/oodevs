@@ -18,7 +18,6 @@
 #include "Decision/DEC_EquipmentListContext.h"
 #include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathFind_Manager.h"
-#include "Decision/DEC_PathSection.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PopulationContext.h"
 #include "Decision/DEC_Population_PathfinderRule.h"
@@ -27,6 +26,7 @@
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "simulation_terrain/TER_PathSection.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessageParameters.h"
@@ -103,7 +103,7 @@ void PathfindComputer::Compute( MIL_AgentPion& pion, const sword::PathfindReques
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
-        computer->RegisterPathSection( *new DEC_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
     }
     Compute( computer, message, ctx, clientId, magic );
 }
@@ -123,7 +123,7 @@ void PathfindComputer::Compute( const MIL_Population& population, const sword::P
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( context ) );
-        computer->RegisterPathSection( *new DEC_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
     }
     Compute( computer, message, ctx, clientId, magic );
 }
@@ -140,7 +140,7 @@ void PathfindComputer::Compute( const std::vector< const PHY_ComposanteTypePion*
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
-        computer->RegisterPathSection( *new DEC_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
     }
     Compute( computer, message, ctx, clientId, magic );
 }
