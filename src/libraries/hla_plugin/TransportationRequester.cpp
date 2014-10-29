@@ -18,11 +18,13 @@
 #include "ProtocolTools.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include <set>
 #include <algorithm>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/uuid/string_generator.hpp>
 #pragma warning( pop )
 
 
@@ -115,7 +117,8 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
                                                   InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
                                                   InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
                                                   InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender,
-                                                  InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender )
+                                                  InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender,
+                                                  dispatcher::Logger_ABC& logger)
     : missionCompleteReportId_( ResolveReportId( xis, "mission-complete" ) )
     , awaitingCarriersReportId_( ResolveReportId( xis, "awaiting-carriers", true ) )
     , pauseId_                ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "pause" ) ) )
@@ -131,6 +134,7 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
     , readySender_            ( readySender )
     , receivedSender_         ( receivedSender )
     , cancelSender_           ( cancelSender )
+    , logger_                 ( logger )
     , federateName_           ( xis.attribute<std::string>( "name", "SWORD" ) )
 {
     CONNECT( controller, *this, automat_order );
@@ -206,13 +210,20 @@ void TransportationRequester::ProcessTransport(const T& message, bool isAutmaton
         NetnDataTStruct transport;
         transport.appointment = NetnAppointmentStruct( embarkmentTime, rpr::WorldLocation( embarkmentPoint.X(), embarkmentPoint.Y(), 0. ) );
         transport.finalAppointment = NetnAppointmentStruct( debarkmentTime, rpr::WorldLocation( debarkmentPoint.X(), debarkmentPoint.Y(), 0. ) );
-        if( isAutmaton )
+        try
         {
-            SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
-            subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
+            if( isAutmaton )
+            {
+                SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
+                subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
+            }
+            else
+                transport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ), callsignResolver_.ResolveUniqueId( message.tasker().id() ), NetnObjectFeatureStruct() ) );
         }
-        else
-            transport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ), callsignResolver_.ResolveUniqueId( message.tasker().id() ), NetnObjectFeatureStruct() ) );
+        catch( const std::exception& e )
+        {
+            logger_.LogError( std::string( "Exception while proccessing objects to transport " ) + e.what() );
+        }
         request.transportData = NetnTransportStruct( transport );
         CopyService( request, contextRequests_[ context ] );
         contextRequests_[ context ].transportData = request.transportData;
@@ -245,13 +256,20 @@ void TransportationRequester::ProcessEmbark(const T& message, bool isAutomaton, 
         request.requestTimeOut = 0; // no timeout
         NetnDataEDStruct transport;
         transport.appointment = NetnAppointmentStruct( embarkmentTime, rpr::WorldLocation( embarkmentPoint.X(), embarkmentPoint.Y(), 0. ) );
-        if( isAutomaton )
+        try
         {
-            SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
-            subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
+            if( isAutomaton )
+            {
+                SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
+                subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
+            }
+            else
+                transport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ), callsignResolver_.ResolveUniqueId( message.tasker().id() ), NetnObjectFeatureStruct() ) );
         }
-        else
-            transport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ), callsignResolver_.ResolveUniqueId( message.tasker().id() ), NetnObjectFeatureStruct() ) );
+        catch( const std::exception& e )
+        {
+            logger_.LogError( std::string( "Exception while proccessing objects to embark/disembark " ) + e.what() );
+        }
         request.transportData = NetnTransportStruct( transport, transportType );
         CopyService( request, contextRequests_[ context ] );
         contextRequests_[ context ].transportData = request.transportData;
@@ -385,8 +403,40 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
     if( request == serviceStartedRequests_.left.end() )
         return;
     const interactions::NetnOfferConvoy& contextRequest = contextRequests_[ context ];
-    const std::vector< char > transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
-    const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
+    std::vector< char > transporterUniqueId;
+    try
+    {
+        transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
+        if( transporterUniqueId.empty() ) // NETN2 sends UUID instead of callsign
+        {
+            static boost::uuids::string_generator uuid_gen;
+            const boost::uuids::uuid u = uuid_gen( transporterCallsign );
+            transporterUniqueId.resize( u.size(), 0 );
+            std::copy(u.begin(), u.end(), transporterUniqueId.begin());
+        }
+    }
+    catch( const std::exception& e )
+    {
+        logger_.LogError( std::string( "Exception while proccessing transporter " ) + e.what() );
+        return;
+    }
+    bool transporterIdFound = false;
+    unsigned int transporterId;
+    try
+    {
+        transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
+        transporterIdFound = true;
+    }
+    catch( const std::exception& e )
+    {
+        logger_.LogError( std::string( "Exception while proccessing transporter " ) + e.what() );
+    }
+    if( !transporterIdFound )
+    {
+        logger_.LogError( "Transporter unit has no simulation ID : " + transporterCallsign );
+        return;
+    }
+
     std::for_each( units.list.begin(), units.list.end(), [&](const NetnObjectDefinitionStruct& unit)
     {
         try
