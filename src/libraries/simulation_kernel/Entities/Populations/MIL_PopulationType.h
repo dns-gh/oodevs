@@ -65,7 +65,6 @@ public:
     double GetDelay() const;
     bool CanCollideWithFlow() const;
     virtual const DEC_Model_ABC& GetModel() const;
-    virtual std::string GetArchetypeName() const;
     //@}
 
     //! @name Effects

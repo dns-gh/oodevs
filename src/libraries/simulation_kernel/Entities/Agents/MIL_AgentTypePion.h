@@ -69,17 +69,11 @@ public:
           double                            GetDistanceAvantLima             () const;
           double                            GetFeedbackTime() const;
           const MIL_HumanRepartition&       GetHumanRepartition              () const;
-    void SetBrainFunctions( const std::vector< std::string >& names );
     //@}
 
     //! @name Operators
     //@{
     bool operator==( const MIL_AgentTypePion& rhs ) const;
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const;
     //@}
 
 protected:
@@ -119,7 +113,6 @@ private:
     double                  rDistanceAvantLimas_;
     double                  rFeedbackTime_;
     MIL_HumanRepartition*   pHumanRepartition_;
-    std::vector< std::string > functions_;
 
 private:
     static T_PionTypeMap           pionTypes_;

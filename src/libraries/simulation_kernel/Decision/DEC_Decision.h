@@ -168,7 +168,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void InitBrain( const tools::Path& brainFile, const std::string& type, const std::string& archetype,
+    void InitBrain( const tools::Path& brainFile, const std::string& type,
                     const tools::Path& includePath, const std::string& groupName,
                     bool isMasalife, bool reload, const tools::Path& integrationDir );
     void CleanStateAfterCrash     ();
@@ -182,7 +182,6 @@ protected:
     virtual std::string GetGroupName() = 0;
     virtual void EndCleanStateAfterCrash  () = 0;
     virtual void RegisterUserFunctions( sword::Brain& brain ) = 0;
-    virtual void RegisterUserArchetypeFunctions( sword::Brain& brain ) = 0;
     void RegisterReportFunctions( sword::Brain& brain );
 
     template< typename Function >
@@ -289,7 +288,7 @@ namespace DEC_DecisionImpl
     void RegisterMissionParameters( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
     bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain,
                       boost::shared_ptr< sword::Brain >& pBrain, const tools::Path& includePath,
-                      const tools::Path& brainFile, bool isMasalife, const std::string& type, const std::string& archetype,
+                      const tools::Path& brainFile, bool isMasalife, const std::string& type,
                       bool reload, const tools::Path& integrationDir, sword::DEC_Logger* logger );
 }
 
@@ -304,25 +303,22 @@ namespace directia
 // Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::InitBrain( const tools::Path& brainFile, const std::string& type, const std::string& archetype,
+void DEC_Decision< T >::InitBrain( const tools::Path& brainFile, const std::string& type,
                                    const tools::Path& includePath,const std::string& groupName,
                                    bool isMasalife, bool reload, const tools::Path& integrationDir )
-{
+{ 
     tools::Path realIncludePath = includePath;
     realIncludePath.Normalize();
     isMasalife_ = isMasalife;
     pRefs_.reset( 0 ); //Must delete ScriptRef before calling Brain destructor and destroy vm
     boost::shared_ptr< sword::Brain > pArchetypeBrain;
 
-    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, archetype, reload, integrationDir, logger_ );
+    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload, integrationDir, logger_ );
 
     RegisterSelf( *pBrain_ );
 
     if( newBrain )
-    {
         DEC_DecisionImpl::RegisterCommonUserFunctions( *pArchetypeBrain, isMasalife_ );
-        RegisterUserArchetypeFunctions( *pArchetypeBrain );
-    }
 
     RegisterUserFunctions( *pBrain_ );
 
@@ -376,8 +372,7 @@ void DEC_Decision< T >::SetModel( const DEC_Model_ABC& model )
 {
     model_ = &model;
     assert( pEntity_ );
-    auto archetype = pEntity_->GetType().GetArchetypeName();
-    InitBrain( model.GetScriptFile(), model.GetDIAType(), archetype, model.GetIncludePath(),
+    InitBrain( model.GetScriptFile(), model.GetDIAType(), model.GetIncludePath(),
                GetAutomate().GetName(), model.IsMasalife(), false, model.GetIntegrationDir() );
 }
 
@@ -1402,8 +1397,7 @@ void DEC_Decision< T >::Reload( bool force, bool doInitBrain )
 {
     if( doInitBrain ) {
         assert( pEntity_ );
-        auto archetype = pEntity_->GetType().GetArchetypeName();
-        InitBrain( model_->GetScriptFile(), model_->GetDIAType(), archetype, model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), force, model_->GetIntegrationDir() );
+        InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), force, model_->GetIntegrationDir() );
     }
     StartDefaultBehavior();
 }

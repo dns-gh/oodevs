@@ -19,11 +19,7 @@
 #include "Tools/MIL_HumanRepartition.h"
 #include "Units/PHY_UnitType.h"
 
-#include "Decision/Brain.h"
-#include "Decision/DEC_AgentFunctions.h"
-#include "Decision/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/DEC_Representations.h"
-#include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Workspace.h"
 
 #include "Entities/Specialisations/LOG/TC2/MIL_AgentTypePionLOGTC2.h"
@@ -123,9 +119,6 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
             -> const MIL_AgentTypePion*
         {
             auto t = new MIL_AgentTypePion( name, type, xis );
-            t->SetBrainFunctions( boost::assign::list_of
-                    ( "DEC_DecontaminerZone" )
-                    ( "DEC_Agent_SeDecontaminer" ));
             t->SetNBC( true );
             return t;
         };
@@ -407,37 +400,6 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_
         ext->RegisterRoles( pion );
 }
 
-namespace
-{
-
-void RegisterFunction( const std::string& name,  sword::Brain& brain,
-        MIL_Agent_ABC& agent )
-{
-    if( name == "DEC_DecontaminerZone" )
-        brain.RegisterFunction( name.c_str(),
-            std::function< void( const TER_Localisation* ) >(
-                boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone,
-                    boost::cref( agent ), _1 ) ) );
-    else if( name == "DEC_Agent_SeDecontaminer" )
-        brain.RegisterFunction( name.c_str(),
-            boost::bind( &DEC_AgentFunctions::SelfDecontaminate, boost::ref( agent ) ) );
-    else
-        throw MASA_EXCEPTION(
-                "cannot register unknown unit decisional method: " + name );
-}
-
-} // namespace
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePion::RegisterFunctions
-// Created: LDC 2009-04-23
-// -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const
-{
-    for( auto it = functions_.begin(); it != functions_.end(); ++it )
-        RegisterFunction( *it, brain, agent );
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::Find
 // Created: NLD 2004-08-09
@@ -525,9 +487,3 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
 {
     return this == &rhs; //$$ A changer quand IDs
 }
-
-void MIL_AgentTypePion::SetBrainFunctions( const std::vector< std::string >& names )
-{
-    functions_ = names;
-}
-

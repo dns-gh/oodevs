@@ -131,7 +131,6 @@ protected:
     virtual std::string GetGroupName();
 
     virtual void RegisterUserFunctions( sword::Brain& brain );
-    virtual void RegisterUserArchetypeFunctions( sword::Brain& brain );
 
     virtual void PostStartMission();
     virtual void PostStopMission();

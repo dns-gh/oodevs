@@ -15,15 +15,14 @@
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Workspace.h"
-#include "Decision/DEC_Tools.h"
 #include "MIL_AgentServer.h"
-#include "Entities/Specialisations/ASA/MIL_AutomateTypeASA.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeBaseLOG.h"
 #include "Entities/Specialisations/Refugie/MIL_AutomateTypeREFUGIE.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
+
 
 MIL_AutomateType::T_AutomateTypeAllocatorMap  MIL_AutomateType::automateTypeAllocators_;
 MIL_AutomateType::T_AutomateTypeMap           MIL_AutomateType::automateTypes_;
@@ -46,7 +45,7 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing automate types" );
     automateTypeAllocators_[ "Automate ABC"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ALAT"                   ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate ASA"                    ] = &MIL_AutomateTypeASA    ::Create;
+    automateTypeAllocators_[ "Automate ASA"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ASS"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ASY"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate CIRCULATION"            ] = &MIL_AutomateType       ::Create;
@@ -278,15 +277,6 @@ MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID,
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateType::RegisterFunctions
-// Created: LDC 2009-04-23
-// -----------------------------------------------------------------------------
-void MIL_AutomateType::RegisterFunctions( sword::Brain& /*brain*/, MIL_Automate& /*automat*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::FindAutomateType
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
@@ -326,11 +316,6 @@ const DEC_Model_ABC& MIL_AutomateType::GetModel() const
 {
     assert( pModel_ );
     return *pModel_;
-}
-
-std::string MIL_AutomateType::GetArchetypeName() const
-{
-    return "MIL_AutomateType";
 }
 
 // -----------------------------------------------------------------------------

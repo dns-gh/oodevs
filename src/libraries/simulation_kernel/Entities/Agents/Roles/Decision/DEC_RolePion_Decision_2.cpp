@@ -68,15 +68,6 @@
 #include "MIL_Time_ABC.h"
 
 // -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::RegisterUserArchetypeFunctions
-// Created: ADY 2010-08-02
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::RegisterUserArchetypeFunctions( sword::Brain& brain )
-{
-    brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::RegisterUserFunctions
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
@@ -721,9 +712,66 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_DeleteRepresentation",
         std::function< void ( boost::shared_ptr< MIL_FragOrder > ) > ( boost::bind( &DEC_MiscFunctions::DeleteOrderRepresentation , boost::ref( GetPion() ), _1 ) ) );
 
-    pEntity_->GetType().RegisterFunctions( brain, GetPion() );
-    //
     // Critical Intelligence
     RegisterFunction( "DEC_ObtenirRenseignementCritiqueSurFoule",
          std::function< std::string( int ) >(boost::bind( &DEC_KnowledgePopulationFunctions::GetCriticalIntelligence, boost::cref( GetPion() ), _1 ) ) );
+
+    brain.RegisterFunction( "DEC_DecontaminerZone",
+        std::function< void( const TER_Localisation* ) >( boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone, boost::cref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Agent_SeDecontaminer",
+        boost::bind( &DEC_AgentFunctions::SelfDecontaminate, boost::ref( GetPion() ) ) );
+
+    brain.RegisterFunction( "DEC_Maintenance_ActiverChaine",
+        boost::bind( &DEC_LogisticFunctions::PionMaintenanceEnableSystem, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_DesactiverChaine",
+        boost::bind( &DEC_LogisticFunctions::PionMaintenanceDisableSystem, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_ChangerPriorites",
+        std::function< void( const std::vector< const PHY_ComposanteTypePion* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangePriorities, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_ChangerPrioritesTactiques",
+        std::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Maintenance_ChangerRegimeTravail",
+        std::function< void( int ) >( boost::bind( &DEC_LogisticFunctions::PionMaintenanceChangeWorkRate, boost::ref( GetPion() ), _1 ) ) );
+
+    brain.RegisterFunction( "DEC_Sante_ActiverChaine",
+        boost::bind( &DEC_LogisticFunctions::PionMedicalEnableSystem, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Sante_DesactiverChaine",
+        boost::bind( &DEC_LogisticFunctions::PionMedicalDisableSystem, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Sante_ActiverFonctionTri",
+        boost::bind( &DEC_LogisticFunctions::PionMedicalEnableSortingFunction, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Sante_DesactiverFonctionTri",
+        boost::bind( &DEC_LogisticFunctions::PionMedicalDisableSortingFunction, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Sante_ActiverFonctionSoin",
+        boost::bind( &DEC_LogisticFunctions::PionMedicalEnableHealingFunction, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Sante_DesactiverFonctionSoin",
+        boost::bind( &DEC_LogisticFunctions::PionMedicalDisableHealingFunction, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Sante_ChangerPriorites",
+        std::function< void( const std::vector< const PHY_HumanWound* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMedicalChangePriorities, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Sante_ChangerPrioritesTactiques",
+        std::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities, boost::ref( GetPion() ), _1 ) ) );
+
+    brain.RegisterFunction( "DEC_Ravitaillement_ActiverChaine",
+        boost::bind( &DEC_LogisticFunctions::PionSupplyEnableSystem, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_DesactiverChaine",
+        boost::bind( &DEC_LogisticFunctions::PionSupplyDisableSystem, boost::ref( GetPion() ) ) );
+
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue",
+        boost::bind( &DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue",
+        boost::bind( &DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue",
+        boost::bind( &DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_FinMission",
+        boost::bind( &DEC_LogisticFunctions::ConvoyEndMission, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_ActionCourante",
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetCurrentAction, boost::cref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_DestinataireCourant",
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient, boost::cref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_Ravitailleur",
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetSupplier, boost::cref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_Transporteur",
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetTransportersProvider, boost::cref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination",
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetPathToNextDestination, boost::cref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_EstFluxPousse",
+        boost::bind( &DEC_LogisticFunctions::ConvoyIsPushedFlow, boost::cref( GetPion() ) ) );
 }
