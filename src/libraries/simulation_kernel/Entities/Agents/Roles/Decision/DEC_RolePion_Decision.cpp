@@ -703,7 +703,7 @@ void DEC_RolePion_Decision::SetpionEnEscorte( DEC_Decision_ABC* value )
 // Name: DEC_RolePion_Decision::GetitMvt
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_RolePion_Decision::GetitMvt() const
+boost::shared_ptr< TER_Path_ABC > DEC_RolePion_Decision::GetitMvt() const
 {
     return itMvt_;
 }
@@ -712,7 +712,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_RolePion_Decision::GetitMvt() const
 // Name: DEC_RolePion_Decision::SetitMvt
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::SetitMvt( const boost::shared_ptr< DEC_Path_ABC >& value )
+void DEC_RolePion_Decision::SetitMvt( const boost::shared_ptr< TER_Path_ABC >& value )
 {
     itMvt_ = value;
 }

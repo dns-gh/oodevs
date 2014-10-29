@@ -98,7 +98,7 @@ MT_Vector2D PHY_MovingEntity_ABC::ExtrapolatePosition( const MT_Vector2D& positi
 // Name: PHY_MovingEntity_ABC::IsMovingOn
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool PHY_MovingEntity_ABC::IsMovingOn( const DEC_Path_ABC& path ) const
+bool PHY_MovingEntity_ABC::IsMovingOn( const TER_Path_ABC& path ) const
 {
     return pathWalker_->IsMovingOn( path );
 }

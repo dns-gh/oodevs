@@ -379,7 +379,7 @@ const T_PointVector& DEC_Agent_Path::GetNextWaypoints() const
     return nextWaypoints_;
 }
 
-DEC_Path_ABC::E_State DEC_Agent_Path::GetState() const
+TER_Path_ABC::E_State DEC_Agent_Path::GetState() const
 {
     return computer_->GetState();
 }

@@ -59,7 +59,7 @@ void DEC_Population_Path::Finalize()
     }
 }
 
-DEC_Path_ABC::E_State DEC_Population_Path::GetState() const
+TER_Path_ABC::E_State DEC_Population_Path::GetState() const
 {
     return computer_->GetState();
 }

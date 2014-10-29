@@ -10,9 +10,9 @@
 #ifndef __DEC_PathResult_h_
 #define __DEC_PathResult_h_
 
-#include "Decision/DEC_Path_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
+#include "simulation_terrain/TER_Path_ABC.h"
 
 namespace sword
 {
@@ -29,7 +29,7 @@ class TER_Polygon;
 // Created: JDY 03-02-11
 // Last modified: JVT 03-11-26
 //*****************************************************************************
-class DEC_PathResult : public DEC_Path_ABC
+class DEC_PathResult : public TER_Path_ABC
 {
 public:
     //! @name Types

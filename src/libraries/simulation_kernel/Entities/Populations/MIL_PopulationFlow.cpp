@@ -277,7 +277,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         ComputePath( primaryDestination_ );
     }
     // Split management : $$ bof
-    if( pTailPath_ && pTailPath_->GetState() != DEC_Path_ABC::ePartial && pTailPath_->GetState() != DEC_Path_ABC::eValid )
+    if( pTailPath_ && pTailPath_->GetState() != TER_Path_ABC::ePartial && pTailPath_->GetState() != TER_Path_ABC::eValid )
         return;
     assert( pHeadPath_ );
     boost::shared_ptr< DEC_PathResult > pHeadPath = boost::dynamic_pointer_cast< DEC_PathResult >( pHeadPath_ );
@@ -650,7 +650,7 @@ void MIL_PopulationFlow::UpdateSpeedLimit()
     speedLimit_ = std::numeric_limits< double >::max();
 
     if( !canCollideWithFlow_ || !pHeadPath_ ||
-        ( pHeadPath_->GetState() != DEC_Path_ABC::ePartial && pHeadPath_->GetState() != DEC_Path_ABC::eValid ) )
+        ( pHeadPath_->GetState() != TER_Path_ABC::ePartial && pHeadPath_->GetState() != TER_Path_ABC::eValid ) )
         return;
 
     TER_PopulationFlowManager::T_PopulationFlowVector flows;

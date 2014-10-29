@@ -23,12 +23,12 @@ class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class DEC_Knowledge_Object;
-class DEC_Path_ABC;
 class DEC_DIA_PathPoint;
 class DEC_PathResult;
 class DEC_PathType;
 class DEC_PathWalker;
 class TerrainData;
+class TER_Path_ABC;
 struct MIL_DecisionalReport;
 
 // =============================================================================
@@ -92,7 +92,7 @@ public:
 
     //! @name Tools
     //@{
-    bool IsMovingOn                  ( const DEC_Path_ABC& path ) const;
+    bool IsMovingOn                  ( const TER_Path_ABC& path ) const;
     bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
     //@}
 

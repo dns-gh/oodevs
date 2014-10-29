@@ -19,12 +19,12 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
 class DEC_Objective;
-class DEC_Path_ABC;
 class MIL_FragOrder;
 class MIL_Fuseau;
 class MIL_LimaOrder;
 class MIL_ParameterType_MedicalPriorities;
 class MIL_ParameterType_MaintenancePriorities;
+class MIL_UrbanObject_ABC;
 class MT_Vector2D;
 class PHY_Action_ABC;
 class PHY_DotationCategory;
@@ -36,7 +36,7 @@ class PHY_Population_ActionMove;
 class PHY_ResourceNetworkType;
 class TER_Localisation;
 class TER_PathPoint;
-class MIL_UrbanObject_ABC;
+class TER_Path_ABC;
 
 namespace directia
 {
@@ -56,8 +56,8 @@ namespace directia
     void ReleasedByDIA( DEC_Knowledge_Population* );
     void UsedByDIA( DEC_Objective* );
     void ReleasedByDIA( DEC_Objective* );
-    void UsedByDIA( DEC_Path_ABC* );
-    void ReleasedByDIA( DEC_Path_ABC* );
+    void UsedByDIA( TER_Path_ABC* );
+    void ReleasedByDIA( TER_Path_ABC* );
     void UsedByDIA( TER_PathPoint* );
     void ReleasedByDIA( TER_PathPoint* );
     void UsedByDIA( MIL_FragOrder* );

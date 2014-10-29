@@ -76,7 +76,7 @@ public:
         double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
         const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
     MT_Vector2D ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const;
-    bool IsMovingOn( const DEC_Path_ABC& path ) const;
+    bool IsMovingOn( const TER_Path_ABC& path ) const;
     //@}
 
     //! @name Network

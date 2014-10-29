@@ -24,10 +24,10 @@ class DEC_PathComputer_ABC;
 class DEC_PathFind_Manager;
 class MIL_Agent_ABC;
 
-// DEC_PathFindRequest insulates DEC_Path_ABC cleanup logic from
-// TER_PathFinderThread. While the cleanup code itself belongs to DEC_Path_ABC,
+// DEC_PathFindRequest insulates TER_Path_ABC cleanup logic from
+// TER_PathFinderThread. While the cleanup code itself belongs to TER_Path_ABC,
 // the deferred cleanup logic is only required by the threaded implementation
-// of the path finder and has nothing to do in DEC_Path_ABC. We need both a
+// of the path finder and has nothing to do in TER_Path_ABC. We need both a
 // request and an executor class.
 class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
                            private boost::noncopyable

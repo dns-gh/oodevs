@@ -1,27 +1,24 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-02-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path_ABC.h $
-// $Author: Age $
-// $Modtime: 28/02/05 10:04 $
-// $Revision: 2 $
-// $Workfile: DEC_Path_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2014 MASA Group
+//
+// *****************************************************************************
 
-#ifndef __DEC_Path_ABC_h_
-#define __DEC_Path_ABC_h_
+#ifndef SIMULATION_TERRAIN_PATH_ABC
+#define SIMULATION_TERRAIN_PATH_ABC
 
 class TerrainData;
 class MT_Vector2D;
-class MIL_Agent_ABC;
 class TER_Pathfinder_ABC;
 
 // =============================================================================
-// @class  DEC_Path_ABC
+// @class  TER_Path_ABC
 // Created: NLD 2005-02-22
 // =============================================================================
-class DEC_Path_ABC : private boost::noncopyable
+class TER_Path_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -52,22 +49,19 @@ public:
 
     //! @name Operators
     //@{
-    bool operator==( const DEC_Path_ABC& rhs ) const;
-    bool operator!=( const DEC_Path_ABC& rhs ) const;
+    bool operator==( const TER_Path_ABC& rhs ) const;
+    bool operator!=( const TER_Path_ABC& rhs ) const;
     //@}
 
 protected:
     //! @name Constructor / Destructor
     //@{
-             DEC_Path_ABC();
-    virtual ~DEC_Path_ABC();
+             TER_Path_ABC();
+    virtual ~TER_Path_ABC();
     //@}
 
 private:
     const unsigned int nID_;
-
-private:
-    static unsigned int nIDIdx_;
 };
 
-#endif // __DEC_Path_ABC_h_
+#endif // SIMULATION_TERRAIN_PATH_ABC

@@ -27,7 +27,7 @@
 
 DEC_PathComputer::DEC_PathComputer( std::size_t id )
     : id_( id )
-    , nState_( DEC_Path_ABC::eComputing )
+    , nState_( TER_Path_ABC::eComputing )
     , bJobCanceled_( false )
     , bSectionJustStarted_( false )
 {
@@ -69,7 +69,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
     {
         MT_LOG_ERROR_MSG( "DEC_PathComputer::Execute failed: " << e.what() );
         bJobCanceled_ = true;
-        nState_ = DEC_Path_ABC::eCanceled;
+        nState_ = TER_Path_ABC::eCanceled;
         return;
     }
     if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
@@ -99,12 +99,12 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
         throw MASA_EXCEPTION( "List of path sections is empty" );
     lastWaypoint_ = pathSections_.back()->GetPosEnd();
     computedWaypoints_.clear();
-    nState_ = DEC_Path_ABC::eComputing;
+    nState_ = TER_Path_ABC::eComputing;
     for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
     {
         if( bJobCanceled_ )
         {
-            nState_ = DEC_Path_ABC::eCanceled;
+            nState_ = TER_Path_ABC::eCanceled;
             return;
         }
         TER_PathSection& pathSection = **it;
@@ -116,12 +116,12 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
 
             if( bJobCanceled_ )
             {
-                nState_ = DEC_Path_ABC::eCanceled;
+                nState_ = TER_Path_ABC::eCanceled;
                 return;
             }
             else if( it == pathSections_.begin() && pathSection.IsImpossible() )
             {
-                nState_ = DEC_Path_ABC::eImpossible;
+                nState_ = TER_Path_ABC::eImpossible;
                 return;
             }
             else
@@ -130,7 +130,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
                 T_PathSectionVector::iterator itNextPathSection = it + 1;
                 if( itNextPathSection == pathSections_.end() )
                 {
-                    nState_ = DEC_Path_ABC::ePartial;
+                    nState_ = TER_Path_ABC::ePartial;
                     return;
                 }
                 else
@@ -143,18 +143,18 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
             NotifyCompletedSection();
         }
     }
-    nState_ = DEC_Path_ABC::eValid;
+    nState_ = TER_Path_ABC::eValid;
 }
 
 void DEC_PathComputer::Cancel()
 {
     bJobCanceled_ = true;
-    nState_ = DEC_Path_ABC::eCanceled;
+    nState_ = TER_Path_ABC::eCanceled;
     for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
         ( *it )->Cancel();
 }
 
-DEC_Path_ABC::E_State DEC_PathComputer::GetState() const
+TER_Path_ABC::E_State DEC_PathComputer::GetState() const
 {
     return nState_;
 }
@@ -195,12 +195,12 @@ std::string DEC_PathComputer::GetStateAsString() const
 {
     switch( nState_ )
     {
-        case DEC_Path_ABC::eInvalid    : return "Invalid";
-        case DEC_Path_ABC::eComputing  : return "Computing";
-        case DEC_Path_ABC::eValid      : return "Valid";
-        case DEC_Path_ABC::eImpossible : return "Impossible";
-        case DEC_Path_ABC::ePartial    : return "Partial";
-        case DEC_Path_ABC::eCanceled   : return "Canceled";
+        case TER_Path_ABC::eInvalid    : return "Invalid";
+        case TER_Path_ABC::eComputing  : return "Computing";
+        case TER_Path_ABC::eValid      : return "Valid";
+        case TER_Path_ABC::eImpossible : return "Impossible";
+        case TER_Path_ABC::ePartial    : return "Partial";
+        case TER_Path_ABC::eCanceled   : return "Canceled";
         default                        : return "UNKNOWN";
     }
 }

@@ -32,7 +32,7 @@ public:
     virtual double GetLength() const;
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void Cancel();
-    virtual DEC_Path_ABC::E_State GetState() const;
+    virtual TER_Path_ABC::E_State GetState() const;
     virtual void RegisterPathSection( TER_PathSection& section );
 
     virtual const MT_Vector2D& GetLastWaypoint() const;
@@ -61,7 +61,7 @@ private:
 private:
     MT_Profiler profiler_;
     std::size_t id_;
-    DEC_Path_ABC::E_State nState_;
+    TER_Path_ABC::E_State nState_;
     bool bJobCanceled_;
     T_PathSectionVector pathSections_;
     MT_Vector2D lastWaypoint_;

@@ -51,7 +51,7 @@ std::string DEC_DIAFunctions::DirectionToString( MT_Vector2D* p1 )
 // Name: DEC_DIAFunctions::PathToString
 // Created: AGN 03-01-09
 //-----------------------------------------------------------------------------
-std::string DEC_DIAFunctions::PathToString( DEC_Path_ABC* pPath )
+std::string DEC_DIAFunctions::PathToString( TER_Path_ABC* pPath )
 {
     if( !pPath )
         throw MASA_EXCEPTION( "invalid parameter." );

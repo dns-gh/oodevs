@@ -10,7 +10,7 @@
 #ifndef __DEC_PathComputer_ABC_h_
 #define __DEC_PathComputer_ABC_h_
 
-#include "DEC_Path_ABC.h"
+#include "simulation_terrain/TER_Path_ABC.h"
 #include "simulation_terrain/TER_PathResult_ABC.h"
 #include <boost/noncopyable.hpp>
 
@@ -34,7 +34,7 @@ public:
     virtual double GetLength() const = 0;
     virtual void Execute( TER_Pathfinder_ABC& pathfind ) = 0;
     virtual void Cancel() = 0;
-    virtual DEC_Path_ABC::E_State GetState() const = 0;
+    virtual TER_Path_ABC::E_State GetState() const = 0;
     virtual void RegisterPathSection( TER_PathSection& section ) = 0;
 
     virtual const MT_Vector2D& GetLastWaypoint() const = 0;
