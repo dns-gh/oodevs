@@ -536,9 +536,10 @@ void Gl3dWidget::DrawHQSymbol( const std::string& symbol, const geometry::Point2
 // Name: GL3DWidget::DrawUnitSymbol
 // Created: JSR 2013-04-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& /*moveSymbol*/, const std::string& /*staticSymbol*/, const std::string& /*level*/, bool /*isMoving*/, const geometry::Point2f& where, float factor, unsigned int /*direction*/, float /*width*/, float /*depth*/ ) const
+void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& /*moveSymbol*/, const std::string& /*staticSymbol*/, const std::string& level, bool /*isMoving*/, const geometry::Point2f& where, float factor, unsigned int /*direction*/, float /*width*/, float /*depth*/ ) const
 {
     DrawApp6Symbol( symbol, where, factor, 1.f, 0 );
+    DrawApp6Symbol( level, where, factor, 1.f, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -556,10 +557,7 @@ void Gl3dWidget::DrawUnitSymbolAndTail( const std::string&, const std::string&, 
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/, unsigned int direction /* = 0 */ ) const
 {
-    if( factor < 0 )
-        factor = GetAdaptiveZoomFactor( false );
-    else
-        factor *= GetAdaptiveZoomFactor( false );
+    factor = std::abs( factor * GetAdaptiveZoomFactor( false ) );
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
@@ -600,7 +598,7 @@ void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kern
 // Name: Gl3dWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawIcon( const char** /*xpm*/, const Point2f& /*where*/, float /*size*/ /* = -1.f*/, E_Unit /*unit*/ /* = meters*/ ) const
+void Gl3dWidget::DrawIcon( const char** /*xpm*/, const Point2f& /*where*/, float /*size*/ /* = -1.f*/, float /*factor*/, E_Unit /*unit*/ /* = meters*/ ) const
 {
     // $$$$ AGE 2006-05-16: ca va dégager de toute facon...
 }

@@ -11,6 +11,7 @@
 #include "AgentDecisions.h"
 #include "statusicons.h"
 
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_gui/Tools.h"
@@ -62,7 +63,7 @@ bool AgentDecisions::CanBeOrdered() const
 void AgentDecisions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( !CanBeOrdered() && viewport.IsVisible( where ) && !entity_.IsAnAggregatedSubordinate() )
-        tools.DrawIcon( xpm_cadenas, where, 150.f, gui::GLView_ABC::pixels );
+        tools.DrawIcon( xpm_cadenas, where, 150.f, tools.GetOptions().GetRatio( entity_ ), gui::GLView_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

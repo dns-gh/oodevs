@@ -532,10 +532,10 @@ void GlProxy::DrawUnitSymbolAndTail( const std::string& symbol, const std::strin
 // Name: GlProxy::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
+void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /* = -1.f*/, float factor /* = 1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( view_ )
-        view_->DrawIcon( xpm, where, size, unit );
+        view_->DrawIcon( xpm, where, size, factor, unit );
 }
 
 // -----------------------------------------------------------------------------

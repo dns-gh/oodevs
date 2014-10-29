@@ -83,14 +83,15 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport
 {
     if( viewport.IsHotpointVisible() && tools.GetOptions().ShouldDisplay( "DecisionalState" ) && !entity_.IsAnAggregatedSubordinate() )
     {
+        const float factor = tools.GetOptions().GetRatio( entity_ ) * tools.GetAdaptiveZoomFactor( false );
         if( drawSauvegarde_ )
-            tools.DrawSvg( "sauvegarde.svg", where, tools.GetAdaptiveZoomFactor( false ) );
+            tools.DrawSvg( "sauvegarde.svg", where, factor );
         if( drawEclairage_ )
-            tools.DrawSvg( "eclairage.svg", where, tools.GetAdaptiveZoomFactor( false ) );
+            tools.DrawSvg( "eclairage.svg", where, factor );
         if( draw1stEchelon_ )
-            tools.DrawSvg( "1stechelon.svg", where, tools.GetAdaptiveZoomFactor( false ) );
+            tools.DrawSvg( "1stechelon.svg", where, factor );
         if( drawEtatOps_ || dead_ )
-            tools.DrawSvg( "opstatehs.svg", where, tools.GetAdaptiveZoomFactor( false ) );
+            tools.DrawSvg( "opstatehs.svg", where, factor );
     }
 }
 

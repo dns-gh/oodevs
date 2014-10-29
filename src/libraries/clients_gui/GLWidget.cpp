@@ -973,7 +973,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     }
     const bool app6 = isMoving ? moveSymbol.empty() : staticSymbol.empty();
     if( app6 )
-        DrawHQSymbol( level, where, -1.f, 0 );
+        DrawHQSymbol( level, where, factor < 0 ? factor : -factor, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -1060,14 +1060,14 @@ void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Lo
 // Name: GlWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
+void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /* = -1.f*/, float factor, E_Unit unit /* = meters*/ ) const
 {
     if( !GetOptions().ShouldDisplay( "UnitDetails" ) )
         return;
     if( size < 0 )
         size = 32 * Pixels();
 
-    float factor = GetAdaptiveZoomFactor( unit != GLView_ABC::pixels );
+    factor *= GetAdaptiveZoomFactor( unit != GLView_ABC::pixels );
     size *= 0.7f * factor;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );

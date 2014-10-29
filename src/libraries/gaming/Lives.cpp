@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Lives.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -44,7 +45,7 @@ Lives::~Lives()
 void Lives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() && !entity_.IsAnAggregatedSubordinate() )
-        tools.DrawLife( where, life_ );
+        tools.DrawLife( where, life_, tools.GetOptions().GetRatio( entity_ ) );
 }
 
 // -----------------------------------------------------------------------------

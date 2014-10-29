@@ -98,7 +98,7 @@ void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
 {
     if( !viewport.IsHotpointVisible() || !tools.GetOptions().ShouldDisplay( "Direction" ) || entity_.IsAnAggregatedSubordinate() )
         return;
-    const float tailSize = fixedSize * tools.GetAdaptiveZoomFactor( false );
+    const float tailSize = fixedSize * tools.GetOptions().GetRatio( entity_ ) * tools.GetAdaptiveZoomFactor( false );
     const float arrowSize = tailSize * arrowHeightPercent;
     const geometry::Point2f tail = where + geometry::Vector2f( 0, -1 ) * tailSize;
     const geometry::Vector2f arrowWidth = direction_.Normal().Normalize() * arrowSize * arrowheadWidthPercent / 2;

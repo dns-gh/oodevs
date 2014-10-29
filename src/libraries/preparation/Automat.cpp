@@ -63,12 +63,12 @@ Automat::~Automat()
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
+void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
-    if( !IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( *this ) && viewport.IsVisible( where ) )
+    if( !IsAnAggregatedSubordinate() && tools.GetOptions().IsAggregated( *this ) && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
-        view.DrawUnitSymbol( symbol_, "", "", level_, false, where, -1.5f, 0, 0, 0 );
+        tools.DrawUnitSymbol( symbol_, "", "", level_, false, where, -tools.GetOptions().GetRatio( *this ), 0, 0, 0 );
     }
 }
 

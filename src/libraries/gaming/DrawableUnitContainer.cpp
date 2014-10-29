@@ -3,6 +3,7 @@
 #include "Attributes.h"
 #include "Agent.h"
 #include "Diplomacies.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
@@ -110,75 +111,75 @@ namespace
 // -----------------------------------------------------------------------------
 void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools, float factor ) const
 {
-    if( viewport.IsHotpointVisible() )
+    if( !viewport.IsHotpointVisible() )
+        return;
+    factor *= tools.GetOptions().GetRatio( entity );
+    const kernel::TacticalHierarchies& hierarchies = entity.Get< kernel::TacticalHierarchies >();
+    InitializeSymbol( hierarchies );
+    if( HasStaticChild( hierarchies ) )
     {
-        const kernel::TacticalHierarchies& hierarchies = entity.Get< kernel::TacticalHierarchies >();
-        InitializeSymbol( hierarchies );
-        if( HasStaticChild( hierarchies ) )
+        const geometry::Vector2f directionVector = ComputeDirection( hierarchies ).Normalized();
+        const geometry::Vector2f vertical( 0., 1. );
+        const float radians = geometry::Angle( vertical, directionVector );
+        int direction = static_cast< int >( radians * 180 / 3.14f );
+        if( direction < 0 )
+            direction = 360 + direction;
+        const unsigned int udirection = 360 - static_cast< unsigned int >( direction );
+        auto children = hierarchies.CreateSubordinateIterator();
+        bool isMoving = false;
+        bool hasLiveChildren = false;
+        float minProjection = std::numeric_limits< float >::max();
+        float maxProjection = - std::numeric_limits< float >::max();
+        geometry::Vector2f orthogonalDirection = directionVector.Normal();
+        float minOrthogonalProjection = std::numeric_limits< float >::max();
+        float maxOrthogonalProjection = - std::numeric_limits< float >::max();
+        std::vector < geometry::Point2f > orderedPositions;
+        float minWidth = 0.;
+        float minDepth = 0.;
+        while( children.HasMoreElements() )
         {
-            const geometry::Vector2f directionVector = ComputeDirection( hierarchies ).Normalized();
-            const geometry::Vector2f vertical( 0., 1. );
-            const float radians = geometry::Angle( vertical, directionVector );
-            int direction = static_cast< int >( radians * 180 / 3.14f );
-            if( direction < 0 )
-                direction = 360 + direction;
-            const unsigned int udirection = 360 - static_cast< unsigned int >( direction );
-            auto children = hierarchies.CreateSubordinateIterator();
-            bool isMoving = false;
-            bool hasLiveChildren = false;
-            float minProjection = std::numeric_limits< float >::max();
-            float maxProjection = - std::numeric_limits< float >::max();
-            geometry::Vector2f orthogonalDirection = directionVector.Normal();
-            float minOrthogonalProjection = std::numeric_limits< float >::max();
-            float maxOrthogonalProjection = - std::numeric_limits< float >::max();
-            std::vector < geometry::Point2f > orderedPositions;
-            float minWidth = 0.;
-            float minDepth = 0.;
-            while( children.HasMoreElements() )
+            const Entity_ABC* child = &children.NextElement();
+            if( child )
             {
-                const Entity_ABC* child = &children.NextElement();
-                if( child )
+                const Attributes& attributes = child->Get< Attributes >();
+                if( !attributes.bDead_ )
                 {
-                    const Attributes& attributes = child->Get< Attributes >();
-                    if( !attributes.bDead_ )
-                    {
-                        hasLiveChildren = true;
-                        geometry::Point2f position = child->Get< kernel::Positions >().GetPosition( false );
-                        orderedPositions.push_back( position );
-                        float projection = directionVector.DotProduct( geometry::Vector2f( position ) );
-                        minProjection = std::min( minProjection, projection );
-                        maxProjection = std::max( maxProjection, projection );
-                        float orthogonalProjection = orthogonalDirection.DotProduct( geometry::Vector2f( position ) );
-                        minOrthogonalProjection = std::min( minOrthogonalProjection, orthogonalProjection );
-                        maxOrthogonalProjection = std::max( maxOrthogonalProjection, orthogonalProjection );
-                        if( IsUnitMoving( attributes ) )
-                            isMoving = true;
-                    }
-                    const Agent* agent = dynamic_cast< const Agent* >( child );
-                    if( agent )
-                    {
-                        minWidth = std::max( minWidth, agent->GetSymbolWidth() );
-                        minDepth = std::max( minDepth, agent->GetSymbolDepth() );
-                    }
+                    hasLiveChildren = true;
+                    geometry::Point2f position = child->Get< kernel::Positions >().GetPosition( false );
+                    orderedPositions.push_back( position );
+                    float projection = directionVector.DotProduct( geometry::Vector2f( position ) );
+                    minProjection = std::min( minProjection, projection );
+                    maxProjection = std::max( maxProjection, projection );
+                    float orthogonalProjection = orthogonalDirection.DotProduct( geometry::Vector2f( position ) );
+                    minOrthogonalProjection = std::min( minOrthogonalProjection, orthogonalProjection );
+                    maxOrthogonalProjection = std::max( maxOrthogonalProjection, orthogonalProjection );
+                    if( IsUnitMoving( attributes ) )
+                        isMoving = true;
+                }
+                const Agent* agent = dynamic_cast< const Agent* >( child );
+                if( agent )
+                {
+                    minWidth = std::max( minWidth, agent->GetSymbolWidth() );
+                    minDepth = std::max( minDepth, agent->GetSymbolDepth() );
                 }
             }
-            isMoving = isMoving && hasLiveChildren;
-            float width = hasLiveChildren ? maxOrthogonalProjection - minOrthogonalProjection : 0;
-            float depth = hasLiveChildren ? maxProjection - minProjection : 0;
-            width = std::max( width, minWidth );
-            depth = std::max( depth, minDepth );
-            if( isMoving && !moveSymbol_.empty() && orderedPositions.size() > 1 && IsInColumn( width, depth ) )
-            {
-                PointComparator comparator( directionVector );
-                std::sort( orderedPositions.begin(), orderedPositions.end(), comparator );
-                tools.DrawUnitSymbolAndTail( moveSymbol_, level_, orderedPositions );
-            }
-            else
-                tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, -1.f, udirection, isMoving ? 0 : minWidth * std::abs( factor ), isMoving ? depth : minDepth * std::abs( factor ) );
+        }
+        isMoving = isMoving && hasLiveChildren;
+        float width = hasLiveChildren ? maxOrthogonalProjection - minOrthogonalProjection : 0;
+        float depth = hasLiveChildren ? maxProjection - minProjection : 0;
+        width = std::max( width, minWidth );
+        depth = std::max( depth, minDepth );
+        if( isMoving && !moveSymbol_.empty() && orderedPositions.size() > 1 && IsInColumn( width, depth ) )
+        {
+            PointComparator comparator( directionVector );
+            std::sort( orderedPositions.begin(), orderedPositions.end(), comparator );
+            tools.DrawUnitSymbolAndTail( moveSymbol_, level_, orderedPositions );
         }
         else
-            tools.DrawUnitSymbol( symbol_, "", "", level_, false, where, factor, 0, 0, 0 );
+            tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, factor, udirection, isMoving ? 0 : minWidth * std::abs( factor ), isMoving ? depth : minDepth * std::abs( factor ) );
     }
+    else
+        tools.DrawUnitSymbol( symbol_, "", "", level_, false, where, factor, 0, 0, 0 );
 }
 
 // -----------------------------------------------------------------------------

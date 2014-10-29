@@ -11,6 +11,7 @@
 #include "CommandPostAttributes.h"
 #include "LogisticLinks.h"
 #include "DebugPoints.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -57,7 +58,7 @@ void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Vie
     if( commandPost_ && !entity_.IsAnAggregatedSubordinate() )
     {
         if( viewport.IsHotpointVisible() )
-            tools.DrawHQSymbol( type_.GetHQSymbol(), where, -1.f, 0 );
+            tools.DrawHQSymbol( type_.GetHQSymbol(), where, -tools.GetOptions().GetRatio( entity_ ), 0 );
 
         const kernel::Entity_ABC& automata = entity_.Get< kernel::TacticalHierarchies >().GetUp();
         if( const LogisticLinks* links = automata.Retrieve< LogisticLinks >() )
