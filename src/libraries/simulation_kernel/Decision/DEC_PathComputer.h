@@ -10,8 +10,8 @@
 #ifndef __DEC_PathComputer_h_
 #define __DEC_PathComputer_h_
 
-#include "DEC_PathComputer_ABC.h"
 #include "MT_Tools/MT_Profiler.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include <boost/optional.hpp>
 #include <vector>
 
@@ -23,7 +23,7 @@ class TER_PathPoint;
 */
 // Created: MCO 2014-05-15
 // =============================================================================
-class DEC_PathComputer : public DEC_PathComputer_ABC
+class DEC_PathComputer : public TER_PathComputer_ABC
 {
 public:
              DEC_PathComputer( std::size_t id );

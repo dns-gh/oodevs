@@ -20,8 +20,8 @@
 #include <deque>
 #include <vector>
 
-class DEC_PathComputer_ABC;
 class DEC_PathFindRequest;
+class TER_PathComputer_ABC;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
 class MIL_Config;
@@ -47,7 +47,7 @@ public:
     // Returns computation time since last update.
     double Update();
     void UpdateInSimulationThread();
-    void StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& pPath, const sword::Pathfind& pathfind );
+    void StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& pPath, const sword::Pathfind& pathfind );
     void CleanPathAfterComputation( double duration );
     //@}
 

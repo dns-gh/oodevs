@@ -20,7 +20,7 @@ namespace sword
     class Pathfind;
 }
 
-class DEC_PathComputer_ABC;
+class TER_PathComputer_ABC;
 class DEC_PathFind_Manager;
 class MIL_Agent_ABC;
 
@@ -35,7 +35,7 @@ class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathFindRequest( DEC_PathFind_Manager& manager, const boost::shared_ptr< DEC_PathComputer_ABC >& computer,
+             DEC_PathFindRequest( DEC_PathFind_Manager& manager, const boost::shared_ptr< TER_PathComputer_ABC >& computer,
                                   const sword::Pathfind& pathfind );
     virtual ~DEC_PathFindRequest();
     //@}
@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     DEC_PathFind_Manager& manager_;
-    boost::weak_ptr< DEC_PathComputer_ABC > computer_;
+    boost::weak_ptr< TER_PathComputer_ABC > computer_;
     const sword::Pathfind pathfind_;
     //@}
 };

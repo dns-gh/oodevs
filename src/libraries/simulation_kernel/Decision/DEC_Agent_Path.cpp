@@ -12,7 +12,6 @@
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Agent_PathfinderRule.h"
 #include "DEC_AgentContext.h"
-#include "DEC_PathComputer_ABC.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
@@ -27,6 +26,7 @@
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathSection.h"
 #include <boost/make_shared.hpp>
 
@@ -35,7 +35,7 @@
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType,
-    const boost::shared_ptr< DEC_PathComputer_ABC >& computer )
+    const boost::shared_ptr< TER_PathComputer_ABC >& computer )
     : DEC_PathResult     ( pathType )
     , queryMaker_        ( queryMaker )
     , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )

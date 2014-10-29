@@ -11,9 +11,9 @@
 #include "DEC_Population_Path.h"
 #include "DEC_Population_PathClass.h"
 #include "DEC_Population_PathfinderRule.h"
-#include "DEC_PathComputer_ABC.h"
 #include "DEC_PopulationContext.h"
 #include "Decision/DEC_PathType.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathSection.h"
 
 //-----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
 // Created: JSR 2014-01-16
 //-----------------------------------------------------------------------------
 DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const T_PointVector& points,
-    const boost::shared_ptr< DEC_PathComputer_ABC >& computer )
+    const boost::shared_ptr< TER_PathComputer_ABC >& computer )
     : DEC_PathResult( DEC_PathType::movement_ )
     , context_( new DEC_PopulationContext( population, points ) )
     , computer_( computer )

@@ -10,16 +10,16 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFindRequest.h"
 #include "DEC_PathFind_Manager.h"
-#include "DEC_PathComputer_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathFinder_ABC.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <tools/thread/Handler_ABC.h>
 #include <boost/foreach.hpp>
 
-DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager& manager, const boost::shared_ptr< DEC_PathComputer_ABC >& computer,
+DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager& manager, const boost::shared_ptr< TER_PathComputer_ABC >& computer,
                                           const sword::Pathfind& pathfind )
     : manager_( manager )
     , computer_( computer )

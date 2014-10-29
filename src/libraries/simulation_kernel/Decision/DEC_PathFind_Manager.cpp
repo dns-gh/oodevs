@@ -11,11 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFind_Manager.h"
-#include "DEC_PathComputer_ABC.h"
 #include "DEC_PathFindRequest.h"
 #include "DEC_PathType.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Population_PathClass.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
@@ -94,7 +94,7 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 // Name: DEC_PathFind_Manager::StartCompute
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
+void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
 {
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ) );
     auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, pathfind );
