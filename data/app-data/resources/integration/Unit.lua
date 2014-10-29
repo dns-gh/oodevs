@@ -422,7 +422,7 @@ end
 integration.isKnowledgesAgentsInArea = integration.getAgentKnowledgesInArea
 
 --- Informs if the calling agent is located inside a landing area.
--- Tests if the calling agen is inside a "landing area" type of object of a friendly side.
+-- Tests if the calling agent is inside a "landing area" type of object of a friendly side.
 -- This method can only be called by an agent.
 -- @return a boolean 'true' if the calling agent is located inside a "landing area" type of object, 'false' otherwise.
 integration.inLandingArea = function()
