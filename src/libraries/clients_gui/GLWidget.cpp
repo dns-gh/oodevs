@@ -386,7 +386,7 @@ void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2
 float GlWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
     if( !bVariableSize )
-        return GetOptions().Get( "SymbolSize" ).To< float >() * Pixels() / 60;
+        return GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() * Pixels() / 60;
 
     float zoom = Zoom();
     float pixels = Pixels();
@@ -920,7 +920,7 @@ void GlWidget::DrawHQSymbol( const std::string& symbol, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
-    factor = fabs( factor ) * GetActualZoomFactor() * GetOptions().Get( "SymbolSize" ).To< float >() / defaultSymbolSize;
+    factor = fabs( factor ) * GetActualZoomFactor() * GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() / defaultSymbolSize;
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the default height...
     Rectangle2f rectangle( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) );
@@ -948,11 +948,11 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
             directionVector.Rotate( - radians );
             geometry::Point2f arrowTail = where + directionVector * (-baseDepth);
             geometry::Point2f arrowHead = where;
-            geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth * GetOptions().Get( "SymbolSize" ).To< float >() / defaultSymbolSize );
+            geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth * GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() / defaultSymbolSize );
             geometry::Vector2f symbolVector( symbolTail, arrowHead );
             geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f; 
             DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, xFactor, 1 );
-            if( baseDepth && baseDepth > symbolDepth * GetOptions().Get( "SymbolSize" ).To< float >() / defaultSymbolSize )
+            if( baseDepth && baseDepth > symbolDepth * GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() / defaultSymbolSize )
             {
                 T_PointVector points;
                 points.push_back( arrowTail );

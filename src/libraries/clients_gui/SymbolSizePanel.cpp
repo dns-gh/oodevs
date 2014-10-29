@@ -87,6 +87,8 @@ SymbolSizePanel::SymbolSizePanel( QWidget* parent, kernel::OptionsController& op
         const std::string& level = ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) );
         new NatureLevelSlider( options, ( "SymbolSizePanel" + level + "Slider" ).c_str(), header + level, minValue, maxValue, box );
     }
+    new QLabel( tr( "Headquarters" ), box );
+    new NatureLevelSlider( options, "SymbolSizePanelHeadQuartersSlider", header + "Headquarters", minValue, maxValue, box );
     setWidget( box );
 }
 

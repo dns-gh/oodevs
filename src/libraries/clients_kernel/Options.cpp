@@ -364,9 +364,10 @@ void Options::InitializeView()
     Create( "Lighting/Diffuse",   QString( "#c8c8c8" ), true );
 
     // symbol size
-    Create( "SymbolSize", 3.f, false ); // move this one under SymbolSize/ when the report will be done
+    Create( "SymbolSize/CurrentFactor", 3.f, false );
     for( int i = eNatureLevel_c; i < eNbrNatureLevel; ++i )
         Create( "SymbolSize/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ), 1.f, true );
+    Create( "SymbolSize/Headquarters", 1.f, true );
 
     // terrain
     QStringList order;

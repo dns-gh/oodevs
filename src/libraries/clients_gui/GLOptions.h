@@ -98,7 +98,7 @@ public:
     void Set( const std::string& name, const kernel::OptionVariant& value );
     void Remove( const std::string& name );
 
-    float GetRatio( const std::string& level ) const;
+    float GetRatio( const kernel::Entity_ABC& entity ) const;
 
     const kernel::Entity_ABC* GetFilterEntity() const;
     void SetFilterEntity( const kernel::Entity_ABC* filterEntity );

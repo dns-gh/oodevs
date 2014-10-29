@@ -153,7 +153,7 @@ float Gl3dWidget::Pixels( const Point2f& at ) const
 float Gl3dWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
     if( !bVariableSize )
-        return GetOptions().Get( "SymbolSize" ).To< float >();
+        return GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
     return 1.f;
 }
 

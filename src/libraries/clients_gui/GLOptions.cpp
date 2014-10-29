@@ -17,6 +17,7 @@
 #include "UrbanDisplayOptions.h"
 #include "WatershedTexture.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -337,9 +338,12 @@ void GLOptions::Remove( const std::string& name )
 // Name: GLOptions::GetRatio
 // Created: ABR 2014-06-24
 // -----------------------------------------------------------------------------
-float GLOptions::GetRatio( const std::string& level ) const
+float GLOptions::GetRatio( const kernel::Entity_ABC& entity ) const
 {
-    const auto name = "SymbolSize/" + boost::algorithm::erase_all_copy( level, "levels/" );
+    const std::string level = entity.Get< kernel::TacticalHierarchies >().GetLevel();
+    const auto* commandPost = entity.Retrieve< kernel::CommandPostAttributes_ABC >();
+    const bool isPC = commandPost && commandPost->IsCommandPost();
+    const auto name = "SymbolSize/" + ( isPC ? "Headquarters" : boost::algorithm::erase_all_copy( level, "levels/" ) );
     return options_->Has( name ) ? options_->Get( name ).To< float >() : 1.f;
 }
 
