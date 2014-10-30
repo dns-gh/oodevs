@@ -12,6 +12,7 @@
 #include "DotationTypeResolver_ABC.h"
 #include "ContextFactory_ABC.h"
 #include "Interactions.h"
+#include "dispatcher/Logger_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
@@ -21,10 +22,12 @@ using namespace plugins::hla;
 // Name: IndirectFireReceiver constructor
 // Created: SLI 2011-09-27
 // -----------------------------------------------------------------------------
-IndirectFireReceiver::IndirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory, const DotationTypeResolver_ABC& resolver )
+IndirectFireReceiver::IndirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory, const DotationTypeResolver_ABC& resolver,
+        dispatcher::Logger_ABC& logger )
     : publisher_( publisher )
     , factory_  ( factory )
     , resolver_ ( resolver )
+    , logger_   ( logger )
 {
     // NOTHING
 }
@@ -62,8 +65,8 @@ void IndirectFireReceiver::Receive( interactions::MunitionDetonation& interactio
         message().mutable_parameters()->add_elem()->add_value()->set_areal( 1. );  // iterations, hardcoded
         message.Send( publisher_, factory_.Create() );
     }
-    catch( const std::exception& )
+    catch( const std::exception& e )
     {
-        // NOTHING
+        logger_.LogError( std::string( "Error in while processing MunitionDetonation ") + e.what() );
     }
 }

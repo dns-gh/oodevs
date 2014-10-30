@@ -20,6 +20,8 @@ namespace tools
 namespace kernel
 {
     class AgentType;
+    class BreakdownType;
+    class EquipmentType;
 }
 
 namespace plugins
@@ -37,7 +39,9 @@ class ComponentTypes : public ComponentTypes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ComponentTypes( const tools::Resolver_ABC< kernel::AgentType, unsigned long >& agentTypes );
+    explicit ComponentTypes( const tools::Resolver_ABC< kernel::AgentType, unsigned long >& agentTypes,
+            const tools::Resolver_ABC< kernel::EquipmentType, unsigned long >& equipmentTypes,
+            const tools::Resolver_ABC< kernel::BreakdownType, std::string >& breakdownsTypes );
     virtual ~ComponentTypes();
     //@}
 
@@ -50,6 +54,8 @@ private:
     //! @name Member data
     //@{
     const tools::Resolver_ABC< kernel::AgentType, unsigned long >& agentTypes_;
+    const tools::Resolver_ABC< kernel::EquipmentType, unsigned long >& equipmentTypes_;
+    const tools::Resolver_ABC< kernel::BreakdownType, std::string >& breakdownsTypes_;
     //@}
 };
 

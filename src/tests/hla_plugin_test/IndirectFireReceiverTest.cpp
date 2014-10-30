@@ -12,6 +12,7 @@
 #include "hla_plugin/Interactions.h"
 #include "MockSimulationPublisher.h"
 #include "MockContextFactory.h"
+#include "MockLogger.h"
 #include "MockDotationTypeResolver.h"
 #include "protocol/Senders.h"
 #include "protocol/Simulation.h"
@@ -24,7 +25,7 @@ namespace
     {
     public:
         Fixture()
-            : receiver        ( publisher, factory, munitionResolver )
+            : receiver        ( publisher, factory, munitionResolver, logger )
             , latitude        ( 1. )
             , longitude       ( 2. )
             , munitionType    ( "1 2 3 0 0 0 0" )
@@ -36,6 +37,7 @@ namespace
         dispatcher::MockSimulationPublisher publisher;
         MockContextFactory factory;
         MockDotationTypeResolver munitionResolver;
+        dispatcher::MockLogger logger;
         IndirectFireReceiver receiver;
         interactions::MunitionDetonation parameters;
         const double latitude;
@@ -79,5 +81,6 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_catch_unknown_munition, Fixture 
     MOCK_EXPECT( munitionResolver.ResolveType ).once().with( rpr::EntityType( munitionType ) ).throws( std::exception( "unknown munition" ) );
     parameters.detonationLocation = rpr::WorldLocation( latitude, longitude, 0. );
     parameters.munitionType = rpr::EntityType( munitionType );
+    MOCK_EXPECT( logger.LogError ).once();
     BOOST_CHECK_NO_THROW( receiver.Receive( parameters ) );
 }

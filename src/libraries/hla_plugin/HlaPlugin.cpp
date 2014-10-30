@@ -225,7 +225,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "component" ) ) ) ) )
     , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "munition" ) ) ) ) )
     , pEntityObjectTypeResolver_  ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "object" ) ) ) ) )
-    , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
+    , pComponentTypes_            ( new ComponentTypes( staticModel.types_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pUnitTypeResolver_          ( new UnitTypeResolver< kernel::AgentType >( *pAggregateTypeResolver_, staticModel.types_, logger ) )
     , pAutomatTypeResolver_       ( new UnitTypeResolver< kernel::AutomatType >( *pAutomatAggregateResolver_, staticModel.types_, logger ) )
     , pMunitionTypeResolver_      ( new DotationTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
@@ -288,7 +288,9 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                     *pComponentTypeResolver_, *pUnitTypeResolver_, *pAutomatTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_,
                     *pExtentResolver_, *pSubject_, *pLocalAgentResolver_, *pSideResolver_, *pEntityObjectTypeResolver_, *pFederate_, *pMissionResolver_, config_, *pSimulationTimeManager_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
-            pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_, *pSubject_ ) );
+            pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_,
+                                                            *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ),
+                                                            *pInteractionBuilder_, *pSubject_, logger_ ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
             pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( logger_, *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, simulationPublisher_, clientsPublisher_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, simulationPublisher_ ) );

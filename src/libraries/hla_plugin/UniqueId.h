@@ -102,6 +102,7 @@ struct UniqueIdSerializer
 public:
     static std::string GetAgentId( const NETN_UUID& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver );
     static std::vector< char > GenerateUniqueId( std::size_t sz );
+    static std::string UniqueIdToHexString( const std::vector< char >& uniqueid );
 
 public:
     UniqueIdSerializer( int netnVersion );

@@ -28,13 +28,13 @@ DetonationFacade::DetonationFacade( dispatcher::SimulationPublisher_ABC& publish
                                     const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                     const ContextFactory_ABC& contextFactory, const DotationTypeResolver_ABC& munitionTypeResolver,
                                     RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName, const InteractionBuilder& builder,
-                                    AgentSubject_ABC& agentSubject )
+                                    AgentSubject_ABC& agentSubject, dispatcher::Logger_ABC& logger )
     : pMunitionDetonation_  ( new InteractionSender< interactions::MunitionDetonation >( *this, builder ) )
     , pWeaponFire_          ( new InteractionSender< interactions::WeaponFire >( *this, builder ) )
     , pDirectFireReceiver_  ( new DirectFireReceiver( publisher, remoteResolver, localResolver, contextFactory ) )
-    , pIndirectFireReceiver_( new IndirectFireReceiver( publisher, contextFactory, munitionTypeResolver ) )
+    , pIndirectFireReceiver_( new IndirectFireReceiver( publisher, contextFactory, munitionTypeResolver, logger  ) )
     , pDirectFireSender_    ( new DirectFireSender( *pMunitionDetonation_, *pWeaponFire_, remoteResolver, localResolver, remoteAgentSubject, controller, federateName, munitionTypeResolver, agentSubject ) )
-    , pIndirectFireSender_  ( new IndirectFireSender( *pMunitionDetonation_, controller, federateName, munitionTypeResolver, localResolver ) )
+    , pIndirectFireSender_  ( new IndirectFireSender( *pMunitionDetonation_, controller, federateName, munitionTypeResolver, localResolver) )
 {
     // NOTHING
 }

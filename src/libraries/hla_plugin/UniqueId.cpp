@@ -12,6 +12,8 @@
 #include "LocalAgentResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
 
+#include <sstream>
+
 #ifdef _MSC_VER
 #pragma warning( push )
 #pragma warning( disable : 4724 )
@@ -67,4 +69,17 @@ std::vector< char > UniqueIdSerializer::GenerateUniqueId( std::size_t sz )
     std::vector< char > retval( sz, 0);
     std::copy( uid.begin(), uid.begin() + sz, retval.begin() );
     return retval;
+}
+
+
+std::string UniqueIdSerializer::UniqueIdToHexString( const std::vector< char >& uniqueid )
+{
+    const std::size_t count = uniqueid.size();
+    std::stringstream ss;
+    ss << std::hex;
+    for( std::size_t i = 0; i < count; ++i )
+    {
+        ss << (uint16_t)uniqueid[ i ];
+    }
+    return ss.str();
 }

@@ -94,9 +94,11 @@ namespace
         {
             // NOTHING
         }
-        virtual void NotifyEquipment( unsigned int typeIdentifier, const std::string& typeName, unsigned int number )
+        virtual void NotifyEquipment( unsigned int typeIdentifier, const std::string& typeName, unsigned int number,
+                unsigned int crew, const std::vector< unsigned long >& breakdowns )
         {
-            agents_[ identifier_ ][ typeName ] = std::make_pair( typeIdentifier, number );
+            const EquipmentUpdater::T_StaticComponent comp = { typeIdentifier, number, crew, breakdowns };
+            agents_[ identifier_ ][ typeName ] = comp;
         }
     private:
         const std::string identifier_;
@@ -129,6 +131,8 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
         return;
     bool mustSend = false;
     const std::string& identifier = it->second;
+    if( !remoteNames_.count( identifier ) )
+        return;
     const T_Components& remoteComponents = remoteAgents_[ identifier ];
     T_StaticComponents& staticComponents = agentTypes_[ identifier ];
     for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
@@ -137,10 +141,10 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
         std::string equipmentName;
         std::for_each( staticComponents.begin(), staticComponents.end(), [&](T_StaticComponents::value_type& staticComponent)
             {
-                if( staticComponent.second.first == dotation.type().id() )
+                if( staticComponent.second.typeIdentifier == dotation.type().id() )
                 {
                     equipmentName = staticComponent.first;
-                    staticComponent.second.second = dotation.available() + dotation.unavailable() + dotation.repairable() +
+                    staticComponent.second.count = dotation.available() + dotation.unavailable() + dotation.repairable() +
                             dotation.on_site_fixable() + dotation.repairing() + dotation.captured();
                 }
             });
@@ -159,6 +163,7 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
 void EquipmentUpdater::RemoteCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
     hlaObjects_[ identifier ] = &object;
+    remoteNames_.insert( identifier );
     object.Register( *this );
 }
 
@@ -254,16 +259,17 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
     if( agentType == agentTypes_.end() || remoteAgent == remoteAgents_.end() )
         return;
     const unsigned int agentIdentifier = identifiers_.left.at( identifier );
-    simulation::UnitMagicAction message;
-    message().mutable_tasker()->mutable_unit()->set_id( agentIdentifier );
-    message().set_type( sword::UnitMagicAction::change_equipment_state );
-    sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+    simulation::UnitMagicAction equipmentMessage;
+    equipmentMessage().mutable_tasker()->mutable_unit()->set_id( agentIdentifier );
+    equipmentMessage().set_type( sword::UnitMagicAction::change_equipment_state );
+    sword::MissionParameter& parameter = *equipmentMessage().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
     std::for_each( agentType->second.begin(), agentType->second.end(), [&](const T_StaticComponents::value_type& component)
     {
         const std::string& componentTypeName = component.first;
-        const unsigned int componentTypeIdentifier = component.second.first;
-        const unsigned int componentStaticNumber = component.second.second;
+        const T_StaticComponent& staticComponent = component.second;
+        const unsigned int componentTypeIdentifier = staticComponent.typeIdentifier;
+        const unsigned int componentStaticNumber = staticComponent.count;
         const EquipmentUpdater::T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
         if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.available_ <= componentStaticNumber )
         {
@@ -279,11 +285,16 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
             componentChanged->add_list()->set_quantity( remoteComponent->second.lightDamages_ );
             componentChanged->add_list()->set_quantity( 0 );
             componentChanged->add_list()->set_quantity( 0 );
-            componentChanged->add_list()->mutable_list();
+            auto breakDownList = componentChanged->add_list()->mutable_list();
+            const unsigned long breakdownType = !staticComponent.breakdowns.empty() ? staticComponent.breakdowns[0] : 1;
+            for( std::size_t idxDmg = 0; idxDmg < remoteComponent->second.heavyDamages_; ++idxDmg )
+            {
+                breakDownList->Add()->set_identifier( breakdownType );
+            }
         }
     });
-    if( message().parameters().elem( 0 ).value_size() > 0 )
-        message.Send( publisher_, factory_.Create() );
+    if( equipmentMessage().parameters().elem( 0 ).value_size() > 0 )
+        equipmentMessage.Send( publisher_, factory_.Create() );
 }
 
 // -----------------------------------------------------------------------------
@@ -324,6 +335,7 @@ void EquipmentUpdater::Divested( const std::string& identifier, const T_Attribut
     T_HLAObjects::const_iterator itObj( hlaObjects_.find( identifier ) );
     if( hlaObjects_.end() != itObj )
         itObj->second->Register( *this );
+    remoteNames_.insert( identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -332,6 +344,7 @@ void EquipmentUpdater::Divested( const std::string& identifier, const T_Attribut
 // -----------------------------------------------------------------------------
 void EquipmentUpdater::Acquired( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
 {
+    remoteNames_.erase( identifier );
     T_HLAObjects::const_iterator itObj( hlaObjects_.find( identifier ) );
     if( hlaObjects_.end() != itObj )
         itObj->second->Unregister( *this );

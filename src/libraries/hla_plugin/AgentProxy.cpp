@@ -44,7 +44,8 @@ namespace
         {
             // NOTHING
         }
-        virtual void NotifyEquipment( unsigned int typeIdentifier, const std::string& typeName, unsigned int /*number*/ )
+        virtual void NotifyEquipment( unsigned int typeIdentifier, const std::string& typeName, unsigned int /*number*/,
+                unsigned int /*crew*/, const std::vector< unsigned long >& /*breakdowns*/ )
         {
             if( typeIdentifier == componentTypeIdentifier_ )
             {
