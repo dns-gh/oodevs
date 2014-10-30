@@ -53,7 +53,7 @@ namespace
             return creationMessage;
         }
         void CheckMessage( const sword::ClientToSim& message, unsigned int unitId, unsigned int componentTypeId,
-                           int undamaged, int destroyed, int lightDamages, int heavyDamages )
+                           int undamaged, int destroyed, int lightDamages, int heavyDamages, uint32_t breakdown = 1 )
         {
             BOOST_CHECK( message.message().has_unit_magic_action() );
             const sword::UnitMagicAction& action = message.message().unit_magic_action();
@@ -70,7 +70,11 @@ namespace
             BOOST_CHECK_EQUAL( componentChanged.list( 4 ).quantity(), lightDamages );
             BOOST_CHECK_EQUAL( componentChanged.list( 5 ).quantity(), 0 );
             BOOST_CHECK_EQUAL( componentChanged.list( 6 ).quantity(), 0 );
-            BOOST_CHECK_EQUAL( componentChanged.list( 7 ).list_size(), 0 );
+            BOOST_CHECK_EQUAL( componentChanged.list( 7 ).list_size(), heavyDamages );
+            for( int i = 0; i < heavyDamages; ++i )
+            {
+                BOOST_CHECK_EQUAL( componentChanged.list( 7 ).list( i ).identifier(), breakdown );
+            }
         }
 
         ClassListener_ABC* remoteClassListener;
@@ -101,7 +105,7 @@ namespace
         {
             BOOST_REQUIRE( remoteClassListener );
             MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
-            remoteClassListener->RemoteCreated( "id", hlaClass, object );
+            remoteClassListener->RemoteCreated( "remote", hlaClass, object );
             BOOST_REQUIRE( remoteAgentListener );
             BOOST_REQUIRE( responseObserver );
             BOOST_REQUIRE( unitAttributesHandler );
@@ -123,9 +127,11 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_message_when_unit_creation_is_r
     const int undamaged = 2;
     const int componentNumber = 10;
     const int destroyed = componentNumber - undamaged;
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns( 1, 19 );
     MOCK_EXPECT( resolver.Resolve ).once().with( rpr::EntityType( componentEntityType ), mock::assign( componentTypeName ) ).returns( true );
     remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged, destroyed, 0, 0 );
-    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
     responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
     CheckMessage( message, unitId, componentTypeId, undamaged, destroyed, 0, 0 );
@@ -136,7 +142,9 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_message_when_remote_component_u
     const int undamaged = 2;
     const int componentNumber = 10;
     const int destroyed = componentNumber - undamaged;
-    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns( 1, 19 );
+    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
     responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
     MOCK_EXPECT( resolver.Resolve ).once().with( rpr::EntityType( componentEntityType ), mock::assign( componentTypeName ) ).returns( true );
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
@@ -151,12 +159,14 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_light_heavy_damages, Registered
     const int destroyed = 3;
     const int lightDamages = 3;
     const int heavyDamages = 2;
-    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns( 1, 19 );
+    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
     responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
     MOCK_EXPECT( resolver.Resolve ).once().with( rpr::EntityType( componentEntityType ), mock::assign( componentTypeName ) ).returns( true );
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
     remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged, destroyed, lightDamages, heavyDamages );
-    CheckMessage( message, unitId, componentTypeId, undamaged, destroyed, lightDamages, heavyDamages );
+    CheckMessage( message, unitId, componentTypeId, undamaged, destroyed, lightDamages, heavyDamages, 19 );
 }
 
 BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_nothing_if_message_is_empty, RegisteredFixture )
@@ -164,7 +174,9 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_nothing_if_message_is_empty, Re
     const int undamaged = 2;
     const int componentNumber = 10;
     const int destroyed = componentNumber - undamaged;
-    MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns( 1, 19 );
+    MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
     responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
     MOCK_EXPECT( resolver.Resolve ).once().with( mock::any, mock::assign( "unknown remote" ) ).returns( true );
     remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged, destroyed, 0, 0 );
@@ -175,7 +187,9 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_does_not_send_message_if_no_change, R
     const int undamaged = 2;
     const int componentNumber = 10;
     const int destroyed = componentNumber - undamaged;
-    MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns( 1, 19 );
+    MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
     responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
     MOCK_EXPECT( resolver.Resolve ).with( mock::any, mock::assign( componentTypeName ) ).returns( true );
     MOCK_EXPECT( publisher.SendClientToSim ).once();
@@ -188,7 +202,9 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_does_not_send_message_if_remote_numbe
 {
     const int undamaged = 4;
     const int componentNumber = 2;
-    MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns( 1, 19 );
+    MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
     responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
     MOCK_EXPECT( resolver.Resolve ).once().with( mock::any, mock::assign( componentTypeName ) ).returns( true );
     remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged, 0, 0, 0 );
@@ -199,7 +215,9 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_only_mapped_components, Registe
     const int undamaged = 2;
     const int componentNumber = 10;
     const int destroyed = componentNumber - undamaged;
-    MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns( 1, 19 );
+    MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
     responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
     MOCK_EXPECT( resolver.Resolve ).once().with( mock::any, mock::assign( "unknown remote" ) ).returns( true );
     remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged, destroyed, 0, 0 );
@@ -219,7 +237,9 @@ namespace
             , componentNumber( 10 )
             , destroyed      ( componentNumber - undamaged )
         {
-            MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+            const int crew = 1;
+            const std::vector< unsigned long > breakdowns( 1, 19 );
+            MOCK_EXPECT( componentTypes.Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
             responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
             MOCK_EXPECT( resolver.Resolve ).once().with( mock::any, mock::assign( componentTypeName ) ).returns( true );
             MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
@@ -308,10 +328,12 @@ namespace
 BOOST_FIXTURE_TEST_CASE( divested_local_object_update, LocalObjectFixture )
 {
     const int componentNumber = 10;
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns( 1, 19 );
 
     MOCK_EXPECT( localAgentResolver.ResolveName ).with("id_local").returns(unitId);
     MOCK_EXPECT( localAgentResolver.AgentType ).with(unitId).returns(agentTypeId);
-    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
     remoteClassListener->LocalCreated( "id_local", hlaClass, object );
 
     MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
@@ -327,5 +349,5 @@ BOOST_FIXTURE_TEST_CASE( divested_local_object_update, LocalObjectFixture )
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
     MOCK_EXPECT( resolver.Resolve ).once().with( rpr::EntityType( componentEntityType ), mock::assign( componentTypeName ) ).returns( true );
     remoteAgentListener->EquipmentUpdated( "id_local", rpr::EntityType( componentEntityType ), undamaged, destroyed, lightDamages, heavyDamages );
-    CheckMessage( message, unitId, componentTypeId, undamaged, destroyed, lightDamages, heavyDamages );
+    CheckMessage( message, unitId, componentTypeId, undamaged, destroyed, lightDamages, heavyDamages, 19 );
 }

@@ -225,7 +225,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "component" ) ) ) ) )
     , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "munition" ) ) ) ) )
     , pEntityObjectTypeResolver_  ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "object" ) ) ) ) )
-    , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
+    , pComponentTypes_            ( new ComponentTypes( staticModel.types_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pUnitTypeResolver_          ( new UnitTypeResolver< kernel::AgentType >( *pAggregateTypeResolver_, staticModel.types_, logger ) )
     , pAutomatTypeResolver_       ( new UnitTypeResolver< kernel::AutomatType >( *pAutomatAggregateResolver_, staticModel.types_, logger ) )
     , pMunitionTypeResolver_      ( new DotationTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )

@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyEquipment( unsigned int typeIdentifier, const std::string& typeName, unsigned int number ) = 0;
+    virtual void NotifyEquipment( unsigned int typeIdentifier, const std::string& typeName, unsigned int number, unsigned int crew, const std::vector< unsigned long >& breakdowns ) = 0;
     //@}
 };
 
