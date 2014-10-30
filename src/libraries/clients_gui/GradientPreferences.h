@@ -51,6 +51,7 @@ public:
 
     void Apply( const std::function< void( const T_Gradient ) >& functor ) const;
 
+    bool Exist( const QString& name ) const;
     T_Gradient GetByName( const QString& name ) const;
     T_Gradient GetByDisplayName( const QString& name ) const;
     T_Gradient GetCurrent() const;

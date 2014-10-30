@@ -108,6 +108,18 @@ void GradientPreferences::Apply( const std::function< void( const T_Gradient ) >
 }
 
 // -----------------------------------------------------------------------------
+// Name: GradientPreferences::Exist
+// Created: ABR 2014-10-27
+// -----------------------------------------------------------------------------
+bool GradientPreferences::Exist( const QString& name ) const
+{
+    auto it = std::find_if( gradients_.begin(), gradients_.end(), [ &name ]( const T_Gradient& gradient ) {
+        return gradient->GetName() == name;
+    } );
+    return it != gradients_.end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GradientPreferences::GetByName
 // Created: ABR 2014-10-09
 // -----------------------------------------------------------------------------

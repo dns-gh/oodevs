@@ -12,13 +12,10 @@
 #include "moc_PreferencesDialog.cpp"
 #include "CoordinateSystemsPanel.h"
 #include "ElevationPanel.h"
-#include "FireColorPanel.h"
 #include "RefreshRatePanel.h"
-#include "ReplayPanel.h"
 #include "GLOptions.h"
 #include "GlProxy.h"
 #include "GraphicsPanel.h"
-#include "InhabitantPanel.h"
 #include "LayersPanel.h"
 #include "LightingPanel.h"
 #include "PreferencesList.h"
@@ -81,8 +78,6 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     QHBoxLayout* contentLayout = new QHBoxLayout();
     contentLayout->addWidget( list_, 1 );
     contentLayout->addWidget( stack_, 3 );
-    AddPage( tr( "Direct fire colors" ), *new FireColorPanel( this, controllers_, model, FIRE_GROUP_DIRECT ) );
-    AddPage( tr( "Indirect fire colors" ), *new FireColorPanel( this, controllers_, model, FIRE_GROUP_INDIRECT ) );
 
     QHBoxLayout* bottomLayout = new QHBoxLayout();
     bottomLayout->setMargin( 0 );
@@ -96,14 +91,13 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     layout->addLayout( bottomLayout );
 
     auto& options = controllers.options_;
+    // common pages between preparation and gaming
     AddPage( tr( "2D" ),                   *new LayersPanel( this, options, proxy ) );
     AddPage( tr( "2D/Terrain" ),           *new GraphicsPanel( this, options ) );
-    AddPage( tr( "2D/Population" ),        *new InhabitantPanel( this, options ) );
     AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, model.detection_ ) );
     AddPage( tr( "3D" ),                   *new LightingPanel( this, options ) );
     AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, model.coordinateConverter_ ) );
     AddPage( tr( "Refresh rate" ),         *new RefreshRatePanel( this, options ) );
-    AddPage( tr( "Replay" ),               *new ReplayPanel( this, options ) );
     AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, options ) );
 
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
@@ -147,20 +141,20 @@ void PreferencesDialog::showEvent( QShowEvent * event )
 
 namespace
 {
-    void RestoreOptions( kernel::OptionsController& optionsController,
-                         const kernel::Options& previousOptions,
+    void RestoreOptions( kernel::Options& previousOptions,
                          kernel::Options& currentOptions )
     {
         std::vector< std::string > toDelete;
-        currentOptions.Apply( [&]( const std::string& name, const OptionVariant&, bool ) {
+        // Update our previous values with changes done outside the preferences panel
+        // and remove the current values that were added.
+        currentOptions.Apply( [ &]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
             if( !previousOptions.Has( name ) )
                 toDelete.push_back( name );
+            else if( !isInPreferencePanel )
+                previousOptions.Set( name, value );
+
         } );
-        std::for_each( toDelete.begin(), toDelete.end(), [&]( const std::string& name ){ currentOptions.Remove( name ); } );
-        previousOptions.Apply( [&]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
-            if( isInPreferencePanel )
-                optionsController.Change( name, value );
-        } );
+        std::for_each( toDelete.begin(), toDelete.end(), [ &]( const std::string& name ) { currentOptions.Remove( name ); } );
     }
 }
 
@@ -170,13 +164,20 @@ namespace
 // -----------------------------------------------------------------------------
 void PreferencesDialog::reject()
 {
-    auto& options = controllers_.options_;
-    auto& viewOptions = *options.GetViewOptions();
+    auto& optionsController = controllers_.options_;
+    auto& generalOptions = *optionsController.GetGeneralOptions();
+    auto& viewOptions = *optionsController.GetViewOptions();
+
+    RestoreOptions( *previousViewOptions_->GetOptions(), viewOptions );
     proxy_.GetOptions() = *previousViewOptions_;
-    options.UpdateViewOptions();
-    RestoreOptions( options, *previousGeneralOptions_, *options.GetGeneralOptions() );
+    optionsController.UpdateViewOptions();
     previousViewOptions_.reset();
+
+    RestoreOptions( *previousGeneralOptions_, generalOptions );
+    generalOptions = *previousGeneralOptions_;
+    optionsController.UpdateGeneralOptions();
     previousGeneralOptions_.reset();
+
     proxy_.UpdateLayerOrder( viewOptions );
     proxy_.GetOptions().Load();
     ModalDialog::reject();

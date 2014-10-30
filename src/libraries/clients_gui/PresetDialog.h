@@ -12,7 +12,7 @@
 
 namespace kernel
 {
-    class OptionsController;
+    class Options;
 }
 
 namespace gui
@@ -34,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PresetDialog( QWidget* parent,
-                           kernel::OptionsController& options,
+                           kernel::Options& options,
                            const std::shared_ptr< Gradient >& gradient,
                            GradientPreferences& preferences );
     virtual ~PresetDialog();

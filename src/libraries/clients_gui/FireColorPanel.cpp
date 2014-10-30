@@ -38,7 +38,6 @@ FireColorPanel::FireColorPanel( QWidget* parent,
     , group_( group )
     , model_( model )
     , controllers_( controllers )
-    , options_( controllers.options_ )
 {
     SetupUi( this );
     controllers_.Update( *this );
@@ -355,6 +354,7 @@ void FireColorPanel::SetupGroup( QLayout* root,
     rlayout->addWidget( add );
 
     ctx_.grid = new QGridLayout( frame );
+    ctx_.grid->setContentsMargins( 10, 0, 0, 0 );
     int row = 0;
     ctx_.grid->addWidget( nameLabel, 0, row++ );
     ctx_.grid->addWidget( karmaLabel, 0, row++ );
@@ -369,13 +369,15 @@ void FireColorPanel::SetupUi( QScrollArea* parent )
     auto frame = new QWidget();
     parent->setWidget( frame );
     auto layout = new QVBoxLayout( frame );
+    layout->setMargin( 0 );
+    layout->setSpacing( 0 );
     SetupGroup( layout, group_ == FIRE_GROUP_DIRECT ? tr( "Shooter" ) : tr( "Ammunition" ) );
     layout->addStretch();
 }
 
 void FireColorPanel::Save()
 {
-    options_.Change(
+    controllers_.options_.Change(
         FireOption::GetOptionName( group_ ),
         SaveFireOptions( ctx_.data ) );
 }

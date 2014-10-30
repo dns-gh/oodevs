@@ -17,7 +17,7 @@
 #include "SignalAdapter.h"
 #include "SubObjectName.h"
 #include "Tools.h"
-#include "clients_kernel/OptionsController.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
@@ -27,7 +27,7 @@ using namespace gui;
 // Created: LGY 2010-09-24
 // -----------------------------------------------------------------------------
 PresetDialog::PresetDialog( QWidget* parent,
-                            kernel::OptionsController& options,
+                            kernel::Options& options,
                             const std::shared_ptr< Gradient >& gradient,
                             GradientPreferences& preferences )
     : QDialog( parent )
@@ -68,15 +68,15 @@ PresetDialog::PresetDialog( QWidget* parent,
         QString newName = lineEdit->text();
         if( newName.isEmpty() )
             QMessageBox::warning( this, tr( "Warning" ), tr( "Preset name is empty.") );
-        else if( preferences.GetByName( newName ) )
+        else if( preferences.Exist( newName ) )
             QMessageBox::warning( this, tr( "Warning" ), tr( "Preset name already exists." ) );
         else
         {
             const auto oldName = gradient->GetName();
             gradient->SetName( newName );
             options.Remove( "Elevation/Gradients/" + oldName.toStdString() );
-            options.Change( "Elevation/Gradients/" + newName.toStdString(), gradient->GetValues() );
-            options.Change( "Elevation/Gradient", newName );
+            options.Create( "Elevation/Gradients/" + newName.toStdString(), gradient->GetValues(), true );
+            options.Set( "Elevation/Gradient", newName );
             accept();
         }
     } );

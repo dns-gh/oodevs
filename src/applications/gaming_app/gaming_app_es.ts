@@ -2164,6 +2164,22 @@ Los datos no pueden ser proyectados.</translation>
         <source>Weapon Ranges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fire colors/Direct</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire colors/Indirect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D/Population</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replay</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
