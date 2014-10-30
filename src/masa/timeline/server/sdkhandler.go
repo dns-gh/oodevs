@@ -27,6 +27,7 @@ type SdkController interface {
 	StartSession(uuid string, offset int64) (*sdk.Session, error)
 	StopSession(uuid string) (*sdk.Session, error)
 	// services
+	AttachService(uuid, name string, service services.Service) (*sdk.Session, error)
 	AttachTimerService(uuid, name string, base string) (*sdk.Session, error)
 	AttachSwordService(uuid, name string, clock bool, address string) (*sdk.Session, error)
 	DetachService(uuid, name string) (*sdk.Session, error)

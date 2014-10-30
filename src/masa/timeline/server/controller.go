@@ -195,6 +195,12 @@ func (c *Controller) AttachSwordService(uuid, name string, clock bool, address s
 	})
 }
 
+func (c *Controller) AttachService(uuid, name string, service services.Service) (*sdk.Session, error) {
+	return c.applySession(uuid, func(session *Session) error {
+		return session.AttachService(name, service)
+	})
+}
+
 func (c *Controller) DetachService(uuid, name string) (*sdk.Session, error) {
 	return c.applySession(uuid, func(session *Session) error {
 		return session.Detach(name)

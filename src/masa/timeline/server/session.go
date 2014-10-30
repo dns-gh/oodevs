@@ -282,6 +282,12 @@ func (s *Session) UpdateSession() {
 	}
 }
 
+func (s *Session) UpdateTick(tick time.Time) {
+	for _, observer := range s.observers {
+		observer.UpdateTick(tick)
+	}
+}
+
 func (s *Session) setTick(tick time.Time) {
 	modified := s.tick != tick
 	s.tick = tick
@@ -289,12 +295,10 @@ func (s *Session) setTick(tick time.Time) {
 		return
 	}
 	s.UpdateSession()
-	for _, observer := range s.observers {
-		observer.UpdateTick(tick)
-	}
+	s.UpdateTick(tick)
 }
 
-func (s *Session) runEvent(event *Event) {
+func (s *Session) activateEvent(event *Event) {
 	if !event.action.apply {
 		return
 	}
@@ -309,7 +313,7 @@ func (s *Session) runEvent(event *Event) {
 	}
 }
 
-func (s *Session) runEvents(begin, end time.Time) {
+func (s *Session) activateEvents(begin, end time.Time) {
 	for _, event := range s.events {
 		if event.done {
 			continue
@@ -320,7 +324,7 @@ func (s *Session) runEvents(begin, end time.Time) {
 		if event.begin.After(end) {
 			continue
 		}
-		s.runEvent(event)
+		s.activateEvent(event)
 	}
 }
 
@@ -436,7 +440,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	}
 	s.listeners.UpdateEvents(updates, encoded)
 	if triggered {
-		s.runEvent(event)
+		s.activateEvent(event)
 	}
 	return encoded[0], nil
 }
@@ -616,7 +620,7 @@ func (s *Session) Tick(tick time.Time) {
 		last = tick
 	}
 	if s.autostart {
-		s.runEvents(last, tick)
+		s.activateEvents(last, tick)
 	}
 }
 

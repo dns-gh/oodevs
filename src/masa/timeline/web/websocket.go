@@ -10,10 +10,13 @@ package web
 
 import (
 	"code.google.com/p/go.net/websocket"
+	"code.google.com/p/goprotobuf/proto"
 	"io"
+	"masa/timeline/sdk"
 	"masa/timeline/server"
 	"masa/timeline/util"
 	"net"
+	"net/url"
 	"regexp"
 	"sync/atomic"
 	"time"
@@ -93,6 +96,30 @@ func (w *WsContext) SendBroadcasts() {
 	}
 }
 
+type ObserverService struct {
+	url      string
+	observer server.SdkObserver
+}
+
+func (os *ObserverService) Proto(name string) *sdk.Service {
+	return &sdk.Service{
+		Name:  proto.String(name),
+		Clock: proto.Bool(false),
+		Websocket: &sdk.Websocket{
+			Url: proto.String(os.url),
+		},
+	}
+}
+
+func (ObserverService) HasClock() bool { return false }
+func (ObserverService) IsLocked() bool { return false }
+func (ObserverService) Start() error   { return nil }
+func (ObserverService) Stop() error    { return nil }
+
+func (ObserverService) Apply(uuid string, url url.URL, payload []byte) error {
+	return nil
+}
+
 func (s *Server) socketHandler(log util.Logger, ws *websocket.Conn) {
 	defer ws.Close()
 	req := ws.Request()
@@ -113,6 +140,14 @@ func (s *Server) socketHandler(log util.Logger, ws *websocket.Conn) {
 		return
 	}
 	defer s.controller.UnregisterObserver(uuid, observer)
+	if service := req.FormValue("register_service"); len(service) > 0 {
+		_, err = s.controller.AttachService(uuid, service, &ObserverService{req.URL.String(), observer})
+		if err != nil {
+			log.Printf("[ws] Unable to register observer service %s: %s\n", uuid, err)
+			return
+		}
+		defer s.controller.DetachService(uuid, service)
+	}
 	ctx := WsContext{
 		log:    log,
 		link:   ws,
