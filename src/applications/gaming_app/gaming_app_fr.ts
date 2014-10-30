@@ -2165,6 +2165,22 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Weapon Ranges</source>
         <translation>Portées Utiles de Combat</translation>
     </message>
+    <message>
+        <source>Fire colors/Direct</source>
+        <translation>Couleurs des tirs/Directs</translation>
+    </message>
+    <message>
+        <source>Fire colors/Indirect</source>
+        <translation>Couleurs des tirs/Indirects</translation>
+    </message>
+    <message>
+        <source>2D/Population</source>
+        <translation>2D/Population couvrante</translation>
+    </message>
+    <message>
+        <source>Replay</source>
+        <translation>Rejeu</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

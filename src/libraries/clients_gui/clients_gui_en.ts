@@ -1726,10 +1726,6 @@ Do you want to remove it?</translation>
         <translation type="unfinished">2D/Terrain</translation>
     </message>
     <message>
-        <source>2D/Population</source>
-        <translation type="unfinished">2D/Population</translation>
-    </message>
-    <message>
         <source>2D/Elevation</source>
         <translation type="unfinished">2D/Elevation</translation>
     </message>
@@ -1739,18 +1735,6 @@ Do you want to remove it?</translation>
     </message>
     <message>
         <source>Refresh rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Direct fire colors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Indirect fire colors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

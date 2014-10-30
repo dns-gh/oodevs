@@ -85,6 +85,7 @@
 #include "clients_gui/Elevation3dLayer.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_gui/FireColorPanel.h"
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GlOptions.h"
@@ -94,6 +95,7 @@
 #include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/InhabitantLayer.h"
+#include "clients_gui/InhabitantPanel.h"
 #include "clients_gui/Layer.h"
 #include "clients_gui/LayerComposite.h"
 #include "clients_gui/LocationEditorToolbar.h"
@@ -109,6 +111,7 @@
 #include "clients_gui/RasterLayer.h"
 #include "clients_gui/MapnikLayer.h"
 #include "clients_gui/RasterProcess.h"
+#include "clients_gui/ReplayPanel.h"
 #include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/SelectionColorModifier.h"
@@ -226,7 +229,11 @@ MainWindow::MainWindow( Controllers& controllers,
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, staticModel, *glProxy_ ) );
+    preferenceDialog_->AddPage( tr( "2D/Population" ), *new gui::InhabitantPanel( preferenceDialog_.get(), controllers.options_ ) );
+    preferenceDialog_->AddPage( tr( "Fire colors/Direct" ), *new gui::FireColorPanel( preferenceDialog_.get(), controllers_, staticModel, gui::FIRE_GROUP_DIRECT ) );
+    preferenceDialog_->AddPage( tr( "Fire colors/Indirect" ), *new gui::FireColorPanel( preferenceDialog_.get(), controllers_, staticModel, gui::FIRE_GROUP_INDIRECT ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers.options_ ) );
+    preferenceDialog_->AddPage( tr( "Replay" ), *new gui::ReplayPanel( preferenceDialog_.get(), controllers.options_ ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers.options_, *firePlayer_ ) );
     preferenceDialog_->AddPage( tr( "Weapon Ranges" ), *new gui::WeaponRangesPanel( preferenceDialog_.get(), controllers.options_, staticModel_ ) );
     new VisionConesToggler( controllers, simulationController, this );

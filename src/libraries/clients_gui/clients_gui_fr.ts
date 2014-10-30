@@ -1707,47 +1707,31 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Coordinate System</source>
-        <translation type="unfinished">Système de coordonnées</translation>
+        <translation>Système de coordonnées</translation>
     </message>
     <message>
         <source>Visualisation Scales</source>
-        <translation type="unfinished">Echelles de Visualisation</translation>
+        <translation>Echelles de Visualisation</translation>
     </message>
     <message>
         <source>2D</source>
-        <translation type="unfinished">2D</translation>
+        <translation>2D</translation>
     </message>
     <message>
         <source>2D/Terrain</source>
-        <translation type="unfinished">2D/Terrain</translation>
-    </message>
-    <message>
-        <source>2D/Population</source>
-        <translation type="unfinished">2D/Population couvrante</translation>
+        <translation>2D/Terrain</translation>
     </message>
     <message>
         <source>2D/Elevation</source>
-        <translation type="unfinished">2D/Elevation</translation>
+        <translation>2D/Elevation</translation>
     </message>
     <message>
         <source>3D</source>
-        <translation type="unfinished">3D</translation>
+        <translation>3D</translation>
     </message>
     <message>
         <source>Refresh rate</source>
-        <translation type="unfinished">Période de rafraîchissement</translation>
-    </message>
-    <message>
-        <source>Replay</source>
-        <translation type="unfinished">Rejeu</translation>
-    </message>
-    <message>
-        <source>Direct fire colors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Indirect fire colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Période de rafraîchissement</translation>
     </message>
 </context>
 <context>

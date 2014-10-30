@@ -12,13 +12,10 @@
 #include "moc_PreferencesDialog.cpp"
 #include "CoordinateSystemsPanel.h"
 #include "ElevationPanel.h"
-#include "FireColorPanel.h"
 #include "RefreshRatePanel.h"
-#include "ReplayPanel.h"
 #include "GLOptions.h"
 #include "GlProxy.h"
 #include "GraphicsPanel.h"
-#include "InhabitantPanel.h"
 #include "LayersPanel.h"
 #include "LightingPanel.h"
 #include "PreferencesList.h"
@@ -81,8 +78,6 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     QHBoxLayout* contentLayout = new QHBoxLayout();
     contentLayout->addWidget( list_, 1 );
     contentLayout->addWidget( stack_, 3 );
-    AddPage( tr( "Direct fire colors" ), *new FireColorPanel( this, controllers_, model, FIRE_GROUP_DIRECT ) );
-    AddPage( tr( "Indirect fire colors" ), *new FireColorPanel( this, controllers_, model, FIRE_GROUP_INDIRECT ) );
 
     QHBoxLayout* bottomLayout = new QHBoxLayout();
     bottomLayout->setMargin( 0 );
@@ -96,14 +91,13 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     layout->addLayout( bottomLayout );
 
     auto& options = controllers.options_;
+    // common pages between preparation and gaming
     AddPage( tr( "2D" ),                   *new LayersPanel( this, options, proxy ) );
     AddPage( tr( "2D/Terrain" ),           *new GraphicsPanel( this, options ) );
-    AddPage( tr( "2D/Population" ),        *new InhabitantPanel( this, options ) );
     AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, model.detection_ ) );
     AddPage( tr( "3D" ),                   *new LightingPanel( this, options ) );
     AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, model.coordinateConverter_ ) );
     AddPage( tr( "Refresh rate" ),         *new RefreshRatePanel( this, options ) );
-    AddPage( tr( "Replay" ),               *new ReplayPanel( this, options ) );
     AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, options ) );
 
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
