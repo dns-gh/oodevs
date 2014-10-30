@@ -1042,6 +1042,10 @@
         <source>Vision surfaces</source>
         <translation>Vision surfaces</translation>
     </message>
+    <message>
+        <source>Marker</source>
+        <translation>Marker</translation>
+    </message>
 </context>
 <context>
     <name>LocationCategory</name>
