@@ -16,7 +16,6 @@
 #include <host/Proxy.h>
 #include <host/Session.h>
 #include <host/SessionController.h>
-#include <host/Sql.h>
 #include <host/UserController.h>
 #include <host/UuidFactory.h>
 #include <runtime/CrashHandler.h>
@@ -27,6 +26,7 @@
 #include <runtime/PropertyTree.h>
 #include <runtime/Runtime_ABC.h>
 #include <runtime/Utf8.h>
+#include <tools/Sql.h>
 #include <web/Client.h>
 #include <web/Controller.h>
 #include <web/Plugins.h>
@@ -330,7 +330,7 @@ struct Facade : SqlFacade
     Facade( cpplog::BaseLogger& log, const Configuration& cfg )
         : log  ( log )
         , cfg  ( cfg )
-        , db   ( cfg.root / "host" / "host_agent.db" )
+        , db   ( tools::Path::FromUnicode( ( cfg.root / "host" / "host_agent.db" ).wstring() ) )
         , users( log, crypt, uuids, db )
     {
         if( users.CountUsers( boost::uuids::nil_uuid() ) == 0 )
@@ -387,7 +387,7 @@ struct Facade : SqlFacade
     const Configuration& cfg;
     UuidFactory uuids;
     Crypt crypt;
-    Sql db;
+    tools::Sql db;
     UserController users;
 };
 

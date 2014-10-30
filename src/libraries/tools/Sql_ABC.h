@@ -19,13 +19,13 @@ namespace boost
     template< typename T > class shared_ptr;
 }
 
-namespace host
+namespace tools
 {
     struct Statement_ABC;
     struct Transaction;
 }
 
-namespace host
+namespace tools
 {
 // =============================================================================
 /** @class  Sql_ABC

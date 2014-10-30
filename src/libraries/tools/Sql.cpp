@@ -9,15 +9,12 @@
 
 #include "Sql.h"
 
-#include "runtime/Utf8.h"
-
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
 #include <sqlite/sqlite3.h>
 
-using namespace host;
-using runtime::Utf8;
+using namespace tools;
 
 namespace
 {
@@ -79,9 +76,9 @@ Sql::Sql( const Path& file )
     : file_  ( file )
 {
     sqlite3* pdb = 0;
-    int err = sqlite3_open( Utf8( file_ ).c_str(), &pdb );
+    int err = sqlite3_open( file_.ToUTF8().c_str(), &pdb );
     if( err != SQLITE_OK )
-        ThrowSqlException( "Unable to open " + file.string(), err );
+        ThrowSqlException( "Unable to open " + file.ToDebug(), err );
     db_.reset( pdb, &SqliteClose );
 }
 

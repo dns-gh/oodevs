@@ -213,6 +213,7 @@ target_link_libraries( sword_tools
     mt_tools
     ${PROTOBUF_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
+    ${SQLITE3_LIBRARIES}
     ${XALAN_LIBRARIES}
     ${XERCES_LIBRARIES}
 )
@@ -747,6 +748,7 @@ target_link_libraries( web
 # host
 add_target( host admin "libraries/host" OPTIONS qt )
 target_link_libraries( host
+    sword_tools
     web
     version
     ${BCRYPT_LIBRARIES}
