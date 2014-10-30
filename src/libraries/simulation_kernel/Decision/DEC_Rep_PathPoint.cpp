@@ -22,6 +22,10 @@ DEC_DIA_PathPoint::DEC_DIA_PathPoint( const MT_Vector2D& vPos, E_Type type,
     // NOTHING
 }
 
+DEC_DIA_PathPoint::~DEC_DIA_PathPoint()
+{
+}
+
 void DEC_DIA_PathPoint::SendToDIA( DEC_Representations& agent,
         boost::shared_ptr< DEC_DIA_PathPoint > point )
 {

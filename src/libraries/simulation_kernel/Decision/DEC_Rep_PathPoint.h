@@ -23,7 +23,7 @@ class DEC_DIA_PathPoint : public TER_PathPoint
 public:
              DEC_DIA_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nTypePoint,
                      const char* szDIARepType );
-    virtual ~DEC_DIA_PathPoint() {}
+    virtual ~DEC_DIA_PathPoint();
 
     void SendToDIA( DEC_Representations& agent,
             boost::shared_ptr< DEC_DIA_PathPoint > point );
