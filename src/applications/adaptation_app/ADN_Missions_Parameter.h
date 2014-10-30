@@ -45,7 +45,7 @@ public:
     void WriteArchive( xml::xostream& output ) const;
     void UpdateObjectsVectors();
     virtual void CheckValidity();
-    void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
+    void CheckDatabaseValidity( ADN_ConsistencyChecker&, const std::string&, E_MissionType ) const;
 
 private:
     void FillChoices();

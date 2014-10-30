@@ -105,7 +105,7 @@ void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
 void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker )
 {
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
-        (*it)->CheckDatabaseValidity( checker );
+        (*it)->CheckDatabaseValidity( checker, strName_.GetData(), type_ );
 }
 
 // -----------------------------------------------------------------------------

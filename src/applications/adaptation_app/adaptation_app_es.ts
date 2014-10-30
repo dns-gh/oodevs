@@ -785,10 +785,6 @@ Estacionado y motor encendido</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
         <translation type="unfinished">Equipo &apos;%1&apos; - Datos de falla no válidos : suma != 100</translation>
     </message>
@@ -858,6 +854,10 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter &apos;%2&apos; of the mission %1 should have at least one object: All objects will be selectable instead of none.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

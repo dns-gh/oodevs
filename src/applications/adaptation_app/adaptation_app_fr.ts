@@ -776,10 +776,6 @@ Arrêt moteur allumé</translation>
         <translation>Profondeur de scan invalide, elle doit être supérieure à la largeur.</translation>
     </message>
     <message>
-        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
-        <translation>Le paramètre de mission %1 devrait avoir au moins un objet : Tous les objets seront sélectionnables plutôt qu&apos;aucun.</translation>
-    </message>
-    <message>
         <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
         <translation>L&apos;automate non logistique &apos;%1&apos; contient au moins un pion logistique.</translation>
     </message>
@@ -858,6 +854,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
         <translation>Le symbole &apos;%2&apos; est manquant pour l&apos;unité %1.</translation>
+    </message>
+    <message>
+        <source>Parameter &apos;%2&apos; of the mission %1 should have at least one object: All objects will be selectable instead of none.</source>
+        <translation>Le paramètre &apos;%2&apos; de la mission %1 devrait avoir au moins un objet : Tous les objets seront sélectionnables plutôt qu&apos;aucun.</translation>
     </message>
 </context>
 <context>
