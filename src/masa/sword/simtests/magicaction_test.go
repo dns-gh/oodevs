@@ -588,6 +588,14 @@ func (s *TestSuite) TestListReports(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(len(reports), Equals, 0)
 
+	// Create a bunch of reports
+	startMissionId := uint32(79)
+	unitId := getSomeUnit(c, client.Model.GetData()).Id
+	for i := 0; i < 10; i++ {
+		err = client.CreateReport(startMissionId, unitId)
+		c.Assert(err, IsNil)
+	}
+
 	// Get all reports
 	allReports, next, err := client.ListReports(math.MaxInt32, 0)
 	c.Assert(err, IsNil)
