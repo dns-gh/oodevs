@@ -73,3 +73,11 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_does_nothing_if_target_is_define
     parameters.targetObjectIdentifier = Omt13String( "local target" );
     receiver.Receive( parameters );
 }
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_catch_unknown_munition, Fixture )
+{
+    MOCK_EXPECT( munitionResolver.ResolveType ).once().with( rpr::EntityType( munitionType ) ).throws( std::exception( "unknown munition" ) );
+    parameters.detonationLocation = rpr::WorldLocation( latitude, longitude, 0. );
+    parameters.munitionType = rpr::EntityType( munitionType );
+    BOOST_CHECK_NO_THROW( receiver.Receive( parameters ) );
+}
