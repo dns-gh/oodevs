@@ -17,7 +17,6 @@
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
-#include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -65,8 +64,8 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
 DEC_Agent_Path::~DEC_Agent_Path()
 {
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
-        if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
-            ( *it )->RemoveFromDIA( *it );
+        if( auto p = boost::dynamic_pointer_cast< DEC_DIA_PathPoint >( *it ) )
+            p->RemoveFromDIA( p );
     queryMaker_.UnregisterPath( *this );
 }
 
@@ -126,7 +125,7 @@ DEC_Agent_Path::T_PathPoints::iterator DEC_Agent_Path::GetPreviousPathPointOnDif
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: NLD 2005-08-11
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent )
 {
     double rDistanceLeft = spottedPathPoint->GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
@@ -189,7 +188,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: JVT 02-12-04
 //----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPointAvant )
 {
     static const double rDist = 2000.;
     if( rDistSinceLastPointAvant > rDist )
@@ -203,7 +202,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 // Name: DEC_Agent_Path::InsertPoint
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint )
+bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< TER_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint )
 {
     static double rDist = 500.;
     if( rDistSinceLastPoint > rDist )
@@ -219,7 +218,7 @@ bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPath
 // Name: DEC_Agent_Path::InsertPointAndPointAvant
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant )
 {
     if( InsertPoint( spottedPathPoint, itCurrent, rDistSinceLastPoint ) )
         InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );
@@ -234,10 +233,10 @@ void DEC_Agent_Path::InsertPointAvants()
     double rDistSinceLastPointAvant = std::numeric_limits< double >::max();
     double rDistSinceLastPoint = std::numeric_limits< double >::max();
     TerrainData nObjectTypesBefore;
-    DEC_PathPoint* pPrevPoint = 0;
+    TER_PathPoint* pPrevPoint = 0;
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
     {
-        DEC_PathPoint& current = **it;
+        TER_PathPoint& current = **it;
         if( pPrevPoint )
         {
             if( rDistSinceLastPointAvant != std::numeric_limits< double >::max() )
@@ -247,7 +246,7 @@ void DEC_Agent_Path::InsertPointAvants()
         }
 
         // On ne teste les points avants que sur les points du path find original
-        if( current.GetType() != DEC_PathPoint::eTypePointPath )
+        if( current.GetType() != TER_PathPoint::eTypePointPath )
         {
             pPrevPoint = &current;
             continue;
@@ -263,7 +262,7 @@ void DEC_Agent_Path::InsertPointAvants()
 
         // Village
         if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *it )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( CreateSpecialPoint( ( *it )->GetPos(), TerrainData::Urban() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Urban
         else if( IsPointAvantOut( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
@@ -275,13 +274,13 @@ void DEC_Agent_Path::InsertPointAvants()
 
         // Cross roads
         else if( current.GetObjectTypes().ContainsOne( TerrainData::Crossroad() ) )
-            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *it )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( CreateSpecialPoint( ( *it )->GetPos(), TerrainData::Crossroad() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Pont
         else if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Bridge() )
                 || ( !current.GetObjectTypes().ContainsOne( TerrainData::SmallRiver() ) && current.GetObjectTypes().ContainsOne( TerrainData::Bridge() ) && !nObjectTypesBefore.ContainsOne( TerrainData::Bridge() ) && !nObjectTypesToNextPoint.ContainsOne( TerrainData::Bridge() ) )
                 )
-            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *it )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( CreateSpecialPoint( ( *it )->GetPos(), TerrainData::Bridge() ), it, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         nObjectTypesBefore = nObjectTypesToNextPoint;
         pPrevPoint = &current;
@@ -294,10 +293,10 @@ void DEC_Agent_Path::InsertPointAvants()
 //-----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
 {
-    boost::shared_ptr< DEC_PathPoint > pLastPoint;
+    boost::shared_ptr< TER_PathPoint > pLastPoint;
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
     {
-        boost::shared_ptr< DEC_PathPoint > pCurrentPoint = *it;
+        boost::shared_ptr< TER_PathPoint > pCurrentPoint = *it;
         if( !pCurrentPoint )
         {
             MT_LOG_ERROR_MSG( "Current point is invalid" );

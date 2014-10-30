@@ -11,7 +11,6 @@
 #include "DEC_PathComputer.h"
 #include "DEC_PathFind_Manager.h"
 #include "DEC_PathSection.h"
-#include "DEC_PathPoint.h"
 #include "MIL_AgentServer.h"
 #include "SlopeSpeedModifier.h"
 #include "Network/NET_ASN_Tools.h"
@@ -22,6 +21,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Line.h"
 #include "protocol/Protocol.h"
+#include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/make_shared.hpp>
 
@@ -262,12 +262,12 @@ void DEC_PathComputer::AddResultPoint( const MT_Vector2D& vPos, const TerrainDat
             {
                 const MT_Line segment( startPoint, vPos );
                 const MT_Vector2D projected = segment.ProjectPointOnLine( ( itSlope + 1 )->first );
-                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
+                auto point = boost::make_shared< TER_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
                 resultList_.push_back( point );
             }
         }
     }
-    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
+    auto point = boost::make_shared< TER_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
     resultList_.push_back( point );
 }
 

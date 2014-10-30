@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathWalker.h"
-#include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_Rep_PathPoint.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -106,8 +106,8 @@ MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, co
 // -----------------------------------------------------------------------------
 void DEC_PathWalker::ComputeCurrentSpeed()
 {
-    const DEC_PathPoint& curPathPoint = **itCurrentPathPoint_;
-    if( curPathPoint.GetType() == DEC_PathPoint::eTypePointPath )
+    const TER_PathPoint& curPathPoint = **itCurrentPathPoint_;
+    if( curPathPoint.GetType() == TER_PathPoint::eTypePointPath )
     {
         TerrainData tmpEnvironment = curPathPoint.GetObjectTypesToNextPoint();
         if( !( environment_ == tmpEnvironment ) ) //$$$
@@ -137,7 +137,7 @@ void DEC_PathWalker::ComputeCurrentSpeed()
 void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 {
     DEC_PathResult::T_PathPoints::const_iterator itPathPointTmp = itCurrentPathPoint_;
-    while( itPathPointTmp != path.GetResult().end() && ( *itPathPointTmp )->GetType() != DEC_PathPoint::eTypePointPath )
+    while( itPathPointTmp != path.GetResult().end() && ( *itPathPointTmp )->GetType() != TER_PathPoint::eTypePointPath )
         ++itPathPointTmp;
     if( itPathPointTmp == path.GetResult().end() )
         MT_LOG_ERROR_MSG( "Path point is invalid" );
@@ -224,7 +224,8 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
 //-----------------------------------------------------------------------------
 bool DEC_PathWalker::GoToNextNavPoint( DEC_PathResult& path )
 {
-    if( ( *itNextPathPoint_ )->GetType() == DEC_PathPoint::eTypePointPath )
+    auto diaPoint = boost::dynamic_pointer_cast< DEC_DIA_PathPoint >( *itNextPathPoint_ );
+    if( !diaPoint )
     {
         movingEntity_.NotifyMovingOnPathPoint( (*itNextPathPoint_)->GetPos() );
         SetCurrentPathPoint( path );
@@ -233,14 +234,18 @@ bool DEC_PathWalker::GoToNextNavPoint( DEC_PathResult& path )
         return false;
     }
     // points particuliers -> EVT vers DEC
-    do
+    for( ;; )
     {
-        movingEntity_.NotifyMovingOnSpecialPoint( *itNextPathPoint_ );
+        movingEntity_.NotifyMovingOnSpecialPoint( diaPoint );
         SetCurrentPathPoint( path );
         CheckPathNotification();
+        ++itNextPathPoint_;
+        if( itNextPathPoint_ == path.GetResult().end() )
+            break;
+        diaPoint = boost::dynamic_pointer_cast< DEC_DIA_PathPoint >( *itNextPathPoint_ );
+        if( !diaPoint || diaPoint->GetPos() != vNewPos_ )
+            break;
     }
-    while( ++itNextPathPoint_ != path.GetResult().end() &&
-         ( *itNextPathPoint_ )->GetType() != DEC_PathPoint::eTypePointPath && ( *itNextPathPoint_ )->GetPos() == vNewPos_ );
     return true;
 }
 

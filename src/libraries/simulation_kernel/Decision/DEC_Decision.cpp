@@ -34,7 +34,6 @@
 #include "Decision/DEC_ResourceNetworkFunctions.h"
 #include "Decision/DEC_TelepathyFunctions.h"
 #include "Decision/DEC_Gen_Object.h"
-#include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Decision/DEC_TerrainFunctions.h"
 #include "Decision/DEC_Logger.h"
@@ -47,6 +46,7 @@
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "simulation_terrain/TER_PathPoint.h"
 #include <directia/tools/binders/ScriptRef.h>
 #include <geometry/Point2.h>
 
@@ -666,7 +666,7 @@ void RegisterTypeFunctions( sword::Brain& brain )
     brain.RegisterMethod( "GetType", &DEC_Decision_ABC::GetDIAType );
     brain.RegisterMethod( "GetType", &DEC_RolePion_Decision::GetDIAType );
     brain.RegisterMethod( "GetType", &DEC_AutomateDecision::GetDIAType );
-    brain.RegisterMethod( "GetType", &DEC_PathPoint::GetDIAType );
+    brain.RegisterMethod( "GetType", &TER_PathPoint::GetDIAType );
 }
 
 // -----------------------------------------------------------------------------
@@ -839,7 +839,7 @@ void RegisterTelepathyFunctions( sword::Brain& brain )
     brain.RegisterMethod( "GetporteeAction_", &DEC_Decision_ABC::GetPorteeAction );
     brain.RegisterMethod( "SetporteeAction_", &DEC_Decision_ABC::SetPorteeAction );
     brain.RegisterMethod( "GetrNiveauAlerteRavitaillement_", &DEC_Decision_ABC::GetNiveauAlerteRavitaillement );
-    brain.RegisterMethod( "Getpoint_", &DEC_PathPoint::GetPos );
+    brain.RegisterMethod( "Getpoint_", &TER_PathPoint::GetPos );
     brain.RegisterMethod( "Setmunitions_", &DEC_Decision_ABC::SetMunition );
     brain.RegisterMethod( "Getmunitions_", &DEC_Decision_ABC::GetMunition );
     brain.RegisterMethod( "SetnbIT_", &DEC_Decision_ABC::SetNbIt );

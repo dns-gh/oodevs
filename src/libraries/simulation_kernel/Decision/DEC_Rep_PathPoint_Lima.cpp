@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, unsigned int nLimaID, const MIL_LimaFunction& function )
     : DEC_Rep_PathPoint( vPos, DEC_Rep_PathPoint::eTypePointLima, nTypeTerrain, "Rep_PointLima" )
-    , typeLima_( (int)function.GetID() )
+    , typeLima_( static_cast< int >( function.GetID() ) )
     , limaID_  ( nLimaID )
 {
     // NOTHING
@@ -38,7 +38,7 @@ DEC_Rep_PathPoint_Lima::~DEC_Rep_PathPoint_Lima()
 // Name: DEC_Rep_PathPoint_Lima::GetTypeLima
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-int DEC_Rep_PathPoint_Lima::GetTypeLima()
+int DEC_Rep_PathPoint_Lima::GetTypeLima() const
 {
     return typeLima_;
 }
@@ -47,7 +47,7 @@ int DEC_Rep_PathPoint_Lima::GetTypeLima()
 // Name: DEC_Rep_PathPoint_Lima::GetLimaID
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-unsigned int DEC_Rep_PathPoint_Lima::GetLimaID()
+unsigned int DEC_Rep_PathPoint_Lima::GetLimaID() const
 {
     return limaID_;
 }

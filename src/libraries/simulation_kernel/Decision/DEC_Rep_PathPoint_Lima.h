@@ -27,13 +27,13 @@ public:
 
     //! @name Accessors
     //@{
-    int GetTypeLima();
-    unsigned int GetLimaID();
+    int GetTypeLima() const;
+    unsigned int GetLimaID() const;
     //@}
 
 private:
-    int typeLima_;
-    unsigned int limaID_;
+    const int typeLima_;
+    const unsigned int limaID_;
 };
 
 #endif // __DEC_Rep_PathPoint_Lima_h_

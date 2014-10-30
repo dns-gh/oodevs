@@ -34,6 +34,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
@@ -289,7 +290,7 @@ bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const 
 // Name: DEC_PathFunctions::GetRepPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetRepPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetRepPoint( boost::shared_ptr< TER_PathPoint > pPoint )
 {
     if( !pPoint )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -300,29 +301,29 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetRepPoint( boost::shared_p
 // Name: DEC_PathFunctions::IsAvantPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-bool DEC_PathFunctions::IsAvantPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+bool DEC_PathFunctions::IsAvantPoint( boost::shared_ptr< TER_PathPoint > pPoint )
 {
     if( !pPoint )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return pPoint->GetType() == DEC_PathPoint::eTypePointFront;
+    return pPoint->GetType() == TER_PathPoint::eTypePointFront;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::IsPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-bool DEC_PathFunctions::IsPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+bool DEC_PathFunctions::IsPoint( boost::shared_ptr< TER_PathPoint > pPoint )
 {
     if( !pPoint )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return pPoint->GetType() == DEC_PathPoint::eTypePointSpecial;
+    return pPoint->GetType() == TER_PathPoint::eTypePointSpecial;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetTypePoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-int DEC_PathFunctions::GetTypePoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+int DEC_PathFunctions::GetTypePoint( boost::shared_ptr< TER_PathPoint > pPoint )
 {
     if( !pPoint )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -333,33 +334,36 @@ int DEC_PathFunctions::GetTypePoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 // Name: DEC_PathFunctions::GetDestPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_PathPoint > DEC_PathFunctions::GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+boost::shared_ptr< TER_PathPoint > DEC_PathFunctions::GetDestPoint( boost::shared_ptr< TER_PathPoint > pPoint )
 {
-    if( !pPoint )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    return pPoint->GetDestPoint();
+    const auto* front = dynamic_cast< const DEC_Rep_PathPoint_Front* >( pPoint.get() );
+    if( !front )
+        throw MASA_EXCEPTION( "invalid front path point" );
+    return front->GetDestPoint();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetTypeLimaPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-int DEC_PathFunctions::GetTypeLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+int DEC_PathFunctions::GetTypeLimaPoint( boost::shared_ptr< TER_PathPoint > pPoint )
 {
-    if( !pPoint )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    return pPoint->GetTypeLima();
+    const auto* lima = dynamic_cast< const DEC_Rep_PathPoint_Lima* >( pPoint.get() );
+    if( !lima )
+        throw MASA_EXCEPTION( "invalid lima path point" );
+    return lima->GetTypeLima();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetLimaPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-unsigned int DEC_PathFunctions::GetLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+unsigned int DEC_PathFunctions::GetLimaPoint( boost::shared_ptr< TER_PathPoint > pPoint )
 {
-    if( !pPoint )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    return pPoint->GetLimaID();
+    const auto* lima = dynamic_cast< const DEC_Rep_PathPoint_Lima* >( pPoint.get() );
+    if( !lima )
+        throw MASA_EXCEPTION( "invalid lima path point" );
+    return lima->GetLimaID();
 }
 
 // -----------------------------------------------------------------------------

@@ -15,7 +15,7 @@
 #include <boost/optional.hpp>
 #include <vector>
 
-class DEC_PathPoint;
+class TER_PathPoint;
 
 // =============================================================================
 /** @class  DEC_PathComputer
@@ -56,7 +56,7 @@ private:
 
 private:
     typedef std::vector< DEC_PathSection* > T_PathSectionVector;
-    typedef std::list< boost::shared_ptr< DEC_PathPoint > > T_PathPoints;
+    typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 
 private:
     MT_Profiler profiler_;

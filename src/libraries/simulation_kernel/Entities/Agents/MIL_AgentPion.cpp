@@ -873,7 +873,6 @@ void MIL_AgentPion::DeleteUnit( unsigned int nCtx, unsigned int clientId )
         return;
     CancelCurrentMission();
     pOrderManager_->StopAllMissions();
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJobForUnit( this );
 
     GetType().DeleteUnit( *this );
 

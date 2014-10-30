@@ -19,11 +19,11 @@ namespace sword
     class Path;
 }
 
-class MIL_Agent_ABC;
-class DEC_PathPoint;
 class DEC_PathType;
-class TER_Polygon;
+class MIL_Agent_ABC;
 class TER_Localisation;
+class TER_PathPoint;
+class TER_Polygon;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -34,7 +34,7 @@ class DEC_PathResult : public DEC_Path_ABC
 public:
     //! @name Types
     //@{
-    typedef std::list< boost::shared_ptr< DEC_PathPoint > > T_PathPoints;
+    typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
     //@}
 
 public:

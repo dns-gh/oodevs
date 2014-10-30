@@ -107,15 +107,6 @@ void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_PathComput
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::CancelJobForUnit
-// Created: JSR 2013-03-11
-// -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* /*pion*/ )
-{
-    // NOTHING TO BE REMOVED
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::GetNbrShortRequests
 // Created: NLD 2005-04-01
 // -----------------------------------------------------------------------------

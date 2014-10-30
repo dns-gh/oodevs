@@ -136,7 +136,7 @@ std::vector< boost::shared_ptr< MIL_FragOrder > > DEC_MiscFunctions::GetOrdersCa
 // Name: DEC_MiscFunctions::GetPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< DEC_PathPoint > > DEC_MiscFunctions::GetPointsCategory( MIL_Entity_ABC& callerAgent )
+std::vector< boost::shared_ptr< TER_PathPoint > > DEC_MiscFunctions::GetPointsCategory( MIL_Entity_ABC& callerAgent )
 {
     DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
     return role.GetPointsCategory();
@@ -156,7 +156,7 @@ void DEC_MiscFunctions::RemoveFromOrdersCategory( MIL_Entity_ABC& callerAgent, b
 // Name: DEC_MiscFunctions::RemoveFromPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::RemoveFromPointsCategory( MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_PathPoint > pPoint )
+void DEC_MiscFunctions::RemoveFromPointsCategory( MIL_Entity_ABC& callerAgent, boost::shared_ptr< TER_PathPoint > pPoint )
 {
     DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
     role.RemoveFromPointsCategory( pPoint );

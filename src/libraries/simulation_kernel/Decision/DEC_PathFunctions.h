@@ -20,8 +20,8 @@ class MIL_Agent_ABC;
 class MT_Vector2D;
 class DEC_Knowledge_Object;
 class DEC_Path_ABC;
-class DEC_PathPoint;
 class DEC_Decision_ABC;
+class TER_PathPoint;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -40,14 +40,14 @@ public:
     static std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextRemovableObjectOnPath( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > oId, float oDistance );
     static boost::shared_ptr< MT_Vector2D > ExtrapolatePosition   ( const MIL_AgentPion& callerAgent, const double time, bool bBoundOnPath );
     static boost::shared_ptr< MT_Vector2D > GetLastPointOfPath    ( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath );
-    static boost::shared_ptr< MT_Vector2D > GetRepPoint           ( boost::shared_ptr< DEC_PathPoint > pPoint );
+    static boost::shared_ptr< MT_Vector2D > GetRepPoint           ( boost::shared_ptr< TER_PathPoint > pPoint );
     static bool IsMovingOnPath        ( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath );
-    static bool IsAvantPoint          ( boost::shared_ptr< DEC_PathPoint > pPoint );
-    static bool IsPoint               ( boost::shared_ptr< DEC_PathPoint > pPoint );
-    static int  GetTypePoint          ( boost::shared_ptr< DEC_PathPoint > pPoint );
-    static boost::shared_ptr< DEC_PathPoint > GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint );
-    static int  GetTypeLimaPoint      ( boost::shared_ptr< DEC_PathPoint > pPoint );
-    static unsigned int GetLimaPoint  ( boost::shared_ptr< DEC_PathPoint > pPoint );
+    static bool IsAvantPoint          ( boost::shared_ptr< TER_PathPoint > pPoint );
+    static bool IsPoint               ( boost::shared_ptr< TER_PathPoint > pPoint );
+    static int  GetTypePoint          ( boost::shared_ptr< TER_PathPoint > pPoint );
+    static boost::shared_ptr< TER_PathPoint > GetDestPoint( boost::shared_ptr< TER_PathPoint > pPoint );
+    static int  GetTypeLimaPoint      ( boost::shared_ptr< TER_PathPoint > pPoint );
+    static unsigned int GetLimaPoint  ( boost::shared_ptr< TER_PathPoint > pPoint );
     static std::vector< boost::shared_ptr< MT_Vector2D > > GetClosestPath( DEC_Decision_ABC* callerAgent,
                                                                            const boost::shared_ptr< MT_Vector2D >& begin,
                                                                            const boost::shared_ptr< MT_Vector2D >& end );

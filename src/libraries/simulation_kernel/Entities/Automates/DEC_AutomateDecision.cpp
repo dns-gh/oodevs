@@ -352,7 +352,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_DeleteRepresentation",
         std::function< void ( boost::shared_ptr< MIL_FragOrder > ) > ( boost::bind( &DEC_MiscFunctions::DeleteOrderRepresentation , boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_RemoveFromPointsCategory",
-        std::function< void( boost::shared_ptr< DEC_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetAutomate() ), _1 ) ) );
+        std::function< void( boost::shared_ptr< TER_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetAutomate() ), _1 ) ) );
     
     brain.RegisterFunction( "DEC_KnowledgeAgent_IsPerceptionLevelMax", std::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax, boost::cref( GetAutomate() ), _1 ) ) );
 

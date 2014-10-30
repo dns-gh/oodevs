@@ -30,7 +30,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
-#include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_Rep_PathPoint.h"
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
@@ -338,9 +338,8 @@ void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const MT_Vector2D& /*point*
 // Name: PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point )
+void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_DIA_PathPoint > point )
 {
-    //@TODO MGD Refactor Path_Point and DEC_Representation, DEC_Representations must be a manager to avoid auto dia register
     point->SendToDIA( owner_->GetRole< DEC_Representations >(), point );
 }
 

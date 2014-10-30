@@ -44,8 +44,8 @@ namespace directia
     void ReleasedByDIA( DEC_Objective* ) {}
     void UsedByDIA( DEC_Path_ABC* ) {}
     void ReleasedByDIA( DEC_Path_ABC* ) {}
-    void UsedByDIA( DEC_PathPoint* ) {}
-    void ReleasedByDIA( DEC_PathPoint* ) {}
+    void UsedByDIA( TER_PathPoint* ) {}
+    void ReleasedByDIA( TER_PathPoint* ) {}
     void UsedByDIA( MIL_FragOrder* ) {}
     void ReleasedByDIA( MIL_FragOrder* ) {}
     void UsedByDIA( MIL_Fuseau* ) {}

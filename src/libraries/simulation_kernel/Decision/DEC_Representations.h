@@ -14,7 +14,7 @@
 #include <boost/serialization/access.hpp>
 
 class MIL_FragOrder;
-class DEC_PathPoint;
+class TER_PathPoint;
 
 // =============================================================================
 /** @class  DEC_Representations
@@ -41,9 +41,9 @@ public:
     void RemoveFromOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject );
     void DeleteOrderRepresentation( boost::shared_ptr< MIL_FragOrder > pObject ); // $$$$ _RC_ SLI 2012-12-13: same as RemoveFromOrdersCategory, delete it?
 
-    const std::vector< boost::shared_ptr< DEC_PathPoint > >& GetPointsCategory();
-    void AddToPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject );
-    void RemoveFromPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject );
+    const std::vector< boost::shared_ptr< TER_PathPoint > >& GetPointsCategory();
+    void AddToPointsCategory( boost::shared_ptr< TER_PathPoint > pObject );
+    void RemoveFromPointsCategory( boost::shared_ptr< TER_PathPoint > pObject );
     //@}
 
 private:
@@ -65,7 +65,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< MIL_FragOrder > > T_OrdersRepresentationVector;
-    typedef std::vector< boost::shared_ptr< DEC_PathPoint > > T_PointsRepresentationVector;
+    typedef std::vector< boost::shared_ptr< TER_PathPoint > > T_PointsRepresentationVector;
     //@}
 
 private:

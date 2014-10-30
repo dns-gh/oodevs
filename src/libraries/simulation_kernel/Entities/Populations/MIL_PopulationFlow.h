@@ -135,7 +135,7 @@ private:
     //! @name Notifications
     //@{
     virtual void NotifyMovingOnPathPoint( const MT_Vector2D& point );
-    virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point );
+    virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_DIA_PathPoint > point );
     virtual void NotifyMovingInsideObject( MIL_Object_ABC& object, const MT_Vector2D& startPos, const MT_Vector2D& endPos );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
     virtual void NotifyEnvironmentChanged();

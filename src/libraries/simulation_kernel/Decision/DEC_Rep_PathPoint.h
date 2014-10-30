@@ -12,14 +12,28 @@
 #ifndef __DEC_Rep_PathPoint_h_
 #define __DEC_Rep_PathPoint_h_
 
-#include "Decision/DEC_PathPoint.h"
+#include "simulation_terrain/TER_PathPoint.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Representations;
 
-//*****************************************************************************
-// Created: JDY 03-05-05
-//*****************************************************************************
-class DEC_Rep_PathPoint : public DEC_PathPoint
+// Base class for path points returned to DIA.
+class DEC_DIA_PathPoint : public TER_PathPoint
+{
+public:
+             DEC_DIA_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nTypePoint,
+                     const char* szDIARepType );
+    virtual ~DEC_DIA_PathPoint();
+
+    void SendToDIA( DEC_Representations& agent,
+            boost::shared_ptr< DEC_DIA_PathPoint > point );
+    void RemoveFromDIA( boost::shared_ptr< DEC_DIA_PathPoint > self );
+
+private:
+    DEC_Representations* pSentToDiaAgent_;
+};
+
+class DEC_Rep_PathPoint : public DEC_DIA_PathPoint
 {
 public:
              DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
@@ -27,18 +41,14 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const TerrainData& GetTypeTerrain() const;
-    //@}
-
-    //! @name DIA
-    //@{
-    virtual void SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
-    virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
+    const TerrainData& GetTypeTerrain() const;
     //@}
 
 private:
     TerrainData nTypeTerrain_;
-    mutable DEC_Representations* pSentToDiaAgent_;
 };
+
+boost::shared_ptr< DEC_Rep_PathPoint > CreateSpecialPoint(
+        const MT_Vector2D& pos, const TerrainData& terrain );
 
 #endif // __DEC_Rep_PathPoint_h_

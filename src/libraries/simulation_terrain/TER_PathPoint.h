@@ -7,21 +7,18 @@
 //
 // *****************************************************************************
 
-#ifndef __DEC_PathPoint_h_
-#define __DEC_PathPoint_h_
+#ifndef SIMULATION_TERRAIN_PATHPOINT_H
+#define SIMULATION_TERRAIN_PATHPOINT_H
 
-#include "MIL.h"
+#include "MT_Tools/MT_Vector2D.h"
 #include <spatialcontainer/TerrainData.h>
-#include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
+#include <boost/shared_ptr.hpp>
 
-class DEC_PathPoint;
-class DEC_Representations;
-
-//*****************************************************************************
-// Created: JVT 02-12-04
-//*****************************************************************************
-class DEC_PathPoint : private boost::noncopyable
+// Base class for points composing pathfinder result paths. Caller may inherit
+// it to add specific annotations
+class TER_PathPoint : private boost::noncopyable
 {
 public:
     //-------------------------------------------------------------------------
@@ -49,10 +46,10 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint );
-    virtual ~DEC_PathPoint();
+             TER_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint );
+    virtual ~TER_PathPoint();
 protected:
-             DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType);
+             TER_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType);
     //@}
 
 public:
@@ -63,10 +60,6 @@ public:
     E_TypePoint GetTypePoint() const;
     const TerrainData& GetObjectTypes() const;
     const TerrainData& GetObjectTypesToNextPoint() const;
-    virtual boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
-    virtual int GetTypeLima();
-    virtual unsigned int GetLimaID();
-    virtual const TerrainData& GetTypeTerrain() const;
     bool IsSlopeValid() const;
     bool IsWaypoint() const;
     bool IsPartial() const;
@@ -82,16 +75,12 @@ public:
     void NotifyWaypoint();
     //@}
 
-    //! @name DIA
-    //@{
-    virtual void SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
-    virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
+    // This bit is required for DIA wrapping. It is ugly to keep it in
+    // TER_PathPoint, it belongs to a subclass but the situation is not
+    // clear enough yet to do that easily.
     const std::string& GetDIAType() const;
-    //@}
 
 protected:
-    //! @name Member data
-    //@{
     MT_Vector2D vPos_;
     E_Type nType_;
     E_TypePoint nPointType_;
@@ -101,7 +90,6 @@ protected:
     boost::optional< double > slope_;
     bool waypoint_;
     bool partial_;
-    //@}
 };
 
-#endif // __DEC_PathPoint_h_
+#endif // SIMULATION_TERRAIN_PATHPOINT_H

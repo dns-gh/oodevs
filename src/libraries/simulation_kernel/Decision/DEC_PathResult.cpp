@@ -9,14 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathResult.h"
-#include "DEC_PathPoint.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
-#include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_PathPoint.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const T_PathPoints::const
     // recherche du prochain point sur le path
     // on passe tous les points spéciaux, car il n'y a des changement de direction que sur les PathPoint_Point
     auto itNextPos = itCurrentPos;
-    while ( ++itNextPos != resultList_.end() && (*itNextPos)->GetType() != DEC_PathPoint::eTypePointPath )
+    while ( ++itNextPos != resultList_.end() && (*itNextPos)->GetType() != TER_PathPoint::eTypePointPath )
         ;
     const MT_Vector2D& vCurrentPos = (*itCurrentPos)->GetPos();
     if( itNextPos == resultList_.end() )

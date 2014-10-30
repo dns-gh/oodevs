@@ -12,30 +12,18 @@
 #ifndef __DEC_Rep_PathPoint_Front_h_
 #define __DEC_Rep_PathPoint_Front_h_
 
-#include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_Rep_PathPoint.h"
 
-class DEC_Rep_PathPoint;
-class DEC_Representations;
-
-//*****************************************************************************
-// Created: JDY 03-05-05
-//*****************************************************************************
-class DEC_Rep_PathPoint_Front  : public DEC_PathPoint
+class DEC_Rep_PathPoint_Front : public DEC_DIA_PathPoint
 {
 public:
-             DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< DEC_PathPoint > dest );
+             DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< TER_PathPoint > dest );
     virtual ~DEC_Rep_PathPoint_Front();
 
-    //! @name DIA
-    //@{
-    virtual void SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
-    virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
-    boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
-    //@}
+    boost::shared_ptr< TER_PathPoint > GetDestPoint() const;
 
 private:
-    boost::shared_ptr< DEC_PathPoint > destPoint_;
-    mutable DEC_Representations* pSentToDiaAgent_;
+    boost::shared_ptr< TER_PathPoint > destPoint_;
 };
 
 #endif // __DEC_Rep_PathPoint_Front_h_

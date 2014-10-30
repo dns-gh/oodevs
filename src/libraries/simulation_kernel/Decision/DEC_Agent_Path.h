@@ -18,6 +18,7 @@ class MIL_Agent_ABC;
 class DEC_Agent_PathClass;
 class DEC_AgentContext_ABC;
 class DEC_PathComputer_ABC;
+class DEC_Rep_PathPoint;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -39,7 +40,7 @@ public:
     virtual double GetLength() const;
 
 private:
-    int IsPointAvant( DEC_PathPoint* pBefore, DEC_PathPoint& current, DEC_PathPoint* pAfter, const TerrainData& nTypeTerrain ) const;
+    int IsPointAvant( TER_PathPoint* pBefore, TER_PathPoint& current, TER_PathPoint* pAfter, const TerrainData& nTypeTerrain ) const;
     bool IsPointAvant( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
     bool IsPointAvantOut( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
     bool IsPointAvantIn( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
@@ -47,10 +48,10 @@ private:
     void InsertPointAvants();
     void InsertLimas();
 
-    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent );
-    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPointAvant );
-    bool InsertPoint             ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint );
-    void InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant );
+    void InsertPointAvant        ( boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent );
+    void InsertPointAvant        ( boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPointAvant );
+    bool InsertPoint             ( boost::shared_ptr< TER_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint );
+    void InsertPointAndPointAvant( boost::shared_ptr< DEC_Rep_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant );
     void InsertLima              ( const MIL_LimaOrder& lima );
 
     T_PathPoints::iterator GetPreviousPathPointOnDifferentLocation( T_PathPoints::iterator );

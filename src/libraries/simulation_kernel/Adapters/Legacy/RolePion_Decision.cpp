@@ -183,7 +183,7 @@ void RolePion_Decision::RegisterRepresentations()
 {
     RegisterFunction( "DEC_GetPointsCategory", boost::bind( &DEC_MiscFunctions::GetPointsCategory , boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_RemoveFromPointsCategory",
-        std::function< void( boost::shared_ptr< DEC_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetPion() ), _1 ) ) );
+        std::function< void( boost::shared_ptr< TER_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetPion() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------
