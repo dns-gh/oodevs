@@ -35,7 +35,7 @@ class EventMarkerWidget : public EventMarkerWidget_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EventMarkerWidget( gui::EventPresenter& presenter, const tools::Path& exercisePath );
+             EventMarkerWidget( gui::EventPresenter& presenter, const tools::Path& exercisePath, const std::string& uuid );
     virtual ~EventMarkerWidget();
     //@}
 

@@ -23,9 +23,10 @@ using namespace gui;
 // Name: EventFactory constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-EventFactory::EventFactory( actions::ActionsModel& actionsModel, kernel::Controllers& controllers )
+EventFactory::EventFactory( actions::ActionsModel& actionsModel, kernel::Controllers& controllers, const std::string& uuid )
     : actionsModel_( actionsModel )
     , controllers_( controllers )
+    , uuid_( uuid )
 {
     // NOTHING
 }
@@ -52,7 +53,7 @@ Event* EventFactory::Create( const timeline::Event& event ) const
         type = eEventTypes_Report;
     else if( event.action.target == CREATE_EVENT_TARGET( EVENT_MULTIMEDIA_PROTOCOL, EVENT_MULTIMEDIA_SERVICE ) )
         type = eEventTypes_Multimedia;
-    else if( event.action.target == CREATE_EVENT_TARGET( EVENT_MARKER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
+    else if( event.action.target == "marker://" + uuid_ )
         type = eEventTypes_Marker;
     return Create( type, &event );
 }
@@ -84,7 +85,7 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
         result = new EventMarker( type, ( event ) ? *event : dummyEvent );
         if( !event )
         {
-            result->GetEvent().action.target = CREATE_EVENT_TARGET( EVENT_MARKER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+            result->GetEvent().action.target = "marker://" + uuid_;
             result->GetEvent().name = tools::translate( "EventFactory", "New marker" );
         }
         break;

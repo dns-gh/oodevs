@@ -55,7 +55,7 @@ namespace
     struct MarkerPresenterFixture : public PresenterBaseFixture
     {
         MarkerPresenterFixture()
-            : markerPresenter( markerView )
+            : markerPresenter( markerView, "" )
             , state( "label", "description", false, "c:\\path1\\drawings.xml", "d:\\path2\\configuration.xml" )
         {
             markerEvent.reset( eventFactory.Create( eEventTypes_Marker ) );

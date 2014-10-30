@@ -115,6 +115,7 @@ void TimelineWebView::Connect()
         ( "sword_profile",        lastProfile_ )
         ( "sword_filter_engaged", "true" )
         ( "filter_service",       "sword:true,none:true" )
+        ( "register_service",     model_.GetUuid() )
         ( "horizontal",           "false" );
     cfg.url += MakeQuery( query );
     server_.reset( MakeServer( cfg ).release() );

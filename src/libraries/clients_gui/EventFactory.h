@@ -44,7 +44,7 @@ class EventFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             EventFactory( actions::ActionsModel& actionsModel, kernel::Controllers& controllers );
+             EventFactory( actions::ActionsModel& actionsModel, kernel::Controllers& controllers, const std::string& uuid );
     virtual ~EventFactory();
     //@}
 
@@ -59,6 +59,7 @@ private:
     //@{
     actions::ActionsModel& actionsModel_;
     kernel::Controllers& controllers_;
+    const std::string uuid_;
     //@}
 };
 

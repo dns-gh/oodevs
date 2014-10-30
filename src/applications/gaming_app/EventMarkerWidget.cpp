@@ -25,11 +25,11 @@
 // Name: EventMarkerWidget constructor
 // Created: JSR 2014-10-27
 // -----------------------------------------------------------------------------
-EventMarkerWidget::EventMarkerWidget( gui::EventPresenter& presenter, const tools::Path& exercisePath )
+EventMarkerWidget::EventMarkerWidget( gui::EventPresenter& presenter, const tools::Path& exercisePath, const std::string& uuid )
     : EventMarkerWidget_ABC( presenter )
 {
     // Presenter
-    markerPresenter_ = boost::make_shared< gui::EventMarkerPresenter >( *this );
+    markerPresenter_ = boost::make_shared< gui::EventMarkerPresenter >( *this, uuid );
     presenter_.AddSubPresenter( markerPresenter_ );
 
     label_ = new gui::RichLineEdit( "marker-label" );

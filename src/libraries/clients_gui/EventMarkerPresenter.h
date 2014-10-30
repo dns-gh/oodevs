@@ -31,7 +31,7 @@ class EventMarkerPresenter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EventMarkerPresenter( EventView_ABC< EventMarkerViewState >& view );
+    explicit EventMarkerPresenter( EventView_ABC< EventMarkerViewState >& view, const std::string& uuid );
     virtual ~EventMarkerPresenter();
     //@}
 
@@ -60,6 +60,8 @@ private:
     virtual void CommitTo( timeline::Event& event ) const;
     virtual void Clear();
     //@}
+
+    const std::string uuid_;
 };
 
 } //! namespace gui

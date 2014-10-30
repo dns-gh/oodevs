@@ -121,6 +121,7 @@ public:
 
     //! @name Operations
     //@{
+    const std::string& GetUuid() const;
     virtual Surface* CreateSurface( const kernel::Agent_ABC& agent, const sword::VisionCone& input );
     virtual VisionMap* CreateVisionMap();
     virtual void NotifyUpdated( const MeteoModel& model );
@@ -134,6 +135,7 @@ public:
     kernel::Controllers& controllers_;
     const StaticModel& static_;
     const tools::ExerciseConfig& config_;
+    const std::string uuid_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     actions::ParameterFactory_ABC& actionParameterFactory_;
     actions::ActionFactory_ABC& actionFactory_;

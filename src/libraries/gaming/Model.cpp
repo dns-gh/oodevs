@@ -60,6 +60,10 @@
 #include "clients_kernel/SymbolFactory.h"
 #include "indicators/GaugeTypes.h"
 #include <boost/make_shared.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/uuid/uuid_generators.hpp>
 
 #pragma warning( disable : 4355 )
 
@@ -74,6 +78,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , controllers_             ( controllers )
     , static_                  ( staticModel )
     , config_                  ( config )
+    , uuid_                    ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
     , objectKnowledgeConverter_( *new ObjectKnowledgeConverter( controllers ) )
     , actionParameterFactory_  ( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, objectKnowledgeConverter_, controllers_.controller_ ) )
     , actionFactory_           ( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
@@ -115,7 +120,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , visionMeteoModel_        ( boost::make_shared< VisionMeteoModel >( meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
-    , eventFactory_            ( *new gui::EventFactory( actions_, controllers ) )
+    , eventFactory_            ( *new gui::EventFactory( actions_, controllers, uuid_ ) )
     , events_                  ( *new gui::EventsModel( eventFactory_, controllers.controller_ ) )
     , timelinePublisher_       ( *new gui::TimelinePublisher() )
     , pathfinds_               ( *new PathfindModel( controllers.controller_, actions_, agents_, agents_, staticModel.coordinateConverter_, profile ) )
@@ -298,6 +303,15 @@ void Model::NotifyUpdated( const MeteoModel& model )
     // Vision meteo model is used by the vision cones. It's a copy of the meteo model
     // to avoid threads problem when the model changes/destroys.
     visionMeteoModel_ = boost::make_shared< VisionMeteoModel >( model );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetUuid()
+// Created: JSR 2014-10-30
+// -----------------------------------------------------------------------------
+const std::string& Model::GetUuid() const
+{
+    return uuid_;
 }
 
 // -----------------------------------------------------------------------------

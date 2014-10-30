@@ -110,7 +110,7 @@ public:
         , actionFactory( controllers.controller_, parameterFactory, entityResolver, staticModel, time )
         , actionPublisher( publisher, controllers, time )
         , actionsModel( actionFactory, publisher, controllers, time )
-        , eventFactory( actionsModel, controllers )
+        , eventFactory( actionsModel, controllers , "" )
     {}
 
     kernel::CoordinateConverter coordinateConverter;

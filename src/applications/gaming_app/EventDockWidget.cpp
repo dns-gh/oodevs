@@ -105,7 +105,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
                                                                     model, entitySymbols ) );
     stack_->insertWidget( eEventTypes_Task , new EventTaskWidget( *presenter_, controllers, entitySymbols,
                                                                   profile, model, simulation ) );
-    stack_->insertWidget( eEventTypes_Marker, new EventMarkerWidget( *presenter_, config.BuildExerciseChildFile( "" ) ) );
+    stack_->insertWidget( eEventTypes_Marker, new EventMarkerWidget( *presenter_, config.BuildExerciseChildFile( "" ), model.GetUuid() ) );
     AddDefaultView( views_, *stack_, eEventTypes_Report, new EventReportWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eEventTypes_Multimedia , new EventMultimediaWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eNbrEventTypes         , new EventDetailWidget( *presenter_ ) );

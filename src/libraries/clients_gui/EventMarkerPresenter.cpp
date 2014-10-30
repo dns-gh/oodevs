@@ -35,8 +35,9 @@ namespace bpt = boost::property_tree;
 // Name: EventMarkerPresenter constructor
 // Created: JSR 2014-10-24
 // -----------------------------------------------------------------------------
-EventMarkerPresenter::EventMarkerPresenter( EventView_ABC< EventMarkerViewState >& view )
+EventMarkerPresenter::EventMarkerPresenter( EventView_ABC< EventMarkerViewState >& view, const std::string& uuid )
     : EventSubPresenter_ABC< EventMarkerViewState >( eEventTypes_Marker, view )
+    , uuid_( uuid )
 {
     // NOTHING
 }
@@ -179,5 +180,5 @@ void EventMarkerPresenter::CommitTo( timeline::Event& event ) const
     std::ostringstream output;
     bpt::write_json( output, rpy );
     event.action.payload = output.str();
-    event.action.target = CREATE_EVENT_TARGET( EVENT_MARKER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+    event.action.target = "marker://" + uuid_;
 }
