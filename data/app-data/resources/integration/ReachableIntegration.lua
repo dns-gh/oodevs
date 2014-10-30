@@ -676,7 +676,7 @@ integration.startMoveToItArea = function(  objective, pathType, waypoints )
     else
         itinerary = DEC_CreerItineraireBM( objective.destination, pathType )
     end
-    F_Pion_SetitMvt( meKnowledge.source, it )
+    F_Pion_SetitMvt( meKnowledge.source, itinerary )
     objective[ myself ] = {}
     objective[ myself ].moveAction = DEC_StartDeplacement( itinerary )
     local moveAction = objective[ myself ].moveAction
