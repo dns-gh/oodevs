@@ -20,6 +20,17 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/StaticModel.h"
+#include <boost/assign.hpp>
+
+namespace
+{
+    enum E_PopulationOption
+    {
+        eNone,
+        eDensity,
+        eAccommodation,
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationOptionChooser constructor
@@ -35,17 +46,16 @@ PopulationOptionChooser::PopulationOptionChooser( QMainWindow* parent, kernel::C
     qApp->installEventFilter( this );
 
     displayCombo_ = new QComboBox();
-    QStringList displays;
-    displays << tools::translate( "PopulationOptionChooser", "Off" )
-             << tools::translate( "PopulationOptionChooser", "Density" )
-             << tools::translate( "PopulationOptionChooser", "Occupation" );
-    displayCombo_->addItems( displays );
+    const std::map< E_PopulationOption, QString > values = boost::assign::map_list_of( eNone, tr( "Off" ) )
+                                                                                     ( eDensity, tr( "Density" ) )
+                                                                                     ( eAccommodation, tr( "Occupation" ) );
+    for( auto it = values.begin(); it != values.end(); ++it )
+        displayCombo_->insertItem( it->first, it->second );
     displayCombo_->setCurrentItem( 0 );
     displayCombo_->setEditable( false );
 
     activityCombo_ = new QComboBox();
     activityCombo_->setEditable( false );
-    activityCombo_->setCurrentItem( 0 );
     activityCombo_->setEnabled( false );
 
     occupationList_ = new QListWidget();
@@ -83,10 +93,16 @@ PopulationOptionChooser::~PopulationOptionChooser()
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::OnDisplayChanged( int index )
 {
-    controllers_.options_.Change( "Density/Enabled", index  == 1 );
-    controllers_.options_.Change( "Accommodation/Enabled", index  == 2 );
-    activityCombo_->setEnabled( index  == 2 );
-    occupationList_->setEnabled( index  == 2  );
+    controllers_.options_.Change( "Density/Enabled", index == eDensity );
+    const bool accommodationEnabled = index == eAccommodation;
+    controllers_.options_.Change( "Accommodation/Enabled", accommodationEnabled );
+    activityCombo_->setEnabled( accommodationEnabled );
+    occupationList_->setEnabled( accommodationEnabled );
+    if( accommodationEnabled )
+    {
+        int index = activityCombo_->findText( controllers_.options_.GetOption( "Accommodation/Displayed" ).To< QString >() );
+        activityCombo_->setCurrentIndex( index < 0 ? 0 : index );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -122,6 +138,8 @@ void PopulationOptionChooser::Show()
         return;
     move( button->mapToGlobal( button->pos() ).x() - 3*button->width(), button->mapToGlobal( button->pos() ).y() + button->height() );
     show();
+    displayCombo_->setCurrentIndex( controllers_.options_.GetOption( "Density/Enabled" ).To< bool >() ? eDensity :
+                                    controllers_.options_.GetOption( "Accommodation/Enabled" ).To< bool >() ? eAccommodation : eNone );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,8 +148,8 @@ void PopulationOptionChooser::Show()
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::NotifyUpdated( const kernel::ModelLoaded& )
 {
-    tools::Iterator< const kernel::AccommodationType& > it = accomodations_.CreateIterator();
     activityCombo_->clear();
+    auto it = accomodations_.CreateIterator();
     while( it.HasMoreElements() )
         activityCombo_->addItem( it.NextElement().GetRole().c_str() );
     if( activityCombo_->count() > 0 )
@@ -169,10 +187,10 @@ void PopulationOptionChooser::OptionChanged( const std::string& name, const kern
     if( displayCombo_ )
         if( name == "Density/Enabled" )
             if( value.To< bool >() )
-                displayCombo_->setCurrentIndex( 1 );
+                displayCombo_->setCurrentIndex( eDensity );
         else if( name == "Accommodation/Enabled" )
             if( value.To< bool >() )
-                displayCombo_->setCurrentIndex( 2 );
+                displayCombo_->setCurrentIndex( eAccommodation );
 }
 
 // -----------------------------------------------------------------------------
