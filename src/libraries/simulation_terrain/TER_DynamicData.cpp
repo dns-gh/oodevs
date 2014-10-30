@@ -70,7 +70,7 @@ DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
     manager->AddDynamicData( data );
     return DynamicDataPtr( data.get(), [manager,data]( TER_DynamicData* p ) mutable
     {
-        if( p && manager && data )
+        if( p )
         {
             if( p != data.get() )
                 throw std::logic_error( "original and dynamic data to destroy mismatch" );
