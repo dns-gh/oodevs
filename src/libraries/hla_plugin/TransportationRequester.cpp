@@ -16,6 +16,7 @@
 #include "ContextFactory_ABC.h"
 #include "InteractionSender_ABC.h"
 #include "ProtocolTools.h"
+#include "UniqueId.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Logger_ABC.h"
@@ -456,9 +457,9 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
                     TeleportToDestination( id, contextRequest.transportData.dataDisembarkment.appointment.location.Latitude(),
                                            contextRequest.transportData.dataDisembarkment.appointment.location.Longitude(), publisher_ );
         }
-        catch( const std::exception& )
+        catch( const std::exception& e )
         {
-            // NOTHING
+            logger_.LogError( "Error while transporting unit " + UniqueIdSerializer::UniqueIdToHexString( unit.uniqueId ) + " : " + e.what() );
         }
     });
 }

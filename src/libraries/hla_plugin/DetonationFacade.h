@@ -16,6 +16,7 @@
 
 namespace dispatcher
 {
+    class Logger_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -66,7 +67,7 @@ public:
                                const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                const ContextFactory_ABC& contextFactory, const DotationTypeResolver_ABC& munitionTypeResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName, const InteractionBuilder& builder,
-                               AgentSubject_ABC& agentSubject );
+                               AgentSubject_ABC& agentSubject, dispatcher::Logger_ABC& logger );
     virtual ~DetonationFacade();
     //@}
 
