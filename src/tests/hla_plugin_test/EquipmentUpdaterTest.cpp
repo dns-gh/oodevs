@@ -53,7 +53,7 @@ namespace
             return creationMessage;
         }
         void CheckMessage( const sword::ClientToSim& message, unsigned int unitId, unsigned int componentTypeId,
-                           int undamaged, int destroyed, int lightDamages, int heavyDamages, unsigned long breakdown = 1 )
+                           int undamaged, int destroyed, int lightDamages, int heavyDamages, uint32_t breakdown = 1 )
         {
             BOOST_CHECK( message.message().has_unit_magic_action() );
             const sword::UnitMagicAction& action = message.message().unit_magic_action();

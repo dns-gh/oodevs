@@ -130,7 +130,6 @@ public:
     };
     typedef std::map< std::string, T_Component > T_Components;
     typedef std::map< std::string, T_Components > T_Agents;
-    //typedef std::pair< unsigned int, unsigned int > T_StaticComponent;
     typedef std::map< std::string, T_StaticComponent > T_StaticComponents;
     typedef std::map< std::string, T_StaticComponents > T_AgentsTypes;
     typedef boost::bimap< std::string, unsigned int > T_Identifiers;

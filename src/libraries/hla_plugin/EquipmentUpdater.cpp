@@ -131,7 +131,7 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
         return;
     bool mustSend = false;
     const std::string& identifier = it->second;
-    if( remoteNames_.find( identifier ) == remoteNames_.end() )
+    if( !remoteNames_.count( identifier ) )
         return;
     const T_Components& remoteComponents = remoteAgents_[ identifier ];
     T_StaticComponents& staticComponents = agentTypes_[ identifier ];
