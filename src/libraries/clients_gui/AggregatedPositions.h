@@ -29,7 +29,7 @@ namespace gui
 */
 // Created: AGE 2006-10-06
 // =============================================================================
-class AggregatedPositions : public kernel::Positions
+class AggregatedPositions : public kernel::Moveable_ABC
                           , public gui::Drawable_ABC
                           , private boost::noncopyable
 {

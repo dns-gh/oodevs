@@ -93,8 +93,8 @@ bool AutomatsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
         {
             positions->Move( point + draggingOffset_.ToVector() );
             draggingPoint_ = point;
+            return true;
         }
-        return true;
     }
     return gui::AutomatsLayer::HandleMoveDragEvent( event, point );
 }
