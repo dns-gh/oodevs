@@ -784,10 +784,6 @@ Parked engine running</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
         <translation type="unfinished">Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</translation>
     </message>
@@ -858,6 +854,10 @@ Parked engine running</translation>
     <message>
         <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
         <translation>Symbol &apos;%2&apos; is missing for unit %1.</translation>
+    </message>
+    <message>
+        <source>Parameter &apos;%2&apos; of the mission %1 should have at least one object: All objects will be selectable instead of none.</source>
+        <translation>Parameter &apos;%2&apos; of the mission %1 should have at least one object: All objects will be selectable instead of none.</translation>
     </message>
 </context>
 <context>

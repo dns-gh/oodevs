@@ -309,26 +309,26 @@ void ADN_Missions_Parameter::CheckValidity()
 // Name: ADN_Missions_Parameter::CheckDatabaseValidity
 // Created: LDC 2014-03-14
 // -----------------------------------------------------------------------------
-void ADN_Missions_Parameter::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+void ADN_Missions_Parameter::CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const std::string& mission, E_MissionType type ) const
 {
     if( ( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge )
         && CountObject( objects_ ) == 0 )
-        checker.AddError( eMissingObjectParameter, strName_.GetData(), eMissions );
+        checker.AddError( eMissingObjectParameter, mission, eMissions, type, strName_.GetData() );
     if( type_.GetData() == eMissionParameterTypeLocationComposite )
     {
         bool hasObject = false;
         for( std::size_t i = 0; i < choices_.size() && !hasObject; ++i )
             if( "ObjectKnowledge" == choices_[i]->name_ )
-                hasObject = choices_[i]->isAllowed_.GetData(); 
+                hasObject = choices_[i]->isAllowed_.GetData();
         if( hasObject && CountObject( objects_ ) == 0 )
-            checker.AddError( eMissingObjectParameter, strName_.GetData(), eMissions );
+            checker.AddError( eMissingObjectParameter, mission, eMissions, type, strName_.GetData() );
     }
     std::set< int > ids;
     for( auto it = values_.begin(); it != values_.end(); ++it )
     {
         if( !ids.insert( (*it)->id_.GetData() ).second )
         {
-            checker.AddError( eDuplicateEnumeration, strName_.GetData(), eMissions );
+            checker.AddError( eDuplicateEnumeration, mission, eMissions, type, strName_.GetData() );
             break;
         }
     }

@@ -764,10 +764,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -845,6 +841,10 @@ Parked engine running</source>
     </message>
     <message>
         <source>Symbol &apos;%2&apos; is missing for unit %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter &apos;%2&apos; of the mission %1 should have at least one object: All objects will be selectable instead of none.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
