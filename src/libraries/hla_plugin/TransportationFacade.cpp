@@ -46,7 +46,7 @@ TransportationFacade::TransportationFacade( dispatcher::Logger_ABC& logger, xml:
         pTransportationRequester_.reset( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates,
                                                                             contextFactory, simulationPublisher, *pNetnRequestConvoy_,
                                                                             *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_,
-                                                                            *pNetnReadyToReceiveService_, *pNetnServiceReceived_, *pNetnCancelConvoy_ ) );
+                                                                            *pNetnReadyToReceiveService_, *pNetnServiceReceived_, *pNetnCancelConvoy_, logger ) );
         pTransportationOfferer_.reset( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_, *pNetnConvoyDestroyedEntities_, *pNetnServiceComplete_, *pNetnCancelConvoy_,
                                                                           controller, contextFactory, callsignResolver, clientsPublisher, simulationPublisher ) );
     }

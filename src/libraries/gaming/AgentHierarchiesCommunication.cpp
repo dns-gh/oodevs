@@ -32,7 +32,6 @@ AgentHierarchiesCommunication::AgentHierarchiesCommunication( kernel::Controller
     ,jammed_ ( false )
     ,radioEmitterDisabled_ ( false )
     ,radioReceiverDisabled_ ( false )
-    , superior_ ( 0 )
     ,groupResolver_ ( groupResolver )
     ,controllers_ ( controllers )
 {
@@ -73,7 +72,7 @@ void AgentHierarchiesCommunication::DoUpdate( const sword::UnitAttributes& messa
         if( jammed_ || radioReceiverDisabled_ || radioEmitterDisabled_ )
             UpdateSuperior( groupResolver_.Get( message.communications().knowledge_group().id() )  );
         else
-            UpdateSuperior( *superior_ );
+            UpdateSuperior( const_cast< kernel::Entity_ABC& >( *superior_ ) );
         if( wasSelected )
           entity_.Select( controllers_.actions_ );
     }

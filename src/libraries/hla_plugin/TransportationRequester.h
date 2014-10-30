@@ -28,6 +28,7 @@ namespace xml
 
 namespace dispatcher
 {
+    class Logger_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -84,7 +85,8 @@ public:
                                       InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
                                       InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
                                       InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender,
-                                      InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender );
+                                      InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender,
+                                      dispatcher::Logger_ABC& logger );
     virtual ~TransportationRequester();
     //@}
 
@@ -152,6 +154,7 @@ private:
     InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender_;
     InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender_;
     InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender_;
+    dispatcher::Logger_ABC& logger_;
     T_Requests pendingRequests_;
     T_Requests acceptedRequests_;
     T_Requests readyToReceiveRequests_;

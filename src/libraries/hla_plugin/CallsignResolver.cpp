@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "CallsignResolver.h"
 #include <boost/lexical_cast.hpp>
+#include <sstream>
 
 using namespace plugins::hla;
 
@@ -74,7 +75,15 @@ unsigned long CallsignResolver::ResolveSimulationIdentifier( const std::vector< 
 {
     T_SimulationIdentifiers::const_iterator identifier = simulationIdentifiers_.find( uniqueId );
     if( identifier == simulationIdentifiers_.end() )
-        throw MASA_EXCEPTION( "Unknown unique identifier '" + std::string( uniqueId.begin(), uniqueId.end() ) + "'" );
+    {
+        std::stringstream ss;
+        ss << std::hex;
+        for( std::size_t i = 0; i < uniqueId.size(); ++i )
+        {
+            ss << (uint16_t)uniqueId[ i ];
+        }
+        throw MASA_EXCEPTION( "Unknown unique identifier '" + ss.str() + "'" );
+    }
     return identifier->second;
 }
 

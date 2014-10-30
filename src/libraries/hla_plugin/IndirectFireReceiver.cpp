@@ -47,16 +47,23 @@ void IndirectFireReceiver::Receive( interactions::MunitionDetonation& interactio
     const std::string target = interaction.targetObjectIdentifier.str();
     if( !target.empty() )
         return;
-    simulation::MagicAction message;
-    message().set_type( sword::MagicAction::create_fire_order_on_location );
-    sword::MissionParameter& locationParameter = *message().mutable_parameters()->add_elem();
-    locationParameter.set_null_value( false );
-    sword::Location& location = *locationParameter.add_value()->mutable_location();
-    location.set_type( sword::Location::point );
-    sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
-    coordinates.set_latitude( interaction.detonationLocation.Latitude() );
-    coordinates.set_longitude( interaction.detonationLocation.Longitude() );
-    message().mutable_parameters()->add_elem()->add_value()->mutable_resourcetype()->set_id( resolver_.Resolve( interaction.munitionType ) );
-    message().mutable_parameters()->add_elem()->add_value()->set_areal( 1. );  // iterations, hardcoded
-    message.Send( publisher_, factory_.Create() );
+    try
+    {
+        simulation::MagicAction message;
+        message().set_type( sword::MagicAction::create_fire_order_on_location );
+        sword::MissionParameter& locationParameter = *message().mutable_parameters()->add_elem();
+        locationParameter.set_null_value( false );
+        sword::Location& location = *locationParameter.add_value()->mutable_location();
+        location.set_type( sword::Location::point );
+        sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
+        coordinates.set_latitude( interaction.detonationLocation.Latitude() );
+        coordinates.set_longitude( interaction.detonationLocation.Longitude() );
+        message().mutable_parameters()->add_elem()->add_value()->mutable_resourcetype()->set_id( resolver_.Resolve( interaction.munitionType ) );
+        message().mutable_parameters()->add_elem()->add_value()->set_areal( 1. );  // iterations, hardcoded
+        message.Send( publisher_, factory_.Create() );
+    }
+    catch( const std::exception& )
+    {
+        // NOTHING
+    }
 }
