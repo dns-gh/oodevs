@@ -43,7 +43,7 @@ UrbanDisplayOptions::UrbanDisplayOptions( kernel::Controllers& controllers,
     , unoccupiedAccommodation_( 0, 0, 0, 180 )
     , minAccommodation_       ( 0.f )
     , maxAccommodation_       ( 1.f )
-    , accommodationGradient_  ( std::make_shared< Gradient >( "Graient" ) )
+    , accommodationGradient_  ( std::make_shared< Gradient >( "Gradient" ) )
 {
     controllers_.Register( *this );
 }
