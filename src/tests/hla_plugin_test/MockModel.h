@@ -43,6 +43,7 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
     MOCK_METHOD( ObjectKnowledges, 0 );
     MOCK_METHOD( PopulationKnowledges, 0 );
     MOCK_METHOD( SetToTasker, 2 );
+    MOCK_METHOD( Reports, 0 );
 };
 
 }

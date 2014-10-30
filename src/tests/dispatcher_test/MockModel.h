@@ -39,6 +39,7 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
     MOCK_METHOD( AgentKnowledges, 0 );
     MOCK_METHOD( ObjectKnowledges, 0 );
     MOCK_METHOD( PopulationKnowledges, 0 );
+    MOCK_METHOD( Reports, 0 );
 
     virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const
     {

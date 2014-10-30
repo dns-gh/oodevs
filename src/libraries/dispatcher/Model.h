@@ -90,18 +90,19 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const tools::Resolver_ABC< Team_ABC >&              Sides() const { return sides_; }
-    virtual const tools::Resolver_ABC< KnowledgeGroup_ABC >&    KnowledgeGroups() const { return knowledgeGroups_; }
-    virtual const tools::Resolver_ABC< Formation_ABC >&         Formations() const { return formations_; }
-    virtual const tools::Resolver_ABC< Automat_ABC >&           Automats() const { return automats_; }
-    virtual const tools::Resolver_ABC< Agent_ABC >&             Agents() const { return agents_; }
-    virtual const tools::Resolver_ABC< Object_ABC >&            Objects() const { return objects_; }
-    virtual const tools::Resolver_ABC< UrbanObject_ABC >&       UrbanBlocks() const { return urbanBlocks_; }
-    virtual const tools::Resolver_ABC< Population_ABC >&        Populations() const { return populations_; }
-    virtual const tools::Resolver_ABC< Inhabitant_ABC >&        Inhabitants() const { return inhabitants_; }
-    virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&    AgentKnowledges() const { return agentKnowledges_; }
-    virtual const tools::Resolver_ABC< ObjectKnowledge_ABC >&   ObjectKnowledges() const { return objectKnowledges_; }
-    virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
+    virtual const tools::Resolver_ABC< Team_ABC >&            Sides() const { return sides_; }
+    virtual const tools::Resolver_ABC< KnowledgeGroup_ABC >&  KnowledgeGroups() const { return knowledgeGroups_; }
+    virtual const tools::Resolver_ABC< Formation_ABC >&       Formations() const { return formations_; }
+    virtual const tools::Resolver_ABC< Automat_ABC >&         Automats() const { return automats_; }
+    virtual const tools::Resolver_ABC< Agent_ABC >&           Agents() const { return agents_; }
+    virtual const tools::Resolver_ABC< Object_ABC >&          Objects() const { return objects_; }
+    virtual const tools::Resolver_ABC< UrbanObject_ABC >&     UrbanBlocks() const { return urbanBlocks_; }
+    virtual const tools::Resolver_ABC< Population_ABC >&      Populations() const { return populations_; }
+    virtual const tools::Resolver_ABC< Inhabitant_ABC >&      Inhabitants() const { return inhabitants_; }
+    virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&  AgentKnowledges() const { return agentKnowledges_; }
+    virtual const tools::Resolver_ABC< ObjectKnowledge_ABC >& ObjectKnowledges() const { return objectKnowledges_; }
+    virtual const tools::Resolver_ABC< PopulationKnowledge >& PopulationKnowledges() const { return populationKnowledges_; }
+    virtual const tools::Resolver_ABC< Report >&              Reports() const { return reports_; }
 
     virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const;
     const kernel::ExtensionTypes& GetExtensionTypes() const;

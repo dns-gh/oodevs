@@ -2063,3 +2063,32 @@ func (c *Client) CreateReport(report, source uint32, reportParams ...*sword.Miss
 	msg := CreateMagicAction(params, sword.MagicAction_debug_internal)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
+
+func (c *Client) ListReports(maxCount, start uint32) ([]*sword.Report, uint32, error) {
+	param := sword.ListReports{
+		MaxCount: proto.Uint32(maxCount),
+	}
+	if start != 0 {
+		param.Report = proto.Uint32(start)
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ListReports: &param,
+			},
+		},
+	}
+	var reports []*sword.Report
+	var nextReport uint32
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetListReportsAck()
+		if reply == nil {
+			return ErrContinue
+		}
+		DeepCopy(&reports, reply.GetReports())
+		nextReport = reply.GetNextReport()
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return reports, nextReport, err
+}

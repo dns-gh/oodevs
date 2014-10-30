@@ -265,6 +265,8 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         // fix is to make DispatcherPlugin use HandleClientToSim() so the
         // message is filtered by the handling plugin.
         return true;
+    if( message.has_list_reports() )
+        return true;
     return false;
 }
 

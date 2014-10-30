@@ -15,8 +15,11 @@ import (
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
 	"masa/sword/swrun"
+	"masa/sword/swtest"
+	"math"
 	"os"
 	"regexp"
+	"time"
 )
 
 const (
@@ -529,7 +532,7 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 
 func (s *TestSuite) TestReportCreation(c *C) {
 	sim, client := connectAndWaitModel(c,
-		NewAllUserOpts(ExCrossroadLog).EnableTestCommands())
+		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
 	defer stopSimAndClient(c, sim, client)
 	phydb := loadPhysical(c, "test")
 	data := client.Model.GetData()
@@ -554,10 +557,62 @@ func (s *TestSuite) TestReportCreation(c *C) {
 	c.Assert(err, IsNil)
 
 	CBRNProtectionId := uint32(525)
-	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeIdentifier(345))
+	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeInt(345))
 	c.Assert(err, IsNil)
 
 	client.Model.WaitTicks(1)
 	reports := reporter.Stop()
 	c.Assert(len(reports), Equals, 2)
+}
+
+func ParseTime(c *C, value *sword.DateTime) time.Time {
+	t, err := swapi.GetTime(value.GetData())
+	c.Assert(err, IsNil)
+	return t
+}
+
+func CheckReportOrder(c *C, first, second *sword.Report) {
+	firstTime := ParseTime(c, first.GetTime())
+	secondTime := ParseTime(c, second.GetTime())
+	c.Assert(firstTime.Equal(secondTime) || firstTime.After(secondTime), Equals, true)
+	c.Assert(first.GetReport().GetId(), Lesser, second.GetReport().GetId())
+}
+
+func (s *TestSuite) TestListReports(c *C) {
+	sim, client := connectAndWaitModel(c,
+		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
+	defer stopSimAndClient(c, sim, client)
+
+	// Check the size of reports
+	reports, _, err := client.ListReports(0, 0)
+	c.Assert(err, IsNil)
+	c.Assert(len(reports), Equals, 0)
+
+	// Get all reports
+	allReports, next, err := client.ListReports(math.MaxInt32, 0)
+	c.Assert(err, IsNil)
+	c.Assert(len(allReports), Lesser, math.MaxInt32)
+	c.Assert(next, Equals, uint32(0))
+
+	// Get reports by package of two reports
+	reports = []*sword.Report{}
+	part, next, err := client.ListReports(2, 0)
+	c.Assert(len(part), Equals, 2)
+	c.Assert(next, Greater, uint32(0))
+	reports = append(reports, part...)
+	for next != 0 {
+		part, next, err = client.ListReports(2, next)
+		c.Assert(len(part) == 2 && next != 0 || len(part) <= 2 && next == 0, Equals, true)
+		reports = append(reports, part...)
+	}
+	// Check equality between 'allReports' and 'reports'
+	swtest.DeepEquals(c, allReports, reports)
+
+	// Check chronological order
+	for i := 0; i < len(reports)-1; i++ {
+		CheckReportOrder(c, reports[i], reports[i+1])
+	}
+	if len(reports) != 0 {
+		CheckReportOrder(c, reports[0], reports[len(reports)-1])
+	}
 }

@@ -21,6 +21,7 @@
 #include "CheckpointFilterPlugin.h"
 #include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
+#include "reports_plugin/ReportsPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "MT_Tools/MT_Logger.h"
 #include "logistic_plugin/LogisticPlugin.h"
@@ -118,6 +119,7 @@ void PluginFactory::Instanciate()
     checkpointFilter_->Add( boost::make_shared< logger::LoggerPlugin >( *model_,
                 staticModel_, config_, services_ ) );
     checkpointFilter_->Add( logistic::CreateLogisticPlugin( *model_, staticModel_, config_ ) );
+    checkpointFilter_->Add( boost::make_shared< reports::ReportsPlugin >( *model_ ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

@@ -350,6 +350,7 @@ add_plugin( messenger_plugin )
 add_plugin( order_plugin )
 add_plugin( positions_plugin )
 add_plugin( replay_plugin )
+add_plugin( reports_plugin )
 add_plugin( rights_plugin )
 target_link_libraries( rights_plugin
     ${OPENSSL_LIBRARIES}
@@ -405,6 +406,7 @@ target_link_libraries( dispatcher
     order_plugin
     replay_plugin
     reports
+    reports_plugin
     rights_plugin
     saver_plugin
     score_plugin
