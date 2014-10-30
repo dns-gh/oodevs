@@ -27,7 +27,7 @@ namespace gui
 // =============================================================================
 class SymbolSizePanel : public PreferencePanel_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

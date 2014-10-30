@@ -99,11 +99,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     AddPage( tr( "3D" ),                   *new LightingPanel( this, options ) );
     AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, model.coordinateConverter_ ) );
     AddPage( tr( "Refresh rate" ),         *new RefreshRatePanel( this, options ) );
-<<<<<<< HEAD
-=======
-    AddPage( tr( "Replay" ),               *new ReplayPanel( this, options ) );
-    AddPage( tr( "Symbols size" ),         *new SymbolSizePanel( this, options ) );
->>>>>>> [clients_gui] Add Symbol size options panel
+    AddPage( tr( "Symbol sizes" ),         *new SymbolSizePanel( this, options ) );
     AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, options ) );
 
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );

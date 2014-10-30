@@ -18,7 +18,6 @@
 #include "clients_kernel/OptionVariant.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/algorithm/string.hpp>
-#include <math.h>
 
 using namespace gui;
 
@@ -42,8 +41,8 @@ namespace
     int FromRatio( float y )
     {
         if( y >= 1 )
-            return static_cast< int >( floorf( maxFactor * step * ( y - 1 ) / ( maxFactor - 1 ) ) );
-        return static_cast< int >( floorf( minFactor * minFactor * step * ( y - 1 ) / ( minFactor - 1 ) ) );
+            return static_cast< int >( maxFactor * step * ( y - 1 ) / ( maxFactor - 1 ) );
+        return static_cast< int >( minFactor * minFactor * step * ( y - 1 ) / ( minFactor - 1 ) );
     }
 
     class NatureLevelSlider : public OptionWidget< RichWidget< QSlider > >
@@ -63,7 +62,6 @@ namespace
                 options.Change( optionName, ToRatio( value() ) );
             } );
         }
-        virtual ~NatureLevelSlider() {}
 
     private:
         virtual void OnOptionChanged( const kernel::OptionVariant& value )

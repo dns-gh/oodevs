@@ -889,8 +889,8 @@ float GlWidget::ComputeZoomFactor( float& factor, bool bVariableSize /*= true*/ 
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
     thickness *= ComputeZoomFactor( factor );
-    DrawApp6Symbol( symbol, where, baseWidth_ * factor, viewport_
-                  , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), direction, 1., 1., -20, -80 );
+    DrawApp6Symbol( symbol, where, baseWidth_ * factor, viewport_,
+                    static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), direction, 1., 1., -20, -80 );
 }
 
 // -----------------------------------------------------------------------------
@@ -905,10 +905,10 @@ void GlWidget::DrawInfrastructureSymbol( const std::string& symbol, const geomet
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::DrawHQSymbol
+// Name: GlWidget::DrawApp6SymbolFixedSize
 // Created: MMC 2012-02-04
 // -----------------------------------------------------------------------------
-void GlWidget::DrawHQSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
+void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
 {
     ComputeZoomFactor( factor, false );
     DrawApp6Symbol( symbol, where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction, 1., 1. );
@@ -962,18 +962,18 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
             DrawApp6SymbolScaledSize( level, symbolPosition, factor, direction, xFactor, 1 );
         }
         else
-            DrawHQSymbol( symbol, where, factor, 0 );
+            DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
     else
     {
         if( !staticSymbol.empty() )
             DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction, width * xFactor, depth );
         else
-            DrawHQSymbol( symbol, where, factor, 0 );
+            DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
     const bool app6 = isMoving ? moveSymbol.empty() : staticSymbol.empty();
     if( app6 )
-        DrawHQSymbol( level, where, factor < 0 ? factor : -factor, 0 );
+        DrawApp6SymbolFixedSize( level, where, -std::abs( factor ), 0 );
 }
 
 // -----------------------------------------------------------------------------

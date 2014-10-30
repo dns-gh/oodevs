@@ -1733,9 +1733,8 @@ Voulez-vous le supprimer?</translation>
         <source>Refresh rate</source>
         <translation>Période de rafraîchissement</translation>
     </message>
-    </message>
     <message>
-        <source>Symbols size</source>
+        <source>Symbol sizes</source>
         <translation>Taille des symboles</translation>
     </message>
 </context>
@@ -2038,6 +2037,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Hierarchical levels relative sizes</source>
         <translation>Tailles relatives des niveaux hiérarchiques</translation>
+    </message>
+    <message>
+        <source>Headquarters</source>
+        <translation>Quartier général</translation>
     </message>
 </context>
 <context>

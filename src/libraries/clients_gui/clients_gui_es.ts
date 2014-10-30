@@ -1736,9 +1736,8 @@ Desea eliminarlo?</translation>
         <source>Refresh rate</source>
         <translation type="unfinished"></translation>
     </message>
-    </message>
     <message>
-        <source>Symbols size</source>
+        <source>Symbol sizes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2040,6 +2039,10 @@ Desea eliminarlo?</translation>
     <name>gui::SymbolSizePanel</name>
     <message>
         <source>Hierarchical levels relative sizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Headquarters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

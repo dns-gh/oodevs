@@ -1738,8 +1738,8 @@ Do you want to remove it?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Symbols size</source>
-        <translation>Symbols size</translation>
+        <source>Symbol sizes</source>
+        <translation>Symbol sizes</translation>
     </message>
 </context>
 <context>
@@ -2041,6 +2041,10 @@ Do you want to remove it?</translation>
     <message>
         <source>Hierarchical levels relative sizes</source>
         <translation>Hierarchical levels relative sizes</translation>
+    </message>
+    <message>
+        <source>Headquarters</source>
+        <translation>Headquarters</translation>
     </message>
 </context>
 <context>
