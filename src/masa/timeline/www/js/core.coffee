@@ -94,6 +94,7 @@ query_filters = [
     "filter_keyword"
     "filter_service"
     "filter_show_only"
+    "register_service"
     "sword_filter"
     "sword_filter_engaged"
     "sword_profile"
