@@ -157,21 +157,20 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 	c.Assert(party, NotNil)
 
 	// Error: parameters count
-	object, err := client.CreateObject("mined area (linear and destructible)",
+	object, err := client.CreateObject("mined area",
 		party.Id, location, swapi.MakeList(
 			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_obstacle))))
 	c.Assert(err, IsSwordError, "error_invalid_object")
 
-	// Create mined area (linear and destructible) by default
+	// Create mined area by default
 	// object isn't activated
-	object, err = client.CreateObject("mined area (linear and destructible)",
-		party.Id, location)
+	object, err = client.CreateObject("mined area", party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 	c.Assert(object.Activated, Equals, false)
 
 	// Create mined area, activated by default
-	object, err = client.CreateObject("mined area (linear and destructible)",
+	object, err = client.CreateObject("mined area",
 		party.Id, location, createObstacleAttributeParameter(true, 0, 0))
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -195,7 +194,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 		return false
 	})
 	delay := int32(120) // 120 seconds
-	object, err = client.CreateObject("mined area (linear and destructible)",
+	object, err = client.CreateObject("mined area",
 		party.Id, location, createObstacleAttributeParameter(false, delay, 0))
 	c.Assert(err, IsNil)
 	c.Assert(object.Activated, Equals, false)
@@ -220,7 +219,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 		}
 		return false
 	})
-	object, err = client.CreateObject("mined area (linear and destructible)",
+	object, err = client.CreateObject("mined area",
 		party.Id, location, createObstacleAttributeParameter(true, 0, delay))
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -241,7 +240,7 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 	c.Assert(party, NotNil)
 
 	// Error: parameters count
-	object, err := client.CreateObject("mined area (linear and destructible)",
+	object, err := client.CreateObject("mined area",
 		party.Id, location, swapi.MakeList(
 			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_time_limit))))
 	c.Assert(err, IsSwordError, "error_invalid_object")
@@ -265,8 +264,7 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 		}
 		return object == nil
 	})
-	object, err = client.CreateObject("mined area (linear and destructible)",
-		party.Id, location, params)
+	object, err = client.CreateObject("mined area", party.Id, location, params)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 
@@ -288,13 +286,13 @@ func (s *TestSuite) TestBypassAttribute(c *C) {
 	c.Assert(party, NotNil)
 
 	// Error: parameters count
-	object, err := client.CreateObject("mined area (linear and destructible)",
+	object, err := client.CreateObject("mined area",
 		party.Id, location, swapi.MakeList(
 			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_bypass))))
 	c.Assert(err, IsSwordError, "error_invalid_object")
 
 	// Create mined area by default
-	object, err = client.CreateObject("mined area (linear and destructible)",
+	object, err = client.CreateObject("mined area",
 		party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -306,7 +304,7 @@ func (s *TestSuite) TestBypassAttribute(c *C) {
 		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_bypass)), // attribute type
 		swapi.MakeQuantity(percentage),                               // % of bypass
 	)
-	object, err = client.CreateObject("mined area (linear and destructible)",
+	object, err = client.CreateObject("mined area",
 		party.Id, location, params)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -346,8 +344,7 @@ func (s *TestSuite) TestAltitudeAttribute(c *C) {
 		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_altitude_modifier)), // attribute type
 		swapi.MakeQuantity(altitude),                                            // height
 	)
-	object, err = client.CreateObject("mined area (linear and destructible)",
-		party.Id, location, params)
+	object, err = client.CreateObject("mined area", party.Id, location, params)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<dis-mapping default-type="2 0 225 3 7" default-name="mined area (linear and destructible)" threshold="0 0 9 1 1 9 9">
+<dis-mapping default-type="2 0 225 3 7" default-name="mined area" threshold="0 0 9 1 1 9 9">
     <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
     <!-- aggregates -->
-    <entry name="mined area (linear and destructible)" dis="2 0 225 3 7"/>
+    <entry name="mined area" dis="2 0 225 3 7"/>
     <entry name="mines" dis="4 0 225 1 1"/>
     <entry name="jamming area" dis="4 0 225 1 3"/>
     <entry name="full jamming area" dis="4 0 225 1 4"/>
