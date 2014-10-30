@@ -224,30 +224,6 @@ func (s *TestSuite) TestTriggerError(c *C) {
 	c.Assert(err, IsNil)
 }
 
-func TriggerBreakdown(c *C, client *swapi.Client) uint32 {
-	unit := client.Model.GetUnit(8)
-	equipmentId := uint32(39)
-	MOBBreakdown2EBEvac := int32(13)
-	equipment := swapi.Equipment{
-		Available:  1,
-		Repairable: 1,
-		Breakdowns: []int32{MOBBreakdown2EBEvac},
-	}
-	err := client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
-	c.Assert(err, IsNil)
-	var handlingId uint32
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, h := range data.MaintenanceHandlings {
-			if h.Provider != nil {
-				handlingId = h.Id
-				return true
-			}
-		}
-		return false
-	})
-	return handlingId
-}
-
 // Creates a mobility breakdown on one unit supported by the maintenance
 // logistic chain in crossroad-log exercise.
 // TODO: migrate all transport tests on "test" phydb and rename this into
@@ -297,10 +273,6 @@ func WaitStateLeft(c *C, client *swapi.Client, handlingId uint32,
 			h.Provider.State != state
 	})
 }
-
-const (
-	automatLog = 14
-)
 
 func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
@@ -480,32 +452,37 @@ func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
 }
 
 func (s *TestSuite) TestSelectRepairTeam(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	opts := NewAllUserOpts(ExCrossroadSmallLog)
-	opts.Step = 300
-	sim, client := connectAndWaitModel(c, opts)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
+	phydb := loadPhysicalData(c, "test")
+	gyroScrew, err := phydb.Components.Find("Gyroscrew 1")
+	c.Assert(err, IsNil)
+	otherEquipment, err := phydb.Components.Find("equipment")
+	c.Assert(err, IsNil)
+
+	maintenanceAutomat := getSomeAutomatByName(c, client.Model.GetData(), "Maintenance Automat 1")
+
 	// error: invalid parameters count, parameters expected
-	err := client.SelectRepairTeamTest(swapi.MakeParameters())
+	err = client.SelectRepairTeamTest(swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	const MobilityRepairsTeam = 91
-
 	// error: first parameter must be an identifier
-	err = client.SelectRepairTeamTest(swapi.MakeParameters(nil, swapi.MakeIdentifier(MobilityRepairsTeam)))
+	err = client.SelectRepairTeamTest(swapi.MakeParameters(
+		nil, swapi.MakeIdentifier(gyroScrew.Id)))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a valid identifier
-	err = client.SelectRepairTeam(1000, MobilityRepairsTeam)
+	err = client.SelectRepairTeam(1000, gyroScrew.Id)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
-	SetManualMaintenance(c, client, automatLog)
-	handlingId := TriggerBreakdown(c, client)
+	SetManualMaintenance(c, client, maintenanceAutomat.Id)
+	handlingId := TriggerBreakdownTest(c, client, phydb)
 
 	// error: not a repair consign
-	err = client.SelectRepairTeam(handlingId, MobilityRepairsTeam)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot select a repair team for a transport consign")
+	err = client.SelectRepairTeam(handlingId, gyroScrew.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot select a repair"+
+		" team for a transport consign")
 
 	// skip transporter selection
 	WaitStateEntered(c, client, handlingId,
@@ -527,17 +504,19 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
 
 	// error: component type specified not available
-	err = client.SelectRepairTeam(handlingId, 39)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for repair team selection")
+	err = client.SelectRepairTeam(handlingId, otherEquipment.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of"+
+		" specified type available for repair team selection")
 
-	err = client.SelectRepairTeam(handlingId, MobilityRepairsTeam)
+	err = client.SelectRepairTeam(handlingId, gyroScrew.Id)
 	c.Assert(err, IsNil)
 	WaitStateLeft(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_repair_team_selection)
 
 	// error: not in repair team waiting state
-	err = client.SelectRepairTeam(handlingId, MobilityRepairsTeam)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: repair consign not in a waiting for repair team selection state")
+	err = client.SelectRepairTeam(handlingId, gyroScrew.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: repair consign not in"+
+		" a waiting for repair team selection state")
 }
 
 func (s *TestSuite) TestReportCreation(c *C) {
