@@ -31,7 +31,12 @@ end
 -- @param unit Directia agent
 -- @return Boolean
 integration.unitIsInCrowd = function( unit )
-    return DEC_Agent_EstDansFoule( unit.source )
+    if masalife.brain.core.class.isOfType( unit, integration.ontology.types.agentKnowledge) then
+        local agent = DEC_Connaissance_EnAgent( unit.source )
+        return DEC_Agent_EstDansFoule( agent )
+    else
+        return DEC_Agent_EstDansFoule( unit.source )
+    end
 end
 
 --- Makes this crowd display a report with the given id.
@@ -103,7 +108,12 @@ integration.updateAttackingIt = function( target )
     if currentIntensity ~= target[myself].intensity then
         DEC__StopAction( target[myself].actionTir )
         target[myself].intensity = currentIntensity
-        target[myself].actionTir = DEC_StartTirSurPion( currentIntensity, target.source )
+        if masalife.brain.core.class.isOfType( target, integration.ontology.types.agentKnowledge) then
+            local agent = DEC_Connaissance_EnAgent( target.source )
+            target[ myself ].actionTir = DEC_StartTirSurPion( currentIntensity, agent )
+        else
+            target[myself].actionTir = DEC_StartTirSurPion( currentIntensity, target.source )
+        end
         return false
     end
     return true
