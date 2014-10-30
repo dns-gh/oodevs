@@ -421,32 +421,39 @@ func (s *TestSuite) TestSelectMaintenanceTransporterWithAgentAsDestination(c *C)
 }
 
 func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	opts := NewAllUserOpts(ExCrossroadSmallLog)
-	opts.Step = 300
-	sim, client := connectAndWaitModel(c, opts)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	phydb := loadPhysicalData(c, "test")
+	towTruck, err := phydb.Components.Find("Tow Truck")
+	c.Assert(err, IsNil)
+	gyroScrew, err := phydb.Components.Find("Gyroscrew 1")
+	c.Assert(err, IsNil)
+	otherEquipment, err := phydb.Components.Find("equipment")
+	c.Assert(err, IsNil)
 
 	// error: invalid parameters count, parameters expected
-	err := client.SelectDiagnosisTeamTest(swapi.MakeParameters())
+	err = client.SelectDiagnosisTeamTest(swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	const MobilityRepairsTeam = 91
+	data := client.Model.GetData()
+	maintenanceAutomat := getSomeAutomatByName(c, data, "Maintenance Automat 1")
 
 	// error: first parameter must be an identifier
-	err = client.SelectDiagnosisTeamTest(swapi.MakeParameters(nil, swapi.MakeIdentifier(MobilityRepairsTeam)))
+	err = client.SelectDiagnosisTeamTest(swapi.MakeParameters(
+		nil, swapi.MakeIdentifier(towTruck.Id)))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a valid identifier
-	err = client.SelectDiagnosisTeam(1000, MobilityRepairsTeam)
+	err = client.SelectDiagnosisTeam(1000, towTruck.Id)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
-	SetManualMaintenance(c, client, automatLog)
-	handlingId := TriggerBreakdown(c, client)
+	SetManualMaintenance(c, client, maintenanceAutomat.Id)
+	handlingId := TriggerBreakdownTest(c, client, phydb)
 
 	// error: not in diagnosis team waiting state
-	err = client.SelectDiagnosisTeam(handlingId, MobilityRepairsTeam)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot select a diagnosis team for a transport consign")
+	err = client.SelectDiagnosisTeam(handlingId, towTruck.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot select a diagnosis"+
+		" team for a transport consign")
 
 	// skip transporter selection
 	WaitStateEntered(c, client, handlingId,
@@ -462,10 +469,11 @@ func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
 
 	// error: component type specified not available
-	err = client.SelectDiagnosisTeam(handlingId, 39)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for diagnosis team selection")
+	err = client.SelectDiagnosisTeam(handlingId, otherEquipment.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of "+
+		"specified type available for diagnosis team selection")
 
-	err = client.SelectDiagnosisTeam(handlingId, MobilityRepairsTeam)
+	err = client.SelectDiagnosisTeam(handlingId, gyroScrew.Id)
 	c.Assert(err, IsNil)
 	WaitStateLeft(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_diagnosis_team_selection)
