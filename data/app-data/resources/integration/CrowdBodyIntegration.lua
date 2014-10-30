@@ -28,7 +28,7 @@ end
 
 --- Returns true if the given agent is inside this crowd, false otherwise.
 -- This method can only be called by a crowd.
--- @param unit Directia agent
+-- @param unit Directia agent or agent knowledge
 -- @return Boolean
 integration.unitIsInCrowd = function( unit )
     if masalife.brain.core.class.isOfType( unit, integration.ontology.types.agentKnowledge) then
