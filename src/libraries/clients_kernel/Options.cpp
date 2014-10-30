@@ -348,7 +348,9 @@ void Options::InitializeView()
 
     // Fires
     // FireRules are empty by default
-    Create( "FireIndicators", 0, true );
+    Create( "FireRules/indicators", 0, false );
+    Create( "FireRules/direct", QString(), true );
+    Create( "FireRules/indirect", QString(), true );
 
     // HillShade
     Create( "HillShade/Enabled",   false, true );

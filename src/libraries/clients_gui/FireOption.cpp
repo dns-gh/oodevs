@@ -67,6 +67,8 @@ QString gui::SaveFireOptions( const T_FireOptions& options )
 T_FireOptions gui::LoadFireOptions( const QString& data )
 {
     T_FireOptions options;
+    if( data.isEmpty() )
+        return options;
     xml::xistringstream xis( data.toStdString() );
     options.clear();
     xis >> xml::start( "data" )
@@ -115,7 +117,7 @@ std::string FireOption::GetOptionName( FireGroup group )
 
 const std::string& gui::GetFireIndicatorsOptionName()
 {
-    static const std::string name = "FireIndicators";
+    static const std::string name = "FireRules/indicators";
     return name;
 }
 

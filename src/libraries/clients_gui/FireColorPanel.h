@@ -73,10 +73,9 @@ private:
     const FireGroup group_;
     kernel::Controllers& controllers_;
     const kernel::StaticModel& model_;
-    kernel::OptionsController& options_;
     FireContext ctx_;
 };
 
-}
+} //! namespace gui
 
 #endif // FireColorPanel_h
