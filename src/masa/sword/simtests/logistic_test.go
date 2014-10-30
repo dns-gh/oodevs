@@ -334,15 +334,14 @@ func CheckDeployTime(c *C, start, end *sword.DateTime, duration time.Duration) {
 }
 
 func (s *TestSuite) TestLogisticDeployment(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	phydb := loadPhysical(c, "worldwide")
-	opts := NewAdminOpts(ExCrossroadSmallLog)
+	phydb := loadPhysical(c, "test")
+	opts := NewAdminOpts(ExCrossroadLog)
 	opts.Paused = true
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 	model := client.Model
-	tc2 := getSomeAutomatByName(c, model.GetData(), "LOG.Logistic combat train")
-	unit := getSomeUnitByName(c, model.GetData(), "LOG.Logistic CT")
+	tc2 := getSomeAutomatByName(c, model.GetData(), "Maintenance Automat 1")
+	unit := getSomeUnitByName(c, model.GetData(), "Maintenance Log Unit 1")
 	startingReportsTypes := []string{
 		"Starting deploy",
 		"Starting undeploy",
@@ -367,7 +366,7 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 	starting := startingReporter.Count()
 
 	// Deploy TC2 to another position to force undeployment and deployment
-	MissionLogDeploy := uint32(44584)
+	MissionLogDeploy := uint32(8)
 	heading := swapi.MakeHeading(0)
 	limit1 := swapi.MakeLimit(
 		swapi.Point{X: -15.8302, Y: 28.3765},
