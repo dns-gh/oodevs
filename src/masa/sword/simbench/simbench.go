@@ -78,7 +78,7 @@ func getVersionAndDate() (string, time.Time, error) {
 		if m == nil {
 			continue
 		}
-		d, err := time.Parse("2006-01-02 15:04:06", m[1])
+		d, err := time.Parse("2006-01-02 15:04:05", m[1])
 		if err != nil {
 			return "", date, fmt.Errorf("unexpected date: %s", m[1])
 		}
