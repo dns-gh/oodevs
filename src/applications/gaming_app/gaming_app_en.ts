@@ -660,6 +660,45 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>EventMarkerWidget</name>
+    <message>
+        <source>Label</source>
+        <translation>Label</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Drawings</translation>
+    </message>
+    <message>
+        <source>Clear previous drawings</source>
+        <translation>Clear previous drawings</translation>
+    </message>
+    <message>
+        <source>Load drawing file</source>
+        <translation>Load drawing file</translation>
+    </message>
+    <message>
+        <source>Drawings (*.xml)</source>
+        <translation>Drawings (*.xml)</translation>
+    </message>
+    <message>
+        <source>Display settings</source>
+        <translation>Display settings</translation>
+    </message>
+    <message>
+        <source>Load configuration file</source>
+        <translation>Load configuration file</translation>
+    </message>
+    <message>
+        <source>Configuration file (*.ini)</source>
+        <translation>Configuration file (*.ini)</translation>
+    </message>
+</context>
+<context>
     <name>EventOrderWidget</name>
     <message>
         <source>Order acknowledged</source>

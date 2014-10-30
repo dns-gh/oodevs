@@ -256,6 +256,10 @@
         <source>New task</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New marker</source>
+        <translation>New marker</translation>
+    </message>
 </context>
 <context>
     <name>EventOrderPresenter</name>
@@ -1893,6 +1897,13 @@ Do you want to remove it?</translation>
     <message>
         <source>Resource network</source>
         <translation>Resource network</translation>
+    </message>
+</context>
+<context>
+    <name>gui::RichPathWidget</name>
+    <message>
+        <source>Browse</source>
+        <translation>Browse</translation>
     </message>
 </context>
 <context>

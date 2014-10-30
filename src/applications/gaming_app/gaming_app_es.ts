@@ -661,6 +661,45 @@ Motivo: %3</translation>
     </message>
 </context>
 <context>
+    <name>EventMarkerWidget</name>
+    <message>
+        <source>Label</source>
+        <translation type="unfinished">Etiqueta</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Descripción</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear previous drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load drawing file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawings (*.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration file (*.ini)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EventOrderWidget</name>
     <message>
         <source>Order acknowledged</source>

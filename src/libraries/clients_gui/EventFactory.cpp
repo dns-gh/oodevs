@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "EventFactory.h"
 #include "EventAction.h"
+#include "EventMarker.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
@@ -51,6 +52,8 @@ Event* EventFactory::Create( const timeline::Event& event ) const
         type = eEventTypes_Report;
     else if( event.action.target == CREATE_EVENT_TARGET( EVENT_MULTIMEDIA_PROTOCOL, EVENT_MULTIMEDIA_SERVICE ) )
         type = eEventTypes_Multimedia;
+    else if( event.action.target == CREATE_EVENT_TARGET( EVENT_MARKER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
+        type = eEventTypes_Marker;
     return Create( type, &event );
 }
 
@@ -76,6 +79,14 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
         result = new Event(  type, ( event ) ? *event : dummyEvent );
         if( !event )
             result->GetEvent().name = tools::translate( "EventFactory", "New task" );
+        break;
+    case eEventTypes_Marker:
+        result = new EventMarker( type, ( event ) ? *event : dummyEvent );
+        if( !event )
+        {
+            result->GetEvent().action.target = CREATE_EVENT_TARGET( EVENT_MARKER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+            result->GetEvent().name = tools::translate( "EventFactory", "New marker" );
+        }
         break;
     case eEventTypes_Magic:
     case eEventTypes_Report:

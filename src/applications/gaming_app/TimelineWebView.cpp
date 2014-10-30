@@ -323,7 +323,7 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
 
     kernel::ContextMenu* createMenu = new kernel::ContextMenu( &menu );
     for( int i = 0; i < eNbrEventTypes; ++i )
-        if( i == eEventTypes_Order || i == eEventTypes_Task )
+        if (i == eEventTypes_Order || i == eEventTypes_Task || i == eEventTypes_Marker )
             AddToMenu( *createMenu, creationSignalMapper_.get(), QString::fromStdString( ENT_Tr::ConvertFromEventTypes( static_cast< E_EventTypes >( i ) ) ), i );
 
     menu.InsertItem( "Command", tr( "Create an event" ), createMenu );
