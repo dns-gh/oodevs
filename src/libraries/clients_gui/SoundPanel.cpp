@@ -127,6 +127,7 @@ void SoundPanel::SetSoundDirectory( const tools::Path& path )
     {
         soundDirectoryEditor_->setText( QString::fromStdWString( path.ToUnicode() ) );
         soundPlayer_.ChangeSoundsDirectory( path );
+        options_.Change( "Sound/Directory", soundDirectoryEditor_->text() );
     }
 }
 
