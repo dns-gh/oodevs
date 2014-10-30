@@ -74,7 +74,7 @@ end
 -- This method can only be called by a crowd.
 -- @see integration.updateAttackingIt
 -- @see integration.stopAttackingIt
--- @param target Directia agent
+-- @param target Directia agent or agent knowledge
 -- @return Boolean, false if a current attacking action involving this crowd
 -- and the given agent is currently occurring, true otherwise.
 integration.startAttackingIt = function( target )
@@ -100,7 +100,7 @@ end
 -- This method can only be called by a crowd.
 -- @see integration.startAttackingIt
 -- @see integration.stopAttackingIt
--- @param target Directia agent
+-- @param target Directia agent or agent knowledge
 -- @return Boolean, false if this crowd has a new attitude, true otherwise.
 integration.updateAttackingIt = function( target )
     target[myself] = target[myself] or {}
@@ -125,7 +125,7 @@ end
 -- This method can only be called by a crowd.
 -- @see integration.startAttackingIt
 -- @see integration.updateAttackingIt
--- @param target Directia agent
+-- @param target Directia agent or agent knowledge
 -- @return Boolean, false if an attacking action has been stopped,
 -- true otherwise.
 integration.stopAttackingIt = function( target )
