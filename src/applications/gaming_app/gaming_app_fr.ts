@@ -689,7 +689,7 @@ Raison: %3
     </message>
     <message>
         <source>Display settings</source>
-        <translation>Paramètres d'affichage</translation>
+        <translation>Paramètres d&apos;affichage</translation>
     </message>
     <message>
         <source>Load configuration file</source>

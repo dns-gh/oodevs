@@ -729,7 +729,7 @@ Reason: %3
     <name>EventTaskWidget</name>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Label</translation>
     </message>
     <message>
         <source>Description</source>
@@ -2900,7 +2900,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Drawings</translation>
     </message>
 </context>
 <context>
