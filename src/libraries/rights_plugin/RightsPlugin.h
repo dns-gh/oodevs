@@ -79,6 +79,8 @@ public:
     virtual dispatcher::ClientPublisher_ABC& GetAuthenticatedPublisher( const std::string& link ) const;
     virtual dispatcher::ClientPublisher_ABC& GetAuthenticatedPublisher( unsigned int clientId ) const;
     virtual unsigned int GetClientID( const std::string& link ) const;
+
+    unsigned int RegisterClient( const std::string& link );
     //@}
 
 private:

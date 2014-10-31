@@ -263,6 +263,14 @@ unsigned int RightsPlugin::AcquireClientId()
     }
 }
 
+unsigned int RightsPlugin::RegisterClient( const std::string& link )
+{
+    const auto clientId = AcquireClientId();
+    clientsID_[ link ] = clientId;
+    ids_[ clientId ] = link;
+    return clientId;
+}
+
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::OnReceiveMsgAuthenticationRequest
 // Created: AGE 2007-08-24
@@ -319,12 +327,10 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         ack->set_terrain_name( config_.GetTerrainName().ToUTF8() );
         ack->set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack );
-        const auto clientId = AcquireClientId();
+        const auto clientId = RegisterClient( link );
         reply.set_client_id( clientId );
         sender.Send( reply );
         authenticated_[ link ] = profile;
-        clientsID_[ link ] = clientId;
-        ids_[ clientId ] = link;
         if( keyAuthenticated )
             silentClients_.insert( link );
         else
