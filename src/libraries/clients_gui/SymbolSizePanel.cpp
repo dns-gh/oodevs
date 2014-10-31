@@ -29,8 +29,8 @@ namespace
     const int step      = 2; // number of steps per 1x increment/decrement
     const int minValue  = - minFactor * step;
     const int maxValue  = maxFactor * step;
-    const float toMaxValue = ( maxFactor - 1 ) / ( maxFactor * step );
-    const float toMinValue = ( minFactor - 1 ) / ( minFactor * minFactor * step );
+    const float toMaxValue = ( maxFactor - 1. ) / ( maxFactor * step );
+    const float toMinValue = ( minFactor - 1. ) / ( minFactor * minFactor * step );
     const float fromMaxValue = 1 / toMaxValue;
     const float fromMinValue = 1 / toMinValue;
 
@@ -41,7 +41,7 @@ namespace
 
     int FromRatio( float y )
     {
-        return static_cast< int >( ( y - 1 ) * y >= 1 ? fromMaxValue : fromMinValue );
+        return static_cast< int >( ( y - 1 ) * ( y >= 1 ? fromMaxValue : fromMinValue ) );
     }
 
     class NatureLevelSlider : public OptionWidget< RichWidget< QSlider > >
