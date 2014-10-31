@@ -136,6 +136,8 @@ void GlWidget::paintGL()
 {
     if( bMulti_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
     {
+        glPushAttrib( GL_DEPTH_BUFFER_BIT );
+        glDisable( GL_DEPTH_TEST );
         setAutoUpdate( false );
         for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
             RenderPass( **it );
@@ -143,6 +145,7 @@ void GlWidget::paintGL()
             fps_->Update();
         Scale().Draw( 20, 20, *this );
         setAutoUpdate( true );
+        glPopAttrib();
     }
 }
 
