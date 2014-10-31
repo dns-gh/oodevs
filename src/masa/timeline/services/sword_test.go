@@ -94,7 +94,8 @@ func (t *TestSuite) makeFixtureWith(c *C, f *Fixture) {
 	f.server = server
 	f.eloop = util.NewEventLoop()
 	f.eloop.Start()
-	f.client = NewSword(log, f, true, "sim", local)
+	f.client = NewSword(log, true, "sim", local)
+	f.client.AttachObserver(f)
 }
 
 func (t *TestSuite) makeFixture(c *C) *Fixture {

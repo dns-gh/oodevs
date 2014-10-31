@@ -80,10 +80,10 @@ type Sword struct {
 	endTime   time.Time                     // exercise end date
 }
 
-func NewSword(log util.Logger, observer Observer, clock bool, name, address string) *Sword {
+func NewSword(log util.Logger, clock bool, name, address string) *Sword {
 	return &Sword{
 		log:      log,
-		observer: observer,
+		observer: nil,
 		name:     name,
 		address:  address,
 		clock:    clock,
@@ -118,6 +118,10 @@ func (s *Sword) HasClock() bool {
 
 func (*Sword) IsLocked() bool {
 	return true
+}
+
+func (s *Sword) AttachObserver(observer Observer) {
+	s.observer = observer
 }
 
 func (s *Sword) Log(format string, args ...interface{}) {

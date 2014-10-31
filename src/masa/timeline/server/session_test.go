@@ -486,11 +486,12 @@ func (f *FakeService) Proto(name string) *sdk.Service {
 	}
 }
 
-func (f *FakeService) HasClock() bool                    { return false }
-func (f *FakeService) IsLocked() bool                    { return false }
-func (f *FakeService) Start() error                      { return nil }
-func (f *FakeService) Stop() error                       { return nil }
-func (f *FakeService) Trigger(url.URL, *sdk.Event) error { return nil }
+func (f *FakeService) HasClock() bool                            { return false }
+func (f *FakeService) IsLocked() bool                            { return false }
+func (f *FakeService) AttachObserver(observer services.Observer) {}
+func (f *FakeService) Start() error                              { return nil }
+func (f *FakeService) Stop() error                               { return nil }
+func (f *FakeService) Trigger(url.URL, *sdk.Event) error         { return nil }
 
 func (f *FakeService) UpdateEvents(events ...*sdk.Event) {
 	f.lock.Lock()

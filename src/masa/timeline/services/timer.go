@@ -29,9 +29,9 @@ type Timer struct {
 	ticker *time.Ticker
 }
 
-func NewTimer(root Observer, base time.Time) *Timer {
+func NewTimer(base time.Time) *Timer {
 	return &Timer{
-		root:   root,
+		root:   nil,
 		base:   base,
 		offset: base.Sub(time.Now()),
 		quit:   make(chan struct{}),
@@ -58,6 +58,10 @@ func (*Timer) HasClock() bool {
 
 func (*Timer) IsLocked() bool {
 	return false
+}
+
+func (t Timer) AttachObserver(observer Observer) {
+	t.root = observer
 }
 
 func (t *Timer) Start() error {

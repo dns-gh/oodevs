@@ -14,6 +14,7 @@ import (
 	"io"
 	"masa/timeline/sdk"
 	"masa/timeline/server"
+	"masa/timeline/services"
 	"masa/timeline/util"
 	"net"
 	"net/url"
@@ -97,10 +98,11 @@ func (w *WsContext) SendBroadcasts() {
 }
 
 type ObserverService struct {
-	url      string
-	observer server.SdkObserver
-	uuid     string
-	log      util.Logger
+	url             string
+	observer        server.SdkObserver
+	uuid            string
+	log             util.Logger
+	serviceObserver services.Observer
 }
 
 func (os *ObserverService) Proto(name string) *sdk.Service {
@@ -118,9 +120,14 @@ func (ObserverService) IsLocked() bool { return false }
 func (ObserverService) Start() error   { return nil }
 func (ObserverService) Stop() error    { return nil }
 
+func (os *ObserverService) AttachObserver(observer services.Observer) {
+	os.serviceObserver = observer
+}
+
 func (os *ObserverService) Trigger(url url.URL, event *sdk.Event) error {
 	os.log.Printf("ws[%v] -> action %v\n", os.uuid, event.GetUuid())
 	os.observer.TriggerEvents(event)
+	os.serviceObserver.CloseEvent(event.GetUuid(), nil, true)
 	return nil
 }
 
@@ -145,7 +152,7 @@ func (s *Server) socketHandler(log util.Logger, ws *websocket.Conn) {
 	}
 	defer s.controller.UnregisterObserver(uuid, observer)
 	if service := req.FormValue("register_service"); len(service) > 0 {
-		_, err = s.controller.AttachService(uuid, service, &ObserverService{req.URL.String(), observer, service, log})
+		_, err = s.controller.AttachService(uuid, service, &ObserverService{req.URL.String(), observer, service, log, nil})
 		if err != nil {
 			log.Printf("[ws] Unable to register observer service %s: %s\n", uuid, err)
 			return
