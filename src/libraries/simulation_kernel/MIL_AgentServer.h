@@ -36,7 +36,6 @@ namespace xml
 
 class ActionManager;
 class DEC_Workspace;
-class DEC_PathFind_Manager;
 class MIL_CheckPointManager;
 class MIL_EffectManager;
 class MIL_EntityManager_ABC;
@@ -49,6 +48,7 @@ class MIL_Config;
 class MIL_UrbanCache;
 class MIL_ObjectFactory;
 class PathfindComputer;
+class TER_PathfindManager2;
 
 // If filePath exists, returns the largest identifier referenced in expressions
 // such as id="\d+". Returns 0 otherwise.
@@ -109,7 +109,7 @@ public:
     MIL_UrbanCache& GetUrbanCache() const;
     DEC_Workspace& GetWorkspaceDIA() const;
     NET_AgentServer& GetAgentServer() const;
-    DEC_PathFind_Manager& GetPathFindManager() const;
+    TER_PathfindManager2& GetPathFindManager() const;
     PHY_MeteoDataManager& GetMeteoDataManager() const;
     MIL_CheckPointManager& GetCheckPointManager() const;
     resource::ResourceNetworkModel& GetResourceNetworkModel() const;
@@ -195,7 +195,7 @@ private:
     DEC_Workspace* pWorkspaceDIA_;
     PHY_MeteoDataManager* pMeteoDataManager_;
     MT_TimerManager timerManager_;
-    boost::shared_ptr< DEC_PathFind_Manager > pPathFindManager_;
+    boost::shared_ptr< TER_PathfindManager2 > pPathFindManager_;
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;
     MIL_UrbanCache* pUrbanCache_;

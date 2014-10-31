@@ -17,7 +17,6 @@
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_EquipmentListContext.h"
 #include "Decision/DEC_PathComputer.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PopulationContext.h"
 #include "Decision/DEC_Population_PathfinderRule.h"
@@ -27,6 +26,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_PathSection.h"
+#include "simulation_terrain/TER_PathfindManager2.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessageParameters.h"
@@ -40,7 +40,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PathfindComputer )
 // Name: PathfindComputer constructor
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-PathfindComputer::PathfindComputer( DEC_PathFind_Manager& manager, const TER_World& world )
+PathfindComputer::PathfindComputer( TER_PathfindManager2& manager, const TER_World& world )
     : manager_( manager )
     , world_( world )
     , ids_( 0 )

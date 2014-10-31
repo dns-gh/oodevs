@@ -70,7 +70,6 @@ namespace propagation
 class ActionManager;
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
-class DEC_PathFind_Manager;
 class FormationFactory_ABC;
 class InhabitantFactory_ABC;
 class KnowledgeGroupFactory;

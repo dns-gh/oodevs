@@ -23,7 +23,6 @@
 #include "Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Adapters/RoleAdapterInterface.h"
 #include "Decision/DEC_Model_ABC.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Workspace.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
@@ -89,6 +88,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "Tools/MIL_Tools.h"
+#include "simulation_terrain/TER_PathfindManager2.h"
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>

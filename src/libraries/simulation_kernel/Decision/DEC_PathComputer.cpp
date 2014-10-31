@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathComputer.h"
-#include "DEC_PathFind_Manager.h"
 #include "MIL_AgentServer.h"
 #include "SlopeSpeedModifier.h"
 #include "Network/NET_ASN_Tools.h"
@@ -20,6 +19,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Line.h"
 #include "protocol/Protocol.h"
+#include "simulation_terrain/TER_PathfindManager2.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_PathSection.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"

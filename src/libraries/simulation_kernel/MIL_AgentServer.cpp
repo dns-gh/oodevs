@@ -10,7 +10,6 @@
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "CheckPoints/SerializationTools.h"
 #include "Decision/DEC_Agent_PathClass.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Population_PathClass.h"
 #include "Decision/DEC_Workspace.h"
@@ -28,10 +27,11 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "resource_network/ResourceNetworkModel.h"
-#include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_IDManager.h"
 #include "Urban/MIL_UrbanCache.h"
+#include "simulation_terrain/TER_PathfindManager2.h"
+#include "simulation_terrain/TER_World.h"
 #include "tools/Codec.h"
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
@@ -114,7 +114,7 @@ PHY_MeteoDataManager* CreateMeteoManager(
             world, *xis, config.GetDetectionFile(), now, tickDuration );
 }
 
-boost::shared_ptr< DEC_PathFind_Manager > CreatePathfindManager( const MIL_Config& config,
+boost::shared_ptr< TER_PathfindManager2 > CreatePathfindManager( const MIL_Config& config,
        const MIL_ObjectFactory& objectFactory )
 {
     const auto maxAvoidanceDist = objectFactory.GetMaxAvoidanceDistance();
@@ -149,11 +149,11 @@ boost::shared_ptr< DEC_PathFind_Manager > CreatePathfindManager( const MIL_Confi
     DEC_Population_PathClass::Initialize( x, dangerousObjects );
 
     // The shared_ptr allows a destructor without having to write a class
-    return boost::shared_ptr< DEC_PathFind_Manager >( new DEC_PathFind_Manager(
+    return boost::shared_ptr< TER_PathfindManager2 >( new TER_PathfindManager2(
         threads, distanceThreshold, maxAvoidanceDist, maxEndConnections,
         maxComputationDuration, config.GetPathfindDir(),
         config.GetPathfindFilter() ),
-        []( DEC_PathFind_Manager* m )
+        []( TER_PathfindManager2* m )
         {
             delete m;
             DEC_Population_PathClass::Terminate();
@@ -773,7 +773,7 @@ PHY_MeteoDataManager& MIL_AgentServer::GetMeteoDataManager() const
 // Name: MIL_AgentServer::GetPathFindManager
 // Created: JDY 03-02-12
 //-----------------------------------------------------------------------------
-DEC_PathFind_Manager& MIL_AgentServer::GetPathFindManager() const
+TER_PathfindManager2& MIL_AgentServer::GetPathFindManager() const
 {
     assert( pPathFindManager_ );
     return *pPathFindManager_;

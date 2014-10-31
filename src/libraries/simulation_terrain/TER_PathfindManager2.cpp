@@ -1,28 +1,26 @@
 // *****************************************************************************
 //
-// $Created: NLD 2003-08-14 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathFind_Manager.cpp $
-// $Author: Age $
-// $Modtime: 10/05/05 16:50 $
-// $Revision: 15 $
-// $Workfile: DEC_PathFind_Manager.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-#include "DEC_PathFind_Manager.h"
-#include "DEC_PathFindRequest.h"
-#include "simulation_terrain/TER_PathComputer_ABC.h"
-#include "simulation_terrain/TER_PathFindManager.h"
-#include "simulation_terrain/TER_World.h"
+#include "simulation_terrain_pch.h"
+#include "TER_PathfindManager2.h"
+#include "TER_PathComputer_ABC.h"
+#include "TER_PathFindManager.h"
+#include "TER_PathFindRequest.h"
+#include "TER_World.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager constructor
+// Name: TER_PathfindManager2 constructor
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-DEC_PathFind_Manager::DEC_PathFind_Manager( unsigned int threads,
+TER_PathfindManager2::TER_PathfindManager2( unsigned int threads,
         double distanceThreshold, double maxAvoidanceDistance,
         unsigned int maxEndConnections, unsigned int maxComputationDuration,
         const tools::Path& pathfindDir, const std::string& pathfindFilter )
@@ -46,20 +44,20 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( unsigned int threads,
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager destructor
+// Name: TER_PathfindManager2 destructor
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-DEC_PathFind_Manager::~DEC_PathFind_Manager()
+TER_PathfindManager2::~TER_PathfindManager2()
 {
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::StartCompute
+// Name: TER_PathfindManager2::StartCompute
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
+void TER_PathfindManager2::StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
 {
-    auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, pathfind );
+    auto p = boost::make_shared< TER_PathfindRequest >( *this, path, pathfind );
     boost::mutex::scoped_lock locker( mutex_ );
     if( path->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
@@ -69,40 +67,40 @@ void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< TER_PathComput
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetNbrShortRequests
+// Name: TER_PathfindManager2::GetNbrShortRequests
 // Created: NLD 2005-04-01
 // -----------------------------------------------------------------------------
-unsigned int DEC_PathFind_Manager::GetNbrShortRequests() const
+unsigned int TER_PathfindManager2::GetNbrShortRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
     return static_cast< unsigned int >( shortRequests_.size() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetNbrLongRequests
+// Name: TER_PathfindManager2::GetNbrLongRequests
 // Created: NLD 2005-04-01
 // -----------------------------------------------------------------------------
-unsigned int DEC_PathFind_Manager::GetNbrLongRequests() const
+unsigned int TER_PathfindManager2::GetNbrLongRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
     return static_cast< unsigned int >( longRequests_.size() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetNbrTreatedRequests
+// Name: TER_PathfindManager2::GetNbrTreatedRequests
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-unsigned int DEC_PathFind_Manager::GetNbrTreatedRequests() const
+unsigned int TER_PathfindManager2::GetNbrTreatedRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
     return treatedRequests_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetMessage
+// Name: TER_PathfindManager2::GetMessage
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage()
+boost::shared_ptr< TER_PathFindRequest_ABC > TER_PathfindManager2::GetMessage()
 {
     unsigned int nIndex = 0;
     for( ; nIndex < pathFindThreads_.size(); ++nIndex )
@@ -117,10 +115,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetRequests
+// Name: TER_PathfindManager2::GetRequests
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-DEC_PathFind_Manager::T_Requests& DEC_PathFind_Manager::GetRequests()
+TER_PathfindManager2::T_Requests& TER_PathfindManager2::GetRequests()
 {
     const bool shortHavePriority =
            ( ! shortRequests_.empty() )
@@ -131,10 +129,10 @@ DEC_PathFind_Manager::T_Requests& DEC_PathFind_Manager::GetRequests()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetMessage
+// Name: TER_PathfindManager2::GetMessage
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage( unsigned int nThread )
+boost::shared_ptr< TER_PathFindRequest_ABC > TER_PathfindManager2::GetMessage( unsigned int nThread )
 {
     boost::shared_ptr< TER_PathFindRequest_ABC > pRequest;
     boost::mutex::scoped_lock locker( mutex_ );
@@ -156,10 +154,10 @@ boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage( u
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetCurrentThread
+// Name: TER_PathfindManager2::GetCurrentThread
 // Created: AGE 2005-02-28
 // -----------------------------------------------------------------------------
-int DEC_PathFind_Manager::GetCurrentThread() const
+int TER_PathfindManager2::GetCurrentThread() const
 {
     for( unsigned int nIndex = 0; nIndex < pathFindThreads_.size(); ++nIndex )
         if( pathFindThreads_[ nIndex ]->IsCurrent() )
@@ -168,20 +166,20 @@ int DEC_PathFind_Manager::GetCurrentThread() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::CleanPathAfterComputation
+// Name: TER_PathfindManager2::CleanPathAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CleanPathAfterComputation( double duration )
+void TER_PathfindManager2::CleanPathAfterComputation( double duration )
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     toCleanup_.push_back( duration );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::Update
+// Name: TER_PathfindManager2::Update
 // Created: NLD 2005-09-20
 // -----------------------------------------------------------------------------
-double DEC_PathFind_Manager::Update()
+double TER_PathfindManager2::Update()
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     double pathfindTime = pathfindTime_;
@@ -196,10 +194,10 @@ double DEC_PathFind_Manager::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::UpdateInSimulationThread
+// Name: TER_PathfindManager2::UpdateInSimulationThread
 // Created: JSR 2010-06-16
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::UpdateInSimulationThread()
+void TER_PathfindManager2::UpdateInSimulationThread()
 {
     if( bUseInSameThread_ ) // Pathfind in same thread than simulation
         while( ! shortRequests_.empty() || ! longRequests_.empty() )
@@ -213,10 +211,10 @@ void DEC_PathFind_Manager::UpdateInSimulationThread()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetMaxComputationDuration
+// Name: TER_PathfindManager2::GetMaxComputationDuration
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-unsigned int DEC_PathFind_Manager::GetMaxComputationDuration() const
+unsigned int TER_PathfindManager2::GetMaxComputationDuration() const
 {
     return nMaxComputationDuration_;
 }

@@ -21,11 +21,11 @@ namespace sword
 
 class ActionManager;
 class MIL_AgentPion;
-class DEC_PathFind_Manager;
 class DEC_PathComputer;
 class MIL_Population;
 class PathRequest;
 class PHY_ComposanteTypePion;
+class TER_PathfindManager2;
 
 // =============================================================================
 /** @class  PathfindComputer
@@ -38,7 +38,7 @@ class PathfindComputer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PathfindComputer( DEC_PathFind_Manager& manager, const TER_World& world );
+             PathfindComputer( TER_PathfindManager2& manager, const TER_World& world );
     virtual ~PathfindComputer();
     //@}
 
@@ -87,7 +87,7 @@ private:
 private:
     //! @name Member data
     //@{
-    DEC_PathFind_Manager& manager_;
+    TER_PathfindManager2& manager_;
     const TER_World& world_;
     uint32_t ids_;
     T_Results results_;

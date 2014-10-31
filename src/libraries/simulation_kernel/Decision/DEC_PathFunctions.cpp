@@ -13,7 +13,6 @@
 #include "DEC_PathFunctions.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_PathComputer.h"
@@ -38,6 +37,7 @@
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
+#include "simulation_terrain/TER_PathfindManager2.h"
 #include <geometry/Types.h>
 #include <boost/smart_ptr/make_shared.hpp>
 

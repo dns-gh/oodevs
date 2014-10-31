@@ -1,16 +1,14 @@
 // *****************************************************************************
 //
-// $Created: NLD 2003-08-14 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/decision/path/DEC_PathFind_Manager.h $
-// $Author: Age $
-// $Modtime: 10/05/05 16:50 $
-// $Revision: 9 $
-// $Workfile: DEC_PathFind_Manager.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __DEC_PathFind_Manager_h_
-#define __DEC_PathFind_Manager_h_
+#ifndef SIMULATION_TERRAIN_PATHFIND_MANAGER
+#define SIMULATION_TERRAIN_PATHFIND_MANAGER
 
 #pragma warning( push, 0 )
 #include <tools/thread/MessageQueue_ABC.h>
@@ -20,10 +18,15 @@
 #include <deque>
 #include <vector>
 
-class DEC_PathFindRequest;
+class TER_PathfindRequest;
 class TER_PathComputer_ABC;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
+
+namespace sword
+{
+    class Pathfind;
+}
 
 namespace tools
 {
@@ -33,15 +36,15 @@ namespace tools
 // =============================================================================
 // Created: NLD 2003-08-14
 // =============================================================================
-class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
+class TER_PathfindManager2 : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
                            , private boost::noncopyable
 {
 public:
-             DEC_PathFind_Manager( unsigned int threads, double distanceThreshold,
+             TER_PathfindManager2( unsigned int threads, double distanceThreshold,
                     double maxAvoidanceDistance, unsigned int maxEndConnections,
                     unsigned int maxComputationDuration,
                     const tools::Path& pathfindDir, const std::string& pathfindFilter );
-    virtual ~DEC_PathFind_Manager();
+    virtual ~TER_PathfindManager2();
 
     //! @name Main
     //@{
@@ -65,7 +68,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< TER_PathFinderThread* > T_PathFindThreads;
-    typedef std::deque< boost::shared_ptr< DEC_PathFindRequest > > T_Requests;
+    typedef std::deque< boost::shared_ptr< TER_PathfindRequest > > T_Requests;
     //@}
 
 private:
@@ -94,4 +97,4 @@ private:
     //@}
 };
 
-#endif // __DEC_PathFind_Manager_h_
+#endif // SIMULATION_TERRAIN_PATHFIND_MANAGER
