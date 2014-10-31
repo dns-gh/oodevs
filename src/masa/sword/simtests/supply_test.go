@@ -401,9 +401,9 @@ func SetManualSupply(c *C, client *swapi.Client, id uint32, mode bool) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		automat := data.Automats[id]
 		if automat != nil {
-			return automat.LogSupplyManual
+			return automat.LogSupplyManual == mode
 		}
-		return data.Formations[id].LogSupplyManual
+		return data.Formations[id].LogSupplyManual == mode
 	})
 }
 
