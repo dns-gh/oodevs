@@ -982,9 +982,17 @@ integration.isPointTrafficable = function( self )
     return self.isPointInUrbanBlockTrafficableCache
 end
 
-integration.getUnitPositions = function( simPoint )
+--- Returns a list of positions outside a urban block.
+-- If the given position is inside a urban block,this method will return
+-- a list of positions around this urban block (witout the given position).
+-- Otherwise, this method will return a list containing only the given position.
+-- @param simPoint Simulation position
+-- @return List of simulation positions
+integration.getPositionsOutsideUrbanBlock = function( simPoint )
     return DEC_Geometrie_CalculerTrafficablePointPourPoint( simPoint )
 end
+
+integration.getUnitPositions = integration.getPositionsOutsideUrbanBlock
 
 integration.isPointInUrbanBlockTrafficableForPlatoon = function( platoon, localisation )
     return DEC_IsPointInUrbanBlockTrafficableForPlatoon( platoon, localisation)
