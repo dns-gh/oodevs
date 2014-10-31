@@ -153,11 +153,11 @@ namespace
     };
 }
 
-void TER_PathfindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
+double TER_PathfindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
 {
     auto computer = computer_.lock(); // thread-safe
     if( !computer )
-        return;
+        return 0;
     MT_Profiler profiler;
     profiler.Start();
     if( IsItinerary() )
@@ -169,7 +169,7 @@ void TER_PathfindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
     {
         computer->Execute( pathfinder );
     }
-    manager_.CleanPathAfterComputation( profiler.Stop() );
+    return profiler.Stop();
 }
 
 bool TER_PathfindRequest::IsItinerary() const

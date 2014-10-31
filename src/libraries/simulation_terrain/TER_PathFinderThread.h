@@ -46,7 +46,8 @@ public:
     void AddDynamicDataToRegister  ( const DynamicDataPtr& data );
     void AddDynamicDataToUnregister( const DynamicDataPtr& data );
 
-    void Process( const boost::shared_ptr< TER_PathfindRequest >& pRequest );
+    // Returns path processing time in milliseconds.
+    double Process( TER_PathfindRequest& pRequest );
 
 private:
     void ProcessDynamicData();

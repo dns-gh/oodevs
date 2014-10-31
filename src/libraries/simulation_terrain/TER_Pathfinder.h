@@ -56,8 +56,8 @@ public:
     // Returns computation time since last update.
     double Update();
     void UpdateInSimulationThread();
-    void StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& pPath, const sword::Pathfind& pathfind );
-    void CleanPathAfterComputation( double duration );
+    void StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& pPath,
+            const sword::Pathfind& pathfind );
 
     void AddDynamicData   ( const DynamicDataPtr& data );
     void RemoveDynamicData( const DynamicDataPtr& data );
@@ -78,11 +78,9 @@ private:
     //@}
 
 private:
-    //! @name Tools
-    //@{
     boost::shared_ptr< TER_PathfindRequest > GetMessage( unsigned int nThread );
     T_Requests& GetRequests();
-    //@}
+    void ProcessRequest( TER_PathFinderThread& data, TER_PathfindRequest& rq );
 
 private:
     const boost::shared_ptr< TER_StaticData > staticData_;

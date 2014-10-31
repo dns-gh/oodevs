@@ -191,17 +191,14 @@ namespace
 // Name: TER_PathFinderThread::Process
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathfindRequest >& pRequest )
+double TER_PathFinderThread::Process( TER_PathfindRequest& rq )
 {
     try
     {
         ProcessDynamicData();
-        if( pRequest )
-        {
-            PathfinderProxy proxy( dump_, filter_,
-                pRequest->IgnoreDynamicObjects() ? *staticPathfinder_ : *pathfinder_ );
-            pRequest->FindPath( proxy );
-        }
+        PathfinderProxy proxy( dump_, filter_,
+            rq.IgnoreDynamicObjects() ? *staticPathfinder_ : *pathfinder_ );
+        return rq.FindPath( proxy );
     }
     catch( const std::exception& e )
     {
@@ -211,6 +208,7 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathfindRequest
     {
         MT_LOG_ERROR_MSG( "Unknown exception caught in pathfinder thread" );
     }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

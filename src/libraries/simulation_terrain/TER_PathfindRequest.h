@@ -40,11 +40,10 @@ public:
     virtual ~TER_PathfindRequest();
     //@}
 
-    //! @name Operations
-    //@{
     bool IgnoreDynamicObjects() const;
-    void FindPath( TER_Pathfinder_ABC& pathfind );
-    //@}
+
+    // Computes path and returned processing time in milliseconds.
+    double FindPath( TER_Pathfinder_ABC& pathfind );
 
 private:
     //! @name Helpers

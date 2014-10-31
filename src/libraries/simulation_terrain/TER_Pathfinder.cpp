@@ -54,7 +54,7 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
                 const auto rq = GetMessage( i );
                 if( !rq )
                     break;
-                data->Process( rq );
+                ProcessRequest( *data, *rq );
             }
         })));
     }
@@ -173,14 +173,13 @@ boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned in
     return pRequest;
 }
 
-// -----------------------------------------------------------------------------
-// Name: TER_Pathfinder::CleanPathAfterComputation
-// Created: NLD 2006-01-23
-// -----------------------------------------------------------------------------
-void TER_Pathfinder::CleanPathAfterComputation( double duration )
+void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindRequest& rq )
 {
-    boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-    toCleanup_.push_back( duration );
+    const auto duration = data.Process( rq );
+    {
+        boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
+        toCleanup_.push_back( duration );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +213,7 @@ void TER_Pathfinder::UpdateInSimulationThread()
         T_Requests& requests = GetRequests();
         boost::shared_ptr< TER_PathfindRequest > pRequest = requests.front();
         requests.pop_front();
-        pathfindData_[ 0 ]->Process( pRequest );
+        ProcessRequest( *pathfindData_.front(), *pRequest );
         ++treatedRequests_;
     }
 }
