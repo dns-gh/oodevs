@@ -34,6 +34,14 @@ integration.getObjectNearestBorderPosition = function( object, distance )
     return DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
 end
 
+--- Returns the given planned object's nearest position.
+-- @param object Object knowledge
+-- @return Simulation position
+integration.getPlannedObjectNearestPositionOnBorder = function( plannedObject )
+    local localisation = integration.getGenObjectLocation( plannedObject.source )
+    return DEC_Geometrie_ComputeNearestBorder( integration.getBodyPosition(), localisation )
+end
+
 --- Returns the given object's nearest position to this entity's position
 -- @param object Object knowledge
 -- @return Simulation position
