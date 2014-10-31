@@ -34,6 +34,7 @@ type TestSuite struct{}
 var (
 	_              = Suite(&TestSuite{})
 	Port           = flag.Int("port", 35000, "base port for spawned processes")
+	BinDir         = flag.String("bindir", ".", "bin directory")
 	RunDir         = flag.String("rundir", ".", "run directory")
 	OutDir         = flag.String("outdir", ".", "output directory")
 	DefaultTimeout = 30 * time.Second
@@ -101,6 +102,7 @@ func (s *TestSuite) SetUpSuite(c *C) {
 	temp, err := ioutil.TempDir(*OutDir, "test")
 	c.Assert(err, IsNil)
 	TempDir = temp
+	log.Println("Bin", *BinDir)
 	log.Println("Run", *RunDir)
 	log.Println("Out", *OutDir)
 	log.Println("Port", *Port)
@@ -134,7 +136,7 @@ func MakeServerConfig(c *C) (string, map[string]interface{}) {
 }
 
 func StartServer(c *C, cfg string) *exec.Cmd {
-	server := filepath.Join(*RunDir, "timeline_server.exe")
+	server := filepath.Join(*BinDir, "timeline_server.exe")
 	_, err := os.Stat(server)
 	c.Assert(err, IsNil)
 	cmd := exec.Command(server,
@@ -149,7 +151,7 @@ func StartServer(c *C, cfg string) *exec.Cmd {
 }
 
 func StartClient(c *C, command string, args ...string) *exec.Cmd {
-	client := filepath.Join(*RunDir, "timeline_app.exe")
+	client := filepath.Join(*OutDir, "release", "timeline_app.exe")
 	_, err := os.Stat(client)
 	c.Assert(err, IsNil)
 	cmd := exec.Command(client, append(

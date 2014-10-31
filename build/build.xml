@@ -699,7 +699,6 @@
                 <fileset dir="${run.dir}">
                     <exclude name="Debug/**"/>
                     <exclude name="resources/integration tests/**"/>
-                    <exclude name="timeline_app.exe"/>
                     <exclude name="timeline_client_d.*"/>
                 </fileset>
             </zip>
@@ -1187,6 +1186,7 @@
         <echo message="test.port=${test.port}"/>
         <go cmd="test" module="masa/timelineui/...">
             <env key="TIMELINE_DISABLE_PROXY" value=""/>
+            <arg value="--bindir=${bin.dir}"/>
             <arg value="--rundir=${run.dir}"/>
             <arg value="--outdir=${out.dir}"/>
             <arg value="--port=${test.port}"/>
