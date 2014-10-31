@@ -30,6 +30,7 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
     , rDistanceThreshold_     ( distanceThreshold )
     , treatedRequests_        ( 0 )
     , pathfindTime_           ( 0 )
+    , stopped_                ( false )
 {
     if( nMaxComputationDuration_ <= 0 )
         throw MASA_EXCEPTION( "pathfind maximum computation duration must be greater than zero");
@@ -40,9 +41,22 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
         threads = 1;
     for( unsigned i = 0; i < threads; ++i )
     {
-        threads_.push_back( new TER_PathFinderThread( *staticData_, *this,
-            maxEndConnections, maxAvoidanceDistance, bUseInSameThread_,
-            pathfindDir, pathfindFilter ) );
+        pathfindData_.push_back( std::unique_ptr< TER_PathFinderThread >( new TER_PathFinderThread(
+            *staticData_, maxEndConnections, maxAvoidanceDistance,
+            pathfindDir, pathfindFilter ) ) );
+        if( bUseInSameThread_ )
+            continue;
+        auto* data = pathfindData_.back().get();
+        threads_.push_back( std::unique_ptr< boost::thread >( new boost::thread( [&,i,data]()
+        {
+            for( ;; )
+            {
+                const auto rq = GetMessage( i );
+                if( !rq )
+                    break;
+                data->Process( rq );
+            }
+        })));
     }
 }
 
@@ -52,8 +66,12 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
 // -----------------------------------------------------------------------------
 TER_Pathfinder::~TER_Pathfinder()
 {
-    for( auto it = threads_.begin(); it != threads_.end(); ++it )
-        delete *it;
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
+        stopped_ = true;
+    }
+    condition_.notify_all();
+    threads_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -101,22 +119,9 @@ unsigned int TER_Pathfinder::GetNbrTreatedRequests() const
     return treatedRequests_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: TER_Pathfinder::GetMessage
-// Created: AGE 2005-02-25
-// -----------------------------------------------------------------------------
-boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage()
-{
-    unsigned int nIndex = 0;
-    for( ; nIndex < threads_.size(); ++nIndex )
-        if( threads_[ nIndex ]->IsCurrent() )
-            break;
-    return GetMessage( nIndex );
-}
-
 namespace
 {
-    static const unsigned maximumShortRequest = 5;
+    const unsigned maximumShortRequest = 5;
 }
 
 // -----------------------------------------------------------------------------
@@ -143,13 +148,23 @@ boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned in
     boost::mutex::scoped_lock locker( mutex_ );
     if( ( nThread % 2 ) )
     {
-        condition_.wait( locker, [&]() { return !shortRequests_.empty(); } );
+        condition_.wait( locker, [&]()
+        {
+            return stopped_ || !shortRequests_.empty();
+        });
+        if( stopped_ )
+            return pRequest;
         pRequest = shortRequests_.front();
         shortRequests_.pop_front();
     }
     else
     {
-        condition_.wait( locker, [&]() { return !shortRequests_.empty() || !longRequests_.empty(); } );
+        condition_.wait( locker, [&]()
+        {
+            return stopped_ || !shortRequests_.empty() || !longRequests_.empty();
+        });
+        if( stopped_ )
+            return pRequest;
         T_Requests& requests = GetRequests();
         pRequest = requests.front();
         requests.pop_front();
@@ -192,15 +207,16 @@ double TER_Pathfinder::Update()
 // -----------------------------------------------------------------------------
 void TER_Pathfinder::UpdateInSimulationThread()
 {
-    if( bUseInSameThread_ ) // Pathfind in same thread than simulation
-        while( ! shortRequests_.empty() || ! longRequests_.empty() )
-        {
-            T_Requests& requests = GetRequests();
-            boost::shared_ptr< TER_PathfindRequest > pRequest = requests.front();
-            requests.pop_front();
-            threads_[ 0 ]->ProcessInSimulationThread( pRequest );
-            ++treatedRequests_;
-        }
+    if( !bUseInSameThread_ ) // Pathfind in same thread than simulation
+        return;
+    while( !stopped_ && ( ! shortRequests_.empty() || ! longRequests_.empty() ) )
+    {
+        T_Requests& requests = GetRequests();
+        boost::shared_ptr< TER_PathfindRequest > pRequest = requests.front();
+        requests.pop_front();
+        pathfindData_[ 0 ]->Process( pRequest );
+        ++treatedRequests_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -218,7 +234,7 @@ unsigned int TER_Pathfinder::GetMaxComputationDuration() const
 // -----------------------------------------------------------------------------
 void TER_Pathfinder::AddDynamicData( const DynamicDataPtr& data )
 {
-    for( auto it = threads_.begin(); it != threads_.end(); ++it )
+    for( auto it = pathfindData_.begin(); it != pathfindData_.end(); ++it )
         (*it)->AddDynamicDataToRegister( data );
 }
 
@@ -228,6 +244,6 @@ void TER_Pathfinder::AddDynamicData( const DynamicDataPtr& data )
 // -----------------------------------------------------------------------------
 void TER_Pathfinder::RemoveDynamicData( const DynamicDataPtr& data )
 {
-    for( auto it = threads_.begin(); it != threads_.end(); ++it )
+    for( auto it = pathfindData_.begin(); it != pathfindData_.end(); ++it )
         (*it)->AddDynamicDataToUnregister( data );
 }

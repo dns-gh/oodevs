@@ -42,13 +42,9 @@ namespace
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
 TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
-                                            tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathfindRequest > >& queue,
-                                            unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
-                                            const tools::Path& dump,
-                                            const std::string& filter )
-    : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathfindRequest > >( queue )
-    , useSameThread_( useSameThread )
-    , dump_          ( dump )
+            unsigned int nMaxEndConnections, double rMinEndConnectionLength,
+            const tools::Path& dump, const std::string& filter )
+    : dump_          ( dump )
     , filter_        ( ParseFilter( filter ) )
     , pathfinder_    ( new TerrainPathfinder( staticData ) )
     , staticPathfinder_( new TerrainPathfinder( staticData ) )
@@ -57,8 +53,6 @@ TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
     pathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
     staticPathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
     staticPathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
-    if( !useSameThread )
-        Start();
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +63,6 @@ TER_PathFinderThread::~TER_PathFinderThread()
 {
     // Ensure the retractation handlers are destroyed before the graph
     handlers_.clear();
-    Terminate();
 }
 
 namespace
@@ -213,24 +206,11 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathfindRequest
     catch( const std::exception& e )
     {
         MT_LOG_ERROR_MSG( "Exception caught in pathfinder thread : " << tools::GetExceptionMsg( e ) );
-        assert( false );
     }
     catch( ... )
     {
         MT_LOG_ERROR_MSG( "Unknown exception caught in pathfinder thread" );
-        assert( false );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::ProcessInSimulationThread
-// Created: JSR 2010-06-16
-// -----------------------------------------------------------------------------
-void TER_PathFinderThread::ProcessInSimulationThread( const boost::shared_ptr< TER_PathfindRequest >& pRequest )
-{
-    if( !useSameThread_ )
-        throw MASA_EXCEPTION( "Pathfind : Process in same thread than simulation not expected." );
-    Process( pRequest );
 }
 
 // -----------------------------------------------------------------------------
