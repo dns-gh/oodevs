@@ -10,11 +10,11 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFindRequest.h"
 #include "DEC_PathFind_Manager.h"
-#include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathFinder_ABC.h"
+#include "simulation_terrain/TER_World.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <tools/thread/Handler_ABC.h>
 #include <boost/foreach.hpp>
@@ -55,7 +55,10 @@ namespace
     TerrainPathPoint ReadPathPoint( const sword::PathPoint& point )
     {
         MT_Vector2D position;
-        MIL_Tools::ConvertCoordMosToSim( point.coordinate(), position );
+        TER_World::GetWorld().MosToSimMgrsCoord(
+                point.coordinate().latitude(),
+                point.coordinate().longitude(),
+                position );
         return TerrainPathPoint( geometry::Point2f( static_cast< float >( position.GetX() ),
                                                     static_cast< float >( position.GetY() ) ),
                                  ReadTerrainData( point.current() ), ReadTerrainData( point.next() ) );
