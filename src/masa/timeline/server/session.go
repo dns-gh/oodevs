@@ -166,9 +166,6 @@ func (s *Session) AttachListener(listener services.EventListener) {
 }
 
 func (s *Session) Detach(name string) error {
-	if s.status == sdk.Session_LIVE {
-		return ErrInProgress
-	}
 	service, ok := s.services[name]
 	if !ok {
 		return ErrServiceNotFound
@@ -307,7 +304,7 @@ func (s *Session) activateEvent(event *Event) {
 		s.Log("unable to find service '%s' for event '%s'", event.action.url.Host, event.uuid)
 		return
 	}
-	err := service.Apply(event.uuid, event.action.url, event.action.payload)
+	err := service.Apply(event.action.url, event.Proto())
 	if err != nil {
 		s.Log("unable to apply event '%s': %v", event.uuid, err)
 	}

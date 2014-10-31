@@ -99,6 +99,8 @@ func (w *WsContext) SendBroadcasts() {
 type ObserverService struct {
 	url      string
 	observer server.SdkObserver
+	uuid     string
+	log      util.Logger
 }
 
 func (os *ObserverService) Proto(name string) *sdk.Service {
@@ -116,7 +118,9 @@ func (ObserverService) IsLocked() bool { return false }
 func (ObserverService) Start() error   { return nil }
 func (ObserverService) Stop() error    { return nil }
 
-func (ObserverService) Apply(uuid string, url url.URL, payload []byte) error {
+func (os *ObserverService) Apply(url url.URL, event *sdk.Event) error {
+	os.log.Printf("ws[%v] -> action %v\n", os.uuid, event.GetUuid())
+	os.observer.ActivateEvents(event)
 	return nil
 }
 
@@ -141,7 +145,7 @@ func (s *Server) socketHandler(log util.Logger, ws *websocket.Conn) {
 	}
 	defer s.controller.UnregisterObserver(uuid, observer)
 	if service := req.FormValue("register_service"); len(service) > 0 {
-		_, err = s.controller.AttachService(uuid, service, &ObserverService{req.URL.String(), observer})
+		_, err = s.controller.AttachService(uuid, service, &ObserverService{req.URL.String(), observer, service, log})
 		if err != nil {
 			log.Printf("[ws] Unable to register observer service %s: %s\n", uuid, err)
 			return

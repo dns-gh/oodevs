@@ -54,6 +54,13 @@ func makeUpdateEvents(events []*sdk.Event) *sdk.Message {
 	}
 }
 
+func makeActivateEvents(events []*sdk.Event) *sdk.Message {
+	return &sdk.Message{
+		Tag:    sdk.MessageTag_activate_events.Enum(),
+		Events: events,
+	}
+}
+
 func makeDeleteEvents(events []string) *sdk.Message {
 	return &sdk.Message{
 		Tag:   sdk.MessageTag_delete_events.Enum(),
@@ -78,6 +85,10 @@ func (o *Observer) UpdateSession(session *sdk.Session) {
 
 func (o *Observer) UpdateEvents(events ...*sdk.Event) {
 	o.output <- makeUpdateEvents(events)
+}
+
+func (o *Observer) ActivateEvents(events ...*sdk.Event) {
+	o.output <- makeActivateEvents(events)
 }
 
 func (o *Observer) DeleteEvents(events ...string) {

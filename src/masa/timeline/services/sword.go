@@ -342,7 +342,8 @@ func isOrder(msg *sword.ClientToSim) bool {
 	return false
 }
 
-func (s *Sword) Apply(uuid string, url url.URL, payload []byte) error {
+func (s *Sword) Apply(url url.URL, event *sdk.Event) error {
+	uuid := event.GetUuid()
 	msg, ok := s.events[uuid]
 	if !ok {
 		return ErrUnknown
@@ -355,7 +356,8 @@ func (s *Sword) Apply(uuid string, url url.URL, payload []byte) error {
 		data = []byte(err.Error())
 	}
 	s.Log("-> action %v %s", uuid, data)
-	action := NewAction(uuid, url, payload, msg, isOrder(msg.ClientToSimulation))
+	action := NewAction(uuid, url, event.GetAction().GetPayload(),
+		msg, isOrder(msg.ClientToSimulation))
 	s.pending[uuid] = action
 	if s.status == SwordStatusConnected {
 		s.link.PostAction(action)
