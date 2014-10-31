@@ -11,7 +11,10 @@ package swapi
 type ModelEventTag int
 
 const (
-	AutomatCreate ModelEventTag = iota
+	ActionCreate ModelEventTag = iota
+	ActionDelete
+	ActionUpdate
+	AutomatCreate
 	AutomatDelete
 	AutomatReparent
 	AutomatUpdate

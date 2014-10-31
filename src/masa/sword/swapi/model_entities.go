@@ -1048,13 +1048,19 @@ func (model *ModelData) addOrder(order *Order) bool {
 func (model *ModelData) addAction(action *Action) bool {
 	size := len(model.Actions)
 	model.Actions[action.Id] = action
-	return size != len(model.Actions)
+	created := size != len(model.Actions)
+	model.notifyCreate(created, ActionCreate, ActionUpdate, action.Id)
+	return created
 }
 
 func (model *ModelData) removeAction(id uint32) bool {
 	size := len(model.Actions)
 	delete(model.Actions, id)
-	return size != len(model.Actions)
+	deleted := size != len(model.Actions)
+	if deleted {
+		model.listeners.NotifyId(ActionDelete, id)
+	}
+	return deleted
 }
 
 func (model *ModelData) changeAutomatLogisticsLinks(entityId uint32, superiors []uint32) bool {

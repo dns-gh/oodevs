@@ -649,3 +649,40 @@ func (s *TestSuite) TestListReportsAfterCheckpoint(c *C) {
 	// Check equality between 'allReports' and 'reports'
 	swtest.DeepEquals(c, allReports, reports)
 }
+
+func (s *TestSuite) TestHideActions(c *C) {
+	opts := NewAllUserOpts(ExCrossroadLog)
+	sim, clientA := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, clientA)
+	clientB := connectAndWait(c, sim, opts.User, opts.Password)
+	defer clientB.Close()
+	listenerA := ModelListener{}
+	listenerB := ModelListener{}
+	clientA.Model.RegisterListener(listenerA.Notify)
+	clientB.Model.RegisterListener(listenerB.Notify)
+
+	// check we don't see clientA action
+	clientA.HideActions()
+	d := clientA.Model.GetData()
+	supplier := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	SetManualSupply(c, clientA, supplier, true)
+	// we assume waiting one tick is sufficient
+	// to sync on previous action
+	clientB.Model.WaitTicks(1)
+	listenerA.Check(c)
+	listenerB.Check(c)
+
+	// check we still see clientB action
+	SetManualSupply(c, clientB, supplier, false)
+	clientB.Model.WaitTicks(1)
+	// close listeners to avoid data races in listeners
+	clientA.Close()
+	clientB.Close()
+	c.Assert(listenerA.events, HasLen, 1)
+	event := swapi.ModelEvent{
+		Tag: swapi.ActionCreate,
+		Id:  listenerA.events[0].Id, // ignore server-side id
+	}
+	listenerA.Check(c, event)
+	listenerB.Check(c, event)
+}

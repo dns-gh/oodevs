@@ -2096,3 +2096,8 @@ func (c *Client) ListReports(maxCount, start uint32) ([]*sword.Report, uint32, e
 	err := <-c.postSimRequest(msg, handler)
 	return reports, nextReport, err
 }
+
+func (c *Client) HideActions() error {
+	msg := CreateMagicAction(MakeParameters(), sword.MagicAction_hide_actions)
+	return <-c.postSimRequest(msg, defaultMagicHandler)
+}
