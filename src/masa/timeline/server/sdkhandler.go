@@ -15,7 +15,7 @@ import (
 
 type SdkObserver interface {
 	Listen() <-chan interface{}
-	ActivateEvents(events ...*sdk.Event)
+	TriggerEvents(events ...*sdk.Event)
 }
 
 type SdkController interface {

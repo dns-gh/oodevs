@@ -91,7 +91,7 @@ enum MessageTag
     delete_events   = 3;
     update_services = 4;
     update_session  = 5;
-    activate_events = 6;
+    trigger_events  = 6;
 }
 
 // Message applies to one session

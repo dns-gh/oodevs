@@ -161,8 +161,8 @@ func (t *TestSuite) TestTwoConsecutiveOrders(c *C) {
 		c.Check(err, IsNil)
 		url, err := url.Parse("sword://sim")
 		c.Check(err, IsNil)
-		f.client.Apply(*url, getSomeEvent(c, "1", *url))
-		f.client.Apply(*url, getSomeEvent(c, "2", *url))
+		f.client.Trigger(*url, getSomeEvent(c, "1", *url))
+		f.client.Trigger(*url, getSomeEvent(c, "2", *url))
 	})
 	waitConnectedCount(c, f.server, 1)
 }

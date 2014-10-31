@@ -245,7 +245,7 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
         currentAction_.reset( action );
     }
     event.action.apply = true;
-    event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+    event.action.target = timeline_helpers::CreateEventTarget( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }
 
 // -----------------------------------------------------------------------------

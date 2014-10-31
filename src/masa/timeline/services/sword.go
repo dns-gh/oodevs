@@ -342,7 +342,7 @@ func isOrder(msg *sword.ClientToSim) bool {
 	return false
 }
 
-func (s *Sword) Apply(url url.URL, event *sdk.Event) error {
+func (s *Sword) Trigger(url url.URL, event *sdk.Event) error {
 	uuid := event.GetUuid()
 	msg, ok := s.events[uuid]
 	if !ok {

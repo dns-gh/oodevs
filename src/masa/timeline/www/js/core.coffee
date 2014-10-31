@@ -680,7 +680,7 @@ class SessionView extends Backbone.View
                 @throttler.delete_events msg.uuids
             when "update_services"
                 @throttler.update_services msg.services
-            when "activate_events"
+            when "trigger_events"
                 if gaming?
                     gaming.trigger_events msg.events
 

@@ -181,5 +181,5 @@ void EventMarkerPresenter::CommitTo( timeline::Event& event ) const
     bpt::write_json( output, rpy );
     event.action.payload = output.str();
     event.action.apply = true;
-    event.action.target = "marker://" + uuid_;
+    event.action.target = timeline_helpers::CreateEventTarget( EVENT_MARKER_PROTOCOL, uuid_ );
 }

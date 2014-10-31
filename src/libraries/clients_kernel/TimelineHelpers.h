@@ -19,6 +19,9 @@
 #define EVENT_MULTIMEDIA_SERVICE "multimedia"
 #define EVENT_MARKER_PROTOCOL "marker"
 
-#define CREATE_EVENT_TARGET( PROTOCOL, SERVICE ) PROTOCOL "://" SERVICE
+namespace timeline_helpers
+{
+    std::string CreateEventTarget( const std::string& protocol, const std::string& service );
+}
 
 #endif // __TimelineHelpers_h__

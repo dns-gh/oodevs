@@ -118,9 +118,9 @@ func (ObserverService) IsLocked() bool { return false }
 func (ObserverService) Start() error   { return nil }
 func (ObserverService) Stop() error    { return nil }
 
-func (os *ObserverService) Apply(url url.URL, event *sdk.Event) error {
+func (os *ObserverService) Trigger(url url.URL, event *sdk.Event) error {
 	os.log.Printf("ws[%v] -> action %v\n", os.uuid, event.GetUuid())
-	os.observer.ActivateEvents(event)
+	os.observer.TriggerEvents(event)
 	return nil
 }
 

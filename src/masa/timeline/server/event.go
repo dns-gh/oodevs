@@ -139,7 +139,7 @@ func NewEvent(msg *sdk.Event, events EventSlice) (*Event, error) {
 	return reply, nil
 }
 
-func (e *Event) OnApply(err error, lock bool) bool {
+func (e *Event) OnTrigger(err error, lock bool) bool {
 	done := err == nil
 	modified := e.done != done || !reflect.DeepEqual(e.err, err) || e.readOnly != (done && lock)
 	e.done = done

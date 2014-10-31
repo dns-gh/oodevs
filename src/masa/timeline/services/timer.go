@@ -17,8 +17,8 @@ import (
 )
 
 var (
-	TimePeriod      = 400 * time.Millisecond
-	ErrInvalidApply = errors.New("invalid apply")
+	TimePeriod        = 400 * time.Millisecond
+	ErrInvalidTrigger = errors.New("invalid trigger")
 )
 
 type Timer struct {
@@ -84,6 +84,6 @@ func (t *Timer) Stop() error {
 	return nil
 }
 
-func (t *Timer) Apply(url.URL, *sdk.Event) error {
-	return ErrInvalidApply
+func (t *Timer) Trigger(url.URL, *sdk.Event) error {
+	return ErrInvalidTrigger
 }

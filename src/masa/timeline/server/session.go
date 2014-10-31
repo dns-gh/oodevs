@@ -295,7 +295,7 @@ func (s *Session) setTick(tick time.Time) {
 	s.UpdateTick(tick)
 }
 
-func (s *Session) activateEvent(event *Event) {
+func (s *Session) triggerEvent(event *Event) {
 	if !event.action.apply {
 		return
 	}
@@ -304,13 +304,13 @@ func (s *Session) activateEvent(event *Event) {
 		s.Log("unable to find service '%s' for event '%s'", event.action.url.Host, event.uuid)
 		return
 	}
-	err := service.Apply(event.action.url, event.Proto())
+	err := service.Trigger(event.action.url, event.Proto())
 	if err != nil {
 		s.Log("unable to apply event '%s': %v", event.uuid, err)
 	}
 }
 
-func (s *Session) activateEvents(begin, end time.Time) {
+func (s *Session) triggerEvents(begin, end time.Time) {
 	for _, event := range s.events {
 		if event.done {
 			continue
@@ -321,7 +321,7 @@ func (s *Session) activateEvents(begin, end time.Time) {
 		if event.begin.After(end) {
 			continue
 		}
-		s.activateEvent(event)
+		s.triggerEvent(event)
 	}
 }
 
@@ -437,7 +437,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	}
 	s.listeners.UpdateEvents(updates, encoded)
 	if triggered {
-		s.activateEvent(event)
+		s.triggerEvent(event)
 	}
 	return encoded[0], nil
 }
@@ -617,7 +617,7 @@ func (s *Session) Tick(tick time.Time) {
 		last = tick
 	}
 	if s.autostart {
-		s.activateEvents(last, tick)
+		s.triggerEvents(last, tick)
 	}
 }
 
@@ -626,7 +626,7 @@ func (s *Session) CloseEvent(uuid string, err error, lock bool) {
 	if event == nil {
 		return
 	}
-	modified := event.OnApply(err, lock)
+	modified := event.OnTrigger(err, lock)
 	if !modified {
 		return
 	}

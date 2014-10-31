@@ -37,7 +37,7 @@ type Service interface {
 	IsLocked() bool                 // whether service clock is immutable
 	Start() error
 	Stop() error
-	Apply(target url.URL, event *sdk.Event) error
+	Trigger(target url.URL, event *sdk.Event) error
 }
 
 type EventListener interface {

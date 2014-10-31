@@ -54,9 +54,9 @@ func makeUpdateEvents(events []*sdk.Event) *sdk.Message {
 	}
 }
 
-func makeActivateEvents(events []*sdk.Event) *sdk.Message {
+func makeTriggerEvents(events []*sdk.Event) *sdk.Message {
 	return &sdk.Message{
-		Tag:    sdk.MessageTag_activate_events.Enum(),
+		Tag:    sdk.MessageTag_trigger_events.Enum(),
 		Events: events,
 	}
 }
@@ -87,8 +87,8 @@ func (o *Observer) UpdateEvents(events ...*sdk.Event) {
 	o.output <- makeUpdateEvents(events)
 }
 
-func (o *Observer) ActivateEvents(events ...*sdk.Event) {
-	o.output <- makeActivateEvents(events)
+func (o *Observer) TriggerEvents(events ...*sdk.Event) {
+	o.output <- makeTriggerEvents(events)
 }
 
 func (o *Observer) DeleteEvents(events ...string) {

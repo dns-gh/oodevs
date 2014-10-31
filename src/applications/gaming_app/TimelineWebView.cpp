@@ -483,7 +483,7 @@ void TimelineWebView::ReadAction( timeline::Events& events,
     timeline::Event event;
     event.action.payload = model_.timelinePublisher_.GetPayload();
     event.action.apply = true;
-    event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+    event.action.target = timeline_helpers::CreateEventTarget( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
     event.name = action->GetName();
 
     const actions::ActionTiming& timing = action->Get< actions::ActionTiming >();
