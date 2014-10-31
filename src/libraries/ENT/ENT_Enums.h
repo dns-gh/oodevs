@@ -88,9 +88,9 @@ enum E_AmmunitionType
 enum E_NatureLevel
 {
     eNatureLevel_None,
+    eNatureLevel_c,
     eNatureLevel_b,
     eNatureLevel_o,
-    eNatureLevel_c,
     eNatureLevel_oo,
     eNatureLevel_ooo,
     eNatureLevel_i,
