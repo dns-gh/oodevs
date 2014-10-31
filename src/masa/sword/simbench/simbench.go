@@ -176,12 +176,13 @@ func BenchmarkPathfindImpossible(quick bool) ([]float64, error) {
 
 // A single measure
 type BenchmarkResult struct {
-	Name     string  `xml:"name,attr"`     // Measure identifier
-	Time     int64   `xml:"time,attr"`     // Date as number of seconds since 1970-01-01
-	Value    float64 `xml:"value,attr"`    // Measure value
-	Version  string  `xml:"version,attr"`  // Sword version as X.Y.*
-	Exercise string  `xml:"exercise,attr"` // Source exercise, usually ignored
-	Comment  string  `xml:"comment,attr"`
+	Name     string   `xml:"name,attr"`     // Measure identifier
+	Time     int64    `xml:"time,attr"`     // Date as number of seconds since 1970-01-01
+	Value    *float64 `xml:"value,attr"`    // Measure value
+	Version  string   `xml:"version,attr"`  // Sword version as X.Y.*
+	Exercise string   `xml:"exercise,attr"` // Source exercise, usually ignored
+	Comment  string   `xml:"comment,attr"`
+	Error    string   `xml:"error,attr,omitempty"` // Filled if benchmark failed
 }
 
 type BenchmarkResults struct {
@@ -293,19 +294,21 @@ various flags shared with the testing framework.
 		value, err := benchmarkOne(fn, *quick)
 		end := time.Now()
 		duration := float64(end.Sub(start)/time.Millisecond) / 1000.0
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "FAILED %s: %s in %.1fs\n", name, err, duration)
-			failed += 1
-			continue
-		}
-		fmt.Printf("OK: %s: %f in %.1fs\n", name, value, duration)
-		results = append(results, &BenchmarkResult{
+		result := &BenchmarkResult{
 			Name:     name,
-			Value:    value,
 			Exercise: "swbench",
 			Version:  version,
 			Time:     date.Unix(),
-		})
+		}
+		if err != nil {
+			result.Error = err.Error()
+			fmt.Fprintf(os.Stderr, "FAILED %s: %s in %.1fs\n", name, err, duration)
+			failed += 1
+		} else {
+			result.Value = &value
+			fmt.Printf("OK: %s: %f in %.1fs\n", name, value, duration)
+		}
+		results = append(results, result)
 	}
 	if len(*output) > 0 {
 		fmt.Printf("writing %s\n", *output)
