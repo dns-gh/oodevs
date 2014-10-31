@@ -226,9 +226,7 @@ func (s *TestSuite) TestTriggerError(c *C) {
 
 // Creates a mobility breakdown on one unit supported by the maintenance
 // logistic chain in crossroad-log exercise.
-// TODO: migrate all transport tests on "test" phydb and rename this into
-// TriggerBreakdown.
-func TriggerBreakdownTest(c *C, client *swapi.Client, phydb *phy.PhysicalData) uint32 {
+func TriggerBreakdown(c *C, client *swapi.Client, phydb *phy.PhysicalData) uint32 {
 	unit := getSomeUnitByName(c, client.Model.GetData(), "Maintenance Mobile Infantry 2")
 	citroen, err := phydb.Components.Find("Citroën 2CV")
 	c.Assert(err, IsNil)
@@ -317,7 +315,7 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
 	SetManualMaintenance(c, client, maintenanceAutomat.Id)
-	handlingId := TriggerBreakdownTest(c, client, phydb)
+	handlingId := TriggerBreakdown(c, client, phydb)
 
 	WaitStateEntered(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
@@ -363,7 +361,7 @@ func (s *TestSuite) TestSelectMaintenanceTransporterWithAgentAsDestination(c *C)
 	c.Assert(err, IsNil)
 
 	SetManualMaintenance(c, client, maintenanceAutomat.Id)
-	handlingId := TriggerBreakdownTest(c, client, phydb)
+	handlingId := TriggerBreakdown(c, client, phydb)
 
 	WaitStateEntered(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
@@ -420,7 +418,7 @@ func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
 	SetManualMaintenance(c, client, maintenanceAutomat.Id)
-	handlingId := TriggerBreakdownTest(c, client, phydb)
+	handlingId := TriggerBreakdown(c, client, phydb)
 
 	// error: not in diagnosis team waiting state
 	err = client.SelectDiagnosisTeam(handlingId, towTruck.Id)
@@ -477,7 +475,7 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
 	SetManualMaintenance(c, client, maintenanceAutomat.Id)
-	handlingId := TriggerBreakdownTest(c, client, phydb)
+	handlingId := TriggerBreakdown(c, client, phydb)
 
 	// error: not a repair consign
 	err = client.SelectRepairTeam(handlingId, gyroScrew.Id)
