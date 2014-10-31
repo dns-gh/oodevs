@@ -1730,11 +1730,11 @@ Voulez-vous le supprimer?</translation>
         <translation>3D</translation>
     </message>
     <message>
-        <source>Refresh rate</source>
+        <source>Refresh Rate</source>
         <translation>Période de rafraîchissement</translation>
     </message>
     <message>
-        <source>Symbol sizes</source>
+        <source>Symbol Sizes</source>
         <translation>Taille des symboles</translation>
     </message>
 </context>

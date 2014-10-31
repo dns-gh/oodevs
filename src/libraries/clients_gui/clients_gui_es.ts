@@ -1733,11 +1733,11 @@ Desea eliminarlo?</translation>
         <translation type="unfinished">3D</translation>
     </message>
     <message>
-        <source>Refresh rate</source>
+        <source>Refresh Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Symbol sizes</source>
+        <source>Symbol Sizes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

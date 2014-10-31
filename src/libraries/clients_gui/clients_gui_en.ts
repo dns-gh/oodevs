@@ -1734,12 +1734,12 @@ Do you want to remove it?</translation>
         <translation type="unfinished">3D</translation>
     </message>
     <message>
-        <source>Refresh rate</source>
-        <translation type="unfinished"></translation>
+        <source>Refresh Rate</source>
+        <translation>Refresh Rate</translation>
     </message>
     <message>
-        <source>Symbol sizes</source>
-        <translation>Symbol sizes</translation>
+        <source>Symbol Sizes</source>
+        <translation>Symbol Sizes</translation>
     </message>
 </context>
 <context>

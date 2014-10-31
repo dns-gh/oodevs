@@ -98,8 +98,8 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, model.detection_ ) );
     AddPage( tr( "3D" ),                   *new LightingPanel( this, options ) );
     AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, model.coordinateConverter_ ) );
-    AddPage( tr( "Refresh rate" ),         *new RefreshRatePanel( this, options ) );
-    AddPage( tr( "Symbol sizes" ),         *new SymbolSizePanel( this, options ) );
+    AddPage( tr( "Refresh Rate" ),         *new RefreshRatePanel( this, options ) );
+    AddPage( tr( "Symbol Sizes" ),         *new SymbolSizePanel( this, options ) );
     AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, options ) );
 
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
