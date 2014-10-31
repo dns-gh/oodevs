@@ -30,7 +30,6 @@ namespace kernel
 namespace gui
 {
     class DiffusionListHierarchy;
-    class EntitySymbols;
     class DiffusionListEditor;
 
 // =============================================================================

@@ -11,7 +11,6 @@
 #include "GhostsPanel.h"
 #include "moc_GhostsPanel.cpp"
 #include "EntitySymbolEditor.h"
-#include "clients_gui/UnitPreviewIcon.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_kernel/Automat_ABC.h"

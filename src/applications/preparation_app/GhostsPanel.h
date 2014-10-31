@@ -30,10 +30,7 @@ namespace gui
     class NatureEditionWidget;
     class PanelStack_ABC;
     class SymbolIcons;
-
-    class UnitPreviewIcon;
     class NatureEditionWidget;
-
     class RichLineEdit;
 }
 
