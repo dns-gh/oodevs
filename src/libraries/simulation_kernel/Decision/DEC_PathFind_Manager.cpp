@@ -12,15 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFind_Manager.h"
 #include "DEC_PathFindRequest.h"
-#include "DEC_PathType.h"
-#include "DEC_Agent_PathClass.h"
-#include "DEC_Population_PathClass.h"
 #include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/MIL_Config.h"
-#include "tools/PhyLoader.h"
-#include "tools/Codec.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Profiler.h"
@@ -31,52 +25,27 @@
 // Name: DEC_PathFind_Manager constructor
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoidanceDistance,
-                                            const std::vector< unsigned int >& dangerousObjects )
-    : nMaxComputationDuration_( std::numeric_limits< unsigned int >::max() )
-    , nMaxEndConnections_     ( 8 )
-    , rDistanceThreshold_     ( 0 )
+DEC_PathFind_Manager::DEC_PathFind_Manager( unsigned int threads,
+        double distanceThreshold, double maxAvoidanceDistance,
+        unsigned int maxEndConnections, unsigned int maxComputationDuration,
+        const tools::Path& pathfindDir, const std::string& pathfindFilter )
+    : nMaxComputationDuration_( maxComputationDuration )
+    , rDistanceThreshold_     ( distanceThreshold )
     , treatedRequests_        ( 0 )
     , pathfindTime_           ( 0 )
 {
-    config.GetPhyLoader().LoadPhysicalFile( "pathfinder",
-        boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, boost::ref( config ), boost::cref( dangerousObjects ) ) );
-    bUseInSameThread_ = config.GetPathFinderThreads() == 0;
-    MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
-    const unsigned len = bUseInSameThread_ ? 1 : config.GetPathFinderThreads();
-    for( unsigned i = 0; i < len; ++i )
-        pathFindThreads_.push_back( &TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread(
-                                    *this, nMaxEndConnections_, maxAvoidanceDistance, bUseInSameThread_,
-                                    config.GetPathfindDir(), config.GetPathfindFilter() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::ReadPathfind
-// Created: LDC 2010-11-30
-// -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, MIL_Config& config, const std::vector< unsigned int >& dangerousObjects )
-{
-    xis >> xml::start( "pathfind" )
-            >> xml::start( "configuration" )
-                >> xml::attribute( "distance-threshold", rDistanceThreshold_ );
-    boost::optional< unsigned int > duration = config.GetPathFinderMaxComputationTime();
-    if( duration )
-        nMaxComputationDuration_ = *duration;
-    else
-        tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ );
     if( nMaxComputationDuration_ <= 0 )
-        throw MASA_EXCEPTION( "Pathfind configuration : max-calculation-time <= 0" );
-
-    xis         >> xml::attribute( "max-end-connections", nMaxEndConnections_ )
-            >> xml::end;
-    if( nMaxEndConnections_ <= 0 )
-        throw MASA_EXCEPTION( "Pathfind configuration : max-end-connections <= 0" );
-
-    MT_LOG_INFO_MSG( "Setting pathfind.max-calculation-time=" << nMaxComputationDuration_ );
-    DEC_PathType   ::Initialize();
-    DEC_Agent_PathClass::Initialize( xis, dangerousObjects );
-    DEC_Population_PathClass::Initialize( xis, dangerousObjects );
-    xis >> xml::end;
+        throw MASA_EXCEPTION( "pathfind maximum computation duration must be greater than zero");
+    if( maxEndConnections <= 0 )
+        throw MASA_EXCEPTION( "pathfind maximum end connections count must be greater than zero");
+    bUseInSameThread_ = threads == 0;
+    if( threads == 0 )
+        threads = 1;
+    for( unsigned i = 0; i < threads; ++i )
+        pathFindThreads_.push_back(
+            &TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread(
+                *this, maxEndConnections, maxAvoidanceDistance, bUseInSameThread_,
+                pathfindDir, pathfindFilter ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,9 +54,6 @@ void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, MIL_Config& config,
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::~DEC_PathFind_Manager()
 {
-    DEC_Population_PathClass::Terminate();
-    DEC_Agent_PathClass::Terminate();
-    DEC_PathType::Terminate();
 }
 
 // -----------------------------------------------------------------------------

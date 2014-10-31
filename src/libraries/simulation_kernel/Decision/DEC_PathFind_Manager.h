@@ -24,11 +24,10 @@ class DEC_PathFindRequest;
 class TER_PathComputer_ABC;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
-class MIL_Config;
 
-namespace xml
+namespace tools
 {
-    class xistream;
+    class Path;
 }
 
 // =============================================================================
@@ -38,8 +37,10 @@ class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< boost::sha
                            , private boost::noncopyable
 {
 public:
-             DEC_PathFind_Manager( MIL_Config& config, double maxAvoidanceDistance,
-                                   const std::vector< unsigned int >& dangerousObjects );
+             DEC_PathFind_Manager( unsigned int threads, double distanceThreshold,
+                    double maxAvoidanceDistance, unsigned int maxEndConnections,
+                    unsigned int maxComputationDuration,
+                    const tools::Path& pathfindDir, const std::string& pathfindFilter );
     virtual ~DEC_PathFind_Manager();
 
     //! @name Main
@@ -73,7 +74,6 @@ private:
     virtual boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage();
     boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage( unsigned int nThread );
     T_Requests& GetRequests();
-    void ReadPathfind( xml::xistream& xis, MIL_Config& config, const std::vector< unsigned int >& dangerousObjects );
     //@}
 
 private:
@@ -85,7 +85,6 @@ private:
     T_Requests longRequests_;
     double rDistanceThreshold_;
     unsigned int nMaxComputationDuration_;
-    unsigned int nMaxEndConnections_;
     unsigned int treatedRequests_;
     T_PathFindThreads pathFindThreads_;
     boost::mutex cleanAndDestroyMutex_;

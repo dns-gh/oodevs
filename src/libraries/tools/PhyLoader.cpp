@@ -51,7 +51,8 @@ PhyLoader::~PhyLoader()
     // NOTHING
 }
 
-Path PhyLoader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const
+boost::shared_ptr< const xml::xistream > PhyLoader::GetPhysicalXml(
+        const std::string& rootTag, bool optional ) const
 {
     const Path path = GetPhysicalChildFile( rootTag );
     auto it = cached_.find( rootTag );
@@ -61,7 +62,7 @@ Path PhyLoader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, b
         {
             if( !optional )
                 throw MASA_EXCEPTION( "cannot load disallowed physical file entry: " + rootTag );
-            return path;
+            return nullptr;
         }
         if( !optional || path.Exists() )
         {
@@ -69,9 +70,15 @@ Path PhyLoader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, b
             it = cached_.insert( std::make_pair( rootTag, cached )).first;
         }
     }
-    if( it != cached_.end() )
-        loader( xml::xisubstream( *it->second ));
-    return path;
+    return it != cached_.end() ? it->second : nullptr;
+}
+
+Path PhyLoader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const
+{
+    const auto xis = GetPhysicalXml( rootTag, optional );
+    if( xis )
+        loader( xml::xisubstream( *xis ));
+    return GetPhysicalChildFile( rootTag );
 }
 
 // -----------------------------------------------------------------------------

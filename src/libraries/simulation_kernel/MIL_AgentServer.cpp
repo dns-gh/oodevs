@@ -9,7 +9,10 @@
 
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "CheckPoints/SerializationTools.h"
+#include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathType.h"
+#include "Decision/DEC_Population_PathClass.h"
 #include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Decision/Brain.h"
@@ -27,11 +30,13 @@
 #include "resource_network/ResourceNetworkModel.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
+#include "Tools/MIL_IDManager.h"
+#include "Urban/MIL_UrbanCache.h"
+#include "tools/Codec.h"
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "tools/FileWrapper.h"
-#include "Urban/MIL_UrbanCache.h"
-#include "Tools/MIL_IDManager.h"
+#include "tools/PhyLoader.h"
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -109,6 +114,54 @@ PHY_MeteoDataManager* CreateMeteoManager(
             world, *xis, config.GetDetectionFile(), now, tickDuration );
 }
 
+boost::shared_ptr< DEC_PathFind_Manager > CreatePathfindManager( const MIL_Config& config,
+       const MIL_ObjectFactory& objectFactory )
+{
+    const auto maxAvoidanceDist = objectFactory.GetMaxAvoidanceDistance();
+    const auto& dangerousObjects = objectFactory.GetDangerousObjects();
+
+    const auto xis = config.GetPhyLoader().GetPhysicalXml( "pathfinder", false );
+
+    // Extract pathfind configuration
+    double distanceThreshold;
+    unsigned int maxEndConnections;
+    auto x = xml::xisubstream( *xis );
+    x >> xml::start( "pathfind" )
+            >> xml::start( "configuration" )
+                >> xml::attribute( "distance-threshold", distanceThreshold )
+                >> xml::attribute( "max-end-connections", maxEndConnections );
+
+    unsigned int maxComputationDuration;
+    boost::optional< unsigned int > duration = config.GetPathFinderMaxComputationTime();
+    if( duration )
+        maxComputationDuration = *duration;
+    else
+        tools::ReadTimeAttribute( x, "max-calculation-time", maxComputationDuration );
+    x >> xml::end;
+
+    const unsigned int threads = config.GetPathFinderThreads();
+    MT_LOG_INFO_MSG( "Starting " << threads << " pathfind thread(s)" );
+    MT_LOG_INFO_MSG( "Setting pathfind.max-calculation-time=" << maxComputationDuration );
+
+    // Initialize the singletons before the pathfinder
+    DEC_PathType::Initialize();
+    DEC_Agent_PathClass::Initialize( x, dangerousObjects );
+    DEC_Population_PathClass::Initialize( x, dangerousObjects );
+
+    // The shared_ptr allows a destructor without having to write a class
+    return boost::shared_ptr< DEC_PathFind_Manager >( new DEC_PathFind_Manager(
+        threads, distanceThreshold, maxAvoidanceDist, maxEndConnections,
+        maxComputationDuration, config.GetPathfindDir(),
+        config.GetPathfindFilter() ),
+        []( DEC_PathFind_Manager* m )
+        {
+            delete m;
+            DEC_Population_PathClass::Terminate();
+            DEC_Agent_PathClass::Terminate();
+            DEC_PathType::Terminate();
+        });
+}
+
 }  // namespace
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
@@ -135,7 +188,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pEntityManager_       ( 0 )
     , pWorkspaceDIA_        ( 0 )
     , pMeteoDataManager_    ( 0 )
-    , pPathFindManager_     ( 0 )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
     , pUrbanCache_          ( new MIL_UrbanCache() )
@@ -176,7 +228,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
     
-    pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
+    pPathFindManager_ = CreatePathfindManager( config_, *pObjectFactory_ );
     if( config_.HasCheckpoint() )
     {
         updateState_ = !config_.GetPausedAtStartup();
@@ -221,7 +273,7 @@ MIL_AgentServer::~MIL_AgentServer()
     MT_LOG_INFO_MSG( "Terminating Simulation..." );
     timerManager_.Unregister( *this );
     MT_LOG_INFO_MSG( "Terminating pathfind threads" );
-    delete pPathFindManager_;
+    pPathFindManager_.reset();
     delete pBurningCells_;
     // $$$$ AGE 2005-02-21:
 //    MT_LOG_INFO_MSG( "Cleaning up simulation data" );

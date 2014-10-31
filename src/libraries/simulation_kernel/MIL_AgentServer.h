@@ -195,7 +195,7 @@ private:
     DEC_Workspace* pWorkspaceDIA_;
     PHY_MeteoDataManager* pMeteoDataManager_;
     MT_TimerManager timerManager_;
-    DEC_PathFind_Manager* pPathFindManager_;
+    boost::shared_ptr< DEC_PathFind_Manager > pPathFindManager_;
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;
     MIL_UrbanCache* pUrbanCache_;
