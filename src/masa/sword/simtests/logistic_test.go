@@ -137,8 +137,18 @@ func assertIsPrefixed(c *C, s, prefix string) {
 
 func initLogisticEvents(c *C, client *swapi.Client) {
 	data := client.Model.GetData()
-	unit := getSomeUnitByName(c, data, "ARMOR.MBT")
-	supply := getSomeUnitByName(c, data, "Logistic CT").Id
+	unit := getSomeUnitByName(c, data, "Maintenance Mobile Infantry 2")
+	supply := getSomeUnitByName(c, data, "Maintenance Log Unit 1").Id
+	supplied := getSomeUnitByName(c, data, "Supply Mobile Infantry")
+	wounded := getSomeUnitByName(c, data, "Medical Mobile Infantry")
+
+	phydb := loadPhysicalData(c, "test")
+	citroen, err := phydb.Components.Find("Citroën 2CV")
+	c.Assert(err, IsNil)
+	breakdown, err := phydb.Breakdowns.Find("breakdown")
+	c.Assert(err, IsNil)
+	electrogen1Id, err := phydb.Resources.GetIdFromName("electrogen 1")
+	c.Assert(err, IsNil)
 
 	// Waiting for deployment
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -147,23 +157,22 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 	})
 
 	// Generate maintenance activity
-	equipmentId := uint32(11)
 	dotation := swapi.Equipment{
-		Available: 4,
+		Available: 5,
 	}
-	swtest.DeepEquals(c, dotation, *unit.Equipments[equipmentId])
+	swtest.DeepEquals(c, dotation, *unit.Equipments[citroen.Id])
 	equipment := swapi.Equipment{
-		Available:  3,
+		Available:  4,
 		Repairable: 1,
-		Breakdowns: []int32{82},
+		Breakdowns: []int32{int32(breakdown.Id)},
 	}
-	err := client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.Equipment{
-		equipmentId: &equipment})
+	err = client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.Equipment{
+		citroen.Id: &equipment})
 	c.Assert(err, IsNil)
 
 	// Generate medical and funeral activity
-	c.Assert(CheckHumanQuantity(unit.Humans,
-		map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7}), Equals, true)
+	c.Assert(CheckHumanQuantity(wounded.Humans,
+		map[int32]int32{eOfficer: 1, eWarrantOfficer: 1, eTrooper: 3}), Equals, true)
 	injured := swapi.Human{
 		Quantity:     1,
 		Rank:         eTrooper,
@@ -177,30 +186,30 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 		Rank:     eTrooper,
 		State:    eDead,
 	}
-	err = client.ChangeHumanState(unit.Id, []*swapi.Human{&injured, &dead})
+	err = client.ChangeHumanState(wounded.Id, []*swapi.Human{&injured, &dead})
 	c.Assert(err, IsNil)
 
 	// Generate supply activity
 	c.Assert(unit.Resources, NotNil)
-	swtest.DeepEquals(c, unit.Resources[1],
+	swtest.DeepEquals(c, supplied.Resources[electrogen1Id],
 		swapi.Resource{
-			Quantity:      3200,
-			LowThreshold:  10,
+			Quantity:      10,
+			LowThreshold:  50,
 			HighThreshold: 100,
 		})
 	resource := swapi.Resource{
-		LowThreshold:  10,
+		Quantity:      1,
+		LowThreshold:  50,
 		HighThreshold: 100,
 	}
-	err = client.ChangeResource(unit.Id, map[uint32]*swapi.Resource{1: &resource})
+	err = client.ChangeResource(supplied.Id, map[uint32]*swapi.Resource{electrogen1Id: &resource})
 	c.Assert(err, IsNil)
 
 	client.Model.WaitTicks(2)
 }
 
 func (s *TestSuite) TestLogisticPlugin(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	initLogisticEvents(c, client)
 
@@ -210,20 +219,20 @@ func (s *TestSuite) TestLogisticPlugin(c *C) {
 	logs := readAndRewriteLogFiles(c, sim.Opts)
 	assertIsPrefixed(c, logs["funeral"], ""+
 		`request id ; tick ; GDH ; unit ; handling unit ; conveying unit ; rank ; packaging resource ; state ; state end tick
- *** ; *** ; *** ; ARMOR.MBT platoon ;  ;  ; Trooper ;  ;  ; *** 
- *** ; *** ; *** ; ARMOR.MBT platoon ; Logistic combat train [23] ;  ; Trooper ;  ; transporting unpackaged ; *** `)
+ *** ; *** ; *** ; Medical Mobile Infantry ;  ;  ; Trooper ;  ;  ; *** 
+ *** ; *** ; *** ; Medical Mobile Infantry ; Medical Log Automat 1 ;  ; Trooper ;  ; transporting unpackaged ; *** `)
 	assertIsPrefixed(c, logs["maintenance"], ""+
 		`request id ; tick ; GDH ; unit ; provider ; equipment ; breakdown ; state ; state end tick
- *** ; *** ; *** ; ARMOR.MBT platoon ;  ; ARMOR.Main Battle Tank ; COTAC Breakdown 10 ;  ; *** 
- *** ; *** ; *** ; ARMOR.MBT platoon ; Logistic CT ; ARMOR.Main Battle Tank ; COTAC Breakdown 10 ; moving toward logistics system ; *** `)
+ *** ; *** ; *** ; Maintenance Mobile Infantry 2 ;  ; Citroën 2CV ; breakdown ;  ; *** 
+ *** ; *** ; *** ; Maintenance Mobile Infantry 2 ; Maintenance Log Unit 1 ; Citroën 2CV ; breakdown ; moving toward logistics system ; *** `)
 	assertIsPrefixed(c, logs["medical"], ""+
 		`request id ; tick ; GDH ; unit ; provider ; rank ; wound ; nbc ; mental ; state ; state end tick
- *** ; *** ; *** ; ARMOR.MBT platoon ;  ; Trooper ; injury severity level 2 ; yes ; yes ;  ; *** 
- *** ; *** ; *** ; ARMOR.MBT platoon ; Logistic CT ; Trooper ; injury severity level 2 ; yes ; yes ; waiting for evacuation ambulance ; *** 
- *** ; *** ; *** ; ARMOR.MBT platoon ; Logistic CT ; Trooper ; injury severity level 2 ; yes ; yes ; evacuation ambulance coming ; *** `)
+ *** ; *** ; *** ; Medical Mobile Infantry ;  ; Trooper ; injury severity level 2 ; yes ; yes ;  ; *** 
+ *** ; *** ; *** ; Medical Mobile Infantry ; Medical Log Unit 1 ; Trooper ; injury severity level 2 ; yes ; yes ; waiting for evacuation ambulance ; *** 
+ *** ; *** ; *** ; Medical Mobile Infantry ; Medical Log Unit 1 ; Trooper ; injury severity level 2 ; yes ; yes ; evacuation ambulance coming ; *** `)
 	assertIsPrefixed(c, logs["supply"], ""+
 		`request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed
- *** ; *** ; *** ;  ; Logistic combat train [23] ; Logistic combat train [23] ;  ;  ; *** `)
+ *** ; *** ; *** ;  ; Supply Log Automat 1c ; Supply Log Automat 1c ;  ;  ; *** `)
 }
 
 func hashLogEntry(c *C, e *sword.LogHistoryEntry) string {
@@ -235,8 +244,7 @@ func hashLogEntry(c *C, e *sword.LogHistoryEntry) string {
 }
 
 func (s *TestSuite) TestLogisticHistory(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	initLogisticEvents(c, client)
 	// Wait for some basic activity
@@ -326,15 +334,14 @@ func CheckDeployTime(c *C, start, end *sword.DateTime, duration time.Duration) {
 }
 
 func (s *TestSuite) TestLogisticDeployment(c *C) {
-	c.Skip("broken by models.679a0efae7cc")
-	phydb := loadPhysical(c, "worldwide")
-	opts := NewAdminOpts(ExCrossroadSmallLog)
+	phydb := loadPhysical(c, "test")
+	opts := NewAdminOpts(ExCrossroadLog)
 	opts.Paused = true
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 	model := client.Model
-	tc2 := getSomeAutomatByName(c, model.GetData(), "LOG.Logistic combat train")
-	unit := getSomeUnitByName(c, model.GetData(), "LOG.Logistic CT")
+	tc2 := getSomeAutomatByName(c, model.GetData(), "Maintenance Automat 1")
+	unit := getSomeUnitByName(c, model.GetData(), "Maintenance Log Unit 1")
 	startingReportsTypes := []string{
 		"Starting deploy",
 		"Starting undeploy",
@@ -359,7 +366,7 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 	starting := startingReporter.Count()
 
 	// Deploy TC2 to another position to force undeployment and deployment
-	MissionLogDeploy := uint32(44584)
+	MissionLogDeploy := uint32(8)
 	heading := swapi.MakeHeading(0)
 	limit1 := swapi.MakeLimit(
 		swapi.Point{X: -15.8302, Y: 28.3765},
