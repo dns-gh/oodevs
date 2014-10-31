@@ -273,21 +273,28 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
         const EquipmentUpdater::T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
         if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.available_ <= componentStaticNumber )
         {
-            auto deads = remoteComponent->second.dead_;
-            if( (remoteComponent->second.available_ + remoteComponent->second.dead_ + 
-                remoteComponent->second.heavyDamages_ + remoteComponent->second.lightDamages_) != componentStaticNumber )
-                deads = componentStaticNumber - (remoteComponent->second.available_+remoteComponent->second.heavyDamages_ + remoteComponent->second.lightDamages_);
+            unsigned int available = remoteComponent->second.available_;
+            unsigned int heavyDamages = remoteComponent->second.heavyDamages_;
+            unsigned int lightDamages = remoteComponent->second.lightDamages_;
+            if( staticComponent.breakdowns.empty() )
+            {
+                available += lightDamages + heavyDamages;
+                lightDamages = heavyDamages = 0;
+            }
+            unsigned int deads = remoteComponent->second.dead_;
+            if( ( available + deads + lightDamages + heavyDamages ) != componentStaticNumber )
+                deads = componentStaticNumber - (available+heavyDamages + lightDamages);
             sword::MissionParameter_Value* componentChanged = parameter.add_value();
             componentChanged->add_list()->set_identifier( componentTypeIdentifier );
-            componentChanged->add_list()->set_quantity( remoteComponent->second.available_ );
+            componentChanged->add_list()->set_quantity( available );
             componentChanged->add_list()->set_quantity( deads );
-            componentChanged->add_list()->set_quantity( remoteComponent->second.heavyDamages_ );
-            componentChanged->add_list()->set_quantity( remoteComponent->second.lightDamages_ );
+            componentChanged->add_list()->set_quantity( heavyDamages );
+            componentChanged->add_list()->set_quantity( lightDamages );
             componentChanged->add_list()->set_quantity( 0 );
             componentChanged->add_list()->set_quantity( 0 );
             auto breakDownList = componentChanged->add_list()->mutable_list();
             const unsigned long breakdownType = !staticComponent.breakdowns.empty() ? staticComponent.breakdowns[0] : 1;
-            for( std::size_t idxDmg = 0; idxDmg < remoteComponent->second.heavyDamages_; ++idxDmg )
+            for( std::size_t idxDmg = 0; idxDmg < heavyDamages; ++idxDmg )
             {
                 breakDownList->Add()->set_identifier( breakdownType );
             }
