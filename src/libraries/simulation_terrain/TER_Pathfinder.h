@@ -66,7 +66,6 @@ public:
 
     //! @name Accessors
     //@{
-    int GetCurrentThread() const;
     unsigned int GetNbrShortRequests() const;
     unsigned int GetNbrLongRequests() const;
     unsigned int GetNbrTreatedRequests() const;

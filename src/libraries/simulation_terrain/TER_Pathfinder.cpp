@@ -159,18 +159,6 @@ boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned in
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_Pathfinder::GetCurrentThread
-// Created: AGE 2005-02-28
-// -----------------------------------------------------------------------------
-int TER_Pathfinder::GetCurrentThread() const
-{
-    for( unsigned int nIndex = 0; nIndex < threads_.size(); ++nIndex )
-        if( threads_[ nIndex ]->IsCurrent() )
-            return nIndex;
-    return -1;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_Pathfinder::CleanPathAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------

@@ -61,6 +61,8 @@ private:
 private:
     MT_Profiler profiler_;
     std::size_t id_;
+    // Identify the current computation, for logging purpose
+    const std::size_t computerId_;
     TER_Path_ABC::E_State nState_;
     bool bJobCanceled_;
     T_PathSectionVector pathSections_;

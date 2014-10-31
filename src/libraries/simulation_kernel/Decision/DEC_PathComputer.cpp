@@ -19,14 +19,22 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Line.h"
 #include "protocol/Protocol.h"
-#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_PathSection.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/make_shared.hpp>
 
+namespace
+{
+
+std::size_t computersId_ = 1;
+
+}  // namespace
+
 DEC_PathComputer::DEC_PathComputer( std::size_t id )
     : id_( id )
+    , computerId_( computersId_++ )
     , nState_( TER_Path_ABC::eComputing )
     , bJobCanceled_( false )
     , bSectionJustStarted_( false )
@@ -55,7 +63,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
     if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this << " computation begin" <<
-                            ", Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
+                            ", Request : " << computerId_ <<
                             ", Entity    : " << id_ );
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
@@ -79,7 +87,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
         if( ! resultList_.empty() )
             stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this <<
-                            ", Thread : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
+                            ", Thread : " << computerId_ <<
                             ", Time : " << rComputationTime <<
                             ", State : " << GetStateAsString() <<
                             ", Result : " << stream.str() );
