@@ -131,6 +131,7 @@ void TimelineWebView::Connect()
     connect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
     connect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
     connect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
+    connect( server_.get(), SIGNAL( TriggeredEvents( const timeline::Events& ) ), this, SLOT( OnTriggeredEvents( const timeline::Events& ) ) );
 
     server_->Start();
 }
@@ -284,6 +285,15 @@ void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
     gui::Event& gamingEvent = GetOrCreateEvent( event );
     gamingEvent.Activate( controllers_.eventActions_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnTriggeredEvents
+// Created: JSR 2014-10-31
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnTriggeredEvents( const timeline::Events& /*events*/ )
+{
+    // TODO
 }
 
 // -----------------------------------------------------------------------------

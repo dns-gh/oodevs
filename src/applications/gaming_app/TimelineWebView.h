@@ -132,6 +132,7 @@ private slots:
 
     void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
     void OnActivatedEvent( const timeline::Event& event );
+    void OnTriggeredEvents( const timeline::Events& events );
     void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time );
     void OnKeyUp( int key );
 

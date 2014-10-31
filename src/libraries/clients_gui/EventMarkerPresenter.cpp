@@ -180,5 +180,6 @@ void EventMarkerPresenter::CommitTo( timeline::Event& event ) const
     std::ostringstream output;
     bpt::write_json( output, rpy );
     event.action.payload = output.str();
+    event.action.apply = true;
     event.action.target = "marker://" + uuid_;
 }

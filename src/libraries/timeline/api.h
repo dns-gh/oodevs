@@ -149,6 +149,7 @@ signals:
     void SavedEvents( const std::string& events, const timeline::Error& error );
     void SelectedEvent( boost::shared_ptr< timeline::Event > event );
     void ActivatedEvent( const timeline::Event& event );
+    void TriggeredEvents( const timeline::Events& events );
     void ContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time );
     void KeyDown( int key );
     void KeyPress( int key );
