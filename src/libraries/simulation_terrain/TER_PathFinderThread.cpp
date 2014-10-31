@@ -9,7 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PathFinderThread.h"
-#include "TER_PathFindRequest_ABC.h"
+#include "TER_PathfindRequest.h"
 #include "TER_DynamicData.h"
 #include "TER_StaticData.h"
 #include "MT_Tools/MT_Profiler.h"
@@ -42,11 +42,11 @@ namespace
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
 TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
-                                            tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
+                                            tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathfindRequest > >& queue,
                                             unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
                                             const tools::Path& dump,
                                             const std::string& filter )
-    : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
+    : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathfindRequest > >( queue )
     , useSameThread_( useSameThread )
     , dump_          ( dump )
     , filter_        ( ParseFilter( filter ) )
@@ -198,7 +198,7 @@ namespace
 // Name: TER_PathFinderThread::Process
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest )
+void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathfindRequest >& pRequest )
 {
     try
     {
@@ -226,7 +226,7 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
 // Name: TER_PathFinderThread::ProcessInSimulationThread
 // Created: JSR 2010-06-16
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest )
+void TER_PathFinderThread::ProcessInSimulationThread( const boost::shared_ptr< TER_PathfindRequest >& pRequest )
 {
     if( !useSameThread_ )
         throw MASA_EXCEPTION( "Pathfind : Process in same thread than simulation not expected." );

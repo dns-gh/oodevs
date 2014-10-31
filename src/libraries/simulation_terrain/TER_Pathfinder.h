@@ -23,7 +23,7 @@ class TER_DynamicData;
 class TER_PathfindRequest;
 class TER_PathComputer_ABC;
 class TER_PathFinderThread;
-class TER_PathFindRequest_ABC;
+class TER_PathfindRequest;
 class TER_StaticData;
 
 namespace sword
@@ -41,7 +41,7 @@ typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
 // =============================================================================
 // Created: NLD 2003-08-14
 // =============================================================================
-class TER_Pathfinder : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
+class TER_Pathfinder : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathfindRequest > >
                            , private boost::noncopyable
 {
 public:
@@ -82,8 +82,8 @@ private:
 private:
     //! @name Tools
     //@{
-    virtual boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage();
-    boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage( unsigned int nThread );
+    virtual boost::shared_ptr< TER_PathfindRequest > GetMessage();
+    boost::shared_ptr< TER_PathfindRequest > GetMessage( unsigned int nThread );
     T_Requests& GetRequests();
     //@}
 

@@ -28,7 +28,7 @@ namespace spatialcontainer
 typedef boost::shared_ptr< spatialcontainer::RetractationHandle > RetractationPtr;
 
 class TerrainPathfinder;
-class TER_PathFindRequest_ABC;
+class TER_PathfindRequest;
 class TER_DynamicData;
 typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
 class TER_StaticData;
@@ -36,13 +36,13 @@ class TER_StaticData;
 // =============================================================================
 // Created: AGE 2005-02-23
 // =============================================================================
-class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >, private boost::noncopyable
+class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathfindRequest > >, private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              TER_PathFinderThread( const TER_StaticData& staticData,
-                                   tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
+                                   tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathfindRequest > >& queue,
                                    unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
                                    const tools::Path& dump, const std::string& filter );
     virtual ~TER_PathFinderThread();
@@ -56,13 +56,13 @@ public:
 
     //! @name Operations
     //@{
-    void ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
+    void ProcessInSimulationThread( const boost::shared_ptr< TER_PathfindRequest >& pRequest );
     //@}
 
 private:
     //! @name Tools
     //@{
-    virtual void Process           ( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
+    virtual void Process           ( const boost::shared_ptr< TER_PathfindRequest >& pRequest );
             void ProcessDynamicData();
     //@}
 

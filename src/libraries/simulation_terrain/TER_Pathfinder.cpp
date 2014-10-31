@@ -105,7 +105,7 @@ unsigned int TER_Pathfinder::GetNbrTreatedRequests() const
 // Name: TER_Pathfinder::GetMessage
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_PathFindRequest_ABC > TER_Pathfinder::GetMessage()
+boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage()
 {
     unsigned int nIndex = 0;
     for( ; nIndex < threads_.size(); ++nIndex )
@@ -137,9 +137,9 @@ TER_Pathfinder::T_Requests& TER_Pathfinder::GetRequests()
 // Name: TER_Pathfinder::GetMessage
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_PathFindRequest_ABC > TER_Pathfinder::GetMessage( unsigned int nThread )
+boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned int nThread )
 {
-    boost::shared_ptr< TER_PathFindRequest_ABC > pRequest;
+    boost::shared_ptr< TER_PathfindRequest > pRequest;
     boost::mutex::scoped_lock locker( mutex_ );
     if( ( nThread % 2 ) )
     {
@@ -208,7 +208,7 @@ void TER_Pathfinder::UpdateInSimulationThread()
         while( ! shortRequests_.empty() || ! longRequests_.empty() )
         {
             T_Requests& requests = GetRequests();
-            boost::shared_ptr< TER_PathFindRequest_ABC > pRequest = requests.front();
+            boost::shared_ptr< TER_PathfindRequest > pRequest = requests.front();
             requests.pop_front();
             threads_[ 0 ]->ProcessInSimulationThread( pRequest );
             ++treatedRequests_;

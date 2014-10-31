@@ -10,7 +10,6 @@
 #ifndef SIMULATION_TERRAIN_PATHFINDREQUEST_H
 #define SIMULATION_TERRAIN_PATHFINDREQUEST_H
 
-#include "TER_PathFindRequest_ABC.h"
 #include <protocol/Simulation.h>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
@@ -22,6 +21,7 @@ namespace sword
 }
 
 class TER_PathComputer_ABC;
+class TER_Pathfinder_ABC;
 class TER_Pathfinder;
 
 // TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
@@ -29,8 +29,7 @@ class TER_Pathfinder;
 // the deferred cleanup logic is only required by the threaded implementation
 // of the path finder and has nothing to do in TER_Path_ABC. We need both a
 // request and an executor class.
-class TER_PathfindRequest: public TER_PathFindRequest_ABC,
-                           private boost::noncopyable
+class TER_PathfindRequest: private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IgnoreDynamicObjects() const;
-    virtual void FindPath( TER_Pathfinder_ABC& pathfind );
+    bool IgnoreDynamicObjects() const;
+    void FindPath( TER_Pathfinder_ABC& pathfind );
     //@}
 
 private:
