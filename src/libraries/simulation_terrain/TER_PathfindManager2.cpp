@@ -10,8 +10,9 @@
 #include "simulation_terrain_pch.h"
 #include "TER_PathfindManager2.h"
 #include "TER_PathComputer_ABC.h"
-#include "TER_PathFindManager.h"
+#include "TER_PathfindManager2.h"
 #include "TER_PathFindRequest.h"
+#include "TER_PathFinderThread.h"
 #include "TER_World.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/make_shared.hpp>
@@ -20,11 +21,12 @@
 // Name: TER_PathfindManager2 constructor
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-TER_PathfindManager2::TER_PathfindManager2( unsigned int threads,
-        double distanceThreshold, double maxAvoidanceDistance,
+TER_PathfindManager2::TER_PathfindManager2( const boost::shared_ptr< TER_StaticData >& staticData,
+        unsigned int threads, double distanceThreshold, double maxAvoidanceDistance,
         unsigned int maxEndConnections, unsigned int maxComputationDuration,
         const tools::Path& pathfindDir, const std::string& pathfindFilter )
-    : nMaxComputationDuration_( maxComputationDuration )
+    : staticData_( staticData )
+    , nMaxComputationDuration_( maxComputationDuration )
     , rDistanceThreshold_     ( distanceThreshold )
     , treatedRequests_        ( 0 )
     , pathfindTime_           ( 0 )
@@ -37,10 +39,11 @@ TER_PathfindManager2::TER_PathfindManager2( unsigned int threads,
     if( threads == 0 )
         threads = 1;
     for( unsigned i = 0; i < threads; ++i )
-        pathFindThreads_.push_back(
-            &TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread(
-                *this, maxEndConnections, maxAvoidanceDistance, bUseInSameThread_,
-                pathfindDir, pathfindFilter ) );
+    {
+        threads_.push_back( new TER_PathFinderThread( *staticData_, *this,
+            maxEndConnections, maxAvoidanceDistance, bUseInSameThread_,
+            pathfindDir, pathfindFilter ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +52,8 @@ TER_PathfindManager2::TER_PathfindManager2( unsigned int threads,
 // -----------------------------------------------------------------------------
 TER_PathfindManager2::~TER_PathfindManager2()
 {
+    for( auto it = threads_.begin(); it != threads_.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,8 +108,8 @@ unsigned int TER_PathfindManager2::GetNbrTreatedRequests() const
 boost::shared_ptr< TER_PathFindRequest_ABC > TER_PathfindManager2::GetMessage()
 {
     unsigned int nIndex = 0;
-    for( ; nIndex < pathFindThreads_.size(); ++nIndex )
-        if( pathFindThreads_[ nIndex ]->IsCurrent() )
+    for( ; nIndex < threads_.size(); ++nIndex )
+        if( threads_[ nIndex ]->IsCurrent() )
             break;
     return GetMessage( nIndex );
 }
@@ -122,7 +127,7 @@ TER_PathfindManager2::T_Requests& TER_PathfindManager2::GetRequests()
 {
     const bool shortHavePriority =
            ( ! shortRequests_.empty() )
-           && ( pathFindThreads_.size() == 1 || shortRequests_.size() > maximumShortRequest );
+           && ( threads_.size() == 1 || shortRequests_.size() > maximumShortRequest );
     if( shortHavePriority || longRequests_.empty() )
         return shortRequests_;
     return longRequests_;
@@ -159,8 +164,8 @@ boost::shared_ptr< TER_PathFindRequest_ABC > TER_PathfindManager2::GetMessage( u
 // -----------------------------------------------------------------------------
 int TER_PathfindManager2::GetCurrentThread() const
 {
-    for( unsigned int nIndex = 0; nIndex < pathFindThreads_.size(); ++nIndex )
-        if( pathFindThreads_[ nIndex ]->IsCurrent() )
+    for( unsigned int nIndex = 0; nIndex < threads_.size(); ++nIndex )
+        if( threads_[ nIndex ]->IsCurrent() )
             return nIndex;
     return -1;
 }
@@ -205,7 +210,7 @@ void TER_PathfindManager2::UpdateInSimulationThread()
             T_Requests& requests = GetRequests();
             boost::shared_ptr< TER_PathFindRequest_ABC > pRequest = requests.front();
             requests.pop_front();
-            pathFindThreads_[ 0 ]->ProcessInSimulationThread( pRequest );
+            threads_[ 0 ]->ProcessInSimulationThread( pRequest );
             ++treatedRequests_;
         }
 }
@@ -217,4 +222,24 @@ void TER_PathfindManager2::UpdateInSimulationThread()
 unsigned int TER_PathfindManager2::GetMaxComputationDuration() const
 {
     return nMaxComputationDuration_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathfindManager2::AddDynamicData
+// Created: AGE 2005-10-07
+// -----------------------------------------------------------------------------
+void TER_PathfindManager2::AddDynamicData( const DynamicDataPtr& data )
+{
+    for( auto it = threads_.begin(); it != threads_.end(); ++it )
+        (*it)->AddDynamicDataToRegister( data );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathfindManager2::RemoveDynamicData
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+void TER_PathfindManager2::RemoveDynamicData( const DynamicDataPtr& data )
+{
+    for( auto it = threads_.begin(); it != threads_.end(); ++it )
+        (*it)->AddDynamicDataToUnregister( data );
 }

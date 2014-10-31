@@ -15,13 +15,16 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
 #pragma warning( pop )
+#include <boost/shared_ptr.hpp>
 #include <deque>
 #include <vector>
 
+class TER_DynamicData;
 class TER_PathfindRequest;
 class TER_PathComputer_ABC;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
+class TER_StaticData;
 
 namespace sword
 {
@@ -33,6 +36,8 @@ namespace tools
     class Path;
 }
 
+typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
+
 // =============================================================================
 // Created: NLD 2003-08-14
 // =============================================================================
@@ -40,7 +45,8 @@ class TER_PathfindManager2 : private tools::thread::MessageQueue_ABC< boost::sha
                            , private boost::noncopyable
 {
 public:
-             TER_PathfindManager2( unsigned int threads, double distanceThreshold,
+             TER_PathfindManager2( const boost::shared_ptr< TER_StaticData >& staticData,
+                    unsigned int threads, double distanceThreshold,
                     double maxAvoidanceDistance, unsigned int maxEndConnections,
                     unsigned int maxComputationDuration,
                     const tools::Path& pathfindDir, const std::string& pathfindFilter );
@@ -53,6 +59,9 @@ public:
     void UpdateInSimulationThread();
     void StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& pPath, const sword::Pathfind& pathfind );
     void CleanPathAfterComputation( double duration );
+
+    void AddDynamicData   ( const DynamicDataPtr& data );
+    void RemoveDynamicData( const DynamicDataPtr& data );
     //@}
 
     //! @name Accessors
@@ -67,7 +76,6 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< TER_PathFinderThread* > T_PathFindThreads;
     typedef std::deque< boost::shared_ptr< TER_PathfindRequest > > T_Requests;
     //@}
 
@@ -80,8 +88,8 @@ private:
     //@}
 
 private:
-    //! @name Member data
-    //@{
+    const boost::shared_ptr< TER_StaticData > staticData_;
+
     mutable boost::mutex mutex_;
     boost::condition condition_;
     T_Requests shortRequests_;
@@ -89,12 +97,11 @@ private:
     double rDistanceThreshold_;
     unsigned int nMaxComputationDuration_;
     unsigned int treatedRequests_;
-    T_PathFindThreads pathFindThreads_;
+    std::vector< TER_PathFinderThread* > threads_;
     boost::mutex cleanAndDestroyMutex_;
     std::vector< double > toCleanup_;
     bool bUseInSameThread_;
     double pathfindTime_;
-    //@}
 };
 
 #endif // SIMULATION_TERRAIN_PATHFIND_MANAGER

@@ -37,9 +37,9 @@ class TER_ObjectManager;
 class TER_PopulationManager;
 class TER_CoordinateManager;
 class TER_StaticData;
-class TER_PathFindManager;
 class TER_Analyzer;
 class TER_LimitDataManager;
+class TER_PathfindManager2;
 class MT_Rect;
 class MT_Vector2D;
 
@@ -100,12 +100,14 @@ public:
 
     //! @name Accessors
     //@{
-    TER_PathFindManager&   GetPathFindManager  () const;
     TER_Analyzer&          GetAnalyzer() const;
     TER_AgentManager&      GetAgentManager     () const;
     TER_ObjectManager&     GetObjectManager    () const;
     TER_PopulationManager& GetPopulationManager() const;
     TER_LimitDataManager& GetLimitManager() const;
+    boost::shared_ptr< TER_StaticData > GetStaticGraph() const;
+    void SetPathfinder( const boost::shared_ptr< TER_PathfindManager2 >& pathfinder );
+    TER_PathfindManager2& GetPathfinder() const;
     //@}
 
 private:
@@ -114,11 +116,11 @@ private:
     TER_AgentManager*      pAgentManager_;
     TER_ObjectManager*     pObjectManager_;
     TER_CoordinateManager* pCoordinateManager_;
-    TER_StaticData*        pGraphManager_;
-    TER_PathFindManager*   pPathfindManager_;
+    boost::shared_ptr< TER_StaticData> staticGraph_;
     TER_PopulationManager* pPopulationManager_;
     std::unique_ptr< TER_Analyzer > analyzer_;
     std::unique_ptr< TER_LimitDataManager > limitManager_;
+    boost::shared_ptr< TER_PathfindManager2 > pathfinder_;
     //@}
 };
 

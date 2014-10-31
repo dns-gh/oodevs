@@ -149,10 +149,10 @@ boost::shared_ptr< TER_PathfindManager2 > CreatePathfindManager( const MIL_Confi
     DEC_Population_PathClass::Initialize( x, dangerousObjects );
 
     // The shared_ptr allows a destructor without having to write a class
-    return boost::shared_ptr< TER_PathfindManager2 >( new TER_PathfindManager2(
-        threads, distanceThreshold, maxAvoidanceDist, maxEndConnections,
-        maxComputationDuration, config.GetPathfindDir(),
-        config.GetPathfindFilter() ),
+    const auto pathfinder = boost::shared_ptr< TER_PathfindManager2 >( new TER_PathfindManager2(
+        TER_World::GetWorld().GetStaticGraph(), threads, distanceThreshold,
+        maxAvoidanceDist, maxEndConnections, maxComputationDuration,
+        config.GetPathfindDir(), config.GetPathfindFilter() ),
         []( TER_PathfindManager2* m )
         {
             delete m;
@@ -160,6 +160,8 @@ boost::shared_ptr< TER_PathfindManager2 > CreatePathfindManager( const MIL_Confi
             DEC_Agent_PathClass::Terminate();
             DEC_PathType::Terminate();
         });
+    TER_World::GetWorld().SetPathfinder( pathfinder );
+    return pathfinder;
 }
 
 }  // namespace

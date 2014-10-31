@@ -9,7 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_DynamicData.h"
-#include "TER_PathFindManager.h"
+#include "TER_PathfindManager2.h"
 #include "TER_World.h"
 #include <spatialcontainer/TerrainData.h>
 #include <boost/make_shared.hpp>
@@ -63,7 +63,7 @@ DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
     // This is ugly but let us run tests creating TER_LimitData
     // without having to instanciante all the TER_World machinery.
     auto w = TER_World::GetWorldPtr();
-    TER_PathFindManager* manager = w ? &w->GetPathFindManager() : 0;
+    auto* manager = w ? &w->GetPathfinder() : 0;
     auto data = boost::make_shared< DynamicData >( points, type );
     if( !manager )
         return data;
