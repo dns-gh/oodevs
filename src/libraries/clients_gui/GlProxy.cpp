@@ -499,16 +499,6 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::DrawApp6Symbol
-// Created: AGE 2008-05-07
-// -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
-{
-    if( view_ )
-        view_->DrawApp6Symbol( symbol, style, where, factor, thickness, direction );
-}
-
-// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawApp6SymbolFixedSize
 // Created: MMC 2013-02-05
 // -----------------------------------------------------------------------------
@@ -542,10 +532,10 @@ void GlProxy::DrawUnitSymbolAndTail( const std::string& symbol, const std::strin
 // Name: GlProxy::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
+void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /* = -1.f*/, float factor /* = 1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( view_ )
-        view_->DrawIcon( xpm, where, size, unit );
+        view_->DrawIcon( xpm, where, size, factor, unit );
 }
 
 // -----------------------------------------------------------------------------

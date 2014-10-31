@@ -118,7 +118,7 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewpor
         glPushAttrib( GL_CURRENT_BIT );
         glColor4f( 1, 1, 1, tools.GetCurrentAlpha() );
             tools.DrawIcon( obstacleActivated_ ? xpm_activated : xpm_not_activated
-                          , offsetPoint, 150.f, hasSinglePointPos_? gui::GLView_ABC::pixels : gui::GLView_ABC::meters );
+                          , offsetPoint, 150.f, 1.f, hasSinglePointPos_? gui::GLView_ABC::pixels : gui::GLView_ABC::meters );
         glPopAttrib();
     }
 }

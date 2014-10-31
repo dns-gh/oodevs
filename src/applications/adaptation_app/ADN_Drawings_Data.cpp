@@ -77,8 +77,7 @@ namespace
         virtual void Print            ( const std::string&, const geometry::Point2f&, const QFont& ) const {}
         virtual void DrawInfrastructureSymbol( const std::string&, const geometry::Point2f&, float, float ) const {}
         virtual void DrawApp6Symbol   ( const std::string&, const geometry::Point2f&, float, float, unsigned int ) const {}
-        virtual void DrawApp6Symbol   ( const std::string&, const std::string&, const geometry::Point2f&, float, float, unsigned int ) const {}
-        virtual void DrawIcon         ( const char**, const geometry::Point2f&, float, E_Unit ) const {}
+        virtual void DrawIcon         ( const char**, const geometry::Point2f&, float, float, E_Unit ) const {}
         virtual void DrawImage        ( const QImage&, const geometry::Point2f& ) const {}
         virtual void DrawCell         ( const geometry::Point2f& ) const {}
         virtual void DrawSvg          ( const std::string&, const geometry::Point2f&, float, bool ) const {}

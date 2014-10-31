@@ -153,7 +153,7 @@ float Gl3dWidget::Pixels( const Point2f& at ) const
 float Gl3dWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
     if( !bVariableSize )
-        return GetOptions().Get( "SymbolSize" ).To< float >();
+        return GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
     return 1.f;
 }
 
@@ -515,15 +515,49 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawApp6Symbol
-// Created: AGE 2008-05-07
+// Name: GL3DWidget::DrawInfrastructureSymbol
+// Created: LGY 2013-06-12
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/, unsigned int direction /*= 0*/ ) const
+void Gl3dWidget::DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float /*thickness*/ ) const
 {
-    if( factor < 0 )
-        factor = GetAdaptiveZoomFactor( false );
-    else
-        factor *= GetAdaptiveZoomFactor( false );
+    DrawApp6Symbol( symbol, where, factor, 1.f, 0u );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::DrawApp6SymbolFixedSize
+// Created: LGY 2013-03-12
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
+{
+    DrawApp6Symbol( symbol, where, factor, 1.f, direction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::DrawUnitSymbol
+// Created: JSR 2013-04-09
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& /*moveSymbol*/, const std::string& /*staticSymbol*/, const std::string& level, bool /*isMoving*/, const geometry::Point2f& where, float factor, unsigned int /*direction*/, float /*width*/, float /*depth*/ ) const
+{
+    DrawApp6Symbol( symbol, where, factor, 1.f, 0 );
+    DrawApp6Symbol( level, where, factor, 1.f, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawUnitSymbolAndTail
+// Created: LDC 2013-04-26
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawUnitSymbolAndTail( const std::string&, const std::string&, const T_PointVector& ) const
+{
+    // NOT implemented
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawApp6Symbol
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/, unsigned int direction /* = 0 */ ) const
+{
+    factor = std::abs( factor * GetAdaptiveZoomFactor( false ) );
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
@@ -540,55 +574,9 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
             glScalef( scaleRatio, - scaleRatio, scaleRatio );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
             const Rectangle2f bbox( -10000, -10000, 10000, 10000 ); // $$$$ AGE 2006-09-11:
-            Base().PrintApp6( symbol, style, bbox, 640, 480 );
+            Base().PrintApp6( symbol, DefaultStyle(), bbox, 640, 480 );
         glPopAttrib();
     glPopMatrix();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::DrawInfrastructureSymbol
-// Created: LGY 2013-06-12
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float /*thickness*/ ) const
-{
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, 1.f, 0u );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::DrawApp6SymbolFixedSize
-// Created: LGY 2013-03-12
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
-{
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, 1.f, direction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::DrawUnitSymbol
-// Created: JSR 2013-04-09
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& /*moveSymbol*/, const std::string& /*staticSymbol*/, const std::string& /*level*/, bool /*isMoving*/, const geometry::Point2f& where, float factor, unsigned int /*direction*/, float /*width*/, float /*depth*/ ) const
-{
-    DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawUnitSymbolAndTail
-// Created: LDC 2013-04-26
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawUnitSymbolAndTail( const std::string&, const std::string&, const T_PointVector& ) const
-{
-    // NOT implemented
-}
-
-// -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawApp6Symbol
-// Created: AGE 2006-03-28
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /* = 0 */ ) const
-{
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------
@@ -610,7 +598,7 @@ void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kern
 // Name: Gl3dWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawIcon( const char** /*xpm*/, const Point2f& /*where*/, float /*size*/ /* = -1.f*/, E_Unit /*unit*/ /* = meters*/ ) const
+void Gl3dWidget::DrawIcon( const char** /*xpm*/, const Point2f& /*where*/, float /*size*/ /* = -1.f*/, float /*factor*/, E_Unit /*unit*/ /* = meters*/ ) const
 {
     // $$$$ AGE 2006-05-16: ca va dégager de toute facon...
 }

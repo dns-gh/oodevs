@@ -19,6 +19,7 @@
 #include "ProfilesModel.h"
 #include "StaticModel.h"
 
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_gui/Tools.h"
@@ -149,8 +150,7 @@ void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     if( viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        tools.DrawApp6SymbolFixedSize( symbol_, where, -1.f, 0 );
-        tools.DrawApp6SymbolFixedSize( GetLevelSymbol(), where, -1.f, 0 );
+        tools.DrawUnitSymbol( symbol_, "", "", GetLevelSymbol(), false, where, -tools.GetOptions().GetRatio( *this ), 0, 0, 0 );
     }
 }
 

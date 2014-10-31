@@ -12,6 +12,7 @@
 #include "Attributes.h"
 #include "Diplomacies.h"
 #include "equipments.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -82,14 +83,11 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     }
     if( viewport.IsHotpointVisible() && !IsAnAggregatedSubordinate() )
     {
-        bool isMoving = ( Get< Attributes >().nCurrentPosture_ <= eUnitPosture_PostureArret );
-        float depth = isMoving? type_.GetLength( !Get< Attributes >().bAmbianceSafety_ ) : type_.GetDepth();
-        float width = isMoving? 0 : type_.GetWidth();
-        unsigned int direction = isMoving ? direction_ : sensorsDirection_;
-        tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, -1.f, direction, width, depth );
-        bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
-        if( app6 )
-            tools.DrawApp6SymbolFixedSize( level_, where, -1.f, 0 );
+        const bool isMoving = ( Get< Attributes >().nCurrentPosture_ <= eUnitPosture_PostureArret );
+        const float depth = isMoving? type_.GetLength( !Get< Attributes >().bAmbianceSafety_ ) : type_.GetDepth();
+        const float width = isMoving? 0 : type_.GetWidth();
+        const unsigned int direction = isMoving ? direction_ : sensorsDirection_;
+        tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, -tools.GetOptions().GetRatio( *this ), direction, width, depth );
     }
 }
 

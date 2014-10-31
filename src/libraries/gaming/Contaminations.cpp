@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Contaminations.h"
 #include "Tools.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -115,5 +116,5 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 void Contaminations::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     if( contaminated_ && viewport.IsHotpointVisible() )
-        tools.DrawIcon( xpm_nbc, where, 150.f, gui::GLView_ABC::pixels );
+        tools.DrawIcon( xpm_nbc, where, 150.f, tools.GetOptions().GetRatio( entity_ ), gui::GLView_ABC::pixels );
 }

@@ -340,20 +340,23 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
     || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ || bEmptyGasTank )
     || ! viewport.IsHotpointVisible() || !tools.GetOptions().ShouldDisplay( "UnitDetails" ) )
         return;
+
+    const float size = 150.f;
+    const float factor = tools.GetOptions().GetRatio( entity_ );
     glPushAttrib( GL_CURRENT_BIT );
     glColor4f( 1, 1, 1, tools.GetCurrentAlpha() );
     if( bDead_ )
-        tools.DrawIcon( xpm_skull, where, 150.f, gui::GLView_ABC::pixels );
+        tools.DrawIcon( xpm_skull, where, size, factor, gui::GLView_ABC::pixels );
     if( bRadioEmitterSilence_ )
-        tools.DrawIcon( xpm_silence_radio_outgoing, where, 150.f, gui::GLView_ABC::pixels );
+        tools.DrawIcon( xpm_silence_radio_outgoing, where, size, factor, gui::GLView_ABC::pixels );
     if( bRadarEnabled_ )
-        tools.DrawIcon( xpm_radars_on, where, 150.f, gui::GLView_ABC::pixels );
+        tools.DrawIcon( xpm_radars_on, where, size, factor, gui::GLView_ABC::pixels );
     if( bCommJammed_ )
-        tools.DrawIcon( xpm_brouillage, where, 150.f, gui::GLView_ABC::pixels );
+        tools.DrawIcon( xpm_brouillage, where, size, factor, gui::GLView_ABC::pixels );
     if( bUnderground_ )
-        tools.DrawIcon( xpm_underground, where, 150.f, gui::GLView_ABC::pixels );
+        tools.DrawIcon( xpm_underground, where, size, factor, gui::GLView_ABC::pixels );
     if( bEmptyGasTank )
-        tools.DrawIcon( xpm_gas, where, 150.f, gui::GLView_ABC::pixels );
+        tools.DrawIcon( xpm_gas, where, size, factor, gui::GLView_ABC::pixels );
     glPopAttrib();
 }
 

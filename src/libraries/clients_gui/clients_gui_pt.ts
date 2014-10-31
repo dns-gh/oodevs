@@ -1725,7 +1725,11 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Refresh rate</source>
+        <source>Refresh Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol Sizes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2020,6 +2024,17 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>Equipped:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::SymbolSizePanel</name>
+    <message>
+        <source>Hierarchical levels relative sizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Headquarters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
