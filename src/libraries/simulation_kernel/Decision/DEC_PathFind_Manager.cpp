@@ -15,11 +15,8 @@
 #include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "MT_Tools/MT_FormatString.h"
-#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/make_shared.hpp>
-#include <boost/range/algorithm_ext/erase.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor
@@ -62,7 +59,6 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 // -----------------------------------------------------------------------------
 void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
 {
-    MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ) );
     auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, pathfind );
     boost::mutex::scoped_lock locker( mutex_ );
     if( path->GetLength() > rDistanceThreshold_ )
