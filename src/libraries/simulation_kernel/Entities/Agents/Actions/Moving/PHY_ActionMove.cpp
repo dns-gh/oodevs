@@ -36,7 +36,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "propagation/Extractor_ABC.h"
-#include "simulation_terrain/TER_PathfindManager2.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>

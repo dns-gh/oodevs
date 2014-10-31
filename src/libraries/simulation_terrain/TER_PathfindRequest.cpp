@@ -11,7 +11,7 @@
 #include "TER_PathfindRequest.h"
 #include "TER_PathComputer_ABC.h"
 #include "TER_PathFinder_ABC.h"
-#include "TER_PathfindManager2.h"
+#include "TER_Pathfinder.h"
 #include "TER_World.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_Logger.h"
@@ -20,7 +20,7 @@
 #include <tools/thread/Handler_ABC.h>
 #include <boost/foreach.hpp>
 
-TER_PathfindRequest::TER_PathfindRequest( TER_PathfindManager2& manager,
+TER_PathfindRequest::TER_PathfindRequest( TER_Pathfinder& manager,
         const boost::shared_ptr< TER_PathComputer_ABC >& computer,
         const sword::Pathfind& pathfind )
     : manager_( manager )

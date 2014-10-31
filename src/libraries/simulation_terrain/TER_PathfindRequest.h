@@ -22,7 +22,7 @@ namespace sword
 }
 
 class TER_PathComputer_ABC;
-class TER_PathfindManager2;
+class TER_Pathfinder;
 
 // TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
 // TER_PathFinderThread. While the cleanup code itself belongs to TER_Path_ABC,
@@ -35,7 +35,7 @@ class TER_PathfindRequest: public TER_PathFindRequest_ABC,
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_PathfindRequest( TER_PathfindManager2& manager,
+             TER_PathfindRequest( TER_Pathfinder& manager,
                 const boost::shared_ptr< TER_PathComputer_ABC >& computer,
                 const sword::Pathfind& pathfind );
     virtual ~TER_PathfindRequest();
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TER_PathfindManager2& manager_;
+    TER_Pathfinder& manager_;
     boost::weak_ptr< TER_PathComputer_ABC > computer_;
     const sword::Pathfind pathfind_;
     //@}

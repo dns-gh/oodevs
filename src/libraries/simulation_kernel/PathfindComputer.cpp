@@ -26,7 +26,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_PathSection.h"
-#include "simulation_terrain/TER_PathfindManager2.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessageParameters.h"
@@ -40,7 +40,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PathfindComputer )
 // Name: PathfindComputer constructor
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-PathfindComputer::PathfindComputer( TER_PathfindManager2& manager, const TER_World& world )
+PathfindComputer::PathfindComputer( TER_Pathfinder& manager, const TER_World& world )
     : manager_( manager )
     , world_( world )
     , ids_( 0 )

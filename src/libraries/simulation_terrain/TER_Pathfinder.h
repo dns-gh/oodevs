@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef SIMULATION_TERRAIN_PATHFIND_MANAGER
-#define SIMULATION_TERRAIN_PATHFIND_MANAGER
+#ifndef SIMULATION_TERRAIN_PATHFINDER
+#define SIMULATION_TERRAIN_PATHFINDER
 
 #pragma warning( push, 0 )
 #include <tools/thread/MessageQueue_ABC.h>
@@ -41,16 +41,16 @@ typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
 // =============================================================================
 // Created: NLD 2003-08-14
 // =============================================================================
-class TER_PathfindManager2 : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
+class TER_Pathfinder : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
                            , private boost::noncopyable
 {
 public:
-             TER_PathfindManager2( const boost::shared_ptr< TER_StaticData >& staticData,
+             TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& staticData,
                     unsigned int threads, double distanceThreshold,
                     double maxAvoidanceDistance, unsigned int maxEndConnections,
                     unsigned int maxComputationDuration,
                     const tools::Path& pathfindDir, const std::string& pathfindFilter );
-    virtual ~TER_PathfindManager2();
+    virtual ~TER_Pathfinder();
 
     //! @name Main
     //@{
@@ -104,4 +104,4 @@ private:
     double pathfindTime_;
 };
 
-#endif // SIMULATION_TERRAIN_PATHFIND_MANAGER
+#endif // SIMULATION_TERRAIN_PATHFINDER

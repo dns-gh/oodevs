@@ -88,7 +88,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "Tools/MIL_Tools.h"
-#include "simulation_terrain/TER_PathfindManager2.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>

@@ -287,12 +287,12 @@ boost::shared_ptr< TER_World > CreateWorld( const std::string& exercise )
     return boost::make_shared< TER_World >( *config );
 }
 
-void TER_World::SetPathfinder( const boost::shared_ptr< TER_PathfindManager2 >& pathfinder )
+void TER_World::SetPathfinder( const boost::shared_ptr< TER_Pathfinder >& pathfinder )
 {
     pathfinder_ = pathfinder;
 }
  
-TER_PathfindManager2& TER_World::GetPathfinder() const
+TER_Pathfinder& TER_World::GetPathfinder() const
 {
     return *pathfinder_;
 }

@@ -34,7 +34,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
-#include "simulation_terrain/TER_PathfindManager2.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_PopulationFlowManager.h"

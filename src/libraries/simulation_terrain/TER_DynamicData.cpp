@@ -9,7 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_DynamicData.h"
-#include "TER_PathfindManager2.h"
+#include "TER_Pathfinder.h"
 #include "TER_World.h"
 #include <spatialcontainer/TerrainData.h>
 #include <boost/make_shared.hpp>

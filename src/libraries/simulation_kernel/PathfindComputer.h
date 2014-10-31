@@ -25,7 +25,7 @@ class DEC_PathComputer;
 class MIL_Population;
 class PathRequest;
 class PHY_ComposanteTypePion;
-class TER_PathfindManager2;
+class TER_Pathfinder;
 
 // =============================================================================
 /** @class  PathfindComputer
@@ -38,7 +38,7 @@ class PathfindComputer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PathfindComputer( TER_PathfindManager2& manager, const TER_World& world );
+             PathfindComputer( TER_Pathfinder& manager, const TER_World& world );
     virtual ~PathfindComputer();
     //@}
 
@@ -87,7 +87,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TER_PathfindManager2& manager_;
+    TER_Pathfinder& manager_;
     const TER_World& world_;
     uint32_t ids_;
     T_Results results_;

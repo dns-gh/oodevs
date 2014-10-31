@@ -37,7 +37,7 @@
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
-#include "simulation_terrain/TER_PathfindManager2.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include <geometry/Types.h>
 #include <boost/smart_ptr/make_shared.hpp>
 

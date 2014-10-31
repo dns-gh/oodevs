@@ -30,7 +30,7 @@
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_IDManager.h"
 #include "Urban/MIL_UrbanCache.h"
-#include "simulation_terrain/TER_PathfindManager2.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_World.h"
 #include "tools/Codec.h"
 #include "tools/ExerciseSettings.h"
@@ -114,7 +114,7 @@ PHY_MeteoDataManager* CreateMeteoManager(
             world, *xis, config.GetDetectionFile(), now, tickDuration );
 }
 
-boost::shared_ptr< TER_PathfindManager2 > CreatePathfindManager( const MIL_Config& config,
+boost::shared_ptr< TER_Pathfinder > CreatePathfindManager( const MIL_Config& config,
        const MIL_ObjectFactory& objectFactory )
 {
     const auto maxAvoidanceDist = objectFactory.GetMaxAvoidanceDistance();
@@ -149,11 +149,11 @@ boost::shared_ptr< TER_PathfindManager2 > CreatePathfindManager( const MIL_Confi
     DEC_Population_PathClass::Initialize( x, dangerousObjects );
 
     // The shared_ptr allows a destructor without having to write a class
-    const auto pathfinder = boost::shared_ptr< TER_PathfindManager2 >( new TER_PathfindManager2(
+    const auto pathfinder = boost::shared_ptr< TER_Pathfinder >( new TER_Pathfinder(
         TER_World::GetWorld().GetStaticGraph(), threads, distanceThreshold,
         maxAvoidanceDist, maxEndConnections, maxComputationDuration,
         config.GetPathfindDir(), config.GetPathfindFilter() ),
-        []( TER_PathfindManager2* m )
+        []( TER_Pathfinder* m )
         {
             delete m;
             DEC_Population_PathClass::Terminate();
@@ -775,7 +775,7 @@ PHY_MeteoDataManager& MIL_AgentServer::GetMeteoDataManager() const
 // Name: MIL_AgentServer::GetPathFindManager
 // Created: JDY 03-02-12
 //-----------------------------------------------------------------------------
-TER_PathfindManager2& MIL_AgentServer::GetPathFindManager() const
+TER_Pathfinder& MIL_AgentServer::GetPathFindManager() const
 {
     assert( pPathFindManager_ );
     return *pPathFindManager_;
