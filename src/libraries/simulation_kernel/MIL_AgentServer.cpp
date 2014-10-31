@@ -59,55 +59,57 @@ unsigned long FindMaxIdInFile( const tools::Path& filePath )
 
 namespace
 {
-    struct AgentServerInit : boost::noncopyable
-    {
-        explicit AgentServerInit( MIL_AgentServer*& agent )
-            : agent_( agent )
-            , done_ ( false )
-        {}
-        ~AgentServerInit()
-        {
-            if( !done_ )
-                agent_ = 0;
-        }
-        void Done()
-        {
-            done_ = true;
-        }
 
-    private:
-        MIL_AgentServer*& agent_;
-        bool done_;
-    };
-
-    unsigned long FindMaxId( const MIL_Config& config )
+struct AgentServerInit : boost::noncopyable
+{
+    explicit AgentServerInit( MIL_AgentServer*& agent )
+        : agent_( agent )
+        , done_ ( false )
+    {}
+    ~AgentServerInit()
     {
-        unsigned long maxUrbanId = FindMaxIdInFile( config.GetUrbanFile() );
-        unsigned long maxOrbatId = FindMaxIdInFile( config.GetOrbatFile() );
-        return std::max( maxUrbanId, maxOrbatId ) + 2;
+        if( !done_ )
+            agent_ = 0;
+    }
+    void Done()
+    {
+        done_ = true;
     }
 
-    PHY_MeteoDataManager* CreateMeteoManager(
-        const boost::shared_ptr< TER_World >& world, MIL_Config& config,
-        uint32_t tickDuration )
-    {
-        auto xis = config.GetLoader().LoadFile( config.GetWeatherFile() );
+private:
+    MIL_AgentServer*& agent_;
+    bool done_;
+};
 
-        // Extract and configure exercise start time
-        std::string date;
-        *xis >> xml::start( "weather" )
-                >> xml::start( "exercise-date" )
-                    >> xml::attribute( "value", date )
-                >> xml::end
-            >> xml::end;
-        const auto since = bpt::from_iso_string( date ) - bpt::from_time_t( 0 );
-        MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
-        const auto now = MIL_Time_ABC::GetTime().GetRealTime();
-
-        return new PHY_MeteoDataManager(
-                world, *xis, config.GetDetectionFile(), now, tickDuration );
-    }
+unsigned long FindMaxId( const MIL_Config& config )
+{
+    unsigned long maxUrbanId = FindMaxIdInFile( config.GetUrbanFile() );
+    unsigned long maxOrbatId = FindMaxIdInFile( config.GetOrbatFile() );
+    return std::max( maxUrbanId, maxOrbatId ) + 2;
 }
+
+PHY_MeteoDataManager* CreateMeteoManager(
+    const boost::shared_ptr< TER_World >& world, MIL_Config& config,
+    uint32_t tickDuration )
+{
+    auto xis = config.GetLoader().LoadFile( config.GetWeatherFile() );
+
+    // Extract and configure exercise start time
+    std::string date;
+    *xis >> xml::start( "weather" )
+            >> xml::start( "exercise-date" )
+                >> xml::attribute( "value", date )
+            >> xml::end
+        >> xml::end;
+    const auto since = bpt::from_iso_string( date ) - bpt::from_time_t( 0 );
+    MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
+    const auto now = MIL_Time_ABC::GetTime().GetRealTime();
+
+    return new PHY_MeteoDataManager(
+            world, *xis, config.GetDetectionFile(), now, tickDuration );
+}
+
+}  // namespace
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 
