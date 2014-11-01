@@ -19,6 +19,7 @@
 #include <pathfind/TerrainPathPoint.h>
 #include <tools/thread/Handler_ABC.h>
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 
 TER_PathfindRequest::TER_PathfindRequest( TER_Pathfinder& manager,
         const boost::shared_ptr< TER_PathComputer_ABC >& computer,
@@ -123,10 +124,8 @@ namespace
             return std::make_pair( -1, -1 );
         }
 
-        virtual bool ComputePath( const geometry::Point2f& from, const geometry::Point2f& to,
-                                  TerrainRule_ABC& rule,
-                                  pathfind::AStarManagementCallback_ABC* callback,
-                                  tools::thread::Handler_ABC< TerrainPathPoint >& handler )
+        virtual PathResultPtr ComputePath( const geometry::Point2f& from,\
+                const geometry::Point2f& to, TerrainRule_ABC& rule )
         {
             const T_PathPoints points = ReadPathPoints( pathfind_.result() );
             const auto segment = MatchWaypoints( FindWaypoints( points, from ),
@@ -134,17 +133,19 @@ namespace
             if( segment.first < 0 || segment.second < 0 )
             {
                 MT_LOG_INFO_MSG( "Segment [" << from << "] -> [" << to << "] not found in itinerary id='" << pathfind_.id() << "', computing a new path." );
-                return pathfinder_.ComputePath( from, to, rule, callback, handler );
+                return pathfinder_.ComputePath( from, to, rule );
             }
-            bool reached = false;
+            const auto res = boost::make_shared< PathResult >();
+            res->found = false;
+            res->points.reserve( segment.second - segment.first + 1 );
             for( int i = segment.first; i <= segment.second; ++i )
             {
                 const auto& current = points[ i ];
-                handler.Handle( current.first );
+                res->points.push_back( current.first );
                 const auto& point = pathfind_.result().points().Get( i );
-                reached = point.waypoint() >= 0 && point.reached();
+                res->found = point.waypoint() >= 0 && point.reached();
             }
-            return reached;
+            return res;
         }
 
     private:
