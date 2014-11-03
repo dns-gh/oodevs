@@ -63,8 +63,8 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
     if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this << " computation begin" <<
-                            ", Request : " << computerId_ <<
-                            ", Entity    : " << id_ );
+                            ", Request: " << computerId_ <<
+                            ", Entity: " << id_ );
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
     }
@@ -87,10 +87,10 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
         if( ! resultList_.empty() )
             stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this <<
-                            ", Thread : " << computerId_ <<
-                            ", Time : " << rComputationTime <<
-                            ", State : " << GetStateAsString() <<
-                            ", Result : " << stream.str() );
+                            ", Request: " << computerId_ <<
+                            ", Time: " << rComputationTime <<
+                            ", State: " << GetStateAsString() <<
+                            ", Result: " << stream.str() );
     }
 }
 
