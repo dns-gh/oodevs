@@ -169,6 +169,23 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_light_heavy_damages, Registered
     CheckMessage( message, unitId, componentTypeId, undamaged, destroyed, lightDamages, heavyDamages, 19 );
 }
 
+BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_only_dead_humans, RegisteredFixture )
+{
+    const int undamaged = 2;
+    const int componentNumber = 10;
+    const int destroyed = 3;
+    const int lightDamages = 3;
+    const int heavyDamages = 2;
+    const int crew = 1;
+    const std::vector< unsigned long > breakdowns;
+    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber, crew, breakdowns ) );
+    responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
+    MOCK_EXPECT( resolver.Resolve ).once().with( rpr::EntityType( componentEntityType ), mock::assign( componentTypeName ) ).returns( true );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
+    remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged, destroyed, lightDamages, heavyDamages );
+    CheckMessage( message, unitId, componentTypeId, undamaged + lightDamages + heavyDamages, destroyed, 0, 0, 19 );
+}
+
 BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_nothing_if_message_is_empty, RegisteredFixture )
 {
     const int undamaged = 2;
