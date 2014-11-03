@@ -11,7 +11,9 @@ package server
 import (
 	"code.google.com/p/goprotobuf/proto"
 	"masa/timeline/sdk"
+	"masa/timeline/services"
 	"masa/timeline/util"
+	"net/url"
 	"time"
 )
 
@@ -97,4 +99,38 @@ func (o *Observer) DeleteEvents(events ...string) {
 
 func (o *Observer) UpdateServices(services ...*sdk.Service) {
 	o.output <- makeUpdateServices(services)
+}
+
+type ObserverService struct {
+	uuid            string
+	source          string
+	observer        SdkObserver
+	log             util.Logger
+	serviceObserver services.Observer
+}
+
+func (os *ObserverService) Proto(name string) *sdk.Service {
+	return &sdk.Service{
+		Name:  proto.String(name),
+		Clock: proto.Bool(false),
+		External: &sdk.External{
+			Source: proto.String(os.source),
+		},
+	}
+}
+
+func (ObserverService) HasClock() bool { return false }
+func (ObserverService) IsLocked() bool { return false }
+func (ObserverService) Start() error   { return nil }
+func (ObserverService) Stop() error    { return nil }
+
+func (os *ObserverService) AttachObserver(observer services.Observer) {
+	os.serviceObserver = observer
+}
+
+func (os *ObserverService) Trigger(url url.URL, event *sdk.Event) error {
+	os.log.Printf("external[%v] -> action %v\n", os.uuid, event.GetUuid())
+	os.observer.TriggerEvents(event)
+	os.serviceObserver.CloseEvent(event.GetUuid(), nil, true)
+	return nil
 }

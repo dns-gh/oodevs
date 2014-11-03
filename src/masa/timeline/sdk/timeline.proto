@@ -26,18 +26,18 @@ message Sword
     required bool   has_replay = 2;
 }
 
-message Websocket
+message External
 {
-    required string url = 1;
+    required string source = 1;
 }
 
 message Service
 {
-    required string    name      = 1;
-    required bool      clock     = 2; ///< true to use service's clock
-    optional Timer     timer     = 3;
-    optional Sword     sword     = 4;
-    optional Websocket websocket = 5;
+    required string   name     = 1;
+    required bool     clock    = 2; ///< true to use service's clock
+    optional Timer    timer    = 3;
+    optional Sword    sword    = 4;
+    optional External external = 5;
 }
 
 message Session

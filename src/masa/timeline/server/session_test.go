@@ -34,6 +34,7 @@ type Fixture struct {
 	observer   ControllerObserver
 	session    string
 	begin      time.Time
+	log        util.Logger
 }
 
 func (f *Fixture) Close() {
@@ -88,7 +89,7 @@ func (t *TestSuite) MakeFixture(c *C, logins bool) *Fixture {
 	sword := ctx.session.services["some_name"].(*services.Sword)
 	_, err = controller.StartSession(id, 0)
 	c.Assert(err, IsNil)
-	f := &Fixture{server, sword, controller, observer, id, time.Now()}
+	f := &Fixture{server, sword, controller, observer, id, time.Now(), log}
 	f.Tick()
 	return f
 }
@@ -441,8 +442,22 @@ func (t *TestSuite) TestTriggerEvent(c *C) {
 
 	uuid := uuid.New()
 	f.begin = time.Now().Add(24 * time.Hour)
-	event, err := f.createEvent(uuid, "some_event", "some_name", f.getSomeUnitOrder(c, 1, 0))
+	target := "external_service"
+	event, err := f.createEvent(uuid, "some_event", target, f.getSomeUnitOrder(c, 1, 0))
 	c.Assert(err, IsNil)
+
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
+	_, err = f.controller.AttachService(f.session, target, &ObserverService{target, "some_url", link, f.log, nil})
+	c.Assert(err, IsNil)
+	defer f.controller.DetachService(f.session, target)
+	messages := make(chan interface{})
+	go func() {
+		for msg := range link.Listen() {
+			messages <- msg
+		}
+	}()
 
 	event.Done = proto.Bool(true)
 	_, err = f.controller.UpdateEvent(f.session, uuid, event)
@@ -455,6 +470,15 @@ func (t *TestSuite) TestTriggerEvent(c *C) {
 	begin, err := util.ParseTime(data[0].GetBegin())
 	c.Assert(err, IsNil)
 	c.Assert(compareTime(begin, time.Now()), Equals, true)
+
+	msg := waitBroadcastTag(messages, sdk.MessageTag_trigger_events)
+	event.Begin = proto.String(util.FormatTime(begin))
+	swtest.DeepEquals(c, msg, &sdk.Message{
+		Tag: sdk.MessageTag_trigger_events.Enum(),
+		Events: []*sdk.Event{
+			event,
+		},
+	})
 }
 
 func waitBroadcastTag(messages <-chan interface{}, tag sdk.MessageTag) *sdk.Message {
