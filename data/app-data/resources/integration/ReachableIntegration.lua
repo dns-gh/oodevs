@@ -8,7 +8,7 @@ integration.getKnowledgeAgentPosition = function( agent )
     return DEC_ConnaissanceAgent_Position( agent )
 end
 
---- Returns the given agent's knowledge.
+--- Returns the given agent's position.
 -- @param platoon DirectIA agent
 -- @return Simulation position
 integration.getTeammatePosition = function( platoon )
@@ -37,7 +37,7 @@ integration.getPointPosition = function( point )
 end
 
 --- Returns the last waypoint of the given itinerary.
--- @param itinerary Itinerary knowledge
+-- @param itinerary Path knowledge
 -- @return Simulation position
 integration.getItineraryPosition = function( itinerary )
     return DEC_Itineraire_DernierPoint( itinerary.source )
@@ -66,15 +66,15 @@ integration.getObjectPositions = function( object )
     return object.getObjectPositionsResult
 end
 
---- Returns a list of positions at the border of the given planned object.
--- If the planned object is not valid, this method will return an empty table.
--- If this method was previously called on the given object, then the
--- same table will be returned, regardless of the current validity of the object.
--- @param object Object knowledge
--- @return List of simulation positions
-integration.getEngineerObjectPosition = function( object )
-  object.getEngineerObjectPositionResult = object.getEngineerObjectPositionResult or DEC_Geometrie_CalculerBarycentreLocalisation( DEC_GenObject_Localisation( object.source ) )
-  return object.getEngineerObjectPositionResult 
+--- Returns the barycenter of the given planned object.
+-- If this method was previously called on the given planned object,
+-- then the same position will be returned,
+-- regardless of the current validity of the planned object.
+-- @param plannedObject Planned object knowledge
+-- @return Simulation position
+integration.getEngineerObjectPosition = function( plannedObject )
+    plannedObject.getEngineerObjectPositionResult = plannedObject.getEngineerObjectPositionResult or DEC_Geometrie_CalculerBarycentreLocalisation( DEC_GenObject_Localisation( plannedObject.source ) )
+    return plannedObject.getEngineerObjectPositionResult 
 end
 
 --- Returns the barycenter of the given area, unless the barycenter is in a non-trafficable urban block,
@@ -98,7 +98,10 @@ integration.getCentralAreaPosition = function( area )
     return area.getCentralAreaPositionResult
 end
 
---- Returns a list of positions on the border of the given area.
+--- Returns the contour of the given area.
+-- If the given area is a single point, this method returns
+-- a list with that point only.
+-- If the given area is a polyline, this method returns it.
 -- @param area Area knowledge
 -- @return List of simulation positions
 integration.getAreaPerimeterPositions = function( area )
@@ -113,7 +116,7 @@ integration.getUrbanBlockPosition = function( urbanBlock )
     return urbanBlock.getUrbanBlockPosition
 end
 
---- Returns positions the given urban block (positions near vertices + the urban block's barycenter).
+--- Returns positions the given urban block (positions at the edges + the urban block's barycenter).
 -- @param urbanBlock Urban block knowledge
 -- @return List of simulation positions
 integration.getUrbanBlockPositions = function( urbanBlock )
@@ -169,7 +172,8 @@ integration.getPointPositions = function( point )
   return point.getPointPositionsResult
 end
 
---- Returns true if the given position is in a urban block, false otherwise.
+--- Returns true if the given agent is inside the convex hull of all
+-- urban blocks in the current map, false otherwise.
 -- @param position Simulation position
 -- @return Boolean
 integration.pointIsInCity = function( position )
@@ -204,8 +208,8 @@ end
 -- being the detection distance of this entity (or the defaultDistanceMax parameter
 -- if this entity has no detection distance).
 -- @see integration.distance
--- @param pos1 DirectIA knowledge
--- @param pos2 DirectIA knowledge
+-- @param pos1 DirectIA localized element knowledge
+-- @param pos2 DirectIA localized element knowledge
 -- @param defaultDistanceMax Float, the default distance max for the linear interpolation (in meters, 4000 by default).
 -- @return Float
 integration.proximity = function( pos1, pos2, defaultDistanceMax ) -- $$$ MIA security. A mettre en commun avec integration.normalizedInversedDistance
@@ -294,12 +298,13 @@ integration.normalizedInversedDistance = function( pos1, pos2, distanceMaxGiven 
     return normalizedInverseDistanceSimSim ( pos1:getPosition(), pos2:getPosition(), distanceMax )
 end
 
---- Sets the movement pace (i.e. the max speed) of this entity.
--- If the "maxSpeed" parameter is set to 'true', then the movement pace of this entity is set to 1.
--- Otherwise, the movement pace to set depends on the "modulation" parameter, on whether or not
--- this entity is in safety/cover mode, on whether or not it is inside an urban block, and
--- on eventual orders from its company to slow down.
+--- Applies a coefficient between 0 and 1 on the max speed of this agent.
+-- If the "maxSpeed" parameter is set to 'true', then the agent will move at its max speed.
+-- Otherwise, the applied coefficient depends on the "modulation" parameter, on whether or not
+-- this agent is in safety/cover mode, on whether or not it is inside an urban block, and
+-- on potential orders from its company to slow down.
 -- This method can only be called by an agent.
+-- @see integration.speedMaxModulation
 -- @param modulation Float between 0 and 1 (1 by default).
 -- @param maxSpeed Boolean
 integration.setMovementPace = function( modulation, maxSpeed ) -- maxSpeed TRUE/FALSE 
@@ -354,7 +359,7 @@ integration.setMovementPace = function( modulation, maxSpeed ) -- maxSpeed TRUE/
     for _, modulation in pairs( myself.speedModulations ) do
         currentModulation = math.min( currentModulation , modulation )
     end
-    DEC_ModulationVitesseMax( math.max( currentModulation, 0.01 ) )
+    integration.speedMaxModulation( math.max( currentModulation, 0.01 ) )
 end
 
 --- Sets the movement pace (i.e. the max speed) of this entity.
@@ -376,7 +381,8 @@ integration.setPace = function( urgency, modulation )
     end
 end
 
---- Modify the max speed by the given modulation (between 0 and 1)
+--- Modify the max speed by the given modulation (between 0 and 1).
+-- The unit's new max speed is a fraction of its original max speed, proportional to the modulation factor.
 -- This method can only be called by an agent.
 -- @param modulation Float, the max speed modulation (between 0 and 1)
 integration.speedMaxModulation = function( modulation )
@@ -384,6 +390,7 @@ integration.speedMaxModulation = function( modulation )
 end
 
 --- Modify the current speed by the given modulation (between 0 and 1)
+-- The unit will move at a fraction of its current speed, proportional to the modulation factor.
 -- This method can only be called by an agent.
 -- @param modulation Float, the current speed modulation (between 0 and 1)
 integration.speedCurrentModulation = function( modulation )
@@ -419,6 +426,8 @@ local getNearestSimPoint = function( target, simPoints )
 end
 
 --- Moves towards the given localized entity, along the provided waypoints (if any), with the given pathtype.
+-- This method must be called continuously on several
+-- consecutive ticks for the movement to take place.
 -- Returns 'true' if the movement action is finished, 'false' otherwise.
 -- This method can only be called by an agent.
 -- @see integration.startMoveToIt
@@ -457,9 +466,7 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
 } )
 
 --- Starts moving towards the given objective, along the provided waypoints (if any), with the given pathtype.
--- This entity will deploy itself if it is not deployed.
 -- If the objective is in a non-trafficable urban block, then a replacement position at the border will be computed.
--- If the objective is in a contaminated object, then this entity will equip its NBC outfit.
 -- This method creates an itinerary for the movement action.
 -- This method can only be called by an agent.
 -- @see integration.updateMoveToIt
@@ -477,8 +484,13 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
 -- <li> eTypeItiCriminal (criminal) </li>
 -- <li> eTypeItiNBC (CBRN) </li> </ul>
 -- @param waypoints List of directIA knowledges
+-- @param ignorePreparation Boolean. If set to 'false', the agent will :
+-- <ul> <li> Undeploy if it is deployed </li>
+-- <li> Retrieve the current paused movement action if there is one </li>
+-- <li> Equip its NBC outfit if the destination is in a contaminated object </li> </ul>
+-- If set to 'true', the agent will do none of that.
 -- @return Boolean, 'false'.
-integration.startMoveToIt = function( objective, pathType, waypoints )
+integration.startMoveToIt = function( objective, pathType, waypoints, ignorePreparation )
     myself.blocked = nil
     objective[ myself ] = objective[ myself ] or {}
 
@@ -489,30 +501,29 @@ integration.startMoveToIt = function( objective, pathType, waypoints )
         myself.actionOccupy = DEC__StopAction( myself.actionOccupy )
     end
     myself.location = nil
-
-    -- -------------------------------------------------------------------------------- 
-    --if the agent is ordered to move and if it is deployed, undeploy before starting 
-    -- to move. 
-    -- -------------------------------------------------------------------------------- 
-    if integration.isDeployed() then
-        integration.undeploy() -- call once, but deployment takes delays.
-    end
-
-    -- -------------------------------------------------------------------------------- 
-    -- Retreive current paused movement action if it was suspended
-    -- --------------------------------------------------------------------------------
-    if objective[ myself ].moveAction then
-        DEC_ReprendAction( objective[ myself ].moveAction )
-        return false
+    
+    if not ignorePreparation then
+        -- If the agent is undeployed, then deploy
+        if integration.isDeployed() then
+            integration.undeploy() -- call once, but deployment takes delays.
+        end
+        
+        -- If a movement action was suspended, retrieve it
+        if objective[ myself ].moveAction then
+            DEC_ReprendAction( objective[ myself ].moveAction )
+            return false
+        end
+        
+        -- If the destination is in a contaminated object, equip the NBC outfit
+        if DEC_ObjectKnowledge_IsPositionInside( meKnowledge.source, "contamination", objective:getPosition() ) then
+            integration.equipNBCOutfit()
+        end
     end
     
     -- -------------------------------------------------------------------------------- 
     -- Terrain management: reach a accessible position if position is not accessible 
     -- with a mounted agent.
     -- --------------------------------------------------------------------------------
-    if DEC_ObjectKnowledge_IsPositionInside(meKnowledge.source,"contamination", objective:getPosition()) then
-        integration.equipNBCOutfit()
-    end
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
     if ( not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination ) or DEC_IsPointInDestroyedUrbanBlock( objective.initialeDestination ) )
         and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) 
@@ -757,80 +768,6 @@ integration.stopMoveToIt = function( objective )
     end
 end
 
---- Starts moving towards the given objective, along the provided waypoints (if any), with the given pathtype.
--- If the objective is in a non-trafficable urban block, then a replacement position at the border will be computed.
--- This method can only be called by an agent.
--- @see integration.updateMoveToItArea
--- @param objective DirectIA knowledge, the entity to reach.
--- @param pathType Integer, the path type among the following possible values :
--- <ul> <li> eTypeItiMouvement (normal movement, default value) </li>
--- <li> eTypeItiReconnaissance (reconnaissance) </li>
--- <li> eTypeItiInfiltration (stealth) </li>
--- <li> eTypeItiAttaque (attack) </li>
--- <li> eTypeItiRepli (withdrawal) </li>
--- <li> eTypeItiAppui (support) </li>
--- <li> eTypeItiDeminage (mine-sweeping)</li>
--- <li> eTypeItiLogistique (logistics) </li>
--- <li> eTypeItiCriminal (criminal) </li>
--- <li> eTypeItiNBC (CBRN) </li> </ul>
--- @param waypoints List of directIA knowledges
--- @return Boolean, 'false'.
-integration.startMoveToItArea = function( objective, pathType, waypoints )
-
-    objective[ myself ] = objective[ myself ] or {}
-
-    -- -------------------------------------------------------------------------------- 
-    -- Leaving occupied position
-    -- -------------------------------------------------------------------------------- 
-    if myself.actionOccupy then
-        myself.actionOccupy = DEC__StopAction( myself.actionOccupy )
-    end
-    myself.location = nil
-    
-    -- -------------------------------------------------------------------------------- 
-    -- Terrain management: reach a accessible position if objective is not accessible 
-    -- with a mounted agent.
-    -- --------------------------------------------------------------------------------
-    objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
-    if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
-       and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() )
-       and not DEC_Agent_PionCanFly( myself ) then
-        local simPositions = DEC_Geometrie_CalculerTrafficablePointPourPoint( objective.initialeDestination )
-        objective.destination = DEC_Geometrie_CopiePoint(  getNearestSimPoint( objective.initialeDestination, simPositions ) )
-    else
-        objective.destination = objective.initialeDestination
-    end
-
-    -- -------------------------------------------------------------------------------- 
-    -- Compute path and start moving along.
-    -- --------------------------------------------------------------------------------
-    if pathType == NIL  or pathType == nil then -- pathType can have the MASA Life 'NIL' value 
-        pathType = eTypeItiMouvement
-    end
-    local itinerary
-    local simWaypoints = {}
-    if waypoints ~= nil then
-        for i = 1, #waypoints do
-            simWaypoints[ i ] = waypoints[ i ]:getPosition()
-        end
-    end
-    if #simWaypoints > 0 then
-        simWaypoints[ #simWaypoints + 1 ] = objective.destination
-        myself.movingOnPath = true
-        itinerary = DEC_CreerItineraireListe( simWaypoints, pathType )
-    else
-        itinerary = DEC_CreerItineraireBM( objective.destination, pathType )
-    end
-    F_Pion_SetitMvt( meKnowledge.source, itinerary )
-    objective[ myself ] = {}
-    objective[ myself ].moveAction = DEC_StartDeplacement( itinerary )
-    local moveAction = objective[ myself ].moveAction
-    actionCallbacks[ objective[ myself ].moveAction ] = function( arg )
-        objective[ myself ].etat = arg
-    end
-
-    return false
-end
 
 --- Continues moving towards the given objective with the provided path type.
 -- This method should be used to follow a moving target. This entity will continue
@@ -893,7 +830,8 @@ end
 
 --- Starts moving along the given itinerary
 -- This method can only be called by an agent.
--- @param objective Itinerary knowledge
+-- @see integration.creerItineraireAPartirListePoint
+-- @param objective Itinerary
 -- @return Boolean, 'false'
 integration.startMoveToItItinerary = function( objective )
     -- Leave tactical object
@@ -919,7 +857,8 @@ integration.startMoveToItItinerary = function( objective )
 end
 
 --- Computes a path to the given objective with the provided path type.
--- Returns 'true' if the path is computed, 'false' otherwise'.
+-- This method can be called until the computation is finished.
+-- Returns 'true' if the path is computed, 'false' otherwise.
 -- This method can only be called by an agent.
 -- @param objective DirectIA objective
 -- @param pathType Integer, the path type among the following possible values :
@@ -1081,7 +1020,7 @@ end
 
 --- Returns 100 if the given urban block is trafficable for this agent, 0 otherwise.
 -- If the structural state of the given urban block equals 0, then this method returns 0.
--- If the 'loaded' parameter is not set to 'true', then this method returns 100.
+-- Otherwise, if the 'loaded' parameter is not set to 'true', then this method returns 100.
 -- @param urbanBlock Urban block knowledge
 -- @param loaded Boolean, whether this agent is on-board or off-board
 -- @return Integer, 0 or 100
@@ -1220,11 +1159,8 @@ end
 -- @param location DirectIA knowledge defining a "getPosition" method returning a simulation position
 -- @return Boolean
 integration.isPointTrafficable = function( location )
-    if not location.isPointInUrbanBlockTrafficableCache then
-        local pos = location:getPosition()
-        location.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) )
-    end
-    return location.isPointInUrbanBlockTrafficableCache
+    local pos = location:getPosition()
+    return pos and DEC_IsPointInUrbanBlockTrafficable( pos )
 end
 
 --- Returns a list of positions outside a urban block.
@@ -1256,9 +1192,9 @@ integration.getCrossroads = function()
     return crossroads
 end
 
---- Returns an itinerary from the given list of positions.
+--- Creates a path from the given list of positions.
 -- @param listPoint List of point knowledges
--- @return Itinerary knkowledge
+-- @return Itinerary knowledge
 integration.creerItineraireAPartirListePoint = function( listPoint )
     local listPointSource = {}
     for i=1,#listPoint do 
@@ -1270,6 +1206,7 @@ end
 --- Returns 'true' if the given localized element is inside this entity's
 -- current area of responsibility, 'false' otherwise.
 -- If there is no current area of responsibility, this method returns 'true'.
+-- This method can only be called by an agent or a company.
 -- @param location DirectIA knowledge defining a "getPosition" method returning a simulation position
 -- @return Boolean
 integration.isElementInAOR = function( location )
@@ -1283,21 +1220,25 @@ integration.copyPoint = function( position )
     return DEC_Geometrie_CopiePoint( position )
 end
 
---- Returns a list of key positions for this entity.
--- @return List of simulation key positions
+--- Returns a list of path keypoints for this entity.
+-- Path keypoints are points of interest along a path, such as
+-- intersection between a path and a lima, and points before
+-- crossroads, bridges, entry into urban or forest areas.
+-- The distance before these points can be customised in the authoring tool for each unit.
+-- @return List of simulation path keypoints
 integration.getPointsCategory = function()
     return DEC_GetPointsCategory()
 end
 
 --- Returns 'true' if the given position is a key front position, 'false' otherwise.
--- @param position Simulation position
+-- @param position Simulation path keypoint
 -- @return Boolean
 integration.isBeforePoint = function( position )
     return DEC_IsAvantPoint( position)
 end
 
 --- Returns the type of the given key position.
--- @param position Simulation position
+-- @param position Simulation path keypoint
 -- @return Integer, the position's type among the following :
 -- <ul> <li> eTypePointNormal </li>
 -- <li> eTypePointObservation </li>
@@ -1319,6 +1260,8 @@ end
 
 --- Returns the geometry of a pathPoint (a simulation point) allowing 
 -- the decisional models to create a ML knowledge of such a pathPoint
+-- @param pathPoint Simulation path keypoint
+-- @return Simulation position
 integration.getSimPointFromPathPoint = function( pathPoint )
     return DEC_GetRepPoint( pathPoint )
 end
@@ -1363,7 +1306,7 @@ integration.getAgentTimeToReachPosition = function( position )
     return DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( DEC_Geometrie_Distance( meKnowledge:getPosition(), position:getPosition() ) )
 end
 
---- Returns the time (minutes) during which the agent
+--- Returns the time left (minutes) during which the agent
 -- can remain autonomous while moving.
 -- This method can only be called by an agent
 -- @return Float
@@ -1436,4 +1379,9 @@ end
 --- Deprecated, use integration.cancelReinforcement instead
 integration.annuleRenfortMouvement = function()
     DEC_AnnuleRenforcement()
+end
+
+--- Deprecated, see integration.startMoveToIt
+integration.startMoveToItArea = function( objective, pathType, waypoints )
+    return integration.startMoveToIt( objective, pathType, waypoints, true )
 end
