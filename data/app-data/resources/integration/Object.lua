@@ -38,7 +38,7 @@ end
 -- @param object Object knowledge
 -- @return Simulation position
 integration.getPlannedObjectNearestPositionOnBorder = function( plannedObject )
-    local localisation = integration.getGenObjectLocation( plannedObject.source )
+    local localisation =  DEC_Geometrie_AgrandirLocalisation( DEC_GenObject_Localisation( plannedObject.source ) , 0 )
     return DEC_Geometrie_ComputeNearestBorder( integration.getBodyPosition(), localisation )
 end
 
