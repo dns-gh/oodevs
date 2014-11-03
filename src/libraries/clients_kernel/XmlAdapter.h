@@ -98,6 +98,20 @@ struct XmlWriterEmptyAdapter : public protocol::Writer_ABC
         throw MASA_EXCEPTION_NOT_IMPLEMENTED;
     }
 };
+
+struct XmlReaderEmptyAdapter : public protocol::Reader_ABC
+{
+    virtual Point Convert( const std::string& /*value*/ ) const
+    {
+        throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+    }
+
+    virtual EntityType Resolve( uint32_t /*id*/ ) const
+    {
+        return COUNT;
+    }
+};
+
 }
 
 #endif // KERNEL_XML_ADAPTER_H__

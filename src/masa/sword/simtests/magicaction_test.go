@@ -583,9 +583,13 @@ func (s *TestSuite) TestListReports(c *C) {
 		c.Assert(err, IsNil)
 	}
 
-	// Pause
-	_, err = client.Pause()
+	// Create a report with a parameter
+	CBRNProtectionId := uint32(525)
+	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeInt(345))
 	c.Assert(err, IsNil)
+
+	_, err = client.Pause()
+	 c.Assert(err, IsNil)
 
 	// Get all reports
 	allReports, next, err := client.ListReports(math.MaxInt32, 0)
