@@ -3591,6 +3591,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Save failed. Some actions may not have been saved correctly. Check log for details.</source>
         <translation>Erreur à la sauvegarde. Certaines actions peuvent ne pas avoir été sauvées correctement. Vérifiez le fichier log pour plus de détails.</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <translation>&apos;%1&apos; n&apos;est pas un fichier de dessins valide.</translation>
+    </message>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>

@@ -12,24 +12,14 @@
 #include "moc_EventMarkerPresenter.cpp"
 #include "Event.h"
 #include "EventAction.h"
+#include "EventHelpers.h"
 #include "EventMarkerViewState.h"
 #include "EventView_ABC.h"
 #include "clients_kernel/TimelineHelpers.h"
-#include <boost/lexical_cast.hpp>
-#include <boost/property_tree/ptree.hpp>
+#include <boost/assign.hpp>
 #include <timeline/api.h>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4100 4512 )
-#endif
-#include <boost/property_tree/json_parser.hpp>
-#ifdef _MSC_VER
-#pragma warning( pop )
-#endif
-
 using namespace gui;
-namespace bpt = boost::property_tree;
 
 // -----------------------------------------------------------------------------
 // Name: EventMarkerPresenter constructor
@@ -128,13 +118,6 @@ void EventMarkerPresenter::Clear()
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
-namespace
-{
-    const std::string resetDrawingsKey( "reset_drawings" );
-    const std::string drawingsPathKey( "drawings_path" );
-    const std::string configurationPathKey( "configuration_path" );
-}
-
 // -----------------------------------------------------------------------------
 // Name: EventMarkerPresenter::FillFrom
 // Created: JSR 2014-10-24
@@ -145,23 +128,14 @@ void EventMarkerPresenter::FillFrom( const Event& event )
     state_->Purge();
     state_->label_ = timelineEvent.name;
     state_->description_ = timelineEvent.info;
-    const std::string& payload = timelineEvent.action.payload;
-    if( !payload.empty() )
-    {
-        bpt::ptree rpy;
-        try
-        {
-            std::istringstream input( payload );
-            bpt::read_json( input, rpy );
-            std::istringstream stream( rpy.get< std::string >( resetDrawingsKey ) );
-            stream >> std::boolalpha >> state_->resetDrawings_; // convert localized "true"/"false" to true/false
-            state_->drawingsPath_ = tools::Path::FromUTF8( rpy.get< std::string >( drawingsPathKey ) );
-            state_->configurationPath_ = tools::Path::FromUTF8( rpy.get< std::string >( configurationPathKey ) );
-        }
-        catch( ... )
-        {
-        }
-    }
+    std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
+        ( event_helpers::resetDrawingsKey, event_helpers::BoolToString( false ) )
+        ( event_helpers::drawingsPathKey, "" )
+        ( event_helpers::configurationPathKey, "" );
+    event_helpers::ReadJsonPayload( timelineEvent, jsonPayload );
+    state_->resetDrawings_ = event_helpers::StringToBool( jsonPayload[ event_helpers::resetDrawingsKey ] );
+    state_->drawingsPath_ = tools::Path::FromUTF8( jsonPayload[ event_helpers::drawingsPathKey ] );
+    state_->configurationPath_ = tools::Path::FromUTF8( jsonPayload[ event_helpers::configurationPathKey ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,13 +147,11 @@ void EventMarkerPresenter::CommitTo( timeline::Event& event ) const
     event.name = state_->label_;
     event.info = state_->description_;
     event.action.apply = false;
-    bpt::ptree rpy;
-    rpy.put( resetDrawingsKey, state_->resetDrawings_ );
-    rpy.put( drawingsPathKey, state_->drawingsPath_.ToUTF8() );
-    rpy.put( configurationPathKey, state_->configurationPath_.ToUTF8() );
-    std::ostringstream output;
-    bpt::write_json( output, rpy );
-    event.action.payload = output.str();
+    const std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
+        ( event_helpers::resetDrawingsKey, event_helpers::BoolToString( state_->resetDrawings_ ) )
+        ( event_helpers::drawingsPathKey, state_->drawingsPath_.ToUTF8() )
+        ( event_helpers::configurationPathKey, state_->configurationPath_.ToUTF8() );
+    event_helpers::WriteJsonPayload( jsonPayload, event );
     event.action.apply = true;
     event.action.target = timeline_helpers::CreateEventTarget( EVENT_MARKER_PROTOCOL, uuid_ );
 }

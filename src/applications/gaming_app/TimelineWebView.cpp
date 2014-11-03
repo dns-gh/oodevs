@@ -17,7 +17,7 @@
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory_ABC.h"
 #include "actions/ActionTiming.h"
-#include "clients_gui/EventAction.h"
+#include "clients_gui/EventHelpers.h"
 #include "clients_gui/EventsModel.h"
 #include "clients_gui/TimelinePublisher.h"
 #include "clients_kernel/ActionController.h"
@@ -27,6 +27,7 @@
 #include "clients_kernel/TimelineHelpers.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
+#include "gaming/DrawingsModel.h"
 #include "gaming/Model.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
@@ -291,9 +292,33 @@ void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 // Name: TimelineWebView::OnTriggeredEvents
 // Created: JSR 2014-10-31
 // -----------------------------------------------------------------------------
-void TimelineWebView::OnTriggeredEvents( const timeline::Events& /*events*/ )
+void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
 {
-    // TODO
+    for( auto it = events.begin(); it != events.end(); ++it )
+    {
+        gui::Event* gamingEvent = model_.events_.Find( it->uuid );
+        if( gamingEvent && gamingEvent->GetType() == eEventTypes_Marker )
+        {
+            std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
+                ( gui::event_helpers::resetDrawingsKey, gui::event_helpers::BoolToString( false ) )
+                ( gui::event_helpers::drawingsPathKey, "" )
+                ( gui::event_helpers::configurationPathKey, "" );
+            gui::event_helpers::ReadJsonPayload( gamingEvent->GetEvent(), jsonPayload );
+            if( gui::event_helpers::StringToBool( jsonPayload[ gui::event_helpers::resetDrawingsKey ] ) )
+                model_.drawings_.Purge();
+            tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
+            if( drawingsPath.Exists() )
+                try
+                {
+                    drawingsPath.MakePreferred();
+                    model_.drawings_.Load( config_.GetLoader(), drawingsPath );
+                }
+                catch( const xml::exception& )
+                {
+                    QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawing file." ).arg( drawingsPath.ToUTF8().c_str() ) );
+                }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -3586,6 +3586,14 @@ Los datos no pueden ser proyectados.</translation>
         <source>Save failed. Some actions may not have been saved correctly. Check log for details.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>
