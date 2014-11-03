@@ -206,7 +206,8 @@ double TER_Pathfinder::Update()
 // -----------------------------------------------------------------------------
 void TER_Pathfinder::UpdateInSimulationThread()
 {
-    if( !bUseInSameThread_ ) // Pathfind in same thread than simulation
+    if( !bUseInSameThread_ )
+         // Pathfind in same thread as simulation
         return;
     while( !stopped_ && ( ! shortRequests_.empty() || ! longRequests_.empty() ) )
     {
