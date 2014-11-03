@@ -36,7 +36,7 @@ integration.getPointPosition = function( point )
     return point.source
 end
 
---- Returns the last waypoint of the given itinerary.
+--- Returns the last waypoint of the given path.
 -- @param itinerary Path knowledge
 -- @return Simulation position
 integration.getItineraryPosition = function( itinerary )
@@ -172,7 +172,7 @@ integration.getPointPositions = function( point )
   return point.getPointPositionsResult
 end
 
---- Returns true if the given agent is inside the convex hull of all
+--- Returns true if the given position is inside the convex hull of all
 -- urban blocks in the current map, false otherwise.
 -- @param position Simulation position
 -- @return Boolean
@@ -467,7 +467,7 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
 
 --- Starts moving towards the given objective, along the provided waypoints (if any), with the given pathtype.
 -- If the objective is in a non-trafficable urban block, then a replacement position at the border will be computed.
--- This method creates an itinerary for the movement action.
+-- This method computes a path for the movement action.
 -- This method can only be called by an agent.
 -- @see integration.updateMoveToIt
 -- @see integration.stopMoveToIt
@@ -486,7 +486,7 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
 -- @param waypoints List of directIA knowledges
 -- @param ignorePreparation Boolean. If set to 'false', the agent will :
 -- <ul> <li> Undeploy if it is deployed </li>
--- <li> Retrieve the current paused movement action if there is one </li>
+-- <li> Resume the current paused movement action if there is one </li>
 -- <li> Equip its NBC outfit if the destination is in a contaminated object </li> </ul>
 -- If set to 'true', the agent will do none of that.
 -- @return Boolean, 'false'.
@@ -828,10 +828,10 @@ integration.updateMoveToItArea = function( objective, pathType )
     return integration.updateMoveToIt( objective )
 end
 
---- Starts moving along the given itinerary
+--- Starts moving along the given path
 -- This method can only be called by an agent.
 -- @see integration.creerItineraireAPartirListePoint
--- @param objective Itinerary
+-- @param objective Path
 -- @return Boolean, 'false'
 integration.startMoveToItItinerary = function( objective )
     -- Leave tactical object
@@ -1194,7 +1194,7 @@ end
 
 --- Creates a path from the given list of positions.
 -- @param listPoint List of point knowledges
--- @return Itinerary knowledge
+-- @return Path knowledge
 integration.creerItineraireAPartirListePoint = function( listPoint )
     local listPointSource = {}
     for i=1,#listPoint do 
