@@ -6,11 +6,10 @@
 // Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
-
 #include "ClientApp.h"
 
+#include "Controls.h"
 #include "Engine.h"
-#include "controls/controls.h"
 
 using namespace timeline;
 

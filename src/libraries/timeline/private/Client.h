@@ -9,8 +9,8 @@
 #ifndef CLIENT_H__
 #define CLIENT_H__
 
-#include <timeline/api.h>
-#include <controls/controls.h>
+#include "timeline/api.h"
+#include "Controls.h"
 #pragma warning( push, 0 )
 #include <internal/cef_ptr.h>
 #pragma warning( pop )

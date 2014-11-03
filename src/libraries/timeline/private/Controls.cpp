@@ -6,7 +6,7 @@
 // Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
-#include "controls.h"
+#include "Controls.h"
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
