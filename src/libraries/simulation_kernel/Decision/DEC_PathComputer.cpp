@@ -28,13 +28,13 @@
 namespace
 {
 
-std::size_t computersId_ = 1;
+std::size_t computersId = 1;
 
 }  // namespace
 
 DEC_PathComputer::DEC_PathComputer( std::size_t id )
     : id_( id )
-    , computerId_( computersId_++ )
+    , computerId_( ::computersId++ )
     , nState_( TER_Path_ABC::eComputing )
     , bJobCanceled_( false )
     , bSectionJustStarted_( false )
