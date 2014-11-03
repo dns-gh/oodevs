@@ -1314,10 +1314,7 @@
                                         ,admin.externals
                                         ,admin.plugins
                                         ,admin.versions">
-        <cmake_build target="cloud_server"/>
-        <cmake_build target="gaming_app"/>
-        <cmake_build target="replayer_app"/>
-        <cmake_build target="simulation_app"/>
+        <cmake_build target="cloud_server gaming_app replayer_app simulation_app"/>
         <local name="current_platform"/>
         <propertyregex property="current_platform" input="${platform}"
             regexp="\w+_x(64)" select="\1" defaultvalue="32"/>
