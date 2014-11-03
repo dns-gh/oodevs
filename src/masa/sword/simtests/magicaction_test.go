@@ -583,6 +583,10 @@ func (s *TestSuite) TestListReports(c *C) {
 		c.Assert(err, IsNil)
 	}
 
+	// Pause
+	_, err = client.Pause()
+	c.Assert(err, IsNil)
+
 	// Get all reports
 	allReports, next, err := client.ListReports(math.MaxInt32, 0)
 	c.Assert(err, IsNil)
