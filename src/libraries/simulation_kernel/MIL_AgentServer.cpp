@@ -120,12 +120,12 @@ boost::shared_ptr< TER_Pathfinder > CreatePathfindManager( const MIL_Config& con
     const auto maxAvoidanceDist = objectFactory.GetMaxAvoidanceDistance();
     const auto& dangerousObjects = objectFactory.GetDangerousObjects();
 
-    const auto xis = config.GetPhyLoader().GetPhysicalXml( "pathfinder", false );
+    const auto file = config.GetPhyLoader().GetPhysicalXml( "pathfinder", false );
 
     // Extract pathfind configuration
     double distanceThreshold;
     unsigned int maxEndConnections;
-    auto x = xml::xisubstream( *xis );
+    auto x = xml::xisubstream( *file.xml );
     x >> xml::start( "pathfind" )
             >> xml::start( "configuration" )
                 >> xml::attribute( "distance-threshold", distanceThreshold )

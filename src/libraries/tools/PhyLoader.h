@@ -10,6 +10,7 @@
 #ifndef tools_PhyLoader_h
 #define tools_PhyLoader_h
 
+#include <tools/Path.h>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
@@ -23,8 +24,6 @@ namespace xml
 
 namespace tools
 {
-    class Path;
-
     class Loader_ABC;
     class ExerciseConfig;
 
@@ -32,6 +31,12 @@ class PhyLoader : private boost::noncopyable
 {
 public:
     typedef std::function< void ( xml::xistream& ) > T_Loader;
+
+    struct File
+    {
+        boost::shared_ptr< const xml::xistream > xml;
+        tools::Path path;
+    };
 
 public:
              PhyLoader( const Path& physicalFile, const ExerciseConfig& config,
@@ -44,8 +49,7 @@ public:
     Path LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const;
     Path GetPhysicalChildFile( const std::string& rootTag ) const;
     Path GetPhysicalChildPath( const std::string& rootTag ) const;
-    boost::shared_ptr< const xml::xistream > GetPhysicalXml(
-            const std::string& rootTag, bool optional ) const;
+    File GetPhysicalXml( const std::string& rootTag, bool optional ) const;
 
 private:
     Path LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const;
