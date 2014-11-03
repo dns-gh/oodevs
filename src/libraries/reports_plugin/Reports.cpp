@@ -45,10 +45,23 @@ namespace
             ")" ) );
         db.Commit( *tr );
     }
+
+    std::unique_ptr< tools::Sql_ABC > InitializeDatabase( const tools::SessionConfig& config, const std::string& filename )
+    {
+        const auto sessionPath = config.BuildSessionChildFile( filename.c_str() );
+        sessionPath.Remove();
+        if( config.HasCheckpoint() )
+        {
+            const auto checkpointPath = config.GetCheckpointDirectory() / filename.c_str();
+            checkpointPath.Copy( sessionPath, tools::Path::OverwriteIfExists );
+        }
+        return std::unique_ptr< tools::Sql_ABC >( new tools::Sql( sessionPath ) );
+    }
 }
 
 Reports::Reports( const tools::SessionConfig& config, const dispatcher::Model_ABC& model )
-    : database_( new tools::Sql( config.BuildSessionChildFile( "reports.db" ) ) )
+    : database_( InitializeDatabase( config, "reports.db" ) )
+    , config_  ( config )
     , model_   ( model )
 {
     MakeTable( *database_ );
@@ -96,7 +109,7 @@ void Reports::AddReport( const sword::Report& report )
     }
     catch( const tools::SqlException& err )
     {
-        MT_LOG_INFO_MSG( err.msg );
+        MT_LOG_ERROR_MSG( err.msg );
     }
 }
 
@@ -154,6 +167,18 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, u
     }
     catch( const tools::SqlException& err )
     {
-        MT_LOG_INFO_MSG( err.msg );
+        MT_LOG_ERROR_MSG( err.msg );
+    }
+}
+
+void Reports::Save( const std::string& path )
+{
+    try
+    {
+        database_->Save( config_.GetCheckpointDirectory( tools::Path::FromUTF8( path ) / "reports.db" ) );
+    }
+    catch( const tools::SqlException& err )
+    {
+        MT_LOG_ERROR_MSG( err.msg );
     }
 }

@@ -28,6 +28,8 @@ void ReportsPlugin::Receive( const sword::SimToClient& msg )
 {
     if( msg.message().has_report() )
         reports_->AddReport( msg.message().report() );
+    else if( msg.message().has_control_checkpoint_save_end() )
+        reports_->Save( msg.message().control_checkpoint_save_end().name() );
 }
 
 bool ReportsPlugin::HandleClientToSim( const sword::ClientToSim& msg,

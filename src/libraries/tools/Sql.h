@@ -43,6 +43,7 @@ struct Sql : public Sql_ABC
     virtual T_Statement   Prepare( const Transaction& tr, const std::string& sql );
     virtual void          Commit ( Transaction& tr );
     virtual int64_t       LastId () const;
+    virtual void          Save   ( const tools::Path& filename );
     //@}
 
 private:

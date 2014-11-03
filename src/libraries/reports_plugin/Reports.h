@@ -48,12 +48,14 @@ public:
     void AddReport( const sword::Report& report );
     void ListReports( sword::ListReportsAck& reports,
                       unsigned int count, unsigned int next );
+    void Save( const std::string& path );
     //@}
 
 private:
     //! @name Member data
     //@{
     std::unique_ptr< tools::Sql_ABC > database_;
+    const tools::SessionConfig& config_;
     const dispatcher::Model_ABC& model_;
     //@}
 };

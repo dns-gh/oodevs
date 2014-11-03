@@ -589,7 +589,7 @@ func (s *TestSuite) TestListReports(c *C) {
 	c.Assert(err, IsNil)
 
 	_, err = client.Pause()
-	 c.Assert(err, IsNil)
+	c.Assert(err, IsNil)
 
 	// Get all reports
 	allReports, next, err := client.ListReports(math.MaxInt32, 0)
@@ -618,4 +618,34 @@ func (s *TestSuite) TestListReports(c *C) {
 	if len(reports) != 0 {
 		CheckReportOrder(c, reports[0], reports[len(reports)-1])
 	}
+}
+
+func (s *TestSuite) TestListReportsAfterCheckpoint(c *C) {
+	sim, client := connectAndWaitModel(c,
+		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
+	defer stopSimAndClient(c, sim, client)
+
+	// Create a bunch of reports
+	startMissionId := uint32(79)
+	unitId := getSomeUnit(c, client.Model.GetData()).Id
+	for i := 0; i < 10; i++ {
+		err := client.CreateReport(startMissionId, unitId)
+		c.Assert(err, IsNil)
+	}
+
+	_, err := client.Pause()
+	c.Assert(err, IsNil)
+
+	// Get all reports
+	allReports, _, err := client.ListReports(math.MaxInt32, 0)
+	c.Assert(err, IsNil)
+
+	// Create checkpoint
+	sim, client, _ = checkpointAndRestart(c, sim, client)
+	defer stopSimAndClient(c, sim, client)
+
+	reports, _, err := client.ListReports(math.MaxInt32, 0)
+	c.Assert(err, IsNil)
+	// Check equality between 'allReports' and 'reports'
+	swtest.DeepEquals(c, allReports, reports)
 }
