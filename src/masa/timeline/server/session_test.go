@@ -650,6 +650,9 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(expected.Sword.GetHasReplay(), Equals, false)
 	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
 
+	// Timeline server reads the service description, looking for
+	// the replay service, and updates the sword service it exposes
+	// to its clients
 	detached := f.server.GetLinks()
 	defer detached.Close()
 	for slink := range detached {
@@ -665,6 +668,8 @@ func (t *TestSuite) TestObservers(c *C) {
 	expected.Sword.HasReplay = proto.Bool(true)
 	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
 
+	// When replayer sends a control replay information message,
+	// timeline server updates its session with the begin/end replay time
 	expectedStart := time.Now().Truncate(time.Second).UTC()
 	expectedEnd := expectedStart.Add(60 * time.Second)
 	for slink := range detached {
@@ -691,6 +696,37 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(end, Equals, expectedEnd)
 	c.Assert(start.Before(end), Equals, true)
+
+	// Timeline server creates a special range event, with the
+	// replay start and end dates. This event is tagged as replay
+	// in the action's target (replay://).
+	for slink := range detached {
+		f.server.WriteReplayToClient(slink, 1, 0,
+			&sword.ReplayToClient_Content{
+				ControlReplayInformation: &sword.ControlReplayInformation{
+					CurrentTick:     proto.Int32(1),
+					InitialDateTime: swapi.MakeDateTime(expectedStart.Add(time.Second)),
+					EndDateTime:     swapi.MakeDateTime(expectedEnd),
+					DateTime:        swapi.MakeDateTime(expectedStart),
+					TickDuration:    proto.Int32(10),
+					TimeFactor:      proto.Int32(1),
+					Status:          sword.EnumSimulationState_running.Enum(),
+					TickCount:       proto.Int32(6),
+				},
+			})
+	}
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	c.Assert(len(msg.GetEvents()), Equals, 1)
+	event := msg.GetEvents()[0]
+	c.Assert(event.GetAction(), Not(IsNil))
+	c.Assert(event.GetAction().GetTarget(), Equals, "replay://")
+	start, err = util.ParseTime(event.GetBegin())
+	c.Assert(err, IsNil)
+	c.Assert(start, Equals, expectedStart.Add(time.Second))
+	end, err = util.ParseTime(event.GetEnd())
+	c.Assert(err, IsNil)
+	c.Assert(end, Equals, expectedEnd)
 }
 
 func addParty(c *C, d *swapi.ModelData, id uint32) {

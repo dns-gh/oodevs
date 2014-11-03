@@ -216,14 +216,12 @@ class VerticalLayout
             h = get_y(d.max) - y - 1
             return imax 0, imin h, @t.h - y
 
-    replay_range_attributes: (start, end) ->
+    replay_range_attributes: ->
         get_y = (y) => snap_to_grid @t.scale y
-        y0 = get_y start
-        y1 = get_y end
         x:      @get_replay_x() + 1
-        width:  @t.replay.size() - 1
-        y:      y0
-        height: y1 - y0 - 1
+        width:  imax 0, @t.replay.size() - 1
+        y:      (d) -> get_y d.min
+        height: (d) -> imax 0, get_y(d.max) - get_y(d.min) - 1
 
     lane_size: (el) ->
         y = parseFloat el.attr "y"
@@ -504,14 +502,12 @@ class HorizontalLayout
             w = get_x(d.max) - x - 1
             return imax 0, imin w, @t.w - x
 
-    replay_range_attributes: (start, end) ->
+    replay_range_attributes: ->
         get_x = (x) => snap_to_grid @t.scale x
-        x0 = get_x start
-        x1 = get_x end
-        x:      x0
+        x:      (d) -> get_x d.min
+        width:  (d) -> imax 0, get_x(d.max) - get_x(d.min) - 1
         y:      snap_to_grid @top_y @get_replay_y() + @iftop 0, @t.replay.size()
-        width:  x1 - x0 - 1
-        height: @t.replay.size() - 1
+        height: imax 0, @t.replay.size() - 1
 
     lane_size: (el) ->
         x = parseFloat el.attr "x"
@@ -704,14 +700,15 @@ class TickView extends Backbone.View
 
 class Replay
 
-    constructor: (svg) ->
+    constructor: (model, svg, scale) ->
+        @model = model
+        @scale = scale
+        @svg = svg
         @has_replay = false
+        @svg.append("g").attr id: "replays"
         @replay_split = svg.append("line")
             .attr(id: "replay_splitter")
             .classed("splitter", true)
-        @replay_range = svg.append("rect")
-            .attr(id: "replay_range")
-            .classed("range", true)
 
     size: -> if @has_replay then 25 else 0
 
@@ -732,11 +729,25 @@ class Replay
     render: ->
         split_attributes = @layout.replay_split_attributes @w, @h
         split_attributes.visibility = @has_replay
-        range_attributes = {}
-        if @start? and @end? and @has_replay
-            range_attributes = @layout.replay_range_attributes @start, @end
-        range_attributes.visibility = @has_replay
-        @replay_range.attr range_attributes
+        domain = (moment(x).valueOf() for x in @scale.domain())
+        return unless @model.replays?
+        data = @model.replays.filter (d) =>
+            d.min <= domain[1] && domain[0] <= d.max
+        replays = @svg.select("#replays").selectAll(".replay_range")
+            .data(data, (d) -> d.id)
+        that = this
+        placement = @layout.lane_orientation()
+        replays.enter()
+            .append("rect")
+            .each((d) ->
+                add_popover this, placement, that.model.get d.id
+            )
+            .attr
+                class:  "replay_range"
+        replays.attr(@layout.replay_range_attributes())
+        replays.exit()
+            .remove()
+            .each((d) -> $(this).popover "destroy")
 
 class Timeline
     id:      "#session"
@@ -776,7 +787,7 @@ class Timeline
         @svg.append("path").attr class: "current"
         @svg.append("g").attr id: "links"
         @svg.append("g").attr id: "lanes"
-        @replay = new Replay @svg
+        @replay = new Replay @model, @svg, @scale
         @lane_split = @svg.append("line")
             .attr(id: "lane_splitter")
             .classed("splitter", true)
@@ -1013,7 +1024,7 @@ class Timeline
         intervals = []
         last = null
         for evt, i in data
-            continue if has_end evt
+            continue if !is_simple_event evt
             last = evt.timestamp unless last?
             intervals.push idx: i, value: evt.timestamp - last
             last = evt.timestamp

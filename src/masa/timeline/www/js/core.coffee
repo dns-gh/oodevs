@@ -84,6 +84,21 @@ has_end = (model) ->
     end = model.get "end"
     return end?.length > 0
 
+has_replay = (model) ->
+    action = model.get "action"
+    if !action?
+        return false
+    return action.target.indexOf("replay://", 0) == 0
+
+is_simple_event = (model) ->
+    return !has_end model
+
+is_range_event = (model) ->
+    return has_end(model) and !has_replay(model)
+
+is_replay_event = (model) ->
+    return has_end(model) and has_replay(model)
+
 # translate a <value> inside an handlebars template
 Handlebars.registerHelper "i18n", (value) ->
     return new Handlebars.SafeString i18n value
@@ -143,7 +158,7 @@ class Events extends Backbone.Collection
         tree = new SegmentTree()
         for it in @models
             it.children = {}
-            continue unless has_end it
+            continue unless is_range_event it
             [min, max] = get_minmax_event it
             tree.add min, max,
                 id: it.id, idx: tree.ranges.length
@@ -153,7 +168,10 @@ class Events extends Backbone.Collection
             [d.min, d.max] = get_minmax_event d
             d.parent = @get d.get "parent"
             d.parent?.children[d.id] = d
-            return !has_end d
+            return is_simple_event d
+        @replays = @models.filter (d) =>
+            [d.min, d.max] = get_minmax_event d
+            return is_replay_event d
         @trigger "resync"
 
 is_readonly_event = (event) ->

@@ -9,6 +9,7 @@
 package services
 
 import (
+	gouuid "code.google.com/p/go-uuid/uuid"
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/base64"
 	"encoding/json"
@@ -36,6 +37,7 @@ var (
 	ErrInProgress   = errors.New("in progress")
 	ErrSkipped      = errors.New("skipped")
 	ErrUnknown      = errors.New("unknown")
+	ReplayRangeUuid = gouuid.New()
 )
 
 type Action struct {
@@ -449,6 +451,17 @@ func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
 	if link == s.link {
 		s.startTime = start
 		s.endTime = end
+		event := &sdk.Event{
+			Uuid:     proto.String(ReplayRangeUuid),
+			Name:     proto.String("Replay range"),
+			Begin:    proto.String(util.FormatTime(start)),
+			End:      proto.String(util.FormatTime(end)),
+			ReadOnly: proto.Bool(false),
+			Action: &sdk.Action{
+				Target: proto.String("replay://"),
+			},
+		}
+		s.observer.UpdateEvent(ReplayRangeUuid, event)
 		s.observer.UpdateRangeDates(start, end)
 	}
 }
