@@ -67,6 +67,39 @@ ADN_Crowds_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( ADN_Armor
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::FireEffectProtectionInfos
+// Created: LDC 2014-11-03
+// -----------------------------------------------------------------------------
+ADN_Crowds_Data::FireEffectProtectionInfos::FireEffectProtectionInfos()
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), 0, true )
+    , rUnarmedDestruction_( 0. )
+    , rUnarmedFixableWithEvacuation_( 0. )
+    , rUnarmedFixableWithoutEvacuation_ ( 0. )
+    , rArmedDestruction_( 0. )
+    , rArmedFixableWithEvacuation_( 0. )
+    , rArmedFixableWithoutEvacuation_( 0. )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::FireEffectProtectionInfos::CreateCopy
+// Created: LDC 2014-11-03
+// -----------------------------------------------------------------------------
+ADN_Crowds_Data::FireEffectProtectionInfos* ADN_Crowds_Data::FireEffectProtectionInfos::CreateCopy() const
+{
+    ADN_Crowds_Data::FireEffectProtectionInfos* result = new ADN_Crowds_Data::FireEffectProtectionInfos();
+    result->SetCrossedElement( GetCrossedElement() );
+    result->rUnarmedDestruction_ = rUnarmedDestruction_.GetData();
+    result->rUnarmedFixableWithEvacuation_ = rUnarmedFixableWithEvacuation_.GetData();
+    result->rUnarmedFixableWithoutEvacuation_ = rUnarmedFixableWithoutEvacuation_.GetData();
+    result->rArmedDestruction_ = rArmedDestruction_.GetData();
+    result->rArmedFixableWithEvacuation_ = rArmedFixableWithEvacuation_.GetData();
+    result->rArmedFixableWithoutEvacuation_ = rArmedFixableWithoutEvacuation_.GetData();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Crowds_Data::FireEffectProtectionInfos::ReadArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
@@ -142,6 +175,20 @@ ADN_Crowds_Data::FireEffectInfos::FireEffectInfos( E_PopulationAttitude nAttitud
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::FireEffectInfos::::CreateCopy
+// Created: LDC 2014-11-03
+// -----------------------------------------------------------------------------
+ADN_Crowds_Data::FireEffectInfos* ADN_Crowds_Data::FireEffectInfos::CreateCopy() const
+{
+    ADN_Crowds_Data::FireEffectInfos* result = new ADN_Crowds_Data::FireEffectInfos( nAttitude_ );
+    result->rIntensityDensity_ = rIntensityDensity_.GetData();
+    result->rIntensityFactor_ = rIntensityFactor_.GetData();
+    for( auto it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
+        result->vProtectionInfos_.push_back( (*it)->CreateCopy() );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Crowds_Data::FireEffectInfos::ReadArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
@@ -213,6 +260,18 @@ ADN_Crowds_Data::FireEffectRoeInfos::~FireEffectRoeInfos()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::FireEffectRoeInfos::CreateCopy
+// Created: LDC 2014-11-03
+// -----------------------------------------------------------------------------
+ADN_Crowds_Data::FireEffectRoeInfos* ADN_Crowds_Data::FireEffectRoeInfos::CreateCopy() const
+{
+    ADN_Crowds_Data::FireEffectRoeInfos* result = new ADN_Crowds_Data::FireEffectRoeInfos( nRoe_ );
+    result->rAttritionSurface_ = rAttritionSurface_.GetData();
+    result-> rPH_ = rPH_.GetData();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Crowds_Data::GetRoe
 // Created: LGY 2011-02-15
 // -----------------------------------------------------------------------------
@@ -256,6 +315,31 @@ ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Volumes_Dat
     , rMaxSpeed_( 0. )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos
+// Created: LDC 2014-11-03
+// -----------------------------------------------------------------------------
+ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos()
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), 0, true )
+    , rDensity_( 0. )
+    , rMaxSpeed_( 0. )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::SpeedEffectVolumeInfos::CreateCopy
+// Created: LDC 2014-11-03
+// -----------------------------------------------------------------------------
+ADN_Crowds_Data::SpeedEffectVolumeInfos* ADN_Crowds_Data::SpeedEffectVolumeInfos::CreateCopy() const
+{
+    ADN_Crowds_Data::SpeedEffectVolumeInfos* result = new ADN_Crowds_Data::SpeedEffectVolumeInfos();
+    result->SetCrossedElement( GetCrossedElement() );
+    result->rDensity_ = rDensity_.GetData();
+    result->rMaxSpeed_ = rMaxSpeed_.GetData();
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -308,6 +392,18 @@ ADN_Crowds_Data::SpeedEffectInfos::SpeedEffectInfos( E_PopulationAttitude nAttit
     , vVolumeInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos() )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::SpeedEffectInfos::CreateCopy
+// Created: LDC 2014-11-03
+// -----------------------------------------------------------------------------
+ADN_Crowds_Data::SpeedEffectInfos* ADN_Crowds_Data::SpeedEffectInfos::CreateCopy() const
+{
+    ADN_Crowds_Data::SpeedEffectInfos* result = new SpeedEffectInfos( nAttitude_ );
+    for( auto it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
+        result->vVolumeInfos_.push_back( (*it)->CreateCopy() );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -378,6 +474,18 @@ ADN_Crowds_Data::UrbanEffectInfos::UrbanEffectInfos( E_PopulationAttitude nAttit
 ADN_Crowds_Data::UrbanEffectInfos::~UrbanEffectInfos()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::UrbanEffectInfos::CreateCopy
+// Created: LDC 2014-11-03
+// -----------------------------------------------------------------------------
+ADN_Crowds_Data::UrbanEffectInfos* ADN_Crowds_Data::UrbanEffectInfos::CreateCopy() const
+{
+    ADN_Crowds_Data::UrbanEffectInfos* result = new ADN_Crowds_Data::UrbanEffectInfos( nAttitude_ );
+    result->rDensity_ = rDensity_.GetData();
+    result->rTime_ = rTime_.GetData();
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -523,12 +631,12 @@ ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::CrowdsInfos::CreateCopy()
 
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
-        pCopy->vSpeedEffectInfos_[ i ] = vSpeedEffectInfos_[ i ];
-        pCopy->vFireEffectInfos_ [ i ] = vFireEffectInfos_ [ i ];
-        pCopy->vUrbanEffectInfos_[ i ] = vUrbanEffectInfos_[ i ];
+        pCopy->vSpeedEffectInfos_[ i ] = vSpeedEffectInfos_[ i ]->CreateCopy();
+        pCopy->vFireEffectInfos_ [ i ] = vFireEffectInfos_ [ i ]->CreateCopy();
+        pCopy->vUrbanEffectInfos_[ i ] = vUrbanEffectInfos_[ i ]->CreateCopy();
     }
     for( unsigned int i = 0; i < vFireEffectRoeInfos_.size(); ++i )
-        pCopy->vFireEffectRoeInfos_[ i ] = vFireEffectRoeInfos_[ i ];
+        pCopy->vFireEffectRoeInfos_[ i ] = vFireEffectRoeInfos_[ i ]->CreateCopy();
 
     return pCopy;
 }

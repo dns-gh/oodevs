@@ -69,8 +69,12 @@ public:
         explicit FireEffectProtectionInfos( ADN_Armors_Data::ArmorInfos* ptr );
         virtual ~FireEffectProtectionInfos();
 
+        FireEffectProtectionInfos* CreateCopy() const;
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+
+    private:
+        FireEffectProtectionInfos();
 
     public:
         ADN_Type_Double rUnarmedDestruction_;
@@ -107,6 +111,7 @@ public:
         explicit FireEffectInfos( E_PopulationAttitude nAttitude );
         virtual ~FireEffectInfos();
 
+        FireEffectInfos* CreateCopy() const;
         void ReadArchive( xml::xistream& input );
         void ReadProtection( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
@@ -142,6 +147,7 @@ public:
         explicit FireEffectRoeInfos( E_PopulationRoe nRoe );
         virtual ~FireEffectRoeInfos();
 
+        FireEffectRoeInfos* CreateCopy() const;
         unsigned int GetRoe();
 
         void ReadArchive( xml::xistream& input );
@@ -161,8 +167,12 @@ public:
         explicit SpeedEffectVolumeInfos( ADN_Volumes_Data::VolumeInfos* ptr );
         virtual ~SpeedEffectVolumeInfos();
 
+        SpeedEffectVolumeInfos* CreateCopy() const;
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+
+    private:
+        SpeedEffectVolumeInfos();
 
     public:
         ADN_Type_Double rDensity_;
@@ -195,6 +205,7 @@ public:
         explicit SpeedEffectInfos( E_PopulationAttitude nAttitude );
         virtual ~SpeedEffectInfos();
 
+        SpeedEffectInfos* CreateCopy() const;
         void ReadArchive( xml::xistream& input );
         void ReadSpeedEffect( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
@@ -212,6 +223,7 @@ public:
         explicit UrbanEffectInfos( E_PopulationAttitude nAttitude );
         virtual ~UrbanEffectInfos();
 
+        UrbanEffectInfos* CreateCopy() const;
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
