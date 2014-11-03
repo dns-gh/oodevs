@@ -181,7 +181,7 @@ add_target( timeline_client timeline "applications/timeline_client"
 target_link_libraries( timeline_client timeline )
 
 # timeline_app
-add_target( timeline_app timeline "applications/timeline_app" OPTIONS qt executable copyrun )
+add_target( timeline_app timeline "applications/timeline_app" OPTIONS qt executable )
 target_link_libraries( timeline_app
     timeline
 )
