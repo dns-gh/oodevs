@@ -338,9 +338,9 @@ void SelectionMenu::GenerateMenu()
 
     std::unique_ptr< Menu_ABC > menu;
     if( tools_.GetOptions().Get( "3D" ).To< bool >() )
-        menu.reset( new RichMenu< gui::Gl3dWidget >( parent3d_ ) );
+        menu.reset( new RichMenu< gui::Gl3dWidget >( 0 ) );
     else
-        menu.reset( new RichMenu< gui::GlWidget >( parent2d_ ) );
+        menu.reset( new RichMenu< gui::GlWidget >( 0 ) );
     connect( menu.get(), SIGNAL( hovered( QAction* ) ), this, SLOT( OnSelectionChanged( QAction* ) ) );
 
     menu->setStyle( new StandardIconProxyStyle() );
