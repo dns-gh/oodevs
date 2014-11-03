@@ -716,7 +716,7 @@ class Replay
             .attr(id: "replay_range")
             .classed("range", true)
 
-    size: -> if @has_replay then 88 else 0
+    size: -> if @has_replay then 25 else 0
 
     resize: (w, h) ->
         @replay_split.attr @layout.split_size w, h
