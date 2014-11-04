@@ -25,6 +25,14 @@ integration.isObjectRemoved = function( object )
     return not DEC_IsValidKnowledgeObject( object.source )
 end
 
+--- Returns the point nearest a location. If the location is of type point, the returned point will be at a distance from the point as specified when the point was created (for instance the area of effect of the corresponding object)
+-- @param location Simulation location
+-- @return Simulation position
+integration.getPositionOnBorder = function( location )
+    local polygon = DEC_Geometrie_AgrandirLocalisation( location, 0 )
+    return DEC_Geometrie_ComputeNearestBorder( integration.getBodyPosition(), polygon )
+end
+
 --- Returns the nearest position to the border of the provided object, at a specified distance
 -- @param object The knowledge of the object
 -- @param distance Optional, the minimal distance in meters between the returned position and the border of the object (20 by default)
@@ -38,16 +46,14 @@ end
 -- @param object Object knowledge
 -- @return Simulation position
 integration.getPlannedObjectNearestPositionOnBorder = function( plannedObject )
-    local localisation = integration.getGenObjectLocation( plannedObject.source )
-    return DEC_Geometrie_ComputeNearestBorder( integration.getBodyPosition(), localisation )
+    return integration.getPositionOnBorder( DEC_GenObject_Localisation( plannedObject.source ) )
 end
 
 --- Returns the given object's nearest position to this entity's position
 -- @param object Object knowledge
 -- @return Simulation position
 integration.getObjectNearestPositionOnBorder = function( object )
-    local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 0 )
-    return DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
+    return integration.getPositionOnBorder( DEC_ConnaissanceObjet_Localisation( object.source ) )
 end
 
 --- Returns positions around the given object to interact with it (e.g. to build it, to improve it, etc.).
