@@ -149,6 +149,9 @@ void Reports::AddReport( const sword::Report& report )
             xos << xml::end;
             st->Bind( xos.str() );
         }
+        else
+            st->Bind();
+
         Execute( *st );
         database_->Commit( *tr );
     }
@@ -172,7 +175,7 @@ namespace
             report.mutable_type()->set_id( st.ReadInt() );
             report.set_category( sword::Report_EnumReportType( st.ReadInt() ) );
             report.mutable_time()->set_data( st.ReadText() );
-            st.ReadInt();
+            st.SkipNull();
             if( st.IsColumnDefined() )
                 protocol::Read( kernel::XmlReaderEmptyAdapter(), *report.mutable_parameters(),
                     xml::xistringstream( st.ReadText() ) >> xml::start( "parameters" ) );
