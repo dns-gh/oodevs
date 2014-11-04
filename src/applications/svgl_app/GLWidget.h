@@ -18,11 +18,14 @@
 #pragma warning(pop)
 #include <string>
 
-namespace svg {
+namespace svg
+{
     class Node_ABC;
     class References;
     class Property_ABC;
     class RenderingContext;
+    class Style;
+    class PropertyFactory;
 }
 
 // =============================================================================
@@ -33,27 +36,11 @@ namespace svg {
 // =============================================================================
 class GLWidget : public QGLWidget
 {
-
 public:
-    //! @name Constructors/Destructor
-    //@{
              GLWidget( QWidget* parent, const std::string& filename );
     virtual ~GLWidget();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
 
 private:
-    //! @name Copy/Assignement
-    //@{
-    GLWidget( const GLWidget& );            //!< Copy constructor
-    GLWidget& operator=( const GLWidget& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
     virtual void paintGL();
@@ -65,11 +52,8 @@ private:
     void ComputeViewport();
     geometry::Point RetrieveCoordinates( const QMouseEvent& e );
     void Parse( const std::string& filename );
-    //@}
 
 private:
-    //! @name Member data
-    //@{
     svg::TextRenderer renderer_;
     geometry::Point center_;
     geometry::Point topLeft_, bottomRight_;
@@ -79,9 +63,10 @@ private:
     svg::References* references_;
     svg::Node_ABC* root_;
     svg::Property_ABC* color_;
+    svg::PropertyFactory* factory_;
+    svg::Style* style_;
     bool compile_;
     std::string filename_;
-    //@}
 };
 
 #endif // __GLWidget_h_
