@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "LogisticTreeView.h"
 
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/ModelObserver_ABC.h"
@@ -84,6 +85,16 @@ void LogisticTreeView::NotifyUpdated( const LogisticBaseStates& hierarchy )
 void LogisticTreeView::NotifyUpdated( const gui::LogisticBase& hierarchy )
 {
     CreateOrReplace( hierarchy.GetEntity() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::NotifyContextMenu
+// Created: JSR 2014-10-03
+// -----------------------------------------------------------------------------
+void LogisticTreeView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
+{
+    if( ghost.GetGhostType() == eGhostType_Automat )
+        AddChangeLinksToMenu( ghost, menu );
 }
 
 // -----------------------------------------------------------------------------
