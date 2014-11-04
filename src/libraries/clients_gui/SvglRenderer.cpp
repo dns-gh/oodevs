@@ -100,6 +100,8 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
 void SvglRenderer::Render( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport,
                            unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
+    if( !node )
+        return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     CreateStaticLists();
     if( pickingMode )
@@ -145,7 +147,8 @@ unsigned int SvglRenderer::RetrieveListId( const std::shared_ptr< svg::Node_ABC 
 // Name: SvglRenderer::Draw
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void SvglRenderer::Draw( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
+void SvglRenderer::Draw( const std::shared_ptr< svg::Node_ABC >& node, const std::string& style,
+    const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
