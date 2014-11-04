@@ -21,7 +21,6 @@
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_PathSection.h"
-#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/make_shared.hpp>
 
@@ -55,7 +54,8 @@ double DEC_PathComputer::GetLength() const
     return length;
 }
 
-void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
+void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
+        unsigned int deadline )
 {
     if( !resultList_.empty() )
         throw MASA_EXCEPTION( "List of path points is not empty before running pathfind" );
@@ -70,7 +70,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
     pathfind.SetId( id_ );
     try
     {
-        DoExecute( pathfind );
+        DoExecute( pathfind, deadline );
     }
     catch( const std::exception& e )
     {
@@ -93,15 +93,8 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
     }
 }
 
-void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
+void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadline )
 {
-    unsigned int nComputationEndTime = 0;
-    const unsigned int nMaxComputationDuration = MIL_AgentServer::IsInitialized() ? MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration() : std::numeric_limits< unsigned int >::max();
-    if( nMaxComputationDuration == std::numeric_limits< unsigned int >::max() )
-        nComputationEndTime = std::numeric_limits< unsigned int >::max();
-    else
-        nComputationEndTime = static_cast< unsigned int >( time( 0 ) ) + nMaxComputationDuration;
-
     if( pathSections_.empty() )
         throw MASA_EXCEPTION( "List of path sections is empty" );
     lastWaypoint_ = pathSections_.back()->GetPosEnd();
@@ -115,7 +108,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
             return;
         }
         TER_PathSection& pathSection = **it;
-        const auto res = pathSection.Execute( pathfind, nComputationEndTime );
+        const auto res = pathSection.Execute( pathfind, deadline );
         for( auto ip = res->points.begin(); ip != res->points.end(); ++ip )
         {
             const geometry::Point2f p( *ip );

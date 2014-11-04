@@ -154,7 +154,7 @@ namespace
     };
 }
 
-double TER_PathfindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
+double TER_PathfindRequest::FindPath( TER_Pathfinder_ABC& pathfinder, unsigned int deadline )
 {
     auto computer = computer_.lock(); // thread-safe
     if( !computer )
@@ -164,11 +164,11 @@ double TER_PathfindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
     if( IsItinerary() )
     {
         PathfinderProxy proxy( pathfinder, pathfind_ );
-        computer->Execute( proxy );
+        computer->Execute( proxy, deadline );
     }
     else
     {
-        computer->Execute( pathfinder );
+        computer->Execute( pathfinder, deadline );
     }
     return profiler.Stop();
 }

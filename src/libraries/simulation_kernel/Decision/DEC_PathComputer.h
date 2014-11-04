@@ -30,7 +30,7 @@ public:
     virtual ~DEC_PathComputer();
 
     virtual double GetLength() const;
-    virtual void Execute( TER_Pathfinder_ABC& pathfind );
+    virtual void Execute( TER_Pathfinder_ABC& pathfind, unsigned int deadline );
     virtual void Cancel();
     virtual TER_Path_ABC::E_State GetState() const;
     virtual void RegisterPathSection( TER_PathSection& section );
@@ -45,7 +45,7 @@ private:
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
     virtual T_PathPoints GetResult() const;
 
-    void DoExecute( TER_Pathfinder_ABC& pathfind );
+    void DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadline );
     void NotifyPartialSection();
     void NotifyCompletedSection();
     boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;

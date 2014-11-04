@@ -47,7 +47,7 @@ public:
     void AddDynamicDataToUnregister( const DynamicDataPtr& data );
 
     // Returns path processing time in milliseconds.
-    double Process( TER_PathfindRequest& pRequest );
+    double Process( TER_PathfindRequest& pRequest, unsigned int deadline );
 
 private:
     void ProcessDynamicData();

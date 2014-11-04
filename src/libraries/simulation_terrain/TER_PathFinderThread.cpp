@@ -191,14 +191,14 @@ namespace
 // Name: TER_PathFinderThread::Process
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-double TER_PathFinderThread::Process( TER_PathfindRequest& rq )
+double TER_PathFinderThread::Process( TER_PathfindRequest& rq, unsigned int deadline )
 {
     try
     {
         ProcessDynamicData();
         PathfinderProxy proxy( dump_, filter_,
             rq.IgnoreDynamicObjects() ? *staticPathfinder_ : *pathfinder_ );
-        return rq.FindPath( proxy );
+        return rq.FindPath( proxy, deadline );
     }
     catch( const std::exception& e )
     {

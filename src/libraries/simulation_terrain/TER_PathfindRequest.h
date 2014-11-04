@@ -43,7 +43,7 @@ public:
     bool IgnoreDynamicObjects() const;
 
     // Computes path and returned processing time in milliseconds.
-    double FindPath( TER_Pathfinder_ABC& pathfind );
+    double FindPath( TER_Pathfinder_ABC& pathfind, unsigned int deadline );
 
 private:
     //! @name Helpers

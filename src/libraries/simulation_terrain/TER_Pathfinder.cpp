@@ -175,7 +175,10 @@ boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned in
 
 void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindRequest& rq )
 {
-    const auto duration = data.Process( rq );
+    const unsigned int deadline = nMaxComputationDuration_ == std::numeric_limits< unsigned int >::max()
+        ? std::numeric_limits< unsigned int >::max()
+        : static_cast< unsigned int >( std::time( 0 ) ) + nMaxComputationDuration_;
+    const auto duration = data.Process( rq, deadline );
     {
         boost::mutex::scoped_lock locker( pathfindTimeMutex_ );
         pathfindTime_ += duration;

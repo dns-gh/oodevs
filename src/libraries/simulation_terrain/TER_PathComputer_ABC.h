@@ -31,7 +31,7 @@ public:
     virtual ~TER_PathComputer_ABC() {}
 
     virtual double GetLength() const = 0;
-    virtual void Execute( TER_Pathfinder_ABC& pathfind ) = 0;
+    virtual void Execute( TER_Pathfinder_ABC& pathfind, unsigned int deadline ) = 0;
     virtual void Cancel() = 0;
     virtual TER_Path_ABC::E_State GetState() const = 0;
     virtual void RegisterPathSection( TER_PathSection& section ) = 0;
