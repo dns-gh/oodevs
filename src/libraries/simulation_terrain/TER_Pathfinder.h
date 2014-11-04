@@ -49,7 +49,8 @@ public:
                     unsigned int threads, double distanceThreshold,
                     double maxAvoidanceDistance, unsigned int maxEndConnections,
                     unsigned int maxComputationDuration,
-                    const tools::Path& pathfindDir, const std::string& pathfindFilter );
+                    const tools::Path& pathfindDir, const std::string& pathfindFilter,
+                    bool debugPath );
     virtual ~TER_Pathfinder();
 
     //! @name Main
@@ -89,6 +90,7 @@ private:
     std::vector< std::unique_ptr< boost::thread > > threads_;
     const tools::Path dumpDir_; // empty if dump is disabled
     const std::set< size_t > dumpFilter_; // empty if no id filters
+    bool debugPath_;
 
     mutable boost::mutex mutex_;
     boost::condition condition_;

@@ -106,10 +106,12 @@ boost::uint32_t PathfindDumper::s_idx_ = 0;
 TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& staticData,
         unsigned int threads, double distanceThreshold, double maxAvoidanceDistance,
         unsigned int maxEndConnections, unsigned int maxComputationDuration,
-        const tools::Path& pathfindDir, const std::string& pathfindFilter )
+        const tools::Path& pathfindDir, const std::string& pathfindFilter,
+        bool debugPath )
     : staticData_( staticData )
     , dumpDir_( pathfindDir )
     , dumpFilter_( ParseFilter( pathfindFilter ) )
+    , debugPath_( debugPath )
     , nMaxComputationDuration_( maxComputationDuration )
     , rDistanceThreshold_     ( distanceThreshold )
     , treatedRequests_        ( 0 )
@@ -277,7 +279,7 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         profiler.Start();
         if( rq.IsItinerary() )
             wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
-        computer->Execute( *wrapper, deadline );
+        computer->Execute( *wrapper, deadline, debugPath_ );
         duration = profiler.Stop();
     }
     catch( const std::exception& e )

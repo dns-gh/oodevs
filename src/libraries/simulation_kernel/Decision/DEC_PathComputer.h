@@ -30,7 +30,8 @@ public:
     virtual ~DEC_PathComputer();
 
     virtual double GetLength() const;
-    virtual void Execute( TER_Pathfinder_ABC& pathfind, unsigned int deadline );
+    virtual void Execute( TER_Pathfinder_ABC& pathfind, unsigned int deadline,
+           bool debugPath );
     virtual void Cancel();
     virtual TER_Path_ABC::E_State GetState() const;
     virtual void RegisterPathSection( TER_PathSection& section );

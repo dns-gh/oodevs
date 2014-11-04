@@ -152,7 +152,7 @@ boost::shared_ptr< TER_Pathfinder > CreatePathfindManager( const MIL_Config& con
     const auto pathfinder = boost::shared_ptr< TER_Pathfinder >( new TER_Pathfinder(
         TER_World::GetWorld().GetStaticGraph(), threads, distanceThreshold,
         maxAvoidanceDist, maxEndConnections, maxComputationDuration,
-        config.GetPathfindDir(), config.GetPathfindFilter() ),
+        config.GetPathfindDir(), config.GetPathfindFilter(), config.UsePathDebug() ),
         []( TER_Pathfinder* m )
         {
             delete m;

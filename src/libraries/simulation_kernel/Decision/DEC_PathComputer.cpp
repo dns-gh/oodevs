@@ -55,11 +55,11 @@ double DEC_PathComputer::GetLength() const
 }
 
 void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
-        unsigned int deadline )
+        unsigned int deadline, bool debugPath )
 {
     if( !resultList_.empty() )
         throw MASA_EXCEPTION( "List of path points is not empty before running pathfind" );
-    if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
+    if( debugPath )
     {
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this << " computation begin" <<
                             ", Request: " << computerId_ <<
@@ -79,7 +79,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
         nState_ = TER_Path_ABC::eCanceled;
         return;
     }
-    if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
+    if( debugPath )
     {
         const double rComputationTime = profiler_.Stop();
         std::stringstream stream;
