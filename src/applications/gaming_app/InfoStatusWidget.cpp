@@ -330,16 +330,8 @@ void InfoStatusWidget::SetIcon()
         pixmap = pixmap.scaled( QSize( 64, 64 ), Qt::KeepAspectRatio, Qt::SmoothTransformation );
         icon_->setPixmap( pixmap );
     }
-    else
-    {
-        QImage img;
-        if( selected_ )
-            img = icons_.GetSymbol( *selected_, QSize( 64, 64 ) );
-        if( img.isNull() )
-            QTimer::singleShot( 200, this, SLOT( SetIcon() ) );
-        else if( img.width() > 1 && img.height() > 1 )
-            icon_->setPixmap( QPixmap::fromImage( img ) );
-    }
+    else if( selected_ )
+        icon_->setPixmap( icons_.GetSymbol( *selected_ ) );
 }
 
 // -----------------------------------------------------------------------------
