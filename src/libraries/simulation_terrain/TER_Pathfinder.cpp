@@ -29,8 +29,8 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
     , nMaxComputationDuration_( maxComputationDuration )
     , rDistanceThreshold_     ( distanceThreshold )
     , treatedRequests_        ( 0 )
-    , pathfindTime_           ( 0 )
     , stopped_                ( false )
+    , pathfindTime_           ( 0 )
 {
     if( nMaxComputationDuration_ <= 0 )
         throw MASA_EXCEPTION( "pathfind maximum computation duration must be greater than zero");
@@ -177,8 +177,8 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
 {
     const auto duration = data.Process( rq );
     {
-        boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-        toCleanup_.push_back( duration );
+        boost::mutex::scoped_lock locker( pathfindTimeMutex_ );
+        pathfindTime_ += duration;
     }
 }
 
@@ -188,15 +188,9 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
 // -----------------------------------------------------------------------------
 double TER_Pathfinder::Update()
 {
-    boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
+    boost::mutex::scoped_lock locker( pathfindTimeMutex_ );
     double pathfindTime = pathfindTime_;
     pathfindTime_ = 0;
-    while( ! toCleanup_.empty() )
-    {
-        auto rq = toCleanup_.back();
-        toCleanup_.pop_back();
-        pathfindTime += rq;
-    }
     return pathfindTime;
 }
 

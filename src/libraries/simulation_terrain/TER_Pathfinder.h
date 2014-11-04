@@ -94,11 +94,12 @@ private:
     double rDistanceThreshold_;
     unsigned int nMaxComputationDuration_;
     unsigned int treatedRequests_;
-    boost::mutex cleanAndDestroyMutex_;
-    std::vector< double > toCleanup_;
     bool bUseInSameThread_;
-    double pathfindTime_;
     bool stopped_;
+
+    boost::mutex pathfindTimeMutex_;
+    // Total computation time of terminated pathfinds since last Update() call
+    double pathfindTime_;
 };
 
 #endif // SIMULATION_TERRAIN_PATHFINDER
