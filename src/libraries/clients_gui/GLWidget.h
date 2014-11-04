@@ -181,7 +181,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const float baseWidth_;
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;

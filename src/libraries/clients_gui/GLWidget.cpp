@@ -38,11 +38,6 @@ bool GlWidget::passLess::operator()( GlRenderPass_ABC* lhs, GlRenderPass_ABC* rh
     return names_.find( lhs->GetName() ) < names_.find( rhs->GetName() );
 }
 
-namespace
-{
-    float defaultSymbolSize = 3.f;
-}
-
 // -----------------------------------------------------------------------------
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
@@ -56,7 +51,6 @@ GlWidget::GlWidget( QWidget* pParent,
     : SetGlOptions()
     , MapWidget( context_, pParent, width, height, 0 )
     , GlToolsBase( parent, drawingTypes )
-    , baseWidth_( 600.f )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , circle_      ( 0 )
@@ -885,6 +879,11 @@ float GlWidget::ComputeZoomFactor( float& factor, bool bVariableSize /*= true*/ 
     return adaptiveZoomFactor;
 }
 
+namespace
+{
+    const float baseWidth = 600.f;
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawApp6Symbol
 // Created: SBO 2006-03-20
@@ -892,7 +891,7 @@ float GlWidget::ComputeZoomFactor( float& factor, bool bVariableSize /*= true*/ 
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
     thickness *= ComputeZoomFactor( factor );
-    DrawApp6Symbol( symbol, where, baseWidth_ * factor, viewport_,
+    DrawApp6Symbol( symbol, where, baseWidth * factor, viewport_,
         static_cast< unsigned int >( windowWidth_ * thickness ),
         static_cast< unsigned int >( windowHeight_ * thickness ),
         direction, 1, 1, true );
@@ -905,7 +904,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
 void GlWidget::DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float thickness ) const
 {
     thickness *= ComputeZoomFactor( factor );
-    DrawApp6Symbol( symbol, where, baseWidth_ * factor, viewport_,
+    DrawApp6Symbol( symbol, where, baseWidth * factor, viewport_,
         static_cast< unsigned int >( windowWidth_ * thickness ),
         static_cast< unsigned int >( windowHeight_ * thickness ),
         0u, 1, 1, false );
@@ -919,7 +918,12 @@ void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometr
 {
     ComputeZoomFactor( factor, false );
     const Rectangle2f viewport( 0, 0, 256, 256 );
-    DrawApp6Symbol( symbol, where, baseWidth_ * factor, viewport, 4, 4, direction, 1., 1. );
+    DrawApp6Symbol( symbol, where, baseWidth * factor, viewport, 4, 4, direction, 1., 1. );
+}
+
+namespace
+{
+    const float defaultSymbolSize = 3.f;
 }
 
 // -----------------------------------------------------------------------------
@@ -932,7 +936,7 @@ void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geomet
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the default height...
     const Rectangle2f viewport( 0, 0, 256, 256 );
-    DrawApp6Symbol( symbol, where, baseWidth_ * factor, viewport, 4, 4, direction, width, depth, true, svgDeltaX, svgDeltaY );
+    DrawApp6Symbol( symbol, where, baseWidth * factor, viewport, 4, 4, direction, width, depth, true, svgDeltaX, svgDeltaY );
 }
 
 // -----------------------------------------------------------------------------
