@@ -18,7 +18,7 @@ type ServiceFilter struct{}
 
 func (s ServiceFilter) GetFilters(config services.EventFilterConfig) []services.EventFilter {
 	filters := []services.EventFilter{}
-	enabled, ok := config["filter_service"].(map[string]bool)
+	enabled, ok := config["filter_service"].(map[string]string)
 	if !ok {
 		return filters
 	}
@@ -35,15 +35,25 @@ func (s ServiceFilter) Filter(event *sdk.Event, config services.EventFilterConfi
 	return filter[0](event)
 }
 
-func (ServiceFilter) filterService(enabled map[string]bool, event *sdk.Event) bool {
+func parseFilter(filter, host string) bool {
+	if filter == "*" {
+		return false
+	}
+	if filter == "0" {
+		return true
+	}
+	return len(host) == 0 || filter != host
+}
+
+func (ServiceFilter) filterService(enabled map[string]string, event *sdk.Event) bool {
 	none := enabled["none"]
 	url, err := url.Parse(event.GetAction().GetTarget())
 	if err != nil {
-		return !none
+		return parseFilter(none, "")
 	}
 	value, found := enabled[url.Scheme]
 	if !found {
-		return !none
+		return parseFilter(none, "")
 	}
-	return !value
+	return parseFilter(value, url.Host)
 }
