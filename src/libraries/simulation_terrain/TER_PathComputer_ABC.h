@@ -11,7 +11,6 @@
 #define SIMULATION_TERRAIN_PATHCOMPUTER_ABC
 
 #include "TER_Path_ABC.h"
-#include "TER_PathResult_ABC.h"
 #include <boost/noncopyable.hpp>
 
 class MT_Vector2D;
@@ -25,7 +24,7 @@ class TER_Pathfinder_ABC;
 */
 // Created: MCO 2014-05-15
 // =============================================================================
-class TER_PathComputer_ABC : public TER_PathResult_ABC
+class TER_PathComputer_ABC : private boost::noncopyable
 {
 public:
              TER_PathComputer_ABC() {}

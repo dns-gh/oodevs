@@ -10,7 +10,6 @@
 #include "simulation_terrain_pch.h"
 #include "TER_PathSection.h"
 #include "TER_Pathfinder_ABC.h"
-#include "TER_PathResult_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <ctime>
 
@@ -77,16 +76,15 @@ private:
 // Name: TER_PathSection constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-TER_PathSection::TER_PathSection( TER_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
-    const MT_Vector2D& startPoint, const MT_Vector2D& endPoint, bool needRefine, bool useStrictClosest )
-    : result_             ( result  )
-    , rule_               ( std::move( rule ) )
+TER_PathSection::TER_PathSection( std::unique_ptr< TerrainRule_ABC > rule,
+    const MT_Vector2D& startPoint, const MT_Vector2D& endPoint, bool needRefine,
+    bool useStrictClosest )
+    : rule_               ( std::move( rule ) )
     , canceler_           ( new Canceler( *rule_ ) )
     , startPoint_         ( startPoint )
     , endPoint_           ( endPoint )
     , needRefine_         ( needRefine )
     , useStrictClosest_   ( useStrictClosest )
-    , nAddedPoints_       ( 0 )
 {
     // NOTHING
 }
@@ -115,13 +113,6 @@ PathResultPtr TER_PathSection::Execute( TER_Pathfinder_ABC& pathfind,
     pathfind.SetChoiceRatio( useStrictClosest_ ? 0.f : 0.1f );
     const auto res = pathfind.ComputePath( from, to, *canceler_ );
     pathfind.SetConfiguration( 0, 0 );
-    for( auto it = res->points.begin(); it != res->points.end(); ++it )
-    {
-        const geometry::Point2f p( *it );
-        result_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), it->DataAtPoint(),
-                it->DataToNextPoint(), nAddedPoints_ == 0u );
-        ++nAddedPoints_;
-    }
     return res;
 }
 
@@ -141,15 +132,6 @@ const MT_Vector2D& TER_PathSection::GetPosStart() const
 const MT_Vector2D& TER_PathSection::GetPosEnd() const
 {
     return endPoint_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathSection::IsImpossible
-// Created: AGE 2005-03-04
-// -----------------------------------------------------------------------------
-bool TER_PathSection::IsImpossible() const
-{
-    return nAddedPoints_ < 2;
 }
 
 // -----------------------------------------------------------------------------

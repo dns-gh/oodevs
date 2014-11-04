@@ -117,7 +117,14 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
         }
         TER_PathSection& pathSection = **it;
         NotifySectionStarted();
-        if( !pathSection.Execute( pathfind, nComputationEndTime )->found )
+        const auto res = pathSection.Execute( pathfind, nComputationEndTime );
+        for( auto ip = res->points.begin(); ip != res->points.end(); ++ip )
+        {
+            const geometry::Point2f p( *ip );
+            AddResultPoint( MT_Vector2D( p.X(), p.Y() ), ip->DataAtPoint(),
+                    ip->DataToNextPoint(), ip == res->points.begin() );
+        }
+        if( !res->found )
         {
             if( auto last = GetLastPosition() )
                 computedWaypoints_.push_back( *last );
@@ -127,7 +134,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
                 nState_ = TER_Path_ABC::eCanceled;
                 return;
             }
-            else if( it == pathSections_.begin() && pathSection.IsImpossible() )
+            else if( it == pathSections_.begin() && res->points.size() < 2 )
             {
                 nState_ = TER_Path_ABC::eImpossible;
                 return;

@@ -31,7 +31,7 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( context_ ) );
-        computer_->RegisterPathSection( *new TER_PathSection( *computer_, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer_->RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), false, false ) );
     }
 }
 

@@ -51,7 +51,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context_, *it, *(it + 1) ) );
-        computer_->RegisterPathSection( *new TER_PathSection( *computer_, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
+        computer_->RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
     }
     queryMaker.RegisterPath( *this );
 }
