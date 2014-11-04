@@ -21,17 +21,18 @@
 
 #include <timeline/api.h>
 #include <boost/algorithm/string/join.hpp>
-#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineToolBar constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
 TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
-                                  const tools::ExerciseConfig& config )
+                                  const tools::ExerciseConfig& config,
+                                  const std::string& gamingUuid )
     : QToolBar( 0 )
     , eventActionsController_( controllers.eventActions_ )
     , config_( config )
+    , gamingUuid_( gamingUuid )
     , filters_( tr( "All timeline files (*.ord *.timeline)" ) )
     , displayEngaged_( false )
     , displayOrders_( true )
@@ -50,6 +51,7 @@ TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
 TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     : eventActionsController_( other.eventActionsController_ )
     , config_( other.config_ )
+    , gamingUuid_( other.gamingUuid_ )
     , entityFilter_( other.entityFilter_ )
     , filters_( other.filters_ )
     , displayEngaged_( other.displayEngaged_ )
@@ -227,14 +229,23 @@ bool TimelineToolBar::GetEngagedFilter() const
     return displayEngaged_;
 }
 
+namespace
+{
+    std::string ConvertToFilter( bool filter )
+    {
+        return filter ? "*" : "0";
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TimelineToolBar::GetServicesFilter
 // Created: SLI 2013-11-21
 // -----------------------------------------------------------------------------
 std::string TimelineToolBar::GetServicesFilter() const
 {
-     return "sword:" + boost::lexical_cast< std::string >( displayOrders_ )
-          + ",none:" + boost::lexical_cast< std::string >( displayTasks_ );
+    return "sword:" + ConvertToFilter( displayOrders_ )
+         + ",none:" + ConvertToFilter( displayTasks_ )
+         + ",marker:" + gamingUuid_;
 }
 
 // -----------------------------------------------------------------------------

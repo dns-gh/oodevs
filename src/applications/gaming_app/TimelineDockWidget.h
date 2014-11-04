@@ -84,6 +84,7 @@ private:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
+    const std::string gamingUuid_;
     QTabWidget* tabWidget_;
     QMenu* contextMenu_;
     QWidget* mainView_;
