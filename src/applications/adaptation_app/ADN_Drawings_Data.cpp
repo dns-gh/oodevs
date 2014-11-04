@@ -11,7 +11,7 @@
 #include "ADN_Drawings_Data.h"
 #include "ADN_Project_Data.h"
 #include "clients_gui/GLView_ABC.h"
-#include "clients_gui/GlTooltip.h"
+#include "clients_gui/GlTooltip_ABC.h"
 #include "svgl/TextRenderer.h"
 #include "tools/Loader_ABC.h"
 

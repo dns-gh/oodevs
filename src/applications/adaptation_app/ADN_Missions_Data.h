@@ -13,7 +13,6 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
-#include "ADN_Drawings_Data.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 #include "ADN_Missions_ParameterValue.h"
 #include "ADN_Missions_Parameter.h"
