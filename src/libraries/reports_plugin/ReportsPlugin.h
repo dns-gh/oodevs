@@ -34,7 +34,7 @@ class ReportsPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportsPlugin( const tools::SessionConfig& config, const dispatcher::Model_ABC& model );
+    explicit ReportsPlugin( const tools::SessionConfig& config );
     virtual ~ReportsPlugin();
     //@}
 
@@ -49,6 +49,7 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< Reports > reports_;
+    const tools::SessionConfig& config_;
     //@}
 };
 }

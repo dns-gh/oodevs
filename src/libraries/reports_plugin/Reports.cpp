@@ -8,15 +8,12 @@
 // *****************************************************************************
 
 #include "Reports.h"
-#include "dispatcher/Model_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "clients_kernel/XmlAdapter.h"
-#include "tools/SessionConfig.h"
 #include "tools/Sql.h"
 #include "protocol/Protocol.h"
 #include "protocol/XmlWriters.h"
 #include "protocol/XmlReaders.h"
-#include "protocol/MessageParameters.h"
 #include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -38,6 +35,7 @@ namespace
             "CREATE TABLE IF NOT EXISTS reports ("
             "  id           INTEGER PRIMARY KEY"
             ", source       INTEGER NOT NULL"
+            ", source_type  INTEGER NOT NULL"
             ", type         INTEGER NOT NULL"
             ", category     INTEGER NOT NULL"
             ", time         DATETIME NOT NULL"
@@ -46,24 +44,10 @@ namespace
             ")" ) );
         db.Commit( *tr );
     }
-
-    std::unique_ptr< tools::Sql_ABC > InitializeDatabase( const tools::SessionConfig& config, const std::string& filename )
-    {
-        const auto sessionPath = config.BuildSessionChildFile( filename.c_str() );
-        sessionPath.Remove();
-        if( config.HasCheckpoint() )
-        {
-            const auto checkpointPath = config.GetCheckpointDirectory() / filename.c_str();
-            checkpointPath.Copy( sessionPath, tools::Path::OverwriteIfExists );
-        }
-        return std::unique_ptr< tools::Sql_ABC >( new tools::Sql( sessionPath ) );
-    }
 }
 
-Reports::Reports( const tools::SessionConfig& config, const dispatcher::Model_ABC& model )
-    : database_( InitializeDatabase( config, "reports.db" ) )
-    , config_  ( config )
-    , model_   ( model )
+Reports::Reports( const tools::Path& filename )
+    : database_( new tools::Sql( filename ) )
     , tick_    ( 0 )
 {
     MakeTable( *database_ );
@@ -74,12 +58,67 @@ Reports::~Reports()
     // NOTHING
 }
 
+namespace
+{
+    enum E_Type
+    {
+        eUnit = 0,
+        eAutomat,
+        eCrowd,
+        eFormation,
+        eParty,
+        ePopulation
+    };
+    boost::optional< std::pair< uint32_t, uint32_t > > TryGetTasker( const sword::Tasker& tasker )
+    {
+        if( tasker.has_unit() )
+            return std::make_pair( tasker.unit().id(), eUnit );
+        if( tasker.has_automat() )
+            return std::make_pair( tasker.automat().id(), eAutomat );
+        if( tasker.has_crowd() )
+            return std::make_pair( tasker.crowd().id(), eCrowd );
+        if( tasker.has_formation() )
+            return std::make_pair( tasker.formation().id(), eFormation );
+        if( tasker.has_party() )
+            return std::make_pair( tasker.party().id(), eParty );
+        if( tasker.has_population() )
+            return std::make_pair( tasker.population().id(), ePopulation );
+        return boost::none;
+    }
+    sword::Tasker TryGetTasker( int id, int type )
+    {
+        sword::Tasker tasker;
+        switch( type )
+        {
+        case eUnit:
+            tasker.mutable_unit()->set_id( id );
+            break;
+        case eAutomat:
+            tasker.mutable_automat()->set_id( id );
+            break;
+        case eCrowd:
+            tasker.mutable_crowd()->set_id( id );
+            break;
+        case eFormation:
+            tasker.mutable_formation()->set_id( id );
+            break;
+        case eParty:
+            tasker.mutable_party()->set_id( id );
+            break;
+        case ePopulation:
+            tasker.mutable_population()->set_id( id );
+            break;
+        }
+        return tasker;
+    }
+}
+
 void Reports::AddReport( const sword::Report& report )
 {
     try
     {
-        const auto sourceId = protocol::TryGetTasker( report.source() );
-        if( !sourceId )
+        const auto source = TryGetTasker( report.source() );
+        if( !source )
             throw MASA_EXCEPTION( "Invalid tasker" );
 
         auto tr = database_->Begin( true );
@@ -87,15 +126,17 @@ void Reports::AddReport( const sword::Report& report )
             "INSERT INTO reports ("
             "            id "
             ",           source "
+            ",           source_type "
             ",           type "
             ",           category "
             ",           time "
             ",           tick "
             ",           parameters "
-            ") VALUES  ( ?, ?, ?, ?, ?, ?, ? ) "
+            ") VALUES  ( ?, ?, ?, ?, ?, ?, ?, ? ) "
             );
         st->Bind( static_cast< int64_t >( report.report().id() ) );
-        st->Bind( static_cast< int >( *sourceId ) );
+        st->Bind( static_cast< int >( source->first ) );
+        st->Bind( static_cast< int >( source->second ) );
         st->Bind( static_cast< int >( report.type().id() ) );
         st->Bind( report.category() );
         st->Bind( report.time().data() );
@@ -119,22 +160,22 @@ void Reports::AddReport( const sword::Report& report )
 
 namespace
 {
-    void MakeReport( sword::ListReportsAck& reports, tools::Statement_ABC& st,
-                     const dispatcher::Model_ABC& model, unsigned int count )
+    void MakeReport( sword::ListReportsAck& reports, tools::Statement_ABC& st, unsigned int count )
     {
         if( static_cast< unsigned int >( reports.reports_size() ) < count )
         {
             auto& report = *reports.add_reports();
             report.mutable_report()->set_id( static_cast< int32_t >( st.ReadInt64() ) );
-            model.SetToTasker( *report.mutable_source(), st.ReadInt() );
+            const auto sourceId = st.ReadInt();
+            const auto sourceType = st.ReadInt();
+            *report.mutable_source() = TryGetTasker( sourceId, sourceType );
             report.mutable_type()->set_id( st.ReadInt() );
             report.set_category( sword::Report_EnumReportType( st.ReadInt() ) );
             report.mutable_time()->set_data( st.ReadText() );
+            st.ReadInt();
             if( st.IsColumnDefined() )
-            {
                 protocol::Read( kernel::XmlReaderEmptyAdapter(), *report.mutable_parameters(),
                     xml::xistringstream( st.ReadText() ) >> xml::start( "parameters" ) );
-            }
         }
         else
             reports.set_next_report( static_cast< int32_t >( st.ReadInt64() ) );
@@ -148,6 +189,7 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, u
         std::string sql =
             "SELECT id "
             ",      source "
+            ",      source_type "
             ",      type "
             ",      category "
             ",      time "
@@ -166,7 +208,7 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, u
         st->Bind( static_cast< int >( count + 1 ) );
 
         while( st->Next() )
-            MakeReport( reports, *st, model_, count );
+            MakeReport( reports, *st, count );
     }
     catch( const tools::SqlException& err )
     {
@@ -174,11 +216,11 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, u
     }
 }
 
-void Reports::Save( const std::string& path )
+void Reports::Save( const tools::Path& filename )
 {
     try
     {
-        database_->Save( config_.GetCheckpointDirectory( tools::Path::FromUTF8( path ) / "reports.db" ) );
+        database_->Save( filename );
     }
     catch( const tools::SqlException& err )
     {

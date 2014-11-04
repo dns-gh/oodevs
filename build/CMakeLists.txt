@@ -386,6 +386,7 @@ add_target( plugins_test tests "tests/plugins_test" OPTIONS protocol test )
 target_link_libraries( plugins_test
     clients_kernel
     logistic_plugin
+    reports_plugin
     rpr
     script_plugin
     tic

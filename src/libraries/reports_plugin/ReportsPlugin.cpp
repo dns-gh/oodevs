@@ -10,11 +10,28 @@
 #include "ReportsPlugin.h"
 #include "Reports.h"
 #include "protocol/Protocol.h"
+#include "tools/SessionConfig.h"
 
 using namespace plugins::reports;
 
-ReportsPlugin::ReportsPlugin( const tools::SessionConfig& config, const dispatcher::Model_ABC& model )
-    : reports_( new Reports( config, model ) )
+namespace
+{
+    std::unique_ptr< Reports > InitializeReports( const tools::SessionConfig& config, const std::string& name )
+    {
+        const auto filename = config.BuildSessionChildFile( name.c_str() );
+        filename.Remove();
+        if( config.HasCheckpoint() )
+        {
+            const auto checkpointPath = config.GetCheckpointDirectory() / name.c_str();
+            checkpointPath.Copy( filename, tools::Path::OverwriteIfExists );
+        }
+        return std::unique_ptr< Reports >( new Reports( filename ) );
+    }
+}
+
+ReportsPlugin::ReportsPlugin( const tools::SessionConfig& config )
+    : reports_( InitializeReports( config, "reports.db" ) )
+    , config_ ( config )
 {
     // NOTHING
 }
@@ -31,7 +48,10 @@ void ReportsPlugin::Receive( const sword::SimToClient& msg )
     else if( msg.message().has_report() )
         reports_->AddReport( msg.message().report() );
     else if( msg.message().has_control_checkpoint_save_end() )
-        reports_->Save( msg.message().control_checkpoint_save_end().name() );
+    {
+        const auto checkpointName = tools::Path::FromUTF8( msg.message().control_checkpoint_save_end().name() );
+        reports_->Save( config_.GetCheckpointDirectory( checkpointName / "reports.db" ) );
+    }
 }
 
 bool ReportsPlugin::HandleClientToSim( const sword::ClientToSim& msg,

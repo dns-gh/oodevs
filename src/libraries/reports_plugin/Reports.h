@@ -16,12 +16,7 @@
 
 namespace tools
 {
-    class SessionConfig;
-}
-
-namespace dispatcher
-{
-    class Model_ABC;
+    class Path;
 }
 
 namespace sword
@@ -39,7 +34,7 @@ class Reports : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( const tools::SessionConfig& config, const dispatcher::Model_ABC& model );
+    explicit Reports( const tools::Path& filename );
     virtual ~Reports();
     //@}
 
@@ -48,7 +43,7 @@ public:
     void AddReport( const sword::Report& report );
     void ListReports( sword::ListReportsAck& reports,
                       unsigned int count, unsigned int from );
-    void Save( const std::string& path );
+    void Save( const tools::Path& filename );
     void Update( int tick );
     //@}
 
@@ -56,8 +51,6 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< tools::Sql_ABC > database_;
-    const tools::SessionConfig& config_;
-    const dispatcher::Model_ABC& model_;
     int tick_;
     //@}
 };
