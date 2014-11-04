@@ -2085,6 +2085,10 @@ func (c *Client) ListReports(maxCount, start uint32) ([]*sword.Report, uint32, e
 		if reply == nil {
 			return ErrContinue
 		}
+		code := reply.GetErrorCode()
+		if code != sword.ListReportsAck_no_error {
+			return makeError(reply, int32(code), sword.ListReportsAck_ErrorCode_name)
+		}
 		DeepCopy(&reports, reply.GetReports())
 		nextReport = reply.GetNextReport()
 		return nil

@@ -212,7 +212,8 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, u
     }
     catch( const tools::SqlException& err )
     {
-        MT_LOG_ERROR_MSG( err.msg );
+        reports.set_error_code( sword::ListReportsAck::error_invalid_request );
+        reports.set_error_msg( err.msg );
     }
 }
 

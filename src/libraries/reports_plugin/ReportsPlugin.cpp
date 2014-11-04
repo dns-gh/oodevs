@@ -62,6 +62,8 @@ bool ReportsPlugin::HandleClientToSim( const sword::ClientToSim& msg,
     const auto& message = msg.message().list_reports();
 
     sword::SimToClient reply;
+    auto& ack = *reply.mutable_message()->mutable_list_reports_ack();
+    ack.set_error_code( sword::ListReportsAck::no_error );
     reports_->ListReports( *reply.mutable_message()->mutable_list_reports_ack(), message.max_count(),
         message.has_report() ? message.report() : 0 );
     unicaster.Send( reply );
