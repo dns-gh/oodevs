@@ -340,7 +340,10 @@ void GLOptions::Remove( const std::string& name )
 // -----------------------------------------------------------------------------
 float GLOptions::GetRatio( const kernel::Entity_ABC& entity ) const
 {
-    const std::string level = entity.Get< kernel::TacticalHierarchies >().GetLevel();
+    const auto hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+    if( !hierarchy )
+        return 1;
+    const std::string level = hierarchy->GetLevel();
     const auto* commandPost = entity.Retrieve< kernel::CommandPostAttributes_ABC >();
     const bool isPC = commandPost && commandPost->IsCommandPost();
     const auto name = "SymbolSize/" + ( isPC ? "Headquarters" : boost::algorithm::erase_all_copy( level, "levels/" ) );
