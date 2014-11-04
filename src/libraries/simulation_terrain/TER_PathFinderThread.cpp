@@ -105,9 +105,9 @@ void TER_PathFinderThread::ProcessDynamicData()
     }
 }
 
-TerrainPathfinder& TER_PathFinderThread::GetPathfinder( bool dynamic )
+boost::shared_ptr< TerrainPathfinder > TER_PathFinderThread::GetPathfinder( bool dynamic )
 {
-    return dynamic ? *pathfinder_ : *staticPathfinder_;
+    return dynamic ? pathfinder_ : staticPathfinder_;
 }
 
 // -----------------------------------------------------------------------------

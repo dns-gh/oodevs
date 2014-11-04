@@ -16,7 +16,6 @@
 #include <boost/weak_ptr.hpp>
 
 class TER_PathComputer_ABC;
-class TER_Pathfinder_ABC;
 
 // TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
 // TER_PathFinderThread. While the cleanup code itself belongs to TER_Path_ABC,
@@ -35,15 +34,12 @@ public:
     //@}
 
     bool IgnoreDynamicObjects() const;
-
-    // Computes path and returned processing time in milliseconds.
-    double FindPath( TER_Pathfinder_ABC& pathfind, unsigned int deadline );
-
-private:
-    //! @name Helpers
-    //@{
     bool IsItinerary() const;
-    //@}
+
+    // Returns the path computer or 0 if it was destroyed before the request
+    // could be processed.
+    boost::shared_ptr< TER_PathComputer_ABC > GetComputer();
+    const sword::Pathfind& GetPathfind() const;
 
 private:
     //! @name Member data

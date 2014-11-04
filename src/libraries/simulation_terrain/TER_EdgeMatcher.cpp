@@ -52,7 +52,8 @@ TER_EdgeMatcher::T_PathPoints ReadPathPoints( const sword::PathResult& result )
 
 }  // namespace
 
-TER_EdgeMatcher::TER_EdgeMatcher( TER_Pathfinder_ABC& pathfinder,
+TER_EdgeMatcher::TER_EdgeMatcher(
+        const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
         const sword::Pathfind& pathfind )
     : pathfinder_( pathfinder )
     , pathfind_( pathfind )
@@ -62,17 +63,17 @@ TER_EdgeMatcher::TER_EdgeMatcher( TER_Pathfinder_ABC& pathfinder,
 
 void TER_EdgeMatcher::SetId( size_t id )
 {
-    pathfinder_.SetId( id );
+    pathfinder_->SetId( id );
 }
 
 void TER_EdgeMatcher::SetChoiceRatio( float ratio )
 {
-    pathfinder_.SetChoiceRatio( ratio );
+    pathfinder_->SetChoiceRatio( ratio );
 }
 
 void TER_EdgeMatcher::SetConfiguration( unsigned refine, unsigned int subdivisions )
 {
-    pathfinder_.SetConfiguration( refine, subdivisions );
+    pathfinder_->SetConfiguration( refine, subdivisions );
 }
 
 TER_EdgeMatcher::T_Waypoints TER_EdgeMatcher::FindWaypoints(
@@ -111,7 +112,7 @@ PathResultPtr TER_EdgeMatcher::ComputePath( const geometry::Point2f& from,
     if( segment.first < 0 || segment.second < 0 )
     {
         MT_LOG_INFO_MSG( "Segment [" << from << "] -> [" << to << "] not found in itinerary id='" << pathfind_.id() << "', computing a new path." );
-        return pathfinder_.ComputePath( from, to, rule );
+        return pathfinder_->ComputePath( from, to, rule );
     }
     const auto res = boost::make_shared< PathResult >();
     res->found = false;

@@ -42,11 +42,11 @@ public:
     void AddDynamicDataToRegister  ( const DynamicDataPtr& data );
     void AddDynamicDataToUnregister( const DynamicDataPtr& data );
     void ProcessDynamicData();
-    TerrainPathfinder& GetPathfinder( bool dynamic );
+    boost::shared_ptr< TerrainPathfinder > GetPathfinder( bool dynamic );
 
 private:
-    std::unique_ptr< TerrainPathfinder > pathfinder_;
-    std::unique_ptr< TerrainPathfinder > staticPathfinder_;
+    boost::shared_ptr< TerrainPathfinder > pathfinder_;
+    boost::shared_ptr< TerrainPathfinder > staticPathfinder_;
     std::map< DynamicDataPtr, RetractationPtr > handlers_;
     boost::mutex                       dynamicDataMutex_;
     std::vector< DynamicDataPtr >      dynamicDataToRegister_;

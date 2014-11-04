@@ -9,10 +9,6 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PathfindRequest.h"
-#include "TER_EdgeMatcher.h"
-#include "TER_PathComputer_ABC.h"
-#include "MT_Tools/MT_Profiler.h"
-#include <boost/make_shared.hpp>
 
 TER_PathfindRequest::TER_PathfindRequest(
         const boost::shared_ptr< TER_PathComputer_ABC >& computer,
@@ -33,23 +29,14 @@ bool TER_PathfindRequest::IgnoreDynamicObjects() const
     return pathfind_.request().ignore_dynamic_objects();
 }
 
-double TER_PathfindRequest::FindPath( TER_Pathfinder_ABC& pathfinder, unsigned int deadline )
+boost::shared_ptr< TER_PathComputer_ABC > TER_PathfindRequest::GetComputer()
 {
-    auto computer = computer_.lock(); // thread-safe
-    if( !computer )
-        return 0;
-    MT_Profiler profiler;
-    profiler.Start();
-    if( IsItinerary() )
-    {
-        TER_EdgeMatcher matcher( pathfinder, pathfind_ );
-        computer->Execute( matcher, deadline );
-    }
-    else
-    {
-        computer->Execute( pathfinder, deadline );
-    }
-    return profiler.Stop();
+    return computer_.lock();
+}
+
+const sword::Pathfind& TER_PathfindRequest::GetPathfind() const
+{
+    return pathfind_;
 }
 
 bool TER_PathfindRequest::IsItinerary() const

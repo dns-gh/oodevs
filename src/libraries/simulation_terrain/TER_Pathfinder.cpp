@@ -9,6 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_Pathfinder.h"
+#include "TER_EdgeMatcher.h"
 #include "TER_PathComputer_ABC.h"
 #include "TER_Pathfinder.h"
 #include "TER_Pathfinder_ABC.h"
@@ -17,6 +18,7 @@
 #include "TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Profiler.h"
+#include "protocol/Simulation.h"
 #include <pathfind/PathfindFileDumper.h>
 #include <pathfind/TerrainPathfinder.h>
 #include <boost/interprocess/detail/atomic.hpp>
@@ -42,7 +44,7 @@ struct PathfindDumper : public TER_Pathfinder_ABC
                       , public boost::noncopyable
 {
     PathfindDumper( const tools::Path& dump, const std::set< size_t >& filter,
-                     TerrainPathfinder& root )
+                     boost::shared_ptr< TerrainPathfinder >& root )
         : dump_  ( dump )
         , filter_( filter )
         , root_  ( root )
@@ -56,11 +58,11 @@ struct PathfindDumper : public TER_Pathfinder_ABC
     }
     virtual void SetChoiceRatio( float ratio )
     {
-        root_.SetChoiceRatio( ratio );
+        root_->SetChoiceRatio( ratio );
     }
     virtual void SetConfiguration( unsigned nRefining, unsigned int nSubdivisions )
     {
-        root_.SetConfiguration( nRefining, nSubdivisions );
+        root_->SetConfiguration( nRefining, nSubdivisions );
     }
     virtual PathResultPtr ComputePath( const geometry::Point2f& from,
                               const geometry::Point2f& to,
@@ -71,9 +73,9 @@ struct PathfindDumper : public TER_Pathfinder_ABC
         if( dump )
         {
             PathfindFileDumper dumper( GetFilename(), rule );
-            return root_.ComputePath( from, to, dumper );
+            return root_->ComputePath( from, to, dumper );
         }
-        return root_.ComputePath( from, to, rule );
+        return root_->ComputePath( from, to, rule );
     }
 private:
     tools::Path GetFilename() const
@@ -89,7 +91,7 @@ private:
     static boost::uint32_t    s_idx_;
     const tools::Path&        dump_;
     const std::set< size_t >& filter_;
-    TerrainPathfinder&        root_;
+    boost::shared_ptr< TerrainPathfinder> root_;
     size_t                    id_;
 };
 
@@ -257,6 +259,10 @@ boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned in
 
 void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindRequest& rq )
 {
+    const auto computer = rq.GetComputer();
+    if( !computer )
+        return;
+
     const unsigned int deadline = nMaxComputationDuration_ == std::numeric_limits< unsigned int >::max()
         ? std::numeric_limits< unsigned int >::max()
         : static_cast< unsigned int >( std::time( 0 ) ) + nMaxComputationDuration_;
@@ -264,9 +270,15 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
     try
     {
         data.ProcessDynamicData();
-        auto& pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
-        PathfindDumper dumper( dumpDir_, dumpFilter_, pathfinder );
-        duration = rq.FindPath( dumper, deadline );
+        auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
+        boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
+            boost::make_shared< PathfindDumper >( dumpDir_, dumpFilter_, pathfinder );
+        MT_Profiler profiler;
+        profiler.Start();
+        if( rq.IsItinerary() )
+            wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
+        computer->Execute( *wrapper, deadline );
+        duration = profiler.Stop();
     }
     catch( const std::exception& e )
     {

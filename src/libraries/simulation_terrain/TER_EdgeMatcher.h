@@ -13,6 +13,7 @@
 #include "TER_Pathfinder_ABC.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 #include <vector>
 
 class TerrainRule_ABC;
@@ -30,7 +31,8 @@ public:
     typedef std::vector< std::pair< int, int > > T_Waypoints;
 
 public:
-    TER_EdgeMatcher( TER_Pathfinder_ABC& pathfinder, const sword::Pathfind& pathfind );
+    TER_EdgeMatcher( const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
+                     const sword::Pathfind& pathfind );
     
     virtual void SetId( size_t id );
     virtual void SetChoiceRatio( float ratio );
@@ -44,7 +46,7 @@ private:
     std::pair< int, int > MatchWaypoints( const T_Waypoints& from,
             const T_Waypoints& to );
 private:
-    TER_Pathfinder_ABC& pathfinder_;
+    boost::shared_ptr< TER_Pathfinder_ABC > pathfinder_;
     const sword::Pathfind& pathfind_;
 };
 
