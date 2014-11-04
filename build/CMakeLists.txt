@@ -752,7 +752,6 @@ target_link_libraries( host
     web
     version
     ${BCRYPT_LIBRARIES}
-    ${SQLITE3_LIBRARIES}
     ${TOOLS_LIBRARIES}
 )
 
