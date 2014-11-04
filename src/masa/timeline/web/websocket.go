@@ -10,14 +10,10 @@ package web
 
 import (
 	"code.google.com/p/go.net/websocket"
-	"code.google.com/p/goprotobuf/proto"
 	"io"
-	"masa/timeline/sdk"
 	"masa/timeline/server"
-	"masa/timeline/services"
 	"masa/timeline/util"
 	"net"
-	"net/url"
 	"regexp"
 	"sync/atomic"
 	"time"
@@ -118,7 +114,7 @@ func (s *Server) socketHandler(log util.Logger, ws *websocket.Conn) {
 	}
 	defer s.controller.UnregisterObserver(uuid, observer)
 	if service := req.FormValue("register_service"); len(service) > 0 {
-		_, err = s.controller.AttachService(uuid, service, &ObserverService{service, req.URL.String(), observer, log, nil})
+		_, err = s.controller.AttachService(uuid, service, server.NewObserverService(service, req.URL.String(), observer, log))
 		if err != nil {
 			log.Printf("[ws] Unable to register observer service %s: %s\n", uuid, err)
 			return

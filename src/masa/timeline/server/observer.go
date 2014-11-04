@@ -109,6 +109,15 @@ type ObserverService struct {
 	serviceObserver services.Observer
 }
 
+func NewObserverService(uuid, source string, observer SdkObserver, log util.Logger) *ObserverService {
+	return &ObserverService{
+		uuid:     uuid,
+		source:   source,
+		observer: observer,
+		log:      log,
+	}
+}
+
 func (os *ObserverService) Proto(name string) *sdk.Service {
 	return &sdk.Service{
 		Name:  proto.String(name),
