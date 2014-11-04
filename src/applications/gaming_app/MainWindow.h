@@ -119,7 +119,6 @@ public slots:
     void ToggleFullScreen();
     void ToggleDocks();
     void OnAddRaster();
-    void OnGenerateSymbols();
     void PlayPauseSoundControl( bool play );
     void OnUpdateGL();
     //@}

@@ -472,7 +472,6 @@ void MainWindow::NotifyModeChanged( E_Modes newMode )
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
-    static bool firstPass = true;
     const QString appName = tr( "SWORD" );
     const QString modePlanif =  tr( " - Planning mode on" );
     if( simulation.IsConnected() )
@@ -499,12 +498,6 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         Close();
     }
     setCaption( GetCurrentMode() == eModes_Planning ? planifName_ + modePlanif : planifName_ );
-
-    if( simulation.IsInitialized() && firstPass )
-    {
-        QTimer::singleShot( 500, this, SLOT( OnGenerateSymbols() ) );
-        firstPass = false;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -648,15 +641,6 @@ void MainWindow::OnAddRaster()
     {
         QMessageBox::critical( this, tr( "Error loading image file" ), tr( "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::OnGenerateSymbols
-// Created: NPT 2013-05-15
-// -----------------------------------------------------------------------------
-void MainWindow::OnGenerateSymbols()
-{
-    icons_->GenerateSymbols( model_.teams_ );
 }
 
 // -----------------------------------------------------------------------------

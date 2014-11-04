@@ -11,7 +11,6 @@
 #define __EntitySymbols_h_
 
 #include <boost/noncopyable.hpp>
-#include <tools/Resolver.h>
 
 namespace kernel
 {
@@ -27,15 +26,13 @@ namespace gui
 
 // =============================================================================
 /** @class  EntitySymbols
-    @brief  EntitySymbols
+    @brief  Entity symbols
 */
 // Created: SBO 2007-02-21
 // =============================================================================
 class EntitySymbols : private boost::noncopyable
 {
 public:
-    //! @name Type
-    //@{
     enum ColorMode
     {
         eColorBase,
@@ -43,35 +40,18 @@ public:
         eColorSelected,
         eColorSuperiorSelected
     };
-    //@}
 
-    //! @name Constructors/Destructor
-    //@{
+public:
              EntitySymbols( SymbolIcons& icons, ColorStrategy_ABC& strategy );
     virtual ~EntitySymbols();
-    //@}
 
-    //! @name Operations
-    //@{
     const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const QSize& size = QSize( 64, 64 ), ColorMode colorMode = eColorBase ) const;
     const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
         const QSize& size = QSize( 64, 64 ), ColorMode colorMode = eColorBase ) const;
 
-    void GenerateSymbols( const tools::Resolver< kernel::Team_ABC >& teamResolver ) const;
-    //@}
-
 private:
-    //! @name Helper
-    //@{
-    void RecGenerateSymbols( const kernel::Entity_ABC& entity ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     SymbolIcons& icons_;
     ColorStrategy_ABC& strategy_;
-    //@}
 };
 
 }
