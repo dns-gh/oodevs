@@ -46,7 +46,6 @@ private:
     virtual T_PathPoints GetResult() const;
 
     void DoExecute( TER_Pathfinder_ABC& pathfind );
-    void NotifySectionStarted();
     void NotifyPartialSection();
     void NotifyCompletedSection();
     boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;
@@ -69,7 +68,6 @@ private:
     MT_Vector2D lastWaypoint_;
     std::vector< MT_Vector2D > computedWaypoints_;
     T_PathPoints resultList_;
-    bool bSectionJustStarted_;
 };
 
 #endif // __DEC_PathComputer_h_

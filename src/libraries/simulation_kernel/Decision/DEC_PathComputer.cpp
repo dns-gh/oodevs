@@ -37,7 +37,6 @@ DEC_PathComputer::DEC_PathComputer( std::size_t id )
     , computerId_( ::computersId++ )
     , nState_( TER_Path_ABC::eComputing )
     , bJobCanceled_( false )
-    , bSectionJustStarted_( false )
 {
     // NOTHING
 }
@@ -116,7 +115,6 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
             return;
         }
         TER_PathSection& pathSection = **it;
-        NotifySectionStarted();
         const auto res = pathSection.Execute( pathfind, nComputationEndTime );
         for( auto ip = res->points.begin(); ip != res->points.end(); ++ip )
         {
@@ -252,13 +250,9 @@ const std::vector< MT_Vector2D >& DEC_PathComputer::GetComputedWaypoints() const
 
 void DEC_PathComputer::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint )
 {
-    if( bSectionJustStarted_ )
-    {
-        bSectionJustStarted_ = false;
+    if( beginPoint && !resultList_.empty() )
         // skip the first next point of the new section
-        if( !resultList_.empty() )
-            return;
-    }
+        return;
     if( !resultList_.empty() && MIL_AgentServer::IsInitialized() )
     {
         SlopeSpeedModifier slopeSpeedModifier;
@@ -284,11 +278,6 @@ void DEC_PathComputer::AddResultPoint( const MT_Vector2D& vPos, const TerrainDat
     }
     auto point = boost::make_shared< TER_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
     resultList_.push_back( point );
-}
-
-void DEC_PathComputer::NotifySectionStarted()
-{
-    bSectionJustStarted_ = true;
 }
 
 void DEC_PathComputer::NotifyPartialSection()
