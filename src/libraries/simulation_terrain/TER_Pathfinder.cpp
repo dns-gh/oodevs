@@ -162,7 +162,7 @@ TER_Pathfinder::~TER_Pathfinder()
 // -----------------------------------------------------------------------------
 void TER_Pathfinder::StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
 {
-    auto p = boost::make_shared< TER_PathfindRequest >( *this, path, pathfind );
+    auto p = boost::make_shared< TER_PathfindRequest >( path, pathfind );
     boost::mutex::scoped_lock locker( mutex_ );
     if( path->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
