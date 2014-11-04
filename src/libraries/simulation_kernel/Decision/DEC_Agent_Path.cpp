@@ -12,8 +12,6 @@
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Agent_PathfinderRule.h"
 #include "DEC_AgentContext.h"
-#include "DEC_PathComputer_ABC.h"
-#include "DEC_PathSection.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
@@ -28,6 +26,8 @@
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
+#include "simulation_terrain/TER_PathSection.h"
 #include <boost/make_shared.hpp>
 
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType,
-    const boost::shared_ptr< DEC_PathComputer_ABC >& computer )
+    const boost::shared_ptr< TER_PathComputer_ABC >& computer )
     : DEC_PathResult     ( pathType )
     , queryMaker_        ( queryMaker )
     , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
@@ -51,7 +51,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context_, *it, *(it + 1) ) );
-        computer_->RegisterPathSection( *new DEC_PathSection( *computer_, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
+        computer_->RegisterPathSection( *new TER_PathSection( *computer_, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
     }
     queryMaker.RegisterPath( *this );
 }
@@ -379,7 +379,7 @@ const T_PointVector& DEC_Agent_Path::GetNextWaypoints() const
     return nextWaypoints_;
 }
 
-DEC_Path_ABC::E_State DEC_Agent_Path::GetState() const
+TER_Path_ABC::E_State DEC_Agent_Path::GetState() const
 {
     return computer_->GetState();
 }

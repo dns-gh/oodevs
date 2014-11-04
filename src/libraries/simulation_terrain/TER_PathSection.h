@@ -1,16 +1,14 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-02-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathSection.h $
-// $Author: Age $
-// $Modtime: 10/05/05 16:48 $
-// $Revision: 6 $
-// $Workfile: DEC_PathSection.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2014 MASA Group
+//
+// *****************************************************************************
 
-#ifndef __DEC_PathSection_h_
-#define __DEC_PathSection_h_
+#ifndef SIMULATION_TERRAIN_PATHSECTION_H
+#define SIMULATION_TERRAIN_PATHSECTION_H
 
 #include "MT_Tools/MT_Vector2D.h"
 #include <pathfind/TerrainPathPoint.h>
@@ -19,22 +17,22 @@
 #include <tools/thread/Handler_ABC.h>
 
 class TER_Pathfinder_ABC;
-class DEC_PathResult_ABC;
+class TER_PathResult_ABC;
 
 // =============================================================================
 // @class  DEC_Tools
 // Created: NLD 2005-02-22
 // =============================================================================
-class DEC_PathSection : private tools::thread::Handler_ABC< TerrainPathPoint >
+class TER_PathSection : private tools::thread::Handler_ABC< TerrainPathPoint >
                           , private pathfind::AStarManagementCallback_ABC
                           , private boost::noncopyable
 {
 public:
-             DEC_PathSection(
-                    DEC_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
+             TER_PathSection(
+                    TER_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
                     const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint,
                     bool needRefine, bool useStrictClosest );
-    virtual ~DEC_PathSection();
+    virtual ~TER_PathSection();
 
     //! @name Operations
     //@{
@@ -60,7 +58,7 @@ private:
     //@}
 
 private:
-    DEC_PathResult_ABC& result_;
+    TER_PathResult_ABC& result_;
     std::unique_ptr< TerrainRule_ABC > rule_;
     MT_Vector2D startPoint_;
     const MT_Vector2D endPoint_;
@@ -71,4 +69,4 @@ private:
     unsigned int nAddedPoints_;
 };
 
-#endif // __DEC_PathSection_h_
+#endif // SIMULATION_TERRAIN_PATHSECTION_H

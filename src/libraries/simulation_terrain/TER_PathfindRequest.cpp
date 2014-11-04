@@ -3,24 +3,26 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-#include "DEC_PathFindRequest.h"
-#include "DEC_PathFind_Manager.h"
-#include "DEC_PathComputer_ABC.h"
-#include "Tools/MIL_Tools.h"
+#include "simulation_terrain_pch.h"
+#include "TER_PathfindRequest.h"
+#include "TER_PathComputer_ABC.h"
+#include "TER_PathFinder_ABC.h"
+#include "TER_Pathfinder.h"
+#include "TER_World.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_Logger.h"
-#include "simulation_terrain/TER_PathFinder_ABC.h"
+#include "MT_Tools/MT_Vector2d.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <tools/thread/Handler_ABC.h>
 #include <boost/foreach.hpp>
 
-DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager& manager, const boost::shared_ptr< DEC_PathComputer_ABC >& computer,
-                                          const sword::Pathfind& pathfind )
+TER_PathfindRequest::TER_PathfindRequest( TER_Pathfinder& manager,
+        const boost::shared_ptr< TER_PathComputer_ABC >& computer,
+        const sword::Pathfind& pathfind )
     : manager_( manager )
     , computer_( computer )
     , pathfind_( pathfind )
@@ -28,12 +30,12 @@ DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager& manager, const b
     // NOTHING
 }
 
-DEC_PathFindRequest::~DEC_PathFindRequest()
+TER_PathfindRequest::~TER_PathfindRequest()
 {
     // NOTHING
 }
 
-bool DEC_PathFindRequest::IgnoreDynamicObjects() const
+bool TER_PathfindRequest::IgnoreDynamicObjects() const
 {
     return pathfind_.request().ignore_dynamic_objects();
 }
@@ -55,7 +57,10 @@ namespace
     TerrainPathPoint ReadPathPoint( const sword::PathPoint& point )
     {
         MT_Vector2D position;
-        MIL_Tools::ConvertCoordMosToSim( point.coordinate(), position );
+        TER_World::GetWorld().MosToSimMgrsCoord(
+                point.coordinate().latitude(),
+                point.coordinate().longitude(),
+                position );
         return TerrainPathPoint( geometry::Point2f( static_cast< float >( position.GetX() ),
                                                     static_cast< float >( position.GetY() ) ),
                                  ReadTerrainData( point.current() ), ReadTerrainData( point.next() ) );
@@ -148,11 +153,11 @@ namespace
     };
 }
 
-void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
+double TER_PathfindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
 {
     auto computer = computer_.lock(); // thread-safe
     if( !computer )
-        return;
+        return 0;
     MT_Profiler profiler;
     profiler.Start();
     if( IsItinerary() )
@@ -164,10 +169,10 @@ void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfinder )
     {
         computer->Execute( pathfinder );
     }
-    manager_.CleanPathAfterComputation( profiler.Stop() );
+    return profiler.Stop();
 }
 
-bool DEC_PathFindRequest::IsItinerary() const
+bool TER_PathfindRequest::IsItinerary() const
 {
     return pathfind_.has_result();
 }

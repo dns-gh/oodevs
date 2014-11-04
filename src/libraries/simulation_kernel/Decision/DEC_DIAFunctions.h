@@ -17,8 +17,8 @@
 class MIL_Mission_ABC;
 class DEC_Gen_Object;
 class DEC_Knowledge_Object;
-class DEC_Path_ABC;
 class TER_Localisation;
+class TER_Path_ABC;
 class MT_Vector2D;
 
 //=============================================================================
@@ -33,7 +33,7 @@ public:
     // Debug
     static std::string PointToString( MT_Vector2D* p1 );
     static std::string DirectionToString( MT_Vector2D* p1 );
-    static std::string PathToString( DEC_Path_ABC* pPath );
+    static std::string PathToString( TER_Path_ABC* pPath );
     static void BreakForDebug( unsigned int id, const std::string& message );
 
     // DIA user types list manipulation

@@ -13,7 +13,6 @@
 #include "DEC_PathFunctions.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_PathComputer.h"
@@ -38,6 +37,7 @@
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include <geometry/Types.h>
 #include <boost/smart_ptr/make_shared.hpp>
 
@@ -45,7 +45,7 @@
 // Name: DEC_PathFunctions::CreatePathToPointBM
 // Created: MGD 2009-10-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > end, int pathType )
+boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > end, int pathType )
 {
     return CreatePathToPoint( callerAgent, end.get(), pathType );
 }
@@ -109,7 +109,7 @@ namespace
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
+boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
 {
     assert( pEnd );
     std::vector< MT_Vector2D > points;
@@ -124,7 +124,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
 // Name: DEC_PathFunctions::CreatePathToPointList
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType )
+boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType )
 {
     assert( !listPt.empty() );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
@@ -141,7 +141,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
 // Created: NLD 2004-09-23
 // Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-int DEC_PathFunctions::GetPathState( MIL_AgentPion& /*callerAgent*/, DEC_Path_ABC* pPath )
+int DEC_PathFunctions::GetPathState( MIL_AgentPion& /*callerAgent*/, TER_Path_ABC* pPath )
 {
     if( !pPath )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -267,7 +267,7 @@ std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >
 // Created: JVT 2004-11-30
 // Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MIL_AgentPion& /*callerAgent*/, const DEC_Path_ABC* pPath )
+boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MIL_AgentPion& /*callerAgent*/, const TER_Path_ABC* pPath )
 {
     assert( pPath );
     const DEC_PathResult* path = dynamic_cast< const DEC_PathResult* > ( pPath );
@@ -281,7 +281,7 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MI
 // Created: JVT 2004-11-30
 // Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath )
+bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const TER_Path_ABC* pPath )
 {
     return pPath && callerAgent.GetRole< moving::PHY_RoleAction_Moving >().IsMovingOn( *pPath );
 }

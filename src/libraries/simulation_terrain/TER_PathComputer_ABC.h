@@ -7,35 +7,35 @@
 //
 // *****************************************************************************
 
-#ifndef __DEC_PathComputer_ABC_h_
-#define __DEC_PathComputer_ABC_h_
+#ifndef SIMULATION_TERRAIN_PATHCOMPUTER_ABC
+#define SIMULATION_TERRAIN_PATHCOMPUTER_ABC
 
-#include "DEC_Path_ABC.h"
-#include "DEC_PathResult_ABC.h"
+#include "TER_Path_ABC.h"
+#include "TER_PathResult_ABC.h"
 #include <boost/noncopyable.hpp>
 
-class DEC_PathSection;
 class MT_Vector2D;
 class TER_PathPoint;
+class TER_PathSection;
 class TER_Pathfinder_ABC;
 
 // =============================================================================
-/** @class  DEC_PathComputer_ABC
-    @brief  DEC_PathComputer_ABC
+/** @class  TER_PathComputer_ABC
+    @brief  TER_PathComputer_ABC
 */
 // Created: MCO 2014-05-15
 // =============================================================================
-class DEC_PathComputer_ABC : public DEC_PathResult_ABC
+class TER_PathComputer_ABC : public TER_PathResult_ABC
 {
 public:
-             DEC_PathComputer_ABC() {}
-    virtual ~DEC_PathComputer_ABC() {}
+             TER_PathComputer_ABC() {}
+    virtual ~TER_PathComputer_ABC() {}
 
     virtual double GetLength() const = 0;
     virtual void Execute( TER_Pathfinder_ABC& pathfind ) = 0;
     virtual void Cancel() = 0;
-    virtual DEC_Path_ABC::E_State GetState() const = 0;
-    virtual void RegisterPathSection( DEC_PathSection& section ) = 0;
+    virtual TER_Path_ABC::E_State GetState() const = 0;
+    virtual void RegisterPathSection( TER_PathSection& section ) = 0;
 
     virtual const MT_Vector2D& GetLastWaypoint() const = 0;
     virtual const std::vector< MT_Vector2D >& GetComputedWaypoints() const = 0;
@@ -46,4 +46,4 @@ public:
 
 };
 
-#endif // __DEC_PathComputer_ABC_h_
+#endif // SIMULATION_TERRAIN_PATHCOMPUTER_ABC

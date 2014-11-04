@@ -17,7 +17,7 @@ class MIL_LimaOrder;
 class MIL_Agent_ABC;
 class DEC_Agent_PathClass;
 class DEC_AgentContext_ABC;
-class DEC_PathComputer_ABC;
+class TER_PathComputer_ABC;
 class DEC_Rep_PathPoint;
 
 //*****************************************************************************
@@ -28,7 +28,7 @@ class DEC_Agent_Path : public DEC_PathResult
 {
 public:
              DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType,
-                 const boost::shared_ptr< DEC_PathComputer_ABC >& computer );
+                 const boost::shared_ptr< TER_PathComputer_ABC >& computer );
     virtual ~DEC_Agent_Path();
 
     virtual void Cancel();
@@ -68,7 +68,7 @@ private:
     const T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
     boost::shared_ptr< DEC_AgentContext_ABC > context_;
-    boost::shared_ptr< DEC_PathComputer_ABC > computer_;
+    boost::shared_ptr< TER_PathComputer_ABC > computer_;
     //@}
 };
 

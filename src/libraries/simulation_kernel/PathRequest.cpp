@@ -93,9 +93,9 @@ bool PathRequest::Update( ActionManager& actions )
     if( path_ )
         return false;
     const auto state = computer_->GetState();
-    if( state == DEC_Path_ABC::eComputing )
+    if( state == TER_Path_ABC::eComputing )
         return false;
-    const bool ok = state != DEC_Path_ABC::eInvalid && state != DEC_Path_ABC::eImpossible;
+    const bool ok = state != TER_Path_ABC::eInvalid && state != TER_Path_ABC::eImpossible;
     path_ = sword::PathResult();
     if( ok )
         computer_->Serialize( *path_ );

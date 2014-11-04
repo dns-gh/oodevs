@@ -10,6 +10,7 @@
 #ifndef tools_PhyLoader_h
 #define tools_PhyLoader_h
 
+#include <tools/Path.h>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
@@ -23,53 +24,42 @@ namespace xml
 
 namespace tools
 {
-    class Path;
-
     class Loader_ABC;
     class ExerciseConfig;
 
-// =============================================================================
-/** @class  PhyLoader
-    @brief  PhyLoader
-*/
-// Created: NLD 2011-02-14
-// =============================================================================
 class PhyLoader : private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
     typedef std::function< void ( xml::xistream& ) > T_Loader;
-    //@}
+
+    struct File
+    {
+        boost::shared_ptr< const xml::xistream > xml;
+        tools::Path path;
+    };
 
 public:
-    //! @name Constructors/Destructor
-    //@{
              PhyLoader( const Path& physicalFile, const ExerciseConfig& config,
                      const boost::shared_ptr< Loader_ABC >& loader );
     virtual ~PhyLoader();
-    //@}
 
-    //! @name Operations
-    //@{
-    virtual Path LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
-    virtual Path LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
-    virtual Path GetPhysicalChildFile( const std::string& rootTag ) const;
-    virtual Path GetPhysicalChildPath( const std::string& rootTag ) const;
-    //@}
+    // Return the file path/name loaded
+    Path LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const;
+    // Return the file path/name loaded
+    Path LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const;
+    Path GetPhysicalChildFile( const std::string& rootTag ) const;
+    Path GetPhysicalChildPath( const std::string& rootTag ) const;
+    File GetPhysicalXml( const std::string& rootTag, bool optional ) const;
 
 private:
     Path LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const;
 
 private:
-    //! @name Member data
-    //@{
     const boost::shared_ptr< Loader_ABC > loader_;
     const ExerciseConfig& config_;
     std::map< std::string, std::string > allowedFiles_;
     std::map< std::string, std::string > allowedPaths_;
     mutable std::map< std::string, boost::shared_ptr< xml::xistream > > cached_;
-    //@}
 };
 
 }

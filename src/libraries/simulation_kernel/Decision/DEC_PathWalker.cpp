@@ -76,7 +76,7 @@ bool DEC_PathWalker::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 // Name: DEC_PathWalker::IsMovingOn
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::IsMovingOn( const DEC_Path_ABC& path ) const
+bool DEC_PathWalker::IsMovingOn( const TER_Path_ABC& path ) const
 {
     return pCurrentPath_ && path == *pCurrentPath_;
 }
@@ -530,7 +530,7 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
         return eAlreadyMoving;
 
     DEC_PathResult::E_State nPathState = pPath->GetState();
-    if( nPathState == DEC_Path_ABC::eImpossible )
+    if( nPathState == TER_Path_ABC::eImpossible )
     {
         if( !bImpossibleReportSent_ )
         {
@@ -543,10 +543,10 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
     }
     else
         bImpossibleReportSent_ = false;
-    if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible || nPathState == DEC_Path_ABC::eCanceled )
+    if( nPathState == TER_Path_ABC::eInvalid || nPathState == TER_Path_ABC::eImpossible || nPathState == TER_Path_ABC::eCanceled )
         return eNotAllowed;
 
-    if( nPathState == DEC_Path_ABC::eComputing )
+    if( nPathState == TER_Path_ABC::eComputing )
     {
         bHasMoved_ = true;
         return eRunning;
@@ -632,7 +632,7 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
 // -----------------------------------------------------------------------------
 void DEC_PathWalker::MoveSuspended( const boost::shared_ptr< DEC_PathResult >& pPath )
 {
-    if( !pCurrentPath_ && ( pPath->GetState() == DEC_Path_ABC::eValid || pPath->GetState() == DEC_Path_ABC::ePartial ) )
+    if( !pCurrentPath_ && ( pPath->GetState() == TER_Path_ABC::eValid || pPath->GetState() == TER_Path_ABC::ePartial ) )
         SetCurrentPath(pPath );
     if( !pCurrentPath_ && !bForcePathCheck_ )
         MT_LOG_ERROR_MSG( "Move cannot be suspended" );

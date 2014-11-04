@@ -11,17 +11,17 @@
 #include "DEC_Population_Path.h"
 #include "DEC_Population_PathClass.h"
 #include "DEC_Population_PathfinderRule.h"
-#include "DEC_PathSection.h"
-#include "DEC_PathComputer_ABC.h"
 #include "DEC_PopulationContext.h"
 #include "Decision/DEC_PathType.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
+#include "simulation_terrain/TER_PathSection.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Population_Path constructor
 // Created: JSR 2014-01-16
 //-----------------------------------------------------------------------------
 DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const T_PointVector& points,
-    const boost::shared_ptr< DEC_PathComputer_ABC >& computer )
+    const boost::shared_ptr< TER_PathComputer_ABC >& computer )
     : DEC_PathResult( DEC_PathType::movement_ )
     , context_( new DEC_PopulationContext( population, points ) )
     , computer_( computer )
@@ -31,7 +31,7 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( context_ ) );
-        computer_->RegisterPathSection( *new DEC_PathSection( *computer_, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer_->RegisterPathSection( *new TER_PathSection( *computer_, std::move( rule ), *it, *(it + 1), false, false ) );
     }
 }
 
@@ -59,7 +59,7 @@ void DEC_Population_Path::Finalize()
     }
 }
 
-DEC_Path_ABC::E_State DEC_Population_Path::GetState() const
+TER_Path_ABC::E_State DEC_Population_Path::GetState() const
 {
     return computer_->GetState();
 }

@@ -17,10 +17,10 @@ namespace sword
 
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
-class DEC_Path_ABC;
 class MIL_Fuseau;
 class MT_Vector2D;
 class TER_Localisation;
+class TER_Path_ABC;
 
 // =============================================================================
 /** @class  DEC_CommunicationFunctions
@@ -72,8 +72,8 @@ public:
     static bool F_Pion_GetNeedReinforcement( DEC_Decision_ABC* pPion );
     static void F_Pion_SetNeedReinforcement( DEC_Decision_ABC* pPion, bool value );
     static boost::shared_ptr< DEC_Knowledge_Agent > F_Pion_GetEnemyAttackedBy( DEC_Decision_ABC* pPion );
-    static boost::shared_ptr< DEC_Path_ABC > F_Pion_GetitMvt( DEC_Decision_ABC* pPion );
-    static void F_Pion_SetitMvt( DEC_Decision_ABC* pPion, const boost::shared_ptr< DEC_Path_ABC >& value );
+    static boost::shared_ptr< TER_Path_ABC > F_Pion_GetitMvt( DEC_Decision_ABC* pPion );
+    static void F_Pion_SetitMvt( DEC_Decision_ABC* pPion, const boost::shared_ptr< TER_Path_ABC >& value );
     static boost::shared_ptr< MT_Vector2D > F_Pion_GetobjectifEsquive( DEC_Decision_ABC* pPion );
     static void F_Pion_SetobjectifEsquive( DEC_Decision_ABC* pPion, MT_Vector2D* value );
     static boost::shared_ptr< DEC_Knowledge_Agent > F_Pion_GeteniEnCours( DEC_Decision_ABC* pPion );

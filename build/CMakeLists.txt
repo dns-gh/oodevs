@@ -481,7 +481,7 @@ add_target( resource_network server "libraries/resource_network" OPTIONS protoco
 target_link_libraries( resource_network ${XERCES_LIBRARIES} )
 
 # simulation_terrain
-add_target( simulation_terrain server "libraries/simulation_terrain" )
+add_target( simulation_terrain server "libraries/simulation_terrain" OPTIONS protocol )
 target_link_libraries( simulation_terrain
     sword_tools
     ${ANALYSYS_LIBRARIES}

@@ -23,10 +23,10 @@ namespace client
 
 class DEC_AutomateDecision;
 class DEC_Knowledge_Agent;
-class DEC_Path_ABC;
 class MIL_Mission_ABC;
 class MT_Vector2D;
 class PHY_RoePopulation;
+class TER_Path_ABC;
 
 enum E_CloseCombatState;
 enum E_FightRateState;
@@ -133,8 +133,8 @@ public:
     void SetbPasserSurLC( bool value );
     DEC_Decision_ABC* GetpionEnEscorte() const;
     void SetpionEnEscorte( DEC_Decision_ABC* value );
-    boost::shared_ptr< DEC_Path_ABC > GetitMvt() const;
-    void SetitMvt( const boost::shared_ptr< DEC_Path_ABC >& value );
+    boost::shared_ptr< TER_Path_ABC > GetitMvt() const;
+    void SetitMvt( const boost::shared_ptr< TER_Path_ABC >& value );
     boost::shared_ptr< MT_Vector2D > GetobjectifEsquive() const;
     void SetobjectifEsquive( MT_Vector2D* value );
     boost::shared_ptr< DEC_Knowledge_Agent > GeteniEnCours() const;
@@ -250,7 +250,7 @@ private:
     bool bStateHasChanged_;     // Network
     DEC_Decision_ABC* pionEnEscorte_;
     std::vector< DEC_Decision_ABC* > pionsEnAppui_;
-    boost::shared_ptr< DEC_Path_ABC > itMvt_;
+    boost::shared_ptr< TER_Path_ABC > itMvt_;
     boost::shared_ptr< MT_Vector2D > objectifEsquive_;
     boost::shared_ptr< DEC_Knowledge_Agent > eniEnCours_;
     std::string missionPrecedente_;

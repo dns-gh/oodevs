@@ -130,9 +130,9 @@ void RolePion_Decision::RegisterControlActions()
 void RolePion_Decision::RegisterActions()
 {
     RegisterFunction( "DEC_StartDeplacement",
-        std::function< unsigned int( boost::shared_ptr< DEC_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< DEC_Path_ABC > >, boost::ref( GetPion() ), _1 ) ) );
+        std::function< unsigned int( boost::shared_ptr< TER_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< TER_Path_ABC > >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_StartMovementSuspended",
-        std::function< unsigned int( boost::shared_ptr< DEC_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< DEC_Path_ABC >, bool >, boost::ref( GetPion() ), _1, true ) ) );
+        std::function< unsigned int( boost::shared_ptr< TER_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< TER_Path_ABC >, bool >, boost::ref( GetPion() ), _1, true ) ) );
     RegisterFunction( "DEC_Orientate",
         std::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_ActionFunctions::Orientate, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_StartTirDirect",
@@ -154,13 +154,13 @@ void RolePion_Decision::RegisterActions()
 void RolePion_Decision::RegisterPath()
 {
     RegisterFunction( "DEC_CreerItineraire",
-        std::function< boost::shared_ptr< DEC_Path_ABC >( MT_Vector2D*, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPoint, boost::ref( GetPion() ), _1, _2 ) ) );
+        std::function< boost::shared_ptr< TER_Path_ABC >( MT_Vector2D*, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPoint, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_CreerItineraireBM",
-        std::function< boost::shared_ptr< DEC_Path_ABC >( boost::shared_ptr< MT_Vector2D >, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointBM, boost::ref( GetPion() ), _1, _2 ) ) );
+        std::function< boost::shared_ptr< TER_Path_ABC >( boost::shared_ptr< MT_Vector2D >, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointBM, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_CreerItineraireListe",
-        std::function< boost::shared_ptr< DEC_Path_ABC >( std::vector< boost::shared_ptr< MT_Vector2D > >, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointList, boost::ref( GetPion() ), _1, _2 ) ) );
+        std::function< boost::shared_ptr< TER_Path_ABC >( std::vector< boost::shared_ptr< MT_Vector2D > >, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointList, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Itineraire_EstEnMouvementSur",
-        std::function< bool ( const DEC_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::IsMovingOnPath, boost::ref( GetPion() ), _1 ) ) );
+        std::function< bool ( const TER_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::IsMovingOnPath, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Itineraire_ExtrapolerPosition" ,
         std::function< boost::shared_ptr< MT_Vector2D >( const double, bool ) >( boost::bind( &DEC_PathFunctions::ExtrapolatePosition, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_GetNextObjectOnPath",
@@ -170,9 +170,9 @@ void RolePion_Decision::RegisterPath()
         std::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
         boost::bind( &DEC_PathFunctions::GetNextObjectOnPathWithBypassed, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     RegisterFunction( "DEC_Itineraire_Etat",
-        std::function< int ( DEC_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::GetPathState, boost::ref( GetPion() ), _1 ) ) );
+        std::function< int ( TER_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::GetPathState, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Itineraire_DernierPoint",
-        std::function< boost::shared_ptr< MT_Vector2D >( const DEC_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::GetLastPointOfPath, boost::ref( GetPion() ), _1 ) ) );
+        std::function< boost::shared_ptr< MT_Vector2D >( const TER_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::GetLastPointOfPath, boost::ref( GetPion() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

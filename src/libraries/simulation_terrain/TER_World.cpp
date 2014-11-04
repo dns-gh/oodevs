@@ -23,7 +23,6 @@
 #include "TER_PopulationManager.h"
 #include "TER_CoordinateManager.h"
 #include "TER_StaticData.h"
-#include "TER_PathFindManager.h"
 #include "TER_Analyzer.h"
 #include "TER_LimitDataManager.h"
 #include <spatialcontainer/TerrainData.h>
@@ -70,9 +69,8 @@ TER_World::TER_World( const tools::ExerciseConfig& config )
     pObjectManager_     = new TER_ObjectManager    ( extent );
     pPopulationManager_ = new TER_PopulationManager( extent );
     pCoordinateManager_ = new TER_CoordinateManager( config.GetTerrainLatitude(), config.GetTerrainLongitude(), extent );
-    pGraphManager_      = new TER_StaticData       ( config.GetPathfindGraphFile(), config.GetPathfindNodesFile(), config.GetPathfindLinksFile(), 1e-4f );
-    pPathfindManager_   = new TER_PathFindManager  ( *pGraphManager_ );
-    analyzer_.reset( new TER_Analyzer( *pGraphManager_ ) );
+    staticGraph_.reset( new TER_StaticData( config.GetPathfindGraphFile(), config.GetPathfindNodesFile(), config.GetPathfindLinksFile(), 1e-4f ) );
+    analyzer_.reset( new TER_Analyzer( *staticGraph_ ) );
     limitManager_.reset( new TER_LimitDataManager() );
 }
 
@@ -82,8 +80,7 @@ TER_World::TER_World( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 TER_World::~TER_World()
 {
-    delete pPathfindManager_;
-    delete pGraphManager_;
+    staticGraph_.reset();
     delete pCoordinateManager_;
     delete pObjectManager_;
     delete pAgentManager_;
@@ -206,16 +203,6 @@ double TER_World::GetWeldValue() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_World::GetPathFindManager
-// Created: AGE 2005-02-01
-// -----------------------------------------------------------------------------
-TER_PathFindManager& TER_World::GetPathFindManager() const
-{
-    assert( pPathfindManager_ );
-    return *pPathfindManager_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_World::GetAnalyzer
 // Created: CMA 2011-08-16
 // -----------------------------------------------------------------------------
@@ -259,6 +246,11 @@ TER_LimitDataManager& TER_World::GetLimitManager() const
     return *limitManager_;
 }
 
+boost::shared_ptr< TER_StaticData > TER_World::GetStaticGraph() const
+{
+    return staticGraph_;
+}
+
 namespace
 {
 
@@ -293,4 +285,14 @@ boost::shared_ptr< TER_World > CreateWorld( const std::string& exercise )
 {
     const auto config = CreateConfig( exercise );
     return boost::make_shared< TER_World >( *config );
+}
+
+void TER_World::SetPathfinder( const boost::shared_ptr< TER_Pathfinder >& pathfinder )
+{
+    pathfinder_ = pathfinder;
+}
+ 
+TER_Pathfinder& TER_World::GetPathfinder() const
+{
+    return *pathfinder_;
 }

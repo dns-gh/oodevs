@@ -1,26 +1,24 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathSection.cpp $
-// $Author: Age $
-// $Modtime: 12/05/05 16:18 $
-// $Revision: 7 $
-// $Workfile: DEC_PathSection.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2014 MASA Group
+//
+// *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-#include "DEC_PathSection.h"
-#include "DEC_PathResult_ABC.h"
+#include "simulation_terrain_pch.h"
+#include "TER_PathSection.h"
+#include "TER_Pathfinder_ABC.h"
+#include "TER_PathResult_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <ctime>
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection constructor
+// Name: TER_PathSection constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-DEC_PathSection::DEC_PathSection( DEC_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
+TER_PathSection::TER_PathSection( TER_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
     const MT_Vector2D& startPoint, const MT_Vector2D& endPoint, bool needRefine, bool useStrictClosest )
     : result_             ( result  )
     , rule_               ( std::move( rule ) )
@@ -36,19 +34,19 @@ DEC_PathSection::DEC_PathSection( DEC_PathResult_ABC& result, std::unique_ptr< T
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection destructor
+// Name: TER_PathSection destructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-DEC_PathSection::~DEC_PathSection()
+TER_PathSection::~TER_PathSection()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::Execute
+// Name: TER_PathSection::Execute
 // Created: AGE 2005-02-24
 // -----------------------------------------------------------------------------
-bool DEC_PathSection::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime )
+bool TER_PathSection::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime )
 {
     geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
     geometry::Point2f to( float( endPoint_.rX_ ), float( endPoint_.rY_ ) );
@@ -62,10 +60,10 @@ bool DEC_PathSection::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nCompu
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::Handle
+// Name: TER_PathSection::Handle
 // Created: AGE 2005-02-24
 // -----------------------------------------------------------------------------
-void DEC_PathSection::Handle( const TerrainPathPoint& point )
+void TER_PathSection::Handle( const TerrainPathPoint& point )
 {
     const geometry::Point2f p( point );
     result_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint(), nAddedPoints_ == 0u );
@@ -73,10 +71,10 @@ void DEC_PathSection::Handle( const TerrainPathPoint& point )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::ShouldEndComputation
+// Name: TER_PathSection::ShouldEndComputation
 // Created: AGE 2005-02-28
 // -----------------------------------------------------------------------------
-bool DEC_PathSection::ShouldEndComputation( float /*rCostToCurrentNode*/, float /*rCostToGoalNode*/ )
+bool TER_PathSection::ShouldEndComputation( float /*rCostToCurrentNode*/, float /*rCostToGoalNode*/ )
 {
     if( bCanceled_ )
         return true;
@@ -89,55 +87,55 @@ bool DEC_PathSection::ShouldEndComputation( float /*rCostToCurrentNode*/, float 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::GetPosStart
+// Name: TER_PathSection::GetPosStart
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-const MT_Vector2D& DEC_PathSection::GetPosStart() const
+const MT_Vector2D& TER_PathSection::GetPosStart() const
 {
     return startPoint_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::GetPosEnd
+// Name: TER_PathSection::GetPosEnd
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-const MT_Vector2D& DEC_PathSection::GetPosEnd() const
+const MT_Vector2D& TER_PathSection::GetPosEnd() const
 {
     return endPoint_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::IsImpossible
+// Name: TER_PathSection::IsImpossible
 // Created: AGE 2005-03-04
 // -----------------------------------------------------------------------------
-bool DEC_PathSection::IsImpossible() const
+bool TER_PathSection::IsImpossible() const
 {
     return nAddedPoints_ < 2;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::Cancel
+// Name: TER_PathSection::Cancel
 // Created: AGE 2005-02-28
 // -----------------------------------------------------------------------------
-void DEC_PathSection::Cancel()
+void TER_PathSection::Cancel()
 {
     bCanceled_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::GetLength
+// Name: TER_PathSection::GetLength
 // Created: AGE 2005-02-28
 // -----------------------------------------------------------------------------
-double DEC_PathSection::GetLength() const
+double TER_PathSection::GetLength() const
 {
     return startPoint_.Distance( endPoint_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection::SetPosStart
+// Name: TER_PathSection::SetPosStart
 // Created: CMA 2011-04-18
 // -----------------------------------------------------------------------------
-void DEC_PathSection::SetPosStart( const MT_Vector2D& point )
+void TER_PathSection::SetPosStart( const MT_Vector2D& point )
 {
     startPoint_ = point;
 }

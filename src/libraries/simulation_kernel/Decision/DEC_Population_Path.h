@@ -16,7 +16,7 @@
 
 class MIL_Population;
 class DEC_PopulationContext_ABC;
-class DEC_PathComputer_ABC;
+class TER_PathComputer_ABC;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -26,7 +26,7 @@ class DEC_Population_Path : public DEC_PathResult
 {
 public:
              DEC_Population_Path( const MIL_Population& population, const T_PointVector& points,
-                const boost::shared_ptr< DEC_PathComputer_ABC >& computer );
+                const boost::shared_ptr< TER_PathComputer_ABC >& computer );
     virtual ~DEC_Population_Path();
 
 private:
@@ -43,7 +43,7 @@ private:
     //@{
     MT_Profiler profiler_;
     boost::shared_ptr< DEC_PopulationContext_ABC > context_;
-    boost::shared_ptr< DEC_PathComputer_ABC > computer_;
+    boost::shared_ptr< TER_PathComputer_ABC > computer_;
     //@}
 };
 

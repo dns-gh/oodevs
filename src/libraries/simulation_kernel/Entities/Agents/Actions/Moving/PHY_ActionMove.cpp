@@ -18,7 +18,6 @@
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_PathComputer.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathWalker.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -37,6 +36,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "propagation/Extractor_ABC.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
@@ -45,7 +45,7 @@
 // Name: PHY_ActionMove constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath, bool suspended )
+PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< TER_Path_ABC > pPath, bool suspended )
     : PHY_DecisionCallbackAction_ABC( pion )
     , pion_( pion )
     , role_( pion.GetRole< moving::PHY_RoleAction_Moving >() )
@@ -58,7 +58,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
 {
     if( suspended )
         Suspend();
-    if( pMainPath_->GetState() == DEC_Path_ABC::eCanceled )
+    if( pMainPath_->GetState() == TER_Path_ABC::eCanceled )
     {
         pion.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
         CreateNewPath();
@@ -192,7 +192,7 @@ bool PHY_ActionMove::AvoidObstacles()
 void PHY_ActionMove::CreateNewPath()
 {
     assert( pMainPath_ );
-    assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
+    assert( pMainPath_->GetState() != TER_Path_ABC::eComputing );
     T_PointVector nextWaypoints = pMainPath_->GetNextWaypoints();
     nextWaypoints.insert( nextWaypoints.begin(), pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     const DEC_PathType& pathType = pMainPath_->GetPathType();
@@ -222,7 +222,7 @@ void PHY_ActionMove::Execute()
         Callback< int >( DEC_PathWalker::eNotAllowed );
         return;
     }
-    if( pMainPath_->GetState() != DEC_Path_ABC::eComputing
+    if( pMainPath_->GetState() != TER_Path_ABC::eComputing
         && ( AvoidObstacles()
             || executionSuspended_
                 && ( pMainPath_->GetCurrentKeyOnPath() == pMainPath_->GetResult().end()
@@ -282,7 +282,7 @@ void PHY_ActionMove::StopAction()
 // -----------------------------------------------------------------------------
 PHY_ActionMove::E_State PHY_ActionMove::GetState() const
 {
-    if( pMainPath_->GetState() == DEC_Path_ABC::eComputing )
+    if( pMainPath_->GetState() == TER_Path_ABC::eComputing )
         return eRunning;
     if( !role_.HasCurrentPath() )
         return eRunning;

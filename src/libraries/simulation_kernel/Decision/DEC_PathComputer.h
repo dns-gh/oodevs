@@ -10,8 +10,8 @@
 #ifndef __DEC_PathComputer_h_
 #define __DEC_PathComputer_h_
 
-#include "DEC_PathComputer_ABC.h"
 #include "MT_Tools/MT_Profiler.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include <boost/optional.hpp>
 #include <vector>
 
@@ -23,7 +23,7 @@ class TER_PathPoint;
 */
 // Created: MCO 2014-05-15
 // =============================================================================
-class DEC_PathComputer : public DEC_PathComputer_ABC
+class DEC_PathComputer : public TER_PathComputer_ABC
 {
 public:
              DEC_PathComputer( std::size_t id );
@@ -32,8 +32,8 @@ public:
     virtual double GetLength() const;
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void Cancel();
-    virtual DEC_Path_ABC::E_State GetState() const;
-    virtual void RegisterPathSection( DEC_PathSection& section );
+    virtual TER_Path_ABC::E_State GetState() const;
+    virtual void RegisterPathSection( TER_PathSection& section );
 
     virtual const MT_Vector2D& GetLastWaypoint() const;
     virtual const std::vector< MT_Vector2D >& GetComputedWaypoints() const;
@@ -55,13 +55,15 @@ private:
     std::string DEC_PathComputer::GetStateAsString() const;
 
 private:
-    typedef std::vector< DEC_PathSection* > T_PathSectionVector;
+    typedef std::vector< TER_PathSection* > T_PathSectionVector;
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 
 private:
     MT_Profiler profiler_;
     std::size_t id_;
-    DEC_Path_ABC::E_State nState_;
+    // Identify the current computation, for logging purpose
+    const std::size_t computerId_;
+    TER_Path_ABC::E_State nState_;
     bool bJobCanceled_;
     T_PathSectionVector pathSections_;
     MT_Vector2D lastWaypoint_;

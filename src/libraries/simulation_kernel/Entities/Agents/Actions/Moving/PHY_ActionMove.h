@@ -23,8 +23,8 @@ namespace moving
 {
     class PHY_RoleAction_Moving;
 }
-class DEC_Path_ABC;
 class DEC_Agent_Path;
+class TER_Path_ABC;
 
 // =============================================================================
 // @class  PHY_ActionMove
@@ -41,7 +41,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath, bool suspended = false );
+             PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< TER_Path_ABC > pPath, bool suspended = false );
     virtual ~PHY_ActionMove();
     //@}
 

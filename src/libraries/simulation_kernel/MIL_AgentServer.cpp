@@ -9,7 +9,9 @@
 
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "CheckPoints/SerializationTools.h"
-#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_Agent_PathClass.h"
+#include "Decision/DEC_PathType.h"
+#include "Decision/DEC_Population_PathClass.h"
 #include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Decision/Brain.h"
@@ -25,13 +27,16 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "resource_network/ResourceNetworkModel.h"
-#include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
+#include "Tools/MIL_IDManager.h"
+#include "Urban/MIL_UrbanCache.h"
+#include "simulation_terrain/TER_Pathfinder.h"
+#include "simulation_terrain/TER_World.h"
+#include "tools/Codec.h"
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "tools/FileWrapper.h"
-#include "Urban/MIL_UrbanCache.h"
-#include "Tools/MIL_IDManager.h"
+#include "tools/PhyLoader.h"
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -59,55 +64,107 @@ unsigned long FindMaxIdInFile( const tools::Path& filePath )
 
 namespace
 {
-    struct AgentServerInit : boost::noncopyable
-    {
-        explicit AgentServerInit( MIL_AgentServer*& agent )
-            : agent_( agent )
-            , done_ ( false )
-        {}
-        ~AgentServerInit()
-        {
-            if( !done_ )
-                agent_ = 0;
-        }
-        void Done()
-        {
-            done_ = true;
-        }
 
-    private:
-        MIL_AgentServer*& agent_;
-        bool done_;
-    };
-
-    unsigned long FindMaxId( const MIL_Config& config )
+struct AgentServerInit : boost::noncopyable
+{
+    explicit AgentServerInit( MIL_AgentServer*& agent )
+        : agent_( agent )
+        , done_ ( false )
+    {}
+    ~AgentServerInit()
     {
-        unsigned long maxUrbanId = FindMaxIdInFile( config.GetUrbanFile() );
-        unsigned long maxOrbatId = FindMaxIdInFile( config.GetOrbatFile() );
-        return std::max( maxUrbanId, maxOrbatId ) + 2;
+        if( !done_ )
+            agent_ = 0;
+    }
+    void Done()
+    {
+        done_ = true;
     }
 
-    PHY_MeteoDataManager* CreateMeteoManager(
-        const boost::shared_ptr< TER_World >& world, MIL_Config& config,
-        uint32_t tickDuration )
-    {
-        auto xis = config.GetLoader().LoadFile( config.GetWeatherFile() );
+private:
+    MIL_AgentServer*& agent_;
+    bool done_;
+};
 
-        // Extract and configure exercise start time
-        std::string date;
-        *xis >> xml::start( "weather" )
-                >> xml::start( "exercise-date" )
-                    >> xml::attribute( "value", date )
-                >> xml::end
-            >> xml::end;
-        const auto since = bpt::from_iso_string( date ) - bpt::from_time_t( 0 );
-        MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
-        const auto now = MIL_Time_ABC::GetTime().GetRealTime();
-
-        return new PHY_MeteoDataManager(
-                world, *xis, config.GetDetectionFile(), now, tickDuration );
-    }
+unsigned long FindMaxId( const MIL_Config& config )
+{
+    unsigned long maxUrbanId = FindMaxIdInFile( config.GetUrbanFile() );
+    unsigned long maxOrbatId = FindMaxIdInFile( config.GetOrbatFile() );
+    return std::max( maxUrbanId, maxOrbatId ) + 2;
 }
+
+PHY_MeteoDataManager* CreateMeteoManager(
+    const boost::shared_ptr< TER_World >& world, MIL_Config& config,
+    uint32_t tickDuration )
+{
+    auto xis = config.GetLoader().LoadFile( config.GetWeatherFile() );
+
+    // Extract and configure exercise start time
+    std::string date;
+    *xis >> xml::start( "weather" )
+            >> xml::start( "exercise-date" )
+                >> xml::attribute( "value", date )
+            >> xml::end
+        >> xml::end;
+    const auto since = bpt::from_iso_string( date ) - bpt::from_time_t( 0 );
+    MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
+    const auto now = MIL_Time_ABC::GetTime().GetRealTime();
+
+    return new PHY_MeteoDataManager(
+            world, *xis, config.GetDetectionFile(), now, tickDuration );
+}
+
+boost::shared_ptr< TER_Pathfinder > CreatePathfindManager( const MIL_Config& config,
+       const MIL_ObjectFactory& objectFactory )
+{
+    const auto maxAvoidanceDist = objectFactory.GetMaxAvoidanceDistance();
+    const auto& dangerousObjects = objectFactory.GetDangerousObjects();
+
+    const auto file = config.GetPhyLoader().GetPhysicalXml( "pathfinder", false );
+
+    // Extract pathfind configuration
+    double distanceThreshold;
+    unsigned int maxEndConnections;
+    auto x = xml::xisubstream( *file.xml );
+    x >> xml::start( "pathfind" )
+            >> xml::start( "configuration" )
+                >> xml::attribute( "distance-threshold", distanceThreshold )
+                >> xml::attribute( "max-end-connections", maxEndConnections );
+
+    unsigned int maxComputationDuration;
+    boost::optional< unsigned int > duration = config.GetPathFinderMaxComputationTime();
+    if( duration )
+        maxComputationDuration = *duration;
+    else
+        tools::ReadTimeAttribute( x, "max-calculation-time", maxComputationDuration );
+    x >> xml::end;
+
+    const unsigned int threads = config.GetPathFinderThreads();
+    MT_LOG_INFO_MSG( "Starting " << threads << " pathfind thread(s)" );
+    MT_LOG_INFO_MSG( "Setting pathfind.max-calculation-time=" << maxComputationDuration );
+
+    // Initialize the singletons before the pathfinder
+    DEC_PathType::Initialize();
+    DEC_Agent_PathClass::Initialize( x, dangerousObjects );
+    DEC_Population_PathClass::Initialize( x, dangerousObjects );
+
+    // The shared_ptr allows a destructor without having to write a class
+    const auto pathfinder = boost::shared_ptr< TER_Pathfinder >( new TER_Pathfinder(
+        TER_World::GetWorld().GetStaticGraph(), threads, distanceThreshold,
+        maxAvoidanceDist, maxEndConnections, maxComputationDuration,
+        config.GetPathfindDir(), config.GetPathfindFilter() ),
+        []( TER_Pathfinder* m )
+        {
+            delete m;
+            DEC_Population_PathClass::Terminate();
+            DEC_Agent_PathClass::Terminate();
+            DEC_PathType::Terminate();
+        });
+    TER_World::GetWorld().SetPathfinder( pathfinder );
+    return pathfinder;
+}
+
+}  // namespace
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 
@@ -133,7 +190,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pEntityManager_       ( 0 )
     , pWorkspaceDIA_        ( 0 )
     , pMeteoDataManager_    ( 0 )
-    , pPathFindManager_     ( 0 )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
     , pUrbanCache_          ( new MIL_UrbanCache() )
@@ -174,7 +230,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
     
-    pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
+    pPathFindManager_ = CreatePathfindManager( config_, *pObjectFactory_ );
     if( config_.HasCheckpoint() )
     {
         updateState_ = !config_.GetPausedAtStartup();
@@ -219,7 +275,7 @@ MIL_AgentServer::~MIL_AgentServer()
     MT_LOG_INFO_MSG( "Terminating Simulation..." );
     timerManager_.Unregister( *this );
     MT_LOG_INFO_MSG( "Terminating pathfind threads" );
-    delete pPathFindManager_;
+    pPathFindManager_.reset();
     delete pBurningCells_;
     // $$$$ AGE 2005-02-21:
 //    MT_LOG_INFO_MSG( "Cleaning up simulation data" );
@@ -719,7 +775,7 @@ PHY_MeteoDataManager& MIL_AgentServer::GetMeteoDataManager() const
 // Name: MIL_AgentServer::GetPathFindManager
 // Created: JDY 03-02-12
 //-----------------------------------------------------------------------------
-DEC_PathFind_Manager& MIL_AgentServer::GetPathFindManager() const
+TER_Pathfinder& MIL_AgentServer::GetPathFindManager() const
 {
     assert( pPathFindManager_ );
     return *pPathFindManager_;
