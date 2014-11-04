@@ -77,7 +77,6 @@ private:
 private:
     //! @name Member data
     //@{
-    geometry::BoundingBox viewport_;
     float pixels_;
     float expectedPrecision_;
     T_PropertyMap properties_;

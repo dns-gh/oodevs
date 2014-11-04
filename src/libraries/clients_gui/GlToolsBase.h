@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( const tools::ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
 
     virtual float GetCurrentAlpha() const;
     virtual void SetCurrentColor( float r, float g, float b, float a = 1 );

@@ -29,8 +29,7 @@ using namespace svg;
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
 RenderingContext::RenderingContext()
-    : viewport_()
-    , pixels_( 1 )
+    : pixels_( 1 )
     , expectedPrecision_( 10 )
     , pickingMode_( false )
     , lineWithFactor_( 1.f )
@@ -86,7 +85,6 @@ RenderingContext::~RenderingContext()
 // -----------------------------------------------------------------------------
 void RenderingContext::SetViewport( const geometry::BoundingBox& viewport, unsigned w, unsigned h )
 {
-    viewport_ = viewport;
     pixels_ =   std::sqrt( ( viewport.Width() * viewport.Width() + viewport.Height() * viewport.Height() ) )
               / std::sqrt( ( float( w ) * w + float( h ) * h ) );
     expectedPrecision_ = 10 * pixels_;

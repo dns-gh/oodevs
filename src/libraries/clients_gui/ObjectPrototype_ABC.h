@@ -42,7 +42,6 @@ namespace gui
     class ObjectAttributePrototypeFactory_ABC;
     class ParametersLayer;
     class RichLabel;
-    class SymbolIcons;
 }
 
 namespace gui
