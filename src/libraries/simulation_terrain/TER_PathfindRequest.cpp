@@ -124,7 +124,7 @@ namespace
             return std::make_pair( -1, -1 );
         }
 
-        virtual PathResultPtr ComputePath( const geometry::Point2f& from,\
+        virtual PathResultPtr ComputePath( const geometry::Point2f& from,
                 const geometry::Point2f& to, TerrainRule_ABC& rule )
         {
             const T_PathPoints points = ReadPathPoints( pathfind_.result() );
