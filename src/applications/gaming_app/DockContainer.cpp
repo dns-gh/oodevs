@@ -43,7 +43,6 @@
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/Logger.h"
-#include "clients_gui/MiniViews.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/RichItemFactory.h"
 #include "gaming/AgentServerMsgMgr.h"
@@ -198,12 +197,6 @@ DockContainer::DockContainer( QMainWindow* parent,
         pInfoPanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, pInfoPanel );
     }
-    // Mini views
-    {
-        miniView_ = new gui::MiniViews( parent, controllers, profile );
-        miniView_->SetModes( eModes_Default );
-        parent->addDockWidget( Qt::RightDockWidgetArea, miniView_ );
-    }
     // Terrain profile
     {
         terrainProfiler_ = new gui::TerrainProfiler( parent, controllers, staticModel.detection_, profilerLayer );
@@ -324,15 +317,6 @@ ProfilingPanel& DockContainer::GetProfilingPanel() const
 gui::TerrainProfiler& DockContainer::GetTerrainProfiler() const
 {
     return *terrainProfiler_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DockContainer::GetMiniView
-// Created: ABR 2013-02-14
-// -----------------------------------------------------------------------------
-gui::MiniViews& DockContainer::GetMiniView() const
-{
-    return *miniView_;
 }
 
 // -----------------------------------------------------------------------------
