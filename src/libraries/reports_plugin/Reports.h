@@ -47,8 +47,9 @@ public:
     //@{
     void AddReport( const sword::Report& report );
     void ListReports( sword::ListReportsAck& reports,
-                      unsigned int count, unsigned int next );
+                      unsigned int count, unsigned int from );
     void Save( const std::string& path );
+    void Update( int tick );
     //@}
 
 private:
@@ -57,6 +58,7 @@ private:
     std::unique_ptr< tools::Sql_ABC > database_;
     const tools::SessionConfig& config_;
     const dispatcher::Model_ABC& model_;
+    int tick_;
     //@}
 };
 }

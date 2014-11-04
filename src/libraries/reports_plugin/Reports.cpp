@@ -41,6 +41,7 @@ namespace
             ", type         INTEGER NOT NULL"
             ", category     INTEGER NOT NULL"
             ", time         DATETIME NOT NULL"
+            ", tick         INTEGER NOT NULL"
             ", parameters   TEXT"
             ")" ) );
         db.Commit( *tr );
@@ -63,6 +64,7 @@ Reports::Reports( const tools::SessionConfig& config, const dispatcher::Model_AB
     : database_( InitializeDatabase( config, "reports.db" ) )
     , config_  ( config )
     , model_   ( model )
+    , tick_    ( 0 )
 {
     MakeTable( *database_ );
 }
@@ -88,14 +90,16 @@ void Reports::AddReport( const sword::Report& report )
             ",           type "
             ",           category "
             ",           time "
+            ",           tick "
             ",           parameters "
-            ") VALUES  ( ?, ?, ?, ?, ?, ? ) "
+            ") VALUES  ( ?, ?, ?, ?, ?, ?, ? ) "
             );
         st->Bind( static_cast< int64_t >( report.report().id() ) );
         st->Bind( static_cast< int >( *sourceId ) );
         st->Bind( static_cast< int >( report.type().id() ) );
         st->Bind( report.category() );
         st->Bind( report.time().data() );
+        st->Bind( tick_ );
         if( report.has_parameters() )
         {
             xml::xostringstream xos;
@@ -118,7 +122,6 @@ namespace
     void MakeReport( sword::ListReportsAck& reports, tools::Statement_ABC& st,
                      const dispatcher::Model_ABC& model, unsigned int count )
     {
-
         if( static_cast< unsigned int >( reports.reports_size() ) < count )
         {
             auto& report = *reports.add_reports();
@@ -133,13 +136,12 @@ namespace
                     xml::xistringstream( st.ReadText() ) >> xml::start( "parameters" ) );
             }
         }
-        else{
+        else
             reports.set_next_report( static_cast< int32_t >( st.ReadInt64() ) );
-        }
     }
 }
 
-void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, unsigned int next )
+void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, unsigned int from )
 {
     try
     {
@@ -149,17 +151,18 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, u
             ",      type "
             ",      category "
             ",      time "
+            ",      tick "
             ",      parameters "
             "FROM   reports ";
-        if( next != 0 )
+        if( from != 0 )
             sql += "WHERE id >= ? ";
         sql += "ORDER BY id ASC "
                "LIMIT  ? ";
 
         tools::Sql_ABC::T_Transaction tr = database_->Begin( false );
         tools::Sql_ABC::T_Statement st = database_->Prepare( *tr, sql );
-        if( next != 0 )
-            st->Bind( static_cast< int64_t >( next ) );
+        if( from != 0 )
+            st->Bind( static_cast< int64_t >( from ) );
         st->Bind( static_cast< int >( count + 1 ) );
 
         while( st->Next() )
@@ -181,4 +184,9 @@ void Reports::Save( const std::string& path )
     {
         MT_LOG_ERROR_MSG( err.msg );
     }
+}
+
+void Reports::Update( int tick )
+{
+    tick_ = tick;
 }

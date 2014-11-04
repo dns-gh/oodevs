@@ -26,7 +26,9 @@ ReportsPlugin::~ReportsPlugin()
 
 void ReportsPlugin::Receive( const sword::SimToClient& msg )
 {
-    if( msg.message().has_report() )
+    if( msg.message().has_control_end_tick() )
+        reports_->Update( msg.message().control_end_tick().current_tick() );
+    else if( msg.message().has_report() )
         reports_->AddReport( msg.message().report() );
     else if( msg.message().has_control_checkpoint_save_end() )
         reports_->Save( msg.message().control_checkpoint_save_end().name() );
