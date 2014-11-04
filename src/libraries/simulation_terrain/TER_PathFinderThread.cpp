@@ -161,7 +161,7 @@ namespace
                 ( filter_.empty() || filter_.count( id_ ) );
             if( dump )
             {
-                PathfindFileDumper dumper( GetFilename(), rule, from, to );
+                PathfindFileDumper dumper( GetFilename(), rule );
                 return root_.ComputePath( from, to, dumper );
             }
             return root_.ComputePath( from, to, rule );
