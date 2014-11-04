@@ -1063,13 +1063,13 @@ integration.moveToItCrowd = masalife.brain.integration.startStopAction( {
         started = integration.updateMoveToItCrowd, 
         stop = integration.deselectMoveToIt } )
 
---- Moves towards the given itinerary with the provided pathtype.
+--- Moves along the given path with the provided pathtype.
 -- Returns 'true' if the movement action is finished, 'false' otherwise.
 -- This method can only be called by an agent.
 -- @see integration.startMoveToItItinerary
 -- @see integration.updateMoveToIt
 -- @see integration.deselectMoveToIt
--- @param objective Itinerary knowledge
+-- @param objective Path knowledge
 -- @param pathType Integer, the path type among the following possible values :
 -- <ul> <li> eTypeItiMouvement (normal movement, default value) </li>
 -- <li> eTypeItiReconnaissance (reconnaissance) </li>
