@@ -163,22 +163,14 @@ function( add_target target group dir )
     endif()
 endfunction()
 
-# timeline_controls
-add_target( timeline_controls timeline "libraries/controls" OPTIONS protobuf )
-masa_add_target_include( timeline_controls "${MASA_INCLUDE}/cef" )
-masa_add_target_include( timeline_controls "${MASA_INCLUDE}/cef/include" )
-target_link_libraries( timeline_controls
-    ${CEF_WRAPPER_LIBRARIES}
-    ${CEF_LIBRARIES}
-    ${PROTOBUF_LIBRARIES}
-)
-
 # timeline
-add_target( timeline timeline "libraries/timeline" OPTIONS qt recurse )
+add_target( timeline timeline "libraries/timeline" OPTIONS protobuf qt recurse )
 masa_add_target_include( timeline "${MASA_INCLUDE}/cef" )
 masa_add_target_include( timeline "${MASA_INCLUDE}/cef/include" )
 target_link_libraries( timeline
-    timeline_controls
+    ${CEF_LIBRARIES}
+    ${CEF_WRAPPER_LIBRARIES}
+    ${PROTOBUF_LIBRARIES}
     ${QT_LIBRARIES}
     ${TOOLS_LIBRARIES}
 )

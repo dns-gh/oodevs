@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "Browser.h"
-#include "Server.h"
 
-#include "controls/controls.h"
+#include "Controls.h"
+#include "Server.h"
 
 using namespace timeline;
 

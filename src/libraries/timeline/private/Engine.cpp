@@ -9,7 +9,7 @@
 
 #include "Engine.h"
 
-#include "controls/controls.h"
+#include "Controls.h"
 #include "timeline/api.h"
 
 #include <tools/Base64Converters.h>

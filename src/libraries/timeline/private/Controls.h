@@ -9,7 +9,7 @@
 #ifndef CONTROLS_H__
 #define CONTROLS_H__
 
-#include <timeline/api.h>
+#include "timeline/api.h"
 #include <boost/noncopyable.hpp>
 #include <cstdint>
 #include <map>

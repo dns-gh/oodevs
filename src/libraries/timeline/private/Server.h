@@ -10,7 +10,7 @@
 #define SERVER_H__
 
 #include "timeline/api.h"
-#include "controls/controls.h"
+#include "Controls.h"
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
