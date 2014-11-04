@@ -128,7 +128,7 @@ private:
     float ComputeZoomFactor( float& factor, bool bVariableSize = true ) const;
     void DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where,
         float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight,
-        unsigned int angle, float xFactor, float yFactor, float svgDeltaX = -20, float svgDeltaY = -80, bool checkAlpha = true ) const;
+        unsigned int angle, float xFactor, float yFactor, bool checkAlpha = true, float svgDeltaX = -20, float svgDeltaY = -80 ) const;
     void DrawTail( const T_PointVector& points, float width ) const;
     void DrawDiscPart( const geometry::Point2f& center, int glList, float angleDegrees, float radius, GLView_ABC::E_Unit unit ) const;
     float Radius( float radius, E_Unit unit ) const;
