@@ -10,6 +10,7 @@
 #ifndef SIMULATION_TERRAIN_PATHFINDER
 #define SIMULATION_TERRAIN_PATHFINDER
 
+#include <tools/Path.h>
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
@@ -86,6 +87,8 @@ private:
     const boost::shared_ptr< TER_StaticData > staticData_;
     std::vector< std::unique_ptr< TER_PathFinderThread > > pathfindData_;
     std::vector< std::unique_ptr< boost::thread > > threads_;
+    const tools::Path dumpDir_; // empty if dump is disabled
+    const std::set< size_t > dumpFilter_; // empty if no id filters
 
     mutable boost::mutex mutex_;
     boost::condition condition_;

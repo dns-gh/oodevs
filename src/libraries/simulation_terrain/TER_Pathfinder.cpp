@@ -11,11 +11,91 @@
 #include "TER_Pathfinder.h"
 #include "TER_PathComputer_ABC.h"
 #include "TER_Pathfinder.h"
+#include "TER_Pathfinder_ABC.h"
 #include "TER_PathFindRequest.h"
 #include "TER_PathFinderThread.h"
 #include "TER_World.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Profiler.h"
+#include <pathfind/PathfindFileDumper.h>
+#include <pathfind/TerrainPathfinder.h>
+#include <boost/interprocess/detail/atomic.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/tokenizer.hpp>
+
+namespace bii = boost::interprocess::ipcdetail;
+
+namespace
+{
+
+std::set< size_t > ParseFilter( const std::string& filter )
+{
+    std::set< size_t > reply;
+    boost::tokenizer< boost::escaped_list_separator< char > > tokens( filter );
+    for( auto it = tokens.begin(); it != tokens.end(); ++it )
+        reply.insert( boost::lexical_cast< size_t >( *it ) );
+    return reply;
+}
+
+struct PathfindDumper : public TER_Pathfinder_ABC
+                      , public boost::noncopyable
+{
+    PathfindDumper( const tools::Path& dump, const std::set< size_t >& filter,
+                     TerrainPathfinder& root )
+        : dump_  ( dump )
+        , filter_( filter )
+        , root_  ( root )
+        , id_    ( 0 )
+    {
+        // NOTHING
+    }
+    virtual void SetId( size_t id )
+    {
+        id_ = id;
+    }
+    virtual void SetChoiceRatio( float ratio )
+    {
+        root_.SetChoiceRatio( ratio );
+    }
+    virtual void SetConfiguration( unsigned nRefining, unsigned int nSubdivisions )
+    {
+        root_.SetConfiguration( nRefining, nSubdivisions );
+    }
+    virtual PathResultPtr ComputePath( const geometry::Point2f& from,
+                              const geometry::Point2f& to,
+                              TerrainRule_ABC& rule )
+    {
+        const bool dump = !dump_.IsEmpty() &&
+            ( filter_.empty() || filter_.count( id_ ) );
+        if( dump )
+        {
+            PathfindFileDumper dumper( GetFilename(), rule );
+            return root_.ComputePath( from, to, dumper );
+        }
+        return root_.ComputePath( from, to, rule );
+    }
+private:
+    tools::Path GetFilename() const
+    {
+        std::stringstream name;
+        name << "pathfind_"
+             << id_
+             << "_"
+             << bii::atomic_inc32( &s_idx_ );
+        return dump_ / name.str().c_str();
+    }
+private:
+    static boost::uint32_t    s_idx_;
+    const tools::Path&        dump_;
+    const std::set< size_t >& filter_;
+    TerrainPathfinder&        root_;
+    size_t                    id_;
+};
+
+boost::uint32_t PathfindDumper::s_idx_ = 0;
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: TER_Pathfinder constructor
@@ -26,6 +106,8 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
         unsigned int maxEndConnections, unsigned int maxComputationDuration,
         const tools::Path& pathfindDir, const std::string& pathfindFilter )
     : staticData_( staticData )
+    , dumpDir_( pathfindDir )
+    , dumpFilter_( ParseFilter( pathfindFilter ) )
     , nMaxComputationDuration_( maxComputationDuration )
     , rDistanceThreshold_     ( distanceThreshold )
     , treatedRequests_        ( 0 )
@@ -41,9 +123,9 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
         threads = 1;
     for( unsigned i = 0; i < threads; ++i )
     {
-        pathfindData_.push_back( std::unique_ptr< TER_PathFinderThread >( new TER_PathFinderThread(
-            *staticData_, maxEndConnections, maxAvoidanceDistance,
-            pathfindDir, pathfindFilter ) ) );
+        pathfindData_.push_back( std::unique_ptr< TER_PathFinderThread >(
+            new TER_PathFinderThread( *staticData_, maxEndConnections,
+                maxAvoidanceDistance ) ) );
         if( bUseInSameThread_ )
             continue;
         auto* data = pathfindData_.back().get();
@@ -178,11 +260,26 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
     const unsigned int deadline = nMaxComputationDuration_ == std::numeric_limits< unsigned int >::max()
         ? std::numeric_limits< unsigned int >::max()
         : static_cast< unsigned int >( std::time( 0 ) ) + nMaxComputationDuration_;
-    const auto duration = data.Process( rq, deadline );
+    double duration = 0;
+    try
     {
-        boost::mutex::scoped_lock locker( pathfindTimeMutex_ );
-        pathfindTime_ += duration;
+        data.ProcessDynamicData();
+        auto& pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
+        PathfindDumper dumper( dumpDir_, dumpFilter_, pathfinder );
+        duration = rq.FindPath( dumper, deadline );
     }
+    catch( const std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Exception caught in pathfinder thread : "
+                << tools::GetExceptionMsg( e ) );
+    }
+    catch( ... )
+    {
+        MT_LOG_ERROR_MSG( "Unknown exception caught in pathfinder thread" );
+    }
+
+    boost::mutex::scoped_lock locker( pathfindTimeMutex_ );
+    pathfindTime_ += duration;
 }
 
 // -----------------------------------------------------------------------------

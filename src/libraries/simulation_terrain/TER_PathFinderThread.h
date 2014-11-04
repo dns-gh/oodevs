@@ -11,14 +11,12 @@
 #define __TER_PathFinderThread_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
-#include <tools/Path.h>
 #pragma warning( push, 1 )
 #pragma warning( disable : 4244 4275 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
-#include <set>
 
 namespace spatialcontainer
 {
@@ -27,7 +25,6 @@ namespace spatialcontainer
 typedef boost::shared_ptr< spatialcontainer::RetractationHandle > RetractationPtr;
 
 class TerrainPathfinder;
-class TER_PathfindRequest;
 class TER_DynamicData;
 typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
 class TER_StaticData;
@@ -39,22 +36,15 @@ class TER_PathFinderThread : private boost::noncopyable
 {
 public:
              TER_PathFinderThread( const TER_StaticData& staticData,
-                   unsigned int nMaxEndConnections, double rMinEndConnectionLength,
-                   const tools::Path& dump, const std::string& filter );
+                   unsigned int nMaxEndConnections, double rMinEndConnectionLength );
     virtual ~TER_PathFinderThread();
 
     void AddDynamicDataToRegister  ( const DynamicDataPtr& data );
     void AddDynamicDataToUnregister( const DynamicDataPtr& data );
-
-    // Returns path processing time in milliseconds.
-    double Process( TER_PathfindRequest& pRequest, unsigned int deadline );
-
-private:
     void ProcessDynamicData();
+    TerrainPathfinder& GetPathfinder( bool dynamic );
 
 private:
-    const tools::Path                  dump_; // empty if dump is disabled
-    const std::set< size_t >           filter_; // empty if no id filters
     std::unique_ptr< TerrainPathfinder > pathfinder_;
     std::unique_ptr< TerrainPathfinder > staticPathfinder_;
     std::map< DynamicDataPtr, RetractationPtr > handlers_;
