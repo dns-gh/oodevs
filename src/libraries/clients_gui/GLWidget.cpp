@@ -910,6 +910,12 @@ void GlWidget::DrawInfrastructureSymbol( const std::string& symbol, const geomet
         0u, 1, 1, false );
 }
 
+void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const
+{
+    const Rectangle2f viewport( 0, 0, 600, 600 );
+    DrawApp6Symbol( symbol, where, baseWidth * factor, viewport, 900, 900, 0, 1, 1 );
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawApp6SymbolFixedSize
 // Created: MMC 2012-02-04

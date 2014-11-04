@@ -194,8 +194,8 @@ MainWindow::MainWindow( Controllers& controllers,
     glProxy_->GetOptions().SetColorStrategy( *strategy_ ); // $$$$ MCO 2014-10-27: not that great...
 
     // Symbols
-    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
-    icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
+    symbols_.reset( new gui::SymbolIcons() );
+    icons_.reset( new gui::EntitySymbols( *symbols_, *strategy_ ) );
 
     // Event strategy
     forward_.reset( new gui::CircularEventStrategy( controllers_, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
@@ -203,7 +203,6 @@ MainWindow::MainWindow( Controllers& controllers,
 
     // Main widget
     selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, staticModel_.drawings_ ) );
-    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );
     selector_->AddIcon( xpm_cadenas        , -260, 360 );
@@ -263,7 +262,7 @@ MainWindow::MainWindow( Controllers& controllers,
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
                                              parameters, profilerLayer, meteoLayer,
-                                             *glProxy_, *factory, *strategy_, *symbols, *icons_, *indicatorExportDialog,
+                                             *glProxy_, *factory, *strategy_, *symbols_, *icons_, *indicatorExportDialog,
                                              simulationController, *drawingsBuilder_, *displayExtractor_, converter, *unitStateDialog_ ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
@@ -409,6 +408,7 @@ void MainWindow::Load()
         auto& options = *controllers_.options_.GetViewOptions();
         glProxy_->UpdateLayerOrder( options );
         selector_->Load();
+        symbols_->Initialize( selector_->GetWidget2d() );
     }
     catch( const xml::exception& e )
     {
@@ -667,7 +667,6 @@ void MainWindow::PlayPauseSoundControl( bool play )
 {
     firePlayer_->PlayPauseSoundControl( play );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::OnUpdateGL

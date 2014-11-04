@@ -31,6 +31,7 @@ namespace gui
     class Layer_ABC;
     class Painter_ABC;
     class ParametersLayer;
+    class SymbolIcons;
     class TerrainPicker;
     class TextEditor;
 }
@@ -153,6 +154,7 @@ private:
     std::unique_ptr< QProgressDialog >             progressDialog_;
     boost::shared_ptr< QProcess >                  process_;
     std::unique_ptr< gui::EntitySymbols >          icons_;
+    std::unique_ptr< gui::SymbolIcons >            symbols_;
     //@}
 };
 

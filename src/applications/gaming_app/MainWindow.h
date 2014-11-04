@@ -44,6 +44,7 @@ namespace gui
     class ParametersLayer;
     class PreferencesDialog;
     class RichToolBar;
+    class SymbolIcons;
     class TerrainPicker;
     class TextEditor;
 }
@@ -189,6 +190,7 @@ private:
     std::unique_ptr< DrawingsBuilder > drawingsBuilder_;
     std::unique_ptr< UnitStateDialog > unitStateDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
+    std::unique_ptr< gui::SymbolIcons > symbols_;
     //@}
 };
 

@@ -87,6 +87,8 @@ public:
     void SetFocus();
     //@}
 
+    GlWidget* GetWidget2d() const;
+
 signals:
     //! @name Signals
     //@{
