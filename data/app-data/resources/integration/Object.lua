@@ -29,8 +29,8 @@ end
 -- @param location Simulation location
 -- @return Simulation position
 integration.getPositionOnBorder = function( location )
-local polygon = DEC_Geometrie_AgrandirLocalisation( location, 0 )
-return DEC_Geometrie_ComputeNearestBorder( integration.getBodyPosition(), polygon )
+    local polygon = DEC_Geometrie_AgrandirLocalisation( location, 0 )
+    return DEC_Geometrie_ComputeNearestBorder( integration.getBodyPosition(), polygon )
 end
 
 --- Returns the nearest position to the border of the provided object, at a specified distance
