@@ -89,11 +89,7 @@ QPixmap SymbolIcons::GenerateSymbol( const SymbolIcon& symbol )
         const geometry::Point2f center( 220, 310 );
         Draw( symbol.symbol_, center, 0.5f );
     }
-    glFinish();
-    QImage image( iconSize, iconSize, QImage::Format_ARGB32 );
-    glReadPixels( 0, 0, iconSize, iconSize, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
-    QPixmap result( image.mirror().smoothScale( symbol.size_ ) );
-    return result;
+    return QPixmap( context_->grabFrameBuffer().smoothScale( symbol.size_ ) );
 }
 
 const QPixmap& SymbolIcons::GetSymbol( const SymbolIcon& symbol )
