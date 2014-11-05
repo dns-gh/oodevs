@@ -153,18 +153,18 @@ namespace
         {
             root_.SetConfiguration( nRefining, nSubdivisions );
         }
-        virtual PathResultPtr ComputePath( const geometry::Point2f& from,
-                                  const geometry::Point2f& to,
-                                  TerrainRule_ABC& rule )
+        virtual bool ComputePath( const geometry::Point2f& from, const geometry::Point2f& to,
+                                  TerrainRule_ABC& rule,
+                                  AStarManagementCallback_ABC* callback,
+                                  tools::thread::Handler_ABC< TerrainPathPoint >& handler )
         {
-            const bool dump = !dump_.IsEmpty() &&
-                ( filter_.empty() || filter_.count( id_ ) );
+            const bool dump = !dump_.IsEmpty() && ( filter_.empty() || filter_.count( id_ ) );
             if( dump )
             {
-                PathfindFileDumper dumper( GetFilename(), rule );
-                return root_.ComputePath( from, to, dumper );
+                PathfindFileDumper dumper( GetFilename() );
+                return root_.ComputePath( from, to, rule, callback, handler, &dumper );
             }
-            return root_.ComputePath( from, to, rule );
+            return root_.ComputePath( from, to, rule, callback, handler );
         }
     private:
         tools::Path GetFilename() const

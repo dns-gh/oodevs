@@ -13,6 +13,8 @@
 #include "MT_Tools/MT_Vector2D.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <pathfind/TerrainRule_ABC.h>
+#include <pathfind/AStarManagementCallback_ABC.h>
+#include <tools/thread/Handler_ABC.h>
 
 class TER_Pathfinder_ABC;
 class TER_PathResult_ABC;
@@ -21,7 +23,9 @@ class TER_PathResult_ABC;
 // @class  DEC_Tools
 // Created: NLD 2005-02-22
 // =============================================================================
-class TER_PathSection : private boost::noncopyable
+class TER_PathSection : private tools::thread::Handler_ABC< TerrainPathPoint >
+                          , private pathfind::AStarManagementCallback_ABC
+                          , private boost::noncopyable
 {
 public:
              TER_PathSection(
@@ -32,8 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    PathResultPtr Execute  ( TER_Pathfinder_ABC& pathfind,
-            unsigned int nComputationEndTime );
+    bool   Execute  ( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime );
     double GetLength() const;
     void   Cancel   ();
     //@}
@@ -47,16 +50,22 @@ public:
     //@}
 
 private:
-    class Canceler;
+    //! @name Tools
+    //@{
+    virtual void Handle( const TerrainPathPoint& point );
+
+    bool ShouldEndComputation( float rCostToCurrentNode, float rCostToGoalNode );
+    //@}
 
 private:
     TER_PathResult_ABC& result_;
     std::unique_ptr< TerrainRule_ABC > rule_;
-    std::unique_ptr< Canceler > canceler_;
     MT_Vector2D startPoint_;
     const MT_Vector2D endPoint_;
     const bool needRefine_;
     const bool useStrictClosest_;
+    bool bCanceled_;
+    unsigned int nComputationEndTime_;
     unsigned int nAddedPoints_;
 };
 

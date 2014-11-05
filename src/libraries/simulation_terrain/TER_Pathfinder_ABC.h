@@ -11,10 +11,20 @@
 #define TER_PATHFINDER_ABC__
 
 #include <geometry/Types.h>
-#include <boost/shared_ptr.hpp>
 
-struct PathResult;
-typedef boost::shared_ptr< PathResult > PathResultPtr;
+namespace pathfind
+{
+    class AStarManagementCallback_ABC;
+}
+
+namespace tools
+{
+namespace thread
+{
+    template< typename T > class Handler_ABC;
+}
+}
+
 class TerrainRule_ABC;
 class TerrainPathPoint;
 
@@ -40,8 +50,10 @@ public:
     virtual void SetId( size_t id ) = 0;
     virtual void SetChoiceRatio( float ratio ) = 0;
     virtual void SetConfiguration( unsigned nRefining, unsigned int nSubdivisions ) = 0;
-    virtual PathResultPtr ComputePath( const geometry::Point2f& from,
-            const geometry::Point2f& to, TerrainRule_ABC& rule ) = 0;
+    virtual bool ComputePath( const geometry::Point2f& from, const geometry::Point2f& to,
+                              TerrainRule_ABC& rule,
+                              pathfind::AStarManagementCallback_ABC* callback,
+                              tools::thread::Handler_ABC< TerrainPathPoint >& handler ) = 0;
     //@}
 };
 

@@ -14,57 +14,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include <ctime>
 
-// TerrainRule_ABC proxy handling computation timeouts.
-class TER_PathSection::Canceler : public TerrainRule_ABC
-{
-public:
-    Canceler( TerrainRule_ABC& rule )
-        : rule_( rule )
-        , stopTime_( 0 )
-        , canceled_( false )
-    {
-    }
-
-    void SetStopTime( unsigned int stopTime )
-    {
-        stopTime_ = stopTime;
-    }
-
-    virtual float EvaluateCost( const geometry::Point2f& from,
-                                const geometry::Point2f& to )
-    {
-        return rule_.EvaluateCost( from, to );
-    }
-
-    virtual float GetCost( const geometry::Point2f& from,
-                           const geometry::Point2f& to,
-                           const TerrainData& terrainTo,
-                           const TerrainData& terrainBetween,
-                           std::ostream* reason )
-    {
-        return rule_.GetCost( from, to, terrainTo, terrainBetween, reason );
-    }
-
-    virtual bool ShouldEndComputation()
-    {
-        if( canceled_ )
-            return true;
-        const auto now = static_cast< unsigned int >( time( 0 ) );
-        if( now >= stopTime_ )
-        {
-            MT_LOG_ERROR_MSG( "Pathfind computation aborted - timeout" );
-            canceled_ = true;
-            return true;
-        }
-        return false;
-    }
-
-private: 
-    TerrainRule_ABC& rule_;
-    unsigned int stopTime_;
-    bool canceled_;
-};
-
 // -----------------------------------------------------------------------------
 // Name: TER_PathSection constructor
 // Created: NLD 2005-02-22
@@ -73,11 +22,12 @@ TER_PathSection::TER_PathSection( TER_PathResult_ABC& result, std::unique_ptr< T
     const MT_Vector2D& startPoint, const MT_Vector2D& endPoint, bool needRefine, bool useStrictClosest )
     : result_             ( result  )
     , rule_               ( std::move( rule ) )
-    , canceler_           ( new Canceler( *rule_ ) )
     , startPoint_         ( startPoint )
     , endPoint_           ( endPoint )
     , needRefine_         ( needRefine )
     , useStrictClosest_   ( useStrictClosest )
+    , bCanceled_          ( false )
+    , nComputationEndTime_( 0 )
     , nAddedPoints_       ( 0 )
 {
     // NOTHING
@@ -96,25 +46,44 @@ TER_PathSection::~TER_PathSection()
 // Name: TER_PathSection::Execute
 // Created: AGE 2005-02-24
 // -----------------------------------------------------------------------------
-PathResultPtr TER_PathSection::Execute( TER_Pathfinder_ABC& pathfind,
-        unsigned int nComputationEndTime )
+bool TER_PathSection::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime )
 {
     geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
     geometry::Point2f to( float( endPoint_.rX_ ), float( endPoint_.rY_ ) );
-    canceler_->SetStopTime( nComputationEndTime );
+    nComputationEndTime_ = nComputationEndTime;
     if( needRefine_ )
         pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
     pathfind.SetChoiceRatio( useStrictClosest_ ? 0.f : 0.1f );
-    const auto res = pathfind.ComputePath( from, to, *canceler_ );
+    const bool bResult = pathfind.ComputePath( from, to, *rule_, this, *this );
     pathfind.SetConfiguration( 0, 0 );
-    for( auto it = res->points.begin(); it != res->points.end(); ++it )
+    return bResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathSection::Handle
+// Created: AGE 2005-02-24
+// -----------------------------------------------------------------------------
+void TER_PathSection::Handle( const TerrainPathPoint& point )
+{
+    const geometry::Point2f p( point );
+    result_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint(), nAddedPoints_ == 0u );
+    ++ nAddedPoints_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathSection::ShouldEndComputation
+// Created: AGE 2005-02-28
+// -----------------------------------------------------------------------------
+bool TER_PathSection::ShouldEndComputation( float /*rCostToCurrentNode*/, float /*rCostToGoalNode*/ )
+{
+    if( bCanceled_ )
+        return true;
+    if( (unsigned int)time( 0 ) >= nComputationEndTime_ )
     {
-        const geometry::Point2f p( *it );
-        result_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), it->DataAtPoint(),
-                it->DataToNextPoint(), nAddedPoints_ == 0u );
-        ++nAddedPoints_;
+        MT_LOG_ERROR_MSG( "Pathfind computation aborted - timeout" );
+        return true;
     }
-    return res;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +119,7 @@ bool TER_PathSection::IsImpossible() const
 // -----------------------------------------------------------------------------
 void TER_PathSection::Cancel()
 {
-    canceler_->SetStopTime( 0 );
+    bCanceled_ = true;
 }
 
 // -----------------------------------------------------------------------------
