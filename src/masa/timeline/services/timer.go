@@ -31,7 +31,6 @@ type Timer struct {
 
 func NewTimer(base time.Time) *Timer {
 	return &Timer{
-		root:   nil,
 		base:   base,
 		offset: base.Sub(time.Now()),
 		quit:   make(chan struct{}),
@@ -60,7 +59,7 @@ func (*Timer) IsLocked() bool {
 	return false
 }
 
-func (t Timer) AttachObserver(observer Observer) {
+func (t *Timer) AttachObserver(observer Observer) {
 	t.root = observer
 }
 
