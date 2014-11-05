@@ -162,6 +162,21 @@ bool MobilityCapacity::IsMaxSpeed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MobilityCapacity::IsImpassable
+// Created: LDC 2014-11-05
+// -----------------------------------------------------------------------------
+bool MobilityCapacity::IsImpassable() const
+{
+    switch( nSpeedPolicy_ )
+    {
+        case eSpeedPolicy_Slowest : return rDefaultSpeed_ == 0;
+        case eSpeedPolicy_AgentMaxSpeed : return rSpeedPolicyMaxSpeedAgentFactor_ == 0;
+        case eSpeedPolicy_ObjectMaxSpeed : return rDefaultSpeed_ == 0;
+        default : return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MobilityCapacity::ComputeFactor
 // Created: SLG 2010-06-29
 // -----------------------------------------------------------------------------

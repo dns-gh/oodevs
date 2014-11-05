@@ -41,6 +41,7 @@ public:
     double GetDefaultSpeed() const;
     double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, double structural ) const;
     bool IsMaxSpeed() const;
+    bool IsImpassable() const;
     //@}
 
 private:

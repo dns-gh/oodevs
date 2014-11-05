@@ -74,6 +74,7 @@ public:
     static bool CanBeValorized( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool HasCapacity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::string& capacity );
     static void BuildInstantaneously( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static bool IsImpassable( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static bool IsUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int ActivateUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

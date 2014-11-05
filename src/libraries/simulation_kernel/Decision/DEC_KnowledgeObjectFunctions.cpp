@@ -19,15 +19,16 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/AnimatorAttribute.h"
+#include "Entities/Objects/BurnAttribute.h"
 #include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/DecontaminationCapacity.h"
-#include "Entities/Objects/IntoxicationCapacity.h"
-#include "Entities/Objects/MineAttribute.h"
-#include "Entities/Objects/BurnAttribute.h"
 #include "Entities/Objects/FireAttribute.h"
+#include "Entities/Objects/IntoxicationCapacity.h"
 #include "Entities/Objects/ImprovableCapacity.h"
+#include "Entities/Objects/MineAttribute.h"
+#include "Entities/Objects/MobilityCapacity.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
@@ -559,6 +560,21 @@ void DEC_KnowledgeObjectFunctions::BuildInstantaneously( const DEC_Decision_ABC&
         callerAgent.GetPion().GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *obj );
         ( *obj )().Construct();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsImpassable
+// Created: LDC 2014-11-05
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::IsImpassable( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        auto capacity = pKnowledge->GetType().GetCapacity< MobilityCapacity >();
+        if( capacity )
+            return capacity->IsImpassable();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
