@@ -120,6 +120,20 @@ std::vector< const QPixmap* > TacticalTreeView::GetEntityPixmap( const kernel::E
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Accept
+// Created: LDC 2014-11-04
+// -----------------------------------------------------------------------------
+bool TacticalTreeView::Accept( const kernel::Entity_ABC& entity ) const
+{
+    auto type = entity.GetTypeName();
+    return AcceptType< kernel::Agent_ABC >( type ) ||
+           AcceptType< kernel::Automat_ABC >( type ) ||
+           AcceptType< kernel::Formation_ABC >( type ) ||
+           AcceptType< kernel::Team_ABC >( type ) ||
+           AcceptType< kernel::Ghost_ABC >( type );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalTreeView::AddCommonMenu
 // Created: ABR 2014-06-02
 // -----------------------------------------------------------------------------

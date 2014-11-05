@@ -92,6 +92,8 @@ bool HierarchyTreeView_ABC::IsActivated() const
 void HierarchyTreeView_ABC::InternalNotifyCreated( const kernel::Hierarchies& hierarchy )
 {
     const kernel::Entity_ABC& entity = hierarchy.GetEntity();
+    if( !Accept( entity ) )
+        return;
     const kernel::Entity_ABC* superior = hierarchy.GetSuperior();
     QStandardItem* entityItem = 0;
 
@@ -158,6 +160,8 @@ QStandardItem* HierarchyTreeView_ABC::AddItem( QStandardItem* parent, const kern
 void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hierarchy )
 {
     const kernel::Entity_ABC& entity = hierarchy.GetEntity();
+    if( !Accept( entity ) )
+        return;
     QStandardItem* entityItem = dataModel_.FindDataItem( entity );
     if( entityItem )
     {

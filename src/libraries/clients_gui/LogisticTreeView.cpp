@@ -143,6 +143,19 @@ QStandardItem& LogisticTreeView::RetrieveTypeItem( const kernel::Entity_ABC& ent
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticTreeView::Accept
+// Created: LDC 2014-11-04
+// -----------------------------------------------------------------------------
+bool LogisticTreeView::Accept( const kernel::Entity_ABC& entity ) const
+{
+    auto type = entity.GetTypeName();
+    return AcceptType< kernel::Automat_ABC >( type ) ||
+           AcceptType< kernel::Formation_ABC >( type ) ||
+           AcceptType< kernel::Team_ABC >( type ) ||
+           AcceptType< kernel::Ghost_ABC >( type );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticTreeView::NotifyCreatedInternal
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------

@@ -14,6 +14,10 @@
 #include "Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace gui;
 
@@ -68,32 +72,18 @@ void UserProfileUnitRights::AdditionalUpdateItem( QStandardItem& entityItem, con
     longname::SetItemLongName( entity, entityItem );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::Accept
+// Created: LDC 2014-11-04
+// -----------------------------------------------------------------------------
+bool UserProfileUnitRights::Accept( const kernel::Entity_ABC& entity ) const
 {
-    bool IsAgent( const kernel::Hierarchies& hierarchies )
-    {
-        return hierarchies.GetEntity().GetTypeName() == kernel::Agent_ABC::typeName_;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::NotifyCreated
-// Created: JSR 2014-06-06
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::NotifyCreated( const kernel::TacticalHierarchies& hierarchy )
-{
-    if( !IsAgent( hierarchy  ) )
-        ::T_Parent::NotifyCreated( hierarchy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::NotifyUpdated
-// Created: JSR 2014-06-06
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::NotifyUpdated( const kernel::TacticalHierarchies& hierarchy )
-{
-    if( !IsAgent( hierarchy  ) )
-        ::T_Parent::NotifyUpdated( hierarchy );
+    auto type = entity.GetTypeName();
+    return AcceptType< kernel::Agent_ABC >( type ) ||
+           AcceptType< kernel::Automat_ABC >( type ) ||
+           AcceptType< kernel::Formation_ABC >( type ) ||
+           AcceptType< kernel::Team_ABC >( type ) ||
+           AcceptType< kernel::Ghost_ABC >( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +92,7 @@ void UserProfileUnitRights::NotifyUpdated( const kernel::TacticalHierarchies& hi
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::NotifyDeleted( const kernel::TacticalHierarchies& hierarchy )
 {
-    if( !IsAgent( hierarchy  ) )
+    if( !Accept( static_cast< const kernel::Hierarchies& >( hierarchy ).GetEntity() ) )
         ::T_Parent::NotifyDeleted( hierarchy );
 }
 

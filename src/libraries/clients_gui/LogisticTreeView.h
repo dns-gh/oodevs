@@ -64,6 +64,7 @@ protected:
 
     //! @name Operations
     //@{
+    virtual bool Accept( const kernel::Entity_ABC& entity ) const;
     void CreateOrReplace( const kernel::Entity_ABC& entity );
     void AddChangeLinksToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
