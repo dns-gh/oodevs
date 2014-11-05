@@ -16,6 +16,7 @@
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
@@ -180,7 +181,8 @@ void ColorController::RemoveSubordinate( const kernel::Entity_ABC& entity, const
 void ColorController::UpdateHierarchies( const kernel::Entity_ABC& entity )
 {
     controllers_.controller_.Update( entity );
-    if( entity.GetTypeName() != kernel::Object_ABC::typeName_ )
+    auto type = entity.GetTypeName();
+    if( type != kernel::Object_ABC::typeName_ && type != kernel::Population_ABC::typeName_)
         if( const kernel::TacticalHierarchies* pTactical = entity.Retrieve< kernel::TacticalHierarchies >() )
         {
             controllers_.controller_.Update( *pTactical );
