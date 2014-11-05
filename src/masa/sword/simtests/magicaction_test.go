@@ -656,8 +656,8 @@ func (s *TestSuite) TestHideActions(c *C) {
 	defer stopSimAndClient(c, sim, clientA)
 	clientB := connectAndWait(c, sim, opts.User, opts.Password)
 	defer clientB.Close()
-	listenerA := ModelListener{}
-	listenerB := ModelListener{}
+	listenerA := ModelListener{actions: true}
+	listenerB := ModelListener{actions: true}
 	clientA.Model.RegisterListener(listenerA.Notify)
 	clientB.Model.RegisterListener(listenerB.Notify)
 
