@@ -61,9 +61,19 @@
 #include "indicators/GaugeTypes.h"
 #include <boost/make_shared.hpp>
 #include <boost/lexical_cast.hpp>
+
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable : 4724 )
+#endif
+
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 #pragma warning( disable : 4355 )
 
