@@ -66,6 +66,11 @@ protected:
     virtual void AdditionalUpdateItem( QStandardItem& /*entityItem*/, const kernel::Entity_ABC& /*entity*/ ) {}
     template< typename Entity >
     bool AddItemIfPossible( const kernel::Entity_ABC& entity, QStandardItem* parent, QStandardItem*& ret );
+    virtual bool Accept( const kernel::Entity_ABC& entity ) const = 0;
+    template< typename T > static bool AcceptType( const std::string& type )
+    {
+        return type == T::typeName_;
+    }
     //@}
 
     //! @name Operations

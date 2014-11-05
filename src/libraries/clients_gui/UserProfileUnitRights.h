@@ -49,8 +49,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const kernel::TacticalHierarchies& hierarchy );
-    virtual void NotifyUpdated( const kernel::TacticalHierarchies& hierarchy );
+    virtual bool Accept( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyDeleted( const kernel::TacticalHierarchies& hierarchy );
     //@}
 

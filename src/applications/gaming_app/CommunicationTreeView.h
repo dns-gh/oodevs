@@ -61,6 +61,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool Accept( const kernel::Entity_ABC& entity ) const;
     std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
     //@}
 

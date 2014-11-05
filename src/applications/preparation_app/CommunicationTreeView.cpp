@@ -89,6 +89,15 @@ bool CommunicationTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity,
 }
 
 // -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::Accept
+// Created: LDC 2014-11-04
+// -----------------------------------------------------------------------------
+bool CommunicationTreeView::Accept( const kernel::Entity_ABC& ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: CommunicationTreeView::OnCreateCommunication
 // Created: JSR 2012-09-11
 // -----------------------------------------------------------------------------
