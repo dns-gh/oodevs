@@ -39,7 +39,7 @@ void SymbolIcons::Initialize( gui::GlWidget* widget )
         throw MASA_EXCEPTION( "cannot initialize symbols icons with a null 2D widget" );
     if( widget == widget_ )
         return;
-    context_ = new QGLWidget( widget, widget );
+    context_ = new QGLWidget( 0, widget );
     context_->resize( iconSize, iconSize );
     context_->makeCurrent();
     glEnable( GL_LINE_SMOOTH );
@@ -52,17 +52,15 @@ void SymbolIcons::Initialize( gui::GlWidget* widget )
     glOrtho( 0, viewSize, 0, viewSize, -300, 300 );
     glEnableClientState( GL_VERTEX_ARRAY );
     widget_ = widget;
-    connect( context_, SIGNAL( destroyed( QObject* ) ), this, SLOT( Destroyed( QObject* ) ) );
-    connect( widget_, SIGNAL( destroyed( QObject* ) ), this, SLOT( Destroyed( QObject* ) ) );
+    connect( widget, SIGNAL( destroyed( QObject* ) ), this, SLOT( Destroyed( QObject* ) ) );
     icons_.clear();
 }
 
-void SymbolIcons::Destroyed( QObject* object )
+void SymbolIcons::Destroyed( QObject* /*object*/ )
 {
-    if( object == widget_ )
-        widget_ = 0;
-    else if( object == context_ )
-        context_ = 0;
+    delete context_;
+    widget_ = 0;
+    context_ = 0;
 }
 
 void SymbolIcons::Draw( std::string symbol, const geometry::Point2f& center, float factor ) const
