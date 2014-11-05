@@ -76,6 +76,7 @@ public:
     virtual const kernel::Team_ABC* GetTeam() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
     virtual std::string GetSymbol() const;
+    virtual std::string GetLevelSymbol() const;
     //@}
 
     //! @name Static
