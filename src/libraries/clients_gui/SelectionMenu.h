@@ -55,7 +55,6 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void GenerateMenu();
     void OnWidget2dChanged( gui::GlWidget* );
     void OnWidget3dChanged( gui::Gl3dWidget* );
     void OnSelectionChanged( QAction* action );
@@ -70,7 +69,8 @@ private:
 private:
     //! @name Helpers
     //@{
-    bool GenerateIcons();
+    void GenerateMenu();
+    void GenerateIcons();
     void FilterElement( const Layer_ABC::T_LayerElements& extractedElements );
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, float g, float b, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, const QColor& color, const std::string& category = "", float markerPixelRatio = 1.f ) const;

@@ -172,10 +172,8 @@ QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, f
 // Name: SelectionMenu::GenerateIcons
 // Created: ABR 2013-01-28
 // -----------------------------------------------------------------------------
-bool SelectionMenu::GenerateIcons()
+void SelectionMenu::GenerateIcons()
 {
-    bool mode3d = tools_.GetOptions().Get( "3D" ).To< bool >();
-    bool allIconsGenerated = true;
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
     {
         Layer_ABC* layer = extractedPair->first;
@@ -265,13 +263,10 @@ bool SelectionMenu::GenerateIcons()
                         const std::string levelName  = symbol->GetLevel();
                         pixmap = entitySymbols_.GetSymbol( *entity, symbolName, levelName, EntitySymbols::eColorWithModifier );
                     }
-                    if( allIconsGenerated && ( !mode3d && pixmap.isNull() ) )
-                        allIconsGenerated = false;
                 }
             }
         }
     }
-    return allIconsGenerated;
 }
 
 namespace
@@ -330,12 +325,7 @@ namespace
 // -----------------------------------------------------------------------------
 void SelectionMenu::GenerateMenu()
 {
-    if( !GenerateIcons() )
-    {
-        QTimer::singleShot( 100, this, SLOT( GenerateMenu() ) );
-        return;
-    }
-
+    GenerateIcons();
     std::unique_ptr< Menu_ABC > menu;
     if( tools_.GetOptions().Get( "3D" ).To< bool >() )
         menu.reset( new RichMenu< gui::Gl3dWidget >( 0 ) );
