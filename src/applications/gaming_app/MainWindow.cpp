@@ -498,6 +498,9 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         Close();
     }
     setCaption( GetCurrentMode() == eModes_Planning ? planifName_ + modePlanif : planifName_ );
+    static bool firstPass = true;
+    if( simulation.IsInitialized() && firstPass )
+        icons_->GenerateSymbols( model_.teams_ );
 }
 
 // -----------------------------------------------------------------------------

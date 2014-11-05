@@ -511,6 +511,7 @@ void MainWindow::LoadExercise()
         selector_->Load();
         symbols_->Initialize( selector_->GetWidget2d() );
         SetProgression( 90, tools::translate( "MainWindow", "Generate symbols" ) );
+        icons_->GenerateSymbols( *model_.teams_ );
     }
     catch( const std::exception& e )
     {
