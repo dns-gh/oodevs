@@ -87,7 +87,7 @@ namespace
     void CheckReports( const sword::ListReportsAck& ack, const std::vector< sword::Report >& expected,
                        unsigned int nextReport = 0 )
     {
-        BOOST_CHECK_EQUAL( ack.reports_size(), expected.size() );
+        BOOST_CHECK_EQUAL( ack.reports_size(), static_cast< int >( expected.size() ) );
         for( int i = 0; i < ack.reports_size(); ++i )
             BOOST_CHECK_EQUAL( ack.reports( i ).DebugString(), expected[ i ].DebugString() );
         BOOST_CHECK_EQUAL( ack.has_next_report() ? ack.next_report() : 0u, nextReport );
