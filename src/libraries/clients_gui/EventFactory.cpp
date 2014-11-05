@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "EventFactory.h"
 #include "EventAction.h"
-#include "EventMarker.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
@@ -82,7 +81,7 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
             result->GetEvent().name = tools::translate( "EventFactory", "New task" );
         break;
     case eEventTypes_Marker:
-        result = new EventMarker( type, ( event ) ? *event : dummyEvent );
+        result = new Event( type, ( event ) ? *event : dummyEvent );
         if( !event )
         {
             result->GetEvent().action.target = timeline_helpers::CreateEventTarget( EVENT_MARKER_PROTOCOL, uuid_ );

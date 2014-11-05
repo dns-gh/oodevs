@@ -105,7 +105,7 @@ public:
     virtual void OnKeyDown( int key );
     virtual void OnKeyPress( int key );
     virtual void OnKeyUp( int key );
-  
+
     /// public methods
     virtual void Resize();
     virtual void Quit();

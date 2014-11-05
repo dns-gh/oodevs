@@ -10,7 +10,6 @@
 #ifndef __EventMarkerViewState_h_
 #define __EventMarkerViewState_h_
 
-#include <string>
 #include <tools/Path.h>
 
 namespace gui
@@ -22,7 +21,7 @@ namespace gui
 */
 // Created: JSR 2014-10-24
 // =============================================================================
-    struct EventMarkerViewState
+struct EventMarkerViewState
 {
     //! @name Constructors/Destructor
     //@{
@@ -32,8 +31,8 @@ namespace gui
         // NOTHING
     }
 
-    EventMarkerViewState( const std::string& label, 
-                          const std::string& description,
+    EventMarkerViewState( const QString& label, 
+                          const QString& description,
                           bool resetDrawings,
                           const std::string& drawingsPath,
                           const std::string& configurationPath )
@@ -57,8 +56,8 @@ namespace gui
 
     //! @name Member data
     //@{
-    std::string label_;
-    std::string description_;
+    QString label_;
+    QString description_;
     bool resetDrawings_;
     tools::Path drawingsPath_;
     tools::Path configurationPath_;

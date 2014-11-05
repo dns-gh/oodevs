@@ -1897,8 +1897,8 @@ Do you want to remove it?</source>
 <context>
     <name>gui::RichPathWidget</name>
     <message>
-        <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <source>Browse...</source>
+        <translation type="unfinished">استعراض...</translation>
     </message>
 </context>
 <context>

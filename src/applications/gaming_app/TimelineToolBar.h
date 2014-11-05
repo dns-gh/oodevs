@@ -45,7 +45,7 @@ class TimelineToolBar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TimelineToolBar( kernel::Controllers& controllers,
+             TimelineToolBar( kernel::Controllers& controllers,
                               const tools::ExerciseConfig& config,
                               const std::string& gamingUuid );
     virtual ~TimelineToolBar();

@@ -1898,8 +1898,8 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::RichPathWidget</name>
     <message>
-        <source>Browse</source>
-        <translation>Parcourir</translation>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
     </message>
 </context>
 <context>

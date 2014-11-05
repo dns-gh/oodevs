@@ -83,7 +83,6 @@ type Sword struct {
 func NewSword(log util.Logger, clock bool, name, address string) *Sword {
 	return &Sword{
 		log:      log,
-		observer: nil,
 		name:     name,
 		address:  address,
 		clock:    clock,

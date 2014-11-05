@@ -31,7 +31,7 @@ class EventMarkerPresenter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EventMarkerPresenter( EventView_ABC< EventMarkerViewState >& view, const std::string& uuid );
+             EventMarkerPresenter( EventView_ABC< EventMarkerViewState >& view, const std::string& uuid );
     virtual ~EventMarkerPresenter();
     //@}
 
@@ -50,7 +50,6 @@ public slots:
     void OnDrawingsPathChanged( const tools::Path& path );
     void OnConfigurationPathChanged( const tools::Path& path );
     //@}
-
 
 private:
     //! @name EventSubPresenter_ABC implementation

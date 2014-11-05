@@ -47,7 +47,7 @@ EventMarkerPresenter::~EventMarkerPresenter()
 // -----------------------------------------------------------------------------
 void EventMarkerPresenter::OnLabelChanged( const QString& label )
 {
-    state_->label_ = label.toStdString();
+    state_->label_ = label;
     BuildView();
 }
 
@@ -57,7 +57,7 @@ void EventMarkerPresenter::OnLabelChanged( const QString& label )
 // -----------------------------------------------------------------------------
 void EventMarkerPresenter::OnDescriptionChanged( const QString& description )
 {
-    state_->description_ = description.toStdString();
+    state_->description_ = description;
     BuildView();
 }
 
@@ -126,8 +126,8 @@ void EventMarkerPresenter::FillFrom( const Event& event )
 {
     const timeline::Event& timelineEvent = event.GetEvent();
     state_->Purge();
-    state_->label_ = timelineEvent.name;
-    state_->description_ = timelineEvent.info;
+    state_->label_ = QString::fromStdString( timelineEvent.name );
+    state_->description_ = QString::fromStdString( timelineEvent.info );
     std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
         ( event_helpers::resetDrawingsKey, event_helpers::BoolToString( false ) )
         ( event_helpers::drawingsPathKey, "" )
@@ -144,8 +144,8 @@ void EventMarkerPresenter::FillFrom( const Event& event )
 // -----------------------------------------------------------------------------
 void EventMarkerPresenter::CommitTo( timeline::Event& event ) const
 {
-    event.name = state_->label_;
-    event.info = state_->description_;
+    event.name = state_->label_.toStdString();
+    event.info = state_->description_.toStdString();
     event.action.apply = false;
     const std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
         ( event_helpers::resetDrawingsKey, event_helpers::BoolToString( state_->resetDrawings_ ) )

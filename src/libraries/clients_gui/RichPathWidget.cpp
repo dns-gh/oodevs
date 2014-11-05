@@ -27,7 +27,7 @@ RichPathWidget::RichPathWidget( const QString& objectName, const QString& captio
     , dir_( dir )
 {
     edit_ = new RichLineEdit( objectName + "-edit" );
-    RichPushButton* button = new RichPushButton( objectName + "-browse", tr( "Browse" ) );
+    RichPushButton* button = new RichPushButton( objectName + "-browse", tr( "Browse..." ) );
 
     QHBoxLayout* layout = new QHBoxLayout;
     setLayout( layout );

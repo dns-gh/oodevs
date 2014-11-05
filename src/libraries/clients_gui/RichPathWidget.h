@@ -29,7 +29,7 @@ namespace gui
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RichPathWidget( const QString& objectName, const QString& caption, const tools::Path& dir, const QString& filter, QWidget* parent = 0 );
+             RichPathWidget( const QString& objectName, const QString& caption, const tools::Path& dir, const QString& filter, QWidget* parent = 0 );
     virtual ~RichPathWidget();
     //@}
 

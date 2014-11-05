@@ -41,14 +41,13 @@ std::string gui::event_helpers::BoolToString( bool b )
 void gui::event_helpers::ReadJsonPayload( const timeline::Event& event, std::map< std::string, std::string >& values )
 {
     const std::string& payload = event.action.payload;
-    if( !payload.empty() )
-    {
-        bpt::ptree rpy;
-        std::istringstream input( payload );
-        bpt::read_json( input, rpy );
-        for( auto it = values.begin(); it != values.end(); ++it )
-            it->second = rpy.get< std::string >( it->first, it->second );
-    }
+    if( payload.empty() )
+        return;
+    bpt::ptree rpy;
+    std::istringstream input( payload );
+    bpt::read_json( input, rpy );
+    for( auto it = values.begin(); it != values.end(); ++it )
+        it->second = rpy.get< std::string >( it->first, it->second );
 }
 
 void gui::event_helpers::WriteJsonPayload( const std::map< std::string, std::string >& values, timeline::Event& event )

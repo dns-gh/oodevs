@@ -20,7 +20,6 @@
 #include "clients_gui/RichTextEdit.h"
 #include <boost/make_shared.hpp>
 
-
 // -----------------------------------------------------------------------------
 // Name: EventMarkerWidget constructor
 // Created: JSR 2014-10-27
@@ -111,8 +110,8 @@ void EventMarkerWidget::BlockSignals( bool blocked )
 // -----------------------------------------------------------------------------
 void EventMarkerWidget::Build( const gui::EventMarkerViewState& state )
 {
-    label_->SetText( QString::fromStdString( state.label_ ) );
-    description_->SetText( QString::fromStdString( state.description_ ) );
+    label_->SetText( state.label_ );
+    description_->SetText( state.description_ );
     resetDrawings_->setChecked( state.resetDrawings_ );
     drawingsPath_->SetPath( state.drawingsPath_ );
     configurationPath_->SetPath( state.configurationPath_ );

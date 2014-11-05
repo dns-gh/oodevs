@@ -297,27 +297,26 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
     for( auto it = events.begin(); it != events.end(); ++it )
     {
         gui::Event* gamingEvent = model_.events_.Find( it->uuid );
-        if( gamingEvent && gamingEvent->GetType() == eEventTypes_Marker )
-        {
-            std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
-                ( gui::event_helpers::resetDrawingsKey, gui::event_helpers::BoolToString( false ) )
-                ( gui::event_helpers::drawingsPathKey, "" )
-                ( gui::event_helpers::configurationPathKey, "" );
-            gui::event_helpers::ReadJsonPayload( gamingEvent->GetEvent(), jsonPayload );
-            if( gui::event_helpers::StringToBool( jsonPayload[ gui::event_helpers::resetDrawingsKey ] ) )
-                model_.drawings_.Purge();
-            tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
-            if( drawingsPath.Exists() )
-                try
-                {
-                    drawingsPath.MakePreferred();
-                    model_.drawings_.Load( config_.GetLoader(), drawingsPath );
-                }
-                catch( const xml::exception& )
-                {
-                    QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawing file." ).arg( drawingsPath.ToUTF8().c_str() ) );
-                }
-        }
+        if( !gamingEvent || gamingEvent->GetType() != eEventTypes_Marker )
+            continue;
+        std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
+            ( gui::event_helpers::resetDrawingsKey, gui::event_helpers::BoolToString( false ) )
+            ( gui::event_helpers::drawingsPathKey, "" )
+            ( gui::event_helpers::configurationPathKey, "" );
+        gui::event_helpers::ReadJsonPayload( gamingEvent->GetEvent(), jsonPayload );
+        if( gui::event_helpers::StringToBool( jsonPayload[ gui::event_helpers::resetDrawingsKey ] ) )
+            model_.drawings_.Purge();
+        tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
+        if( drawingsPath.Exists() )
+            try
+            {
+                drawingsPath.MakePreferred();
+                model_.drawings_.Load( config_.GetLoader(), drawingsPath );
+            }
+            catch( const xml::exception& )
+            {
+                QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawing file." ).arg( drawingsPath.ToUTF8().c_str() ) );
+            }
     }
 }
 
@@ -359,7 +358,7 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
 
     kernel::ContextMenu* createMenu = new kernel::ContextMenu( &menu );
     for( int i = 0; i < eNbrEventTypes; ++i )
-        if (i == eEventTypes_Order || i == eEventTypes_Task || i == eEventTypes_Marker )
+        if( i == eEventTypes_Order || i == eEventTypes_Task || i == eEventTypes_Marker )
             AddToMenu( *createMenu, creationSignalMapper_.get(), QString::fromStdString( ENT_Tr::ConvertFromEventTypes( static_cast< E_EventTypes >( i ) ) ), i );
 
     menu.InsertItem( "Command", tr( "Create an event" ), createMenu );

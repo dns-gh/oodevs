@@ -1893,7 +1893,7 @@ Do you want to remove it?</source>
 <context>
     <name>gui::RichPathWidget</name>
     <message>
-        <source>Browse</source>
+        <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
