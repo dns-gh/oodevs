@@ -610,6 +610,9 @@ target_link_libraries( gaming_app
     ${MAPNIK_LIBRARIES}
     ${TERRAIN_LIBRARIES}
 )
+add_dependencies( gaming_app
+    timeline_client
+)
 
 # launcher_test
 add_target( launcher_test tests "tests/launcher_test" OPTIONS protocol test )
