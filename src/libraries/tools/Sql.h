@@ -16,16 +16,12 @@
 #include <boost/noncopyable.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/lock_guard.hpp>
+#include <tools/Path.h>
 
 struct sqlite3;
 struct sqlite3_stmt;
 
-namespace host
-{
-    typedef boost::filesystem::path Path;
-}
-
-namespace host
+namespace tools
 {
 // =============================================================================
 /** @class  Sql
@@ -37,7 +33,7 @@ struct Sql : public Sql_ABC
 {
     //! @name Constructors/Destructor
     //@{
-             Sql( const Path& file );
+             Sql( const tools::Path& file );
     virtual ~Sql();
     //@}
 
@@ -47,10 +43,11 @@ struct Sql : public Sql_ABC
     virtual T_Statement   Prepare( const Transaction& tr, const std::string& sql );
     virtual void          Commit ( Transaction& tr );
     virtual int64_t       LastId () const;
+    virtual void          Save   ( const tools::Path& filename );
     //@}
 
 private:
-    const Path file_;
+    const tools::Path file_;
     boost::mutex access_;
     boost::shared_ptr< sqlite3 > db_;
 };

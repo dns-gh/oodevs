@@ -9,15 +9,12 @@
 
 #include "Sql.h"
 
-#include "runtime/Utf8.h"
-
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
 #include <sqlite/sqlite3.h>
 
-using namespace host;
-using runtime::Utf8;
+using namespace tools;
 
 namespace
 {
@@ -79,9 +76,9 @@ Sql::Sql( const Path& file )
     : file_  ( file )
 {
     sqlite3* pdb = 0;
-    int err = sqlite3_open( Utf8( file_ ).c_str(), &pdb );
+    int err = sqlite3_open( file_.ToUTF8().c_str(), &pdb );
     if( err != SQLITE_OK )
-        ThrowSqlException( "Unable to open " + file.string(), err );
+        ThrowSqlException( "Unable to open " + file.ToDebug(), err );
     db_.reset( pdb, &SqliteClose );
 }
 
@@ -133,6 +130,27 @@ void Sql::Commit( Transaction& tr )
 int64_t Sql::LastId () const
 {
     return sqlite3_last_insert_rowid( db_.get() );
+}
+
+void Sql::Save( const tools::Path& filename )
+{
+    sqlite3* to = 0;
+    int err = sqlite3_open( filename.ToUTF8().c_str(), &to );
+    if( err != SQLITE_OK )
+        ThrowSqlException( "Unable to copy reports.db to " + filename.ToDebug(), err );
+
+    sqlite3_backup* pBackup = sqlite3_backup_init( to, "main", db_.get(), "main" );
+    if( pBackup )
+    {
+        sqlite3_backup_step( pBackup, -1 );
+        sqlite3_backup_finish( pBackup );
+    }
+
+    err = sqlite3_errcode( to );
+    sqlite3_close( to );
+
+    if( err != SQLITE_OK )
+        ThrowSqlException( "Unable to copy reports.db to " + filename.ToDebug(), err );
 }
 
 // -----------------------------------------------------------------------------

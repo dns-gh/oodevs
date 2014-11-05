@@ -205,6 +205,7 @@ target_link_libraries( sword_tools
     mt_tools
     ${PROTOBUF_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
+    ${SQLITE3_LIBRARIES}
     ${XALAN_LIBRARIES}
     ${XERCES_LIBRARIES}
 )
@@ -377,6 +378,7 @@ add_target( plugins_test tests "tests/plugins_test" OPTIONS protocol test )
 target_link_libraries( plugins_test
     clients_kernel
     logistic_plugin
+    reports_plugin
     rpr
     script_plugin
     tic
@@ -739,10 +741,10 @@ target_link_libraries( web
 # host
 add_target( host admin "libraries/host" OPTIONS qt )
 target_link_libraries( host
+    sword_tools
     web
     version
     ${BCRYPT_LIBRARIES}
-    ${SQLITE3_LIBRARIES}
     ${TOOLS_LIBRARIES}
 )
 

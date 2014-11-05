@@ -17,10 +17,14 @@ namespace cpplog
     class BaseLogger;
 }
 
+namespace tools
+{
+    struct Sql_ABC;
+}
+
 namespace host
 {
     struct Crypt_ABC;
-    struct Sql_ABC;
     struct UuidFactory_ABC;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
@@ -41,7 +45,7 @@ struct UserController : public web::UserController_ABC
              UserController( cpplog::BaseLogger& log,
                              const Crypt_ABC& crypt,
                              UuidFactory_ABC& uuids,
-                             Sql_ABC& db );
+                             tools::Sql_ABC& db );
     virtual ~UserController();
     //@}
 
@@ -78,7 +82,7 @@ private:
     cpplog::BaseLogger& log_;
     const Crypt_ABC& crypt_;
     UuidFactory_ABC& uuids_;
-    Sql_ABC& db_;
+    tools::Sql_ABC& db_;
     //@}
 };
 }

@@ -16,9 +16,9 @@
 #include "runtime/FileSystem.h"
 #include "runtime/PropertyTree.h"
 #include "host/Crypt.h"
-#include "host/Sql.h"
 #include "host/UserController.h"
 #include "host/UuidFactory.h"
+#include "tools/Sql.h"
 #include "web/HttpException.h"
 
 #include <boost/date_time.hpp>
@@ -51,14 +51,14 @@ struct SubFixture
 
     cpplog::OstreamLogger log;
     const FileSystem fs;
-    const Path db;
+    const boost::filesystem::path db;
     const Crypt crypt;
     UuidFactory uuids;
 };
 
 BOOST_FIXTURE_TEST_CASE( user_controller_has_no_user_by_default, SubFixture )
 {
-    Sql sql( db );
+    tools::Sql sql( tools:: Path::FromUnicode( db.wstring() ) );
     UserController users( log, crypt, uuids, sql );
     BOOST_CHECK_EQUAL( 0u, users.CountUsers( boost::uuids::nil_uuid() ) );
 }
@@ -66,13 +66,13 @@ BOOST_FIXTURE_TEST_CASE( user_controller_has_no_user_by_default, SubFixture )
 struct Fixture : SubFixture
 {
     Fixture()
-        : sql  ( db )
+        : sql  ( tools:: Path::FromUnicode( db.wstring() ) )
         , users( log, crypt, uuids, sql )
     {
         users.CreateUser( boost::uuids::nil_uuid(), "admin@masagroup.net", "Default", "admin", web::USER_TYPE_ADMINISTRATOR, false );
     }
 
-    Sql sql;
+    tools::Sql sql;
     UserController users;
 
     Tree LogAdmin()

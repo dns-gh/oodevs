@@ -19,13 +19,14 @@ namespace boost
     template< typename T > class shared_ptr;
 }
 
-namespace host
+namespace tools
 {
     struct Statement_ABC;
     struct Transaction;
+    class Path;
 }
 
-namespace host
+namespace tools
 {
 // =============================================================================
 /** @class  Sql_ABC
@@ -53,6 +54,7 @@ struct Sql_ABC : public boost::noncopyable
     virtual T_Statement   Prepare( const Transaction& tr, const std::string& sql ) = 0;
     virtual void          Commit ( Transaction& tr ) = 0;
     virtual int64_t       LastId () const = 0;
+    virtual void          Save   ( const tools::Path& filename ) = 0;
     //@}
 };
 
