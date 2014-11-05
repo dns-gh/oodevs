@@ -44,7 +44,7 @@ public:
     void ListReports( sword::ListReportsAck& reports,
                       unsigned int count, unsigned int from );
     void Save( const tools::Path& filename );
-    void Update( int tick );
+    void SetTick( int tick );
     //@}
 
 private:

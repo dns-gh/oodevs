@@ -62,8 +62,7 @@ namespace
             : tempDir( "testreportsplugin-", testOptions.GetTempDir() )
             , reports( new Reports( tempDir.Path() / "reports.db" ) )
         {
-            // tick 12
-            reports->Update( 12 );
+            reports->SetTick( 12 );
             FillReport( report1, 542, 0, sword::Report_EnumReportType_information,
                 "date1", CreateUnitTasker( 1234 ) );
             FillReport( report2, 541, 1, sword::Report_EnumReportType_operational,
@@ -71,8 +70,7 @@ namespace
             reports->AddReport( report1 );
             reports->AddReport( report2 );
 
-            // tick 14
-            reports->Update( 14 );
+            reports->SetTick( 14 );
             FillReport( report3, 540, 2, sword::Report_EnumReportType_exceptional_event,
                 "date3", CreateCrowdTasker( 123456 ) );
             FillParameters( report3 );

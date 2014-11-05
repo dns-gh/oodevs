@@ -69,7 +69,7 @@ namespace
         eParty,
         ePopulation
     };
-    boost::optional< std::pair< uint32_t, uint32_t > > TryGetTasker( const sword::Tasker& tasker )
+    boost::optional< std::pair< uint32_t, uint32_t > > TaskerToId( const sword::Tasker& tasker )
     {
         if( tasker.has_unit() )
             return std::make_pair( tasker.unit().id(), eUnit );
@@ -85,7 +85,7 @@ namespace
             return std::make_pair( tasker.population().id(), ePopulation );
         return boost::none;
     }
-    sword::Tasker TryGetTasker( int id, int type )
+    sword::Tasker IdToTasker( int id, int type )
     {
         sword::Tasker tasker;
         switch( type )
@@ -117,7 +117,7 @@ void Reports::AddReport( const sword::Report& report )
 {
     try
     {
-        const auto source = TryGetTasker( report.source() );
+        const auto source = TaskerToId( report.source() );
         if( !source )
             throw MASA_EXCEPTION( "Invalid tasker" );
 
@@ -171,7 +171,7 @@ namespace
             report.mutable_report()->set_id( static_cast< int32_t >( st.ReadInt64() ) );
             const auto sourceId = st.ReadInt();
             const auto sourceType = st.ReadInt();
-            *report.mutable_source() = TryGetTasker( sourceId, sourceType );
+            *report.mutable_source() = IdToTasker( sourceId, sourceType );
             report.mutable_type()->set_id( st.ReadInt() );
             report.set_category( sword::Report_EnumReportType( st.ReadInt() ) );
             report.mutable_time()->set_data( st.ReadText() );
@@ -232,7 +232,7 @@ void Reports::Save( const tools::Path& filename )
     }
 }
 
-void Reports::Update( int tick )
+void Reports::SetTick( int tick )
 {
     tick_ = tick;
 }

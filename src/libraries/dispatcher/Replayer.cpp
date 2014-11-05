@@ -21,6 +21,7 @@
 #include "MemoryLogger_ABC.h"
 #include "aar_plugin/AarPlugin.h"
 #include "replay_plugin/ReplayPlugin.h"
+#include "reports_plugin/ReportsPlugin.h"
 #include "rights_plugin/RightsPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include "logistic_plugin/LogisticPlugin.h"
@@ -134,6 +135,7 @@ Replayer::Replayer( const Config& config )
     handler_.Add( boost::make_shared< plugins::messenger::MessengerPlugin >(
                   *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( plugins::logistic::ReloadLogisticPlugin( config ) );
+    handler_.Add( boost::make_shared< plugins::reports::ReportsPlugin >( config, true ) );
     tools::Xifstream xis( config.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

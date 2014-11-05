@@ -160,3 +160,32 @@ func (c *Client) ReplayStop() error {
 	}
 	return <-c.postReplay(msg, handler)
 }
+
+func (c *Client) ReplayListReports(maxCount, start uint32) ([]*sword.Report, uint32, error) {
+	param := sword.ListReports{
+		MaxCount: proto.Uint32(maxCount),
+	}
+	if start != 0 {
+		param.Report = proto.Uint32(start)
+	}
+	msg := &sword.ClientToReplay_Content{
+		ListReports: &param,
+	}
+	var reports []*sword.Report
+	var nextReport uint32
+	handler := func(msg *sword.ReplayToClient_Content) error {
+		reply := msg.GetListReportsAck()
+		if reply == nil {
+			return ErrContinue
+		}
+		code := reply.GetErrorCode()
+		if code != sword.ListReportsAck_no_error {
+			return makeError(reply, int32(code), sword.ListReportsAck_ErrorCode_name)
+		}
+		DeepCopy(&reports, reply.GetReports())
+		nextReport = reply.GetNextReport()
+		return nil
+	}
+	err := <-c.postReplay(msg, handler)
+	return reports, nextReport, err
+}

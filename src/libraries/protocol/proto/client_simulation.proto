@@ -178,18 +178,6 @@ message SegmentRequest {
     optional float        radius    = 4;
 }
 
-// "ListReports(max_count=10)" returns at most the 10 most recent
-// list_reports and a next_report identifier. Use the latter to continue
-// the enumeration: ListReports(max_count=10, next_report=X) returns at
-// most ten reports following the first set in reverse chronological
-// order".
-message ListReports {
-    //! Maximum number of reports to send
-    required uint32 max_count = 1;
-    //! Report identifier to start enumeration
-    optional uint32 report    = 2;
-}
-
 /** @struct ClientToSim
     @brief Wraps messages from clients to the simulation
 */
