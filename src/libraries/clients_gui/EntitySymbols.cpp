@@ -31,7 +31,7 @@ EntitySymbols::~EntitySymbols()
     // NOTHING
 }
 
-const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 64, 64 )*/, ColorMode colorMode /* = eColorBase */ ) const
+const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, ColorMode colorMode ) const
 {
     const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
     if( !symbol )
@@ -40,11 +40,12 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
     const std::string levelName  = symbol->GetLevel();
     if( symbolName.empty() && levelName.empty() )
         return icons_.GetDefaultSymbol();
-    return GetSymbol( entity, symbolName, levelName, size, colorMode );
+    return GetSymbol( entity, symbolName, levelName, colorMode );
 }
 
-const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
-    const QSize& size /*= QSize( 64, 64 )*/, ColorMode colorMode /* = eColorBase */ ) const
+const QPixmap& EntitySymbols::GetSymbol(
+    const kernel::Entity_ABC& entity, const std::string& symbolName,
+    const std::string& levelName, ColorMode colorMode ) const
 {
     SymbolIcon icon( symbolName, levelName );
     QColor color;
@@ -66,6 +67,5 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
         break;
     }
     icon.SetColor( color );
-    icon.SetSize( size );
     return icons_.GetSymbol( icon );
 }

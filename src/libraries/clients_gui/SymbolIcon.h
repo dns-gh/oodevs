@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 MASA Group
 //
 // *****************************************************************************
 
@@ -12,7 +12,6 @@
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  SymbolIcon
     @brief  SymbolIcon
@@ -32,9 +31,7 @@ public:
     //@{
     void AddLevel( const std::string& level );
     void SetColor( const QColor& color );
-    void SetSize( const QSize& size );
     void SetSize( unsigned size );
-    void SetSize( unsigned width, unsigned height );
     //@}
 
     //! @name Operators

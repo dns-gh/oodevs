@@ -45,9 +45,9 @@ public:
              EntitySymbols( SymbolIcons& icons, ColorStrategy_ABC& strategy );
     virtual ~EntitySymbols();
 
-    const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const QSize& size = QSize( 64, 64 ), ColorMode colorMode = eColorBase ) const;
+    const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, ColorMode colorMode = eColorBase ) const;
     const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
-        const QSize& size = QSize( 64, 64 ), ColorMode colorMode = eColorBase ) const;
+        ColorMode colorMode = eColorBase ) const;
 
 private:
     SymbolIcons& icons_;
