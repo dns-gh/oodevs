@@ -322,6 +322,13 @@ integration.getPositionOutsideObjects = function( objects, distanceFromBorder )
     end
 end
 
+--- Returns whether or not an object prevents units from moving into it
+-- @param object Simulation object knowledge
+-- @return true if units can never inside an object of this type, false otherwise
+integration.isImpassableObject = function( object )
+    return DEC_ObjectKnowledge_IsImpassable( object )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
