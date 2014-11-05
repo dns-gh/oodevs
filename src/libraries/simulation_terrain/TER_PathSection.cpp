@@ -30,6 +30,14 @@ public:
         stopTime_ = stopTime;
     }
 
+    // Note the difference between Cancel() and SetStopTime(0) is the former
+    // will not write an "aborted" message in the log file. Cancelling queries
+    // is part of pathfinding workflow.
+    void Cancel()
+    {
+        canceled_ = true;
+    }
+
     virtual float EvaluateCost( const geometry::Point2f& from,
                                 const geometry::Point2f& to )
     {
@@ -150,7 +158,7 @@ bool TER_PathSection::IsImpossible() const
 // -----------------------------------------------------------------------------
 void TER_PathSection::Cancel()
 {
-    canceler_->SetStopTime( 0 );
+    canceler_->Cancel();
 }
 
 // -----------------------------------------------------------------------------
