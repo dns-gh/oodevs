@@ -117,7 +117,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind )
         }
         TER_PathSection& pathSection = **it;
         NotifySectionStarted();
-        if( !pathSection.Execute( pathfind, nComputationEndTime ) )
+        if( !pathSection.Execute( pathfind, nComputationEndTime )->found )
         {
             if( auto last = GetLastPosition() )
                 computedWaypoints_.push_back( *last );
