@@ -79,9 +79,7 @@ masa_set_internal_library( MAPNIK_LIBRARIES             mapnik )
 masa_set_internal_library( PATHFIND_LIBRARIES           libpathfind )
 masa_set_internal_library( SPATIALCONTAINER_LIBRARIES   libspatialcontainer )
 masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
-masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
 masa_set_internal_library( TERRAIN_LIBRARIES            libterrain )
-
 
 macro( grab_item output name items )
     list( LENGTH ${items} len )
@@ -208,7 +206,7 @@ target_link_libraries( mt_tools
 )
 
 # sword_tools
-add_target( sword_tools common "libraries/tools" OPTIONS )
+add_target( sword_tools common "libraries/tools" )
 target_link_libraries( sword_tools
     mt_tools
     ${PROTOBUF_LIBRARIES}
@@ -463,7 +461,6 @@ set( PLUGINS_DLL
     web_control_plugin_dll
 )
 
-
 # dispatcher_app
 add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS executable )
 target_link_libraries( dispatcher_app
@@ -714,7 +711,7 @@ target_link_libraries( casava_odb_gen_app
     ${GEOCOORD_LIBRARIES}
 )
 
-# migratexml 
+# migratexml
 add_target( migratexml clients "applications/migratexml" OPTIONS executable )
 target_link_libraries( migratexml
     sword_tools
