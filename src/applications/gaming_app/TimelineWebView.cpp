@@ -17,7 +17,7 @@
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory_ABC.h"
 #include "actions/ActionTiming.h"
-#include "clients_gui/EventAction.h"
+#include "clients_gui/EventHelpers.h"
 #include "clients_gui/EventsModel.h"
 #include "clients_gui/TimelinePublisher.h"
 #include "clients_kernel/ActionController.h"
@@ -27,6 +27,7 @@
 #include "clients_kernel/TimelineHelpers.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
+#include "gaming/DrawingsModel.h"
 #include "gaming/Model.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
@@ -114,7 +115,8 @@ void TimelineWebView::Connect()
         ( "sword_filter",         "" )
         ( "sword_profile",        lastProfile_ )
         ( "sword_filter_engaged", "true" )
-        ( "filter_service",       "sword:true,none:true" )
+        ( "filter_service",       "sword:*,none:*,marker:" + model_.GetUuid() )
+        ( "register_service",     model_.GetUuid() )
         ( "horizontal",           "false" );
     cfg.url += MakeQuery( query );
     server_.reset( MakeServer( cfg ).release() );
@@ -130,6 +132,7 @@ void TimelineWebView::Connect()
     connect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
     connect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
     connect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
+    connect( server_.get(), SIGNAL( TriggeredEvents( const timeline::Events& ) ), this, SLOT( OnTriggeredEvents( const timeline::Events& ) ) );
 
     server_->Start();
 }
@@ -286,6 +289,38 @@ void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnTriggeredEvents
+// Created: JSR 2014-10-31
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
+{
+    for( auto it = events.begin(); it != events.end(); ++it )
+    {
+        gui::Event* gamingEvent = model_.events_.Find( it->uuid );
+        if( !gamingEvent || gamingEvent->GetType() != eEventTypes_Marker )
+            continue;
+        std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
+            ( gui::event_helpers::resetDrawingsKey, gui::event_helpers::BoolToString( false ) )
+            ( gui::event_helpers::drawingsPathKey, "" )
+            ( gui::event_helpers::configurationPathKey, "" );
+        gui::event_helpers::ReadJsonPayload( gamingEvent->GetEvent(), jsonPayload );
+        if( gui::event_helpers::StringToBool( jsonPayload[ gui::event_helpers::resetDrawingsKey ] ) )
+            model_.drawings_.Purge();
+        tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
+        if( drawingsPath.Exists() )
+            try
+            {
+                drawingsPath.MakePreferred();
+                model_.drawings_.Load( config_.GetLoader(), drawingsPath );
+            }
+            catch( const xml::exception& )
+            {
+                QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawing file." ).arg( drawingsPath.ToUTF8().c_str() ) );
+            }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineWebView::OnContextMenuEvent
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
@@ -323,7 +358,7 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
 
     kernel::ContextMenu* createMenu = new kernel::ContextMenu( &menu );
     for( int i = 0; i < eNbrEventTypes; ++i )
-        if( i == eEventTypes_Order || i == eEventTypes_Task )
+        if( i == eEventTypes_Order || i == eEventTypes_Task || i == eEventTypes_Marker )
             AddToMenu( *createMenu, creationSignalMapper_.get(), QString::fromStdString( ENT_Tr::ConvertFromEventTypes( static_cast< E_EventTypes >( i ) ) ), i );
 
     menu.InsertItem( "Command", tr( "Create an event" ), createMenu );
@@ -472,7 +507,7 @@ void TimelineWebView::ReadAction( timeline::Events& events,
     timeline::Event event;
     event.action.payload = model_.timelinePublisher_.GetPayload();
     event.action.apply = true;
-    event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+    event.action.target = timeline_helpers::CreateEventTarget( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
     event.name = action->GetName();
 
     const actions::ActionTiming& timing = action->Get< actions::ActionTiming >();

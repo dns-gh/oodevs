@@ -252,6 +252,10 @@
         <source>New task</source>
         <translation>Nouvelle tâche</translation>
     </message>
+    <message>
+        <source>New marker</source>
+        <translation>Nouveau marqueur</translation>
+    </message>
 </context>
 <context>
     <name>EventOrderPresenter</name>
@@ -1889,6 +1893,13 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Resource network</source>
         <translation>Réseau de ressource</translation>
+    </message>
+</context>
+<context>
+    <name>gui::RichPathWidget</name>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
     </message>
 </context>
 <context>

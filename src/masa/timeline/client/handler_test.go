@@ -78,6 +78,12 @@ func (f *FakeHandler) AttachSwordService(uuid, name string, clock bool, address 
 	return DummySession, DummyError
 }
 
+func (f *FakeHandler) AttachService(uuid, name string, service services.Service) (*sdk.Session, error) {
+	f.uuid = uuid
+	f.name = name
+	return DummySession, DummyError
+}
+
 func (f *FakeHandler) DetachService(uuid, name string) (*sdk.Session, error) {
 	f.uuid = uuid
 	f.name = name

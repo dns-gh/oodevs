@@ -227,6 +227,11 @@ void Server::OnActivatedEvent( const Event& event )
     emit ActivatedEvent( event );
 }
 
+void Server::OnTriggeredEvents( const Events& events )
+{
+    emit TriggeredEvents( events );
+}
+
 void Server::OnContextMenuEvent( const Event& event )
 {
     emit ContextMenuEvent( boost::make_shared< Event >( event ), event.begin );

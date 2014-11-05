@@ -94,6 +94,7 @@ query_filters = [
     "filter_keyword"
     "filter_service"
     "filter_show_only"
+    "register_service"
     "sword_filter"
     "sword_filter_engaged"
     "sword_profile"
@@ -679,6 +680,9 @@ class SessionView extends Backbone.View
                 @throttler.delete_events msg.uuids
             when "update_services"
                 @throttler.update_services msg.services
+            when "trigger_events"
+                if gaming?
+                    gaming.trigger_events msg.events
 
 # a backbone collection for every sessions
 class Sessions extends Backbone.Collection

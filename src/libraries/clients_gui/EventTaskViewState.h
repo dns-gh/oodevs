@@ -10,8 +10,6 @@
 #ifndef __EventTaskViewState_h_
 #define __EventTaskViewState_h_
 
-#include <string>
-
 namespace gui
 {
 
@@ -34,10 +32,10 @@ struct EventTaskViewState
         // NOTHING
     }
     EventTaskViewState( unsigned long target,
-                        std::string label,
-                        std::string description,
-                        std::string url,
-                        std::string payload,
+                        const QString& label,
+                        const QString& description,
+                        const QString& url,
+                        const std::string& payload,
                         bool isUrlValid,
                         bool isPayloadVisible,
                         int bytes )
@@ -65,9 +63,9 @@ struct EventTaskViewState
     //! @name Member data
     //@{
     unsigned long target_;
-    std::string label_;
-    std::string description_;
-    std::string url_;
+    QString label_;
+    QString description_;
+    QString url_;
     std::string payload_;
     bool isUrlValid_;
     bool isPayloadVisible_;

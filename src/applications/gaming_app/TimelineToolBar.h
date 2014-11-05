@@ -45,8 +45,9 @@ class TimelineToolBar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TimelineToolBar( kernel::Controllers& controllers,
-                              const tools::ExerciseConfig& config );
+             TimelineToolBar( kernel::Controllers& controllers,
+                              const tools::ExerciseConfig& config,
+                              const std::string& gamingUuid );
     virtual ~TimelineToolBar();
     //@}
 
@@ -116,6 +117,7 @@ private:
     kernel::ActionController& eventActionsController_;
     const bool main_;
     const tools::ExerciseConfig& config_;
+    const std::string gamingUuid_;
     QAction* horizontalView_;
     std::string entityFilter_;
     std::string keywordFilter_;

@@ -177,14 +177,16 @@ func (c *Controller) AttachTimerService(uuid, name string, base string) (*sdk.Se
 		}
 	}
 	return c.applySession(uuid, func(session *Session) error {
-		timer := services.NewTimer(&ControllerObserver{uuid, c}, begin)
+		timer := services.NewTimer(begin)
+		timer.AttachObserver(&ControllerObserver{uuid, c})
 		return session.AttachService(name, timer)
 	})
 }
 
 func (c *Controller) AttachSwordService(uuid, name string, clock bool, address string) (*sdk.Session, error) {
 	return c.applySession(uuid, func(session *Session) error {
-		sword := services.NewSword(c.log, &ControllerObserver{uuid, c}, clock, name, address)
+		sword := services.NewSword(c.log, clock, name, address)
+		sword.AttachObserver(&ControllerObserver{uuid, c})
 		err := session.AttachService(name, sword)
 		if err != nil {
 			return err
@@ -192,6 +194,13 @@ func (c *Controller) AttachSwordService(uuid, name string, clock bool, address s
 		session.AttachListener(sword)
 		session.AttachFilterer(sword)
 		return nil
+	})
+}
+
+func (c *Controller) AttachService(uuid, name string, service services.Service) (*sdk.Session, error) {
+	return c.applySession(uuid, func(session *Session) error {
+		service.AttachObserver(&ControllerObserver{uuid, c})
+		return session.AttachService(name, service)
 	})
 }
 

@@ -94,7 +94,8 @@ func (t *TestSuite) makeFixtureWith(c *C, f *Fixture) {
 	f.server = server
 	f.eloop = util.NewEventLoop()
 	f.eloop.Start()
-	f.client = NewSword(log, f, true, "sim", local)
+	f.client = NewSword(log, true, "sim", local)
+	f.client.AttachObserver(f)
 }
 
 func (t *TestSuite) makeFixture(c *C) *Fixture {
@@ -143,6 +144,16 @@ func getSomePayload(c *C) []byte {
 	return payload
 }
 
+func getSomeEvent(c *C, uuid string, url url.URL) *sdk.Event {
+	return &sdk.Event{
+		Uuid: proto.String(uuid),
+		Action: &sdk.Action{
+			Target:  proto.String(url.String()),
+			Payload: getSomePayload(c),
+		},
+	}
+}
+
 func (t *TestSuite) TestTwoConsecutiveOrders(c *C) {
 	f := t.makeFixture(c)
 	defer f.Close()
@@ -151,8 +162,8 @@ func (t *TestSuite) TestTwoConsecutiveOrders(c *C) {
 		c.Check(err, IsNil)
 		url, err := url.Parse("sword://sim")
 		c.Check(err, IsNil)
-		f.client.Apply("1", *url, getSomePayload(c))
-		f.client.Apply("2", *url, getSomePayload(c))
+		f.client.Trigger(*url, getSomeEvent(c, "1", *url))
+		f.client.Trigger(*url, getSomeEvent(c, "2", *url))
 	})
 	waitConnectedCount(c, f.server, 1)
 }

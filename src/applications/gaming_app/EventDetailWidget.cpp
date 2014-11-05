@@ -132,13 +132,13 @@ void EventDetailWidget::Build( const gui::EventViewState& state )
     if( !timelineEvent.action.payload.empty() )
     {
         payloadBase64_->setText( QString::fromStdString( tools::BinaryToBase64( timelineEvent.action.payload ) ) );
-        if( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
+        if( timelineEvent.action.target == timeline_helpers::CreateEventTarget( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
         {
             sword::ClientToSim msg;
             msg.ParsePartialFromString( timelineEvent.action.payload );
             payloadString_->setText( QString::fromStdString( msg.DebugString() ) );
         }
-        else if ( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
+        else if( timelineEvent.action.target == timeline_helpers::CreateEventTarget( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
         {
             sword::SimToClient msg;
             msg.ParsePartialFromString( timelineEvent.action.payload );

@@ -113,6 +113,14 @@ func (s *Server) socketHandler(log util.Logger, ws *websocket.Conn) {
 		return
 	}
 	defer s.controller.UnregisterObserver(uuid, observer)
+	if service := req.FormValue("register_service"); len(service) > 0 {
+		_, err = s.controller.AttachService(uuid, service, server.NewObserverService(service, req.URL.String(), observer, log))
+		if err != nil {
+			log.Printf("[ws] Unable to register observer service %s: %s\n", uuid, err)
+			return
+		}
+		defer s.controller.DetachService(uuid, service)
+	}
 	ctx := WsContext{
 		log:    log,
 		link:   ws,

@@ -82,9 +82,10 @@ func parseKeywordFilter(dst services.EventFilterConfig, req Getter) {
 }
 
 func parseServiceFilter(dst services.EventFilterConfig, req Getter) error {
-	filters := map[string]bool{
-		"sword": true,
-		"none":  true,
+	filters := map[string]string{
+		"sword":  "*",
+		"none":   "*",
+		"marker": "*",
 	}
 	dst["filter_service"] = filters
 	filter := req.FormValue("filter_service")
@@ -96,15 +97,11 @@ func parseServiceFilter(dst services.EventFilterConfig, req Getter) error {
 		if len(service) != 2 {
 			return fmt.Errorf("invalid filter_service format: %s, token %s", filter, service)
 		}
-		value, err := strconv.ParseBool(service[1])
-		if err != nil {
-			return fmt.Errorf("invalid filter_service format: %s, value %s %s", filter, service[1], err)
-		}
 		_, ok := filters[service[0]]
 		if !ok {
 			return fmt.Errorf("invalid filter_service format: %s, token %s", filter, service[0])
 		}
-		filters[service[0]] = value
+		filters[service[0]] = service[1]
 	}
 	return nil
 }

@@ -660,6 +660,45 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>EventMarkerWidget</name>
+    <message>
+        <source>Label</source>
+        <translation>Label</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Drawings</translation>
+    </message>
+    <message>
+        <source>Clear previous drawings</source>
+        <translation>Clear previous drawings</translation>
+    </message>
+    <message>
+        <source>Load drawing file</source>
+        <translation>Load drawing file</translation>
+    </message>
+    <message>
+        <source>Drawings (*.xml)</source>
+        <translation>Drawings (*.xml)</translation>
+    </message>
+    <message>
+        <source>Display settings</source>
+        <translation>Display settings</translation>
+    </message>
+    <message>
+        <source>Load configuration file</source>
+        <translation>Load configuration file</translation>
+    </message>
+    <message>
+        <source>Configuration file (*.ini)</source>
+        <translation>Configuration file (*.ini)</translation>
+    </message>
+</context>
+<context>
     <name>EventOrderWidget</name>
     <message>
         <source>Order acknowledged</source>
@@ -690,7 +729,7 @@ Reason: %3
     <name>EventTaskWidget</name>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Label</translation>
     </message>
     <message>
         <source>Description</source>
@@ -2861,7 +2900,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Drawings</translation>
     </message>
 </context>
 <context>
@@ -3537,6 +3576,14 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Save failed. Some actions may not have been saved correctly. Check log for details.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <translation>&apos;%1&apos; is not a valid drawing file.</translation>
     </message>
 </context>
 <context>

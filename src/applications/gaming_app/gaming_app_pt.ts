@@ -660,6 +660,45 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>EventMarkerWidget</name>
+    <message>
+        <source>Label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear previous drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load drawing file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawings (*.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration file (*.ini)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EventOrderWidget</name>
     <message>
         <source>Order acknowledged</source>
@@ -3535,6 +3574,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Save failed. Some actions may not have been saved correctly. Check log for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawing file.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -17,8 +17,8 @@ import (
 )
 
 var (
-	TimePeriod      = 400 * time.Millisecond
-	ErrInvalidApply = errors.New("invalid apply")
+	TimePeriod        = 400 * time.Millisecond
+	ErrInvalidTrigger = errors.New("invalid trigger")
 )
 
 type Timer struct {
@@ -29,9 +29,8 @@ type Timer struct {
 	ticker *time.Ticker
 }
 
-func NewTimer(root Observer, base time.Time) *Timer {
+func NewTimer(base time.Time) *Timer {
 	return &Timer{
-		root:   root,
 		base:   base,
 		offset: base.Sub(time.Now()),
 		quit:   make(chan struct{}),
@@ -60,6 +59,10 @@ func (*Timer) IsLocked() bool {
 	return false
 }
 
+func (t *Timer) AttachObserver(observer Observer) {
+	t.root = observer
+}
+
 func (t *Timer) Start() error {
 	t.ticker = time.NewTicker(TimePeriod)
 	go func() {
@@ -84,6 +87,6 @@ func (t *Timer) Stop() error {
 	return nil
 }
 
-func (t *Timer) Apply(string, url.URL, []byte) error {
-	return ErrInvalidApply
+func (t *Timer) Trigger(url.URL, *sdk.Event) error {
+	return ErrInvalidTrigger
 }

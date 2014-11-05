@@ -41,6 +41,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
                                         Model& model )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , config_( config )
+    , gamingUuid_( model.GetUuid() )
     , mainView_( 0 )
 {
     // Init
@@ -122,7 +123,7 @@ void TimelineDockWidget::Disconnect()
 QWidget* TimelineDockWidget::AddView( bool main /* = false */,
                                       const std::string& name /* = "" */ )
 {
-    TimelineToolBar* toolBar = main ? new TimelineToolBar( controllers_, config_ ) : new TimelineToolBar( *static_cast< TimelineToolBar* >( tabWidget_->widget( 0 ) ) );
+    TimelineToolBar* toolBar = main ? new TimelineToolBar( controllers_, config_, gamingUuid_ ) : new TimelineToolBar( *static_cast< TimelineToolBar* >( tabWidget_->widget( 0 ) ) );
     connect( toolBar, SIGNAL( CenterView() ), webView_.get(), SLOT( OnCenterView() ) );
     connect( toolBar, SIGNAL( AddView() ), this, SLOT( AddView() ) );
     connect( toolBar, SIGNAL( RemoveCurrentView() ), this, SLOT( RemoveCurrentView() ) );

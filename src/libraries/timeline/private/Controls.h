@@ -82,6 +82,7 @@ namespace controls
     T_Msg SelectedEvent         ( const T_Logger& log,  const Event& event );
     T_Msg DeselectedEvent       ( const T_Logger& log );
     T_Msg ActivatedEvent        ( const T_Logger& log, const Event& event );
+    T_Msg TriggeredEvents       ( const T_Logger& log, const Events& events );
     T_Msg ContextMenuEvent      ( const T_Logger& log, const Event& event );
     T_Msg ContextMenuBackground ( const T_Logger& log, const std::string& time );
     T_Msg KeyDown               ( const T_Logger& log, int key );
@@ -105,6 +106,7 @@ namespace controls
         virtual void OnSelectedEvent        ( const Event& event ) = 0;
         virtual void OnDeselectedEvent      () = 0;
         virtual void OnActivatedEvent       ( const Event& event ) = 0;
+        virtual void OnTriggeredEvents      ( const Events& events ) = 0;
         virtual void OnContextMenuEvent     ( const Event& event ) = 0;
         virtual void OnContextMenuBackground( const std::string& time ) = 0;
         virtual void OnKeyDown              ( int key ) = 0;

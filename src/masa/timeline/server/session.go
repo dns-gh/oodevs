@@ -166,9 +166,6 @@ func (s *Session) AttachListener(listener services.EventListener) {
 }
 
 func (s *Session) Detach(name string) error {
-	if s.status == sdk.Session_LIVE {
-		return ErrInProgress
-	}
 	service, ok := s.services[name]
 	if !ok {
 		return ErrServiceNotFound
@@ -282,6 +279,12 @@ func (s *Session) UpdateSession() {
 	}
 }
 
+func (s *Session) UpdateTick(tick time.Time) {
+	for _, observer := range s.observers {
+		observer.UpdateTick(tick)
+	}
+}
+
 func (s *Session) setTick(tick time.Time) {
 	modified := s.tick != tick
 	s.tick = tick
@@ -289,12 +292,10 @@ func (s *Session) setTick(tick time.Time) {
 		return
 	}
 	s.UpdateSession()
-	for _, observer := range s.observers {
-		observer.UpdateTick(tick)
-	}
+	s.UpdateTick(tick)
 }
 
-func (s *Session) runEvent(event *Event) {
+func (s *Session) triggerEvent(event *Event) {
 	if !event.action.apply {
 		return
 	}
@@ -303,13 +304,13 @@ func (s *Session) runEvent(event *Event) {
 		s.Log("unable to find service '%s' for event '%s'", event.action.url.Host, event.uuid)
 		return
 	}
-	err := service.Apply(event.uuid, event.action.url, event.action.payload)
+	err := service.Trigger(event.action.url, event.Proto())
 	if err != nil {
 		s.Log("unable to apply event '%s': %v", event.uuid, err)
 	}
 }
 
-func (s *Session) runEvents(begin, end time.Time) {
+func (s *Session) triggerEvents(begin, end time.Time) {
 	for _, event := range s.events {
 		if event.done {
 			continue
@@ -320,7 +321,7 @@ func (s *Session) runEvents(begin, end time.Time) {
 		if event.begin.After(end) {
 			continue
 		}
-		s.runEvent(event)
+		s.triggerEvent(event)
 	}
 }
 
@@ -436,7 +437,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	}
 	s.listeners.UpdateEvents(updates, encoded)
 	if triggered {
-		s.runEvent(event)
+		s.triggerEvent(event)
 	}
 	return encoded[0], nil
 }
@@ -616,7 +617,7 @@ func (s *Session) Tick(tick time.Time) {
 		last = tick
 	}
 	if s.autostart {
-		s.runEvents(last, tick)
+		s.triggerEvents(last, tick)
 	}
 }
 
@@ -625,7 +626,7 @@ func (s *Session) CloseEvent(uuid string, err error, lock bool) {
 	if event == nil {
 		return
 	}
-	modified := event.OnApply(err, lock)
+	modified := event.OnTrigger(err, lock)
 	if !modified {
 		return
 	}

@@ -162,6 +162,7 @@ void Engine::Register( CefRefPtr< CefBrowser > browser, CefRefPtr< CefV8Context 
     SetValue( gaming, "selected_event",         1, boost::bind( &Engine::OnSelectEvent,           this, _1 ) );
     SetValue( gaming, "deselected_event",       0, boost::bind( &Engine::OnDeselectEvent,         this, _1 ) );
     SetValue( gaming, "activated_event",        1, boost::bind( &Engine::OnActivateEvent,         this, _1 ) );
+    SetValue( gaming, "trigger_events",         1, boost::bind( &Engine::OnTriggerEvents,         this, _1 ) );
     SetValue( gaming, "contextmenu_event",      1, boost::bind( &Engine::OnContextMenuEvent,      this, _1 ) );
     SetValue( gaming, "contextmenu_background", 1, boost::bind( &Engine::OnContextMenuBackground, this, _1 ) );
     SetValue( gaming, "keydown",                1, boost::bind( &Engine::OnKeyDown,               this, _1 ) );
@@ -395,6 +396,12 @@ CefRefPtr< CefV8Value > Engine::OnActivateEvent( const CefV8ValueList& args )
     return 0;
 }
 
+CefRefPtr< CefV8Value > Engine::OnTriggerEvents( const CefV8ValueList& args )
+{
+    Post( browser_, controls::TriggeredEvents( log_, GetEvents( args[ 0 ] ) ) );
+    return 0;
+}
+
 CefRefPtr< CefV8Value > Engine::OnContextMenuEvent( const CefV8ValueList& args )
 {
     Post( browser_, controls::ContextMenuEvent( log_, GetEvent( args[0] ) ) );
@@ -516,11 +523,7 @@ void Engine::ReadEvents()
 
 CefRefPtr< CefV8Value > Engine::OnReadEvents( const CefV8ValueList& args )
 {
-    Events rpy;
-    const auto& list = args[0];
-    for( int i = 0; i < list->GetArrayLength(); ++i )
-        rpy.push_back( GetEvent( list->GetValue( i ) ) );
-    SendReadEvents( rpy, GetError( args[1] ) );
+    SendReadEvents( GetEvents( args[0] ), GetError( args[1] ) );
     return 0;
 }
 

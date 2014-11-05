@@ -146,9 +146,9 @@ void EventTaskWidget::Build( const gui::EventTaskViewState& state )
 {
     taskerWidget_->SetTasker( model_.FindEntity( state.target_ ) );
     lastTaskerId_ = state.target_;
-    label_->SetText( QString::fromStdString( state.label_ ) );
-    description_->SetText( QString::fromStdString( state.description_ ) );
-    url_->SetText( QString::fromStdString( state.url_ ) );
+    label_->SetText( state.label_ );
+    description_->SetText( state.description_ );
+    url_->SetText( state.url_ );
     bytes_->clear();
     if( state.bytes_ != 0 )
         bytes_->setText( QString::number( state.bytes_ ) + QString( " bytes" ) );

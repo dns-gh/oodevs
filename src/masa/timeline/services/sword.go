@@ -80,10 +80,9 @@ type Sword struct {
 	endTime   time.Time                     // exercise end date
 }
 
-func NewSword(log util.Logger, observer Observer, clock bool, name, address string) *Sword {
+func NewSword(log util.Logger, clock bool, name, address string) *Sword {
 	return &Sword{
 		log:      log,
-		observer: observer,
 		name:     name,
 		address:  address,
 		clock:    clock,
@@ -118,6 +117,10 @@ func (s *Sword) HasClock() bool {
 
 func (*Sword) IsLocked() bool {
 	return true
+}
+
+func (s *Sword) AttachObserver(observer Observer) {
+	s.observer = observer
 }
 
 func (s *Sword) Log(format string, args ...interface{}) {
@@ -342,7 +345,8 @@ func isOrder(msg *sword.ClientToSim) bool {
 	return false
 }
 
-func (s *Sword) Apply(uuid string, url url.URL, payload []byte) error {
+func (s *Sword) Trigger(url url.URL, event *sdk.Event) error {
+	uuid := event.GetUuid()
 	msg, ok := s.events[uuid]
 	if !ok {
 		return ErrUnknown
@@ -355,7 +359,8 @@ func (s *Sword) Apply(uuid string, url url.URL, payload []byte) error {
 		data = []byte(err.Error())
 	}
 	s.Log("-> action %v %s", uuid, data)
-	action := NewAction(uuid, url, payload, msg, isOrder(msg.ClientToSimulation))
+	action := NewAction(uuid, url, event.GetAction().GetPayload(),
+		msg, isOrder(msg.ClientToSimulation))
 	s.pending[uuid] = action
 	if s.status == SwordStatusConnected {
 		s.link.PostAction(action)

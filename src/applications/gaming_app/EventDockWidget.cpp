@@ -17,6 +17,7 @@
 #include "EventOrderWidget.h"
 #include "EventReportWidget.h"
 #include "EventMagicWidget.h"
+#include "EventMarkerWidget.h"
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
 
@@ -35,6 +36,8 @@
 
 #include "actions/Action_ABC.h"
 #include "actions/ActionError.h"
+
+#include "tools/ExerciseConfig.h"
 
 #include <timeline/api.h>
 
@@ -95,13 +98,15 @@ EventDockWidget::EventDockWidget( QWidget* parent,
     stackAreaLayout->addWidget( stack_ );
 
     // Content
-    stack_->insertWidget( eEventTypes_Order, new EventOrderWidget( *presenter_, controllers, model,
-                                                                   config, interfaceBuilder, profile,
-                                                                   tools, simulation, entitySymbols ) );
+    stack_->insertWidget( eEventTypes_Order , new EventOrderWidget( *presenter_, controllers, model,
+                                                                    config, interfaceBuilder, profile,
+                                                                    tools, simulation, entitySymbols ) );
     stack_->insertWidget( eEventTypes_Magic , new EventMagicWidget( *presenter_, controllers,
                                                                     model, entitySymbols ) );
-    stack_->insertWidget( eEventTypes_Task , new EventTaskWidget( *presenter_, controllers, entitySymbols,
-                                                                  profile, model, simulation ) );
+    stack_->insertWidget( eEventTypes_Task  , new EventTaskWidget( *presenter_, controllers, entitySymbols,
+                                                                   profile, model, simulation ) );
+    stack_->insertWidget( eEventTypes_Marker, new EventMarkerWidget( *presenter_, config.BuildExerciseChildFile( "" ), model.GetUuid() ) );
+
     AddDefaultView( views_, *stack_, eEventTypes_Report     , new EventReportWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eEventTypes_Multimedia , new EventMultimediaWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eNbrEventTypes         , new EventDetailWidget( *presenter_ ) );

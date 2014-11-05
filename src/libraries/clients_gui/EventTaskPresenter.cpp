@@ -59,7 +59,7 @@ EventTaskPresenter::~EventTaskPresenter()
 // -----------------------------------------------------------------------------
 void EventTaskPresenter::OnLabelChanged( const QString& label )
 {
-    state_->label_ = label.toStdString();
+    state_->label_ = label;
     BuildView();
 }
 
@@ -69,7 +69,7 @@ void EventTaskPresenter::OnLabelChanged( const QString& label )
 // -----------------------------------------------------------------------------
 void EventTaskPresenter::OnDescriptionChanged( const QString& description )
 {
-    state_->description_ = description.toStdString();
+    state_->description_ = description;
     BuildView();
 }
 
@@ -79,8 +79,8 @@ void EventTaskPresenter::OnDescriptionChanged( const QString& description )
 // -----------------------------------------------------------------------------
 void EventTaskPresenter::OnUrlChanged( const QString& url )
 {
-    state_->url_ = url.toStdString();
-    state_->isUrlValid_ = !state_->url_.empty();
+    state_->url_ = url;
+    state_->isUrlValid_ = !state_->url_.isEmpty();
     BuildView();
 }
 
@@ -90,7 +90,7 @@ void EventTaskPresenter::OnUrlChanged( const QString& url )
 // -----------------------------------------------------------------------------
 void EventTaskPresenter::OnPayloadChanged( const QString& payload )
 {
-    state_->payload_ = payload.toStdString();
+    state_->payload_ = payload;
     BuildView();
 }
 
@@ -166,13 +166,13 @@ void EventTaskPresenter::FillFrom( const gui::Event& event )
 {
     const timeline::Event& timelineEvent = event.GetEvent();
     state_->Purge();
-    state_->label_ = timelineEvent.name;
-    state_->description_ = timelineEvent.info;
-    state_->url_ = timelineEvent.action.target;
+    state_->label_ = QString::fromStdString( timelineEvent.name );
+    state_->description_ = QString::fromStdString( timelineEvent.info );
+    state_->url_ = QString::fromStdString( timelineEvent.action.target );
     const QString data = QByteArray::fromBase64( timelineEvent.action.payload.c_str() );
     state_->bytes_ = data.size();
     state_->payload_ = data.toStdString();
-    state_->isUrlValid_ = !state_->url_.empty();
+    state_->isUrlValid_ = !state_->url_.isEmpty();
     state_->isPayloadVisible_ = false;
     SetTasker( MetadataToEntity( timelineEvent.metadata, model_ ) );
 }
@@ -187,7 +187,7 @@ void EventTaskPresenter::CommitTo( timeline::Event& event ) const
     event.info = state_->description_;
     event.action.target = state_->url_;
     event.action.apply = false;
-    if( !state_->url_.empty() )
+    if( !state_->url_.isEmpty() )
     {
         QByteArray data( state_->payload_.c_str() );
         event.action.payload = data.toBase64().data();

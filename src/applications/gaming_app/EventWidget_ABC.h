@@ -63,5 +63,6 @@ typedef EventWidget_ABC< gui::EventViewState >                 EventDefaultWidge
 typedef EventWidget_ABC< gui::EventMagicViewState >            EventMagicWidget_ABC;
 typedef EventWidget_ABC< gui::EventOrderViewState >            EventOrderWidget_ABC;
 typedef EventWidget_ABC< gui::EventTaskViewState >             EventTaskWidget_ABC;
+typedef EventWidget_ABC< gui::EventMarkerViewState >           EventMarkerWidget_ABC;
 
 #endif // __EventWidget_ABC_h_

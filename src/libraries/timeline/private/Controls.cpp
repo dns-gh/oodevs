@@ -384,6 +384,15 @@ T_Msg controls::ActivatedEvent( const T_Logger& log, const Event& event )
     return Pack( log, cmd );
 }
 
+T_Msg controls::TriggeredEvents( const T_Logger& log, const Events& events )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_TRIGGERED );
+    for( auto it = events.begin(); it != events.end(); ++it )
+        SetEvent( *cmd.add_events(), *it );
+    return Pack( log, cmd );
+}
+
 T_Msg controls::ContextMenuEvent( const T_Logger& log, const Event& event )
 {
     ServerCommand cmd;
@@ -443,6 +452,7 @@ void controls::ParseServer( ServerHandler_ABC& handler,
         case sdk::SERVER_EVENT_SELECTED:              return handler.OnSelectedEvent( GetEvent( cmd.events() ) );
         case sdk::SERVER_EVENT_DESELECTED:            return handler.OnDeselectedEvent();
         case sdk::SERVER_EVENT_ACTIVATED:             return handler.OnActivatedEvent( GetEvent( cmd.events() ) );
+        case sdk::SERVER_EVENT_TRIGGERED:             return handler.OnTriggeredEvents( GetEvents( cmd.events() ) );
         case sdk::SERVER_EVENT_CONTEXTMENU:           return handler.OnContextMenuEvent( GetEvent( cmd.events() ) );
         case sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND: return handler.OnContextMenuBackground( cmd.time() );
         case sdk::SERVER_KEYBOARD_KEYDOWN:            return handler.OnKeyDown( cmd.keyboardevent().keydown() );

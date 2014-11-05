@@ -662,6 +662,45 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>EventMarkerWidget</name>
+    <message>
+        <source>Label</source>
+        <translation>Label</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
+    <message>
+        <source>Clear previous drawings</source>
+        <translation>Effacer les dessins précédents</translation>
+    </message>
+    <message>
+        <source>Load drawing file</source>
+        <translation>Charger un fichier de dessins</translation>
+    </message>
+    <message>
+        <source>Drawings (*.xml)</source>
+        <translation>Dessins (*.xml)</translation>
+    </message>
+    <message>
+        <source>Display settings</source>
+        <translation>Paramètres d&apos;affichage</translation>
+    </message>
+    <message>
+        <source>Load configuration file</source>
+        <translation>Charger un fichier de configuration</translation>
+    </message>
+    <message>
+        <source>Configuration file (*.ini)</source>
+        <translation>Fichier de configuration (*.ini)</translation>
+    </message>
+</context>
+<context>
     <name>EventOrderWidget</name>
     <message>
         <source>Order acknowledged</source>
@@ -3551,6 +3590,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Save failed. Some actions may not have been saved correctly. Check log for details.</source>
         <translation>Erreur à la sauvegarde. Certaines actions peuvent ne pas avoir été sauvées correctement. Vérifiez le fichier log pour plus de détails.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <translation>&apos;%1&apos; n&apos;est pas un fichier de dessins valide.</translation>
     </message>
 </context>
 <context>

@@ -423,6 +423,7 @@ enum E_EventTypes
     eEventTypes_Report,
     eEventTypes_Task,
     eEventTypes_Multimedia,
+    eEventTypes_Marker,
     eNbrEventTypes
 };
 

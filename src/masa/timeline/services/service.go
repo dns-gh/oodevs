@@ -35,9 +35,10 @@ type Service interface {
 	Proto(name string) *sdk.Service // convert service to protobuf
 	HasClock() bool                 // whether we use the service clock
 	IsLocked() bool                 // whether service clock is immutable
+	AttachObserver(observer Observer)
 	Start() error
 	Stop() error
-	Apply(uuid string, url url.URL, payload []byte) error
+	Trigger(target url.URL, event *sdk.Event) error
 }
 
 type EventListener interface {
