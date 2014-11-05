@@ -14,7 +14,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AutomatType.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 #include "protocol/SimulationSenders.h"

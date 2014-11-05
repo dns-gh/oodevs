@@ -9,24 +9,20 @@
 
 #include "clients_gui_pch.h"
 #include "EntityLayer.h"
-
 #include "DrawVisitor.h"
 #include "GlProxy.h"
 #include "InformationToolTip.h"
 #include "Viewport_ABC.h"
 #include "Viewport2d.h"
-
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "ENT/ENT_Tr.h"
-#include <boost/optional.hpp>
 
 using namespace kernel;
 using namespace gui;
