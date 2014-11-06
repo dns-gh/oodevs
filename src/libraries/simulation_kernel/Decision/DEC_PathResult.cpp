@@ -11,21 +11,26 @@
 #include "DEC_PathResult.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
+#include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_PathPoint.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult constructor
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType )
+DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType, unsigned int querierId )
     : pathType_( pathType )
     , bSectionJustStarted_( false )
+    , computer_( boost::make_shared< DEC_PathComputer >( querierId ) )
+    , finalized_( false )
 {
     itCurrentPathPoint_ = resultList_.end();
 }
@@ -301,4 +306,55 @@ void DEC_PathResult::SetResult( T_PathPoints points )
 const DEC_PathType& DEC_PathResult::GetPathType() const
 {
     return pathType_;
+}
+
+DEC_PathComputer& DEC_PathResult::GetComputer()
+{
+    return *computer_;
+}
+
+void DEC_PathResult::StartCompute( const sword::Pathfind& pathfind )
+{
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
+    future_ = pathfinder.StartCompute( computer_, pathfind );
+}
+
+void DEC_PathResult::Cancel()
+{
+    future_ = boost::make_shared< TER_PathFuture >();
+    future_->Set( computer_->Cancel() );
+}
+
+TER_Path_ABC::E_State DEC_PathResult::GetState() const
+{
+    boost::shared_ptr< TER_PathResult > result;
+    if( future_ )
+        result = future_->Get();
+    if( !result )
+        return TER_Path_ABC::eComputing;
+    return result->state;
+}
+
+const MT_Vector2D& DEC_PathResult::GetLastWaypoint() const
+{
+    return computer_->GetLastWaypoint();
+}
+
+double DEC_PathResult::GetLength() const
+{
+    return computer_->GetLength();
+}
+
+void DEC_PathResult::Finalize()
+{
+    if( finalized_ )
+        return;
+    finalized_ = true;
+    SetResult( computer_->GetResult() );
+    DoFinalize();
+}
+
+void DEC_PathResult::DoFinalize()
+{
+    // Nothing
 }

@@ -17,13 +17,7 @@ class MIL_LimaOrder;
 class MIL_Agent_ABC;
 class DEC_Agent_PathClass;
 class DEC_AgentContext_ABC;
-class TER_PathComputer_ABC;
 class DEC_Rep_PathPoint;
-
-namespace sword
-{
-    class Pathfind;
-}
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -36,14 +30,8 @@ public:
                      const DEC_PathType& pathType );
     virtual ~DEC_Agent_Path();
 
-    virtual void Cancel();
-
     const DEC_Agent_PathClass& GetPathClass() const;
     const T_PointVector& GetNextWaypoints() const;
-    void StartCompute( const sword::Pathfind& pathfind );
-
-    virtual E_State GetState() const;
-    virtual double GetLength() const;
 
 private:
     int IsPointAvant( TER_PathPoint* pBefore, TER_PathPoint& current, TER_PathPoint* pAfter, const TerrainData& nTypeTerrain ) const;
@@ -62,9 +50,8 @@ private:
 
     T_PathPoints::iterator GetPreviousPathPointOnDifferentLocation( T_PathPoints::iterator );
 
-    virtual void Finalize();
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
-    virtual const MT_Vector2D& GetLastWaypoint() const;
+    virtual void DoFinalize();
 
 private:
     //! @name Member data
@@ -74,7 +61,6 @@ private:
     const T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
     boost::shared_ptr< DEC_AgentContext_ABC > context_;
-    boost::shared_ptr< TER_PathComputer_ABC > computer_;
     //@}
 };
 

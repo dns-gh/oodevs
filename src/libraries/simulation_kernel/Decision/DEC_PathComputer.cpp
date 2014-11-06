@@ -161,12 +161,15 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int dea
     nState_ = TER_Path_ABC::eValid;
 }
 
-void DEC_PathComputer::Cancel()
+boost::shared_ptr< TER_PathResult > DEC_PathComputer::Cancel()
 {
     bJobCanceled_ = true;
     nState_ = TER_Path_ABC::eCanceled;
     for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
         ( *it )->Cancel();
+    const auto res = boost::make_shared< TER_PathResult >();
+    res->state = TER_Path_ABC::eCanceled;
+    return res;
 }
 
 TER_Path_ABC::E_State DEC_PathComputer::GetState() const

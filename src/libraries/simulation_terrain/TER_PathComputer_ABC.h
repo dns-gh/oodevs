@@ -45,7 +45,7 @@ public:
     virtual double GetLength() const = 0;
     virtual boost::shared_ptr< TER_PathResult > Execute( TER_Pathfinder_ABC& pathfind,
             unsigned int deadline, bool debugPath ) = 0;
-    virtual void Cancel() = 0;
+    virtual boost::shared_ptr< TER_PathResult > Cancel() = 0;
     virtual TER_Path_ABC::E_State GetState() const = 0;
     virtual void RegisterPathSection( TER_PathSection& section ) = 0;
 

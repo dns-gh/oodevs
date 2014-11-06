@@ -19,10 +19,12 @@ namespace sword
     class Path;
 }
 
+class DEC_PathComputer;
 class DEC_PathType;
 class MIL_Agent_ABC;
 class TER_Localisation;
 class TER_PathPoint;
+class TER_PathFuture;
 class TER_Polygon;
 
 //*****************************************************************************
@@ -40,7 +42,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_PathResult( const DEC_PathType& pathType );
+             DEC_PathResult( const DEC_PathType& pathType, unsigned int querierId );
     virtual ~DEC_PathResult();
     //@}
 
@@ -52,15 +54,19 @@ public:
 
     //! @name Tools
     //@{
+    void StartCompute( const sword::Pathfind& pathfind );
     bool IsOnPath( const MT_Vector2D& vPos ) const;
     T_PathPoints::const_iterator GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
     bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest,
         double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
         const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
-    virtual void Finalize() = 0;
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
-    virtual const MT_Vector2D& GetLastWaypoint() const = 0;
+    virtual TER_Path_ABC::E_State GetState() const;
+    virtual void Cancel();
+    virtual const MT_Vector2D& GetLastWaypoint() const;
+    virtual double GetLength() const;
+    virtual void Finalize();
     //@}
 
     //! @name Network
@@ -80,6 +86,8 @@ private:
 
 protected:
     void SetResult( T_PathPoints points );
+    DEC_PathComputer& GetComputer();
+    virtual void DoFinalize();
 
 protected:
     //! @name Member data
@@ -93,6 +101,9 @@ private:
     T_PathPoints::const_iterator itCurrentPathPoint_;
     const DEC_PathType& pathType_;
     bool bSectionJustStarted_;
+    boost::shared_ptr< DEC_PathComputer > computer_;
+    boost::shared_ptr< TER_PathFuture > future_;
+    bool finalized_;
     //@}
 };
 

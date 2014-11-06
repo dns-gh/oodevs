@@ -16,7 +16,6 @@
 
 class MIL_Population;
 class DEC_PopulationContext_ABC;
-class TER_PathComputer_ABC;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -28,13 +27,6 @@ public:
              DEC_Population_Path( const MIL_Population& population, const T_PointVector& points );
     virtual ~DEC_Population_Path();
 
-    void StartCompute();
-    virtual void Cancel();
-    virtual void Finalize();
-    virtual E_State GetState() const;
-    virtual double GetLength() const;
-    virtual const MT_Vector2D& GetLastWaypoint() const;
-
 private:
     DEC_Population_Path( const DEC_Population_Path& rhs ); // Copy only query parameters, not the result !
 
@@ -43,7 +35,6 @@ private:
     //@{
     MT_Profiler profiler_;
     boost::shared_ptr< DEC_PopulationContext_ABC > context_;
-    boost::shared_ptr< TER_PathComputer_ABC > computer_;
     //@}
 };
 
