@@ -65,7 +65,6 @@ public:
     virtual TER_Path_ABC::E_State GetState() const;
     virtual void Cancel();
     virtual const MT_Vector2D& GetLastWaypoint() const;
-    virtual double GetLength() const;
     virtual void Finalize();
     //@}
 
@@ -87,13 +86,12 @@ private:
 protected:
     void SetResult( T_PathPoints points );
     DEC_PathComputer& GetComputer();
+    const std::vector< MT_Vector2D >& GetComputedWaypoints() const;
+    void RemoveComputedWaypoint();
     virtual void DoFinalize();
 
 protected:
-    //! @name Member data
-    //@{
     T_PathPoints resultList_; //$$$
-    //@}
 
 private:
     //! @name Member data
@@ -103,6 +101,9 @@ private:
     bool bSectionJustStarted_;
     boost::shared_ptr< DEC_PathComputer > computer_;
     boost::shared_ptr< TER_PathFuture > future_;
+    TER_Path_ABC::E_State state_;
+    MT_Vector2D lastWaypoint_;
+    std::vector< MT_Vector2D > computedWaypoints_;
     bool finalized_;
     //@}
 };

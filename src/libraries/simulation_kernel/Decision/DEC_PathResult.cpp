@@ -20,6 +20,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
+#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
@@ -30,6 +31,7 @@ DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType, unsigned int queri
     : pathType_( pathType )
     , bSectionJustStarted_( false )
     , computer_( boost::make_shared< DEC_PathComputer >( querierId ) )
+    , state_( TER_Path_ABC::eComputing )
     , finalized_( false )
 {
     itCurrentPathPoint_ = resultList_.end();
@@ -327,6 +329,8 @@ void DEC_PathResult::Cancel()
 
 TER_Path_ABC::E_State DEC_PathResult::GetState() const
 {
+    if( state_ != TER_Path_ABC::eComputing )
+        return state_;
     boost::shared_ptr< TER_PathResult > result;
     if( future_ )
         result = future_->Get();
@@ -337,12 +341,7 @@ TER_Path_ABC::E_State DEC_PathResult::GetState() const
 
 const MT_Vector2D& DEC_PathResult::GetLastWaypoint() const
 {
-    return computer_->GetLastWaypoint();
-}
-
-double DEC_PathResult::GetLength() const
-{
-    return computer_->GetLength();
+    return lastWaypoint_;
 }
 
 void DEC_PathResult::Finalize()
@@ -350,7 +349,14 @@ void DEC_PathResult::Finalize()
     if( finalized_ )
         return;
     finalized_ = true;
-    SetResult( computer_->GetResult() );
+    auto result = future_->Get();
+    if( !result )
+        throw MASA_EXCEPTION( "unexpected undefined pathfind result" );
+    state_ = result->state;
+    lastWaypoint_ = result->lastWaypoint;
+    computedWaypoints_ = result->computedWaypoints;
+    resultList_ = result->points;
+    itCurrentPathPoint_ = resultList_.begin();
     DoFinalize();
 }
 
@@ -358,3 +364,15 @@ void DEC_PathResult::DoFinalize()
 {
     // Nothing
 }
+
+const std::vector< MT_Vector2D >& DEC_PathResult::GetComputedWaypoints() const
+{
+    return computedWaypoints_;
+}
+
+void DEC_PathResult::RemoveComputedWaypoint()
+{
+    if( !computedWaypoints_.empty() )
+        computedWaypoints_.erase( computedWaypoints_.begin() );
+}
+

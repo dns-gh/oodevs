@@ -46,16 +46,9 @@ public:
     virtual boost::shared_ptr< TER_PathResult > Execute( TER_Pathfinder_ABC& pathfind,
             unsigned int deadline, bool debugPath ) = 0;
     virtual boost::shared_ptr< TER_PathResult > Cancel() = 0;
-    virtual TER_Path_ABC::E_State GetState() const = 0;
     virtual void RegisterPathSection( TER_PathSection& section ) = 0;
 
-    virtual const MT_Vector2D& GetLastWaypoint() const = 0;
-    virtual const std::vector< MT_Vector2D >& GetComputedWaypoints() const = 0;
-    virtual void RemoveComputedWaypoint() = 0;
-
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
-    virtual T_PathPoints GetResult() const = 0;
-
 };
 
 #endif // SIMULATION_TERRAIN_PATHCOMPUTER_ABC

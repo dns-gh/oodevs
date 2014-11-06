@@ -172,11 +172,6 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Cancel()
     return res;
 }
 
-TER_Path_ABC::E_State DEC_PathComputer::GetState() const
-{
-    return nState_;
-}
-
 std::string DEC_PathComputer::GetStateAsString() const
 {
     switch( nState_ )
@@ -203,22 +198,6 @@ std::string DEC_PathComputer::GetPathAsString() const
 void DEC_PathComputer::RegisterPathSection( TER_PathSection& section )
 {
     pathSections_.push_back( &section );
-}
-
-const MT_Vector2D& DEC_PathComputer::GetLastWaypoint() const
-{
-    return lastWaypoint_;
-}
-
-void DEC_PathComputer::RemoveComputedWaypoint()
-{
-    if( !computedWaypoints_.empty() )
-        computedWaypoints_.erase( computedWaypoints_.begin() );
-}
-
-const std::vector< MT_Vector2D >& DEC_PathComputer::GetComputedWaypoints() const
-{
-    return computedWaypoints_;
 }
 
 void DEC_PathComputer::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint )
@@ -272,7 +251,3 @@ boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const
     return resultList_.back()->GetPos();
 }
 
-DEC_PathComputer::T_PathPoints DEC_PathComputer::GetResult() const
-{
-    return resultList_;
-}

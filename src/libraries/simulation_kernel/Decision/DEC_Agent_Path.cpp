@@ -340,13 +340,13 @@ void DEC_Agent_Path::DoFinalize()
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint )
 {
-    const T_PointVector& computedWaypoints = GetComputer().GetComputedWaypoints();
+    const T_PointVector& computedWaypoints = GetComputedWaypoints();
     if( nextWaypoints_.size() > 1 && computedWaypoints.size() > 1 &&
         static_cast< float >( (*itCurrentPathPoint)->GetPos().rX_ ) == static_cast< float >( computedWaypoints.front().rX_ ) &&
         static_cast< float >( (*itCurrentPathPoint)->GetPos().rY_ ) == static_cast< float >( computedWaypoints.front().rY_ ) )
     {
         nextWaypoints_.erase( nextWaypoints_.begin() );
-        GetComputer().RemoveComputedWaypoint();
+        RemoveComputedWaypoint();
     }
     DEC_PathResult::NotifyPointReached( itCurrentPathPoint );
 }
