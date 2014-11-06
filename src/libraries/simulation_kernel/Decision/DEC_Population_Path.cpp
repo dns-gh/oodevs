@@ -12,19 +12,24 @@
 #include "DEC_Population_PathClass.h"
 #include "DEC_Population_PathfinderRule.h"
 #include "DEC_PopulationContext.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathType.h"
-#include "simulation_terrain/TER_PathComputer_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
+#include "MIL_AgentServer.h"
+#include "protocol/Simulation.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_PathSection.h"
+#include <boost/make_shared.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Population_Path constructor
 // Created: JSR 2014-01-16
 //-----------------------------------------------------------------------------
-DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const T_PointVector& points,
-    const boost::shared_ptr< TER_PathComputer_ABC >& computer )
+DEC_Population_Path::DEC_Population_Path( const MIL_Population& population,
+        const T_PointVector& points )
     : DEC_PathResult( DEC_PathType::movement_ )
     , context_( new DEC_PopulationContext( population, points ) )
-    , computer_( computer )
+    , computer_( boost::make_shared< DEC_PathComputer >( population.GetID() ) )
 {
     if( points.empty() )
         throw MASA_EXCEPTION( "List of points is empty in population path initialization" );
@@ -43,6 +48,11 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
 DEC_Population_Path::~DEC_Population_Path()
 {
     // NOTHING
+}
+
+void DEC_Population_Path::StartCompute()
+{
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer_, sword::Pathfind() );
 }
 
 void DEC_Population_Path::Cancel()

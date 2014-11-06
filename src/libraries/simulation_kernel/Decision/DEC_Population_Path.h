@@ -25,18 +25,18 @@ class TER_PathComputer_ABC;
 class DEC_Population_Path : public DEC_PathResult
 {
 public:
-             DEC_Population_Path( const MIL_Population& population, const T_PointVector& points,
-                const boost::shared_ptr< TER_PathComputer_ABC >& computer );
+             DEC_Population_Path( const MIL_Population& population, const T_PointVector& points );
     virtual ~DEC_Population_Path();
 
-private:
-    DEC_Population_Path( const DEC_Population_Path& rhs ); // Copy only query parameters, not the result !
-
+    void StartCompute();
     virtual void Cancel();
     virtual void Finalize();
     virtual E_State GetState() const;
     virtual double GetLength() const;
     virtual const MT_Vector2D& GetLastWaypoint() const;
+
+private:
+    DEC_Population_Path( const DEC_Population_Path& rhs ); // Copy only query parameters, not the result !
 
 private:
     //! @name Member data
