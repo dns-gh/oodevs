@@ -12,11 +12,11 @@
 
 #include "clients_kernel/tools.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Log.h"
 #include "tools/Path.h"
 
-#pragma warning( push, 0 )
-#include <QProcess>
-#pragma warning( pop )
+#include <graphics/MapnikProcess.h>
+
 #include <windows.h>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/make_shared.hpp>
@@ -36,6 +36,7 @@ struct SpawnCommand::Private : public boost::noncopyable
 {
     Private( const tools::Path& exe )
         : exe( exe )
+        , truncate( false )
     {
         // NOTHING
     }
@@ -43,8 +44,11 @@ struct SpawnCommand::Private : public boost::noncopyable
     const tools::Path exe;
     tools::Path working;
     QStringList arguments;
-    boost::shared_ptr< QProcess > process;
+    boost::shared_ptr< graphics::Process > process;
     boost::shared_ptr< Process_ABC > attached;
+    tools::Path logname;
+    bool truncate;
+    std::unique_ptr< tools::Log > log;
 };
 
 // -----------------------------------------------------------------------------
@@ -116,13 +120,28 @@ void SpawnCommand::AddSessionArgument( const tools::Path& session )
     AddArgument( "session", session.ToUTF8() );
 }
 
+void SpawnCommand::SetLogFile( const tools::Path& path, bool truncate )
+{
+    private_->logname = path;
+    private_->truncate = truncate;
+}
+
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::Start
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 void SpawnCommand::Start()
 {
-    private_->process = boost::make_shared< QProcess >();
+    graphics::T_ProcessCallback logger = []( const std::string&, graphics::E_Process ){};
+    if( !private_->logname.IsEmpty() )
+    {
+        private_->log.reset( new tools::Log( private_->logname, 2, 0, private_->truncate, true ) );
+        logger = [&]( const std::string& data, graphics::E_Process )
+        {
+            private_->log->Write( data );
+        };
+    }
+    private_->process = boost::make_shared< graphics::Process >( logger );
     if( !private_->working.IsEmpty() )
         private_->process->setWorkingDirectory( QString::fromStdWString( private_->working.ToUnicode() ) );
     private_->process->start( QString::fromStdWString( private_->exe.ToUnicode() ), private_->arguments );

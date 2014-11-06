@@ -111,7 +111,7 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
     AddArgument( "port", timeline );
     const tools::Path root = ConfigurationManipulator::GetSessionXml( config, exercise, session ).Parent();
     const tools::Path log = root / "timeline.log";
-    AddArgument( "log", log.ToUTF8() );
+    SetLogFile( log, false );
     const tools::Path run = root / "timeline.run";
     AddArgument( "run", run.ToUTF8() );
     if( !debug.timeline.debugWwwDir.IsEmpty() )
