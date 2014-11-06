@@ -13,6 +13,8 @@ event_settings_template = null
 triggers = null
 # gaming object, only defined when used inside gaming
 gaming = window.gaming
+# url parameters
+url_query = null
 lang = "en"
 vertical = true
 
@@ -24,12 +26,12 @@ vertical = true
     tick_template  = Handlebars.compile $("#tick_template").html()
     event_settings_template = Handlebars.compile $("#event_settings_template").html()
     triggers = new Triggers()
-    params = parse_parameters()
-    if params.lang?
-        lang = params.lang
-    vertical = !convert_to_boolean params.horizontal
+    url_query = parse_parameters()
+    if url_query.lang?
+        lang = url_query.lang
+    vertical = !convert_to_boolean url_query.horizontal
     moment.lang(lang)
-    unless params.id?
+    unless url_query.id?
         return redirect()
     $("#session_container").show()
     if gaming?.enabled
@@ -37,7 +39,7 @@ vertical = true
         $("body").keyup -> gaming.keyup event.keyCode
         $("body").keydown -> gaming.keydown event.keyCode
         $("body").keypress -> gaming.keypress event.keyCode
-    view = new SessionView id: params.id
+    view = new SessionView id: url_query.id
     return
 
 # translate <source> token
@@ -101,10 +103,9 @@ query_filters = [
 ]
 
 get_filters = ->
-    params = parse_parameters()
     query = {}
     for it in query_filters
-        value = params[it]
+        value = url_query[it]
         query[it] = value if value?
     return query
 
@@ -547,11 +548,12 @@ class EventsView extends Backbone.View
         @timeline.center()
 
     update_query: (query) =>
-        params = _.extend parse_parameters(), query
-        for p in query
-            if p.length == 0
-                delete params[p]
-        window.location.search = $.param params
+        _.extend url_query, query
+        for k, v of url_query
+            unless v?.length
+                delete url_query[k]
+        window.location.search = "?" + $.param url_query
+        return
 
 # a backbone model for one session
 class Session extends Backbone.Model
@@ -703,8 +705,8 @@ redirect = ->
     model.fetch
        success: (model, data) ->
            if _.isArray(data) && data.length > 0
-               params = _.extend parse_parameters(), id: data[0].uuid
-               window.location.search = "?" + $.param params
+               url_query.id = data[0].uuid
+               window.location.search = "?" + $.param url_query
                return
            on_error i18n "Unable to find any session"
        error: ->
