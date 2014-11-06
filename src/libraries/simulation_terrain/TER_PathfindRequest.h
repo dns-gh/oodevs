@@ -15,6 +15,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
+class TER_PathFuture;
 class TER_PathComputer_ABC;
 
 // TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
@@ -29,7 +30,8 @@ public:
     //@{
              TER_PathfindRequest(
                 const boost::shared_ptr< TER_PathComputer_ABC >& computer,
-                const sword::Pathfind& pathfind );
+                const sword::Pathfind& pathfind,
+                const boost::shared_ptr< TER_PathFuture >& future );
     virtual ~TER_PathfindRequest();
     //@}
 
@@ -40,12 +42,14 @@ public:
     // could be processed.
     boost::shared_ptr< TER_PathComputer_ABC > GetComputer();
     const sword::Pathfind& GetPathfind() const;
+    boost::shared_ptr< TER_PathFuture > GetFuture();
 
 private:
     //! @name Member data
     //@{
     boost::weak_ptr< TER_PathComputer_ABC > computer_;
     const sword::Pathfind pathfind_;
+    boost::shared_ptr< TER_PathFuture > future_;
     //@}
 };
 

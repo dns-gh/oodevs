@@ -12,10 +12,11 @@
 
 #include "ActionManager.h"
 #include "MIL_AgentServer.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Decision/DEC_PathComputer.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Serialization.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 
 #include <boost/serialization/optional.hpp>
 
@@ -28,13 +29,15 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PathRequest )
 // Name: PathRequest constructor
 // Created: LGY 2014-04-16
 // -----------------------------------------------------------------------------
-PathRequest::PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer,
+PathRequest::PathRequest( const boost::shared_ptr< TER_PathComputer_ABC >& computer,
+                          const boost::shared_ptr< TER_PathFuture >& future,
                           unsigned int ctx,
                           unsigned int clientId,
                           uint32_t id,
                           const sword::PathfindRequest& message,
                           const boost::optional< uint32_t >& magic )
     : computer_( computer )
+    , future_( future )
     , ctx_( ctx )
     , clientId_( clientId )
     , id_( id )
@@ -84,6 +87,40 @@ void PathRequest::SendPathfindCreation( ActionManager& actions, bool ok )
         SendStateToNewClient();
 }
 
+namespace
+{
+
+sword::TerrainData SerializeTerrainData( const TerrainData& point )
+{
+    sword::TerrainData data;
+    data.set_linear( point.Linear() );
+    data.set_area( point.Area() );
+    data.set_left( point.Left() );
+    data.set_right( point.Right() );
+    return data;
+}
+
+void SerializePathResult( const TER_PathResult& result, sword::PathResult& msg )
+{
+    unsigned int index = 0;
+    for( auto it = result.points.begin(); it != result.points.end(); ++it )
+    {
+        auto point = msg.add_points();
+        const MT_Vector2D& position = (*it)->GetPos();
+        const bool partial = (*it)->IsPartial();
+        if( (*it)->IsWaypoint() || partial )
+        {
+            point->set_waypoint( index++ );
+            point->set_reached( !partial );
+        }
+        *point->mutable_current() = SerializeTerrainData( (*it)->GetObjectTypes() );
+        *point->mutable_next() = SerializeTerrainData( (*it)->GetObjectTypesToNextPoint() );
+        NET_ASN_Tools::WritePoint( position, *point->mutable_coordinate() );
+    }
+}
+
+}  // namespace
+
 // -----------------------------------------------------------------------------
 // Name: PathRequest::Update
 // Created: LGY 2014-03-03
@@ -92,13 +129,14 @@ bool PathRequest::Update( ActionManager& actions )
 {
     if( path_ )
         return false;
-    const auto state = computer_->GetState();
-    if( state == TER_Path_ABC::eComputing )
+    const auto result = future_->Get();
+    if( !result )
         return false;
-    const bool ok = state != TER_Path_ABC::eInvalid && state != TER_Path_ABC::eImpossible;
+    const bool ok = result->state != TER_Path_ABC::eInvalid &&
+        result->state != TER_Path_ABC::eImpossible;
     path_ = sword::PathResult();
     if( ok )
-        computer_->Serialize( *path_ );
+        SerializePathResult( *result, *path_ );
     if( magic_ )
         SendPathfindCreation( actions, ok );
     else
@@ -179,7 +217,7 @@ void load_construct_data( Archive& ar, PathRequest* ptr, const unsigned int /*ve
     ar >> id;
     ar >> request;
     ar >> magic;
-    // we don't care anymore about the computer, our path is computed and ready to use
-    ::new( ptr ) PathRequest( boost::shared_ptr< DEC_PathComputer >(), ctx, clientId, id, request, magic );
+    // we don't care anymore about the future, our path is computed and ready to use
+    ::new( ptr ) PathRequest( nullptr, nullptr, ctx, clientId, id, request, magic );
 }
 

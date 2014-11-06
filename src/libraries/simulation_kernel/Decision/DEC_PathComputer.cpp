@@ -11,14 +11,12 @@
 #include "DEC_PathComputer.h"
 #include "MIL_AgentServer.h"
 #include "SlopeSpeedModifier.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Config.h"
 #include "meteo/PHY_MeteoDataManager.h"
 #include "meteo/RawVisionData/Elevation.h"
 #include "meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Line.h"
-#include "protocol/Protocol.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_PathSection.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
@@ -46,6 +44,16 @@ DEC_PathComputer::~DEC_PathComputer()
         delete *it;
 }
 
+boost::shared_ptr< TER_PathResult > DEC_PathComputer::GetPathResult() const
+{
+    const auto res = boost::make_shared< TER_PathResult >();
+    res->state = nState_;
+    res->lastWaypoint = lastWaypoint_;
+    res->computedWaypoints = computedWaypoints_;
+    res->points = resultList_;
+    return res;
+}
+
 double DEC_PathComputer::GetLength() const
 {
     double length = 0;
@@ -54,7 +62,7 @@ double DEC_PathComputer::GetLength() const
     return length;
 }
 
-void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
+boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
         unsigned int deadline, bool debugPath )
 {
     if( !resultList_.empty() )
@@ -77,7 +85,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
         MT_LOG_ERROR_MSG( "DEC_PathComputer::Execute failed: " << e.what() );
         bJobCanceled_ = true;
         nState_ = TER_Path_ABC::eCanceled;
-        return;
+        return GetPathResult();
     }
     if( debugPath )
     {
@@ -91,6 +99,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
                             ", State: " << GetStateAsString() <<
                             ", Result: " << stream.str() );
     }
+    return GetPathResult();
 }
 
 void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadline )
@@ -163,38 +172,6 @@ void DEC_PathComputer::Cancel()
 TER_Path_ABC::E_State DEC_PathComputer::GetState() const
 {
     return nState_;
-}
-
-namespace
-{
-    sword::TerrainData Convert( const TerrainData& point )
-    {
-        sword::TerrainData data;
-        data.set_linear( point.Linear() );
-        data.set_area( point.Area() );
-        data.set_left( point.Left() );
-        data.set_right( point.Right() );
-        return data;
-    }
-}
-
-void DEC_PathComputer::Serialize( sword::PathResult& msg ) const
-{
-    unsigned int index = 0;
-    for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
-    {
-        auto point = msg.add_points();
-        const MT_Vector2D& position = (*it)->GetPos();
-        const bool partial = (*it)->IsPartial();
-        if( (*it)->IsWaypoint() || partial )
-        {
-            point->set_waypoint( index++ );
-            point->set_reached( !partial );
-        }
-        *point->mutable_current() = Convert( (*it)->GetObjectTypes() );
-        *point->mutable_next() = Convert( (*it)->GetObjectTypesToNextPoint() );
-        NET_ASN_Tools::WritePoint( position, *point->mutable_coordinate() );
-    }
 }
 
 std::string DEC_PathComputer::GetStateAsString() const

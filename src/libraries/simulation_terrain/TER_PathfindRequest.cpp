@@ -12,9 +12,11 @@
 
 TER_PathfindRequest::TER_PathfindRequest(
         const boost::shared_ptr< TER_PathComputer_ABC >& computer,
-        const sword::Pathfind& pathfind )
+        const sword::Pathfind& pathfind,
+        const boost::shared_ptr< TER_PathFuture >& future )
     : computer_( computer )
     , pathfind_( pathfind )
+    , future_( future )
 {
     // NOTHING
 }
@@ -37,6 +39,11 @@ boost::shared_ptr< TER_PathComputer_ABC > TER_PathfindRequest::GetComputer()
 const sword::Pathfind& TER_PathfindRequest::GetPathfind() const
 {
     return pathfind_;
+}
+
+boost::shared_ptr< TER_PathFuture > TER_PathfindRequest::GetFuture()
+{
+    return future_;
 }
 
 bool TER_PathfindRequest::IsItinerary() const

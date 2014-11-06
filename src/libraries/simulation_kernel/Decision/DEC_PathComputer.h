@@ -13,9 +13,11 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "simulation_terrain/TER_PathComputer_ABC.h"
 #include <boost/optional.hpp>
+#include <boost/shared_ptr.hpp>
 #include <vector>
 
 class TER_PathPoint;
+struct TER_PathResult;
 
 // =============================================================================
 /** @class  DEC_PathComputer
@@ -30,8 +32,8 @@ public:
     virtual ~DEC_PathComputer();
 
     virtual double GetLength() const;
-    virtual void Execute( TER_Pathfinder_ABC& pathfind, unsigned int deadline,
-           bool debugPath );
+    virtual boost::shared_ptr< TER_PathResult > Execute( TER_Pathfinder_ABC& pathfind,
+            unsigned int deadline, bool debugPath );
     virtual void Cancel();
     virtual TER_Path_ABC::E_State GetState() const;
     virtual void RegisterPathSection( TER_PathSection& section );
@@ -39,8 +41,6 @@ public:
     virtual const MT_Vector2D& GetLastWaypoint() const;
     virtual const std::vector< MT_Vector2D >& GetComputedWaypoints() const;
     virtual void RemoveComputedWaypoint();
-
-    void Serialize( sword::PathResult& msg ) const;
 
 private:
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
@@ -50,6 +50,7 @@ private:
     void NotifyPartialSection();
     void NotifyCompletedSection();
     boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;
+    boost::shared_ptr< TER_PathResult > GetPathResult() const;
 
     std::string DEC_PathComputer::GetPathAsString() const;
     std::string DEC_PathComputer::GetStateAsString() const;

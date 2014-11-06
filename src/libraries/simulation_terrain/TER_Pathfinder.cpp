@@ -10,7 +10,6 @@
 #include "simulation_terrain_pch.h"
 #include "TER_Pathfinder.h"
 #include "TER_EdgeMatcher.h"
-#include "TER_PathComputer_ABC.h"
 #include "TER_Pathfinder.h"
 #include "TER_Pathfinder_ABC.h"
 #include "TER_PathFindRequest.h"
@@ -99,6 +98,26 @@ boost::uint32_t PathfindDumper::s_idx_ = 0;
 
 }  // namespace
 
+TER_PathFuture::TER_PathFuture()
+{
+}
+
+TER_PathFuture::~TER_PathFuture()
+{
+}
+
+void TER_PathFuture::Set( const boost::shared_ptr< TER_PathResult >& path )
+{
+    boost::mutex::scoped_lock lock( mutex_ );
+    path_ = path;
+}
+
+boost::shared_ptr< TER_PathResult > TER_PathFuture::Get() const
+{
+    boost::mutex::scoped_lock lock( mutex_ );
+    return path_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: TER_Pathfinder constructor
 // Created: NLD 2003-08-14
@@ -164,15 +183,22 @@ TER_Pathfinder::~TER_Pathfinder()
 // Name: TER_Pathfinder::StartCompute
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void TER_Pathfinder::StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& path, const sword::Pathfind& pathfind )
+boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
+        const boost::shared_ptr< TER_PathComputer_ABC >& path,
+        const sword::Pathfind& pathfind )
 {
-    auto p = boost::make_shared< TER_PathfindRequest >( path, pathfind );
+    // $$$$$ PMD: storing the callback in the request is not elegant but harmless
+    // for now as the request object is private to the pathfinder. Make a local
+    // struct later.
+    const auto future = boost::make_shared< TER_PathFuture >();
+    auto p = boost::make_shared< TER_PathfindRequest >( path, pathfind, future );
     boost::mutex::scoped_lock locker( mutex_ );
     if( path->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
     else
         shortRequests_.push_back( p );
     condition_.notify_all();
+    return future;
 }
 
 // -----------------------------------------------------------------------------
@@ -263,7 +289,12 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
 {
     const auto computer = rq.GetComputer();
     if( !computer )
+    {
+        const auto res = boost::make_shared< TER_PathResult >();
+        res->state = TER_Path_ABC::eCanceled;
+        rq.GetFuture()->Set( res );
         return;
+    }
 
     const unsigned int deadline = nMaxComputationDuration_ == std::numeric_limits< unsigned int >::max()
         ? std::numeric_limits< unsigned int >::max()
@@ -279,7 +310,8 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         profiler.Start();
         if( rq.IsItinerary() )
             wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
-        computer->Execute( *wrapper, deadline, debugPath_ );
+        const auto res = computer->Execute( *wrapper, deadline, debugPath_ );
+        rq.GetFuture()->Set( res );
         duration = profiler.Stop();
     }
     catch( const std::exception& e )
