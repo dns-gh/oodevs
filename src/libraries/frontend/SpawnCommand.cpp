@@ -23,6 +23,30 @@
 
 using namespace frontend;
 
+namespace
+{
+    std::shared_ptr< void > MakeAutoKill( const QProcess& process )
+    {
+        auto info = process.pid();
+        if( !info )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Missing pid from QProcess" ).toUtf8().constData() );
+        auto job = CreateJobObject( NULL, NULL );
+        if( !job )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object" ).toUtf8().constData() );
+        std::shared_ptr< void > rpy( job, CloseHandle );
+        JOBOBJECT_EXTENDED_LIMIT_INFORMATION jeli;
+        memset( &jeli, 0, sizeof jeli );
+        jeli.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+        bool valid = !!SetInformationJobObject( job, JobObjectExtendedLimitInformation, &jeli, sizeof jeli );
+        if( !valid )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object" ).toUtf8().constData() );
+        valid = !!AssignProcessToJobObject( job, info->hProcess );
+        if( !valid )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object").toUtf8().constData() );
+        return rpy;
+    }
+}
+
 tools::Path frontend::MakeBinaryName( const tools::Path& prefix )
 {
 #ifdef _DEBUG
@@ -49,6 +73,7 @@ struct SpawnCommand::Private : public boost::noncopyable
     tools::Path logname;
     bool truncate;
     std::unique_ptr< tools::Log > log;
+    std::shared_ptr< void > job;
 };
 
 // -----------------------------------------------------------------------------
@@ -147,7 +172,10 @@ void SpawnCommand::Start()
     private_->process->start( QString::fromStdWString( private_->exe.ToUnicode() ), private_->arguments );
     const bool done = private_->process->waitForStarted();
     if( done )
+    {
+        private_->job = MakeAutoKill( *private_->process );
         return;
+    }
     const int exit = private_->process->exitCode();
     private_->process.reset();
     throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" )

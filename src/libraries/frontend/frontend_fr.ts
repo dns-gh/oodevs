@@ -233,6 +233,22 @@
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
+    <message>
+        <source>Missing pid from QProcess</source>
+        <translation>Impossible de lire le pid du processus</translation>
+    </message>
+    <message>
+        <source>Unable to create job object</source>
+        <translation>Impossible de créer un objet de travail</translation>
+    </message>
+    <message>
+        <source>Unable to set information job object</source>
+        <translation>Impossible d'initialiser l'objet de travail</translation>
+    </message>
+    <message>
+        <source>Unable to assign process to job object</source>
+        <translation>Impossible d'assigner l'objet de travail au processus</translation>
+    </message>
 </context>
 <context>
     <name>StartExercise</name>
