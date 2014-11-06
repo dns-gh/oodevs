@@ -945,32 +945,35 @@ void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geomet
     DrawApp6Symbol( symbol, where, baseWidth * factor, viewport, 4, 4, direction, width, depth, true, svgDeltaX, svgDeltaY );
 }
 
+namespace
+{
+    const float symbolDepth = 240;
+}
+
 // -----------------------------------------------------------------------------
 // Name: GLWidget::DrawUnitSymbol
 // Created: LDC 2013-04-09
 // -----------------------------------------------------------------------------
-void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, const std::string& level, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
+void GlWidget::DrawUnitSymbol(
+    const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol,
+    const std::string& level, bool isMoving, const geometry::Point2f& where,
+    float factor, unsigned int direction, const float width, const float depth ) const
 {
-    width = width ? width / 360 : 1;
-    const float symbolDepth = 240;
-    const float baseDepth = depth;
-    depth = depth ? depth / symbolDepth : 1;
-    const bool mirror = direction > 180;
-    const float xFactor = mirror ? -1.f : 1.f;
+    const float xFactor = direction > 180 ? -1.f : 1.f;
     if( isMoving )
     {
         if( !moveSymbol.empty() )
         {
-            geometry::Vector2f directionVector( 0., 1. );
-            float radians = direction * 3.14f/180;
-            directionVector.Rotate( - radians );
-            geometry::Point2f arrowTail = where + directionVector * (-baseDepth);
-            geometry::Point2f arrowHead = where;
-            geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth * GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() / defaultSymbolSize );
-            geometry::Vector2f symbolVector( symbolTail, arrowHead );
-            geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f; 
+            const auto scaledDepth = symbolDepth * GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() / defaultSymbolSize;
+            geometry::Vector2f directionVector( 0, 1 );
+            directionVector.Rotate( -3.14f * direction / 180 );
+            const geometry::Point2f arrowTail = where - directionVector * depth;
+            const geometry::Point2f arrowHead = where;
+            const geometry::Point2f symbolTail = arrowHead - directionVector * scaledDepth;
+            const geometry::Vector2f symbolVector( symbolTail, arrowHead );
+            const geometry::Point2f symbolPosition = symbolTail + symbolVector / 2;
             DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, xFactor, 1 );
-            if( baseDepth && baseDepth > symbolDepth * GetOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() / defaultSymbolSize )
+            if( depth && depth > scaledDepth )
             {
                 T_PointVector points;
                 points.push_back( arrowTail );
@@ -984,10 +987,13 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     }
     else
     {
-        if( !staticSymbol.empty() )
-            DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction, width * xFactor, depth );
-        else
+        if( staticSymbol.empty() )
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
+        else
+            DrawApp6SymbolScaledSize(
+                staticSymbol, where, factor, direction,
+                ( width ? width / 360 : 1 ) * xFactor,
+                depth ? depth / symbolDepth : 1 );
     }
     const bool app6 = isMoving ? moveSymbol.empty() : staticSymbol.empty();
     if( app6 )
@@ -1002,7 +1008,6 @@ void GlWidget::DrawUnitSymbolAndTail( const std::string& symbol, const std::stri
 {
     geometry::Point2f penultimatePoint = points.at( points.size() -2 );
     geometry::Point2f lastPoint = points.back();
-    float symbolDepth = 240;
     geometry::Vector2f directionVector( penultimatePoint, lastPoint );
     directionVector.Normalize();
     geometry::Vector2f vertical( 0.f, 1.f );
