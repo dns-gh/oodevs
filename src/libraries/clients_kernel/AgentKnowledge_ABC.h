@@ -44,6 +44,8 @@ public:
     //@{
     virtual const kernel::Agent_ABC* GetEntity() const = 0;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const = 0;
+    virtual std::string GetLevel() const = 0;
+    virtual bool IsCommandPost() const = 0;
 
     virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
     //@}
