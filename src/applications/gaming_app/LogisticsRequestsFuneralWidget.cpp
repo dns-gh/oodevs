@@ -41,3 +41,9 @@ void LogisticsRequestsFuneralWidget::OnRequestSelected( const LogisticsConsign_A
     detailsTable_->Add( tools::translate( "Logistic", "Started:" ), c.GetCurrentStartedTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Ending:" ), SupervisionFilter( c.GetCurrentEndTime() ) );
 }
+
+bool LogisticsRequestsFuneralWidget::IsActive( const LogFuneralConsign& consign ) const
+{
+    // funeral consigns are never terminated even in 'finished' status
+    return consign.GetStatus() != sword::LogFuneralHandlingUpdate::finished;
+}

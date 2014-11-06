@@ -33,6 +33,7 @@ public:
 
 private:
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );
+    virtual bool IsActive( const LogFuneralConsign& consign ) const;
 };
 
 #endif // __LogisticsRequestsFuneralWidget_h_
