@@ -150,24 +150,24 @@ void TerrainsWidget::OnUpgrade()
         generator_.reset();
     });
     generator_ = graphics::StartMapnikGen( *terrain, false, false,
-        [this]( const std::string& line, graphics::E_MapnikProcess s )
+        [this]( const std::string& line, graphics::E_Process s )
         {
             switch( s )
             {
-                case graphics::MapnikLogInfo:
+                case graphics::ProcessLogInfo:
                     MT_LOG_INFO_MSG( "mapnikgen: " << line );
                     progress_->Log( line );
                     break;
-                case graphics::MapnikLogError:
+                case graphics::ProcessLogError:
                     MT_LOG_ERROR_MSG( "mapnikgen: " << line );
                     progress_->Log( line );
                     break;
-                case graphics::MapnikSuccess:
+                case graphics::ProcessSuccess:
                     progress_->NotifyDone( "" );
                     // Notify Qt main thread
                     QMetaObject::invokeMethod( this, "OnUpdate", Qt::QueuedConnection );
                     break;
-                case graphics::MapnikFailure:
+                case graphics::ProcessFailure:
                     progress_->NotifyDone( "Mapnik generation failed" );
                     QMetaObject::invokeMethod( this, "OnUpdate", Qt::QueuedConnection );
                     break;
